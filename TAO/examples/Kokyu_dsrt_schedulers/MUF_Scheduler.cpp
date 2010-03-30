@@ -269,7 +269,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
 
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
     {
       //24 hrs from now - infinity
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
@@ -280,7 +280,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   else
     {
       MUF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       MUF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
       deadline = sched_param->deadline;
@@ -466,7 +466,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
   RTScheduling::Current::IdType_var guid = this->current_->id ();
 
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
   {
 #ifdef KOKYU_DSRT_LOGGING
     ACE_DEBUG ((LM_DEBUG,
@@ -486,7 +486,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "sched params set\n"));
 #endif
       MUF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
       MUF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
 
 
