@@ -1,3 +1,18 @@
+Tue Mar 30 09:24:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/*
+          Removed, LatencyTT will be removed to Latency, that is the ping
+          pong latency test with two topics
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+          Catch some exceptions by const
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Print statuskind
+
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+          Reduced sleep time
+
 Tue Mar 30 09:14:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.cpp:

@@ -90,13 +90,15 @@ namespace CIAO_Quoter_Distributor_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)
+    ::DDS::StatusKind status_kind)
   {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status: %d\n"),
+                status_kind));
   }
 
   void ConnectorStatusListener_exec_i::on_publication_matched ( ::DDS::DataWriter_ptr ,
-                                      const DDS::PublicationMatchedStatus & )
+                                      const DDS::PublicationMatchedStatus &)
   {
     ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_publication_matched\n"));
   }
