@@ -69,12 +69,6 @@ public:
   virtual void ccm_remove (void);
 
 private:
-  bool observable_obtained_;
-  bool passive_observer_obtained_;
-  bool pull_observer_obtained_;
-  bool push_observer_obtained_;
-  bool push_state_observer_obtained_;
-
   /**
    * DDS_Update observable
    */
