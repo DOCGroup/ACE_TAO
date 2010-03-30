@@ -3322,6 +3322,14 @@ idl_store_pragma (char *buf)
           idl_global->add_ciao_ami_iface_names (tmp);
         }
     }
+  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)
+    {
+      if (idl_global->in_main_file ())
+        {
+          char *tmp = idl_get_pragma_string (buf);
+          idl_global->add_ciao_ami_recep_names (tmp);
+        }
+    }
 }
 
 /*

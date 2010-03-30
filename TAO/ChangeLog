@@ -1,3 +1,47 @@
+Tue Mar 30 17:32:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Added recognition and handling of a new pragma
+          that stores names of receptacles we want to 
+          use with AMI.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added storage and access for the names gathered
+          by the new pragma described above.
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp(visit_root):
+
+          Added a diagnostic error message on the return
+          value of the call to generate_ami4ccm_idl().
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          Added method generate_ami4ccm_uses(), called
+          from visit_root(), to create implied IDL
+          receptacles as AMI counterparts to existing
+          receptacles, as indicated by instances of the
+          new pragma.
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+
+          Removed code that accomplished the above in an
+          ad hoc fashion for every receptacle, without
+          using a pragma or implied IDL.
+
 Mon Mar 29 21:13:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/TypeCodeFactory/Recursive_TypeCode.h:
