@@ -77,7 +77,7 @@ project(NoModule_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(NoModule_Connector_exec) : ciao_executor, dds4ccm_impl  {
+project(NoModule_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
   after   += NoModule_Connector_lem_stub NoModule_Connector_stub
   sharedname = NoModule_Connector_exec
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub
