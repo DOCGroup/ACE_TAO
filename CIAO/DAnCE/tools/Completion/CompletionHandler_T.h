@@ -25,6 +25,8 @@ namespace DAnCE
   class CompletionHandler
     {
     public:
+      virtual ~CompletionHandler () {}
+      
       virtual void handle_completion (PROCESSOR *processor) = 0;
       virtual void handle_exception (CORBA::Exception* local_ex) = 0;
     };
