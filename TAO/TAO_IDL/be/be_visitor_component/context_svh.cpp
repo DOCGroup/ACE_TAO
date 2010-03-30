@@ -139,57 +139,6 @@ be_visitor_context_svh::visit_uses (be_uses *node)
           << "get_connection_" << port_name << " (void);";
     }
 
-  if (be_global->ami4ccm_call_back ())
-    {
-      os_ << be_nl << be_nl
-          << "virtual ";
-
-      if (is_multiple)
-        {
-          os_ << "::" << node_->full_name () << "::"
-              << port_name << "Connections *" << be_nl
-              << "get_connections_" << port_name << " (void);";
-        }
-      else
-        {
-          ACE_CString original_op_name (
-            node->uses_type ()->name ()->last_component ()->get_string ());
-          ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
-          UTL_ScopedName *op_name =
-            static_cast<UTL_ScopedName *> (node->uses_type ()->name ()->copy ());
-          op_name->last_component ()->replace_string (new_op_name.c_str ());
-
-          os_ << "::" << op_name << "_ptr" << be_nl
-              << "get_connection_sendc_" << port_name << " (void);";
-
-          os_ << be_nl << be_uidt_nl
-              << "protected:" << be_idt_nl
-              << "virtual "
-              << (is_multiple ? "::Components::Cookie *" : "void")
-              << be_nl
-              << "connect_sendc_" << port_name << " (" << be_idt_nl
-              << "::" << op_name << "_ptr);"
-              << be_uidt_nl << be_nl;
-
-          os_ << "virtual ::" << op_name << "_ptr" << be_nl
-              << "disconnect_sendc_" << port_name << " (";
-
-          if (is_multiple)
-            {
-              os_ << be_idt_nl
-                  << "::Components::Cookie * ck);" << be_uidt;
-            }
-          else
-            {
-              os_ << "void);";
-            }
-
-          op_name->destroy ();
-          delete op_name;
-          op_name = 0;
-        }
-    }
-
   os_ << be_nl << be_uidt_nl
       << "protected:" << be_idt_nl
       << "virtual "
@@ -232,27 +181,6 @@ be_visitor_context_svh::visit_uses (be_uses *node)
       os_ << "// Simplex " << port_name << " connection." << be_nl
           << "::" << obj_name << "_var" << be_nl
           << "ciao_uses_" << port_name << "_;";
-
-      if (be_global->ami4ccm_call_back ())
-        {
-          ACE_CString original_op_name (
-            node->uses_type ()->name ()->last_component ()->get_string ());
-          ACE_CString new_op_name =
-            ACE_CString ("AMI_") + original_op_name;
-          UTL_ScopedName *op_name =
-            static_cast<UTL_ScopedName *> (
-              node->uses_type ()->name ()->copy ());
-          op_name->last_component ()->replace_string (new_op_name.c_str ());
-          
-          os_ << be_nl << be_nl
-              << "// Simplex sendc_" << port_name << " connection." << be_nl
-              << "::" << op_name << "_var" << be_nl
-              << "ciao_uses_sendc_" << port_name << "_;";
-              
-          op_name->destroy ();
-          delete op_name;
-          op_name = 0;
-        }
     }
 
   return 0;

@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_CCM_PRE_PROC_H
 #define TAO_BE_VISITOR_CCM_PRE_PROC_H
 
@@ -126,6 +125,10 @@ protected:
   // Working nodes.
   be_component *comp_;
   be_home *home_;
+  
+private:                                  
+  /// Generate a sendc_* receptacle for AMI4CCM.
+  int generate_ami4ccm_uses (void);
 };
 
 #endif // TAO_BE_VISITOR_CCM_PRE_PROC_H

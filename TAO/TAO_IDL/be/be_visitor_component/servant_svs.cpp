@@ -439,35 +439,6 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       << port_name << " ();" << be_uidt_nl
       << "}";
 
-  if (be_global->ami4ccm_call_back ())
-    {
-  /*    os_ << be_nl << be_nl;
-      ACE_CString original_op_name (
-        node->uses_type ()->name ()->last_component ()->get_string ());
-      ACE_CString new_op_name = ACE_CString ("AMI_") + original_op_name;
-      UTL_ScopedName *op_name =
-        static_cast<UTL_ScopedName *> (node->uses_type ()->name ()->copy ());
-      op_name->last_component ()->replace_string (new_op_name.c_str ());
-      if (is_multiple)
-        {
-          os_ << node_->full_name () << "::" << port_name
-              << "Connections *";
-        }
-      else
-        {
-          os_ << op_name << "_ptr";
-        }
-      os_ << be_nl
-          << node_->local_name () << "_Servant::get_connection_sendc"
-          << (is_multiple ? "s" : "") << "_"
-          << port_name << " (void)" << be_nl
-          << "{" << be_idt_nl
-          << "return this->context_->get_connection_sendc"
-          << (is_multiple ? "s" : "") << "_"
-          << port_name << " ();" << be_uidt_nl
-          << "}";*/
-    }
-
   return 0;
 }
 
@@ -1303,49 +1274,6 @@ be_visitor_connect_block::visit_uses (be_uses *node)
 
   os_ << be_uidt_nl
       << "}" << be_uidt;
-
-  if (be_global->ami4ccm_call_back ())
-    {
-      ACE_CString reply_handler_local_name;
-      reply_handler_local_name += "AMI_";
-      reply_handler_local_name +=
-        node->uses_type ()->name ()->last_component ()->get_string ();
-      UTL_ScopedName *reply_handler_name =
-        static_cast<UTL_ScopedName *> (node->uses_type ()->name ()->copy ());
-      reply_handler_name->last_component ()->replace_string (
-        reply_handler_local_name.c_str ());
-
-      os_ << be_nl << be_nl
-          << "if (ACE_OS::strcmp (name, \"sendc_" << port_name
-          << "\") == 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "::"
-          << IdentifierHelper::orig_sn (reply_handler_name).c_str ()
-          << "_var _ciao_conn =" << be_idt_nl
-          << "::"
-          << IdentifierHelper::orig_sn (reply_handler_name).c_str ()
-          << "::_narrow (connection);" << be_uidt_nl << be_nl;
-
-      // @@todo: placeholder for connection logic
-      os_ << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-          << " connect." << be_nl
-          << (is_multiple ? "return " : "")
-          << "this->context_->connect_sendc_"
-          << port_name << " (_ciao_conn.in ());";
-
-      if (! is_multiple)
-        {
-          os_ << be_nl << be_nl
-              << "return 0;";
-        }
-
-      os_ << be_uidt_nl
-          << "}" << be_uidt;
-          
-      reply_handler_name->destroy ();
-      delete reply_handler_name;
-      reply_handler_name = 0;
-    }
 
   return 0;
 }

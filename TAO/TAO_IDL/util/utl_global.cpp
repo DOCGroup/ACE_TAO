@@ -1361,6 +1361,18 @@ IDL_GlobalData::ciao_ami_iface_names (void)
   return this->ciao_ami_iface_names_;
 }
 
+void
+IDL_GlobalData::add_ciao_ami_recep_names (const char *s)
+{
+  this->ciao_ami_recep_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_ami_recep_names (void)
+{
+  return this->ciao_ami_recep_names_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {
@@ -1626,6 +1638,15 @@ IDL_GlobalData::fini (void)
        iter5.advance ())
     {
       iter5.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter6 (
+         this->ciao_ami_recep_names_);
+       iter6.done () == 0;
+       iter6.advance ())
+    {
+      iter6.next (path_tmp);
       ACE::strdelete (*path_tmp);
     }
 

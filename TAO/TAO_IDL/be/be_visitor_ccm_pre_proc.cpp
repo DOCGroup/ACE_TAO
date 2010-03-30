@@ -93,6 +93,23 @@ be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc (void)
 int
 be_visitor_ccm_pre_proc::visit_root (be_root *node)
 {
+  if (be_global->ami4ccm_call_back ())
+    {        
+      /// Do this before traversing the tree so the traversal
+      /// will pick up the implied uses nodes we add, if any.
+      int status = this->generate_ami4ccm_uses ();
+      
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_root - ")
+                             ACE_TEXT ("generate_ami4ccm_uses() ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+    }
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1703,5 +1720,115 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
     }
 
   return retval;
+}
+
+int
+be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
+{    
+  /// The interfaces in the list below are from this IDL file,
+  /// which then must be processed with the -GC option, so we
+  /// know we'll get here - a good place to generate the *A.idl
+  /// file containing the local interfaces and connector
+  /// associated with each interface in the list.
+
+  ACE_Unbounded_Queue<char *> &ccm_ami_receps =
+    idl_global->ciao_ami_recep_names ();
+
+  /// If the queue is empty, we're done.
+  if (ccm_ami_receps.size () == 0)
+    {
+      return 0;
+    }
+
+  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
+         ccm_ami_receps);
+       ! i.done ();
+       i.advance ())
+    {
+      char **item = 0;
+      i.next (item);
+
+      UTL_ScopedName *sn =
+        idl_global->string_to_scoped_name (*item);
+
+      UTL_Scope *s =
+        idl_global->scopes ().top_non_null ();
+
+      AST_Decl *d = s->lookup_by_name (sn, true);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (sn);
+          continue;
+        }
+        
+      be_uses *u = be_uses::narrow_from_decl (d);
+      
+      if (u == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc")
+                             ACE_TEXT ("::generate_ami4ccm_uses - ")
+                             ACE_TEXT ("narrow to receptacle ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+        
+      be_interface *iface =
+        be_interface::narrow_from_decl (u->uses_type ());
+
+      /// The real AMI_xxx exists only in the *A.idl file, si
+      /// we create a dummy as the uses type for the implied
+      /// receptacle created below.
+      
+      ACE_CString iname ("AMI_");
+      iname += iface->local_name ();
+      Identifier itmp_id (iname.c_str ());
+      UTL_ScopedName itmp_sn (&itmp_id, 0);
+      
+      s = iface->defined_in ();
+      idl_global->scopes ().push (s);
+      be_interface *ami_iface = 0;
+      ACE_NEW_RETURN (ami_iface,
+                      be_interface (&itmp_sn,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    true,
+                                    false),
+                       -1);
+       
+      /// Make it imported so it doesn't trigger
+      /// any unwanted code generation.                 
+      ami_iface->set_imported (true);
+      s->add_to_scope (ami_iface);
+      idl_global->scopes ().pop ();
+      
+      /// Now create the receptacle, passing in
+      /// the local interface created above as the
+      /// uses type. We don't generate anything
+      /// in the main IDL file from the interface's
+      /// contents, so it's ok that it's empty.
+      
+      ACE_CString uname ("sendc_");
+      uname += u->local_name ()->get_string ();
+      Identifier utmp_id (uname.c_str ());
+      UTL_ScopedName utmp_sn (&utmp_id, 0);
+      
+      s = u->defined_in ();
+      idl_global->scopes ().push (s);
+      be_uses *ami_uses = 0;
+      ACE_NEW_RETURN (ami_uses,
+                      be_uses (&utmp_sn,
+                               ami_iface,
+                               false),
+                      -1);
+                      
+      s->add_to_scope (ami_uses);
+      idl_global->scopes ().pop ();
+    }
+
+  return 0;
 }
 
