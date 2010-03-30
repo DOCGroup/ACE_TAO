@@ -13,8 +13,9 @@
 
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Queue_Adapters.h"
-
 #include "test_config.h"
+
+#if defined (ACE_HAS_THREADS)
 
 /// ICustomEventHandler
 ///
@@ -172,10 +173,14 @@ typedef ACE_Timer_Wheel_Iterator_T <ICustomEventHandler*,
 typedef ACE_Thread_Timer_Queue_Adapter<TTimerWheel,
                                        ICustomEventHandler*> TTimerWheelThreadAdapter;
 
+#endif /* ACE_HAS_THREADS */
+
 int
 run_main (int, ACE_TCHAR *[])
 {
     ACE_START_TEST (ACE_TEXT ("Thread_Timer_Queue_Adapter_Test"));
+
+#if defined (ACE_HAS_THREADS)
 
     // Start the thread adapter
     TTimerWheelThreadAdapter TimerWheelThreadAdapter;
@@ -292,6 +297,10 @@ run_main (int, ACE_TCHAR *[])
         ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Success in Multiple timers test.\n")));
     }
 
+#else
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threads not supported on this platform\n")));
+#endif /* ACE_HAS_THREADS */
     ACE_END_TEST;
 
     return 0;
