@@ -1,3 +1,8 @@
+Tue Mar 30 09:34:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
+          Fixed compilation problems with single threaded builds
+
 Tue Mar 30 07:50:02 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/MT_NonBlocking_Connect_Test.cpp:
