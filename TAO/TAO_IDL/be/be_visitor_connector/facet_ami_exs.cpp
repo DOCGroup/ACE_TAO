@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
@@ -211,8 +210,6 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
     }
 
   ACE_CString scope_str (scope_name, 0, false);
-//  const char *smart_scope =
-//    (scope_str.empty () ? "" : "::");
 
   os_ << be_nl << be_nl
       << "void" << be_nl
@@ -229,33 +226,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "this->receptacle_objref_ =" << be_idt_nl
-      << "this->context_->get_connection_";
-
-  /// The port is the only item in the connector's scope.
-  UTL_ScopeActiveIterator j (this->node_, UTL_Scope::IK_decls);
-  AST_Extended_Port *p =
-    AST_Extended_Port::narrow_from_decl (j.item ());
-
-  /// The port name is used in construction of the operation name.
-  os_ << p->local_name () << "_";
-
-  for (UTL_ScopeActiveIterator i (p->port_type (), UTL_Scope::IK_decls);
-       !i.is_done ();
-       i.next ())
-    {
-      AST_Decl *d = i.item ();
-      AST_Uses *u = AST_Uses::narrow_from_decl (d);
-
-      if (u != 0)
-        {
-          os_ << u->local_name ();
-        }
-    }
-
-  os_ << " ();"
-      << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
       << "}";
 
   return 0;
@@ -358,10 +329,24 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
+    
+  AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
+  bool global = (scope->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (global ? "" : "::");
+  
+  const char *prefix = "AMI_";
+  ACE_CString iface_str (this->iface_->local_name ());
+  ACE_CString orig_iface_str (
+    iface_str.substr (ACE_OS::strlen (prefix)));
+  const char *orig_iface_name = orig_iface_str.c_str ();
 
   os_ << be_nl
       << "{" << be_idt_nl
-      << "if (! ::CORBA::is_nil (this->receptacle_objref_.in ()))"
+      << smart_scope << scope->full_name () << "::"
+      << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
+      << "this->context_->get_connection_The_Port_run ();"
+      << be_uidt_nl << be_nl
+      << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::" << this->iface_->full_name ()
@@ -374,7 +359,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "_reply_handler (ami_handler);" << be_uidt_nl
       << "the_handler_var = handler->_this ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "this->receptacle_objref_->" << node->local_name ()
+      << "receptacle_objref->" << node->local_name ()
       << " (" << be_idt_nl
       << "the_handler_var.in ()";
 
