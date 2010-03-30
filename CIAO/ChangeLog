@@ -1,3 +1,11 @@
+Tue Mar 30 08:22:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+          Reverted my previous changes. Committed too soon..
+
 Mon Mar 29 13:11:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:

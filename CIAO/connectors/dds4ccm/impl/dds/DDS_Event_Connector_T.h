@@ -62,10 +62,6 @@ public:
   virtual void ccm_remove (void);
 
 private:
-  bool supplier_obtained_;
-  bool push_consumer_obtained_;
-  bool pull_consumer_obtained_;
-
   /**
    * DDS_Write supplier
    */
