@@ -105,7 +105,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
   {
      ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
                            "Total number of messages sent back: %u \n",
-                           this->count_.value()));
+                           this->count_));
   }
 
   void

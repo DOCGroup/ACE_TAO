@@ -19,7 +19,6 @@
 namespace CIAO_LatencyTT_Test_Receiver_Impl
 {
   class Receiver_exec_i;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
 
   //============================================================
   // LatencyTTTest_Listener_exec_i
@@ -79,8 +78,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     ::LatencyTT_Test::CCM_Receiver_Context_var context_;
     CCM_DDS::LatencyTTTest::Writer_var writer_;
 
-    Atomic_ULong  count_;
-
+    CORBA::ULong count_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
