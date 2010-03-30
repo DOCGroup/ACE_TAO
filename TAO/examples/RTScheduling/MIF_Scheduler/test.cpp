@@ -62,7 +62,7 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   CORBA::Object_var manager_obj = orb_->resolve_initial_references ("RTSchedulerManager");
 
-  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj);
+  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
 
   ACE_NEW_RETURN (scheduler_,

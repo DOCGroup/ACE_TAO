@@ -171,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             orb->resolve_initial_references ("RTSchedulerManager");
 
           TAO_RTScheduler_Manager_var manager =
-            TAO_RTScheduler_Manager::_narrow (manager_obj);
+            TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)

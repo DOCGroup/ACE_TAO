@@ -266,14 +266,14 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
                   guid->length ());
   */
   RTCORBA::Priority desired_priority;
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
     {
       desired_priority = 0;
     }
   else
     {
       FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_policy =
-        FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
+        FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       FP_Scheduling::SegmentSchedulingParameter sched_param =
         sched_param_policy->value ();
@@ -442,7 +442,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
   RTScheduling::Current::IdType_var guid = this->current_->id ();
 
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
   {
     ACE_DEBUG ((LM_DEBUG, "sched_policy nil. desired_priority not set in sched params\n"));
     desired_priority = 0;
@@ -452,7 +452,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       ACE_DEBUG ((LM_DEBUG, "sched_policy not nil. desired_priority set in sched params\n"));
 
       FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_policy =
-        FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
+        FP_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       FP_Scheduling::SegmentSchedulingParameter sched_param =
         sched_param_policy->value ();
