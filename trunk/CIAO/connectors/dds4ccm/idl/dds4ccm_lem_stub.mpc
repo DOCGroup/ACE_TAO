@@ -41,7 +41,7 @@ project (DDS4CCM_lem_stub) : dds4ccm, ccm_lem_stub, ciaolib_with_idl, ciao_outpu
    dds4ccm_ConnectorStatusListenerEC.cpp
    dds4ccm_StateListenerControlEC.cpp
    dds4ccm_ConnectorEC.cpp
-    dds_rtf2_dcps_i_handleEC.cpp
+   dds_rtf2_dcps_i_handleEC.cpp
   }
 
   Header_Files {
