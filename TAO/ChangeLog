@@ -1,9 +1,24 @@
+Tue Mar 30 18:59:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        
+          Added 'this->' to method call on class member in 
+          generated code.
+          
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        
+          Removed 'receptacle_objref_' class member and added
+          temporary variable of the same type in each generated
+          sendc_* operation.
+
 Tue Mar 30 18:20:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
+        
           Improved handling of -Glem and -GM so that all generated
           files are removed. Thanks to Adam Mitz for explaining
-          how to do this
+          how to do this.
 
 Tue Mar 30 17:32:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -203,8 +202,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "::" << scope_name << "::" << orig_iface_name
-      << "_var receptacle_objref_;" << be_nl
       << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context_var context_;" << be_uidt_nl
