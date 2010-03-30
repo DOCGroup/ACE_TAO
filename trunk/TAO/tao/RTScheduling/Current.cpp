@@ -489,7 +489,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
   if (sched_param == 0)
-    sched_param = this->implicit_sched_param_;
+    sched_param = this->implicit_sched_param_.in ();
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
   TAO_RTScheduler_Current_i *new_current = 0;

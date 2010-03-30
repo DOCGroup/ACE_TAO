@@ -263,14 +263,14 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                   guid->length ());
   */
   CORBA::Short importance;
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
     {
       importance = 0;
     }
   else
     {
       MIF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       MIF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
       importance = sched_param->importance;
@@ -430,7 +430,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
   RTScheduling::Current::IdType_var guid = this->current_->id ();
 
-  if (CORBA::is_nil (sched_policy))
+  if (CORBA::is_nil (sched_policy.in ()))
   {
 #ifdef KOKYU_DSRT_LOGGING
     ACE_DEBUG ((LM_DEBUG,
@@ -447,7 +447,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "importance set in sched params\n"));
 #endif
       MIF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
-        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+        MIF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
 
       MIF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
 

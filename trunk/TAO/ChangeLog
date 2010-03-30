@@ -1,7 +1,22 @@
+Tue Mar 30 19:32:19 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * tao/RTScheduling/Current.cpp:
+          Fixed compile warnigs on LynxOS 4.2.
+
 Tue Mar 30 19:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_event_consumer):
-        
+
           Added a check for exisiting event consumer before creating.
           Since event consumers are created for forward declared
           eventtypes, multiple forward declarations were causing
@@ -10,13 +25,13 @@ Tue Mar 30 19:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Mar 30 18:59:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
-        
-          Added 'this->' to method call on class member in 
+
+          Added 'this->' to method call on class member in
           generated code.
-          
+
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
-        
+
           Removed 'receptacle_objref_' class member and added
           temporary variable of the same type in each generated
           sendc_* operation.
@@ -24,7 +39,7 @@ Tue Mar 30 18:59:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Mar 30 18:20:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
-        
+
           Improved handling of -Glem and -GM so that all generated
           files are removed. Thanks to Adam Mitz for explaining
           how to do this.
