@@ -74,11 +74,12 @@ project: build_files {
     }
 
     optional(generic_outputext) {
-      commandflags(-Glem) += E.idl
+      commandflags(-Glem || -GM) += .idl
     }
 
-    optional(generic_outputext) {
-      commandflags(-GM) += A.idl
+    optional(generic_pre_extension) {
+      commandflags(-Glem) += E
+      commandflags(-GM) += A
     }
   }
 
