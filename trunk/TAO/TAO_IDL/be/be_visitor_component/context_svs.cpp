@@ -441,67 +441,6 @@ be_visitor_context_svs::gen_uses_simplex (AST_Type *obj,
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  if (be_global->ami4ccm_call_back ())
-    {
-      ACE_CString original_op_name (
-        obj->name ()->last_component ()->get_string ());
-      ACE_CString new_op_name =
-        ACE_CString ("AMI_") + original_op_name;
-      UTL_ScopedName *op_name =
-        static_cast<UTL_ScopedName *> (obj->name ()->copy ());
-      op_name->last_component ()->replace_string (new_op_name.c_str ());
-      
-      os_ << be_nl << be_nl
-          << "::" << op_name << "_ptr" << be_nl
-          << node_->local_name () << "_Context::get_connection_sendc_"
-          << port_name << " (void)" << be_nl
-          << "{" << be_idt_nl
-          << "return" << be_idt_nl
-          << "::" << op_name << "::_duplicate (" << be_idt_nl
-          << "this->ciao_uses_sendc_" << port_name << "_.in ());"
-          << be_uidt << be_uidt << be_uidt_nl
-          << "}";
-
-      os_ << be_nl << be_nl
-          << "void" << be_nl
-          << node_->local_name () << "_Context::connect_sendc_"
-          << port_name << " (" << be_idt_nl
-          << "::" << op_name << "_ptr c)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "if (! ::CORBA::is_nil (this->ciao_uses_sendc_"
-          << port_name << "_.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "throw ::Components::AlreadyConnected ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "if ( ::CORBA::is_nil (c))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "this->ciao_uses_sendc_" << port_name << "_ =" << be_idt_nl
-          << "::" << op_name << "::_duplicate (c);"
-          << be_uidt << be_uidt_nl
-          << "}";
-
-      os_ << be_nl << be_nl
-          << "::" << op_name << "_ptr" << be_nl
-          << node_->local_name () << "_Context::disconnect_sendc_"
-          << port_name << " (void)" << be_nl
-          << "{" << be_idt_nl
-          << "if ( ::CORBA::is_nil (this->ciao_uses_sendc_"
-          << port_name << "_.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "throw ::Components::NoConnection ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "return" << be_idt_nl
-          << "this->ciao_uses_sendc_" << port_name
-          << "_._retn ();" << be_uidt << be_uidt_nl
-          << "}";
-          
-      op_name->destroy ();
-      delete op_name;
-      op_name = 0;
-    }
-
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name () << "_Context::connect_"

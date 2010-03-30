@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_context.h"
 #include "be_root.h"
@@ -29,12 +28,16 @@
 #include "be_attribute.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
+
 #include "be_global.h"
 #include "be_extern.h"
+
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+
 #include "nr_extern.h"
 #include "global_extern.h"
+
 #include "ace/Log_Msg.h"
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
@@ -54,17 +57,27 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_root - "
-                         "visit scope failed\n"),
+                         ACE_TEXT ("be_visitor_ami_pre_proc::")
+                         ACE_TEXT ("visit_root - ")
+                         ACE_TEXT ("visit scope failed\n")),
                         -1);
     }
 
-  /// Generate the *A.idl file containing AMI4CCM-related
-  /// interfaces and connector.
   if (be_global->ami4ccm_call_back ())
     {
-      return this->generate_ami4ccm_idl ();
+      /// Generate the *A.idl file containing AMI4CCM-related
+      /// interfaces and connector.
+      int status = this->generate_ami4ccm_idl ();
+      
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ami_pre_proc::")
+                             ACE_TEXT ("visit_root - ")
+                             ACE_TEXT ("generate_ami4ccm_idl() ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
     }
 
   return 0;

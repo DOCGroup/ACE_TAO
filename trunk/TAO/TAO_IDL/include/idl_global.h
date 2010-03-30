@@ -619,6 +619,10 @@ public:
   ACE_Unbounded_Queue<char *> & ciao_ami_iface_names (void);
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
+  void add_ciao_ami_recep_names (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_ami_recep_names (void);
+  // Accessor/mutator for the ciao_ami_recep_names_ member.
+
   FILE * open_included_file (char const * filename,
                              char const *& directory);
   // Attempt to open file for reading until it is found in one of the
@@ -852,6 +856,9 @@ private:
   
   ACE_Unbounded_Queue<char *> ciao_ami_iface_names_;
   // Interfaces that get a reply handler generated for AMI4CCM.
+  
+  ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
+  // Receptacles that get a sendc_ version added for AMI4CCM.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH
