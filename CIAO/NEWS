@@ -30,10 +30,6 @@ replacement in the near term:
     - Add support in DAnCE so DAnCE could enforce the order in which
       components are to be activated within the assembly.
 
-. Add AMI support in DAnCE toolchain to when the DomainApplicationManager
-  contacts node-level managers to deploy components, all the node-level
-  managers could performe the deployment concurrently.
-
 . Integrate RT-CORBA 1.2 dynamic scheduling feature into CIAO, which
   will allow the application developers to use dynamica scheduling
   through meta-programming model.
@@ -93,13 +89,15 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 . DDS4CCM doesn't work anymore with RTI DDS 4.4d, you will need to use at
   least 4.5b version with an updated CCK
 
-. AMI4CCM has been mostly implemented into TAO_IDL and the Hello example has been
+. AMI4CCM has been partly implemented into TAO_IDL and the Hello example has been
   updated. The naming conventions and exact code generated will be reviewed
   after this micro release.
 
 . The DDS4CCM connectors do initialize themselves completely after creation,
   this does mean that one DDS_Event connector has always 1 writer and 2 readers, also
-  when you just write samples and don't use read or listen
+  when you just write samples and don't use read or listen. The latency performance
+  test shows current an overhead of 10% to 13%, but this does include the additional
+  readers.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
 =======================================================
