@@ -1,3 +1,10 @@
+Wed Mar 31 09:45:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+          Added CIAO logger initialization to be able to see logging
+          from reused CIAO components (like Server activator).
+
 Wed Mar 31 09:38:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager.mpc:
