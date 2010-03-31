@@ -32,7 +32,7 @@ namespace CIAO
                           CORBA::NO_RESOURCES ());
 
       CIAO_DEBUG (6, (LM_INFO, CLINFO
-                  "Servant_Activator_i::update_port_activator, "
+                  "Servant_Activator_i::update_port_activator - "
                   "Attempting to update port name [%C]\n",
                   str.in ()));
 
@@ -61,7 +61,7 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid);
 
     CIAO_DEBUG (6, (LM_INFO, CLINFO
-                "Servant_Activator_i::incarnate, "
+                "Servant_Activator_i::incarnate - "
                 "Attempting to activate port name [%C]\n",
                 str.in ()));
 
