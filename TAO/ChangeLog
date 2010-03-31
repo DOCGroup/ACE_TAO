@@ -1,3 +1,9 @@
+Wed Mar 31 11:28:14 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/OBV/TC_Alignment/run_test.pl:
+        * tests/OBV/TC_Alignment/server.cpp:
+        Pass ior filename through commandline.
+
 Wed Mar 31 09:01:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:

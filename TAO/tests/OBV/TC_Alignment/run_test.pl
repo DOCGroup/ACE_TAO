@@ -42,9 +42,8 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$SV = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1");
+$SV = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1  -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile -x $debug");
-
 
 $SV->Spawn ();
 
