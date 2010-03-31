@@ -155,12 +155,12 @@ namespace CIAO_Throughput_Receiver_Impl
 
         if(this->run_ == 1)
           {
-             ACE_DEBUG((LM_DEBUG, CLINFO
+             ACE_DEBUG((LM_DEBUG,
                         " bytes, demand, samples,sample/s, Mbit/s,lost samples\n"));
-             ACE_DEBUG((LM_DEBUG, CLINFO
+             ACE_DEBUG((LM_DEBUG,
                         "------,-------,--------,--------,-------,------------\n"));
           }
-        ACE_DEBUG((LM_DEBUG, CLINFO "%6u,%7q,%8q,%8.1f,%7.1f,%7q\n",
+        ACE_DEBUG((LM_DEBUG, "%6u,%7q,%8q,%8.1f,%7.1f,%7q\n",
                         this->interval_data_length_,
                         this->demand_,
                         this->interval_messages_received_,
