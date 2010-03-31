@@ -90,11 +90,10 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
 
   void ConnectorStatusListener_exec_i::on_unexpected_status(
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)
+    ::DDS::StatusKind status_kind)
   {
-    CORBA::ULong kind = status_kind;
-    if((! ::CORBA::is_nil(the_entity)) &&
-       (kind==DDS::PUBLICATION_MATCHED_STATUS))
+    if ((! ::CORBA::is_nil(the_entity)) &&
+       (status_kind = DDS::PUBLICATION_MATCHED_STATUS))
       {
         ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
@@ -160,9 +159,9 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   {
   }
 
-  static int compare_two_longs(const void *long1, const void *long2)
+  static int compare_two_longs (const void *long1, const void *long2)
   {
-    return (*(CORBA::Long*)long1 - *(CORBA::Long*)long2 );
+    return (int)(*(ACE_UINT64*)long1 - *(ACE_UINT64*)long2);
   }
 
   void
@@ -250,26 +249,26 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     // Sort all duration times.
     qsort(this->duration_times,
           this->count_,
-          sizeof(CORBA::Long),
+          sizeof(ACE_UINT64),
           compare_two_longs);
 
     // Show latency_50_percentile, latency_90_percentile,
     // latency_99_percentile and latency_99.99_percentile.
     // For example duration_times[per50] is the median i.e. 50% of the
-    // samples have a latency time  <=  duration_times[per50]
-    int per50 = this->count_/2;
-    int per90 = (int)(this->count_ * 0.90);
-    int per99 = (int)(this->count_ * 0.990);
-    int per9999 = (int)(this->count_ * 0.9999);
+    // samples have a latency time <= duration_times[per50]
+    int const per50 = this->count_ / 2;
+    int const per90 = (int)(this->count_ * 0.90);
+    int const per99 = (int)(this->count_ * 0.990);
+    int const per9999 = (int)(this->count_ * 0.9999);
 
-    double avg = (double)(this->tv_total_ / this->count_);
+    double const avg = (double)(this->tv_total_ / this->count_);
     // Calculate standard deviation.
-    double _roundtrip_time_std  = sqrt(
+    double const roundtrip_time_std  = sqrt(
         (this->sigma_duration_squared_ / (double)this->count_) -
         (avg * avg));
 
     // Show values as float, in order to be comparable with RTI performance test.
-    if( this->count_ > 0)
+    if (this->count_ > 0)
       {
         if( this->datalen_idx_ == 0)
           {
@@ -283,7 +282,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
              "%6d,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f\n",
               this->count_,
               this->datalen_,
-              _roundtrip_time_std,
+              roundtrip_time_std,
               avg,
               (double)this->tv_min_,
               (double)this->duration_times[per50-1],
@@ -297,7 +296,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
             ACE_DEBUG ((LM_DEBUG,
               "%6d,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f,%7.1f\n",
               this->datalen_,
-              _roundtrip_time_std,
+              roundtrip_time_std,
               avg,
               (double)this->tv_min_,
               (double)this->duration_times[per50-1],
