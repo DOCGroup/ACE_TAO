@@ -1,3 +1,8 @@
+Wed Mar 31 09:01:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled test for bug#3837 on static builds.
+
 Wed Mar 31 06:51:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
