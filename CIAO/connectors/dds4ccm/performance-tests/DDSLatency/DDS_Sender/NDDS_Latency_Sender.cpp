@@ -609,7 +609,6 @@ void HelloListener::on_data_available(DDSDataReader *reader)
 {
   LatencyTestDataReader * test_reader =
                             LatencyTestDataReader::narrow (reader);
-  LatencyTest *instance = new LatencyTest;
   if (!test_reader)
     {
       /* In this specific case, this will never fail */
@@ -621,9 +620,9 @@ void HelloListener::on_data_available(DDSDataReader *reader)
   /* Loop until there are messages available in the queue */
   for(;;)
     {
-      DDS_SampleInfo info;
-      DDS_ReturnCode_t retcode = test_reader->take_next_sample (*instance,
-                                                                   info);
+      ::DDS::SampleInfoSeq info;
+      ::LatencyTestRTISeq sample_req;
+      ::DDS::ReturnCode_t const retcode = test_reader->take(sample_req, info);
       if (retcode == DDS_RETCODE_NO_DATA)
         {
           /*  No more samples */
@@ -637,13 +636,17 @@ void HelloListener::on_data_available(DDSDataReader *reader)
                                 retcode));
           return;
         }
-      if (info.valid_data)
+      for (::DDS_Long i = 0; i < sample_req.length (); ++i)
         {
-          struct RTINtpTime finish_time;
-          RTINtpTime_setZero(&finish_time);
-          timer->getTime(timer, &finish_time);
-          read(*instance, finish_time);
+          if (info[i].valid_data)
+            {
+              struct RTINtpTime finish_time;
+              RTINtpTime_setZero(&finish_time);
+              timer->getTime(timer, &finish_time);
+              read(sample_req[i], finish_time);
+            }
         }
+      (void) test_reader->return_loan (sample_req, info);
     }
 }
 
