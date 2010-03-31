@@ -140,15 +140,15 @@ be_visitor_root_cs::gen_obv_defns (be_root *node)
 int
 be_visitor_root_cs::gen_any_ops (be_root *node)
 {
-  if (! be_global->any_support ())
+  int status = 0;
+
+  if (be_global->any_support ())
     {
-      return 0;
+      be_visitor_context ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
+      be_visitor_root_any_op any_op_visitor (&ctx);
+      status = node->accept (&any_op_visitor);
     }
-    
-  be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
-  be_visitor_root_any_op any_op_visitor (&ctx);
-  int status = node->accept (&any_op_visitor);
 
   /// Conditional switch to the *A.cpp stream is done
   /// in the visitor constructor.
