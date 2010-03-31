@@ -1,7 +1,15 @@
+Wed Mar 31 15:26:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Small changes to debug statements to get consistent logging
+
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Log a message when we can't set the session context
+
 Wed Mar 31 13:49:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitechSink.idl:
-        
+
           Added full definition of eventtype that recently had 2 forward
           declarations uncommented. Missing full definition was causing
           'unresolved' link errors.
