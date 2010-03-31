@@ -39,9 +39,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << scope->local_name () << suffix << be_idt_nl
-      << ": public virtual " << "::"
-      << scope->full_name () << "::CCM_"
-      << node->local_name () << "," << be_idt_nl
+      << ": public virtual The_Connector_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
       << be_uidt << be_uidt_nl
       << "{" << be_nl
