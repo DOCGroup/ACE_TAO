@@ -32,7 +32,7 @@ int
 be_visitor_facet_ami_exh::visit_component (be_component *node)
 {
   this->node_ = node;
-  
+
   return this->visit_scope (node);
 }
 
@@ -41,7 +41,7 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 {
   this->iface_ =
     be_interface::narrow_from_decl (node->provides_type ());
-    
+
   if (this->gen_reply_handler_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -51,7 +51,7 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   if (this->gen_facet_executor_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,7 +61,7 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -70,7 +70,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
 {
   AST_Decl *d =
     ScopeAsDecl (node->defined_in ());
-    
+
   /// We end up here also from the visit_scope() call on the
   /// connector. We want to skip the CCM-related operations
   /// that were added to the connector since it's a component.
@@ -83,7 +83,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
   be_visitor_operation_ih v (this->ctx_);
-  
+
   if (v.visit_operation (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,7 +93,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
                          ACE_TEXT ("failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -119,7 +119,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << "::" << scope_name << "::" << iface_name
       << "Callback_ptr callback);" << be_uidt_nl << be_nl
       << "virtual ~" << iface_name << suffix << " (void);";
-     
+
   /// The reply handler class we are generating inherits from the
   /// CORBA AMI skeleton class, not the AMI_xxxCallback class
   /// generated from the corresponding interface in this IDl file.
@@ -128,18 +128,18 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   /// by -GC, which must be applied to this IDL file.
   ACE_CString handler_str (this->iface_->full_name ());
   handler_str += "Handler";
-  
+
   UTL_ScopedName *sn =
     idl_global->string_to_scoped_name (handler_str.c_str ());
   AST_Decl *d = s->lookup_by_name (sn, true);
-  
+
   sn->destroy ();
   delete sn;
   sn = 0;
-    
+
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
-    
+
   if (this->visit_scope (callback_iface) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -148,13 +148,13 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
                   ACE_TEXT ("visit_scope() on callback ")
                   ACE_TEXT ("interface failed\n")));
     }
-      
+
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << scope_name << "::" << iface_name
       << "Callback_var callback_;" << be_uidt_nl
       << "};";
-      
+
   return 0;
 }
 
@@ -165,7 +165,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
   const char *scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
-  
+
   os_ << be_nl << be_nl
       << "class " << export_macro_.c_str () << " "
       << iface_name << suffix << be_idt_nl
@@ -178,7 +178,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << iface_name << suffix << " (void);" << be_nl << be_nl
       << "virtual ~" << iface_name << suffix
       << " (void);";
-      
+
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -188,25 +188,19 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                          ACE_TEXT ("interface failed\n")),
                         -1);
     }
-    
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << "set_session_context (" << be_idt_nl
       << "::Components::SessionContext_ptr ctx);" << be_uidt;
-      
-  const char *prefix = "AMI_";
-  ACE_CString iface_str (this->iface_->local_name ());
-  ACE_CString orig_iface_str (
-    iface_str.substr (ACE_OS::strlen (prefix)));
-  const char *orig_iface_name = orig_iface_str.c_str ();
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
       << "::CCM_" << this->node_->local_name ()
       << "_Context_var context_;" << be_uidt_nl
-      << "};"; 
-      
+      << "};";
+
   return 0;
 }
 
