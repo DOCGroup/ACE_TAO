@@ -45,6 +45,16 @@ module GlobalTyped<typename A, typename B>
   typedef short x;
 };
 
+module orange
+{
+  module apple
+  {
+    eventtype Bar
+    {
+    };
+  };
+};
+
 module A
 {
   local interface C

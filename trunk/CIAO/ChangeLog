@@ -1,3 +1,11 @@
+Wed Mar 31 13:49:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitechSink.idl:
+        
+          Added full definition of eventtype that recently had 2 forward
+          declarations uncommented. Missing full definition was causing
+          'unresolved' link errors.
+
 Wed Mar 31 13:37:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
