@@ -1,10 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/High_Res_Timer.h"
 #include "tao/ORB_Core.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Reactor.h"
 #include "ace/Env_Value_T.h"
 #include "Latency_Base.h"
 #include "Latency_BaseSupport.h"
@@ -14,9 +11,6 @@
 #include <ndds/ndds_namespace_cpp.h>
 #include <ndds/ndds_cpp.h>
 #include <ndds/clock/clock_highResolution.h>
-
-// Forward declarations
-class WriteTicker;
 
 // Global variables
 CORBA::UShort iterations_ = 1000;
@@ -33,8 +27,6 @@ bool received_ = false;
 CORBA::Long seq_num_ = 0;
 CORBA::Double sigma_duration_squared_;
 struct RTINtpTime start_time_;
-ACE_UINT64 start_time_test_ = 0;
-ACE_UINT64 end_time_test_ = 0;
 
 ACE_UINT64 * duration_times_;
 CORBA::Short * datalen_range_;
@@ -50,8 +42,6 @@ const char * prof_name_ = 0;
 CORBA::UShort domain_id_ = 0;
 CORBA::Boolean both_read_write_ = false;
 
-WriteTicker * ticker_ = 0;
-
 /* The listener of events and data from the middleware */
 class HelloListener: public DDSDataReaderListener
 {
@@ -62,13 +52,6 @@ public:
 /* The dummy listener of events and data from the middleware */
 class DummyListener: public DDSDataReaderListener
 {
-};
-
-class WriteTicker :public ACE_Event_Handler
-{
-  public:
-    WriteTicker (void);
-    int handle_timeout (const ACE_Time_Value &, const void *);
 };
 
 void
@@ -152,17 +135,6 @@ calculate_clock_overhead (void)
   RTINtpTime_decrement(clock_roundtrip_time, begin_time);
   clock_overhead_ = (ACE_UINT64)(1E6 * RTINtpTime_toDouble(&clock_roundtrip_time) /
       (double)num_of_loops_clock);
-}
-
-void
-stop (void)
-{
-  if (ticker_)
-    {
-      ACE_Reactor::instance ()->cancel_timer (ticker_);
-      delete ticker_;
-      ticker_ = 0;
-    }
 }
 
 void
@@ -297,13 +269,9 @@ calc_results()
 }
 
 
-void
+bool
 write_one (void)
 {
-  if ((number_of_msg_ == 0) && (datalen_idx_ == 0))
-    {
-      ACE_High_Res_Timer::gettimeofday_hr ().to_usec (start_time_test_);
-    }
   // First message sent always, next messages only as previous sent message
   // is received back.
   if ((number_of_msg_ == 0) || received_)
@@ -314,10 +282,8 @@ write_one (void)
         {
           if (datalen_idx_ >= (nr_of_runs_ - 1))
             {
-              stop();
               calc_results();
-              ACE_High_Res_Timer::gettimeofday_hr ().to_usec (end_time_test_);
-              ACE_Reactor::instance ()->end_reactor_event_loop ();
+              return true;
             }
           else
             {
@@ -349,25 +315,19 @@ write_one (void)
           ++number_of_msg_;
         }
     }
+  return false;
 }
 
 void start (void)
 {
-  ticker_ = new WriteTicker();
-
-  // This->sleep_ is in ms
   unsigned int sec = sleep_/1000;
   unsigned int usec = (sleep_ % 1000) * 1000;
-  if (ACE_Reactor::instance ()->schedule_timer (
-                  ticker_,
-                  0,
-                  ACE_Time_Value (5, 0),
-                  ACE_Time_Value (sec, usec)) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("start : ")
-                            ACE_TEXT ("Error scheduling timer")));
-    }
-  ACE_Reactor::instance ()->run_reactor_event_loop ();
+
+  while (!write_one())
+   {
+      ACE_Time_Value sleeptime (sec, usec);
+      ACE_OS::sleep (sleeptime);
+   }
 }
 
 void
@@ -406,9 +366,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
                   ACE_TEXT ("Error arguments.\n")));
       return 1;
     }
-
-  (void) ACE_High_Res_Timer::global_scale_factor ();
-  ACE_Reactor::instance ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
 
   /* Create the domain participant */
   DDSDomainParticipant * participant =
@@ -552,7 +509,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
     main_result = 0;
 
 clean_exit:
-    const char * read_write_str;
+    const char * read_write_str = 0;
     if (both_read_write_)
       {
         read_write_str = "Used a extra dummy reader and writer per topic.";
@@ -575,15 +532,11 @@ clean_exit:
       }
     else
       {
-        ACE_UINT64 test_time_usec = end_time_test_ - start_time_test_;
-
-        double sec = (double)test_time_usec / (1000 * 1000);
         ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
-                              "%u messages in %3.3f seconds.\n"
+                              "%u messages.\n"
                                "%C\n\n",
                               nr_of_runs_,
                               number_of_msg_,
-                              sec,
                               read_write_str));
       }
     if (participant)
@@ -650,16 +603,3 @@ void HelloListener::on_data_available(DDSDataReader *reader)
     }
 }
 
-//============================================================
-// WriteTickerHandler
-//============================================================
-WriteTicker::WriteTicker ()
-{
-}
-
-int
-WriteTicker::handle_timeout (const ACE_Time_Value &, const void *)
-{
-  write_one();
-  return 0;
-}

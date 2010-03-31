@@ -1,3 +1,8 @@
+Wed Mar 31 17:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/NDDS_Latency_Sender.cpp:
+          Use a loop to send, not using ace reactor
+
 Wed Mar 31 15:26:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Servant_Activator.cpp:
