@@ -196,9 +196,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
       goto clean_exit;
     }
 
-  /* Create a data writer, which will not be used, but is there for 
+  /* Create a data writer, which will not be used, but is there for
   *   compatibility with DDS4CCM latency test, where there is always a
-  *  reader and a writer per connector 
+  *  reader and a writer per connector
   */
   if (both_read_write_)
     {
@@ -227,9 +227,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
       goto clean_exit;
     }
 
-  /* Create a data reader, which will not be used, but is there for 
+  /* Create a data reader, which will not be used, but is there for
   *  compatibility with DDS4CCM latency test, where there is always a
-  *  reader and a writer per connector. 
+  *  reader and a writer per connector.
   */
   if (both_read_write_)
     {
@@ -316,7 +316,6 @@ void HelloListener::on_data_available(::DDS::DataReader *reader)
     */
   LatencyTestDataReader * test_reader =
                             LatencyTestDataReader::narrow (reader);
-  LatencyTest *instance = new LatencyTest;
   if (!test_reader)
     {
       /* In this specific case, this will never fail */
@@ -328,9 +327,9 @@ void HelloListener::on_data_available(::DDS::DataReader *reader)
   /* Loop until there are messages available in the queue */
   for(;;)
     {
-      ::DDS::SampleInfo        info;
-      ::DDS::ReturnCode_t retcode = test_reader->take_next_sample(*instance,
-                                                                  info);
+      ::DDS::SampleInfoSeq info;
+      ::LatencyTestRTISeq sample_req;
+      ::DDS::ReturnCode_t const retcode = test_reader->take(sample_req, info);
       if (retcode == DDS_RETCODE_NO_DATA)
         {
           /*  No more samples */
@@ -344,9 +343,13 @@ void HelloListener::on_data_available(::DDS::DataReader *reader)
                                 retcode));
           return;
         }
-      if (info.valid_data)
+      for (::DDS_Long i = 0; i < sample_req.length (); ++i)
         {
-            write_back(*instance);
+          if (info[i].valid_data)
+            {
+              write_back(sample_req[i]);
+            }
         }
+      (void) test_reader->return_loan (sample_req, info);
     }
 }
