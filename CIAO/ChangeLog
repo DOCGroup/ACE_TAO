@@ -1,3 +1,8 @@
+Wed Mar 31 09:38:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * DAnCE/TargetManager/TargetManager.mpc:
+          Fix for link error in static build.
+
 Wed Mar 31 07:51:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:

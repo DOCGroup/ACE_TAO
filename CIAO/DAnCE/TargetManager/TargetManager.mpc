@@ -1,6 +1,8 @@
 // $Id$
 
-project (DAnCE_TargetManager_Exec) : iortable, utils, naming, dance_logger, dance_nodemanager_stub, dance_exe, dance_config_handlers, dance_targetmanager_skel {
+project (DAnCE_TargetManager_Exec) : iortable, utils, naming, dance_logger, \
+    dance_nodemanager_stub, dance_nodemanager_skel, dance_exe, \
+    dance_config_handlers, dance_targetmanager_skel {
   exename = dance_target_manager
   IDL_Files {
   }
