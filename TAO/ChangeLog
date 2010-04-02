@@ -1,3 +1,14 @@
+Fri Apr  2 17:03:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Generate typedef in context class used to select the
+          servant impl non-skeleton base class, depending on
+          whether the servant implements a component or a
+          connector. The connector base class is leaner, since
+          connectors may not contain event sources or sinks.
+
 Fri Apr  2 15:32:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
