@@ -1,3 +1,15 @@
+Fri Apr  2 17:50:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Eliminated generation of overrides for the virtual methods
+          subscribe, unsubscribe, connect_consumer, disconnect_consumer,
+          get_all_publishers, and get_all_emitters for connectors.
+          These methods are of course still present as no-ops in a
+          servant base class, since they are inherited from
+          CCMObject and are generated as pure virtual in the skeleton.
+
 Fri Apr  2 17:03:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

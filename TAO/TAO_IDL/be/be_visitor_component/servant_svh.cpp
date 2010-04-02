@@ -385,32 +385,39 @@ be_visitor_servant_svh::gen_non_type_specific (void)
       << "virtual ::Components::ReceptacleDescriptions *" << be_nl
       << "get_all_receptacles (void);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::Cookie *" << be_nl
-      << "subscribe (const char * publisher_name," << be_nl
-      << "           ::Components::EventConsumerBase_ptr subscriber);";
+  /// If the node is a connector, event sources and sinks cannot
+  /// be declared.
+  if (this->node_->node_type () == AST_Decl::NT_component)
+    {
+      os_ << be_nl << be_nl
+          << "virtual ::Components::Cookie *" << be_nl
+          << "subscribe (const char * publisher_name," << be_nl
+          << "           ::Components::"
+          << "EventConsumerBase_ptr subscriber);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::EventConsumerBase_ptr" << be_nl
-      << "unsubscribe (const char * publisher_name," << be_nl
-      << "             ::Components::Cookie * ck);";
+      os_ << be_nl << be_nl
+          << "virtual ::Components::EventConsumerBase_ptr" << be_nl
+          << "unsubscribe (const char * publisher_name," << be_nl
+          << "             ::Components::Cookie * ck);";
 
-  os_ << be_nl << be_nl
-      << "virtual void" << be_nl
-      << "connect_consumer (const char * emitter_name," << be_nl
-      << "                  ::Components::EventConsumerBase_ptr consumer);";
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "connect_consumer (const char * emitter_name," << be_nl
+          << "                  ::Components::"
+          << "EventConsumerBase_ptr consumer);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::EventConsumerBase_ptr" << be_nl
-      << "disconnect_consumer (const char * source_name);";
+      os_ << be_nl << be_nl
+          << "virtual ::Components::EventConsumerBase_ptr" << be_nl
+          << "disconnect_consumer (const char * source_name);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::PublisherDescriptions *" << be_nl
-      << "get_all_publishers (void);";
+      os_ << be_nl << be_nl
+          << "virtual ::Components::PublisherDescriptions *" << be_nl
+          << "get_all_publishers (void);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::EmitterDescriptions *" << be_nl
-      << "get_all_emitters (void);";
+      os_ << be_nl << be_nl
+          << "virtual ::Components::EmitterDescriptions *" << be_nl
+          << "get_all_emitters (void);";
+    }
 
   os_ << be_nl << be_nl
       << "// CIAO-specific." << be_nl
