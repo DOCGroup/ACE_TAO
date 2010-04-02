@@ -50,19 +50,22 @@ be_visitor_servant_svs::visit_component (be_component *node)
   const char *sname = sname_str.c_str ();
   const char *lname = node->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
+  AST_Decl::NodeType nt = this->node_->node_type ();
+  bool is_connector = (nt == AST_Decl::NT_connector);
+  const char *opt_conn =
+    (is_connector ? "Connector_" : "");
 
   os_ << be_nl << be_nl
       << lname << "_Servant::"
-      << lname << "_Servant (" << be_idt << be_idt_nl
+      << lname << "_Servant (" << be_idt << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_ptr exe," << be_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "const char * ins_name," << be_nl
-      << "::CIAO::Home_Servant_Impl_Base * hs,"
-      << be_nl
-      << "::CIAO::Container_ptr c)" << be_uidt_nl
-      << ": ::CIAO::Servant_Impl_Base (h, hs, c),"
-      << be_idt_nl
+      << "::CIAO::Home_Servant_Impl_Base * hs," << be_nl
+      << "::CIAO::Container_ptr c)" << be_uidt << be_uidt_nl
+      << ": ::CIAO::" << opt_conn
+      << "Servant_Impl_Base (h, hs, c)," << be_idt_nl
       << "::CIAO::Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name ()
       << "," << be_nl

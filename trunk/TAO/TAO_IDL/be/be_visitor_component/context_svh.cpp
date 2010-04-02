@@ -69,7 +69,14 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "typedef base_type::context_type context_type;" << be_nl
       << "typedef base_type::component_type component_type;"
-      << be_nl << be_nl;
+      << be_nl;
+      
+  AST_Decl::NodeType nt = this->node_->node_type ();    
+  bool is_connector = (nt == AST_Decl::NT_connector);
+  
+  os_ << "typedef ::CIAO::"
+      << (is_connector ? "Connector_" : "")
+      << "Servant_Impl_Base svnt_base_type;" << be_nl << be_nl;
 
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
