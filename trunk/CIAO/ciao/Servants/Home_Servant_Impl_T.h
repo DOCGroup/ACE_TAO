@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_HOME_SERVANT_IMPL_T_H
 #define CIAO_HOME_SERVANT_IMPL_T_H
 

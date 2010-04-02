@@ -28,7 +28,7 @@
 
 namespace CIAO
 {
-  class Servant_Impl_Base;
+  class Connector_Servant_Impl_Base;
 }
 
 namespace CIAO
@@ -48,7 +48,8 @@ namespace CIAO
   {
   public:
     /// Constructor
-    StandardConfigurator_Impl (Servant_Impl_Base* toconfigure);
+    StandardConfigurator_Impl (
+      Connector_Servant_Impl_Base* toconfigure);
 
     /// Destructor
     virtual ~StandardConfigurator_Impl (void);
@@ -63,9 +64,8 @@ namespace CIAO
   private:
     /// The component whose attributes are going to be configured via
     /// set_attributes
-    Servant_Impl_Base* const component_;
+    Connector_Servant_Impl_Base* const component_;
   };
-
 }
 
 #include /**/ "ace/post.h"
