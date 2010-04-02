@@ -199,7 +199,8 @@ namespace CIAO
     CIAO_DEBUG (6,
                 (LM_DEBUG,
                  CLINFO
-                 "Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
+                 "Servant_Impl_Base::get_all_receptacles "
+                 "- Building sequence of length %d\n",
                  retval->length ()));
 
     for (ReceptacleTable::iterator iter = this->receptacle_table_.begin ();
