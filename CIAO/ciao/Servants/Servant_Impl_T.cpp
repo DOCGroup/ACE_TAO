@@ -12,12 +12,12 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::Servant_Impl (
-      EXEC * exe,
-      Components::CCMHome_ptr home,
-      const char * ins_name,
-      Home_Servant_Impl_Base *home_servant,
-      Container_ptr c)
-    : Servant_Impl_Base (home, home_servant, c),
+        EXEC * exe,
+        Components::CCMHome_ptr home,
+        const char * ins_name,
+        Home_Servant_Impl_Base *home_servant,
+        Container_ptr c)
+    : CONTEXT::svnt_base_type (home, home_servant, c),
       activated_ (false),
       configuration_completed_ (false),
       executor_ (EXEC::_duplicate (exe)),
@@ -36,7 +36,9 @@ namespace CIAO
       }
     else
       {
-        CIAO_DEBUG (6, (LM_DEBUG, "Servant_Impl_T::Servant_Impl_T - "
+        CIAO_DEBUG (6,
+                    (LM_DEBUG,
+                     "Servant_Impl_T::Servant_Impl_T - "
                      "Couldn't set session context for %C\n",
                      ins_name));
       }
@@ -49,7 +51,9 @@ namespace CIAO
   {
     if (this->executor_->_refcount_value () > 1)
       {
-        CIAO_DEBUG (6, (LM_INFO, "Servant_Impl_T::~Servant_Impl_T - "
+        CIAO_DEBUG (6,
+                    (LM_INFO,
+                     "Servant_Impl_T::~Servant_Impl_T - "
                      "Executor object reference count is %u\n",
                      this->executor_->_refcount_value ()));
       }

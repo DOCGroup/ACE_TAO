@@ -27,6 +27,7 @@ project(CIAO_Servant_Impl) : ciao_servant_activator, ciao_port_activator_stub, c
    }
 
    Source_Files {
+     Connector_Servant_Impl_Base.cpp
      Home_Servant_Impl_Base.cpp
      Home_Servant_Impl_T.cpp
      Servant_Impl_Base.cpp
@@ -34,14 +35,16 @@ project(CIAO_Servant_Impl) : ciao_servant_activator, ciao_port_activator_stub, c
      StandardConfigurator_Impl.cpp
      Port_Activator.cpp
    }
-
+      
    Template_Files {
+     Connector_Servant_Impl_Utils.cpp
      Servant_Impl_Utils_T.cpp
      Port_Activator_T.cpp
    }
 
    Header_Files {
      CIAO_Servant_Impl_export.h
+     Connector_Servant_Impl_Base.h
      Home_Servant_Impl_Base.h
      Home_Servant_Impl_T.h
      Servant_Impl_Base.h

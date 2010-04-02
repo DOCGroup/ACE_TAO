@@ -1,3 +1,40 @@
+Fri Apr  2 16:39:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+
+          New files, containing the parts of class
+          Servant_Impl_Base (which is now derived from
+          class Connector_Servant_Impl_Base) pertaining
+          to facets and receptacles, since event sources
+          and sinks are not allowed in connectors.
+
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
+
+          Similar split from Servant_Impl_Utils_T.cpp,
+          containing static methods pertaining only to
+          facets and receptacles.
+
+        * ciao/Servants/Servant_Impl_Base.h:
+        * ciao/Servants/Servants.mpc:
+        * ciao/Servants/Home_Servant_Impl_T.h
+        * ciao/Servants/StandardConfigurator_Impl.cpp:
+        * ciao/Servants/Servant_Impl_Utils_T.cpp:
+        * ciao/Servants/StandardConfigurator_Impl.h:
+        * ciao/Servants/Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_T.h:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+
+          Other changes necessary to enable a connector
+          to inherit from a smaller base class than a
+          component, with no-ops for all inherited
+          methods pertaining to event sources or sinks.
+          The non-skeleton base class of Servant_Impl
+          is now determined by a trait in the CONTEXT
+          template parameter, which is set in generated
+          code according to the type (component or connector)
+          the servant is implementing.
+
 Fri Apr  2 15:36:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
