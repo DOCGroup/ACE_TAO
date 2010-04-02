@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file VTopics_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef VTOPICS_CONNECTOR_IDL_
+#define VTOPICS_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopics_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/VTopics_ConnectorE.idl"
+
+module VTopics
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
+  connector VTopics_Connector : TestTopicConn::DDS_State
+  {
+  };
+};
+
+#endif /* VTopics_CONNECTOR_IDL_ */

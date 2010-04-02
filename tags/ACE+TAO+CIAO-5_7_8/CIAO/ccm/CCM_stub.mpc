@@ -1,0 +1,83 @@
+// $Id$
+
+project(CCM_stub_idl) : ciaolib_with_idl, valuetype {
+  idlflags  += -Wb,stub_export_include=CCM_Stub_Export.h
+  idlflags  += -Wb,stub_export_macro=CCM_Stub_Export
+  idlflags  += -Wb,skel_export_include=CCM_Svnt_Export.h
+  idlflags  += -Wb,skel_export_macro=CCM_Svnt_Export
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -Sci
+    CCM_Base.idl
+    CCM_Component.idl
+    CCM_Exceptions.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    CCM_Cookie.idl
+    CCM_Enumeration.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi -Sci
+    Components.idl
+  }
+
+  IDL_Files {
+    CCM_HomeConfiguration.idl
+    CCM_StandardConfigurator.idl
+    CCM_Home.idl
+    CCM_Homes.idl
+    CCM_Object.idl
+    CCM_PrimaryKeyBase.idl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi
+    CCM_HomeFinder.idl
+    CCM_Configurator.idl
+    CCM_KeylessCCMHome.idl
+    CCM_Navigation.idl
+    CCM_Receptacle.idl
+  }
+
+  IDL_Files {
+    CCM_Events.idl
+    CCM_EventBase.idl
+    CCM_EventConsumerBase.idl
+  }
+
+}
+
+project(CCM_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client {
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+  dynamicflags = CCM_STUB_BUILD_DLL
+  after += CCM_stub_idl
+  IDL_Files {
+  }
+
+  Source_Files {
+    CCM_BaseC.cpp
+    CCM_EventsC.cpp
+    CCM_EventBaseC.cpp
+    CCM_EventConsumerBaseC.cpp
+    CCM_ComponentC.cpp
+    CCM_EnumerationC.cpp
+    CCM_HomeC.cpp
+    CCM_HomesC.cpp
+    CCM_ConfiguratorC.cpp
+    CCM_HomeConfigurationC.cpp
+    CCM_KeylessCCMHomeC.cpp
+    CCM_StandardConfiguratorC.cpp
+    CCM_HomeFinderC.cpp
+    CCM_NavigationC.cpp
+    CCM_ReceptacleC.cpp
+    CCM_CookieC.cpp
+    CCM_ObjectC.cpp
+    CCM_PrimaryKeyBaseC.cpp
+    CCM_ExceptionsC.cpp
+    ComponentsC.cpp
+  }
+}

@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file Unkeyed_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef UNKEYED_TEST_CONNECTOR_IDL_
+#define UNKEYED_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Unkeyed_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Unkeyed_Test_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::UnkeyedTest, ::UnkeyedTestSeq> UnkeyedTest;
+};
+
+module Unkeyed_Test
+{
+  connector Unkeyed_Test_Connector : ::CCM_DDS::UnkeyedTest::DDS_Event
+  {
+  };
+};
+
+#endif /* Unkeyed_Test_CONNECTOR_IDL_ */

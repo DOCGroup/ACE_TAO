@@ -1,0 +1,12 @@
+//  -*- MPC -*-
+// $Id$
+
+project(RMCast) : acelib, ace_output, install, threads {
+  avoids = ace_for_tao
+  sharedname   = ACE_RMCast
+  dynamicflags = ACE_RMCAST_BUILD_DLL
+
+  Pkgconfig_Files {
+    ACE_RMCast.pc.in
+  }
+}

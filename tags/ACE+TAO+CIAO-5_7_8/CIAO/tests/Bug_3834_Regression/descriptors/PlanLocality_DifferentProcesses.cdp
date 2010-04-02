@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>32118EE6-22F8-11DF-8000-00242C889DAA</UUID>
+
+  <implementation xmi:id="_D815B3D6-22F7-11DF-B472-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.CompAImpl.CompAImpl</name>
+    <source/>
+    <artifact xmi:idref="_D815B3D6-22F7-11DF-B474-00242C889DAA"/>
+    <artifact xmi:idref="_D815B3D6-22F7-11DF-B475-00242C889DAA"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CompA_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bug_3834_Regression.ImplementationArtifacts.CompAArtifacts.CompA_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CompA_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bug_3834_Regression.ImplementationArtifacts.CompAArtifacts.CompA_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="_D815B3D6-22F7-11DF-B473-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.CompBImpl.CompBImpl</name>
+    <source/>
+    <artifact xmi:idref="_D815B3D6-22F7-11DF-B476-00242C889DAA"/>
+    <artifact xmi:idref="_D815B3D6-22F7-11DF-B477-00242C889DAA"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CompB_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bug_3834_Regression.ImplementationArtifacts.CompBArtifacts.CompB_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CompB_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Bug_3834_Regression.ImplementationArtifacts.CompBArtifacts.CompB_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="_E85D3B88-22F7-11DF-8000-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA2</name>
+    <node>NodeOne</node>
+    <source/>
+    <implementation xmi:idref="_D815B3D6-22F7-11DF-B472-00242C889DAA"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CompAImpl.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="_ED3C275E-22F7-11DF-8000-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompB</name>
+    <node>NodeOne</node>
+    <source/>
+    <implementation xmi:idref="_D815B3D6-22F7-11DF-B473-00242C889DAA"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CompBImpl.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="_F3C839C8-22F7-11DF-8000-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA3</name>
+    <node>NodeOne</node>
+    <source/>
+    <implementation xmi:idref="_D815B3D6-22F7-11DF-B472-00242C889DAA"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CompAImpl.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="_FC03D516-22F7-11DF-8000-00242C889DAA">
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA1</name>
+    <node>NodeOne</node>
+    <source/>
+    <implementation xmi:idref="_D815B3D6-22F7-11DF-B472-00242C889DAA"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CompAImpl.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompB:my_moo::Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA1:my_moo</name>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="_ED3C275E-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="_FC03D516-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompB:my_moo::Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA2:my_moo</name>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="_ED3C275E-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="_E85D3B88-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompB:my_moo::Bug_3834_Regression.ComponentImplementations.NewComponentImplementationContainer.ComponentAssembly.CompA3:my_moo</name>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="_ED3C275E-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>my_moo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="_F3C839C8-22F7-11DF-8000-00242C889DAA"/>
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="_D815B3D6-22F7-11DF-B474-00242C889DAA">
+    <name>Bug_3834_Regression.ImplementationArtifacts.CompAArtifacts.CompA_svnt</name>
+    <source/>
+    <node/>
+    <location>CompA_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="_D815B3D6-22F7-11DF-B475-00242C889DAA">
+    <name>Bug_3834_Regression.ImplementationArtifacts.CompAArtifacts.CompA_exec</name>
+    <source/>
+    <node/>
+    <location>CompA_exec</location>
+  </artifact>
+
+  <artifact xmi:id="_D815B3D6-22F7-11DF-B476-00242C889DAA">
+    <name>Bug_3834_Regression.ImplementationArtifacts.CompBArtifacts.CompB_svnt</name>
+    <source/>
+    <node/>
+    <location>CompB_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="_D815B3D6-22F7-11DF-B477-00242C889DAA">
+    <name>Bug_3834_Regression.ImplementationArtifacts.CompBArtifacts.CompB_exec</name>
+    <source/>
+    <node/>
+    <location>CompB_exec</location>
+  </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="_FC03D516-22F7-11DF-8000-00242C889DAA"/>
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="_E85D3B88-22F7-11DF-8000-00242C889DAA"/>
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="_ED3C275E-22F7-11DF-8000-00242C889DAA"/>
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="_F3C839C8-22F7-11DF-8000-00242C889DAA"/>
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

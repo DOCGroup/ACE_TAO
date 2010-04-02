@@ -1,0 +1,52 @@
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, namingexe, notification_serv {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    StructuredEventSupplier_i.cpp
+    MessengerServer.cpp
+    Messenger_i.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, namingexe, notification {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Consumer): taoserver, namingexe, notification_skel {
+  exename = MessengerConsumer
+  after += *idl
+  Source_Files {
+    MessengerConsumer.cpp
+    StructuredEventConsumer_i.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}

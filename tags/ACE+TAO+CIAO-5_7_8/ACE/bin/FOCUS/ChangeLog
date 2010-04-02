@@ -1,0 +1,290 @@
+Fri Sep 21 09:44:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * FOCUS.pl:
+          Removed support for messaging specialization, this abstraction
+          has been removed from TAO
+
+        * specializations/Messaging_Strategy:
+        * specializations/Messaging_Strategy/GIOP.spl:
+          Removed from the repo
+
+Wed Dec 20 10:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * specializations/Reactor_Family/TP_Reactor.spl:
+          Removed specialization of Reactor.inl, the added include
+          is not necessary and causes a circular include problem
+
+Tue Nov 14 12:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * specializations/Wait_Strategy/Wait_On_Leader_Follower.spl:
+        * FOCUS.pl:
+          Added new lf specialization
+
+        * specializations/Wait_Strategy/Wait_On_Read.spl:
+          Updated to work with head
+
+Tue Nov 14 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * specializations/Messaging_Strategy/GIOP.spl:
+          Updated to work with current svn head
+
+Tue Nov 14 11:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * specializations/Reactor_Family/TP_Reactor.spl:
+          Updated to work with current svn head
+
+Fri Nov 10 09:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/FOCUS.html:
+          Added tp-reactor reference
+
+Fri Nov 18 17:05:49 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Reactor_Family/Select_Reactor_ST.spl:
+        * specializations/Reactor_Family/Select_Reactor_MT.spl:
+
+          Reverted the include file in ace/Select_Reactor_T.inl as g++ 4.0
+          seems to balk when this is not there. This does not seem to
+          happen with g++ 3.2 or later versions
+
+Thu Oct 27 09:47:32 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/iiop.spl:
+
+          Updated specializations file based on changes made to ACE+TAO
+
+Thu Sep 29 15:57:36 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+          Changed the script to use $ACE_ROOT enviornment variable to
+          compute the paths to the specialization files.
+
+        * Parser/Parser.pm:
+          Modified the parser comments and return values.
+
+        * NEWS: Added news file that discusses the current and planned
+          features.
+
+        * README: Readme file
+        * INSTALL: Removed install file and moved contents to README
+
+        * docs/FOCUS.html: Documenting the different features of FOCUS and
+          usage.
+
+Thu Sep 29 11:15:52 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Protocol_Family/IIOP/iiop.spl:
+        * specializations/Context-Specific-Optimizations/Request-Creation-Optimizations.spl:
+          Changes required to the rules based on code level changes.
+
+Wed Sep  7 09:20:30 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * VERSION:
+        * specializations/Wait_Strategy/Wait_On_Read.spl:
+        * specializations/Protocol_Family/iiop.spl:
+        * specializations/Messaging_Strategy/GIOP.spl:
+        * Parser/Parser.pm:
+
+          Added version file for the first internal release of
+          FOCUS. Updated the specializations based on recent updates.
+
+Tue Sep  6 09:07:04 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Protocol_Family/iiop.spl:
+
+          Added specialization rules for specializing the pluggable
+          protocols implementation in TAO with the IIOP protocol
+          implementation.
+
+Mon Aug 29 11:55:32 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Reactor_Family/Select_Reactor_ST.spl:
+        * specializations/Reactor_Family/Select_Reactor_MT.spl:
+        * specializations/Reactor_Family/TP_Reactor.spl:
+
+          Updated the specializations rules for the Reactor specialization
+          after the commit by Steve Huston. These have been tested and
+          validated with the code in ACE+TAO.
+
+Mon Aug 22 13:28:39 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+        * Parser/Parser.pm:
+        * specializations/Context-Specific-Optimizations/Dispatch-Resolution-Optimitzation.spl:
+
+          Added the specialization that resolves the request processor
+          only once and uses the cached request processor to service
+          requests on a specific connection for all other requests.
+
+Wed Aug 17 14:59:44 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+
+          Added new option for specializing the wait strategy at the
+          client side in ACE+TAO
+
+        * Parser/Parser.pm:
+
+          Added support of <copy-from-source> tag that copies source code
+          from a source file and inserts it into the destination file
+          at a particular hook location.
+
+        * specializations/Reactor_Family/Select_Reactor_MT.spl:
+        * specializations/Reactor_Family/Select_Reactor_ST.spl:
+        * specializations/Wait_Strategy/Wait_On_Read.spl:
+        * specializations/Flushing_Strategy/Leader_Follower_Flushing_Strategy.spl:
+
+          Updated the Reactor specializations, after eliminating the
+          Reactor_Timer_Interface from the Reactor implementation. Added
+          two specializations for the Wait strategy and the
+          Leader_Follower_Flushing strategies. Updated the Messaging
+          specialization based on hooks left in the source code.
+
+Mon Aug 15 14:59:28 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * Parser/Parser.pm:
+
+          Updated the parser to include the attribute match-line in a
+          substitute tag. This matches the entire line as opposed to a
+          word which substitutes default behavior is.
+
+        * specializations/Reactor_Family/Select_Reactor_MT.spl:
+        * specializations/Reactor_Family/Select_Reactor_ST.spl:
+
+          Updated the rules to include the match-line attribute to match
+          the entire line as opposed to the a single word.
+
+Mon Aug 15 09:07:54 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Select_Reactor_ST.spl:
+        * specializations/Select_Reactor_MT.spl:
+        * specializations/TP_Reactor.spl:
+
+          Updated the specialization rules. In particular, the
+          specialization rules have been updated as two separate ST rules
+          and MT rules for select reactor ST and select reactor MT.
+
+        * FOCUS.pl:
+
+          Updated the main script to work with these two rules.
+
+Thu Aug 11 16:33:47 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+        * Parser/Parser.pm:
+
+          Added option to specify the output path where the specialization
+          file should be put.
+
+        * specializations/Reactor_Family/TP_Reactor.spl:
+          Updated the thread-pool reactor specialization file tags based
+          on the generated code.
+
+Thu Aug 11 10:54:06 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+
+          Updated specialization entry for Thread Pool reactor.
+
+        * Parser/Parser.pm:
+
+          Updated the Visit_Substitute method with the requirement that it
+          match whole words and not parts of a word. For example, this
+          problem manifests when one is trying to substitute
+          Msg_WFMO_Reactor and WFM_Reactor. Both the strings match for
+          WFMO_Reactor, when only the latter should be matching. Corrected
+          this issue.
+
+        * specializations/Select_Reactor.spl:
+        * specializations/TP_Reactor.spl:
+
+          Updated the tags to be consistent and corrected several typos
+          and made sure that the rules in the specializations are actually
+          executed.
+
+        * PROBLEM-REPORT-FORM:
+
+          Most important thing added :-)
+
+Wed Aug 10 15:38:17 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS.pl:
+          Moved the perl script from the Parser module to the top level
+          directory for convenience.
+
+        * specializations/Reactor_Family/TP_Reactor.spl:
+
+          Added a specialization file for specializing TP_Reactor
+          implementation.
+
+        * specializations/Reactor_Family/Select_Reactor.spl:
+
+          Updated the specialization file to be in sync with the code
+          level comment hooks in the ACE+TAO implementation.
+
+Sun Aug 7 16:15:29 2005 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+
+	* Parser/Parser.pm:
+
+	  Added Visit_Comment visitor to parse and execute <comment>
+	  tags. Each comment tag contains a start-hook and an end-hook
+	  which can be used to comment blocks of region within the source
+	  code.
+
+	* specializations/Protocol_Family/Pluggable_Messaging.spl:
+
+	  A specialization file that completely removes the Pluggable
+	  messaging interface and replaces that with the concrete type
+	  used.
+
+Thu Aug  4 14:33:42 2005  Arvind Krishna  <arvindkr@arvindkr.qualcomm.com>
+
+	* Parser/Parser.pm:
+
+	  Added diagnostic messages and updated FOCUS perl script to use
+	  Getopt command line parsing perl module.
+
+Thu Aug  4 10:57:08 2005  Arvind Krishna  <arvindkr@arvindkr.qualcomm.com>
+
+	* Parser/Parser.pm:
+	* Parser/FOCUS.pl:
+	  Updated the parser module to include a <module> tag, this is
+	  necessary when the specializations have to work across different
+	  directories such as ACE and TAO.
+
+Wed Jul 27 15:54:02 PDT 2005 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+
+	* specializations/Reactor_Family/Select_Reactor.spl:
+	  Added a couple of specialization tags for reactor specialization.
+
+	* Parser/xml-spl-parser.pm:
+	  Parser now capable of executing search, replace, add and comment
+	  functionality for specializations.
+
+Tue Jul 26 12:38:00 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/README:
+
+          Added a evolving README file that describes the rules for
+          integrating different specializations into FOCUS.
+
+Tue Jul 26 11:23:51 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * Parser/Parser.pm:
+        * specializations/Reactor_Family/Select_Reactor.spl:
+
+          A simple perl based parser to parse the XML specializations
+          defined within the various specialization
+          files. Select_Reactor.spl defines the specialization rules for
+          effecting the transformations for specializing the Reactor
+          framework within ACE.
+
+Tue Jul 26 11:21:44 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * FOCUS:
+          Birth of "Feature Oriented Customization of Systems" is a
+          research project that aims at customizing semi complete
+          applications or frameworks based on features (e.g., type of
+          protocol, type of reactor) used in an application. FOCUS was
+          born out of research efforts described in the following paper:
+          http://www.cs.wustl.edu/~schmidt/PDF/MW-Spl.pdf
