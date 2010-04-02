@@ -1,3 +1,8 @@
+Fri Apr 02 08:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+          2nd attempt to fix link error in static build.
+
 Thu Apr 01 08:03:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
