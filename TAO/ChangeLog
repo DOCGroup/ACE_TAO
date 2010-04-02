@@ -1,6 +1,17 @@
+Fri Apr  2 15:32:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+        
+          Changes to AMI-related visitors to support inheritance in
+          generated AMI4CCM reply handler interfaces.
+
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.8 released.
+	      * TAO version 1.7.8 released.
 
 Wed Mar 31 15:22:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

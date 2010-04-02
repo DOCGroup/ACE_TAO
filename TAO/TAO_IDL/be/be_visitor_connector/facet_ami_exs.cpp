@@ -166,13 +166,28 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
 
-  if (this->visit_scope (callback_iface) == -1)
+  /// The overload of traverse_inheritance_graph() used here
+  /// doesn't automatically prime the queues.
+  callback_iface->get_insert_queue ().reset ();
+  callback_iface->get_del_queue ().reset ();
+  callback_iface->get_insert_queue ().enqueue_tail (callback_iface);
+
+  Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
+
+  int status =
+    callback_iface->traverse_inheritance_graph (
+      op_attr_gen,
+      &os_,
+      false,
+      false);
+
+  if (status == -1)//this->visit_scope (callback_iface) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_ami_exs")
+                  ACE_TEXT ("be_visitor_facet_ami_exs")
                   ACE_TEXT ("::gen_reply_handler_class - ")
-                  ACE_TEXT ("visit_scope() on callback ")
-                  ACE_TEXT ("interface failed\n")));
+                  ACE_TEXT ("traverse_inheritance_graph() on ")
+                  ACE_TEXT ("callback interface failed\n")));
     }
 
   return 0;
@@ -388,5 +403,21 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "}";
 
   return 0;
+}
+
+// ==================================================
+
+Facet_AMI_Exec_Op_Attr_Generator::Facet_AMI_Exec_Op_Attr_Generator (
+      be_visitor_scope * visitor)
+  : visitor_ (visitor)
+{
+}
+
+int
+Facet_AMI_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
+                                        TAO_OutStream * /* os */,
+                                        be_interface * base_interface)
+{
+  return visitor_->visit_scope (base_interface);
 }
 

@@ -140,13 +140,20 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
 
-  if (this->visit_scope (callback_iface) == -1)
+  int status =
+    callback_iface->traverse_inheritance_graph (
+      be_interface::op_attr_decl_helper,
+      &os_,
+      false,
+      false);
+
+  if (status == -1)//this->visit_scope (callback_iface) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_ami_exh")
+                  ACE_TEXT ("be_visitor_facet_ami_exh")
                   ACE_TEXT ("::gen_reply_handler_class - ")
-                  ACE_TEXT ("visit_scope() on callback ")
-                  ACE_TEXT ("interface failed\n")));
+                  ACE_TEXT ("traverse_inheritance_graph() on ")
+                  ACE_TEXT ("callback interface failed\n")));
     }
 
   os_ << be_uidt_nl << be_nl

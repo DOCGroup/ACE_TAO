@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_FACET_AMI_EXS_H_
 #define _BE_CONNECTOR_FACET_AMI_EXS_H_
 
@@ -56,5 +55,23 @@ private:
   bool for_reply_handler_;
 };
 
+//==============================================================
+
+/// Worker class passed to traverse_inheritance_graph(),
+/// collects all operations and attributes.
+class Facet_AMI_Exec_Op_Attr_Generator
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  Facet_AMI_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
+  
+  virtual int emit (be_interface * derived_interface,
+                    TAO_OutStream * os,
+                    be_interface * base_interface);
+
+private:
+  be_visitor_scope * visitor_;
+};
+                     
 #endif /* _BE_CONNECTOR_FACET_AMI_EXS_H_ */
 
