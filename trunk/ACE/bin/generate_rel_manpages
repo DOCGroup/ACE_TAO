@@ -65,7 +65,6 @@ my $bin_files =
     "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
     "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
 
-my $dest = 'bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution';
 my $release_files = '';
 
 chomp ($release_files = `$make show_release_files`);
@@ -80,16 +79,15 @@ my $build_command =
     "$find ./html $release_filter | $cpio -o -H tar | " .
     "$gzip -9 > ACE-html.tar.gz && ".
     "$find ./html $release_filter | $cpio -o -H tar | " .
-   "$bzip -9 > ACE-html.tar.bz2 && ".
+    "$bzip -9 > ACE-html.tar.bz2 && ".
     "$find ./html $release_filter | $egrep -v $bin_files | " .
     "zip ACE-html.zip -q9@ &&" .
     "md5sum ACE-html.tar.gz > ACE-html.tar.gz.md5 &&" .
     "md5sum ACE-html.tar.bz2 > ACE-html.tar.bz2.md5 &&" .
-    "md5sum ACE-html.zip > ACE-html.zip.md5 &&" .
-    "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 $dest;";
+    "md5sum ACE-html.zip > ACE-html.zip.md5;";
 
 &ex ($build_command)
-    && die "$0: failed to move ACE man pages to $dest\n";
+    && die "$0: failed to generate ACE man pages\n";
 
 exit $status;
 

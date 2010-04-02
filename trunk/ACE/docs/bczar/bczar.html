@@ -229,7 +229,7 @@
         to determine the correct filename.) At the moment you execute these commands 
         all users can download these packages.</li>
       <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
-        bczar@anduril.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
+        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
       </code>
       <li>
         After the repository is tagged you can also start generating the doxygen 
@@ -283,6 +283,8 @@
       <li>
         <code>cd $ACE_ROOT</code><br>
         <code>nohup make -f Release manpages &</code>
+        When this is ready copy the resulting files using<br>
+        <code>scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution</code>
       </li></ul><br>
       <li>
         While doxygen churns, format a release announcement, including the release 
