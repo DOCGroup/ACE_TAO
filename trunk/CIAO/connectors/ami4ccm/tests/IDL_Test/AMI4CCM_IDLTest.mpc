@@ -88,7 +88,7 @@ project(AMI4CCM_IDL_Test_stub) : ccm_stub, ami, ami4ccm_stub {
   }
 }
 
-project(AMI4CCM_IDL_Test_skel) : ciao_executor, ami   {
+project(AMI4CCM_IDL_Test_skel) : ciao_executor, ami, ami4ccm_servant   {
   after      += AMI4CCM_IDL_Test_stub AMI4CCM_IDL_Test_exec
   sharedname  = Hello_skel
   libs       += Hello_stub
@@ -103,15 +103,18 @@ project(AMI4CCM_IDL_Test_skel) : ciao_executor, ami   {
 
   Source_Files {
     HelloS.cpp
+    HelloAS.cpp
   }
 
   Header_Files {
     HelloS.h
+    HelloAS.h
     Hello_skel_export.h
   }
 
   Inline_Files {
     HelloS.inl
+    HelloAS.inl
   }
 }
 
@@ -145,7 +148,7 @@ project(AMI4CCM_IDL_Test_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
 
 project(AMI4CCM_IDL_Test_conn) : ciao_executor, ami, ami4ccm_lem_stub {
   after   += AMI4CCM_IDL_Test_lem_stub Hello_Base_AMI_stub AMI4CCM_IDL_Test_skel AMI4CCM_IDL_Test_lema_gen AMI4CCM_IDL_Test_lemae_gen
-  requires += dummy_label
+//  requires += dummy_label
   sharedname = Hello_conn
   libs += Hello_stub Hello_skel Hello_lem_stub
   libpaths += ../lib
@@ -169,7 +172,7 @@ project(AMI4CCM_IDL_Test_conn) : ciao_executor, ami, ami4ccm_lem_stub {
 }
 
 project(AMI4CCM_IDL_Test_svnt) : ciao_servant, ami, ami4ccm_servant {
-  requires += dummy_label
+//  requires += dummy_label
   after   += AMI4CCM_IDL_Test_lem_stub Hello_Base_AMI_stub AMI4CCM_IDL_Test_skel AMI4CCM_IDL_Test_lema_gen AMI4CCM_IDL_Test_lemae_gen AMI4CCM_IDL_Test_conn
   sharedname = Hello_svnt
   libs += Hello_stub Hello_skel Hello_lem_stub Hello_conn

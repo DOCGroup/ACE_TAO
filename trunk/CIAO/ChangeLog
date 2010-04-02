@@ -1,6 +1,12 @@
+Fri Apr  2 15:36:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
+        
+          Added necessary files and library to connector project.
+
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.7.8 released.
+	      * CIAO version 0.7.8 released.
 
 Fri Apr 02 08:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
