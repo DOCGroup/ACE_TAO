@@ -165,8 +165,13 @@ be_visitor_servant_svs::visit_component (be_component *node)
   // possible string name matches.
   this->gen_provides_top ();
   this->gen_uses_top ();
-  this->gen_publishes_top ();
-  this->gen_emits_top ();
+  
+  /// If we are visiting a connector we can skip these.
+  if (this->node_->node_type () == AST_Decl::NT_component)
+    {
+      this->gen_publishes_top ();
+      this->gen_emits_top ();
+    }
 
   // This call will generate all other operations and attributes,
   // including inherited ones.
