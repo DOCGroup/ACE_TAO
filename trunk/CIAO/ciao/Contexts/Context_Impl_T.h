@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_CONTEXT_IMPL_T_H
 #define CIAO_CONTEXT_IMPL_T_H
 
