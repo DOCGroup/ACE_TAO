@@ -1,3 +1,25 @@
+Fri Apr 02 13:57:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated latest release date
+
+        * bin/generate_rel_manpages:
+          Don't automatically copy the files to ISIS, added the copy
+          step to the release instructions
+
+        * docs/bczar/bczar.html:
+          Small improvements and manually copy the html files using
+          scp. Makes it easier to run this from another host
+
+        * docs/Download.html:
+          Updated links to point to x.7.8
+
+        * html/index.html:
+          Added link for x.7.8
+
+        * NEWS:
+          Added 5.7.8 section
+
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.7.8 released.
