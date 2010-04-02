@@ -94,13 +94,6 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << half_stripped_name.c_str ()
       << "Callback_var callback_;" << be_nl;
 
-  /// Now we strip off the "AMI_" prefix.
-//  ACE_CString stripped_name (
-//    half_stripped_name.substr (ACE_OS::strlen ("AMI_")));
-
-//  os_ << smart_scope << i_scope->full_name () << "::"
-//      << stripped_name.c_str () << "_var receptacle_;" << be_nl;
-
   os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
 
   os_ << be_uidt_nl
