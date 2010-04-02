@@ -1,3 +1,14 @@
+Fri Apr  2 19:40:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        
+          Cosmetic changes to debug output.
+          
+        * ciao/Servants/Servant_Impl_Base.h:
+        
+          Removed pure virtual methods that are present in the base
+          class Connector_Servant_Impl_Base.
+
 Fri Apr  2 16:47:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Containers/Session/Session_Container.cpp:
