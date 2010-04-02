@@ -3,14 +3,10 @@
 #include "StandardConfigurator_Impl.h"
 #include "Servant_Impl_Base.h"
 
-ACE_RCSID (ciao,
-           StandardConfigurator_Impl,
-           "$Id$")
-
 namespace CIAO
 {
   StandardConfigurator_Impl::StandardConfigurator_Impl (
-    Servant_Impl_Base* servant)
+        Connector_Servant_Impl_Base* servant)
     : component_ (servant)
   {
   }

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_SERVANT_IMPL_T_H
 #define CIAO_SERVANT_IMPL_T_H
 
@@ -40,7 +39,7 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
-                       public virtual Servant_Impl_Base
+                       public virtual CONTEXT::svnt_base_type
   {
   public:
     Servant_Impl (EXEC * exe,
