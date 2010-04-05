@@ -42,6 +42,10 @@ be_visitor_component_svh::visit_component (be_component *node)
     {
       return 0;
     }
+    
+  /// Fills in the node's has_* members, for use in minimizing
+  /// code generation.  
+  node->scan (node);
   
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
