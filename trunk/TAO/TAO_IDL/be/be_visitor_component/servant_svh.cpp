@@ -69,14 +69,17 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "virtual ~" << lname << "_Servant"
       << " (void);" << be_nl;
 
-  os_ << be_nl
-      << "virtual void" << be_nl
-      << "set_attributes (const "
-      << "::Components::ConfigValues & descr);"
-      << be_nl;
+  if (this->node_->has_attributes ())
+    {
+      os_ << be_nl
+          << "virtual void" << be_nl
+          << "set_attributes (const "
+          << "::Components::ConfigValues & descr);"
+          << be_nl;
+    }
 
   os_ << be_nl
-      << "// Supported operations and attributes.";
+      << "/// Supported operations and attributes.";
 
   int status =
     node_->traverse_inheritance_graph (
@@ -368,61 +371,82 @@ void
 be_visitor_servant_svh::gen_non_type_specific (void)
 {
   os_ << be_nl << be_nl
-      << "// Base class overrides.";
+      << "// Base class overrides."
+      << be_uidt_nl << be_nl
+      << "public:" << be_idt;
 
-  os_ << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl
-      << "virtual ::Components::Cookie *" << be_nl
-      << "connect (const char * name," << be_nl
-      << "         ::CORBA::Object_ptr connection);";
+  if (this->node_->has_uses ())
+    {
+      os_ << be_nl
+          << "virtual ::Components::Cookie *" << be_nl
+          << "connect (const char * name," << be_nl
+          << "         ::CORBA::Object_ptr connection);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::CORBA::Object_ptr" << be_nl
-      << "disconnect (const char * name," << be_nl
-      << "            ::Components::Cookie * ck);";
+      os_ << be_nl << be_nl
+          << "virtual ::CORBA::Object_ptr" << be_nl
+          << "disconnect (const char * name," << be_nl
+          << "            ::Components::Cookie * ck);";
 
-  os_ << be_nl << be_nl
-      << "virtual ::Components::ReceptacleDescriptions *" << be_nl
-      << "get_all_receptacles (void);";
+      os_ << be_nl << be_nl
+          << "virtual ::Components::ReceptacleDescriptions *"
+          << be_nl
+          << "get_all_receptacles (void);";
+    }
 
   /// If the node is a connector, event sources and sinks cannot
   /// be declared.
   if (this->node_->node_type () == AST_Decl::NT_component)
     {
-      os_ << be_nl << be_nl
-          << "virtual ::Components::Cookie *" << be_nl
-          << "subscribe (const char * publisher_name," << be_nl
-          << "           ::Components::"
-          << "EventConsumerBase_ptr subscriber);";
+      if (this->node_->has_publishes ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual ::Components::Cookie *" << be_nl
+              << "subscribe (const char * publisher_name,"
+              << be_nl
+              << "           ::Components::"
+              << "EventConsumerBase_ptr subscriber);";
 
-      os_ << be_nl << be_nl
-          << "virtual ::Components::EventConsumerBase_ptr" << be_nl
-          << "unsubscribe (const char * publisher_name," << be_nl
-          << "             ::Components::Cookie * ck);";
+          os_ << be_nl << be_nl
+              << "virtual ::Components::EventConsumerBase_ptr"
+              << be_nl
+              << "unsubscribe (const char * publisher_name,"
+              << be_nl
+              << "             ::Components::Cookie * ck);";
 
-      os_ << be_nl << be_nl
-          << "virtual void" << be_nl
-          << "connect_consumer (const char * emitter_name," << be_nl
-          << "                  ::Components::"
-          << "EventConsumerBase_ptr consumer);";
+          os_ << be_nl << be_nl
+              << "virtual ::Components::PublisherDescriptions *"
+              << be_nl
+              << "get_all_publishers (void);";
+        }
 
-      os_ << be_nl << be_nl
-          << "virtual ::Components::EventConsumerBase_ptr" << be_nl
-          << "disconnect_consumer (const char * source_name);";
+      if (this->node_->has_emits ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual void" << be_nl
+              << "connect_consumer (const char * emitter_name,"
+              << be_nl
+              << "                  ::Components::"
+              << "EventConsumerBase_ptr consumer);";
 
-      os_ << be_nl << be_nl
-          << "virtual ::Components::PublisherDescriptions *" << be_nl
-          << "get_all_publishers (void);";
+          os_ << be_nl << be_nl
+              << "virtual ::Components::EventConsumerBase_ptr"
+              << be_nl
+              << "disconnect_consumer (const char * source_name);";
 
-      os_ << be_nl << be_nl
-          << "virtual ::Components::EmitterDescriptions *" << be_nl
-          << "get_all_emitters (void);";
+          os_ << be_nl << be_nl
+              << "virtual ::Components::EmitterDescriptions *"
+              << be_nl
+              << "get_all_emitters (void);";
+        }
     }
 
-  os_ << be_nl << be_nl
-      << "// CIAO-specific." << be_nl
-      << "::CORBA::Object_ptr" << be_nl
-      << "get_facet_executor (const char * name);";
+  if (this->node_->has_provides ())
+    {
+      os_ << be_nl << be_nl
+          << "// CIAO-specific." << be_nl
+          << "::CORBA::Object_ptr" << be_nl
+          << "get_facet_executor (const char * name);";
+    }
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl

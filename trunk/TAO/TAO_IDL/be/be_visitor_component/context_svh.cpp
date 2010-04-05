@@ -73,9 +73,20 @@ be_visitor_context_svh::visit_component (be_component *node)
       
   AST_Decl::NodeType nt = this->node_->node_type ();    
   bool is_connector = (nt == AST_Decl::NT_connector);
+  bool no_events = false;
+  
+  if (!is_connector)
+    {
+      no_events =
+        (!node->has_consumes ()
+         && !node->has_emits ()
+         && !node->has_publishes ());
+    }
+    
+  bool de_facto = (is_connector || no_events);
   
   os_ << "typedef ::CIAO::"
-      << (is_connector ? "Connector_" : "")
+      << (de_facto ? "Connector_" : "")
       << "Servant_Impl_Base svnt_base_type;" << be_nl << be_nl;
 
   os_ << lname << "_Context (" << be_idt_nl

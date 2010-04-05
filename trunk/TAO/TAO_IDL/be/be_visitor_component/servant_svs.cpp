@@ -51,9 +51,22 @@ be_visitor_servant_svs::visit_component (be_component *node)
   const char *lname = node->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
   AST_Decl::NodeType nt = this->node_->node_type ();
+  
   bool is_connector = (nt == AST_Decl::NT_connector);
+  bool no_events = false;
+  
+  if (!is_connector)
+    {
+      no_events =
+        (!node->has_consumes ()
+         && !node->has_emits ()
+         && !node->has_publishes ());
+    }
+    
+  bool de_facto = (is_connector || no_events);
+  
   const char *opt_conn =
-    (is_connector ? "Connector_" : "");
+    (de_facto ? "Connector_" : "");
 
   os_ << be_nl << be_nl
       << lname << "_Servant::"
@@ -101,41 +114,44 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << "void" << be_nl
-      << lname << "_Servant::set_attributes (" << be_idt_nl
-      << "const ::Components::ConfigValues & descr)" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "const char * descr_name = descr[i]->name ();" << be_nl
-      << "::CORBA::Any & descr_value = descr[i]->value ();";
-
-  be_visitor_attr_set as_visitor (this->ctx_);
-
-  if (as_visitor.visit_component_scope (node) == -1)
+  if (this->node_->has_attributes ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_svs::"
-                         "visit_component - "
-                         "attr init visitor failed\n"),
-                        -1);
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << lname << "_Servant::set_attributes (" << be_idt_nl
+          << "const ::Components::ConfigValues & descr)"
+          << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+          << be_idt_nl
+          << "{" << be_idt_nl
+          << "const char * descr_name = descr[i]->name ();"
+          << be_nl
+          << "::CORBA::Any & descr_value = descr[i]->value ();";
+
+      be_visitor_attr_set as_visitor (this->ctx_);
+
+      if (as_visitor.visit_component_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_component_svs::"
+                             "visit_component - "
+                             "attr init visitor failed\n"),
+                            -1);
+        }
+
+      os_ << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
+          << "}";
     }
-
-  os_ << be_nl << be_nl
-      << "ACE_UNUSED_ARG (descr_name);" << be_nl
-      << "ACE_UNUSED_ARG (descr_value);" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
-
+    
   os_ << be_nl << be_nl
       << "/// Supported operations and attributes.";
 
   this->op_scope_ = node;
 
-  /// The overload of traverse_inheritance_graph() used here
+  /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
   node_->get_insert_queue ().reset ();
   node_->get_del_queue ().reset ();
@@ -161,8 +177,9 @@ be_visitor_servant_svs::visit_component (be_component *node)
   os_ << be_nl << be_nl
       << "/// All ports and component attributes.";
 
-  // Port operations that require scope traversal to get all the
-  // possible string name matches.
+  /// Port operations that require scope traversal to get all the
+  /// possible string name matches.
+  
   this->gen_provides_top ();
   this->gen_uses_top ();
   
@@ -173,8 +190,8 @@ be_visitor_servant_svs::visit_component (be_component *node)
       this->gen_emits_top ();
     }
 
-  // This call will generate all other operations and attributes,
-  // including inherited ones.
+  /// This call will generate all other operations and attributes,
+  /// including inherited ones.
   if (this->visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -776,6 +793,11 @@ be_visitor_servant_svs::compute_slots (AST_Component *node)
 void
 be_visitor_servant_svs::gen_provides_top (void)
 {
+  if (!this->node_->has_provides ())
+    {
+      return;
+    }
+
   os_ << be_nl << be_nl
       << "/// CIAO-specific." << be_nl
       << "::CORBA::Object_ptr" << be_nl
@@ -809,6 +831,11 @@ be_visitor_servant_svs::gen_provides_top (void)
 void
 be_visitor_servant_svs::gen_publishes_top (void)
 {
+  if (!this->node_->has_publishes ())
+    {
+      return;
+    }
+
   os_ << be_nl << be_nl
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Servant::subscribe ("
@@ -818,8 +845,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_UNUSED_ARG (subscribe);" << be_nl << be_nl
-      << "if (publisher_name == 0)" << be_idt_nl
+  os_ << "if (publisher_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -848,8 +874,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_UNUSED_ARG (ck);" << be_nl << be_nl
-      << "if (publisher_name == 0)" << be_idt_nl
+  os_ << "if (publisher_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -906,6 +931,11 @@ be_visitor_servant_svs::gen_publishes_top (void)
 void
 be_visitor_servant_svs::gen_uses_top (void)
 {
+  if (!this->node_->has_uses ())
+    {
+      return;
+    }
+
   os_ << be_nl << be_nl
       << "::Components::Cookie *" << be_nl
       << node_->local_name () << "_Servant::connect (" << be_idt_nl
@@ -913,10 +943,7 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "::CORBA::Object_ptr connection)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "/// If the component has no receptacles, "
-      << "arg will be unused." << be_nl
-      << "ACE_UNUSED_ARG (connection);" << be_nl << be_nl
-      << "if (name == 0)" << be_idt_nl
+  os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -945,8 +972,7 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "::Components::Cookie * ck)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_UNUSED_ARG (ck);" << be_nl << be_nl
-      << "if (name == 0)" << be_idt_nl
+  os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
@@ -1003,6 +1029,11 @@ be_visitor_servant_svs::gen_uses_top (void)
 void
 be_visitor_servant_svs::gen_emits_top (void)
 {
+  if (!this->node_->has_emits ())
+    {
+      return;
+    }
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << node_->local_name () << "_Servant::connect_consumer ("
@@ -1030,7 +1061,6 @@ be_visitor_servant_svs::gen_emits_top (void)
     }
 
   os_ << be_nl << be_nl
-      << "ACE_UNUSED_ARG (consumer);" << be_nl
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 
