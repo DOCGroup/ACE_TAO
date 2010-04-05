@@ -1,3 +1,43 @@
+Mon Apr  5 16:49:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be/be_component.cpp:
+        
+          Added code to scan component scope and set flags indicating
+          the presence or absence of provides, uses, publishes, emits
+          and consumes ports as well as attributes. Scan includes
+          inherited components' scopes, if any, and also searches the
+          porttype associated with extended ports and mirror ports.
+          
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+        
+          Added line to trigger component scan at the beginning of
+          code generation for each component. Thereafter the only
+          overhead is accessing the flags.
+          
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        
+          Added checks to determine if a component is equivalent to
+          a connector, i.e., that it has no event-related ports. If
+          so, the leaner servant base class typedef is generated in
+          this case as well as for an actual connector.
+          
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        
+          - Checks identical to those in the context visitor above
+            were added to generate the correct base constructor
+            call.
+            
+          - Code generation specific to particular port kinds was
+            made conditional on the presence of those kinds of
+            ports, determined by checking the component's flags.
+            
+          - ACE_UNUSED_ARG instances were removed. They are no
+            longer needed since instead of empty code blocks for
+            methods related to specific port kinds, we now skip
+            the generation of those methods entirely.
+
 Fri Apr  2 17:50:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:

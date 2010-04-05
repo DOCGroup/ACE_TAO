@@ -14,12 +14,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_COMPONENT_H
 #define TAO_BE_COMPONENT_H
 
 #include "be_interface.h"
 #include "ast_component.h"
+
+class AST_PortType;
 
 class be_component : public virtual AST_Component,
                      public virtual be_interface
@@ -57,10 +58,33 @@ public:
   AST_Structure *be_add_structure (AST_Structure *t);
   AST_Typedef *be_add_typedef (AST_Typedef *t);
 
+  bool has_provides (void);
+  bool has_uses (void);
+  bool has_publishes (void);
+  bool has_consumes (void);
+  bool has_emits (void);
+  bool has_attributes (void);
+  
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (be_component);
   DEF_NARROW_FROM_SCOPE (be_component);
+  
+  /// Update the has_* members.
+  void scan (UTL_Scope *s);
+  
+private:
+  /// Specialized version for mirror ports.
+  void mirror_scan (AST_PortType *p);
+  
+private:
+  /// Used by visitors to reduce footprint.
+  bool has_provides_;
+  bool has_uses_;
+  bool has_publishes_;
+  bool has_consumes_;
+  bool has_emits_;
+  bool has_attributes_;
 };
 
 #endif  // if !defined

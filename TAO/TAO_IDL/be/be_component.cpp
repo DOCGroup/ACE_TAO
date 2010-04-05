@@ -16,6 +16,8 @@
 #include "be_component.h"
 #include "be_visitor.h"
 
+#include "ast_mirror_port.h"
+
 #include "global_extern.h"
 #include "utl_err.h"
 
@@ -56,7 +58,13 @@ be_component::be_component (UTL_ScopedName *n,
                   supports_flat,
                   n_supports_flat,
                   false,
-                  false)
+                  false),
+    has_provides_ (false),
+    has_uses_ (false),
+    has_publishes_ (false),
+    has_consumes_ (false),
+    has_emits_ (false),
+    has_attributes_ (false)
 {
   this->size_type (AST_Type::VARIABLE);
   this->has_constructor (true);
@@ -109,5 +117,121 @@ be_component::be_add_typedef (AST_Typedef *t)
   return this->fe_add_typedef (t);
 }
 
+bool
+be_component::has_provides (void)
+{
+  return this->has_provides_;
+}
+
+bool
+be_component::has_uses (void)
+{
+  return this->has_uses_;
+}
+
+bool
+be_component::has_publishes (void)
+{
+  return this->has_publishes_;
+}
+
+bool
+be_component::has_consumes (void)
+{
+  return this->has_consumes_;
+}
+
+bool
+be_component::has_emits (void)
+{
+  return this->has_emits_;
+}
+
+bool
+be_component::has_attributes (void)
+{
+  return this->has_attributes_;
+}
+
 IMPL_NARROW_FROM_DECL (be_component)
 IMPL_NARROW_FROM_SCOPE (be_component)
+
+void
+be_component::scan (UTL_Scope *s)
+{
+  if (s == 0)
+    {
+      return;
+    }
+    
+  for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
+       !i.is_done ();
+       i.next ())
+    {
+      AST_Decl *d = i.item ();
+      AST_Extended_Port *ep = 0;
+      AST_Mirror_Port *mp = 0;
+      
+      switch (d->node_type ())
+        {
+          case AST_Decl::NT_provides:
+            this->has_provides_ = true;
+            continue;
+          case AST_Decl::NT_uses:
+            this->has_uses_ = true;
+            continue;
+          case AST_Decl::NT_publishes:
+            this->has_publishes_ = true;
+            continue;
+          case AST_Decl::NT_consumes:
+            this->has_consumes_ = true;
+            continue;
+          case AST_Decl::NT_emits:
+            this->has_emits_ = true;
+            continue;
+          case AST_Decl::NT_ext_port:
+            ep = AST_Extended_Port::narrow_from_decl (d);
+            this->scan (ep->port_type ());
+            continue;
+          case AST_Decl::NT_mirror_port:
+            mp = AST_Mirror_Port::narrow_from_decl (d);
+            this->mirror_scan (mp->port_type ());
+            continue;
+          case AST_Decl::NT_attr:
+            this->has_attributes_ = true;
+            continue;
+          default:
+            continue;
+        }
+    }
+    
+  AST_Component *c = AST_Component::narrow_from_scope (s);
+  
+  if (c != 0)
+    {  
+      this->scan (c->base_component ());
+    }
+}
+
+void
+be_component::mirror_scan (AST_PortType *p)
+{
+  for (UTL_ScopeActiveIterator i (p, UTL_Scope::IK_decls);
+       !i.is_done ();
+       i.next ())
+    {
+      AST_Decl *d = i.item ();
+      
+      switch (d->node_type ())
+        {
+          case AST_Decl::NT_provides:
+            this->has_uses_ = true;
+            continue;
+          case AST_Decl::NT_uses:
+            this->has_provides_ = true;
+            continue;
+          default:
+            continue;
+        }
+    }
+}
