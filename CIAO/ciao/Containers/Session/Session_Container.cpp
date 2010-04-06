@@ -883,7 +883,7 @@ namespace CIAO
                     (LM_ERROR,
                      CLINFO
                      "Session_Container::connect_local_facet - "
-                     "Caught exception InvalidName while connecting"
+                     "Caught exception InvalidName while connecting "
                      "<%C> to <%C>\n",
                      provider_port,
                      user_port));
