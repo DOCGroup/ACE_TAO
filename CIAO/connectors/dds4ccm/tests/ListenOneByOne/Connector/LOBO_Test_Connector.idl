@@ -14,14 +14,12 @@
 
 #pragma ciao lem "Connector/LOBO_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::ListenOneByOneTest, ::ListenOneByOneTestSeq> ListenOneByOneTest;
-};
-
 module LOBO_Test
 {
-  connector LOBO_Test_Connector : ::CCM_DDS::ListenOneByOneTest::DDS_Event
+  module ::CCM_DDS::Typed
+    < ::ListenOneByOneTest, ::ListenOneByOneTestSeq>
+    ListenOneByOneTestConn;
+  connector LOBO_Test_Connector : ListenOneByOneTestConn::DDS_Event
   {
   };
 };

@@ -14,14 +14,12 @@
 
 #pragma ciao lem "Connector/LMBM_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::ListenManyByManyTest, ::ListenManyByManyTestSeq> ListenManyByManyTest;
-};
-
 module LMBM_Test
 {
-  connector LMBM_Test_Connector : ::CCM_DDS::ListenManyByManyTest::DDS_Event
+  module ::CCM_DDS::Typed
+    < ::ListenManyByManyTest, ::ListenManyByManyTestSeq>
+    ListenManyByManyTestConn;
+  connector LMBM_Test_Connector : ListenManyByManyTestConn::DDS_Event
   {
   };
 };

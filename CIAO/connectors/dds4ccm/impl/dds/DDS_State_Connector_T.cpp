@@ -168,20 +168,29 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 
   TopicBaseConnector::configuration_complete ();
 
-  this->push_observer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_push_observer_data_listener ());
-  this->push_observer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_push_observer_status ());
+  ::CCM_DDS::PortStatusListener_var push_observer_psl =
+    this->context_->get_connection_push_observer_status ();
+  typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+    typename CCM_TYPE::listener_type::_ptr_type
+      this->context_->get_connection_push_observer_data_listener ();
+  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
+  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
 
-  this->push_state_observer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_push_state_observer_data_listener ());
-    ! ::CORBA::is_nil (this->context_->get_connection_push_state_observer_status ());
+  ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
+    this->context_->get_connection_push_state_observer_status ();
+  typename CCM_TYPE::listener_type::_var_type push_state_observer_dl =
+    typename CCM_TYPE::listener_type::_ptr_type
+      this->context_->get_connection_push_state_observer_data_listener ();
+  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
+  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
 
-  this->pull_observer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_pull_observer_status ());
+  ::CCM_DDS::PortStatusListener_var pull_observer_psl =
+    this->context_->get_connection_pull_observer_status ();
+  this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
 
-  this->passive_observer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_passive_observer_status ());
+  ::CCM_DDS::PortStatusListener_var passive_observer_psl =
+    this->context_->get_connection_passive_observer_status ();
+  this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
 
   if (this->observable_obtained_)
     {

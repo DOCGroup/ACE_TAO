@@ -117,36 +117,68 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 
   this->push_consumer_obtained_ |=
     ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ());
-  this->push_consumer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_status ());
+
+  ::CCM_DDS::PortStatusListener_var push_consumer_psl =
+    this->context_->get_connection_push_consumer_status ();
+  this->push_consumer_obtained_ |= ! ::CORBA::is_nil (push_consumer_psl.in ());
+
+  ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
+    this->context_->get_connection_pull_consumer_status ();
   this->pull_consumer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_pull_consumer_status ());
+    ! ::CORBA::is_nil (pull_consumer_psl.in ());
 
   if (this->push_consumer_obtained_)
     {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "Creating push consumer port.\n"));
       this->push_consumer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
         this->profile_name_);
     }
+  else
+    {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "No need to create push consumer port.\n"));
+    }
 
   if (this->supplier_obtained_)
     {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "Creating supplier port.\n"));
       this->supplier_.configuration_complete(
         this->topic_.in (),
         this->publisher_.in (),
         this->library_name_,
         this->profile_name_);
     }
+  else
+    {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "No need to create supplier port.\n"));
+    }
 
   if (this->pull_consumer_obtained_)
     {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "Creating pull consumer port.\n"));
       this->pull_consumer_.configuration_complete (
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
         this->profile_name_);
+    }
+  else
+    {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
+                    "No need to create pull consumer port.\n"));
     }
 }
 

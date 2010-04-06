@@ -64,7 +64,8 @@ namespace CIAO_LMBM_Test_Sender_Impl
         try
           {
             ++this->last_key_->second->iteration;
-            this->writer_->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
+            this->writer_->write_one (this->last_key_->second,
+                                      ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
                           this->last_key_->first.c_str (),
                           this->last_key_->second->iteration));
