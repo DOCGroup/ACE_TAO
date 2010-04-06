@@ -16,54 +16,6 @@
 namespace CIAO_PSL_SampleLost_Receiver_Impl
 {
   //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-    ::DDS::Topic_ptr /*the_topic*/,
-    const DDS::InconsistentTopicStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::RequestedIncompatibleQosStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::SampleRejectedStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedDeadlineMissedStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedIncompatibleQosStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status (
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind /*status_kind*/)
-  {
-  }
-
-  //============================================================
   // read_action_Generator
   //============================================================
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
@@ -149,7 +101,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
 
   void
   PortStatusListener_exec_i::on_sample_lost (
-    ::DDS::DataReader_ptr the_reader,
+    ::DDS::DataReader_ptr /*the_reader*/,
     const ::DDS::SampleLostStatus & status)
   {
     if (this->port_nr_ == 1)
@@ -162,14 +114,12 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
       }
 
     if (this->port_nr_ == 1 &&
-        ! ::CORBA::is_nil(the_reader) &&
         status.total_count > 0)
       {
         this->sample_port_1_ = true;
       }
 
     if (this->port_nr_ == 2 &&
-        ! ::CORBA::is_nil(the_reader) &&
         status.total_count > 0)
       {
         this->sample_port_2_ = true;
@@ -254,6 +204,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   Receiver_exec_i::get_info_get_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener get_info_get_status\n")));
+
     return new PortStatusListener_exec_i (this->sample_port_1_,
                                           this->sample_port_2_,
                                           this->thread_id_listener_1_,
@@ -264,7 +215,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Receiver_exec_i::get_info_out_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   // Operations from Components::SessionComponent.
@@ -327,7 +278,13 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
                          ACE_TEXT ("error 'on_sample_lost' on DDS_Listen port in Receiver\n")
               ));
       }
-    else if (!this->sample_port_2_.value ())
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
+                               ACE_TEXT ("'on_sample_lost' in on DDS_Listen port Receiver\n")
+                    ));
+      }
+    if (!this->sample_port_2_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
                          ACE_TEXT ("error 'on_sample_lost' on DDS_Get port in Receiver\n")
@@ -336,7 +293,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
-                               ACE_TEXT ("'on_sample_lost' in on DDS_Listen and DDS_GET port Receiver\n")
+                               ACE_TEXT ("'on_sample_lost' in on DDS_GET port Receiver\n")
                     ));
       }
     //check thread switch for listener 1

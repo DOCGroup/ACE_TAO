@@ -14,7 +14,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
     time_out_ (),
     max_delivered_data_ (0),
     ws_ (0),
-    rd_condition_ (0)
+    rd_condition_ (0),
+    q_condition_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::Getter_Base_T");
 }
@@ -23,11 +24,8 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::~Getter_Base_T");
-  if (this->ws_)
-    {
-      delete this->ws_;
-      this->ws_ = 0;
-    }
+  delete this->ws_;
+  this->ws_ = 0;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -91,17 +89,30 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->rd_condition_)
+      if (active_conditions[i] == this->rd_condition_ ||
+          active_conditions[i] == this->q_condition_)
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
 
           // Take read condition
-          DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
+          DDS_ReturnCode_t retcode = DDS_RETCODE_OK;
+          if (this->q_condition_)
+            {
+              retcode = this->impl ()->read_w_condition (
+                                    data,
+                                    sample_info,
+                                    max_samples,
+                                    this->q_condition_);
+            }
+          else
+            {
+              retcode = this->impl ()->read_w_condition (
                                     data,
                                     sample_info,
                                     max_samples,
                                     this->rd_condition_);
+            }
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
@@ -199,34 +210,61 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::remove_conditions");
 
-  DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
-  if (retcode != DDS_RETCODE_OK)
+  DDS_ReturnCode_t retcode = DDS_RETCODE_OK;
+  if (this->q_condition_)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
-                      "Unable to detach read condition from waitset.\n"));
-    }
-  else
-    {
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
-                      "Read condition successfully detached from waitset.\n"));
-
-      retcode = this->impl ()->delete_readcondition (this->rd_condition_);
+      retcode = this->ws_->detach_condition (this->q_condition_);
       if (retcode != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
-                          "Unable to delete read condition from DDSDataReader.\n"));
+                          "Unable to detach query condition from waitset.\n"));
         }
       else
         {
           DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
-                          "Read condition successfully deleted from DDSDataReader.\n"));
+                          "Query condition successfully detached from waitset.\n"));
+
+          retcode = this->impl ()->delete_readcondition (this->q_condition_);
+          if (retcode != DDS_RETCODE_OK)
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
+                              "Unable to delete query condition from DDSDataReader.\n"));
+            }
+          else
+            {
+              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                              "Query condition successfully deleted from DDSDataReader.\n"));
+            }
         }
     }
-  if (this->ws_)
+  else
     {
-      delete this->ws_;
-      this->ws_ = 0;
+      retcode = this->ws_->detach_condition (this->rd_condition_);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
+                          "Unable to detach read condition from waitset.\n"));
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                          "Read condition successfully detached from waitset.\n"));
+        }
     }
+  retcode = this->impl ()->delete_readcondition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::remove_conditions - "
+                      "Unable to delete read condition from DDSDataReader.\n"));
+    }
+  else
+    {
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "Getter_Base_T::remove_conditions - "
+                      "Read condition successfully deleted from DDSDataReader.\n"));
+    }
+  delete this->ws_;
+  this->ws_ = 0;
+
   return retcode;
 }
 
@@ -261,6 +299,56 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::create_conditions ()
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::create_querycondition (
+  const char * query,
+  const ::DDS_StringSeq & qp)
+{
+  this->q_condition_ = this->impl ()->create_querycondition (
+                                          DDS_NOT_READ_SAMPLE_STATE,
+                                          DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                          DDS_ALIVE_INSTANCE_STATE,
+                                          query,
+                                          qp);
+  if (!this->q_condition_)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Getter_T::create_querycondition - "
+                                "Error creating query condition."));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+    }
+  DDS_ReturnCode_t retcode = this->ws_->detach_condition (this->rd_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::create_querycondition - "
+                      "Unable to detach read condition from waitset.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+    }
+  retcode = this->ws_->attach_condition (this->q_condition_);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "Getter_Base_T::create_querycondition - "
+                      "Unable to attach query condition to waitset.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_queryparameters (
+  const ::DDS_StringSeq & qp)
+{
+  ::DDS::ReturnCode_t retval = this->q_condition_->set_query_parameters (qp);
+  if (retval != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Getter_T::set_queryparameters - "
+                                "Error setting expression_parameters. "
+                                "Retval is %C\n",
+                                translate_retcode(retval)));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+    }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
   CCM_DDS_DataReader_i *reader)
 {
@@ -268,11 +356,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
 
   if (!reader)
     {
-      if (this->ws_)
-        {
-          delete this->ws_;
-          this->ws_ = 0;
-        }
+      delete this->ws_;
+      this->ws_ = 0;
       this->reader_ = 0;
     }
   else
@@ -296,7 +381,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
 
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->rd_condition_)
+      if (active_conditions[i] == this->rd_condition_ ||
+          active_conditions[i] == this->q_condition_)
         {
           bool valid_data_read = false;
 
@@ -304,11 +390,21 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-              DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
-                                                                  data,
-                                                                  sample_info,
-                                                                  1,
-                                                                  this->rd_condition_);
+              DDS_ReturnCode_t retcode = DDS_RETCODE_OK;
+              if (this->q_condition_)
+                {
+                  retcode = this->impl ()->read_w_condition (data,
+                                                             sample_info,
+                                                             1,
+                                                             this->q_condition_);
+                }
+              else
+                {
+                  retcode = this->impl ()->read_w_condition (data,
+                                                             sample_info,
+                                                             1,
+                                                             this->rd_condition_);
+                }
               if (retcode == DDS_RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
@@ -382,7 +478,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->rd_condition_)
+      if (active_conditions[i] == this->rd_condition_ ||
+          active_conditions[i] == this->q_condition_)
         {
           bool valid_data_read = false;
 
@@ -390,11 +487,21 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-              DDS_ReturnCode_t retcode = this->impl ()->read_w_condition (
-                                                                  data,
-                                                                  sample_info,
-                                                                  1,
-                                                                  this->rd_condition_);
+              DDS_ReturnCode_t retcode = DDS_RETCODE_OK;
+              if (this->q_condition_)
+                {
+                  retcode = this->impl ()->read_w_condition (data,
+                                                             sample_info,
+                                                             1,
+                                                             this->q_condition_);
+                }
+              else
+                {
+                  retcode = this->impl ()->read_w_condition (data,
+                                                             sample_info,
+                                                             1,
+                                                             this->rd_condition_);
+                }
               if (retcode == DDS_RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO

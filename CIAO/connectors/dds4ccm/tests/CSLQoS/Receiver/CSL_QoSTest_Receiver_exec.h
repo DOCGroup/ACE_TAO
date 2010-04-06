@@ -19,36 +19,8 @@
 
 namespace CIAO_CSL_QoSTest_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
-
-  class Receiver_exec_i;
-
-  //============================================================
-  // TestTopic_RawListener_exec_i
-  //============================================================
-  class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
-    : public virtual ::CSL_QoSTest::TestTopicConn::CCM_Listener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    TestTopic_RawListener_exec_i (Atomic_ULong &);
-    virtual ~TestTopic_RawListener_exec_i (void);
-
-    virtual void
-    on_one_data (
-      const TestTopic & an_instance,
-      const ::CCM_DDS::ReadInfo & info);
-
-    virtual void
-    on_many_data (
-      const ::TestTopicSeq & data,
-      const ::CCM_DDS::ReadInfoSeq & info);
-
-  private:
-    Atomic_ULong &received_;
-  };
 
   //============================================================
   // ConnectorStatusListener_exec_i
@@ -119,7 +91,6 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   private:
     ::CSL_QoSTest::CCM_Receiver_Context_var context_;
     Atomic_Boolean incompatible_;
-    Atomic_ULong received_;
     Atomic_ThreadId thread_id_listener_;
   };
 

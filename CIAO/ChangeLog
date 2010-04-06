@@ -1,23 +1,97 @@
+Tue Apr  6 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Layout changes
+
+        * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+          Made use of typedefs for templated classes.
+
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+          Don't create all extended ports by default. Only the used ports are
+          created. This means that the performance should increase and
+          the usages of ports (and configuring them in the deployment
+          plans) is more strict.
+
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Fixed QueryCondition support.
+          Also rewritten/added some Doxygen.
+
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp:
+          Removed connector status listener since the sample rejected status isn't received
+          in a 'write only' component. Also removed some unused code.
+
+
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/ConnectorStatusListener_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp:
+          Rewritten because some callback aren't invoked when 'write only'/ read only'
+          components are used. This because of the fact that not all ports are created by
+          default.
+          Removed some unnecessary code.
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+          Optimized log output.
+
 Fri Apr  2 19:40:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
-        
+
           Cosmetic changes to debug output.
-          
+
         * ciao/Servants/Servant_Impl_Base.h:
-        
+
           Removed pure virtual methods that are present in the base
           class Connector_Servant_Impl_Base.
 
 Fri Apr  2 16:47:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Containers/Session/Session_Container.cpp:
-        
+
           Changes related to the creation of the
           Connector_Servant_Impl_Base class.
-          
+
         * ciao/Contexts/Context_Impl_T.h:
-        
+
           Cosmetic changes.
 
 Fri Apr  2 16:39:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -60,12 +134,12 @@ Fri Apr  2 16:39:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Apr  2 15:36:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
-        
+
           Added necessary files and library to connector project.
 
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * CIAO version 0.7.8 released.
+              * CIAO version 0.7.8 released.
 
 Fri Apr 02 08:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 

@@ -322,25 +322,6 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_portstatuslistener</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_status</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="CSL_SRTest_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
     <name>_listener</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -359,7 +340,7 @@
       <instance xmi:idref="CSL_SRTest_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-    <connection>
+  <connection>
     <name>info_out_connector_status_receiver</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -435,21 +416,6 @@
       <instance xmi:idref="CSL_SRTest_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  <!--connection>
-    <name>info_get_get_fresh_data</name>
-    <internalEndpoint>
-      <portName>info_get_fresh_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>pull_consumer_fresh_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="CSL_SRTest_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection-->
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>

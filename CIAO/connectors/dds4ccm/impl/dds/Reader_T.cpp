@@ -599,6 +599,10 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
                                       "Error creating query condition."));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
           }
+        if (this->dds_get_)
+          {
+            this->dds_get_->create_querycondition (filter.query, dds_qp);
+          }
       }
     else
       {
@@ -613,6 +617,10 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
                                       "Retval is %C\n",
                                       translate_retcode(retval)));
             throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+          }
+        if (this->dds_get_)
+          {
+            this->dds_get_->set_queryparameters (dds_qp);
           }
       }
   #else

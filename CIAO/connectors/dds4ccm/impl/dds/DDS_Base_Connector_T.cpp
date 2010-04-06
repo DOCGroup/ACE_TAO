@@ -186,7 +186,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (void)
         }
       this->domain_participant_->set_listener (
         this->domainparticipantlistener_.in (),
-        ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        DomainParticipantListener::get_mask ());
     }
   catch (...)
     {

@@ -17,8 +17,8 @@ module ConnectorStatusListener_Test
 {
   component Sender
   {
-    port CCM_DDS::TestSecondTopic::DDS_Write test_sec_topic_write;
-    provides CCM_DDS::ConnectorStatusListener test_sec_topic_connector_status;
+    port CCM_DDS::TestSecondTopic::DDS_Write topic_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };
 

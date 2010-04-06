@@ -16,7 +16,6 @@ module PSL_SampleLost
   {
     port CCM_DDS::TestTopic::DDS_Get info_get;
     port CCM_DDS::TestTopic::DDS_Listen info_out;
-    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
    };
 };
 

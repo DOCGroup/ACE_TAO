@@ -14,7 +14,11 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Event_Connector_T (void) :
-    DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>()
+    TopicBaseConnector (),
+    supplier_obtained_ (false),
+    push_consumer_obtained_ (false),
+    pull_consumer_obtained_ (false)
+
 {
 }
 
@@ -29,6 +33,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_data");
 
+  this->supplier_obtained_ = true;
   return this->supplier_.get_data ();
 }
 
@@ -38,6 +43,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_supplier_dds_entity");
 
+  this->supplier_obtained_ = true;
   return this->supplier_.get_dds_entity ();
 }
 
@@ -47,6 +53,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data (
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_fresh_data");
 
+  this->pull_consumer_obtained_ = true;
   return this->pull_consumer_.get_fresh_data ();
 }
 
@@ -56,6 +63,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data");
 
+  this->push_consumer_obtained_ = true;
   return this->push_consumer_.get_data ();
 }
 
@@ -65,6 +73,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_data");
 
+  this->pull_consumer_obtained_ = true;
   return this->pull_consumer_.get_data ();
 }
 
@@ -74,6 +83,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data_control
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_data_control");
 
+  this->push_consumer_obtained_ = true;
   return this->push_consumer_.get_data_control ();
 }
 
@@ -83,6 +93,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_dds_entity (
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_dds_entity");
 
+  this->pull_consumer_obtained_ = true;
   return this->pull_consumer_.get_dds_entity ();
 }
 
@@ -92,6 +103,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_dds_entity (
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_dds_entity");
 
+  this->push_consumer_obtained_ = true;
   return this->push_consumer_.get_dds_entity ();
 }
 
@@ -101,25 +113,41 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+  TopicBaseConnector::configuration_complete ();
 
-  this->push_consumer_.configuration_complete (
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+  this->push_consumer_obtained_ |=
+    ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ());
+  this->push_consumer_obtained_ |=
+    ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_status ());
+  this->pull_consumer_obtained_ |=
+    ! ::CORBA::is_nil (this->context_->get_connection_pull_consumer_status ());
 
-  this->supplier_.configuration_complete(
-    this->topic_.in (),
-    this->publisher_.in (),
-    this->library_name_,
-    this->profile_name_);
+  if (this->push_consumer_obtained_)
+    {
+      this->push_consumer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
 
-  this->pull_consumer_.configuration_complete (
-    this->topic_.in (),
-    this->subscriber_.in (),
-    this->library_name_,
-    this->profile_name_);
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.configuration_complete(
+        this->topic_.in (),
+        this->publisher_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
+
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.configuration_complete (
+        this->topic_.in (),
+        this->subscriber_.in (),
+        this->library_name_,
+        this->profile_name_);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -131,18 +159,27 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_activate (void)
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
   reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (reactor);
+  TopicBaseConnector::ccm_activate (reactor);
 
-  this->push_consumer_.activate (
-    this->context_->get_connection_push_consumer_data_listener (),
-    this->context_->get_connection_push_consumer_status (),
-    reactor);
+  if (this->push_consumer_obtained_)
+    {
+      this->push_consumer_.activate (
+        this->context_->get_connection_push_consumer_data_listener (),
+        this->context_->get_connection_push_consumer_status (),
+        reactor);
+    }
 
-  this->supplier_.activate ();
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.activate ();
+    }
 
-  this->pull_consumer_.activate (
-    this->context_->get_connection_pull_consumer_status (),
-    reactor);
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.activate (
+        this->context_->get_connection_pull_consumer_status (),
+        reactor);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -151,10 +188,21 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_passivate");
 
-  this->push_consumer_.passivate ();
-  this->supplier_.passivate ();
-  this->pull_consumer_.passivate ();
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  if (this->push_consumer_obtained_)
+    {
+      this->push_consumer_.passivate ();
+    }
+
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.passivate ();
+    }
+
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.passivate ();
+    }
+  TopicBaseConnector::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -163,8 +211,19 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::ccm_remove");
 
-  this->push_consumer_.remove (this->subscriber_.in ());
-  this->supplier_.remove (this->publisher_.in ());
-  this->pull_consumer_.remove (this->subscriber_.in ());
-  DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  if (this->push_consumer_obtained_)
+    {
+      this->push_consumer_.remove (this->subscriber_.in ());
+    }
+
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.remove (this->publisher_.in ());
+    }
+
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.remove (this->subscriber_.in ());
+    }
+  TopicBaseConnector::ccm_remove ();
 }

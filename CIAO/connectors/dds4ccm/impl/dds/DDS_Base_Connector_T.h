@@ -49,8 +49,6 @@ protected:
   ::DDS::DomainParticipantListener_var domainparticipantlistener_;
   typename CCM_TYPE::context_type::_var_type context_;
 
-  ::CCM_DDS::ConnectorStatusListener_var error_listener_;
-
   typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE> DomainParticipantListener;
 };
 

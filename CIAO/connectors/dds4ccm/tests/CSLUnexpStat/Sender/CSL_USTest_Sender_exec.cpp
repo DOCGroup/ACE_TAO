@@ -33,27 +33,19 @@ namespace CIAO_CSL_USTest_Sender_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &subscription_matched_received,
-                                                                  Atomic_Boolean &publication_matched_received,
-                                                                  Atomic_Boolean &liveliness_changed_received,
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &publication_matched_received,
                                                                   Atomic_Boolean &liveliness_lost_received,
                                                                   Atomic_Boolean &reliable_dr_activity_changed_received,
                                                                   Atomic_Boolean &reliable_writer_cache_changed_received,
-                                                                  Atomic_ThreadId &thread_id_subcription_matched,
                                                                   Atomic_ThreadId &thread_id_publication_matched,
-                                                                  Atomic_ThreadId &thread_id_liveliness_changed,
                                                                   Atomic_ThreadId &thread_id_liveliness_lost,
                                                                   Atomic_ThreadId &thread_id_reliable_dr_activity_changed,
                                                                   Atomic_ThreadId &thread_id_reliable_writer_cache_changed)
-   : subscription_matched_received_ (subscription_matched_received),
-     publication_matched_received_ (publication_matched_received),
-     liveliness_changed_received_ (liveliness_changed_received),
+   : publication_matched_received_ (publication_matched_received),
      liveliness_lost_received_ (liveliness_lost_received),
      reliable_dr_activity_changed_received_ (reliable_dr_activity_changed_received),
      reliable_writer_cache_changed_received_ (reliable_writer_cache_changed_received),
-     thread_id_subcription_matched_ (thread_id_subcription_matched),
      thread_id_publication_matched_ (thread_id_publication_matched),
-     thread_id_liveliness_changed_ (thread_id_liveliness_changed),
      thread_id_liveliness_lost_ (thread_id_liveliness_lost),
      thread_id_reliable_dr_activity_changed_ (thread_id_reliable_dr_activity_changed),
      thread_id_reliable_writer_cache_changed_ (thread_id_reliable_writer_cache_changed)
@@ -103,17 +95,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
                           "received <%C>\n",
                           CIAO::DDS4CCM::translate_statuskind (status_kind)));
 
-    if (! ::CORBA::is_nil (the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
-      {
-        this->subscription_matched_received_ = true;
-        this->thread_id_subcription_matched_ = ACE_Thread::self ();
-      }
-    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
-      {
-        this->liveliness_changed_received_ = true;
-        this->thread_id_liveliness_changed_ = ACE_Thread::self ();
-      }
-    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
+    if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
       {
         this->liveliness_lost_received_ = true;
         this->thread_id_liveliness_lost_ = ACE_Thread::self ();
@@ -139,13 +121,10 @@ namespace CIAO_CSL_USTest_Sender_Impl
   // Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : subscription_matched_received_ (false),
-      publication_matched_received_ (false),
-      liveliness_changed_received_ (false),
+    : publication_matched_received_ (false),
       liveliness_lost_received_ (false),
       reliable_dr_activity_changed_received_ (false),
       reliable_writer_cache_changed_received_ (false),
-      thread_id_listener_subscription_matched_ (0),
       thread_id_listener_publication_matched_ (0),
       thread_id_listener_liveliness_lost_ (0),
       thread_id_reliable_dr_activity_changed_ (0),
@@ -161,15 +140,11 @@ namespace CIAO_CSL_USTest_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_topic_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->subscription_matched_received_,
-                                               this->publication_matched_received_,
-                                               this->liveliness_changed_received_,
+    return new ConnectorStatusListener_exec_i (this->publication_matched_received_,
                                                this->liveliness_lost_received_,
                                                this->reliable_dr_activity_changed_received_,
                                                this->reliable_writer_cache_changed_received_,
-                                               this->thread_id_listener_subscription_matched_,
                                                this->thread_id_listener_publication_matched_,
-                                               this->thread_id_listener_liveliness_changed_,
                                                this->thread_id_listener_liveliness_lost_,
                                                this->thread_id_reliable_dr_activity_changed_,
                                                this->thread_id_reliable_writer_cache_changed_);
@@ -261,18 +236,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (!this->subscription_matched_received_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: Didn't receive the expected ")
-                              ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
-                    ));
-      }
-    else
-      {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
-                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
-                    ));
-      }
     if (!this->publication_matched_received_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: Didn't receive the expected ")
@@ -283,18 +246,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
       {
          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
                                ACE_TEXT ("'PUBLICATION_MATCHED_STATUS'\n")
-                    ));
-      }
-    if (!this->liveliness_changed_received_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: Didn't receive the expected ")
-                              ACE_TEXT ("'LIVELINESS_CHANGED_STATUS'\n")
-                    ));
-      }
-    else
-      {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
-                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS'\n")
                     ));
       }
     if (!this->liveliness_lost_received_.value ())
@@ -333,52 +284,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                ACE_TEXT ("'RELIABLE_WRITER_CACHE_CHANGED_STATUS'\n")
                     ));
       }
-
-    //test thread switch for SUBSCRIPTION_MATCHED_STATUS
-    if (this->thread_id_listener_subscription_matched_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
-                              "Thread ID for 'SUBSCRIPTION_MATCHED_STATUS' not set!\n"));
-      }
-    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
-                              "Thread switch for 'SUBSCRIPTION_MATCHED_STATUS' seems OK. "
-                              "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_subscription_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
-                              "Thread switch for 'SUBSCRIPTION_MATCHED_STATUS' "
-                              "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_subscription_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_subscription_matched_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'SUBSCRIPTION_MATCHED_STATUS': "
-                              "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_subscription_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'SUBSCRIPTION_MATCHED_STATUS': "
-                              "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_subscription_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    #endif
 
     //test thread switch for PUBLICATION_MATCHED_STATUS
     if (this->thread_id_listener_publication_matched_.value () == 0)
@@ -422,52 +327,6 @@ namespace CIAO_CSL_USTest_Sender_Impl
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    #endif
-
-    //test thread switch for LIVELINESS_CHANGED_STATUS
-    if (this->thread_id_listener_liveliness_changed_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
-                              "Thread ID for 'LIVELINESS_CHANGED_STATUS' not set!\n"));
-      }
-    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_changed_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
-                              "Thread switch for 'LIVELINESS_CHANGED_STATUS' seems OK. "
-                              "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_changed_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
-                              "Thread switch for 'LIVELINESS_CHANGED_STATUS' "
-                              "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_changed_.value (),
-                              ACE_Thread::self ()));
-      }
-    #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_changed_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'LIVELINESS_CHANGED_STATUS': "
-                              "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_changed_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'LIVELINESS_CHANGED_STATUS': "
-                              "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_changed_.value (),
                               ACE_Thread::self ()));
       }
     #endif
