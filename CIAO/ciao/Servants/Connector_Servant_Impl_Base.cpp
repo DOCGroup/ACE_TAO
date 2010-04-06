@@ -32,7 +32,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::remove (void)");
-    
+
     try
     {
       // Removing Facets
@@ -61,7 +61,7 @@ namespace CIAO
 
       Components::SessionComponent_var temp =
         this->get_executor ();
-      
+
       if (!::CORBA::is_nil (temp.in ()))
         {
           temp->ccm_remove ();
@@ -105,7 +105,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::provide_facet (const char *name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::provide_facet (const char *name)");
-    
+
     if (0 == name)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "Connector_Servant_Impl_Base::provide_facet - Got nil name"));
@@ -128,12 +128,12 @@ namespace CIAO
     const ::Components::NameList & names)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_named_facets");
-    
+
     Components::FacetDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                       ::Components::FacetDescriptions,
                       CORBA::NO_MEMORY ());
-                      
+
     Components::FacetDescriptions_var safe_retval = retval;
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
@@ -158,7 +158,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::get_all_facets (void)
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::get_all_facets (void)");
-    
+
     ::Components::FacetDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
                       ::Components::FacetDescriptions,
@@ -190,7 +190,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::get_all_ports (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_all_ports (void)");
-    
+
     OBV_Components::ComponentPortDescription *cps = 0;
     ACE_NEW_THROW_EX (cps,
                       OBV_Components::ComponentPortDescription,
@@ -235,7 +235,7 @@ namespace CIAO
   {
     return 0;
   }
-  
+
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_all_emitters (void)
   {
@@ -292,9 +292,9 @@ namespace CIAO
 
     CIAO_DEBUG (9,
                 (LM_TRACE,
-                 CLINFO 
+                 CLINFO
                  "Connector_Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
-    
+
     return retval._retn ();
   }
 
@@ -369,7 +369,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::get_standard_configurator (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_standard_configurator (void)");
-    
+
     // Create the configurator servant.
     StandardConfigurator_Impl *config_impl = 0;
 
@@ -405,7 +405,7 @@ namespace CIAO
     ::CORBA::Object_ptr port_ref)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::add_facet");
-    
+
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
         throw ::CORBA::BAD_PARAM ();
@@ -436,7 +436,7 @@ namespace CIAO
     const char *port_name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::lookup_facet");
-    
+
     if (!port_name)
       {
         return CORBA::Object::_nil ();
@@ -462,7 +462,7 @@ namespace CIAO
     const char *port_name)
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::lookup_facet_description");
-    
+
     if (!port_name)
       {
         /// Calling function will throw InvalidName after getting this.
@@ -528,7 +528,7 @@ namespace CIAO
                           OBV_Components::ConnectionDescription (cookie,
                                                                  recept_ref),
                           CORBA::NO_MEMORY ());
-                          
+
         ::Components::ConnectionDescription_var cd_safe = cd;
         ::Components::ConnectionDescriptions cds (1);
 
@@ -543,7 +543,7 @@ namespace CIAO
                      CLINFO
                      "Connector_Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
                      receptacle_name));
-                     
+
         rd = safe.inout ();
 
         ::Components::ConnectionDescription *cd = 0;
@@ -551,7 +551,7 @@ namespace CIAO
                           OBV_Components::ConnectionDescription (cookie,
                                                                  recept_ref),
                           CORBA::NO_MEMORY ());
-                          
+
         ::Components::ConnectionDescription_var cd_safe = cd;
         ::Components::ConnectionDescriptions & cds =
           rd->connections ();
@@ -577,3 +577,4 @@ namespace CIAO
       }
   }
 }
+
