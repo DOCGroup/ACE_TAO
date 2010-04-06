@@ -3138,7 +3138,7 @@ ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       ACEXML_CHECK;
     }
   const ACEXML_Char* encoding = this->current_->getInputSource()->getEncoding();
-  if (encoding != 0 && ACE_OS::strcmp (astring, encoding) != 0)
+  if (encoding != 0 && ACE_OS::strcasecmp (astring, encoding) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Detected Encoding is %s ")
                   ACE_TEXT (": Declared Encoding is %s\n"),

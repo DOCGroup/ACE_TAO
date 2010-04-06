@@ -1,3 +1,9 @@
+Thu Mar 25 19:41:57 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * parser/parser/Parser.cpp (ACEXML_Parser::parse_encoding_decl):
+          Changed ACE_OS::strcmp() to ACE_OS::strcasecmp().  Thanks to Tim
+          Pinkawa <tpinkawa at eagleseven dot com> for reporting this.
+
 Tue Oct 13 09:37:48 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/svcconf/Svcconf_Handler.cpp:
