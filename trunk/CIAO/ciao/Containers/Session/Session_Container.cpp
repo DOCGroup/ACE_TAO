@@ -849,7 +849,7 @@ namespace CIAO
         ::CORBA::Object_ptr exec =
           prov_serv->get_facet_executor (provider_port);
 
-        // Note:  Spec says that facet executor provided by component MAY BE NIL
+        // Note: Spec says that facet executor provided by component MAY BE NIL
         if (!::CORBA::is_nil (exec))
           {
             CIAO_DEBUG (6,
