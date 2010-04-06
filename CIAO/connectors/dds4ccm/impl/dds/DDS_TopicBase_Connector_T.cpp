@@ -5,7 +5,7 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::DDS_TopicBase_Connector_T (void) :
-    DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>()
+    BaseConnector ()
 {
 }
 
@@ -19,7 +19,7 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete");
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::configuration_complete ();
+  BaseConnector::configuration_complete ();
   this->init_default_topic ();
   this->init_subscriber ();
   this->init_publisher ();
@@ -30,7 +30,7 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate (ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate");
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_activate ();
+  BaseConnector::ccm_activate ();
   this->activate_default_topic (reactor);
   this->activate_subscriber (reactor);
   this->activate_publisher (reactor);
@@ -44,7 +44,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
   this->passivate_default_topic ();
   this->passivate_subscriber ();
   this->passivate_publisher ();
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate ();
+  BaseConnector::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -55,7 +55,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
   this->remove_default_topic ();
   this->remove_subscriber ();
   this->remove_publisher ();
-  DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove ();
+  BaseConnector::ccm_remove ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -140,7 +140,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::init_default_topic");
 
-  if (::CORBA::is_nil (this->topic_))
+  if (::CORBA::is_nil (this->topic_.in ()))
     {
       try
         {
@@ -273,7 +273,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_default_topic (ACE_React
         }
       this->topic_->set_listener (
         this->topiclistener_.in (),
-        ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+        TopicListener::get_mask (
           this->context_->get_connection_error_listener ()));
     }
   catch (...)
@@ -302,7 +302,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_subscriber (ACE_Reactor*
         }
       this->subscriber_->set_listener (
         this->subscriber_listener_.in (),
-        ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+        SubscriberListener::get_mask (
           this->context_->get_connection_error_listener ()));
     }
   catch (...)
@@ -331,7 +331,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::activate_publisher (ACE_Reactor* 
         }
       this->publisher_->set_listener (
         this->publisher_listener_.in (),
-        ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+        PublisherListener::get_mask (
           this->context_->get_connection_error_listener ()));
     }
   catch (...)

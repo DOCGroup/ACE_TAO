@@ -19,13 +19,13 @@ RTI Data Distribution Service user manual.
 
         A QoS library is a named set of QoS profiles.
     -->
-  <qos_library name="HelloTest_Library">
+  <qos_library name="QoSTest_Library">
     <!-- QoS profile used to configure reliable communication between the DataWriter 
              and DataReader created in the example code.
 
              A QoS profile groups a set of related QoS.
         -->
-    <qos_profile name="Hello_Profile" is_default_qos="true">
+    <qos_profile name="Sender_Profile" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <datawriter_qos>
         <reliability>
@@ -38,6 +38,9 @@ RTI Data Distribution Service user manual.
         <durability>
           <kind>TRANSIENT_DURABILITY_QOS</kind>
         </durability>
+        <liveliness>
+          <kind>DDS_MANUAL_BY_PARTICIPANT_LIVELINESS_QOS</kind>
+        </liveliness>
         <history>
           <kind>KEEP_LAST_HISTORY_QOS</kind>
           <depth>20</depth>
@@ -48,11 +51,16 @@ RTI Data Distribution Service user manual.
           </rtps_reliable_writer>
         </protocol>
       </datawriter_qos>
-      <!-- QoS used to configure the data reader created in the example code -->
+    </qos_profile>
+
+    <qos_profile name="Receiver_Profile" is_default_qos="true">
       <datareader_qos>
         <reliability>
           <kind>RELIABLE_RELIABILITY_QOS</kind>
         </reliability>
+        <liveliness>
+          <kind>DDS_MANUAL_BY_TOPIC_LIVELINESS_QOS</kind>
+        </liveliness>
         <history>
           <kind>KEEP_LAST_HISTORY_QOS</kind>
           <depth>20</depth>
@@ -60,8 +68,7 @@ RTI Data Distribution Service user manual.
         <durability>
           <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
         </durability>
-        </datareader_qos>
-      
+      </datareader_qos>
     </qos_profile>
   </qos_library>
 </dds>

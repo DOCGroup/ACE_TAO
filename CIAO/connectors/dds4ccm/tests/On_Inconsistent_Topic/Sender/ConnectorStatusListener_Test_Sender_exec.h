@@ -22,8 +22,6 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
-  class Sender_exec_i;
-
   //============================================================
   // ConnectorStatusListener_sec_exec_i
   //============================================================
@@ -79,19 +77,13 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
 
      // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_test_sec_topic_connector_status(void);
+    get_connector_status(void);
 
   private:
     ::ConnectorStatusListener_Test::CCM_Sender_Context_var context_;
 
     Atomic_Boolean inconsistent_;
     Atomic_ThreadId thread_id_listener_;
-
-    TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, TestSecondTopic_var> ConnectorStatusListener_TestSec_Table;
-    ConnectorStatusListener_TestSec_Table sec_ktests_;
-
-    void add_instance_of_sec_topic (const char *, int x );
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

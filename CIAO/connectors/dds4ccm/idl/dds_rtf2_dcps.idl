@@ -174,7 +174,6 @@ module DDS {
         QosPolicyCountSeq    policies;
     };
 
-
     struct PublicationMatchedStatus {
         long                 total_count;
         long                 total_count_change;
@@ -182,7 +181,6 @@ module DDS {
         long                 current_count_change;
         InstanceHandle_t     last_subscription_handle;
     };
-
 
     struct SubscriptionMatchedStatus {
         long                 total_count;
@@ -204,6 +202,7 @@ module DDS {
         long                 total_count;
         long                 total_count_change;
     };
+
     struct ReliableWriterCacheChangedStatus {
         ReliableWriterCacheEventCount       empty_reliable_writer_cache;
         ReliableWriterCacheEventCount       full_reliable_writer_cache;

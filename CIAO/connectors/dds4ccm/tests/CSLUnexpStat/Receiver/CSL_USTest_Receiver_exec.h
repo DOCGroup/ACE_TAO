@@ -76,8 +76,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
                                     Atomic_Boolean &,
-                                    Atomic_Boolean &,
-                                    Atomic_ThreadId &,
                                     Atomic_ThreadId &,
                                     Atomic_ThreadId &);
 
@@ -104,10 +102,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
   private:
     Atomic_Boolean &subscription_matched_received_;
-    Atomic_Boolean &publication_matched_received_;
     Atomic_Boolean &liveliness_changed_received_;
     Atomic_ThreadId &thread_id_subcription_matched_;
-    Atomic_ThreadId &thread_id_publication_matched_;
     Atomic_ThreadId &thread_id_liveliness_changed_;
   };
 
@@ -158,10 +154,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     Pulser *pulser_;
 
     Atomic_Boolean subscription_matched_received_;
-    Atomic_Boolean publication_matched_received_;
     Atomic_Boolean liveliness_changed_received_;
     Atomic_ThreadId thread_id_listener_subscription_matched_;
-    Atomic_ThreadId thread_id_listener_publication_matched_;
     Atomic_ThreadId thread_id_listener_liveliness_changed_;
     Atomic_ULong received_;
   };

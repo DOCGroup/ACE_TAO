@@ -69,43 +69,10 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   }
 
   //============================================================
-  // TestTopic_RawListener_exec_i
-  //============================================================
-  TestTopic_RawListener_exec_i::TestTopic_RawListener_exec_i (Atomic_ULong &received)
-    : received_ (received)
-  {
-  }
-
-  TestTopic_RawListener_exec_i::~TestTopic_RawListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::TestTopic_RawListener
-  void
-  TestTopic_RawListener_exec_i::on_one_data (
-    const TestTopic & an_instance ,
-    const ::CCM_DDS::ReadInfo & /* info */)
-  {
-     ++this->received_;
-     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_RawListener: ")
-            ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
-            an_instance.key.in (),
-            an_instance.x));
-  }
-
-  void
-  TestTopic_RawListener_exec_i::on_many_data (
-    const TestTopicSeq & /*an_instance */,
-    const ::CCM_DDS::ReadInfoSeq & /* info */)
-  {
-  }
-
-  //============================================================
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : incompatible_ (false),
-      received_ (0),
       thread_id_listener_ (0)
   {
   }
@@ -118,13 +85,12 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
-    return new TestTopic_RawListener_exec_i (this->received_);
+    return ::CSL_QoSTest::TestTopicConn::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
@@ -156,15 +122,6 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
-
-    if (::CORBA::is_nil (lc.in ()))
-      {
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-        throw CORBA::INTERNAL ();
-      }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void

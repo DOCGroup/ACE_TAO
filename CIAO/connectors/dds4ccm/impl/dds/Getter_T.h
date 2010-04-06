@@ -26,19 +26,19 @@ namespace CIAO
     namespace DDS_CCM
     {
       /**
-        @class Getter_Base_T<DDS_TYPE,CCM_TYPE>
-
-        @brief Templated base class for the Getter port.
-
-        Spec: Get operations are performed with the following parameters
-              - SampleStateMask: NO_READ,
-              - ViewStateMask: NEW or NOT_NEW,
-              - InstanceStateMask: ALIVE or NOT_ALIVE,
-              - Through the query (if any) of the Reader associated to the port,
-              - Within the time limit specified in time_out.
-
-              All methods return a boolean as result indicating whether actual data
-              are provided (TRUE) or if the time-out occurred (FALSE).
+      * @class Getter_Base_T<DDS_TYPE,CCM_TYPE>
+      *
+      * @brief Templated base class for the Getter port.
+      *
+      *        Spec:  Get operations are performed with the following parameters
+      *                · SampleStateMask: NO_READ,
+      *                · ViewStateMask: NEW or NOT_NEW,
+      *                · InstanceStateMask: ALIVE or NOT_ALIVE,
+      *               · Through the query (if any) of the Reader associated to the port,
+      *                · Within the time limit specified in time_out.
+      *
+      *               All methods return a boolean as result indicating whether actual data
+      *               are provided (TRUE) or if the time-out occurred (FALSE).
       */
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_Base_T :
@@ -54,11 +54,11 @@ namespace CIAO
         virtual ~Getter_Base_T (void);
 
         /**
-          Spec : get_many returns all the available samples
-                in the limits set by the attribute max_delivered_data.
-                In case there are more available samples, the first
-                max_delivered_data are returned. The default value for
-                that attribute is UNLIMITED (0)
+         *  Spec : get_many returns all the available samples
+         *         in the limits set by the attribute max_delivered_data.
+         *         In case there are more available samples, the first
+         *         max_delivered_data are returned. The default value for
+         *         that attribute is UNLIMITED (0)
          */
         virtual bool get_many (
           typename CCM_TYPE::seq_type::_out_type instances,
@@ -71,7 +71,7 @@ namespace CIAO
           ::CCM_DDS::DataNumber_t max_delivered_data);
 
         /**
-          Set the actual pointer to DDS Datareader
+         * Set the actual pointer to DDS Datareader
          */
         void set_impl (CCM_DDS_DataReader_i *reader);
 
@@ -79,13 +79,18 @@ namespace CIAO
 
         DDS_ReturnCode_t remove_conditions (void);
 
+        void create_querycondition (const char * query,
+                                    const ::DDS_StringSeq & qp);
+        void set_queryparameters (const ::DDS_StringSeq & qp);
+
       protected:
-        CCM_DDS_DataReader_i *reader_;
-        DDSQueryCondition* condition_;
+        CCM_DDS_DataReader_i * reader_;
+        DDSQueryCondition * condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
-        DDSWaitSet* ws_;
-        DDSReadCondition* rd_condition_;
+        DDSWaitSet * ws_;
+        DDSReadCondition * rd_condition_;
+        DDSQueryCondition * q_condition_;
 
         void create_conditions ();
 
@@ -98,7 +103,8 @@ namespace CIAO
       class Getter_T;
 
       /**
-        @brief Implementation of the Getter port for variable sized data types.
+      * @brief Implementation of the Getter port for variable sized data types.
+      *
       */
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_T <DDS_TYPE, CCM_TYPE, false> :
@@ -106,9 +112,10 @@ namespace CIAO
       {
       public:
         /**
-          @brief  get_one implementation for variable sized datatypes.
-
-          Spec : get_one returns the next sample to be gotten.
+        *
+        * @brief  get_one implementation for variable sized datatypes.
+        *
+        *         Spec : get_one returns the next sample to be gotten.
         */
         virtual bool get_one (
           typename DDS_TYPE::value_type::_out_type an_instance,
@@ -116,7 +123,8 @@ namespace CIAO
       };
 
       /**
-        @brief Implementation of the Getter port for fixed sized data types.
+      * @brief Implementation of the Getter port for fixed sized data types.
+      *
       */
       template <typename DDS_TYPE, typename CCM_TYPE>
       class Getter_T <DDS_TYPE, CCM_TYPE, true> :
@@ -124,9 +132,9 @@ namespace CIAO
       {
       public:
         /**
-          @brief  get_one implementation for fixed sized datatypes.
-
-          Spec : get_one returns the next sample to be gotten.
+        * @brief  get_one implementation for fixed sized datatypes.
+        *
+        *         Spec : get_one returns the next sample to be gotten.
         */
         virtual bool get_one (
           typename DDS_TYPE::value_type::_out_type an_instance,

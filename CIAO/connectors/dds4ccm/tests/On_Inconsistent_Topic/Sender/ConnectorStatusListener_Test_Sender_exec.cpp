@@ -79,7 +79,7 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Sender_exec_i::get_test_sec_topic_connector_status (void)
+  Sender_exec_i::get_connector_status (void)
   {
     return new ConnectorStatusListener_sec_exec_i (this->inconsistent_,
                                                    this->thread_id_listener_);
@@ -103,21 +103,8 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
   }
 
   void
-  Sender_exec_i::add_instance_of_sec_topic (const char * key, int x)
-  {
-    TestSecondTopic *new_key = new TestSecondTopic;
-    new_key->key = CORBA::string_dup(key);
-    new_key->x = x;
-    new_key->y = x + 10;
-    this->sec_ktests_[key] = new_key;
-  }
-
-  void
   Sender_exec_i::ccm_activate (void)
   {
-    //add 2 different instances of topic
-    this->add_instance_of_sec_topic ("ONE",1);
-    this->add_instance_of_sec_topic ("TWO",2);
   }
 
   void

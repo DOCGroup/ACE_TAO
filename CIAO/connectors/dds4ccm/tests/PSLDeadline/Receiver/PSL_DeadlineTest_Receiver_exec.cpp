@@ -258,7 +258,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       {
 
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener I in Receiver")
+                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener I in Receiver\n")
                     ));
       }
     else
@@ -271,7 +271,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       {
 
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener II in Receiver")
+                               ACE_TEXT (" error 'on_requested_deadline_missed' on PortStatusListener II in Receiver\n")
                     ));
       }
     else

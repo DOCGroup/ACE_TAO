@@ -72,11 +72,11 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   {
   }
 
+
   // Port operations.
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return ::CCM_DDS::TestTopic::CCM_Listener::_nil ();
   }
 
@@ -84,12 +84,11 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Receiver_exec_i::get_info_out_connector_status (void)
+  Receiver_exec_i::get_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (this->inconsistent_,
                                                this->thread_id_listener_);
@@ -116,15 +115,6 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
-
-    if (::CORBA::is_nil (lc.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-        throw CORBA::INTERNAL ();
-      }
-    lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
   void

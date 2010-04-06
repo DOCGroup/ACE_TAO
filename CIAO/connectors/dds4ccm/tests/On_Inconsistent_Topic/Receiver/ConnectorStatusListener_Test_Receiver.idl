@@ -15,7 +15,7 @@ module ConnectorStatusListener_Test
   component Receiver
   {
     port CCM_DDS::TestTopic::DDS_Listen info_out;
-    provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
    };
 };
 

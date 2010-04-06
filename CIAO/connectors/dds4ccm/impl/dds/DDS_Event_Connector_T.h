@@ -62,6 +62,10 @@ public:
   virtual void ccm_remove (void);
 
 private:
+  bool supplier_obtained_;
+  bool push_consumer_obtained_;
+  bool pull_consumer_obtained_;
+
   /**
    * DDS_Write supplier
    */
@@ -82,6 +86,8 @@ private:
   //@{
   DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_consumer_;
   //@}
+
+ typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/dds/DDS_Event_Connector_T.cpp"
