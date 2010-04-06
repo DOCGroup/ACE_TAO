@@ -1,3 +1,10 @@
+Tue Apr  6 13:53:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.h:
+          Updated doxygen and removed several methods which where not used at all
+
 Tue Apr  6 12:40:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp (get_facet_executor):
