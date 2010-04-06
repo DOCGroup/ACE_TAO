@@ -933,8 +933,8 @@ namespace CIAO
                      "Session_Container::disconnect_local_facet - "
                      "Successfully fetched provider servant from POA\n"));
 
-        CIAO::Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
+        CIAO::Connector_Servant_Impl_Base *prov_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
 
         if (prov_serv == 0)
           {
@@ -956,8 +956,8 @@ namespace CIAO
                      "Session_Container::disconnect_local_facet - "
                      "Successfully fetched user servant from POA\n"));
 
-        CIAO::Servant_Impl_Base *user_serv =
-          dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
+        CIAO::Connector_Servant_Impl_Base *user_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
 
         if (user_serv == 0)
           {
@@ -965,7 +965,7 @@ namespace CIAO
                         (LM_ERROR,
                          CLINFO
                          "Session_Container::disconnect_local_facet - "
-                         "Unable to cast to provider servant "
+                         "Unable to cast to user servant "
                          "implementation\n"));
 
             throw ::Components::InvalidConnection ();
@@ -1021,12 +1021,12 @@ namespace CIAO
     try
       {
 
-        CIAO::Servant_Impl_Base * svt = 0;
+        CIAO::Connector_Servant_Impl_Base * svt = 0;
 
         try
           {
             svt =
-              dynamic_cast<CIAO::Servant_Impl_Base *> (
+              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
                 this->component_poa_->reference_to_servant (compref));
           }
         catch (...)
@@ -1091,12 +1091,12 @@ namespace CIAO
 
     try
       {
-        CIAO::Servant_Impl_Base * svt = 0;
+        CIAO::Connector_Servant_Impl_Base * svt = 0;
 
         try
           {
             svt =
-              dynamic_cast<CIAO::Servant_Impl_Base *> (
+              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
                 this->component_poa_->reference_to_servant (compref));
           }
         catch (...)
@@ -1182,8 +1182,9 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::uninstall_component");
 
-    CIAO::Servant_Impl_Base * svnt = dynamic_cast <CIAO::Servant_Impl_Base *> (
-      this->component_poa_->reference_to_servant (homeref));
+    CIAO::Connector_Servant_Impl_Base * svnt =
+      dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (
+        this->component_poa_->reference_to_servant (homeref));
 
     if (!svnt)
       {
@@ -1219,7 +1220,7 @@ namespace CIAO
                      CLINFO
                      "Session_Container::uninstall_servant - "
                      "Removing component or home servant\n"));
-                     
+
         tmp = this->component_poa_.in ();
       }
     else
@@ -1229,7 +1230,7 @@ namespace CIAO
                     CLINFO
                     "Session_Container::uninstall_servant - "
                     "Removing facet or consumer servant\n"));
-                    
+
         tmp = this->facet_cons_poa_.in ();
       }
 
@@ -1259,7 +1260,7 @@ namespace CIAO
                      "Caught CORBA exception while "
                      "uninstalling servant: %C\n",
                      ex._info ().c_str ()));
-                     
+
         throw Components::RemoveFailure ();
       }
   }
