@@ -390,14 +390,16 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   const long BUFFERSIZE = 4000;
   char buffer[BUFFERSIZE];
 
-  struct ifconf ifc;
-  struct ifreq* ifr;
+  struct ifconf ifc = 0;
+  struct ifreq* ifr = 0;
 
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
 
   if (handle == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   ifc.ifc_len = BUFFERSIZE;
   ifc.ifc_buf = buffer;
@@ -407,16 +409,16 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
       ACE_OS::close (handle);
       return -1;
     }
-  
+
   for(char* ptr=buffer; ptr < buffer + ifc.ifc_len; )
-    { 
+    {
       ifr = (struct ifreq *) ptr;
 
       if (ifr->ifr_addr.sa_family == AF_LINK)
         {
           if(ACE_OS::strcmp (ifr->ifr_name, "en0") == 0)
             {
-              struct sockaddr_dl* sdl = 
+              struct sockaddr_dl* sdl =
                 (struct sockaddr_dl *) &ifr->ifr_addr;
 
               ACE_OS::memcpy (node->node,

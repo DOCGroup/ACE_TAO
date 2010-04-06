@@ -3411,6 +3411,7 @@ main ()
 
 AC_CHECK_FUNC([gethostbyaddr],,)
 
+if test "$cross_compiling" != yes; then
 case "$host" in
   *linux*)
     dnl Linux Event Poll
@@ -3463,6 +3464,7 @@ main ()
     [])
     ;;
 esac
+fi
 
 AC_CHECK_FUNC([gethrtime])
 if test $ac_cv_func_gethrtime = "yes"; then
