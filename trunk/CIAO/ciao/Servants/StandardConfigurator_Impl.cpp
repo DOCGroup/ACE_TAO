@@ -1,4 +1,4 @@
-// StandardConfigurator.cpp,v 1.0 2004/14/04 08:47:46 white Exp
+// $Id$
 
 #include "StandardConfigurator_Impl.h"
 #include "Servant_Impl_Base.h"
