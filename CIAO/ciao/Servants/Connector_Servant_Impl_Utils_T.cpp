@@ -4,6 +4,7 @@
 #define CIAO_CONNECTOR_SERVANT_IMPL_UTILS_T_C
 
 #include "ciao/Servants/Connector_Servant_Impl_Base.h"
+#include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -81,6 +82,7 @@ namespace CIAO
         ::Components::ConnectionDescription_var safe_conn = conn;
 
         ::Components::Cookie *key_cookie = 0;
+
         ACE_NEW_THROW_EX (key_cookie,
                           CIAO::Cookie_Impl (iter->first),
                           CORBA::NO_MEMORY ());
