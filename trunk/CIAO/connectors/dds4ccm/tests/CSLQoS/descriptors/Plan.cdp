@@ -194,7 +194,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>HelloTest_Library#Hello_Profile</string>
+        <string>QoSTest_Library#Sender_Profile</string>
       </value>
     </value>
     </configProperty>
@@ -223,7 +223,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>QoSTest_Library#Receiver_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -237,63 +237,25 @@
   </instance>
 
   <connection>
-    <name>_listenercontrol</name>
+    <name>info_out_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_data_control</portName>
+      <portName>info_out_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_data_control</portName>
+      <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
   <connection>
-    <name>_portstatuslistener</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_status</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_listener</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_data_listener</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data_listener</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-    <connection>
     <name>info_out_connector_status_receiver</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -331,7 +293,25 @@
       <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
+  <connection>
+    <name>test_topic_writer</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CSL_QoSTest_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>

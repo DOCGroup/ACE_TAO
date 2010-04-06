@@ -35,16 +35,12 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   // ConnectorStatusListener_exec_i
   //============================================================
   ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &subscription_matched_received,
-                                                                  Atomic_Boolean &publication_matched_received,
                                                                   Atomic_Boolean &liveliness_changed_received,
                                                                   Atomic_ThreadId &thread_id_subcription_matched,
-                                                                  Atomic_ThreadId &thread_id_publication_matched,
                                                                   Atomic_ThreadId &thread_id_liveliness_changed)
    : subscription_matched_received_ (subscription_matched_received),
-     publication_matched_received_ (publication_matched_received),
      liveliness_changed_received_ (liveliness_changed_received),
      thread_id_subcription_matched_ (thread_id_subcription_matched),
-     thread_id_publication_matched_ (thread_id_publication_matched),
      thread_id_liveliness_changed_ (thread_id_liveliness_changed)
   {
   }
@@ -102,11 +98,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         this->liveliness_changed_received_ = true;
         this->thread_id_liveliness_changed_ = ACE_Thread::self ();
       }
-    else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
-      {
-        this->publication_matched_received_ = true;
-        this->thread_id_publication_matched_ = ACE_Thread::self ();
-      }
   }
 
   //============================================================
@@ -150,10 +141,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : subscription_matched_received_ (false),
-      publication_matched_received_ (false),
       liveliness_changed_received_ (false),
       thread_id_listener_subscription_matched_ (0),
-      thread_id_listener_publication_matched_ (0),
       thread_id_listener_liveliness_changed_ (0),
       received_(0)
   {
@@ -190,10 +179,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   Receiver_exec_i::get_info_out_connector_status (void)
   {
     return new ConnectorStatusListener_exec_i (this->subscription_matched_received_,
-                                               this->publication_matched_received_,
                                                this->liveliness_changed_received_,
                                                this->thread_id_listener_subscription_matched_,
-                                               this->thread_id_listener_publication_matched_,
                                                this->thread_id_listener_liveliness_changed_);
   }
 
@@ -317,18 +304,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
                                ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
                     ));
       }
-    if (!this->publication_matched_received_.value ())
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
-                              ACE_TEXT ("'PUBLICATION_MATCHED_STATUS'\n")
-                    ));
-      }
-    else
-      {
-         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
-                               ACE_TEXT ("'PUBLICATION_MATCHED_STATUS' \n")
-                    ));
-      }
     if (!this->liveliness_changed_received_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
@@ -384,52 +359,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_subscription_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    #endif
-
-    //test thread switch for PUBLICATION_MATCHED_STATUS
-    if (this->thread_id_listener_publication_matched_.value () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
-                              "Thread ID for 'PUBLICATION_MATCHED_STATUS' not set!\n"));
-      }
-    #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
-                              "Thread switch for 'PUBLICATION_MATCHED_STATUS' seems OK. "
-                              "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
-                              "Thread switch for 'PUBLICATION_MATCHED_STATUS' "
-                              "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
-                                ACE_Thread::self ()))
-      {
-        ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'PUBLICATION_MATCHED_STATUS': "
-                              "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: 'PUBLICATION_MATCHED_STATUS': "
-                              "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
                               ACE_Thread::self ()));
       }
     #endif

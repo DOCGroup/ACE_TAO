@@ -22,8 +22,6 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
-  class Receiver_exec_i;
-
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
@@ -80,7 +78,7 @@ namespace CIAO_ConnectorStatusListener_Test_Receiver_Impl
     get_info_out_status (void);
 
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_info_out_connector_status (void);
+    get_connector_status (void);
 
     // Operations from Components::SessionComponent.
     virtual void

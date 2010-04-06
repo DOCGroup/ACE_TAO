@@ -79,7 +79,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::activate ()
         }
       this->ccm_dds_writer_.set_listener (
         this->data_listener_.in (),
-        ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask ());
+        DataWriterListener::get_mask ());
     }
   catch (...)
     {

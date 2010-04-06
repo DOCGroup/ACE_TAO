@@ -9,55 +9,6 @@
 
 namespace CIAO_PSL_SampleLost_Sender_Impl
 {
-
-  //============================================================
-  // ConnectorStatusListener_exec_i
-  //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i ()
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic (
-    ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::RequestedIncompatibleQosStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected (
-    ::DDS::DataReader_ptr /*the_reader*/,
-    const DDS::SampleRejectedStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
-    ::DDS::DataWriter_ptr /*the_writer*/,
-    const DDS::OfferedDeadlineMissedStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
-   ::DDS::DataWriter_ptr /*the_writer*/,
-   const DDS::OfferedIncompatibleQosStatus & /*status*/)
-  {
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status (
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind  /*status_kind*/)
-  {
-  }
-
   //============================================================
   // pulse_Generator
   //============================================================
@@ -88,7 +39,7 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
   Sender_exec_i::get_test_topic_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   // Supported operations and attributes.

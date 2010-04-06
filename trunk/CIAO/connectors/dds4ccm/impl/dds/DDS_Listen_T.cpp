@@ -95,8 +95,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
         }
       this->ccm_dds_reader_.set_listener (
         this->data_listener_.in (),
-        ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-          listener));
+        DataReaderListener::get_mask (listener));
     }
   catch (...)
     {
