@@ -1,3 +1,15 @@
+Tue Apr 06 06:08:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stddef.h:
+          Fixed incorrect semicolon
+
+        * ace/OS_NS_netdb.cpp:
+          Initialise pointers to 0
+
+        * configure.ac:
+          Fix for cross compilation, thanks to Ed Blackmond
+          <ed dot blackmond at themis dot com> for reporting this
+
 Fri Apr 02 13:57:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
