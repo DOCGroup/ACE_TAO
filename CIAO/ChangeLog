@@ -24,9 +24,12 @@ Tue Apr  6 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
         * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
         * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
-          Don't create all extended ports by default. Only the used ports are
-          created. This means that the performance should increase and
-          the usages of ports (and configuring them in the deployment
+          When an extended port is partially or fully connected,
+          all basic ports in this extended port are initialised.
+          When an extended port is not connected. non of the basic
+          ports will be connected.
+          This means that the performance should increase and
+          the usage of ports (and configuring them in the deployment
           plans) is more strict.
 
         * connectors/dds4ccm/impl/dds/Getter_T.h:
@@ -36,14 +39,12 @@ Tue Apr  6 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
           Fixed QueryCondition support.
           Also rewritten/added some Doxygen.
 
-
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender.idl:
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
         * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp:
-          Removed connector status listener since the sample rejected status isn't received
-          in a 'write only' component. Also removed some unused code.
-
+          Removed connector status listener since the sample rejected status isn't part
+          of a 'subscriber only' component.
 
         * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
         * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
@@ -69,9 +70,9 @@ Tue Apr  6 08:51:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.h:
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/ConnectorStatusListener_Test_Sender_exec.cpp:
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp:
-          Rewritten because some callback aren't invoked when 'write only'/ read only'
-          components are used. This because of the fact that not all ports are created by
-          default.
+          DDS4CCM used to create all extended and basic ports by default. Now that has changed, some tests
+          log errors since they do expect a publisher or subscriber. Since these DDS entities are not there
+          by default anymore, some tests had to be rewritten.
           Removed some unnecessary code.
 
         * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
