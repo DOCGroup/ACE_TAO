@@ -1,38 +1,43 @@
+Tue Apr  6 12:40:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Throw an exception as default, see 6.4.3.3 from the CCM spec
+
 Mon Apr  5 16:49:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_component.h:
         * TAO_IDL/be/be_component.cpp:
-        
+
           Added code to scan component scope and set flags indicating
           the presence or absence of provides, uses, publishes, emits
           and consumes ports as well as attributes. Scan includes
           inherited components' scopes, if any, and also searches the
           porttype associated with extended ports and mirror ports.
-          
+
         * TAO_IDL/be/be_visitor_component/component_svh.cpp:
-        
+
           Added line to trigger component scan at the beginning of
           code generation for each component. Thereafter the only
           overhead is accessing the flags.
-          
+
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
-        
+
           Added checks to determine if a component is equivalent to
           a connector, i.e., that it has no event-related ports. If
           so, the leaner servant base class typedef is generated in
           this case as well as for an actual connector.
-          
+
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
-        
+
           - Checks identical to those in the context visitor above
             were added to generate the correct base constructor
             call.
-            
+
           - Code generation specific to particular port kinds was
             made conditional on the presence of those kinds of
             ports, determined by checking the component's flags.
-            
+
           - ACE_UNUSED_ARG instances were removed. They are no
             longer needed since instead of empty code blocks for
             methods related to specific port kinds, we now skip
@@ -42,7 +47,7 @@ Fri Apr  2 17:50:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        
+
           Eliminated generation of overrides for the virtual methods
           subscribe, unsubscribe, connect_consumer, disconnect_consumer,
           get_all_publishers, and get_all_emitters for connectors.
@@ -54,7 +59,7 @@ Fri Apr  2 17:03:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        
+
           Generate typedef in context class used to select the
           servant impl non-skeleton base class, depending on
           whether the servant implements a component or a
@@ -68,7 +73,7 @@ Fri Apr  2 15:32:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
         * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
-        
+
           Changes to AMI-related visitors to support inheritance in
           generated AMI4CCM reply handler interfaces.
 
@@ -79,7 +84,7 @@ Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Mar 31 15:22:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
-        
+
           Fixed incorrect code generation for the connector executor
           implementation base class, which compiled but caused a
           runtime crash.
@@ -87,7 +92,7 @@ Wed Mar 31 15:22:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Mar 31 13:15:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root_cs.cpp:
-        
+
           Fixed bug in generation of *A.cpp file when versioning
           macros are specified.
 

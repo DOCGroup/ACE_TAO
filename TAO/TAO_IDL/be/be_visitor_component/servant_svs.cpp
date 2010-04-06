@@ -51,10 +51,10 @@ be_visitor_servant_svs::visit_component (be_component *node)
   const char *lname = node->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
   AST_Decl::NodeType nt = this->node_->node_type ();
-  
+
   bool is_connector = (nt == AST_Decl::NT_connector);
   bool no_events = false;
-  
+
   if (!is_connector)
     {
       no_events =
@@ -62,9 +62,9 @@ be_visitor_servant_svs::visit_component (be_component *node)
          && !node->has_emits ()
          && !node->has_publishes ());
     }
-    
+
   bool de_facto = (is_connector || no_events);
-  
+
   const char *opt_conn =
     (de_facto ? "Connector_" : "");
 
@@ -145,7 +145,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "}" << be_uidt << be_uidt_nl
           << "}";
     }
-    
+
   os_ << be_nl << be_nl
       << "/// Supported operations and attributes.";
 
@@ -179,10 +179,10 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// Port operations that require scope traversal to get all the
   /// possible string name matches.
-  
+
   this->gen_provides_top ();
   this->gen_uses_top ();
-  
+
   /// If we are visiting a connector we can skip these.
   if (this->node_->node_type () == AST_Decl::NT_component)
     {
@@ -808,7 +808,7 @@ be_visitor_servant_svs::gen_provides_top (void)
 
   os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_facet_executor_block feb_visitor (this->ctx_);
@@ -824,7 +824,7 @@ be_visitor_servant_svs::gen_provides_top (void)
     }
 
   os_ << be_nl << be_nl
-      << "return ::CORBA::Object::_nil ();" << be_uidt_nl
+      << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 }
 
