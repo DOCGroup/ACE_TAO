@@ -1,3 +1,8 @@
+Tue Apr  6 11:12:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed connecting of local facets
+
 Tue Apr  6 09:47:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp:
