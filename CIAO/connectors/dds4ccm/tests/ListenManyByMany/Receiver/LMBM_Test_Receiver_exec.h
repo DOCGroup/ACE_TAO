@@ -25,7 +25,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   // ListenManyByManyTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ListenManyByManyTest_Listener_exec_i
-    : public virtual ::CCM_DDS::ListenManyByManyTest::CCM_Listener,
+    : public virtual ::LMBM_Test::ListenManyByManyTestConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -68,7 +68,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::CCM_DDS::ListenManyByManyTest::CCM_Listener_ptr
+    virtual ::LMBM_Test::ListenManyByManyTestConn::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

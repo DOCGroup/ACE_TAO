@@ -16,7 +16,7 @@ module LMBM_Test
 {
   component Sender
   {
-    port CCM_DDS::ListenManyByManyTest::DDS_Write info_write;
+    port ListenManyByManyTestConn::DDS_Write info_write;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
