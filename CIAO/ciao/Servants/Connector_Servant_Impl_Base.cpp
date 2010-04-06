@@ -110,14 +110,14 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "Connector_Servant_Impl_Base::provide_facet - Got nil name"));
 
-        throw Components::InvalidName ();
+        throw ::Components::InvalidName ();
       }
 
     CORBA::Object_ptr retval = this->lookup_facet (name);
 
     if ( ::CORBA::is_nil (retval))
       {
-        throw Components::InvalidName ();
+        throw ::Components::InvalidName ();
       }
 
     return retval;
@@ -395,7 +395,7 @@ namespace CIAO
   Connector_Servant_Impl_Base::get_facet_executor (
     const char * /* name */)
   {
-    return ::CORBA::Object::_nil ();
+    throw ::Components::InvalidName ();
   }
 
   /// Protected operations.
