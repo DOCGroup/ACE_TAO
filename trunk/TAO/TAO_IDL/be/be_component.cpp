@@ -163,7 +163,7 @@ be_component::scan (UTL_Scope *s)
     {
       return;
     }
-    
+
   for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
        !i.is_done ();
        i.next ())
@@ -171,7 +171,7 @@ be_component::scan (UTL_Scope *s)
       AST_Decl *d = i.item ();
       AST_Extended_Port *ep = 0;
       AST_Mirror_Port *mp = 0;
-      
+
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
@@ -204,11 +204,11 @@ be_component::scan (UTL_Scope *s)
             continue;
         }
     }
-    
+
   AST_Component *c = AST_Component::narrow_from_scope (s);
-  
+
   if (c != 0)
-    {  
+    {
       this->scan (c->base_component ());
     }
 }
@@ -221,7 +221,7 @@ be_component::mirror_scan (AST_PortType *p)
        i.next ())
     {
       AST_Decl *d = i.item ();
-      
+
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
@@ -235,3 +235,4 @@ be_component::mirror_scan (AST_PortType *p)
         }
     }
 }
+
