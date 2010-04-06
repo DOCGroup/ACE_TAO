@@ -123,17 +123,20 @@ namespace CIAO
 
     virtual void uninstall_home (Components::CCMHome_ptr homeref);
 
+    /// Install a new component
     virtual Components::CCMObject_ptr install_component (const char *primary_artifact,
                                                          const char *entry_point,
                                                          const char *servant_artifact,
                                                          const char *servant_entrypoint,
                                                          const char *name);
-    
+
+    /// Connect a local facet
     virtual void connect_local_facet (::Components::CCMObject_ptr provider,
                                       const char * provider_port,
                                       ::Components::CCMObject_ptr user,
                                       const char * user_port);
-    
+
+    /// Disconnect a local facet
     virtual void disconnect_local_facet (::Components::CCMObject_ptr provider,
                                          const char * provider_port,
                                          ::Components::CCMObject_ptr user,
@@ -142,8 +145,10 @@ namespace CIAO
     /// Activate component
     virtual void activate_component (Components::CCMObject_ptr compref);
 
+    /// Passivate a component
     virtual void passivate_component (Components::CCMObject_ptr compref);
 
+    /// Uninstall a component
     virtual void uninstall_component (Components::CCMObject_ptr compref);
 
     /// Uninstall a servant
@@ -164,24 +169,6 @@ namespace CIAO
 
     /// Uninstall a servant for component or home.
     void uninstall (PortableServer::Servant svt, Container_Types::OA_Type t);
-
-    virtual void add_servant_to_map (PortableServer::ObjectId &oid,
-                                     Dynamic_Component_Servant_Base* servant);
-
-    virtual void delete_servant_from_map (PortableServer::ObjectId &oid);
-
-    // @@Jai, could yo please add documentation?
-    /*
-     * @@Jai, you may want to consider moving these away from the
-     * container interface. I know what you are going to say
-     * :-). Consider using dynamic_cast <> to access
-     * add_servant_to_map, delete_servant_from_map and
-     * deactivate_facet from the Swapping_Conatiner's interface. It
-     * would make the base container interface much cleaner.
-     */
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid);
-
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p);
 
     /// Analog of the POA method that creates an object reference from
     /// an object id string.
