@@ -846,11 +846,11 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        ::CORBA::Object_ptr exec =
+        ::CORBA::Object_var exec =
           prov_serv->get_facet_executor (provider_port);
 
         // Note: Spec says that facet executor provided by component MAY BE NIL
-        if (!::CORBA::is_nil (exec))
+        if (!::CORBA::is_nil (exec.in ()))
           {
             CIAO_DEBUG (6,
                         (LM_DEBUG,
@@ -861,7 +861,7 @@ namespace CIAO
                          user_port,
                          provider_port));
 
-            user_serv->connect (user_port, exec);
+            user_serv->connect (user_port, exec.in ());
           }
         else
           {
@@ -971,11 +971,11 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        ::CORBA::Object_ptr exec =
+        ::CORBA::Object_var exec =
           prov_serv->get_facet_executor (provider_port);
 
-        // Note:  Spec says that facet executor provided by component MAY BE NIL
-        if (!::CORBA::is_nil (exec))
+        // Note: Spec says that facet executor provided by component MAY BE NIL
+        if (!::CORBA::is_nil (exec.in ()))
           {
             user_serv->disconnect (user_port, 0);
           }
@@ -1263,36 +1263,6 @@ namespace CIAO
 
         throw Components::RemoveFailure ();
       }
-  }
-
-  void
-  Session_Container::add_servant_to_map (
-    PortableServer::ObjectId &,
-    Dynamic_Component_Servant_Base*)
-  {
-    CIAO_TRACE ("Session_Container::add_servant_to_map");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  void
-  Session_Container::delete_servant_from_map (
-    PortableServer::ObjectId &)
-  {
-    CIAO_TRACE ("Session_Container::delete_servant_from_map");
-    throw CORBA::NO_IMPLEMENT ();
-  }
-
-  void
-  Session_Container::deactivate_facet (const PortableServer::ObjectId &)
-  {
-    CIAO_TRACE ("Session_Container::deactivate_facet");
-  }
-
-  CORBA::Object_ptr
-  Session_Container::get_home_objref (PortableServer::Servant)
-  {
-    CIAO_TRACE ("Session_Container::get_home_objref");
-    throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::Object_ptr

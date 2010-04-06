@@ -33,8 +33,6 @@
 
 namespace CIAO
 {
-  class Dynamic_Component_Servant_Base;
-
   namespace Deployment
   {
     class CIAO_Container_i;
@@ -99,11 +97,6 @@ namespace CIAO
     virtual void uninstall_servant (PortableServer::Servant objref,
                                     Container_Types::OA_Type type,
                                     PortableServer::ObjectId_out oid) = 0;
-
-    virtual void add_servant_to_map (PortableServer::ObjectId &oid,
-                                     Dynamic_Component_Servant_Base* servant) = 0;
-
-    virtual void delete_servant_from_map (PortableServer::ObjectId &oid) = 0;
 
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
