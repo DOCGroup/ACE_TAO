@@ -59,7 +59,7 @@ namespace CIAO
                      "Constructing container name "
                      "from serial number %u\n",
                      number));
-                     
+
         if (ACE_OS::sprintf (buffer,
                              "CIAO::Session_Container-%ld",
                              number) < 0)
@@ -69,7 +69,7 @@ namespace CIAO
                          CLINFO
                          "CIAO::Session_Container: Unable "
                          ":to create name from number.\n"));
-                         
+
             throw Components::CreateFailure ();
           }
 
@@ -90,7 +90,7 @@ namespace CIAO
                      CLINFO
                      "CIAO::Session_Container: Unable "
                      "to initialize the POA.\n"));
-                     
+
         throw Components::CreateFailure ();
       }
 
@@ -235,7 +235,7 @@ namespace CIAO
                      "Session_Container::install_home - "
                      "Loading home [%C] from shared libraries\n",
                      name));
-                     
+
         CIAO_DEBUG (6,
                     (LM_DEBUG,
                      CLINFO
@@ -243,7 +243,7 @@ namespace CIAO
                      "Executor library [%C] with entrypoint [%C]\n",
                      primary_artifact,
                      entry_point));
-                     
+
         CIAO_DEBUG (6,
                     (LM_DEBUG,
                      CLINFO
@@ -259,7 +259,7 @@ namespace CIAO
                          CLINFO
                          "Session_Container::install_home - "
                          "ERROR: Null component executor DLL name\n"));
-                         
+
             throw Components::Deployment::UnknownImplId ();
           }
 
@@ -270,20 +270,20 @@ namespace CIAO
                          CLINFO
                          "Session_Container::install_home - "
                          "ERROR: Null component servant DLL name\n"));
-                         
+
             throw Components::Deployment::UnknownImplId ();
           }
 
         if (!entry_point)
           {
             CIAO_ERROR (1,
-                        (LM_ERROR, 
+                        (LM_ERROR,
                          CLINFO
                          "Session_Container::install_home - "
                          "ERROR: Null entry point for "
                          "executor DLL [%C]\n",
                          primary_artifact));
-                         
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
@@ -296,7 +296,7 @@ namespace CIAO
                          "ERROR: Null entry point for "
                          "servant DLL [%C]\n",
                          servant_artifact));
-                         
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
@@ -306,7 +306,7 @@ namespace CIAO
                                false) != 0)
           {
             const ACE_TCHAR* error = executor_dll.error ();
-            
+
             CIAO_ERROR (1,
                         (LM_ERROR,
                          CLINFO
@@ -328,13 +328,13 @@ namespace CIAO
           }
 
         ACE_DLL servant_dll;
-        
+
         if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               false) != 0)
           {
             const ACE_TCHAR* error = servant_dll.error ();
-            
+
             CIAO_ERROR (1,
                         (LM_ERROR,
                          CLINFO
@@ -387,7 +387,7 @@ namespace CIAO
                          "Session_Container::install_home - "
                          "ERROR: Static entrypoint "
                          "maps are null or imcomplete.\n"));
-                        
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
@@ -412,7 +412,7 @@ namespace CIAO
                      "invalid in dll [%C]\n",
                      entry_point,
                      primary_artifact));
-                     
+
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
@@ -426,7 +426,7 @@ namespace CIAO
                      "invalid in dll [%C]\n",
                      servant_entrypoint,
                      servant_artifact));
-                     
+
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
@@ -435,7 +435,7 @@ namespace CIAO
                  CLINFO
                  "Session_Container::install_home"
                  " - Loading home executor\n"));
-                 
+
     Components::HomeExecutorBase_var home_executor =
       hcreator ();
 
@@ -446,7 +446,7 @@ namespace CIAO
                      CLINFO
                      "Session_Container::install_home - "
                      "Home executor factory failed.\n"));
-                     
+
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -455,7 +455,7 @@ namespace CIAO
                  CLINFO
                  "Session_Container::install_home"
                  " - Loading home servant\n"));
-                 
+
     PortableServer::Servant home_servant =
       screator (home_executor.in (),
                 this,
@@ -468,7 +468,7 @@ namespace CIAO
                          CLINFO
                          "Session_Container::install_home - "
                          "Home servant factory failed.\n"));
-                         
+
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -519,7 +519,7 @@ namespace CIAO
                      "Session_Container::install_component - "
                      "Loading component [%C] from shared libraries\n",
                      name));
-                    
+
         CIAO_DEBUG (6,
                     (LM_DEBUG,
                      CLINFO
@@ -527,7 +527,7 @@ namespace CIAO
                      "Executor library [%C] with entrypoint [%C]\n",
                      primary_artifact,
                      entry_point));
-                    
+
         CIAO_DEBUG (6,
                     (LM_DEBUG,
                      CLINFO
@@ -551,7 +551,7 @@ namespace CIAO
                          CLINFO
                          "Session_Container::install_component - "
                          "ERROR: Null component servant DLL name\n"));
-                         
+
             throw Components::Deployment::UnknownImplId ();
           }
 
@@ -564,7 +564,7 @@ namespace CIAO
                          "ERROR: Null entry point "
                          "for executor DLL [%C]\n",
                          primary_artifact));
-                         
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
@@ -576,19 +576,19 @@ namespace CIAO
                          "Session_Container::install_component - "
                          "ERROR: Null entry point for servant DLL [%C]\n",
                          servant_artifact));
-                        
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
 
         ACE_DLL executor_dll;
-        
+
         if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
             const ACE_TCHAR* error = executor_dll.error ();
-            
+
             CIAO_ERROR (1,
                         (LM_ERROR,
                          CLINFO
@@ -610,13 +610,13 @@ namespace CIAO
           }
 
         ACE_DLL servant_dll;
-        
+
         if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
             const ACE_TCHAR* error = servant_dll.error ();
-            
+
             CIAO_ERROR (1,
                         (LM_ERROR,
                          CLINFO
@@ -669,7 +669,7 @@ namespace CIAO
                          "Session_Container::install_component - "
                          "ERROR: Static entrypoint "
                          "maps are null or imcomplete.\n"));
-                        
+
             throw Components::Deployment::ImplEntryPointNotFound ();
           }
 
@@ -694,7 +694,7 @@ namespace CIAO
                      "invalid in dll [%C]\n",
                      entry_point,
                      primary_artifact));
-                     
+
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
@@ -708,7 +708,7 @@ namespace CIAO
                      "invalid in dll [%C]\n",
                      servant_entrypoint,
                      servant_artifact));
-                     
+
         throw Components::Deployment::ImplEntryPointNotFound ();
       }
 
@@ -728,7 +728,7 @@ namespace CIAO
                      CLINFO
                      "Session_Container::install_component - "
                      "Component executor factory failed.\n"));
-                     
+
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -737,7 +737,7 @@ namespace CIAO
                  CLINFO
                  "Session_Container::install_component - "
                  "Loading component servant\n"));
-                 
+
     PortableServer::Servant component_servant =
       screator (component_executor.in (),
                 this,
@@ -750,7 +750,7 @@ namespace CIAO
                    CLINFO
                    "Session_Container::install_component - "
                    "Component servant factory failed.\n"));
-                   
+
         throw Components::Deployment::InstallationFailure ();
       }
 
@@ -796,7 +796,7 @@ namespace CIAO
                      "Session_Container::connect_local_facet - "
                      "Nil port name provided to connect local "
                      "facet, throwing exception\n"));
-                     
+
         throw ::Components::InvalidConnection ();
       }
 
@@ -813,8 +813,8 @@ namespace CIAO
                      " [%C] from POA\n",
                      provider_port));
 
-        CIAO::Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
+        CIAO::Connector_Servant_Impl_Base *prov_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
 
         if (!prov_serv)
           {
@@ -831,8 +831,8 @@ namespace CIAO
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "Session_Container::connect_local_facet - "
                      "Successfully fetched user servant [%C] from POA\n", user_port));
 
-        CIAO::Servant_Impl_Base *user_serv =
-          dynamic_cast<CIAO::Servant_Impl_Base *> (srv_tmp);
+        CIAO::Connector_Servant_Impl_Base *user_serv =
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
 
         if (user_serv == 0)
           {
@@ -840,9 +840,9 @@ namespace CIAO
                         (LM_ERROR,
                          CLINFO
                          "Session_Container::connect_local_facet - "
-                         "Unable to cast to provider "
+                         "Unable to cast to user "
                          "servant implementation\n"));
-                         
+
             throw ::Components::InvalidConnection ();
           }
 
@@ -860,7 +860,7 @@ namespace CIAO
                          " and [%C]\n",
                          user_port,
                          provider_port));
-                         
+
             user_serv->connect (user_port, exec);
           }
         else
@@ -887,7 +887,7 @@ namespace CIAO
                      "<%C> to <%C>\n",
                      provider_port,
                      user_port));
-                        
+
         throw ex;
       }
     catch (const ::CORBA::Exception &ex)
@@ -908,7 +908,7 @@ namespace CIAO
                      "Session_Container::connect_local_facet - "
                      "Attempting to connect components not "
                      "managed by this container.\n"));
-                     
+
         throw ::Components::InvalidConnection ();
       }
   }
@@ -926,7 +926,7 @@ namespace CIAO
       {
         PortableServer::Servant srv_tmp =
           this->component_poa_->reference_to_servant (provider);
-          
+
         CIAO_DEBUG (9,
                     (LM_TRACE,
                      CLINFO
@@ -944,12 +944,12 @@ namespace CIAO
                          "Session_Container::disconnect_local_facet - "
                          "Unable to cast to provider servant "
                          "implementation\n"));
-                         
+
             throw ::Components::InvalidConnection ();
           }
 
         srv_tmp = this->component_poa_->reference_to_servant (user);
-        
+
         CIAO_DEBUG (9,
                     (LM_TRACE,
                      CLINFO
@@ -967,7 +967,7 @@ namespace CIAO
                          "Session_Container::disconnect_local_facet - "
                          "Unable to cast to provider servant "
                          "implementation\n"));
-                         
+
             throw ::Components::InvalidConnection ();
           }
 
@@ -996,7 +996,7 @@ namespace CIAO
                      "Session_Container::disconnect_local_facet - "
                      "Caught exception %C.\n",
                      ex._info ().c_str ()));
-                     
+
         throw;
       }
     catch (...)
@@ -1007,7 +1007,7 @@ namespace CIAO
                      "Session_Container::disconnect_local_facet - "
                      "Attempting to connect components not "
                      "managed by this container.\n"));
-                     
+
         throw ::Components::InvalidConnection ();
       }
   }
@@ -1046,7 +1046,7 @@ namespace CIAO
                          "Session_Container::activate_component - "
                          "Invoking CCM activate on provided "
                          "component object reference.\n"));
-                         
+
             svt->activate_component ();
           }
       }
@@ -1079,7 +1079,7 @@ namespace CIAO
                      "Session_Container::activate_component - "
                      "Caught unknown C++ eception while "
                      "activating a component.\n"));
-                     
+
         throw;
       }
   }
@@ -1116,7 +1116,7 @@ namespace CIAO
                          "Session_Container::passivate_component - "
                          "Invoking CCM passivate on provided "
                          "component object reference.\n"));
-                         
+
             svt->passivate_component ();
           }
       }
@@ -1129,7 +1129,7 @@ namespace CIAO
                      "Caught CORBA exception while passivating "
                      "a component: %C\n",
                      ex._info ().c_str ()));
-                     
+
         throw;
       }
     catch (...)
@@ -1140,7 +1140,7 @@ namespace CIAO
                      "Session_Container::passivate_component - "
                      "Caught unknown C++ eception while "
                      "passivating a component.\n"));
-                     
+
         throw;
       }
   }
@@ -1193,7 +1193,7 @@ namespace CIAO
                      "Session_Container::uninstall_component - "
                      "Unable to convert provided servant "
                      "reference to servant implementation."));
-                     
+
         throw ::Components::RemoveFailure ();
       }
     else
