@@ -171,16 +171,14 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   ::CCM_DDS::PortStatusListener_var push_observer_psl =
     this->context_->get_connection_push_observer_status ();
   typename CCM_TYPE::listener_type::_var_type push_observer_dl =
-    typename CCM_TYPE::listener_type::_ptr_type
-      this->context_->get_connection_push_observer_data_listener ();
+    this->context_->get_connection_push_observer_data_listener ();
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
 
   ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
     this->context_->get_connection_push_state_observer_status ();
-  typename CCM_TYPE::listener_type::_var_type push_state_observer_dl =
-    typename CCM_TYPE::listener_type::_ptr_type
-      this->context_->get_connection_push_state_observer_data_listener ();
+  typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+    this->context_->get_connection_push_state_observer_data_listener ();
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
 
