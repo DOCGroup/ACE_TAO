@@ -60,6 +60,7 @@ public:
 
   bool has_provides (void);
   bool has_uses (void);
+  bool has_uses_multiple (void);
   bool has_publishes (void);
   bool has_consumes (void);
   bool has_emits (void);
@@ -81,6 +82,7 @@ private:
   /// Used by visitors to reduce footprint.
   bool has_provides_;
   bool has_uses_;
+  bool has_uses_multiple_;
   bool has_publishes_;
   bool has_consumes_;
   bool has_emits_;
