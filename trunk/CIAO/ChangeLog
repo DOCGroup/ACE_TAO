@@ -1,3 +1,10 @@
+Wed Apr  7 07:14:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/PortUsage/*:
+          Added test which tests the number of DataReaders and
+          DataWriters used in DDS.
+
 Wed Apr  7 07:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/avoids_ccm_lw.mpb:

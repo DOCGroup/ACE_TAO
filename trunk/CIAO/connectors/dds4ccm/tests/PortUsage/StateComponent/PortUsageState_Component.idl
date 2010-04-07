@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef STATE_COMPONENT_IDL
+#define STATE_COMPONENT_IDL
+
+#include "StateConnector/PortUsageState_Connector.idl"
+
+module PortUsageState_Test
+{
+  component PortUsageStateComponent
+  {
+    port PortUsageTestConn::DDS_Update update_port;
+    port PortUsageTestConn::DDS_Read read_port;
+    port PortUsageTestConn::DDS_Get get_port;
+    port PortUsageTestConn::DDS_Listen listen_port;
+    port PortUsageTestConn::DDS_StateListen state_listen_port;
+
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+
+    attribute PortUsageAssignment portusage_assignment;
+  };
+};
+
+#endif
