@@ -89,6 +89,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                          "usage:  %s "
                          "-g <goodiorfile> "
                          "-b <badiorfile> "
+                         "-c <svc_conf_file>"
                          "-p <port> "
                          "-v "
                          "\n",
