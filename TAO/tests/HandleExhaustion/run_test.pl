@@ -31,8 +31,8 @@ my $logbase = 'server.log';
 my $server_logfile = $server->LocalFile ($logbase);
 $server->DeleteFile($logbase);
 
-my $SV = $server->CreateProcess ("server", "-ORBAcceptErrorDelay 5 -ORBDebugLevel 1 -ORBLogFile $logbase");
-my $CL = $client->CreateProcess ("client");
+my $SV = $server->CreateProcess ("server", "-ORBAcceptErrorDelay 5 -ORBDebugLevel 1 -ORBLogFile $logbase -o $server_iorfile");
+my $CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
 
 my $server_status = $SV->Spawn();
 
