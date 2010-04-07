@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef COHERENT_WRITE_TEST_CONNECTOR_IDL_
-#define COHERENT_WRITE_TEST_CONNECTOR_IDL_
+#ifndef QOS_PROFILE_TEST_CONNECTOR_IDL_
+#define QOS_PROFILE_TEST_CONNECTOR_IDL_
 
 #include  <Components.idl>
 #include "Base/QosProfile_Test_Base.idl"
@@ -14,16 +14,12 @@
 
 #pragma ciao lem "Connector/QosProfile_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTest;
-};
-
 module QosProfile_Test
 {
-  connector QosProfile_Test_Connector : ::CCM_DDS::QosProfileTest::DDS_Event
+  module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTestConn;
+  connector QosProfile_Test_Connector : QosProfileTestConn::DDS_Event
   {
   };
 };
 
-#endif /* QosProfile_Test_CONNECTOR_IDL_ */
+#endif /* QOS_PROFILE_TEST_CONNECTOR_IDL_ */
