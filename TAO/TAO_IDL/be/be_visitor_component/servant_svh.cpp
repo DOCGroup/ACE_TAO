@@ -448,6 +448,8 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "get_facet_executor (const char * name);";
     }
 
+  /// No need for this method if the component has neither
+  /// facets nor event sinks.
   if (this->node_->has_provides () || this->node_->has_consumes ())
     {
       os_ << be_uidt_nl << be_nl

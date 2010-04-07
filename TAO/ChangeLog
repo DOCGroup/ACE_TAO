@@ -1,3 +1,13 @@
+Wed Apr  7 14:10:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Added checks to eliminate generation and use of
+          populate_port_tables() if the component has neither
+          facets nor event sinks, since this method will be
+          effectively a no-op in that case anyway.
+
 Wed Apr  7 13:47:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
