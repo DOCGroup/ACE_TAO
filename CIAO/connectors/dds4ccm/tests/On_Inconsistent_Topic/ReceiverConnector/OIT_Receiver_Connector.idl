@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file OIT_Receiver_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_
+#define ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/OIT_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "ReceiverConnector/OIT_Receiver_ConnectorE.idl"
+
+module OIT_Test
+{
+  module ::CCM_DDS::Typed < ::OIT_Receiver_Topic, ::OIT_Receiver_TopicSeq> OIT_Receiver_TopicConn;
+  connector OIT_Receiver_Connector : OIT_Receiver_TopicConn::DDS_Event
+  {
+  };
+};
+
+#endif /* ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_ */
