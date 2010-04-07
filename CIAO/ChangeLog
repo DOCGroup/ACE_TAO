@@ -1,3 +1,10 @@
+Wed Apr  7 07:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/avoids_ccm_lw.mpb:
+        * MPC/config/ccm_lw.mpb:
+          New base projects for future use, to be used for explicitly
+          supporting LwCCM by disabling features
+
 Wed Apr  7 06:58:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
