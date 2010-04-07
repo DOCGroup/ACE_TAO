@@ -33,9 +33,9 @@ $server->DeleteFile($iorbaseB);
 $client->DeleteFile($iorbaseA);
 $client->DeleteFile($iorbaseB);
 
-$SV = $server->CreateProcess ("server", "-ORBDebuglevel $debug_level");
+$SV = $server->CreateProcess ("server", "-ORBDebuglevel $debug_level  -a $server_iorfileA  -b $server_iorfileB");
 
-$CL = $client->CreateProcess ("client");
+$CL = $client->CreateProcess ("client", "-a file://$client_iorfileA -b file://$client_iorfileB");
 
 $server_status = $SV->Spawn ();
 
