@@ -19,10 +19,12 @@ module Components
 
   typedef sequence<ConfigValue> ConfigValues;
 
+#if !defined (CCM_LW)
   interface StandardConfigurator : Configurator
   {
     void set_configuration (in ConfigValues descr);
   };
+#endif
 
 };
 #endif /* CCM_STANDARDCONFIGURATOR_IDL */

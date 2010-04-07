@@ -15,30 +15,38 @@ module Components
 {
   typeprefix Components "omg.org";
 
+#if !defined (CCM_LW)
   valuetype ConsumerDescription : PortDescription
   {
     public EventConsumerBase consumer;
   };
   typedef sequence<ConsumerDescription> ConsumerDescriptions;
+#endif
 
+#if !defined (CCM_LW)
   valuetype EmitterDescription : PortDescription
   {
     public EventConsumerBase consumer;
   };
   typedef sequence<EmitterDescription> EmitterDescriptions;
+#endif
 
+#if !defined (CCM_LW)
   valuetype SubscriberDescription
   {
     public Cookie ck;
     public EventConsumerBase consumer;
   };
   typedef sequence<SubscriberDescription> SubscriberDescriptions;
+#endif
 
+#if !defined (CCM_LW)
   valuetype PublisherDescription : PortDescription
   {
     public SubscriberDescriptions consumers;
   };
   typedef sequence<PublisherDescription> PublisherDescriptions;
+#endif
 
   interface Events
   {
@@ -66,20 +74,32 @@ module Components
       raises (InvalidName,
               NoConnection);
 
+#if !defined (CCM_LW)
     ConsumerDescriptions get_all_consumers ();
+#endif
 
+#if !defined (CCM_LW)
     ConsumerDescriptions get_named_consumers (in NameList names)
       raises (InvalidName);
+#endif
 
+#if !defined (CCM_LW)
     EmitterDescriptions get_all_emitters ();
+#endif
 
+#if !defined (CCM_LW)
     EmitterDescriptions get_named_emitters (in NameList names)
       raises (InvalidName);
+#endif
 
+#if !defined (CCM_LW)
     PublisherDescriptions get_all_publishers ();
+#endif
 
+#if !defined (CCM_LW)
     PublisherDescriptions get_named_publishers (in NameList names)
       raises (InvalidName);
+#endif
   };
 };
 #endif /* CCM_EVENTS_IDL */

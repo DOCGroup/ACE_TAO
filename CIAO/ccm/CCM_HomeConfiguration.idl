@@ -14,10 +14,14 @@ module Components
 
   interface HomeConfiguration : CCMHome
   {
+#if !defined (CCM_LW)
     void set_configurator (in Configurator cfg);
+#endif
     void set_configuration_values (in ConfigValues config);
+#if !defined (CCM_LW)
     void complete_component_configuration (in boolean b);
     void disable_home_configuration();
+#endif
   };
 };
 #endif /* CCM_HOMECONFIGURATOR_IDL */

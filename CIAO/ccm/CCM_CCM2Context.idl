@@ -13,21 +13,31 @@ module Components
 {
   typeprefix Components "omg.org";
 
+#if !defined (CCM_LW)
   typedef CosPersistentState::CatalogBase CatalogBase;
+#endif
+#if !defined (CCM_LW)
   typedef CosPersistentState::_TypeId _TypeId;
+#endif
 
   exception PolicyMismatch {};
+#if !defined (CCM_LW)
   exception PersistenceNotAvailable {};
+#endif
 
   local interface CCM2Context : CCMContext
   {
+#if !defined (CCM_LW)
     HomeRegistration get_home_registration ();
+#endif
 
     void req_passivate ()
       raises (PolicyMismatch);
 
+#if !defined (CCM_LW)
     CatalogBase get_persistence (in _TypeId catalog_type_id)
       raises (PersistenceNotAvailable);
+#endif
   };
 
 };
