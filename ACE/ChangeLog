@@ -1,3 +1,10 @@
+Wed Apr  7 16:27:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/cle.pl:
+
+          Added the ability to use an environment variable (CL_CHANGELOG_FILE)
+          to specify the name of the ChangeLog file to use.
+
 Tue Apr  6 14:37:38 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ACE-INSTALL.html (http): Updated the link to the OCI MPC
@@ -45,7 +52,7 @@ Fri Apr 02 13:57:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.8 released.
+        * ACE version 5.7.8 released.
 
 Tue Mar 30 09:38:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
