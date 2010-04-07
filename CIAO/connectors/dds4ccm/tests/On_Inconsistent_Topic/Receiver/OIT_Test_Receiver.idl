@@ -2,21 +2,21 @@
 
 /**
  * @file
- * @author >
+ * @author Marcel Smit <msmit@remedy.nl>
  */
 
 #ifndef RECEIVER_IDL
 #define RECEIVER_IDL
 
-#include "Connector/ConnectorStatusListener_Test_Connector.idl"
+#include "ReceiverConnector/OIT_Receiver_Connector.idl"
 
-module ConnectorStatusListener_Test
+module OIT_Test
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_Listen info_out;
+    port OIT_Receiver_TopicConn::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener connector_status;
-   };
+  };
 };
 
 #endif
