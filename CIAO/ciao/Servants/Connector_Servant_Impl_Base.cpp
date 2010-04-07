@@ -361,7 +361,7 @@ namespace CIAO
 
   void
   Connector_Servant_Impl_Base::set_attributes (
-    const Components::ConfigValues &descr)
+    const Components::ConfigValues & /* descr */)
   {
   }
 
