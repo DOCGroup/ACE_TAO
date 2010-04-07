@@ -14,14 +14,12 @@
 
 #pragma ciao lem "Connector/SetConnectorAttribute_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::SetConnectorAttributeTest, ::SetConnectorAttributeTestSeq> SetConnectorAttributeTest;
-};
-
 module SetConnectorAttribute
 {
-  connector SetConnectorAttribute_Connector : ::CCM_DDS::SetConnectorAttributeTest::DDS_Event
+  module ::CCM_DDS::Typed
+    < ::SetConnectorAttributeTest, ::SetConnectorAttributeTestSeq>
+    SetConnectorAttributeTestConn;
+  connector SetConnectorAttribute_Connector : SetConnectorAttributeTestConn::DDS_Event
   {
   };
 };

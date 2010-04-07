@@ -123,17 +123,6 @@
     <source/>
     <implementation xmi:idref="QosProfile_Test_ConnectorComponentImplementation" />
     <configProperty>
-      <name>qos_profile</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Wrong_Library#Wrong_Profile</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
       <name>topic_name</name>
       <value>
         <type>
