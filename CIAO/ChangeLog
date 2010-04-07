@@ -1,3 +1,10 @@
+Wed Apr  7 06:58:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QosProfile/*:
+          Added test which tests whether deployment fails when an
+          incorrect profile name is given.
+
 Wed Apr  7 06:48:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/Plan.cdp:

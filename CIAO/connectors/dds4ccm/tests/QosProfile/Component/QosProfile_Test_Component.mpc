@@ -1,0 +1,151 @@
+// $Id$
+
+project(QosProfile_Test_Component_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  after += QosProfile_Test_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=COMPONENT_STUB_Export \
+              -Wb,stub_export_include=Component_stub_export.h \
+              -Wb,skel_export_macro=COMPONENT_SVNT_Export \
+              -Wb,skel_export_include=Component_svnt_export.h \
+              -Wb,svnt_export_macro=COMPONENT_SVNT_Export \
+              -Wb,svnt_export_include=Component_svnt_export.h \
+              -Wb,exec_export_macro=COMPONENT_EXEC_Export \
+              -Wb,exec_export_include=Component_exec_export.h -I..
+
+  IDL_Files {
+    QosProfile_Test_Component.idl
+  }
+}
+
+project(QosProfile_Test_Component_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += QosProfile_Test_Component_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=COMPONENT_LEM_STUB_Export \
+              -Wb,stub_export_include=Component_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    QosProfile_Test_ComponentE.idl
+  }
+}
+
+project(QosProfile_Test_Component_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += QosProfile_Test_Component_lem_gen QosProfile_Test_Component_stub  \
+           QosProfile_Test_Connector_stub QosProfile_Test_Base_stub
+  libs  +=  Component_stub QosProfile_Test_Connector_stub \
+            QosProfile_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Component_lem_stub
+  dynamicflags   = COMPONENT_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QosProfile_Test_ComponentEC.cpp
+  }
+
+  Header_Files {
+    QosProfile_Test_ComponentEC.h
+    Component_lem_stub_export.h
+  }
+
+  Inline_Files {
+    QosProfile_Test_ComponentEC.inl
+  }
+}
+
+project(QosProfile_Test_Component_stub) : ccm_stub, dds4ccm_base {
+  after += QosProfile_Test_Component_idl_gen  QosProfile_Test_Connector_stub \
+           QosProfile_Test_Base_stub QosProfile_Test_Connector_lem_gen
+  libs  += QosProfile_Test_Connector_stub QosProfile_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Component_stub
+  dynamicflags   = COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QosProfile_Test_ComponentC.cpp
+  }
+
+  Header_Files {
+    QosProfile_Test_ComponentC.h
+    Component_stub_export.h
+  }
+
+  Inline_Files {
+    QosProfile_Test_ComponentC.inl
+  }
+}
+
+project(QosProfile_Test_Component_exec) : ciao_executor, dds4ccm_base {
+  after   += QosProfile_Test_Component_lem_stub QosProfile_Test_Component_stub \
+             QosProfile_Test_Base_stub QosProfile_Test_Connector_stub \
+             QosProfile_Test_Connector_lem_stub DDS4CCM_lem_stub
+  sharedname = Component_exec
+  libs += Component_stub Component_lem_stub QosProfile_Test_Base_stub \
+          QosProfile_Test_Connector_stub QosProfile_Test_Connector_lem_stub \
+          DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = COMPONENT_EXEC_BUILD_DLL READER_STARTER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QosProfile_Test_Component_exec.cpp
+  }
+
+  Header_Files {
+    QosProfile_Test_Component_exec.h
+    Component_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(QosProfile_Test_Component_svnt) : ciao_servant, dds4ccm_base {
+  after      +=   QosProfile_Test_Component_lem_stub QosProfile_Test_Base_stub \
+                  QosProfile_Test_Connector_stub QosProfile_Test_Connector_svnt \
+                  QosProfile_Test_Component_exec QosProfile_Test_Connector_lem_stub \
+                  DDS4CCM_lem_stub DDS4CCM_skel
+  sharedname  = Component_svnt
+  libs       += Component_stub Component_lem_stub QosProfile_Test_Base_stub \
+                QosProfile_Test_Connector_stub QosProfile_Test_Connector_svnt \
+                Component_exec QosProfile_Test_Connector_lem_stub DDS4CCM_lem_stub \
+                DDS4CCM_skel
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = COMPONENT_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QosProfile_Test_ComponentS.cpp
+    QosProfile_Test_Component_svnt.cpp
+  }
+
+  Header_Files {
+    QosProfile_Test_ComponentS.h
+    QosProfile_Test_Component_svnt.h
+    Component_svnt_export.h
+  }
+
+  Inline_Files {
+    QosProfile_Test_ComponentS.inl
+  }
+}
+
+
