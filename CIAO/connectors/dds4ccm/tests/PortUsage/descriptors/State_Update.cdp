@@ -1,0 +1,258 @@
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>PortUsage_Test_Depl</label>
+  <UUID>PortUsage_Test_Depl</UUID>
+
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PortUsageState_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PortUsageState_Test_PortUsageStateComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>StateComponent_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>StateComponent_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ConnectorImplementation">
+    <name>ConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="PortUsageState_Connector_ExecArtifact" />
+    <artifact xmi:idref="PortUsageState_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PortUsageState_Test_PortUsageState_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PortUsageState_Test_PortUsageState_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PortUsageState_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PortUsageState_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="ComponentInstance">
+    <name>ComponentInstance</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>portusage_assignment</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>Assigment</name>
+            <typeId>IDL:Simple/Assignment:1.0</typeId>
+            <member>PORTUSAGE_ASSIGNMENT_WRITE</member>
+            <member>PORTUSAGE_ASSIGNMENT_GET</member>
+            <member>PORTUSAGE_ASSIGNMENT_LISTEN</member>
+            <member>PORTUSAGE_ASSIGNMENT_UPDATE</member>
+            <member>PORTUSAGE_ASSIGNMENT_READ</member>
+            <member>PORTUSAGE_ASSIGNMENT_STATELISTEN</member>
+          </enum>
+        </type>
+        <value>
+          <enum>PORTUSAGE_ASSIGNMENT_UPDATE</enum>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="ConnectorInstance">
+    <name>ConnectorInstance</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>PortUsage_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>update_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>update_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>observable_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- a reader is need to force an on_publication_matched -->
+  <connection>
+    <name>read_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>connector_status</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="PortUsageState_Connector_ExecArtifact">
+    <name>PortUsageState_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>PortUsageState_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="PortUsageState_Connector_SvntArtifact">
+    <name>PortUsageState_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>PortUsageState_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="PortUsageState_Connector_StubArtifact">
+    <name>PortUsageState_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>PortUsageState_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>StateComponent_exec</name>
+    <source/>
+    <node/>
+    <location>StateComponent_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>StateComponent_svnt</name>
+    <source/>
+    <node/>
+    <location>StateComponent_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
+    <source/>
+    <node/>
+    <location>Component_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>
