@@ -1,3 +1,11 @@
+Wed Apr  7 16:48:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Sender/Sender.idl:
+        
+          Added attributes to test support of sequence type, since there
+          is already a test case in this component for attributes of
+          enum type.
+
 Wed Apr  7 14:08:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.mpc:
