@@ -99,14 +99,20 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << "try" << be_idt_nl
-      << "{" << be_idt_nl
-      << "this->populate_port_tables ();" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "catch (const ::CORBA::Exception &)" << be_idt_nl
-      << "{" << be_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
+  /// If a component has neither facets nor event sinks, the
+  /// populate_port_tables() method isn't generated.
+  if (this->node_->has_provides () || this->node_->has_consumes ())
+    {
+      os_ << "try" << be_idt_nl
+          << "{" << be_idt_nl
+          << "this->populate_port_tables ();" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "catch (const ::CORBA::Exception &)" << be_idt_nl
+          << "{" << be_nl
+          << "}" << be_uidt << be_uidt_nl;
+    }
+      
+  os_ << "}";
 
   os_ << be_nl << be_nl
       << lname << "_Servant::~"
