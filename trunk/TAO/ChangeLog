@@ -1,3 +1,18 @@
+Wed Apr  7 13:47:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        
+          Added additional flag to indicated the presence of a
+          multiplex uses port in the component.
+          
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Added checks for the above flag, to determine if the Cookie
+          argument in a generated disconnect() method will be used
+          or not. If not used, it is generated as commented out.
+
 Wed Apr  7 10:39:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/Bug_2953_Regression/client.cpp
