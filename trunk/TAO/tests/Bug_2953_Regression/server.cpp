@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
+#include "ace/Get_Opt.h"
 
 #include "TestS.h"
 #include "Client_Task.h"
@@ -43,6 +44,40 @@ private:
   CORBA::ORB_var orb_;
   Client_Task* task_;
 };
+
+const ACE_TCHAR *ior_a_file = ACE_TEXT("iorA.ior");
+const ACE_TCHAR *ior_b_file = ACE_TEXT("iorB.ior");
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'a':
+        ior_a_file = get_opts.optarg;
+        break;
+
+      case 'b':
+        ior_b_file = get_opts.optarg;
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-a <iorAfile>"
+                           "-b <iorBfile>"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 RTCORBA::ThreadpoolId
 createThreadpool(CORBA::ORB_ptr orb, RTCORBA::RTORB_ptr rtorb, CORBA::ULong nthreads)
@@ -229,10 +264,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
     const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
 
-    if (write_iorfile(ACE_TEXT("iorA.ior"), iorA) == 1)
+    if (parse_args (argc, argv) != 0)
       return 1;
 
-    if (write_iorfile(ACE_TEXT("iorB.ior"), iorB) == 1)
+    if (write_iorfile(ior_a_file, iorA) == 1)
+      return 1;
+
+    if (write_iorfile(ior_b_file, iorB) == 1)
       return 1;
 
     // colocated calls work fine
