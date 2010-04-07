@@ -1,7 +1,16 @@
+Wed Apr  7 14:08:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.mpc:
+          Removed unnecessary define.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+          Corrected previous commit.
+
 Wed Apr  7 13:46:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
-        
+
           Commented out an unused argument.
 
 Wed Apr  7 12:12:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
