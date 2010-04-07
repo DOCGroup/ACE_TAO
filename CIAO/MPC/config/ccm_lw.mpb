@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+feature (ccm_lm) : taobaseidldefaults {
+  macros += CCM_LW
+  idlflags += -DCCM_LW
+}
