@@ -1,3 +1,12 @@
+Wed Apr  7 15:18:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_attribute/component_init.cpp:
+        
+          Added check in generated code for the success of extraction
+          from Any. If extraction fails, we throw BAD_PARAM. I didn't
+          see any specific indications in the spec about what to
+          throw in this case.
+
 Wed Apr  7 14:10:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
