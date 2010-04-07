@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/QosProfile_Test_Connector.idl"
+
+module QosProfile_Test
+{
+  component QosProfileComponent
+  {
+    port CCM_DDS::QosProfileTest::DDS_Write info_write;
+  };
+};
+
+#endif
