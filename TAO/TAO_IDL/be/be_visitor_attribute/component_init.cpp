@@ -91,7 +91,7 @@ be_visitor_attribute_component_init::visit_predefined_type (be_predefined_type *
 int
 be_visitor_attribute_component_init::visit_sequence (be_sequence *)
 {
-  this->emit_error ("sequence");
+  this->emit_init_block ();
   return 0;
 }
 

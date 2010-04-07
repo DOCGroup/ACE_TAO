@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_field.h"
 #include "be_structure.h"
 #include "be_helper.h"

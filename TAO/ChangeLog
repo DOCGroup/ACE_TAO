@@ -1,3 +1,22 @@
+Wed Apr  7 16:44:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+
+          Changes to support configuration of component
+          attributes of (typedef'd) sequence type. Attributes
+          of anonymous sequence type (deprecated by the OMG)
+          are not supported.
+
 Wed Apr  7 15:18:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * be/be_visitor_attribute/component_init.cpp:
