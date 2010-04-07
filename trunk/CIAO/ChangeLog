@@ -13,7 +13,7 @@ Tue Apr  6 18:51:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.h:
         * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
         * connectors/dds4ccm/tests/ListenManyByMany/descriptors/Plan.cdp:
-          Added Connector declaration to the ListenManyByMany module.
+          Moved Connector declaration to the ListenManyByMany module.
           Also resolved test errors.
 
         * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl:
@@ -23,7 +23,7 @@ Tue Apr  6 18:51:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender.idl:
         * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.h:
         * connectors/dds4ccm/tests/ListenOneByOne/descriptors/Plan.cdp:
-          Added Connector declaration to the ListenOneByOne module.
+          Moved Connector declaration to the ListenOneByOne module.
           Also resolved test errors.
 
 Tue Apr  6 13:53:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
