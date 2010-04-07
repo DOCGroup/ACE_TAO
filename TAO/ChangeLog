@@ -1,3 +1,11 @@
+Wed Apr  7 10:39:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/Bug_2953_Regression/client.cpp
+        * tests/Bug_2953_Regression/run_test.pl
+        * tests/Bug_2953_Regression/server.cpp
+        Pass filenames through commandline.
+        
+
 Wed Apr  7 09:51:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/Hang_Shutdown/run_test.pl
