@@ -42,7 +42,7 @@ namespace CIAO_QosProfile_Test_QosProfileComponent_Impl
 
   private:
     ::QosProfile_Test::CCM_QosProfileComponent_Context_var context_;
-    ::CCM_DDS::QosProfileTest::Writer_var writer_;
+    ::QosProfile_Test::QosProfileTestConn::Writer_var writer_;
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

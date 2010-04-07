@@ -1,3 +1,17 @@
+Wed Apr  7 12:12:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.idl:
+          Moved templated connector to the namespace of the connector.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file since we don't need it in this test.
+
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+          Moved templated connector to the namespace of the connector.
+
 Wed Apr  7 11:09:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/*:
