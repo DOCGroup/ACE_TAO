@@ -6,6 +6,8 @@
 
 #include "tao/orb_types.pidl"
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -26,4 +28,6 @@ module Components
       raises (HomeNotFound);
   };
 };
+#endif
+
 #endif /* CCM_HOMEFINDER_IDL */

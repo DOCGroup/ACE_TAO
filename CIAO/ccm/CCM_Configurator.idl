@@ -4,6 +4,8 @@
 #if !defined (CCM_CONFIGURATOR_IDL)
 #define CCM_CONFIGURATOR_IDL
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -18,4 +20,7 @@ module Components
       raises (WrongComponentType);
   };
 };
+
+#endif
+
 #endif /* CCM_CONFIGURATOR_IDL */

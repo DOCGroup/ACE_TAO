@@ -32,10 +32,18 @@ module Components
   {
     Object provide_facet (in FeatureName name)
       raises (InvalidName);
+#if !defined (CCM_LW)
     FacetDescriptions get_all_facets();
+#endif
+
+#if !defined (CCM_LW)
     FacetDescriptions get_named_facets (in NameList names)
       raises (InvalidName);
+#endif
+
+#if !defined (CCM_LW)
     boolean same_component (in Object object_ref);
+#endif
   };
 };
 #endif /* CCM_NAVIGATION_IDL */

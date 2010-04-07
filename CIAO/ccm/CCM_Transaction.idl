@@ -3,6 +3,8 @@
 #if !defined (CCM_TRANSACTION_IDL)
 #define CCM_TRANSACTION_IDL
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -73,4 +75,7 @@ module Components
     };
   };
 };
+
+#endif
+
 #endif /* CCM_TRANSACTION_IDL */

@@ -19,8 +19,12 @@ module Components
 
   interface CCMHome
   {
+#if !defined (CCM_LW)
     CORBA::IRObject get_component_def ();
+#endif
+#if !defined (CCM_LW)
     CORBA::IRObject get_home_def ();
+#endif
     void remove_component (in CCMObject comp)
       raises (RemoveFailure);
   };

@@ -7,6 +7,8 @@
 
 // *************** Basic Container interfaces ***************
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -23,4 +25,7 @@ module Components
       raises (CCMException);
   };
 };
+
+#endif
+
 #endif /* CCM_SESSIONSYNCHRONIZATION_IDL */

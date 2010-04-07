@@ -43,13 +43,19 @@ module Components
               CookieRequired,
               NoConnection);
 
+#if !defined (CCM_LW)
     ConnectionDescriptions get_connections (in FeatureName name)
       raises (InvalidName);
+#endif
 
+#if !defined (CCM_LW)
     ReceptacleDescriptions get_all_receptacles ();
+#endif
 
+#if !defined (CCM_LW)
     ReceptacleDescriptions get_named_receptacles (in NameList names)
       raises (InvalidName);
+#endif
   };
 };
 #endif /* CCM_RECEPTACLE_IDL */

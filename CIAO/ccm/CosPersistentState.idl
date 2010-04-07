@@ -9,6 +9,8 @@
 #if !defined (CIAO_COSPERSISTENTSTATE_PIDL)
 #define CIAO_COSPERSISTENTSTATE_PIDL
 
+#if !defined (CCM_LW)
+
 module CosPersistentState {
 
   local interface CatalogBase
@@ -18,4 +20,6 @@ module CosPersistentState {
   typedef sequence<octet> _TypeId;
   typedef string Pid;
 };
+
+#endif
 #endif /* CIAO_COSPERSISTENTSTATE_PIDL */
