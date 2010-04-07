@@ -17,6 +17,7 @@
 #include "be_visitor.h"
 
 #include "ast_mirror_port.h"
+#include "ast_uses.h"
 
 #include "global_extern.h"
 #include "utl_err.h"
@@ -61,6 +62,7 @@ be_component::be_component (UTL_ScopedName *n,
                   false),
     has_provides_ (false),
     has_uses_ (false),
+    has_uses_multiple_ (false),
     has_publishes_ (false),
     has_consumes_ (false),
     has_emits_ (false),
@@ -130,6 +132,12 @@ be_component::has_uses (void)
 }
 
 bool
+be_component::has_uses_multiple (void)
+{
+  return this->has_uses_multiple_;
+}
+
+bool
 be_component::has_publishes (void)
 {
   return this->has_publishes_;
@@ -171,6 +179,7 @@ be_component::scan (UTL_Scope *s)
       AST_Decl *d = i.item ();
       AST_Extended_Port *ep = 0;
       AST_Mirror_Port *mp = 0;
+      AST_Uses *u = 0;
 
       switch (d->node_type ())
         {
@@ -179,6 +188,13 @@ be_component::scan (UTL_Scope *s)
             continue;
           case AST_Decl::NT_uses:
             this->has_uses_ = true;
+            u = AST_Uses::narrow_from_decl (d);
+            
+            if (u->is_multiple ())
+              {
+                this->has_uses_multiple_ = true;
+              }
+              
             continue;
           case AST_Decl::NT_publishes:
             this->has_publishes_ = true;

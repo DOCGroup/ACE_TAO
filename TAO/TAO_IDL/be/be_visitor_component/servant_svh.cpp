@@ -448,9 +448,12 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "get_facet_executor (const char * name);";
     }
 
-  os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl
-      << "void" << be_nl
-      << "populate_port_tables (void);";
+  if (this->node_->has_provides () || this->node_->has_consumes ())
+    {
+      os_ << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl
+          << "void" << be_nl
+          << "populate_port_tables (void);";
+    }
 }
 

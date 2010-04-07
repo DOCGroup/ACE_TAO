@@ -201,31 +201,34 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_nl << be_nl
-      << "/// Private method to trigger population of the port"
-      << be_nl
-      << "/// tables (facets and event consumers)." << be_nl
-      << "void" << be_nl
-      << node_->local_name ()
-      << "_Servant::populate_port_tables (void)" << be_nl
-      << "{" << be_idt_nl
-      << "::CORBA::Object_var obj_var;" << be_nl
-      << "::Components::EventConsumerBase_var ecb_var;"
-      << be_nl;
-
-  be_visitor_populate_port_tables ppt_visitor (this->ctx_);
-
-  if (ppt_visitor.visit_component_scope (node) == -1)
+  if (this->node_->has_provides () || this->node_->has_consumes ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_component_svs::"
-                         "visit_component - "
-                         "populate port tables visitor failed\n"),
-                        -1);
-    }
+      os_ << be_nl << be_nl
+          << "/// Private method to trigger population of the port"
+          << be_nl
+          << "/// tables (facets and event consumers)." << be_nl
+          << "void" << be_nl
+          << node_->local_name ()
+          << "_Servant::populate_port_tables (void)" << be_nl
+          << "{" << be_idt_nl
+          << "::CORBA::Object_var obj_var;" << be_nl
+          << "::Components::EventConsumerBase_var ecb_var;"
+          << be_nl;
 
-  os_ << be_uidt_nl
-      << "}";
+      be_visitor_populate_port_tables ppt_visitor (this->ctx_);
+
+      if (ppt_visitor.visit_component_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_component_svs::"
+                             "visit_component - "
+                             "populate port tables visitor failed\n"),
+                            -1);
+        }
+
+      os_ << be_uidt_nl
+          << "}";
+    }
 
   return 0;
 }
@@ -969,10 +972,11 @@ be_visitor_servant_svs::gen_uses_top (void)
       << node_->local_name () << "_Servant::disconnect ("
       << be_idt_nl
       << "const char * name," << be_nl
-      << "::Components::Cookie * ck)" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  os_ << "if (name == 0)" << be_idt_nl
+      << "::Components::Cookie * "
+      << (this->node_->has_uses_multiple () ? "ck" : "/* ck */")
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
