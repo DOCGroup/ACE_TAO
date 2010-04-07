@@ -1,13 +1,12 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef CIAO_SENDER_EXEC_H_
-#define CIAO_SENDER_EXEC_H_
+#ifndef CIAO_RECEIVER_EXEC_H_
+#define CIAO_RECEIVER_EXEC_H_
 
+#include "OIT_Test_ReceiverEC.h"
 
-#include "ConnectorStatusListener_Test_SenderEC.h"
-
-#include /**/ "Sender_exec_export.h"
+#include /**/ "Receiver_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -17,22 +16,22 @@
 
 #include <map>
 
-namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
+namespace CIAO_OIT_Test_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
-  // ConnectorStatusListener_sec_exec_i
+  // ConnectorStatusListener_exec_i
   //============================================================
-  class SENDER_EXEC_Export ConnectorStatusListener_sec_exec_i
+  class RECEIVER_EXEC_Export ConnectorStatusListener_exec_i
     : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ConnectorStatusListener_sec_exec_i (Atomic_Boolean &,
-                                        Atomic_ThreadId &);
-    virtual ~ConnectorStatusListener_sec_exec_i (void);
+    ConnectorStatusListener_exec_i (Atomic_Boolean &,
+                                    Atomic_ThreadId &);
+    virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
     void on_inconsistent_topic (::DDS::Topic_ptr the_topic,
@@ -50,47 +49,58 @@ namespace CIAO_ConnectorStatusListener_Test_Sender_Impl
     void on_offered_incompatible_qos (::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-      void on_unexpected_status (::DDS::Entity_ptr the_entity,
-                                 ::DDS::StatusKind  status_kind);
-  private:
+      void on_unexpected_status (
+        ::DDS::Entity_ptr the_entity,
+        ::DDS::StatusKind  status_kind);
+    private:
     Atomic_Boolean &inconsistent_;
     Atomic_ThreadId &thread_id_;
   };
 
   //============================================================
-  // Sender_exec_i
+  // Receiver_exec_i
   //============================================================
-  class Sender_exec_i
-    : public virtual Sender_Exec,
+  class RECEIVER_EXEC_Export Receiver_exec_i
+    : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Sender_exec_i (void);
-    virtual ~Sender_exec_i (void);
+    Receiver_exec_i (void);
+    virtual ~Receiver_exec_i (void);
 
-    virtual void set_session_context (::Components::SessionContext_ptr ctx);
+    // Supported operations and attributes.
+    // Component attributes.
+
+    // Port operations.
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_out_status (void);
+
+    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
+    get_connector_status (void);
+
+    virtual ::OIT_Test::OIT_Receiver_TopicConn::CCM_Listener_ptr
+    get_info_out_data_listener (void);
+
+    // Operations from Components::SessionComponent.
+    virtual void
+    set_session_context (
+      ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
+
     virtual void ccm_activate (void);
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-     // Port operations.
-    virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-    get_connector_status(void);
-
   private:
-    ::ConnectorStatusListener_Test::CCM_Sender_Context_var context_;
+    ::OIT_Test::CCM_Receiver_Context_var context_;
 
     Atomic_Boolean inconsistent_;
     Atomic_ThreadId thread_id_listener_;
   };
 
-  extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_ConnectorStatusListener_Test_Sender_Impl (void);
-
-
-
+  extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_OIT_Test_Receiver_Impl (void);
 }
 
 #endif /* ifndef */

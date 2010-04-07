@@ -1,13 +1,13 @@
 <Deployment:DeploymentPlan
-   xmlns:Deployment="http://www.omg.org/Deployment"
-   xmlns:xmi="http://www.omg.org/XMI"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>ConnectorStatusListener_Test_Depl_1</label>
-  <UUID>ConnectorStatusListener_Test_Depl_1</UUID>
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>On_Inconsistent_Topic_Depl</label>
+  <UUID>On_Inconsistent_Topic_Depl</UUID>
 
-  <implementation xmi:id="ReceiverComponentImplementation">
-    <name>ReceiverComponentImplementation</name>
+  <implementation xmi:id="ReceiverImplementation">
+    <name>ReceiverImplementation</name>
     <source/>
     <artifact xmi:idref="Receiver_ExecArtifact" />
     <artifact xmi:idref="Receiver_SvntArtifact" />
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ConnectorStatusListener_Test_Receiver_Impl</string>
+          <string>create_OIT_Test_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ConnectorStatusListener_Test_Receiver_Servant</string>
+          <string>create_OIT_Test_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -58,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="SenderConnectorImplementation">
-    <name>SenderConnectorImplementation</name>
+  <implementation xmi:id="Sender_ConnectorImplementation">
+    <name>Sender_ConnectorImplementation</name>
     <source/>
-    <artifact xmi:idref="Sender_ExecArtifact" />
-    <artifact xmi:idref="Sender_SvntArtifact" />
+    <artifact xmi:idref="Sender_Connector_ExecArtifact" />
+    <artifact xmi:idref="Sender_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SenderStatusListener_Test_Connector_Impl</string>
+          <string>create_OIT_Test_OIT_Sender_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SenderStatusListener_Test_Connector_Servant</string>
+          <string>create_OIT_Test_OIT_Sender_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender_svnt</string>
+          <string>Sender_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,14 +104,14 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender_exec</string>
+          <string>Sender_Connector_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="ReceiverConnectorImplementation">
-    <name>ReceiverConnectorImplementation</name>
+  <implementation xmi:id="Receiver_ConnectorImplementation">
+    <name>Receiver_ConnectorImplementation</name>
     <source/>
     <artifact xmi:idref="Receiver_Connector_ExecArtifact" />
     <artifact xmi:idref="Receiver_Connector_SvntArtifact" />
@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SenderStatusListener_TestSec_Connector_Impl</string>
+          <string>create_OIT_Test_OIT_Receiver_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -134,7 +134,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SenderStatusListener_TestSec_Connector_Servant</string>
+          <string>create_OIT_Test_OIT_Receiver_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -162,9 +162,8 @@
     </execParameter>
   </implementation>
 
-
-  <implementation xmi:id="SenderComponentImplementation">
-    <name>SenderComponentImplementation</name>
+  <implementation xmi:id="SenderImplementation">
+    <name>SenderImplementation</name>
     <source/>
     <artifact xmi:idref="Sender_ExecArtifact" />
     <artifact xmi:idref="Sender_SvntArtifact" />
@@ -176,7 +175,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ConnectorStatusListener_Test_Sender_Impl</string>
+          <string>create_OIT_Test_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -187,7 +186,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_ConnectorStatusListener_Test_Sender_Servant</string>
+          <string>create_OIT_Test_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -214,39 +213,21 @@
       </value>
     </execParameter>
   </implementation>
-  <instance xmi:id="ReceiverComponentInstance">
+
+  <instance xmi:id="ReceiverInstance">
     <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <implementation xmi:idref="ReceiverImplementation" />
   </instance>
 
-  <instance xmi:id="SenderConnectorInstance">
-    <name>SenderComponent</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="SenderConnectorImplementation" />
-    <configProperty>
-      <name>topic_name</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>OIT_Topic</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Receiver_ConnectorComponentInstance">
-    <name>SenderComponentSec</name>
+  <instance xmi:id="Receiver_ConnectorInstance">
+    <name>Receiver_ConnectorComponent</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ReceiverConnectorImplementation" />
+    <implementation xmi:idref="Receiver_ConnectorImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -254,22 +235,40 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>OIT_Topic</string>
+          <string>TestOIT</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
 
-  <instance xmi:id="SenderComponentInstance">
+  <instance xmi:id="SenderInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SenderComponentImplementation" />
+    <implementation xmi:idref="SenderImplementation" />
   </instance>
 
-  <!-- one connection per component should be efficient enough -->
+  <instance xmi:id="Sender_ConnectorInstance">
+    <name>Sender_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Sender_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestOIT</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
     <name>info_out_reader</name>
     <deployRequirement>
@@ -280,36 +279,15 @@
       <portName>info_out_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Receiver_ConnectorComponentInstance" />
+      <instance xmi:idref="Receiver_ConnectorInstance" />
     </internalEndpoint>
   </connection>
-  <connection>
-    <name>topic_write_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>topic_write_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>supplier_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Sender_ConnectorComponentInstance" />
-    </internalEndpoint>
-  </connection>
-
-  <!-- ConnectorStatusListeners -->
   <connection>
     <name>info_out_connector_status_receiver</name>
     <deployRequirement>
@@ -320,13 +298,33 @@
       <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Receiver_ConnectorComponentInstance" />
+      <instance xmi:idref="Receiver_ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>topic_write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>topic_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Sender_ConnectorInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -339,15 +337,16 @@
       <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="SenderComponentInstance" />
+      <instance xmi:idref="SenderInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>error_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="SenderConnectorInstance" />
+      <instance xmi:idref="Sender_ConnectorInstance" />
     </internalEndpoint>
   </connection>
+
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
@@ -361,48 +360,18 @@
     <node/>
     <location>Sender_svnt</location>
   </artifact>
-  <artifact xmi:id="Sender_StubArtifact">
-    <name>Sender_stub</name>
-    <source/>
-    <node/>
-    <location>Sender_stub</location>
-  </artifact>
-  <artifact xmi:id="Sender_ExecArtifact">
-    <name>Sender_exec</name>
-    <source/>
-    <node/>
-    <location>DDS_Sender_exec</location>
-  </artifact>
-  <artifact xmi:id="Sender_SvntArtifact">
-    <name>Sender_svnt</name>
-    <source/>
-    <node/>
-    <location>DDS_Sender_svnt</location>
-  </artifact>
-  <artifact xmi:id="Sender_StubArtifact">
-    <name>Sender_stub</name>
-    <source/>
-    <node/>
-    <location>DDS_Sender_stub</location>
-  </artifact>
 
-  <artifact xmi:id="Receiver_Connector_ExecArtifact">
-    <name>Receiver_Connector_exec</name>
+  <artifact xmi:id="Sender_Connector_ExecArtifact">
+    <name>Sender_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_Receiver_Connector_exec</location>
+    <location>OIT_Sender_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="Receiver_Connector_SvntArtifact">
-    <name>Receiver_Connector_svnt</name>
+  <artifact xmi:id="Sender_Connector_SvntArtifact">
+    <name>Sender_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Receiver_Connector_svnt</location>
-  </artifact>
-  <artifact xmi:id="Receiver_Connector_StubArtifact">
-    <name>Receiver_Connector_stub</name>
-    <source/>
-    <node/>
-    <location>DDS_Receiver_Connector_stub</location>
+    <location>OIT_Sender_Connector_svnt</location>
   </artifact>
 
   <artifact xmi:id="Receiver_ExecArtifact">
@@ -417,10 +386,17 @@
     <node/>
     <location>Receiver_svnt</location>
   </artifact>
-  <artifact xmi:id="Receiver_StubArtifact">
-    <name>Receiver_stub</name>
+
+  <artifact xmi:id="Receiver_Connector_ExecArtifact">
+    <name>Receiver_Connector_exec</name>
     <source/>
     <node/>
-    <location>Receiver_stub</location>
+    <location>OIT_Receiver_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_Connector_SvntArtifact">
+    <name>Receiver_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>OIT_Receiver_Connector_svnt</location>
   </artifact>
 </Deployment:DeploymentPlan>

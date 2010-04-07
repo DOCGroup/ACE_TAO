@@ -1,0 +1,145 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p OIT_Test_Base -l .. -o ../lib -u DDS OIT_Receiver_Connector"
+
+project(OIT_Receiver_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=OIT_Receiver_Connector_stub_export.h \
+              -Wb,skel_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=OIT_Receiver_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=OIT_Receiver_Connector_svnt_export.h \
+              -Wb,conn_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=OIT_Receiver_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    OIT_Receiver_Connector.idl
+  }
+}
+
+project(OIT_Receiver_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += OIT_Receiver_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=OIT_Receiver_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    OIT_Receiver_ConnectorE.idl
+  }
+}
+
+project(OIT_Receiver_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += OIT_Receiver_Connector_lem_gen OIT_Receiver_Connector_stub OIT_Test_Base_stub DDS4CCM_lem_stub
+  libs  += OIT_Test_Base_stub OIT_Receiver_Connector_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = OIT_Receiver_Connector_lem_stub
+  dynamicflags   = ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OIT_Receiver_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    OIT_Receiver_ConnectorEC.h
+    OIT_Receiver_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    OIT_Receiver_ConnectorEC.inl
+  }
+}
+
+project(OIT_Receiver_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += OIT_Receiver_Connector_idl_gen OIT_Test_Base_stub
+  libs  += OIT_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = OIT_Receiver_Connector_stub
+  dynamicflags   = ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OIT_Receiver_ConnectorC.cpp
+  }
+
+  Header_Files {
+    OIT_Receiver_ConnectorC.h
+    OIT_Receiver_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    OIT_Receiver_ConnectorC.inl
+  }
+}
+
+project(OIT_Receiver_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += OIT_Receiver_Connector_lem_stub OIT_Receiver_Connector_stub DDS4CCM_lem_stub OIT_Test_Base_stub
+  sharedname = OIT_Receiver_Connector_exec
+  libs += OIT_Receiver_Connector_stub OIT_Receiver_Connector_lem_stub OIT_Test_Base_stub DDS4CCM_lem_stub OIT_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OIT_Receiver_Connector_conn.cpp
+  }
+
+  Header_Files {
+    OIT_Receiver_Connector_conn.h
+    OIT_Receiver_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(OIT_Receiver_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += OIT_Receiver_Connector_lem_stub OIT_Receiver_Connector_exec OIT_Receiver_Connector_stub DDS4CCM_lem_stub
+  sharedname  = OIT_Receiver_Connector_svnt
+  libs       += OIT_Receiver_Connector_stub \
+                OIT_Receiver_Connector_lem_stub  \
+                OIT_Test_Base_stub \
+                OIT_Receiver_Connector_exec \
+                DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = ON_INCONSISTENT_TOPIC_TEST_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OIT_Receiver_ConnectorS.cpp
+    OIT_Receiver_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    OIT_Receiver_ConnectorS.h
+    OIT_Receiver_Connector_svnt.h
+    OIT_Receiver_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    OIT_Receiver_ConnectorS.inl
+  }
+}
+
+
