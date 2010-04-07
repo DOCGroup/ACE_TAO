@@ -1,0 +1,145 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p PortUsage_Test_Base -l .. -o ../lib -u DDS PortUsageState_Connector"
+
+project(PortUsageState_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=PortUsageState_Connector_stub_export.h \
+              -Wb,skel_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=PortUsageState_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=PortUsageState_Connector_svnt_export.h \
+              -Wb,conn_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=PortUsageState_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    PortUsageState_Connector.idl
+  }
+}
+
+project(PortUsageState_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += PortUsageState_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=PORTUSAGE_EVENT_TEST_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=PortUsageState_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    PortUsageState_ConnectorE.idl
+  }
+}
+
+project(PortUsageState_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += PortUsageState_Connector_lem_gen PortUsageState_Connector_stub PortUsage_Test_Base_stub DDS4CCM_lem_stub
+  libs  += PortUsage_Test_Base_stub PortUsageState_Connector_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = PortUsageState_Connector_lem_stub
+  dynamicflags   = PORTUSAGE_EVENT_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PortUsageState_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    PortUsageState_ConnectorEC.h
+    PortUsageState_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    PortUsageState_ConnectorEC.inl
+  }
+}
+
+project(PortUsageState_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += PortUsageState_Connector_idl_gen PortUsage_Test_Base_stub
+  libs  += PortUsage_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = PortUsageState_Connector_stub
+  dynamicflags   = PORTUSAGE_EVENT_TEST_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PortUsageState_ConnectorC.cpp
+  }
+
+  Header_Files {
+    PortUsageState_ConnectorC.h
+    PortUsageState_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    PortUsageState_ConnectorC.inl
+  }
+}
+
+project(PortUsageState_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += PortUsageState_Connector_lem_stub PortUsageState_Connector_stub DDS4CCM_lem_stub PortUsage_Test_Base_stub
+  sharedname = PortUsageState_Connector_exec
+  libs += PortUsageState_Connector_stub PortUsageState_Connector_lem_stub PortUsage_Test_Base_stub DDS4CCM_lem_stub PortUsage_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = PORTUSAGE_EVENT_TEST_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PortUsageState_Connector_conn.cpp
+  }
+
+  Header_Files {
+    PortUsageState_Connector_conn.h
+    PortUsageState_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(PortUsageState_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += PortUsageState_Connector_lem_stub PortUsageState_Connector_exec PortUsageState_Connector_stub DDS4CCM_lem_stub
+  sharedname  = PortUsageState_Connector_svnt
+  libs       += PortUsageState_Connector_stub \
+                PortUsageState_Connector_lem_stub  \
+                PortUsage_Test_Base_stub \
+                PortUsageState_Connector_exec \
+                DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = PORTUSAGE_EVENT_TEST_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    PortUsageState_ConnectorS.cpp
+    PortUsageState_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    PortUsageState_ConnectorS.h
+    PortUsageState_Connector_svnt.h
+    PortUsageState_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    PortUsageState_ConnectorS.inl
+  }
+}
+
+

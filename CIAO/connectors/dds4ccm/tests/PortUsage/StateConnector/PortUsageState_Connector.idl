@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file PortUsageEvent_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef PORTUSAGE_STATE_CONNECTOR_IDL_
+#define PORTUSAGE_STATE_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/PortUsage_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "StateConnector/PortUsageState_ConnectorE.idl"
+
+module PortUsageState_Test
+{
+  module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConn;
+  connector PortUsageState_Connector : PortUsageTestConn::DDS_State
+  {
+  };
+};
+
+#endif /* PORTUSAGE_STATE_CONNECTOR_IDL_ */
