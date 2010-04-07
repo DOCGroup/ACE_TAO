@@ -1,3 +1,9 @@
+Tue Apr  6 14:37:38 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html (http): Updated the link to the OCI MPC
+          website.  Thanks to Tim <tim at burmair dot com> for suggesting
+          this.
+
 Wed Apr  7 07:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:

@@ -227,13 +227,16 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 
 </p><p></p><hr><p>
 </p><h2><a name="installpre">Installation prerequisites</a></h2>
-<p>
-ACE (as well as TAO and CIAO) use MPC (MakeProjectCreator) to generate
-files used by all supported build tools (such as GNUmakefiles for UNIX based
-platforms, sln and vcproj files for VC71/VC8 and CodeGear makefiles) on various
-platforms. To help new users to bootstrap quickly the release bundles
-of ACE (as well as TAO and CIAO) include all needed files to use the build
+
+<p> ACE (as well as TAO and CIAO) use <A
+HREF="http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html">MPC</A>
+(MakeProjectCreator) to generate files used by all supported build
+tools (such as GNUmakefiles for UNIX based platforms, sln and vcproj
+files for VC71/VC8 and CodeGear makefiles) on various platforms. To
+help new users to bootstrap quickly the release bundles of ACE (as
+well as TAO and CIAO) include all needed files to use the build
 instructions in this document.
+
 </p>
 <p>
 If it is necessary to generate
@@ -2612,12 +2615,14 @@ well, try 'make realclean'.</p><p>
 <p></p><hr><p>
 </p><h1><a name="MPC">General MPC information</a></h1>
 
-The Makefile Project Creator (MPC) is a tool that takes platform and
+The <A HREF="
+http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html</A>
+Makefile Project Creator (MPC)</A> is a tool that takes platform and
 building tool generic files (mpc files) as input, which describe basic
 information needed to generate a "project" file for various build
 tools, including Make, NMake, Visual C++ 6, Visual C++ 7, etc.  Please
-see <a href="MPC/docs/USAGE">USAGE</a>, <a href="MPC/docs/README">README</a> for
-documentation on MPC.<P>
+see <a href="MPC/docs/USAGE">USAGE</a>, <a
+href="MPC/docs/README">README</a> for documentation on MPC.<P>
 
 A common usage for creating a Windows workspace containing just the
 core ACE and TAO libraries and executables is the following:

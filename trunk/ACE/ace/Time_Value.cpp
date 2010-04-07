@@ -340,21 +340,15 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
     {
       o << tv->tv_sec;
       if (tv->tv_usec)
-        {
-          o << '.' << std::setw (6) << ACE_STD_NAMESPACE::abs (tv->tv_usec);
-        }
+        o << '.' << std::setw (6) << ACE_STD_NAMESPACE::abs (tv->tv_usec);
     }
   else if (tv->tv_usec < 0)
-    {
-      o << "-0." << std::setw (6) << -tv->tv_usec;
-    }
+    o << "-0." << std::setw (6) << - tv->tv_usec;
   else
     {
       o << '0';
       if (tv->tv_usec > 0)
-        {
-          o << '.'<< std::setw (6) << tv->tv_usec;
-        }
+        o << '.'<< std::setw (6) << tv->tv_usec;
     }
 
   o.fill (oldFiller);
