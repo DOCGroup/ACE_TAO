@@ -5,6 +5,7 @@
 
 
 #include "../Hello_Base/Hello_Base.idl"
+#include "tao/StringSeq.pidl"
 
 module Hello
 {
@@ -24,6 +25,8 @@ module Hello
       red,
       yellow
     };
+    
+  typedef sequence<COLOR_SELECTION> COLORS;
 
   component Sender supports trigger
   {
@@ -31,8 +34,13 @@ module Hello
     publishes TimeOut click_out;
 
     attribute string local_message;
+    
     // A test attribute to test setting attributes through XML
     attribute COLOR_SELECTION color;
+    
+    // Testing attributes of sequence type.
+    attribute COLORS the_colors;
+    attribute CORBA::StringSeq str_seq;
   };
 
   home SenderHome manages Sender
