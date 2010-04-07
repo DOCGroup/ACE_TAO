@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_attribute_component_init::be_visitor_attribute_component_init (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx),
@@ -157,10 +156,22 @@ be_visitor_attribute_component_init::emit_init_block (void)
   
   if (ft->accept (&decl_emitter) == -1)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("be_visitor_attribute_component_init")
+                  ACE_TEXT ("::emit_init_block - ")
+                  ACE_TEXT ("Any extraction type visitor ")
+                  ACE_TEXT ("failed\n")));
+                  
+      return;
     }
   
   os_ << be_nl
-      << "descr_value >>= _extract_val;" << be_nl
+      << "::CORBA::Boolean good_extr = (descr_value >>= _extract_val);"
+      << be_nl << be_nl
+      << "if (!good_extr)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "this->" << attr_->local_name ()->get_string ()
       << " (";
       
@@ -168,6 +179,13 @@ be_visitor_attribute_component_init::emit_init_block (void)
   
   if (ft->accept (&arg_emitter) == -1)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("be_visitor_attribute_component_init")
+                  ACE_TEXT ("::emit_init_block - ")
+                  ACE_TEXT ("Attribute set type visitor ")
+                  ACE_TEXT ("failed\n")));
+                  
+      return;
     }
     
   os_ << ");";
