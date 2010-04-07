@@ -28,6 +28,7 @@ module Components
     FeatureName name;
   };
 
+#if !defined (CCM_LW)
   valuetype ComponentPortDescription
   {
     public FacetDescriptions facets;
@@ -36,20 +37,29 @@ module Components
     public EmitterDescriptions emitters;
     public PublisherDescriptions publishers;
   };
+#endif
 
+#if !defined (CCM_LW)
   exception NoKeyAvailable {};
+#endif
 
   interface CCMObject : Navigation, Receptacles, Events
   {
+#if !defined (CCM_LW)
     CORBA::IRObject get_component_def ( );
+#endif
     CCMHome get_ccm_home( );
+#if !defined (CCM_LW)
     PrimaryKeyBase get_primary_key( )
       raises (NoKeyAvailable);
+#endif
     void configuration_complete ()
       raises (InvalidConfiguration);
     void remove()
       raises (RemoveFailure);
+#if !defined (CCM_LW)
     ComponentPortDescription get_all_ports ();
+#endif
   };
 
   // From OMG 06-04-01 Section 10.3.1.2

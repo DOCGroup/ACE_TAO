@@ -20,20 +20,30 @@ module Components
 
   local interface CCMContext
   {
+#if !defined (CCM_LW)
     Principal get_caller_principal();
+#endif
 
     CCMHome get_CCM_home();
 
+#if !defined (CCM_LW)
     boolean get_rollback_only()
       raises (IllegalState);
+#endif
 
+#if !defined (CCM_LW)
     Transaction::UserTransaction get_user_transaction()
       raises (IllegalState);
+#endif
 
+#if !defined (CCM_LW)
     boolean is_caller_in_role (in string role);
+#endif
 
+#if !defined (CCM_LW)
     void set_rollback_only()
       raises (IllegalState);
+#endif
 
     /**
      * Added for QoS4CCM

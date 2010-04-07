@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoidldefaults {
+project : ccm_lw {
   idlflags += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ccm
 
   Modify_Custom (IDL) {

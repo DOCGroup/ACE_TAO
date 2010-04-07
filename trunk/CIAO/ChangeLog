@@ -1,7 +1,30 @@
+Wed Apr  7 19:00:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciaoidldefaults.mpb:
+          Update for lwccm
+
+        * ccm/CCM_CCM2Context.idl:
+        * ccm/CCM_Configurator.idl:
+        * ccm/CCM_Context.idl:
+        * ccm/CCM_Events.idl:
+        * ccm/CCM_Home.idl:
+        * ccm/CCM_HomeConfiguration.idl:
+        * ccm/CCM_HomeFinder.idl:
+        * ccm/CCM_Navigation.idl:
+        * ccm/CCM_Object.idl:
+        * ccm/CCM_Receptacle.idl:
+        * ccm/CCM_SessionSynchronization.idl:
+        * ccm/CCM_StandardConfigurator.idl:
+        * ccm/CCM_StateIdFactory.idl:
+        * ccm/CCM_Transaction.idl:
+        * ccm/CosPersistentState.idl:
+          Disabled a lot of interfaces, methods, and types when ccm_lw
+          is enabled
+
 Wed Apr  7 16:48:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Sender/Sender.idl:
-        
+
           Added attributes to test support of sequence type, since there
           is already a test case in this component for attributes of
           enum type.
