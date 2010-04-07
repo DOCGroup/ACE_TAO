@@ -143,4 +143,7 @@ tao_no_iiop = 0
 // whenever TAO is linked in
 link_codecfactory = 0
 
+// Feature for LwCCM
+ccm_lw = 0
+
 valuetype_out_indirection=1
