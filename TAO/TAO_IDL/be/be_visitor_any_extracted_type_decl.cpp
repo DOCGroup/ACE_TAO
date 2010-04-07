@@ -18,6 +18,8 @@
 #include "be_valuebox.h"
 #include "be_valuetype.h"
 
+#include "ast_root.h"
+
 #include "utl_identifier.h"
 
 be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
@@ -57,7 +59,8 @@ be_visitor_any_extracted_type_decl::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_any_extracted_type_decl::visit_eventtype (be_eventtype *node)
+be_visitor_any_extracted_type_decl::visit_eventtype (
+  be_eventtype *node)
 {
   os_ << node->full_name () << " * " << var_name_ << " = 0;";
   return 0;
@@ -72,7 +75,8 @@ be_visitor_any_extracted_type_decl::visit_home (be_home *node)
 }
 
 int
-be_visitor_any_extracted_type_decl::visit_interface (be_interface *node)
+be_visitor_any_extracted_type_decl::visit_interface (
+  be_interface *node)
 {
   os_ << node->full_name () << "_ptr " << var_name_ << " = "
       << node->full_name () << "::_nil ();";
@@ -80,7 +84,8 @@ be_visitor_any_extracted_type_decl::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_any_extracted_type_decl::visit_predefined_type (be_predefined_type *node)
+be_visitor_any_extracted_type_decl::visit_predefined_type (
+  be_predefined_type *node)
 {
   os_ << node->full_name () << " ";
   
@@ -167,7 +172,16 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (be_predefined_type *n
 int
 be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  be_type *bt = this->ctx_->alias ();
+  
+  if (bt == 0)
+    {
+      bt = node;
+    }
+    
+  os_ << bt->nested_type_name (idl_global->root ())
+      << " * " << var_name_ << " = 0;";
+      
   return 0;
 }
 
@@ -188,7 +202,20 @@ be_visitor_any_extracted_type_decl::visit_structure (be_structure *node)
 int
 be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 {
-  return node->primitive_base_type ()->accept (this);
+  this->ctx_->alias (node);
+  int status = node->primitive_base_type ()->accept (this);
+  
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_any_extracted_type_decl::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+    
+  this->ctx_->alias (0);
+  return 0;
 }
 
 int

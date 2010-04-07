@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_enum/enum_ch.h"
 #include "be_visitor_sequence/sequence_ch.h"
 #include "nr_extern.h"
