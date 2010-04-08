@@ -1,3 +1,24 @@
+Thu Apr  8 07:29:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Entity2Context.idl
+        * ccm/CCM_EntityComponent.idl
+        * ccm/CCM_EntityContext.idl
+        * ciao/ComponentServer/Client_init.cpp
+        * ciao/Contexts/Context_Impl_Base.cpp
+        * ciao/Contexts/Context_Impl_Base.h
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp
+        * ciao/Servants/Connector_Servant_Impl_Base.h
+        * ciao/Servants/Servant_Impl_Base.cpp
+        * ciao/Servants/Servant_Impl_Base.h
+        * ciao/Servants/Servant_Impl_Utils_T.cpp
+        * ciao/Servants/StandardConfigurator_Impl.cpp
+        * ciao/Servants/StandardConfigurator_Impl.h
+          Disabled more idl and code for lwccm. This is really work
+          in progress, some lwccm code uses methods from full ccm which
+          means that code has to be rewritten to use other types. First step
+          is to update all IDL and get code to compile to see what runs
+          and what not
+
 Thu Apr  8 06:48:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:

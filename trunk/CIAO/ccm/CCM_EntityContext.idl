@@ -6,6 +6,8 @@
 #include "ccm/CCM_Context.idl"
 #include "ccm/CCM_Object.idl"
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -19,4 +21,7 @@ module Components
       raises (IllegalState);
   };
 };
+
+#endif
+
 #endif /* CCM_ENTITYCONTEXT_IDL */
