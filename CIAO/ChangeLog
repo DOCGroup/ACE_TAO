@@ -1,3 +1,8 @@
+Thu Apr  8 06:48:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
+          Resolved fuzz error.
+
 Thu Apr  8 06:38:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/avoids_ccm_lw.mpb:
