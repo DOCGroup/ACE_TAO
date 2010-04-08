@@ -2,20 +2,18 @@
 // $Id$
 
 
-//Test different topic types, with DDS_STATE connector, look for 'SUBSCRIPTION_MATCHED_STATUS
+//Test different topic types, with DDS_STATE connector, look for 'PUBLICATION_MATCHED_STATUS
 #include "VTopics_Sender_exec.h"
-#include "ace/Guard_T.h"
-#include "ace/Log_Msg.h"
-#include "tao/ORB_Core.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
 namespace CIAO_VTopics_Sender_Impl
 {
   //============================================================
-  // Facet Executor Implementation Class: ConnectorStatusListener_exec_i
+  // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &unexpected_matched)
-   : unexpected_matched_ (unexpected_matched)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Atomic_Boolean &publication_matched)
+    : publication_matched_ (publication_matched)
   {
   }
 
@@ -23,40 +21,44 @@ namespace CIAO_VTopics_Sender_Impl
   {
   }
 
-  // Operations from ::CCM_DDS::ConnectorStatusListener
   void ConnectorStatusListener_exec_i::on_inconsistent_topic(
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
-    {
-    }
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
+  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos (
     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)  {
-    }
+    const DDS::RequestedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_sample_rejected (
+    ::DDS::DataReader_ptr /*the_reader*/,
+    const DDS::SampleRejectedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_deadline_missed (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedDeadlineMissedStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)  {
-    }
+  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos (
+    ::DDS::DataWriter_ptr /*the_writer*/,
+    const DDS::OfferedIncompatibleQosStatus & /*status*/)
+  {
+  }
 
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
+  void ConnectorStatusListener_exec_i::on_unexpected_status (
     ::DDS::Entity_ptr the_entity,
-    ::DDS::StatusKind  status_kind)  {
-      CORBA::ULong kind = status_kind;
-      if((! ::CORBA::is_nil(the_entity)) && (kind==DDS::SUBSCRIPTION_MATCHED_STATUS))
+    ::DDS::StatusKind  status_kind)
+  {
+    if (! ::CORBA::is_nil (the_entity) &&
+        status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
-        this->unexpected_matched_ = true;
+        this->publication_matched_ = true;
       }
     }
   //============================================================
@@ -64,7 +66,7 @@ namespace CIAO_VTopics_Sender_Impl
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
-    : unexpected_matched_ (false)
+    : publication_matched_ (false)
   {
   }
 
@@ -73,10 +75,9 @@ namespace CIAO_VTopics_Sender_Impl
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
-  Sender_exec_i::get_test_topic_connector_status (void)
-
+  Sender_exec_i::get_connector_status (void)
   {
-    return new ConnectorStatusListener_exec_i (this->unexpected_matched_);
+    return new ConnectorStatusListener_exec_i (this->publication_matched_);
   }
 
   // Supported operations and attributes.
@@ -109,16 +110,18 @@ namespace CIAO_VTopics_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if(!this->unexpected_matched_.value ())
+    if(!this->publication_matched_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                               ACE_TEXT ("states 'SUBSCRIPTION_MATCHED_STATUS in Sender\n")
+                              ACE_TEXT ("states 'PUBLICATION_MATCHED_STATUS' ")
+                              ACE_TEXT ("in Sender\n")
                     ));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received the expected ")
-                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS' in Sender\n")
+                              ACE_TEXT ("'PUBLICATION_MATCHED_STATUS' ")
+                              ACE_TEXT ("in Sender\n")
                     ));
       }
   }
