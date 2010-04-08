@@ -6,6 +6,7 @@
 #include "be_attribute.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+#include "be_extern.h"
 
 #include "be_visitor_operation.h"
 #include "be_visitor_attribute.h"
@@ -207,9 +208,9 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       op_scope->get_insert_queue ().reset ();
       op_scope->get_del_queue ().reset ();
       op_scope->get_insert_queue ().enqueue_tail (op_scope);
-      
+
       be_facet_op_attr_defn_helper helper (op_scope);
-      
+
       int status =
         op_scope->traverse_inheritance_graph (helper,
                                               &os,
@@ -238,15 +239,20 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
      << "{" << be_idt_nl
      << "return sc->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl
-     << "::Components::EntityContext_var ec =" << be_idt_nl
-     << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-     << be_uidt_nl << be_nl
-     << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-     << "{" << be_idt_nl
-     << "return ec->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl
-     << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
+     << "}" << be_uidt_nl << be_nl;
+
+  if (!be_global->gen_lwccm ())
+    {
+      os << "::Components::EntityContext_var ec =" << be_idt_nl
+         << "::Components::EntityContext::_narrow (this->ctx_.in ());"
+         << be_uidt_nl << be_nl
+         << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
+         << "{" << be_idt_nl
+         << "return ec->get_CCM_object ();" << be_uidt_nl
+         << "}" << be_uidt_nl << be_nl;
+    }
+
+  os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";
 
   os << be_uidt_nl
@@ -290,7 +296,7 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
     {
       return 0;
     }
-    
+
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SVS);
@@ -301,17 +307,17 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
     {
       AST_Decl *d = i.item ();
       AST_Decl::NodeType nt = d->node_type ();
-      
+
       switch (nt)
         {
           case AST_Decl::NT_op:
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
-                
+
               be_visitor_operation_svs v (&ctx);
               v.scope (op_scope_);
-              
+
               if (v.visit_operation (op) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -320,17 +326,17 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                                      ACE_TEXT ("visit_operation() failed\n")),
                                     -1);
                 }
-                
+
               break;
             }
           case AST_Decl::NT_attr:
             {
               be_attribute *attr =
                 be_attribute::narrow_from_decl (d);
-                
+
               be_visitor_attribute v (&ctx);
               v.op_scope (op_scope_);
-              
+
               if (v.visit_attribute (attr) == -1)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -339,14 +345,14 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
                                      ACE_TEXT ("visit_attribute() failed\n")),
                                     -1);
                 }
-                
+
               break;
             }
           default:
             continue;
         }
     }
-    
+
   return 0;
 }
 

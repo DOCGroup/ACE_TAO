@@ -46,7 +46,7 @@ public:
     TAO_PERFECT_HASH,
     TAO_BINARY_SEARCH
   };
-  
+
   /// To help with DDD portability in DDS4CCM
   /// connectors.
   enum DDS_IMPL
@@ -612,6 +612,12 @@ public:
   /// Check if we want to generate for Minimum CORBA
   bool gen_minimum_corba (void) const;
 
+  /// Set whether we want to generate for LwCCM
+  void gen_lwccm (bool);
+
+  /// Check if we want to generate for LwCCM
+  bool gen_lwccm (void) const;
+
   /// Set optimized typecodes.
   void opt_tc (bool);
 
@@ -686,7 +692,7 @@ public:
   /// Return the enumerated value for the lookup strategy. Default is
   /// perfect hashing.
   LOOKUP_STRATEGY lookup_strategy (void) const;
-  
+
   /// Set the DDS implementation.
   void dds_impl (char const * const val);
 
@@ -792,7 +798,7 @@ public:
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
-  
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -993,6 +999,9 @@ private:
   /// are we generating for Minimum CORBA
   bool gen_minimum_corba_;
 
+  /// are we generating for LwCCM
+  bool gen_lwccm_;
+
   /// do we generate optimized typecodes?
   bool opt_tc_;
 
@@ -1130,7 +1139,7 @@ private:
   /// Toggles generation of exec IDL for facets with imported
   /// interface types (not in main IDL file).
   bool gen_lem_force_all_;
-  
+
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;
 };

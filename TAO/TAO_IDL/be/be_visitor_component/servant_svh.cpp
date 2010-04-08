@@ -132,15 +132,15 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svh::visit_provides (be_provides *node)
 {
+  if (node->provides_type ()->is_local () || be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   ACE_CString prefix (this->port_prefix_);
   prefix +=node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
-
-  if (node->provides_type ()->is_local ())
-    {
-      return 0;
-    }
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -163,16 +163,16 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
 int
 be_visitor_servant_svh::visit_uses (be_uses *node)
 {
+  if (node->uses_type ()->is_local ())
+    {
+      return 0;
+    }
+
   ACE_CString prefix (this->port_prefix_);
   prefix +=node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
-
-  if (node->uses_type ()->is_local ())
-    {
-      return 0;
-    }
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -433,10 +433,13 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << be_nl
               << "disconnect_consumer (const char * source_name);";
 
-          os_ << be_nl << be_nl
-              << "virtual ::Components::EmitterDescriptions *"
-              << be_nl
-              << "get_all_emitters (void);";
+          if (!be_global->gen_lwccm ())
+            {
+              os_ << be_nl << be_nl
+                  << "virtual ::Components::EmitterDescriptions *"
+                  << be_nl
+                  << "get_all_emitters (void);";
+            }
         }
     }
 
@@ -450,7 +453,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   /// No need for this method if the component has neither
   /// facets nor event sinks.
-  if (this->node_->has_provides () || this->node_->has_consumes ())
+  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
     {
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl

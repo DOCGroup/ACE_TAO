@@ -92,6 +92,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_direct_collocation_ (false),
     gen_corba_e_ (false),
     gen_minimum_corba_ (false),
+    gen_lwccm_ (false),
     opt_tc_ (false),
     ami4ccm_call_back_ (false),
     ami_call_back_ (false),
@@ -1526,6 +1527,19 @@ BE_GlobalData::gen_minimum_corba (void) const
 }
 
 void
+BE_GlobalData::gen_lwccm (bool val)
+{
+  this->gen_lwccm_ = val;
+}
+
+bool
+BE_GlobalData::gen_lwccm (void) const
+{
+  return this->gen_lwccm_;
+}
+
+
+void
 BE_GlobalData::opt_tc (bool val)
 {
   this->opt_tc_ = val;
@@ -1674,7 +1688,7 @@ void
 BE_GlobalData::dds_impl (char const * const val)
 {
   ACE_CString tmp (val, 0, false);
-  
+
   if (tmp == "ndds")
     {
       this->dds_impl_ = NDDS;
@@ -1828,7 +1842,7 @@ BE_GlobalData::destroy (void)
 
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
   this->dds_typesupport_hdr_ending_ = 0;
-  
+
   ACE::strdelete (this->ciao_ami_conn_idl_ending_);
   this->ciao_ami_conn_idl_ending_ = 0;
 
@@ -2861,6 +2875,11 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // CORBA/e.
                 be_global->gen_corba_e (true);
               }
+            else if (av[i][3] == 'l')
+              {
+                // CORBA/e.
+                be_global->gen_lwccm (true);
+              }
             else
               {
                 ACE_ERROR ((
@@ -3202,7 +3221,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       default:
         ACE_ERROR ((
@@ -3613,6 +3632,10 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gmc \t\t\tGenerate code optimized for Minimum CORBA\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gcl \t\t\tGenerate code optimized for LwCCM\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
