@@ -100,21 +100,29 @@ namespace CIAO
 
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 
+#if !defined (CCM_LW)
     virtual ::Components::ComponentPortDescription * get_all_ports (void);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::ConsumerDescriptions * get_all_consumers (void);
+#endif
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name);
 
+#if !defined (CCM_LW)
     virtual ::Components::ConsumerDescriptions *
     get_named_consumers (const ::Components::NameList & names);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
 
     virtual ::Components::EmitterDescriptions *
     get_all_emitters (void);
+#endif
 
     virtual ::Components::ReceptacleDescriptions *
     get_named_receptacles (const ::Components::NameList & names);
@@ -122,11 +130,13 @@ namespace CIAO
     virtual ::Components::ReceptacleDescriptions *
     get_all_receptacles (void);
 
+#if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
 
     virtual ::Components::PublisherDescriptions *
     get_all_publishers (void);
+#endif
 
     virtual ::Components::Cookie *
     subscribe (const char * publisher_name,
@@ -154,9 +164,11 @@ namespace CIAO
     /// Operation to set attributes on the component.
     virtual void set_attributes (const Components::ConfigValues &descr);
 
+#if !defined (CCM_LW)
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
     get_standard_configurator (void);
+#endif
 
     /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered

@@ -23,7 +23,8 @@ namespace CIAO
                                  Components::ConnectionDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::ReceptacleDescription_init,
                                  Components::ReceptacleDescription);
-    CIAO_REGISTER_VALUE_FACTORY (o, Components::ConsumerDescription_init,
+ #if !defined (CCM_LW)
+   CIAO_REGISTER_VALUE_FACTORY (o, Components::ConsumerDescription_init,
                                  Components::ConsumerDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::EmitterDescription_init,
                                  Components::EmitterDescription);
@@ -35,6 +36,7 @@ namespace CIAO
                                  Components::ConfigValue);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::ComponentPortDescription_init,
                                  Components::ComponentPortDescription);
+#endif                                 
     return 0;
   }
 }

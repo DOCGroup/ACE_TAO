@@ -34,11 +34,13 @@ namespace CIAO
 
   // Operations from ::Components::CCMContext.
 
+#if !defined (CCM_LW)
   Components::Principal_ptr
   Context_Impl_Base::get_caller_principal (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
   Components::CCMHome_ptr
   Context_Impl_Base::get_CCM_home (void)
@@ -46,29 +48,37 @@ namespace CIAO
     return Components::CCMHome::_duplicate (this->home_.in ());
   }
 
+#if !defined (CCM_LW)
   CORBA::Boolean
   Context_Impl_Base::get_rollback_only (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
+#if !defined (CCM_LW)
   Components::Transaction::UserTransaction_ptr
   Context_Impl_Base::get_user_transaction (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
+#if !defined (CCM_LW)
   CORBA::Boolean
   Context_Impl_Base::is_caller_in_role (const char * /* role */)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
+#if !defined (CCM_LW)
   void
   Context_Impl_Base::set_rollback_only (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
   CORBA::Object_ptr
   Context_Impl_Base::resolve_service_reference(const char *)

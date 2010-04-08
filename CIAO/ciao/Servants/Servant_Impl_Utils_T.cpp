@@ -7,6 +7,7 @@
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/Logger/Log_Macros.h"
 
+#if !defined (CCM_LW)
 namespace CIAO
 {
   template<typename T_var>
@@ -87,5 +88,6 @@ namespace CIAO
     descriptions[slot] = safe_elem._retn ();
   }
 }
+#endif
 
 #endif /* CIAO_SERVANT_IMPL_UTILS_T_C */

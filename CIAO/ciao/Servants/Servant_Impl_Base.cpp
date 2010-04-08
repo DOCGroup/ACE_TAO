@@ -21,6 +21,7 @@ namespace CIAO
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
+#if !defined (CCM_LW)
     
     try
     {
@@ -52,6 +53,7 @@ namespace CIAO
       ex._tao_print_exception ("Port not active\n");
       return;
     }
+#endif
     
     /// This call deactivates facets, removes executor and home
     /// servant (if any), and uninstalls us from the container.
@@ -59,6 +61,7 @@ namespace CIAO
     this->Connector_Servant_Impl_Base::remove ();
   }
 
+#if !defined (CCM_LW)
   ::Components::ComponentPortDescription *
   Servant_Impl_Base::get_all_ports (void)
   {
@@ -82,14 +85,18 @@ namespace CIAO
 
     return retv._retn ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::PrimaryKeyBase *
   Servant_Impl_Base::get_primary_key (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_primary_key");
     throw ::Components::NoKeyAvailable ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (void)
   {
@@ -116,6 +123,7 @@ namespace CIAO
 
     return retval._retn ();
   }
+#endif
 
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (const char *sink_name)
@@ -124,7 +132,7 @@ namespace CIAO
     
     if (sink_name == 0)
       {
-        throw Components::InvalidName ();
+        throw ::Components::InvalidName ();
       }
 
     Components::EventConsumerBase_ptr retval =
@@ -138,6 +146,7 @@ namespace CIAO
     return retval;
   }
 
+#if !defined (CCM_LW)
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
     const ::Components::NameList & names)
@@ -168,7 +177,9 @@ namespace CIAO
 
     return safe_retval._retn ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */)
@@ -176,6 +187,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::get_named_emitters");
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_all_receptacles (void)
@@ -233,6 +245,7 @@ namespace CIAO
     throw ::CORBA::NO_IMPLEMENT ();
   }
 
+#if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)
@@ -240,6 +253,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::get_named_publishers");
     throw ::CORBA::NO_IMPLEMENT ();
   }
+#endif
 
   /// Protected operations.
   void
@@ -260,6 +274,7 @@ namespace CIAO
         return;
       }
 
+#if !defined (CCM_LW)
     ::Components::ConsumerDescription *cd = 0;
     ACE_NEW_THROW_EX (cd,
                       ::OBV_Components::ConsumerDescription,
@@ -279,6 +294,7 @@ namespace CIAO
                               CORBA::NO_RESOURCES ());
 
     (void) this->consumer_table_.insert (entry);
+#endif
   }
 
   ::Components::EventConsumerBase_ptr
@@ -286,6 +302,7 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer");
     
+#if !defined (CCM_LW)
     if (0 == port_name)
       {
         return ::Components::EventConsumerBase::_nil ();
@@ -307,8 +324,12 @@ namespace CIAO
     return
       ::Components::EventConsumerBase::_duplicate (
         iter->second->consumer ());
+#else        
+    return ::Components::EventConsumerBase::_nil ();
+#endif
   }
 
+#if !defined (CCM_LW)
   ::Components::ConsumerDescription *
   Servant_Impl_Base::lookup_consumer_description (
     const char *port_name)
@@ -340,5 +361,6 @@ namespace CIAO
 
     return cd._retn ();
   }
+#endif
 }
 

@@ -62,17 +62,27 @@ namespace CIAO
 
     // Operations from ::Components::CCMContext.
 
+#if !defined (CCM_LW)
     virtual Components::Principal_ptr get_caller_principal ();
+#endif
 
     virtual Components::CCMHome_ptr get_CCM_home ();
 
+#if !defined (CCM_LW)
     virtual CORBA::Boolean get_rollback_only ();
+#endif
 
+#if !defined (CCM_LW)
     virtual Components::Transaction::UserTransaction_ptr get_user_transaction ();
+#endif
 
+#if !defined (CCM_LW)
     virtual CORBA::Boolean is_caller_in_role (const char *role);
+#endif
 
+#if !defined (CCM_LW)
     virtual void set_rollback_only ();
+#endif
 
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 

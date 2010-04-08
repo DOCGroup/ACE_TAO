@@ -7,6 +7,8 @@
 #include "ccm/CCM_EnterpriseComponent.idl"
 #include "ccm/CCM_EntityContext.idl"
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -35,4 +37,7 @@ module Components
       raises (CCMException);
   };
 };
+
+#endif
+
 #endif /* CCM_ENTITYCOMPONENT_IDL */

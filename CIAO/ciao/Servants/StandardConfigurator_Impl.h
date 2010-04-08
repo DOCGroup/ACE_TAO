@@ -31,6 +31,8 @@ namespace CIAO
   class Connector_Servant_Impl_Base;
 }
 
+#if !defined (CCM_LW)
+
 namespace CIAO
 {
   /**
@@ -67,6 +69,7 @@ namespace CIAO
     Connector_Servant_Impl_Base* const component_;
   };
 }
+#endif
 
 #include /**/ "ace/post.h"
 

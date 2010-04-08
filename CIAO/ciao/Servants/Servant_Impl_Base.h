@@ -26,6 +26,7 @@
 
 namespace CIAO
 {
+#if !defined (CCM_LW)
   namespace Servant
   {
     template<typename T_var>
@@ -44,7 +45,7 @@ namespace CIAO
         ::Components::EmitterDescriptions_var &descriptions,
         CORBA::ULong slot);
   } /* Servant */
-
+#endif
   /**
    * @class Servant_Impl_Base
    *
@@ -70,20 +71,29 @@ namespace CIAO
 
     virtual void remove (void);
 
+#if !defined (CCM_LW)
     virtual ::Components::ComponentPortDescription * get_all_ports (void);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
-
+#endif
+#if !defined (CCM_LW)
     virtual ::Components::ConsumerDescriptions * get_all_consumers (void);
+#endif
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name);
 
+#if !defined (CCM_LW)
     virtual ::Components::ConsumerDescriptions *
     get_named_consumers (const ::Components::NameList & names);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
+#endif
 
     virtual ::Components::ReceptacleDescriptions *
     get_named_receptacles (const ::Components::NameList & names);
@@ -91,8 +101,10 @@ namespace CIAO
     virtual ::Components::ReceptacleDescriptions *
     get_all_receptacles (void);
 
+#if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
+#endif
 
   protected:
     void add_consumer (const char *port_name,
@@ -101,15 +113,19 @@ namespace CIAO
     ::Components::EventConsumerBase_ptr lookup_consumer (
       const char *port_name);
 
+#if !defined (CCM_LW)
     ::Components::ConsumerDescription *lookup_consumer_description (
       const char *port_name);
+#endif
 
   protected:
+#if !defined (CCM_LW)
     typedef ACE_Array_Map<ACE_CString,
                           ::Components::ConsumerDescription_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
+#endif    
   };
 }
 
