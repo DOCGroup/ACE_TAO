@@ -16,9 +16,8 @@ module VTopic
 {
   component Sender
   {
-    //port CCM_DDS::TestTopic::DDS_Write test_topic_write;
-    provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
-
+    port TestTopicConn::DDS_Write info_write;
+    provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };
 

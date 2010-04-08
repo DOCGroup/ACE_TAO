@@ -1,3 +1,19 @@
+Thu Apr  8 10:15:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/Plan.cdp:
+          Solved test issues. In order to receive a subscription matched in the
+          Receiver and a publication matched in the Sender, there must be connection
+          between a datareader and a datawriter configured in the deployment plan.
+          Sender should receive a publication matched since it only uses a
+          publisher (and no subscriber).
+          Layout changed.
+
 Thu Apr  8 09:56:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ccm_lw.mpb:

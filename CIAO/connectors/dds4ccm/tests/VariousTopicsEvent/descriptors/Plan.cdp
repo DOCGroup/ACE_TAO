@@ -658,14 +658,20 @@
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
   </instance>
+
+  <!--
+      *****************************
+      Regular connector connections
+      *****************************
+  -->
   <connection>
-    <name>info_out_connector_status_receiver</name>
+    <name>connector_status_receiver</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -678,13 +684,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender</name>
+    <name>connector_status_sender</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -696,15 +702,62 @@
       <instance xmi:idref="VTopic_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-
+  <!-- connection in order to establish a publication_matched
+  -->
   <connection>
-    <name>info_out_connector_status_receiver_string</name>
+    <name>test_topic_info_write</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="VTopic_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <!-- connection in order to establish a subscription_matched
+       -->
+  <connection>
+    <name>test_topic_info_out</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="VTopic_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <!--
+      *****************************
+      String connector connections
+      *****************************
+  -->
+  <connection>
+    <name>connector_status_receiver_string</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -717,13 +770,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender_string</name>
+    <name>connector_status_sender_string</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -736,14 +789,19 @@
     </internalEndpoint>
   </connection>
 
+  <!--
+      *****************************
+      Array connector connections
+      *****************************
+  -->
   <connection>
-    <name>info_out_connector_status_receiver_array</name>
+    <name>connector_status_receiver_array</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -756,13 +814,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender_array</name>
+    <name>connector_status_sender_array</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -775,14 +833,19 @@
     </internalEndpoint>
   </connection>
 
+  <!--
+      *****************************
+      ValueType connector connections
+      *****************************
+  -->
   <connection>
-    <name>info_out_connector_status_receiver_valuetype</name>
+    <name>connector_status_receiver_valuetype</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -795,13 +858,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender_valuetype</name>
+    <name>connector_status_sender_valuetype</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -814,14 +877,19 @@
     </internalEndpoint>
   </connection>
 
+  <!--
+      *****************************
+      Union connector connections
+      *****************************
+  -->
   <connection>
-    <name>info_out_connector_status_receiver_union</name>
+    <name>connector_status_receiver_union</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -834,13 +902,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender_union</name>
+    <name>connector_status_sender_union</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -853,14 +921,19 @@
     </internalEndpoint>
   </connection>
 
+  <!--
+      *****************************
+      Sequence connector connections
+      *****************************
+  -->
   <connection>
-    <name>info_out_connector_status_receiver_seq</name>
+    <name>connector_status_receiver_seq</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_out_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ReceiverComponentInstance" />
@@ -873,13 +946,13 @@
     </internalEndpoint>
   </connection>
   <connection>
-    <name>test_topic_connector_status_sender_seq</name>
+    <name>connector_status_sender_seq</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>test_topic_connector_status</portName>
+      <portName>connector_status</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="SenderComponentInstance" />
@@ -891,7 +964,7 @@
       <instance xmi:idref="VT_Seq_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
- 
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
