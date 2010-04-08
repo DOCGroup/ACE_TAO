@@ -1,3 +1,8 @@
+Thu Apr  8 14:51:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-guidelines.html: Clarified the style recommendations
+          for loop and if statement bodies.
+
 Wed Apr  7 16:27:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/cle.pl:
