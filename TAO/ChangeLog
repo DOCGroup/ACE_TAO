@@ -1,3 +1,17 @@
+Thu Apr  8 09:55:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_provides.cpp
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp
+        * TAO_IDL/be_include/be_global.h
+          Added support for -Gcl which enabled LwCCM
+
 Wed Apr  7 16:44:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure.cpp:
@@ -20,7 +34,7 @@ Wed Apr  7 16:44:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Apr  7 15:18:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * be/be_visitor_attribute/component_init.cpp:
-        
+
           Added check in generated code for the success of extraction
           from Any. If extraction fails, we throw BAD_PARAM. I didn't
           see any specific indications in the spec about what to
@@ -30,7 +44,7 @@ Wed Apr  7 14:10:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        
+
           Added checks to eliminate generation and use of
           populate_port_tables() if the component has neither
           facets nor event sinks, since this method will be
@@ -40,13 +54,13 @@ Wed Apr  7 13:47:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
         * TAO_IDL/be_include/be_component.h:
-        
+
           Added additional flag to indicated the presence of a
           multiplex uses port in the component.
-          
+
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        
+
           Added checks for the above flag, to determine if the Cookie
           argument in a generated disconnect() method will be used
           or not. If not used, it is generated as commented out.
@@ -57,7 +71,7 @@ Wed Apr  7 10:39:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/Bug_2953_Regression/run_test.pl
         * tests/Bug_2953_Regression/server.cpp
         Pass filenames through commandline.
-        
+
 
 Wed Apr  7 09:51:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

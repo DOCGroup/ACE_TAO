@@ -94,11 +94,11 @@ int
 be_visitor_ccm_pre_proc::visit_root (be_root *node)
 {
   if (be_global->ami4ccm_call_back ())
-    {        
+    {
       /// Do this before traversing the tree so the traversal
       /// will pick up the implied uses nodes we add, if any.
       int status = this->generate_ami4ccm_uses ();
-      
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -159,10 +159,10 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
                          ACE_TEXT ("lookups failed\n")),
                         -1);
     }
-    
+
   // Set working node for all port code generation.
   this->comp_ = node;
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -189,37 +189,40 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
     {
       return 0;
     }
-  
-  // If this facet comes from a porttype, the instantiated
-  // port/mirrorport name is prefixed to the facet name.
-  ACE_CString prefix ("provide_");
-  prefix += this->port_prefix_;
-  
-  AST_Operation *provides_op = 0;
-  UTL_ScopedName *op_name =
-    this->create_scoped_name (prefix.c_str (),
-                              node->local_name ()->get_string (),
-                              0,
-                              comp_);
-  ACE_NEW_RETURN (provides_op,
-                  be_operation (node->provides_type (),
-                                AST_Operation::OP_noflags,
-                                0,
-                                0,
-                                0),
-                  -1);
-                  
-  provides_op->set_defined_in (comp_);
-  provides_op->set_imported (comp_->imported ());
-  provides_op->set_name (op_name);
 
-  if (0 == comp_->be_add_operation (provides_op))
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_provides - ")
-                         ACE_TEXT ("be_add_operation() failed\n")),
-                        -1);
+      // If this facet comes from a porttype, the instantiated
+      // port/mirrorport name is prefixed to the facet name.
+      ACE_CString prefix ("provide_");
+      prefix += this->port_prefix_;
+
+      AST_Operation *provides_op = 0;
+      UTL_ScopedName *op_name =
+        this->create_scoped_name (prefix.c_str (),
+                                  node->local_name ()->get_string (),
+                                  0,
+                                  comp_);
+      ACE_NEW_RETURN (provides_op,
+                      be_operation (node->provides_type (),
+                                    AST_Operation::OP_noflags,
+                                    0,
+                                    0,
+                                    0),
+                      -1);
+
+      provides_op->set_defined_in (comp_);
+      provides_op->set_imported (comp_->imported ());
+      provides_op->set_name (op_name);
+
+      if (0 == comp_->be_add_operation (provides_op))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_provides - ")
+                             ACE_TEXT ("be_add_operation() failed\n")),
+                            -1);
+        }
     }
 
   return 0;
@@ -233,62 +236,65 @@ be_visitor_ccm_pre_proc::visit_uses (be_uses *node)
       return 0;
     }
 
-  if (node->is_multiple ())
+  if (!be_global->gen_lwccm ())
     {
-      if (this->gen_connect_multiple (node) == -1)
+      if (node->is_multiple ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_connect_multiple failed\n")),
-                            -1);
-        }
+          if (this->gen_connect_multiple (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_connect_multiple failed\n")),
+                                -1);
+            }
 
-      if (this->gen_disconnect_multiple (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_disconnect_multiple failed\n")),
-                            -1);
-        }
+          if (this->gen_disconnect_multiple (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_disconnect_multiple failed\n")),
+                                -1);
+            }
 
-      if (this->gen_get_connection_multiple (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_get_connection_single failed\n")),
-                            -1);
+          if (this->gen_get_connection_multiple (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_get_connection_single failed\n")),
+                                -1);
+            }
         }
-    }
-  else
-    {
-      if (this->gen_connect_single (node) == -1)
+      else
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_connect_single failed\n")),
-                            -1);
-        }
+          if (this->gen_connect_single (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_connect_single failed\n")),
+                                -1);
+            }
 
-      if (this->gen_disconnect_single (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_disconnect_single failed\n")),
-                            -1);
-        }
+          if (this->gen_disconnect_single (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_disconnect_single failed\n")),
+                                -1);
+            }
 
-      if (this->gen_get_connection_single (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                             ACE_TEXT ("visit_uses - ")
-                             ACE_TEXT ("gen_get_connection_single failed\n")),
-                            -1);
+          if (this->gen_get_connection_single (node) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                                 ACE_TEXT ("visit_uses - ")
+                                 ACE_TEXT ("gen_get_connection_single failed\n")),
+                                -1);
+            }
         }
     }
 
@@ -365,7 +371,7 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
     {
       return 0;
     }
-    
+
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
@@ -460,13 +466,16 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
       return 0;
     }
 
-  if (this->gen_find_by_primary_key (node, implicit) == -1)
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("gen_implicit_ops - ")
-                         ACE_TEXT ("gen_find_by_primary_key failed\n")),
-                        -1);
+      if (this->gen_find_by_primary_key (node, implicit) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("gen_implicit_ops - ")
+                             ACE_TEXT ("gen_find_by_primary_key failed\n")),
+                            -1);
+        }
     }
 
   if (this->gen_remove (node, implicit) == -1)
@@ -478,13 +487,16 @@ be_visitor_ccm_pre_proc::gen_implicit_ops (be_home *node,
                         -1);
     }
 
-  if (this->gen_get_primary_key (node, implicit) == -1)
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("gen_implicit_ops - ")
-                         ACE_TEXT ("gen_get_primary_key failed\n")),
-                        -1);
+      if (this->gen_get_primary_key (node, implicit) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("gen_implicit_ops - ")
+                             ACE_TEXT ("gen_get_primary_key failed\n")),
+                            -1);
+        }
     }
 
   return 0;
@@ -499,7 +511,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("connect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -555,7 +567,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("disconnect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -594,7 +606,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("get_connection_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -611,7 +623,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
-  
+
   if (0 == comp_->be_add_operation (op))
     {
       return -1;
@@ -627,7 +639,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("connect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -683,7 +695,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("disconnect_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -733,7 +745,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   // port/mirrorport name is prefixed to the receptacle name.
   ACE_CString prefix ("get_connections_");
   prefix += this->port_prefix_;
-  
+
   UTL_ScopedName *op_full_name =
     this->create_scoped_name (prefix.c_str (),
                               node->local_name ()->get_string (),
@@ -822,6 +834,11 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
 int
 be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 {
+  if (be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   UTL_ScopedName *op_name =
     this->create_scoped_name ("subscribe_",
                               node->local_name ()->get_string (),
@@ -878,6 +895,11 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 int
 be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 {
+  if (be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
@@ -933,6 +955,11 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
 int
 be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 {
+  if (be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   UTL_ScopedName *op_name =
     this->create_scoped_name ("connect_",
                               node->local_name ()->get_string (),
@@ -988,6 +1015,11 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 int
 be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 {
+  if (be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
@@ -1033,6 +1065,11 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
 int
 be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
 {
+  if (be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   AST_Interface *i = this->lookup_consumer (node);
 
   if (i == 0)
@@ -1293,7 +1330,7 @@ be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
                          ACE_TEXT ("visit_scope for porttype failed\n")),
                         -1);
     }
-    
+
   return 0;
 }
 
@@ -1400,11 +1437,11 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                               node->local_name (),
                               "Consumer",
                               ScopeAsDecl (node->defined_in ()));
-           
+
   /// We need to create event consumers even for forward
   /// declared eventtypes. Since forward declarations can
   /// appear any number of times, we need to check that this
-  /// event consumer hasn't already been created.                            
+  /// event consumer hasn't already been created.
   if (s->lookup_by_name (consumer_name, true) != 0)
     {
       return 0;
@@ -1496,7 +1533,7 @@ AST_Interface *
 be_visitor_ccm_pre_proc::create_explicit (be_home *node)
 {
   be_visitor_xplicit_pre_proc v (this->ctx_);
-  
+
   if (v.visit_home (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1505,7 +1542,7 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                          ACE_TEXT ("home xplicit visitor failed\n")),
                         0);
     }
-    
+
   return v.xplicit ();
 }
 
@@ -1516,20 +1553,20 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
   ACE_NEW_RETURN (parent_id,
                   Identifier ("KeylessCCMHome"),
                   0);
-                  
+
   UTL_ScopedName *parent_local_name = 0;
   ACE_NEW_RETURN (parent_local_name,
                   UTL_ScopedName (parent_id, 0),
                   0);
-                  
+
   UTL_ScopedName *parent_full_name = 0;
   ACE_NEW_RETURN (parent_full_name,
                   UTL_ScopedName (this->module_id_.copy (),
                                   parent_local_name),
                   0);
-                  
+
   UTL_NameList parent_list (parent_full_name, 0);
-  
+
   UTL_NameList *parent_list_ptr = 0;
 
   if (node->primary_key () == 0)
@@ -1553,7 +1590,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                               node->local_name (),
                               "Implicit",
                               ScopeAsDecl (node->defined_in ()));
-                              
+
   be_interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
@@ -1567,19 +1604,19 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   // Back to reality.
   idl_global->scopes ().pop ();
-  
+
   header.destroy ();
   parent_list.destroy ();
 
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
-  
+
   i->gen_fwd_helper_name ();
   i->original_interface (node);
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
-  
+
   return i;
 }
 
@@ -1631,7 +1668,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
   retval->set_imported (node->imported ());
   retval->gen_fwd_helper_name ();
   retval->original_interface (node);
-  
+
   UTL_ScopedName *unmangled_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   UTL_ScopedName *mangled_name =
@@ -1734,7 +1771,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
 
 int
 be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
-{    
+{
   /// The interfaces in the list below are from this IDL file,
   /// which then must be processed with the -GC option, so we
   /// know we'll get here - a good place to generate the *A.idl
@@ -1771,9 +1808,9 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
           idl_global->err ()->lookup_error (sn);
           continue;
         }
-        
+
       be_uses *u = be_uses::narrow_from_decl (d);
-      
+
       if (u == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1783,19 +1820,19 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
                              ACE_TEXT ("failed\n")),
                             -1);
         }
-        
+
       be_interface *iface =
         be_interface::narrow_from_decl (u->uses_type ());
 
       /// The real AMI_xxx exists only in the *A.idl file, si
       /// we create a dummy as the uses type for the implied
       /// receptacle created below.
-      
+
       ACE_CString iname ("AMI_");
       iname += iface->local_name ();
       Identifier itmp_id (iname.c_str ());
       UTL_ScopedName itmp_sn (&itmp_id, 0);
-      
+
       s = iface->defined_in ();
       idl_global->scopes ().push (s);
       be_interface *ami_iface = 0;
@@ -1808,24 +1845,24 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
                                     true,
                                     false),
                        -1);
-       
+
       /// Make it imported so it doesn't trigger
-      /// any unwanted code generation.                 
+      /// any unwanted code generation.
       ami_iface->set_imported (true);
       s->add_to_scope (ami_iface);
       idl_global->scopes ().pop ();
-      
+
       /// Now create the receptacle, passing in
       /// the local interface created above as the
       /// uses type. We don't generate anything
       /// in the main IDL file from the interface's
       /// contents, so it's ok that it's empty.
-      
+
       ACE_CString uname ("sendc_");
       uname += u->local_name ()->get_string ();
       Identifier utmp_id (uname.c_str ());
       UTL_ScopedName utmp_sn (&utmp_id, 0);
-      
+
       s = u->defined_in ();
       idl_global->scopes ().push (s);
       be_uses *ami_uses = 0;
@@ -1834,7 +1871,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
                                ami_iface,
                                false),
                       -1);
-                      
+
       s->add_to_scope (ami_uses);
       idl_global->scopes ().pop ();
     }

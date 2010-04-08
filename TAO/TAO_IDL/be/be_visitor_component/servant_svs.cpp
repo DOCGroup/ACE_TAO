@@ -101,7 +101,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// If a component has neither facets nor event sinks, the
   /// populate_port_tables() method isn't generated.
-  if (this->node_->has_provides () || this->node_->has_consumes ())
+  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
     {
       os_ << "try" << be_idt_nl
           << "{" << be_idt_nl
@@ -111,7 +111,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "{" << be_nl
           << "}" << be_uidt << be_uidt_nl;
     }
-      
+
   os_ << "}";
 
   os_ << be_nl << be_nl
@@ -207,7 +207,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  if (this->node_->has_provides () || this->node_->has_consumes ())
+  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
     {
       os_ << be_nl << be_nl
           << "/// Private method to trigger population of the port"
@@ -278,6 +278,11 @@ be_visitor_servant_svs::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svs::visit_provides (be_provides *node)
 {
+  if (node->provides_type ()->is_local () || be_global->gen_lwccm ())
+    {
+      return 0;
+    }
+
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -287,11 +292,6 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();
-
-  if (node->provides_type ()->is_local ())
-    {
-      return 0;
-    }
 
   // Avoid '_cxx_' prefix.
   const char *lname =
@@ -382,17 +382,17 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 int
 be_visitor_servant_svs::visit_uses (be_uses *node)
 {
+  if (node->uses_type ()->is_local ())
+    {
+      return 0;
+    }
+
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
   const char *obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
-
-  if (node->uses_type ()->is_local ())
-    {
-      return 0;
-    }
 
   os_ << be_nl << be_nl
       << (is_multiple ? "::Components::Cookie *" : "void")
@@ -1102,37 +1102,40 @@ be_visitor_servant_svs::gen_emits_top (void)
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << "::Components::EmitterDescriptions *" << be_nl
-      << node_->local_name ()
-      << "_Servant::get_all_emitters (void)" << be_nl
-      << "{" << be_idt_nl
-      << "::Components::EmitterDescriptions *retval = 0;"
-      << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                ::Components::EmitterDescriptions,"
-      << be_nl
-      << "                0);" << be_nl << be_nl
-      << "::Components::EmitterDescriptions_var "
-      << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << n_emits_
-      << "UL);";
-
-  be_visitor_emitter_desc ed_visitor (this->ctx_);
-
-  if (ed_visitor.visit_component_scope (node_) == -1)
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_emits_top - "
-                  "emitter description visitor failed\n"));
+      os_ << be_nl << be_nl
+          << "::Components::EmitterDescriptions *" << be_nl
+          << node_->local_name ()
+          << "_Servant::get_all_emitters (void)" << be_nl
+          << "{" << be_idt_nl
+          << "::Components::EmitterDescriptions *retval = 0;"
+          << be_nl
+          << "ACE_NEW_RETURN (retval," << be_nl
+          << "                ::Components::EmitterDescriptions,"
+          << be_nl
+          << "                0);" << be_nl << be_nl
+          << "::Components::EmitterDescriptions_var "
+          << "safe_retval = retval;" << be_nl
+          << "safe_retval->length (" << n_emits_
+          << "UL);";
 
-      return;
+      be_visitor_emitter_desc ed_visitor (this->ctx_);
+
+      if (ed_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_emits_top - "
+                      "emitter description visitor failed\n"));
+
+          return;
+        }
+
+      os_ << be_nl << be_nl
+          << "return safe_retval._retn ();" << be_uidt_nl
+          << "}";
     }
-
-  os_ << be_nl << be_nl
-      << "return safe_retval._retn ();" << be_uidt_nl
-      << "}";
 }
 
 // ==========================================================
