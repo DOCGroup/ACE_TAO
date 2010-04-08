@@ -123,6 +123,7 @@ namespace CIAO
         return sc->get_CCM_object ();
       }
 
+#if !defined (CCM_LW)
     ::Components::EntityContext_var ec =
       ::Components::EntityContext::_narrow (this->context_);
 
@@ -130,6 +131,7 @@ namespace CIAO
       {
         return ec->get_CCM_object ();
       }
+#endif
 
     throw CORBA::INTERNAL ();
   }
