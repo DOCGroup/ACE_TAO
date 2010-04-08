@@ -1,3 +1,9 @@
+Thu Apr  8 07:42:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_ComponentId.idl
+        * ccm/CCM_ExecutorLocator.idl
+          LwCCM updates
+
 Thu Apr  8 07:29:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Entity2Context.idl
