@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-feature(ccm_lm) {
-  avoids += ccm_lm
+feature(ccm_lw) {
+  avoids += ccm_lw
 }
