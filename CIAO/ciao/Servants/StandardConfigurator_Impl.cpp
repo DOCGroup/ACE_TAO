@@ -3,6 +3,8 @@
 #include "StandardConfigurator_Impl.h"
 #include "Servant_Impl_Base.h"
 
+#if !defined (CCM_LW)
+
 namespace CIAO
 {
   StandardConfigurator_Impl::StandardConfigurator_Impl (
@@ -27,3 +29,5 @@ namespace CIAO
   {
   }
 }
+
+#endif

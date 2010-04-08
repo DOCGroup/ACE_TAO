@@ -186,6 +186,7 @@ namespace CIAO
     return 0;
   }
 
+#if !defined (CCM_LW)
   ::Components::ComponentPortDescription *
   Connector_Servant_Impl_Base::get_all_ports (void)
   {
@@ -208,12 +209,15 @@ namespace CIAO
 
     return retv._retn ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::ConsumerDescriptions *
   Connector_Servant_Impl_Base::get_all_consumers (void)
   {
     return 0;
   }
+#endif
 
   ::Components::EventConsumerBase_ptr
   Connector_Servant_Impl_Base::get_consumer (
@@ -222,13 +226,16 @@ namespace CIAO
     return ::Components::EventConsumerBase::_nil ();
   }
 
+#if !defined (CCM_LW)
   ::Components::ConsumerDescriptions *
   Connector_Servant_Impl_Base::get_named_consumers (
     const ::Components::NameList & /* names */)
   {
     return 0;
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */)
@@ -241,6 +248,7 @@ namespace CIAO
   {
     return 0;
   }
+#endif
 
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_named_receptacles (
@@ -298,6 +306,7 @@ namespace CIAO
     return retval._retn ();
   }
 
+#if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)
@@ -310,6 +319,7 @@ namespace CIAO
   {
     return 0;
   }
+#endif
 
   ::Components::Cookie *
   Connector_Servant_Impl_Base::subscribe (
@@ -365,6 +375,7 @@ namespace CIAO
   {
   }
 
+#if !defined (CCM_LW)
   ::Components::StandardConfigurator_ptr
   Connector_Servant_Impl_Base::get_standard_configurator (void)
   {
@@ -383,6 +394,7 @@ namespace CIAO
 
     return configurator._retn ();
   }
+#endif
 
   PortableServer::POA_ptr
   Connector_Servant_Impl_Base::_default_POA (void)
@@ -432,8 +444,7 @@ namespace CIAO
   }
 
   CORBA::Object_ptr
-  Connector_Servant_Impl_Base::lookup_facet (
-    const char *port_name)
+  Connector_Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::lookup_facet");
 
@@ -458,8 +469,7 @@ namespace CIAO
   }
 
   ::Components::FacetDescription *
-  Connector_Servant_Impl_Base::lookup_facet_description (
-    const char *port_name)
+  Connector_Servant_Impl_Base::lookup_facet_description (const char *port_name)
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::lookup_facet_description");
 
