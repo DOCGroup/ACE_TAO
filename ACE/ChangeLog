@@ -1,3 +1,9 @@
+Thu Apr  8 21:25:54 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/OS_NS_netdb.cpp:
+
+          Fixed compile time error encountered in MAC and iPhone platforms.
+
 Thu Apr  8 14:51:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/ACE-guidelines.html: Clarified the style recommendations
