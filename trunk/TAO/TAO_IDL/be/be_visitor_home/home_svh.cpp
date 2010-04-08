@@ -171,20 +171,26 @@ be_visitor_home_svh::gen_servant_class (void)
           << "create (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
 
-      os_ << be_nl << be_nl
-          << "virtual ::" << comp_->name () << "_ptr" << be_nl
-          << "find_by_primary_key (" << be_idt_nl
-          << "::" << pk->name () << " * key);" << be_uidt;
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual ::" << comp_->name () << "_ptr" << be_nl
+              << "find_by_primary_key (" << be_idt_nl
+              << "::" << pk->name () << " * key);" << be_uidt;
+        }
 
       os_ << be_nl << be_nl
           << "virtual void" << be_nl
           << "remove (" << be_idt_nl
           << "::" << pk->name () << " * key);" << be_uidt;
 
-      os_ << be_nl << be_nl
-          << "virtual ::" << pk->name () << " *" << be_nl
-          << "get_primary_key (" << be_idt_nl
-          << "::" << comp_->name () << "_ptr comp);" << be_uidt;
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual ::" << pk->name () << " *" << be_nl
+              << "get_primary_key (" << be_idt_nl
+              << "::" << comp_->name () << "_ptr comp);" << be_uidt;
+        }
     }
 
   be_home *h = node_;

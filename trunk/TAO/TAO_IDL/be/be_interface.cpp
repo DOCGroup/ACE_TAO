@@ -2913,15 +2913,20 @@ be_interface::gen_facet_svnt_src (be_visitor *visitor,
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
      << "{" << be_idt_nl
      << "return sc->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl
-     << "::Components::EntityContext_var ec =" << be_idt_nl
-     << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-     << be_uidt_nl << be_nl
-     << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-     << "{" << be_idt_nl
-     << "return ec->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl
-     << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
+     << "}" << be_uidt_nl << be_nl;
+
+  if (!be_global->gen_lwccm ())
+    {
+      os << "::Components::EntityContext_var ec =" << be_idt_nl
+         << "::Components::EntityContext::_narrow (this->ctx_.in ());"
+         << be_uidt_nl << be_nl
+         << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
+         << "{" << be_idt_nl
+         << "return ec->get_CCM_object ();" << be_uidt_nl
+         << "}" << be_uidt_nl << be_nl;
+    }
+
+  os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";
 
   os << be_uidt_nl

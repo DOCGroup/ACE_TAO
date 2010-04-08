@@ -242,16 +242,19 @@ be_visitor_home_svs::gen_servant_class (void)
           << be_uidt_nl
           << "}";
 
-      os_ << be_nl << be_nl
-          << "::" << comp_->name () << "_ptr" << be_nl
-          << lname << "_Servant::find_by_primary_key (" << be_idt_nl
-          << "::" << pk->name () << " * /* key */)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,"
-          << be_nl
-          << "                             CORBA::COMPLETED_NO);"
-          << be_uidt_nl
-          << "}";
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "::" << comp_->name () << "_ptr" << be_nl
+              << lname << "_Servant::find_by_primary_key (" << be_idt_nl
+              << "::" << pk->name () << " * /* key */)" << be_uidt_nl
+              << "{" << be_idt_nl
+              << "throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,"
+              << be_nl
+              << "                             CORBA::COMPLETED_NO);"
+              << be_uidt_nl
+              << "}";
+        }
 
       os_ << be_nl << be_nl
           << "void" << be_nl
@@ -264,16 +267,19 @@ be_visitor_home_svs::gen_servant_class (void)
           << be_uidt_nl
           << "}";
 
-      os_ << be_nl << be_nl
-          << "::" << pk->name () << " *" << be_nl
-          << lname << "_Servant::get_primary_key (" << be_idt_nl
-          << "::" << comp_->name () << "_ptr /* comp */)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,"
-          << be_nl
-          << "                             CORBA::COMPLETED_NO);"
-          << be_uidt_nl
-          << "}";
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "::" << pk->name () << " *" << be_nl
+              << lname << "_Servant::get_primary_key (" << be_idt_nl
+              << "::" << comp_->name () << "_ptr /* comp */)" << be_uidt_nl
+              << "{" << be_idt_nl
+              << "throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,"
+              << be_nl
+              << "                             CORBA::COMPLETED_NO);"
+              << be_uidt_nl
+              << "}";
+        }
     }
 
   be_home *h = node_;
