@@ -7,6 +7,8 @@
 
 // *************** Extended Container Interfaces ***************
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -31,4 +33,6 @@ module Components
       raises (InvalidStateIdData);
   };
 };
+#endif
+
 #endif /* CCM_COMPONENTID_IDL */
