@@ -390,7 +390,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   const long BUFFERSIZE = 4000;
   char buffer[BUFFERSIZE];
 
-  struct ifconf ifc = 0;
+  struct ifconf ifc;
   struct ifreq* ifr = 0;
 
   ACE_HANDLE handle =
