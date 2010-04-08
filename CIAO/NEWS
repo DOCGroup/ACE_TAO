@@ -34,9 +34,7 @@ replacement in the near term:
   will allow the application developers to use dynamica scheduling
   through meta-programming model.
 
-. Update DAnCE IDL data structures and interfaces to comply with the
-  06-04-01 version of the DnC specification, and perform
-  interoperability testing with other DnC implementations.  Note this
+. Perform interoperability testing with other DnC implementations.  Note this
   work may change the functionality and semantics of some proprietary
   DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
   integration, and may even be absent until such a time as they
@@ -60,6 +58,10 @@ replacement in the near term:
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
+
+. Initial set of changes to have real support for the LwCCM profile.
+  This work is not finished yet, to have a look at the reduced
+  code size, add ccm_lw=1 to your default.features file
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
