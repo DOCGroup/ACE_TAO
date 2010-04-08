@@ -1,3 +1,8 @@
+Thu Apr  8 12:02:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
+          In preparation of an upcoming fix.
+
 Thu Apr  8 11:28:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsState/Receiver/VTopics_Receiver.idl:
