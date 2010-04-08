@@ -1,3 +1,9 @@
+Thu Apr  8 06:38:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/avoids_ccm_lw.mpb:
+        * MPC/config/ccm_lw.mpb:
+          Fixed typo
+
 Wed Apr  7 19:00:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciaoidldefaults.mpb:
