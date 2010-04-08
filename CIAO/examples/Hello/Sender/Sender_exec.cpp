@@ -154,6 +154,34 @@ namespace CIAO_Hello_Sender_Impl
     this->color_ = color;
   }
   
+  ::Hello::COLORS *
+  Sender_exec_i::the_colors (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Sender_exec_i::the_colors (
+    const ::Hello::COLORS & /* the_colors */)
+  {
+    /* Your code here. */
+  }
+  
+  ::CORBA::StringSeq *
+  Sender_exec_i::str_seq (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Sender_exec_i::str_seq (
+    const ::CORBA::StringSeq & /* str_seq */)
+  {
+    /* Your code here. */
+  }
+  
   // Operations from Components::SessionComponent.
   
   void

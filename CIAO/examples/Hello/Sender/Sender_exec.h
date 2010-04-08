@@ -125,6 +125,33 @@ namespace CIAO_Hello_Sender_Impl
       ::Hello::COLOR_SELECTION color);
     //@}
     
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
+    
+    virtual ::Hello::COLORS *
+    the_colors (void);
+    
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
+    
+    virtual void
+    the_colors (
+      const ::Hello::COLORS & the_colors);
+    
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
+    
+    virtual ::CORBA::StringSeq *
+    str_seq (void);
+    
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
+    
+    virtual void
+    str_seq (
+      const ::CORBA::StringSeq & str_seq);
+    //@}
+    
     //@{
     /** Operations from Components::SessionComponent. */
     
