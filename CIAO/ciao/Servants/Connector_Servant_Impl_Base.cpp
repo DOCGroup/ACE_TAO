@@ -31,6 +31,8 @@ namespace CIAO
   void
   Connector_Servant_Impl_Base::remove (void)
   {
+ #if !defined (CCM_LW)
+    // @todo, reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::remove (void)");
 
     try
@@ -84,6 +86,7 @@ namespace CIAO
     {
       ex._tao_print_exception ("Port not active\n");
     }
+#endif
   }
 
   CORBA::IRObject_ptr
@@ -93,6 +96,7 @@ namespace CIAO
     throw ::CORBA::NO_IMPLEMENT ();
   }
 
+ #if !defined (CCM_LW)
   ::Components::ConnectionDescriptions *
   Connector_Servant_Impl_Base::get_connections (
     const char * /* name */)
@@ -100,6 +104,7 @@ namespace CIAO
     CIAO_TRACE("Connector_Servant_Impl_Base::get_connections (const char * /* name */)");
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
   ::CORBA::Object_ptr
   Connector_Servant_Impl_Base::provide_facet (const char *name)
@@ -123,6 +128,7 @@ namespace CIAO
     return retval;
   }
 
+ #if !defined (CCM_LW)
   Components::FacetDescriptions *
   Connector_Servant_Impl_Base::get_named_facets (
     const ::Components::NameList & names)
@@ -153,7 +159,9 @@ namespace CIAO
 
     return safe_retval._retn ();
   }
+#endif
 
+ #if !defined (CCM_LW)
   ::Components::FacetDescriptions *
   Connector_Servant_Impl_Base::get_all_facets (void)
   {
@@ -179,12 +187,15 @@ namespace CIAO
 
     return retval._retn ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::PrimaryKeyBase *
   Connector_Servant_Impl_Base::get_primary_key (void)
   {
     return 0;
   }
+#endif
 
 #if !defined (CCM_LW)
   ::Components::ComponentPortDescription *
@@ -250,6 +261,7 @@ namespace CIAO
   }
 #endif
 
+ #if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_named_receptacles (
     const ::Components::NameList & /* names */)
@@ -257,7 +269,9 @@ namespace CIAO
     CIAO_TRACE("Connector_Servant_Impl_Base::get_named_receptacles");
     throw ::CORBA::NO_IMPLEMENT ();
   }
+#endif
 
+ #if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_all_receptacles (void)
   {
@@ -305,6 +319,7 @@ namespace CIAO
 
     return retval._retn ();
   }
+#endif
 
 #if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
@@ -416,6 +431,8 @@ namespace CIAO
     const char *port_name,
     ::CORBA::Object_ptr port_ref)
   {
+ #if !defined (CCM_LW)
+    // @todo reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::add_facet");
 
     if (0 == port_name || ::CORBA::is_nil (port_ref))
@@ -441,13 +458,15 @@ namespace CIAO
 
       (void) this->facet_table_.insert (entry);
     }
+#endif
   }
 
   CORBA::Object_ptr
   Connector_Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::lookup_facet");
-
+ #if !defined (CCM_LW)
+    // @todo Reimplement for LwCCM
     if (!port_name)
       {
         return CORBA::Object::_nil ();
@@ -466,8 +485,12 @@ namespace CIAO
       }
 
     return CORBA::Object::_duplicate (iter->second->facet_ref ());
+#else
+    return CORBA::Object::_nil ();
+#endif
   }
 
+#if !defined (CCM_LW)
   ::Components::FacetDescription *
   Connector_Servant_Impl_Base::lookup_facet_description (const char *port_name)
   {
@@ -497,6 +520,7 @@ namespace CIAO
 
     return fd._retn ();
   }
+#endif
 
   void
   Connector_Servant_Impl_Base::add_receptacle (
@@ -504,6 +528,8 @@ namespace CIAO
     CORBA::Object_ptr recept_ref,
     ::Components::Cookie * cookie)
   {
+#if !defined (CCM_LW)
+    // @todo Reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::add_receptacle");
     CIAO_DEBUG (6,
                 (LM_INFO,
@@ -585,6 +611,7 @@ namespace CIAO
                      "Connector_Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
                      receptacle_name));
       }
+#endif      
   }
 }
 

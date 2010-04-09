@@ -41,6 +41,7 @@ namespace CIAO
   typedef Container *Container_ptr;
   typedef TAO_Objref_Var_T<Container> Container_var;
 
+#if !defined (CCM_LW)
   namespace Servant
   {
     template<typename T_var>
@@ -59,6 +60,7 @@ namespace CIAO
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot);
   } /* Servant */
+#endif
 
   /**
    * @class Servant_Impl_Base
@@ -88,17 +90,25 @@ namespace CIAO
 
     virtual Components::SessionComponent_ptr get_executor () = 0;
 
+#if !defined (CCM_LW)
     virtual ::Components::ConnectionDescriptions *
     get_connections (const char *name);
+#endif
 
     virtual CORBA::Object_ptr provide_facet (const char *name);
 
+#if !defined (CCM_LW)
     virtual ::Components::FacetDescriptions *
     get_named_facets (const ::Components::NameList & names);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::FacetDescriptions * get_all_facets (void);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::Components::PrimaryKeyBase * get_primary_key (void);
+#endif
 
 #if !defined (CCM_LW)
     virtual ::Components::ComponentPortDescription * get_all_ports (void);
@@ -124,11 +134,15 @@ namespace CIAO
     get_all_emitters (void);
 #endif
 
+ #if !defined (CCM_LW)
     virtual ::Components::ReceptacleDescriptions *
     get_named_receptacles (const ::Components::NameList & names);
+#endif
 
+ #if !defined (CCM_LW)
     virtual ::Components::ReceptacleDescriptions *
     get_all_receptacles (void);
+#endif
 
 #if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
@@ -176,7 +190,7 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     virtual ::CORBA::Object_ptr get_facet_executor (const char *name);
-    
+
     virtual void activate_component (void) = 0;
     virtual void passivate_component (void) = 0;
 
@@ -186,14 +200,18 @@ namespace CIAO
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
 
+ #if !defined (CCM_LW)
     ::Components::FacetDescription *lookup_facet_description (
       const char *port_name);
+#endif
 
     void add_receptacle (const char *receptacle_name,
                          CORBA::Object_ptr recept_ref,
                          ::Components::Cookie * cookie);
 
   protected:
+ #if !defined (CCM_LW)
+    // @todo, rework this
     typedef ACE_Array_Map<ACE_CString,
                           ::Components::FacetDescription_var>
        FacetTable;
@@ -207,6 +225,7 @@ namespace CIAO
 
     FacetTable facet_table_;
     ReceptacleTable receptacle_table_;
+#endif
     Container_var container_;
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;
