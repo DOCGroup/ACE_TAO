@@ -92,26 +92,24 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind status_kind)
   {
-    if ((! ::CORBA::is_nil(the_entity)) &&
-       (status_kind = DDS::PUBLICATION_MATCHED_STATUS))
+    if (! ::CORBA::is_nil (the_entity) &&
+        status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
         if(::CORBA::is_nil(wr))
-         {
+          {
             throw ::CORBA::INTERNAL ();
-         }
+          }
         ::DDS::ReturnCode_t retval = wr->get_publication_matched_status(stat.out ());
         if (retval == DDS::RETCODE_OK)
           {
-
-            if((stat.in().current_count >=
-             (this->number_of_subscribers_ + 1)) &&
-             !this->matched_.value())
-            {
-              this->matched_ = true;
-              this->callback_.start();
-            }
+            if (stat.in().current_count >= this->number_of_subscribers_ &&
+                !this->matched_.value())
+              {
+                this->matched_ = true;
+                this->callback_.start();
+              }
           }
       }
   }
@@ -322,7 +320,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       *this);
   }
 
-  ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
+  ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_ptr
   Sender_exec_i::get_ping_listen_data_listener (void)
   {
     return new LatencyTTTest_Listener_exec_i (*this);
@@ -351,11 +349,11 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::start : ")
                               ACE_TEXT ("Error scheduling timer")));
       }
-      this->timer_ = true;
-   }
+    this->timer_ = true;
+  }
 
-void
-Sender_exec_i::record_time (ACE_UINT64 receive_time)
+  void
+  Sender_exec_i::record_time (ACE_UINT64 receive_time)
   {
     ACE_UINT64 interval = receive_time  - this->start_time_;
     ACE_UINT64 duration = interval - this->_clock_overhead_;
@@ -389,9 +387,9 @@ Sender_exec_i::record_time (ACE_UINT64 receive_time)
         throw ::CORBA::BAD_PARAM ();
       }
     else
-    {
-      this->iterations_ = iterations;
-    }
+      {
+        this->iterations_ = iterations;
+      }
   }
 
   ::CORBA::UShort
@@ -486,7 +484,7 @@ Sender_exec_i::record_time (ACE_UINT64 receive_time)
         ::CCM_DDS::DataListenerControl_var dlc =
             this->context_->get_connection_ping_listen_data_control ();
         dlc->mode (::CCM_DDS::ONE_BY_ONE);
-    }
+      }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
@@ -505,10 +503,10 @@ Sender_exec_i::record_time (ACE_UINT64 receive_time)
   Sender_exec_i::stop (void)
   {
     if (this->timer_.value ())
-     {
-       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-       delete this->ticker_;
-    }
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+      }
   }
 
   void
@@ -520,14 +518,21 @@ Sender_exec_i::record_time (ACE_UINT64 receive_time)
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if((this->nr_of_runs_ -1) != this->datalen_idx_)
+    if ((this->nr_of_runs_ -1) != this->datalen_idx_)
       {
-        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
-                             " Number of messages sent of last run (%u): %u\n",
-                          (this->datalen_idx_),
-                           this->nr_of_runs_,
-                          (this->datalen_idx_ + 1),
-                           this->number_of_msg_));
+        if (this->datalen_idx_ == 0)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR SENDER: No run has taken place.\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
+                                " Number of messages sent of last run (%u): %u\n",
+                              this->datalen_idx_,
+                              this->nr_of_runs_,
+                              this->datalen_idx_ + 1,
+                              this->number_of_msg_));
+          }
       }
     else
       {

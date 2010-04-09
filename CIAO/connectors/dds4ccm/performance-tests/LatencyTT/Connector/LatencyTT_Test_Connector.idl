@@ -16,14 +16,10 @@
 
 #pragma ciao lem "Connector/LatencyTT_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::LatencyTTTest, ::LatencyTTTestSeq> LatencyTTTest;
-};
-
 module LatencyTT_Test
 {
-  connector LatencyTT_Test_Connector : ::CCM_DDS::LatencyTTTest::DDS_Event
+  module ::CCM_DDS::Typed < ::LatencyTTTest, ::LatencyTTTestSeq> LatencyTTTestConn;
+  connector LatencyTT_Test_Connector : LatencyTTTestConn::DDS_Event
   {
   };
 };

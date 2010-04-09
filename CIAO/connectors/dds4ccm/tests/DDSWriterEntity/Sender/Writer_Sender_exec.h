@@ -17,8 +17,6 @@
 
 #include "dds4ccm/impl/dds/DataWriter.h"
 
-#include <map>
-
 class WriterTestDataWriter;
 
 namespace CIAO_Writer_Sender_Impl
