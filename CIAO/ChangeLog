@@ -1,3 +1,31 @@
+Fri Apr  9 12:28:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+          Moved connector declaration to the namespace of the test.
+          Give an error when this test does not run.
+          Also made some layout changes.
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender.idl:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:
+          Moved connector declaration to the namespace of the test.
+          Resolved test error. Number of subscribers is less than expected.
+          Give an error when this test does not run.
+          Also made some layout changes.
+
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/USER_QOS_PROFILES.xml:
+          Renamed QoS profile.
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
+          Removed unnecessary code.
+
 Fri Apr  9 11:42:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL3/Connectors:

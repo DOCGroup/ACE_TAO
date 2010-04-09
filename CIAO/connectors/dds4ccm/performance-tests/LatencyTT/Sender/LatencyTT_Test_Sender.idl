@@ -16,12 +16,14 @@ module LatencyTT_Test
 {
   component Sender
   {
-    port CCM_DDS::LatencyTTTest::DDS_Write info_write;
+    port LatencyTTTestConn::DDS_Write info_write;
+    port LatencyTTTestConn::DDS_Listen ping_listen;
+
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+
     attribute unsigned long iterations;
     attribute unsigned short sleep; 
     attribute unsigned short number_of_sub; //number of subscribers
-    provides CCM_DDS::ConnectorStatusListener connector_status;
-    port CCM_DDS::LatencyTTTest::DDS_Listen ping_listen;
   };
 };
 

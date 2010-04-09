@@ -24,7 +24,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   // LatencyTTTest_Listener_exec_i
   //============================================================
   class SENDER_EXEC_Export LatencyTTTest_Listener_exec_i
-    : public virtual ::CCM_DDS::LatencyTTTest::CCM_Listener,
+    : public virtual ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -101,7 +101,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
 
-    virtual ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
+    virtual ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_ptr
     get_ping_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -138,7 +138,7 @@ class SENDER_EXEC_Export ConnectorStatusListener_exec_i
 
   private:
     ::LatencyTT_Test::CCM_Sender_Context_var context_;
-    CCM_DDS::LatencyTTTest::Writer_var writer_;
+    ::LatencyTT_Test::LatencyTTTestConn::Writer_var writer_;
     WriteTicker *ticker_;
 
     CORBA::UShort iterations_;
