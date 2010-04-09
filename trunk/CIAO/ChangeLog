@@ -1,3 +1,9 @@
+Fri Apr  9 10:21:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Add debug statement, would have saved us a day of time to analyze
+          a runtime problem :-(
+
 Fri Apr  9 10:17:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
