@@ -1,3 +1,8 @@
+Fri Apr  9 17:56:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.h:
+          Resolved compile error.
+
 Fri Apr  9 13:36:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Servant_Impl_Base.cpp:
