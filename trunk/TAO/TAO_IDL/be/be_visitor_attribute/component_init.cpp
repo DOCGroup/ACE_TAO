@@ -40,56 +40,64 @@ be_visitor_attribute_component_init::visit_attribute (
 }
 
 int
-be_visitor_attribute_component_init::visit_array (be_array *)
+be_visitor_attribute_component_init::visit_array (
+  be_array *)
 {
   this->emit_error ("array");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_component (be_component *)
+be_visitor_attribute_component_init::visit_component (
+  be_component *)
 {
   this->emit_error ("component");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_enum (be_enum *)
+be_visitor_attribute_component_init::visit_enum (
+  be_enum *)
 {
   this->emit_init_block ();
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_eventtype (be_eventtype *)
+be_visitor_attribute_component_init::visit_eventtype (
+  be_eventtype *)
 {
   this->emit_error ("eventtype");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_home (be_home *)
+be_visitor_attribute_component_init::visit_home (
+  be_home *)
 {
   this->emit_error ("home");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_interface (be_interface *)
+be_visitor_attribute_component_init::visit_interface (
+  be_interface *)
 {
   this->emit_error ("interface");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_predefined_type (be_predefined_type *)
+be_visitor_attribute_component_init::visit_predefined_type (
+  be_predefined_type *)
 {
   this->emit_init_block ();
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_sequence (be_sequence *)
+be_visitor_attribute_component_init::visit_sequence (
+  be_sequence *)
 {
   this->emit_init_block ();
   return 0;
@@ -112,7 +120,8 @@ be_visitor_attribute_component_init::visit_string (
 }
 
 int
-be_visitor_attribute_component_init::visit_structure (be_structure *)
+be_visitor_attribute_component_init::visit_structure (
+  be_structure *)
 {
   this->emit_error ("structure");
   return 0;
@@ -126,21 +135,24 @@ be_visitor_attribute_component_init::visit_typedef (
 }
 
 int
-be_visitor_attribute_component_init::visit_union (be_union *)
+be_visitor_attribute_component_init::visit_union (
+  be_union *)
 {
   this->emit_error ("union");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_valuebox (be_valuebox *)
+be_visitor_attribute_component_init::visit_valuebox (
+  be_valuebox *)
 {
   this->emit_error ("valuebox");
   return 0;
 }
 
 int
-be_visitor_attribute_component_init::visit_valuetype (be_valuetype *)
+be_visitor_attribute_component_init::visit_valuetype (
+  be_valuetype *)
 {
   this->emit_error ("valuetype");
   return 0;

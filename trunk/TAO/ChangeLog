@@ -1,3 +1,18 @@
+Fri Apr  9 13:37:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp(visit_sequence):
+        
+          Added OMG-preferred 'const' qualifier to the generated
+          sequence pointer declaration.
+          
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+        
+          Implemented override for visit_typedef()
+
 Fri Apr  9 13:34:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:

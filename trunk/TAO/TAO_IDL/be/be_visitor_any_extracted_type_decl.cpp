@@ -179,7 +179,7 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
       bt = node;
     }
     
-  os_ << bt->nested_type_name (idl_global->root ())
+  os_ << "const " << bt->nested_type_name (idl_global->root ())
       << " * " << var_name_ << " = 0;";
       
   return 0;
