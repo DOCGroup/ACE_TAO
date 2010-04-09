@@ -1,3 +1,8 @@
+Fri Apr  9 13:36:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Throw CORBA::BAD_PARAM with 0 for string
+
 Fri Apr  9 12:49:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
