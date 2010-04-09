@@ -97,24 +97,21 @@ public:
 
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
 
-
       TAO_OPERATION_ARGLIST_IH,               // ... for implementation header
       TAO_OPERATION_ARGLIST_IS,               // ... for implementation header
       TAO_OPERATION_ARGLIST_COLLOCATED_SH,    // ... for collocated server
-      //   variable to do_static_call
+                                              //   variable to do_static_call
       TAO_OPERATION_ARG_INVOKE_CS,            // passing argument variable to do_static_call
-      //   after do_static_call
+                                              //   after do_static_call
       TAO_OPERATION_ARG_DECL_SS,              // argument decl in skeleton
       TAO_OPERATION_ARG_DEMARSHAL_SS,         //   and argument variables to the
-      TAO_OPERATION_ARG_MARSHAL_SS,
-      // variable
+                                              // variable
       TAO_OPERATION_ARG_UPCALL_SS,            // variables to upcall
       TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS, // variables to upcall for
-      // collocated op
+                                              // collocated op
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
       TAO_OBV_OPERATION_ARGLIST_CS,           // used only for AMH exceptions
-      // ... for client header
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header
       TAO_OBV_OPERATION_ARGLIST_IH,           // ... for implementation header
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header

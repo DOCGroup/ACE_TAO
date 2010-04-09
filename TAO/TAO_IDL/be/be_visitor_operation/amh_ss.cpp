@@ -13,8 +13,7 @@
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
-    be_visitor_context *ctx
-  )
+      be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
 // ************************************************************
@@ -46,10 +45,11 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
                          "be_visitor_operation_argument_marshal"
-                         "::post_process - "
+                         "::pre_process - "
                          "Bad argument node\n"),
                         -1);
     }
+    
   switch (arg->direction ())
     {
     case AST_Argument::dir_IN:
@@ -109,6 +109,7 @@ be_visitor_operation_argument_marshal::post_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
+    
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -261,7 +262,8 @@ be_visitor_args_decl::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
 
-  // the node to be visited in the base primitve type that gets typedefed
+  // The node to be visited in the base primitve
+  // type that gets typedefed.
   be_type *bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))

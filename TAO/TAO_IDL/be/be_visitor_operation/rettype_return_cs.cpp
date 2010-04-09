@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 //    be_visitor_operation_rettype_return_cs
 //
@@ -31,7 +30,8 @@ be_visitor_operation_rettype_return_cs::
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_array (be_array *)
+be_visitor_operation_rettype_return_cs::visit_array (
+  be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -41,7 +41,8 @@ be_visitor_operation_rettype_return_cs::visit_array (be_array *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_enum (be_enum *)
+be_visitor_operation_rettype_return_cs::visit_enum (
+  be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -51,7 +52,8 @@ be_visitor_operation_rettype_return_cs::visit_enum (be_enum *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_interface (be_interface *)
+be_visitor_operation_rettype_return_cs::visit_interface (
+  be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -61,7 +63,8 @@ be_visitor_operation_rettype_return_cs::visit_interface (be_interface *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
+be_visitor_operation_rettype_return_cs::visit_interface_fwd (
+  be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -71,7 +74,8 @@ be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_valuebox (be_valuebox *)
+be_visitor_operation_rettype_return_cs::visit_valuebox (
+  be_valuebox *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -81,7 +85,8 @@ be_visitor_operation_rettype_return_cs::visit_valuebox (be_valuebox *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
+be_visitor_operation_rettype_return_cs::visit_valuetype (
+  be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -91,7 +96,8 @@ be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (
+  be_valuetype_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -130,7 +136,8 @@ be_visitor_operation_rettype_return_cs::visit_predefined_type (
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_sequence (be_sequence *)
+be_visitor_operation_rettype_return_cs::visit_sequence (
+  be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -140,7 +147,8 @@ be_visitor_operation_rettype_return_cs::visit_sequence (be_sequence *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_string (be_string *)
+be_visitor_operation_rettype_return_cs::visit_string (
+  be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -150,7 +158,8 @@ be_visitor_operation_rettype_return_cs::visit_string (be_string *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_structure (be_structure *node)
+be_visitor_operation_rettype_return_cs::visit_structure (
+  be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -167,7 +176,8 @@ be_visitor_operation_rettype_return_cs::visit_structure (be_structure *node)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_typedef (be_typedef *node)
+be_visitor_operation_rettype_return_cs::visit_typedef (
+  be_typedef *node)
 {
   this->ctx_->alias (node);
 
@@ -185,7 +195,8 @@ be_visitor_operation_rettype_return_cs::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_union (be_union *node)
+be_visitor_operation_rettype_return_cs::visit_union (
+  be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -202,7 +213,8 @@ be_visitor_operation_rettype_return_cs::visit_union (be_union *node)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_component (be_component *node)
+be_visitor_operation_rettype_return_cs::visit_component (
+  be_component *node)
 {
   return this->visit_interface (node);
 }
@@ -216,7 +228,8 @@ be_visitor_operation_rettype_return_cs::visit_component_fwd (
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_eventtype (be_eventtype *node)
+be_visitor_operation_rettype_return_cs::visit_eventtype (
+  be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
@@ -230,7 +243,8 @@ be_visitor_operation_rettype_return_cs::visit_eventtype_fwd (
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_home (be_home *node)
+be_visitor_operation_rettype_return_cs::visit_home (
+  be_home *node)
 {
   return this->visit_interface (node);
 }
