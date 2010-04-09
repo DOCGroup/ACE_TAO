@@ -189,6 +189,7 @@ namespace CIAO
   }
 #endif
 
+#if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_all_receptacles (void)
   {
@@ -236,7 +237,9 @@ namespace CIAO
                  
     return retval._retn ();
   }
+#endif
 
+#if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_named_receptacles (
     const ::Components::NameList & /* names */)
@@ -244,6 +247,7 @@ namespace CIAO
     CIAO_TRACE("Servant_Impl_Base::get_named_receptacles");
     throw ::CORBA::NO_IMPLEMENT ();
   }
+#endif
 
 #if !defined (CCM_LW)
   ::Components::PublisherDescriptions *

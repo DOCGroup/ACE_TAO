@@ -95,11 +95,15 @@ namespace CIAO
     get_named_emitters (const ::Components::NameList & names);
 #endif
 
+ #if !defined (CCM_LW)
     virtual ::Components::ReceptacleDescriptions *
     get_named_receptacles (const ::Components::NameList & names);
+#endif
 
+ #if !defined (CCM_LW)
     virtual ::Components::ReceptacleDescriptions *
     get_all_receptacles (void);
+#endif
 
 #if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *

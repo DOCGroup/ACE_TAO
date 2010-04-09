@@ -14,18 +14,22 @@ module Components
   typedef string FeatureName;
   typedef sequence<FeatureName> NameList;
 
+#if !defined (CCM_LW)
   valuetype PortDescription
   {
     public FeatureName name;
     public CORBA::RepositoryId type_id;
   };
+#endif
 
+#if !defined (CCM_LW)
   valuetype FacetDescription : PortDescription
   {
     public Object facet_ref;
   };
 
   typedef sequence<FacetDescription> FacetDescriptions;
+#endif
 
   exception InvalidName {};
   interface Navigation

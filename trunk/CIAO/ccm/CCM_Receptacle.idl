@@ -12,19 +12,23 @@ module Components
 {
   typeprefix Components "omg.org";
 
+#if !defined (CCM_LW)
   valuetype ConnectionDescription
   {
     public Cookie ck;
     public Object objref;
   };
   typedef sequence<ConnectionDescription> ConnectionDescriptions;
+#endif
 
+#if !defined (CCM_LW)
   valuetype ReceptacleDescription : PortDescription
   {
     public boolean is_multiple;
     public ConnectionDescriptions connections;
   };
   typedef sequence<ReceptacleDescription> ReceptacleDescriptions;
+#endif
 
   exception ExceededConnectionLimit {};
   exception CookieRequired {};

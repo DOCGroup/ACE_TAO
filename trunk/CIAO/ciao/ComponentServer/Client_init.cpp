@@ -15,6 +15,7 @@ namespace CIAO
   {
     CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
                                  Components::Cookie);
+ #if !defined (CCM_LW)
     CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                  Components::PortDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::FacetDescription_init,
@@ -23,7 +24,6 @@ namespace CIAO
                                  Components::ConnectionDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::ReceptacleDescription_init,
                                  Components::ReceptacleDescription);
- #if !defined (CCM_LW)
    CIAO_REGISTER_VALUE_FACTORY (o, Components::ConsumerDescription_init,
                                  Components::ConsumerDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::EmitterDescription_init,
