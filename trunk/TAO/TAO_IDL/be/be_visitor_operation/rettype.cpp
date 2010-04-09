@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return
 // type in an operation signature
@@ -30,7 +29,8 @@ be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
 }
 
 int
-be_visitor_operation_rettype::visit_array (be_array *node)
+be_visitor_operation_rettype::visit_array (
+  be_array *node)
 {
   *os << "::" << this->type_name (node) << "_slice *";
 
@@ -38,7 +38,8 @@ be_visitor_operation_rettype::visit_array (be_array *node)
 }
 
 int
-be_visitor_operation_rettype::visit_enum (be_enum *node)
+be_visitor_operation_rettype::visit_enum (
+  be_enum *node)
 {
   *os << "::" << this->type_name (node);
 
@@ -46,7 +47,8 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_operation_rettype::visit_interface (be_interface *node)
+be_visitor_operation_rettype::visit_interface (
+  be_interface *node)
 {
   *os << "::" << this->type_name (node) << "_ptr";
 
@@ -54,7 +56,8 @@ be_visitor_operation_rettype::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_operation_rettype::visit_interface_fwd (
+  be_interface_fwd *node)
 {
   *os << "::" << this->type_name (node) << "_ptr";
 
@@ -62,7 +65,8 @@ be_visitor_operation_rettype::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
-be_visitor_operation_rettype::visit_native (be_native *node)
+be_visitor_operation_rettype::visit_native (
+  be_native *node)
 {
   *os << "::" << this->type_name (node);
 
@@ -70,7 +74,8 @@ be_visitor_operation_rettype::visit_native (be_native *node)
 }
 
 int
-be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
+be_visitor_operation_rettype::visit_predefined_type (
+  be_predefined_type *node)
 {
   be_type *bt = 0;
 
@@ -124,10 +129,11 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 }
 
 int
-be_visitor_operation_rettype::visit_sequence (be_sequence *node)
+be_visitor_operation_rettype::visit_sequence (
+  be_sequence *node)
 {
-  // We should never directly be here because anonymous sequence return types
-  // are not allowed.
+  // We should never directly be here because anonymous
+  // sequence return types are not allowed.
   *os << "::" << this->type_name (node) << " *";
 
   return 0;
@@ -149,7 +155,8 @@ be_visitor_operation_rettype::visit_string (be_string *node)
 }
 
 int
-be_visitor_operation_rettype::visit_structure (be_structure *node)
+be_visitor_operation_rettype::visit_structure (
+  be_structure *node)
 {
   *os << "::" << this->type_name (node);
 
@@ -164,7 +171,8 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 }
 
 int
-be_visitor_operation_rettype::visit_typedef (be_typedef *node)
+be_visitor_operation_rettype::visit_typedef (
+  be_typedef *node)
 {
   // Set the alias node.
   this->ctx_->alias (node);
@@ -183,12 +191,13 @@ be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_operation_rettype::visit_union (be_union *node)
+be_visitor_operation_rettype::visit_union (
+  be_union *node)
 {
   *os << "::" << this->type_name (node);
 
-  // Based on whether we are variable or not, we return a pointer or the
-  // aggregate type.
+  // Based on whether we are variable or not, we return
+  // a pointer or the aggregate type.
   if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << " *";
@@ -198,7 +207,8 @@ be_visitor_operation_rettype::visit_union (be_union *node)
 }
 
 int
-be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
+be_visitor_operation_rettype::visit_valuetype (
+  be_valuetype *node)
 {
   *os << "::" << this->type_name (node) << " *";
 
@@ -206,7 +216,8 @@ be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
 }
 
 int
-be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
+be_visitor_operation_rettype::visit_valuetype_fwd (
+  be_valuetype_fwd *node)
 {
   *os << "::" << this->type_name (node) << " *";
 
@@ -214,25 +225,29 @@ be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
 }
 
 int
-be_visitor_operation_rettype::visit_component (be_component *node)
+be_visitor_operation_rettype::visit_component (
+  be_component *node)
 {
   return this->visit_interface (node);
 }
 
 int
-be_visitor_operation_rettype::visit_component_fwd (be_component_fwd *node)
+be_visitor_operation_rettype::visit_component_fwd (
+  be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
 }
 
 int
-be_visitor_operation_rettype::visit_eventtype (be_eventtype *node)
+be_visitor_operation_rettype::visit_eventtype (
+  be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
 
 int
-be_visitor_operation_rettype::visit_eventtype_fwd (be_eventtype_fwd *node)
+be_visitor_operation_rettype::visit_eventtype_fwd (
+  be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
@@ -244,7 +259,8 @@ be_visitor_operation_rettype::visit_home (be_home *node)
 }
 
 int
-be_visitor_operation_rettype::visit_valuebox (be_valuebox *node)
+be_visitor_operation_rettype::visit_valuebox (
+  be_valuebox *node)
 {
   *os << "::" << this->type_name (node) << " *";
 
@@ -256,7 +272,7 @@ be_visitor_operation_rettype::type_name (be_type *node)
 {
   be_type *bt = 0;
 
-  if (this->ctx_->alias ())
+  if (this->ctx_->alias () != 0)
     {
       // A typedefed return type.
       bt = this->ctx_->alias ();

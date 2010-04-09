@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Generic operation visitor to handle the pre/post
 // do_static_call/upcall stuff with arguments.
@@ -41,7 +40,6 @@ be_visitor_operation_argument::post_process (be_decl *bd)
     {
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
-    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       if (!this->last_node (bd))
         {
           *os << "," << be_nl;
@@ -136,12 +134,6 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
-      {
-        be_visitor_args_marshal_ss visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       {
         be_visitor_args_marshal_ss visitor (&ctx);
         status = node->accept (&visitor);
