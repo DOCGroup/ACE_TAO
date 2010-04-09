@@ -82,7 +82,7 @@ namespace TAO
   bool
   marshal_objref_vector (
     TAO_OutputCDR &strm,
-    const std::vector<T::_ptr_type> &source)
+    const std::vector<typename T::_ptr_type> &source)
   {
     ::CORBA::ULong const length = source.size ();
     
@@ -97,7 +97,7 @@ namespace TAO
       {
         if (! (TAO::Objref_Traits<T>::marshal (*i, strm)))
           {
-            return false'
+            return false;
           }
       }
       
@@ -108,7 +108,7 @@ namespace TAO
   bool
   demarshal_objref_vector (
     TAO_InputCDR &strm,
-    std::vector<T::_ptr_type> &target)
+    std::vector<typename T::_ptr_type> &target)
   {
     ::CORBA::ULong new_length = 0;
     
@@ -144,7 +144,7 @@ namespace TAO
   bool
   marshal_array_vector (
     TAO_OutputCDR &strm,
-    const std::vector<T_forany::_slice_type *> &source)
+    const std::vector<typename T_forany::_slice_type *> &source)
   {
     typedef TAO_FixedArray_Var_T <T_forany::_array_type,
                                   T_forany::_slice_type,
@@ -177,7 +177,7 @@ namespace TAO
   bool
   demarshal_array_vector (
     TAO_InputCDR &strm,
-    const std::vector<T_forany::_slice_type *> &source)
+    const std::vector<typename T_forany::_slice_type *> &source)
   {
     typedef TAO::Array_Traits<T_forany> array_traits;
     ::CORBA::ULong new_length = 0;

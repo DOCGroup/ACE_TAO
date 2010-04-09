@@ -299,16 +299,27 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 
   if (be_global->alt_mapping ())
     {
+      /// Temporarily remove and store the context's 'alias'
+      /// member, if any, so we can work with the sequence's
+      /// element type, and restore the alias value when we're done.
+      be_typedef *td = this->ctx_->alias ();
+      this->ctx_->alias (0);
+    
+      const char *elem_name =
+        this->type_name (node->base_type ());
+
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const std::vector<" << this->type_name (node) << "> &";
+          *os << "const std::vector<" << elem_name << "> &";
           break;
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
-          *os << "std::vector<" << this->type_name (node) << "> &";
+          *os << "std::vector<" << elem_name << "> &";
           break;
         }
+        
+      this->ctx_->alias (td);
     }
   else
     {
@@ -333,8 +344,9 @@ int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  bool wide = (node->width () != (long) sizeof (char));
   
-  if (node->width () == (long) sizeof (char) && bound == 0)
+  if (!wide && bound == 0 && be_global->alt_mapping ())
     {
       switch (this->direction ())
         {

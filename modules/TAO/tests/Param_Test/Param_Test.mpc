@@ -3,7 +3,7 @@
 
 project(*idl): taoidldefaults {
   IDL_Files {
-    idlflags -= -Sa -St
+    idlflags -= -Sa -St -Gstl
     param_test.idl
   }
   custom_only = 1

@@ -53,12 +53,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                         -1);
     }
     
-  if (ACE_OS::strcmp (bt->full_name (), "CORBA::LongSeq") == 0)
-    {
-      *os << "typedef std::vector< ::CORBA::Long> UB_Long_Seq;"
-          << be_nl << be_nl;
-    }
-
   // Every operation is declared virtual in the client code.
   *os << "virtual ";
 

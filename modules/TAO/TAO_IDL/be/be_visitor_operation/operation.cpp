@@ -450,9 +450,16 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     {
       alias = AST_Typedef::narrow_from_decl (bt);
       
-      if (ACE_OS::strcmp (alias->full_name (), "CORBA::LongSeq") == 0)
+      AST_Type *pbt = alias->primitive_base_type ();
+      
+      if (pbt->node_type () == AST_Decl::NT_sequence)
         {
-          *os << "Param_Test::UB_Long_Seq";
+          AST_Sequence *seq =
+            AST_Sequence::narrow_from_decl (pbt);
+            
+          AST_Type *elem_type = seq->base_type ();
+          
+          *os << "std::vector<" << elem_type->name () << ">";
           
           return;
         }
@@ -463,7 +470,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
+      AST_String *s =
+        AST_String::narrow_from_decl (bt->unaliased_type  ());
       bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
@@ -503,7 +511,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (ut);
+      AST_PredefinedType *pdt =
+        AST_PredefinedType::narrow_from_decl (ut);
 
       switch (pdt->pt ())
         {

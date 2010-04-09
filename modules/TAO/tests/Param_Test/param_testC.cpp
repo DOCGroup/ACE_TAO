@@ -27,7 +27,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:378
+// .\be\be_codegen.cpp:381
 
 
 #include "param_testC.h"
@@ -54,6 +54,8 @@
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Array_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
+#include "tao/Vector_CDR_T.h"
+#include "tao/AnyTypeCode/Vector_AnyOp_T.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/BD_String_Argument_T.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -80,28 +82,36 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   
+  // TAO_IDL - Generated from
+  // .\be\be_visitor_arg_traits.cpp:621
+
+#if !defined (_CORBA_LONGSEQ__ARG_TRAITS_)
+#define _CORBA_LONGSEQ__ARG_TRAITS_
+  
   template<>
-  class Arg_Traits<Param_Test::UB_Long_Seq>
+  class Arg_Traits<std::vector<CORBA::Long> >
     : public
-        Basic_Arg_Traits_T<
-            Param_Test::UB_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Long>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Long> >
           >
   {
   };
+
+#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_SHORTSEQ__ARG_TRAITS_)
 #define _CORBA_SHORTSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::ShortSeq>
+  class Arg_Traits<std::vector<CORBA::Short> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::ShortSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::ShortSeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Short>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Short> >
           >
   {
   };
@@ -109,17 +119,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::StringSeq>
+  class Arg_Traits<std::vector<char *> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::StringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
+        Vector_Arg_Traits_T<
+            std::vector<char *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<char *> >
           >
   {
   };
@@ -127,17 +137,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_WSTRINGSEQ__ARG_TRAITS_)
 #define _CORBA_WSTRINGSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::WStringSeq>
+  class Arg_Traits<std::vector<CORBA::WChar *> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::WStringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::WStringSeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::WChar *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::WChar *> >
           >
   {
   };
@@ -145,17 +155,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_ANYSEQ__ARG_TRAITS_)
 #define _CORBA_ANYSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::AnySeq>
+  class Arg_Traits<std::vector<CORBA::Any> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::AnySeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::AnySeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Any>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Any> >
           >
   {
   };
@@ -184,7 +194,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_COFFEE_DESC__ARG_TRAITS_)
 #define _COFFEE_DESC__ARG_TRAITS_
@@ -242,7 +252,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_
@@ -260,17 +270,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_PATHSPEC__ARG_TRAITS_)
 #define _PARAM_TEST_PATHSPEC__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::PathSpec>
+  class Arg_Traits<std::vector<Param_Test::Step> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::PathSpec,
-            TAO::Any_Insert_Policy_Stream <Param_Test::PathSpec>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Step>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Step> >
           >
   {
   };
@@ -278,7 +288,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_SHORT_SEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_SHORT_SEQ__ARG_TRAITS_
@@ -288,7 +298,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Short_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Short_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Short_Seq>
           >
   {
   };
@@ -296,7 +306,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_LONG_SEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_LONG_SEQ__ARG_TRAITS_
@@ -306,7 +316,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Long_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Long_Seq>
           >
   {
   };
@@ -314,7 +324,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRSEQ__ARG_TRAITS_
@@ -324,7 +334,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_StrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StrSeq>
           >
   {
   };
@@ -332,7 +342,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_WSTRSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_WSTRSEQ__ARG_TRAITS_
@@ -342,7 +352,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_WStrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_WStrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_WStrSeq>
           >
   {
   };
@@ -350,17 +360,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_STRUCTSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_STRUCTSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::StructSeq>
+  class Arg_Traits<std::vector<Param_Test::Fixed_Struct> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::StructSeq>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Fixed_Struct>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Struct> >
           >
   {
   };
@@ -368,7 +378,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRUCTSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRUCTSEQ__ARG_TRAITS_
@@ -378,7 +388,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StructSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StructSeq>
           >
   {
   };
@@ -386,17 +396,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_COFFEE_MIX__ARG_TRAITS_)
 #define _PARAM_TEST_COFFEE_MIX__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::Coffee_Mix>
+  class Arg_Traits<std::vector<Coffee> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Coffee_Mix>
+        Vector_Arg_Traits_T<
+            std::vector<Coffee>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Coffee> >
           >
   {
   };
@@ -404,7 +414,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_COFFEE_MIX__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_COFFEE_MIX__ARG_TRAITS_
@@ -414,7 +424,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Coffee_Mix>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Coffee_Mix>
           >
   {
   };
@@ -422,7 +432,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_VAR_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_VAR_STRUCT__ARG_TRAITS_
@@ -440,7 +450,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_
@@ -458,7 +468,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_
@@ -508,17 +518,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_ARRAYSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_ARRAYSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::ArraySeq>
+  class Arg_Traits<std::vector<Param_Test::Fixed_Array> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::ArraySeq>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Fixed_Array>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Array> >
           >
   {
   };
@@ -526,7 +536,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_ARRAYSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_ARRAYSEQ__ARG_TRAITS_
@@ -536,7 +546,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_ArraySeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_ArraySeq>
           >
   {
   };
@@ -544,7 +554,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_BIG_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_BIG_UNION__ARG_TRAITS_
@@ -562,7 +572,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_SMALL_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_SMALL_UNION__ARG_TRAITS_
@@ -580,7 +590,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_
@@ -598,7 +608,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_
@@ -758,7 +768,7 @@ Coffee::description (void)
 
 void
 Coffee::description (
-  const ::Coffee::Desc & description)
+  const Coffee::Desc & description)
 {
   if (!this->is_evaluated ())
     {
@@ -951,9 +961,9 @@ TAO::Collocation_Proxy_Broker *
 
 ::CORBA::Short
 Param_Test::test_short (
-  ::CORBA::Short s1,
-  ::CORBA::Short & s2,
-  ::CORBA::Short_out s3)
+  CORBA::Short s1,
+  CORBA::Short & s2,
+  CORBA::Short_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -997,9 +1007,9 @@ Param_Test::test_short (
 
 ::CORBA::ULongLong
 Param_Test::test_ulonglong (
-  ::CORBA::ULongLong s1,
-  ::CORBA::ULongLong & s2,
-  ::CORBA::ULongLong_out s3)
+  CORBA::ULongLong s1,
+  CORBA::ULongLong & s2,
+  CORBA::ULongLong_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1368,9 +1378,9 @@ Param_Test::Fixed_Struct::_tao_any_destructor (
 
 ::Param_Test::Fixed_Struct
 Param_Test::test_fixed_struct (
-  const ::Param_Test::Fixed_Struct & s1,
-  ::Param_Test::Fixed_Struct & s2,
-  ::Param_Test::Fixed_Struct_out s3)
+  const Param_Test::Fixed_Struct & s1,
+  Param_Test::Fixed_Struct & s2,
+  Param_Test::Fixed_Struct_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1598,11 +1608,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::PathSpec *
+std::vector<Param_Test::Step>
 Param_Test::test_unbounded_struct_sequence (
-  const ::Param_Test::PathSpec & s1,
-  ::Param_Test::PathSpec & s2,
-  ::Param_Test::PathSpec_out s3)
+  const std::vector<Param_Test::Step> & s1,
+  std::vector<Param_Test::Step> & s2,
+  std::vector<Param_Test::Step> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1614,10 +1624,10 @@ Param_Test::test_unbounded_struct_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::PathSpec>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::PathSpec>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::PathSpec>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::PathSpec>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Param_Test::Step>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Param_Test::Step>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Param_Test::Step>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Param_Test::Step>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1644,11 +1654,11 @@ Param_Test::test_unbounded_struct_sequence (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::CORBA::ShortSeq *
+std::vector<CORBA::Short>
 Param_Test::test_short_sequence (
-  const ::CORBA::ShortSeq & s1,
-  ::CORBA::ShortSeq & s2,
-  ::CORBA::ShortSeq_out s3)
+  const std::vector<CORBA::Short> & s1,
+  std::vector<CORBA::Short> & s2,
+  std::vector<CORBA::Short> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1660,10 +1670,10 @@ Param_Test::test_short_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::CORBA::ShortSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::CORBA::ShortSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::CORBA::ShortSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::CORBA::ShortSeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1784,11 +1794,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_Short_Seq *
+std::vector<CORBA::Short>
 Param_Test::test_bounded_short_sequence (
-  const ::Param_Test::Bounded_Short_Seq & s1,
-  ::Param_Test::Bounded_Short_Seq & s2,
-  ::Param_Test::Bounded_Short_Seq_out s3)
+  const std::vector<CORBA::Short> & s1,
+  std::vector<CORBA::Short> & s2,
+  std::vector<CORBA::Short> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1800,10 +1810,10 @@ Param_Test::test_bounded_short_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<CORBA::Short>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1830,11 +1840,11 @@ Param_Test::test_bounded_short_sequence (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-Param_Test::UB_Long_Seq
+std::vector<CORBA::Long>
 Param_Test::test_long_sequence (
-  const Param_Test::UB_Long_Seq & s1,
-  Param_Test::UB_Long_Seq & s2,
-  Param_Test::UB_Long_Seq & s3)
+  const std::vector<CORBA::Long> & s1,
+  std::vector<CORBA::Long> & s2,
+  std::vector<CORBA::Long> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1846,10 +1856,10 @@ Param_Test::test_long_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::ret_val _tao_retval;
-  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< Param_Test::UB_Long_Seq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1970,11 +1980,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_Long_Seq *
+std::vector<CORBA::Long>
 Param_Test::test_bounded_long_sequence (
-  const ::Param_Test::Bounded_Long_Seq & s1,
-  ::Param_Test::Bounded_Long_Seq & s2,
-  ::Param_Test::Bounded_Long_Seq_out s3)
+  const std::vector<CORBA::Long> & s1,
+  std::vector<CORBA::Long> & s2,
+  std::vector<CORBA::Long> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -1986,10 +1996,10 @@ Param_Test::test_bounded_long_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<CORBA::Long>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2016,11 +2026,11 @@ Param_Test::test_bounded_long_sequence (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::CORBA::StringSeq *
+std::vector<char *>
 Param_Test::test_strseq (
-  const ::CORBA::StringSeq & s1,
-  ::CORBA::StringSeq & s2,
-  ::CORBA::StringSeq_out s3)
+  const std::vector<char *> & s1,
+  std::vector<char *> & s2,
+  std::vector<char *> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2032,10 +2042,10 @@ Param_Test::test_strseq (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::CORBA::StringSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::CORBA::StringSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::CORBA::StringSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::CORBA::StringSeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<char *>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<char *>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<char *>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<char *>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2150,11 +2160,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_StrSeq *
+std::vector<char *>
 Param_Test::test_bounded_strseq (
-  const ::Param_Test::Bounded_StrSeq & s1,
-  ::Param_Test::Bounded_StrSeq & s2,
-  ::Param_Test::Bounded_StrSeq_out s3)
+  const std::vector<char *> & s1,
+  std::vector<char *> & s2,
+  std::vector<char *> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2166,10 +2176,10 @@ Param_Test::test_bounded_strseq (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<char *>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<char *>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<char *>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<char *>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2196,11 +2206,11 @@ Param_Test::test_bounded_strseq (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::CORBA::WStringSeq *
+std::vector<CORBA::WChar *>
 Param_Test::test_wstrseq (
-  const ::CORBA::WStringSeq & ws1,
-  ::CORBA::WStringSeq & ws2,
-  ::CORBA::WStringSeq_out ws3)
+  const std::vector<CORBA::WChar *> & ws1,
+  std::vector<CORBA::WChar *> & ws2,
+  std::vector<CORBA::WChar *> & ws3)
 {
   if (!this->is_evaluated ())
     {
@@ -2212,10 +2222,10 @@ Param_Test::test_wstrseq (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::CORBA::WStringSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::CORBA::WStringSeq>::in_arg_val _tao_ws1 (ws1);
-  TAO::Arg_Traits< ::CORBA::WStringSeq>::inout_arg_val _tao_ws2 (ws2);
-  TAO::Arg_Traits< ::CORBA::WStringSeq>::out_arg_val _tao_ws3 (ws3);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::in_arg_val _tao_ws1 (ws1);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::inout_arg_val _tao_ws2 (ws2);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::out_arg_val _tao_ws3 (ws3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2330,11 +2340,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_WStrSeq *
+std::vector<CORBA::WChar *>
 Param_Test::test_bounded_wstrseq (
-  const ::Param_Test::Bounded_WStrSeq & ws1,
-  ::Param_Test::Bounded_WStrSeq & ws2,
-  ::Param_Test::Bounded_WStrSeq_out ws3)
+  const std::vector<CORBA::WChar *> & ws1,
+  std::vector<CORBA::WChar *> & ws2,
+  std::vector<CORBA::WChar *> & ws3)
 {
   if (!this->is_evaluated ())
     {
@@ -2346,10 +2356,10 @@ Param_Test::test_bounded_wstrseq (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::in_arg_val _tao_ws1 (ws1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::inout_arg_val _tao_ws2 (ws2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::out_arg_val _tao_ws3 (ws3);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::in_arg_val _tao_ws1 (ws1);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::inout_arg_val _tao_ws2 (ws2);
+  TAO::Arg_Traits< std::vector<CORBA::WChar *>>::out_arg_val _tao_ws3 (ws3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2478,11 +2488,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::StructSeq *
+std::vector<Param_Test::Fixed_Struct>
 Param_Test::test_struct_sequence (
-  const ::Param_Test::StructSeq & s1,
-  ::Param_Test::StructSeq & s2,
-  ::Param_Test::StructSeq_out s3)
+  const std::vector<Param_Test::Fixed_Struct> & s1,
+  std::vector<Param_Test::Fixed_Struct> & s2,
+  std::vector<Param_Test::Fixed_Struct> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2494,10 +2504,10 @@ Param_Test::test_struct_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::StructSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::StructSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::StructSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::StructSeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2618,11 +2628,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_StructSeq *
+std::vector<Param_Test::Fixed_Struct>
 Param_Test::test_bounded_struct_sequence (
-  const ::Param_Test::Bounded_StructSeq & s1,
-  ::Param_Test::Bounded_StructSeq & s2,
-  ::Param_Test::Bounded_StructSeq_out s3)
+  const std::vector<Param_Test::Fixed_Struct> & s1,
+  std::vector<Param_Test::Fixed_Struct> & s2,
+  std::vector<Param_Test::Fixed_Struct> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2634,10 +2644,10 @@ Param_Test::test_bounded_struct_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2769,11 +2779,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Coffee_Mix *
+std::vector<Coffee>
 Param_Test::test_coffe_mix (
-  const ::Param_Test::Coffee_Mix & s1,
-  ::Param_Test::Coffee_Mix & s2,
-  ::Param_Test::Coffee_Mix_out s3)
+  const std::vector<Coffee> & s1,
+  std::vector<Coffee> & s2,
+  std::vector<Coffee> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2785,10 +2795,10 @@ Param_Test::test_coffe_mix (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Coffee>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Coffee>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Coffee>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Coffee>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2911,11 +2921,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_Coffee_Mix *
+std::vector<Coffee>
 Param_Test::test_bounded_coffe_mix (
-  const ::Param_Test::Bounded_Coffee_Mix & s1,
-  ::Param_Test::Bounded_Coffee_Mix & s2,
-  ::Param_Test::Bounded_Coffee_Mix_out s3)
+  const std::vector<Coffee> & s1,
+  std::vector<Coffee> & s2,
+  std::vector<Coffee> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2927,10 +2937,10 @@ Param_Test::test_bounded_coffe_mix (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Coffee>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Coffee>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Coffee>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Coffee>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2957,11 +2967,11 @@ Param_Test::test_bounded_coffe_mix (
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::CORBA::AnySeq *
+std::vector<CORBA::Any>
 Param_Test::test_anyseq (
-  const ::CORBA::AnySeq & s1,
-  ::CORBA::AnySeq & s2,
-  ::CORBA::AnySeq_out s3)
+  const std::vector<CORBA::Any> & s1,
+  std::vector<CORBA::Any> & s2,
+  std::vector<CORBA::Any> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -2973,10 +2983,10 @@ Param_Test::test_anyseq (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::CORBA::AnySeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::CORBA::AnySeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::CORBA::AnySeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::CORBA::AnySeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<CORBA::Any>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<CORBA::Any>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<CORBA::Any>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<CORBA::Any>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -3071,9 +3081,9 @@ Param_Test::Var_Struct::_tao_any_destructor (
 
 ::Param_Test::Var_Struct *
 Param_Test::test_var_struct (
-  const ::Param_Test::Var_Struct & s1,
-  ::Param_Test::Var_Struct & s2,
-  ::Param_Test::Var_Struct_out s3)
+  const Param_Test::Var_Struct & s1,
+  Param_Test::Var_Struct & s2,
+  Param_Test::Var_Struct_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -3158,9 +3168,9 @@ Param_Test::Nested_Struct::_tao_any_destructor (
 
 ::Param_Test::Nested_Struct *
 Param_Test::test_nested_struct (
-  const ::Param_Test::Nested_Struct & s1,
-  ::Param_Test::Nested_Struct & s2,
-  ::Param_Test::Nested_Struct_out s3)
+  const Param_Test::Nested_Struct & s1,
+  Param_Test::Nested_Struct & s2,
+  Param_Test::Nested_Struct_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -3241,9 +3251,9 @@ Param_Test::make_coffee (void)
 
 ::Coffee_ptr
 Param_Test::test_objref (
-  ::Coffee_ptr o1,
-  ::Coffee_ptr & o2,
-  ::Coffee_out o3)
+  Coffee_ptr o1,
+  Coffee_ptr & o2,
+  Coffee_out o3)
 {
   if (!this->is_evaluated ())
     {
@@ -3287,9 +3297,9 @@ Param_Test::test_objref (
 
 ::CORBA::TypeCode_ptr
 Param_Test::test_typecode (
-  ::CORBA::TypeCode_ptr t1,
-  ::CORBA::TypeCode_ptr & t2,
-  ::CORBA::TypeCode_out t3)
+  CORBA::TypeCode_ptr t1,
+  CORBA::TypeCode_ptr & t2,
+  CORBA::TypeCode_out t3)
 {
   if (!this->is_evaluated ())
     {
@@ -3333,9 +3343,9 @@ Param_Test::test_typecode (
 
 ::CORBA::Any *
 Param_Test::test_any (
-  const ::CORBA::Any & a1,
-  ::CORBA::Any & a2,
-  ::CORBA::Any_out a3)
+  const CORBA::Any & a1,
+  CORBA::Any & a2,
+  CORBA::Any_out a3)
 {
   if (!this->is_evaluated ())
     {
@@ -3421,9 +3431,9 @@ Param_Test::Objref_Struct::_tao_any_destructor (
 
 ::Param_Test::Objref_Struct *
 Param_Test::test_objref_struct (
-  const ::Param_Test::Objref_Struct & t1,
-  ::Param_Test::Objref_Struct & t2,
-  ::Param_Test::Objref_Struct_out t3)
+  const Param_Test::Objref_Struct & t1,
+  Param_Test::Objref_Struct & t2,
+  Param_Test::Objref_Struct_out t3)
 {
   if (!this->is_evaluated ())
     {
@@ -3569,9 +3579,9 @@ static TAO::TypeCode::Alias<char const *,
 
 ::Param_Test::Fixed_Array_slice *
 Param_Test::test_fixed_array (
-  const ::Param_Test::Fixed_Array l1,
-  ::Param_Test::Fixed_Array l2,
-  ::Param_Test::Fixed_Array_out l3)
+  const Param_Test::Fixed_Array l1,
+  Param_Test::Fixed_Array l2,
+  Param_Test::Fixed_Array_out l3)
 {
   if (!this->is_evaluated ())
     {
@@ -3717,9 +3727,9 @@ static TAO::TypeCode::Alias<char const *,
 
 ::Param_Test::Var_Array_slice *
 Param_Test::test_var_array (
-  const ::Param_Test::Var_Array v1,
-  ::Param_Test::Var_Array v2,
-  ::Param_Test::Var_Array_out v3)
+  const Param_Test::Var_Array v1,
+  Param_Test::Var_Array v2,
+  Param_Test::Var_Array_out v3)
 {
   if (!this->is_evaluated ())
     {
@@ -3869,11 +3879,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::ArraySeq *
+std::vector<Param_Test::Fixed_Array>
 Param_Test::test_array_sequence (
-  const ::Param_Test::ArraySeq & s1,
-  ::Param_Test::ArraySeq & s2,
-  ::Param_Test::ArraySeq_out s3)
+  const std::vector<Param_Test::Fixed_Array> & s1,
+  std::vector<Param_Test::Fixed_Array> & s2,
+  std::vector<Param_Test::Fixed_Array> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -3885,10 +3895,10 @@ Param_Test::test_array_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::ArraySeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::ArraySeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::ArraySeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::ArraySeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4013,11 +4023,11 @@ static TAO::TypeCode::Alias<char const *,
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
 
-::Param_Test::Bounded_ArraySeq *
+std::vector<Param_Test::Fixed_Array>
 Param_Test::test_bounded_array_sequence (
-  const ::Param_Test::Bounded_ArraySeq & s1,
-  ::Param_Test::Bounded_ArraySeq & s2,
-  ::Param_Test::Bounded_ArraySeq_out s3)
+  const std::vector<Param_Test::Fixed_Array> & s1,
+  std::vector<Param_Test::Fixed_Array> & s2,
+  std::vector<Param_Test::Fixed_Array> & s3)
 {
   if (!this->is_evaluated ())
     {
@@ -4029,10 +4039,10 @@ Param_Test::test_bounded_array_sequence (
       Param_Test_setup_collocation ();
     }
   
-  TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::ret_val _tao_retval;
-  TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::in_arg_val _tao_s1 (s1);
-  TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::inout_arg_val _tao_s2 (s2);
-  TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::out_arg_val _tao_s3 (s3);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_val _tao_retval;
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_val _tao_s1 (s1);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_val _tao_s2 (s2);
+  TAO::Arg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_val _tao_s3 (s3);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -4327,9 +4337,9 @@ _tao_tc_Param_Test_BadBoy (
 
 ::CORBA::ULong
 Param_Test::test_exception (
-  ::CORBA::ULong s1,
-  ::CORBA::ULong & s2,
-  ::CORBA::ULong_out s3)
+  CORBA::ULong s1,
+  CORBA::ULong & s2,
+  CORBA::ULong_out s3)
 {
   if (!this->is_evaluated ())
     {
@@ -4848,9 +4858,9 @@ static TAO::TypeCode::Union<char const *,
 
 ::Param_Test::Big_Union *
 Param_Test::test_big_union (
-  const ::Param_Test::Big_Union & u1,
-  ::Param_Test::Big_Union & u2,
-  ::Param_Test::Big_Union_out u3)
+  const Param_Test::Big_Union & u1,
+  Param_Test::Big_Union & u2,
+  Param_Test::Big_Union_out u3)
 {
   if (!this->is_evaluated ())
     {
@@ -5024,9 +5034,9 @@ static TAO::TypeCode::Union<char const *,
 
 ::Param_Test::Small_Union
 Param_Test::test_small_union (
-  const ::Param_Test::Small_Union & u1,
-  ::Param_Test::Small_Union & u2,
-  ::Param_Test::Small_Union_out u3)
+  const Param_Test::Small_Union & u1,
+  Param_Test::Small_Union & u2,
+  Param_Test::Small_Union_out u3)
 {
   if (!this->is_evaluated ())
     {
@@ -5155,9 +5165,9 @@ Param_Test::level8::_tao_any_destructor (
 
 ::CORBA::Any *
 Param_Test::test_complex_any (
-  const ::CORBA::Any & ca1,
-  ::CORBA::Any & ca2,
-  ::CORBA::Any_out ca3)
+  const CORBA::Any & ca1,
+  CORBA::Any & ca2,
+  CORBA::Any_out ca3)
 {
   if (!this->is_evaluated ())
     {
@@ -5326,9 +5336,9 @@ Param_Test::Recursive_Struct::_tao_seq_Param_Test_Recursive_Struct_::~_tao_seq_P
 
 ::Param_Test::Recursive_Struct *
 Param_Test::test_recursive_struct (
-  const ::Param_Test::Recursive_Struct & rs1,
-  ::Param_Test::Recursive_Struct & rs2,
-  ::Param_Test::Recursive_Struct_out rs3)
+  const Param_Test::Recursive_Struct & rs1,
+  Param_Test::Recursive_Struct & rs2,
+  Param_Test::Recursive_Struct_out rs3)
 {
   if (!this->is_evaluated ())
     {
@@ -5833,9 +5843,9 @@ static TAO::TypeCode::Recursive_Type<
 
 ::Param_Test::Recursive_Union *
 Param_Test::test_recursive_union (
-  const ::Param_Test::Recursive_Union & ru1,
-  ::Param_Test::Recursive_Union & ru2,
-  ::Param_Test::Recursive_Union_out ru3)
+  const Param_Test::Recursive_Union & ru1,
+  Param_Test::Recursive_Union & ru2,
+  Param_Test::Recursive_Union_out ru3)
 {
   if (!this->is_evaluated ())
     {
@@ -5995,9 +6005,9 @@ static TAO::TypeCode::Alias<char const *,
 
 ::Param_Test::Multdim_Array_slice *
 Param_Test::test_multdim_array (
-  const ::Param_Test::Multdim_Array m1,
-  ::Param_Test::Multdim_Array m2,
-  ::Param_Test::Multdim_Array_out m3)
+  const Param_Test::Multdim_Array m1,
+  Param_Test::Multdim_Array m2,
+  Param_Test::Multdim_Array_out m3)
 {
   if (!this->is_evaluated ())
     {
@@ -6588,613 +6598,271 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::PathSpec &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Param_Test::Step> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::PathSpec *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::PathSpec>::insert_copy (
-        _tao_any,
-        Param_Test::PathSpec::_tao_any_destructor,
-        Param_Test::_tc_PathSpec,
-        _tao_elem
-      );
+  TAO::insert_value_vector<Param_Test::Step> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::PathSpec *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::PathSpec>::insert (
-      _tao_any,
-      Param_Test::PathSpec::_tao_any_destructor,
-      Param_Test::_tc_PathSpec,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::PathSpec *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::PathSpec *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::PathSpec *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Param_Test::Step> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::PathSpec>::extract (
-        _tao_any,
-        Param_Test::PathSpec::_tao_any_destructor,
-        Param_Test::_tc_PathSpec,
-        _tao_elem
-      );
+    TAO::extract_value_vector<Param_Test::Step> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Short_Seq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<CORBA::Short> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_Short_Seq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Short_Seq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_Short_Seq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Short_Seq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<CORBA::Short> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Short_Seq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_Short_Seq>::insert (
-      _tao_any,
-      Param_Test::Bounded_Short_Seq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_Short_Seq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Short_Seq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_Short_Seq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Short_Seq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<CORBA::Short> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Short_Seq>::extract (
-        _tao_any,
-        Param_Test::Bounded_Short_Seq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Short_Seq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<CORBA::Short> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Long_Seq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<CORBA::Long> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_Long_Seq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Long_Seq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_Long_Seq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Long_Seq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<CORBA::Long> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Long_Seq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_Long_Seq>::insert (
-      _tao_any,
-      Param_Test::Bounded_Long_Seq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_Long_Seq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Long_Seq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_Long_Seq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Long_Seq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<CORBA::Long> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Long_Seq>::extract (
-        _tao_any,
-        Param_Test::Bounded_Long_Seq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Long_Seq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<CORBA::Long> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_StrSeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<char *> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_StrSeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_StrSeq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_StrSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_StrSeq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<char *> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_StrSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_StrSeq>::insert (
-      _tao_any,
-      Param_Test::Bounded_StrSeq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_StrSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_StrSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_StrSeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_StrSeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<char *> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_StrSeq>::extract (
-        _tao_any,
-        Param_Test::Bounded_StrSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_StrSeq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<char *> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_WStrSeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<CORBA::WChar *> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_WStrSeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_WStrSeq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_WStrSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_WStrSeq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<CORBA::WChar *> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_WStrSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_WStrSeq>::insert (
-      _tao_any,
-      Param_Test::Bounded_WStrSeq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_WStrSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_WStrSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_WStrSeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_WStrSeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<CORBA::WChar *> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_WStrSeq>::extract (
-        _tao_any,
-        Param_Test::Bounded_WStrSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_WStrSeq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<CORBA::WChar *> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::StructSeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Param_Test::Fixed_Struct> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::StructSeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::StructSeq>::insert_copy (
-        _tao_any,
-        Param_Test::StructSeq::_tao_any_destructor,
-        Param_Test::_tc_StructSeq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<Param_Test::Fixed_Struct> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::StructSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::StructSeq>::insert (
-      _tao_any,
-      Param_Test::StructSeq::_tao_any_destructor,
-      Param_Test::_tc_StructSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::StructSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::StructSeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::StructSeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Param_Test::Fixed_Struct> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::StructSeq>::extract (
-        _tao_any,
-        Param_Test::StructSeq::_tao_any_destructor,
-        Param_Test::_tc_StructSeq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<Param_Test::Fixed_Struct> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_StructSeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Param_Test::Fixed_Struct> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_StructSeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_StructSeq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_StructSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_StructSeq,
-        _tao_elem
-      );
+  TAO::insert_value_vector<Param_Test::Fixed_Struct> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_StructSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_StructSeq>::insert (
-      _tao_any,
-      Param_Test::Bounded_StructSeq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_StructSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_StructSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_StructSeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_StructSeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Param_Test::Fixed_Struct> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_StructSeq>::extract (
-        _tao_any,
-        Param_Test::Bounded_StructSeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_StructSeq,
-        _tao_elem
-      );
+    TAO::extract_value_vector<Param_Test::Fixed_Struct> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Coffee_Mix &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Coffee> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Coffee_Mix *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Coffee_Mix>::insert_copy (
-        _tao_any,
-        Param_Test::Coffee_Mix::_tao_any_destructor,
-        Param_Test::_tc_Coffee_Mix,
-        _tao_elem
-      );
+  TAO::insert_objref_vector<Coffee_ptr> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Coffee_Mix *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Coffee_Mix>::insert (
-      _tao_any,
-      Param_Test::Coffee_Mix::_tao_any_destructor,
-      Param_Test::_tc_Coffee_Mix,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Coffee_Mix *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Coffee_Mix *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Coffee_Mix *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Coffee> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Coffee_Mix>::extract (
-        _tao_any,
-        Param_Test::Coffee_Mix::_tao_any_destructor,
-        Param_Test::_tc_Coffee_Mix,
-        _tao_elem
-      );
+    TAO::extract_objref_vector<Coffee_ptr> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Coffee_Mix &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Coffee> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_Coffee_Mix *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Coffee_Mix>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_Coffee_Mix::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Coffee_Mix,
-        _tao_elem
-      );
+  TAO::insert_objref_vector<Coffee_ptr> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Coffee_Mix *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_Coffee_Mix>::insert (
-      _tao_any,
-      Param_Test::Bounded_Coffee_Mix::_tao_any_destructor,
-      Param_Test::_tc_Bounded_Coffee_Mix,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_Coffee_Mix *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_Coffee_Mix *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_Coffee_Mix *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Coffee> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_Coffee_Mix>::extract (
-        _tao_any,
-        Param_Test::Bounded_Coffee_Mix::_tao_any_destructor,
-        Param_Test::_tc_Bounded_Coffee_Mix,
-        _tao_elem
-      );
+    TAO::extract_objref_vector<Coffee_ptr> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -7489,137 +7157,61 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::ArraySeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Param_Test::Fixed_Array> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::ArraySeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::ArraySeq>::insert_copy (
-        _tao_any,
-        Param_Test::ArraySeq::_tao_any_destructor,
-        Param_Test::_tc_ArraySeq,
-        _tao_elem
-      );
+  TAO::insert_array_vector<Param_Test::Fixed_Array_forany> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::ArraySeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::ArraySeq>::insert (
-      _tao_any,
-      Param_Test::ArraySeq::_tao_any_destructor,
-      Param_Test::_tc_ArraySeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::ArraySeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::ArraySeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::ArraySeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Param_Test::Fixed_Array> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::ArraySeq>::extract (
-        _tao_any,
-        Param_Test::ArraySeq::_tao_any_destructor,
-        Param_Test::_tc_ArraySeq,
-        _tao_elem
-      );
+    TAO::extract_array_vector<Param_Test::Fixed_Array_forany> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from 
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:50
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-// Copying insertion.
 void operator<<= (
-    ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_ArraySeq &_tao_elem
-  )
+  ::CORBA::Any &_tao_any,
+  const std::vector<Param_Test::Fixed_Array> &_tao_elem
 {
-  if (0 == &_tao_elem) // Trying to de-reference NULL object
-    _tao_any <<= static_cast<Param_Test::Bounded_ArraySeq *>( 0 ); // Use non-copying insertion of a NULL
-  else
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_ArraySeq>::insert_copy (
-        _tao_any,
-        Param_Test::Bounded_ArraySeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_ArraySeq,
-        _tao_elem
-      );
+  TAO::insert_array_vector<Param_Test::Fixed_Array_forany> (
+    _tao_any,
+    _tao_elem);
 }
 
-// Non-copying insertion.
-void operator<<= (
-    ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_ArraySeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Param_Test::Bounded_ArraySeq>::insert (
-      _tao_any,
-      Param_Test::Bounded_ArraySeq::_tao_any_destructor,
-      Param_Test::_tc_Bounded_ArraySeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
 ::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    Param_Test::Bounded_ArraySeq *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const Param_Test::Bounded_ArraySeq *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-::CORBA::Boolean operator>>= (
-    const ::CORBA::Any &_tao_any,
-    const Param_Test::Bounded_ArraySeq *&_tao_elem
-  )
+  const ::CORBA::Any &_tao_any,
+  std::vector<Param_Test::Fixed_Array> &_tao_elem
 {
   return
-    TAO::Any_Dual_Impl_T<Param_Test::Bounded_ArraySeq>::extract (
-        _tao_any,
-        Param_Test::Bounded_ArraySeq::_tao_any_destructor,
-        Param_Test::_tc_Bounded_ArraySeq,
-        _tao_elem
-      );
+    TAO::extract_array_vector<Param_Test::Fixed_Array_forany> (
+      _tao_any,
+      _tao_elem);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -8354,40 +7946,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-void operator<<= (
-  ::CORBA::Any &,
-  const std::string)
-{
-}
-
-::CORBA::Boolean operator>>= (
-  const ::CORBA::Any &,
-  std::string &)
-{
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-void operator<<= (
-  ::CORBA::Any &,
-  const Param_Test::UB_Long_Seq)
-{
-}
-
-::CORBA::Boolean operator>>= (
-  const ::CORBA::Any &,
-  Param_Test::UB_Long_Seq &)
-{
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
 
@@ -8564,1468 +8122,1719 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::PathSpec &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::PathSpec &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_PathSpec_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Short_Seq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_Short_Seq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Long_Seq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_Long_Seq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_StrSeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_StrSeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_WStrSeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_WStrSeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_StructSeq_CPP_
-#define _TAO_CDR_OP_Param_Test_StructSeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::StructSeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::StructSeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_StructSeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_StructSeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_StructSeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_
-#define _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Coffee_Mix &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Coffee_Mix &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Coffee_Mix &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_Coffee_Mix &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Var_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.dbl) &&
-    (strm << _tao_aggregate.dummy1.in ()) &&
-    (strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate.boole)) &&
-    (strm << _tao_aggregate.dummy2.in ()) &&
-    (strm << _tao_aggregate.shrt) &&
-    (strm << _tao_aggregate.seq);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Var_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.dbl) &&
-    (strm >> _tao_aggregate.dummy1.out ()) &&
-    (strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate.boole)) &&
-    (strm >> _tao_aggregate.dummy2.out ()) &&
-    (strm >> _tao_aggregate.shrt) &&
-    (strm >> _tao_aggregate.seq);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Nested_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.vs);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Nested_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.vs);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Objref_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.x) &&
-    ::CORBA::Object::marshal (
-        _tao_aggregate.y.in (),
-        strm
-      );
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Objref_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.x) &&
-    (strm >> _tao_aggregate.y.out ());
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Fixed_Array_forany &_tao_array
-  )
-{
-  return
-    strm.write_long_array (
-        reinterpret_cast <const ACE_CDR::Long *> (_tao_array.in ()),
-        10
-      );
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Fixed_Array_forany &_tao_array
-  )
-{
-  return
-    strm.read_long_array (
-        reinterpret_cast <ACE_CDR::Long *> (_tao_array.out ()),
-        10
-      );
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Var_Array_forany &_tao_array
-  )
-{
-  CORBA::Boolean _tao_marshal_flag = true;
-  
-  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
-    {
-      _tao_marshal_flag = (strm << _tao_array [i0].in ());
-    }
-  
-  return _tao_marshal_flag;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Var_Array_forany &_tao_array
-  )
-{
-  CORBA::Boolean _tao_marshal_flag = true;
-  
-  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
-    {
-      _tao_marshal_flag = (strm >> _tao_array [i0].out ());
-    }
-  
-  return _tao_marshal_flag;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_ArraySeq_CPP_
-#define _TAO_CDR_OP_Param_Test_ArraySeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::ArraySeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::ArraySeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_ArraySeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_
-#define _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Bounded_ArraySeq &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Bounded_ArraySeq &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Ooops &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      // Now marshal the members (if any).
-      return (
-        (strm << _tao_aggregate.reason.in ()) &&
-        (strm << _tao_aggregate.input)
-       );
-    }
-  else
-    {
-      return false;
-    }
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Ooops &_tao_aggregate
-  )
-{
-  // Demarshal the members.
-  return (
-    (strm >> _tao_aggregate.reason.out ()) &&
-    (strm >> _tao_aggregate.input)
-  );
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::BadBoy &_tao_aggregate
-  )
-{
-  // Marshal the repository ID.
-  return (strm << _tao_aggregate._rep_id ());
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    Param_Test::BadBoy&
-  )
-{
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Big_Union::_another_array_forany &_tao_array
-  )
-{
-  return
-    strm.write_short_array (
-        reinterpret_cast <const ACE_CDR::Short *> (_tao_array.in ()),
-        32
-      );
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Big_Union::_another_array_forany &_tao_array
-  )
-{
-  return
-    strm.read_short_array (
-        reinterpret_cast <ACE_CDR::Short *> (_tao_array.out ()),
-        32
-      );
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Big_Union &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_union._d ())
-  {
-    case 0:
-      {
-        Param_Test::Fixed_Array_forany _tao_union_tmp (
-            _tao_union.the_array ()
-          );
-        result = strm << _tao_union_tmp;
-      }
-      break;
-    case 1:
-      {
-        result =
-          TAO::Objref_Traits<Coffee>::marshal (
-              _tao_union.the_interface (),
-              strm
-            );
-      }
-      break;
-    case 2:
-      {
-        result = strm << _tao_union.the_long ();
-      }
-      break;
-    case 3:
-      {
-        Param_Test::Big_Union::_another_array_forany _tao_union_tmp (
-            _tao_union.another_array ()
-          );
-        result = strm << _tao_union_tmp;
-      }
-      break;
-    case 4:
-      {
-        result = strm << _tao_union.the_string ();
-      }
-      break;
-    case 5:
-      {
-        result = strm << _tao_union.the_sequence ();
-      }
-      break;
-    case 6:
-      {
-        result = strm << _tao_union.the_any ();
-      }
-      break;
-    case 7:
-      {
-        result = strm << ::ACE_OutputCDR::from_octet (_tao_union.the_octet ());
-      }
-      break;
-    case 8:
-      {
-        result = strm << ::ACE_OutputCDR::from_char (_tao_union.the_char ());
-      }
-      break;
-    case 9:
-      {
-        result = strm << ::ACE_OutputCDR::from_boolean (_tao_union.the_boolean ());
-      }
-      break;
-    case 10:
-      {
-        result = strm << _tao_union.the_var_struct ();
-      }
-      break;
-    case 11:
-      {
-        result = strm << _tao_union.the_fixed_struct ();
-      }
-      break;
-    default:
-      break;
-  }
-  
-  return result;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Big_Union &_tao_union
-  )
-{
-  CORBA::Short _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_discriminant)
-  {
-    case 0:
-      {
-        Param_Test::Fixed_Array _tao_union_tmp;
-        Param_Test::Fixed_Array_forany _tao_union_helper (
-            _tao_union_tmp
-          );
-        result = strm >> _tao_union_helper;
-        
-        if (result)
-          {
-            _tao_union.the_array (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 1:
-      {
-        Coffee_var _tao_union_tmp;
-        result = strm >> _tao_union_tmp.inout ();
-        
-        if (result)
-          {
-            _tao_union.the_interface (_tao_union_tmp.in ());
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 2:
-      {
-        CORBA::Long _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_long (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 3:
-      {
-        Param_Test::Big_Union::_another_array _tao_union_tmp;
-        Param_Test::Big_Union::_another_array_forany _tao_union_helper (
-            _tao_union_tmp
-          );
-        result = strm >> _tao_union_helper;
-        
-        if (result)
-          {
-            _tao_union.another_array (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 4:
-      {
-        ::CORBA::String_var _tao_union_tmp;
-        result = strm >> _tao_union_tmp.out ();
-        
-        if (result)
-          {
-            _tao_union.the_string (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 5:
-      {
-        CORBA::ShortSeq _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_sequence (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 6:
-      {
-        CORBA::Any _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_any (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 7:
-      {
-        ::CORBA::Octet _tao_union_tmp;
-        ::ACE_InputCDR::to_octet _tao_union_helper (_tao_union_tmp);
-        result = strm >> _tao_union_helper;
-        
-        if (result)
-          {
-            _tao_union.the_octet (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 8:
-      {
-        ::CORBA::Char _tao_union_tmp;
-        ::ACE_InputCDR::to_char _tao_union_helper (_tao_union_tmp);
-        result = strm >> _tao_union_helper;
-        
-        if (result)
-          {
-            _tao_union.the_char (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 9:
-      {
-        ::CORBA::Boolean _tao_union_tmp;
-        ::ACE_InputCDR::to_boolean _tao_union_helper (_tao_union_tmp);
-        result = strm >> _tao_union_helper;
-        
-        if (result)
-          {
-            _tao_union.the_boolean (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 10:
-      {
-        Param_Test::Var_Struct _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_var_struct (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 11:
-      {
-        Param_Test::Fixed_Struct _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_fixed_struct (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    default:
-      _tao_union._d (_tao_discriminant);
-      break;
-  }
-  
-  return result;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_enum/cdr_op_cs.cpp:51
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (TAO_OutputCDR &strm, Param_Test::Small_Union_Switch _tao_enumerator)
-{
-  return strm << static_cast< ::CORBA::ULong> (_tao_enumerator);
-}
-
-::CORBA::Boolean operator>> (TAO_InputCDR &strm, Param_Test::Small_Union_Switch & _tao_enumerator)
-{
-  ::CORBA::ULong _tao_temp = 0;
-  ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
-  if (_tao_success)
-    {
-      _tao_enumerator = static_cast<Param_Test::Small_Union_Switch> (_tao_temp);
-    }
-  
-  return _tao_success;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Small_Union &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_union._d ())
-  {
-    case Param_Test::A_LONG:
-      {
-        result = strm << _tao_union.the_long ();
-      }
-      break;
-    case Param_Test::A_SHORT:
-      {
-        result = strm << _tao_union.the_short ();
-      }
-      break;
-  }
-  
-  return result;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Small_Union &_tao_union
-  )
-{
-  Param_Test::Small_Union_Switch _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_discriminant)
-  {
-    case Param_Test::A_LONG:
-      {
-        CORBA::Long _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_long (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case Param_Test::A_SHORT:
-      {
-        CORBA::Short _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.the_short (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-  }
-  
-  return result;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::level4 &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.level5_string.in ()) &&
-    (strm << _tao_aggregate.level5_any);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::level4 &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.level5_string.out ()) &&
-    (strm >> _tao_aggregate.level5_any);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::level8 &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.level9_string.in ()) &&
-    (strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate.level9_boolean)) &&
-    (strm << _tao_aggregate.level9_short);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::level8 &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.level9_string.out ()) &&
-    (strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate.level9_boolean)) &&
-    (strm >> _tao_aggregate.level9_short);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_
-#define _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Struct::_tao_seq_Param_Test_Recursive_Struct_ &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Recursive_Struct::_tao_seq_Param_Test_Recursive_Struct_ &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.x) &&
-    (strm << _tao_aggregate.children);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Recursive_Struct &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.x) &&
-    (strm >> _tao_aggregate.children);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_
-#define _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::nested_rec_union &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_union._d ())
-  {
-    case 0:
-      {
-        result = strm << _tao_union.value ();
-      }
-      break;
-    case 1:
-      {
-        result = strm << _tao_union.nested_rec_member ();
-      }
-      break;
-    default:
-      break;
-  }
-  
-  return result;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::nested_rec_union &_tao_union
-  )
-{
-  CORBA::Short _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_discriminant)
-  {
-    case 0:
-      {
-        CORBA::Long _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.value (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 1:
-      {
-        Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.nested_rec_member (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    default:
-      _tao_union._d (_tao_discriminant);
-      break;
-  }
-  
-  return result;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
-#if !defined _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_
-#define _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ &_tao_sequence
-  )
-{
-  return TAO::marshal_sequence(strm, _tao_sequence);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ &_tao_sequence
-  )
-{
-  return TAO::demarshal_sequence(strm, _tao_sequence);
-}
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_ */
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Union &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_union._d ())
-  {
-    case 0:
-      {
-        result = strm << _tao_union.rec_member ();
-      }
-      break;
-    case 1:
-      {
-        result = strm << _tao_union.nested_member ();
-      }
-      break;
-    default:
-      break;
-  }
-  
-  return result;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Recursive_Union &_tao_union
-  )
-{
-  CORBA::Short _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return false;
-    }
-  
-  ::CORBA::Boolean result = true;
-  
-  switch (_tao_discriminant)
-  {
-    case 0:
-      {
-        Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.rec_member (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 1:
-      {
-        Param_Test::nested_rec_union _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.nested_member (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-        
-      }
-      break;
-    default:
-      _tao_union._d (_tao_discriminant);
-      break;
-  }
-  
-  return result;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test::Multdim_Array_forany &_tao_array
-  )
-{
-  CORBA::Boolean _tao_marshal_flag = true;
-  
-  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
-    {
-      for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
-        {
-          Param_Test::Fixed_Array_var tmp_var (Param_Test::Fixed_Array_dup (_tao_array[i0][i1]));
-          Param_Test::Fixed_Array_forany tmp (tmp_var.inout ());
-          _tao_marshal_flag = (strm << tmp);
-        }
-    }
-  
-  return _tao_marshal_flag;
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test::Multdim_Array_forany &_tao_array
-  )
-{
-  CORBA::Boolean _tao_marshal_flag = true;
-  
-  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
-    {
-      for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
-        {
-          Param_Test::Fixed_Array_forany tmp (Param_Test::Fixed_Array_alloc ());
-          _tao_marshal_flag = (strm >> tmp);
-          Param_Test::Fixed_Array_copy (_tao_array[i0][i1], tmp.in ());
-          Param_Test::Fixed_Array_free (tmp.inout ());
-        }
-    }
-  
-  return _tao_marshal_flag;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Param_Test_ptr _tao_objref)
-{
-  ::CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-::CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Param_Test_ptr &_tao_objref)
-{
-  ::CORBA::Object_var obj;
-  
-  if (!(strm >> obj.inout ()))
-    {
-      return false;
-    }
-  
-  typedef ::Param_Test RHS_SCOPED_NAME;
-  
-  // Narrow to the right type.
-  _tao_objref =
-    TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
-        obj.in (),
-        _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
-      );
-    
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
   TAO_OutputCDR &strm,
-  const std::string &_tao_string)
-{
-  return strm << _tao_string.c_str ();
-}
-
-::CORBA::Boolean operator>> (
-  TAO_InputCDR &strm,
-  std::string &_tao_string)
-{
-  char *buf = 0;
-  strm >> buf;
-  _tao_string.assign (buf);
-  ACE::strdelete (buf);
-  return true;
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (
-  TAO_OutputCDR &strm,
-  const Param_Test::UB_Long_Seq &_tao_vector)
+  const std:;vector<Param_Test::Step &_tao_vector)
 {
   ::CORBA::ULong length = _tao_vector.size ();
   strm << length;
   
   for ( ::CORBA::ULong i = 0UL; i < length; ++i)
     {
-      strm << _tao_vector[i];
-    }
+      if (! strm << _tao_vector[i]
+        {
+          return false;
+        }
+      }
+    
+    return true;
+  }
   
-  return true;
-}
+  ::CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    std::vector<Param_Test::Step &_tao_vector)
+  {
+    ::CORBA::ULong length = 0UL;
+    Param_Test::Step * tmp;
+    
+    for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+      {
+        if (! strm >> tmp)
+          {
+            return false;
+          }
+        
+        _tao_vector[i] = tmp;
+      }
+    
+    return true;
+  }
+  
+  
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-::CORBA::Boolean operator>> (
-  TAO_InputCDR &strm,
-  Param_Test::UB_Long_Seq &_tao_vector)
-{
-  ::CORBA::ULong length = 0UL;
-  ::CORBA::ULong tmp = 0UL;
+  #endif /* _TAO_CDR_OP_Param_Test_PathSpec_CPP_ */
   
-  for ( ::CORBA::ULong i = 0UL; i < length; ++i)
-    {
-      strm >> tmp;
-      _tao_vector[i] = tmp;
-    }
+  // TAO_IDL - Generated from
+  // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+  #if !defined _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_
+  #define _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_
   
-  return true;
-}
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+  ::CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const std:;vector<CORBA::Short &_tao_vector)
+  {
+    ::CORBA::ULong length = _tao_vector.size ();
+    strm << length;
+    
+    for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+      {
+        if (! strm << _tao_vector[i]
+          {
+            return false;
+          }
+        }
+      
+      return true;
+    }
+    
+    ::CORBA::Boolean operator>> (
+      TAO_InputCDR &strm,
+      std::vector<CORBA::Short &_tao_vector)
+    {
+      ::CORBA::ULong length = 0UL;
+      CORBA::Short tmp;
+      
+      for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+        {
+          if (! strm >> tmp)
+            {
+              return false;
+            }
+          
+          _tao_vector[i] = tmp;
+        }
+      
+      return true;
+    }
+    
+    
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+    #endif /* _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_CPP_ */
+    
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+    #if !defined _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_
+    #define _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_
+    
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+    ::CORBA::Boolean operator<< (
+      TAO_OutputCDR &strm,
+      const std:;vector<CORBA::Long &_tao_vector)
+    {
+      ::CORBA::ULong length = _tao_vector.size ();
+      strm << length;
+      
+      for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+        {
+          if (! strm << _tao_vector[i]
+            {
+              return false;
+            }
+          }
+        
+        return true;
+      }
+      
+      ::CORBA::Boolean operator>> (
+        TAO_InputCDR &strm,
+        std::vector<CORBA::Long &_tao_vector)
+      {
+        ::CORBA::ULong length = 0UL;
+        CORBA::Long tmp;
+        
+        for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+          {
+            if (! strm >> tmp)
+              {
+                return false;
+              }
+            
+            _tao_vector[i] = tmp;
+          }
+        
+        return true;
+      }
+      
+      
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+      #endif /* _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_CPP_ */
+      
+      // TAO_IDL - Generated from
+      // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+      #if !defined _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_
+      #define _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_
+      
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+      ::CORBA::Boolean operator<< (
+        TAO_OutputCDR &strm,
+        const std:;vector<char * &_tao_vector)
+      {
+        ::CORBA::ULong length = _tao_vector.size ();
+        strm << length;
+        
+        for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+          {
+            if (! strm << _tao_vector[i]
+              {
+                return false;
+              }
+            }
+          
+          return true;
+        }
+        
+        ::CORBA::Boolean operator>> (
+          TAO_InputCDR &strm,
+          std::vector<char * &_tao_vector)
+        {
+          ::CORBA::ULong length = 0UL;
+          char * * tmp;
+          
+          for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+            {
+              if (! strm >> tmp)
+                {
+                  return false;
+                }
+              
+              _tao_vector[i] = tmp;
+            }
+          
+          return true;
+        }
+        
+        
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+        #endif /* _TAO_CDR_OP_Param_Test_Bounded_StrSeq_CPP_ */
+        
+        // TAO_IDL - Generated from
+        // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+        #if !defined _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_
+        #define _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_
+        
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+        ::CORBA::Boolean operator<< (
+          TAO_OutputCDR &strm,
+          const std:;vector<CORBA::WChar * &_tao_vector)
+        {
+          ::CORBA::ULong length = _tao_vector.size ();
+          strm << length;
+          
+          for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+            {
+              if (! strm << _tao_vector[i]
+                {
+                  return false;
+                }
+              }
+            
+            return true;
+          }
+          
+          ::CORBA::Boolean operator>> (
+            TAO_InputCDR &strm,
+            std::vector<CORBA::WChar * &_tao_vector)
+          {
+            ::CORBA::ULong length = 0UL;
+            CORBA::WChar * * tmp;
+            
+            for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+              {
+                if (! strm >> tmp)
+                  {
+                    return false;
+                  }
+                
+                _tao_vector[i] = tmp;
+              }
+            
+            return true;
+          }
+          
+          
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+          #endif /* _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_CPP_ */
+          
+          // TAO_IDL - Generated from
+          // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+          #if !defined _TAO_CDR_OP_Param_Test_StructSeq_CPP_
+          #define _TAO_CDR_OP_Param_Test_StructSeq_CPP_
+          
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+          ::CORBA::Boolean operator<< (
+            TAO_OutputCDR &strm,
+            const std:;vector<Param_Test::Fixed_Struct &_tao_vector)
+          {
+            ::CORBA::ULong length = _tao_vector.size ();
+            strm << length;
+            
+            for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+              {
+                if (! strm << _tao_vector[i]
+                  {
+                    return false;
+                  }
+                }
+              
+              return true;
+            }
+            
+            ::CORBA::Boolean operator>> (
+              TAO_InputCDR &strm,
+              std::vector<Param_Test::Fixed_Struct &_tao_vector)
+            {
+              ::CORBA::ULong length = 0UL;
+              Param_Test::Fixed_Struct tmp;
+              
+              for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                {
+                  if (! strm >> tmp)
+                    {
+                      return false;
+                    }
+                  
+                  _tao_vector[i] = tmp;
+                }
+              
+              return true;
+            }
+            
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            #endif /* _TAO_CDR_OP_Param_Test_StructSeq_CPP_ */
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+            #if !defined _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_
+            #define _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+              TAO_OutputCDR &strm,
+              const std:;vector<Param_Test::Fixed_Struct &_tao_vector)
+            {
+              ::CORBA::ULong length = _tao_vector.size ();
+              strm << length;
+              
+              for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                {
+                  if (! strm << _tao_vector[i]
+                    {
+                      return false;
+                    }
+                  }
+                
+                return true;
+              }
+              
+              ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                std::vector<Param_Test::Fixed_Struct &_tao_vector)
+              {
+                ::CORBA::ULong length = 0UL;
+                Param_Test::Fixed_Struct tmp;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm >> tmp)
+                      {
+                        return false;
+                      }
+                    
+                    _tao_vector[i] = tmp;
+                  }
+                
+                return true;
+              }
+              
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              #endif /* _TAO_CDR_OP_Param_Test_Bounded_StructSeq_CPP_ */
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+              #if !defined _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_
+              #define _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                TAO_OutputCDR &strm,
+                const std:;vector<Coffee &_tao_vector)
+              {
+                ::CORBA::ULong length = _tao_vector.size ();
+                strm << length;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm << _tao_vector[i]
+                      {
+                        return false;
+                      }
+                    }
+                  
+                  return true;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  std::vector<Coffee &_tao_vector)
+                {
+                  ::CORBA::ULong length = 0UL;
+                  Coffee * tmp;
+                  
+                  for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                    {
+                      if (! strm >> tmp)
+                        {
+                          return false;
+                        }
+                      
+                      _tao_vector[i] = tmp;
+                    }
+                  
+                  return true;
+                }
+                
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                #endif /* _TAO_CDR_OP_Param_Test_Coffee_Mix_CPP_ */
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+                #if !defined _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_
+                #define _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                  TAO_OutputCDR &strm,
+                  const std:;vector<Coffee &_tao_vector)
+                {
+                  ::CORBA::ULong length = _tao_vector.size ();
+                  strm << length;
+                  
+                  for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                    {
+                      if (! strm << _tao_vector[i]
+                        {
+                          return false;
+                        }
+                      }
+                    
+                    return true;
+                  }
+                  
+                  ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    std::vector<Coffee &_tao_vector)
+                  {
+                    ::CORBA::ULong length = 0UL;
+                    Coffee * tmp;
+                    
+                    for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                      {
+                        if (! strm >> tmp)
+                          {
+                            return false;
+                          }
+                        
+                        _tao_vector[i] = tmp;
+                      }
+                    
+                    return true;
+                  }
+                  
+                  
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                  #endif /* _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_CPP_ */
+                  
+                  // TAO_IDL - Generated from
+                  // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+                  
+                  
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                  ::CORBA::Boolean operator<< (
+                      TAO_OutputCDR &strm,
+                      const Param_Test::Var_Struct &_tao_aggregate
+                    )
+                  {
+                    return
+                      (strm << _tao_aggregate.dbl) &&
+                      (strm << _tao_aggregate.dummy1.in ()) &&
+                      (strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate.boole)) &&
+                      (strm << _tao_aggregate.dummy2.in ()) &&
+                      (strm << _tao_aggregate.shrt) &&
+                      (strm << _tao_aggregate.seq);
+                  }
+                  
+                  ::CORBA::Boolean operator>> (
+                      TAO_InputCDR &strm,
+                      Param_Test::Var_Struct &_tao_aggregate
+                    )
+                  {
+                    return
+                      (strm >> _tao_aggregate.dbl) &&
+                      (strm >> _tao_aggregate.dummy1.out ()) &&
+                      (strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate.boole)) &&
+                      (strm >> _tao_aggregate.dummy2.out ()) &&
+                      (strm >> _tao_aggregate.shrt) &&
+                      (strm >> _tao_aggregate.seq);
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Nested_Struct &_tao_aggregate
+                  )
+                {
+                  return
+                    (strm << _tao_aggregate.vs);
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Nested_Struct &_tao_aggregate
+                  )
+                {
+                  return
+                    (strm >> _tao_aggregate.vs);
+              }
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+              
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                  TAO_OutputCDR &strm,
+                  const Param_Test::Objref_Struct &_tao_aggregate
+                )
+              {
+                return
+                  (strm << _tao_aggregate.x) &&
+                  ::CORBA::Object::marshal (
+                      _tao_aggregate.y.in (),
+                      strm
+                    );
+              }
+              
+              ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  Param_Test::Objref_Struct &_tao_aggregate
+                )
+              {
+                return
+                  (strm >> _tao_aggregate.x) &&
+                  (strm >> _tao_aggregate.y.out ());
+            }
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
+            
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+                TAO_OutputCDR &strm,
+                const Param_Test::Fixed_Array_forany &_tao_array
+              )
+            {
+              return
+                strm.write_long_array (
+                    reinterpret_cast <const ACE_CDR::Long *> (_tao_array.in ()),
+                    10
+                  );
+            }
+            
+            ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                Param_Test::Fixed_Array_forany &_tao_array
+              )
+            {
+              return
+                strm.read_long_array (
+                    reinterpret_cast <ACE_CDR::Long *> (_tao_array.out ()),
+                    10
+                  );
+            }
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
+            
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+                TAO_OutputCDR &strm,
+                const Param_Test::Var_Array_forany &_tao_array
+              )
+            {
+              CORBA::Boolean _tao_marshal_flag = true;
+              
+              for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
+                {
+                  _tao_marshal_flag = (strm << _tao_array [i0].in ());
+                }
+              
+              return _tao_marshal_flag;
+            }
+            
+            ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                Param_Test::Var_Array_forany &_tao_array
+              )
+            {
+              CORBA::Boolean _tao_marshal_flag = true;
+              
+              for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
+                {
+                  _tao_marshal_flag = (strm >> _tao_array [i0].out ());
+                }
+              
+              return _tao_marshal_flag;
+            }
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+            #if !defined _TAO_CDR_OP_Param_Test_ArraySeq_CPP_
+            #define _TAO_CDR_OP_Param_Test_ArraySeq_CPP_
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+              TAO_OutputCDR &strm,
+              const std:;vector<Param_Test::Fixed_Array &_tao_vector)
+            {
+              ::CORBA::ULong length = _tao_vector.size ();
+              strm << length;
+              
+              for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                {
+                  if (! strm << _tao_vector[i]
+                    {
+                      return false;
+                    }
+                  }
+                
+                return true;
+              }
+              
+              ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                std::vector<Param_Test::Fixed_Array &_tao_vector)
+              {
+                ::CORBA::ULong length = 0UL;
+                Param_Test::Fixed_Array tmp;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm >> tmp)
+                      {
+                        return false;
+                      }
+                    
+                    _tao_vector[i] = tmp;
+                  }
+                
+                return true;
+              }
+              
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              #endif /* _TAO_CDR_OP_Param_Test_ArraySeq_CPP_ */
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+              #if !defined _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_
+              #define _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                TAO_OutputCDR &strm,
+                const std:;vector<Param_Test::Fixed_Array &_tao_vector)
+              {
+                ::CORBA::ULong length = _tao_vector.size ();
+                strm << length;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm << _tao_vector[i]
+                      {
+                        return false;
+                      }
+                    }
+                  
+                  return true;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  std::vector<Param_Test::Fixed_Array &_tao_vector)
+                {
+                  ::CORBA::ULong length = 0UL;
+                  Param_Test::Fixed_Array tmp;
+                  
+                  for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                    {
+                      if (! strm >> tmp)
+                        {
+                          return false;
+                        }
+                      
+                      _tao_vector[i] = tmp;
+                    }
+                  
+                  return true;
+                }
+                
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                #endif /* _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_CPP_ */
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Ooops &_tao_aggregate
+                  )
+                {
+                  // First marshal the repository ID.
+                  if (strm << _tao_aggregate._rep_id ())
+                    {
+                      // Now marshal the members (if any).
+                      return (
+                        (strm << _tao_aggregate.reason.in ()) &&
+                        (strm << _tao_aggregate.input)
+                       );
+                    }
+                  else
+                    {
+                      return false;
+                    }
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Ooops &_tao_aggregate
+                  )
+                {
+                  // Demarshal the members.
+                  return (
+                    (strm >> _tao_aggregate.reason.out ()) &&
+                    (strm >> _tao_aggregate.input)
+                  );
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_exception/cdr_op_cs.cpp:60
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::BadBoy &_tao_aggregate
+                  )
+                {
+                  // Marshal the repository ID.
+                  return (strm << _tao_aggregate._rep_id ());
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &,
+                    Param_Test::BadBoy&
+                  )
+                {
+                  return true;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Big_Union::_another_array_forany &_tao_array
+                  )
+                {
+                  return
+                    strm.write_short_array (
+                        reinterpret_cast <const ACE_CDR::Short *> (_tao_array.in ()),
+                        32
+                      );
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Big_Union::_another_array_forany &_tao_array
+                  )
+                {
+                  return
+                    strm.read_short_array (
+                        reinterpret_cast <ACE_CDR::Short *> (_tao_array.out ()),
+                        32
+                      );
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Big_Union &_tao_union
+                  )
+                {
+                  if ( !(strm << _tao_union._d ()) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_union._d ())
+                  {
+                    case 0:
+                      {
+                        Param_Test::Fixed_Array_forany _tao_union_tmp (
+                            _tao_union.the_array ()
+                          );
+                        result = strm << _tao_union_tmp;
+                      }
+                      break;
+                    case 1:
+                      {
+                        result =
+                          TAO::Objref_Traits<Coffee>::marshal (
+                              _tao_union.the_interface (),
+                              strm
+                            );
+                      }
+                      break;
+                    case 2:
+                      {
+                        result = strm << _tao_union.the_long ();
+                      }
+                      break;
+                    case 3:
+                      {
+                        Param_Test::Big_Union::_another_array_forany _tao_union_tmp (
+                            _tao_union.another_array ()
+                          );
+                        result = strm << _tao_union_tmp;
+                      }
+                      break;
+                    case 4:
+                      {
+                        result = strm << _tao_union.the_string ();
+                      }
+                      break;
+                    case 5:
+                      {
+                        result = strm << _tao_union.the_sequence ();
+                      }
+                      break;
+                    case 6:
+                      {
+                        result = strm << _tao_union.the_any ();
+                      }
+                      break;
+                    case 7:
+                      {
+                        result = strm << ::ACE_OutputCDR::from_octet (_tao_union.the_octet ());
+                      }
+                      break;
+                    case 8:
+                      {
+                        result = strm << ::ACE_OutputCDR::from_char (_tao_union.the_char ());
+                      }
+                      break;
+                    case 9:
+                      {
+                        result = strm << ::ACE_OutputCDR::from_boolean (_tao_union.the_boolean ());
+                      }
+                      break;
+                    case 10:
+                      {
+                        result = strm << _tao_union.the_var_struct ();
+                      }
+                      break;
+                    case 11:
+                      {
+                        result = strm << _tao_union.the_fixed_struct ();
+                      }
+                      break;
+                    default:
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Big_Union &_tao_union
+                  )
+                {
+                  CORBA::Short _tao_discriminant;
+                  if ( !(strm >> _tao_discriminant) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_discriminant)
+                  {
+                    case 0:
+                      {
+                        Param_Test::Fixed_Array _tao_union_tmp;
+                        Param_Test::Fixed_Array_forany _tao_union_helper (
+                            _tao_union_tmp
+                          );
+                        result = strm >> _tao_union_helper;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_array (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 1:
+                      {
+                        Coffee_var _tao_union_tmp;
+                        result = strm >> _tao_union_tmp.inout ();
+                        
+                        if (result)
+                          {
+                            _tao_union.the_interface (_tao_union_tmp.in ());
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 2:
+                      {
+                        CORBA::Long _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_long (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 3:
+                      {
+                        Param_Test::Big_Union::_another_array _tao_union_tmp;
+                        Param_Test::Big_Union::_another_array_forany _tao_union_helper (
+                            _tao_union_tmp
+                          );
+                        result = strm >> _tao_union_helper;
+                        
+                        if (result)
+                          {
+                            _tao_union.another_array (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 4:
+                      {
+                        ::CORBA::String_var _tao_union_tmp;
+                        result = strm >> _tao_union_tmp.out ();
+                        
+                        if (result)
+                          {
+                            _tao_union.the_string (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 5:
+                      {
+                        CORBA::ShortSeq _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_sequence (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 6:
+                      {
+                        CORBA::Any _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_any (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 7:
+                      {
+                        ::CORBA::Octet _tao_union_tmp;
+                        ::ACE_InputCDR::to_octet _tao_union_helper (_tao_union_tmp);
+                        result = strm >> _tao_union_helper;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_octet (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 8:
+                      {
+                        ::CORBA::Char _tao_union_tmp;
+                        ::ACE_InputCDR::to_char _tao_union_helper (_tao_union_tmp);
+                        result = strm >> _tao_union_helper;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_char (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 9:
+                      {
+                        ::CORBA::Boolean _tao_union_tmp;
+                        ::ACE_InputCDR::to_boolean _tao_union_helper (_tao_union_tmp);
+                        result = strm >> _tao_union_helper;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_boolean (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 10:
+                      {
+                        Param_Test::Var_Struct _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_var_struct (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 11:
+                      {
+                        Param_Test::Fixed_Struct _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_fixed_struct (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    default:
+                      _tao_union._d (_tao_discriminant);
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_enum/cdr_op_cs.cpp:51
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (TAO_OutputCDR &strm, Param_Test::Small_Union_Switch _tao_enumerator)
+                {
+                  return strm << static_cast< ::CORBA::ULong> (_tao_enumerator);
+                }
+                
+                ::CORBA::Boolean operator>> (TAO_InputCDR &strm, Param_Test::Small_Union_Switch & _tao_enumerator)
+                {
+                  ::CORBA::ULong _tao_temp = 0;
+                  ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
+                  
+                  if (_tao_success)
+                    {
+                      _tao_enumerator = static_cast<Param_Test::Small_Union_Switch> (_tao_temp);
+                    }
+                  
+                  return _tao_success;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Small_Union &_tao_union
+                  )
+                {
+                  if ( !(strm << _tao_union._d ()) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_union._d ())
+                  {
+                    case Param_Test::A_LONG:
+                      {
+                        result = strm << _tao_union.the_long ();
+                      }
+                      break;
+                    case Param_Test::A_SHORT:
+                      {
+                        result = strm << _tao_union.the_short ();
+                      }
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Small_Union &_tao_union
+                  )
+                {
+                  Param_Test::Small_Union_Switch _tao_discriminant;
+                  if ( !(strm >> _tao_discriminant) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_discriminant)
+                  {
+                    case Param_Test::A_LONG:
+                      {
+                        CORBA::Long _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_long (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case Param_Test::A_SHORT:
+                      {
+                        CORBA::Short _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.the_short (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::level4 &_tao_aggregate
+                  )
+                {
+                  return
+                    (strm << _tao_aggregate.level5_string.in ()) &&
+                    (strm << _tao_aggregate.level5_any);
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::level4 &_tao_aggregate
+                  )
+                {
+                  return
+                    (strm >> _tao_aggregate.level5_string.out ()) &&
+                    (strm >> _tao_aggregate.level5_any);
+              }
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+              
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                  TAO_OutputCDR &strm,
+                  const Param_Test::level8 &_tao_aggregate
+                )
+              {
+                return
+                  (strm << _tao_aggregate.level9_string.in ()) &&
+                  (strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate.level9_boolean)) &&
+                  (strm << _tao_aggregate.level9_short);
+              }
+              
+              ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  Param_Test::level8 &_tao_aggregate
+                )
+              {
+                return
+                  (strm >> _tao_aggregate.level9_string.out ()) &&
+                  (strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate.level9_boolean)) &&
+                  (strm >> _tao_aggregate.level9_short);
+            }
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+            #if !defined _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_
+            #define _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+              TAO_OutputCDR &strm,
+              const std:;vector<Param_Test::Recursive_Struct &_tao_vector)
+            {
+              ::CORBA::ULong length = _tao_vector.size ();
+              strm << length;
+              
+              for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                {
+                  if (! strm << _tao_vector[i]
+                    {
+                      return false;
+                    }
+                  }
+                
+                return true;
+              }
+              
+              ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                std::vector<Param_Test::Recursive_Struct &_tao_vector)
+              {
+                ::CORBA::ULong length = 0UL;
+                Param_Test::Recursive_Struct * tmp;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm >> tmp)
+                      {
+                        return false;
+                      }
+                    
+                    _tao_vector[i] = tmp;
+                  }
+                
+                return true;
+              }
+              
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              #endif /* _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__CPP_ */
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_structure/cdr_op_cs.cpp:61
+              
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                  TAO_OutputCDR &strm,
+                  const Param_Test::Recursive_Struct &_tao_aggregate
+                )
+              {
+                return
+                  (strm << _tao_aggregate.x) &&
+                  (strm << _tao_aggregate.children);
+              }
+              
+              ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  Param_Test::Recursive_Struct &_tao_aggregate
+                )
+              {
+                return
+                  (strm >> _tao_aggregate.x) &&
+                  (strm >> _tao_aggregate.children);
+            }
+            
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+            
+            
+            // TAO_IDL - Generated from
+            // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+            #if !defined _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_
+            #define _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_
+            
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+            ::CORBA::Boolean operator<< (
+              TAO_OutputCDR &strm,
+              const std:;vector<Param_Test::nested_rec_union &_tao_vector)
+            {
+              ::CORBA::ULong length = _tao_vector.size ();
+              strm << length;
+              
+              for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                {
+                  if (! strm << _tao_vector[i]
+                    {
+                      return false;
+                    }
+                  }
+                
+                return true;
+              }
+              
+              ::CORBA::Boolean operator>> (
+                TAO_InputCDR &strm,
+                std::vector<Param_Test::nested_rec_union &_tao_vector)
+              {
+                ::CORBA::ULong length = 0UL;
+                Param_Test::nested_rec_union * tmp;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm >> tmp)
+                      {
+                        return false;
+                      }
+                    
+                    _tao_vector[i] = tmp;
+                  }
+                
+                return true;
+              }
+              
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              #endif /* _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__CPP_ */
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
+              
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                  TAO_OutputCDR &strm,
+                  const Param_Test::nested_rec_union &_tao_union
+                )
+              {
+                if ( !(strm << _tao_union._d ()) )
+                  {
+                    return false;
+                  }
+                
+                ::CORBA::Boolean result = true;
+                
+                switch (_tao_union._d ())
+                {
+                  case 0:
+                    {
+                      result = strm << _tao_union.value ();
+                    }
+                    break;
+                  case 1:
+                    {
+                      result = strm << _tao_union.nested_rec_member ();
+                    }
+                    break;
+                  default:
+                    break;
+                }
+                
+                return result;
+              }
+              
+              ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  Param_Test::nested_rec_union &_tao_union
+                )
+              {
+                CORBA::Short _tao_discriminant;
+                if ( !(strm >> _tao_discriminant) )
+                  {
+                    return false;
+                  }
+                
+                ::CORBA::Boolean result = true;
+                
+                switch (_tao_discriminant)
+                {
+                  case 0:
+                    {
+                      CORBA::Long _tao_union_tmp;
+                      result = strm >> _tao_union_tmp;
+                      
+                      if (result)
+                        {
+                          _tao_union.value (_tao_union_tmp);
+                          _tao_union._d (_tao_discriminant);
+                        }
+                    }
+                    break;
+                  case 1:
+                    {
+                      Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ _tao_union_tmp;
+                      result = strm >> _tao_union_tmp;
+                      
+                      if (result)
+                        {
+                          _tao_union.nested_rec_member (_tao_union_tmp);
+                          _tao_union._d (_tao_discriminant);
+                        }
+                    }
+                    break;
+                  default:
+                    _tao_union._d (_tao_discriminant);
+                    break;
+                }
+                
+                return result;
+              }
+              
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+              
+              
+              // TAO_IDL - Generated from
+              // w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:96
+              #if !defined _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_
+              #define _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_
+              
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+              ::CORBA::Boolean operator<< (
+                TAO_OutputCDR &strm,
+                const std:;vector<Param_Test::Recursive_Union &_tao_vector)
+              {
+                ::CORBA::ULong length = _tao_vector.size ();
+                strm << length;
+                
+                for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                  {
+                    if (! strm << _tao_vector[i]
+                      {
+                        return false;
+                      }
+                    }
+                  
+                  return true;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                  TAO_InputCDR &strm,
+                  std::vector<Param_Test::Recursive_Union &_tao_vector)
+                {
+                  ::CORBA::ULong length = 0UL;
+                  Param_Test::Recursive_Union * tmp;
+                  
+                  for ( ::CORBA::ULong i = 0UL; i < length; ++i)
+                    {
+                      if (! strm >> tmp)
+                        {
+                          return false;
+                        }
+                      
+                      _tao_vector[i] = tmp;
+                    }
+                  
+                  return true;
+                }
+                
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                #endif /* _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__CPP_ */
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_union/cdr_op_cs.cpp:67
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Recursive_Union &_tao_union
+                  )
+                {
+                  if ( !(strm << _tao_union._d ()) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_union._d ())
+                  {
+                    case 0:
+                      {
+                        result = strm << _tao_union.rec_member ();
+                      }
+                      break;
+                    case 1:
+                      {
+                        result = strm << _tao_union.nested_member ();
+                      }
+                      break;
+                    default:
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Recursive_Union &_tao_union
+                  )
+                {
+                  CORBA::Short _tao_discriminant;
+                  if ( !(strm >> _tao_discriminant) )
+                    {
+                      return false;
+                    }
+                  
+                  ::CORBA::Boolean result = true;
+                  
+                  switch (_tao_discriminant)
+                  {
+                    case 0:
+                      {
+                        Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.rec_member (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                      }
+                      break;
+                    case 1:
+                      {
+                        Param_Test::nested_rec_union _tao_union_tmp;
+                        result = strm >> _tao_union_tmp;
+                        
+                        if (result)
+                          {
+                            _tao_union.nested_member (_tao_union_tmp);
+                            _tao_union._d (_tao_discriminant);
+                          }
+                        
+                      }
+                      break;
+                    default:
+                      _tao_union._d (_tao_discriminant);
+                      break;
+                  }
+                  
+                  return result;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_array/cdr_op_cs.cpp:178
+                
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test::Multdim_Array_forany &_tao_array
+                  )
+                {
+                  CORBA::Boolean _tao_marshal_flag = true;
+                  
+                  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
+                    {
+                      for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
+                        {
+                          Param_Test::Fixed_Array_var tmp_var (Param_Test::Fixed_Array_dup (_tao_array[i0][i1]));
+                          Param_Test::Fixed_Array_forany tmp (tmp_var.inout ());
+                          _tao_marshal_flag = (strm << tmp);
+                        }
+                    }
+                  
+                  return _tao_marshal_flag;
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test::Multdim_Array_forany &_tao_array
+                  )
+                {
+                  CORBA::Boolean _tao_marshal_flag = true;
+                  
+                  for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
+                    {
+                      for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
+                        {
+                          Param_Test::Fixed_Array_forany tmp (Param_Test::Fixed_Array_alloc ());
+                          _tao_marshal_flag = (strm >> tmp);
+                          Param_Test::Fixed_Array_copy (_tao_array[i0][i1], tmp.in ());
+                          Param_Test::Fixed_Array_free (tmp.inout ());
+                        }
+                    }
+                  
+                  return _tao_marshal_flag;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
+                
+                // TAO_IDL - Generated from
+                // w:\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
+                
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+                ::CORBA::Boolean operator<< (
+                    TAO_OutputCDR &strm,
+                    const Param_Test_ptr _tao_objref)
+                {
+                  ::CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+                  return (strm << _tao_corba_obj);
+                }
+                
+                ::CORBA::Boolean operator>> (
+                    TAO_InputCDR &strm,
+                    Param_Test_ptr &_tao_objref)
+                {
+                  ::CORBA::Object_var obj;
+                  
+                  if (!(strm >> obj.inout ()))
+                    {
+                      return false;
+                    }
+                  
+                  typedef ::Param_Test RHS_SCOPED_NAME;
+                  
+                  // Narrow to the right type.
+                  _tao_objref =
+                    TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
+                        obj.in (),
+                        _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
+                      );
+                    
+                  return true;
+                }
+                
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+                
 

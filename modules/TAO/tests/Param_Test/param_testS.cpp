@@ -28,7 +28,7 @@
 
 
 // TAO_IDL - Generated from 
-// .\be\be_codegen.cpp:685
+// .\be\be_codegen.cpp:688
 
 #ifndef _TAO_IDL_PARAM_TESTS_CPP_
 #define _TAO_IDL_PARAM_TESTS_CPP_
@@ -92,28 +92,36 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   
+  // TAO_IDL - Generated from
+  // .\be\be_visitor_arg_traits.cpp:621
+
+#if !defined (_CORBA_LONGSEQ__SARG_TRAITS_)
+#define _CORBA_LONGSEQ__SARG_TRAITS_
+  
   template<>
-  class SArg_Traits<Param_Test::UB_Long_Seq>
+  class SArg_Traits<std::vector<CORBA::Long> >
     : public
-        Basic_SArg_Traits_T<
-            Param_Test::UB_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
+        Vector_SArg_Traits_T<
+            std::vector<CORBA::Long>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Long> >
           >
   {
   };
+
+#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_SHORTSEQ__SARG_TRAITS_)
 #define _CORBA_SHORTSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<CORBA::ShortSeq>
+  class SArg_Traits<std::vector<CORBA::Short> >
     : public
-        Var_Size_SArg_Traits_T<
-            CORBA::ShortSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::ShortSeq>
+        Vector_SArg_Traits_T<
+            std::vector<CORBA::Short>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Short> >
           >
   {
   };
@@ -121,17 +129,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_STRINGSEQ__SARG_TRAITS_)
 #define _CORBA_STRINGSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<CORBA::StringSeq>
+  class SArg_Traits<std::vector<char *> >
     : public
-        Var_Size_SArg_Traits_T<
-            CORBA::StringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
+        Vector_SArg_Traits_T<
+            std::vector<char *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<char *> >
           >
   {
   };
@@ -139,17 +147,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_WSTRINGSEQ__SARG_TRAITS_)
 #define _CORBA_WSTRINGSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<CORBA::WStringSeq>
+  class SArg_Traits<std::vector<CORBA::WChar *> >
     : public
-        Var_Size_SArg_Traits_T<
-            CORBA::WStringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::WStringSeq>
+        Vector_SArg_Traits_T<
+            std::vector<CORBA::WChar *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::WChar *> >
           >
   {
   };
@@ -157,17 +165,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_ANYSEQ__SARG_TRAITS_)
 #define _CORBA_ANYSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<CORBA::AnySeq>
+  class SArg_Traits<std::vector<CORBA::Any> >
     : public
-        Var_Size_SArg_Traits_T<
-            CORBA::AnySeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::AnySeq>
+        Vector_SArg_Traits_T<
+            std::vector<CORBA::Any>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Any> >
           >
   {
   };
@@ -195,7 +203,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_COFFEE_DESC__SARG_TRAITS_)
 #define _COFFEE_DESC__SARG_TRAITS_
@@ -253,7 +261,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_FIXED_STRUCT__SARG_TRAITS_)
 #define _PARAM_TEST_FIXED_STRUCT__SARG_TRAITS_
@@ -271,17 +279,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_PATHSPEC__SARG_TRAITS_)
 #define _PARAM_TEST_PATHSPEC__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<Param_Test::PathSpec>
+  class SArg_Traits<std::vector<Param_Test::Step> >
     : public
-        Var_Size_SArg_Traits_T<
-            Param_Test::PathSpec,
-            TAO::Any_Insert_Policy_Stream <Param_Test::PathSpec>
+        Vector_SArg_Traits_T<
+            std::vector<Param_Test::Step>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Step> >
           >
   {
   };
@@ -289,7 +297,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_SHORT_SEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_SHORT_SEQ__SARG_TRAITS_
@@ -299,7 +307,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_Short_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Short_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Short_Seq>
           >
   {
   };
@@ -307,7 +315,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_LONG_SEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_LONG_SEQ__SARG_TRAITS_
@@ -317,7 +325,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Long_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Long_Seq>
           >
   {
   };
@@ -325,7 +333,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRSEQ__SARG_TRAITS_
@@ -335,7 +343,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_StrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StrSeq>
           >
   {
   };
@@ -343,7 +351,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_WSTRSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_WSTRSEQ__SARG_TRAITS_
@@ -353,7 +361,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_WStrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_WStrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_WStrSeq>
           >
   {
   };
@@ -361,17 +369,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_STRUCTSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_STRUCTSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<Param_Test::StructSeq>
+  class SArg_Traits<std::vector<Param_Test::Fixed_Struct> >
     : public
-        Var_Size_SArg_Traits_T<
-            Param_Test::StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::StructSeq>
+        Vector_SArg_Traits_T<
+            std::vector<Param_Test::Fixed_Struct>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Struct> >
           >
   {
   };
@@ -379,7 +387,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRUCTSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRUCTSEQ__SARG_TRAITS_
@@ -389,7 +397,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StructSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StructSeq>
           >
   {
   };
@@ -397,17 +405,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_COFFEE_MIX__SARG_TRAITS_)
 #define _PARAM_TEST_COFFEE_MIX__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<Param_Test::Coffee_Mix>
+  class SArg_Traits<std::vector<Coffee> >
     : public
-        Var_Size_SArg_Traits_T<
-            Param_Test::Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Coffee_Mix>
+        Vector_SArg_Traits_T<
+            std::vector<Coffee>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Coffee> >
           >
   {
   };
@@ -415,7 +423,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_COFFEE_MIX__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_COFFEE_MIX__SARG_TRAITS_
@@ -425,7 +433,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Coffee_Mix>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Coffee_Mix>
           >
   {
   };
@@ -433,7 +441,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_VAR_STRUCT__SARG_TRAITS_)
 #define _PARAM_TEST_VAR_STRUCT__SARG_TRAITS_
@@ -451,7 +459,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_NESTED_STRUCT__SARG_TRAITS_)
 #define _PARAM_TEST_NESTED_STRUCT__SARG_TRAITS_
@@ -469,7 +477,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_OBJREF_STRUCT__SARG_TRAITS_)
 #define _PARAM_TEST_OBJREF_STRUCT__SARG_TRAITS_
@@ -519,17 +527,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_ARRAYSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_ARRAYSEQ__SARG_TRAITS_
   
   template<>
-  class SArg_Traits<Param_Test::ArraySeq>
+  class SArg_Traits<std::vector<Param_Test::Fixed_Array> >
     : public
-        Var_Size_SArg_Traits_T<
-            Param_Test::ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::ArraySeq>
+        Vector_SArg_Traits_T<
+            std::vector<Param_Test::Fixed_Array>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Array> >
           >
   {
   };
@@ -537,7 +545,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_ARRAYSEQ__SARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_ARRAYSEQ__SARG_TRAITS_
@@ -547,7 +555,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             Param_Test::Bounded_ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_ArraySeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_ArraySeq>
           >
   {
   };
@@ -555,7 +563,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_BIG_UNION__SARG_TRAITS_)
 #define _PARAM_TEST_BIG_UNION__SARG_TRAITS_
@@ -573,7 +581,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_SMALL_UNION__SARG_TRAITS_)
 #define _PARAM_TEST_SMALL_UNION__SARG_TRAITS_
@@ -591,7 +599,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_RECURSIVE_STRUCT__SARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_STRUCT__SARG_TRAITS_
@@ -609,7 +617,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_RECURSIVE_UNION__SARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_UNION__SARG_TRAITS_
@@ -657,28 +665,36 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   
+  // TAO_IDL - Generated from
+  // .\be\be_visitor_arg_traits.cpp:621
+
+#if !defined (_CORBA_LONGSEQ__ARG_TRAITS_)
+#define _CORBA_LONGSEQ__ARG_TRAITS_
+  
   template<>
-  class Arg_Traits<Param_Test::UB_Long_Seq>
+  class Arg_Traits<std::vector<CORBA::Long> >
     : public
-        Basic_Arg_Traits_T<
-            Param_Test::UB_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::UB_Long_Seq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Long>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Long> >
           >
   {
   };
+
+#endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_SHORTSEQ__ARG_TRAITS_)
 #define _CORBA_SHORTSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::ShortSeq>
+  class Arg_Traits<std::vector<CORBA::Short> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::ShortSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::ShortSeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Short>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Short> >
           >
   {
   };
@@ -686,17 +702,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::StringSeq>
+  class Arg_Traits<std::vector<char *> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::StringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
+        Vector_Arg_Traits_T<
+            std::vector<char *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<char *> >
           >
   {
   };
@@ -704,17 +720,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_WSTRINGSEQ__ARG_TRAITS_)
 #define _CORBA_WSTRINGSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::WStringSeq>
+  class Arg_Traits<std::vector<CORBA::WChar *> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::WStringSeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::WStringSeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::WChar *>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::WChar *> >
           >
   {
   };
@@ -722,17 +738,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_CORBA_ANYSEQ__ARG_TRAITS_)
 #define _CORBA_ANYSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<CORBA::AnySeq>
+  class Arg_Traits<std::vector<CORBA::Any> >
     : public
-        Var_Size_Arg_Traits_T<
-            CORBA::AnySeq,
-            TAO::Any_Insert_Policy_Stream <CORBA::AnySeq>
+        Vector_Arg_Traits_T<
+            std::vector<CORBA::Any>,
+            TAO::Any_Insert_Policy_Stream<std::vector<CORBA::Any> >
           >
   {
   };
@@ -761,7 +777,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_COFFEE_DESC__ARG_TRAITS_)
 #define _COFFEE_DESC__ARG_TRAITS_
@@ -815,7 +831,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_FIXED_STRUCT__ARG_TRAITS_
@@ -833,17 +849,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_PATHSPEC__ARG_TRAITS_)
 #define _PARAM_TEST_PATHSPEC__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::PathSpec>
+  class Arg_Traits<std::vector<Param_Test::Step> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::PathSpec,
-            TAO::Any_Insert_Policy_Stream <Param_Test::PathSpec>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Step>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Step> >
           >
   {
   };
@@ -851,7 +867,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_SHORT_SEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_SHORT_SEQ__ARG_TRAITS_
@@ -861,7 +877,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Short_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Short_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Short_Seq>
           >
   {
   };
@@ -869,7 +885,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_LONG_SEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_LONG_SEQ__ARG_TRAITS_
@@ -879,7 +895,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Long_Seq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Long_Seq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Long_Seq>
           >
   {
   };
@@ -887,7 +903,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRSEQ__ARG_TRAITS_
@@ -897,7 +913,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_StrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StrSeq>
           >
   {
   };
@@ -905,7 +921,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_WSTRSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_WSTRSEQ__ARG_TRAITS_
@@ -915,7 +931,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_WStrSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_WStrSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_WStrSeq>
           >
   {
   };
@@ -923,17 +939,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_STRUCTSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_STRUCTSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::StructSeq>
+  class Arg_Traits<std::vector<Param_Test::Fixed_Struct> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::StructSeq>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Fixed_Struct>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Struct> >
           >
   {
   };
@@ -941,7 +957,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_STRUCTSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_STRUCTSEQ__ARG_TRAITS_
@@ -951,7 +967,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_StructSeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_StructSeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_StructSeq>
           >
   {
   };
@@ -959,17 +975,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_COFFEE_MIX__ARG_TRAITS_)
 #define _PARAM_TEST_COFFEE_MIX__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::Coffee_Mix>
+  class Arg_Traits<std::vector<Coffee> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Coffee_Mix>
+        Vector_Arg_Traits_T<
+            std::vector<Coffee>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Coffee> >
           >
   {
   };
@@ -977,7 +993,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_COFFEE_MIX__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_COFFEE_MIX__ARG_TRAITS_
@@ -987,7 +1003,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_Coffee_Mix,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_Coffee_Mix>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_Coffee_Mix>
           >
   {
   };
@@ -995,7 +1011,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_VAR_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_VAR_STRUCT__ARG_TRAITS_
@@ -1013,7 +1029,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_NESTED_STRUCT__ARG_TRAITS_
@@ -1031,7 +1047,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_OBJREF_STRUCT__ARG_TRAITS_
@@ -1081,17 +1097,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_ARRAYSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_ARRAYSEQ__ARG_TRAITS_
   
   template<>
-  class Arg_Traits<Param_Test::ArraySeq>
+  class Arg_Traits<std::vector<Param_Test::Fixed_Array> >
     : public
-        Var_Size_Arg_Traits_T<
-            Param_Test::ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::ArraySeq>
+        Vector_Arg_Traits_T<
+            std::vector<Param_Test::Fixed_Array>,
+            TAO::Any_Insert_Policy_Stream<std::vector<Param_Test::Fixed_Array> >
           >
   {
   };
@@ -1099,7 +1115,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:620
+  // .\be\be_visitor_arg_traits.cpp:621
 
 #if !defined (_PARAM_TEST_BOUNDED_ARRAYSEQ__ARG_TRAITS_)
 #define _PARAM_TEST_BOUNDED_ARRAYSEQ__ARG_TRAITS_
@@ -1109,7 +1125,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             Param_Test::Bounded_ArraySeq,
-            TAO::Any_Insert_Policy_Stream <Param_Test::Bounded_ArraySeq>
+            TAO::Any_Insert_Policy_Stream<Param_Test::Bounded_ArraySeq>
           >
   {
   };
@@ -1117,7 +1133,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_BIG_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_BIG_UNION__ARG_TRAITS_
@@ -1135,7 +1151,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_SMALL_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_SMALL_UNION__ARG_TRAITS_
@@ -1153,7 +1169,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:871
+  // .\be\be_visitor_arg_traits.cpp:884
 
 #if !defined (_PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_STRUCT__ARG_TRAITS_
@@ -1171,7 +1187,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:979
+  // .\be\be_visitor_arg_traits.cpp:992
 
 #if !defined (_PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_)
 #define _PARAM_TEST_RECURSIVE_UNION__ARG_TRAITS_
@@ -2937,25 +2953,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::PathSpec>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::PathSpec> (
+    TAO::SArg_Traits< std::vector<Param_Test::Step>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Param_Test::Step>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::PathSpec>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::PathSpec> (
+    TAO::SArg_Traits< std::vector<Param_Test::Step>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Param_Test::Step>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::PathSpec>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::PathSpec> (
+    TAO::SArg_Traits< std::vector<Param_Test::Step>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Param_Test::Step>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::PathSpec>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::PathSpec> (
+    TAO::SArg_Traits< std::vector<Param_Test::Step>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Param_Test::Step>> (
         this->operation_details_,
         this->args_,
         3);
@@ -2986,10 +3002,10 @@ void POA_Param_Test::test_unbounded_struct_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::PathSpec>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::PathSpec>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::PathSpec>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::PathSpec>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Param_Test::Step>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Param_Test::Step>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Param_Test::Step>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Param_Test::Step>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3043,25 +3059,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::CORBA::ShortSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::CORBA::ShortSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::CORBA::ShortSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::CORBA::ShortSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::CORBA::ShortSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::CORBA::ShortSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::CORBA::ShortSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::CORBA::ShortSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3092,10 +3108,10 @@ void POA_Param_Test::test_short_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::CORBA::ShortSeq>::ret_val retval;
-  TAO::SArg_Traits< ::CORBA::ShortSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::CORBA::ShortSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::CORBA::ShortSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3149,25 +3165,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Short_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Short_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Short_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Short_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Short>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::Short>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3198,10 +3214,10 @@ void POA_Param_Test::test_bounded_short_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<CORBA::Short>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3255,25 +3271,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< Param_Test::UB_Long_Seq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< Param_Test::UB_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< Param_Test::UB_Long_Seq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< Param_Test::UB_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< Param_Test::UB_Long_Seq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< Param_Test::UB_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< Param_Test::UB_Long_Seq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< Param_Test::UB_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3304,10 +3320,10 @@ void POA_Param_Test::test_long_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< Param_Test::UB_Long_Seq>::ret_val retval;
-  TAO::SArg_Traits< Param_Test::UB_Long_Seq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< Param_Test::UB_Long_Seq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< Param_Test::UB_Long_Seq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3361,25 +3377,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Long_Seq> (
+    TAO::SArg_Traits< std::vector<CORBA::Long>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::Long>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3410,10 +3426,10 @@ void POA_Param_Test::test_bounded_long_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<CORBA::Long>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3467,25 +3483,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::CORBA::StringSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::CORBA::StringSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::CORBA::StringSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::CORBA::StringSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::CORBA::StringSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::CORBA::StringSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::CORBA::StringSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::CORBA::StringSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3516,10 +3532,10 @@ void POA_Param_Test::test_strseq_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::CORBA::StringSeq>::ret_val retval;
-  TAO::SArg_Traits< ::CORBA::StringSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::CORBA::StringSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::CORBA::StringSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<char *>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<char *>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<char *>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<char *>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3573,25 +3589,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_StrSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_StrSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_StrSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_StrSeq> (
+    TAO::SArg_Traits< std::vector<char *>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<char *>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3622,10 +3638,10 @@ void POA_Param_Test::test_bounded_strseq_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<char *>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<char *>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<char *>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<char *>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3679,25 +3695,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::CORBA::WStringSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::CORBA::WStringSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::CORBA::WStringSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::CORBA::WStringSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::CORBA::WStringSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::CORBA::WStringSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::CORBA::WStringSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::CORBA::WStringSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3728,10 +3744,10 @@ void POA_Param_Test::test_wstrseq_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::CORBA::WStringSeq>::ret_val retval;
-  TAO::SArg_Traits< ::CORBA::WStringSeq>::in_arg_val _tao_ws1;
-  TAO::SArg_Traits< ::CORBA::WStringSeq>::inout_arg_val _tao_ws2;
-  TAO::SArg_Traits< ::CORBA::WStringSeq>::out_arg_val _tao_ws3;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::in_arg_val _tao_ws1;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::inout_arg_val _tao_ws2;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::out_arg_val _tao_ws3;
   
   TAO::Argument * const args[] =
     {
@@ -3785,25 +3801,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_WStrSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_WStrSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_WStrSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_WStrSeq> (
+    TAO::SArg_Traits< std::vector<CORBA::WChar *>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::WChar *>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3834,10 +3850,10 @@ void POA_Param_Test::test_bounded_wstrseq_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::in_arg_val _tao_ws1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::inout_arg_val _tao_ws2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::out_arg_val _tao_ws3;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::in_arg_val _tao_ws1;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::inout_arg_val _tao_ws2;
+  TAO::SArg_Traits< std::vector<CORBA::WChar *>>::out_arg_val _tao_ws3;
   
   TAO::Argument * const args[] =
     {
@@ -3891,25 +3907,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::StructSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::StructSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::StructSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::StructSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         3);
@@ -3940,10 +3956,10 @@ void POA_Param_Test::test_struct_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::StructSeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::StructSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::StructSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::StructSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -3997,25 +4013,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_StructSeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Param_Test::Fixed_Struct>> (
         this->operation_details_,
         this->args_,
         3);
@@ -4046,10 +4062,10 @@ void POA_Param_Test::test_bounded_struct_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Struct>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -4103,25 +4119,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         3);
@@ -4152,10 +4168,10 @@ void POA_Param_Test::test_coffe_mix_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Coffee>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Coffee>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Coffee>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Coffee>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -4209,25 +4225,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Coffee_Mix> (
+    TAO::SArg_Traits< std::vector<Coffee>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Coffee>> (
         this->operation_details_,
         this->args_,
         3);
@@ -4258,10 +4274,10 @@ void POA_Param_Test::test_bounded_coffe_mix_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Coffee>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Coffee>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Coffee>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Coffee>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -4315,25 +4331,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::CORBA::AnySeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::CORBA::AnySeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Any>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<CORBA::Any>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::CORBA::AnySeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::CORBA::AnySeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Any>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<CORBA::Any>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::CORBA::AnySeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::CORBA::AnySeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Any>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<CORBA::Any>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::CORBA::AnySeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::CORBA::AnySeq> (
+    TAO::SArg_Traits< std::vector<CORBA::Any>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<CORBA::Any>> (
         this->operation_details_,
         this->args_,
         3);
@@ -4364,10 +4380,10 @@ void POA_Param_Test::test_anyseq_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::CORBA::AnySeq>::ret_val retval;
-  TAO::SArg_Traits< ::CORBA::AnySeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::CORBA::AnySeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::CORBA::AnySeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<CORBA::Any>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<CORBA::Any>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<CORBA::Any>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<CORBA::Any>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -5348,25 +5364,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::ArraySeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::ArraySeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::ArraySeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::ArraySeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         3);
@@ -5397,10 +5413,10 @@ void POA_Param_Test::test_array_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::ArraySeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::ArraySeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::ArraySeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::ArraySeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
@@ -5454,25 +5470,25 @@ public:
   
   virtual void execute (void)
   {
-    TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::ret_arg_type retval =
-      TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_arg_type retval =
+      TAO::Portable_Server::get_ret_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_);
     
-    TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::in_arg_type arg_1 =
-      TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_type arg_1 =
+      TAO::Portable_Server::get_in_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         1);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::inout_arg_type arg_2 =
-      TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_type arg_2 =
+      TAO::Portable_Server::get_inout_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         2);
       
-    TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::out_arg_type arg_3 =
-      TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_ArraySeq> (
+    TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_type arg_3 =
+      TAO::Portable_Server::get_out_arg< std::vector<Param_Test::Fixed_Array>> (
         this->operation_details_,
         this->args_,
         3);
@@ -5503,10 +5519,10 @@ void POA_Param_Test::test_bounded_array_sequence_skel (
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
-  TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::ret_val retval;
-  TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::in_arg_val _tao_s1;
-  TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::inout_arg_val _tao_s2;
-  TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::out_arg_val _tao_s3;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::ret_val retval;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::in_arg_val _tao_s1;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::inout_arg_val _tao_s2;
+  TAO::SArg_Traits< std::vector<Param_Test::Fixed_Array>>::out_arg_val _tao_s3;
   
   TAO::Argument * const args[] =
     {
