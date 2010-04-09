@@ -387,10 +387,13 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "disconnect (const char * name," << be_nl
           << "            ::Components::Cookie * ck);";
 
-      os_ << be_nl << be_nl
-          << "virtual ::Components::ReceptacleDescriptions *"
-          << be_nl
-          << "get_all_receptacles (void);";
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual ::Components::ReceptacleDescriptions *"
+              << be_nl
+              << "get_all_receptacles (void);";
+        }
     }
 
   /// If the node is a connector, event sources and sinks cannot
