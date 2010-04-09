@@ -202,7 +202,8 @@ be_visitor_attribute_component_init::emit_error (
       << corba_kind << "\"" << be_nl
       << "            \"IDL type are not yet "
       << "supported by CIAO\\n\"));"
-      << be_nl;
+      << be_nl << be_nl
+      << "ACE_UNUSED_ARG (descr_value);" << be_nl;
       
   this->close_if_block ();
 }

@@ -69,7 +69,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "virtual ~" << lname << "_Servant"
       << " (void);" << be_nl;
 
-  if (this->node_->has_attributes ())
+  if (this->node_->has_rw_attributes ())
     {
       os_ << be_nl
           << "virtual void" << be_nl

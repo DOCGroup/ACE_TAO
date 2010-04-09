@@ -64,7 +64,7 @@ public:
   bool has_publishes (void);
   bool has_consumes (void);
   bool has_emits (void);
-  bool has_attributes (void);
+  bool has_rw_attributes (void);
   
   // Narrowing.
 
@@ -86,7 +86,7 @@ private:
   bool has_publishes_;
   bool has_consumes_;
   bool has_emits_;
-  bool has_attributes_;
+  bool has_rw_attributes_;
 };
 
 #endif  // if !defined
