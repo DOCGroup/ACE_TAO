@@ -18,6 +18,7 @@
 
 #include "ast_mirror_port.h"
 #include "ast_uses.h"
+#include "ast_attribute.h"
 
 #include "global_extern.h"
 #include "utl_err.h"
@@ -66,7 +67,7 @@ be_component::be_component (UTL_ScopedName *n,
     has_publishes_ (false),
     has_consumes_ (false),
     has_emits_ (false),
-    has_attributes_ (false)
+    has_rw_attributes_ (false)
 {
   this->size_type (AST_Type::VARIABLE);
   this->has_constructor (true);
@@ -156,9 +157,9 @@ be_component::has_emits (void)
 }
 
 bool
-be_component::has_attributes (void)
+be_component::has_rw_attributes (void)
 {
-  return this->has_attributes_;
+  return this->has_rw_attributes_;
 }
 
 IMPL_NARROW_FROM_DECL (be_component)
@@ -172,14 +173,16 @@ be_component::scan (UTL_Scope *s)
       return;
     }
 
+  AST_Extended_Port *ep = 0;
+  AST_Mirror_Port *mp = 0;
+  AST_Uses *u = 0;
+  AST_Attribute *a = 0;
+
   for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
        !i.is_done ();
        i.next ())
     {
       AST_Decl *d = i.item ();
-      AST_Extended_Port *ep = 0;
-      AST_Mirror_Port *mp = 0;
-      AST_Uses *u = 0;
 
       switch (d->node_type ())
         {
@@ -214,7 +217,13 @@ be_component::scan (UTL_Scope *s)
             this->mirror_scan (mp->port_type ());
             continue;
           case AST_Decl::NT_attr:
-            this->has_attributes_ = true;
+            a = AST_Attribute::narrow_from_decl (d);;
+            
+            if (!a->readonly ())
+              {
+                this->has_rw_attributes_ = true;
+              }
+              
             continue;
           default:
             continue;
