@@ -33,7 +33,7 @@ be_visitor_attribute_component_init::visit_attribute (
     {
       return 0;
     }
-    
+
   attr_ = node;
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
   return ft->accept (this);
@@ -107,7 +107,7 @@ be_visitor_attribute_component_init::visit_string (
     {
       this->emit_error ("bounded string");
     }
-    
+
   return 0;
 }
 
@@ -150,10 +150,10 @@ void
 be_visitor_attribute_component_init::emit_init_block (void)
 {
   this->open_if_block ();
-  
+
   be_visitor_any_extracted_type_decl decl_emitter (this->ctx_);
   be_type *ft = be_type::narrow_from_decl (attr_->field_type ());
-  
+
   if (ft->accept (&decl_emitter) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -161,22 +161,20 @@ be_visitor_attribute_component_init::emit_init_block (void)
                   ACE_TEXT ("::emit_init_block - ")
                   ACE_TEXT ("Any extraction type visitor ")
                   ACE_TEXT ("failed\n")));
-                  
+
       return;
     }
-  
+
   os_ << be_nl
-      << "::CORBA::Boolean good_extr = (descr_value >>= _extract_val);"
-      << be_nl << be_nl
-      << "if (!good_extr)" << be_idt_nl
+      << "if (!(descr_value >>= _extract_val))" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "this->" << attr_->local_name ()->get_string ()
       << " (";
-      
+
   be_visitor_attribute_set_from_extracted arg_emitter (this->ctx_);
-  
+
   if (ft->accept (&arg_emitter) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -184,12 +182,12 @@ be_visitor_attribute_component_init::emit_init_block (void)
                   ACE_TEXT ("::emit_init_block - ")
                   ACE_TEXT ("Attribute set type visitor ")
                   ACE_TEXT ("failed\n")));
-                  
+
       return;
     }
-    
+
   os_ << ");";
-  
+
   this->close_if_block ();
 }
 
