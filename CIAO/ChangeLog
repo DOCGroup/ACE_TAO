@@ -1,3 +1,13 @@
+Fri Apr  9 11:42:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL3/Connectors:
+          New test to validate that connectors don't support consumes/emits/
+          publishes
+
+        * bin/ciao_tests.lst:
+          Added new IDL3/Connectors test. This executes tao_idl and validates
+          that it fails
+
 Fri Apr  9 10:21:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
