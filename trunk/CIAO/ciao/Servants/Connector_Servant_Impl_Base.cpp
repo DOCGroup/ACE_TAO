@@ -368,7 +368,7 @@ namespace CIAO
 
   ::Components::Cookie *
   Connector_Servant_Impl_Base::connect (
-    const char * /* name */,
+    const char * name,
     ::CORBA::Object_ptr /* connection */)
   {
     if (name == 0)
