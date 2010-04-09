@@ -16,13 +16,13 @@ namespace CIAO
   Servant_Impl_Base::~Servant_Impl_Base (void)
   {
   }
-  
+
   void
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
 #if !defined (CCM_LW)
-    
+
     try
     {
       Components::ConsumerDescriptions_var consumers =
@@ -54,7 +54,7 @@ namespace CIAO
       return;
     }
 #endif
-    
+
     /// This call deactivates facets, removes executor and home
     /// servant (if any), and uninstalls us from the container.
     /// It has its own try/catch blocks.
@@ -66,7 +66,7 @@ namespace CIAO
   Servant_Impl_Base::get_all_ports (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_all_ports (void)");
-    
+
     ::Components::ComponentPortDescription_var retv =
       this->Connector_Servant_Impl_Base::get_all_ports ();
 
@@ -101,7 +101,7 @@ namespace CIAO
   Servant_Impl_Base::get_all_consumers (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_all_consumers (void)");
-    
+
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
                       ::Components::ConsumerDescriptions (
@@ -129,10 +129,10 @@ namespace CIAO
   Servant_Impl_Base::get_consumer (const char *sink_name)
   {
     CIAO_TRACE("Servant_Impl_Base::get_consumer (const char *sink_name)");
-    
+
     if (sink_name == 0)
       {
-        throw ::Components::InvalidName ();
+        throw ::CORBA::BAD_PARAM ();
       }
 
     Components::EventConsumerBase_ptr retval =
@@ -152,12 +152,12 @@ namespace CIAO
     const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_consumers");
-    
+
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                     ::Components::ConsumerDescriptions,
                       CORBA::NO_MEMORY ());
-                      
+
     Components::ConsumerDescriptions_var safe_retval = retval;
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
@@ -234,7 +234,7 @@ namespace CIAO
                 (LM_TRACE,
                  CLINFO
                  "Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
-                 
+
     return retval._retn ();
   }
 #endif
@@ -265,7 +265,7 @@ namespace CIAO
                                    ::Components::EventConsumerBase_ptr port_ref)
   {
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
-    
+
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
         CIAO_ERROR (1,
@@ -273,7 +273,7 @@ namespace CIAO
                      CLINFO
                      "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
                      port_name));
-                     
+
         throw ::CORBA::BAD_PARAM ();
         return;
       }
@@ -305,7 +305,7 @@ namespace CIAO
   Servant_Impl_Base::lookup_consumer (const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer");
-    
+
 #if !defined (CCM_LW)
     if (0 == port_name)
       {
@@ -328,7 +328,7 @@ namespace CIAO
     return
       ::Components::EventConsumerBase::_duplicate (
         iter->second->consumer ());
-#else        
+#else
     return ::Components::EventConsumerBase::_nil ();
 #endif
   }
@@ -339,7 +339,7 @@ namespace CIAO
     const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer_description");
-    
+
     if (0 == port_name)
       {
         /// Calling function will throw InvalidName after getting this.
