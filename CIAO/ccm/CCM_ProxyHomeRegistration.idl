@@ -5,6 +5,8 @@
 
 #include "ccm/CCM_HomeRegistration.idl"
 
+#if !defined (CCM_LW)
+
 module Components
 {
   typeprefix Components "omg.org";
@@ -20,4 +22,7 @@ module Components
               ProxyHomeNotSupported);
   };
 };
+
+#endif
+
 #endif /* CCM_PROXYHOMEREGISTRATION_IDL */
