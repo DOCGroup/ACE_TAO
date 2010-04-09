@@ -1,3 +1,17 @@
+Fri Apr  9 12:49:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+          Moved connector declaration to the namespace of the test.
+          Give an error when this test does not run.
+          Also made some layout changes.
+
 Fri Apr  9 12:28:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/LatencyTT/Connector/LatencyTT_Test_Connector.idl:
