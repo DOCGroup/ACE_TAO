@@ -371,7 +371,12 @@ namespace CIAO
     const char * /* name */,
     ::CORBA::Object_ptr /* connection */)
   {
-    return 0;
+    if (name == 0)
+      {
+        throw ::CORBA::BAD_PARAM ();
+      }
+
+    throw ::Components::InvalidName ();
   }
 
   ::CORBA::Object_ptr
@@ -379,7 +384,12 @@ namespace CIAO
     const char * /* name */,
     ::Components::Cookie * /* ck */)
   {
-    return ::CORBA::Object::_nil ();
+    if (name == 0)
+      {
+        throw ::CORBA::BAD_PARAM ();
+      }
+
+    throw ::Components::InvalidName ();
   }
 
   /// CIAO-specific public methods.
@@ -611,7 +621,7 @@ namespace CIAO
                      "Connector_Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
                      receptacle_name));
       }
-#endif      
+#endif
   }
 }
 
