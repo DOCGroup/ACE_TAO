@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for server skeletons
 // ************************************************************
@@ -25,21 +24,6 @@ be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
 be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
 }
-
-// // Processing to be done after every element in the scope is processed.
-// int
-// be_visitor_operation_ss::post_process (be_decl *bd)
-// {
-//   // All we do here is to insert a comma and a newline.
-//   TAO_OutStream *os = this->ctx_->stream ();
-
-//   if (!this->last_node (bd))
-//     {
-//       *os << ",\n";
-//     }
-
-//   return 0;
-// }
 
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
