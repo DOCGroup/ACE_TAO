@@ -112,7 +112,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "}" << be_uidt << be_uidt_nl;
     }
 
-  os_ << "}";
+  os_ << be_uidt_nl << "}";
 
   os_ << be_nl << be_nl
       << lname << "_Servant::~"
@@ -1184,10 +1184,9 @@ be_visitor_obv_factory_reg::gen_obv_factory_registration (AST_Type *t)
     {
       const char *fname = t->full_name ();
 
-      os_ << be_nl << be_nl
-          << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
+      os_ << "TAO_OBV_REGISTER_FACTORY (" << be_idt_nl
           << "::" << fname << "_init," << be_nl
-          << "::" << fname << ");" << be_uidt;
+          << "::" << fname << ");" << be_uidt_nl;
     }
 }
 
@@ -1375,7 +1374,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
     {
       os_ << "context_->";
     }
-    
+
   os_ << "disconnect_" << port_name
       << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
       << "}" << be_uidt;
