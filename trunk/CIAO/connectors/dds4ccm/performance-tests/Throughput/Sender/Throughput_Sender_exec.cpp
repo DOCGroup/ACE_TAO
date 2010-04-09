@@ -61,8 +61,8 @@ namespace CIAO_Throughput_Sender_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind status_kind)
   {
-    if((!CORBA::is_nil(the_entity)) &&
-       (status_kind == DDS::PUBLICATION_MATCHED_STATUS))
+    if (!CORBA::is_nil (the_entity) &&
+        status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         ::DDS::PublicationMatchedStatus_var stat;
         DDS::DataWriter_var wr = ::DDS::DataWriter::_narrow(the_entity);
@@ -74,7 +74,7 @@ namespace CIAO_Throughput_Sender_Impl
                           wr->get_publication_matched_status(stat.out());
         if (retval == DDS::RETCODE_OK)
           {
-            if (stat.in ().current_count >= this->number_of_subscribers_ + 1 &&
+            if (stat.in ().current_count >= this->number_of_subscribers_ &&
                 !this->started_.value ())
               {
                 ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_unexpected_status - "
@@ -345,8 +345,8 @@ namespace CIAO_Throughput_Sender_Impl
   Sender_exec_i::datalen (::CORBA::UShort datalen)
   {
     this->overhead_size_ = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
-    if((datalen <= this->overhead_size_) ||
-       (datalen > MAX_DATA_SEQUENCE_LENGTH))
+    if (datalen <= this->overhead_size_ ||
+        datalen > MAX_DATA_SEQUENCE_LENGTH)
     {
        ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: datalen has to be bigger"
@@ -378,10 +378,10 @@ namespace CIAO_Throughput_Sender_Impl
         this->writer_ = this->context_->get_connection_info_write_data ();
         this->cmd_writer_ =
                this->context_->get_connection_command_write_data ();
-        if(CORBA::is_nil(this->writer_))
-        {
-          throw ::CORBA::INTERNAL ();
-        }
+        if(CORBA::is_nil (this->writer_.in ()))
+          {
+            throw ::CORBA::INTERNAL ();
+          }
       }
     catch (const CORBA::Exception& ex)
       {
@@ -411,11 +411,11 @@ namespace CIAO_Throughput_Sender_Impl
   Sender_exec_i::stop (void)
   {
     if (this->ticker_)
-     {
-       this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
-       delete this->ticker_;
-       this->ticker_ = 0;
-     }
+      {
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
+        delete this->ticker_;
+        this->ticker_ = 0;
+      }
   }
 
   void
@@ -427,8 +427,16 @@ namespace CIAO_Throughput_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
-                          (this->number_of_msg_)));
+    if (this->number_of_msg_ == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR SENDER: No messages "
+                              "sent during test.\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %u\n",
+                              this->number_of_msg_));
+      }
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

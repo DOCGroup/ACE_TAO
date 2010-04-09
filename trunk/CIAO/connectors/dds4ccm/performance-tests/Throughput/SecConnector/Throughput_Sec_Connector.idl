@@ -16,14 +16,10 @@
 
 #pragma ciao lem "SecConnector/Throughput_Sec_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::ThroughputCommand, ::ThroughputCommandSeq> ThroughputCommand;
-};
-
 module Throughput
 {
-  connector Throughput_Sec_Connector : ::CCM_DDS::ThroughputCommand::DDS_Event
+  module ::CCM_DDS::Typed < ::ThroughputCommand, ::ThroughputCommandSeq> ThroughputCommandConn;
+  connector Throughput_Sec_Connector : ThroughputCommandConn::DDS_Event
   {
   };
 };

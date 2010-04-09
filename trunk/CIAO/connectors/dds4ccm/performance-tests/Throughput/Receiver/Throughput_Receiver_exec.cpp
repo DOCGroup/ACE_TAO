@@ -28,6 +28,7 @@ namespace CIAO_Throughput_Receiver_Impl
   {
     this->callback_.record_data(const_cast<ThroughputTest&> (an_instance));
   }
+
   void
   ThroughputTest_Listener_exec_i::on_many_data (
                                   const ThroughputTestSeq & /*data_seq*/,
@@ -53,7 +54,7 @@ namespace CIAO_Throughput_Receiver_Impl
                                   const ThroughputCommand & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->callback_.handle_run(const_cast<ThroughputCommand&> (an_instance));
+    this->callback_.handle_run (const_cast<ThroughputCommand&> (an_instance));
   }
 
   void
@@ -107,23 +108,23 @@ namespace CIAO_Throughput_Receiver_Impl
   void
   Receiver_exec_i::handle_run(ThroughputCommand & an_instance)
   {
-     if( an_instance.command == THROUGHPUT_COMMAND_START)
-     {
-       this->log_ = true;
-       this->reset_results();
-       this->interval_data_length_ = an_instance.data_length;
-       this->demand_ = an_instance.current_publisher_effort;
-       ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->first_time_);
-     }
-   if( an_instance.command == THROUGHPUT_COMMAND_COMPLETE)
-     {
-       this->log_ = false;
-       ACE_UINT64 last_time;
-       ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
-       this->interval_time_ =  (last_time  - this->first_time_);
-       ++this->run_;
-       this->show_results();
-     }
+    if (an_instance.command == THROUGHPUT_COMMAND_START)
+      {
+        this->log_ = true;
+        this->reset_results();
+        this->interval_data_length_ = an_instance.data_length;
+        this->demand_ = an_instance.current_publisher_effort;
+        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->first_time_);
+      }
+    if (an_instance.command == THROUGHPUT_COMMAND_COMPLETE)
+      {
+        this->log_ = false;
+        ACE_UINT64 last_time;
+        ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
+        this->interval_time_ =  (last_time  - this->first_time_);
+        ++this->run_;
+        this->show_results();
+      }
   }
 
   void
@@ -131,7 +132,7 @@ namespace CIAO_Throughput_Receiver_Impl
   {
     ++this->count_; // total count of all received messages
 
-    if(this->log_.value())
+    if (this->log_.value ())
       {
         ++this->interval_messages_received_;
         this->interval_bytes_received_ += this->interval_data_length_;
@@ -170,7 +171,7 @@ namespace CIAO_Throughput_Receiver_Impl
       }
   }
 
-  ::CCM_DDS::ThroughputTest::CCM_Listener_ptr
+  ::Throughput::ThroughputTestConn::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ThroughputTest_Listener_exec_i (*this);
@@ -182,7 +183,7 @@ namespace CIAO_Throughput_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-   ::CCM_DDS::ThroughputCommand::CCM_Listener_ptr
+   ::Throughput::ThroughputCommandConn::CCM_Listener_ptr
   Receiver_exec_i::get_command_listen_data_listener (void)
   {
     return new ThroughputCommand_Listener_exec_i (*this);
@@ -228,8 +229,8 @@ namespace CIAO_Throughput_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
-                           "No samples received\n "));
+        ACE_ERROR ((LM_ERROR, "ERROR RECEIVER: "
+                              "No samples received\n"));
       }
   }
 
