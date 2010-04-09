@@ -354,16 +354,27 @@ namespace CIAO
 
   void
   Connector_Servant_Impl_Base::connect_consumer (
-    const char * /* emitter_name */,
+    const char * emitter_name,
     ::Components::EventConsumerBase_ptr /* consumer */)
   {
+    if (emitter_name == 0)
+      {
+        throw ::CORBA::BAD_PARAM ();
+      }
+
+    throw ::Components::InvalidName ();
   }
 
   ::Components::EventConsumerBase_ptr
   Connector_Servant_Impl_Base::disconnect_consumer (
-    const char * /* source_name */)
+    const char * source_name)
   {
-    return ::Components::EventConsumerBase::_nil ();
+    if (source_name == 0)
+      {
+        throw ::CORBA::BAD_PARAM ();
+      }
+
+    throw ::Components::InvalidName ();
   }
 
   ::Components::Cookie *
