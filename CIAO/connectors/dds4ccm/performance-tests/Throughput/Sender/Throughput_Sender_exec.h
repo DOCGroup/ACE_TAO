@@ -111,8 +111,8 @@ namespace CIAO_Throughput_Sender_Impl
 
   private:
     ::Throughput::CCM_Sender_Context_var context_;
-    CCM_DDS::ThroughputTest::Writer_var writer_;
-    CCM_DDS::ThroughputCommand::Writer_var cmd_writer_;
+    ::Throughput::ThroughputTestConn::Writer_var writer_;
+    ::Throughput::ThroughputCommandConn::Writer_var cmd_writer_;
 
     WriteTicker *ticker_;
 

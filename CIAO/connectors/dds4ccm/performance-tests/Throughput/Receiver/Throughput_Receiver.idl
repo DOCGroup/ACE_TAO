@@ -15,8 +15,8 @@ module Throughput
 {
   component Receiver
   {
-    port CCM_DDS::ThroughputTest::DDS_Listen info_listen;
-    port CCM_DDS::ThroughputCommand::DDS_Listen command_listen;
+    port ThroughputTestConn::DDS_Listen info_listen;
+    port ThroughputCommandConn::DDS_Listen command_listen;
   };
 };
 

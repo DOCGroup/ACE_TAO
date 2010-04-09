@@ -25,7 +25,7 @@ namespace CIAO_Throughput_Receiver_Impl
   // ThroughputTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ThroughputTest_Listener_exec_i
-    : public virtual ::CCM_DDS::ThroughputTest::CCM_Listener,
+    : public virtual ::Throughput::ThroughputTestConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -48,7 +48,7 @@ namespace CIAO_Throughput_Receiver_Impl
   // ThroughputCommand_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ThroughputCommand_Listener_exec_i
-    : public virtual ::CCM_DDS::ThroughputCommand::CCM_Listener,
+    : public virtual ::Throughput::ThroughputCommandConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -84,13 +84,13 @@ namespace CIAO_Throughput_Receiver_Impl
     void handle_run (ThroughputCommand & an_instance);
     void show_results (void);
 
-    virtual ::CCM_DDS::ThroughputTest::CCM_Listener_ptr
+    virtual ::Throughput::ThroughputTestConn::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_listen_status (void);
 
-    virtual ::CCM_DDS::ThroughputCommand::CCM_Listener_ptr
+    virtual ::Throughput::ThroughputCommandConn::CCM_Listener_ptr
     get_command_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
