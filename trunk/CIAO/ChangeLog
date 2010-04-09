@@ -1,11 +1,17 @@
+Fri Apr  9 07:32:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_HomeRegistration.idl:
+        * ccm/CCM_ProxyHomeRegistration.idl:
+          Disable these interfaces with LwCCM
+
 Thu Apr  8 19:03:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Sender/Sender_exec.cpp:
         * examples/Hello/Sender/Sender_exec.h:
-        
+
           Updated hand-crafted executor to reflect the additional attriutes
           added in
-          
+
           Wed Apr  7 16:48:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr  8 12:02:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
