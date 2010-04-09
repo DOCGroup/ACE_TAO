@@ -80,9 +80,11 @@ namespace CIAO
   }
 #endif
 
+#if !defined (CCM_LW)
   CORBA::Object_ptr
   Context_Impl_Base::resolve_service_reference(const char *)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 }
