@@ -38,9 +38,6 @@ $status = 0;
 $dat_file = "TestNodeManagerMap.dat";
 $cdp_file = "DeploymentPlan.cdp";
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-
 sub create_targets {
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
