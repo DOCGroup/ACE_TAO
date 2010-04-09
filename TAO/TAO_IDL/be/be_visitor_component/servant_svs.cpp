@@ -1003,37 +1003,40 @@ be_visitor_servant_svs::gen_uses_top (void)
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << "::Components::ReceptacleDescriptions *" << be_nl
-      << node_->local_name ()
-      << "_Servant::get_all_receptacles (void)" << be_nl
-      << "{" << be_idt_nl
-      << "::Components::ReceptacleDescriptions * retval = 0;"
-      << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                ::Components::ReceptacleDescriptions,"
-      << be_nl
-      << "                0);" << be_nl
-      << "::Components::ReceptacleDescriptions_var "
-      << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << n_uses_
-      << "UL);";
-
-  be_visitor_receptacle_desc rd_visitor (this->ctx_);
-
-  if (rd_visitor.visit_component_scope (node_) == -1)
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_uses_top - "
-                  "receptacle description visitor failed\n"));
+      os_ << be_nl << be_nl
+          << "::Components::ReceptacleDescriptions *" << be_nl
+          << node_->local_name ()
+          << "_Servant::get_all_receptacles (void)" << be_nl
+          << "{" << be_idt_nl
+          << "::Components::ReceptacleDescriptions * retval = 0;"
+          << be_nl
+          << "ACE_NEW_RETURN (retval," << be_nl
+          << "                ::Components::ReceptacleDescriptions,"
+          << be_nl
+          << "                0);" << be_nl
+          << "::Components::ReceptacleDescriptions_var "
+          << "safe_retval = retval;" << be_nl
+          << "safe_retval->length (" << n_uses_
+          << "UL);";
 
-      return;
+      be_visitor_receptacle_desc rd_visitor (this->ctx_);
+
+      if (rd_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_uses_top - "
+                      "receptacle description visitor failed\n"));
+
+          return;
+        }
+
+      os_ << be_nl << be_nl
+          << "return safe_retval._retn ();" << be_uidt_nl
+          << "}";
     }
-
-  os_ << be_nl << be_nl
-      << "return safe_retval._retn ();" << be_uidt_nl
-      << "}";
 }
 
 void
