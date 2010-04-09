@@ -1,3 +1,23 @@
+Fri Apr  9 08:07:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Navigation.idl:
+        * ccm/CCM_PrimaryKeyBase.idl:
+        * ccm/CCM_Receptacle.idl:
+          Disable more types and methods with LwCCM
+
+        * ciao/ComponentServer/Client_init.cpp
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp
+        * ciao/Servants/Connector_Servant_Impl_Base.h
+        * ciao/Servants/Connector_Servant_Impl_Utils_T.cpp
+        * ciao/Servants/Servant_Impl_Base.cpp
+        * ciao/Servants/Servant_Impl_Base.h
+          Disabled several methods, we need to reimplement
+          some methods for LwCCM, they use regular CCM types. Tagged
+          these methods as a todo
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Disabled part of this test with LwCCM
+
 Fri Apr  9 07:32:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_HomeRegistration.idl:

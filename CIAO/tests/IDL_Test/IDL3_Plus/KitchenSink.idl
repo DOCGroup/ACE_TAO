@@ -10,6 +10,7 @@
 
 #include <Components.idl>
 
+#if !defined (CCM_LW)
 module mod
 {
   valuetype future_key : Components::PrimaryKeyBase
@@ -17,6 +18,7 @@ module mod
     public string info;
   };
 };
+#endif
 
 interface iface
 {
@@ -103,10 +105,12 @@ module second<exception X, typename W>
 {
   typedef short sho;
 
+#if !defined (CCM_LW)
   valuetype pkey : Components::PrimaryKeyBase
   {
     public long id_key;
   };
+#endif  
 };
 
 module B
@@ -218,6 +222,7 @@ module Ast<typename T,
     attribute second_ref::sho sho_attr;
   };
 
+#if !defined (CCM_LW)
   home Comp_T_Home manages Comp_T primarykey second_ref::pkey
   {
     factory create_Comp_T (in TSeq inarg);
@@ -230,6 +235,7 @@ module Ast<typename T,
   home Comp_T_Home_2 supports T manages Comp_T primarykey V
   {
   };
+#endif
 
   connector Comp2_T
   {
@@ -257,6 +263,7 @@ module Ast<typename T,
   typedef T T_array[M][Ast_Const][LC];
 };
 
+#if !defined (CCM_LW)
 module Ast<iface,
            ev,
            iface::iface_excep,
@@ -264,6 +271,7 @@ module Ast<iface,
            ifaceSeq,
            101>
   Ast_Inst;
+#endif
 
 module M
 {
