@@ -426,7 +426,7 @@ void
 NodeApplication_Impl::configuration_complete_components ()
 {
   DANCE_TRACE( "NodeApplication_Impl::configuration_complete_components");
-  
+
   bool error = false;
   ::Deployment::StartError exception;
 
@@ -436,7 +436,7 @@ NodeApplication_Impl::configuration_complete_components ()
           this->instances_[k]->type == eHome ||
           this->instances_[k]->type == eComponentServer)
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
                            ACE_TEXT("NodeApplication_Impl::configuration_complete_components - ")
                            ACE_TEXT("Skipping non-component instance\n")));
           continue;
@@ -999,7 +999,7 @@ NodeApplication_Impl::create_component_server (size_t index)
           DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                            ACE_TEXT ("Passing %u properties to component server\n"),
                            this->servers_[index].properties->length ()));
-          
+
           config_values.length (this->servers_[index].properties->length ());
           for (CORBA::ULong i = 0; i < this->servers_[index].properties->length ();
                ++i)
@@ -1007,13 +1007,13 @@ NodeApplication_Impl::create_component_server (size_t index)
               DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_Server - ")
                                ACE_TEXT ("Copying value <%C>\n"),
                                (*this->servers_[index].properties)[i].name.in ()));
-                           
+
               config_values[i] = new CIAO::ConfigValue_impl ((*this->servers_[index].properties)[i].name.in (),
                                                              (*this->servers_[index].properties)[i].value);
-              
+
             }
         }
-      
+
 
       server.ref = this->activator_->create_component_server (config_values);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::create_component_server - ")
@@ -1109,7 +1109,7 @@ NodeApplication_Impl::create_container (size_t server, size_t cont_idx)
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication_Impl::create_container - ")
                    ACE_TEXT("Configuring %u components on container %u on server %u\n"),
                    container.components.size (),
-                   server, 
+                   server,
                    cont_idx));
 
   // Configure components
@@ -1137,7 +1137,7 @@ NodeApplication_Impl::create_colocation_groups (void)
 
   ColocationMap  retval;
   this->servers_.max_size (this->plan_.localityConstraint.length () + 1);
-  
+
   size_t num_servers = 0;
 
   for (CORBA::ULong i = 0; i < this->plan_.instance.length (); ++i)
@@ -1162,32 +1162,32 @@ NodeApplication_Impl::create_colocation_groups (void)
                         i));
           continue;
         }
-      
+
       ::CORBA::ULongSeq const &instances =
         this->plan_.localityConstraint[i].constrainedInstanceRef;
-      
+
       this->servers_.size (num_servers + 1);
-      
+
       for (CORBA::ULong j = 0; j < instances.length (); ++j)
         {
           std::string id = this->plan_.instance[instances[j]].name.in ();
-          
+
           DANCE_DEBUG (8, (LM_INFO, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                         ACE_TEXT ("Instance <%C> allocated to component server %u\n"),
                         id.c_str (), num_servers));
 
           retval[id] = num_servers;
-          
+
           CORBA::ULong impl = this->plan_.instance[instances[j]].implementationRef;
 
-          if (this->get_instance_type (this->plan_.implementation[impl].execParameter) == 
+          if (this->get_instance_type (this->plan_.implementation[impl].execParameter) ==
               eComponentServer)
             {
               DANCE_DEBUG (8, (LM_INFO, DLINFO
                                ACE_TEXT ("NodeApplication_Impl::create_colocation_groups - ")
                                ACE_TEXT ("Found component server instance\n")));
-              
+
               this->servers_[num_servers].properties = &this->plan_.instance[instances[j]].configProperty;
             }
         }
@@ -1218,7 +1218,7 @@ NodeApplication_Impl::create_colocation_groups (void)
         }
       else
         {
-          
+
         }
     }
 
@@ -1865,24 +1865,24 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                           {
                             if (0 == conn.externalReference.length())
                               {
-                                if (conn.internalEndpoint.length () == 2 && 
+                                if (conn.internalEndpoint.length () == 2 &&
                                     (conn.internalEndpoint[1].kind == ::Deployment::MultiplexReceptacle ||
                                      conn.internalEndpoint[1].kind == ::Deployment::SimplexReceptacle))
                                   {
                                     obj = Components::CCMObject::
                                       _narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-                                        
+
                                     if (this->is_local_facet (conn))
                                       {
                                         ::Components::CCMObject_var facet =
                                           ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-                                        
+
                                         ::Components::CCMObject_var recep =
                                             ::Components::CCMObject::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->ref.in ());
-                                        
+
                                         ::CIAO::Deployment::Container_var cont =
                                             ::CIAO::Deployment::Container::_narrow (this->instances_[conn.internalEndpoint[1].instanceRef]->container->ref.in ());
-                                        
+
                                         this->connect_receptacle (conn,
                                                                   facet.in (),
                                                                   conn.internalEndpoint[0].portName.in (),
@@ -1890,7 +1890,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                                                                   conn.internalEndpoint[1].portName.in(),
                                                                   cont.in ());
                                       }
-                                    else 
+                                    else
                                       {
                                         this->connect_receptacle (conn,
                                                                   obj.in (),
@@ -1959,6 +1959,9 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                               }
                             catch (const ::Components::InvalidName&)
                               {
+                                DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                                                ACE_TEXT("NodeApplication_Impl::finishLaunch - ")
+                                                ACE_TEXT("connect_emitter_ext resulted in InvalidName, trying connect_publisher\n")));
                                 // No this is consumer to publisher
                                 this->connect_publisher (ext_inst,
                                                          conn.externalReference[0].portName.in(),
@@ -2005,23 +2008,23 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
                         else
                           {
                             CORBA::Object_var portref = CORBA::Object::_duplicate (providedReference[i].endpoint[0].in());
-                            
+
                             if (0 != conn.externalReference.length ())
                               {
-                                ::Components::CCMObject_var facet = 
+                                ::Components::CCMObject_var facet =
                                   ::Components::CCMObject::_narrow (providedReference[i].endpoint[0].in ());
-                                
+
                                 if (!CORBA::is_nil (facet.in ()))
                                   portref = facet->provide_facet (conn.externalReference[0].portName.in ());
                               }
-                            
+
                             this->connect_receptacle (conn,
                                                       obj.in (),
                                                       "",
                                                       portref.in (),
                                                       conn.internalEndpoint[0].portName.in(),
                                                       ::CIAO::Deployment::Container::_nil());
-                                
+
                           }
 
                         break;
