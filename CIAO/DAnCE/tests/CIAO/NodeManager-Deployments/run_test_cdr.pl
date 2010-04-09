@@ -47,9 +47,6 @@ $tg_convert_plan = 0;
 
 $status = 0;
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-
 sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
@@ -65,7 +62,7 @@ sub create_targets {
     #   executor (plan_launcher)
     $tg_executor = PerlACE::TestTarget::create_target (1) || die "Create target for executor failed\n";
     #$tg_executor->AddLibPath ('..');
-    
+
     $tg_convert_plan = PerlACE::TestTarget::create_target (1) || die "Could not create target for convert plan\n";
 }
 
@@ -77,7 +74,7 @@ sub init_ior_files {
     }
     $ior_application = $tg_executor->LocalFile ($ior_applicationbase);
     $ior_am = $tg_executor->LocalFile ($ior_ambase);
-    
+
     delete_ior_files ();
 }
 
@@ -188,7 +185,7 @@ foreach $file (@files) {
     }
 
     $daemons_running = 1;
-    
+
     print "Converting plan to CDR representation\n";
     $cdr_planbase = "$file" . ".cdr";
     $cdr_plan = $tg_convert_plan->LocalFile ($cdr_planbase);
@@ -196,7 +193,7 @@ foreach $file (@files) {
                                                "-x $file -o $cdr_plan");
 
     $convert->Spawn ();
-    
+
     if ($tg_convert_plan->WaitForFileTimed ($cdr_planbase,
                                             30) == -1) {
         print STDERR "ERROR: Convert Plan failed to output $cdr_plan.\n";

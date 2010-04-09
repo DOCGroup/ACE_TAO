@@ -1,3 +1,30 @@
+Fri Apr  9 09:46:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl
+        * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl
+        * DAnCE/tests/CIAO/Progressive_Deployments/run_test.pl
+        * examples/BasicSP/descriptors/run_test.pl
+        * examples/Hello/descriptors/run_test.pl
+        * examples/Hello/descriptors/run_test_alias.pl
+        * examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl
+        * examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        * examples/Null_Component/descriptors/run_test.pl
+        * examples/Null_Component/descriptors/run_test_without_ns.pl
+        * examples/Null_Component_Glfa/descriptors/run_test.pl
+        * tests/Bug_2130_Regression/descriptors/run_test.pl
+        * tests/Bug_3769_Regression/descriptors/run_test.pl
+        * tests/Bug_3834_Regression/descriptors/run_test.pl
+        * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl
+        * tests/CIAO_ComponentServer/Local_Facet/run_test.pl
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl
+          Don't change tracing flags
+
 Fri Apr  9 08:48:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:

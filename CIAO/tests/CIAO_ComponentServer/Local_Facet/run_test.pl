@@ -11,13 +11,6 @@ use PerlACE::TestTarget;
 $status = 0;
 $ciao_root = "$ENV{CIAO_ROOT}";
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $ENV{"DANCE_TRACE_ENABLE"} = 1;
-        $ENV{"CIAO_TRACE_ENABLE"} = 1;
-    }
-}
-
 my $target = PerlACE::TestTarget::create_target (1);
 
 $TG = $target->CreateProcess ("client", "-s $ciao_root/bin/ciao_componentserver -d 120");
