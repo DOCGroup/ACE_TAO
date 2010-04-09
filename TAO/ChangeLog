@@ -1,3 +1,26 @@
+Fri Apr  9 12:45:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be/be_component_cpp:
+        
+          Changed 'has_attribute_' member to 'has_rw_attribute_'
+          to indicate presence of read-write attribute only, since
+          these attributes are the only ones of interest. Also
+          changed accessor method names accordingly.
+          
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Modified to use the new accessor names above.
+          
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        
+          Added 'ACE_UNUSED_ARG' macro in the generated code block
+          that outputs an error if an attribute type is not
+          supported. In this case, the attribute description name
+          variable is used, but the corresponding value variable
+          is not. 
+
 Fri Apr  9 08:47:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attribute/component_init.cpp:

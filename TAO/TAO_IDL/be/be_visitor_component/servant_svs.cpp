@@ -120,7 +120,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "{" << be_nl
       << "}";
 
-  if (this->node_->has_attributes ())
+  if (this->node_->has_rw_attributes ())
     {
       os_ << be_nl << be_nl
           << "void" << be_nl
