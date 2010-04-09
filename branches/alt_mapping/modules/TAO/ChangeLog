@@ -1,3 +1,50 @@
+Fri Apr  9 20:39:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/stl_mapping.mpb:
+
+          New base project, to help with toggling the
+          alternate C++ mapping generation for the
+          entire middleware.
+
+        * tao/Vector_Argument_T.inl:
+        * tao/PortableServer/Vector_SArgument_T.inl:
+        * tao/PortableServer/Vector_SArgument_T.cpp:
+        * tao/PortableServer/Vector_SArgument_T.h:
+        * tao/Vector_Argument_T.h:
+        * tao/Vector_Argument_T.cpp:
+
+          New argument template helper classes and
+          traits, for the std::vector containers
+          used for unbounded sequences.
+
+        * tao/tao.mpc:
+
+          Added new files to TAO build project.
+
+        * tao/AnyTypeCode/Vector_AnyOp_T.h:
+        * tao/Vector_CDR_T.h:
+
+          Added 'typename' qualifier to template
+          traits references to disambiguate them
+          for the C++ compiler.
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Further removal of hacks from the IDL compiler
+          to generate the alternate C++ mapping in the
+          general case.
+
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+
+          Update some of the servant methods to use
+          the new signatures.
+
 Mon Mar 29 20:28:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

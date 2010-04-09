@@ -187,12 +187,12 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 
 // = Sequences
 
-Param_Test::UB_Long_Seq
-Param_Test_i::test_long_sequence (const Param_Test::UB_Long_Seq & s1,
-                                  Param_Test::UB_Long_Seq & s2,
-                                  Param_Test::UB_Long_Seq & s3)
+std::vector<CORBA::Long>
+Param_Test_i::test_long_sequence (const std::vector<CORBA::Long> & s1,
+                                  std::vector<CORBA::Long> & s2,
+                                  std::vector<CORBA::Long> & s3)
 {
-  Param_Test::UB_Long_Seq ret;
+  std::vector<CORBA::Long> ret;
 
   s2 = s1;
   s3 = s1;
@@ -379,32 +379,18 @@ Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq 
 }
 
 
-Param_Test::PathSpec *
-Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
-                                              Param_Test::PathSpec & s2,
-                                              Param_Test::PathSpec_out s3)
+std::vector<Param_Test::Step>
+Param_Test_i::test_unbounded_struct_sequence (
+  const std::vector<Param_Test::Step> & s1,
+  std::vector<Param_Test::Step> & s2,
+  std::vector<Param_Test::Step> s3)
 {
-  Param_Test::PathSpec
-    *ret = new Param_Test::PathSpec,
-    *out = new Param_Test::PathSpec;
-
-
-  Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
-  rPathSpec->length(2);
-
-  rPathSpec[0u].name.id = CORBA::string_dup("staff");
-  rPathSpec[0u].name.kind = CORBA::string_dup("staff");
-  rPathSpec[0u].process = 1;
-
-  rPathSpec[1u].name.id = CORBA::string_dup("john");
-  rPathSpec[1u].name.kind = CORBA::string_dup("john");
-  rPathSpec[1u].process = 1;
+  std::vector<Param_Test::Step> ret;
 
   s2 = s1;
-  *out = s1;
-  *ret = s1;
-  s3 = out;
-
+  s3 = s1;
+  ret = s1;
+  
   return ret;
 }
 

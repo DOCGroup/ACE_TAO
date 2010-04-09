@@ -48,7 +48,7 @@ namespace TAO
   void
   insert_objref_vector (
     CORBA::Any &,
-    const std::vector<T::_ptr_type> &)
+    const std::vector<typename T::_ptr_type> &)
   {
   }
     
@@ -57,7 +57,7 @@ namespace TAO
   void
   insert_objref_vector (
     CORBA::Any &,
-    std::vector<T::_ptr_type> *)
+    std::vector<typename T::_ptr_type> *)
   {
   }
     
@@ -65,7 +65,7 @@ namespace TAO
   bool
   extract_objref_vector (
     const CORBA::Any &,
-    std::vector<T::_ptr_type> &)
+    std::vector<typename T::_ptr_type> &)
   {
     return true;
   }  
@@ -75,7 +75,7 @@ namespace TAO
   void
   insert_array_vector (
     CORBA::Any &,
-    const std::vector<T_forany::_slice_type *> &)
+    const std::vector<typename T_forany::_slice_type *> &)
   {
   }
     
@@ -84,7 +84,7 @@ namespace TAO
   void
   insert_array_vector (
     CORBA::Any &,
-    std::vector<T_forany::_slice_type *> *)
+    std::vector<typename T_forany::_slice_type *> *)
   {
   }
     
@@ -92,7 +92,7 @@ namespace TAO
   bool
   extract_array_vector (
     const CORBA::Any &,
-    std::vector<T_forany::_slice_type *> &)
+    std::vector<typename T_forany::_slice_type *> &)
   {
     return true;
   }  

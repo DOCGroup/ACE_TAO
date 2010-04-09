@@ -226,7 +226,7 @@ public:
   
   virtual void
   description (
-    const ::Coffee::Desc & description);
+    const Coffee::Desc & description);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:209
@@ -325,18 +325,18 @@ public:
   
   virtual ::CORBA::Short
   test_short (
-    ::CORBA::Short s1,
-    ::CORBA::Short & s2,
-    ::CORBA::Short_out s3);
+    CORBA::Short s1,
+    CORBA::Short & s2,
+    CORBA::Short_out s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
   virtual ::CORBA::ULongLong
   test_ulonglong (
-    ::CORBA::ULongLong s1,
-    ::CORBA::ULongLong & s2,
-    ::CORBA::ULongLong_out s3);
+    CORBA::ULongLong s1,
+    CORBA::ULongLong & s2,
+    CORBA::ULongLong_out s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
@@ -441,9 +441,9 @@ public:
   
   virtual ::Param_Test::Fixed_Struct
   test_fixed_struct (
-    const ::Param_Test::Fixed_Struct & s1,
-    ::Param_Test::Fixed_Struct & s2,
-    ::Param_Test::Fixed_Struct_out s3);
+    const Param_Test::Fixed_Struct & s1,
+    Param_Test::Fixed_Struct & s2,
+    Param_Test::Fixed_Struct_out s3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -568,20 +568,20 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::PathSpec *
+  virtual std::vector<Param_Test::Step>
   test_unbounded_struct_sequence (
-    const ::Param_Test::PathSpec & s1,
-    ::Param_Test::PathSpec & s2,
-    ::Param_Test::PathSpec_out s3);
+    const std::vector<Param_Test::Step> & s1,
+    std::vector<Param_Test::Step> & s2,
+    std::vector<Param_Test::Step> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::CORBA::ShortSeq *
+  virtual std::vector<CORBA::Short>
   test_short_sequence (
-    const ::CORBA::ShortSeq & s1,
-    ::CORBA::ShortSeq & s2,
-    ::CORBA::ShortSeq_out s3);
+    const std::vector<CORBA::Short> & s1,
+    std::vector<CORBA::Short> & s2,
+    std::vector<CORBA::Short> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -635,22 +635,20 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_Short_Seq *
+  virtual std::vector<CORBA::Short>
   test_bounded_short_sequence (
-    const ::Param_Test::Bounded_Short_Seq & s1,
-    ::Param_Test::Bounded_Short_Seq & s2,
-    ::Param_Test::Bounded_Short_Seq_out s3);
+    const std::vector<CORBA::Short> & s1,
+    std::vector<CORBA::Short> & s2,
+    std::vector<CORBA::Short> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  typedef std::vector< ::CORBA::Long> UB_Long_Seq;
-  
-  virtual Param_Test::UB_Long_Seq
+  virtual std::vector<CORBA::Long>
   test_long_sequence (
-    const Param_Test::UB_Long_Seq & s1,
-    Param_Test::UB_Long_Seq & s2,
-    Param_Test::UB_Long_Seq & s3);
+    const std::vector<CORBA::Long> & s1,
+    std::vector<CORBA::Long> & s2,
+    std::vector<CORBA::Long> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -704,20 +702,20 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_Long_Seq *
+  virtual std::vector<CORBA::Long>
   test_bounded_long_sequence (
-    const ::Param_Test::Bounded_Long_Seq & s1,
-    ::Param_Test::Bounded_Long_Seq & s2,
-    ::Param_Test::Bounded_Long_Seq_out s3);
+    const std::vector<CORBA::Long> & s1,
+    std::vector<CORBA::Long> & s2,
+    std::vector<CORBA::Long> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::CORBA::StringSeq *
+  virtual std::vector<char *>
   test_strseq (
-    const ::CORBA::StringSeq & s1,
-    ::CORBA::StringSeq & s2,
-    ::CORBA::StringSeq_out s3);
+    const std::vector<char *> & s1,
+    std::vector<char *> & s2,
+    std::vector<char *> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -768,20 +766,20 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_StrSeq *
+  virtual std::vector<char *>
   test_bounded_strseq (
-    const ::Param_Test::Bounded_StrSeq & s1,
-    ::Param_Test::Bounded_StrSeq & s2,
-    ::Param_Test::Bounded_StrSeq_out s3);
+    const std::vector<char *> & s1,
+    std::vector<char *> & s2,
+    std::vector<char *> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::CORBA::WStringSeq *
+  virtual std::vector<CORBA::WChar *>
   test_wstrseq (
-    const ::CORBA::WStringSeq & ws1,
-    ::CORBA::WStringSeq & ws2,
-    ::CORBA::WStringSeq_out ws3);
+    const std::vector<CORBA::WChar *> & ws1,
+    std::vector<CORBA::WChar *> & ws2,
+    std::vector<CORBA::WChar *> & ws3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -832,11 +830,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_WStrSeq *
+  virtual std::vector<CORBA::WChar *>
   test_bounded_wstrseq (
-    const ::Param_Test::Bounded_WStrSeq & ws1,
-    ::Param_Test::Bounded_WStrSeq & ws2,
-    ::Param_Test::Bounded_WStrSeq_out ws3);
+    const std::vector<CORBA::WChar *> & ws1,
+    std::vector<CORBA::WChar *> & ws2,
+    std::vector<CORBA::WChar *> & ws3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -891,11 +889,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::StructSeq *
+  virtual std::vector<Param_Test::Fixed_Struct>
   test_struct_sequence (
-    const ::Param_Test::StructSeq & s1,
-    ::Param_Test::StructSeq & s2,
-    ::Param_Test::StructSeq_out s3);
+    const std::vector<Param_Test::Fixed_Struct> & s1,
+    std::vector<Param_Test::Fixed_Struct> & s2,
+    std::vector<Param_Test::Fixed_Struct> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -949,11 +947,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_StructSeq *
+  virtual std::vector<Param_Test::Fixed_Struct>
   test_bounded_struct_sequence (
-    const ::Param_Test::Bounded_StructSeq & s1,
-    ::Param_Test::Bounded_StructSeq & s2,
-    ::Param_Test::Bounded_StructSeq_out s3);
+    const std::vector<Param_Test::Fixed_Struct> & s1,
+    std::vector<Param_Test::Fixed_Struct> & s2,
+    std::vector<Param_Test::Fixed_Struct> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -1009,11 +1007,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Coffee_Mix *
+  virtual std::vector<Coffee>
   test_coffe_mix (
-    const ::Param_Test::Coffee_Mix & s1,
-    ::Param_Test::Coffee_Mix & s2,
-    ::Param_Test::Coffee_Mix_out s3);
+    const std::vector<Coffee> & s1,
+    std::vector<Coffee> & s2,
+    std::vector<Coffee> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -1068,20 +1066,20 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_Coffee_Mix *
+  virtual std::vector<Coffee>
   test_bounded_coffe_mix (
-    const ::Param_Test::Bounded_Coffee_Mix & s1,
-    ::Param_Test::Bounded_Coffee_Mix & s2,
-    ::Param_Test::Bounded_Coffee_Mix_out s3);
+    const std::vector<Coffee> & s1,
+    std::vector<Coffee> & s2,
+    std::vector<Coffee> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::CORBA::AnySeq *
+  virtual std::vector<CORBA::Any>
   test_anyseq (
-    const ::CORBA::AnySeq & s1,
-    ::CORBA::AnySeq & s2,
-    ::CORBA::AnySeq_out s3);
+    const std::vector<CORBA::Any> & s1,
+    std::vector<CORBA::Any> & s2,
+    std::vector<CORBA::Any> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:413
@@ -1139,9 +1137,9 @@ public:
   
   virtual ::Param_Test::Var_Struct *
   test_var_struct (
-    const ::Param_Test::Var_Struct & s1,
-    ::Param_Test::Var_Struct & s2,
-    ::Param_Test::Var_Struct_out s3);
+    const Param_Test::Var_Struct & s1,
+    Param_Test::Var_Struct & s2,
+    Param_Test::Var_Struct_out s3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -1182,9 +1180,9 @@ public:
   
   virtual ::Param_Test::Nested_Struct *
   test_nested_struct (
-    const ::Param_Test::Nested_Struct & s1,
-    ::Param_Test::Nested_Struct & s2,
-    ::Param_Test::Nested_Struct_out s3);
+    const Param_Test::Nested_Struct & s1,
+    Param_Test::Nested_Struct & s2,
+    Param_Test::Nested_Struct_out s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
@@ -1197,27 +1195,27 @@ public:
   
   virtual ::Coffee_ptr
   test_objref (
-    ::Coffee_ptr o1,
-    ::Coffee_ptr & o2,
-    ::Coffee_out o3);
+    Coffee_ptr o1,
+    Coffee_ptr & o2,
+    Coffee_out o3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
   virtual ::CORBA::TypeCode_ptr
   test_typecode (
-    ::CORBA::TypeCode_ptr t1,
-    ::CORBA::TypeCode_ptr & t2,
-    ::CORBA::TypeCode_out t3);
+    CORBA::TypeCode_ptr t1,
+    CORBA::TypeCode_ptr & t2,
+    CORBA::TypeCode_out t3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
   virtual ::CORBA::Any *
   test_any (
-    const ::CORBA::Any & a1,
-    ::CORBA::Any & a2,
-    ::CORBA::Any_out a3);
+    const CORBA::Any & a1,
+    CORBA::Any & a2,
+    CORBA::Any_out a3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -1259,9 +1257,9 @@ public:
   
   virtual ::Param_Test::Objref_Struct *
   test_objref_struct (
-    const ::Param_Test::Objref_Struct & t1,
-    ::Param_Test::Objref_Struct & t2,
-    ::Param_Test::Objref_Struct_out t3);
+    const Param_Test::Objref_Struct & t1,
+    Param_Test::Objref_Struct & t2,
+    Param_Test::Objref_Struct_out t3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_constant/constant_ch.cpp:52
@@ -1326,9 +1324,9 @@ public:
   
   virtual ::Param_Test::Fixed_Array_slice *
   test_fixed_array (
-    const ::Param_Test::Fixed_Array l1,
-    ::Param_Test::Fixed_Array l2,
-    ::Param_Test::Fixed_Array_out l3);
+    const Param_Test::Fixed_Array l1,
+    Param_Test::Fixed_Array l2,
+    Param_Test::Fixed_Array_out l3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_constant/constant_ch.cpp:52
@@ -1398,9 +1396,9 @@ public:
   
   virtual ::Param_Test::Var_Array_slice *
   test_var_array (
-    const ::Param_Test::Var_Array v1,
-    ::Param_Test::Var_Array v2,
-    ::Param_Test::Var_Array_out v3);
+    const Param_Test::Var_Array v1,
+    Param_Test::Var_Array v2,
+    Param_Test::Var_Array_out v3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -1457,11 +1455,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::ArraySeq *
+  virtual std::vector<Param_Test::Fixed_Array>
   test_array_sequence (
-    const ::Param_Test::ArraySeq & s1,
-    ::Param_Test::ArraySeq & s2,
-    ::Param_Test::ArraySeq_out s3);
+    const std::vector<Param_Test::Fixed_Array> & s1,
+    std::vector<Param_Test::Fixed_Array> & s2,
+    std::vector<Param_Test::Fixed_Array> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:107
@@ -1517,11 +1515,11 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
   
-  virtual ::Param_Test::Bounded_ArraySeq *
+  virtual std::vector<Param_Test::Fixed_Array>
   test_bounded_array_sequence (
-    const ::Param_Test::Bounded_ArraySeq & s1,
-    ::Param_Test::Bounded_ArraySeq & s2,
-    ::Param_Test::Bounded_ArraySeq_out s3);
+    const std::vector<Param_Test::Fixed_Array> & s1,
+    std::vector<Param_Test::Fixed_Array> & s2,
+    std::vector<Param_Test::Fixed_Array> & s3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_exception/exception_ch.cpp:53
@@ -1610,9 +1608,9 @@ public:
   
   virtual ::CORBA::ULong
   test_exception (
-    ::CORBA::ULong s1,
-    ::CORBA::ULong & s2,
-    ::CORBA::ULong_out s3);
+    CORBA::ULong s1,
+    CORBA::ULong & s2,
+    CORBA::ULong_out s3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -1828,9 +1826,9 @@ public:
   
   virtual ::Param_Test::Big_Union *
   test_big_union (
-    const ::Param_Test::Big_Union & u1,
-    ::Param_Test::Big_Union & u2,
-    ::Param_Test::Big_Union_out u3);
+    const Param_Test::Big_Union & u1,
+    Param_Test::Big_Union & u2,
+    Param_Test::Big_Union_out u3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_enum/enum_ch.cpp:57
@@ -1924,9 +1922,9 @@ public:
   
   virtual ::Param_Test::Small_Union
   test_small_union (
-    const ::Param_Test::Small_Union & u1,
-    ::Param_Test::Small_Union & u2,
-    ::Param_Test::Small_Union_out u3);
+    const Param_Test::Small_Union & u1,
+    Param_Test::Small_Union & u2,
+    Param_Test::Small_Union_out u3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -2004,9 +2002,9 @@ public:
   
   virtual ::CORBA::Any *
   test_complex_any (
-    const ::CORBA::Any & ca1,
-    ::CORBA::Any & ca2,
-    ::CORBA::Any_out ca3);
+    const CORBA::Any & ca1,
+    CORBA::Any & ca2,
+    CORBA::Any_out ca3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -2080,9 +2078,9 @@ public:
   
   virtual ::Param_Test::Recursive_Struct *
   test_recursive_struct (
-    const ::Param_Test::Recursive_Struct & rs1,
-    ::Param_Test::Recursive_Struct & rs2,
-    ::Param_Test::Recursive_Struct_out rs3);
+    const Param_Test::Recursive_Struct & rs1,
+    Param_Test::Recursive_Struct & rs2,
+    Param_Test::Recursive_Struct_out rs3);
   
   // TAO_IDL - Generated from
   // .\be\be_type.cpp:269
@@ -2310,9 +2308,9 @@ public:
   
   virtual ::Param_Test::Recursive_Union *
   test_recursive_union (
-    const ::Param_Test::Recursive_Union & ru1,
-    ::Param_Test::Recursive_Union & ru2,
-    ::Param_Test::Recursive_Union_out ru3);
+    const Param_Test::Recursive_Union & ru1,
+    Param_Test::Recursive_Union & ru2,
+    Param_Test::Recursive_Union_out ru3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_constant/constant_ch.cpp:52
@@ -2377,9 +2375,9 @@ public:
   
   virtual ::Param_Test::Multdim_Array_slice *
   test_multdim_array (
-    const ::Param_Test::Multdim_Array m1,
-    ::Param_Test::Multdim_Array m2,
-    ::Param_Test::Multdim_Array_out m3);
+    const Param_Test::Multdim_Array m1,
+    Param_Test::Multdim_Array m2,
+    Param_Test::Multdim_Array_out m3);
   
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
@@ -2665,127 +2663,109 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::PathSpec &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::PathSpec*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::PathSpec *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::PathSpec *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Param_Test::Step> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Param_Test::Step> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_Short_Seq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_Short_Seq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_Short_Seq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_Short_Seq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<CORBA::Short> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<CORBA::Short> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_Long_Seq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_Long_Seq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_Long_Seq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_Long_Seq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<CORBA::Long> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<CORBA::Long> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_StrSeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_StrSeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_StrSeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_StrSeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<char *> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<char *> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_WStrSeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_WStrSeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_WStrSeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_WStrSeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<CORBA::WChar *> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<CORBA::WChar *> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::StructSeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::StructSeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::StructSeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::StructSeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Param_Test::Fixed_Struct> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Param_Test::Fixed_Struct> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_StructSeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_StructSeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_StructSeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_StructSeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Param_Test::Fixed_Struct> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Param_Test::Fixed_Struct> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Coffee_Mix &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Coffee_Mix*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Coffee_Mix *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Coffee_Mix *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Coffee> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Coffee> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_Coffee_Mix &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_Coffee_Mix*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_Coffee_Mix *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_Coffee_Mix *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Coffee> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Coffee> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -2857,29 +2837,25 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::ArraySeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::ArraySeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::ArraySeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::ArraySeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Param_Test::Fixed_Array> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Param_Test::Fixed_Array> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:53
+// w:\tao\tao_idl\be\be_visitor_sequence/any_op_ch.cpp:49
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
- void operator<<= ( ::CORBA::Any &, const Param_Test::Bounded_ArraySeq &); // copying version
- void operator<<= ( ::CORBA::Any &, Param_Test::Bounded_ArraySeq*); // noncopying version
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::Bounded_ArraySeq *&); // deprecated
- ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const Param_Test::Bounded_ArraySeq *&);
+ void operator<<= ( ::CORBA::Any &, const std::vector<Param_Test::Fixed_Array> &); // copying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const std::vector<Param_Test::Fixed_Array> *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
@@ -3034,20 +3010,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-void operator<<= ( ::CORBA::Any &, const std::string);
-::CORBA::Boolean operator>>= (const ::CORBA::Any &, std::string &);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-void operator<<= ( ::CORBA::Any &, const Param_Test::UB_Long_Seq);
-::CORBA::Boolean operator>>= (const ::CORBA::Any &, Param_Test::UB_Long_Seq &);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_interface/cdr_op_ch.cpp:55
 
@@ -3125,7 +3087,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_PathSpec_H_
 #define _TAO_CDR_OP_Param_Test_PathSpec_H_
@@ -3135,11 +3097,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::PathSpec &_tao_sequence
+    const std::vector<Param_Test::Step> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::PathSpec &_tao_sequence
+    std::vector<Param_Test::Step> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3148,7 +3110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_PathSpec_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_H_
@@ -3158,11 +3120,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Short_Seq &_tao_sequence
+    const std::vector<CORBA::Short> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_Short_Seq &_tao_sequence
+    std::vector<CORBA::Short> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3171,7 +3133,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Bounded_Short_Seq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_H_
@@ -3181,11 +3143,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Long_Seq &_tao_sequence
+    const std::vector<CORBA::Long> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_Long_Seq &_tao_sequence
+    std::vector<CORBA::Long> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3194,7 +3156,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Bounded_Long_Seq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_StrSeq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_StrSeq_H_
@@ -3204,11 +3166,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_StrSeq &_tao_sequence
+    const std::vector<char *> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_StrSeq &_tao_sequence
+    std::vector<char *> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3217,7 +3179,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Bounded_StrSeq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_H_
@@ -3227,11 +3189,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_WStrSeq &_tao_sequence
+    const std::vector<CORBA::WChar *> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_WStrSeq &_tao_sequence
+    std::vector<CORBA::WChar *> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3240,7 +3202,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Bounded_WStrSeq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_StructSeq_H_
 #define _TAO_CDR_OP_Param_Test_StructSeq_H_
@@ -3250,11 +3212,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::StructSeq &_tao_sequence
+    const std::vector<Param_Test::Fixed_Struct> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::StructSeq &_tao_sequence
+    std::vector<Param_Test::Fixed_Struct> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3263,7 +3225,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_StructSeq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_StructSeq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_StructSeq_H_
@@ -3273,11 +3235,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_StructSeq &_tao_sequence
+    const std::vector<Param_Test::Fixed_Struct> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_StructSeq &_tao_sequence
+    std::vector<Param_Test::Fixed_Struct> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3286,7 +3248,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Bounded_StructSeq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Coffee_Mix_H_
 #define _TAO_CDR_OP_Param_Test_Coffee_Mix_H_
@@ -3296,11 +3258,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Coffee_Mix &_tao_sequence
+    const std::vector<Coffee> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Coffee_Mix &_tao_sequence
+    std::vector<Coffee> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3309,7 +3271,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_Coffee_Mix_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_Coffee_Mix_H_
@@ -3319,11 +3281,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_Coffee_Mix &_tao_sequence
+    const std::vector<Coffee> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_Coffee_Mix &_tao_sequence
+    std::vector<Coffee> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3395,7 +3357,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_ArraySeq_H_
 #define _TAO_CDR_OP_Param_Test_ArraySeq_H_
@@ -3405,11 +3367,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::ArraySeq &_tao_sequence
+    const std::vector<Param_Test::Fixed_Array> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::ArraySeq &_tao_sequence
+    std::vector<Param_Test::Fixed_Array> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3418,7 +3380,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _TAO_CDR_OP_Param_Test_ArraySeq_H_ */
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_H_
 #define _TAO_CDR_OP_Param_Test_Bounded_ArraySeq_H_
@@ -3428,11 +3390,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Bounded_ArraySeq &_tao_sequence
+    const std::vector<Param_Test::Fixed_Array> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Bounded_ArraySeq &_tao_sequence
+    std::vector<Param_Test::Fixed_Array> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3557,7 +3519,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__H_
 #define _TAO_CDR_OP_Param_Test_Recursive_Struct__tao_seq_Param_Test_Recursive_Struct__H_
@@ -3567,11 +3529,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Struct::_tao_seq_Param_Test_Recursive_Struct_ &_tao_sequence
+    const std::vector<Param_Test::Recursive_Struct> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Recursive_Struct::_tao_seq_Param_Test_Recursive_Struct_ &_tao_sequence
+    std::vector<Param_Test::Recursive_Struct> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3593,7 +3555,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__H_
 #define _TAO_CDR_OP_Param_Test_nested_rec_union__tao_seq_Param_Test_nested_rec_union__H_
@@ -3603,11 +3565,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ &_tao_sequence
+    const std::vector<Param_Test::nested_rec_union> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::nested_rec_union::_tao_seq_Param_Test_nested_rec_union_ &_tao_sequence
+    std::vector<Param_Test::nested_rec_union> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3629,7 +3591,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:71
+// w:\tao\tao_idl\be\be_visitor_sequence/cdr_op_ch.cpp:67
 
 #if !defined _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__H_
 #define _TAO_CDR_OP_Param_Test_Recursive_Union__tao_seq_Param_Test_Recursive_Union__H_
@@ -3639,11 +3601,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
  ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ &_tao_sequence
+    const std::vector<Param_Test::Recursive_Union> &_tao_sequence
   );
  ::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    Param_Test::Recursive_Union::_tao_seq_Param_Test_Recursive_Union_ &_tao_sequence
+    std::vector<Param_Test::Recursive_Union> &_tao_sequence
   );
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -3663,22 +3625,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const std::string &_tao_string);
-::CORBA::Boolean operator>> (TAO_InputCDR &strm, std::string &_tao_string);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-::CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Param_Test::UB_Long_Seq &_tao_vector);
-::CORBA::Boolean operator>> (TAO_InputCDR &strm, Param_Test::UB_Long_Seq &_tao_vector);
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:1455
+// .\be\be_codegen.cpp:1458
 #if defined (__ACE_INLINE__)
 #include "param_testC.inl"
 #endif /* defined INLINE */

@@ -136,9 +136,25 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 {
-  // We should never directly be here because anonymous sequence return types
-  // are not allowed.
-  *os << "::" << this->type_name (node) << " *";
+  // We should never directly be here because anonymous
+  // sequence return types are not allowed.
+  if (be_global->alt_mapping ())
+    {
+      /// Temporarily remove and store the context's 'alias'
+      /// member, if any, so we can work with the sequence's
+      /// element type, and restore the alias value when we're done.
+      be_typedef *td = this->ctx_->alias ();
+      this->ctx_->alias (0);
+      
+      *os << "std::vector<" << this->type_name (node->base_type ())
+          << ">";
+          
+      this->ctx_->alias (td);
+    }
+  else
+    {
+      *os << "::" << this->type_name (node) << " *";
+    }
 
   return 0;
 }
@@ -147,21 +163,19 @@ int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  bool wide = (node->width () != (long) sizeof (char));
   
-  if (node->width () == (long) sizeof (char))
+  if (wide)
     {
-      if (bound == 0)
-        {
-          *os << "std::string";
-        }
-      else
-        {
-          *os << "char *";
-        }
+      *os << "::CORBA::WChar *";
+    }
+  else if (bound == 0 && be_global->alt_mapping ())
+    {
+      *os << "std::string";
     }
   else
     {
-      *os << "::CORBA::WChar *";
+      *os << "char *";
     }
 
   return 0;
@@ -185,13 +199,6 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 int
 be_visitor_operation_rettype::visit_typedef (be_typedef *node)
 {
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
-    {
-      *os << "Param_Test::UB_Long_Seq";
-      
-      return 0;
-    }
-    
   // Set the alias node.
   this->ctx_->alias (node);
 

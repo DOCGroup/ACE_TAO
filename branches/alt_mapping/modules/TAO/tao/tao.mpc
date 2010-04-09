@@ -619,6 +619,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     varbase.h
     VarOut_T.h
     Var_Size_Argument_T.h
+    Vector_Argument_T.h
     Vector_CDR_T.h
     Version.h
     Versioned_Namespace.h

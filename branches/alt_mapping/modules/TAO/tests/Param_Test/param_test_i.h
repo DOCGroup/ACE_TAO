@@ -94,10 +94,10 @@ public:
   // test for fixed structures
 
   // = Start of sequences tests...
-  virtual Param_Test::UB_Long_Seq test_long_sequence (
-      const Param_Test::UB_Long_Seq & s1,
-      Param_Test::UB_Long_Seq & s2,
-      Param_Test::UB_Long_Seq & s3);
+  virtual std::vector<CORBA::Long> test_long_sequence (
+      const std::vector<CORBA::Long> & s1,
+      std::vector<CORBA::Long> & s2,
+      std::vector<CORBA::Long> & s3);
       
   virtual Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
       const Param_Test::Bounded_Long_Seq & s1,
@@ -139,10 +139,10 @@ public:
       Param_Test::StructSeq & s2,
       Param_Test::StructSeq_out s3);
       
-  virtual Param_Test::PathSpec * test_unbounded_struct_sequence (
-      const Param_Test::PathSpec & s1,
-      Param_Test::PathSpec & s2,
-      Param_Test::PathSpec_out s3);
+  virtual std::vector<Param_Test::Step> test_unbounded_struct_sequence (
+      const std::vector<Param_Test::Step> & s1,
+      std::vector<Param_Test::Step> & s2,
+      std::vector<Param_Test::Step> s3);
       
   virtual Param_Test::Bounded_StructSeq * test_bounded_struct_sequence (
       const Param_Test::Bounded_StructSeq & s1,

@@ -615,6 +615,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *alias = this->ctx_->alias ();
+  AST_Type *bt = node->base_type ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -624,17 +625,29 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str (), false);
+  os->gen_ifdef_macro (alias->flat_name (),
+                       guard_suffix.c_str (),
+                       false);
+                       
+  bool bounded = (node->max_size ()->ev ()->u.ulval != 0);
+  UTL_ScopedName *sn =
+    (bounded ? alias->name () : bt->name ());
   
   *os << be_nl << be_nl
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
-      << alias->name () << ">" << be_idt_nl
+      << (bounded ? "" : "std::vector<") << sn
+      << (bounded ? "" : "> ") << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << alias->name () << "," << be_nl
-      << this->insert_policy() << " <" << alias->name () << ">" << be_uidt_nl
+      << (bounded ? "Var_Size_" : "Vector_")
+      << this->S_ << "Arg_Traits_T<"
+      << be_idt << be_idt_nl
+      << (bounded ? "" : "std::vector<") << sn
+      << (bounded ? "" : ">") << "," << be_nl
+      << this->insert_policy () << "<"
+      << (bounded ? "" : "std::vector<") << sn
+      << (bounded ? "" : "> ") << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -1092,26 +1105,7 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
       this->generated (bt, false);
     }
 
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::LongSeq") == 0)
-    {
-      TAO_OutStream *os = this->ctx_->stream  ();
-      
-      *os << be_nl << be_nl
-          << "template<>" << be_nl
-          << "class "
-          << this->S_ << "Arg_Traits<"
-          << "Param_Test::UB_Long_Seq" << ">" << be_idt_nl
-          << ": public" << be_idt << be_idt_nl
-          << "Basic_" << this->S_ << "Arg_Traits_T<"
-          << be_idt << be_idt_nl
-          << "Param_Test::UB_Long_Seq" << "," << be_nl
-          << this->insert_policy() << " <"
-          << "Param_Test::UB_Long_Seq" << ">" << be_uidt_nl
-          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
-          << "{" << be_nl
-          << "};";
-    }
-  else if (!bt || (bt->accept (this) == -1))
+  if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arg_traits::"

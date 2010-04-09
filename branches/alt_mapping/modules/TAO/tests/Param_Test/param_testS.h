@@ -27,7 +27,7 @@
  **/
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:474
+// .\be\be_codegen.cpp:477
 
 #ifndef _TAO_IDL_PARAM_TESTS_H_
 #define _TAO_IDL_PARAM_TESTS_H_
@@ -143,7 +143,7 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void description (
-    const ::Coffee::Desc & description) = 0;
+    const Coffee::Desc & description) = 0;
   
   static void _set_description_skel (
       TAO_ServerRequest & server_request,
@@ -216,9 +216,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::Short test_short (
-    ::CORBA::Short s1,
-    ::CORBA::Short & s2,
-    ::CORBA::Short_out s3) = 0;
+    CORBA::Short s1,
+    CORBA::Short & s2,
+    CORBA::Short_out s3) = 0;
   
   static void test_short_skel (
       TAO_ServerRequest & server_request,
@@ -230,9 +230,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::ULongLong test_ulonglong (
-    ::CORBA::ULongLong s1,
-    ::CORBA::ULongLong & s2,
-    ::CORBA::ULongLong_out s3) = 0;
+    CORBA::ULongLong s1,
+    CORBA::ULongLong & s2,
+    CORBA::ULongLong_out s3) = 0;
   
   static void test_ulonglong_skel (
       TAO_ServerRequest & server_request,
@@ -300,9 +300,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Fixed_Struct test_fixed_struct (
-    const ::Param_Test::Fixed_Struct & s1,
-    ::Param_Test::Fixed_Struct & s2,
-    ::Param_Test::Fixed_Struct_out s3) = 0;
+    const Param_Test::Fixed_Struct & s1,
+    Param_Test::Fixed_Struct & s2,
+    Param_Test::Fixed_Struct_out s3) = 0;
   
   static void test_fixed_struct_skel (
       TAO_ServerRequest & server_request,
@@ -313,10 +313,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::PathSpec * test_unbounded_struct_sequence (
-    const ::Param_Test::PathSpec & s1,
-    ::Param_Test::PathSpec & s2,
-    ::Param_Test::PathSpec_out s3) = 0;
+  virtual std::vector<Param_Test::Step> test_unbounded_struct_sequence (
+    const std::vector<Param_Test::Step> & s1,
+    std::vector<Param_Test::Step> & s2,
+    std::vector<Param_Test::Step> & s3) = 0;
   
   static void test_unbounded_struct_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -327,10 +327,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::CORBA::ShortSeq * test_short_sequence (
-    const ::CORBA::ShortSeq & s1,
-    ::CORBA::ShortSeq & s2,
-    ::CORBA::ShortSeq_out s3) = 0;
+  virtual std::vector<CORBA::Short> test_short_sequence (
+    const std::vector<CORBA::Short> & s1,
+    std::vector<CORBA::Short> & s2,
+    std::vector<CORBA::Short> & s3) = 0;
   
   static void test_short_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -341,10 +341,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
-    const ::Param_Test::Bounded_Short_Seq & s1,
-    ::Param_Test::Bounded_Short_Seq & s2,
-    ::Param_Test::Bounded_Short_Seq_out s3) = 0;
+  virtual std::vector<CORBA::Short> test_bounded_short_sequence (
+    const std::vector<CORBA::Short> & s1,
+    std::vector<CORBA::Short> & s2,
+    std::vector<CORBA::Short> & s3) = 0;
   
   static void test_bounded_short_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -355,10 +355,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual Param_Test::UB_Long_Seq test_long_sequence (
-    const Param_Test::UB_Long_Seq & s1,
-    Param_Test::UB_Long_Seq & s2,
-    Param_Test::UB_Long_Seq & s3) = 0;
+  virtual std::vector<CORBA::Long> test_long_sequence (
+    const std::vector<CORBA::Long> & s1,
+    std::vector<CORBA::Long> & s2,
+    std::vector<CORBA::Long> & s3) = 0;
   
   static void test_long_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -369,10 +369,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
-    const ::Param_Test::Bounded_Long_Seq & s1,
-    ::Param_Test::Bounded_Long_Seq & s2,
-    ::Param_Test::Bounded_Long_Seq_out s3) = 0;
+  virtual std::vector<CORBA::Long> test_bounded_long_sequence (
+    const std::vector<CORBA::Long> & s1,
+    std::vector<CORBA::Long> & s2,
+    std::vector<CORBA::Long> & s3) = 0;
   
   static void test_bounded_long_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -383,10 +383,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::CORBA::StringSeq * test_strseq (
-    const ::CORBA::StringSeq & s1,
-    ::CORBA::StringSeq & s2,
-    ::CORBA::StringSeq_out s3) = 0;
+  virtual std::vector<char *> test_strseq (
+    const std::vector<char *> & s1,
+    std::vector<char *> & s2,
+    std::vector<char *> & s3) = 0;
   
   static void test_strseq_skel (
       TAO_ServerRequest & server_request,
@@ -397,10 +397,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_StrSeq * test_bounded_strseq (
-    const ::Param_Test::Bounded_StrSeq & s1,
-    ::Param_Test::Bounded_StrSeq & s2,
-    ::Param_Test::Bounded_StrSeq_out s3) = 0;
+  virtual std::vector<char *> test_bounded_strseq (
+    const std::vector<char *> & s1,
+    std::vector<char *> & s2,
+    std::vector<char *> & s3) = 0;
   
   static void test_bounded_strseq_skel (
       TAO_ServerRequest & server_request,
@@ -411,10 +411,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::CORBA::WStringSeq * test_wstrseq (
-    const ::CORBA::WStringSeq & ws1,
-    ::CORBA::WStringSeq & ws2,
-    ::CORBA::WStringSeq_out ws3) = 0;
+  virtual std::vector<CORBA::WChar *> test_wstrseq (
+    const std::vector<CORBA::WChar *> & ws1,
+    std::vector<CORBA::WChar *> & ws2,
+    std::vector<CORBA::WChar *> & ws3) = 0;
   
   static void test_wstrseq_skel (
       TAO_ServerRequest & server_request,
@@ -425,10 +425,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_WStrSeq * test_bounded_wstrseq (
-    const ::Param_Test::Bounded_WStrSeq & ws1,
-    ::Param_Test::Bounded_WStrSeq & ws2,
-    ::Param_Test::Bounded_WStrSeq_out ws3) = 0;
+  virtual std::vector<CORBA::WChar *> test_bounded_wstrseq (
+    const std::vector<CORBA::WChar *> & ws1,
+    std::vector<CORBA::WChar *> & ws2,
+    std::vector<CORBA::WChar *> & ws3) = 0;
   
   static void test_bounded_wstrseq_skel (
       TAO_ServerRequest & server_request,
@@ -439,10 +439,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::StructSeq * test_struct_sequence (
-    const ::Param_Test::StructSeq & s1,
-    ::Param_Test::StructSeq & s2,
-    ::Param_Test::StructSeq_out s3) = 0;
+  virtual std::vector<Param_Test::Fixed_Struct> test_struct_sequence (
+    const std::vector<Param_Test::Fixed_Struct> & s1,
+    std::vector<Param_Test::Fixed_Struct> & s2,
+    std::vector<Param_Test::Fixed_Struct> & s3) = 0;
   
   static void test_struct_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -453,10 +453,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_StructSeq * test_bounded_struct_sequence (
-    const ::Param_Test::Bounded_StructSeq & s1,
-    ::Param_Test::Bounded_StructSeq & s2,
-    ::Param_Test::Bounded_StructSeq_out s3) = 0;
+  virtual std::vector<Param_Test::Fixed_Struct> test_bounded_struct_sequence (
+    const std::vector<Param_Test::Fixed_Struct> & s1,
+    std::vector<Param_Test::Fixed_Struct> & s2,
+    std::vector<Param_Test::Fixed_Struct> & s3) = 0;
   
   static void test_bounded_struct_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -467,10 +467,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Coffee_Mix * test_coffe_mix (
-    const ::Param_Test::Coffee_Mix & s1,
-    ::Param_Test::Coffee_Mix & s2,
-    ::Param_Test::Coffee_Mix_out s3) = 0;
+  virtual std::vector<Coffee> test_coffe_mix (
+    const std::vector<Coffee> & s1,
+    std::vector<Coffee> & s2,
+    std::vector<Coffee> & s3) = 0;
   
   static void test_coffe_mix_skel (
       TAO_ServerRequest & server_request,
@@ -481,10 +481,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_Coffee_Mix * test_bounded_coffe_mix (
-    const ::Param_Test::Bounded_Coffee_Mix & s1,
-    ::Param_Test::Bounded_Coffee_Mix & s2,
-    ::Param_Test::Bounded_Coffee_Mix_out s3) = 0;
+  virtual std::vector<Coffee> test_bounded_coffe_mix (
+    const std::vector<Coffee> & s1,
+    std::vector<Coffee> & s2,
+    std::vector<Coffee> & s3) = 0;
   
   static void test_bounded_coffe_mix_skel (
       TAO_ServerRequest & server_request,
@@ -495,10 +495,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::CORBA::AnySeq * test_anyseq (
-    const ::CORBA::AnySeq & s1,
-    ::CORBA::AnySeq & s2,
-    ::CORBA::AnySeq_out s3) = 0;
+  virtual std::vector<CORBA::Any> test_anyseq (
+    const std::vector<CORBA::Any> & s1,
+    std::vector<CORBA::Any> & s2,
+    std::vector<CORBA::Any> & s3) = 0;
   
   static void test_anyseq_skel (
       TAO_ServerRequest & server_request,
@@ -510,9 +510,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Var_Struct * test_var_struct (
-    const ::Param_Test::Var_Struct & s1,
-    ::Param_Test::Var_Struct & s2,
-    ::Param_Test::Var_Struct_out s3) = 0;
+    const Param_Test::Var_Struct & s1,
+    Param_Test::Var_Struct & s2,
+    Param_Test::Var_Struct_out s3) = 0;
   
   static void test_var_struct_skel (
       TAO_ServerRequest & server_request,
@@ -524,9 +524,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Nested_Struct * test_nested_struct (
-    const ::Param_Test::Nested_Struct & s1,
-    ::Param_Test::Nested_Struct & s2,
-    ::Param_Test::Nested_Struct_out s3) = 0;
+    const Param_Test::Nested_Struct & s1,
+    Param_Test::Nested_Struct & s2,
+    Param_Test::Nested_Struct_out s3) = 0;
   
   static void test_nested_struct_skel (
       TAO_ServerRequest & server_request,
@@ -549,9 +549,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Coffee_ptr test_objref (
-    ::Coffee_ptr o1,
-    ::Coffee_ptr & o2,
-    ::Coffee_out o3) = 0;
+    Coffee_ptr o1,
+    Coffee_ptr & o2,
+    Coffee_out o3) = 0;
   
   static void test_objref_skel (
       TAO_ServerRequest & server_request,
@@ -563,9 +563,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::TypeCode_ptr test_typecode (
-    ::CORBA::TypeCode_ptr t1,
-    ::CORBA::TypeCode_ptr & t2,
-    ::CORBA::TypeCode_out t3) = 0;
+    CORBA::TypeCode_ptr t1,
+    CORBA::TypeCode_ptr & t2,
+    CORBA::TypeCode_out t3) = 0;
   
   static void test_typecode_skel (
       TAO_ServerRequest & server_request,
@@ -577,9 +577,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::Any * test_any (
-    const ::CORBA::Any & a1,
-    ::CORBA::Any & a2,
-    ::CORBA::Any_out a3) = 0;
+    const CORBA::Any & a1,
+    CORBA::Any & a2,
+    CORBA::Any_out a3) = 0;
   
   static void test_any_skel (
       TAO_ServerRequest & server_request,
@@ -591,9 +591,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Objref_Struct * test_objref_struct (
-    const ::Param_Test::Objref_Struct & t1,
-    ::Param_Test::Objref_Struct & t2,
-    ::Param_Test::Objref_Struct_out t3) = 0;
+    const Param_Test::Objref_Struct & t1,
+    Param_Test::Objref_Struct & t2,
+    Param_Test::Objref_Struct_out t3) = 0;
   
   static void test_objref_struct_skel (
       TAO_ServerRequest & server_request,
@@ -605,9 +605,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Fixed_Array_slice * test_fixed_array (
-    const ::Param_Test::Fixed_Array l1,
-    ::Param_Test::Fixed_Array l2,
-    ::Param_Test::Fixed_Array_out l3) = 0;
+    const Param_Test::Fixed_Array l1,
+    Param_Test::Fixed_Array l2,
+    Param_Test::Fixed_Array_out l3) = 0;
   
   static void test_fixed_array_skel (
       TAO_ServerRequest & server_request,
@@ -619,9 +619,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Var_Array_slice * test_var_array (
-    const ::Param_Test::Var_Array v1,
-    ::Param_Test::Var_Array v2,
-    ::Param_Test::Var_Array_out v3) = 0;
+    const Param_Test::Var_Array v1,
+    Param_Test::Var_Array v2,
+    Param_Test::Var_Array_out v3) = 0;
   
   static void test_var_array_skel (
       TAO_ServerRequest & server_request,
@@ -632,10 +632,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::ArraySeq * test_array_sequence (
-    const ::Param_Test::ArraySeq & s1,
-    ::Param_Test::ArraySeq & s2,
-    ::Param_Test::ArraySeq_out s3) = 0;
+  virtual std::vector<Param_Test::Fixed_Array> test_array_sequence (
+    const std::vector<Param_Test::Fixed_Array> & s1,
+    std::vector<Param_Test::Fixed_Array> & s2,
+    std::vector<Param_Test::Fixed_Array> & s3) = 0;
   
   static void test_array_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -646,10 +646,10 @@ public:
   // TAO_IDL - Generated from
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
-  virtual ::Param_Test::Bounded_ArraySeq * test_bounded_array_sequence (
-    const ::Param_Test::Bounded_ArraySeq & s1,
-    ::Param_Test::Bounded_ArraySeq & s2,
-    ::Param_Test::Bounded_ArraySeq_out s3) = 0;
+  virtual std::vector<Param_Test::Fixed_Array> test_bounded_array_sequence (
+    const std::vector<Param_Test::Fixed_Array> & s1,
+    std::vector<Param_Test::Fixed_Array> & s2,
+    std::vector<Param_Test::Fixed_Array> & s3) = 0;
   
   static void test_bounded_array_sequence_skel (
       TAO_ServerRequest & server_request,
@@ -661,9 +661,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::ULong test_exception (
-    ::CORBA::ULong s1,
-    ::CORBA::ULong & s2,
-    ::CORBA::ULong_out s3) = 0;
+    CORBA::ULong s1,
+    CORBA::ULong & s2,
+    CORBA::ULong_out s3) = 0;
   
   static void test_exception_skel (
       TAO_ServerRequest & server_request,
@@ -675,9 +675,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Big_Union * test_big_union (
-    const ::Param_Test::Big_Union & u1,
-    ::Param_Test::Big_Union & u2,
-    ::Param_Test::Big_Union_out u3) = 0;
+    const Param_Test::Big_Union & u1,
+    Param_Test::Big_Union & u2,
+    Param_Test::Big_Union_out u3) = 0;
   
   static void test_big_union_skel (
       TAO_ServerRequest & server_request,
@@ -689,9 +689,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Small_Union test_small_union (
-    const ::Param_Test::Small_Union & u1,
-    ::Param_Test::Small_Union & u2,
-    ::Param_Test::Small_Union_out u3) = 0;
+    const Param_Test::Small_Union & u1,
+    Param_Test::Small_Union & u2,
+    Param_Test::Small_Union_out u3) = 0;
   
   static void test_small_union_skel (
       TAO_ServerRequest & server_request,
@@ -703,9 +703,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::CORBA::Any * test_complex_any (
-    const ::CORBA::Any & ca1,
-    ::CORBA::Any & ca2,
-    ::CORBA::Any_out ca3) = 0;
+    const CORBA::Any & ca1,
+    CORBA::Any & ca2,
+    CORBA::Any_out ca3) = 0;
   
   static void test_complex_any_skel (
       TAO_ServerRequest & server_request,
@@ -717,9 +717,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Recursive_Struct * test_recursive_struct (
-    const ::Param_Test::Recursive_Struct & rs1,
-    ::Param_Test::Recursive_Struct & rs2,
-    ::Param_Test::Recursive_Struct_out rs3) = 0;
+    const Param_Test::Recursive_Struct & rs1,
+    Param_Test::Recursive_Struct & rs2,
+    Param_Test::Recursive_Struct_out rs3) = 0;
   
   static void test_recursive_struct_skel (
       TAO_ServerRequest & server_request,
@@ -731,9 +731,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Recursive_Union * test_recursive_union (
-    const ::Param_Test::Recursive_Union & ru1,
-    ::Param_Test::Recursive_Union & ru2,
-    ::Param_Test::Recursive_Union_out ru3) = 0;
+    const Param_Test::Recursive_Union & ru1,
+    Param_Test::Recursive_Union & ru2,
+    Param_Test::Recursive_Union_out ru3) = 0;
   
   static void test_recursive_union_skel (
       TAO_ServerRequest & server_request,
@@ -745,9 +745,9 @@ public:
   // w:\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual ::Param_Test::Multdim_Array_slice * test_multdim_array (
-    const ::Param_Test::Multdim_Array m1,
-    ::Param_Test::Multdim_Array m2,
-    ::Param_Test::Multdim_Array_out m3) = 0;
+    const Param_Test::Multdim_Array m1,
+    Param_Test::Multdim_Array m2,
+    Param_Test::Multdim_Array_out m3) = 0;
   
   static void test_multdim_array_skel (
       TAO_ServerRequest & server_request,
@@ -768,7 +768,7 @@ public:
 };
 
 // TAO_IDL - Generated from 
-// .\be\be_codegen.cpp:1517
+// .\be\be_codegen.cpp:1520
 
 
 #if defined (__ACE_INLINE__)
