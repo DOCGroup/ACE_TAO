@@ -1354,31 +1354,31 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 
   bool const is_multiple = node->is_multiple ();
 
+  os_ << be_nl << be_nl
+      << "if (ACE_OS::strcmp (name, \"" << port_name
+      << "\") == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "/// " << (is_multiple ? "Multiplex" : "Simplex")
+      << " disconnect." << be_nl;
+
+  if (is_multiple)
+    {
+      os_ << "if (ck == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::Components::CookieRequired ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
+
+  os_ << "return this->";
+
   if (node->uses_type ()->is_local ())
     {
-      // @@ placeholder for local interface behavior
+      os_ << "context_->";
     }
-  else
-    {
-      os_ << be_nl << be_nl
-          << "if (ACE_OS::strcmp (name, \"" << port_name
-          << "\") == 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "/// " << (is_multiple ? "Multiplex" : "Simplex")
-          << " disconnect." << be_nl;
-
-      if (is_multiple)
-        {
-          os_ << "if (ck == 0)" << be_idt_nl
-              << "{" << be_idt_nl
-              << "throw ::Components::CookieRequired ();" << be_uidt_nl
-              << "}" << be_uidt_nl << be_nl;
-        }
-
-      os_ << "return this->disconnect_" << port_name
-          << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
-          << "}" << be_uidt;
-    }
+    
+  os_ << "disconnect_" << port_name
+      << " (" << (is_multiple ? "ck" : "") << ");" << be_uidt_nl
+      << "}" << be_uidt;
 
   return 0;
 }
