@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx)
@@ -26,49 +25,56 @@ be_visitor_attribute_set_from_extracted::~be_visitor_attribute_set_from_extracte
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_array (be_array *)
+be_visitor_attribute_set_from_extracted::visit_array (
+  be_array *)
 {
   os_ << var_name_ << ".in ()";
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_component (be_component *)
+be_visitor_attribute_set_from_extracted::visit_component (
+  be_component *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_enum (be_enum *)
+be_visitor_attribute_set_from_extracted::visit_enum (
+  be_enum *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_eventtype (be_eventtype *)
+be_visitor_attribute_set_from_extracted::visit_eventtype (
+  be_eventtype *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_home (be_home *)
+be_visitor_attribute_set_from_extracted::visit_home (
+  be_home *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_interface (be_interface *)
+be_visitor_attribute_set_from_extracted::visit_interface (
+  be_interface *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_predefined_type (be_predefined_type *node)
+be_visitor_attribute_set_from_extracted::visit_predefined_type (
+  be_predefined_type *node)
 {
   switch (node->pt ())
     {
@@ -104,21 +110,24 @@ be_visitor_attribute_set_from_extracted::visit_predefined_type (be_predefined_ty
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_sequence (be_sequence *)
+be_visitor_attribute_set_from_extracted::visit_sequence (
+  be_sequence *)
 {
   os_ << "*" << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_string (be_string *)
+be_visitor_attribute_set_from_extracted::visit_string (
+  be_string *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_structure (be_structure *node)
+be_visitor_attribute_set_from_extracted::visit_structure (
+  be_structure *node)
 {
   os_ << (node->size_type () == AST_Type::VARIABLE ? "" : "*")
       << var_name_;
@@ -126,14 +135,18 @@ be_visitor_attribute_set_from_extracted::visit_structure (be_structure *node)
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_typedef (be_typedef *)
+be_visitor_attribute_set_from_extracted::visit_typedef (
+  be_typedef *node)
 {
-  // TODO
-  return 0;
+  be_type *pbt =
+    be_type::narrow_from_decl (node->primitive_base_type ());
+    
+  return (pbt->accept (this));
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_union (be_union *node)
+be_visitor_attribute_set_from_extracted::visit_union (
+  be_union *node)
 {
   os_ << (node->size_type () == AST_Type::VARIABLE ? "" : "*")
       << var_name_;
@@ -141,14 +154,16 @@ be_visitor_attribute_set_from_extracted::visit_union (be_union *node)
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_valuebox (be_valuebox *)
+be_visitor_attribute_set_from_extracted::visit_valuebox (
+  be_valuebox *)
 {
   os_ << var_name_;
   return 0;
 }
 
 int
-be_visitor_attribute_set_from_extracted::visit_valuetype (be_valuetype *)
+be_visitor_attribute_set_from_extracted::visit_valuetype (
+  be_valuetype *)
 {
   os_ << var_name_;
   return 0;
