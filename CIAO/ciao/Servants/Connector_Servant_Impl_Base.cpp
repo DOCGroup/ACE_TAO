@@ -381,7 +381,7 @@ namespace CIAO
 
   ::CORBA::Object_ptr
   Connector_Servant_Impl_Base::disconnect (
-    const char * /* name */,
+    const char * name,
     ::Components::Cookie * /* ck */)
   {
     if (name == 0)
