@@ -63,7 +63,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
+  ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new LatencyTTTest_Listener_exec_i (*this);
@@ -103,9 +103,16 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_passivate (void)
   {
-     ACE_DEBUG((LM_DEBUG, "SUMMARY RECEIVER:\n "
-                           "Total number of messages sent back: %u \n",
-                           this->count_));
+    if (this->count_ == 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR RECEIVER: No messages sent back.\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "SUMMARY RECEIVER:\n "
+                              "Total number of messages sent back: %u \n",
+                              this->count_));
+      }
   }
 
   void

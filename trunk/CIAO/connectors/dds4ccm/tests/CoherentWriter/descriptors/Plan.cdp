@@ -191,7 +191,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Library#QueryFilter_Profile</string>
+          <string>CoherentWriter_Library#CoherentWriter_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -220,7 +220,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Library#QueryFilter_Profile</string>
+          <string>CoherentWriter_Library#CoherentWriter_Profile</string>
         </value>
       </value>
     </configProperty>

@@ -14,8 +14,8 @@ module LatencyTT_Test
 {
   component Receiver
   {
-    port CCM_DDS::LatencyTTTest::DDS_Listen info_listen;
-    port CCM_DDS::LatencyTTTest::DDS_Write write_ping;
+    port LatencyTTTestConn::DDS_Listen info_listen;
+    port LatencyTTTestConn::DDS_Write write_ping;
   };
 };
 

@@ -24,7 +24,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
   // LatencyTTTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export LatencyTTTest_Listener_exec_i
-    : public virtual ::CCM_DDS::LatencyTTTest::CCM_Listener,
+    : public virtual ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -57,7 +57,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
     void start ();
     void record_time (unsigned long datalen);
 
-    virtual ::CCM_DDS::LatencyTTTest::CCM_Listener_ptr
+    virtual ::LatencyTT_Test::LatencyTTTestConn::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -76,7 +76,7 @@ namespace CIAO_LatencyTT_Test_Receiver_Impl
 
   private:
     ::LatencyTT_Test::CCM_Receiver_Context_var context_;
-    CCM_DDS::LatencyTTTest::Writer_var writer_;
+    ::LatencyTT_Test::LatencyTTTestConn::Writer_var writer_;
 
     CORBA::ULong count_;
   };
