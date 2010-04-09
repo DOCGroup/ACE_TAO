@@ -41,9 +41,6 @@ $tg_executor = 0;
 
 $status = 0;
 
-$ENV{"DANCE_TRACE_ENABLE"} = 0;
-$ENV{"CIAO_TRACE_ENABLE"} = 0;
-
 sub create_targets {
     #   daemon
     for ($i = 0; $i < $nr_daemon; ++$i) {
