@@ -1,3 +1,8 @@
+Fri Apr  9 13:34:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          A zero string leads to CORBA::BAD_PARAM
+
 Fri Apr  9 13:26:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:

@@ -817,7 +817,7 @@ be_visitor_servant_svs::gen_provides_top (void)
 
   os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_facet_executor_block feb_visitor (this->ctx_);
@@ -856,7 +856,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
 
   os_ << "if (publisher_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_subscribe_block sb_visitor (this->ctx_);
@@ -885,7 +885,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
 
   os_ << "if (publisher_name == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_unsubscribe_block ub_visitor (this->ctx_);
@@ -954,7 +954,7 @@ be_visitor_servant_svs::gen_uses_top (void)
 
   os_ << "if (name == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
+      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt;
 
   be_visitor_connect_block cb_visitor (this->ctx_);
