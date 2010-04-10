@@ -50,18 +50,18 @@ $server_status3 = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-if ($server_status1 != 1) {
-    print STDERR "ERROR: tao returned $server_status1 for $input_file1, should have failed\n";
+if ($server_status1 == 0) {
+    print STDERR "ERROR: tao_idl returned $server_status1 for $input_file1, should have failed\n";
     $status = 1;
 }
 
-if ($server_status2 != 1) {
-    print STDERR "ERROR: tao returned $server_status2 for $input_file2, should have failed\n";
+if ($server_status2 == 0) {
+    print STDERR "ERROR: tao_idl returned $server_status2 for $input_file2, should have failed\n";
     $status = 1;
 }
 
-if ($server_status3 != 1) {
-    print STDERR "ERROR: tao returned $server_status3 for $input_file3, should have failed\n";
+if ($server_status3 == 0) {
+    print STDERR "ERROR: tao_idl returned $server_status3 for $input_file3, should have failed\n";
     $status = 1;
 }
 
