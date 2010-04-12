@@ -20,27 +20,6 @@ module Components
   interface EventConsumerBase
   {
     void push_event (in EventBase evt) raises (BadEventType);
-
-    /*
-     * CIAO-specific operation to treat event service as regular event
-     * sink port. The source_id needs to be passed in to identify the
-     * source of the publisher port to support event filtering mechanism.
-     *
-     * @todo Has to be removed
-     */
-    void ciao_push_event (in EventBase evt,
-                          in string source_id,
-                          in CORBA::TypeCode tc)
-      raises (BadEventType);
-
-    /*
-     * CIAO-specific operation to help support the capability
-     * to subscribe to eventtypes more derived than the type
-     * consumed.
-     *
-     * @todo Has to be removed
-     */
-    boolean ciao_is_substitutable (in string event_repo_id);
   };
 };
 #endif /* CCM_EVENTCONSUMERBASE_IDL */
