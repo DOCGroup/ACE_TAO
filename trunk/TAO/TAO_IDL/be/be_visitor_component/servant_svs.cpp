@@ -1356,11 +1356,11 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   if (gen_guard)
     {
       os_ << "{" << be_idt_nl
-          << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                       mon," << be_nl
-          << "                       this->context_->"
+          << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+          << "                  mon," << be_nl
+          << "                  this->context_->"
           << port_name << "_lock_," << be_nl
-          << "                       0);" << be_nl << be_nl;
+          << "                  0);" << be_nl << be_nl;
     }
 
   os_ << "::CIAO::Servant::describe_"
@@ -1482,11 +1482,11 @@ be_visitor_event_source_desc::visit_publishes (
   os_ << be_nl << be_nl;
 
   os_ << "{" << be_idt_nl
-      << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                       mon," << be_nl
-      << "                       this->context_->"
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->context_->"
       << port_name << "_lock_," << be_nl
-      << "                       0);" << be_nl << be_nl;
+      << "                  0);" << be_nl << be_nl;
 
   os_ << "::CIAO::Servant::describe_pub_event_source<"
       << be_idt_nl

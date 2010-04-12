@@ -1,3 +1,9 @@
+Mon Apr 12 09:23:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Use ACE_GUARD for a regular mutex, not read/write guards
+
 Mon Apr 12 06:53:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html

@@ -132,9 +132,9 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "::" << fname << " * ev)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_READ_GUARD (TAO_SYNCH_MUTEX," << be_nl
-      << "                mon," << be_nl
-      << "                this->" << port_name
+  os_ << "ACE_GUARD (TAO_SYNCH_MUTEX," << be_nl
+      << "           mon," << be_nl
+      << "           this->" << port_name
       << "_lock_);" << be_nl << be_nl;
 
   os_ << "for (" << tao_cg->upcase (port_name)
@@ -170,11 +170,11 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "Consumer::_duplicate (c);" << be_nl << be_nl;
 
   os_ << "{" << be_idt_nl
-      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                        mon," << be_nl
-      << "                        this->" << port_name
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                        0);" << be_nl << be_nl;
+      << "                  0);" << be_nl << be_nl;
 
   os_ << "result = this->ciao_publishes_" << port_name
       << "_.insert (entry);";
@@ -217,11 +217,11 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "}" << be_uidt_nl << be_nl;
 
   os_ << "{" << be_idt_nl
-      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                        mon," << be_nl
-      << "                        this->" << port_name
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                        ::" << fname
+      << "                  ::" << fname
       << "Consumer::_nil ());" << be_nl << be_nl;
 
   os_ << tao_cg->upcase (port_name) << "_TABLE::iterator iter ="
@@ -385,11 +385,11 @@ be_visitor_context_svs::gen_uses_multiplex (
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                       mon," << be_nl
-      << "                       this->" << port_name
+  os_ << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                       0);" << be_nl << be_nl;
+      << "                  0);" << be_nl << be_nl;
 
   os_ << "::" << node_->full_name () << "::" << port_name
       << "Connections * tmp_retv = 0;" << be_nl
@@ -442,11 +442,11 @@ be_visitor_context_svs::gen_uses_multiplex (
 
   os_ << be_nl << be_nl
       << "{" << be_idt_nl
-      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                        mon," << be_nl
-      << "                        this->" << port_name
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                        0);";
+      << "                  0);";
 
   os_ << be_nl << be_nl
       << "result = this->ciao_uses_" << port_name
@@ -488,11 +488,11 @@ be_visitor_context_svs::gen_uses_multiplex (
 
   os_ << be_nl << be_nl
       << "{" << be_idt_nl
-      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-      << "                        mon," << be_nl
-      << "                        this->" << port_name
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                  mon," << be_nl
+      << "                  this->" << port_name
       << "_lock_," << be_nl
-      << "                        ::" << fname
+      << "                  ::" << fname
       << "::_nil ());";
 
   os_ << be_nl << be_nl
