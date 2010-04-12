@@ -50,7 +50,7 @@ public:
 
   /// Swaps uses for provides members and vice versa.S
   int visit_porttype_scope_mirror (be_porttype *node);
-  
+
   /// Set the member.
   void node (be_component *c);
 
@@ -64,7 +64,6 @@ protected:
   be_component *node_;
   TAO_OutStream &os_;
   ACE_CString export_macro_;
-  bool static_config_;
   ACE_CString port_prefix_;
 };
 

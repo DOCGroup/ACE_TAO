@@ -1,3 +1,19 @@
+Mon Apr 12 06:53:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp
+        * TAO_IDL/be/be_visitor_component_scope.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+        * TAO_IDL/be_include/be_global.h
+        * TAO_IDL/be_include/be_visitor_component_scope.h
+          Removed support for static configuration and ciao specific
+          ccm event extensions which are not used anymore
+
 Fri Apr  9 14:33:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
@@ -31,16 +47,16 @@ Fri Apr  9 14:33:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Apr  9 13:37:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp(visit_sequence):
-        
+
           Added OMG-preferred 'const' qualifier to the generated
           sequence pointer declaration.
-          
+
         * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
-        
+
           Implemented override for visit_typedef()
 
 Fri Apr  9 13:34:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
