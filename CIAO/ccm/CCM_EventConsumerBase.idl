@@ -1,5 +1,4 @@
 // $Id$
-/// NOT Compliant with OMG 06-04-01 Section 6.6.2
 
 #if !defined (CCM_EVENTCONSUMERBASE_IDL)
 #define CCM_EVENTCONSUMERBASE_IDL
