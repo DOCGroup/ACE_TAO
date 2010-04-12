@@ -106,6 +106,15 @@ sub LocalFile {
     return $newfile;
 }
 
+sub AddLibPath ($) {
+    my $self = shift;
+    my $dir = shift;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "Adding libpath $dir\n";
+    }
+    PerlACE::add_lib_path ($dir);
+}
+
 sub CreateProcess {
   my $self = shift;
 if ($OSNAME eq "MSWin32") {
@@ -174,7 +183,7 @@ sub KillAll ($)
 {
     my $self = shift;
     my $procmask = shift;
-    PerlACE::ProcessVX::kill_all ($procmask);    
+    PerlACE::ProcessVX::kill_all ($procmask, $self);    
 }
 
 1;

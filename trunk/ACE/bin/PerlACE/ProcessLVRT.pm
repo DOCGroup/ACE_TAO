@@ -347,9 +347,10 @@ CHECK:
 
 ###
 
-sub kill_all ($)
+sub kill_all
 {
   my $procmask = shift;
+  my $target = shift;
   ## NOT IMPLEMENTED YET
 }
 
