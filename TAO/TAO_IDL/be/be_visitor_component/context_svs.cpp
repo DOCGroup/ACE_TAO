@@ -122,8 +122,6 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
   const char *lname = obj->local_name ()->get_string ();
   ACE_CString sname_str (
     ScopeAsDecl (obj->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl << be_nl
       << "void" << be_nl
