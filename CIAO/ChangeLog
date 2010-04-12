@@ -1,10 +1,15 @@
+Mon Apr 12 11:40:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Cornucopia/Cornucopia.idl:
+          Disabled some methods for LwCCM
+
 Mon Apr 12 10:00:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
         * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
         * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl:
-        
+
           Changes to allow tests to run in multiplatform setup.
 
 Mon Apr 12 06:56:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
