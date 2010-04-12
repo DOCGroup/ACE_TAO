@@ -52,7 +52,7 @@ sub create_targets {
     #   daemon
     @tg_daemons = 0;
     for ($i = 0; $i < $nr_daemon; ++$i) {
-        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for deamon $i failed\n";
+        $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+2) || die "Create target for deamon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../Components');
     }
     #   execution manager
@@ -87,6 +87,10 @@ sub kill_node_daemons {
         $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
         $tg_daemons[$i]->DeleteFile ("$iorbase$i.ior");
     }
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        # in case shutdown did not perform as expected
+        $tg_daemons[$i]->KillAll ('ciao_componentserver');
+    }
 }
 
 sub kill_open_processes {
@@ -101,8 +105,6 @@ sub kill_open_processes {
     if ($ns_running == 1) {
         $NS->Kill (); $NS->TimedWait (1);
     }
-    # in case shutdown did not perform as expected
-    $tg_executor->KillAll ('ciao_componentserver');
 }
 
 
@@ -112,13 +114,15 @@ sub run_node_daemons {
         $iorfile = $iorfiles[$i];
         $port = $port_start+$i;
         $nodename = $nodebase . ($i + 1);
-        $iiop = "iiop://localhost:$port";
+        $node_host = $tg_daemons[$i]->HostName ();
+        $iiop = "iiop://$node_host:$port";
         $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
 
         print "Run node daemon \#$nodename\n";
+        $tg_daemons[$i]->SetEnv ("NameServiceIOR", $tg_exe_man->GetEnv ("NameServiceIOR"));
 
         $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
         $DEAMONS[$i]->Spawn ();
@@ -165,7 +169,8 @@ foreach $file (@files) {
 
     print STDERR "Starting Naming Service\n";
 
-    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:60000 -o $ior_nsfile");
+    my $ns_host = $tg_naming->HostName ();
+    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://$ns_host:60000 -o $ior_nsfile");
     $NS->Spawn ();
 
     if ($tg_naming->WaitForFileTimed ($ior_nsbase,
@@ -177,7 +182,8 @@ foreach $file (@files) {
 
     $ns_running = 1;
     # Set up NamingService environment
-    $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60000/NameService";
+    $tg_exe_man->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60000/NameService");
+    $tg_executor->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60000/NameService");
 
     # Invoke node daemon(s).
     print "Invoking $nr_daemon node daemon(s)\n";
