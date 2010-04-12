@@ -1,3 +1,11 @@
+Mon Apr 12 18:39:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp
+        * ciao/Servants/Connector_Servant_Impl_Base.h
+        * ciao/Servants/Home_Servant_Impl_Base.cpp
+        * ciao/Servants/Home_Servant_Impl_Base.h
+          Disabled some more code with LwCCM
+
 Mon Apr 12 18:29:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp (remove):
