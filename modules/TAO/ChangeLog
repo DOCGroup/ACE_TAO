@@ -1,0 +1,1404 @@
+Mon Apr 12 09:52:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Handle -Gex
+
+Mon Apr 12 09:43:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Disable get_all_publishers with lwccm
+
+Mon Apr 12 09:23:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Use ACE_GUARD for a regular mutex, not read/write guards
+
+Mon Apr 12 06:53:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp
+        * TAO_IDL/be/be_visitor_component_scope.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+        * TAO_IDL/be_include/be_global.h
+        * TAO_IDL/be_include/be_visitor_component_scope.h
+          Removed support for static configuration and ciao specific
+          ccm event extensions which are not used anymore
+
+Fri Apr  9 14:33:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/paramlist.h:
+
+          Removed these unused visitors.
+
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+
+          Removed includes of the above visitor files.
+
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed unused context state value.
+
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_invoke.cpp:
+
+          Code consolidation and cleanup.
+
+Fri Apr  9 13:37:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp(visit_sequence):
+
+          Added OMG-preferred 'const' qualifier to the generated
+          sequence pointer declaration.
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+
+          Implemented override for visit_typedef()
+
+Fri Apr  9 13:34:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          A zero string leads to CORBA::BAD_PARAM
+
+Fri Apr  9 13:26:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Fixed identation in generated code
+
+Fri Apr  9 12:45:17 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be/be_component_cpp:
+
+          Changed 'has_attribute_' member to 'has_rw_attribute_'
+          to indicate presence of read-write attribute only, since
+          these attributes are the only ones of interest. Also
+          changed accessor method names accordingly.
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Modified to use the new accessor names above.
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+
+          Added 'ACE_UNUSED_ARG' macro in the generated code block
+          that outputs an error if an attribute type is not
+          supported. In this case, the attribute description name
+          variable is used, but the corresponding value variable
+          is not.
+
+Fri Apr  9 08:47:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+          Removed local variable
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Generate disconnect for local interfaces
+
+Fri Apr  9 08:05:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Disable some code generation with LwCCM
+
+Thu Apr  8 09:55:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * TAO_IDL/be/be_global.cpp
+        * TAO_IDL/be/be_interface.cpp
+        * TAO_IDL/be/be_provides.cpp
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp
+        * TAO_IDL/be_include/be_global.h
+          Added support for -Gcl which enabled LwCCM
+
+Wed Apr  7 16:44:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+
+          Changes to support configuration of component
+          attributes of (typedef'd) sequence type. Attributes
+          of anonymous sequence type (deprecated by the OMG)
+          are not supported.
+
+Wed Apr  7 15:18:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * be/be_visitor_attribute/component_init.cpp:
+
+          Added check in generated code for the success of extraction
+          from Any. If extraction fails, we throw BAD_PARAM. I didn't
+          see any specific indications in the spec about what to
+          throw in this case.
+
+Wed Apr  7 14:10:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Added checks to eliminate generation and use of
+          populate_port_tables() if the component has neither
+          facets nor event sinks, since this method will be
+          effectively a no-op in that case anyway.
+
+Wed Apr  7 13:47:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be_include/be_component.h:
+
+          Added additional flag to indicated the presence of a
+          multiplex uses port in the component.
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Added checks for the above flag, to determine if the Cookie
+          argument in a generated disconnect() method will be used
+          or not. If not used, it is generated as commented out.
+
+Wed Apr  7 10:39:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/Bug_2953_Regression/client.cpp
+        * tests/Bug_2953_Regression/run_test.pl
+        * tests/Bug_2953_Regression/server.cpp
+        Pass filenames through commandline.
+
+
+Wed Apr  7 09:51:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/Hang_Shutdown/run_test.pl
+        * tests/Hang_Shutdown/server.cpp
+        * tests/OBV/TC_Alignment/run_test.pl
+        Hang_Shutdown:Pass ior filenmae through commandline.
+        TC_Alignment: remove duplicate header.
+
+Wed Apr  7 08:44:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/HandleExhaustion/run_test.pl
+        Pass ior file nasme through commandline.
+
+Wed Apr  7 08:28:12 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/POA/EndpointPolicy/server.cpp
+        Add svc.conf filename through command line option in help.
+
+Tue Apr  6 12:40:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Throw an exception as default, see 6.4.3.3 from the CCM spec
+
+Mon Apr  5 16:49:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be/be_component.cpp:
+
+          Added code to scan component scope and set flags indicating
+          the presence or absence of provides, uses, publishes, emits
+          and consumes ports as well as attributes. Scan includes
+          inherited components' scopes, if any, and also searches the
+          porttype associated with extended ports and mirror ports.
+
+        * TAO_IDL/be/be_visitor_component/component_svh.cpp:
+
+          Added line to trigger component scan at the beginning of
+          code generation for each component. Thereafter the only
+          overhead is accessing the flags.
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+
+          Added checks to determine if a component is equivalent to
+          a connector, i.e., that it has no event-related ports. If
+          so, the leaner servant base class typedef is generated in
+          this case as well as for an actual connector.
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+
+          - Checks identical to those in the context visitor above
+            were added to generate the correct base constructor
+            call.
+
+          - Code generation specific to particular port kinds was
+            made conditional on the presence of those kinds of
+            ports, determined by checking the component's flags.
+
+          - ACE_UNUSED_ARG instances were removed. They are no
+            longer needed since instead of empty code blocks for
+            methods related to specific port kinds, we now skip
+            the generation of those methods entirely.
+
+Fri Apr  2 17:50:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Eliminated generation of overrides for the virtual methods
+          subscribe, unsubscribe, connect_consumer, disconnect_consumer,
+          get_all_publishers, and get_all_emitters for connectors.
+          These methods are of course still present as no-ops in a
+          servant base class, since they are inherited from
+          CCMObject and are generated as pure virtual in the skeleton.
+
+Fri Apr  2 17:03:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+
+          Generate typedef in context class used to select the
+          servant impl non-skeleton base class, depending on
+          whether the servant implements a component or a
+          connector. The connector base class is leaner, since
+          connectors may not contain event sources or sinks.
+
+Fri Apr  2 15:32:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+
+          Changes to AMI-related visitors to support inheritance in
+          generated AMI4CCM reply handler interfaces.
+
+Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	      * TAO version 1.7.8 released.
+
+Wed Mar 31 15:22:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+
+          Fixed incorrect code generation for the connector executor
+          implementation base class, which compiled but caused a
+          runtime crash.
+
+Wed Mar 31 13:15:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+
+          Fixed bug in generation of *A.cpp file when versioning
+          macros are specified.
+
+Wed Mar 31 11:28:14 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/OBV/TC_Alignment/run_test.pl:
+        * tests/OBV/TC_Alignment/server.cpp:
+        Pass ior filename through commandline.
+
+Wed Mar 31 09:01:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled test for bug#3837 on static builds.
+
+Wed Mar 31 06:51:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+          Fixed variable not used arnings
+
+Tue Mar 30 19:32:19 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * tao/RTScheduling/Current.cpp:
+          Fixed compile warnigs on LynxOS 4.2.
+
+Tue Mar 30 19:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_event_consumer):
+
+          Added a check for exisiting event consumer before creating.
+          Since event consumers are created for forward declared
+          eventtypes, multiple forward declarations were causing
+          'illegal redefinition' diagnostics from the IDL compiler.
+
+Tue Mar 30 18:59:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+
+          Added 'this->' to method call on class member in
+          generated code.
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+
+          Removed 'receptacle_objref_' class member and added
+          temporary variable of the same type in each generated
+          sendc_* operation.
+
+Tue Mar 30 18:20:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+
+          Improved handling of -Glem and -GM so that all generated
+          files are removed. Thanks to Adam Mitz for explaining
+          how to do this.
+
+Tue Mar 30 17:32:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Added recognition and handling of a new pragma
+          that stores names of receptacles we want to
+          use with AMI.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added storage and access for the names gathered
+          by the new pragma described above.
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp(visit_root):
+
+          Added a diagnostic error message on the return
+          value of the call to generate_ami4ccm_idl().
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+
+          Added method generate_ami4ccm_uses(), called
+          from visit_root(), to create implied IDL
+          receptacles as AMI counterparts to existing
+          receptacles, as indicated by instances of the
+          new pragma.
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+
+          Removed code that accomplished the above in an
+          ad hoc fashion for every receptacle, without
+          using a pragma or implied IDL.
+
+Mon Mar 29 21:13:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/TypeCodeFactory/Recursive_TypeCode.h:
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+
+          When typecodes are created for a recursive structure make the
+          link back up the tree a *_ptr rather than a *_var.  This avoids
+          creating a loop of reference counts thereby eliminating a leak
+          in the interface repository.
+          Developed by Dale Wilson <wilsond at ociweb dot com>.
+
+Mon Mar 29 16:25:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_svs.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_attribute/attribute.h:
+
+          Changed code generation for the facet executor implementation
+          class to use a name built on the facet name rather than on
+          the interface name. If two facets in a component use the
+          same interface, it's likely that the intention is to
+          implement the operations of this interface differently
+          in each facet. This change allows the application developer
+          to do that.
+
+Fri Mar 26 20:30:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+
+          Another attempt to get a value of type size_t inserted
+          into an IDL compiler file output stream in a way that
+          makes all supported compilers happy.
+
+Fri Mar 26 20:11:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ci.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+
+          - Changed facet executor impl class generation to
+            occur each time an interface is used in a component
+            facet, rather than once per interface as before.
+
+          - Fixed bugs in generation of type names for
+            component executors' facet executor reference
+            members.
+
+          - Fixed compile warnings in class be_visitor_root_ch
+            that local variable names hide base class member.
+
+          - Fixed bug in generation of facet executor operation
+            declarations when the facet interface is local.
+
+Fri Mar 26 17:02:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp (recursion_start):
+
+          Added code to strip off trailing slashes on the string
+          passed to this method. It is assumed the string denotes
+          a directory path, and the slashes are not only redundant,
+          but also cause problems down the line when using ACE
+          utilities to find the directory. Thanks to Abdullah
+          Sowayan <sowayan at gmail dot com> for reporting the
+          bug.
+
+Fri Mar 26 10:07:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Fixed variable not used warning
+
+Fri Mar 26 09:58:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/IDL_Test.mpc:
+          Disabled some generated ndds code, result in compile warnings
+
+Fri Mar 26 09:56:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Fixed variable not used warning
+
+Thu Mar 25 21:26:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_global.h:
+
+          New option -TS to set tab size for generated files.
+          Closes [BUGID:3829].
+
+        * docs/compiler.html:
+
+          Updated command line options table.
+
+Thu Mar 25 20:11:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+
+          Changed the point of copying, in generated code, the
+          component executor's context reference passed to the
+          constructor of the facet executor.
+
+Thu Mar 25 17:44:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_private_exh.h:
+
+          New visitor, generating private members in the component
+          executor to hold references to facet executors, if any.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          - Added class member to the facet executor impl to
+            hold a reference to its component's context.
+
+          - Change the facet exectutor impl's constructor
+            signature to pass in a reference to aforementioned
+            context.
+
+          - Added generation of a private member in the component
+            executor impl for each facet.
+
+          - Filled in the body of the component executor's generated
+            get_<port name>_<facet name> operation to actually
+            create a facet executor (passing in a copy of the
+            component executor's context) and store it (if not
+            already created) and return a copy to the caller.
+
+            These changes close [BUGID:3830].
+
+Thu Mar 25 14:52:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+
+          Fixed bug in code generation logic when the options
+          -Sa and -GA both are present on the command line.
+
+Thu Mar 25 08:56:11 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3837_Regression/client.cpp:
+        * tests/Bug_3837_Regression/server.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+          Fixed code for Unicode builds.
+
+Wed Mar 24 18:48:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ci.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ih.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svh.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_root/serializer_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cnh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_svs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_is.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/any_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cns.cpp:
+        * TAO_IDL/be/be_visitor_root/root_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ci.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sth.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ih.h:
+        * TAO_IDL/be_include/be_visitor_root/cdr_op.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ex_idl.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cnh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_si.h:
+        * TAO_IDL/be_include/be_visitor_root/root_is.h:
+        * TAO_IDL/be_include/be_visitor_root/root_svs.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_visitor_root/any_op.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cns.h:
+        * TAO_IDL/be_include/be_visitor_root/root_exh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ss.h:
+        * TAO_IDL/be_include/be_visitor_decl.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+
+          Refactored the huge visit_root() method in base
+          class be_visitor_root into visit_root() methods
+          (also added) in the subclasses, which are the
+          ones actually instantiated at the top level of
+          the backend AST traversal. Also, additional
+          code generation and AST traversals, besides the
+          main AST traversal, were factored out into
+          self_explanatory methods in the appropriate
+          root visitor classes.
+
+Tue Mar 23 16:08:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added !VxWorks to two tests that aren't expected to run on VxWorks.
+
+Tue Mar 23 15:57:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/OBV/Truncatable/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+
+          Pass -ORBDebugLevel if the perl script is started with -debug.
+
+        * tests/ORB_shutdown/run_test.pl:
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+
+          Extend the timeout.
+
+        * tests/Portable_Interceptors/Bug_3079/server.cpp:
+
+          Fixed an ACE logging call to have the correct number of params.
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+
+          Use multiple TestTargets for running concurrent processes.
+
+Tue Mar 23 12:50:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+
+          Fixed size_t to ACE_CDR::ULong conversion warnings.
+
+Tue Mar 23 12:42:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_root.cpp:
+
+          Fixed warning from wrong order of constructors.
+
+Mon Mar 22 19:55:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+
+          Made class be_root inherit from be_module (as AST_Root
+          inherits from aST_Module) and be_visitor_root inherit
+          from be_visitor_module. This change enabled ~1200 lines
+          of code to be eliminated from be_visitor_root.
+
+Mon Mar 20 15:52:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+          Layout changes to the generated code
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+          Commented out the generation of the receptacle_ member, it
+          is not used in the generated code as far as I can tell
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Const change
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp
+
+Mon Mar 22 15:05:44 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * NEWS:
+        * tao/ORB_Core.cpp:
+        * docs/Options.html:
+          Implemented -ORBHandleLoggingStrategyEvents option. Updated NEWS
+          for it and added corresponding documentation. This fixes bug#3837.
+
+        * tests/Bug_3837_Regression/client.cpp:
+        * tests/Bug_3837_Regression/Bug_3837_Regression.mpc:
+        * tests/Bug_3837_Regression/logger.conf:
+        * tests/Bug_3837_Regression/Hello.cpp:
+        * tests/Bug_3837_Regression/Test.idl:
+        * tests/Bug_3837_Regression/server.cpp:
+        * tests/Bug_3837_Regression/Hello.h:
+        * tests/Bug_3837_Regression/README:
+        * tests/Bug_3837_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+          Added a test for a new feature and scheduled it for run.
+
+Mon Mar 20 10:39:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+          Generate missing space when connector export macro is used
+
+Mon Mar 20 10:00:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Added rules for generating connector implementation
+
+Mon Mar 22 09:49:04 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+          Fixed these examples on Windows builds.
+
+Mon Mar 20 09:43:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp
+          Layout changes to the generated code
+
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+          Use ACE_NEW_NORETURN
+
+        * TAO_IDL/be/be_visitor_scope.cpp:
+          Check node pointer and return -1 instead of crashing
+
+Fri Mar 19 18:53:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+
+          More changes debugging the generation of an AMI4CCM
+          connector implementation.
+
+Fri Mar 19 14:18:40 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+
+          Removed redefinition of ACE_MAIN on VxWorks.
+
+        * orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl:
+
+          Use the TestTarget's HOSTNAME property.
+
+        * tests/AlternateIIOP/run_test.pl:
+
+          Fixed a bug where ',' was used to join two Perl strings instead
+          of '.'.  Changed hostname of "bogus" host.
+
+        * tests/Bug_1495_Regression/run_test.pl:
+
+          Swapped client and server TestTargets (client is now target #1).
+
+        * tests/Bug_2183_Regression/hang_client.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+
+          Pass the remote target's hostname to hang_client.pl and run the
+          client processes on TestTarget #2.
+
+        * tests/Bug_2805_Regression/client.cpp:
+        * tests/Bug_2909_Regression/client.cpp:
+        * tests/UNKNOWN_Exception/server.cpp:
+
+          Running orb->perform_work() in a tight loop may starve-out the
+          other threads.  Added ACE_OS::thr_yield().
+
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+
+          TestTarget #1 is created before the loop, start with #2.
+
+        * tests/ForwardOnceUponException/run_test.pl:
+
+          Select a new random port each time through the loop.
+
+        * tests/HandleExhaustion/run_test.pl:
+
+          Let the client process run a little while longer before killing it.
+
+        * tests/HandleExhaustion/server.cpp:
+
+          On VxWorks (kernel), hard-code the executable name as "server.out".
+
+        * tests/Hang_Shutdown/client.conf:
+
+          Added the three other svc.conf settings that are required when
+          -ORBClientConnectionHandler rw is used.
+
+Fri Mar 19 11:55:18 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+          Fixed RTScheduling examples on Solaris builds.
+
+Fri Mar 19 10:36:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Added flags used for ciao and with -GM we get a new A.idl file
+
+Thu Mar 18 18:33:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+
+          Changes to AMI connector impl generation, mostly due
+          to the declaration of the AMI connector in IDL as a
+          template module instantiation.
+
+        * TAO_IDL/fe/fe_utils.cpp:
+
+          Commented out the destruction of template arguments
+          for the time being until a way can be found to
+          avoid the call on AST nodes that are already
+          destroyed.
+
+Thu Mar 18 09:30:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/IDL_Test.mpc:
+          Enabled some more files with rti nddsgen
+
+Thu Mar 18 08:02:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Only when -GM is enabled on the commandline generate the ami4ccm
+          includes. Fixes the problems that the dds4ccm connectors also
+          got this include
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Default the dds implementation to NONE
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          With RTI DDS the dds implicit sequence now has a RTISeq postfix
+
+Thu Mar 18 07:59:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+              * TAO_IDL/Makefile.am:
+                Removed obsolete files
+
+              * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+              * TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+                Changed layout of generated code
+
+Wed Mar 17 19:10:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami4ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ami4ccm_pre_proc.h:
+
+          Removed this visitor, it was a temporary experiment.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_connector.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Further work on implementation of AMI connector code
+          generation. The presence of any
+          #pragma ciao ami4ccm interface "xxx" directives will
+          trigger the generation of an *A.idl file containing
+          AMI-related types associated with each interface -
+          a local AMI callback interface, a local interface
+          containing the corresponding sendc_* operations
+          (in a separate interface rather than added to the
+          original interface as in CORBA AMI so that users
+          connecting to a component but not wishing to use
+          AMI will not be burdened with the extra footprint),
+          and a connector declaration, in the form of an
+          instantiation of a template module (parameterized on
+          the original interface and the sendc_* operation
+          interface) containing a porttype with a 'uses'
+          port using the interface type and a 'provides' port
+          using the sendc_* operation interface type, and a
+          connector declaration using the porttype. This new
+          generated IDL file will be treated like any other
+          IDL file containing a connector declaration, that is,
+          executor IDL, a servant class, a context class,
+          and a connector implementation will be generated in
+          turn from it.
+
+Wed Mar 17 13:44:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.inl:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+          Fixed a number of memory leaks.
+
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/RTScheduling/Scheduler.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.h:
+        * tests/RTScheduling/Thread_Cancel/test.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/POA_Holder.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.h:
+        * examples/RTScheduling/MIF_Scheduler/run_test.pl:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * examples/RTScheduling/DT_Creator.h:
+          Fixed a lot of memory leaks which are actually similar from test
+          to test.
+
+Wed Mar 17 10:57:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Use fully scoped TAO namespace
+
+Wed Mar 17 10:43:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          Use fully scoped TAO namespace
+
+Wed Mar 17 09:14:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * docs/Options.html:
+          Improved readability of description for -ORBIgnoreDefaultSvcConfFile.
+
+        * tests/Bug_3826_Regression/run_test.pl:
+          Removed -ORBIgnoreDefaultSvcConfFile in a subtest for
+          -ORBSvcConfDirective as it is not needed after the following
+          change in ACE.
+          Wed Mar 17 08:57:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * NEWS:
+          Added news entry about -ORBIgnoreDefaultSvcConfFile.
+
+Mon Mar 15 11:49:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+          Derive the implied AMI4CCM connector from ::CCM_AMI::AMI_Base
+
+Mon Mar 15 11:25:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_svs.cpp:
+          Simplified generated factory method
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed issue with the layout of the generated code
+
+Fri Mar 12 20:34:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_exs.h:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/executor_ami_exs.h:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exs.h:
+
+          New visitors, generating the source code for the AMI
+          connector implementation.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+
+          Changes related to the new visitors described above,
+          and other minor changes.
+
+Fri Mar 12 11:19:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+          Fixed argument not used warning
+
+        * util/utl_decllist.cpp:
+          Zap old documentation
+
+Thu Mar 11 22:53:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/facet_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_ami_exh.h:
+        * TAO_IDL/be_include/be_visitor_connector/executor_ami_exh.h:
+
+          New visitors to generate the AMI connector implementation
+          header.
+
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+
+          Removed generation of pure virtual extension to method
+          declarations when generating for implementation header.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+
+          Added temporary code to launch the new visitors until
+          the overarching logic is in place for AMI connectors.
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be_include/be_visitor_connector.h:
+
+          Added new visitor files to the include lists.
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+
+          Fixed typo in error message.
+
+Thu Mar 11 15:44:15 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/TAO_Internal.cpp:
+          Added a new -ORBIgnoreDefaultSvcConfFile option. It will force to
+          ignore svc.conf if it's present in current directory.
+
+        * tests/Bug_3826_Regression/svc.conf:
+        * tests/Bug_3826_Regression/server.cpp:
+        * tests/Bug_3826_Regression/run_test.pl:
+          Extended the test for using a new option.
+
+        * docs/Options.html:
+          Documented a new -ORBIgnoreDefaultSvcConfFile option.
+
+Thu Mar 11 14:09:46 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+          Fixed code generation for unions related to bug#3821. If union
+          has several case labels for one element and default is not the
+          first label in this list then tao_idl generated non-compilable
+          code. Changed how default label value is generated. tao_idl uses
+          existing but unused enum labels where these exist for maximum
+          compatability with Java ORBs.
+
+        * TAO_IDL/ast/ast_union.cpp:
+          Fixed a typo in the code when union labels are iterated in
+          a loop but only the first label is always checked.
+
+        * tests/Bug_3821_Regression/test.cpp:
+        * tests/Bug_3821_Regression/test.idl:
+        * tests/IDL_Test/Bug_3821_Regression.idl:
+          Updated the test for testing new code.
+
+Thu Mar 11 09:39:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_3215_Regression/ServerORBInitializer2.{h,cpp}:
+          Layout changes
+
+Tue Mar  9 20:06:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+
+          Added code generation of IDL local interfaces related to
+          the generated IDL connector.
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+
+          Fixed memory leaks and made minor formatting changes
+          to generated code.
+
+Tue Mar  9 18:29:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_conn_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_conn_ex_idl.h:
+
+          New visitor, to generate the implied connector IDL for a
+          designated AMI4CCM IDL interface.
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+          Added the new visitor files to the IDL compiler build.
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added code to create and launch the new visitor.
+
+Tue Mar  9 14:28:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/TAO_IDL_ACE.mwc:
+          Use full paths
+
+Mon Mar  8 20:22:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+
+          Changed inheritance list of reply handler interface to include
+          corresponding reply handler(s) of parent(s), if any.
+
+Mon Mar  8 19:17:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_sendc_ex_idl.h:
+
+          New files, containing a new visitor that generates an interface
+          containing sendc_* operations for AMI4CCM in the executor IDL
+          file, and a corresponding CCM_* interface inheriting from it.
+
+        * TAO_IDL/be/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+
+          - Mods to existing files required by the new visitor described
+            above
+
+          - Guards to ensure that AMI4CCM IDL gets generated only once
+            per interface (specified by the ciao ami4ccm interface
+            pragma
+
+          - Code cleanup and cosmetic changes
+
+Mon Mar  8 16:27:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Updated because of move of type traits
+
+Mon Mar  8 15:13:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_global.h:
+          Doxygen changes
+
+Mon Mar  8 14:21:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_global.h:
+
+          Restored name of enum that was made anonymous in the
+          declaration without changing any refereces to the enum.
+
+Mon Mar  8 12:06:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Renamed 'RTIDDS' of DDS_IMPL enum to 'NDDS'.
+
+Mon Mar  8 11:31:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Using 'ndds' instead of 'rtidds' for IDL compiler flag
+          'dds_impl'.
+
+Mon Mar  8 11:22:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Renamed directory of dds4ccm_traits.h
+
+Sun Mar  7 19:06:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+          Fixed argument not used warnings
+
+Fri Mar  5 22:26:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+
+          New files, containing a new visitor to generate the reply
+          handler interfaces in executor IDL.
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be_include/be_visitor_interface/ami_interface_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+
+          - Added new pragma string to be handled, one that
+            designates an IDL interface for AMI4CCM code
+            generation.
+
+          - Added storage for the above pragma interface
+            names in IDL_GlobalData.
+
+          - Added cleanup of string names contained in
+            several new ACE_Unbounded_Queue members of
+            IDL_GlobalData.
+
+          - Added iteration of pragma ami4ccm interface
+            list and trigger of associated code generation
+            in root visitor.
+
+          - Added as yet unimplemented visitor to generate
+            the reply handler operations.
+
+Fri Mar  5 20:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connectorconnector_dds_exh.cpp:
+
+          Fixed bug in connector traits typedef generation, a component
+          declared at global scope caused an extra '::' to be generated
+          in the associated context class name.
+
+Fri Mar  5 14:14:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+          Changed refcount to unsigned long and remove casts, we have
+          an atomic op specialization for unsigned long for years now
+
+Fri Mar  5 12:28:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Namespace RTI renamed to NDDS namespace regarding
+          traits.
+
+Fri Mar  5 10:42:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed path to DDS4CCM_Traits.h
+
+Thu Mar  4 16:31:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/anonymous.idl:
+
+          Added array test cases.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+
+          Added command line option -Wb,dds_impl=xxx to select
+          included files to generate, both the list of typesupport
+          files gathered with the associated #pragma, or other
+          miscellaneous files such as the state and connector
+          template header files.
+
+Thu Mar  4 12:01:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Unicode fixes
+
+        * orbsvcs/tests/Bug_3215_Regression/Hello.h:
+          Removed msvc checks
+
+Thu Mar  4 11:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * tao/PI/PI.h:
+        * tao/VarOut_T.h:
+          Layout and doxygen changes
+
+Thu Mar  4 08:03:51 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed path /impl/ndds to /impl/dds or
+          /impl/dds/ndds.
+
+Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next micro
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
