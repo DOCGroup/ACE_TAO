@@ -1,3 +1,8 @@
+Mon Apr 12 09:52:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+          Handle -Gex
+
 Mon Apr 12 09:43:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
