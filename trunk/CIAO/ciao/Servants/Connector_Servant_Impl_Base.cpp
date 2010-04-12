@@ -182,7 +182,13 @@ namespace CIAO
          iter != this->facet_table_.end ();
          ++iter, ++i)
       {
-        retval[i] = iter->second;
+        ::Components::FacetDescription *fd = 0;
+        ACE_NEW_THROW_EX (fd,
+                          ::OBV_Components::FacetDescription (iter->first.c_str (),
+                                                              iter->second->_interface_repository_id (),
+                                                              iter->second),
+                          CORBA::NO_MEMORY ());
+        retval[i] = fd;
       }
 
     return retval._retn ();
@@ -291,8 +297,8 @@ namespace CIAO
     retval->length (this->receptacle_table_.current_size ());
     CORBA::ULong i = 0;
 
-    CIAO_DEBUG (6,
-                (LM_DEBUG,
+    CIAO_DEBUG (9,
+                (LM_TRACE,
                  CLINFO
                  "Connector_Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
                  retval->length ()));
@@ -302,11 +308,6 @@ namespace CIAO
          iter != this->receptacle_table_.end ();
          ++iter, ++i)
       {
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::get_all_receptacles - Starting loop iteration...\n",
-                     retval->length ()));
 
         ReceptacleTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
@@ -452,8 +453,6 @@ namespace CIAO
     const char *port_name,
     ::CORBA::Object_ptr port_ref)
   {
- #if !defined (CCM_LW)
-    // @todo reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::add_facet");
 
     if (0 == port_name || ::CORBA::is_nil (port_ref))
@@ -461,17 +460,9 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::Components::FacetDescription *fd = 0;
-    ACE_NEW_THROW_EX (fd,
-                      ::OBV_Components::FacetDescription (port_name,
-                                                          port_ref->_interface_repository_id (),
-                                                          port_ref),
-                      CORBA::NO_MEMORY ());
-    ::Components::FacetDescription_var safe = fd;
-
     FacetTable::value_type entry;
     entry.first = port_name;
-    entry.second = safe._retn ();
+    entry.second = ::CORBA::Object::_duplicate (port_ref);
 
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
@@ -479,18 +470,12 @@ namespace CIAO
 
       (void) this->facet_table_.insert (entry);
     }
-#else
-    ACE_UNUSED_ARG (port_name);
-    ACE_UNUSED_ARG (port_ref);
-#endif
   }
 
   CORBA::Object_ptr
   Connector_Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::lookup_facet");
- #if !defined (CCM_LW)
-    // @todo Reimplement for LwCCM
     if (!port_name)
       {
         return CORBA::Object::_nil ();
@@ -508,10 +493,7 @@ namespace CIAO
         return CORBA::Object::_nil ();
       }
 
-    return CORBA::Object::_duplicate (iter->second->facet_ref ());
-#else
-    return CORBA::Object::_nil ();
-#endif
+    return CORBA::Object::_duplicate (iter->second);
   }
 
 #if !defined (CCM_LW)
@@ -522,11 +504,11 @@ namespace CIAO
 
     if (!port_name)
       {
-        /// Calling function will throw InvalidName after getting this.
+        // Calling function will throw InvalidName after getting this.
         return 0;
       }
 
-    ::Components::FacetDescription_var fd;
+    ::Components::FacetDescription_var safe;
 
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -538,11 +520,17 @@ namespace CIAO
 
       if (iter != this->facet_table_.end ())
         {
-          fd = iter->second;
+          ::Components::FacetDescription *fd = 0;
+          ACE_NEW_THROW_EX (fd,
+                            ::OBV_Components::FacetDescription (iter->first.c_str (),
+                                                                iter->second->_interface_repository_id (),
+                                                                iter->second),
+                            CORBA::NO_MEMORY ());
+          safe = fd;
         }
     }
 
-    return fd._retn ();
+    return safe._retn ();
   }
 #endif
 

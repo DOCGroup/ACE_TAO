@@ -190,66 +190,6 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_LW)
-  ::Components::ReceptacleDescriptions *
-  Servant_Impl_Base::get_all_receptacles (void)
-  {
-    CIAO_TRACE("  Servant_Impl_Base::get_all_receptacles (void)");
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Servant_Impl_Base::get_all_receptacles\n"));
-
-    ::Components::ReceptacleDescriptions *tmp = 0;
-    ACE_NEW_THROW_EX (tmp,
-                      ::Components::ReceptacleDescriptions,
-                      CORBA::NO_MEMORY ());
-
-    ::Components::ReceptacleDescriptions_var retval = tmp;
-
-    retval->length (this->receptacle_table_.current_size ());
-    CORBA::ULong i = 0;
-
-    CIAO_DEBUG (6,
-                (LM_DEBUG,
-                 CLINFO
-                 "Servant_Impl_Base::get_all_receptacles "
-                 "- Building sequence of length %d\n",
-                 retval->length ()));
-
-    for (ReceptacleTable::iterator iter = this->receptacle_table_.begin ();
-         iter != this->receptacle_table_.end ();
-         ++iter, ++i)
-      {
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Servant_Impl_Base::get_all_receptacles - Starting loop iteration...\n",
-                     retval->length ()));
-
-        ReceptacleTable::ENTRY & entry = *iter;
-        retval[i] = entry.int_id_;
-      }
-
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
-
-    return retval._retn ();
-  }
-#endif
-
-#if !defined (CCM_LW)
-  ::Components::ReceptacleDescriptions *
-  Servant_Impl_Base::get_named_receptacles (
-    const ::Components::NameList & /* names */)
-  {
-    CIAO_TRACE("Servant_Impl_Base::get_named_receptacles");
-    throw ::CORBA::NO_IMPLEMENT ();
-  }
-#endif
-
-#if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)

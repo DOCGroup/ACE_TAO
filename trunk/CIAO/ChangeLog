@@ -1,3 +1,13 @@
+Mon Apr 12 17:48:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Reworked facet table to work with LwCCM
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.h:
+          Removed code which is already in the base class
+
 Mon Apr 12 12:33:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
