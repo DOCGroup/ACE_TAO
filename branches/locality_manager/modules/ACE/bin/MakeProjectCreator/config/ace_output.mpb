@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  libout = $(ACE_ROOT)/lib
+
+  specific(automake) {
+    libout -= $(ACE_ROOT)/lib
+    libout += $(top_builddir)/lib
+  }
+}
+
