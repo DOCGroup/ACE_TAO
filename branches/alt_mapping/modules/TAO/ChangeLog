@@ -1,3 +1,21 @@
+Mon Apr 12 19:30:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added conditional include of vector argument class
+          header file.
+          
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        
+          Fixed typos in generated code, and added check to
+          skip bounded sequences for now.
+          
+        * tao/Vector_Argument_T.inl:
+        * tao/Vector_Argument_T.h:
+        * tao/Vector_Argument_T.cpp:
+        
+          Overhauled signatures of most methods.
+
 Fri Apr  9 20:39:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/stl_mapping.mpb:

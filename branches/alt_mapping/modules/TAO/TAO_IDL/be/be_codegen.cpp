@@ -2801,6 +2801,12 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
     );
 
   this->gen_cond_file_include (
+      idl_global->seq_seen_ && be_global->alt_mapping (),
+      "tao/Vector_Argument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
       idl_global->any_arg_seen_,
       "tao/AnyTypeCode/Any_Arg_Traits.h",
       stream

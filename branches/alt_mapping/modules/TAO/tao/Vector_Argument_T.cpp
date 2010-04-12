@@ -16,7 +16,7 @@ template<typename S,
 CORBA::Boolean
 TAO::In_Vector_Argument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  return cdr << *this->x_;
+  return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -28,7 +28,7 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -39,7 +39,7 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argumen
 {
   if (this->is_clone_)
     {
-      S* tmp = const_cast<S*> (this->x_);
+      S & tmp = const_cast<S &> (this->x_);
       delete tmp;
     }
 }
@@ -49,7 +49,7 @@ template<typename S,
 TAO::Argument*
 TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone (void)
 {
-  S* clone_x = new S (*(this->x_));
+  S* clone_x = new S (this->x_);
   In_Vector_Clonable_Argument_T<S,Insert_Policy>* clone_arg
     = new In_Vector_Clonable_Argument_T<S,Insert_Policy> (*clone_x);
   clone_arg->is_clone_ = true;
@@ -65,7 +65,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr
   )
 {
-  return cdr << *this->x_;
+  return cdr << this->x_;
 }
 
 template<typename S,
@@ -75,7 +75,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  return cdr >> *this->x_;
+  return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -87,7 +87,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -101,12 +101,7 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  this->x_ = new (ACE_nothrow) S;
-#else
-  this->x_ = new S;
-#endif /* ACE_HAS_NEW_NOTHROW */
-  return cdr >> *this->x_;
+  return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -118,7 +113,7 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -132,12 +127,7 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  S * tmp = 0;
-  ACE_NEW_RETURN (tmp,
-                  S (),
-                  0);
-  this->x_ = tmp;
-  return cdr >> this->x_.inout ();
+  return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -149,7 +139,7 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, this->x_.in ());
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
