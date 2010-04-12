@@ -84,14 +84,16 @@ namespace CIAO
     }
   }
 
+#if !defined (CCM_LW)
   CORBA::IRObject_ptr
   Connector_Servant_Impl_Base::get_component_def (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_component_def");
     throw ::CORBA::NO_IMPLEMENT ();
   }
+#endif
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
   ::Components::ConnectionDescriptions *
   Connector_Servant_Impl_Base::get_connections (
     const char * /* name */)

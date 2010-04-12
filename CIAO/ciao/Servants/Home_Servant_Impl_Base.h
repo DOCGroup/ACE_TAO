@@ -47,9 +47,13 @@ namespace CIAO
 
     // Operations for CCMHome interface.
 
-    virtual ::CORBA::IRObject_ptr  get_component_def (void);
+#if !defined (CCM_LW)
+    virtual ::CORBA::IRObject_ptr get_component_def (void);
+#endif
 
+#if !defined (CCM_LW)
     virtual ::CORBA::IRObject_ptr get_home_def (void);
+#endif
 
     virtual void update_component_map (PortableServer::ObjectId &oid) = 0;
 
