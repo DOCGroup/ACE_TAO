@@ -211,9 +211,8 @@ namespace CIAO
 
   protected:
  #if !defined (CCM_LW)
-    // @todo, rework this
     typedef ACE_Array_Map<ACE_CString,
-                          ::Components::FacetDescription_var>
+                          ::CORBA::Object_var>
        FacetTable;
 
     typedef ACE_Hash_Map_Manager_Ex<const char *,
