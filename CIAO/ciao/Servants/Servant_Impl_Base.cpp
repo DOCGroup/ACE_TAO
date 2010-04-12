@@ -294,8 +294,8 @@ namespace CIAO
     entry.first = port_name;
     entry.second = safe._retn ();
 
-    ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-                              CORBA::NO_RESOURCES ());
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+                        CORBA::NO_RESOURCES ());
 
     (void) this->consumer_table_.insert (entry);
 #endif
@@ -312,10 +312,10 @@ namespace CIAO
         return ::Components::EventConsumerBase::_nil ();
       }
 
-    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                             mon,
-                             this->lock_,
-                             CORBA::NO_RESOURCES ());
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        mon,
+                        this->lock_,
+                        CORBA::NO_RESOURCES ());
 
     ConsumerTable::const_iterator iter =
       this->consumer_table_.find (port_name);
@@ -352,10 +352,10 @@ namespace CIAO
     ConsumerTable::const_iterator iter;
 
     {
-      ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                               mon,
-                               this->lock_,
-                               CORBA::NO_RESOURCES ());
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          mon,
+                          this->lock_,
+                          CORBA::NO_RESOURCES ());
 
       iter = this->consumer_table_.find (port_name);
 

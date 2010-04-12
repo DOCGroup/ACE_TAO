@@ -133,18 +133,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-          //Test value to be sent to the server
+          // Test value to be sent to the server
           long test = 0;
 
           (void) round_trip->makeCall (test);
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           history.sample (now - start);
         }
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
