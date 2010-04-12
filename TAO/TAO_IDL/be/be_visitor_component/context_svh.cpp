@@ -70,11 +70,11 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "typedef base_type::context_type context_type;" << be_nl
       << "typedef base_type::component_type component_type;"
       << be_nl;
-      
-  AST_Decl::NodeType nt = this->node_->node_type ();    
+
+  AST_Decl::NodeType nt = this->node_->node_type ();
   bool is_connector = (nt == AST_Decl::NT_connector);
   bool no_events = false;
-  
+
   if (!is_connector)
     {
       no_events =
@@ -82,9 +82,9 @@ be_visitor_context_svh::visit_component (be_component *node)
          && !node->has_emits ()
          && !node->has_publishes ());
     }
-    
+
   bool de_facto = (is_connector || no_events);
-  
+
   os_ << "typedef ::CIAO::"
       << (de_facto ? "Connector_" : "")
       << "Servant_Impl_Base svnt_base_type;" << be_nl << be_nl;
@@ -224,12 +224,6 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << "::" << obj_name << "Consumer_ptr c);" << be_uidt_nl;
 
   os_ << be_nl
-      << "// CIAO-specific." << be_nl
-      << "::Components::Cookie *" << be_nl
-      << "subscribe_" << port_name << "_generic (" << be_idt_nl
-      << "::Components::EventConsumerBase_ptr c);" << be_uidt_nl;
-
-  os_ << be_nl
       << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
       << "unsubscribe_" << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck);" << be_uidt;
@@ -245,15 +239,6 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << port_name << "_;" << be_nl
       << "TAO_SYNCH_MUTEX " << port_name << "_lock_;"
       << be_nl << be_nl;
-
-  os_ << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
-      << "                      ::Components::EventConsumerBase_var>"
-      << be_idt_nl
-      << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE;" << be_uidt_nl
-      << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE ciao_publishes_"
-      << port_name << "_generic_;";
 
   return 0;
 }

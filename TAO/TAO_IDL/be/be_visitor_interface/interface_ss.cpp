@@ -171,7 +171,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                        node->is_local (),
                        node->is_abstract ());
     is_a.set_defined_in (node);
-    
+
     ACE_CDR::ULong bound = 0UL;
 
     auto_ptr<AST_String> s (
@@ -387,7 +387,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (!be_global->gen_minimum_corba ())
   {
     ACE_CDR::ULong bound = 0UL;
-  
+
     // Generate code for the _repository_id skeleton.
     auto_ptr<AST_String> s (
       idl_global->gen ()->create_string (
@@ -691,16 +691,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
   *os << "}";
-
-  if (node->is_event_consumer ())
-    {
-      *os << be_nl << be_nl
-          << "::CORBA::Boolean " << be_nl << full_skel_name
-          << "::ciao_is_substitutable (const char *)" << be_nl
-          << "{" << be_idt_nl
-          << "return true;" << be_uidt_nl
-          << "}";
-    }
 
   // Print out dispatch method.
   this->dispatch_method (node);
