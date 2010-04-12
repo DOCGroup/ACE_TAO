@@ -31,23 +31,19 @@ namespace CIAO
   void
   Connector_Servant_Impl_Base::remove (void)
   {
- #if !defined (CCM_LW)
-    // @todo, reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::remove (void)");
 
     try
     {
       // Removing Facets
-      Components::FacetDescriptions_var facets =
-        this->get_all_facets ();
-
-      CORBA::ULong const facet_len = facets->length ();
-
-      for (CORBA::ULong i = 0; i < facet_len; ++i)
+      for (FacetTable::const_iterator iter =
+             this->facet_table_.begin ();
+           iter != this->facet_table_.end ();
+           ++iter)
         {
           PortableServer::ObjectId_var facet_id =
             this->container_->the_port_POA ()->reference_to_id (
-              facets[i]->facet_ref ());
+              iter->second);
 
           this->container_->the_port_POA ()->deactivate_object (
             facet_id);
@@ -86,7 +82,6 @@ namespace CIAO
     {
       ex._tao_print_exception ("Port not active\n");
     }
-#endif
   }
 
   CORBA::IRObject_ptr
