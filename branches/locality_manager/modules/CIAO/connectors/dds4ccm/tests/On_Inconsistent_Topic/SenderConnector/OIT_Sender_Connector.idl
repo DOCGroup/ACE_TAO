@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file OIT_Sender_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_
+#define ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/OIT_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "SenderConnector/OIT_Sender_ConnectorE.idl"
+
+module OIT_Test
+{
+  module ::CCM_DDS::Typed < ::OIT_Sender_Topic, ::OIT_Sender_TopicSeq> OIT_Sender_TopicConn;
+  connector OIT_Sender_Connector : OIT_Sender_TopicConn::DDS_Event
+  {
+  };
+};
+
+#endif /* ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_ */

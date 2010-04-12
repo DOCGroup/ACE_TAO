@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file SL_OneByOne_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef SL_ONEBYONE_CONNECTOR_IDL_
+#define SL_ONEBYONE_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/SL_OneByOne_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/SL_OneByOne_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
+};
+
+module SL_OneByOne
+{
+  connector SL_OneByOne_Connector : ::CCM_DDS::TestTopic::DDS_State
+  {
+  };
+};
+
+#endif /* SL_OneByOne_CONNECTOR_IDL_ */

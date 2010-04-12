@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file VTS_String_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef VTS_STRING_CONNECTOR_IDL_
+#define VTS_STRING_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopics_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Conn_String/VTS_String_ConnectorE.idl"
+
+module VTopics
+{
+  module ::CCM_DDS::Typed < ::TopicString, ::TopicStringSeq> TopicStringConn;
+  connector VTS_String_Connector : TopicStringConn::DDS_Event
+  {
+  };
+};
+
+#endif /* VTS_STRING_CONNECTOR_IDL_ */

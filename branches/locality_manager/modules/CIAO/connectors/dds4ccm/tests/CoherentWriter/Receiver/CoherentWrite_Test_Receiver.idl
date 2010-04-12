@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/CoherentWrite_Test_Connector.idl"
+#include "Base/Reader_Starter.idl"
+
+module CoherentWrite_Test
+{
+  component Receiver
+  {
+    port CCM_DDS::CoherentWriteTest::DDS_Read info_out;
+
+    provides CoherentWriteStarter reader_start;
+    uses CoherentWriteRestarter writer_restart;
+
+    attribute unsigned short nr_runs;
+  };
+};
+
+#endif

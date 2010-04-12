@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file QFLS_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_FILTER_LISTEN_STATE_TEST_CONNECTOR_IDL_
+#define QUERY_FILTER_LISTEN_STATE_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/QFLS_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/QFLS_Test_ConnectorE.idl"
+
+module QFLS_Test
+{
+  module ::CCM_DDS::Typed < ::QueryFilterListenStateTest, ::QueryFilterListenStateTestSeq> QueryFilterListenStateTestConn;
+  connector QFLS_Test_Connector : QueryFilterListenStateTestConn::DDS_State
+  {
+  };
+};
+
+#endif /* QFLS_Test_CONNECTOR_IDL_ */

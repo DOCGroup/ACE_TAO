@@ -1,0 +1,42 @@
+// $Id$
+
+/**
+ * @file Throughput_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef THROUGHPUT_BASE_IDL
+#define THROUGHPUT_BASE_IDL
+
+//#pragma ndds typesupport "Base/Throughput_BaseSupport.h"
+
+const short MAX_DATA_SEQUENCE_LENGTH = 8192;
+
+typedef enum ThroughputCommandKind
+{
+    THROUGHPUT_COMMAND_IDLE,
+    THROUGHPUT_COMMAND_START,
+    THROUGHPUT_COMMAND_COMPLETE
+} CommandKind;
+
+typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> OctetSeq;
+
+struct ThroughputTest {
+ long key;
+ unsigned long long seq_num;
+ OctetSeq data;
+ };
+
+//typedef sequence<ThroughputTest> ThroughputTest_Seq;
+
+struct ThroughputCommand
+{
+    CommandKind  command;
+    unsigned long data_length;
+    unsigned long long current_publisher_effort;
+    unsigned long long final_publisher_effort;
+};
+
+//typedef sequence<ThroughputCommand> ThroughputCommand_Seq;
+
+#endif

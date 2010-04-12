@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file Hello_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef HELLO_CONNECTOR_IDL_
+#define HELLO_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Hello_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Hello_ConnectorE.idl"
+
+module Hello
+{
+  module ::CCM_DDS::Typed <::DDSHello, ::DDSHelloSeq> HelloConn;
+
+  connector Hello_Connector : HelloConn::DDS_Event
+  {
+  };
+};
+
+#endif /* HELLO_CONNECTOR_IDL_ */
+
+

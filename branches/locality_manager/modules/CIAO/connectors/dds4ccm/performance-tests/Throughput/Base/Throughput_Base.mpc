@@ -1,0 +1,26 @@
+// $Id$
+
+project (DDS_Throughput_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  sharedname = DDS_Throughput_Base_stub
+  dynamicflags += THROUGHPUT_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=THROUGHPUT_BASE_STUB_Export \
+              -Wb,stub_export_include=THROUGHPUT_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    Throughput_Base.idl
+  }
+
+  opendds_ts_flags += --export=THROUGHPUT_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    Throughput_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+

@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file QosProfile_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COHERENT_WRITE_TEST_BASE_IDL
+#define COHERENT_WRITE_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/QosProfile_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "QosProfileTest"
+#pragma DCPS_DATA_KEY "QosProfileTest symbol"
+
+struct QosProfileTest {
+  string symbol; //@key
+  long iteration;
+};
+
+typedef sequence<QosProfileTest> QosProfileTestSeq;
+
+#endif

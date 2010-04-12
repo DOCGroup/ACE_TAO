@@ -1,0 +1,18 @@
+// $Id$
+
+#if !defined (CCM_PRIMARYKEYBASE_IDL)
+#define CCM_PRIMARYKEYBASE_IDL
+
+#if !defined (CCM_LW)
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  abstract valuetype PrimaryKeyBase {};
+
+};
+
+#endif
+
+#endif /* CCM_PRIMARYKEYBASE_IDL */
