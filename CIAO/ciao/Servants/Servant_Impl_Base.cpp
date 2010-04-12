@@ -21,20 +21,16 @@ namespace CIAO
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
-#if !defined (CCM_LW)
-
     try
     {
-      Components::ConsumerDescriptions_var consumers =
-        this->get_all_consumers ();
-
-      CORBA::ULong const consumer_len = consumers->length ();
-
-      for (CORBA::ULong j = 0; j < consumer_len; ++j)
+      for (ConsumerTable::const_iterator iter =
+             this->consumer_table_.begin ();
+           iter != this->consumer_table_.end ();
+           ++iter)
         {
           PortableServer::ObjectId_var cons_id =
             this->container_->the_port_POA ()->reference_to_id (
-              consumers[j]->consumer ());
+              iter->second);
 
           this->container_->the_port_POA ()->deactivate_object (
             cons_id);
@@ -53,7 +49,6 @@ namespace CIAO
       ex._tao_print_exception ("Port not active\n");
       return;
     }
-#endif
 
     /// This call deactivates facets, removes executor and home
     /// servant (if any), and uninstalls us from the container.
@@ -118,7 +113,16 @@ namespace CIAO
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
-        retval[i] = iter->second;
+        ::Components::ConsumerDescription *cd = 0;
+        ACE_NEW_THROW_EX (cd,
+                          ::OBV_Components::ConsumerDescription,
+                          CORBA::NO_MEMORY ());
+
+        cd->name (iter->first.c_str ());
+        cd->type_id (iter->second->_interface_repository_id ());
+        cd->consumer (iter->second);
+
+        retval[i] = cd;
       }
 
     return retval._retn ();
@@ -135,12 +139,12 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    Components::EventConsumerBase_ptr retval =
+    ::Components::EventConsumerBase_ptr retval =
       this->lookup_consumer (sink_name);
 
-    if (CORBA::is_nil (retval))
+    if (::CORBA::is_nil (retval))
       {
-        throw Components::InvalidName ();
+        throw ::Components::InvalidName ();
       }
 
     return retval;
@@ -169,7 +173,7 @@ namespace CIAO
 
         if (tmp == 0)
           {
-            throw Components::InvalidName ();
+            throw ::Components::InvalidName ();
           }
 
         safe_retval[i] = tmp;
@@ -218,27 +222,16 @@ namespace CIAO
         return;
       }
 
-#if !defined (CCM_LW)
-    ::Components::ConsumerDescription *cd = 0;
-    ACE_NEW_THROW_EX (cd,
-                      ::OBV_Components::ConsumerDescription,
-                      CORBA::NO_MEMORY ());
-
-    ::Components::ConsumerDescription_var safe = cd;
-
-    cd->name (port_name);
-    cd->type_id (port_ref->_interface_repository_id ());
-    cd->consumer (port_ref);
-
     ConsumerTable::value_type entry;
     entry.first = port_name;
-    entry.second = safe._retn ();
+    entry.second = ::Components::EventConsumerBase::_duplicate (port_ref);
 
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-                        CORBA::NO_RESOURCES ());
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+                          CORBA::NO_RESOURCES ());
 
-    (void) this->consumer_table_.insert (entry);
-#endif
+      (void) this->consumer_table_.insert (entry);
+    }
   }
 
   ::Components::EventConsumerBase_ptr
@@ -246,7 +239,6 @@ namespace CIAO
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer");
 
-#if !defined (CCM_LW)
     if (0 == port_name)
       {
         return ::Components::EventConsumerBase::_nil ();
@@ -265,14 +257,7 @@ namespace CIAO
         return ::Components::EventConsumerBase::_nil ();
       }
 
-    return
-      ::Components::EventConsumerBase::_duplicate (
-        iter->second->consumer ());
-#else
-    // @todo reimplement for lwccm
-    ACE_UNUSED_ARG (port_name);
-    return ::Components::EventConsumerBase::_nil ();
-#endif
+    return ::Components::EventConsumerBase::_duplicate (iter->second);
   }
 
 #if !defined (CCM_LW)
@@ -301,7 +286,15 @@ namespace CIAO
 
       if (iter != this->consumer_table_.end ())
         {
-          cd = iter->second;
+          ::Components::ConsumerDescription *cdp = 0;
+          ACE_NEW_THROW_EX (cdp,
+                            ::OBV_Components::ConsumerDescription,
+                            CORBA::NO_MEMORY ());
+
+          cdp->name (iter->first.c_str ());
+          cdp->type_id (iter->second->_interface_repository_id ());
+          cdp->consumer (iter->second);
+          cd = cdp;
         }
     }
 
