@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "Client_Task.h"
 
@@ -12,10 +10,11 @@ Client_Task::Client_Task (Benchmark::RoundTripClient_ptr roundtrip)
 int
 Client_Task::svc (void)
 {
-  //Creat the Controller
-  Benchmark::Controller_var controller = this->roundtrip_->provide_controller();
+  // Create the Controller
+  CORBA::Object_var obj = this->roundtrip_->provide_facet ("controller");
+  Benchmark::Controller_var controller = Benchmark::Controller::_narrow (obj.in ());
 
-  //check if controller is non nil
+  // Check if controller is non nil
   if (CORBA::is_nil (controller.in ()))
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Nil Benchmark::Controller reference\n"),
@@ -23,7 +22,7 @@ Client_Task::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "Sending Trigger\n"));
 
-  //send out the trigger message
+  // Send out the trigger message
   controller->start();
 
   return 0;

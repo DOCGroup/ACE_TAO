@@ -479,6 +479,9 @@ namespace CIAO
 
       (void) this->facet_table_.insert (entry);
     }
+#else
+    ACE_UNUSED_ARG (port_name);
+    ACE_UNUSED_ARG (port_ref);
 #endif
   }
 
