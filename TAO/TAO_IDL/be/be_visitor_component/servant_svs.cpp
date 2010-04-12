@@ -847,37 +847,40 @@ be_visitor_servant_svs::gen_publishes_top (void)
       << "throw ::Components::InvalidName ();" << be_uidt_nl
       << "}";
 
-  os_ << be_nl << be_nl
-      << "::Components::PublisherDescriptions *" << be_nl
-      << node_->local_name ()
-      << "_Servant::get_all_publishers (void)" << be_nl
-      << "{" << be_idt_nl
-      << "::Components::PublisherDescriptions *retval = 0;"
-      << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                ::Components::PublisherDescriptions,"
-      << be_nl
-      << "                0);" << be_nl << be_nl
-      << "::Components::PublisherDescriptions_var "
-      << "safe_retval = retval;" << be_nl
-      << "safe_retval->length (" << n_publishes_
-      << "UL);";
-
-  be_visitor_event_source_desc esd_visitor (this->ctx_);
-
-  if (esd_visitor.visit_component_scope (node_) == -1)
+  if (!be_global->gen_lwccm ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_publishes_top - "
-                  "event source description visitor failed\n"));
+      os_ << be_nl << be_nl
+          << "::Components::PublisherDescriptions *" << be_nl
+          << node_->local_name ()
+          << "_Servant::get_all_publishers (void)" << be_nl
+          << "{" << be_idt_nl
+          << "::Components::PublisherDescriptions *retval = 0;"
+          << be_nl
+          << "ACE_NEW_RETURN (retval," << be_nl
+          << "                ::Components::PublisherDescriptions,"
+          << be_nl
+          << "                0);" << be_nl << be_nl
+          << "::Components::PublisherDescriptions_var "
+          << "safe_retval = retval;" << be_nl
+          << "safe_retval->length (" << n_publishes_
+          << "UL);";
 
-      return;
+      be_visitor_event_source_desc esd_visitor (this->ctx_);
+
+      if (esd_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_publishes_top - "
+                      "event source description visitor failed\n"));
+
+          return;
+        }
+
+      os_ << be_nl << be_nl
+          << "return safe_retval._retn ();" << be_uidt_nl
+          << "}";
     }
-
-  os_ << be_nl << be_nl
-      << "return safe_retval._retn ();" << be_uidt_nl
-      << "}";
 }
 
 void
