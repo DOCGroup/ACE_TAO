@@ -86,7 +86,9 @@ namespace CIAO
 
     virtual void remove (void);
 
+#if !defined (CCM_LW)
     virtual CORBA::IRObject_ptr get_component_def (void);
+#endif
 
     virtual Components::SessionComponent_ptr get_executor () = 0;
 
