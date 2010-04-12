@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      //set priority on the platform
+      // Set priority on the platform
       set_priority();
 
       // Initialize orb
@@ -111,17 +111,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (home.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire TestHome objref\n"), -1);
 
-      Benchmark::RoundTrip_var test
-        = home->create ();
+      Benchmark::RoundTrip_var test = home->create ();
 
-      //Get the RoundTrip reference
-      Benchmark::LatencyTest_var round_trip = test->provide_latency ();
+      // Get the RoundTrip reference
+      obj = test->provide_facet ("latency");
+      Benchmark::LatencyTest_var round_trip = 
+        Benchmark::LatencyTest::_narrow (obj.in ());
 
-      //Warmup the System by making some empty calls
-      long start = 0L;
+      if (CORBA::is_nil (round_trip.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire LatencyTest objref\n"), -1);
+
+      // Warmup the System by making some empty calls
       for (int j = 0; j < 100; ++j)
         {
-          round_trip->makeCall (start);
+          round_trip->makeCall (0L);
         }
 
       ///// Start Test ////////////////////////////////////////////
