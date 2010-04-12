@@ -115,7 +115,7 @@ namespace CIAO
   protected:
 #if !defined (CCM_LW)
     typedef ACE_Array_Map<ACE_CString,
-                          ::Components::ConsumerDescription_var>
+                          ::Components::EventConsumerBase_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
