@@ -1,6 +1,0 @@
-// $Id$
-
-workspace {
-  cmdline += -include $ADBC_ROOT/MPC/config \
-             -feature_file $ADBC_ROOT/default.features
-}

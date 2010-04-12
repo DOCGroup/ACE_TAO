@@ -1,9 +1,0 @@
-// $Id$
-project : dance, taoexe, xerces, aceexe, dance_config_handlers, dance_logger {
-  exename   = DeploymentPlanDump
-
-  Source_Files {
-    test.cpp
-  }
-}
-

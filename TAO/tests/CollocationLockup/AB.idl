@@ -1,8 +1,0 @@
-// $Id$
-
-interface A {
-};
-
-interface C {
-  A makeA ();
-};
