@@ -474,8 +474,8 @@ namespace CIAO
     entry.second = safe._retn ();
 
     {
-      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-                                CORBA::NO_RESOURCES ());
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+                          CORBA::NO_RESOURCES ());
 
       (void) this->facet_table_.insert (entry);
     }
@@ -496,10 +496,10 @@ namespace CIAO
         return CORBA::Object::_nil ();
       }
 
-    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                             mon,
-                             this->lock_,
-                             CORBA::NO_RESOURCES ());
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        mon,
+                        this->lock_,
+                        CORBA::NO_RESOURCES ());
 
     FacetTable::const_iterator iter = this->facet_table_.find (port_name);
 
@@ -529,10 +529,10 @@ namespace CIAO
     ::Components::FacetDescription_var fd;
 
     {
-      ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                             mon,
-                             this->lock_,
-                             0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        mon,
+                        this->lock_,
+                        0);
       FacetTable::const_iterator iter =
         this->facet_table_.find (port_name);
 
