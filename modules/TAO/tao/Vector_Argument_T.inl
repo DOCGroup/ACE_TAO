@@ -8,17 +8,17 @@ template<typename S,
          class Insert_Policy>
 ACE_INLINE
 TAO::In_Vector_Argument_T<S,Insert_Policy>::In_Vector_Argument_T (S const & x)
-  : x_ (&x)
+  : x_ (x)
 {
 }
 
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-const S &
+S const &
 TAO::In_Vector_Argument_T<S,Insert_Policy>::arg (void) const
 {
-  return *this->x_;
+  return this->x_;
 }
 
 template<typename S,
@@ -35,7 +35,7 @@ template<typename S,
          class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::Inout_Vector_Argument_T (S & x)
-  : x_ (&x)
+  : x_ (x)
 {
 }
 
@@ -45,7 +45,7 @@ ACE_INLINE
 S &
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg (void)
 {
-  return *this->x_;
+  return this->x_;
 }
 
 // ==========================================================================
@@ -54,15 +54,15 @@ template<typename S,
          class Insert_Policy>
 ACE_INLINE
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::Out_Vector_Argument_T (
-    typename S::_out_type x
+    S & x
   )
-  : x_ (x.ptr ())
+  : x_ (x)
 {}
 
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S *&
+S &
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg (void)
 {
   return this->x_;
@@ -80,28 +80,28 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::Ret_Vector_Argument_T (void)
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S *&
+S
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::arg (void)
 {
-  return this->x_.out ();
+  return this->x_;
 }
 
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S *
+S
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::excp (void)
 {
-  return this->x_.ptr ();
+  return this->x_;
 }
 
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S *
+S
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::retn (void)
 {
-  return this->x_._retn ();
+  return this->x_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

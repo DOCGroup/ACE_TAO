@@ -46,7 +46,7 @@ namespace TAO
     S const & arg (void) const;
 
   protected:
-    const S * x_;
+    S const & x_;
   };
 
   /**
@@ -93,7 +93,7 @@ namespace TAO
     S & arg (void);
 
   private:
-    S * x_;
+    S & x_;
   };
 
   /**
@@ -108,16 +108,16 @@ namespace TAO
   class Out_Vector_Argument_T : public OutArgument
   {
   public:
-    Out_Vector_Argument_T (typename S::_out_type x);
+    Out_Vector_Argument_T (S & x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    S & arg (void);
 
   private:
-    S *& x_;
+    S & x_;
   };
 
   /**
@@ -137,13 +137,13 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    S arg (void);
 
-    S * excp (void);
-    S * retn (void);
+    S excp (void);
+    S retn (void);
 
   protected:
-    typename S::_var_type x_;
+    typename S x_;
   };
 
   /**
