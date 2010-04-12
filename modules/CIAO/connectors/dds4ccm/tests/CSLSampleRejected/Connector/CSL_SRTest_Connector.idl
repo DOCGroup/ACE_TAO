@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file CSL_SRTest_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef CSL_SRTEST_CONNECTOR_IDL_
+#define CSL_SRTEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CSL_SRTest_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CSL_SRTest_ConnectorE.idl"
+
+module CSL_SRTest
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
+  connector CSL_SRTest_Connector : TestTopicConn::DDS_Event
+  {
+  };
+
+};
+
+#endif /* CSL_SRTEST_CONNECTOR_IDL_ */

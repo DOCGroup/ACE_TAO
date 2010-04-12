@@ -1,0 +1,29 @@
+// $Id$
+
+/**
+ * @file Updater_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef UPDATER_CONNECTOR_IDL_
+#define UPDATER_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Updater_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Updater_ConnectorE.idl"
+
+module CCM_DDS
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
+};
+
+module Updater
+{
+  connector Updater_Connector : ::CCM_DDS::TestTopic::DDS_State
+  {
+  };
+};
+
+#endif /* UPDATER_CONNECTOR_IDL_ */

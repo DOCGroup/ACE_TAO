@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ami4ccm_stub {
+  after += AMI4CCM_lem_stub
+  libs += AMI4CCM_lem_stub
+}

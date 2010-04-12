@@ -1,0 +1,24 @@
+// $Id$
+
+#if !defined (CCM_EVENTCONSUMERBASE_IDL)
+#define CCM_EVENTCONSUMERBASE_IDL
+
+#include "ccm/CCM_EventBase.idl"
+#include "tao/Typecode_types.pidl"
+#include "tao/orb_types.pidl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  exception BadEventType
+  {
+    CORBA::RepositoryId expected_event_type;
+  };
+
+  interface EventConsumerBase
+  {
+    void push_event (in EventBase evt) raises (BadEventType);
+  };
+};
+#endif /* CCM_EVENTCONSUMERBASE_IDL */

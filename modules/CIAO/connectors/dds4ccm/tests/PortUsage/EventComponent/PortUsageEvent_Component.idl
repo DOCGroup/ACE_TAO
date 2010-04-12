@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef EVENT_COMPONENT_IDL
+#define EVENT_COMPONENT_IDL
+
+#include "EventConnector/PortUsageEvent_Connector.idl"
+
+module PortUsageEvent_Test
+{
+  component PortUsageEventComponent
+  {
+    port PortUsageTestConn::DDS_Write write_port;
+    port PortUsageTestConn::DDS_Get get_port;
+    port PortUsageTestConn::DDS_Listen listen_port;
+
+    provides CCM_DDS::ConnectorStatusListener connector_status;
+
+    attribute PortUsageAssignment portusage_assignment;
+  };
+};
+
+#endif

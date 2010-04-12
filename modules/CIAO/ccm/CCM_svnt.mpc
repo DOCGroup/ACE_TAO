@@ -1,0 +1,78 @@
+// $Id$
+
+project(CCM_svnt_idl) : ciaolib_with_idl, valuetype {
+  idlflags   += -Wb,export_include=CCM_Svnt_Export.h
+  idlflags   += -Wb,export_macro=CCM_Svnt_Export
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -Sci
+    CCM_EntityComponent.idl
+    CCM_EntityContext.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    CCM_CCM2Context.idl
+    CCM_ProxyHomeRegistration.idl
+    CCM_Session2Context.idl
+    CCM_Transaction.idl
+    CosPersistentState.idl
+    CCM_Container_Ex.idl
+    CCM_StateIdFactory.idl
+    CCM_Entity2Context.idl
+    CCM_ComponentId.idl
+    CCM_ExecutorLocator.idl
+    CCM_SessionSynchronization.idl
+    CCM_HomeRegistration.idl
+  }
+
+}
+
+project(CCM_svnt) : orbsvcslib, orbsvcs_output \
+                           , portableserver \
+                           , valuetype \
+                           , ifr_client \
+                           , codecfactory \
+                           , pi \
+                           , ccm_lem_stub \
+                           , avoids_corba_e_compact \
+                           , avoids_corba_e_micro \
+{
+  dynamicflags = CCM_SVNT_BUILD_DLL
+  after += CCM_svnt_idl
+  IDL_Files {
+  }
+
+  Source_Files {
+    CCM_TransactionC.cpp
+    CosPersistentStateC.cpp
+    CCM_SessionSynchronizationC.cpp
+    CCM_Container_ExC.cpp
+    CCM_StateIdFactoryC.cpp
+    CCM_ComponentIdC.cpp
+    CCM_Entity2ContextC.cpp
+    CCM_ExecutorLocatorC.cpp
+    CCM_ProxyHomeRegistrationC.cpp
+    CCM_Session2ContextC.cpp
+    CCM_CCM2ContextC.cpp
+    CCM_HomeRegistrationC.cpp
+    CCM_EntityContextC.cpp
+    CCM_EntityComponentC.cpp
+    CCM_EventsS.cpp
+    CCM_EventConsumerBaseS.cpp
+    CCM_EventBaseS.cpp
+    CCM_ConfiguratorS.cpp
+    CCM_HomeConfigurationS.cpp
+    CCM_KeylessCCMHomeS.cpp
+    CCM_StandardConfiguratorS.cpp
+    CCM_HomeS.cpp
+    CCM_HomesS.cpp
+    CCM_ObjectS.cpp
+    CCM_PrimaryKeyBaseS.cpp
+    CCM_HomeFinderS.cpp
+    CCM_NavigationS.cpp
+    CCM_ReceptacleS.cpp
+    ComponentsS.cpp
+  }
+}
+

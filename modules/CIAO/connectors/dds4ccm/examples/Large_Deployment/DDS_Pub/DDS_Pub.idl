@@ -1,0 +1,16 @@
+// $Id$
+
+#ifndef DDS_PUB_IDL
+#define DDS_PUB_IDL
+
+#include "Common/Common.idl"
+#include "Connector/Large_Connector.idl"
+
+component DDS_Pub
+{
+  port Large_Connector::DDS_Write info;
+  uses Simple_Service ping_one;
+  uses Simple_Service ping_two;
+};
+
+#endif

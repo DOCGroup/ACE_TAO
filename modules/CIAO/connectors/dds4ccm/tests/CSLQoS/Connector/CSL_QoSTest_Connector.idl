@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file CSL_QoSTest_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef CSL_QOSTEST_CONNECTOR_IDL_
+#define CSL_QOSTEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CSL_QoSTest_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CSL_QoSTest_ConnectorE.idl"
+
+module CSL_QoSTest
+{
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
+  connector CSL_QoSTest_Connector : TestTopicConn::DDS_Event
+  {
+  };
+};
+
+#endif /* CSL_QoSTest_CONNECTOR_IDL_ */

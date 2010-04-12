@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(DAnCE_Properties_IDL) : ciaolib_with_idl, dance_output {
+  custom_only = 1
+
+  IDL_Files {
+    idlflags += -SS -Sci
+    DAnCE_Properties.idl
+  }
+}
+

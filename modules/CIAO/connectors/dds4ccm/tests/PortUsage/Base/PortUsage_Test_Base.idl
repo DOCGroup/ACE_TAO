@@ -1,0 +1,36 @@
+// $Id$
+
+/**
+ * @file PortUsage_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef PORTUSAGE_EVENT_TEST_BASE_IDL
+#define PORTUSAGE_EVENT_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/PortUsage_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "PortUsageTest"
+#pragma DCPS_DATA_KEY "PortUsageTest symbol"
+
+struct PortUsageTest {
+  string symbol; //@key
+  long iteration;
+};
+
+typedef sequence<PortUsageTest> PortUsageTestSeq;
+
+enum PortUsageAssignment {
+  //event ports
+  PORTUSAGE_ASSIGNMENT_WRITE,
+  //event and state ports
+  PORTUSAGE_ASSIGNMENT_GET,
+  PORTUSAGE_ASSIGNMENT_LISTEN,
+  //state ports
+  PORTUSAGE_ASSIGNMENT_UPDATE,
+  PORTUSAGE_ASSIGNMENT_READ,
+  PORTUSAGE_ASSIGNMENT_STATELISTEN
+};
+
+
+#endif

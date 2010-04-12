@@ -1,0 +1,120 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Progressive_A</label>
+  <UUID>Progressive_A</UUID>
+
+  <!-- Implementations declarations -->
+  <implementation xmi:id="ProgressiveHomeImplementation">
+    <name>ProgressiveHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Progressive_ExecArtifact" />
+    <artifact xmi:idref="Progressive_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_ProgressiveHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_ProgressiveHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Progressive_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Progressive_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ProgressiveComponentImplementation">
+    <name>ProgressiveComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Progressive_ExecArtifact" />
+    <artifact xmi:idref="Progressive_SvntArtifact" />
+  </implementation>
+
+  <instance xmi:id="ProgressiveHomeInstance">
+    <name>ProgressiveHome</name>
+    <node>NodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ProgressiveHomeImplementation" />
+  </instance>
+
+  <instance xmi:id="ProgressiveComponentInstance">
+    <name>ProgressiveComponent</name>
+    <node>NodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ProgressiveComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ProgressiveHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Progressive_A</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <artifact xmi:id="Progressive_ExecArtifact">
+    <name>Progressive_exec</name>
+    <source/>
+    <node/>
+    <location>Progressive_exec</location>
+  </artifact>
+  <artifact xmi:id="Progressive_SvntArtifact">
+    <name>Progressive_svnt</name>
+    <source/>
+    <node/>
+    <location>Progressive_svnt</location>
+  </artifact>
+
+  </Deployment:DeploymentPlan>

@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file Getter_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef GETTER_TEST_CONNECTOR_IDL_
+#define GETTER_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Getter_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
+
+module Getter_Test
+{
+  module ::CCM_DDS::Typed < ::GetterTest, ::GetterTestSeq> GetterTestConn;
+  connector Getter_Test_Connector : GetterTestConn::DDS_Event
+  {
+  };
+
+  module ::CCM_DDS::Typed < ::GetterFixed, ::GetterFixedSeq> GetterFixedConn;
+  connector Getter_Fixed_Connector : GetterFixedConn::DDS_Event
+  {
+  };
+};
+
+#endif /* GETTER_TEST_CONNECTOR_IDL_ */

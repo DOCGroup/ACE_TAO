@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file VTS_Array_Connector.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef VTS_ARRAY_CONNECTOR_IDL_
+#define VTS_ARRAY_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/VTopics_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Conn_Array/VTS_Array_ConnectorE.idl"
+
+module VTopics
+{
+  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConn;
+  connector VTS_Array_Connector : TopicArrayConn::DDS_State
+  {
+  };
+};
+
+#endif /* VTS_Array_CONNECTOR_IDL_ */
