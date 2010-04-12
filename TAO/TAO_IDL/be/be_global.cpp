@@ -126,7 +126,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_ciao_exec_idl_ (false),
     gen_ciao_exec_impl_ (false),
     gen_ciao_conn_impl_ (false),
-    gen_ciao_static_config_ (false),
     gen_ciao_valuefactory_reg_ (true),
     gen_stub_export_hdr_file_ (false),
     gen_skel_export_hdr_file_ (false),
@@ -2234,18 +2233,6 @@ BE_GlobalData::gen_ciao_conn_impl (bool val)
 }
 
 bool
-BE_GlobalData::gen_ciao_static_config (void) const
-{
-  return this->gen_ciao_static_config_;
-}
-
-void
-BE_GlobalData::gen_ciao_static_config (bool val)
-{
-  this->gen_ciao_static_config_ = val;
-}
-
-bool
 BE_GlobalData::gen_ciao_valuefactory_reg (void) const
 {
   return this->gen_ciao_valuefactory_reg_;
@@ -2769,11 +2756,6 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // CIAO servant code generation.
                 be_global->gen_ciao_svnt (true);
-              }
-            else if (av[i][3] == 'c')
-              {
-                // CIAO static configuration code generation.
-                be_global->gen_ciao_static_config (true);
               }
             else
               {

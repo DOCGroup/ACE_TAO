@@ -494,17 +494,6 @@ be_visitor_servant_svs::visit_publishes (be_publishes *node)
       << "}";
 
   os_ << be_nl << be_nl
-      << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Servant::subscribe_"
-      << port_name << "_generic (" << be_idt_nl
-      << "::Components::EventConsumerBase_ptr c)" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  os_ << "return this->context_->subscribe_" << port_name
-      << "_generic (c);" << be_uidt_nl
-      << "}";
-
-  os_ << be_nl << be_nl
       << "::" << obj_name << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::unsubscribe_"
       << port_name << " (" << be_idt_nl
@@ -620,52 +609,6 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "return;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "throw ::Components::BadEventType ();" << be_uidt_nl
-      << "}";
-
-  os_ << be_nl << be_nl
-      << "/// CIAO-specific."
-      << be_nl
-      << "void" << be_nl
-      << comp_lname << "_Servant::" << lname << "Consumer_"
-      << port_name << "_Servant::ciao_push_event (" << be_idt_nl
-      << "::Components::EventBase * ev," << be_nl
-      << "const char * /* source_id */," << be_nl
-      << "::CORBA::TypeCode_ptr /* tc */)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "this->push_event (ev);" << be_uidt_nl
-      << "}";
-
-  os_ << be_nl << be_nl
-      << "/// CIAO-specific."
-      << be_nl
-      << "::CORBA::Boolean" << be_nl
-      << comp_lname << "_Servant::" << lname << "Consumer_"
-      << port_name << "_Servant::ciao_is_substitutable ("
-      << be_idt_nl
-      << "const char * event_repo_id)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (event_repo_id == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb ();"
-      << be_nl << be_nl
-      << "CORBA::ValueFactory f =" << be_idt_nl
-      << "orb->lookup_value_factory (event_repo_id);"
-      << be_uidt_nl << be_nl
-      << "if (f == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "CORBA::ValueBase_var v = f->create_for_unmarshal ();"
-      << be_nl
-      << "f->_remove_ref ();" << be_nl << be_nl
-      << "if (v.in () == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return dynamic_cast< ::" << fname
-      << " *> (v.in ()) != 0;" << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl
@@ -1408,7 +1351,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
 
   os_ << be_nl << be_nl;
 
-  bool gen_guard = is_multiple && ! static_config_;
+  bool gen_guard = is_multiple;
 
   if (gen_guard)
     {
@@ -1471,20 +1414,7 @@ be_visitor_subscribe_block::visit_publishes (
       << be_uidt_nl << be_nl
       << "if ( ::CORBA::is_nil (sub.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "::CORBA::Boolean const substitutable =" << be_idt_nl
-      << "subscribe->ciao_is_substitutable (" << be_idt_nl
-      << "::" << obj_name
-      << "::_tao_obv_static_repository_id ());"
-      << be_uidt << be_uidt_nl << be_nl
-      << "if (substitutable)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return this->subscribe_" << port_name
-      << "_generic (subscribe);" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
@@ -1551,15 +1481,12 @@ be_visitor_event_source_desc::visit_publishes (
 
   os_ << be_nl << be_nl;
 
-  if (! static_config_)
-    {
-      os_ << "{" << be_idt_nl
-          << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                       mon," << be_nl
-          << "                       this->context_->"
-          << port_name << "_lock_," << be_nl
-          << "                       0);" << be_nl << be_nl;
-    }
+  os_ << "{" << be_idt_nl
+      << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                       mon," << be_nl
+      << "                       this->context_->"
+      << port_name << "_lock_," << be_nl
+      << "                       0);" << be_nl << be_nl;
 
   os_ << "::CIAO::Servant::describe_pub_event_source<"
       << be_idt_nl
@@ -1572,11 +1499,8 @@ be_visitor_event_source_desc::visit_publishes (
       << "safe_retval," << be_nl
       << slot_++ << "UL);" << be_uidt << be_uidt;
 
-  if (! be_global->gen_ciao_static_config ())
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
+  os_ << be_uidt_nl
+      << "}";
 
   return 0;
 }

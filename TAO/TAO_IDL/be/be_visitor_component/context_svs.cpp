@@ -132,13 +132,10 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "::" << fname << " * ev)" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  if (! static_config_)
-    {
-      os_ << "ACE_READ_GUARD (TAO_SYNCH_MUTEX," << be_nl
-          << "                mon," << be_nl
-          << "                this->" << port_name
-          << "_lock_);" << be_nl << be_nl;
-    }
+  os_ << "ACE_READ_GUARD (TAO_SYNCH_MUTEX," << be_nl
+      << "                mon," << be_nl
+      << "                this->" << port_name
+      << "_lock_);" << be_nl << be_nl;
 
   os_ << "for (" << tao_cg->upcase (port_name)
       << "_TABLE::const_iterator iter =" << be_nl
@@ -150,24 +147,6 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "{" << be_idt_nl
       << "iter->second->push_" << lname << " (ev);"
       << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "ACE_CString source_id (this->_ciao_instance_id ());"
-      << be_nl
-      << "source_id += \"_" << port_name << "\";"
-      << be_nl << be_nl
-      << "for (" << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE::const_iterator giter =" << be_nl
-      << "       this->ciao_publishes_" << port_name
-      << "_generic_.begin ();" << be_nl
-      << "     giter != this->ciao_publishes_"
-      << port_name << "_generic_.end ();" << be_nl
-      << "     ++giter)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "giter->second->ciao_push_event (ev," << be_nl
-      << "                                source_id.c_str (),"
-      << be_nl
-      << "                                " << global
-      << sname << "::_tc_" << lname << ");" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
 
@@ -190,91 +169,24 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "entry.second = ::" << fname
       << "Consumer::_duplicate (c);" << be_nl << be_nl;
 
-  if (! static_config_)
-    {
-    os_ << "{" << be_idt_nl
-        << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-        << "                        mon," << be_nl
-        << "                        this->" << port_name
-        << "_lock_," << be_nl
-        << "                        0);" << be_nl << be_nl;
-    }
+  os_ << "{" << be_idt_nl
+      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                        mon," << be_nl
+      << "                        this->" << port_name
+      << "_lock_," << be_nl
+      << "                        0);" << be_nl << be_nl;
 
   os_ << "result = this->ciao_publishes_" << port_name
       << "_.insert (entry);";
 
-  if (! static_config_)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
+  os_ << be_uidt_nl
+      << "}";
 
   os_ << be_nl << be_nl
       << "if (! result.second)" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_ERROR_RETURN ((LM_ERROR," << be_nl
       << "                   ACE_TEXT (\"subscribe on %s failed\\n\"),"
-      << be_nl
-      << "                   ACE_TEXT (\"" << port_name
-      << "\"))," << be_nl
-      << "                  0);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::Components::Cookie * retv = 0;" << be_nl
-      << "ACE_NEW_THROW_EX (retv," << be_nl
-      << "                  ::CIAO::Cookie_Impl (entry.first),"
-      << be_nl
-      << "                  ::CORBA::NO_MEMORY ());"
-      << be_nl << be_nl
-      << "return retv;" << be_uidt_nl
-      << "}";
-
-  os_ << be_nl << be_nl
-      << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Context::subscribe_"
-      << port_name << "_generic (" << be_idt_nl
-      << "::Components::EventConsumerBase_ptr c)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if ( ::CORBA::is_nil (c))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "std::pair<" << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE::iterator, bool> result;" << be_nl
-      << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE::value_type entry;" << be_nl
-      << "entry.first = reinterpret_cast<ptrdiff_t> (c);"
-      << be_nl
-      << "entry.second =" << be_idt_nl
-      << "::Components::EventConsumerBase::_duplicate (c);"
-      << be_uidt_nl << be_nl;
-
-  if (! static_config_)
-    {
-      os_ << "{" << be_idt_nl
-          << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                        mon," << be_nl
-          << "                        this->" << port_name
-          << "_lock_," << be_nl
-          << "                        0);" << be_nl << be_nl;
-    }
-
-  os_ << "result =" << be_idt_nl
-      << "this->ciao_publishes_" << port_name
-      << "_generic_.insert (entry);" << be_uidt;
-
-  if (! static_config_)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
-
-  os_ << be_nl << be_nl
-      << "if (! result.second)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_ERROR_RETURN ((LM_ERROR," << be_nl
-      << "                   ACE_TEXT (\"generic subscribe \")"
-      << be_nl
-      << "                   ACE_TEXT (\"on %s failed\\n\"),"
       << be_nl
       << "                   ACE_TEXT (\"" << port_name
       << "\"))," << be_nl
@@ -304,16 +216,13 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
-  if (! static_config_)
-    {
-      os_ << "{" << be_idt_nl
-          << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                        mon," << be_nl
-          << "                        this->" << port_name
-          << "_lock_," << be_nl
-          << "                        ::" << fname
-          << "Consumer::_nil ());" << be_nl << be_nl;
-    }
+  os_ << "{" << be_idt_nl
+      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                        mon," << be_nl
+      << "                        this->" << port_name
+      << "_lock_," << be_nl
+      << "                        ::" << fname
+      << "Consumer::_nil ());" << be_nl << be_nl;
 
   os_ << tao_cg->upcase (port_name) << "_TABLE::iterator iter ="
       << be_idt_nl
@@ -331,24 +240,10 @@ be_visitor_context_svs::visit_publishes (be_publishes *node)
       << "return retv._retn ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << tao_cg->upcase (port_name)
-      << "_GENERIC_TABLE::iterator giter =" << be_idt_nl
-      << "this->ciao_publishes_" << port_name
-      << "_generic_.find (key);" << be_uidt_nl << be_nl
-      << "if (giter == this->ciao_publishes_" << port_name
-      << "_generic_.end ())" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::Components::InvalidConnection ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "n = this->ciao_publishes_" << port_name
-      << "_generic_.erase (key);";
+      << "}" << be_uidt_nl << be_nl;
 
-  if (! static_config_)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
+  os_ << be_uidt_nl
+      << "}";
 
   os_ << be_nl << be_nl
       << "if (n != 1UL)" << be_idt_nl
@@ -482,7 +377,6 @@ be_visitor_context_svs::gen_uses_multiplex (
   const char *port_name)
 {
   const char *fname = obj->full_name ();
-  bool static_config = be_global->gen_ciao_static_config ();
 
   os_ << be_nl << be_nl
       << "::" << node_->full_name () << "::" << port_name
@@ -491,14 +385,11 @@ be_visitor_context_svs::gen_uses_multiplex (
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl;
 
-  if (! static_config)
-    {
-      os_ << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                       mon," << be_nl
-          << "                       this->" << port_name
-          << "_lock_," << be_nl
-          << "                       0);" << be_nl << be_nl;
-    }
+  os_ << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                       mon," << be_nl
+      << "                       this->" << port_name
+      << "_lock_," << be_nl
+      << "                       0);" << be_nl << be_nl;
 
   os_ << "::" << node_->full_name () << "::" << port_name
       << "Connections * tmp_retv = 0;" << be_nl
@@ -549,26 +440,20 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "entry.second = ::" << fname
       << "::_duplicate (c);";
 
-  if (! static_config)
-    {
-      os_ << be_nl << be_nl
-          << "{" << be_idt_nl
-          << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                        mon," << be_nl
-          << "                        this->" << port_name
-          << "_lock_," << be_nl
-          << "                        0);";
-    }
+  os_ << be_nl << be_nl
+      << "{" << be_idt_nl
+      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                        mon," << be_nl
+      << "                        this->" << port_name
+      << "_lock_," << be_nl
+      << "                        0);";
 
   os_ << be_nl << be_nl
       << "result = this->ciao_uses_" << port_name
       << "_.insert (entry);";
 
-  if (! static_config)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
+  os_ << be_uidt_nl
+      << "}";
 
   os_ << be_nl << be_nl
       << "if (! result.second)" << be_idt_nl
@@ -601,17 +486,14 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "throw ::Components::InvalidConnection ();" << be_uidt_nl
       << "}" << be_uidt;
 
-  if (! static_config)
-    {
-      os_ << be_nl << be_nl
-          << "{" << be_idt_nl
-          << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
-          << "                        mon," << be_nl
-          << "                        this->" << port_name
-          << "_lock_," << be_nl
-          << "                        ::" << fname
-          << "::_nil ());";
-    }
+  os_ << be_nl << be_nl
+      << "{" << be_idt_nl
+      << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
+      << "                        mon," << be_nl
+      << "                        this->" << port_name
+      << "_lock_," << be_nl
+      << "                        ::" << fname
+      << "::_nil ());";
 
   os_ << be_nl << be_nl
       << tao_cg->upcase (port_name)
@@ -627,11 +509,8 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "n = this->ciao_uses_" << port_name
       << "_.erase (key);";
 
-  if (! static_config)
-    {
-      os_ << be_uidt_nl
-          << "}";
-    }
+  os_ << be_uidt_nl
+      << "}";
 
   os_ << be_nl << be_nl
       << "if (n != 1UL)" << be_idt_nl

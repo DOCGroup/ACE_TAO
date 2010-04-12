@@ -228,12 +228,6 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
       << "::" << obj_name << "Consumer_ptr c);" << be_uidt_nl;
 
   os_ << be_nl
-      << "// CIAO-specific." << be_nl
-      << "::Components::Cookie *" << be_nl
-      << "subscribe_" << port_name << "_generic (" << be_idt_nl
-      << "::Components::EventConsumerBase_ptr c);" << be_uidt_nl;
-
-  os_ << be_nl
       << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
       << "unsubscribe_" << port_name << " (" << be_idt_nl
       << "::Components::Cookie * ck);" << be_uidt;
@@ -316,18 +310,6 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       << "// Inherited from ::Components::EventConsumerBase." << be_nl
       << "virtual void" << be_nl
       << "push_event ( ::Components::EventBase * ev);";
-
-  os_ << be_nl << be_nl
-      << "// CIAO-specific in ::Components::EventConsumerBase." << be_nl
-      << "virtual void" << be_nl
-      << "ciao_push_event ( ::Components::EventBase * ev," << be_nl
-      << "                 const char * source_id," << be_nl
-      << "                 ::CORBA::TypeCode_ptr tc);";
-
-  os_ << be_nl << be_nl
-      << "// CIAO-specific in ::Components::EventConsumerBase." << be_nl
-      << "virtual ::CORBA::Boolean" << be_nl
-      << "ciao_is_substitutable (const char * event_repo_id);";
 
   os_ << be_nl << be_nl
       << "// Get component implementation." << be_nl

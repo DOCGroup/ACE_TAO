@@ -32,8 +32,7 @@ be_visitor_component_scope::be_visitor_component_scope (
   : be_visitor_scope (ctx),
     node_ (0),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ()),
-    static_config_ (be_global->gen_ciao_static_config ())
+    export_macro_ (be_global->svnt_export_macro ())
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
