@@ -165,6 +165,15 @@ sub Spawn ()
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
             @cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
         }
+        if (defined $self->{TARGET}) {
+            my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
+            while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print "INFO: adding target environment $env_key=$env_value\n";
+                }
+                @cmds[$cmdnr++] = 'C putenv("' . $env_key. '=' . $env_value . '")';
+            }
+        }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
@@ -219,6 +228,15 @@ sub Spawn ()
 
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
             @cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+        }
+        if (defined $self->{TARGET}) {
+            my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
+            while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print "INFO: adding target environment $env_key=$env_value\n";
+                }
+                @cmds[$cmdnr++] = 'putenv("' . $env_key. '=' . $env_value . '")';
+            }
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
