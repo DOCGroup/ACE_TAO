@@ -329,6 +329,8 @@ namespace CIAO
       ::Components::EventConsumerBase::_duplicate (
         iter->second->consumer ());
 #else
+    // @todo reimplement for lwccm
+    ACE_UNUSED_ARG (port_name);
     return ::Components::EventConsumerBase::_nil ();
 #endif
   }
