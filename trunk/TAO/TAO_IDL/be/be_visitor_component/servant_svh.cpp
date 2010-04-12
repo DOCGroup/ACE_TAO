@@ -398,10 +398,13 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << be_nl
               << "             ::Components::Cookie * ck);";
 
-          os_ << be_nl << be_nl
-              << "virtual ::Components::PublisherDescriptions *"
-              << be_nl
-              << "get_all_publishers (void);";
+          if (!be_global->gen_lwccm ())
+            {
+              os_ << be_nl << be_nl
+                  << "virtual ::Components::PublisherDescriptions *"
+                  << be_nl
+                  << "get_all_publishers (void);";
+            }
         }
 
       if (this->node_->has_emits ())
