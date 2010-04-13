@@ -148,11 +148,12 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   // Now pop the pipe to force the callback for dispatching when ready. If
   // the send fails due to a full pipe, don't fail - assume the already-sent
   // pipe bytes will cause the entire notification queue to be processed.
+  // Note that we don't need a timeout since the pipe is already in
+  // nonblocking mode and all we want is one attempt.
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
                          (char *) &buffer,
-                         1,             // Only need one byte to pop the pipe
-                         &ACE_Time_Value::zero);
-  if (n == -1 && (errno != ETIME && errno != EAGAIN))
+                         1);             // Only need one byte to pop the pipe
+  if (n == -1 && (errno != EAGAIN))
     return -1;
 
   return 0;
@@ -206,46 +207,40 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   // expensive than simply checking for an EWOULDBLOCK.
   size_t to_read;
   char *read_p;
-  bool have_one = false;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // For the queued case, we'll try to read one byte (since that's what
-  // the notify () tried to put in) but we don't need it - notifications can
-  // be queued even if the pipe fills, so there may be more notifications
-  // queued than there are bytes in the pipe.
-  char b;
+  // The idea in the queued case is to be sure we never end up with a notify
+  // queued but no byte in the pipe. If that happens, the notify won't be
+  // dispatched. So always try to empty the pipe, read the queue, then put
+  // a byte in if needed. The notify() method is enqueueing then writing the
+  // pipe, so be sure to do it in the reverse order here to avoid a race
+  // between removing the last notification from the queue and the notify
+  // side writing its byte.
+  char b[1024];
   read_p = &b;
-  to_read = 1;
+  to_read = sizeof(b);
+  (void)ACE::recv (handle, read_p, to_read);
 
-  // Before reading the byte, pop a message from the queue and queue a
-  // new message unless the queue is now empty.  The protocol is to
-  // keep a byte in the pipe as long as the queue is not empty.
   bool more_messages_queued = false;
   ACE_Notification_Buffer next;
-
   int result = notification_queue_.pop_next_notification (buffer,
                                                           more_messages_queued,
                                                           next);
 
-  if (result == 0)
-    {
-      // remove the notification byte from the pipe, avoiding notification loop
-      ACE::recv (handle, read_p, to_read);
-      return 0;
-    }
+  if (result <= 0)   // Nothing dequeued or error
+    return result;
 
-  if (result == -1)
-    return -1;
-
+  // If there are more messages, ensure there's a byte in the pipe
+  // in case the notification limit stops dequeuing notifies before
+  // emptying the queue.
   if (more_messages_queued)
     (void) ACE::send (this->notification_pipe_.write_handle (),
                       (char *)&next,
-                      1 /* one byte is enough */,
-                      &ACE_Time_Value::zero);
+                      1); /* one byte is enough */
+  return 1;
 #else
   to_read = sizeof buffer;
   read_p = (char *)&buffer;
-#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   ssize_t n = ACE::recv (handle, read_p, to_read);
 
@@ -271,7 +266,8 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
     return -1;
 
-  return have_one ? 1 : 0;
+  return 0;
+#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 }
 
 
