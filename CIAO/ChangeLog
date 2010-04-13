@@ -1,3 +1,24 @@
+Tue Apr 13 15:06:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/Exceptions
+        * connectors/ami4ccm/tests/Exceptions/Base
+        * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.idl
+        * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.mpc
+        * connectors/ami4ccm/tests/Exceptions/descriptors
+        * connectors/ami4ccm/tests/Exceptions/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/Exceptions/Receiver
+        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver.idl
+        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver.mpc
+        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver_exec.h
+        * connectors/ami4ccm/tests/Exceptions/Sender
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.idl
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.mpc
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.h
+        Test in server thrown exceptions are passed back correctly.
+
 Tue Apr 13 11:43:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

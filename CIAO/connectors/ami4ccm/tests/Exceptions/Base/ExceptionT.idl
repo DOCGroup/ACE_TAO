@@ -1,0 +1,37 @@
+// $Id$
+
+#ifndef EXCEPTION_T_IDL
+#define EXCEPTION_T_IDL
+
+#pragma ciao lem "Base/ExceptionTE.idl"
+#pragma ciao ami4ccm interface "ExceptionT::MyFoo"
+#pragma ciao lem "Base/ExceptionTAE.idl"
+
+module ExceptionT
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+      string test;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, out string answer)
+        raises (InternalError);
+      void hello (out long answer)
+        raises (InternalError);
+  
+      attribute short rw_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+
+      readonly attribute short ro_attrib
+        raises (InternalError);
+    };
+};
+
+#endif
+
