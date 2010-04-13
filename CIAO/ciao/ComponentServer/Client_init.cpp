@@ -32,11 +32,11 @@ namespace CIAO
                                  Components::SubscriberDescription);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::PublisherDescription_init,
                                  Components::PublisherDescription);
-    CIAO_REGISTER_VALUE_FACTORY (o, Components::ConfigValue_init,
-                                 Components::ConfigValue);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::ComponentPortDescription_init,
                                  Components::ComponentPortDescription);
-#endif                                 
+#endif
+    CIAO_REGISTER_VALUE_FACTORY (o, Components::ConfigValue_init,
+                                 Components::ConfigValue);
     return 0;
   }
 }
