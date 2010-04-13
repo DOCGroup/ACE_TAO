@@ -357,7 +357,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
       << be_uidt_nl << be_nl
       << "public:" << be_idt;
 
-  if (this->node_->has_uses ())
+  if (this->node_->n_uses () > 0UL)
     {
       os_ << be_nl
           << "virtual ::Components::Cookie *" << be_nl
@@ -382,7 +382,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   /// be declared.
   if (this->node_->node_type () == AST_Decl::NT_component)
     {
-      if (this->node_->has_publishes ())
+      if (this->node_->n_publishes () > 0UL)
         {
           os_ << be_nl << be_nl
               << "virtual ::Components::Cookie *" << be_nl
@@ -407,7 +407,20 @@ be_visitor_servant_svh::gen_non_type_specific (void)
             }
         }
 
-      if (this->node_->has_emits ())
+      /// Generated whether the component has emits ports
+      /// or not, except if we are generating a LwCCM
+      /// profile, in which case the base class method
+      /// (returning a null pointer to a sequence of
+      /// emitter descriptions) is seen instead.
+      if (!be_global->gen_lwccm ())
+        {
+          os_ << be_nl << be_nl
+              << "virtual ::Components::EmitterDescriptions *"
+              << be_nl
+              << "get_all_emitters (void);";
+        }
+
+      if (this->node_->n_emits () > 0UL)
         {
           os_ << be_nl << be_nl
               << "virtual void" << be_nl
@@ -420,18 +433,10 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << "virtual ::Components::EventConsumerBase_ptr"
               << be_nl
               << "disconnect_consumer (const char * source_name);";
-
-          if (!be_global->gen_lwccm ())
-            {
-              os_ << be_nl << be_nl
-                  << "virtual ::Components::EmitterDescriptions *"
-                  << be_nl
-                  << "get_all_emitters (void);";
-            }
         }
     }
 
-  if (this->node_->has_provides ())
+  if (this->node_->n_provides () > 0UL)
     {
       os_ << be_nl << be_nl
           << "// CIAO-specific." << be_nl
@@ -441,7 +446,8 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   /// No need for this method if the component has neither
   /// facets nor event sinks.
-  if (this->node_->has_provides () || this->node_->has_consumes ()) // @TODO
+  if (this->node_->n_provides () > 0UL
+      || this->node_->n_consumes () > 0UL)
     {
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl
