@@ -403,7 +403,7 @@ sub Spawn ()
             if (!(defined $self->{VALGRIND_CMD} || defined $ENV{'ACE_TEST_WINDOW'}) && 
                   (defined $self->{TARGET}) && ($ENV{'ACE_ROOT'} ne $self->{TARGET}->ACE_ROOT ())) {
                 my $x_dir = dirname ($executable);
-                chdir (x_dir);
+                chdir ($x_dir);
             }
             exec @cmdlist;
             die "ERROR: exec failed for <" . $cmdline . ">\n";

@@ -1,3 +1,7 @@
+Tue Apr 13 20:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/Process_Unix.pm: Fix typo that broke all tests.
+
 Tue Apr 13 19:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.{h cpp}: Reorder the enqueue/pipe operations
