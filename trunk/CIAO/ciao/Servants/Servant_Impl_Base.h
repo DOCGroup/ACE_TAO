@@ -113,13 +113,11 @@ namespace CIAO
 #endif
 
   protected:
-#if !defined (CCM_LW)
     typedef ACE_Array_Map<ACE_CString,
                           ::Components::EventConsumerBase_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
-#endif
   };
 }
 

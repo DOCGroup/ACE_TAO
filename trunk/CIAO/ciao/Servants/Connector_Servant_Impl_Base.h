@@ -212,19 +212,21 @@ namespace CIAO
                          ::Components::Cookie * cookie);
 
   protected:
- #if !defined (CCM_LW)
     typedef ACE_Array_Map<ACE_CString,
                           ::CORBA::Object_var>
        FacetTable;
 
+ #if !defined (CCM_LW)
     typedef ACE_Hash_Map_Manager_Ex<const char *,
                                     ::Components::ReceptacleDescription_var,
                                     ACE_Hash<const char *>,
                                     ACE_Equal_To<const char *>,
                                     ACE_Null_Mutex>
        ReceptacleTable;
+#endif
 
     FacetTable facet_table_;
+ #if !defined (CCM_LW)
     ReceptacleTable receptacle_table_;
 #endif
     Container_var container_;
