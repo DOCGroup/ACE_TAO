@@ -207,28 +207,12 @@ namespace CIAO
       const char *port_name);
 #endif
 
-    void add_receptacle (const char *receptacle_name,
-                         CORBA::Object_ptr recept_ref,
-                         ::Components::Cookie * cookie);
-
   protected:
     typedef ACE_Array_Map<ACE_CString,
                           ::CORBA::Object_var>
        FacetTable;
 
- #if !defined (CCM_LW)
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                    ::Components::ReceptacleDescription_var,
-                                    ACE_Hash<const char *>,
-                                    ACE_Equal_To<const char *>,
-                                    ACE_Null_Mutex>
-       ReceptacleTable;
-#endif
-
     FacetTable facet_table_;
- #if !defined (CCM_LW)
-    ReceptacleTable receptacle_table_;
-#endif
     Container_var container_;
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;

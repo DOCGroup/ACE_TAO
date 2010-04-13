@@ -278,48 +278,11 @@ namespace CIAO
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_all_receptacles (void)
   {
-    CIAO_TRACE("  Connector_Servant_Impl_Base::get_all_receptacles (void)");
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles\n"));
-
-    ::Components::ReceptacleDescriptions *tmp = 0;
-    ACE_NEW_THROW_EX (tmp,
-                      ::Components::ReceptacleDescriptions,
-                      CORBA::NO_MEMORY ());
-
-    ::Components::ReceptacleDescriptions_var retval = tmp;
-
-    retval->length (this->receptacle_table_.current_size ());
-    CORBA::ULong i = 0;
-
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
-                 retval->length ()));
-
-    for (ReceptacleTable::iterator iter =
-           this->receptacle_table_.begin ();
-         iter != this->receptacle_table_.end ();
-         ++iter, ++i)
-      {
-
-        ReceptacleTable::ENTRY & entry = *iter;
-        retval[i] = entry.int_id_;
-      }
-
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
-
-    return retval._retn ();
+    return 0;
   }
 #endif
 
-#if !defined (CCM_LW)
+ #if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)
@@ -530,97 +493,5 @@ namespace CIAO
     return safe._retn ();
   }
 #endif
-
-  void
-  Connector_Servant_Impl_Base::add_receptacle (
-    const char *receptacle_name,
-    CORBA::Object_ptr recept_ref,
-    ::Components::Cookie * cookie)
-  {
-#if !defined (CCM_LW)
-    // @todo Reimplement for LwCCM
-    CIAO_TRACE("Connector_Servant_Impl_Base::add_receptacle");
-    CIAO_DEBUG (6,
-                (LM_INFO,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%C)\n",
-                 receptacle_name));
-
-    ::Components::ReceptacleDescription_var safe;
-    ::Components::ReceptacleDescription *rd = 0;
-
-    if (this->receptacle_table_.find (receptacle_name, safe) == -1)
-      {
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
-                     receptacle_name));
-
-        ACE_NEW_THROW_EX (rd,
-                          OBV_Components::ReceptacleDescription,
-                          CORBA::NO_MEMORY ());
-        safe = rd;
-
-        rd->name (receptacle_name);
-        rd->type_id ();
-        // The receptacle is a multiplex receptacle if and only if a
-        // cookie was given.
-        rd->is_multiple (cookie != 0);
-
-        ::Components::ConnectionDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          OBV_Components::ConnectionDescription (cookie,
-                                                                 recept_ref),
-                          CORBA::NO_MEMORY ());
-
-        ::Components::ConnectionDescription_var cd_safe = cd;
-        ::Components::ConnectionDescriptions cds (1);
-
-        cds.length (1);
-        cds[0] = cd_safe;
-        rd->connections (cds);
-      }
-    else
-      {
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
-                     receptacle_name));
-
-        rd = safe.inout ();
-
-        ::Components::ConnectionDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          OBV_Components::ConnectionDescription (cookie,
-                                                                 recept_ref),
-                          CORBA::NO_MEMORY ());
-
-        ::Components::ConnectionDescription_var cd_safe = cd;
-        ::Components::ConnectionDescriptions & cds =
-          rd->connections ();
-        CORBA::ULong old_length = cds.length ();
-        cds.length (old_length + 1);
-        cds [old_length] = cd_safe;
-
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Added new connection to "
-                     "existing receptacle named (%C)\n",
-                     receptacle_name));
-      }
-
-    if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
-      {
-        CIAO_DEBUG (6,
-                    (LM_INFO,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
-                     receptacle_name));
-      }
-#endif
-  }
 }
 

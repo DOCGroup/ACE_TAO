@@ -1,3 +1,11 @@
+Tue Apr 13 10:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Removed the receptacle administration, if the user
+          component has receptacles, than tao_idl already generates code
+          to get all of these and that code also uses the context
+
 Tue Apr 13 08:53:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL3/ImpliedIDL/All/convert.idl:
