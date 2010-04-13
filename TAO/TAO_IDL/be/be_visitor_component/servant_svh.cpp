@@ -441,7 +441,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   /// No need for this method if the component has neither
   /// facets nor event sinks.
-  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
+  if (this->node_->has_provides () || this->node_->has_consumes ()) // @TODO
     {
       os_ << be_uidt_nl << be_nl
           << "private:" << be_idt_nl
