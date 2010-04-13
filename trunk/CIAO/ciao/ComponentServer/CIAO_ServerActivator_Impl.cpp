@@ -72,7 +72,7 @@ namespace CIAO
                       "CIAO_ServerActivator_i::component_server_callback - "
                       "Received callback from ComponentServer %C, which doesn't belong to me.\n",
                       server_UUID));
-          throw CORBA::BAD_PARAM ();
+          throw ::CORBA::BAD_PARAM ();
         }
 
       if (info->activated_)
@@ -81,7 +81,7 @@ namespace CIAO
                        "CIAO_ServerActivator_i::component_server_callback - "
                        "Received callback from ComponentServer %C, which has already been configured.\n",
                        server_UUID));
-          throw CORBA::BAD_INV_ORDER ();
+          throw ::CORBA::BAD_INV_ORDER ();
         }
 
       if (!CORBA::is_nil (info->ref_))
@@ -90,7 +90,7 @@ namespace CIAO
                        "CIAO_ServerActivator_i::component_server_callback - "
                        "Received callback from ComponentServer %C, which has already called back.\n",
                        server_UUID));
-          throw CORBA::BAD_INV_ORDER ();
+          throw ::CORBA::BAD_INV_ORDER ();
         }
 
       CIAO_DEBUG (9, (LM_TRACE, CLINFO
@@ -138,7 +138,7 @@ namespace CIAO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which doesn't belong to me.\n",
                            server_UUID));
-              throw CORBA::BAD_PARAM ();
+              throw ::CORBA::BAD_PARAM ();
             }
 
           if (info->activated_)
@@ -147,7 +147,7 @@ namespace CIAO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which has already been completed.\n",
                            server_UUID));
-              throw CORBA::BAD_INV_ORDER ();
+              throw ::CORBA::BAD_INV_ORDER ();
             }
 
           if (CORBA::is_nil (info->ref_.in ()))
@@ -156,7 +156,7 @@ namespace CIAO
                            "CIAO_ServerActivator_i::configuration_complete - "
                            "Received configuration_complete from ComponentServer %C, which has not called back.\n",
                            server_UUID));
-              throw CORBA::BAD_INV_ORDER ();
+              throw ::CORBA::BAD_INV_ORDER ();
             }
 
           info->activated_ = true;

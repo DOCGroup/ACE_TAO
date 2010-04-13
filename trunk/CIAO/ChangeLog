@@ -1,3 +1,12 @@
+Tue Apr 13 10:59:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+          Layout change
+
+        * ccm/CCM_Session2Context.idl:
+          Disable for LwCCM
+
 Tue Apr 13 10:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
