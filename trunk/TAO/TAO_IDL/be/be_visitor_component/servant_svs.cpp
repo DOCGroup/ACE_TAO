@@ -101,7 +101,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// If a component has neither facets nor event sinks, the
   /// populate_port_tables() method isn't generated.
-  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
+  if (this->node_->has_provides () || this->node_->has_consumes ()) // @TODO
     {
       os_ << "try" << be_idt_nl
           << "{" << be_idt_nl
@@ -207,7 +207,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
+  if (this->node_->has_provides () || this->node_->has_consumes ()) // @TODO
     {
       os_ << be_nl << be_nl
           << "/// Private method to trigger population of the port"
