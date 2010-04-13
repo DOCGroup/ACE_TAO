@@ -1,3 +1,10 @@
+Tue Apr 13 12:05:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Enabled some code for provides and lwccm, this has to be
+          reworked, not all this functionality is needed for lwccm
+
 Tue Apr 13 10:03:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
