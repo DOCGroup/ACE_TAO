@@ -1744,7 +1744,7 @@ NodeApplication_Impl::getAllConnections()
                       }
                     catch (const ::Components::InvalidName& )
                       {
-                        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT(" NodeApplication_Impl::getAllConnections - ")
+                        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::getAllConnections - ")
                                      ACE_TEXT("Components::CCMObject_var::provide_facet() returned ")
                                      ACE_TEXT("::Components::InvalidName exception for connection %C and port %C\n"),
                                      this->plan_.connection[i].name.in (),

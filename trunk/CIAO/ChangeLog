@@ -1,3 +1,14 @@
+Tue Apr 13 11:43:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Changed layout of a debug statement
+
+        * ciao/ComponentServer/Client_init.cpp:
+          Always register ConfigValue factory
+
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+          Added missing newline to debug statement
+
 Tue Apr 13 11:35:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:

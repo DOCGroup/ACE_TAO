@@ -339,7 +339,7 @@ namespace CIAO
 
       CIAO_DEBUG (9, (LM_TRACE, CLINFO
                   "CIAO_Container_i::install_home - "
-                  "Extraction resulted in map of [%u] values", cm.current_size ()));
+                  "Extraction resulted in map of [%u] values\n", cm.current_size ()));
 
 
       // extract config values here...
