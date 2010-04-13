@@ -109,7 +109,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "}" << be_uidt_nl
           << "catch (const ::CORBA::Exception &)" << be_idt_nl
           << "{" << be_nl
-          << "}" << be_uidt << be_uidt_nl;
+          << "}" << be_uidt;
     }
 
   os_ << be_uidt_nl << "}";
@@ -216,10 +216,17 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "void" << be_nl
           << node_->local_name ()
           << "_Servant::populate_port_tables (void)" << be_nl
-          << "{" << be_idt_nl
-          << "::CORBA::Object_var obj_var;" << be_nl
-          << "::Components::EventConsumerBase_var ecb_var;"
-          << be_nl;
+          << "{" << be_idt_nl;
+
+      if (this->node_->has_provides ())
+        {
+          os_ << "::CORBA::Object_var obj_var;" << be_nl;
+        }
+
+      if (this->node_->has_consumes ())
+        {
+          os_ << "::Components::EventConsumerBase_var ecb_var;" << be_nl;
+        }
 
       be_visitor_populate_port_tables ppt_visitor (this->ctx_);
 
@@ -404,28 +411,11 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
 
   if (is_multiple)
     {
-      os_ << "::Components::Cookie * cookie =" << be_idt_nl;
+      os_ << "return ";
     }
 
   os_ << "this->context_->connect_" << port_name
-      << " (c);" << be_nl;
-
-  if (is_multiple)
-    {
-      os_ << be_uidt_nl;
-    }
-
-  os_ << "this->add_receptacle (\"" << port_name
-      << "\", c, " << (is_multiple ? "cookie" : "0")
-      << ");";
-
-  if (is_multiple)
-    {
-      os_ << be_nl << be_nl
-          << "return cookie;";
-    }
-
-  os_ << be_uidt_nl
+      << " (c);" << be_uidt_nl
       << "}";
 
   os_ << be_nl << be_nl
