@@ -264,6 +264,13 @@ namespace CIAO
                            "wrong ServerActivator\n"));
               throw Error ("Bad callback IOR");
             }
+          catch (const ::CORBA::Exception &ex)
+            {
+              CIAO_ERROR (1, (LM_ERROR, CLINFO "RTComponentServer_Task::svc - "
+                           "Caught CORBA Exception %C\n",
+                           ex._info().c_str ()));
+              throw Error ("Caught exception while calling back");
+            }
           catch (...)
             {
               CIAO_ERROR (1, (LM_ERROR, CLINFO "RTComponentServer_Task::svc - "

@@ -161,12 +161,19 @@ namespace CIAO
 
               sa->configuration_complete (this->uuid_.c_str ());
             }
-          catch (const CORBA::BAD_PARAM &)
+          catch (const ::CORBA::BAD_PARAM &)
             {
               CIAO_ERROR (1, (LM_ERROR, CLINFO "ComponentServer_Task::svc - "
                            "The Callback IOR provided pointed to the "
                            "wrong ServerActivator\n"));
               throw Error ("Bad callback IOR");
+            }
+          catch (const ::CORBA::Exception &ex)
+            {
+              CIAO_ERROR (1, (LM_ERROR, CLINFO "ComponentServer_Task::svc - "
+                           "Caught CORBA Exception %C\n",
+                           ex._info().c_str ()));
+              throw Error ("Caught exception while calling back");
             }
           catch (...)
             {
