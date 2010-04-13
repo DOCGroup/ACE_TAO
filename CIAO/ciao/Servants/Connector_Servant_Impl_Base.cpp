@@ -57,8 +57,7 @@ namespace CIAO
             }
         }
 
-      Components::SessionComponent_var temp =
-        this->get_executor ();
+      Components::SessionComponent_var temp = this->get_executor ();
 
       if (!::CORBA::is_nil (temp.in ()))
         {
