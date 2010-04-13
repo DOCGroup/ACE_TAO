@@ -1,3 +1,9 @@
+Tue Apr 13 10:03:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Simplified code generation because there is no receptacle
+          administration anymore in the servant base
+
 Mon Apr 12 18:13:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
