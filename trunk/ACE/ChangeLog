@@ -1,3 +1,10 @@
+Tue Apr 13 19:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.{h cpp}: Reorder the enqueue/pipe operations
+          when adding a notification to close the race where notifies can get
+          lost in the ACE_HAS_NOTIFICATION_QUEUE case. Also fixed a misplaced
+          #endif in read_notification_pipe() and cleaned it up some.
+
 Mon Apr 12 09:31:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/TestTarget_WinCE.pm:

@@ -249,7 +249,7 @@ protected:
   /// Lock and flag to say whether we're already dispatching notifies.
   /// Purpose is to only dispatch notifies from one thread at a time.
   ACE_SYNCH_MUTEX dispatching_lock_;
-  bool dispatching_;
+  volatile bool dispatching_;
 };
 
 // ---------------------------------------------------------------------
