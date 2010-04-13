@@ -78,9 +78,9 @@ be_visitor_context_svh::visit_component (be_component *node)
   if (!is_connector)
     {
       no_events =
-        (!node->has_consumes ()
-         && !node->has_emits ()
-         && !node->has_publishes ());
+        (node->n_consumes () == 0UL
+         && node->n_emits () == 0UL
+         && node->n_publishes () == 0UL);
     }
 
   bool de_facto = (is_connector || no_events);
