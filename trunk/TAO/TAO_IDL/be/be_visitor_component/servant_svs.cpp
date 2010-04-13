@@ -285,7 +285,7 @@ be_visitor_servant_svs::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svs::visit_provides (be_provides *node)
 {
-  if (node->provides_type ()->is_local () || be_global->gen_lwccm ())
+  if (node->provides_type ()->is_local ()) // @TODO || be_global->gen_lwccm ())
     {
       return 0;
     }
