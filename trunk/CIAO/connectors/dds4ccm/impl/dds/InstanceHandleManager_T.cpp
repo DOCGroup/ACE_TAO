@@ -24,7 +24,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::impl (voi
 {
   if (this->writer_)
     {
-      return DDS_TYPE::data_writer::narrow (this->writer_->get_impl ());
+      return this->writer_;
     }
   else
     {
@@ -67,7 +67,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl 
     }
   else
     {
-      this->writer_ = writer;
+      this->writer_ = DDS_TYPE::data_writer::narrow (writer->get_impl ());
     }
 }
 
