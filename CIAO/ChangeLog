@@ -1,3 +1,15 @@
+Wed Apr 14 12:41:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+          Reverted latest change.
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+          Since DataReaderListener_T is derived from PortStatusListener_T,
+          it should use the PortStatusListener_T mask to define
+          his own mask.
+
 Wed Apr 14 12:13:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.h:

@@ -168,9 +168,10 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
 {
   if (! ::CORBA::is_nil (listener) || CIAO_debug_level >= 10)
     {
+      ::CCM_DDS::PortStatusListener_ptr psl =
+        dynamic_cast < ::CCM_DDS::PortStatusListener_ptr> (listener);
       return ::DDS::DATA_AVAILABLE_STATUS |
-             ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
-             ::DDS::SAMPLE_LOST_STATUS;
+             PortStatusListener::get_mask (psl);
     }
   else
     {
