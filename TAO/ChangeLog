@@ -1,3 +1,11 @@
+Wed Apr 14 06:20:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+          Const change
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Generate correct base class
+
 Tue Apr 13 17:11:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
@@ -6,15 +14,15 @@ Tue Apr 13 17:11:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
         * TAO_IDL/be_include/be_component.h:
         * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
-        
+
           - Changed the scanning mechanism in the component node
             to increment unsigned long members for all port kinds
             (uses multiple and read-write attribute members are
             still boolean flags).
-            
+
           - Removed duplicate mechanism to the above in the servant
             source visitor.
-            
+
           - Moved the generation of get_all_emitters() outside the
             check for existence of emit port(s). If there are no
             emit ports, the method returns a sequence (of emitter
