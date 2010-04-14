@@ -19,7 +19,7 @@ project(AMI_ExceptionT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
 }
 
 project(AMI_ExceptionT_lem_gen) : ciaoidldefaults {
-  after += AMI_ExceptionT_idl_gen
+  after += AMI_ExceptionT_idl_gen AMI_ExceptionT_lema_gen
   custom_only = 1
   idlflags += -Wb,export_macro=EXCEPTION_T_LEM_STUB_Export \
               -Wb,export_include=ExceptionT_lem_stub_export.h \
@@ -61,7 +61,7 @@ project(AMI_ExceptionT_lemae_gen) : ciaoidldefaults {
 }
 
 project(AMI_ExceptionT_stub) : ccm_stub, ami, ami4ccm_stub {
-  after += AMI_ExceptionT_lem_gen AMI_ExceptionT_lema_gen
+  after += AMI_ExceptionT_lem_gen
   libs  +=
   libout = ../lib
   libpaths += ../lib
@@ -136,13 +136,13 @@ project(AMI_ExceptionT_skel) : ciao_executor, ami, ami4ccm_servant {
 
   Header_Files {
     ExceptionTS.h
-    ExceptionTAS.h
+   
     ExceptionT_skel_export.h
   }
 
   Inline_Files {
     ExceptionTS.inl
-    ExceptionTAS.inl
+   
   }
 }
 
