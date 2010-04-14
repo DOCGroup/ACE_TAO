@@ -34,7 +34,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
 {
   if (this->reader_)
     {
-      return DDS_TYPE::data_reader::narrow (this->reader_->get_impl ());
+      return this->reader_;
     }
   else
     {
@@ -362,7 +362,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
     }
   else
     {
-      this->reader_ = reader;
+      this->reader_ = DDS_TYPE::data_reader::narrow (reader->get_impl ());;
       this->create_conditions ();
     }
 }

@@ -72,6 +72,7 @@ namespace CIAO
 
       private:
         CCM_DDS_DataReader_i *reader_;
+        typename DDS_TYPE::data_reader * impl_;
 
         Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get_;
 
