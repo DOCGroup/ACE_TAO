@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_component_scope.h"
 #include "be_visitor_context.h"
 
@@ -56,7 +55,8 @@ be_visitor_component_scope::visit_extended_port (
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
-  // Store this to prefix to contained provides or uses node name.
+  /// Skip if we are defined inside a porttype.
+  /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->port_prefix_ = node->local_name ()->get_string ();
@@ -75,6 +75,7 @@ be_visitor_component_scope::visit_extended_port (
                         -1);
     }
 
+  /// Reset port prefix string.
   this->port_prefix_ = "";
   return 0;
 }
@@ -86,7 +87,8 @@ be_visitor_component_scope::visit_mirror_port (
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
-  // Store this to prefix to contained provides or uses node name.
+  /// Skip if we are defined inside a porttype.
+  /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
       this->port_prefix_ = node->local_name ()->get_string ();
@@ -100,12 +102,13 @@ be_visitor_component_scope::visit_mirror_port (
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_component_scope")
-                         ACE_TEXT ("::visit_extended_port - ")
+                         ACE_TEXT ("::visit_mirror_port - ")
                          ACE_TEXT ("visit_porttype_scope")
                          ACE_TEXT ("_mirror failed\n")),
                         -1);
     }
 
+  /// Reset port prefix string.
   this->port_prefix_ = "";
   return 0;
 }
