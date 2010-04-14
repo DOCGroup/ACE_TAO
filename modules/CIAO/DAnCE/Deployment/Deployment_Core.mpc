@@ -13,6 +13,11 @@ project(Deployment_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream
     idlflags += -SS -Sci
     Deployment_Packaging_Data.idl
     Deployment_PlanError.idl
+    Deployment_InvalidProperty.idl
+    Deployment_InvalidNodeExecParameter.idl
+    Deployment_InvalidComponentExecParameter.idl
+    Deployment_InvalidConnection.idl
+    Deployment_ResourceNotAvailable.idl
     Deployment_Connection.idl
     Deployment_StopError.idl
     Deployment_StartError.idl

@@ -1,0 +1,24 @@
+// $Id$
+project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
+    ami, amh, dance_deployment_stub {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=DANCE_STUB_Export \
+                  -Wb,stub_export_include=DAnCE_stub_export.h \
+                  -Wb,skel_export_macro=DANCE_SKEL_Export \
+                  -Wb,skel_export_include=DAnCE_skel_export.h
+
+  IDL_Files {
+    idlflags += -SS -Sci
+    DAnCE_DeploymentInterceptors.idl
+    DAnCE_Properties.idl
+  }
+  
+  IDL_Files {
+    idlflags += -Gxhst -Gxhsk
+    DAnCE_LocalityManager.idl
+  }
+  
+  IDL_Files {
+    DAnCE_ArtifactInstallation.idl
+  }
+}
