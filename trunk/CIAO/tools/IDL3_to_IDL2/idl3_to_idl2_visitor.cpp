@@ -6,7 +6,9 @@
 #include "be_sunsoft.h"
 #include "be_extern.h"
 
-#include "ast_component.h"
+#include "ast_connector.h"
+#include "ast_porttype.h"
+#include "ast_mirror_port.h"
 #include "ast_component_fwd.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
@@ -134,7 +136,7 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
     {
       return 0;
     }
-
+    
   *os << be_nl << be_nl
       << "interface "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
@@ -199,7 +201,8 @@ idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
     IdentifierHelper::orig_sn (n);
 
   *os << be_nl << be_nl
-      << impl_name.c_str () << " provide_" << orig_id << " ();";
+      << impl_name.c_str () << " provide_"
+      << this->port_prefix_.c_str () << orig_id << " ();";
 
   orig_id->destroy ();
   delete orig_id;
@@ -219,39 +222,48 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
   UTL_ScopedName *n = node->uses_type ()->name ();
   ACE_CString impl_name =
     IdentifierHelper::orig_sn (n);
+    
+  ACE_CString port_name (this->port_prefix_);
+  port_name += orig_id->get_string ();
 
   if (node->is_multiple ())
     {
-      *os << "struct " << orig_id << "Connection" << be_nl
+      *os << "struct " << port_name.c_str ()
+          << "Connection" << be_nl
           << "{" << be_idt_nl
           << impl_name.c_str () << " objref;" << be_nl
           << "Components::Cookie ck;" << be_uidt_nl
           << "};" << be_nl << be_nl
           << "typedef sequence<" << orig_id << "Connection> "
-          << orig_id << "Connections;"
+          << port_name.c_str () << "Connections;"
           << be_nl << be_nl
-          << "Components::Cookie connect_" << orig_id << " (in "
-          << impl_name.c_str () << " connection)" << be_idt_nl
+          << "Components::Cookie connect_" << port_name.c_str ()
+          << " (in " << impl_name.c_str () << " connection)"
+          << be_idt_nl
           << "raises (Components::ExceededConnectionLimit, "
-          << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-          << impl_name.c_str () << " disconnect_" << orig_id
-          << " (in Components::Cookie ck)" << be_idt_nl
+          << "Components::InvalidConnection);"
+          << be_uidt_nl << be_nl
+          << impl_name.c_str () << " disconnect_"
+          << port_name.c_str () << " (in Components::Cookie ck)"
+          << be_idt_nl
           << "raises (Components::InvalidConnection);"
           << be_uidt_nl << be_nl
-          << orig_id << "Connections get_connections_" << orig_id
-          << " ();";
+          << port_name.c_str () << "Connections get_connections_"
+          << port_name.c_str () << " ();";
     }
   else
     {
-      *os << "void connect_" << orig_id << " (in "
+      *os << "void connect_" << port_name.c_str () << " (in "
           << impl_name.c_str () << " conxn)" << be_idt_nl
           << "raises (Components::AlreadyConnected, "
-          << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-          << impl_name.c_str () << " disconnect_" << orig_id
-          << " ()" << be_idt_nl
-          << "raises (Components::NoConnection);" << be_uidt_nl << be_nl
-          << impl_name.c_str () << " get_connection_" << orig_id
-          << " ();";
+          << "Components::InvalidConnection);"
+          << be_uidt_nl << be_nl
+          << impl_name.c_str () << " disconnect_"
+          << port_name.c_str () << " ()" << be_idt_nl
+          << "raises (Components::NoConnection);"
+          << be_uidt_nl << be_nl
+          << impl_name.c_str () << " get_connection_"
+          << port_name.c_str () << " ();";
     }
 
   orig_id->destroy ();
@@ -338,21 +350,77 @@ idl3_to_idl2_visitor::visit_consumes (AST_Consumes *node)
 }
 
 int
-idl3_to_idl2_visitor::visit_extended_port (AST_Extended_Port *)
+idl3_to_idl2_visitor::visit_porttype (AST_PortType *node)
 {
+  /// We want to visit these nodes only by navigating from an
+  /// extended port or a mirror port.
   return 0;
 }
 
 int
-idl3_to_idl2_visitor::visit_mirror_port (AST_Mirror_Port *)
+idl3_to_idl2_visitor::visit_extended_port (AST_Extended_Port *node)
 {
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+
+  /// Skip if we are defined inside a porttype.
+  /// Depends on nested ports not being allowed.
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+    {
+      this->port_prefix_ = node->local_name ()->get_string ();
+      this->port_prefix_ += '_';
+    }
+
+  if (this->visit_porttype_scope (node->port_type ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("idl3_to_idl2_visitor")
+                         ACE_TEXT ("::visit_extended_port - ")
+                         ACE_TEXT ("visit porttype scope failed\n")),
+                        -1);
+    }
+
+  /// Reset port prefix string.
+  this->port_prefix_ = "";
   return 0;
 }
 
 int
-idl3_to_idl2_visitor::visit_connector (AST_Connector *)
+idl3_to_idl2_visitor::visit_mirror_port (AST_Mirror_Port *node)
 {
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+
+  /// Skip if we are defined inside a porttype.
+  /// Depends on nested ports not being allowed.
+  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+    {
+      this->port_prefix_ = node->local_name ()->get_string ();
+      this->port_prefix_ += '_';
+    }
+    
+  int status =
+    this->visit_porttype_scope_mirror (node->port_type ());
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("idl3_to_idl2_visitor")
+                         ACE_TEXT ("::visit_mirror_port - ")
+                         ACE_TEXT ("visit_porttype_scope")
+                         ACE_TEXT ("_mirror failed\n")),
+                        -1);
+    }
+
+  /// Reset port prefix string.
+  this->port_prefix_ = "";
   return 0;
+}
+
+int
+idl3_to_idl2_visitor::visit_connector (AST_Connector *node)
+{
+  return this->visit_component (node);
 }
 
 int
@@ -727,4 +795,71 @@ idl3_to_idl2_visitor::tranfer_scope_elements (AST_Home *src,
                       "codegen for destination scope failed\n"));
         }
     }
+}
+
+int
+idl3_to_idl2_visitor::visit_porttype_scope (AST_PortType *node)
+{
+  return this->visit_scope (node);
+}
+
+int
+idl3_to_idl2_visitor::visit_porttype_scope_mirror (
+  AST_PortType *node)
+{
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *d = si.item ();
+
+      switch (d->node_type ())
+        {
+          case AST_Decl::NT_provides:
+            {
+              AST_Provides *p =
+                AST_Provides::narrow_from_decl (d);
+
+              AST_Uses mirror_node (p->name (),
+                                    p->provides_type (),
+                                    false);
+
+              if (this->visit_uses (&mirror_node) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("idl3_to_idl2_visitor")
+                                     ACE_TEXT ("::visit_porttype_mirror - ")
+                                     ACE_TEXT ("visit_uses() failed\n")),
+                                    -1);
+                }
+
+              mirror_node.destroy ();
+              break;
+            }
+          case AST_Decl::NT_uses:
+            {
+              AST_Uses *u =
+                AST_Uses::narrow_from_decl (d);
+
+              AST_Provides mirror_node (u->name (),
+                                        u->uses_type ());
+
+              if (this->visit_provides (&mirror_node) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("idl3_to_idl2_visitor")
+                                     ACE_TEXT ("::visit_porttype_mirror - ")
+                                     ACE_TEXT ("visit_provides() failed\n")),
+                                    -1);
+                }
+
+              mirror_node.destroy ();
+              break;
+            }
+          default:
+            return d->ast_accept (this);
+        }
+    }
+
+  return 0;
 }
