@@ -39,18 +39,18 @@ be_visitor_servant_svs::visit_component (be_component *node)
   const char *global = (sname_str == "" ? "" : "::");
   AST_Decl::NodeType nt = this->node_->node_type ();
 
-  bool is_connector = (nt == AST_Decl::NT_connector);
+  bool const is_connector = (nt == AST_Decl::NT_connector);
   bool no_events = false;
 
   if (!is_connector)
     {
       no_events =
-        (node->n_consumes () > 0UL
-         && node->n_emits () > 0UL
-         && node->n_publishes () > 0UL);
+        (node->n_consumes () == 0UL
+         && node->n_emits () == 0UL
+         && node->n_publishes () == 0UL);
     }
 
-  bool de_facto = (is_connector || no_events);
+  bool const de_facto = (is_connector || no_events);
 
   const char *opt_conn =
     (de_facto ? "Connector_" : "");
@@ -1009,7 +1009,7 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
     {
       return;
     }
-    
+
   os_ << be_nl << be_nl
       << "::Components::EmitterDescriptions *" << be_nl
       << node_->local_name ()
