@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 void
 set_priority ()
 {
-  int priority =
+  int const priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
@@ -115,7 +115,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get the RoundTrip reference
       obj = test->provide_facet ("latency");
-      Benchmark::LatencyTest_var round_trip = 
+      Benchmark::LatencyTest_var round_trip =
         Benchmark::LatencyTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (round_trip.in ()))

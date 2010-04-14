@@ -105,8 +105,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::Object_var obj = orb->string_to_object(ior);
     Messenger_var messenger = Messenger::_narrow (obj.in());
 
-    Runnable_var runnable = messenger->provide_control();
-    Publication_var publication = messenger->provide_content ();
+    obj = messenger->provide_facet ("control");
+    Runnable_var runnable = Runnable::_narrow (obj.in ());
+    obj = messenger->provide_facet ("content");
+    Publication_var publication = Publication::_narrow (obj.in ());
 
     svc( runnable.in(), publication.in() );
 
