@@ -95,7 +95,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
         }
       this->ccm_dds_reader_.set_listener (
         this->data_listener_.in (),
-        DataReaderListener::get_mask (listener));
+        PortStatusListener::get_mask (status));
     }
   catch (...)
     {
