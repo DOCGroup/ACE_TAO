@@ -1,3 +1,24 @@
+Wed Apr 14 15:00:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/NoReplyH
+        * connectors/ami4ccm/tests/NoReplyH/Base
+        * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.idl
+        * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.mpc
+        * connectors/ami4ccm/tests/NoReplyH/descriptors
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/NoReplyH/Receiver
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver.idl
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver.mpc
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.h
+        * connectors/ami4ccm/tests/NoReplyH/Sender
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender.idl
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender.mpc
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h
+        test AMI4CCM with no reply handlers.
+
 Wed Apr 14 12:41:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Listen_T.h:
