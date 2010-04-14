@@ -1,3 +1,13 @@
+Wed Apr 14 10:14:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/dds/InstanceHandleManager_T.cpp:
+          No narrow in the critical code path.
+
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/Plan.cdp:
+          Removed connector status listener connection since
+          it wasn't used.
+
 Wed Apr 14 09:49:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/Getter_T.h:
