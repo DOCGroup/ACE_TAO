@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p ExceptionT_Base ExceptionT_Receiver"
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_idl_gen) : componentidldefaults {
+project(AMI_ExceptionT_Base_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   after += AMI_ExceptionT_idl_gen
   idlflags += -Wb,stub_export_macro=EXCEPTION_T_RECEIVER_STUB_Export \
@@ -17,8 +17,8 @@ project(AMI_ExceptionT_Base_ExceptionT_Receiver_idl_gen) : componentidldefaults 
   }
 }
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_lem_gen) : ciaoidldefaults {
-  after += AMI_ExceptionT_Base_ExceptionT_Receiver_idl_gen
+project(AMI_ExceptionT_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_ExceptionT_Base_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=EXCEPTION_T_RECEIVER_LEM_STUB_Export \
               -Wb,stub_export_include=ExceptionT_Receiver_lem_stub_export.h \
@@ -29,8 +29,8 @@ project(AMI_ExceptionT_Base_ExceptionT_Receiver_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_l_stub) : ccm_svnt, messaging {
-  after += AMI_ExceptionT_Base_ExceptionT_Receiver_lem_gen AMI_ExceptionT_Base_ExceptionT_Receiver_stub AMI_ExceptionT_stub
+project(AMI_ExceptionT_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_ExceptionT_Base_Receiver_lem_gen AMI_ExceptionT_Base_Receiver_stub AMI_ExceptionT_stub
   libs  += ExceptionT_stub ExceptionT_Receiver_stub
   libpaths += ../lib
   libout = ../lib
@@ -54,8 +54,8 @@ project(AMI_ExceptionT_Base_ExceptionT_Receiver_l_stub) : ccm_svnt, messaging {
   }
 }
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_stub) : ccm_stub, messaging {
-  after += AMI_ExceptionT_Base_ExceptionT_Receiver_idl_gen AMI_ExceptionT_stub
+project(AMI_ExceptionT_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_ExceptionT_Base_Receiver_idl_gen AMI_ExceptionT_stub
   libs  += ExceptionT_stub
   libpaths += ../lib
   libout = ../lib
@@ -79,8 +79,8 @@ project(AMI_ExceptionT_Base_ExceptionT_Receiver_stub) : ccm_stub, messaging {
   }
 }
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_exec) : ciao_executor, messaging {
-  after   += AMI_ExceptionT_Base_ExceptionT_Receiver_l_stub AMI_ExceptionT_Base_ExceptionT_Receiver_stub AMI_ExceptionT_stub AMI_ExceptionT_lem_stub
+project(AMI_ExceptionT_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_ExceptionT_Base_Receiver_l_stub AMI_ExceptionT_Base_Receiver_stub AMI_ExceptionT_stub AMI_ExceptionT_lem_stub
   sharedname = ExceptionT_Receiver_exec
   libs += ExceptionT_Receiver_stub ExceptionT_Receiver_lem_stub ExceptionT_stub ExceptionT_lem_stub
   libpaths += ../lib
@@ -103,8 +103,8 @@ project(AMI_ExceptionT_Base_ExceptionT_Receiver_exec) : ciao_executor, messaging
   }
 }
 
-project(AMI_ExceptionT_Base_ExceptionT_Receiver_svnt) : ciao_servant, messaging {
-  after      += AMI_ExceptionT_Base_skel AMI_ExceptionT_Base_ExceptionT_Receiver_l_stub AMI_ExceptionT_stub AMI_ExceptionT_skel AMI_ExceptionT_lem_stub
+project(AMI_ExceptionT_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_ExceptionT_Base_skel AMI_ExceptionT_Base_Receiver_l_stub AMI_ExceptionT_stub AMI_ExceptionT_skel AMI_ExceptionT_lem_stub
   sharedname  = ExceptionT_Receiver_svnt
   libs       += ExceptionT_Receiver_stub ExceptionT_Receiver_lem_stub  \
                 ExceptionT_skel \
