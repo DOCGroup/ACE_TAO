@@ -84,7 +84,7 @@ namespace CIAO
         void set_queryparameters (const ::DDS_StringSeq & qp);
 
       protected:
-        CCM_DDS_DataReader_i * reader_;
+        typename DDS_TYPE::data_reader * reader_;
         DDSQueryCondition * condition_;
         ::DDS::Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;

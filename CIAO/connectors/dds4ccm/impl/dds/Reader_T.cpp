@@ -14,6 +14,7 @@
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::Reader_T (void)
   : reader_ (0),
+    impl_ (0),
     dds_get_ (0),
     library_name_ (""),
     profile_name_ ("")
@@ -36,9 +37,9 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename DDS_TYPE::data_reader *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::impl (void)
 {
-  if (this->reader_)
+  if (this->impl_)
     {
-      return DDS_TYPE::data_reader::narrow (this->reader_->get_impl ());
+      return this->impl_;
     }
   else
     {
@@ -411,7 +412,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_contentfilte
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
   // Now, get the topic.
-  ::DDSTopicDescription * td = this->reader_->get_impl ()->get_topicdescription ();
+  ::DDSTopicDescription * td = this->impl ()->get_topicdescription ();
   if (!td)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DDS_CCM::Reader_T::create_contentfilteredtopic - "
@@ -512,19 +513,21 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::create_filter (
                     "Error: Unable to create a new DataReader.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
     }
-  // Inform the Getter that there's a new DataReader created
+  // Remove the DataReader
   if (this->dds_get_)
     {
+      //Remove conditions in order to prevent a PRECONDITION_NOT_MET-error.
       this->dds_get_->remove_conditions ();
-      this->delete_datareader (sub);
-      // Now we need to set the new created DataReader in our proxy classes.
-      this->reader_->set_impl (dr);
-      this->dds_get_->set_impl (this->reader_);
     }
-  else
+
+  this->delete_datareader (sub);
+  // Now we need to set the new created DataReader in our proxy classes.
+  this->reader_->set_impl (dr);
+  this->impl_ = DDS_TYPE::data_reader::narrow (this->reader_->get_impl ());
+
+  if (this->dds_get_)
     {
-      this->delete_datareader (sub);
-      this->reader_->set_impl (dr);
+      this->dds_get_->set_impl (this->reader_);
     }
 }
 
@@ -679,4 +682,12 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
   this->reader_ = reader;
+  if (reader)
+    {
+      this->impl_ = DDS_TYPE::data_reader::narrow (reader->get_impl ());
+    }
+  else
+    {
+      this->impl_ = 0;
+    }
 }
