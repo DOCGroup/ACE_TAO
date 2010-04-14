@@ -968,7 +968,7 @@ basic_visitor::gen_params (UTL_Scope *s, int arg_count)
 {
   if (arg_count > 0)
     {
-      *os << be_idt << be_idt;
+      *os << be_idt;
 
       for (UTL_ScopeActiveIterator si (s, UTL_Scope::IK_decls);
            !si.is_done ();)
@@ -988,7 +988,7 @@ basic_visitor::gen_params (UTL_Scope *s, int arg_count)
             }
         }
 
-      *os << be_uidt_nl << be_uidt;
+      *os << be_uidt;
     }
 }
 
