@@ -8,9 +8,10 @@
 #include "dds4ccm/impl/dds/Utils.h"
 
 #define DOMAIN_ID_IN_DP 56
-#define PROFILE_IN_DP "SetConnectorAttribute_Profile"
-#define LIBRARY_IN_DP "SetConnectorAttribute_Library"
 #define TOPIC_NAME_IN_DP "SetConnectorAttribute"
+
+#define DW_MAX_BLOCKING_TIME_SEC 11
+#define DW_MAX_BLOCKING_TIME_NSEC 200
 
 namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
 {
@@ -26,6 +27,43 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
   }
 
   void
+  Component_exec_i::check_topic_name (DDSTopic * tp)
+  {
+    if (ACE_OS::strcmp (tp->get_name (), TOPIC_NAME_IN_DP) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_topic_name - "
+                              "Topic name set properly.\n"));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Component_exec_i::check_topic_name - "
+                              "Topic name not properly set: "
+                              "expected <%C> - retrieved <%C>\n",
+                              TOPIC_NAME_IN_DP,
+                              tp->get_name ()));
+      }
+  }
+
+  void
+  Component_exec_i::check_domain_id (DDSPublisher * pub)
+  {
+    DDSDomainParticipant * part = pub->get_participant ();
+    if (part->get_domain_id () != DOMAIN_ID_IN_DP)
+      {
+        ACE_ERROR ((LM_ERROR, "Component_exec_i::check_domain_id - "
+                              "ERROR: Domain ID not set properly: "
+                              "expected <%u> - retrieved <%u>\n",
+                              DOMAIN_ID_IN_DP,
+                              part->get_domain_id ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_domain_id - "
+                              "Domain ID set properly.\n"));
+      }
+  }
+
+  void
   Component_exec_i::check_attributes (DDSDataWriter * dw)
   {
     //check topic name
@@ -37,22 +75,9 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
       }
     else
       {
-        if (ACE_OS::strcmp (tp->get_name (), TOPIC_NAME_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_attributes - "
-                                  "Topic name set properly.\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_attributes - "
-                                  "Topic name not properly set: "
-                                  "expected <%C> - retrieved <%C>\n",
-                                  TOPIC_NAME_IN_DP,
-                                  tp->get_name ()));
-          }
+        this->check_topic_name (tp);
       }
     //check domain id
-    ::DDSDomainParticipant * part = 0;
     ::DDSPublisher * pub = dw->get_publisher ();
     if (!pub)
       {
@@ -61,96 +86,30 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
       }
     else
       {
-        
-        if (pub->get_domain_id () != DOMAIN_ID_DP)
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_attributes - "
-                                  "ERROR: Domain ID not set properly: "
-                                  "expected <%u> - retrieved <%u>\n",
-                                  DOMAIN_ID_DP,
-                                  pub->get_domain_id ()));
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_attributes - "
-                                  "Domain ID set properly.\n"));
-          }
-    this->check_profile_names (dw, tp, pub);
+        this->check_domain_id (pub);
+      }
+    this->check_profile (pub);
   }
 
   void
-  Component_exec_i::check_profile_names (DDSDataWriter * dw,
-                                         DDSTopic * tp,
-                                         DDSPublisher * pub)
+  Component_exec_i::check_profile (DDSPublisher * pub)
   {
-    if (dw)
+    DDS_DataWriterQos dw_qos;
+    pub->get_default_datawriter_qos (dw_qos);
+    if (dw_qos.reliability.max_blocking_time.sec == DW_MAX_BLOCKING_TIME_SEC &&
+        dw_qos.reliability.max_blocking_time.nanosec == DW_MAX_BLOCKING_TIME_NSEC)
       {
-        if (ACE_OS::strcmp (dw->get_default_profile (), PROFILE_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Profile name set properly in DataWriter\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Profile name not set properly in DataWriter\n"));
-          }
-        if (ACE_OS::strcmp (dw->get_default_library (), LIBRARY_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Library name set properly in DataWriter\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Library name not set properly in DataWriter\n"));
-          }
       }
-    if (tp)
+    else
       {
-        if (ACE_OS::strcmp (tp->get_default_profile (), PROFILE_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Profile name set properly in Topic\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Profile name not set properly in Topic\n"));
-          }
-        if (ACE_OS::strcmp (tp->get_default_library (), LIBRARY_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Library name set properly in Topic\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Library name not set properly in Topic\n"));
-          }
-      }
-    if (pub)
-      {
-        if (ACE_OS::strcmp (pub->get_default_profile (), PROFILE_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Profile name set properly in Publisher\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Profile name not set properly in Publisher\n"));
-          }
-        if (ACE_OS::strcmp (pub->get_default_library (), LIBRARY_IN_DP) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Component_exec_i::check_profile_names - "
-                                  "Library name set properly in Publisher\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile_names - "
-                                  "ERROR: Library name not set properly in Publisher\n"));
-          }
+        ACE_ERROR ((LM_ERROR, "Component_exec_i::check_profile - "
+                              "ERROR: Profile not set properly: "
+                              "expected sec <%u> - retrieved sec <%u> and "
+                              "expected nanosec <%u> - retrieved nanosec <%u>\n",
+                              dw_qos.reliability.max_blocking_time.sec,
+                              DW_MAX_BLOCKING_TIME_SEC,
+                              dw_qos.reliability.max_blocking_time.nanosec,
+                              DW_MAX_BLOCKING_TIME_NSEC));
       }
   }
 
