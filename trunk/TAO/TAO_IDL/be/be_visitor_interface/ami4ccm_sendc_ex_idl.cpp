@@ -149,17 +149,6 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
 {
-  be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
-    
-  if (op != 0)
-    {
-      if (op->void_return_type () && this->elem_number () == 1)
-        {
-          return 0;
-        }
-    }
-    
   be_argument *arg = be_argument::narrow_from_decl (node);
   
   if (arg == 0)
