@@ -1,3 +1,23 @@
+Wed Apr 14 19:04:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be/be_visitor_component_scope.cpp:
+        
+          Cosmetic changes and corrections to comments.
+          
+        * TAO_IDL/be/util/utl_global.cpp(create_uses_multiple_stuff):
+        
+          When creating the AST node for the xxxConnection struct,
+          specifically the 'objref' field, changed the argument from
+          the result of calling uses_type() on the receptacle node
+          to the result of calling lookup_by_name() on its scoped
+          name. If the uses type is a template parameter reference,
+          then the lookup will create a new param holder node,
+          which is what we want since all param holder nodes are
+          owned by whatever references them, and thus destroyed
+          as well. The param holder field type must be a fresh node
+          or there will be a double deletion at cleanup time.
+
 Wed Apr 14 13:55:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:

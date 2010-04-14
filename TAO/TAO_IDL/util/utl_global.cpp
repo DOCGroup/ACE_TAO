@@ -1683,12 +1683,20 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
   AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, 0, 0);
   struct_id.destroy ();
+  
+  /// If the field type is a param holder, we want
+  /// to use the lookup to create a fresh one,
+  /// since the field will own it and destroy it.
+  UTL_ScopedName *fn = u->uses_type ()->name ();
+  AST_Decl *d =
+    idl_global->root ()->lookup_by_name (fn, true);
+  AST_Type *ft = AST_Type::narrow_from_decl (d);
 
   Identifier object_id ("objref");
   UTL_ScopedName object_name (&object_id,
                               0);
   AST_Field *object_field =
-    idl_global->gen ()->create_field (u->uses_type (),
+    idl_global->gen ()->create_field (ft,
                                       &object_name,
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (object_field);
@@ -1700,8 +1708,8 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
   Identifier module_id ("Components");
   UTL_ScopedName scoped_name (&module_id,
                               &local_name);
-  AST_Decl *d = c->lookup_by_name (&scoped_name,
-                                   true);
+                              
+  d = c->lookup_by_name (&scoped_name, true);
   local_id.destroy ();
   module_id.destroy ();
 
