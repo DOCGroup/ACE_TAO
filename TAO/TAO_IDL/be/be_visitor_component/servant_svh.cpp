@@ -138,7 +138,7 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
     }
 
   ACE_CString prefix (this->port_prefix_);
-  prefix +=node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
 
