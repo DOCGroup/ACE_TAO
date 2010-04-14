@@ -6,9 +6,60 @@
   <label>SetConnectorAttributeAttribute_Depl_1</label>
   <UUID>SetConnectorAttributeAttribute_Depl_1</UUID>
 
+  <implementation xmi:id="SetConnectorAttributeComponentImplementation">
+    <name>SetConnectorAttributeComponentmplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SetConnectorAttribute_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_SetConnectorAttribute_SetConnectorAttributeComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
 
-  <implementation xmi:id="SetConnectorAttributeConnectorComponentImplementation">
-    <name>SetConnectorAttributeConnectorComponentImplementation</name>
+  <implementation xmi:id="SetConnectorAttributeConnectorImplementation">
+    <name>SetConnectorAttributeConnectorImplementation</name>
     <source/>
     <artifact xmi:idref="SetConnectorAttributeConnector_ExecArtifact" />
     <artifact xmi:idref="SetConnectorAttributeConnector_SvntArtifact" />
@@ -58,12 +109,21 @@
       </value>
     </execParameter>
   </implementation>
-  <instance xmi:id="SetConnectorAttributeConnectorComponentInstance">
-    <name>SetConnectorAttributeConnectorComponent</name>
+
+  <instance xmi:id="SetConnectorAttributeComponentInstance">
+    <name>SetConnectorAttributeComponentInstance</name>
     <node>ComponentNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="SetConnectorAttributeConnectorComponentImplementation" />
+    <implementation xmi:idref="SetConnectorAttributeComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="SetConnectorAttributeConnectorInstance">
+    <name>SetConnectorAttributeConnectorInstance</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SetConnectorAttributeConnectorImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -82,7 +142,7 @@
           <kind>tk_long</kind>
         </type>
         <value>
-          <long>100</long>
+          <long>2</long>
         </value>
       </value>
     </configProperty>
@@ -93,11 +153,11 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>'qos profile'</string>
+          <string>SetConnectorAttribute_Library#SetConnectorAttribute_Profile</string>
         </value>
       </value>
     </configProperty>
-    <configProperty>
+    <!--configProperty>
       <name>key_fields</name>
       <value>
         <type>
@@ -126,8 +186,28 @@
           </element>
         </value>
       </value>
-    </configProperty>
+    </configProperty-->
   </instance>
+
+  <connection>
+    <name>info_write_dds_entity</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_dds_entity</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SetConnectorAttributeComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SetConnectorAttributeConnectorInstance" />
+    </internalEndpoint>
+  </connection>
 
   <artifact xmi:id="SetConnectorAttributeConnector_ExecArtifact">
     <name>SetConnectorAttributeConnector_exec</name>
@@ -146,5 +226,24 @@
     <source/>
     <node/>
     <location>DDS_SCAConnector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
+    <source/>
+    <node/>
+    <location>Component_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 //
 // $Id$
-
 #include "Throughput_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ace/High_Res_Timer.h"
@@ -26,7 +25,7 @@ namespace CIAO_Throughput_Receiver_Impl
                                   const ThroughputTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->callback_.record_data(const_cast<ThroughputTest&> (an_instance));
+    this->callback_.record_data (const_cast<ThroughputTest&> (an_instance));
   }
 
   void
@@ -69,7 +68,6 @@ namespace CIAO_Throughput_Receiver_Impl
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
     : count_ (0L), // total count of all received messages
-      interval_time_(0L),
       interval_messages_received_(0L),
       interval_bytes_received_(0L),
       interval_data_length_(0L),
@@ -100,30 +98,29 @@ namespace CIAO_Throughput_Receiver_Impl
   {
     this->interval_messages_received_ = 0;
     this->interval_bytes_received_ = 0;
-    this->interval_time_=0;
     this->seq_num_ = 0;
     this->messages_lost_= 0;
   }
 
   void
-  Receiver_exec_i::handle_run(ThroughputCommand & an_instance)
+  Receiver_exec_i::handle_run (ThroughputCommand & an_instance)
   {
     if (an_instance.command == THROUGHPUT_COMMAND_START)
       {
-        this->log_ = true;
         this->reset_results();
         this->interval_data_length_ = an_instance.data_length;
         this->demand_ = an_instance.current_publisher_effort;
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (this->first_time_);
+        this->log_ = true;
       }
-    if (an_instance.command == THROUGHPUT_COMMAND_COMPLETE)
+    else if (an_instance.command == THROUGHPUT_COMMAND_COMPLETE)
       {
         this->log_ = false;
+        ++this->run_;
         ACE_UINT64 last_time;
         ACE_High_Res_Timer::gettimeofday_hr ().to_usec (last_time);
-        this->interval_time_ =  (last_time  - this->first_time_);
-        ++this->run_;
-        this->show_results();
+        ACE_UINT64 interval_time =  (last_time  - this->first_time_);
+        this->show_results (interval_time);
       }
   }
 
@@ -139,7 +136,6 @@ namespace CIAO_Throughput_Receiver_Impl
         if (an_instance.seq_num != this->seq_num_)
           {
             ++this->messages_lost_;
-            /* Reset sequence number */
             this->seq_num_ = an_instance.seq_num;
           }
         ++this->seq_num_;
@@ -147,11 +143,11 @@ namespace CIAO_Throughput_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::show_results()
+  Receiver_exec_i::show_results (const ACE_UINT64& interval_time)
   {
-    if ((this->count_ > 0) && (this->interval_time_ > 0))
+    if (this->count_ > 0 && interval_time > 0)
       {
-        double per_sec = (double)1000000/ this->interval_time_;
+        double per_sec = (double)1000000/ interval_time;
         double mbps = (this->interval_bytes_received_* per_sec)* (8.0/1000.0/1000.0);
 
         if(this->run_ == 1)
@@ -165,7 +161,7 @@ namespace CIAO_Throughput_Receiver_Impl
                         this->interval_data_length_,
                         this->demand_,
                         this->interval_messages_received_,
-                        this->interval_messages_received_* per_sec,
+                        this->interval_messages_received_ * per_sec,
                         mbps,
                         this->messages_lost_));
       }
