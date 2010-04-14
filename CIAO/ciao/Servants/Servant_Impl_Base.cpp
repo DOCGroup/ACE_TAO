@@ -219,7 +219,6 @@ namespace CIAO
                      port_name));
 
         throw ::CORBA::BAD_PARAM ();
-        return;
       }
 
     ConsumerTable::value_type entry;

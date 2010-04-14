@@ -1,3 +1,20 @@
+Wed Apr 14 07:29:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Removed obsolete include
+
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Removed unneeded return after throw
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          layout changes for debug message
+
+        * examples/DevGuideExamples/Messenger/Administrator_Client.cpp:
+          Don't use full CCM methods
+
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+          Const changes
+
 Wed Apr 14 07:13:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Listen_T.h:
