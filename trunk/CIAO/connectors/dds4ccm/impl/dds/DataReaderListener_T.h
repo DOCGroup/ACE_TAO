@@ -49,6 +49,7 @@ namespace CIAO
       ::CCM_DDS::DataListenerControl_var control_;
 
       typedef ::CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE> drh;
+      typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE> PortStatusListener;
     };
   }
 }

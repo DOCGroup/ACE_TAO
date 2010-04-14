@@ -58,7 +58,6 @@ private:
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
   //@}
   typedef ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE> DataReaderListener;
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE> PortStatusListener;
 };
 
 #include "dds4ccm/impl/dds/DDS_Listen_T.cpp"
