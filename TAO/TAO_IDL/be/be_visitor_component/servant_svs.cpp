@@ -296,27 +296,31 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   const char *global = (sname_str == "" ? "" : "::");
   const char *prefix_connector = (sname_str == "" ? "" : "_");
 
-  os_ << be_nl << be_nl
-      << "::" << obj_name << "_ptr" << be_nl
-      << node_->local_name () << "_Servant::provide_"
-      << port_name << " (void)" << be_nl
-      << "{" << be_idt_nl;
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_nl << be_nl
+          << "::" << obj_name << "_ptr" << be_nl
+          << node_->local_name () << "_Servant::provide_"
+          << port_name << " (void)" << be_nl
+          << "{" << be_idt_nl;
 
-  os_ << "if ( ::CORBA::is_nil (this->provide_"
-      << port_name << "_.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "::CORBA::Object_var obj =" << be_idt_nl
-      << "this->provide_" << port_name << "_i ();"
-      << be_uidt_nl << be_nl
-      << "::" << obj_name << "_var fo =" << be_idt_nl
-      << "::" << obj_name << "::_narrow (obj.in ());"
-      << be_uidt_nl << be_nl
-      << "this->provide_" << port_name << "_ = fo;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return" << be_idt_nl
-      <<  "::" << obj_name << "::_duplicate (this->provide_"
-      << port_name << "_.in ());" << be_uidt << be_uidt_nl
-      << "}";
+      os_ << "if ( ::CORBA::is_nil (this->provide_"
+          << port_name << "_.in ()))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "::CORBA::Object_var obj =" << be_idt_nl
+          << "this->provide_" << port_name << "_i ();"
+          << be_uidt_nl << be_nl
+          << "::" << obj_name << "_var fo =" << be_idt_nl
+          << "::" << obj_name << "::_narrow (obj.in ());"
+          << be_uidt_nl << be_nl
+          << "this->provide_" << port_name << "_ = fo;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
+      os_ << "return" << be_idt_nl
+          <<  "::" << obj_name << "::_duplicate (this->provide_"
+          << port_name << "_.in ());" << be_uidt << be_uidt_nl
+          << "}";
+    }
 
   os_ << be_nl << be_nl
       << "::CORBA::Object_ptr" << be_nl
