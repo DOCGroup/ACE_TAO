@@ -217,7 +217,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   // between removing the last notification from the queue and the notify
   // side writing its byte.
   char b[1024];
-  read_p = &b;
+  read_p = b;
   to_read = sizeof(b);
   (void)ACE::recv (handle, read_p, to_read);
 
