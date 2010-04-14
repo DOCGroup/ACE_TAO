@@ -47,9 +47,14 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     check_attributes (DDSDataWriter * dw);
 
     void
-    check_profile_names (DDSDataWriter * dw,
-                         DDSTopic * tp,
-                         DDSPublisher * pub);
+    check_profile (DDSPublisher * pub);
+
+    void
+    check_topic_name (DDSTopic * tp);
+
+    void
+    check_domain_id (DDSPublisher * pub);
+
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
