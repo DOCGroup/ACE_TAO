@@ -1,3 +1,10 @@
+Wed Apr 14 07:11:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * MPC/config/taoidl3toid2_ccm_lw.mpb:
+        * MPC/config/taoidl3toidl2defaults.mpb:
+          Added support for LwCCM
+
 Wed Apr 14 05:56:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
