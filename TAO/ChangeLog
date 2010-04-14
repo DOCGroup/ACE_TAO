@@ -1,3 +1,9 @@
+Wed Apr 14 07:50:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Another generated code reduction for LwCCM
+
 Wed Apr 14 06:20:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:

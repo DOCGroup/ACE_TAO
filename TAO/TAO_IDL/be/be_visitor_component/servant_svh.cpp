@@ -142,11 +142,14 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
 
-  os_ << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl
-      << "virtual ::" << obj_name << "_ptr" << be_nl
-      << "provide_" << port_name << " (void);"
-      << be_uidt_nl << be_nl;
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_uidt_nl << be_nl
+          << "public:" << be_idt_nl
+          << "virtual ::" << obj_name << "_ptr" << be_nl
+          << "provide_" << port_name << " (void);"
+          << be_uidt_nl << be_nl;
+    }
 
   os_ << "private:" << be_idt_nl
       << "::CORBA::Object_ptr" << be_nl
