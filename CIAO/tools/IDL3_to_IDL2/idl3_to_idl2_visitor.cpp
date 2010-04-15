@@ -240,6 +240,9 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
 
   if (node->is_multiple ())
     {
+      /// We generate these by hand instead of by traversal so
+      /// they will be declared before the get_connections()
+      /// operation below.
       *os << "struct " << port_name.c_str ()
           << "Connection" << be_nl
           << "{" << be_idt_nl
@@ -248,8 +251,9 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
           << "};" << be_nl << be_nl
           << "typedef sequence<" << orig_id << "Connection> "
           << port_name.c_str () << "Connections;"
-          << be_nl << be_nl
-          << "Components::Cookie connect_" << port_name.c_str ()
+          << be_nl << be_nl;
+         
+      *os << "Components::Cookie connect_" << port_name.c_str ()
           << " (in " << impl_name.c_str () << " connection)"
           << be_idt_nl
           << "raises (Components::ExceededConnectionLimit, "

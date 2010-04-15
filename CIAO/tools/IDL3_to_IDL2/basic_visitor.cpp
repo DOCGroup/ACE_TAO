@@ -27,10 +27,13 @@
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_component.h"
 #include "ast_native.h"
+
 #include "utl_exceptlist.h"
 #include "utl_idlist.h"
 #include "utl_identifier.h"
+
 #include "nr_extern.h"
 
 basic_visitor::basic_visitor (void)
@@ -67,11 +70,14 @@ basic_visitor::visit_scope (UTL_Scope *node)
 
       AST_Decl::NodeType nt = d->node_type ();
 
-      // Want to skip the uses_xxxConnection structs added by uses
-      // multiple ports.
-      // @@@ (JP) This will go away when the visitor is finished, since
-      // those uses_xxxConnection structs will not be added to the AST.
-      if (ScopeAsDecl (node)->node_type () == AST_Decl::NT_component
+      /// We want to skip the uses_xxxConnection structs added by uses
+      /// multiple ports. We have no CCM preprocessing visitor as
+      /// with tao_idl, so the get_connections() operation gets
+      /// created before we see the xxxXonnections return type
+      /// it need. So we just generate the struct and sequence
+      /// typedef literally as well, just before generating the
+      /// operation.
+      if (AST_Component::narrow_from_scope (node) != 0
           && (nt == AST_Decl::NT_struct
               || nt == AST_Decl::NT_sequence
               || nt == AST_Decl::NT_typedef))
