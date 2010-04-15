@@ -60,9 +60,9 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestTopic_RawListener: ")
-            ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
-            an_instance.key.in (),
-            an_instance.x));
+              ACE_TEXT ("received test_topic_info for <%C> at %u\n"),
+              an_instance.key.in (),
+              an_instance.x));
   }
 
   void
@@ -174,14 +174,12 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   ::CCM_DDS::TestTopic::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
     return new TestTopic_RawListener_exec_i ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i (this->deadline_port_1_,
                                           this->deadline_port_2_,
                                           this->thread_id_listener_1_,
@@ -192,7 +190,6 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_get_status (void)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new PortStatuslistener\n")));
     return new PortStatusListener_exec_i (this->deadline_port_1_,
                                           this->deadline_port_2_,
                                           this->thread_id_listener_1_,
