@@ -213,6 +213,7 @@ module Ast<typename T,
   component Comp_T
   {
     uses multiple T Comp_T_Recep;
+    
     mirrorport PT_T Comp_T_Mirror_Port;
     provides T Comp_T_Facet;
     emits E Comp_T_Emit;
@@ -239,8 +240,8 @@ module Ast<typename T,
 
   connector Comp2_T
   {
-    port PT_T Conn_T_Port;
-    provides T Conn_T_Facet;
+    port PT_T Comp2_T_Port;
+    provides T Comp2_T_Facet;
   };
 
   connector Conn_T
@@ -272,7 +273,7 @@ module Ast<iface,
            101>
   Ast_Inst;
 #endif
-
+/*
 module M
 {
   module N <typename T>
@@ -282,7 +283,7 @@ module M
     };
   };
 };
-
+*/
 /*
 Support for native is there, but this results in non compiling code
 native NAT;

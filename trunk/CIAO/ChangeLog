@@ -1,3 +1,18 @@
+Thu Apr 15 19:01:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Fixed bug where the uses multiple helper types
+          struct xxxConnection and sequence xxxConnections
+          were generated twice for connectors with uses
+          multiple ports.
+        
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Changed names of ports in connector Comp2_T to follow
+          the connector name.
+
 Thu Apr 15 17:11:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3p_checking_visitor.cpp:
