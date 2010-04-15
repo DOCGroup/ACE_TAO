@@ -35,7 +35,6 @@ namespace CIAO
       return this->dds_writer_.in ();
     }
 
-
     void
     CCM_DDS_DataWriterListener_i::on_offered_deadline_missed (
       ::DDSDataWriter *the_writer,

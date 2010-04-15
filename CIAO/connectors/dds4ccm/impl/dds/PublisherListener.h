@@ -50,39 +50,43 @@ namespace CIAO
 
       virtual void
       on_offered_deadline_missed (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_OfferedDeadlineMissedStatus & status);
 
       virtual void
       on_offered_incompatible_qos (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_OfferedIncompatibleQosStatus & status);
 
       virtual void
       on_liveliness_lost (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_LivelinessLostStatus & status);
 
       virtual void
       on_publication_matched (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_PublicationMatchedStatus & status);
 
 #if (CIAO_DDS4CCM_NDDS==1)
       virtual void
       on_reliable_reader_activity_changed (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_ReliableReaderActivityChangedStatus & status);
 
       virtual void
       on_reliable_writer_cache_changed (
-        ::DDSDataWriter *writer,
+        ::DDSDataWriter *the_writer,
         const ::DDS_ReliableWriterCacheChangedStatus & status);
 #endif
 
       ::DDS::PublisherListener_ptr get_publisher_listener (void);
     private:
       ::DDS::PublisherListener_var impl_;
+      ::DDS::DataWriter_var dds_writer_;
+
+      ::DDS::DataWriter_ptr
+      get_datawriter_proxy (::DDSDataWriter * the_writer);
     };
   }
 }
