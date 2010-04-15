@@ -164,17 +164,14 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::StatusMask
 CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
-  typename CCM_TYPE::listener_type::_ptr_type listener)
+  ::CCM_DDS::PortStatusListener_ptr listener)
 {
+  //always listen to data_available
+  ::DDS::StatusMask mask = ::DDS::DATA_AVAILABLE_STATUS;
+
   if (! ::CORBA::is_nil (listener) || CIAO_debug_level >= 10)
     {
-      ::CCM_DDS::PortStatusListener_ptr psl =
-        dynamic_cast < ::CCM_DDS::PortStatusListener_ptr> (listener);
-      return ::DDS::DATA_AVAILABLE_STATUS |
-             PortStatusListener::get_mask (psl);
+      mask |= PortStatusListener::get_mask (listener);
     }
-  else
-    {
-      return 0;
-    }
+  return mask;
 }

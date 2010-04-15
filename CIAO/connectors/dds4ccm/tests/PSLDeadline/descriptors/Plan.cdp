@@ -194,7 +194,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>HelloTest_Library#Hello_Profile</string>
+        <string>Deadline_Library#Deadline_Profile</string>
       </value>
     </value>
     </configProperty>
@@ -223,7 +223,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>HelloTest_Library#Hello_Profile</string>
+          <string>Deadline_Library#Deadline_Profile</string>
         </value>
       </value>
     </configProperty>

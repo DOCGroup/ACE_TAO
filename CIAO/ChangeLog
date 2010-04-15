@@ -1,3 +1,15 @@
+Thu Apr 15 09:30:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+          Resolved test issues regarding portstatuslisteners.
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+          Layout and naming changes.
+
 Thu Apr 15 10:14:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl
