@@ -241,7 +241,7 @@ be_type::fwd_helper_name (const char *name)
 void
 be_type::gen_common_varout (TAO_OutStream *os)
 {
-  if (this->common_varout_gen_ == 1)
+  if (this->common_varout_gen_)
     {
       return;
     }
@@ -280,7 +280,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
           << this->local_name () << "_out;" << be_uidt;
     }
 
-  this->common_varout_gen_ = 1;
+  this->common_varout_gen_ = true;
 }
 
 bool
