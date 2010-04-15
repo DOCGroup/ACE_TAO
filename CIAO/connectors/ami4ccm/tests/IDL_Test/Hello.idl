@@ -22,7 +22,8 @@ module Hello
         raises (InternalError);
       void hello (out long answer)
         raises (InternalError);
-
+      void no_answer (in string in_str)
+        raises (InternalError);
       attribute short rw_attrib
         getraises (InternalError)
         setraises (InternalError);
