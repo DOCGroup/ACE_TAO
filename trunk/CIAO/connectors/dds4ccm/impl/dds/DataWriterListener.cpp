@@ -14,7 +14,9 @@ namespace CIAO
   namespace DDS4CCM
   {
     CCM_DDS_DataWriterListener_i::CCM_DDS_DataWriterListener_i (::DDS::DataWriterListener_ptr s)
-      : impl_ (::DDS::DataWriterListener::_duplicate (s))
+      : impl_ (::DDS::DataWriterListener::_duplicate (s)),
+        dds_writer_ (::DDS::DataWriter::_nil ())
+
     {
     }
 
@@ -22,22 +24,33 @@ namespace CIAO
     {
     }
 
+    ::DDS::DataWriter_ptr
+    CCM_DDS_DataWriterListener_i::get_datawriter_proxy (::DDSDataWriter * the_writer)
+    {
+      if (::CORBA::is_nil (this->dds_writer_.in ()))
+        {
+          ACE_NEW_NORETURN (this->dds_writer_,
+                             CCM_DDS_DataWriter_i (the_writer));
+        }
+      return this->dds_writer_.in ();
+    }
+
+
     void
     CCM_DDS_DataWriterListener_i::on_offered_deadline_missed (
       ::DDSDataWriter *the_writer,
       const ::DDS_OfferedDeadlineMissedStatus & status)
     {
-      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_offered_deadline_missed (dds_writer.in (), ddsstatus);
+      this->impl_->on_offered_deadline_missed (
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_offered_deadline_missed (dds_writer.in (), status);
+      this->impl_->on_offered_deadline_missed (
+        this->get_datawriter_proxy (the_writer),
+        status);
 #endif
     }
 
@@ -46,17 +59,16 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_OfferedIncompatibleQosStatus & status)
     {
-      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_offered_incompatible_qos (dds_writer.in (), ddsstatus);
+      this->impl_->on_offered_incompatible_qos (
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_offered_incompatible_qos (dds_writer.in (), status);
+      this->impl_->on_offered_incompatible_qos (
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #endif
     }
 
@@ -65,17 +77,16 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_LivelinessLostStatus & status)
     {
-      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_liveliness_lost (dds_writer.in (), ddsstatus);
+      this->impl_->on_liveliness_lost (
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_liveliness_lost (dds_writer.in (), status);
+      this->impl_->on_liveliness_lost (
+        this->get_datawriter_proxy (the_writer),
+        status);
 #endif
     }
 
@@ -84,17 +95,16 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_PublicationMatchedStatus & status)
     {
-      ::DDS::DataWriter_var dds_writer = ::DDS::DataWriter::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_publication_matched (dds_writer.in (), ddsstatus);
+      this->impl_->on_publication_matched (
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #else
-      ACE_NEW (dds_writer, 
-               CCM_DDS_DataWriter_i (the_writer));
-      this->impl_->on_publication_matched (dds_writer.in (), status);
+      this->impl_->on_publication_matched ();
+        this->get_datawriter_proxy (the_writer),
+        ddsstatus);
 #endif
     }
 

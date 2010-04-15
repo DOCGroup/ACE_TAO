@@ -1,15 +1,27 @@
+Thu Apr 15 07:21:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+          Stored pointer to our proxy as class variable. The
+          proxy is reused.
+
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.cpp:
+          Optimized logging.
+
 Wed Apr 14 19:13:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_sunsoft.cpp:
-        
+
           Fixed bug in code generation where the
           ACE_(U)INT64_LITERAL macros were generated in
           IDL.
-          
+
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
-        
+
           Changes to support IDL3+ in this tool. There are more
           changes forthcoming before support is complete.
 
