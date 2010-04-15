@@ -18,6 +18,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, tao_idl_fe {
     checking_visitor.cpp
     identifier_helper.cpp
     idl3_to_idl2_visitor.cpp
+    idl3p_checking_visitor.cpp
   }
 
   Header_Files {
@@ -30,6 +31,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, ciao_output, tao_idl_fe {
     identifier_helper.h
     idl3_to_idl2_visitor.h
     TAO_IDL3_TO_IDL2_BE_Export.h
+    idl3p_checking_visitor.h
   }
 }
 
