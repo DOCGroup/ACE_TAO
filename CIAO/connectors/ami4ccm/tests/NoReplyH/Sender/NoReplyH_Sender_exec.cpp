@@ -138,17 +138,19 @@ namespace CIAO_NoReplyH_Sender_Impl
                                  "Do something asynchronous");
         
         //test without replyhandlers.
-        my_foo_ami_->sendc_foo ( NULL,
+        my_foo_ami_->sendc_foo ( NoReplyH::AMI_MyFooCallback::_nil (),
                           "Do something asynchronous with no replyhandler");
-        my_foo_ami_->sendc_hello (NULL);
-        my_foo_ami_->sendc_get_rw_attrib(NULL);
-        my_foo_ami_->sendc_set_rw_attrib(NULL, 15);
-        my_foo_ami_->sendc_get_ro_attrib(NULL);
+        my_foo_ami_->sendc_hello ( NoReplyH::AMI_MyFooCallback::_nil ());
+        my_foo_ami_->sendc_get_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil ());
+        my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil (),
+                                          15);
+        my_foo_ami_->sendc_get_ro_attrib (NoReplyH::AMI_MyFooCallback::_nil ());
       }
       //Invoke Asynchronous calls to test exception handling 
       //without replyhandlers.
-      my_foo_ami_->sendc_foo (NULL, "");
-      my_foo_ami_->sendc_set_rw_attrib(NULL, 0);
+      my_foo_ami_->sendc_foo ( NoReplyH::AMI_MyFooCallback::_nil (), "");
+      my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil (),
+                                        0);
  
       return 0;
   }
@@ -168,7 +170,7 @@ namespace CIAO_NoReplyH_Sender_Impl
     try 
       {
         CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
-        ACE_DEBUG ((LM_DEBUG, "OK: SYNCH ro_attrib() returns %u.\n",
+        ACE_DEBUG ((LM_DEBUG, "OK: SYNCH rw_attrib() returns %u.\n",
                               rw_attrib));
       }
     catch (const NoReplyH::InternalError& )

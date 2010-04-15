@@ -1,3 +1,9 @@
+Thu Apr 15 09:38:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp
+        Add test to test suite.
+
 Thu Apr 15 08:47:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp
