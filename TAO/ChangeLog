@@ -1,3 +1,10 @@
+Thu Apr 15 18:59:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_type.cpp:
+        
+          Changed boolean flag to be used with 'true' and 'false' instead
+          of 1 and 0.
+
 Wed Apr 14 19:04:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
