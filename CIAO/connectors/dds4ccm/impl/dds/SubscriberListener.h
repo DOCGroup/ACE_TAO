@@ -87,6 +87,10 @@ namespace CIAO
       ::DDS::SubscriberListener_ptr get_subscriber_listener (void);
     private:
       ::DDS::SubscriberListener_var impl_;
+      ::DDS::DataReader_var dds_reader_;
+
+      ::DDS::DataReader_ptr
+      get_datareader_proxy (::DDSDataReader * the_reader);
     };
   }
 }

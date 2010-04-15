@@ -1,3 +1,15 @@
+Thu Apr 15 09:56:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/dds/PublisherListener.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.cpp:
+          Stored pointer to our proxy as class variable. The
+          proxy is reused.
+
 Thu Apr 15 09:30:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Listen_T.cpp:
