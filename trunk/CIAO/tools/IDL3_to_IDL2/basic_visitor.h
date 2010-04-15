@@ -30,7 +30,8 @@
 class TAO_OutStream;
 class UTL_ExceptList;
 
-class TAO_IDL3_TO_IDL2_BE_Export basic_visitor : public ast_visitor
+class TAO_IDL3_TO_IDL2_BE_Export basic_visitor
+  : public ast_visitor
 {
   //
   // = TITLE
@@ -47,14 +48,10 @@ public:
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_type (AST_Type *node);
   virtual int visit_predefined_type (AST_PredefinedType *node);
-  virtual int visit_module (AST_Module *node) = 0;
-  virtual int visit_interface (AST_Interface *node) = 0;
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
   virtual int visit_valuebox (AST_ValueBox *node);
   virtual int visit_valuetype (AST_ValueType *node);
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
-  virtual int visit_component (AST_Component *node) = 0;
-  virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
   virtual int visit_template_module (AST_Template_Module *node);
   virtual int visit_template_module_inst (AST_Template_Module_Inst *node);
   virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
@@ -64,12 +61,6 @@ public:
   virtual int visit_publishes (AST_Publishes *node);
   virtual int visit_emits (AST_Emits *node);
   virtual int visit_consumes (AST_Consumes *node);
-  virtual int visit_extended_port (AST_Extended_Port *node) = 0;
-  virtual int visit_mirror_port (AST_Mirror_Port *node) = 0;
-  virtual int visit_connector (AST_Connector *node) = 0;
-  virtual int visit_eventtype (AST_EventType *node) = 0;
-  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
-  virtual int visit_home (AST_Home *node) = 0;
   virtual int visit_factory (AST_Factory *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
@@ -90,7 +81,6 @@ public:
   virtual int visit_sequence (AST_Sequence *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_typedef (AST_Typedef *node);
-  virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node);
   virtual int visit_param_holder (AST_Param_Holder *node);
   

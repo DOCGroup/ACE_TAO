@@ -1,3 +1,28 @@
+Thu Apr 15 17:11:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.h:
+
+          New visitor that checks module scopes. If they
+          contain only template module or porttype
+          declarations, code generation for that module
+          must be skipped, since it would be empty.
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Added new files to project.
+
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+
+          Removed some pure virtual methods repeated from
+          the ast_visitor base class.
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp(visit_module):
+
+          Added creation and launch of the new visitor. When it's
+          finished, a member flag is checked to see if code
+          generation is necessary or not.
+
 Thu Apr 15 09:56:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:

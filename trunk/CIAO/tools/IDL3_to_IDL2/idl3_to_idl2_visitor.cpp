@@ -2,6 +2,7 @@
 // $Id$
 
 #include "idl3_to_idl2_visitor.h"
+#include "idl3p_checking_visitor.h"
 #include "identifier_helper.h"
 #include "be_sunsoft.h"
 #include "be_extern.h"
@@ -28,8 +29,7 @@
 #include "nr_extern.h"
 
 idl3_to_idl2_visitor::idl3_to_idl2_visitor (void)
-  : basic_visitor (),
-    home_ (0)
+  : home_ (0)
 {
 }
 
@@ -42,6 +42,18 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
 {
   if (node->imported ())
     {
+      return 0;
+    }
+    
+  idl3p_checking_visitor v;
+  
+  /// Inherited visit_* methods must return int, but this
+  /// visitor never returns anything but 0.
+  (void) v.visit_scope (node);
+  
+  if (!v.needs_codegen ())
+    {
+      /// We'd be generating an (illegal) empty module.
       return 0;
     }
 
