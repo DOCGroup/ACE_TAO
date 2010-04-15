@@ -26,7 +26,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   // FOO methods
   void
   MyFoo_callback_exec_i::foo (
-    ::CORBA::Long ami_return_val,
+    ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
     ++nr_received_back;
@@ -36,7 +36,7 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::foo_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
+      ::CCM_AMI::ExceptionHolder * /*excep_holder*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::foo_excep: "
@@ -46,7 +46,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   // HELLO methods
   void
   MyFoo_callback_exec_i::hello (
-    ::CORBA::Long answer)
+    ::CORBA::Long /*answer*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::hello: "
@@ -55,7 +55,7 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::hello_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
+      ::CCM_AMI::ExceptionHolder * /*excep_holder*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::hello_excep: "
@@ -65,7 +65,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   //GET rw_attrib Reply Handler
   void
   MyFoo_callback_exec_i::get_rw_attrib (
-    ::CORBA::Short ami_return_val)
+    ::CORBA::Short /*ami_return_val*/)
   {
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_rw_attrib: "
                            "Unexpected return.\n"));
@@ -73,7 +73,7 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::get_rw_attrib_excep (
-    ::CCM_AMI::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * /*excep_holder*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_rw_attrib_excep: "
@@ -90,7 +90,7 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::set_rw_attrib_excep (
-    ::CCM_AMI::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * /*excep_holder*/)
   {
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::set_rw_attrib_excep: "
                            "Unexpected return.\n"));
@@ -99,7 +99,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   //ro_attrib Reply Handler
   void
   MyFoo_callback_exec_i::get_ro_attrib (
-    ::CORBA::Short ami_return_val)
+    ::CORBA::Short /*ami_return_val*/)
   {
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_ro_attrib: "
                            "Unexpected return.\n"));
@@ -107,7 +107,7 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::get_ro_attrib_excep (
-    ::CCM_AMI::ExceptionHolder * excep_holder)
+    ::CCM_AMI::ExceptionHolder * /*excep_holder*/)
   {
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_ro_attrib_excep: "
                            "Unexpected return.\n"));

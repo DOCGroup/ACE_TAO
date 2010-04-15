@@ -71,8 +71,8 @@ namespace CIAO_ExceptionT_Sender_Impl
   // FOO methods
   void
   MyFoo_callback_exec_i::foo (
-    ::CORBA::Long ami_return_val,
-    const char * answer)
+    ::CORBA::Long /*ami_return_val*/,
+    const char * /*answer*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::foo: "
@@ -89,7 +89,7 @@ namespace CIAO_ExceptionT_Sender_Impl
   // Hello methods
   void
   MyFoo_callback_exec_i::hello (
-    ::CORBA::Long answer)
+    ::CORBA::Long /*answer*/)
   {
     // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::hello: "
@@ -106,7 +106,7 @@ namespace CIAO_ExceptionT_Sender_Impl
   //GET rw_attrib Reply Handler
   void
   MyFoo_callback_exec_i::get_rw_attrib (
-    ::CORBA::Short ami_return_val)
+    ::CORBA::Short /*ami_return_val*/)
   {
    // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_rw_attrib : "
@@ -139,7 +139,7 @@ namespace CIAO_ExceptionT_Sender_Impl
   //ro_attrib Reply Handler
   void
   MyFoo_callback_exec_i::get_ro_attrib (
-    ::CORBA::Short ami_return_val)
+    ::CORBA::Short /*ami_return_val*/)
   {
    // never should come here in this test.
     ACE_ERROR ((LM_ERROR, "ERROR: MyFoo_callback_exec_i::get_ro_attrib: "
@@ -199,8 +199,8 @@ namespace CIAO_ExceptionT_Sender_Impl
     char * out_str = 0;
         try
           {
-            CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
-                                                    out_str);
+            my_foo_ami_->foo ("Do something synchronous",
+                               out_str);
           } 
         catch (const ExceptionT::InternalError&)
           {
@@ -209,7 +209,7 @@ namespace CIAO_ExceptionT_Sender_Impl
           }
         try
           {
-            CORBA::Long result = my_foo_ami_->foo ("", out_str);
+            my_foo_ami_->foo ("", out_str);
           }
         catch (const ExceptionT::InternalError& ex)
           {
@@ -233,7 +233,7 @@ namespace CIAO_ExceptionT_Sender_Impl
           }
         try 
           {
-            CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
+            my_foo_ami_->rw_attrib ();
           }
         catch (const ExceptionT::InternalError& ex)
           {
@@ -255,7 +255,7 @@ namespace CIAO_ExceptionT_Sender_Impl
           }
         try 
           {
-            CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
+            my_foo_ami_->ro_attrib ();
           }
         catch (const ExceptionT::InternalError& ex)
           {
