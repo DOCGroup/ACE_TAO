@@ -130,7 +130,7 @@ module T
   typedef unsigned long MyLongType;
   module Typed <typename T, sequence <T> TSeq>
   {
-    local interface X
+    /* local */ interface X
     {
       void send (in MyLongType a);
     };
