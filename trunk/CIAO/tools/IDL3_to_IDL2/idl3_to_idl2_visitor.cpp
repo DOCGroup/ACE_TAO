@@ -236,54 +236,56 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
     IdentifierHelper::original_local_name (node->local_name ());
 
   UTL_ScopedName *n = node->uses_type ()->name ();
-  ACE_CString impl_name =
+  ACE_CString impl_str =
     IdentifierHelper::orig_sn (n);
+  const char *impl_name = impl_str.c_str ();
     
   ACE_CString port_name (this->port_prefix_);
   port_name += orig_id->get_string ();
+  const char *ext_port_name = port_name.c_str ();
 
   if (node->is_multiple ())
     {
       /// We generate these by hand instead of by traversal so
       /// they will be declared before the get_connections()
       /// operation below.
-      *os << "struct " << port_name.c_str ()
+      *os << "struct " << ext_port_name
           << "Connection" << be_nl
           << "{" << be_idt_nl
-          << impl_name.c_str () << " objref;" << be_nl
+          << impl_name << " objref;" << be_nl
           << "Components::Cookie ck;" << be_uidt_nl
           << "};" << be_nl << be_nl
-          << "typedef sequence<" << orig_id << "Connection> "
-          << port_name.c_str () << "Connections;"
+          << "typedef sequence<" << ext_port_name
+          << "Connection> " << ext_port_name << "Connections;"
           << be_nl << be_nl;
          
-      *os << "Components::Cookie connect_" << port_name.c_str ()
-          << " (in " << impl_name.c_str () << " connection)"
+      *os << "Components::Cookie connect_" << ext_port_name
+          << " (in " << impl_name << " connection)"
           << be_idt_nl
           << "raises (Components::ExceededConnectionLimit, "
           << "Components::InvalidConnection);"
           << be_uidt_nl << be_nl
-          << impl_name.c_str () << " disconnect_"
-          << port_name.c_str () << " (in Components::Cookie ck)"
+          << impl_name << " disconnect_"
+          << ext_port_name << " (in Components::Cookie ck)"
           << be_idt_nl
           << "raises (Components::InvalidConnection);"
           << be_uidt_nl << be_nl
-          << port_name.c_str () << "Connections get_connections_"
-          << port_name.c_str () << " ();";
+          << ext_port_name << "Connections get_connections_"
+          << ext_port_name << " ();";
     }
   else
     {
-      *os << "void connect_" << port_name.c_str () << " (in "
-          << impl_name.c_str () << " conxn)" << be_idt_nl
+      *os << "void connect_" << ext_port_name << " (in "
+          << impl_name << " conxn)" << be_idt_nl
           << "raises (Components::AlreadyConnected, "
           << "Components::InvalidConnection);"
           << be_uidt_nl << be_nl
-          << impl_name.c_str () << " disconnect_"
-          << port_name.c_str () << " ()" << be_idt_nl
+          << impl_name << " disconnect_"
+          << ext_port_name << " ()" << be_idt_nl
           << "raises (Components::NoConnection);"
           << be_uidt_nl << be_nl
-          << impl_name.c_str () << " get_connection_"
-          << port_name.c_str () << " ();";
+          << impl_name << " get_connection_"
+          << ext_port_name << " ();";
     }
 
   orig_id->destroy ();

@@ -104,3 +104,44 @@ project(KitchenSink_svnt) : ciao_servant {
     KitchenSinkS.inl
   }
 }
+
+project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults {
+  avoids += mfc
+  custom_only = 1
+
+  IDL3TOIDL2_Files {
+    KitchenSink.idl
+  }
+}
+
+project(KitchenSink_IDL2_gen) : taoidldefaults {
+  avoids += mfc
+  custom_only = 1
+  idlflags += -Sm
+  after += KitchenSink_ConvertIDL3_Plus
+  
+  IDL_Files {
+    KitchenSink_IDL2.idl
+  }
+}
+
+project(KitchenSink_IDL2_skel) : ciao_executor {
+  IDL_Files {
+  }
+  
+  Source_Files {
+    KitchenSink_IDL2C.cpp
+    KitchenSink_IDL2S.cpp
+  }
+  
+  Header_Files {
+    KitchenSink_IDL2C.h
+    KitchenSink_IDL2S.h
+  }
+  
+  Inline_Files {
+    KitchenSink_IDL2C.inl
+    KitchenSink_IDL2S.inl
+  }
+}
+

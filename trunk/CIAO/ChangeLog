@@ -1,3 +1,30 @@
+Fri Apr 16 20:20:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        
+          Changes to reflect differences in IDL code generation
+          from C++ generation, which was what this file was
+          for in the original TAO_IDL backend.
+          
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Fixed a bug in code generation for the multiplex
+          uses *Connection struct.
+          
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Commented out the 'local' qualifier on an interface,
+          temporarily until a design question involving our use
+          in DDS3CCM of local interfaces in regular CORBA calls.
+          The IDL compiler still flags this as illegal, and we
+          get an actual error due to an implied IDL operation
+          that contains the formerly local interface as a parameter.
+          
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        
+          Added new projects to convert KitchenSink.idl to IDL2,
+          process that IDL, and compile the resulting C++.
+
 Fri Apr 16 16:41:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
