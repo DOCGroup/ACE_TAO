@@ -1,3 +1,10 @@
+Fri Apr 16 16:07:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Restored some line that had been mistakenly checked in as
+          commented out.
+
 Fri Apr 16 15:30:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3p_checking_visitor.cpp:
