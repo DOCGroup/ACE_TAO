@@ -273,7 +273,7 @@ module Ast<iface,
            101>
   Ast_Inst;
 #endif
-/*
+
 module M
 {
   module N <typename T>
@@ -283,7 +283,7 @@ module M
     };
   };
 };
-*/
+
 /*
 Support for native is there, but this results in non compiling code
 native NAT;
