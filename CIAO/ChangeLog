@@ -1,3 +1,12 @@
+Fri Apr 16 16:41:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Added missing code generation for a home's supported
+          interfaces - as base interfaces of the explicit home
+          interface. Also changed layout of code generated for
+          component and explicit home equivalent interfaces.
+
 Fri Apr 16 16:07:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
