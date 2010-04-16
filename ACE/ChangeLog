@@ -1,3 +1,13 @@
+Fri Apr 16 13:02:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+        * ace/Atomic_Op.cpp:
+        * ace/config-sunos5.10.h:
+	  Added support for the Solaris 10 Atomic support, thanks
+	  to Aleksandar Vukajlovic <aleksandar dot vukajlovic at finsoft dot rs>
+	  for providing the patches
+
 Wed Apr 14 11:22:27 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.cpp: Fixed compile error on some g++ versions.
@@ -27,10 +37,10 @@ Mon Apr 12 09:31:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * bin/PerlACE/Process_Win32.pm:
         * bin/PerlACE/Run_Test.pm:
         * bin/PerlACE/Process_VMS.pm:
-        
-          Added support for running multiplatform tests using remote shell 
+
+          Added support for running multiplatform tests using remote shell
           connections.
-          Currently only supported for *nix-like platforms 
+          Currently only supported for *nix-like platforms
           (like Linux PPC64 <-> Linux x86_64).
 
 Thu Apr  8 21:25:54 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
