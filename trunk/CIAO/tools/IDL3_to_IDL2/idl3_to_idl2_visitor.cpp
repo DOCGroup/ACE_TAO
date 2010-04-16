@@ -154,20 +154,24 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Component *base = node->base_component ();
-  long nsupports = node->n_supports ();
 
-  *os << " : "
+  *os << be_idt_nl
+      << ": "
       << (base != 0
             ? IdentifierHelper::orig_sn (base->name ()).c_str ()
-            : "Components::CCMObject");
+            : "Components::CCMObject")
+      << be_idt;
+      
+  long nsupports = node->n_supports ();
+  AST_Type **sups = node->supports ();
 
   for (long i = 0; i < nsupports; ++i)
     {
-      *os << ", "
-          << IdentifierHelper::orig_sn (node->supports ()[i]->name ()).c_str ();
+      *os << "," << be_nl
+          << IdentifierHelper::orig_sn (sups[i]->name ()).c_str ();
     }
 
-  *os << be_nl
+  *os << be_uidt << be_uidt_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
@@ -531,7 +535,8 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   explicit_name += "Explicit";
 
   *os << be_nl << be_nl
-      << "interface " << explicit_name.c_str () << " : ";
+      << "interface " << explicit_name.c_str () << be_idt_nl
+      << ": ";
 
   AST_Home *base = node->base_home ();
 
@@ -544,8 +549,19 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
       *os << IdentifierHelper::orig_sn (base->name (), true).c_str ()
           << "Explicit";
     }
+    
+  *os << be_idt;
 
-  *os << be_nl
+  long nsupports = node->n_supports ();
+  AST_Type **sups = node->supports ();
+
+  for (long i = 0; i < nsupports; ++i)
+    {
+      *os << "," << be_nl
+          << IdentifierHelper::orig_sn (sups[i]->name ()).c_str ();
+    }
+
+  *os << be_uidt << be_uidt_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
