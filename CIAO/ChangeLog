@@ -1,3 +1,10 @@
+Fri Apr 16 15:30:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Fixed 'unused arg' warnings.
+
 Thu Apr 15 19:01:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
