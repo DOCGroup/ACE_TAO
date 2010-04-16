@@ -1,3 +1,9 @@
+Fri Apr 16 20:29:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        
+          Added missing 'after' line in new project.
+
 Fri Apr 16 20:20:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_sunsoft.cpp:
