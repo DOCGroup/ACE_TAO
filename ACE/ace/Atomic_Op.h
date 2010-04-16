@@ -45,6 +45,8 @@
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
 # elif defined (ACE_HAS_VXATOMICLIB)
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
+# elif defined (ACE_HAS_SOLARIS_ATOMIC_LIB)
+#  define ACE_HAS_BUILTIN_ATOMIC_OP
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
