@@ -126,6 +126,8 @@ project(KitchenSink_IDL2_gen) : taoidldefaults {
 }
 
 project(KitchenSink_IDL2_skel) : ciao_executor {
+  after += KitchenSink_IDL2_gen
+
   IDL_Files {
   }
   
