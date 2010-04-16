@@ -204,7 +204,7 @@ idl3p_checking_visitor::visit_attribute (AST_Attribute *)
 }
 
 int
-idl3p_checking_visitor::visit_union (AST_Union *node)
+idl3p_checking_visitor::visit_union (AST_Union *)
 {
   this->needs_codegen_ = true;
   return 0;
