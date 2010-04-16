@@ -1044,7 +1044,7 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
     node->constant_value ()->param_holder ();
 
   AST_Expression *v = 0;
-  AST_Expression::ExprType et = AST_Expression::EV_none;
+  AST_Expression::ExprType et = node->et ();
 
   if (ph != 0)
     {
@@ -1063,13 +1063,21 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
       AST_Constant *c =
         AST_Constant::narrow_from_decl (rv.reified_node ());
 
+      /// We don't use the reified node's ExprType here, since
+      /// it was created from a template arg that (for const
+      /// type template args) was a literal. The arg name was
+      /// matched with a template param list to check correctness,
+      /// but not the type. Thus an integer literal, for example,
+      /// will be a 64-bit type usually, but what we want is
+      /// the type of the constant we are visiting. When the
+      /// new expression and constant are created below, things
+      /// will be coerced to the ExprType passed in, and if
+      /// there is a mismatch, we'll get an error at that point.
       v = c->constant_value ();
-      et = c->et ();
     }
   else
     {
       v = node->constant_value ();
-      et = node->et ();
     }
 
   AST_Expression *new_v =
