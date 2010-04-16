@@ -1,3 +1,23 @@
+Fri Apr 16 20:11:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp(visit_constant):
+        
+          This method uses the reifying visitor to fetch the AST
+          node created from the template argument. Since for constants,
+          this node was created from a parsed literal, the expression
+          type will be the largest possible (64-bit integer for
+          example) and not necessarily the type of the corresponding
+          template parameter. It's not necessary to match the types
+          of parameter and argument at arg creation time. When the
+          template module is instantiated, we use (for constants)
+          the expression type of the constant AST node being visited.
+          A new expression and AST node are created, and the type
+          of the template arg node will be coerced to the type
+          desired at that point, and any possible mismatches will
+          be detected. Formerly we were using the type of the
+          template arg, if one is found, which led to incorrect
+          const types in code generation.
+
 Thu Apr 15 18:59:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_type.cpp:
