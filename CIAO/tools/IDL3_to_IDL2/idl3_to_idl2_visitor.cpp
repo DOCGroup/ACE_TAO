@@ -366,7 +366,7 @@ idl3_to_idl2_visitor::visit_consumes (AST_Consumes *node)
 }
 
 int
-idl3_to_idl2_visitor::visit_porttype (AST_PortType *node)
+idl3_to_idl2_visitor::visit_porttype (AST_PortType *)
 {
   /// We want to visit these nodes only by navigating from an
   /// extended port or a mirror port.
