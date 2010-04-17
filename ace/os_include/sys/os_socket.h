@@ -30,9 +30,9 @@
 #  include /**/ <sys/socket.h>
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
+#if defined (ACE_USES_SOCKLIB_H)
 #  include /**/ <sockLib.h>
-#endif /* ACE_VXWORKS */
+#endif /* ACE_USES_SOCKLIB_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

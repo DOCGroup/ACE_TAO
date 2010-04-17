@@ -31,14 +31,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Future_Set
  *
- * @brief This class implements a mechanism which allows the values of
+ * @brief This class implements a mechanism that allows the values of
  * a collection of ACE_Future objects to be accessed by reader threads
  * as they become available.  The caller(s) provide the ACE_Future_Set
  * (i.e. the observer...) with the collection of ACE_Future objects
- * (i.e. the subjects...) that are to be observed using the
- * the ACE_Future_Set::insert() method.  The caller(s) may then iterate
- * over the collection in the order in which they become readable using
- * the ACE_Future_Set::next_readable() method.
+ * (i.e. the subjects...) that are to be observed using the the
+ * ACE_Future_Set::insert() method.  The caller(s) may then iterate
+ * over the collection in the order in which they become readable
+ * using the ACE_Future_Set::next_readable() method.
  */
 template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>

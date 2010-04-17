@@ -107,9 +107,6 @@
    the one in ace/OS.i. */
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
 
-/* Denotes that GNU has cstring.h as standard which redefines memchr() */
-#define ACE_HAS_GNU_CSTRING_H
-
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF 1
 
@@ -228,9 +225,6 @@
 
 /* Platform supports STREAM pipes */
 #define ACE_HAS_STREAM_PIPES 1
-
-/* Compiler/platform supports strerror () */
-#define ACE_HAS_STRERROR 1
 
 /* Platform/Compiler supports a String class (e.g., GNU or Win32). */
 #define ACE_HAS_STRING_CLASS 1

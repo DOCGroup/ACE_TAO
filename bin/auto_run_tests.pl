@@ -19,6 +19,13 @@ use Cwd;
 
 use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT);
 
+if (!defined $TAO_ROOT && -d "$ACE_ROOT/TAO") {
+    $TAO_ROOT = "$ACE_ROOT/TAO";
+}
+if (!defined $CIAO_ROOT && -d "$ACE_ROOT/TAO/CIAO") {
+    $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO";
+}
+
 ################################################################################
 
 if (!getopts ('adl:os:r:tC') || $opt_h) {
@@ -41,34 +48,39 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
     $ace_config_list = new PerlACE::ConfigList;
     $ace_config_list->load ($ACE_ROOT."/bin/ace_tests.lst");
     print "ACE Test Configs: " . $ace_config_list->list_configs () . "\n";
-    $orb_config_list = new PerlACE::ConfigList;
-    $orb_config_list->load ($ACE_ROOT."/bin/tao_orb_tests.lst");
-    print "ORB Test Configs: " . $orb_config_list->list_configs () . "\n";
-    $tao_config_list = new PerlACE::ConfigList;
-    $tao_config_list->load ($ACE_ROOT."/bin/tao_other_tests.lst");
-    print "TAO Test Configs: " . $tao_config_list->list_configs () . "\n";
-    $ciao_config_list = new PerlACE::ConfigList;
-    $ciao_config_list->load ($ACE_ROOT."/bin/ciao_tests.lst");
-    print "CIAO Test Configs: " . $ciao_config_list->list_configs () . "\n";
+    if (defined $TAO_ROOT) {
+        $orb_config_list = new PerlACE::ConfigList;
+        $orb_config_list->load ($TAO_ROOT."/bin/tao_orb_tests.lst");
+        print "ORB Test Configs: " . $orb_config_list->list_configs () . "\n";
+        $tao_config_list = new PerlACE::ConfigList;
+        $tao_config_list->load ($TAO_ROOT."/bin/tao_other_tests.lst");
+        print "TAO Test Configs: " . $tao_config_list->list_configs () . "\n";
+    }
+    if (defined $CIAO_ROOT) {
+        $ciao_config_list = new PerlACE::ConfigList;
+        $ciao_config_list->load ($CIAO_ROOT."/bin/ciao_tests.lst");
+        print "CIAO Test Configs: " . $ciao_config_list->list_configs ()
+            . "\n";
+    }
     exit (1);
 }
 
 my @file_list;
 
 if ($opt_a) {
-push (@file_list, "/bin/ace_tests.lst");
+push (@file_list, "bin/ace_tests.lst");
 }
 
 if ($opt_o) {
-push (@file_list, "/bin/tao_orb_tests.lst");
+push (@file_list, "$TAO_ROOT/bin/tao_orb_tests.lst");
 }
 
 if ($opt_t) {
-push (@file_list, "/bin/tao_other_tests.lst");
+push (@file_list, "$TAO_ROOT/bin/tao_other_tests.lst");
 }
 
 if ($opt_C) {
-push (@file_list, "/bin/ciao_tests.lst");
+push (@file_list, "$CIAO_ROOT/bin/ciao_tests.lst");
 }
 
 if ($opt_r) {
@@ -83,13 +95,13 @@ push (@file_list, "$opt_l");
 }
 
 if (scalar(@file_list) == 0) {
-    push (@file_list, "/bin/ace_tests.lst");
-    if (-d $TAO_ROOT || -d "$ACE_ROOT/TAO") {
-        push (@file_list, "/bin/tao_orb_tests.lst");
-        push (@file_list, "/bin/tao_other_tests.lst");
+    push (@file_list, "bin/ace_tests.lst");
+    if (-d $TAO_ROOT) {
+        push (@file_list, "$TAO_ROOT/bin/tao_orb_tests.lst");
+        push (@file_list, "$TAO_ROOT/bin/tao_other_tests.lst");
     }
-    if (-d $CIAO_ROOT || -d "$ACE_ROOT/TAO/CIAO") {
-        push (@file_list, "/bin/ciao_tests.lst");
+    if (-d $CIAO_ROOT) {
+        push (@file_list, "$CIAO_ROOT/bin/ciao_tests.lst");
     }
 }
 
@@ -99,11 +111,11 @@ foreach my $test_lst (@file_list) {
     if (-r $ACE_ROOT.$test_lst) {
       $config_list->load ($ACE_ROOT.$test_lst);
     }
-    elsif (-r "$startdir/$test_list") {
+    elsif (-r "$startdir/$test_lst") {
       $config_list->load ("$startdir/$test_lst");
     }
     else {
-      $config_list->load ($test_list);
+      $config_list->load ($test_lst);
     }
 
     # Insures that we search for stuff in the current directory.

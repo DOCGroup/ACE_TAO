@@ -180,6 +180,11 @@ public:
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
   /// the Reactor_Impl
+  ///
+  /// Return value semantics for this are:
+  /// -1: nothing read, fatal, unrecoverable error
+  ///  0: nothing read at all
+  ///  1: complete buffer read
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
@@ -502,7 +507,7 @@ protected:
   /// appropriate point specified by <requeue_position_>.
   virtual void renew (void) = 0;
 
-  /// Check to see if the <Event_Handler> associated with @a handle is
+  /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
   virtual int is_suspended_i (ACE_HANDLE handle) = 0;
 
@@ -570,7 +575,7 @@ protected:
 
   /**
    * True if state has changed during dispatching of
-   * <ACE_Event_Handlers>, else false.  This is used to determine
+   * ACE_Event_Handlers, else false.  This is used to determine
    * whether we need to make another trip through the
    * <Select_Reactor>'s <wait_for_multiple_events> loop.
    */

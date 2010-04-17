@@ -1,9 +1,15 @@
+Tue Feb 17 16:15:16 UTC 2009  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * server/HTTP_Server.h:
+
+          Updated to reflect movement of the svc_export.h file. 
+        
 Fri Dec  7 22:00:18 UTC 2007  Will Otte  <wotte@dre.Vanderbilt.Edu>
 
         * server/HTTP_Helpers.cpp:
           Replaced format strings passed sscanf as char arrays to be
-          string literals instead, to address a gcc warning. 
-        
+          string literals instead, to address a gcc warning.
+
 Wed Jul 17 14:40:28 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * clients/Caching/http_handler.cpp:

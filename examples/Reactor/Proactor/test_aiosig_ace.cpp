@@ -290,7 +290,7 @@ query_aio_completions (void)
               // may easily overrun the ACE_Log_Msg output buffer. If you need
               // to turn the on for some reason, be careful of this.
 #if 0
-              ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb1.rd_ptr ()));
+              ACE_DEBUG ((LM_DEBUG, "The buffer : %s\n", mb1.rd_ptr ()));
 #endif /* 0 */
             }
           else
@@ -300,7 +300,7 @@ query_aio_completions (void)
                           "\n Number of bytes transferred : %d\n",
                           nbytes));
 #if 0
-              ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb2.rd_ptr ()));
+              ACE_DEBUG ((LM_DEBUG, "The buffer : %s\n", mb2.rd_ptr ()));
 #endif /* 0 */
             }
         }

@@ -114,7 +114,7 @@ public:
 
   /**
    * Called when timer expires.  @a current_time represents the current
-   * time that the <Event_Handler> was selected for timeout
+   * time that the Event_Handler was selected for timeout
    * dispatching and @a act is the asynchronous completion token that
    * was passed in when <schedule_timer> was invoked.
    */
@@ -153,9 +153,8 @@ public:
    * return a value more than zero and decide to resume the handler
    * themseleves.
    *
-   * @note This method is only useful for the ACE_TP_Reactor. Sad
-   * that we have to have this method in a class that is supposed to
-   * be used across different components in ACE.
+   * @note This method has an affect only when used with the
+   * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
   virtual int resume_handler (void);
 

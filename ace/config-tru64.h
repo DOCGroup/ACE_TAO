@@ -37,7 +37,6 @@
 
 # include "ace/config-g++-common.h"
 
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_REENTRANT_FUNCTIONS
 #elif defined (__DECCXX)
 
@@ -60,7 +59,6 @@
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_BROKEN_IF_HEADER
-#define ACE_HAS_BROKEN_R_ROUTINES
 #if (ACE_MT_SAFE != 0)
 # define ACE_HAS_PTHREADS
 # define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
@@ -102,7 +100,6 @@
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T

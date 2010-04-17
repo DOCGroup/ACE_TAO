@@ -477,7 +477,9 @@ ACE_Reactor::notify (ACE_Event_Handler *event_handler,
   // First, try to remember this reactor in the event handler, in case
   // the event handler goes away before the notification is delivered.
   if (event_handler != 0 && event_handler->reactor () == 0)
-    event_handler->reactor (this);
+    {
+      event_handler->reactor (this);
+    }
   return this->implementation ()->notify (event_handler, mask, tv);
 }
 

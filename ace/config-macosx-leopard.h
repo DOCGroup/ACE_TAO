@@ -6,6 +6,9 @@
 #ifndef ACE_CONFIG_MACOSX_LEOPARD_H
 #define ACE_CONFIG_MACOSX_LEOPARD_H
 
+#define ACE_HAS_MAC_OSX
+#define ACE_HAS_NET_IF_DL_H
+
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -85,9 +88,6 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
-#define ACE_HAS_SIG_MACROS
-
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 
@@ -95,9 +95,6 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-
-//?
-#define ACE_LACKS_SIGSET
 
 #define ACE_NEEDS_SCHED_H
 
@@ -115,6 +112,7 @@
 
 #define ACE_LACKS_STRRECVFD
 
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
@@ -146,9 +144,6 @@
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
@@ -204,6 +199,11 @@
 #define ACE_HAS_GETIFADDRS
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
+
+#if !defined (__DARWIN_UNIX03)
+#define ACE_HAS_VOID_UNSETENV
+#endif
+
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink

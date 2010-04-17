@@ -349,7 +349,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmin_free_ = %d"),
               this->timer_ids_min_free_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nheap_ = \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nheap_ =\n")));
 
   for (size_t i = 0; i < this->cur_size_; ++i)
     {
@@ -359,7 +359,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
       this->heap_[i]->dump ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_ids_ = \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_ids_ =\n")));
 
   for (size_t j = 0; j < this->max_size_; ++j)
     ACE_DEBUG ((LM_DEBUG,
@@ -688,7 +688,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (
   if ((this->cur_size_ + this->cur_limbo_) < this->max_size_)
     {
       // Obtain the next unique sequence number.
-      long timer_id = this->timer_id ();
+      long const timer_id = this->timer_id ();
 
       // Obtain the memory to the new node.
       ACE_Timer_Node_T<TYPE> *temp = 0;

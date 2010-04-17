@@ -742,7 +742,8 @@ struct Session_Data
 {
   ACE_INT32 direction_;     // 0 == Start, 1 == Ack
   ACE_INT32 addr_;          // Network byte order, must be IPv4
-  ACE_INT16 port_;          // UDP port, network byte order
+  ACE_UINT16 port_;         // UDP port, network byte order
+  Session_Data() { ACE_OS::memset (this, 0, sizeof(*this)); }
 };
 
 // Master is the server-side receiver of session establishment requests.
@@ -1335,6 +1336,7 @@ Connector::Connector (TestData *tester)
 int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
+  ACE_OS::sleep(3);  // Let Master get going
   if (num > MAX_CLIENTS)
     num = MAX_CLIENTS;
 

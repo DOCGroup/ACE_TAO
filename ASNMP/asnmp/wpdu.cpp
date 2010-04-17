@@ -457,6 +457,14 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
     }
     break;
 
+    // Gauge32
+    case sNMP_SYNTAX_GAUGE32:
+    {
+       Gauge32 gauge32( (unsigned long) *(vp->val.integer));
+       tempvb.set_value( gauge32);
+    }
+    break;
+
     // 32 bit counter
     case sNMP_SYNTAX_CNTR32:
     {

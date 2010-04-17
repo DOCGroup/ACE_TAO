@@ -73,6 +73,7 @@
 # if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
 #   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 #   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
+#   define ACE_LACKS_ISCTYPE
 # endif
 # define ACE_HAS_SOCKLEN_T
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
@@ -174,7 +175,7 @@
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#elif defined (__SUNCC_PRO)
+#elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
@@ -202,11 +203,13 @@
 // Completely common part :-)
 
 // Platform/compiler has the sigwait(2) prototype
-# define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGWAIT
 
-# define ACE_HAS_SIGSUSPEND
+#define ACE_HAS_SIGSUSPEND
 
-# define ACE_HAS_UALARM
+#define ACE_HAS_UALARM
+
+#define ACE_HAS_STRSIGNAL
 
 #if __GLIBC__ >= 2
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
@@ -318,8 +321,11 @@
 
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
+#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
 // Although the scandir man page says otherwise, this setting is correct.
+// The setting was fixed in 2.10, so do not use the hack after that.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#endif
 
 // A conflict appears when including both <ucontext.h> and
 // <sys/procfs.h> with recent glibc headers.
@@ -335,9 +341,6 @@
 #define ACE_HAS_TIMEZONE
 
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
 // visible.  ACE shouldn't depend on feature test macros to make
@@ -380,6 +383,11 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
+#if defined (__powerpc__) && !defined (ACE_SIZEOF_LONG_DOUBLE)
+// 32bit PowerPC Linux uses 128bit long double
+# define ACE_SIZEOF_LONG_DOUBLE 16
+#endif
+
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME
 
@@ -387,11 +395,13 @@
 #define ACE_HAS_TERMIOS
 
 // Linux implements sendfile().
-#define ACE_HAS_SENDFILE
+#define ACE_HAS_SENDFILE 1
 
 #define ACE_HAS_VOIDPTR_MMAP
 
 #define ACE_HAS_ICMP_SUPPORT 1
+
+#define ACE_HAS_VASPRINTF
 
 // According to man pages Linux uses different (compared to UNIX systems) types
 // for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
@@ -404,7 +414,9 @@
 # include "ace/config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
+# if (__GLIBC__  > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2)
+#   define ACE_HAS_GETIFADDRS
+# endif
 #endif
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)

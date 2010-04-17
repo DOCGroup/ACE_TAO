@@ -112,7 +112,7 @@ int
 Connection_Handler::handle_close (ACE_HANDLE,
                                   ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in handle_close \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in handle_close\n")));
 
   // Signal the svc() event loop to shut down.
   this->finished_ = 1;

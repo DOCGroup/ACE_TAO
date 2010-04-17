@@ -66,6 +66,101 @@ static int testConcatenation() {
   return 0;
 }
 
+int testIterator()
+{
+  ACE_CString s1 ("Hello, World");
+
+  // Use the advance () method to count number of characters.
+  size_t count = 0;
+  for (ACE_CString::ITERATOR iter (s1); !iter.done (); iter.advance ())
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("advance () failed")),
+                       1);
+
+  // Use the prefix operator to count number of characters.
+  count = 0;
+  for (ACE_CString::ITERATOR iter (s1); !iter.done (); ++ iter)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("++ operator failed")),
+                       1);
+
+  count = 0;
+
+  for (ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
+       iter != iter_end; iter ++)
+  {
+    ++ count;
+  }
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("end () failed")),
+                       1);
+
+  ACE_CString::iterator iter1 (s1);
+
+  if (*iter1 != s1[0])
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("dereference operator failed")),
+                       1);
+
+  return 0;
+}
+
+int testConstIterator()
+{
+  const ACE_CString s1 ("Hello, World");
+
+  // Use the advance () method to count number of characters.
+  size_t count = 0;
+  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("advance () failed")),
+                       1);
+
+  // Use the prefix operator to count number of characters.
+  count = 0;
+  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); ++ iter)
+    ++ count;
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("++ operator failed")),
+                       1);
+
+  count = 0;
+
+  for (ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
+       iter != iter_end; iter ++)
+  {
+    ++ count;
+  }
+
+  if (count != s1.length ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("end () failed")),
+                       1);
+
+  ACE_CString::const_iterator iter1 (s1);
+
+  if (*iter1 != s1[0])
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("dereference operator failed")),
+                       1);
+
+  return 0;
+}
+
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -92,45 +187,45 @@ run_main (int, ACE_TCHAR *[])
 
     // Not equal comparisons. Error if they are equal
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
-    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Equal comparisons. Error if they are not equal
-    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Substring creation. Error if they are not equal
-    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.substring (4, 10).length () != 1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.substring (4, 10).length () != 1){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Forward search. Error if they are not equal
-    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s3.find (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s3.find (s1, 1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.find (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s3.find (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s3.find (s1, 1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.find (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Reverse search. Error if they are not equal
-    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
+    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
 
     // Assignment. Error if they are not equal
     ACE_CString s6;
     s6 = s0;
-    if (s6 != s0){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s6 != s0){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
     s6 = s4;
-    if (s4 != s6){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s4 != s6){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
     s6 = s5;
-    if (s6 != s5){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s6 != s5){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
   }
 
   {
@@ -149,59 +244,59 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString zero_size_string (s1.c_str (), 0, 0, false);
 
     // Not equal comparisons. Error if they are equal
-    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Equal comparisons. Error if they are not equal
-    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Substring creation. Error if they are not equal
-    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Forward search. Error if they are not equal
-    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s3.find (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s3.find (s1, 1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.find (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s3.find (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s3.find (s1, 1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.find (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Reverse search. Error if they are not equal
-    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
+    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Assignment. Error if they are not equal
     ACE_CString s6;
     s6 = s0;
-    if (s6 != s0){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s6 != s0){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
     s6 = s4;
-    if (s4 != s6){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s4 != s6){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
     s6 = s5;
-    if (s6 != s5){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s6 != s5){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Clear. Error if they are not equal
     s0.clear();
-    if (s0.length() != 0){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s0.length() != 0){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Rep. Error if they are not equal
     ACE_Auto_Basic_Array_Ptr<char> s (s1.rep ());
     if (ACE_OS::strlen (s.get ()) != s1.length ())
       {
-        ACE_ERROR((LM_ERROR,"Auto_ptr s: \n"));
+        ACE_ERROR((LM_ERROR,"Auto_ptr s:\n"));
       };
 
     ACE_CString s7 (s.get ());
-    if (s1 != s7){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1 != s7){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
   }
 
   {
@@ -221,50 +316,50 @@ run_main (int, ACE_TCHAR *[])
     ACE_NS_WString zero_size_string (s1.c_str (), 0, 0);
 
     // Not equal comparisons. Error if they are equal
-    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
     if (s1 == s6){ACE_ERROR((LM_ERROR,"Set #3: off-by-one failed\n"));return 1;}
 
     // Equal comparisons. Error if they are not equal
-    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.strstr (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s3.strstr (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Substring creation. Error if they are not equal
-    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.substring (0) != s1){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.substring (1) != s4){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.substring (2, 2) != s3){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.substring (0, 0) != empty_string){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Forward search. Error if they are not equal
-    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.find (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.find (s1, 1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.find (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s3.find (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s3.find (s1, 1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.find (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Reverse search. Error if they are not equal
-    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.rfind ('l') != 3){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
+    if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Assignment. Error if they are not equal
     ACE_NS_WString s7;
     s7 = s0;
-    if (s7 != s0){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s7 != s0){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
     s7 = s4;
-    if (s4 != s7){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s4 != s7){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
     s7 = s5;
-    if (s7 != s5){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s7 != s5){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
 
     // Clear. Error if they are not equal
     s0.clear();
-    if (s0.length() != 0){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s0.length() != 0){ACE_ERROR((LM_ERROR,"Set #3:\n"));return 1;}
   }
 
   {
@@ -272,44 +367,44 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString s1("dog");
     ACE_CString s2("d");
 
-    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if (!(s1 > s2)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if (s1 < s2){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if (!(s1 > s2)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if (s1 < s2){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     ACE_CString s3 ("dog");
     ACE_CString s4 ("dogbert");
 
-    if (s3 == s4){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if (!(s3 < s4)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if (s3 > s4){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if (s3 == s4){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if (!(s3 < s4)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if (s3 > s4){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     ACE_CString s5 ("dogbert",3);
     ACE_CString s6 ("dogbert",5);
 
-    if(s5 == s6){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(!(s5 < s6)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(s5 > s6){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if(s5 == s6){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(!(s5 < s6)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(s5 > s6){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     ACE_CString s7 ("dogbert",4);
     ACE_CString s8 ("dogbert",2);
 
-    if(s7 == s8){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(!(s7 > s8)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(s7 < s8){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if(s7 == s8){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(!(s7 > s8)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(s7 < s8){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     ACE_CString s9 ("dogbert",3);
     ACE_CString s10 ("dogbert");
 
-    if(s9 == s10){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(!(s9 < s10)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(s9 > s10){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if(s9 == s10){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(!(s9 < s10)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(s9 > s10){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     ACE_CString s11 ("dogbert",5);
     ACE_CString s12 ("dog");
 
-    if(s11 == s12){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(!(s11 > s12)){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
-    if(s11 < s12){ACE_ERROR((LM_ERROR,"Set #4: \n"));return 1;}
+    if(s11 == s12){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(!(s11 > s12)){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
+    if(s11 < s12){ACE_ERROR((LM_ERROR,"Set #4:\n"));return 1;}
 
     s11.fast_clear ();
     if (s11.length () != 0)
@@ -329,7 +424,7 @@ run_main (int, ACE_TCHAR *[])
       sstr.substring (2, 300);
 
     if (tmp.length () == 300)
-      ACE_ERROR ((LM_ERROR, "SString substring \n"));
+      ACE_ERROR ((LM_ERROR, "SString substring\n"));
 
     // Constring an ACE_SString without a character pointer or from an
     // existing ACE_SString causes memory to be allocated that will not
@@ -338,7 +433,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_Allocator::instance ()->free (const_cast<char *> (tmp.rep ()));
   }
 
-  int err = testConcatenation();
+  int err = testConcatenation ();
+  err += testIterator ();
+  err += testConstIterator ();
 
   ACE_END_TEST;
   return err;

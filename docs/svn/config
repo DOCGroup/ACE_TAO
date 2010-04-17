@@ -83,6 +83,8 @@ enable-auto-props = yes
 *.aspx=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cxx=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.patch=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.dpatch=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.C=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.c=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -95,6 +97,8 @@ enable-auto-props = yes
 *.cs=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.java=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.idl=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.idl3=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.idl3p=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pidl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cidl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.html=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -108,6 +112,7 @@ enable-auto-props = yes
 *.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpb=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpt=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.ns=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pcd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdd=svn:eol-style=native;svn:keywords=Author Date Id Revision

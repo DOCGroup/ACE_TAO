@@ -254,7 +254,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       ACE_TString header = ACE_TEXT ("[");
       header += path;
       header += ACE_TEXT ("]");
-      header += ACE_TEXT (" \n");
+      header += ACE_TEXT ("\n");
       if (ACE_OS::fputs (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value

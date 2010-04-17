@@ -1,14 +1,11 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Get_Opt.h"
 #include "Token_Handler.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Signal.h"
-
 
 ACE_RCSID (lib,
            Token_Handler,

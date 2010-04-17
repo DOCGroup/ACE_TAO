@@ -115,7 +115,7 @@ client (void *arg)
           }
 
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) (errno %d) %p\n"), errno,
+                    ACE_TEXT ("(%P|%t) (errno %d) %p\n"), ACE_ERRNO_GET,
                     ACE_TEXT ("client: send_n")));
         ACE_ERROR ((LM_ERROR, "client: Closing stream.\n"));
         cli_stream.close();

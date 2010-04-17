@@ -43,7 +43,7 @@ public:
 
   // = Initialization/Finalization methods.
 
-  /// Constructor. All locking requests will be forwarded to <lock>.
+  /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
 
   /// Constructor. Since no lock is provided by the user, one will be

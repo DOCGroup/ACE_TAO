@@ -7,7 +7,7 @@
     <LINK href="Stats.css" rel="stylesheet" type="text/css">
   </HEAD>
   <DIV align="center">
-  <h2>ACE+TAO Footprint Metrics Results</h2>
+  <h2>ACE+TAO+CIAO Footprint Metrics Results</h2>
 
   </DIV>
   <CENTER>
@@ -30,9 +30,9 @@
    <UL> <LI> Detailed Footprint, for a closer look at the sizes of 
    libraries and its dependencies. 
    <UL>
-   <LI><a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/FP_Metrics/metrics/ace_Footprint.html">ACE</a>
-   <LI><a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/FP_Metrics/metrics/tao_Footprint.html">TAO</a>
-   <LI><a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/FP_Metrics/metrics/ciao_Footprint.html">CIAO</a>
+   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/ace_Footprint.html">ACE</a>
+   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/tao_Footprint.html">TAO</a>
+   <LI><a href="http://www.dre.vanderbilt.edu/Stats/regular/ciao_Footprint.html">CIAO</a>
    </UL>
 
 </LI> </UL>

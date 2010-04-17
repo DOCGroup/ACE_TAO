@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //    This example tests the ACE Future Set and illustrates an
 //    implementation of the Active Object pattern, which is available
-//    at <http://www.cs.wustl.edu/~schmidt/Act-Obj.ps.gz>.  The
+//    at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The
 //    Active Object itself is very simple -- it determines if numbers
 //    are prime.
 //

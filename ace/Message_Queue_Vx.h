@@ -58,11 +58,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * * <peek_dequeue_head>.
  * * <ACE_Message_Queue_Iterators>.
  * * The ability to change low and high water marks after creation.
- * * <Message_Block> chains.  The continuation field of ACE_Message_Block
+ * * Message_Block chains.  The continuation field of ACE_Message_Block
  * *   is ignored; only the first block of a fragment chain is
  * *   recognized.
  */
-class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
+class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
 public:
   // = Initialization and termination methods.

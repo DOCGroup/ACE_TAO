@@ -56,30 +56,29 @@ public:
    * @c SO_REUSEADDR to reuse this address.
    */
   ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
-                     int reuse_addr = 0,
-                     int protocol_family = PF_UNSPEC,
-                     int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 132);
+                             int reuse_addr = 0,
+                             int protocol_family = PF_UNSPEC,
+                             int backlog = ACE_DEFAULT_BACKLOG,
+                             int protocol = 132);
 
   /// Multihomed version of same
 
   ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_Addr &local_sap,
-                     int reuse_addr = 0,
-                     int protocol_family = PF_UNSPEC,
-                     int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 132);
+                             int reuse_addr = 0,
+                             int protocol_family = PF_UNSPEC,
+                             int backlog = ACE_DEFAULT_BACKLOG,
+                             int protocol = 132);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
   ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
-                     ACE_Protocol_Info *protocolinfo,
-                     ACE_SOCK_GROUP g,
-                     u_long flags,
-                     int reuse_addr,
-                     int protocol_family = PF_UNSPEC,
-                     int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 132);
-
+                             ACE_Protocol_Info *protocolinfo,
+                             ACE_SOCK_GROUP g,
+                             u_long flags,
+                             int reuse_addr,
+                             int protocol_family = PF_UNSPEC,
+                             int backlog = ACE_DEFAULT_BACKLOG,
+                             int protocol = 132);
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).

@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 # VxWorks 6.2
 
@@ -68,16 +69,13 @@ ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2.exe
 else
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
   TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
 endif
 TAO_IDL_DEP = $(TAO_IDL)
 TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-CIDLC_DEP = $(CIDLC)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -173,7 +171,6 @@ ifneq ($(VX_LIB_BUILD),1)
       EXEEXT = .vxe
       VXE_DIR := $(OUTPUT_DIRECTORY)
       EXE = $(BIN_UNCHECKED)
-      GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
     endif
     PRJ_DIR = .
     CLEANUP_OBJS := ctdt.c $(PRJ_DIR)/$(PRJ_FILE) $(CLEANUP_OBJS)
@@ -194,7 +191,19 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
-  LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
+
+  ifeq ($(SHARED_LIBS), 1))
+    ifeq ($(PRJ_TYPE),library)
+      PICDIR = /PIC
+    endif
+  endif
+
+  ifeq ($(findstring *sf,*$(TOOL)),*sf)
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/sfcommon$(PICDIR)
+  else
+    LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common$(PICDIR)
+  endif
+
   LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default

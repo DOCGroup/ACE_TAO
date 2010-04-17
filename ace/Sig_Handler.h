@@ -177,7 +177,7 @@ public:
    * Remove an ACE_Event_Handler currently associated with @a signum.
    * We remove the handler if (1) its sigkey> matches the @a sigkey
    * passed as a parameter or (2) if we've been told to remove all the
-   * handlers, i.e., <sigkey> == -1.  If a new disposition is given it
+   * handlers, i.e., @a sigkey == -1.  If a new disposition is given it
    * is installed and the previous disposition is returned (if desired
    * by the caller).  Returns 0 on success and -1 if @a signum is
    * invalid.

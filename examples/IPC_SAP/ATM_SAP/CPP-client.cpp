@@ -90,7 +90,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Point-to-point connection
     // Not sure why but reuse_addr set to true/1 causes problems for
     // FORE/XTI/ATM - this is now handled in ACE_ATM_Connector::connect()
-    ACE_OS::printf( "ATM_Client: to open a connection \n" );
+    ACE_OS::printf( "ATM_Client: to open a connection\n" );
     ACE_ATM_Params params = ACE_ATM_Params();
     if (con.connect (atm_stream,
                      hosts[ 0 ],

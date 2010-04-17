@@ -35,7 +35,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#undef clearerr
 #undef memset
 #undef memcpy
 #undef memmove
@@ -107,7 +106,6 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
 #define ACE_HAS_3_PARAM_WCSTOK 1
 #define ACE_HAS_SIGSUSPEND 1
-#define ACE_HAS_SIG_MACROS 1
 #define ACE_HAS_SIGWAIT 1
 #define ACE_HAS_SIGTIMEDWAIT 1
 
@@ -115,7 +113,6 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_STRNLEN 1
 #define ACE_HAS_STREAMS 1
-#define ACE_HAS_STRERROR 1
 #define ACE_HAS_UALARM 1
 #define ACE_HAS_VOIDPTR_MMAP 1
 #define ACE_HAS_VOIDPTR_SOCKOPT 1
@@ -194,5 +191,8 @@
 #define ACE_LACKS_ALPHASORT 1
 #define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_ISBLANK
+
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
 
 #endif

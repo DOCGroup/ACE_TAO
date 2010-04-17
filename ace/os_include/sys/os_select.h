@@ -32,9 +32,9 @@
 #  include /**/ <sys/select.h>
 #endif /* !ACE_LACKS_SYS_SELECT_H */
 
-#if defined (ACE_VXWORKS) && defined (ACE_LACKS_SYS_SELECT_H)
+#if defined (ACE_USES_SELECTLIB_H) && defined (ACE_LACKS_SYS_SELECT_H)
 #  include /**/ <selectLib.h>
-#endif /* ACE_VXWORKS */
+#endif /* ACE_USES_SELECTLIB_H && ACE_LACKS_SYS_SELECT_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

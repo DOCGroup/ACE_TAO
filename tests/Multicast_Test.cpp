@@ -448,11 +448,19 @@ public:
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
   virtual ~MCT_Event_Handler (void);
 
+#if defined (__linux__)
+  int join (const ACE_INET_Addr &mcast_addr,
+            int reuse_addr = 1,
+            const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
+  int leave (const ACE_INET_Addr &mcast_addr,
+             const ACE_TCHAR *net_if = ACE_TEXT ("lo"));
+#else
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = 0);
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
+#endif
 
   // = Event Handler hooks.
   virtual int handle_input (ACE_HANDLE handle);
@@ -506,8 +514,8 @@ MCT_Event_Handler::mcast (void)
 int
 MCT_Event_Handler::find (const char *buf)
 {
-  size_t size = this->address_vec_.size ();
-  size_t i;
+  size_t const size = this->address_vec_.size ();
+  size_t i = 0;
   for (i = 0; i < size; ++i)
     {
       if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
@@ -548,7 +556,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str;
+  ACE_CString *str = 0;
   ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;
@@ -602,7 +610,7 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("MCT_Event_Handler::handle_input - ")
                   ACE_TEXT ("Received dgram for a group we didn't join ")
-                  ACE_TEXT ("(%s) \n"),
+                  ACE_TEXT ("(%s)\n"),
                   buf));
     }
   return 0;
@@ -672,7 +680,7 @@ MCT_Task::~MCT_Task (void)
 int
 MCT_Task::open (void *)
 {
-  MCT_Event_Handler *handler;
+  MCT_Event_Handler *handler = 0;
 
   ACE_INET_Addr addr = this->config_.group_start ();
   int groups = this->config_.groups ();
@@ -762,7 +770,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
         ACE_OS::sprintf (buf, "%s/%d", address, port);
 
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %s, %p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %C, %p\n"),
                            address,
                            ACE_TEXT ("send_dgram - error calling send on ")
                            ACE_TEXT ("ACE_SOCK_Dgram.")), -1);
@@ -779,7 +787,9 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
   //FUZZ: enable check_for_lack_ACE_OS
-
+#if defined (__linux__)
+  socket.set_nic (ACE_TEXT("lo"));
+#endif
   // Note that is is IPv4 specific and needs to be changed once
   //
   if (config.ttl () > 1)

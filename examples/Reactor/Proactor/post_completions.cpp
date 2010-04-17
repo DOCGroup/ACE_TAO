@@ -186,7 +186,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P | %t):Test starts \n"));
+              "(%P | %t):Test starts\n"));
 
   // = Get two POSIX_SIG_Proactors, one with SIGRTMIN and one with
   //   SIGRTMAX.

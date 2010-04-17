@@ -614,7 +614,7 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("MCT_Event_Handler::handle_input - ")
                   ACE_TEXT ("Received dgram for a group we didn't join ")
-                  ACE_TEXT ("(%s) \n"),
+                  ACE_TEXT ("(%s)\n"),
                   buf));
     }
   return 0;

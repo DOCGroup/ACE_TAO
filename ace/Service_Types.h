@@ -43,8 +43,7 @@ public:
   ACE_Service_Type_Impl (void *object,
                          const ACE_TCHAR *s_name,
                          u_int flags = 0,
-                         ACE_Service_Object_Exterminator gobbler = 0,
-                         int stype = ACE_Service_Type::INVALID_TYPE);
+                         ACE_Service_Object_Exterminator gobbler = 0);
   virtual ~ACE_Service_Type_Impl (void);
 
   // = Pure virtual interface (must be defined by the subclass).
@@ -52,7 +51,6 @@ public:
   virtual int resume (void) const = 0;
   virtual int init (int argc, ACE_TCHAR *argv[]) const = 0;
   virtual int fini (void) const;
-  virtual int fini_delete (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const = 0;
 
   /// The pointer to the service.
@@ -66,10 +64,6 @@ public:
 
   /// Dump the state of an object.
   void dump (void) const;
-
-  /// Getter and setter for service_type_.
-  int service_type(void) const;
-  void service_type(int stype); 
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -87,11 +81,6 @@ protected:
 
   /// Flags that control serivce behavior (particularly deletion).
   u_int flags_;
-
-  /// Stores the enum that represents the concrete type of this ACE_Service_Type_Impl.
-  /// Possible values are ACE_Service_Type::SERVICE_OBJECT, ACE_Service_Type::MODULE, and
-  /// ACE_Service_Type::STREAM.
-  int service_type_;
 };
 
 /**
@@ -107,8 +96,7 @@ public:
   ACE_Service_Object_Type (void *so,
                            const ACE_TCHAR *name,
                            u_int flags = 0,
-                           ACE_Service_Object_Exterminator gobbler = 0,
-			   int stype = ACE_Service_Type::SERVICE_OBJECT);
+                           ACE_Service_Object_Exterminator gobbler = 0);
 
   ~ACE_Service_Object_Type (void);
 
@@ -136,8 +124,7 @@ public:
   // = Initialization method.
   ACE_Module_Type (void *m, // Really an ACE_Module *.
                    const ACE_TCHAR *identifier,
-                   u_int flags = 0,
-		   int stype = ACE_Service_Type::MODULE);
+                   u_int flags = 0);
 
   ~ACE_Module_Type (void);
 
@@ -177,9 +164,7 @@ public:
   // = Initialization method.
   ACE_Stream_Type (void *s, // Really an ACE_Stream *.
                    const ACE_TCHAR *identifier,
-                   u_int flags = 0,
-		   int stype = ACE_Service_Type::STREAM);
-
+                   u_int flags = 0);
 
   ~ACE_Stream_Type (void);
 
@@ -197,7 +182,7 @@ public:
   int remove (ACE_Module_Type *module);
 
   /// Locate the ACE_Module with @a mod_name.
-  ACE_Module_Type *find (const ACE_TCHAR *mod_name) const;
+  ACE_Module_Type *find (const ACE_TCHAR *module_name) const;
 
   /// Dump the state of an object.
   void dump (void) const;

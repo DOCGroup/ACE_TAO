@@ -26,22 +26,24 @@ ACE_Thread::spawn_n (size_t n,
                      const char* thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
-  ACE_thread_t t_id;
   size_t i;
 
   for (i = 0; i < n; i++)
-    // Bail out if error occurs.
-    if (ACE_OS::thr_create (func,
-                            arg,
-                            flags,
-                            &t_id,
-                            0,
-                            priority,
-                            stack == 0 ? 0 : stack[i],
-                            stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
-                            thread_adapter,
-                            thr_name == 0 ? 0 : &thr_name[i]) != 0)
-      break;
+   {
+      ACE_thread_t t_id;
+      // Bail out if error occurs.
+      if (ACE_OS::thr_create (func,
+                              arg,
+                              flags,
+                              &t_id,
+                              0,
+                              priority,
+                              stack == 0 ? 0 : stack[i],
+                              stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
+                              thread_adapter,
+                              thr_name == 0 ? 0 : &thr_name[i]) != 0)
+        break;
+   }
 
   return i;
 }

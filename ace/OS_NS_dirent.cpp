@@ -122,8 +122,7 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
     }
   else
     {
-      int retval = ACE_TEXT_FindNextFile (d->current_handle_,
-                                          &d->fdata_);
+      int const retval = ACE_TEXT_FindNextFile (d->current_handle_, &d->fdata_);
       if (retval == 0)
         {
           // Make sure to close the handle explicitly to avoid a leak!

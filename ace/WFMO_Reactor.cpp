@@ -1756,6 +1756,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   // grab the lock and recheck the ok_to_wait_ event. When we can get them
   // both, or there's an error/timeout, return.
 #if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (alertable);
   ACE_Time_Value timeout;
   if (max_wait_time != 0)
     {
@@ -1953,9 +1954,9 @@ ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
 #if ! defined(__BORLANDC__) \
     && !defined (ghs) \
     && !defined (__MINGW32__) \
-    && !(defined (_MSC_VER) && _MSC_VER >= 1300)
+    && !defined (_MSC_VER)
                  // wait_status is unsigned in Borland, Green Hills,
-                 // mingw32 and MSVC++ >= 7.1.
+                 // mingw32 and MSVC++
                  // This >= is always true, with a warning.
                  wait_status >= WAIT_OBJECT_0 &&
 #endif

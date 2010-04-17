@@ -211,8 +211,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
-
-  ssize_t const n = this->notify_handler_->notify (eh, mask, timeout);
+  ssize_t n = -1;
+  if (this->notify_handler_)
+    {
+      n = this->notify_handler_->notify (eh, mask, timeout);
+    }
   return n == -1 ? -1 : 0;
 }
 
@@ -1493,13 +1496,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       // variant since fstat always returns an error on socket FDs.
       rd_mask.set_bit (h);
 
-      int select_width;
 #  if defined (ACE_WIN32)
       // This arg is ignored on Windows and causes pointer truncation
       // warnings on 64-bit compiles.
-      select_width = 0;
+      int select_width = 0;
 #  else
-      select_width = int (h) + 1;
+      int select_width = int (h) + 1;
 #  endif /* ACE_WIN32 */
 
       if (ACE_OS::select (select_width,

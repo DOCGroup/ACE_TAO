@@ -1,9 +1,8 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
+project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
   avoids       = ace_for_tao
-  libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
 
@@ -292,6 +291,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Asynch_Acceptor.cpp
     Asynch_Connector.cpp
     Atomic_Op_T.cpp
+    Atomic_Op_GCC_T.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
@@ -361,6 +361,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
+    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp

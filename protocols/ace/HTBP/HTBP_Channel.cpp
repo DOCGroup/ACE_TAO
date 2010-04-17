@@ -38,7 +38,7 @@ ACE::HTBP::Channel::Channel (ACE::HTBP::Session *s)
     error_buffer_ (0)
 {
   ACE_NEW (this->notifier_,ACE::HTBP::Notifier(this));
-  this->filter_ = get_filter ();
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
@@ -55,7 +55,7 @@ ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
     error_buffer_ (0)
 
 {
-  filter_ = get_filter ();
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
@@ -70,7 +70,7 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
     state_ (Init),
     error_buffer_ (0)
 {
-  filter_ = get_filter ();
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
@@ -395,6 +395,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
     {
       int ndx = 0;
       iovec *iov2 = new iovec[iovcnt];
+      ACE_Auto_Array_Ptr<iovec> guard (iov2);
       for (int i = 0; i < iovcnt; i++)
         {
           size_t n = ACE_MIN ((size_t) iov[i].iov_len ,
@@ -414,7 +415,6 @@ ACE::HTBP::Channel::recvv (iovec iov[],
         }
       if (ndx > 0)
         result += this->ace_stream_.recvv(iov2,ndx,timeout);
-      delete [] iov2;
     }
   else
     result = this->ace_stream_.recvv(iov,iovcnt,timeout);
@@ -546,20 +546,6 @@ ACE::HTBP::Channel::disable (int value) const
   this->ace_stream_.disable(value);
 
   return 0;//this->ace_stream_.disable(value);
-}
-
-ACE::HTBP::Filter *
-ACE::HTBP::Channel::get_filter ()
-{
-  ACE::HTBP::Filter_Factory *factory = 0;
-
-  // @todo Should I be throwing an exception here if
-  // memory is not allocated right ?
-  ACE_NEW_RETURN (factory,
-                  ACE::HTBP::Filter_Factory,
-                  0);
-  int inside = (this->session_ != 0);
-  return factory->get_filter (inside);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

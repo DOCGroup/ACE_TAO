@@ -60,20 +60,20 @@ public:
 
   // = Initializatation and termination methods.
   /**
-   * Create a Stream consisting of <head> and <tail> as the Stream
+   * Create a Stream consisting of @a head and @a tail as the Stream
    * head and Stream tail, respectively.  If these are 0 then the
-   * <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
-   * <arg> is the value past in to the <open> methods of the tasks.
+   * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
+   * @a arg is the value past in to the <open> methods of the tasks.
    */
   ACE_Stream (void *arg = 0,
               ACE_Module<ACE_SYNCH_USE> *head = 0,
               ACE_Module<ACE_SYNCH_USE> *tail = 0);
 
   /**
-   * Create a Stream consisting of <head> and <tail> as the Stream
+   * Create a Stream consisting of @a head and @a tail as the Stream
    * head and Stream tail, respectively.  If these are 0 then the
-   * <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
-   * <arg> is the value past in to the <open> methods of the tasks.
+   * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
+   * @a arg is the value past in to the @c open() methods of the tasks.
    */
   virtual int open (void *arg,
                     ACE_Module<ACE_SYNCH_USE> *head = 0,
@@ -87,12 +87,12 @@ public:
 
   // = ACE_Stream plumbing operations
 
-  /// Add a new module <mod> right below the Stream head.  The
+  /// Add a new module @a mod right below the Stream head.  The
   /// <open()> hook methods of the <ACE_Tasks> in this ACE_Module
   /// are invoked to initialize the tasks.
   virtual int push (ACE_Module<ACE_SYNCH_USE> *mod);
 
-  /// Remove the <mod> right below the Stream head and close it down.
+  /// Remove the @a mod right below the Stream head and close it down.
   //  The <close()> hook methods of the <ACE_Tasks> in this ACE_Module
   /// are invoked to cleanup the tasks.
   virtual int pop (int flags = M_DELETE);
@@ -101,16 +101,16 @@ public:
   /// head).
   virtual int top (ACE_Module<ACE_SYNCH_USE> *&mod);
 
-  /// Insert a new module <mod> below the named module <prev_name>.
+  /// Insert a new module @a mod below the named module <prev_name>.
   virtual int insert (const ACE_TCHAR *prev_name,
                       ACE_Module<ACE_SYNCH_USE> *mod);
 
-  /// Replace the named module <replace_name> with a new module <mod>.
+  /// Replace the named module @a replace_name with a new module @a mod.
   virtual int replace (const ACE_TCHAR *replace_name,
                        ACE_Module<ACE_SYNCH_USE> *mod,
                        int flags = M_DELETE);
 
-  /// Remove the named module <mod> from the stream.  This bypasses the
+  /// Remove the named module @a mod from the stream.  This bypasses the
   /// strict LIFO ordering of <push> and <pop>.
   virtual int remove (const ACE_TCHAR *mod,
                       int flags = M_DELETE);
@@ -206,7 +206,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the set.
+  /// Pass back the @a next_item that hasn't been seen in the set.
   /// Returns 0 when all items have been seen, else 1.
   int next (const ACE_Module<ACE_SYNCH_USE> *&next_item);
 

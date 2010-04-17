@@ -34,6 +34,10 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* CYGWIN32 || ACE_OPENVMS */
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+# include "io.h"
+#endif
+
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
 #endif
@@ -108,7 +112,18 @@ inline int ace_ungetc_helper (int ch, FILE *fp)
 #endif /* defined (ungetc) */
 }
 
-
+#if !defined ACE_FILENO_EQUIVALENT
+inline ACE_HANDLE ace_fileno_helper (FILE *fp)
+{
+# if defined (fileno)
+  return (ACE_HANDLE)fileno (fp);
+# undef fileno
+# else
+  return (ACE_HANDLE)ACE_STD_NAMESPACE::fileno (fp);
+# endif /* defined (fileno) */
+}
+#endif /* !ACE_FILENO_EQUIVALENT */
+ 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)
 /// Helper for the ACE_OS::cuserid() function
@@ -219,10 +234,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int fclose (FILE *fp);
 
-# if defined (fdopen)
-#   undef fdopen
-# endif /* fdopen */
-
   ACE_NAMESPACE_INLINE_FUNCTION
   FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
 
@@ -297,6 +308,10 @@ namespace ACE_OS {
                     ACE_OFF_T len = 0);
 
   //@}
+
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_HANDLE fileno (FILE *stream);
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export

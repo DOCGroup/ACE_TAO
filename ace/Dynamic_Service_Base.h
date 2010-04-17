@@ -37,7 +37,6 @@ class ACE_Service_Type;
  */
 class ACE_Export ACE_Dynamic_Service_Base
 {
-
 public:
   /// Dump the current static of the object
   void dump (void) const;

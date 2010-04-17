@@ -77,7 +77,7 @@ public:
 
   // = Initialization/Finalization methods.
 
-  /// Constructor. All locking requests will be forwarded to <lock>.
+  /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
                     ACE_Acquire_Method::METHOD_TYPE acquire_method = ACE_Acquire_Method::ACE_REGULAR);
 

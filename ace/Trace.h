@@ -49,8 +49,8 @@ public:
   ~ACE_Trace (void);
 
   // = Control the tracing level.
-  /// Determine if tracing is enabled (return == 1) or not (== 0)
-  static int  is_tracing(void);
+  /// Determine if tracing is enabled or not
+  static bool is_tracing(void);
 
   /// Enable the tracing facility.
   static void start_tracing (void);
@@ -79,7 +79,7 @@ private:
   static int nesting_indent_;
 
   /// Is tracing enabled?
-  static int enable_tracing_;
+  static bool enable_tracing_;
 
   /// Default values.
   enum

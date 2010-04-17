@@ -39,17 +39,17 @@ public:
   /// Default constructor.
   ACE_Dirent (void);
 
-  /// Constructor calls <opendir>
+  /// Constructor calls @c opendir()
   explicit ACE_Dirent (const ACE_TCHAR *dirname);
 
   /// Opens the directory named by filename and associates a directory
   /// stream with it.
   int open (const ACE_TCHAR *filename);
 
-  /// Destructor calls <closedir>.
+  /// Destructor calls @c closedir().
   ~ACE_Dirent (void);
 
-  /// Closes the directory stream and frees the <ACE_DIR> structure.
+  /// Closes the directory stream and frees the ACE_DIR structure.
   void close (void);
 
   // = Iterator methods.

@@ -16,13 +16,13 @@ ACE_INLINE int
 ACE_OS::ace_isalnum (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-# if defined (_MSC_VER) && (_MSC_VER >= 1300)
+# if defined (_MSC_VER)
   // For MSVC 7.x, we need to prevent "illegal" character getting into
   // isalnum, otherwise, it will crash the program.
   return c > 0 && c < 0xFF && iswalnum (c);
 # else
   return iswalnum (c);
-# endif /* _MSC_VER && _MSC_VER >= 1300 */
+# endif /* _MSC_VER */
 #else /* ACE_USES_WCHAR */
   return isalnum ((unsigned char) c);
 #endif /* ACE_USES_WCHAR */
@@ -123,9 +123,10 @@ ACE_INLINE int
 ACE_OS::ace_isprint (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-# if defined (_WIN32_WCE) && (_WIN32_WCE <= 0x600)
-  /* WinCE 6 and earlier have the bug that for tab (\t) the
-   * iswprint returns true instead of false
+# if defined (ACE_LACKS_CORRECT_ISWPRINT_TAB)
+  /* The MS CRT has the bug that for tab (\t) iswprint returns true instead of
+   * false.  This has been reported to Microsoft:
+   * https://connect.microsoft.com/VisualStudio/feedback ID# 381915
    */
   if (c == 0x9)
     {

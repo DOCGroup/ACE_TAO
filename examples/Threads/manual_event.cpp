@@ -71,14 +71,14 @@ worker (void *arg)
   ACE_OS::sleep (::amount_of_work.value ());
 
   // synch with everybody else
-  ACE_DEBUG ((LM_DEBUG, "(%t) waiting to synch with others \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) waiting to synch with others\n"));
   thread_barrier.wait ();
 
   // more work
   ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", ++::amount_of_work));
   ACE_OS::sleep (::amount_of_work.value ());
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) dying \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) dying\n"));
 
   return 0;
 }

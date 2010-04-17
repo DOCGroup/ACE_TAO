@@ -186,7 +186,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                           -1);
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Dgram_Mcast subscribe succeeds \n"));
+                    "Dgram_Mcast subscribe succeeds\n"));
 
       int nIP_TTL = 25;
       char achInBuf [BUFSIZ];
@@ -204,13 +204,13 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          0, // Overlapped.
                          0) == -1) // Func.
         ACE_ERROR ((LM_ERROR,
-                    "Error in Multicast scope ACE_OS::ioctl() \n"));
+                    "Error in Multicast scope ACE_OS::ioctl()\n"));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds \n"));
-      
+                    "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds\n"));
+
       int bFlag = 0;
-      
+
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
       // to do anything directly with QoS.
       if (ACE_OS::ioctl (dgram_mcast_qos.get_handle (), // Socket.
@@ -223,16 +223,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          0, // Overlapped.
                          0) == -1) // Func.
         ACE_ERROR ((LM_ERROR,
-                    "Error in Loopback ACE_OS::ioctl() \n"));
+                    "Error in Loopback ACE_OS::ioctl()\n"));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Disable Loopback with ACE_OS::ioctl call succeeds \n"));
-      
-      // This is a receiver. 
+                    "Disable Loopback with ACE_OS::ioctl call succeeds\n"));
+
+      // This is a receiver.
       qos_session->flags (ACE_QoS_Session::ACE_QOS_RECEIVER);
-      
+
       ACE_QoS_Manager qos_manager = dgram_mcast_qos.qos_manager ();
-      
+
       // Set the QoS for the session. Replaces the ioctl () call that
       // was being made previously.
       if (qos_session->qos (&dgram_mcast_qos,
@@ -248,11 +248,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // Register a signal handler that helps to gracefully close the
       // open QoS sessions.
       QoS_Signal_Handler qos_signal_handler (qos_session);
-      
+
       // Register the usual SIGINT signal handler with the Reactor for
       // the application to gracefully release the QoS session and
       // shutdown.
-      if (ACE_Reactor::instance ()->register_handler 
+      if (ACE_Reactor::instance ()->register_handler
           (SIGINT, &qos_signal_handler) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error in registering the Signal Handler.\n"),
@@ -262,7 +262,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       Receiver_QoS_Event_Handler qos_event_handler (dgram_mcast_qos,
                                                     qos_session);
 
-      // Decorate the above handler with QoS functionality. 
+      // Decorate the above handler with QoS functionality.
       ACE_QoS_Decorator qos_decorator (&qos_event_handler,
                                        qos_session);
 
@@ -292,20 +292,20 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 //        // The following event handler handles the data.
 //        ACE_QoS_Event_Handler data_event_handler (dgram_mcast_qos,
 //                                                  qos_session);
-      
+
 //        // Register the Data Event Handler with the Reactor.
-//        if (ACE_Reactor::instance ()->register_handler 
+//        if (ACE_Reactor::instance ()->register_handler
 //            (&data_event_handler,ACE_Event_Handler::READ_MASK) == -1)
 //          ACE_ERROR_RETURN ((LM_ERROR,
 //                             "Error in registering Data Event Handler\n"),
 //                            -1);
-      
+
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,
-                  "Running the Event Loop ... \n"));
-      
+                  "Running the Event Loop ...\n"));
+
       ACE_Reactor::instance ()->run_event_loop ();
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) shutting down server logging daemon\n"));
     }

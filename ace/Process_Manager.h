@@ -337,9 +337,9 @@ public:
   //@}
 
 protected:
-  // = These methods allow a <Process_Manager> to be an <Event_Handler>.
+  // = These methods allow a <Process_Manager> to be an Event_Handler.
 
-  // As an <Event_Handler>, the <Process_Manager> automagically
+  // As an Event_Handler, the <Process_Manager> automagically
   // detects child Processes exiting and calls notify_proc_handler()
   // and remove().  This means that you don't have to (shouldn't!)
   // call the wait(...)  methods yourself.

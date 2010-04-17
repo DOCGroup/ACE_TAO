@@ -7,24 +7,28 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 int
 ACE_Object_Manager::at_exit (ACE_Cleanup *object,
-                             void *param)
+                             void *param,
+                             const char* name)
 {
   return ACE_Object_Manager::instance ()->at_exit_i (
     object,
     (ACE_CLEANUP_FUNC) ACE_CLEANUP_DESTROYER_NAME,
-    param);
+    param,
+    name);
 }
 
 ACE_INLINE
 int
 ACE_Object_Manager::at_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
-                             void *param)
+                             void *param,
+                             const char* name)
 {
   return ACE_Object_Manager::instance ()->at_exit_i (
     object,
     cleanup_hook,
-    param);
+    param,
+    name);
 }
 
 ACE_INLINE

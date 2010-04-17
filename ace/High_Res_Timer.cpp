@@ -152,9 +152,12 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             {
               // If the line "cpu MHz : xxx" is present, then it's a
               // reliable measure of the CPU speed - according to the
-              // kernel-source.
-              scale_factor = (ACE_UINT32) (mhertz + 0.5);
-              break;
+              // kernel-source. It's possible to see a 0 value reported.
+              if (mhertz > 0.0)
+                {
+                  scale_factor = (ACE_UINT32) (mhertz + 0.5);
+                  break;
+                }
             }
           else if (::sscanf (buf, "bogomips : %lf\n", &bmips) == 1
                    || ::sscanf (buf, "BogoMIPS : %lf\n", &bmips) == 1)
@@ -234,7 +237,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
 #         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
 
 #         if !defined (ACE_WIN32)
-          if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
+          if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
             // Failed to retrieve CPU speed from system, so calculate it.
             ACE_High_Res_Timer::calibrate ();
 #         endif // (ACE_WIN32)
@@ -273,14 +276,11 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
        i < iterations;
        ++i)
     {
-      const ACE_Time_Value actual_start =
-        ACE_OS::gettimeofday ();
-      const ACE_hrtime_t start =
-        ACE_OS::gethrtime ();
+      ACE_Time_Value const actual_start = ACE_OS::gettimeofday ();
+      ACE_hrtime_t const start = ACE_OS::gethrtime ();
       ACE_OS::sleep (sleep_time);
-      const ACE_hrtime_t stop =
-        ACE_OS::gethrtime ();
-      const ACE_Time_Value actual_delta =
+      ACE_hrtime_t const stop = ACE_OS::gethrtime ();
+      ACE_Time_Value const actual_delta =
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
@@ -477,9 +477,9 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 
   // Separate to seconds and nanoseconds.
   u_long total_secs =
-    (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   ACE_UINT32 extra_nsecs =
-    (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)

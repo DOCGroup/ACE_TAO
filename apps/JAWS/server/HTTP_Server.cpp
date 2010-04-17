@@ -12,7 +12,7 @@
 #include "ace/Signal.h"
 #include "ace/Auto_Ptr.h"
 
-#include "IO.h"
+#include "JAWS_IO.h"
 #include "HTTP_Server.h"
 
 ACE_RCSID(server, HTTP_Server, "$Id$")
@@ -158,7 +158,6 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   //so please do not change the ACE_NEW_RETURN macros unless
   //you know what you are doing
   ACE_Auto_Ptr<HTTP_Handler_Factory> factory (f);
-
 
   // Choose what concurrency strategy to run.
   switch (this->strategy_)

@@ -28,7 +28,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/FoxReactor/ACE_FoxReactor_export.h"
 
-#include <fox/fx.h>
+#include <fx.h>
 
 /**
  * @class ACE_FoxReactor

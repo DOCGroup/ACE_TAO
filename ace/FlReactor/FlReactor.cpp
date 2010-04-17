@@ -4,7 +4,7 @@
 
 ACE_RCSID(ace, FlReactor, "$Id$")
 
-#include /**/ <FL/Fl.h>
+#include /**/ <FL/Fl.H>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

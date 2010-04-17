@@ -140,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("received %b \n"),total_recv));
+              ACE_TEXT("received %b\n"),total_recv));
 
 
   ACE_OS::strcpy (buffer,"I hear you !");

@@ -71,7 +71,7 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
   // If a new map entry was created, then attach to the future,
   // otherwise we were already attached to the future or some error
   // occurred so just delete the future holder.
-  if ( result == 0 )
+  if (result == 0)
     // Attach ourself to the ACE_Futures list of observer
     future.attach (this);
   else

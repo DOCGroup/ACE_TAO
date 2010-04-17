@@ -137,7 +137,7 @@ int singleton_test (void)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("ACE_Based_Pointer_Repository is not a ")
-                           ACE_TEXT ("singleton in DLL %@ %@\n"),
+                           ACE_TEXT ("singleton in DLL <%@> <%@>\n"),
                            baddr_dll,
                            baddr1),
                           -1);

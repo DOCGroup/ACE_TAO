@@ -29,6 +29,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{TARGET} = shift;
     $self->{EXECUTABLE} = shift;
@@ -154,12 +155,11 @@ sub Spawn ()
         my(@load_commands);
         my(@unload_commands);
         my $vxtest_file = $program . '.vxtest';
-        if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+        if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
             push @cmds, @load_commands;
             $cmdnr += scalar @load_commands;
           } else {
             print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
-            return -1;
           }
 
         if (defined $self->{ARGUMENTS}) {
@@ -205,8 +205,10 @@ if (!defined $t) {
 $t->open();
 
 my $ok = false;
-while ($blk = $t->get) {
-  printf $blk;
+my $buf = '';
+while (1) {
+  my $blk = $t->get;
+  print $blk;
   $buf .= $blk;
   if ($buf =~ /$prompt/) {
     $ok = true;
@@ -221,9 +223,9 @@ if ($ok) {
       print @cmds[$i]."\n";
     }
     if ($t->print (@cmds[$i++])) {
-      my $blk;
-      my $buf;
-      while ($blk = $t->get) {
+      my $buf = '';
+      while (1) {
+        my $blk = $t->get;
         printf $blk;
         $buf .= $blk;
         if ($buf =~ /$prompt/) {
@@ -333,23 +335,33 @@ sub Kill ()
 
 sub handle_vxtest_file
 {
+  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
   my $fh = new FileHandle;
-  if (open ($fh, $vxtestfile)) {
-    push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/MSVCR80D.dll .";
-    my $line1 = <$fh>;
-    chomp $line1;
-    while(<$fh>) {
-      $line1 = $_;
-      chomp $line1;
-      push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
-      unshift @$unld_ref, "del $line1" . "d.dll";
+
+  if (defined $self->{TARGET} && $self->{TARGET}->SystemLibs())
+    {
+      my @tokens = split(/;/, $self->{TARGET}->SystemLibs());
+      foreach my $token (@tokens) {
+        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/" . $token . " .";
+      }
     }
-    close $fh;
-  } else {
-    return 0;
+  if (!$PerlACE::Static) {
+    if (open ($fh, $vxtestfile)) {
+      my $line1 = <$fh>;
+      chomp $line1;
+      while(<$fh>) {
+        $line1 = $_;
+        chomp $line1;
+        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
+        unshift @$unld_ref, "del $line1" . "d.dll";
+      }
+      close $fh;
+    } else {
+      return 0;
+    }
   }
   return 1;
 }

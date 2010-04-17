@@ -256,7 +256,7 @@ Supplier_Task::perform_notifications (int notifications)
     {
       iterations *= (iterations * iterations * 2);
 #if defined (ACE_VXWORKS)
-      // scale down otherwise the test won'y finish in time
+      // scale down otherwise the test won't finish in time
       iterations /= 4;
 #endif
     }

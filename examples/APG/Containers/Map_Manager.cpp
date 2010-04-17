@@ -37,7 +37,7 @@ int Map_Example::run (void)
       map_.bind (i, DataElement (i));
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has\n")));
   for (int j = 0; j < 100; j++)
     {
       DataElement d;

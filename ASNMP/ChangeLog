@@ -1,3 +1,9 @@
+Mon Apr  6 09:57:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * asnmp/wpdu.cpp:
+          Added support for Gauge32, thanks to Shai Kedem
+          <shai_kedem at hotmail dot com> for reporting this
+
 Wed Mar  8 10:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * asnmp/*.h:

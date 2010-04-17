@@ -45,7 +45,8 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
   return vx_ace_main_i_ptr ? (*vx_ace_main_i_ptr) (argc, argv) : (-1);   /* what the user calls "main" */
 }
 #    else /* !ACE_VXWORKS && !__RTP__ */
-int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
+ACE_Export int
+ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 {
   ACE_MAIN_OBJECT_MANAGER
   return ace_main_i (argc, argv);           /* what the user calls "main" */
@@ -102,10 +103,15 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // CE only gets a command line string;  no argv. So we need to convert it
 // when the main entrypoint expects argc/argv. ACE_ARGV supports this.
 #    include "ace/OS_NS_string.h"
+#    include "ace/OS_NS_ctype.h"
 #    include "ace/ACE.h"
 #    include "ace/ARGV.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_Main_Base::~ACE_Main_Base ()
+{
+}
 
 int ACE_Main_Base::run (HINSTANCE,
                         HINSTANCE,
@@ -116,8 +122,18 @@ int ACE_Main_Base::run (HINSTANCE,
   ACE_TCHAR msg_file [MAXPATHLEN];
   if (ACE_TEXT_GetModuleFileName (0, msg_file, MAXPATHLEN))
     {
-      ACE_OS::strcpy (cmdline, msg_file);
-      ACE_OS::strcat (cmdline, ACE_TEXT (" "));
+      bool quote = false;
+      for (size_t i(0); !quote && msg_file[i]; ++i)
+        {
+          if (ACE_OS::ace_isspace (msg_file[i])) quote = true;
+        }
+      ACE_TCHAR *cmd_iter = cmdline;
+      if (quote)
+        {
+          *cmd_iter++ = ACE_TEXT ('"');
+        }
+      ACE_OS::strcpy (cmd_iter, msg_file);
+      ACE_OS::strcat (cmd_iter, quote ? ACE_TEXT ("\" ") : ACE_TEXT (" "));
     }
   else
     {

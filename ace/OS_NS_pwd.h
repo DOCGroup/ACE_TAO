@@ -33,10 +33,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef getpwnam_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
 struct passwd;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -35,10 +35,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef rand_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
 // We need this for MVS... as well as Linux, etc...
 // On Windows, we explicitly set this up as __cdecl so it's correct even
 // if building with another calling convention, such as __stdcall.
@@ -52,6 +48,42 @@ extern "C" {
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 
+// FreeBSD has atop macro (not related to ACE_OS::atop)
+#if defined (atop)
+# undef atop
+#endif
+
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ */
+
+#if !defined (ACE_LACKS_STRTOLL) && !defined (ACE_STRTOLL_EQUIVALENT)
+inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
+{
+# if defined (strtoll)
+  return strtoll (s, ptr, base);
+# undef strtoll
+# else
+  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
+# endif /* strtoll */
+}
+#endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
+
+#if !defined (ACE_LACKS_STRTOULL) && !defined (ACE_STRTOULL_EQUIVALENT)
+inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
+{
+# if defined (strtoull)
+  return strtoull (s, ptr, base);
+# undef strtoull
+# else
+  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
+# endif /* strtoull */
+}
+#endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
@@ -62,50 +94,72 @@ namespace ACE_OS {
    *
    */
   //@{
-
-
   ACE_NAMESPACE_INLINE_FUNCTION
   void _exit (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void abort (void);
 
+  /**
+   * Register an at exit hook. The @a name can be used to analyze shutdown
+   * problems
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atexit (ACE_EXIT_HOOK func);
+  int atexit (ACE_EXIT_HOOK func, const char* name = 0);
 
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to integer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  /*
+   * Convert string to long
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   long atol (const char *s);
 
+  /*
+   * Convert string to long
+   */
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   long atol (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  /*
+   * Convert string to double
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   double atof (const char *s);
 
+  /*
+   * Convert string to double
+   */
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   double atof (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
   // atop not in spec
-# if defined (atop)
-#   undef atop
-# endif /* atop */
-
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
+  /*
+   * Convert string to pointer
+   */
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
@@ -188,7 +242,7 @@ namespace ACE_OS {
 #else
   extern ACE_Export
   ACE_TCHAR *mktemp (ACE_TCHAR *s);
-#endif /* !ACE_LACKS_MSTEMP */
+#endif /* !ACE_LACKS_MKTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);
@@ -207,6 +261,12 @@ namespace ACE_OS {
               size_t nel,
               size_t width,
               ACE_COMPARE_FUNC);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int setenv(const char *envname, const char *envval, int overwrite);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int unsetenv(const char *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rand (void);

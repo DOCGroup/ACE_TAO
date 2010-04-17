@@ -271,7 +271,7 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes the @a mask bind of <Event_Handler> whose handle is
+   * Removes the @a mask bind of Event_Handler whose handle is
    * @a handle from the Select_Reactor.  If there are no more bindings
    * for this @a eh then it is removed from the Select_Reactor.
    */
@@ -279,8 +279,8 @@ public:
                               ACE_Reactor_Mask);
 
   /**
-   * Removes all the @a mask bindings for handles in the <handle_set>
-   * bind of <Event_Handler>.  If there are no more bindings for any
+   * Removes all the @a mask bindings for handles in the @a handle_set
+   * bind of Event_Handler.  If there are no more bindings for any
    * of these handlers then they are removed from the Select_Reactor.
    */
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
@@ -288,7 +288,7 @@ public:
 
   /**
    * Remove the ACE_Event_Handler currently associated with @a signum.
-   * <sigkey> is ignored in this implementation since there is only
+   * @a sigkey is ignored in this implementation since there is only
    * one instance of a signal handler.  Install the new disposition
    * (if given) and return the previous disposition (if desired by the
    * caller).  Returns 0 on success and -1 if @a signum is invalid.
@@ -298,7 +298,7 @@ public:
                               ACE_Sig_Action *old_disp = 0,
                               int sigkey = -1);
 
-  /// Calls <remove_handler> for every signal in <sigset>.
+  /// Calls <remove_handler> for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
 
   // = Suspend and resume Handlers.
@@ -306,24 +306,24 @@ public:
   /// Temporarily suspend the <Event_Handler> associated with @a eh.
   virtual int suspend_handler (ACE_Event_Handler *eh);
 
-  /// Temporarily suspend the <Event_Handler> associated with @a handle.
+  /// Temporarily suspend the Event_Handler associated with @a handle.
   virtual int suspend_handler (ACE_HANDLE handle);
 
-  /// Suspend all <handles> in handle set temporarily.
+  /// Suspend all @a handles in handle set temporarily.
   virtual int suspend_handler (const ACE_Handle_Set &handles);
 
   /// Suspend all the <Event_Handlers> in the Select_Reactor.
   virtual int suspend_handlers (void);
 
-  /// Resume a temporarily suspend <Event_Handler> associated with
+  /// Resume a temporarily suspend Event_Handler associated with
   /// @a eh.
   virtual int resume_handler (ACE_Event_Handler *eh);
 
-  /// Resume a temporarily suspended <Event_Handler> associated with
+  /// Resume a temporarily suspended Event_Handler associated with
   /// @a handle.
   virtual int resume_handler (ACE_HANDLE handle);
 
-  /// Resume all <handles> in handle set.
+  /// Resume all @a handles in handle set.
   virtual int resume_handler (const ACE_Handle_Set &handles);
 
   /// Resume all the <Event_Handlers> in the Select_Reactor.
@@ -373,8 +373,8 @@ public:
 
   /**
    * Cancel all <event_handlers> that match the address of
-   * <event_handler>.  If @a dont_call_handle_close is 0 then the
-   * <handle_close> method of <event_handler> will be invoked.
+   * @a event_handler.  If @a dont_call_handle_close is 0 then the
+   * <handle_close> method of @a event_handler will be invoked.
    * Returns number of handler's cancelled.
    */
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
@@ -384,7 +384,7 @@ public:
    * Cancel the single ACE_Event_Handler that matches the @a timer_id
    * value (which was returned from the <schedule> method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
-   * argument passed in when the <Event_Handler> was registered.  This
+   * argument passed in when the Event_Handler was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
    * If @a dont_call_handle_close is 0 then the <handle_close> method
    * of <event_handler> will be invoked.  Returns 1 if cancellation
@@ -416,7 +416,7 @@ public:
   /**
    * Called by a thread when it wants to unblock the Select_Reactor.
    * This wakeups the <ACE_Select_Reactor> if currently blocked in
-   * <select>/<poll>.  Pass over both the <Event_Handler> *and* the
+   * <select>/<poll>.  Pass over both the Event_Handler *and* the
    * @a mask to allow the caller to dictate which <Event_Handler>
    * method the <Select_Reactor> will invoke.  The ACE_Time_Value
    * indicates how long to blocking trying to notify the
@@ -431,7 +431,7 @@ public:
   /**
    * Set the maximum number of times that the
    * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
+   * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its <recv> loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    * Setting this to a value like "1 or 2" will increase "fairness"
@@ -443,7 +443,7 @@ public:
   /**
    * Get the maximum number of times that the
    * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-   * dispatch the <ACE_Event_Handlers> that are passed in via the
+   * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its <recv> loop.
    */
   virtual int max_notify_iterations (void);
@@ -556,7 +556,7 @@ protected:
                                   ACE_Event_Handler *eh,
                                   ACE_Reactor_Mask mask);
 
-  /// Register a set of <handles>.
+  /// Register a set of @a handles.
   virtual int register_handler_i (const ACE_Handle_Set &handles,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
@@ -566,7 +566,7 @@ protected:
   virtual int remove_handler_i (ACE_HANDLE handle,
                                 ACE_Reactor_Mask);
 
-  /// Remove a set of <handles>.
+  /// Remove a set of @a handles.
   virtual int remove_handler_i (const ACE_Handle_Set &handles,
                                 ACE_Reactor_Mask);
 
@@ -642,8 +642,8 @@ protected:
 
   /**
    * Dispatch all the input/output/except handlers that are enabled in
-   * the <dispatch_set>.  Updates <number_of_active_handles> and
-   * <number_of_handlers_dispatched> according to the behavior of the
+   * the @a dispatch_set.  Updates @a number_of_active_handles and
+   * @a number_of_handlers_dispatched according to the behavior of the
    * number Returns -1 if the state of the <wait_set_> has changed,
    * else 0.
    */
@@ -654,9 +654,9 @@ protected:
   /**
    * Factors the dispatching of an io handle set (each WRITE, EXCEPT
    * or READ set of handles).  It updates the
-   * <number_of_handlers_dispatched> and invokes this->notify_handle
+   * @a number_of_handlers_dispatched and invokes this->notify_handle
    * for all the handles in <dispatch_set> using the @a mask,
-   * <ready_set> and <callback> parameters.  Must return -1 if
+   * <ready_set> and @a callback parameters.  Must return -1 if
    * this->state_changed otherwise it must return 0.
    */
   virtual int dispatch_io_set (int number_of_active_handles,
@@ -666,7 +666,7 @@ protected:
                                ACE_Handle_Set& ready_mask,
                                ACE_EH_PTMF callback);
 
-  /// Notify the appropriate <callback> in the context of the @a eh
+  /// Notify the appropriate @a callback in the context of the @a eh
   /// associated with @a handle that a particular event has occurred.
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,

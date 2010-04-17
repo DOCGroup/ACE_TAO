@@ -154,7 +154,7 @@ ACE_Data_Block::dump (void) const
               ACE_TEXT ("cur_size_ = %u\n")
               ACE_TEXT ("max_size_ = %u\n")
               ACE_TEXT ("flags_ = %u\n")
-              ACE_TEXT ("base_ = %u\n")
+              ACE_TEXT ("base_ = %@\n")
               ACE_TEXT ("locking_strategy_ = %u\n")
               ACE_TEXT ("reference_count_ = %u\n")
               ACE_TEXT ("---------------------------\n"),
@@ -179,11 +179,11 @@ ACE_Message_Block::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-----( Message Block )-----\n")
               ACE_TEXT ("priority_ = %d\n")
-              ACE_TEXT ("next_ = %u\n")
-              ACE_TEXT ("prev_ = %u\n")
-              ACE_TEXT ("cont_ = %u\n")
-              ACE_TEXT ("rd_ptr_ = %u\n")
-              ACE_TEXT ("wr_ptr_ = %u\n")
+              ACE_TEXT ("next_ = %@\n")
+              ACE_TEXT ("prev_ = %@\n")
+              ACE_TEXT ("cont_ = %@\n")
+              ACE_TEXT ("rd_ptr_ = %@\n")
+              ACE_TEXT ("wr_ptr_ = %@\n")
               ACE_TEXT ("---------------------------\n"),
               this->priority_,
               this->next_,
@@ -815,8 +815,10 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
     }
   // This is the case when no lock was passed in
   else
-    // Lock to be used is our lock
-    lock_to_be_used = this->locking_strategy_;
+    {
+      // Lock to be used is our lock
+      lock_to_be_used = this->locking_strategy_;
+    }
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
@@ -827,7 +829,9 @@ ACE_Data_Block::release_no_delete (ACE_Lock *lock)
       result = this->release_i ();
     }
   else
-    result = this->release_i ();
+    {
+      result = this->release_i ();
+    }
 
   return result;
 }
@@ -878,7 +882,7 @@ ACE_Message_Block::release (void)
           // One guard for all
           ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);
 
-          // Call non-guarded release with <lock>
+          // Call non-guarded release with @a lock
           destroy_dblock = this->release_i (lock);
         }
       // This is the case when we have a valid data block but no lock
@@ -980,6 +984,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 
   this->prev_ = 0;
   this->next_ = 0;
+  this->cont_ = 0;
 }
 
 ACE_Data_Block *

@@ -395,7 +395,7 @@
 # endif /* ghs || __GNUC__ || ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined(__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC >= 60500))
+#if defined (_MSC_VER) || defined(__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 40000 || __HP_aCC >= 60500))
 # define ACE_NOTREACHED(a)
 #else  /* __sgi || ghs || ..... */
 # define ACE_NOTREACHED(a) a
@@ -455,7 +455,8 @@
 #if defined (ACE_WIN32)
 # define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_ = (TYPE) X; \
+    TYPE ace_result_; \
+    ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
@@ -634,5 +635,17 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #if defined MPC_LIB_MODIFIER && !defined (ACE_LD_DECORATOR_STR)
 #define ACE_LD_DECORATOR_STR ACE_TEXT( MPC_LIB_MODIFIER )
 #endif /* MPC_LIB_MODIFIER */
+
+#ifndef ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+# define ACE_GCC_CONSTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_GCC_DESTRUCTOR_ATTRIBUTE
+# define ACE_GCC_DESTRUCTOR_ATTRIBUTE
+#endif
+
+#ifndef ACE_DEPRECATED
+# define ACE_DEPRECATED
+#endif
 
 #endif /* ACE_CONFIG_MACROS_H */

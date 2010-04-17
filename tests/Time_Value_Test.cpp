@@ -30,6 +30,9 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 
 #include "ace/Numeric_Limits.h"
 
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+#include <sstream>
+#endif
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -98,16 +101,9 @@ run_main (int, ACE_TCHAR *[])
   const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
   const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
 
-  // test results near limits
-  tv1.set ((max_time_t >> 1), 499999);
-  tv2.set ((-(max_time_t >> 1) << 1), -999998);
-  tv1 *= -2.0;
-  ACE_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t >> 1, 499999);
-  tv2.set (((max_time_t >> 1) << 1), 999998);
-  tv1 *= 2.0;
-  ACE_ASSERT (tv1 == tv2);
-
+  // test protection against overflows
+  // ACE_ASSERT( ACE_Time_Value(max_time_t,ACE_ONE_SECOND_IN_USECS) != ACE_Time_Value(ACE_Numeric_Limits<time_t>::min()) );
+  
   // test saturated result
   tv1.set (max_time_t - 1, 499999);
   tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
@@ -116,6 +112,16 @@ run_main (int, ACE_TCHAR *[])
   tv1.set (max_time_t - 1, 499999);
   tv2.set (min_time_t, -999999);
   tv1 *= -10.0;
+  ACE_ASSERT (tv1 == tv2);
+  
+  // test results near limits
+  tv1.set ((max_time_t >> 1), 499999);
+  tv2.set ((-(max_time_t >> 1) << 1), -999998);
+  tv1 *= -2.0;
+  ACE_ASSERT (tv1 == tv2);
+  tv1.set (max_time_t >> 1, 499999);
+  tv2.set (((max_time_t >> 1) << 1), 999998);
+  tv1 *= 2.0;
   ACE_ASSERT (tv1 == tv2);
 
   // Test correct msec() convert; also checks for compile error reported in
@@ -127,7 +133,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("msec test failed: %Q should be 42555\n"),
                 ms));
-  const ACE_Time_Value msec_test2 (42, 555000);
+  ACE_Time_Value const msec_test2 (42, 555000);
   ms = 0;
   msec_test2.msec (ms);
   if (ms != 42555)
@@ -135,6 +141,27 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
                 ms));
 
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+  std::ostringstream ost;
+  ost << ACE_Time_Value(1);
+  ACE_ASSERT( ost.str() == "1" );
+  ost.str("");
+  ost << ACE_Time_Value(1,1);
+  ACE_ASSERT( ost.str() == "1.000001" );
+  ost.str("");
+  ost << ACE_Time_Value(-1,-1);
+  ACE_ASSERT( ost.str() == "-1.000001" );
+  ost.str(""); 
+  ost << ACE_Time_Value(0,1);
+  ACE_ASSERT( ost.str() == "0.000001" );
+  ost.str("");
+  ost << ACE_Time_Value(0,-1);
+  ACE_ASSERT( ost.str() == "-0.000001" );
+  ost.str("");
+  ost << ACE_Time_Value();
+  ACE_ASSERT( ost.str() == "0" );
+#endif
+                
   ACE_END_TEST;
 
   return ret;

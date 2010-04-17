@@ -208,8 +208,7 @@ ACE_Notification_Queue::pop_next_notification(
       return 0;
     }
 
-  ACE_Notification_Queue_Node * node =
-    notify_queue_.pop_front();
+  ACE_Notification_Queue_Node * node = notify_queue_.pop_front();
 
   current = node->get();
   free_queue_.push_front(node);

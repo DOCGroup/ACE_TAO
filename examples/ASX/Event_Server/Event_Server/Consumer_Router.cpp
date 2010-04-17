@@ -138,22 +138,22 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr  addr;
-  const ACE_TCHAR *mod_name = this->name ();
+  const ACE_TCHAR *module_name = this->name ();
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
 
   ACE_OS::sprintf (buf,
                    FMTSTR,
-                   mod_name,
+                   module_name,
                    addr.get_port_number (),
                    ACE_TEXT ("tcp"),
                    ACE_TEXT ("# consumer router"),
                    this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer"));
-  if (*strp == 0 && (*strp = ACE_OS::strdup (mod_name)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
     return -1;
   else
-    ACE_OS::strncpy (*strp, mod_name, length);
+    ACE_OS::strncpy (*strp, module_name, length);
 
-  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mod_name));
+  return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }

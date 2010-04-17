@@ -27,13 +27,7 @@
 #include "ace/os_include/os_unistd.h"
 
 #if defined (ACE_HAS_TIMOD_H)
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    define queue _Queue_
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #  include /**/ <sys/timod.h>
-#  if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#    undef queue
-#  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #elif defined (ACE_HAS_OSF_TIMOD_H)
 #  include /**/ <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */

@@ -36,7 +36,7 @@ reader (void *arg)
 
   // Wait for writer to complete.
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) reader: waiting...... \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%t) reader: waiting......\n"));
 
   if (EVENT::instance ()->wait () == -1)
     {
@@ -45,7 +45,7 @@ reader (void *arg)
     }
 
   // Read shared data.
-  ACE_DEBUG ((LM_DEBUG, "(%t) reader: value of data is: %d \n", data));
+  ACE_DEBUG ((LM_DEBUG, "(%t) reader: value of data is: %d\n", data));
 
   return 0;
 }

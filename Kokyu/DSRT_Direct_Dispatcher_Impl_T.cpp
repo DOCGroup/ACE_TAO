@@ -149,7 +149,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
                   "(%t|%T):curr scheduled thr handle = %d\n",
                   this->curr_scheduled_thr_handle_));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):most eligible thr handle = %d \n",
+                  "(%t|%T):most eligible thr handle = %d\n",
                   most_eligible_thr_handle));
 #endif
 

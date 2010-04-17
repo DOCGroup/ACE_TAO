@@ -257,7 +257,7 @@ int  DgramHandler::open (const ACE_INET_Addr &local,
                       protocol,
                       reuse_addr))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot oper dgram socket")),
                       -1);
 
@@ -280,7 +280,7 @@ int DgramHandler::handle_input (ACE_HANDLE handle)
 
   if (0 >= result)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("While reading datagram from socket"))
                       , -1);
   else
@@ -303,7 +303,7 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
                                         static_cast< ACE_UINT32 > (INADDR_ANY)),
                                         ACE_PROTOCOL_FAMILY_INET, 0, 1))
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P) %p \n"),
+                ACE_TEXT (" (%P) %p\n"),
                 ACE_TEXT ("Cannot open socket for sending Qt dgrams")));
 
   ACE_INET_Addr peerAddr;
@@ -312,7 +312,7 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
   if (sizeof (sendBuffer) != socket.send (&sendBuffer,
                                           sizeof (sendBuffer), peerAddr))
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT (" (%P) %p \n"),
+                ACE_TEXT (" (%P) %p\n"),
                 ACE_TEXT ("Cannot send dgram")));
   else
     ++dgramsSent_;
@@ -396,7 +396,7 @@ int TCPConnectionHandler::handle_input (ACE_HANDLE handle)
           int result = scheduleSend (buffer);
           if (0 > result)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT (" (%P) %p \n"),
+                               ACE_TEXT (" (%P) %p\n"),
                                ACE_TEXT ("Cannot schedule TCP reply")),
                               -1);
         }
@@ -476,7 +476,7 @@ int TCPConnectionHandler::scheduleSend (ACE_Message_Block * buffer)
 
   if (0 > sendBuffers ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot schedule TCP send.")),
                       -1);
   return 0;
@@ -615,7 +615,7 @@ int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
                                           ACE_Time_Value::zero,
                                           p_TestTime * (0.5 / DgramsToSend)))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P) %p \n"),
+                           ACE_TEXT (" (%P) %p\n"),
                            ACE_TEXT ("Cannot schedule ACE timer")),
                           -1);
 
@@ -637,7 +637,7 @@ int HandlersRegister::registerDgramHandlers ()
                                                         ACE_TEXT ("127.0.0.1"),
                                                         ACE_PROTOCOL_FAMILY_INET)))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P) %p \n"),
+                         ACE_TEXT (" (%P) %p\n"),
                          ACE_TEXT ("Cannot open dgram handler")),
                         -1);
 
@@ -646,7 +646,7 @@ int HandlersRegister::registerDgramHandlers ()
     if (-1 == reactor_->register_handler (DgramHandlers_[ i ],
                                           ACE_Event_Handler::READ_MASK))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P) %p \n"),
+                         ACE_TEXT (" (%P) %p\n"),
                          ACE_TEXT ("Cannot register dgram handler")),
                         -1);
   return 0;
@@ -658,7 +658,7 @@ int HandlersRegister::registerTCPHandlers ()
 
   if (-1 == acceptor_->open (addr, reactor_, 1))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P) %p \n"),
+                       ACE_TEXT (" (%P) %p\n"),
                        ACE_TEXT ("Cannot open acceptor port")),
                       -1);
 

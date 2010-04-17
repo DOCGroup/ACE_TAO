@@ -284,16 +284,10 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Platform/compiler supports _sys_errlist symbol */
-#define ACE_HAS_SYS_ERRLIST 1
-
 #define ACE_HAS_UALARM
 
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
@@ -346,6 +340,9 @@
 
 #define ACE_LACKS_ISWASCII
 
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
+
 // Shared library name/path components
 #if defined (__ia64)
 #  define ACE_DLL_SUFFIX  ACE_TEXT (".so")
@@ -364,6 +361,7 @@
 
 #define ACE_HAS_3_PARAM_READDIR_R
 
+#define ACE_LACKS_STRUCT_LIFNUM
 
 //////////////////////////////////////////////////////////////////////////
 //

@@ -50,7 +50,6 @@
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
 
-#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 #define ACE_HAS_SIG_ATOMIC_T
@@ -112,7 +111,7 @@
 #pragma warning(disable:4231)
 
 // 'function' : unreferenced local function has been removed
-# pragma warning(disable:4505)
+#pragma warning(disable:4505)
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

@@ -44,9 +44,9 @@ ACE_OS::abort (void)
 }
 
 ACE_INLINE int
-ACE_OS::atexit (ACE_EXIT_HOOK func)
+ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
 {
-  return ACE_OS_Object_Manager::instance ()->at_exit (func);
+  return ACE_OS_Object_Manager::instance ()->at_exit (func, name);
 }
 
 ACE_INLINE int
@@ -59,7 +59,7 @@ ACE_OS::atoi (const char *s)
 ACE_INLINE int
 ACE_OS::atoi (const wchar_t *s)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTOI)
   ACE_OSCALL_RETURN (::_wtoi (s), int, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
@@ -77,7 +77,7 @@ ACE_OS::atol (const char *s)
 ACE_INLINE long
 ACE_OS::atol (const wchar_t *s)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTOL)
   ACE_OSCALL_RETURN (::_wtol (s), long, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());
@@ -104,10 +104,6 @@ ACE_OS::atof (const wchar_t *s)
 #endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
-
-#if defined (atop)
-#  undef atop
-#endif /* atop */
 
 ACE_INLINE void *
 ACE_OS::atop (const char *s)
@@ -171,24 +167,24 @@ ACE_INLINE char *
 ACE_OS::getenv (const char *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
-#if defined (ACE_LACKS_ENV)
+#if defined (ACE_LACKS_GETENV)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#else /* ACE_LACKS_ENV */
+#else /* ACE_LACKS_GETENV */
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
-#endif /* ACE_LACKS_ENV */
+#endif /* ACE_LACKS_GETENV */
 }
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
 ACE_INLINE wchar_t *
 ACE_OS::getenv (const wchar_t *symbol)
 {
-#if defined (ACE_LACKS_ENV)
+#if defined (ACE_LACKS_GETENV)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
-#endif /* ACE_LACKS_ENV */
+#endif /* ACE_LACKS_GETENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
@@ -305,21 +301,11 @@ ACE_OS::mktemp (wchar_t *s)
 
 #endif /* !ACE_LACKS_MKTEMP */
 
-#if defined (INTEGRITY)
-extern "C" {
-  int putenv (char *string);
-}
-#endif
-
 ACE_INLINE int
 ACE_OS::putenv (const char *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
-#if defined (ACE_HAS_WINCE)
-  // WinCE don't have the concept of environment variables.
-  ACE_UNUSED_ARG (string);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
+#if defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
   int result = 0;
   char *sp = ACE_OS::strchr (const_cast <char *> (string), '=');
   if (sp)
@@ -328,7 +314,7 @@ ACE_OS::putenv (const char *string)
       if (stmp)
         {
           stmp[sp - string] = '\0';
-          ACE_OSCALL (::setenv (stmp, sp+sizeof (char), 1), int, -1, result);
+          result = ACE_OS::setenv (stmp, sp+sizeof (char), 1);
           ACE_OS::free (stmp);
         }
       else
@@ -338,15 +324,46 @@ ACE_OS::putenv (const char *string)
         }
     }
   else
-    ACE_OSCALL (::setenv (string, "", 1), int, -1, result);
+    {
+      result = ACE_OS::setenv (string, "", 1);
+    }
 
   return result;
-#elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
+#elif defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #else /* ! ACE_HAS_WINCE */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
+}
+
+ACE_INLINE int
+ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
+{
+#if defined (ACE_LACKS_SETENV)
+  ACE_UNUSED_ARG (envname);
+  ACE_UNUSED_ARG (envval);
+  ACE_UNUSED_ARG (overwrite);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::setenv (envname, envval, overwrite), int, -1);
+#endif
+}
+
+ACE_INLINE int
+ACE_OS::unsetenv(const char *name)
+{
+#if defined (ACE_LACKS_UNSETENV)
+  ACE_UNUSED_ARG (name);
+  ACE_NOTSUP_RETURN (-1);
+#else
+# if defined (ACE_HAS_VOID_UNSETENV)
+  ::unsetenv (name);
+  return 0;
+#else
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::unsetenv (name), int, -1);
+# endif /* ACE_HAS_VOID_UNSETENV */
+#endif /* ACE_LACKS_UNSETENV */
 }
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
@@ -354,13 +371,12 @@ ACE_INLINE int
 ACE_OS::putenv (const wchar_t *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
-#if defined (ACE_HAS_WINCE)
-  // WinCE doesn't have the concept of environment variables.
+#if defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_PUTENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
@@ -545,7 +561,7 @@ ACE_OS::strtoll (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOLL_EQUIVALENT)
   return ACE_STRTOLL_EQUIVALENT (s, ptr, base);
 #else
-  return ::strtoll (s, ptr, base);
+  return ace_strtoll_helper (s, ptr, base);
 #endif /* ACE_LACKS_STRTOLL */
 }
 
@@ -571,7 +587,7 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOULL_EQUIVALENT)
   return ACE_STRTOULL_EQUIVALENT (s, ptr, base);
 #else
-  return ::strtoull (s, ptr, base);
+  return ace_strtoull_helper (s, ptr, base);
 #endif /* ACE_LACKS_STRTOULL */
 }
 

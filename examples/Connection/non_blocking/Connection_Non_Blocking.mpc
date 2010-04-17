@@ -17,8 +17,7 @@ project (*SockServer) : aceexe {
   }
 }
 
-project (*LSockClient) : aceexe {
-  avoids += ace_for_tao
+project (*LSockClient) : aceexe, avoids_ace_for_tao {
   exename = lsock_client
   Source_Files {
     CPP-connector.cpp
@@ -26,8 +25,7 @@ project (*LSockClient) : aceexe {
   }
 }
 
-project (*LSockServer) : aceexe {
-  avoids += ace_for_tao
+project (*LSockServer) : aceexe, avoids_ace_for_tao {
   exename = lsock_server
   Source_Files {
     CPP-acceptor.cpp

@@ -21,7 +21,7 @@ noinst_LTLIBRARIES = libnetsvcs.la
 libnetsvcs_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -DACE_NETSVCS_BUILD_DLL
+  -DACE_BUILD_SVC_DLL
 
 libnetsvcs_la_SOURCES = \
   Base_Optimizer.cpp \

@@ -100,6 +100,7 @@ myallocator (const void *base_addr = 0)
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
       // WinCE cannot do fixed base, ever.
+      ACE_UNUSED_ARG (base_addr);
       ACE_MMAP_Memory_Pool_Options options
         (0,
          ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
@@ -126,6 +127,7 @@ init_test (const void *base_addr = 0)
   // file from the previous crash.
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
   // WinCE cannot do fixed base, ever.
+  ACE_UNUSED_ARG (base_addr);
   ACE_MMAP_Memory_Pool_Options options
     (0,
      ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
@@ -234,7 +236,7 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
+                  ACE_TEXT ("<<<< (%P) %C\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,

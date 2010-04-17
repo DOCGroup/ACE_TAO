@@ -847,11 +847,13 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   // Shared write
-  int return_val = this->shared_write (result);
+  int const return_val = this->shared_write (result);
 
   // Upon errors
   if (return_val == -1)
-    delete result;
+    {
+      delete result;
+    }
 
   return return_val;
 }
@@ -1024,8 +1026,10 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
                                result,
                                0);
   if (initiate_result == 0)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 0;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 0;
+    }
 #else
   initiate_result = ::WriteFile (result->handle (),
                                  result->message_block ().rd_ptr (),
@@ -2385,7 +2389,7 @@ ACE_WIN32_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::open:")
-                       ACE_TEXT ("connector already open \n")),
+                       ACE_TEXT ("connector already open\n")),
                       -1);
 
   //int result =

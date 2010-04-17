@@ -13,7 +13,7 @@
 #endif
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <Iphlpapi.h>
+#include /**/ <iphlpapi.h>
 #endif
 
 #if !defined (__ACE_INLINE__)

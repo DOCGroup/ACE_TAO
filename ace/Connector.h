@@ -67,6 +67,9 @@ public:
                                    SVC_HANDLER *,
                                    long timer_id);
 
+  /// Destructor.
+  ~ACE_NonBlocking_Connect_Handler (void);
+
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
    * If the return value is true the close was performed succesfully,
@@ -126,6 +129,9 @@ private:
 
   /// Associated SVC_HANDLER.
   SVC_HANDLER *svc_handler_;
+
+  /// Same as svc_handler_ if svc_handler_ is reference counted.
+  SVC_HANDLER *cleanup_svc_handler_;
 
   /// Associated timer id.
   long timer_id_;
@@ -190,7 +196,7 @@ public:
    * 1). @a flags and @a perms can be used to pass any flags that are
    * needed to perform specific operations such as opening a file
    * within connect with certain permissions.  If the connection fails
-   * the <close> hook on the <svc_handler> will be called
+   * the <close> hook on the @a svc_handler will be called
    * automatically to prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler,
@@ -209,7 +215,7 @@ public:
    * context of the internal cache its use is thread-safe.  But the
    * actual svc_handler for the current connection is returned in the
    * second parameter @a svc_handler.  If the connection fails the
-   * <close> hook on the <svc_handler> will be called automatically to
+   * <close> hook on the @a svc_handler will be called automatically to
    * prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler_hint,

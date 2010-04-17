@@ -100,9 +100,6 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -124,8 +121,7 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_STRSIGNAL
 
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.

@@ -49,7 +49,7 @@ public:
   ACE_Name_Binding (const ACE_Name_Binding &);
 
   /// Assignment operator.
-  void operator= (const ACE_Name_Binding &);
+  const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
   /// Destructor.
   ~ACE_Name_Binding (void);

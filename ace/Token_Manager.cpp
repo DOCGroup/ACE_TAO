@@ -3,6 +3,7 @@
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Object_Manager.h"
+#include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Manager.inl"
@@ -61,7 +62,7 @@ ACE_Token_Manager::instance (void)
                           ACE_Token_Manager,
                           0);
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (token_manager_);
+          ACE_Object_Manager::at_exit (token_manager_, 0, typeid (token_manager_).name ());
         }
     }
 

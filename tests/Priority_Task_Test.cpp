@@ -102,7 +102,7 @@ Priority_Task::open (void *arg)
                   flags,
                   fallback_priority,
                   THR_NEW_LWP,
-                  errno,
+                  ACE_ERRNO_GET,
                   ACE_TEXT ("")));
 
       flags = THR_NEW_LWP;

@@ -33,6 +33,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(tests, Log_Msg_Test, "$Id$")
 
@@ -398,7 +401,7 @@ test_ostream (void)
                         1);
     }
 
-#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x660))
+#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x680))
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
@@ -543,6 +546,26 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
               ++this->fail_;
             }
         }
+        else if (ACE_OS::strncmp (b, ACE_TEXT ("l5:"), 3) == 0)
+        {
+          b += 3;          
+          switch (log_record.type())
+          {
+            case (LM_SHUTDOWN): expect = ACE_TEXT("S"); break;
+            case (LM_TRACE): expect = ACE_TEXT("T"); break;
+            case (LM_DEBUG): expect = ACE_TEXT("D"); break;
+            case (LM_INFO): expect = ACE_TEXT("I"); break;
+            case (LM_NOTICE): expect = ACE_TEXT("N"); break;
+            case (LM_WARNING): expect = ACE_TEXT("W"); break;
+            case (LM_STARTUP): expect = ACE_TEXT("U"); break;
+            case (LM_ERROR): expect = ACE_TEXT("E"); break;
+            case (LM_CRITICAL): expect = ACE_TEXT("C"); break;
+            case (LM_ALERT): expect = ACE_TEXT("A"); break;
+            case (LM_EMERGENCY): expect = ACE_TEXT("!"); break;
+            default: expect = ACE_TEXT("?"); break;
+          }
+          
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -573,9 +596,9 @@ Log_Spec_Verify::result (void)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 4)
+  if (this->tests_ != 15)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Exexpected number of %d tests run!\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 15!\n"),
                 this->tests_));
     ++this->fail_;
   }
@@ -597,9 +620,21 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
   ACE_TCHAR* nill_string = 0;
+  char* char_nill_string = 0;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D\n")));
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  tv += ACE_Time_Value (25*60*60); // + 25 hours
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#D\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
 
   Log_Spec_Verify  verifier;
 
@@ -612,7 +647,32 @@ test_format_specs (void)
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l1:%l"));
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l4:%T")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l4:%T")));  
+
+  ACE_LOG_MSG->priority_mask (LM_SHUTDOWN | 
+                              LM_TRACE | 
+                              LM_DEBUG | 
+                              LM_INFO | 
+                              LM_NOTICE | 
+                              LM_WARNING | 
+                              LM_STARTUP | 
+                              LM_ERROR | 
+                              LM_CRITICAL | 
+                              LM_ALERT | 
+                              LM_EMERGENCY,
+                              ACE_Log_Msg::PROCESS);
+  ACE_DEBUG ((LM_SHUTDOWN, ACE_TEXT ("l5:%.1M")));  
+  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_WARNING, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_STARTUP, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_CRITICAL, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_ALERT, ACE_TEXT ("l5:%.1M")));
+  ACE_DEBUG ((LM_EMERGENCY, ACE_TEXT ("l5:%.1M")));
+  
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (0);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);

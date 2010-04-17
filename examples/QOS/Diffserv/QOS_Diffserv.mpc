@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : aceexe, qos {
-  avoids += ace_for_tao
+project(*client) : aceexe, qos, avoids_ace_for_tao {
   exename = client
   requires += qos
   Source_Files {

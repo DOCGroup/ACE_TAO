@@ -82,10 +82,15 @@ public:
     MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
 
+  enum
+  {
+    DEFAULT_SIZE = ACE_DEFAULT_SERVICE_GESTALT_SIZE
+  };
+
   /// Constructor either associates the instance with the process-wide
   /// singleton instance of ACE_Service_Repository, or creates and
   /// manages its own instance of the specified size.
-  ACE_Service_Gestalt (size_t size = 1024,
+  ACE_Service_Gestalt (size_t size = DEFAULT_SIZE,
                        bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
 
@@ -102,16 +107,16 @@ public:
    * is typically either a STREAM pipe or a socket address.  If
    * @a ignore_static_svcs is true then static services are not loaded,
    * otherwise, they are loaded.  If @a ignore_default_svc_conf_file is
-   * true then the <svc.conf> configuration file will be ignored.
+   * true then the @c svc.conf configuration file will be ignored.
    * Returns zero upon success, -1 if the file is not found or cannot
    * be opened (errno is set accordingly), otherwise returns the
    * number of errors encountered loading the services in the
    * specified svc.conf configuration file.  If @a ignore_debug_flag is
    * true then the application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.
+   * ACE_Log_Msg::priority_mask appropriately.
    */
   int open (const ACE_TCHAR program_name[],
-            const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+            const ACE_TCHAR *logger_key = 0,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -132,6 +137,8 @@ public:
    * - '-d' Turn on debugging mode
    * - '-f' Specifies a configuration file name other than the default
    *        svc.conf. Can be specified multiple times to use multiple files.
+   *        If any configuration file is provided with this option then
+   *        the default svc.conf will be ignored.
    * - '-k' Specifies the rendezvous point to use for the ACE distributed
    *        logger.
    * - '-y' Explicitly enables the use of static services. This flag
@@ -145,7 +152,13 @@ public:
    * - '-S' Specifies a service directive string. Enclose the string in quotes
    *        and escape any embedded quotes with a backslash. This option
    *        specifies service directives without the need for a configuration
-   *        file.
+   *        file. Can be specified multiple times.
+   *
+   * Note: Options '-f' and '-S' complement each other. Directives from files
+   * and from '-S' option are processed together in the following order. First,
+   * all files are processed in the order they are specified in @a argv
+   * parameter. Second, all directive strings are executed in the order the
+   * directives appear in @a argv parameter.
    *
    * @param argc The number of commandline arguments.
    * @param argv The array with commandline arguments
@@ -168,7 +181,7 @@ public:
    */
   int open (int argc,
             ACE_TCHAR *argv[],
-            const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+            const ACE_TCHAR *logger_key = 0,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -217,7 +230,7 @@ public:
 
   /**
    * Handle the command-line options intended for the
-   * ACE_Service_Gestalt.  Note that <argv[0]> is assumed to be the
+   * ACE_Service_Gestalt.  Note that @c argv[0] is assumed to be the
    * program name.
    *
    * The arguments that are valid in a call to this method are
@@ -232,21 +245,20 @@ public:
    *        Please observe the difference between options '-f' that looks
    *        for a list of files and here a list of services.
    */
-   int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
    * Process (or re-process) service configuration requests that are
    * provided in the svc.conf file(s).  Returns the number of errors
    * that occurred.
    */
-   int process_directives (bool ignore_default_svc_conf_file);
+  int process_directives (bool ignore_default_svc_conf_file);
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
-  /// down.  This method calls <close_svcs>.  Returns 0.
+  /// down.  This method calls @c close_svcs.  Returns 0.
   int close (void);
 
-
-  // Registers a service descriptor for a static service object
+  /// Registers a service descriptor for a static service object
   int insert (ACE_Static_Svc_Descriptor *stsd);
 
   // = Utility methods.
@@ -288,9 +300,9 @@ public:
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
-   * being suspended in the Service Repository and call the <suspend>
+   * being suspended in the Service Repository and call the @c suspend()
    * member function on the appropriate ACE_Service_Object.  A
-   * service can be resumed later on by calling the <RESUME> member
+   * service can be resumed later on by calling the @c resume() member
    * function...
    */
   int suspend (const ACE_TCHAR svc_name[]);
@@ -333,12 +345,12 @@ protected:
    * errors that occurred on failure and 0 otherwise.
    */
   int open_i (const ACE_TCHAR program_name[],
-              const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+              const ACE_TCHAR *logger_key = 0,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false);
 
-  /// Initialize the <svc_conf_file_queue_> if necessary.
+  /// Initialize the @c svc_conf_file_queue_ if necessary.
   int init_svc_conf_file_queue (void);
 
   /// Add the default statically-linked services to the
@@ -380,12 +392,12 @@ protected:
 
 protected:
 
-  // Maintain a queue of services to be configured from the
-  // command-line.
+  /// Maintain a queue of services to be configured from the
+  /// command-line.
   typedef ACE_Unbounded_Queue<ACE_TString> ACE_SVC_QUEUE;
   typedef ACE_Unbounded_Queue_Iterator<ACE_TString> ACE_SVC_QUEUE_ITERATOR;
 
-  // Maintain a set of the statically linked service descriptors.
+  /// Maintain a set of the statically linked service descriptors.
   typedef ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
     ACE_STATIC_SVCS;
 
@@ -431,7 +443,8 @@ protected:
   /// Queue of services specified on the command-line.
   ACE_SVC_QUEUE* svc_queue_;
 
-  /** Queue of svc.conf files specified on the command-line.
+  /**
+   * Queue of svc.conf files specified on the command-line.
    * @@ This should probably be made to handle unicode filenames...
    */
   ACE_SVC_QUEUE* svc_conf_file_queue_;
@@ -490,7 +503,6 @@ private:
   ACE_Service_Repository & repo_;
   size_t repo_begin_;
   ACE_TCHAR const * const name_;
-
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;

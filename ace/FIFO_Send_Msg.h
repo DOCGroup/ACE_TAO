@@ -62,12 +62,12 @@ public:
   ssize_t send (const void *buf, size_t len);
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  /// Send <data> and <cntl> message via Stream pipes.
+  /// Send @a data and @a cntl message via Stream pipes.
   ssize_t send (const ACE_Str_Buf *data,
                 const ACE_Str_Buf *cntl = 0,
                 int flags = 0);
 
-  /// Send <data> and <cntl> message via Stream pipes in "band" mode.
+  /// Send @a data and @a cntl message via Stream pipes in "band" mode.
   ssize_t send (int band,
                 const ACE_Str_Buf *data,
                 const ACE_Str_Buf *cntl = 0,

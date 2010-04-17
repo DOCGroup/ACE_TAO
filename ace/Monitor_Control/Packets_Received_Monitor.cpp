@@ -24,7 +24,9 @@ namespace ACE
             /// Scan format for /proc/net/dev
 #elif defined (ACE_HAS_KSTAT)
       , Solaris_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
-#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) 
+#elif defined (__FreeBSD__) || defined (__Lynx__)
+      , FreeBSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
+#elif defined (__NetBSD__) || defined (__OpenBSD__) 
       , BSD_Network_Interface_Monitor (ACE_TEXT ("ipackets"))
 #endif
     {}
@@ -56,4 +58,3 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
-

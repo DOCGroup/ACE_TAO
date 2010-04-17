@@ -563,7 +563,7 @@ YY_MALLOC_DECL
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ETCL_ECHO (void) fwrite( yytext, yyleng, 1, yyout )
+#define ETCL_ECHO { size_t __dum_ret = fwrite( yytext, yyleng, 1, yyout ); (void) __dum_ret; }
 #endif
  //FUZZ: enable check_for_lack_ACE_OS
 
@@ -1542,14 +1542,14 @@ FILE *file;
 
 #if defined (ACE_HAS_WINCE)
     // Mimic the behavior as WinCE does not have isatty().
-    if ((file != 0) && (file == fileno(file))) {
+    if ((file != 0) && (file == ACE_OS::fileno(file))) {
         b->yy_is_interactive = 1;
     }
     else {
         b->yy_is_interactive = 0;
     }
 #else
-  b->yy_is_interactive = file ? (ACE_OS::isatty( fileno(file) ) > 0) : 0;
+  b->yy_is_interactive = file ? (ACE_OS::isatty( ACE_OS::fileno(file) ) > 0) : 0;
 #endif  // ACE_HAS_WINCE
 
   }

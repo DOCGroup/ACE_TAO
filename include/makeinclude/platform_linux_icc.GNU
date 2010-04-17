@@ -60,7 +60,7 @@ ifeq ($(threads),1)
 endif # threads
 
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
-DCFLAGS += -g
+DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl

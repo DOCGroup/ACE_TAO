@@ -97,7 +97,7 @@ ListTest::displayList (MyList& list)
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration\n")));
   ACE_DLList_Reverse_Iterator<DataElement> riter (list);
   while (!riter.done ())
     {

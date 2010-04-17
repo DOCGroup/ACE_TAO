@@ -10,6 +10,9 @@ optimize ?= 1
 threads ?= 1
 insure ?= 0
 
+LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
+LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
+
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
 PLATFORM_XT_LDFLAGS=
@@ -30,9 +33,9 @@ PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
 PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
 PLATFORM_GTK_LDFLAGS =
 
-PLATFORM_FOX_CPPFLAGS=
-PLATFORM_FOX_LIBS=-lFOX
-PLATFORM_FOX_LDFLAGS=
+PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
+PLATFORM_FOX_LIBS     ?= -lFOX
+PLATFORM_FOX_LDFLAGS  ?=
 
 # NOTE: we only support wxWindows over GTK
 PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
@@ -43,13 +46,24 @@ PLATFORM_BOOST_CPPFLAGS ?=
 PLATFORM_BOOST_LDLAGS ?=
 PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
 
-PLATFORM_TCL_CPPFLAGS=
-PLATFORM_TCL_LIBS=-ltcl
-PLATFORM_TCL_LDFLAGS=
+ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
+  PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
 
-PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-PLATFORM_TK_LDFLAGS=
+  PLATFORM_TCL_CPPFLAGS=
+  PLATFORM_TCL_LIBS=-ltcl8.4
+  PLATFORM_TCL_LDFLAGS=
+else
+  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
+  PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
+  PLATFORM_TK_LDFLAGS=
+
+
+  PLATFORM_TCL_CPPFLAGS=
+  PLATFORM_TCL_LIBS=-ltcl
+  PLATFORM_TCL_LDFLAGS=
+endif
 
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
@@ -73,7 +87,7 @@ endif
 PLATFORM_AIO_SUPPORT := \
        $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
-GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
+GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION 2> /dev/null || echo Unknown)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
   NPTL_VERS := $(subst ., ,$(word 2,$(GNU_LIBPTHREAD_VERSION)))
   ifneq (0, $(word 1,$(NPTL_VERS)))
@@ -84,9 +98,6 @@ nptl ?= 0
 ifeq ($(nptl),0)
   CPPFLAGS += -DACE_LACKS_LINUX_NPTL
 endif
-
-LSB_RELEASE_ID := $(shell lsb_release -i)
-LSB_RELEASE_RELEASE := $(shell lsb_release -r)
 
 ssl ?= 0
 ifeq ($(ssl),1)
@@ -107,10 +118,29 @@ SYSARCH := $(shell uname -m)
 ifeq ($(insure),1)
   CC  = insure
   CXX = insure
+else
+  ifneq ($(CROSS_COMPILE),)
+    # Build using the cross-tools
+    CC  = ${CROSS_COMPILE}gcc
+    CXX = ${CROSS_COMPILE}g++
+    AR  = ${CROSS_COMPILE}ar
+    # Cross-linker requires this for linked in shared libs that depend
+    # themselves on other shared libs (not directly linked in)
+    LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+    ifneq (,$(HOST_ROOT))
+      TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
+      TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+      TAO_IDL_DEP = $(TAO_IDL)
+      TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
+      TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+      # make sure to use the target compiler, not the cross-compiler
+      # as preprocessor for the cross-compiled idl tools
+      TAO_IDL_PREPROCESSOR = gcc
+    endif
+  endif
 endif
 
 PIC      = -fPIC
 AR      ?= ar
-ARFLAGS  = rsuv
+ARFLAGS ?= rsuv
 RANLIB   = @true
-

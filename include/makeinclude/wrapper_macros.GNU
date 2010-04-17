@@ -72,12 +72,6 @@
 #  rwho             Build with rwho, this results in building apps/drwho
 #  pipes            Build with pipe support, resulting in adding -pipe to the
 #                   compiler options.
-#  split            Build the library by first splitting up the ACE source
-#                   to several files, with one object code entity for each
-#                   source file. This allows an application that is linked
-#                   with ACE to extract _exactly_ what it needs from the
-#                   library, resulting in a smaller executable.
-#                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
 #                   value representing a particular SCTP implementation.
@@ -192,6 +186,143 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
+#### Default to building shared libraries only.  Set it here to give the
+#### platform a chance to override.
+ifndef shared_libs
+  shared_libs = 1
+endif # shared_libs
+ifndef static_libs
+  static_libs = 0
+endif # static_libs
+
+#### Set up the build ACE version in case the platform_macros.GNU wants it.
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+else
+ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+endif
+
+# Define some variables to silence warnings
+SHR_FILTER ?=
+
+# Include this before the below variables to make it possible for
+# platform_macros.GNU to set default values for them.
+ifneq ($(alternate_platform_macros),)
+  include $(alternate_platform_macros)
+else
+  include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif # alternate_platform_macros
+
+# Define some variables to silence warnings
+GHS ?=
+CHORUS ?=
+AIX_TEMPLATE_HACK ?=
+
+# $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
+# platform dependent config-*.h file included in config.h, and can be set
+# in your platform_*.GNU file or platform_macros.GNU.
+ACE_PLATFORM_CONFIG ?= config.h
+
+ifeq ($(threads),0)
+  ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
+    CPPFLAGS += -DACE_MT_SAFE=0
+  endif # -DACE_MT_SAFE=0
+endif # threads
+
+####
+#### Defaults are exceptions on (1), fast off (0), threads on (1)
+#### and versioned_so on (1).
+####
+exceptions ?= 1
+fast ?= 0
+versioned_so ?= 1
+use_dep_libs ?= 1
+threads ?= 1
+symlinks ?= relative
+link_groups ?= 0
+mcpp ?= 0
+
+SOVERSION ?=
+SONAME ?=
+
+ifeq ($(PWD),)
+  PWD=$(shell pwd)
+endif
+
+ifeq ($(ACE_MKDIR),)
+  MKDIR = mkdir -p
+else
+  MKDIR = $(ACE_MKDIR)
+endif
+
+#----------------------------------------------------------------------------
+#      Platform-independent macro definitions
+#----------------------------------------------------------------------------
+
+INCLDIRS ?=
+DEFFLAGS ?=
+
+ifeq ($(debug),0)
+  DEFFLAGS        += -DNDEBUG
+endif
+
+ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
+  INCLDIRS        += -I$(ACE_ROOT)
+endif
+
+CPPFLAGS          += $(DEFFLAGS) $(INCLDIRS)
+
+# Define default extensions for IDL-generated files
+IDL_CLIENT_HDR_EXT ?= C.h
+IDL_CLIENT_INL_EXT ?= C.inl
+IDL_CLIENT_SRC_EXT ?= C.cpp
+IDL_SERVER_HDR_EXT ?= S.h
+IDL_SERVER_INL_EXT ?= S.inl
+IDL_SERVER_SRC_EXT ?= S.cpp
+IDL_SERVER_THDR_EXT ?= S_T.h
+IDL_SERVER_TINL_EXT ?= S_T.inl
+IDL_SERVER_TSRC_EXT ?= S_T.cpp
+
+ifeq (default,$(origin LEX))
+LEX = flex
+endif
+
+EXEEXT ?=
+
+ifndef COMSPEC
+  ifdef ComSpec
+    #### ACE+TAO use COMSPEC, but ComSpec is defined.
+    COMSPEC = $(ComSpec)
+  endif # ComSpec
+endif # ! COMPSPEC
+
+ifdef COMSPEC
+  #### Assume we're on a WIN32 host.
+  ACE_NUL = nul
+else  # ! WIN32
+  ACE_NUL = /dev/null
+endif # ! WIN32
+
+#### Redirect stderr to nul device, and mask exit status.
+ACE_NUL_STDERR = 2>$(ACE_NUL) || true
+PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
+PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
+VAR             =
+
+# User-written makefiles that are not MPC-generated often use LIB to specify
+# what to build. This is in contrast to MPC-generated files that use
+# LIB_CHECKED for this purpose. LIB causes conflicts on Windows with gmake
+# and Visual Studio which uses the LIB environment variable as a search path
+# for libraries to link. So, to allow non-MPC makefiles to keep working, set
+# LIB_CHECKED based on LIB if the former is not set and the latter is.
+ifndef COMSPEC
+  LIB_CHECKED ?= $(LIB)
+endif # ! COMPSPEC (and, therefore, assumed !Windows
+
 # default to not using an architecture specific output directory
 ARCH        ?=
 ARCH_BIN     = $(BIN)
@@ -203,7 +334,12 @@ ARCH_SHLIB2  = $(SHLIB2)
 ARCH_SHLIBA  = $(SHLIBA)
 ARCH_SHLIBA2 = $(SHLIBA2)
 
+INSINC      ?= $(ACE_ROOT)/ace
+INSLIB      ?= $(ACE_ROOT)/lib
+INSMAN      ?= $(ACE_ROOT)/man
+
 ifdef ARCH
+  INSLIB := $(INSLIB:%=%/$(ARCH))
 ifdef BIN
   ARCH_BIN = $(ARCH)/$(BIN)
 endif
@@ -226,9 +362,18 @@ ifdef SHLIBA
   ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
 endif
 ifdef SHLIBA2
-  ARCH_HLIBA2 = $(ARCH)/$(SHLIBA2)
+  ARCH_SHLIBA2 = $(ARCH)/$(SHLIBA2)
 endif
 endif
+
+ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
+  LDFLAGS         += -L$(INSLIB)
+endif
+
+#ifdef ARCH
+#  LDFLAGS_ARCH := $(LDFLAGS:-L%=-L%/$(ARCH))
+#  LDFLAGS += $(LDFLAGS_ARCH)
+#endif
 
 # Set the cleanup targets.  These targets are used by realclean even if
 # the component isn't being built, i.e., the decision to build it was based
@@ -288,134 +433,6 @@ ifneq ($(SHLIBA_UNCHECKED),)
   CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
 endif # SHLIBA_UNCHECKED
 
-#### Default to building shared libraries only.  Set it here to give the
-#### platform a chance to override.
-ifndef shared_libs
-  shared_libs = 1
-endif # shared_libs
-ifndef static_libs
-  static_libs = 0
-endif # static_libs
-
-#### Set up the build ACE version in case the platform_macros.GNU wants it.
-ifeq (cmd,$(findstring cmd,$(SHELL)))
-ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-else
-ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-endif
-
-# Define some variables to silence warnings
-SHR_FILTER ?=
-
-# Include this before the below variables to make it possible for
-# platform_macros.GNU to set default values for them.
-ifneq ($(alternate_platform_macros),)
-  include $(alternate_platform_macros)
-else
-  include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-endif # alternate_platform_macros
-
-# Define some variables to silence warnings
-GHS ?=
-CHORUS ?=
-AIX_TEMPLATE_HACK ?=
-
-# $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
-# platform dependent config-*.h file included in config.h, and can be set
-# in your platform_*.GNU file or platform_macros.GNU.
-ACE_PLATFORM_CONFIG ?= config.h
-
-ifeq ($(threads),0)
-  ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
-    CPPFLAGS += -DACE_MT_SAFE=0
-  endif # -DACE_MT_SAFE=0
-endif # threads
-
-####
-#### Defaults are exceptions on (1), fast off (0), threads on (1)
-#### and versioned_so on (1).
-####
-exceptions ?= 1
-fast ?= 0
-versioned_so ?= 1
-use_dep_libs ?= 1
-threads ?= 1
-symlinks ?= relative
-link_groups ?= 0
-
-SOVERSION ?=
-SONAME ?=
-
-ifeq ($(PWD),)
-  PWD=$(shell pwd)
-endif
-
-ifeq ($(ACE_MKDIR),)
-  MKDIR = mkdir -p
-else
-  MKDIR = $(ACE_MKDIR)
-endif
-
-#----------------------------------------------------------------------------
-#      Platform-independent macro definitions
-#----------------------------------------------------------------------------
-
-INCLDIRS ?=
-DEFFLAGS ?=
-
-CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
-
-# Define default extensions for IDL-generated files
-IDL_CLIENT_HDR_EXT ?= C.h
-IDL_CLIENT_INL_EXT ?= C.inl
-IDL_CLIENT_SRC_EXT ?= C.cpp
-IDL_SERVER_HDR_EXT ?= S.h
-IDL_SERVER_INL_EXT ?= S.inl
-IDL_SERVER_SRC_EXT ?= S.cpp
-IDL_SERVER_THDR_EXT ?= S_T.h
-IDL_SERVER_TINL_EXT ?= S_T.inl
-IDL_SERVER_TSRC_EXT ?= S_T.cpp
-
-ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I$(ACE_ROOT)
-endif
-INSINC          ?= $(ACE_ROOT)/ace
-INSLIB          ?= $(ACE_ROOT)/lib
-INSMAN          ?= $(ACE_ROOT)/man
-ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
-  LDFLAGS         += -L$(INSLIB)
-endif
-
-ifeq (default,$(origin LEX))
-LEX = flex
-endif
-
-EXEEXT ?=
-
-ifndef COMSPEC
-  ifdef ComSpec
-    #### ACE+TAO use COMSPEC, but ComSpec is defined.
-    COMSPEC = $(ComSpec)
-  endif # ComSpec
-endif # ! COMPSPEC
-
-ifdef COMSPEC
-  #### Assume we're on a WIN32 host.
-  ACE_NUL = nul
-else  # ! WIN32
-  ACE_NUL = /dev/null
-endif # ! WIN32
-
-#### Redirect stderr to nul device, and mask exit status.
-ACE_NUL_STDERR = 2>$(ACE_NUL) || true
-PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
-PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
-VAR             =
-
 # Let users override the default VDIR directories
 ifdef ARCH
 VDIR          ?= $(ARCH)/.obj/
@@ -438,6 +455,7 @@ endif
 OBJEXT ?= o
 SOEXT ?= so
 LIBEXT ?= a
+LIB_PREFIX ?= lib
 
 CC_OUTPUT_FLAG ?= -o
 SO_OUTPUT_FLAG ?= -o
@@ -455,19 +473,6 @@ ifneq ($(optimize),)
   CFLAGS  += $(OCFLAGS)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
-
-split ?= 0
-ifeq ($(split),0)
-  override split =
-endif # split
-
-ifneq ($(split),)
-  override split_target = SPLIT
-  override debug = 0
-  CPPFLAGS += -DACE_IS_SPLITTING
-else
-  override split_target =
-endif # split
 
 ifeq ($(debug),0)
   override debug =
@@ -724,8 +729,12 @@ ifeq ($(static_libs_only),0)
 endif # static_libs_only
 
 ifdef shared_libs_only
-  override shared_libs = 1
-  override static_libs =
+  ifdef static_libs_only
+    $(error Both static_libs_only and shared_libs_only defined.)
+  else
+    override shared_libs = 1
+    override static_libs =
+  endif
 endif # shared_libs_only
 ifdef static_libs_only
   override shared_libs =
@@ -810,12 +819,12 @@ ifdef quantify
   #### You might want to adjust the Quantify options below.
   #### -best-effort is undocumented but supported, and seems
   #### to help avoid occasional link failure.
-  PRELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
-             -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
+  PURELINK += quantify -best-effort -cache-dir=$(PURE_CACHE_DIR) \
+              -max_threads=100 $(PLATFORM_QUANTIFY_OPTIONS)
   CPPFLAGS += -DACE_HAS_QUANTIFY -I$(ACE_QUANTIFY_DIR)
 
   ifeq ($(shell uname -p),sparc)
-    PRELINK += -record-register-window-traps
+    PURELINK += -record-register-window-traps
   endif # sparc
 endif # quantify
 
@@ -857,6 +866,7 @@ rwho ?= 1
 stlport ?= 0
 ifeq ($(stlport),1)
   CPPFLAGS += -DACE_HAS_STLPORT $(PLATFORM_STLPORT_CPPFLAGS)
+  CCFLAGS  += $(PLATFORM_STLPORT_CCFLAGS)
   LDFLAGS  += $(PLATFORM_STLPORT_LDFLAGS)
   LIBS     += $(PLATFORM_STLPORT_LIBS)
 endif
@@ -878,7 +888,38 @@ ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
 acexml        ?= 1
-xerces        ?= 1
+
+# Icecream distributed compilation support
+ifeq ($(icecream),1)
+  # check availability of icecc
+  ifneq ($(ICECC_ROOT),)
+    ICECC_PROG := $(ICECC_ROOT)/icecc
+  else
+    ICECC_PROG := $(shell which icecc 2>/dev/null)
+  endif
+  ICECC_VERTEST := $(shell test -x "$(ICECC_PROG)" && $(ICECC_PROG) --version)
+  ifneq (ICECC,$(findstring ICECC,$(ICECC_VERTEST)))
+    # not good, try alternative install location
+    ICECC_PROG := /opt/icecream/bin/icecc
+    ICECC_VERTEST := $(shell test -x "$(ICECC_PROG)" && $(ICECC_PROG) --version)
+    ifneq (ICECC,$(findstring ICECC,$(ICECC_VERTEST)))
+      override icecream := 0
+      $(error Cannot locate valid Icecream compiler.)
+    endif
+  endif
+  ifeq ($(icecream),1)
+    # force LD and DLD to be 'normal' tools
+    override LD := $(LD)
+    override DLD := $(DLD)
+    # define tools that icecc should call for local jobs
+    ICECC_CC := $(CC)
+    ICECC_CXX := $(CXX)
+    export ICECC_CC ICECC_CXX
+    # let all compilation go through icecc
+    CC := $(ICECC_PROG)
+    CXX := $(ICECC_PROG)
+  endif
+endif
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
@@ -914,4 +955,8 @@ else
   LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
-SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+ifeq ($(SOLINK.cc),override)
+  SOLINK.cc = $(SOLINK.cc.override)
+else
+  SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
+endif # SOLINK.cc.override

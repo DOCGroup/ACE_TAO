@@ -19,6 +19,11 @@ ACE_RCSID (ace, OS_NS_unistd, "$Id$")
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_sysctl.h"
 
+#if defined ACE_HAS_VXCPULIB
+# include "vxCpuLib.h"
+# include "cpuset.h"
+#endif /* ACE_HAS_VXCPULIB */
+
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int
 ftruncate (ACE_HANDLE handle, long len)
@@ -64,6 +69,10 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   if (argc <= 0 || argv == 0 || argv[0] == 0)
     return 0;
 
@@ -75,7 +84,7 @@ ACE_OS::argv_to_string (int argc,
 
   for (int i = 0; i < argc; ++i)
     {
-#if !defined (ACE_LACKS_ENV)
+#if !defined (ACE_LACKS_STRENVDUP)
       // Account for environment variables.
       if (substitute_env_args
           && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != 0)
@@ -98,7 +107,7 @@ ACE_OS::argv_to_string (int argc,
               return 0;
             }
         }
-#endif /* ACE_LACKS_ENV */
+#endif /* ACE_LACKS_STRENVDUP */
       // If must quote, we only do it if the arg contains spaces, or
       // is empty. Perhaps a check for other c | ord(c) <= 32 is in
       // order?
@@ -127,7 +136,8 @@ ACE_OS::argv_to_string (int argc,
                   ++quotes;
             }
           argv_p[i] =
-            (ACE_TCHAR *) ACE_OS::malloc (ACE_OS::strlen (temp) * sizeof (ACE_TCHAR) + quotes + 3);
+            (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
+                                          * sizeof (ACE_TCHAR));
           if (argv_p[i] == 0)
             {
               ACE_OS::free (argv_p);
@@ -378,6 +388,8 @@ ACE_OS::num_processors (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
+#elif defined (ACE_HAS_VXCPULIB)
+  return vxCpuConfiguredGet();
 #elif defined (_SC_NPROCESSORS_CONF)
   return ::sysconf (_SC_NPROCESSORS_CONF);
 #elif defined (ACE_HAS_SYSCTL)
@@ -418,6 +430,20 @@ ACE_OS::num_processors_online (void)
       mask >>= 1;
     }
   return active_processors;
+#elif defined (ACE_HAS_VXCPULIB)
+  long num_cpu = 0;
+  cpuset_t cpuset;
+  CPUSET_ZERO (cpuset);
+  cpuset = vxCpuEnabledGet();
+  unsigned int const maxcpu = vxCpuConfiguredGet();
+  for (unsigned int i =0; i < maxcpu; i++)
+    {
+      if (CPUSET_ISSET (cpuset, i))
+        {
+          ++num_cpu;
+        }
+    }
+  return num_cpu;
 #elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
 #elif defined (ACE_HAS_SYSCTL)
@@ -619,7 +645,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                                   0,
                                                   &original_high_position,
                                                   FILE_CURRENT);
-                                                  
+
   if (original_low_position == INVALID_SET_FILE_POINTER
       && GetLastError () != NO_ERROR)
     {
@@ -652,7 +678,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
         {
           return -1;
         }
-      else 
+      else
         {
           result = ::GetOverlappedResult (handle,
                                           &overlapped,
@@ -668,7 +694,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   if (::SetFilePointer (handle,
                         low_offset,
                         &high_offset,
-                        FILE_BEGIN) == INVALID_SET_FILE_POINTER 
+                        FILE_BEGIN) == INVALID_SET_FILE_POINTER
                         && ::GetLastError () != NO_ERROR)
     {
       ACE_OS::set_errno_to_last_error ();
@@ -741,6 +767,10 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         ACE_TCHAR **&argv,
                         bool substitute_env_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   // Reset the number of arguments
   argc = 0;
 
@@ -834,7 +864,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
       *cp = ACE_TEXT ('\0');
 
-#if !defined (ACE_LACKS_ENV)
+#if !defined (ACE_LACKS_STRENVDUP)
       // Check for environment variable substitution here.
       if (substitute_env_args) {
           argv[i] = ACE_OS::strenvdup (argp);
@@ -848,7 +878,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
             }
       }
       else
-#endif /* ACE_LACKS_ENV */
+#endif /* ACE_LACKS_STRENVDUP */
         {
           argv[i] = ACE_OS::strdup (argp);
 

@@ -20,6 +20,9 @@ BIN_UNCHECKED    = <%exename%>
 
 LIB_PREFIX      ?= lib
 <%endif%>
+<%if(need_staticflags)%>
+static_libs_only ?= 1
+<%endif%>
 <%if(staticname)%>
 
 ## LIB_CHECKED may be set to empty later on in this file
@@ -167,16 +170,14 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-<%if(!dds && version)%>
+<%if(version)%>
 
 ifeq ($(versioned_so),1)
   SOVERSION = .<%version%>
 endif # versioned_so
 
 <%endif%>
-<%if(dds)%>
-include $(DDS_ROOT)/rules.dds.GNU
-<%endif%>
+<%marker(extension)%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
 <%endif%>
@@ -225,7 +226,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%libpath%>/$(ARCH) <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/$(LIB_PREFIX)$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
@@ -444,7 +445,7 @@ endif
 ifeq ($(VXWORKSLINK),1)
 LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%> -L<%libpath%>/$(ARCH)<%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 endif
 <%endif%>
 <%if(includes)%>
@@ -506,6 +507,7 @@ ifeq ($(wildcard /usr/bin/test), /usr/bin/test)
 endif
 endif
 
+SPACE = $(should_be_unset) $(should_be_unset)
 <%foreach(custom_types)%>
 <%if(custom_type->libpath)%>
 DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
@@ -534,7 +536,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
     ## If all of the generated files are there, then we need to check
     ## and make sure that the generated files are up-to-date.  If they are not
     ## then we need the special rule.
-    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%custom_type->input_file%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%> echo 0),)
       .NOTPARALLEL:
 <%if(flag_overrides(custom_type->input_file, dependent))%>
     else
@@ -542,7 +544,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%dep%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%dep%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%else%>
@@ -552,7 +554,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%custom_type->dependent%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
@@ -566,7 +568,7 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%dep%>)<%else%><%dep%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->dependent%>)<%else%><%custom_type->dependent%><%endif%><%endfor%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
 <%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
@@ -675,17 +677,35 @@ endif
 <%endif%>
 
 __prebuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 <%if(prebuild)%>
 	@<%eval(prebuild)%>
 <%else%>
 	@-:
 <%endif%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%if(postbuild)%>
 all: __postbuild__
 
 __postbuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 	@<%eval(postbuild)%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%endif%>
 <%marker(bottom)%>

@@ -58,25 +58,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_SIGSET)
+#if defined (ACE_LACKS_SIGSET) && !defined (__MINGW32__)
   typedef u_int sigset_t;
-#endif /* ACE_LACKS_SIGSET */
-
-#if defined (ACE_HAS_SIG_MACROS)
-#  undef sigemptyset
-#  undef sigfillset
-#  undef sigaddset
-#  undef sigdelset
-#  undef sigismember
-#endif /* ACE_HAS_SIG_MACROS */
-
-// This must come after signal.h is #included.  It's to counteract
-// the sigemptyset and sigfillset #defines, which only happen
-// when __OPTIMIZE__ is #defined (really!) on Linux.
-#if defined (linux) && defined (__OPTIMIZE__)
-#  undef sigemptyset
-#  undef sigfillset
-#endif /* linux && __OPTIMIZE__ */
+#endif /* ACE_LACKS_SIGSET && !sigset_t */
 
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
    typedef int sig_atomic_t;
@@ -171,17 +155,17 @@ extern "C"
    // All other platforms set NSIG to one greater than the
    // highest-numbered signal.
 #  define ACE_NSIG NSIG
-#endif /* __Lynx__ */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_HAS_WINCE)
   typedef void (__cdecl * __sighandler_t)(int);
 #endif
 
-#if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES) || defined (ACE_HAS_LYNXOS50_SIGNALS)
-   // Prototypes for both signal() and struct sigaction are consistent..
+#if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+  // Prototypes for both signal() and struct sigaction are consistent..
   typedef void (*ACE_SignalHandler)(int);
   typedef void (*ACE_SignalHandlerV)(int);
-#elif defined (ACE_HAS_LYNXOS_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
+#elif defined (ACE_HAS_LYNXOS4_SIGNALS) || defined (ACE_HAS_TANDEM_SIGNALS)
    typedef void (*ACE_SignalHandler)(...);
    typedef void (*ACE_SignalHandlerV)(...);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)

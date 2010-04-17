@@ -78,7 +78,7 @@ ACE_OS::dlerror (void)
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  const char *err;
+  const char *err = 0;
 #   if defined(_M_UNIX)
   ACE_OSCALL (::_dlerror (), const char *, 0, err);
 #   else /* _M_UNIX */

@@ -1141,7 +1141,7 @@ testing (ACE_Reactor *reactor,
          int nested_upcalls)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n(%t) Configuration: \n")
+              ACE_TEXT ("\n(%t) Configuration:\n")
               ACE_TEXT ("\tInvocation thread = %d\n")
               ACE_TEXT ("\tEvent Loop thread = %d\n")
               ACE_TEXT ("\tPurger thread     = %d\n")

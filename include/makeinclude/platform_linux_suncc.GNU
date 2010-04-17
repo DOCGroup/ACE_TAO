@@ -66,6 +66,9 @@ ifeq ($(buildbits),64)
   CFLAGS   += -m64
 endif
 
+# Enable GNU extensions
+CPPFLAGS+= -D_GNU_SOURCE
+
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>

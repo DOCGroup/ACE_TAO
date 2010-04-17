@@ -182,11 +182,17 @@ test_argv_buf (void)
 static int
 test_argv_quotes (void)
 {
-  const ACE_TCHAR *argv[] = { ACE_TEXT ("first without quotes"),
-                              ACE_TEXT ("'second in single quotes'"),
-                              ACE_TEXT ("\"third in double quotes\""),
-                         0
-                       };
+  const ACE_TCHAR *argv_const[] = { ACE_TEXT ("first without quotes"),
+                                    ACE_TEXT ("'second in single quotes'"),
+                                    ACE_TEXT ("\"third in double quotes\""),
+                                    0
+                                  };
+  ACE_TCHAR **argv = const_cast<ACE_TCHAR **> (argv_const);
+  // The convoluted argv definition is to silence warnings from gcc 4.3, which
+  // warns if the string-literals are not assigned to const char* and also
+  // warns if the const char*[] is passed to the ACE_ARGV constructor as in
+  // "args3" below.
+
   int argc = 3;
 
   // (argc, argv)

@@ -82,9 +82,9 @@ public:
    * max strlen for command-line arguments.
    */
   ACE_Process_Options (bool inherit_environment = true,
-                       int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
-                       int env_buf_len = ENVIRONMENT_BUFFER,
-                       int max_env_args = MAX_ENVIRONMENT_ARGS);
+                       size_t command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
+                       size_t env_buf_len = ENVIRONMENT_BUFFER,
+                       size_t max_env_args = MAX_ENVIRONMENT_ARGS);
 
   /// Destructor.
   ~ACE_Process_Options (void);
@@ -388,7 +388,7 @@ protected:
   size_t environment_buf_index_;
 
   /// Pointer to environment_argv_.
-  int environment_argv_index_;
+  size_t environment_argv_index_;
 
   /// Pointer to buffer of the environment settings.
   ACE_TCHAR *environment_buf_;
@@ -400,17 +400,17 @@ protected:
   ACE_TCHAR **environment_argv_;
 
   /// Maximum number of environment variables. Configurable
-  int max_environment_args_;
+  size_t max_environment_args_;
 
   /// Maximum index of environment_argv_ buffer
-  int max_environ_argv_index_;
+  size_t max_environ_argv_index_;
 
   /// The current working directory.
   ACE_TCHAR working_directory_[MAXPATHLEN + 1];
 #endif /* !ACE_HAS_WINCE */
 
   /// Ensures command_line_argv is only calculated once.
-  int command_line_argv_calculated_;
+  bool command_line_argv_calculated_;
 
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
   ACE_TCHAR *command_line_buf_;
@@ -420,7 +420,7 @@ protected:
   ACE_TCHAR *command_line_copy_;
 
   /// Max length of command_line_buf_
-  int command_line_buf_len_;
+  size_t command_line_buf_len_;
 
   /// Argv-style command-line arguments.
   ACE_TCHAR *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
@@ -495,14 +495,14 @@ public:
    */
   virtual void child (pid_t parent);
 
-  /// Called by a <Process_Manager> that is removing this Process from
+  /// Called by a Process_Manager that is removing this Process from
   /// its table of managed Processes.  Default is to do nothing.
   virtual void unmanage (void);
 
   /**
-   * Wait for the process we've created to exit.  If <status> != 0, it
+   * Wait for the process we've created to exit.  If @a status != 0, it
    * points to an integer where the function store the exit status of
-   * child process to.  If <wait_options> == <WNOHANG> then return 0
+   * child process to.  If @a wait_options == @c WNOHANG then return 0
    * and don't block if the child process hasn't exited yet.  A return
    * value of -1 represents the <wait> operation failed, otherwise,
    * the child process id is returned.
@@ -514,7 +514,7 @@ public:
    * Timed wait for the process we've created to exit.  A return value
    * of -1 indicates that the something failed; 0 indicates that a
    * timeout occurred.  Otherwise, the child's process id is returned.
-   * If <status> != 0, it points to an integer where the function
+   * If @a status != 0, it points to an integer where the function
    * stores the child's exit status.
    *
    * @note On UNIX platforms this function uses <ualarm>, i.e., it
@@ -531,7 +531,7 @@ public:
   int kill (int signum = SIGINT);
 
   /**
-   * Terminate the process abruptly using <ACE::terminate_process>.
+   * Terminate the process abruptly using ACE::terminate_process().
    * This call doesn't give the process a chance to cleanup, so use it
    * with caution...
    */
@@ -591,6 +591,7 @@ protected:
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
+
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
 
@@ -601,7 +602,6 @@ private:
   wchar_t* convert_env_buffer (const char* env) const;
 #endif
 };
-
 
 /**
  * @class ACE_Managed_Process

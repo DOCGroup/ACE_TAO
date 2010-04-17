@@ -126,8 +126,8 @@ public:
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value& interval);
 
-  /// Cancel all timer associated with @a type.  If <dont_call> is 0
-  /// then the <functor> will be invoked.  Returns number of timers
+  /// Cancel all timer associated with @a type.  If @a dont_call_handle_close is
+  /// 0 then the <functor> will be invoked.  Returns number of timers
   /// cancelled.
   virtual int cancel (const TYPE& type,
                       int dont_call_handle_close = 1);

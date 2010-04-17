@@ -72,13 +72,13 @@ usage (void)
               "  [-b send_bufsz]\n"
               "  [-n nsamples]\n"
               "  [-I usdelay]\n"
-              "  [-s so_bufsz] \n"
+              "  [-s so_bufsz]\n"
               "  [-p port]\n"
               "  [-t]\n"
               "  [-r]\n"
               "  [-x max_sample_allowed]\n"
               "  [-a to use the ACE reactor]\n"
-              "  targethost \n",
+              "  targethost\n",
               *cmd));
 }
 
@@ -435,7 +435,7 @@ Client::run (void)
   if (logfile)
     {
       ACE_OS::fprintf (sumfp,
-                       "Command executed: \n");
+                       "Command executed:\n");
       for (; *cmd; cmd++)
         ACE_OS::fprintf (sumfp,
                          "%s ",

@@ -14,11 +14,11 @@ ACE_OS::inet_addr (const char *name)
 #if defined (ACE_LACKS_INET_ADDR)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_NONCONST_GETBY)
+#elif defined (ACE_HAS_NONCONST_INET_ADDR)
   return ::inet_addr (const_cast <char*> (name));
 #else
   return ::inet_addr (name);
-#endif /* ACE_HAS_NONCONST_GETBY */
+#endif /* ACE_HAS_NONCONST_INET_ADDR */
 }
 
 ACE_INLINE char *

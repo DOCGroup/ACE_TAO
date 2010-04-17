@@ -124,8 +124,6 @@ template <class ACE_LOCK>
 class ACE_Guard;
 
 /**
- * @class ACE_Guard<ACE_Null_Mutex>
- *
  * @brief Template specialization of ACE_Guard for the
  * ACE_Null_Mutex.
  *
@@ -164,8 +162,8 @@ template <class ACE_LOCK>
 class ACE_Write_Guard;
 
 /**
- * @class ACE_Write_Guard<ACE_Null_Mutex>
- *
+ * @brief Template specialization of ACE_Write_Guard for the
+ * ACE_Null_Mutex.
  */
 template<>
 class ACE_Export ACE_Write_Guard<ACE_Null_Mutex>
@@ -188,8 +186,8 @@ template <class ACE_LOCK>
 class ACE_Read_Guard;
 
 /**
- * @class ACE_Read_Guard<ACE_Null_Mutex>
- *
+ * @brief Template specialization of ACE_Read)Guard for the
+ * ACE_Null_Mutex.
  */
 template<>
 class ACE_Export ACE_Read_Guard<ACE_Null_Mutex>
@@ -211,8 +209,8 @@ public:
 template <class T> class ACE_Malloc_Lock_Adapter_T;
 
 /**
- * @class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
- *
+ * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for the
+ * ACE_Null_Mutex.
  */
 template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>

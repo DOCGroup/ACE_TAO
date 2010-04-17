@@ -95,6 +95,10 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
                       ACE_TEXT ("_"));
 }
 
+ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
+{
+}
+
 void *
 ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
                                    size_t &rounded_bytes)

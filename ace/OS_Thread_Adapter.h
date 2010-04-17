@@ -63,7 +63,6 @@ protected:
 
   /// Ensure that this object is allocated on the heap.
   ~ACE_OS_Thread_Adapter (void);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

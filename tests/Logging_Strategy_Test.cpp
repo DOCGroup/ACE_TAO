@@ -108,7 +108,7 @@ static
 void print_till_death (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\n-> start generating messages... \n"));
+              "\n-> start generating messages...\n"));
 
   for (int i = 0; i < 1000; i++)
     {
@@ -191,7 +191,7 @@ count_files (void)
                 num_files));
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n-< counting finished... \n"));
+              "\n-< counting finished...\n"));
 }
 
 // get the file statistics
@@ -200,7 +200,7 @@ static time_t
 get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
-  
+
   // Get data associated with "file_name":
   int result = ACE_OS::stat (f_name, &buf);
 
@@ -230,7 +230,7 @@ static void
 order (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n-> start testing order... \n")));
+              ACE_TEXT ("\n-> start testing order...\n")));
 
   if (num_files <= 2)
     {
@@ -467,10 +467,10 @@ int run_main (int argc, ACE_TCHAR *argv [])
 #else // Platform doesn't support DLLs, or configured to link
       // statically
   ACE_Logging_Strategy logging_strategy;
-  char ls_argc = argc - 1;
+  unsigned char ls_argc = argc - 1;
   ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
-  for (char c = 0; c < ls_argc; c++)
+  for (unsigned char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)

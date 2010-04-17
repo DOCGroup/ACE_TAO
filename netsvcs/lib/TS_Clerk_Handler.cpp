@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Get_Opt.h"
 #include "TS_Clerk_Handler.h"
 #include "ace/Signal.h"

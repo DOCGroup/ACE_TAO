@@ -352,6 +352,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
 
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  dev_poll_reactor_impl.restart (true);
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
 
   test_reactor_upcall (dev_poll_reactor);

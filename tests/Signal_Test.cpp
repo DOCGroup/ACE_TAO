@@ -97,7 +97,7 @@ handle_signal (int signum)
 
 #if 0
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) killing child pid %d \n"),
+                    ACE_TEXT ("(%P|%t) killing child pid %d\n"),
                     child_pid));
 #endif
         int const result = ACE_OS::kill (child_pid,
@@ -473,6 +473,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
+#ifdef ACE_HAS_THREADS
       ++test_number;
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
@@ -487,6 +488,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 3: handle signals asynchronously in this thread\n")));
+#else
+      test_number += 2;
+#endif /* ACE_HAS_THREADS */
 
       ++test_number;
       // And finally by handling asynchronously signals in this thread.

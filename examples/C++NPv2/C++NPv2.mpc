@@ -98,8 +98,8 @@ project(*SLD) : acelib, avoids_ace_for_tao {
   }
 }
 
-project(*SLDex) : acelib {
-  avoids += uses_wchar ace_for_tao
+project(*SLDex) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
   sharedname = SLDex
   dynamicflags = SLDEX_BUILD_DLL
   specific(gnuace) {
@@ -123,8 +123,8 @@ project(*SR_Configurable_Log_Server) : aceexe {
   }
 }
 
-project(*TP_Reactor_Log_Server) : aceexe {
-  avoids += uses_wchar ace_for_tao
+project(*TP_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
+  avoids += uses_wchar
   exename = tp_reactor_logging_server
   specific(gnuace) {
     after += *Reactor_Log_Server
@@ -151,8 +151,8 @@ project(*TPCLS) : acelib, ssl {
   }
 }
 
-project(*TPLS) : acelib {
-  avoids += uses_wchar ace_for_tao
+project(*TPLS) : acelib, avoids_ace_for_tao {
+  avoids += uses_wchar
   sharedname = TPLS
   dynamicflags = TPLS_BUILD_DLL
   specific(gnuace) {
@@ -166,8 +166,8 @@ project(*TPLS) : acelib {
   }
 }
 
-project(*WFMO_Reactor_Log_Server) : aceexe, wfmo {
-  avoids += uses_wchar ace_for_tao
+project(*WFMO_Reactor_Log_Server) : aceexe, wfmo, avoids_ace_for_tao {
+  avoids += uses_wchar
   exename = wfmo_reactor_logging_server
   specific(gnuace) {
     after += *Reactor_Log_Server

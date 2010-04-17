@@ -158,7 +158,7 @@ private:
  *
  * @brief Product object created by a
  * <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
- * <ACE_Server_Logging_Handler> receives, frames. The logging record
+ * ACE_Server_Logging_Handler receives, frames. The logging record
  * is then processed by the <LOG_MESSAGE_RECEIVER>
  *
  * All clients are handled in the same thread.
@@ -188,7 +188,7 @@ typedef u_long ACE_LOGGER_COUNTER;
  *
  * @brief Product object created by a
  * <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
- * >.  An <ACE_Thr_Server_Logging_Handler> receives, frames. The
+ * >.  An ACE_Thr_Server_Logging_Handler receives, frames. The
  * logging record is then processed by the <LOG_MESSAGE_RECEIVER>
  *
  * Each client is handled in its own separate thread.

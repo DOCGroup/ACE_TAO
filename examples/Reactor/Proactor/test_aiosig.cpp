@@ -215,12 +215,12 @@ query_aio_completions (void)
 
       if (number_of_compleions == 0)
         // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s \n",
+        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
                 nbytes,
                 mb1);
       else
         // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s \n",
+        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
                 nbytes,
                 mb2);
     }

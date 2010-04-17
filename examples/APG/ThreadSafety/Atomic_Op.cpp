@@ -42,7 +42,7 @@ public:
         buf_[in_.value () % Q_SIZE] = itemNo.value ();
         in_++;
 
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Produced %d \n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Produced %d\n"),
                     itemNo.value ()));
 
         if (check_termination (itemNo.value ()))

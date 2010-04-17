@@ -10,6 +10,8 @@ ifneq ($(mingw32),1)
   endif
 endif
 
+no_hidden_visibility ?= 1
+
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
 
 winsock2 ?= 1
@@ -29,17 +31,27 @@ endif
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
-
-CC      = gcc
-CXX     = g++
-RC      = windres
+CC      = ${COMPARCH}gcc
+CXX     = ${COMPARCH}g++
+RC      = ${COMPARCH}windres
+DLLTOOL = ${COMPARCH}dlltool
 
 RC_OUTPUT_FLAG = -o
 
 ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mcpu=$(TCPU)
+  cpumodelflag ?= 1
+  tunemodelflag ?= 0
 else
+  cpumodelflag ?= 0
+  tunemodelflag ?= 1
+endif
+
+ifeq ($(tunemodelflag),1)
   MODEL_FLAGS += -mtune=$(TCPU)
+endif
+
+ifeq ($(cpumodelflag),1)
+  MODEL_FLAGS += -mcpu=$(TCPU)
 endif
 
 CFLAGS += -Wpointer-arith
@@ -64,9 +76,9 @@ endif
 
 OCFLAGS += -O3
 PIC        =
-AR         = ar
+AR         = ${COMPARCH}ar
 ARFLAGS    = rsuv
-RANLIB     = ranlib
+RANLIB     = ${COMPARCH}ranlib
 SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
@@ -87,7 +99,7 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 # to workaround to a bug in ld.
 SHLIBBUILD = \
   $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
-  dlltool --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
+  $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
   && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \

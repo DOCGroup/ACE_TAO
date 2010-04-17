@@ -26,7 +26,7 @@ class HTTP_Handler_Factory;
 
 #include "HTTP_Request.h"
 #include "HTTP_Response.h"
-#include "IO.h"
+#include "JAWS_IO.h"
 
 /**
  * @class HTTP_Handler

@@ -533,7 +533,7 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
 
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
-#if defined (__arm__)
+#if defined (__arm__) && !defined (ACE_HAS_IPHONE)
       // Convert to Intel format (12345678 => 56781234)
       const char *orig = reinterpret_cast<const char *> (x);
       char *target = buf;
@@ -1612,7 +1612,7 @@ ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-#  if defined (__arm__)
+#  if defined (__arm__) && !defined (ACE_HAS_IPHONE)
       if (!this->do_byte_swap_)
         {
           // Convert from Intel format (12345678 => 56781234)
@@ -1894,8 +1894,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 
   ACE_CDR::mb_align (&this->start_);
 
-  ACE_Data_Block *db =
-    this->start_.data_block ();
+  ACE_Data_Block *db = this->start_.data_block ();
 
   // If the size of the data that needs to be copied are higher than
   // what is available, then do a reallocation.
@@ -1903,8 +1902,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
     {
       // @@NOTE: We need to probably add another method to the message
       // block interface to simplify this
-      db =
-        cdr.start_.data_block ()->clone_nocopy ();
+      db = cdr.start_.data_block ()->clone_nocopy ();
 
       if (db == 0 || db->size ((wr_bytes) +
                                ACE_CDR::MAX_ALIGNMENT) == -1)

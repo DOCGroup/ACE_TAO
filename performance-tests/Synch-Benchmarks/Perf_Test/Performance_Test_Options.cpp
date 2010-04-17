@@ -206,8 +206,8 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                    "\t[-S] service entry\n"
                    "\t[-t] number of threads [%d]\n"
                    "\t[-T] (enable tracing)\n"
-                   "\t[-u] (UDP) \n"
-                   "\t[-v] (verbose) \n"
+                   "\t[-u] (UDP)\n"
+                   "\t[-v] (verbose)\n"
                    "\t[-X] (enable xdr conversion)\n"
                    "\t[-Z] (enable zero-copy driver)\n%a",
                    argv[0],

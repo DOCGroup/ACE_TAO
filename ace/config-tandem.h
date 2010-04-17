@@ -111,9 +111,6 @@
 #define ACE_HAS_STREAM_PIPES
 //Platform supports STREAM pipes
 
-//Compiler/platform supports strerror ()
-#define ACE_HAS_STRERROR
-
 //Compiler/platform supports struct strbuf
 #define ACE_HAS_STRBUF_T
 
@@ -172,6 +169,7 @@
 //Platform uses non-const char * in calls to gethostbyaddr, gethostbyname,
 // getservbyname
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_INET_ADDR
 // Platform's select() uses non-const timeval* (only found on Linux right now)
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 // And on Tandem :-)

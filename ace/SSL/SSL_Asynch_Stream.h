@@ -379,9 +379,6 @@ protected:
   /// Stream Type ST_CLIENT/ST_SERVER
   Stream_Type type_;
 
-  /// The real file/socket handle
-  ACE_HANDLE handle_;
-
   /// The proactor
   ACE_Proactor * proactor_;
 

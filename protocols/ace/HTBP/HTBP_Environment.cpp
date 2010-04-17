@@ -85,6 +85,7 @@ ACE::HTBP::Environment::open_registry_config ()
   ACE_NEW_RETURN (this->config_,
                   ACE_Configuration_Win32Registry (root),
                   -1);
+  this->own_config_ = true;
   return 0;
 #else
   errno = ENOTSUP;
@@ -101,6 +102,7 @@ ACE::HTBP::Environment::open_persistent_config (const ACE_TCHAR *persistent_file
                   -1);
   // do this before trying to open so it isn't leaked if the open fails.
   this->config_ = heap;
+  this->own_config_ = true;
   if (persistent_file == 0)
     heap->open();
   else

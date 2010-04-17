@@ -1,2 +1,2 @@
-usr/bin/tao-ns{add,del,list}
-usr/bin/tao-catior
+usr/bin/tao_ns{add,del,list}
+usr/bin/tao_catior

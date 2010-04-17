@@ -460,7 +460,10 @@ public:
       {
       public:
         /// Constructor
-        Iteration_State ();
+        Iteration_State (void);
+
+        /// Destructor
+        virtual ~Iteration_State (void);
 
         /// Set the iterator reference.
         void iterator (Binding_Iterator *iterator);

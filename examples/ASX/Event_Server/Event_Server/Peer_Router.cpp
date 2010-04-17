@@ -406,7 +406,7 @@ Peer_Handler::svc (void)
                               ACE_TEXT ("unbind failed")),
                              -1);
             LM_DEBUG ((LOG_DEBUG,
-                     ACE_TEXT ("(%t) shutting down \n")));
+                     ACE_TEXT ("(%t) shutting down\n")));
 
           // We do not need to be deregistered by reactor
           // as we were not registered at all.

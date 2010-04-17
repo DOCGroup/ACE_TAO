@@ -71,8 +71,8 @@ typedef double ACE_timer_t;
 
 #if defined (ACE_SIZEOF_LONG) && ACE_SIZEOF_LONG == 8
    typedef off_t ACE_LOFF_T;
-#elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || \
-  (defined (ACE_OPENVMS) && defined (_LARGEFILE)) || defined(ACE_MVS)
+#elif defined (ACE_HAS_RTEMS) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) || defined (__APPLE__) || defined(ACE_MVS) || defined(__INTERIX) || \
+  (defined (ACE_OPENVMS) && defined (_LARGEFILE))
    typedef off_t ACE_LOFF_T;
 #elif defined (__sgi) || defined (AIX) || defined (HPUX) || defined (__QNX__)
    typedef off64_t ACE_LOFF_T;
@@ -80,7 +80,7 @@ typedef double ACE_timer_t;
    typedef offset_t ACE_LOFF_T;
 #elif defined (WIN32)
    typedef __int64  ACE_LOFF_T;
-#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x660)) || \
+#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x680)) || \
   defined (ACE_LYNXOS_MAJOR) || \
   (defined (ACE_OPENVMS) && !defined (_LARGEFILE)) || \
   defined (__TANDEM)
@@ -89,17 +89,25 @@ typedef double ACE_timer_t;
    typedef loff_t ACE_LOFF_T;
 #endif
 
-#if defined (ACE_WIN32)
-#  if !defined (__BORLANDC__)
-     typedef DWORD nlink_t;
-#    if !defined(__MINGW32__)
-        typedef u_short mode_t;
-#    endif /* !__MINGW32__ */
-     typedef long uid_t;
-     typedef long gid_t;
-#  endif /* __BORLANDC__ */
-   typedef char *caddr_t;
-#endif /* ACE_WIN32 */
+#if defined (ACE_LACKS_UID_T)
+typedef long uid_t;
+#endif /* ACE_LACKS_UID_T */
+
+#if defined (ACE_LACKS_GID_T)
+typedef long gid_t;
+#endif /* ACE_LACKS_GID_T */
+
+#if defined (ACE_LACKS_CADDR_T)
+typedef char *caddr_t;
+#endif /* ACE_LACKS_CADDR_T */
+
+#if defined (ACE_LACKS_MODE_T)
+typedef u_short mode_t;
+#endif /* ACE_LACKS_MODE_T */
+
+#if defined (ACE_LACKS_NLINK_T)
+typedef DWORD nlink_t;
+#endif /* ACE_LACKS_NLINK_T */
 
 #if defined (ACE_LACKS_KEY_T)
 #  if defined (ACE_WIN32)

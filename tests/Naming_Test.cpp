@@ -49,7 +49,7 @@ print_time (ACE_Profile_Timer &timer,
   timer.stop ();
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %C  *****     \n"), test));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %C  *****    \n"), test));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));

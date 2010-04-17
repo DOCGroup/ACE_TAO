@@ -32,6 +32,9 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
 
+// needed to determine if iostreams are present
+#include "ace/iosfwd.h"
+
 // This forward declaration is needed by the set() and FILETIME() functions
 #if defined (ACE_LACKS_LONGLONG_T)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -40,6 +43,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif  /* ACE_LACKS_LONGLONG_T */
 
 // -------------------------------------------------------------------
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 /**
  * @class ACE_Time_Value
@@ -51,18 +57,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * ACE.  These time values are typically used in conjunction with OS
  * mechanisms like <select>, <poll>, or <cond_timedwait>.
  */
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-// Something is a bit brain-damaged here and I'm not sure what... this code
-// compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
-// complains that the operators that return ACE_Time_Value are C-linkage
-// functions that can't return a C++ class. The only way I've found to
-// defeat this is to wrap the whole class in extern "C++".
-//    - Steve Huston, 23-Aug-2004
-extern "C++" {
-#endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -333,7 +327,7 @@ public:
 
 private:
   /// Put the timevalue into a canonical form.
-  void normalize (void);
+  void normalize (bool saturate = false);
 
   /// Store the values as a timeval.
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
@@ -355,15 +349,15 @@ private:
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
+#ifdef ACE_HAS_CPP98_IOSTREAMS
+extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 #if defined (__MINGW32__)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#ifndef ACE_HAS_SENDFILE
+#if defined ACE_HAS_SENDFILE && ACE_HAS_SENDFILE == 0
 ssize_t
 ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
                             ACE_HANDLE in_fd,
@@ -48,6 +48,6 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
 
   return r;
 }
-#endif  /* !ACE_HAS_SENDFILE */
+#endif  /* ACE_HAS_SENDFILE==0 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

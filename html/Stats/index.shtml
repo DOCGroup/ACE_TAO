@@ -22,7 +22,7 @@
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests.  The complete source for the tests is
       available as part of the ACE+TAO+CIAO <A
-      HREF="http://deuce.doc.wustl.edu/Download.html"> distribution
+      HREF="http://download.dre.vanderbilt.edu"> distribution
       </A>. The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
@@ -48,6 +48,30 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
 </li>
 <li>
   <a href="http://www.dre.vanderbilt.edu/Scoreboard/">Automated Builds</a>
+</li>
+<li>
+  Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>, <a href="http://www.dre.vanderbilt.edu/~remedynl/ps3cellbuild_xampler/ps3xampler/_Report/">IBM Cell</a> and <a href="http://www.dre.vanderbilt.edu/~remedynl/mpc440_xampler/mpc440xampler/_Report/">MPC440</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAecompact/">Footprint CORBA/e compact</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAemicro/">Footprint CORBA/e micro</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAemicros/">Footprint CORBA/e micro single threaded</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/CORBAminimum/">Footprint Minimum CORBA</a>
+</li>
+<li>
+  <a href="http://www.dre.vanderbilt.edu/Stats/regular/">Footprint Regular CORBA</a>
+</li>
+<li>
+  <a href="compilation.shtml">Compilation metrics Regular CORBA</a>
+</li>
+<li>
+  <a href="performance.shtml">Performance metrics Regular CORBA</a>
 </li>
 </ul>
 The <i>Code Coverage</i> pages illustrate which areas of

@@ -42,7 +42,7 @@ print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-d (don't close pipes)] ")
-              ACE_TEXT ("[-c (child process)] [-i (iterations)] \n")));
+              ACE_TEXT ("[-c (child process)] [-i (iterations)]\n")));
   ACE_OS::exit (1);
 }
 

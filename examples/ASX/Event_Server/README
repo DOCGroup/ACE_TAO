@@ -1,10 +1,11 @@
 This subdirectory illustrates a number of the ACE ASX framework
 features using an ACE_Stream application called the Event Server.  For
 more information on the design and use of the ACE ASX framework please
-see http://www.cs.wustl.edu/~schmidt/C++-USENIX-94.ps.gz and
-http://www.cs.wustl.edu/~schmidt/ACE-concurrency.ps.gz.  For more
+see http://www.cs.wustl.edu/~schmidt/PDF/C++-USENIX-94.pdf and
+http://www.cs.wustl.edu/~schmidt/PDF/ACE-concurrency.pdf.  For more
 information on the Event Server, please see
-http://www.cs.wustl.edu/~schmidt/DSEJ-94.ps.gz.
+
+http://www.cs.wustl.edu/~schmidt/PDF/DSEJ-94.pdf
 
 The Event Server example works as follows:
 

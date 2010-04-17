@@ -24,9 +24,23 @@
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 
+// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
+// We need to be check if the user has manually defined the macro before
+// including <sys/feature_tests.h>.
+#if defined (_POSIX_PTHREAD_SEMANTICS)
+# define ACE_HAS_POSIX_PTHREAD_SEMANTICS
+#endif /* _POSIX_PTHREAD_SEMANTICS */
+
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
+
+// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
+// We need to undef if the macro is set and not defined by the user.
+#if defined (_POSIX_PTHREAD_SEMANTICS) && \
+ !defined (ACE_HAS_POSIX_PTHREAD_SEMANTICS)
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif /* _POSIX_PTHREAD_SEMANTICS && !ACE_HAS_POSIX_PTHREAD_SEMANTICS */
 
 // Sun has the posix defines so let this file sort out what Sun delivers
 #include "ace/config-posix.h"
@@ -116,10 +130,10 @@
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
+
 # include "ace/config-g++-common.h"
+
 # define ACE_HAS_HI_RES_TIMER
-  // Denotes that GNU has cstring.h as standard, to redefine memchr().
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
@@ -264,9 +278,6 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -282,8 +293,7 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_STRSIGNAL
 
 // SunOS 5.5.x does not support mkstemp
 #define ACE_LACKS_MKSTEMP
@@ -361,8 +371,6 @@
 
 #define ACE_HAS_GETPAGESIZE 1
 
-#define ACE_HAS_STL_MAP_CONFLICT
-
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_GPERF
@@ -416,6 +424,9 @@
 
 // Sum of the iov_len values can't be larger then SSIZE_MAX
 #define ACE_HAS_SOCK_BUF_SIZE_MAX
+
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

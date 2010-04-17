@@ -585,12 +585,12 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (debug > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Output CDR: \n")));
+                      ACE_TEXT ("Output CDR:\n")));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Input CDR: \n")));
+                      ACE_TEXT ("Input CDR:\n")));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
@@ -616,12 +616,12 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (debug > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Output CDR: \n")));
+                      ACE_TEXT ("Output CDR:\n")));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Input CDR: \n")));
+                      ACE_TEXT ("Input CDR:\n")));
           ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
@@ -654,12 +654,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (debug > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Output CDR: \n")));
+                  ACE_TEXT ("Output CDR:\n")));
       ACE_HEX_DUMP ((LM_DEBUG,
                      input.rd_ptr(),
                      64));
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Input CDR: \n")));
+                  ACE_TEXT ("Input CDR:\n")));
       ACE_HEX_DUMP ((LM_DEBUG,
                      input.rd_ptr(),
                      64));
@@ -680,12 +680,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (debug > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Output CDR: \n")));
+                  ACE_TEXT ("Output CDR:\n")));
       ACE_HEX_DUMP ((LM_DEBUG,
                      input.rd_ptr(),
                      64));
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Input CDR: \n")));
+                  ACE_TEXT ("Input CDR:\n")));
       ACE_HEX_DUMP ((LM_DEBUG,
                      input.rd_ptr(),
                      64));

@@ -84,7 +84,7 @@ usage (void)
               "  [-m message size]\n"
               "  [-i iterations]\n"
               "  [-I usdelay]\n"
-              "  [-b socket bufsz] \n"
+              "  [-b socket bufsz]\n"
               "  [-p port]\n"
               "  [-s]\n"
               "  [-c]\n"
@@ -93,7 +93,7 @@ usage (void)
               "  [-a to use the ACE Select reactor]\n"
               "  [-x to use the ACE TP reactor]\n"
               "  [-w to use the ACE WFMO reactor]\n"
-              "  targethost \n"));
+              "  targethost\n"));
 }
 
 // ****************************************************************
@@ -340,7 +340,7 @@ Server::Server (const ACE_INET_Addr &addr)
                     "ACE_Reactor::register_handler: Server\n"));
     }
 
-#if !defined (ACE_LACKS_SOCKET_BUFSIZ)
+#if !defined (ACE_LACKS_SO_SNDBUF)
   if (so_bufsz != 0)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
@@ -348,17 +348,26 @@ Server::Server (const ACE_INET_Addr &addr)
                                       (void *) &so_bufsz,
                                       sizeof (so_bufsz)) == -1
           && errno != ENOTSUP)
-        ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
-                    "set_option failed"));
-      else if (this->endpoint_.set_option (SOL_SOCKET,
-                                           SO_RCVBUF,
-                                           (void *) &so_bufsz,
-                                           sizeof (so_bufsz)) == -1
-               && errno != ENOTSUP)
-        ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
-                    "set_option failed"));
+        {
+          ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
+                      "set_option failed"));
+        }
     }
-#endif /* !ACE_LACKS_SOCKET_BUFSIZ */
+#endif /* ACE_LACKS_SO_SNDBUF */
+#if !defined (ACE_LACKS_SO_RCVBUF)
+  if (so_bufsz != 0)
+    {
+      if (this->endpoint_.set_option (SOL_SOCKET,
+                                      SO_RCVBUF,
+                                      (void *) &so_bufsz,
+                                      sizeof (so_bufsz)) == -1
+               && errno != ENOTSUP)
+        {
+          ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
+                      "set_option failed"));
+        }
+    }
+#endif /* !ACE_LACKS_SO_RCVBUF */
   if (acceptor.close () == -1)
     ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
                 "close failed"));

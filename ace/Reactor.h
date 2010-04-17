@@ -281,8 +281,8 @@ public:
    * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, the eventloop will
+   * The only difference between alertable_handle_events() and
+   * handle_events() is that in the alertable case, the eventloop will
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
@@ -294,8 +294,8 @@ public:
    * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, the eventloop will
+   * The only difference between alertable_handle_events() and
+   * handle_events() is that in the alertable case, the eventloop will
    * return when the system queues an I/O completion routine or an
    * Asynchronous Procedure Call.
    */
@@ -380,7 +380,7 @@ public:
    * Shorthand for calling
    * register_handler(ACE_HANDLE,ACE_Event_Handler*,ACE_Reactor_Mask),
    * multiple times for the same @a event_handler and @a masks but
-   * different <handles>.
+   * different @a handles.
    */
   int register_handler (const ACE_Handle_Set &handles,
                         ACE_Event_Handler *event_handler,
@@ -524,7 +524,7 @@ public:
    * Resume @a handles.
    *
    * Shorthand for calling resume_handler(ACE_HANDLE) with multiple
-   * <handles>.
+   * @a handles.
    */
   int resume_handler (const ACE_Handle_Set &handles);
 
@@ -703,7 +703,7 @@ public:
    * Set the maximum number of times that ACE_Reactor will
    * iterate and dispatch the ACE_Event_Handlers that are passed in
    * via the notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * ACE_Message_Queue::dequeue() loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
    * to a value like "1 or 2" will increase "fairness" (and thus
    * prevent starvation) at the expense of slightly higher dispatching
@@ -715,7 +715,7 @@ public:
    * Get the maximum number of times that the ACE_Reactor will
    * iterate and dispatch the ACE_Event_Handler's that are passed in
    * via the notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.
+   * ACE_Message_Queue::dequeue() loop.
    */
   int max_notify_iterations (void);
 

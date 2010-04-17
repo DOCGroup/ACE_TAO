@@ -92,6 +92,17 @@
 # define ACE_MT_SAFE 1
 #endif
 
+// On winCE these classes do not exist. If they are
+// introduced in the future, no changes need to be made
+#if defined (ABOVE_NORMAL_PRIORITY_CLASS) && \
+  defined (BELOW_NORMAL_PRIORITY_CLASS) && \
+  defined (HIGH_PRIORITY_CLASS) && \
+  defined (IDLE_PRIORITY_CLASS) && \
+  defined (NORMAL_PRIORITY_CLASS) && \
+  defined (REALTIME_PRIORITY_CLASS)
+#define ACE_HAS_WIN32_PRIORITY_CLASS
+#endif
+
 // Build ACE services as DLLs.  If you write a library and want it to
 // use ACE_Svc_Export, this will cause those macros to build dlls.  If
 // you want your ACE service to be a static library, comment out this
@@ -103,7 +114,7 @@
 //  #endif
 
 // Define the special export macros needed to export symbols outside a dll
-#if !defined(__BORLANDC__)
+#if !defined(__BORLANDC__) && !defined (ACE_HAS_CUSTOM_EXPORT_MACROS)
 #define ACE_HAS_CUSTOM_EXPORT_MACROS 1
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
@@ -148,8 +159,6 @@
 // using static object managers.
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
-#elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
-# undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #define ACE_HAS_GPERF
@@ -273,6 +282,17 @@
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
+#define ACE_LACKS_CADDR_T
+#if !defined(__MINGW32__) && !defined (__BORLANDC__)
+# define ACE_LACKS_MODE_T
+#endif
+#if !defined (__BORLANDC__)
+# define ACE_LACKS_NLINK_T
+# define ACE_LACKS_UID_T
+# define ACE_LACKS_GID_T
+#endif
+#define ACE_LACKS_SETENV
+#define ACE_LACKS_UNSETENV
 
 #define ACE_HAS_PDH_H
 #define ACE_HAS_PDHMSG_H
@@ -300,6 +320,8 @@
 // Win32 has wide-char support. Use of the compiler-defined wchar_t type
 // is controlled in compiler configs since it's a compiler switch.
 #define ACE_HAS_WCHAR
+#define ACE_HAS_WTOI
+#define ACE_HAS_WTOL
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
@@ -323,9 +345,6 @@
 // Platform provides <sys/filio.h> header.
 //define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-//define ACE_HAS_SYS_SIGLIST
-
 // Platform supports ACE_TLI timod STREAMS module.
 //define ACE_HAS_TIMOD_H
 
@@ -346,7 +365,10 @@
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_READV
 
-#define ACE_LACKS_COND_T
+#if !defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
+# define ACE_LACKS_COND_T
+#endif
+
 #define ACE_LACKS_RWLOCK_T
 
 #define ACE_LACKS_KEY_T
@@ -441,6 +463,10 @@
 #if !defined(ACE_HAS_WINSOCK2)
 # define ACE_HAS_WINSOCK2 1
 #endif /* !defined(ACE_HAS_WINSOCK2) */
+// Not use WS1 by default
+#if !defined(ACE_HAS_WINSOCK1)
+# define ACE_HAS_WINSOCK1 0
+#endif /* !defined(ACE_HAS_WINSOCK1) */
 
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -488,7 +514,7 @@
 #    define EDQUOT                  WSAEDQUOT
 #    define ESTALE                  WSAESTALE
 #    define EREMOTE                 WSAEREMOTE
-#  endif /* UNDER_CE */
+#  endif /* (_WIN32_WCE) && (_WIN32_WCE < 0x600) */
 # endif /* _WINSOCK2API */
 
 # if defined (ACE_HAS_FORE_ATM_WS2)
@@ -521,7 +547,7 @@
 
 // PharLap ETS has its own winsock lib, so don't grab the one
 // supplied with the OS.
-# if defined (_MSC_VER) && !defined (UNDER_CE) && !defined (ACE_HAS_PHARLAP)
+# if defined (_MSC_VER) && !defined (_WIN32_WCE) && !defined (ACE_HAS_PHARLAP)
 #  pragma comment(lib, "wsock32.lib")
 # endif /* _MSC_VER */
 
@@ -550,7 +576,7 @@
 # define ACE_HAS_CANCEL_IO
 # define ACE_HAS_WIN32_OVERLAPPED_IO
 # define ACE_HAS_WIN32_NAMED_PIPES
-#endif /* !defined (ACE_USES_WINCE_SEMA_SIMULATION) && !ACE_HAS_PHARLAP */
+#endif /* !defined (ACE_HAS_WINCE) && !ACE_HAS_PHARLAP */
 
 #if !defined (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION)
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH

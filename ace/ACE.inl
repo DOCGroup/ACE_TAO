@@ -288,8 +288,17 @@ ACE_INLINE bool
 ACE::isdotdir (const char *s)
 {
   return (s[0] == '.' && 
-	  ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
+          ((s[1] == 0) || (s[1] == '.' && s[2] == 0)));
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE bool
+ACE::isdotdir (const wchar_t *s)
+{
+  return (s[0] == ACE_TEXT ('.') && 
+          ((s[1] == 0) || (s[1] == ACE_TEXT ('.') && s[2] == 0)));
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
 ACE::unique_name (const void *object,
@@ -308,24 +317,6 @@ ACE::log2 (u_long num)
     num >>= 1;
 
   return log;
-}
-
-ACE_INLINE ACE_TCHAR
-ACE::nibble2hex (u_int n)
-{
-  // Hexadecimal characters.
-#if defined (ACE_VXWORKS) && !defined (__DCPLUSPLUS__)
-  // temporary solution to prevent Windriver GNU toolchains from spewing
-  // loads of warnings when inlining.
-  // problem (incorrect warning leftover from older GNU) has been reported as
-  // TSR to Windriver.
-  const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
-#else
-  static const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
-#endif
-
-  // Yes, this works for UNICODE
-  return hex_chars[n & 0x0f];
 }
 
 ACE_INLINE int

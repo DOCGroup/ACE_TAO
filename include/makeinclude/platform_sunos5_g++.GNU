@@ -15,14 +15,21 @@ pipes ?= 1
 buildbits ?= 32
 
 ifeq ($(exceptions),0)
-  CFLAGS += -fno-exceptions
+  CCFLAGS += -fno-exceptions
 endif # exceptions
+
+ifeq ($(buildbits),64)
+  FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
+endif
 
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
   DCFLAGS         += -gstabs+
+  DCCFLAGS        += -gstabs+
 else  # ! i86pc
   DCFLAGS         += -g
+  DCCFLAGS        += -g
 endif # ! i86pc
 
 CC              = gcc
@@ -38,6 +45,7 @@ LD              = $(CXX)
 LDFLAGS         +=
 LIBS            += -lsocket -ldl -lgen -lnsl -lposix4 -lthread
 OCFLAGS         += -O3
+OCCFLAGS        += -O3
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
@@ -58,7 +66,7 @@ CFLAGS  += $(FLAGS_C_CC)
 CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
 
 # Make sure we resolve all symbols at link time, see bugzilla 2710
-LDFLAGS += -z now
+LDFLAGS         += -z now
 
 ## Unfortunately, gcc 3.0 fails to many cpp files with
 ## optimization enabled.  Even -O causes the compiler

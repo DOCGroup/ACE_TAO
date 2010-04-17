@@ -48,12 +48,10 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SIG_MACROS
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 // #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STRERROR
 #define ACE_HAS_STRINGS
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_TERMIOS
@@ -84,7 +82,8 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_SO_SNDBUF
+#define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_SOCKETPAIR
 // Even if the QNX RTP docs says that socket pair are
 // available, there is actually no implementation of
