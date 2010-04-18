@@ -41,6 +41,8 @@ run_main (int, ACE_TCHAR *argv[])
                 ACE_TEXT ("open"),
                 1));
 
+  ACE_Service_Config::fini_svcs ();
+  
   ACE_END_TEST;
   return status;
 }
