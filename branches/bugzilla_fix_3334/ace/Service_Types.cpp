@@ -244,15 +244,10 @@ ACE_Module_Type::fini (void) const
 
   if (writer != 0)
     writer->fini ();
- 
-#if 0
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
   return ACE_Service_Type_Impl::fini ();
-
-#endif
-  return 0;
 }
 
 int
@@ -370,20 +365,13 @@ ACE_Stream_Type::fini (void) const
   void *obj = this->object ();
   MT_Stream *str = (MT_Stream *) obj;
 
-  for (ACE_Module_Type *m = this->head_; m != 0; )
-    {
-      ACE_Module_Type *t = m->link ();
+  for (ACE_Module_Type *m = this->head_; m != 0;)
+  {
+    ACE_Module_Type *t = m->link ();
 
       // Final arg is an indication to *not* delete the Module.
       str->remove (m->name (),
-                   MT_Module::M_DELETE_NONE);
-
-      // Finalize the Module (this may delete it, but we don't really
-      // care since we don't access it again).
-      m->fini ();
-      // This should be done in ACE_Module_Type::fini but that creates
-      // a double delete problem so we do it here. 
-      delete m;
+                   MT_Module::M_DELETE_NONE);      
       m = t;
     }
   str->close ();
@@ -420,9 +408,8 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
                            MT_Module::M_DELETE_NONE) == -1)
             result = -1;
 
-          // This call may end up deleting m, which is ok since we
-          // don't access it again!
-          m->fini ();
+          // Do not call m->fini (); as this will result in a double delete
+          // of the ACE_Module_type when ACE_Service_Repository::fini is called
         }
       else
         prev = m;
