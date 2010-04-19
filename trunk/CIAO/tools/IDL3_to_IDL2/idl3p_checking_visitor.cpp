@@ -281,3 +281,4 @@ idl3p_checking_visitor::needs_codegen (void) const
 {
   return this->needs_codegen_;
 }
+
