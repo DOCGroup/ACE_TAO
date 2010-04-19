@@ -130,9 +130,6 @@ namespace CIAO
 #if !defined (CCM_LW)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
-
-    virtual ::Components::EmitterDescriptions *
-    get_all_emitters (void);
 #endif
 
  #if !defined (CCM_LW)
@@ -140,17 +137,9 @@ namespace CIAO
     get_named_receptacles (const ::Components::NameList & names);
 #endif
 
- #if !defined (CCM_LW)
-    virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (void);
-#endif
-
 #if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
-
-    virtual ::Components::PublisherDescriptions *
-    get_all_publishers (void);
 #endif
 
     virtual ::Components::Cookie *
@@ -166,7 +155,7 @@ namespace CIAO
                       ::Components::EventConsumerBase_ptr consumer);
 
     virtual ::Components::EventConsumerBase_ptr
-    disconnect_consumer ( const char * source_name);
+    disconnect_consumer (const char * source_name);
 
     virtual ::Components::Cookie *
     connect (const char * name,
