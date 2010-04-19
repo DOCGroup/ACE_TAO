@@ -29,4 +29,15 @@ ACE_Service_Type_Impl::name (const ACE_TCHAR *n)
   this->name_ = ACE::strnew (n);
 }
 
+ACE_INLINE int
+ACE_Service_Type_Impl::service_type (void) const
+{
+  return service_type_;
+}
+
+ACE_INLINE void
+ACE_Service_Type_Impl::service_type (int stype)
+{
+  service_type_ = stype;
+}
 ACE_END_VERSIONED_NAMESPACE_DECL
