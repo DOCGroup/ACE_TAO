@@ -235,7 +235,8 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
-  UTL_ScopedName *n = node->uses_type ()->name ();
+  AST_Type *ut = node->uses_type ();
+  UTL_ScopedName *n = ut->name ();
   ACE_CString impl_str =
     IdentifierHelper::orig_sn (n);
   const char *impl_name = impl_str.c_str ();
@@ -275,12 +276,16 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
     }
   else
     {
-      *os << "void connect_" << ext_port_name << " (in "
-          << impl_name << " conxn)" << be_idt_nl
-          << "raises (Components::AlreadyConnected, "
-          << "Components::InvalidConnection);"
-          << be_uidt_nl << be_nl
-          << impl_name << " disconnect_"
+      if (! ut->is_local ())
+        {
+          *os << "void connect_" << ext_port_name << " (in "
+              << impl_name << " conxn)" << be_idt_nl
+              << "raises (Components::AlreadyConnected, "
+              << "Components::InvalidConnection);"
+              << be_uidt_nl << be_nl;
+        }
+          
+      *os << impl_name << " disconnect_"
           << ext_port_name << " ()" << be_idt_nl
           << "raises (Components::NoConnection);"
           << be_uidt_nl << be_nl
