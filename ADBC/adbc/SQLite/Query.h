@@ -15,8 +15,8 @@
 
 #include "adbc/Query.h"
 #include "sqlite3.h"
-#include "Record.h"
 #include "Parameter_List.h"
+#include "Record.h"
 
 namespace ADBC
 {
