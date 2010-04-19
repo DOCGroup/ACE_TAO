@@ -1,3 +1,9 @@
+Mon Apr 19 10:24:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+	* orbsvcs/tests/Notify/Timeout/run_test.pl:
+
+	  Fixed missing library path customization for test target.
+
 Mon Apr 19 07:47:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
 	* tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
