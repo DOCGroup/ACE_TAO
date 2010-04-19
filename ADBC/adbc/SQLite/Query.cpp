@@ -118,5 +118,21 @@ void Query::reset (void)
   //this->needs_reseting_ = false;
 }
 
+//
+// last_insert_id
+//
+long Query::last_insert_id (void)
+{
+  return static_cast <long> (::sqlite3_last_insert_rowid (this->parent_.conn_));
+}
+
+//
+// count
+//
+size_t Query::count (void) const
+{
+  return ::sqlite3_changes (this->parent_.conn_);
+}
+
 }
 }

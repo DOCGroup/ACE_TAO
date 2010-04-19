@@ -1,3 +1,19 @@
+Mon Apr 19 13:50:33 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * MPC/config/adbc_odbc.mpb:
+        * MPC/config/adbc_sqlite.mpb:
+
+          Added adbclib as a base project.
+
+        * adbc/SQLite/Query.h:
+        * adbc/SQLite/Query.inl:
+        * adbc/SQLite/Query.cpp:
+        * adbc/SQLite/Record.h:
+        * adbc/SQLite/Record.inl:
+        * adbc/SQLite/Record.cpp:
+
+          Fixed design issues related to circular dependencies.
+
 Thu Feb 18 05:44:41 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * MPC/config/adbc_odbc.mpb:
