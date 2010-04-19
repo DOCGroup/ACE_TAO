@@ -144,6 +144,6 @@ tao_no_iiop = 0
 link_codecfactory = 0
 
 // Feature for LwCCM
-ccm_lw = 0
+ccm_lw = 1
 
 valuetype_out_indirection=1

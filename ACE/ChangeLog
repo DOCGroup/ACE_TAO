@@ -1,12 +1,18 @@
+Mon Apr 19 06:54:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Enabled LightWeigth CCM as default, if you want to use the
+          full ccm features set ccm_lw to 0 in your default.features file
+
 Fri Apr 16 13:02:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:
         * ace/Atomic_Op.inl:
         * ace/Atomic_Op.cpp:
         * ace/config-sunos5.10.h:
-	  Added support for the Solaris 10 Atomic support, thanks
-	  to Aleksandar Vukajlovic <aleksandar dot vukajlovic at finsoft dot rs>
-	  for providing the patches
+          Added support for the Solaris 10 Atomic support, thanks
+          to Aleksandar Vukajlovic <aleksandar dot vukajlovic at finsoft dot rs>
+          for providing the patches
 
 Wed Apr 14 11:22:27 UTC 2010  Steve Huston  <shuston@riverace.com>
 
