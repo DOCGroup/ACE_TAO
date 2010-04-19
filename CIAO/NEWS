@@ -59,9 +59,10 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
 
-. Initial set of changes to have real support for the LwCCM profile.
-  This work is not finished yet, to have a look at the reduced
-  code size, add ccm_lw=1 to your default.features file
+. CIAO now enabled the LwCCM profile by default. This reduces the
+  size of the generated code and the core libraries significantly.
+  If you need any of the full CCM features, set ccm_lw=0 in your
+  default.features file.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
