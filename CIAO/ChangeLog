@@ -1,3 +1,12 @@
+Mon Apr 19 18:33:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        
+          Removed get_all_receptacles() and get_all_publishers(),
+          since these methods are now always generated, except
+          when the LwCCM flag is present.
+
 Mon Apr 19 15:31:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp(visit_uses):
