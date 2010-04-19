@@ -1,4 +1,4 @@
-Mon Apr 19 17:34:04 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
+Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
 
    * ace/Service_Repository.cpp
      Modified ASR::fini to print debug info for empty
@@ -7,11 +7,12 @@ Mon Apr 19 17:34:04 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
      one of the reasons SC_Server was crashing at shutdown.
 
    * examples/ASX/CCM_App/SC_Server.cpp
-     Removed ACE_Sig_Adapter shutdown_handler.
-     Registered SIGINT and SIGQUIT handler for Event_Handler
-     so it could call eh->remove_std_in_handler() to prevent
-     SEGV at shutdown when CTRL-C was used to shutdown.
+     Removing signal handler before main exit to present SEGV
 
+   * tests/run_test.lst
+     Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+     Apparently it was missed in the last commit.
+	
   This fixes Bugzilla #2916 and #3205.
   I'll create another patch for #3334 after this commit.
 
