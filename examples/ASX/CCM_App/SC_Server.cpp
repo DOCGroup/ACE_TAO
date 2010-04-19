@@ -10,7 +10,7 @@
 #include "ace/Reactor.h"
 #include "ace/Sig_Adapter.h"
 
-ACE_RCSID(CCM_App, SC_Server, "$Id$")
+ACE_RCSID (CCM_App, SC_Server, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -18,7 +18,25 @@ public:
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);
+
+  virtual int handle_signal (int signum,
+                             siginfo_t *,
+                             ucontext_t *);
 };
+
+
+// @@ Note that this code is not portable to all OS platforms since
+// it does print statements within the signal handler.
+
+int
+Event_Handler::handle_signal (int signum,
+                              siginfo_t *,
+                              ucontext_t *)
+{
+  if (signum == SIGINT || signum == SIGQUIT)
+    return -1;
+  return 0;
+}
 
 int
 Event_Handler::handle_input (ACE_HANDLE handle)
@@ -35,7 +53,7 @@ Event_Handler::handle_input (ACE_HANDLE handle)
   else if (ACE_OS::write (ACE_STDOUT, buf, n) != n)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"), ACE_TEXT ("write failed")),
-                       -1);
+                      -1);
   else
     return 0;
 }
@@ -45,6 +63,8 @@ Event_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("closing Event_Handler\n")));
+  //ACE_Reactor::instance ()->remove_handler (this,ACE_Event_Handler::ALL_EVENTS_MASK);
+  this->remove_stdin_handler (ACE_Reactor::instance (),ACE_Thread_Manager::instance ());
   ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;
 }
@@ -71,8 +91,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("%p\n%a"),
                 ACE_TEXT ("open"),
                 1));
-  // Perform logging service until we receive SIGINT.
+  else
+  {
+    ACE_Reactor::instance ()->register_handler (SIGQUIT, &handler);
+    ACE_Reactor::instance ()->register_handler (SIGINT, &handler);
+    ACE_Reactor::instance ()->run_reactor_event_loop ();
 
-  ACE_Reactor::instance ()->run_reactor_event_loop ();
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("SC_Server exiting\n")));
+
+    loggerd.fini_svcs ();
+  }
   return 0;
 }
