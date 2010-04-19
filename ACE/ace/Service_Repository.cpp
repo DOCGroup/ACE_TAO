@@ -113,6 +113,7 @@ ACE_Service_Repository::ACE_Service_Repository (size_t size)
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
 }
 
+          
 /// Finalize (call fini() and possibly delete) all the services.
 int
 ACE_Service_Repository::fini (void)
@@ -121,44 +122,79 @@ ACE_Service_Repository::fini (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int retval = 0;
-
   // Do not be tempted to use the prefix decrement operator.  Use
   // postfix decrement operator since the index is unsigned and may
   // wrap around the 0
-  for (size_t i = this->service_array_.size(); i-- != 0; )
-    {
-      // <fini> the services in reverse order.
-      ACE_Service_Type *s =
-        const_cast<ACE_Service_Type *> (this->service_array_[i]);
+  for (size_t i = this->service_array_.size (); i-- != 0;)
+  {
+    // <fini> the services in reverse order.
+    ACE_Service_Type *s =
+      const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
+    if (s->type ()->service_type () != ACE_Service_Type::MODULE)
+    {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
-        {
-          if (s != 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
-                        ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
-                        this,
-                        i,
-                        s->name(),
-                        s->type (),
-                        (s->type () != 0) ? s->type ()->object () : 0,
-                        s->active ()));
-          else
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
-                        this,
-                        i));
-        }
+      {
+        if (s != 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
+                      ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
+                      this,
+                      i,
+                      s->name (),
+                      s->type (),
+                      (s->type () != 0) ? s->type ()->object () : 0,
+                      s->active ()));
+        else
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
+                      this,
+                      i));
+      }
 #endif
 
       // Collect any errors.
       if (s != 0)
         retval += s->fini ();
     }
+  }
+  for (size_t i = this->service_array_.size (); i-- != 0;)
+  {
+    // <fini> the services in reverse order.
+    ACE_Service_Type *s =
+      const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
+    if (s->type ()->service_type () == ACE_Service_Type::MODULE)
+    {
+#ifndef ACE_NLOGGING
+      if (ACE::debug ())
+      {
+        if (s != 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d], ")
+                      ACE_TEXT ("name=%s, type=%@, object=%@, active=%d\n"),
+                      this,
+                      i,
+                      s->name (),
+                      s->type (),
+                      (s->type () != 0) ? s->type ()->object () : 0,
+                      s->active ()));
+        else
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] -> 0\n"),
+                      this,
+                      i));
+      }
+#endif
+      // Collect any errors.
+      if (s != 0)
+        retval += s->fini ();
+    }
+  }
   return (retval == 0) ? 0 : -1;
 }
+
 
 /// Close down all the services.
 int
