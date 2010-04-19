@@ -1,14 +1,33 @@
+Mon Apr 19 18:27:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component\servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component\servant_svs.cpp:
+        
+          Changed logic of code generation for get_all_receptacles()
+          get_all_pulishers() and get_all_emitters() to generate
+          method in the class except when LwCCM flag is present.
+          Otherwise if the component has no ports of the 
+          given kind, the method returns a sequence (of port
+          descriptors) of length 0. This change in logic means
+          that these methods can be totally removed from the
+          servant base class. In the case of get_all_facets()
+          and get_all_consumers(), the servant base class
+          maintains a table of associated object references,
+          used in several other spec method calls, and is
+          much more efficient than a generated method would be,
+          so we have left them in the base class.
+
 Mon Apr 19 10:24:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	* orbsvcs/tests/Notify/Timeout/run_test.pl:
+	      * orbsvcs/tests/Notify/Timeout/run_test.pl:
 
-	  Fixed missing library path customization for test target.
+	        Fixed missing library path customization for test target.
 
 Mon Apr 19 07:47:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	* tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+	      * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
 
-	  Fixed missing library path customization for client processes.
+	        Fixed missing library path customization for client processes.
 
 Fri Apr 16 20:11:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
