@@ -897,3 +897,4 @@ idl3_to_idl2_visitor::visit_porttype_scope_mirror (
 
   return 0;
 }
+
