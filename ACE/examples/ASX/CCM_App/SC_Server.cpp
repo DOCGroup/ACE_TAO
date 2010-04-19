@@ -82,5 +82,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Perform logging service until we receive SIGINT.
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
+  handler.remove_stdin_handler (ACE_Reactor::instance (),ACE_Thread_Manager::instance ());  
   return 0;
 }
