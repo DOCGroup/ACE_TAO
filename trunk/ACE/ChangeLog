@@ -1,3 +1,21 @@
+Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
+
+   * ace/Service_Repository.cpp
+     Modified ASR::fini to print debug info for empty
+     service entries and handle empty service entries.
+     This fixes the ASR remove functionality that was
+     one of the reasons SC_Server was crashing at shutdown.
+
+   * examples/ASX/CCM_App/SC_Server.cpp
+     Removing signal handler before main exit to present SEGV
+
+   * tests/run_test.lst
+     Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+     Apparently it was missed in the last commit.
+	
+  This fixes Bugzilla #2916 and #3205.
+  I'll create another patch for #3334 after this commit.
+
 Mon Apr 19 12:44:56 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
 
    * ace/Service_Types.h
