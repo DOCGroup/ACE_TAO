@@ -729,70 +729,70 @@ be_visitor_servant_svs::gen_provides_top (void)
 void
 be_visitor_servant_svs::gen_publishes_top (void)
 {
-  if (this->node_->n_publishes () == 0UL)
+  ACE_CDR::ULong npubs = this->node_->n_publishes ();
+
+  if (npubs > 0UL)
     {
-      return;
+      os_ << be_nl << be_nl
+          << "::Components::Cookie *" << be_nl
+          << node_->local_name () << "_Servant::subscribe ("
+          << be_idt_nl
+          << "const char * publisher_name," << be_nl
+          << "::Components::EventConsumerBase_ptr subscribe)"
+          << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      os_ << "if (publisher_name == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+          << "}" << be_uidt;
+
+      be_visitor_subscribe_block sb_visitor (this->ctx_);
+
+      if (sb_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_publishes_top - "
+                      "subscribe block visitor failed\n"));
+
+          return;
+        }
+
+      os_ << be_nl << be_nl
+          << "throw ::Components::InvalidName ();" << be_uidt_nl
+          << "}";
+
+      os_ << be_nl << be_nl
+          << "::Components::EventConsumerBase_ptr" << be_nl
+          << node_->local_name () << "_Servant::unsubscribe ("
+          << be_idt_nl
+          << "const char * publisher_name," << be_nl
+          << "::Components::Cookie * ck)" << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      os_ << "if (publisher_name == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+          << "}" << be_uidt;
+
+      be_visitor_unsubscribe_block ub_visitor (this->ctx_);
+
+      if (ub_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_publishes_top - "
+                      "unsubscribe block visitor failed\n"));
+
+          return;
+        }
+
+      os_ << be_nl << be_nl
+          << "throw ::Components::InvalidName ();" << be_uidt_nl
+          << "}";
     }
-
-  os_ << be_nl << be_nl
-      << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Servant::subscribe ("
-      << be_idt_nl
-      << "const char * publisher_name," << be_nl
-      << "::Components::EventConsumerBase_ptr subscribe)"
-      << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  os_ << "if (publisher_name == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt;
-
-  be_visitor_subscribe_block sb_visitor (this->ctx_);
-
-  if (sb_visitor.visit_component_scope (node_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_publishes_top - "
-                  "subscribe block visitor failed\n"));
-
-      return;
-    }
-
-  os_ << be_nl << be_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
-      << "}";
-
-  os_ << be_nl << be_nl
-      << "::Components::EventConsumerBase_ptr" << be_nl
-      << node_->local_name () << "_Servant::unsubscribe ("
-      << be_idt_nl
-      << "const char * publisher_name," << be_nl
-      << "::Components::Cookie * ck)" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  os_ << "if (publisher_name == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt;
-
-  be_visitor_unsubscribe_block ub_visitor (this->ctx_);
-
-  if (ub_visitor.visit_component_scope (node_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_publishes_top - "
-                  "unsubscribe block visitor failed\n"));
-
-      return;
-    }
-
-  os_ << be_nl << be_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
-      << "}";
-
+    
   if (!be_global->gen_lwccm ())
     {
       os_ << be_nl << be_nl
@@ -811,16 +811,20 @@ be_visitor_servant_svs::gen_publishes_top (void)
           << "safe_retval->length (" << this->node_->n_publishes ()
           << "UL);";
 
-      be_visitor_event_source_desc esd_visitor (this->ctx_);
-
-      if (esd_visitor.visit_component_scope (node_) == -1)
+      if (npubs > 0UL)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "be_visitor_component_svs::"
-                      "gen_publishes_top - "
-                      "event source description visitor failed\n"));
+          be_visitor_event_source_desc esd_visitor (this->ctx_);
 
-          return;
+          if (esd_visitor.visit_component_scope (node_) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("be_visitor_component_svs::")
+                          ACE_TEXT ("gen_publishes_top - ")
+                          ACE_TEXT ("event source description ")
+                          ACE_TEXT ("visitor failed\n")));
+
+              return;
+            }
         }
 
       os_ << be_nl << be_nl
@@ -832,68 +836,69 @@ be_visitor_servant_svs::gen_publishes_top (void)
 void
 be_visitor_servant_svs::gen_uses_top (void)
 {
-  if (this->node_->n_uses () == 0UL)
-    {
-      return;
-    }
+  ACE_CDR::ULong nuses = this->node_->n_uses ();
+    
+  if (nuses > 0UL)
+    {  
+      os_ << be_nl << be_nl
+          << "::Components::Cookie *" << be_nl
+          << node_->local_name () << "_Servant::connect ("
+          << be_idt_nl
+          << "const char * name," << be_nl
+          << "::CORBA::Object_ptr connection)" << be_uidt_nl
+          << "{" << be_idt_nl;
 
-  os_ << be_nl << be_nl
-      << "::Components::Cookie *" << be_nl
-      << node_->local_name () << "_Servant::connect (" << be_idt_nl
-      << "const char * name," << be_nl
-      << "::CORBA::Object_ptr connection)" << be_uidt_nl
-      << "{" << be_idt_nl;
+      os_ << "if (name == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+          << "}" << be_uidt;
 
-  os_ << "if (name == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt;
+      be_visitor_connect_block cb_visitor (this->ctx_);
 
-  be_visitor_connect_block cb_visitor (this->ctx_);
+      if (cb_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("be_visitor_component_svs::")
+                      ACE_TEXT ("gen_uses_top - ")
+                      ACE_TEXT ("connect block visitor failed\n")));
 
-  if (cb_visitor.visit_component_scope (node_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_uses_top - "
-                  "connect block visitor failed\n"));
+          return;
+        }
 
-      return;
-    }
+      os_ << be_nl << be_nl
+          << "throw ::Components::InvalidName ();" << be_uidt_nl
+          << "}";
 
-  os_ << be_nl << be_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
-      << "}";
+      os_ << be_nl << be_nl
+          << "::CORBA::Object_ptr" << be_nl
+          << node_->local_name () << "_Servant::disconnect ("
+          << be_idt_nl
+          << "const char * name," << be_nl
+          << "::Components::Cookie * "
+          << (this->node_->has_uses_multiple () ? "ck" : "/* ck */")
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "if (name == 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
+          << "}" << be_uidt;
 
-  os_ << be_nl << be_nl
-      << "::CORBA::Object_ptr" << be_nl
-      << node_->local_name () << "_Servant::disconnect ("
-      << be_idt_nl
-      << "const char * name," << be_nl
-      << "::Components::Cookie * "
-      << (this->node_->has_uses_multiple () ? "ck" : "/* ck */")
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (name == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
-      << "}" << be_uidt;
+      be_visitor_disconnect_block db_visitor (this->ctx_);
 
-  be_visitor_disconnect_block db_visitor (this->ctx_);
+      if (db_visitor.visit_component_scope (node_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "be_visitor_component_svs::"
+                      "gen_uses_top - "
+                      "disconnect block visitor failed\n"));
 
-  if (db_visitor.visit_component_scope (node_) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "be_visitor_component_svs::"
-                  "gen_uses_top - "
-                  "disconnect block visitor failed\n"));
+          return;
+        }
 
-      return;
-    }
-
-  os_ << be_nl << be_nl
-      << "throw ::Components::InvalidName ();" << be_uidt_nl
-      << "}";
+      os_ << be_nl << be_nl
+          << "throw ::Components::InvalidName ();" << be_uidt_nl
+          << "}";
+    } // nuses > 0UL
 
   if (!be_global->gen_lwccm ())
     {
@@ -910,19 +915,23 @@ be_visitor_servant_svs::gen_uses_top (void)
           << "                0);" << be_nl
           << "::Components::ReceptacleDescriptions_var "
           << "safe_retval = retval;" << be_nl
-          << "safe_retval->length (" << this->node_->n_uses ()
+          << "safe_retval->length (" << nuses
           << "UL);";
 
-      be_visitor_receptacle_desc rd_visitor (this->ctx_);
-
-      if (rd_visitor.visit_component_scope (node_) == -1)
+      if (nuses > 0UL)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "be_visitor_component_svs::"
-                      "gen_uses_top - "
-                      "receptacle description visitor failed\n"));
+          be_visitor_receptacle_desc rd_visitor (this->ctx_);
 
-          return;
+          if (rd_visitor.visit_component_scope (node_) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("be_visitor_component_svs::")
+                          ACE_TEXT ("gen_uses_top - ")
+                          ACE_TEXT ("receptacle description ")
+                          ACE_TEXT ("visitor failed\n")));
+
+              return;
+            }
         }
 
       os_ << be_nl << be_nl
