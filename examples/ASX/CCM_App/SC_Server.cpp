@@ -54,7 +54,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config loggerd;
   Event_Handler handler;
-  ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   if (ACE_Event_Handler::register_stdin_handler (&handler,
                                                  ACE_Reactor::instance (),
@@ -72,13 +71,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("%p\n%a"),
                 ACE_TEXT ("open"),
                 1));
-  else if (ACE_Reactor::instance ()->register_handler
-    (SIGINT, &shutdown_handler) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("register_handler"),
-                1));
-
   // Perform logging service until we receive SIGINT.
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();

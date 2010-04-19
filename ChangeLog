@@ -1,3 +1,13 @@
+Mon Apr 19 14:43:39 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
+
+   * examples/ASX/CCM_App/SC_Server.cpp
+     Removed ACE_Sig_Adapter shutdown_handler.
+     This was causing a bus error at application termination.
+     It is also unnecessary because the STDIN handler
+     is taking care of shutdown upon a CTRL-C.
+
+  This fixes Bugzilla #2916 and #3205
+
 Fri Apr 16 13:02:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:
