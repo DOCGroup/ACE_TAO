@@ -371,14 +371,14 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "virtual ::CORBA::Object_ptr" << be_nl
           << "disconnect (const char * name," << be_nl
           << "            ::Components::Cookie * ck);";
-
-      if (!be_global->gen_lwccm ())
-        {
-          os_ << be_nl << be_nl
-              << "virtual ::Components::ReceptacleDescriptions *"
-              << be_nl
-              << "get_all_receptacles (void);";
-        }
+    }
+    
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_nl << be_nl
+          << "virtual ::Components::ReceptacleDescriptions *"
+          << be_nl
+          << "get_all_receptacles (void);";
     }
 
   /// If the node is a connector, event sources and sinks cannot
@@ -400,23 +400,15 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << "unsubscribe (const char * publisher_name,"
               << be_nl
               << "             ::Components::Cookie * ck);";
-
-          if (!be_global->gen_lwccm ())
-            {
-              os_ << be_nl << be_nl
-                  << "virtual ::Components::PublisherDescriptions *"
-                  << be_nl
-                  << "get_all_publishers (void);";
-            }
         }
 
-      /// Generated whether the component has emits ports
-      /// or not, except if we are generating a LwCCM
-      /// profile, in which case the base class method
-      /// (returning a null pointer to a sequence of
-      /// emitter descriptions) is seen instead.
       if (!be_global->gen_lwccm ())
         {
+          os_ << be_nl << be_nl
+              << "virtual ::Components::PublisherDescriptions *"
+              << be_nl
+              << "get_all_publishers (void);";
+
           os_ << be_nl << be_nl
               << "virtual ::Components::EmitterDescriptions *"
               << be_nl
