@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Connection.h"
+#include "Record.h"
 
 namespace ADBC
 {
@@ -53,24 +53,6 @@ ADBC_INLINE
 const Parameter_List & Query::parameters (void) const
 {
   return this->params_;
-}
-
-//
-// last_insert_id
-//
-ADBC_INLINE
-long Query::last_insert_id (void)
-{
-  return static_cast <long> (::sqlite3_last_insert_rowid (this->parent_.conn_));
-}
-
-//
-// count
-//
-ADBC_INLINE
-size_t Query::count (void) const
-{
-  return ::sqlite3_changes (this->parent_.conn_);
 }
 
 }
