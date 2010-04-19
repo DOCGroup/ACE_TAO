@@ -114,7 +114,7 @@ project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults {
   }
 }
 
-project(KitchenSink_IDL2_gen) : taoidldefaults {
+project(KitchenSink_IDL2_gen) : taoidldefaults, ccm_lw {
   avoids += mfc
   custom_only = 1
   idlflags += -Sm
