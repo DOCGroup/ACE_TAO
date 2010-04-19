@@ -1,40 +1,45 @@
+Mon Apr 19 06:51:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+          Add ccm_lw as base project
+
 Fri Apr 16 20:29:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
-        
+
           Added missing 'after' line in new project.
 
 Fri Apr 16 20:20:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_sunsoft.cpp:
-        
+
           Changes to reflect differences in IDL code generation
           from C++ generation, which was what this file was
           for in the original TAO_IDL backend.
-          
+
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed a bug in code generation for the multiplex
           uses *Connection struct.
-          
+
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Commented out the 'local' qualifier on an interface,
           temporarily until a design question involving our use
           in DDS3CCM of local interfaces in regular CORBA calls.
           The IDL compiler still flags this as illegal, and we
           get an actual error due to an implied IDL operation
           that contains the formerly local interface as a parameter.
-          
+
         * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
-        
+
           Added new projects to convert KitchenSink.idl to IDL2,
           process that IDL, and compile the resulting C++.
 
 Fri Apr 16 16:41:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Added missing code generation for a home's supported
           interfaces - as base interfaces of the explicit home
           interface. Also changed layout of code generated for
@@ -43,7 +48,7 @@ Fri Apr 16 16:41:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Apr 16 16:07:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Restored some line that had been mistakenly checked in as
           commented out.
 
@@ -51,21 +56,21 @@ Fri Apr 16 15:30:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3p_checking_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed 'unused arg' warnings.
 
 Thu Apr 15 19:01:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed bug where the uses multiple helper types
           struct xxxConnection and sequence xxxConnections
           were generated twice for connectors with uses
           multiple ports.
-        
+
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Changed names of ports in connector Comp2_T to follow
           the connector name.
 
