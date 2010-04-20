@@ -1,3 +1,11 @@
+Tue Apr 20 14:25:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
+        
+          Changed logic in decision to generate a comma between 
+          parameters of an AMI4CCM reply handler IDL operation.
+
 Mon Apr 19 18:27:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component\servant_svh.cpp:
