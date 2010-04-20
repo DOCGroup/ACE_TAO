@@ -106,7 +106,6 @@ project(KitchenSink_svnt) : ciao_servant {
 }
 
 project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults {
-  avoids += mfc
   custom_only = 1
 
   IDL3TOIDL2_Files {
@@ -115,7 +114,6 @@ project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults {
 }
 
 project(KitchenSink_IDL2_gen) : taoidldefaults, ccm_lw {
-  avoids += mfc
   custom_only = 1
   idlflags += -Sm
   after += KitchenSink_ConvertIDL3_Plus
