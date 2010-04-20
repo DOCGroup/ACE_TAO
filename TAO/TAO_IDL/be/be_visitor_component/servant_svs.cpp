@@ -88,7 +88,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// If a component has neither facets nor event sinks, the
   /// populate_port_tables() method isn't generated.
-  if (this->node_->n_provides () > 0UL
+  if (this->node_->n_remote_provides () > 0UL
       || this->node_->n_consumes () > 0UL)
     {
       os_ << "try" << be_idt_nl
@@ -195,7 +195,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
                         -1);
     }
 
-  if (this->node_->n_provides () > 0UL
+  if (this->node_->n_remote_provides () > 0UL
       || this->node_->n_consumes () > 0UL)
     {
       os_ << be_nl << be_nl
@@ -207,7 +207,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "_Servant::populate_port_tables (void)" << be_nl
           << "{" << be_idt_nl;
 
-      if (this->node_->n_provides () > 0UL)
+      if (this->node_->n_remote_provides () > 0UL)
         {
           os_ << "::CORBA::Object_var obj_var;" << be_nl;
         }
@@ -1603,20 +1603,18 @@ int
 be_visitor_populate_port_tables::visit_provides (
   be_provides *node)
 {
+  if (node->provides_type ()->is_local ())
+    {
+      return 0;
+    }
+
   ACE_CString prefix (this->port_prefix_);
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  if (node->provides_type ()->is_local ())
-    {
-      // @@ placeholder for local interface behavior.
-    }
-  else
-    {
-      os_ << be_nl
-          << "obj_var = this->provide_"
-          << port_name << "_i ();";
-    }
+  os_ << be_nl
+      << "obj_var = this->provide_"
+      << port_name << "_i ();";
 
   return 0;
 }

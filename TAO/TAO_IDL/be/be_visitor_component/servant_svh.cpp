@@ -441,7 +441,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   /// No need for this method if the component has neither
   /// facets nor event sinks.
-  if (this->node_->n_provides () > 0UL
+  if (this->node_->n_remote_provides () > 0UL
       || this->node_->n_consumes () > 0UL)
     {
       os_ << be_uidt_nl << be_nl

@@ -18,6 +18,7 @@
 
 #include "ast_mirror_port.h"
 #include "ast_uses.h"
+#include "ast_provides.h"
 #include "ast_attribute.h"
 
 #include "global_extern.h"
@@ -62,7 +63,9 @@ be_component::be_component (UTL_ScopedName *n,
                   false,
                   false),
     n_provides_ (0UL),
+    n_remote_provides_ (0UL),
     n_uses_ (0UL),
+    n_remote_uses_ (0UL),
     has_uses_multiple_ (false),
     n_publishes_ (0UL),
     n_consumes_ (0UL),
@@ -121,43 +124,55 @@ be_component::be_add_typedef (AST_Typedef *t)
 }
 
 ACE_CDR::ULong
-be_component::n_provides (void)
+be_component::n_provides (void) const
 {
   return this->n_provides_;
 }
 
 ACE_CDR::ULong
-be_component::n_uses (void)
+be_component::n_remote_provides (void) const
+{
+  return this->n_remote_provides_;
+}
+
+ACE_CDR::ULong
+be_component::n_uses (void) const
 {
   return this->n_uses_;
 }
 
+ACE_CDR::ULong
+be_component::n_remote_uses (void) const
+{
+  return this->n_remote_uses_;
+}
+
 bool
-be_component::has_uses_multiple (void)
+be_component::has_uses_multiple (void) const
 {
   return this->has_uses_multiple_;
 }
 
 ACE_CDR::ULong
-be_component::n_publishes (void)
+be_component::n_publishes (void) const
 {
   return this->n_publishes_;
 }
 
 ACE_CDR::ULong
-be_component::n_consumes (void)
+be_component::n_consumes (void) const
 {
   return this->n_consumes_;
 }
 
 ACE_CDR::ULong
-be_component::n_emits (void)
+be_component::n_emits (void) const
 {
   return this->n_emits_;
 }
 
 bool
-be_component::has_rw_attributes (void)
+be_component::has_rw_attributes (void) const
 {
   return this->has_rw_attributes_;
 }
@@ -176,6 +191,7 @@ be_component::scan (UTL_Scope *s)
   AST_Extended_Port *ep = 0;
   AST_Mirror_Port *mp = 0;
   AST_Uses *u = 0;
+  AST_Provides *p = 0;
   AST_Attribute *a = 0;
 
   for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
@@ -188,6 +204,13 @@ be_component::scan (UTL_Scope *s)
         {
           case AST_Decl::NT_provides:
             ++this->n_provides_;
+            p = AST_Provides::narrow_from_decl (d);
+            
+            if (!p->provides_type ()->is_local ())
+              {
+                ++this->n_remote_provides_;
+              }
+              
             continue;
           case AST_Decl::NT_uses:
             ++this->n_uses_;
@@ -196,6 +219,11 @@ be_component::scan (UTL_Scope *s)
             if (u->is_multiple ())
               {
                 this->has_uses_multiple_ = true;
+              }
+              
+            if (!u->uses_type ()->is_local ())
+              {
+                ++this->n_remote_uses_;
               }
               
             continue;
