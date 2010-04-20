@@ -1,3 +1,12 @@
+Tue Apr 20 18:45:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added check for local interface as return type of operation
+          in non-local interface, similar to the check already in
+          place for the operation parameters.
+
 Tue Apr 20 17:33:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
