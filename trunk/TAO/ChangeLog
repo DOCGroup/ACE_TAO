@@ -1,3 +1,19 @@
+Tue Apr 20 17:33:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        
+          Added additional members to count the facets and
+          receptacles having non-local interface types,
+          the associated accessor methods, and the logic to
+          maintain them.
+          
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        
+          Changed check for decision to generate populate_port_tables()
+          to use the new non-remote facet count described above.
+
 Tue Apr 20 14:25:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
