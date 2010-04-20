@@ -6905,13 +6905,26 @@ tao_yyreduce:
                     s->is_local ()
                     || nt == AST_Decl::NT_valuetype
                     || nt == AST_Decl::NT_eventtype;
+                    
                   o =
-                    idl_global->gen ()->create_operation (tp,
-                                                          (tao_yyvsp[(1) - (4)].ofval),
-                                                          &n,
-                                                          local,
-                                                          s->is_abstract ());
-                  (void) s->fe_add_operation (o);
+                    idl_global->gen ()->create_operation (
+                      tp,
+                      (tao_yyvsp[(1) - (4)].ofval),
+                      &n,
+                      local,
+                      s->is_abstract ());
+                          
+                  if (!local && tp->is_local ())
+                    {
+                      idl_global->err ()->local_remote_mismatch (tp, o);
+                      o->destroy ();
+                      delete o;
+                      o = 0;
+                    }
+                  else
+                    {
+                      (void) s->fe_add_operation (o);
+                    }
                 }
             }
 
