@@ -209,10 +209,19 @@ idl3_to_idl2_visitor::visit_component_fwd (AST_ComponentFwd *node)
 int
 idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
 {
+  AST_Type *pt = node->provides_type ();
+  
+  /// These ports are always internal to the container, no
+  /// equivalent IDL should be generated for them.
+  if (pt->is_local ())
+    {
+      return 0;
+    }
+  
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
-  UTL_ScopedName *n = node->provides_type ()->name ();
+  UTL_ScopedName *n = pt->name ();
   ACE_CString impl_name =
     IdentifierHelper::orig_sn (n);
 
@@ -230,12 +239,20 @@ idl3_to_idl2_visitor::visit_provides (AST_Provides *node)
 int
 idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
 {
+  AST_Type *ut = node->uses_type ();
+
+  /// These ports are always internal to the container, no
+  /// equivalent IDL should be generated for them.
+  if (ut->is_local ())
+    {
+      return 0;
+    }
+  
   *os << be_nl << be_nl;
 
   Identifier *orig_id =
     IdentifierHelper::original_local_name (node->local_name ());
 
-  AST_Type *ut = node->uses_type ();
   UTL_ScopedName *n = ut->name ();
   ACE_CString impl_str =
     IdentifierHelper::orig_sn (n);
