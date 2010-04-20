@@ -1,3 +1,10 @@
+Tue Apr 20 18:57:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        
+          Removed now-redundant check for non-local uses type in
+          generation of connect_* methods.
+
 Tue Apr 20 17:49:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:

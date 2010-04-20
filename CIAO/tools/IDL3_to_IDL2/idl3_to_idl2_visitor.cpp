@@ -293,16 +293,12 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
     }
   else
     {
-      if (! ut->is_local ())
-        {
-          *os << "void connect_" << ext_port_name << " (in "
-              << impl_name << " conxn)" << be_idt_nl
-              << "raises (Components::AlreadyConnected, "
-              << "Components::InvalidConnection);"
-              << be_uidt_nl << be_nl;
-        }
-          
-      *os << impl_name << " disconnect_"
+      *os << "void connect_" << ext_port_name << " (in "
+          << impl_name << " conxn)" << be_idt_nl
+          << "raises (Components::AlreadyConnected, "
+          << "Components::InvalidConnection);"
+          << be_uidt_nl << be_nl
+          << impl_name << " disconnect_"
           << ext_port_name << " ()" << be_idt_nl
           << "raises (Components::NoConnection);"
           << be_uidt_nl << be_nl
