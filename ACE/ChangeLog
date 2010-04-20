@@ -1,3 +1,8 @@
+Tue Apr 20 13:02:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+   * ace/Atomic_Op.h:
+     Fix redefinition warning
+
 Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
 
    * ace/Service_Repository.cpp
@@ -12,7 +17,7 @@ Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
    * tests/run_test.lst
      Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
      Apparently it was missed in the last commit.
-	
+
   This fixes Bugzilla #2916 and #3205.
   I'll create another patch for #3334 after this commit.
 
