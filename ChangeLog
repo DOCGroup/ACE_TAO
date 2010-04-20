@@ -1,3 +1,58 @@
+Tue Apr 20 18:46:38 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Stream_Test.{cp conf}: Brought this test over
+          from hte dev stream as well as Bug_3334_Regression_Test.cpp.
+
+Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Service_Repository.cpp
+          Modified ASR::fini to print debug info for empty
+          service entries and handle empty service entries.
+          This fixes the ASR remove functionality that was
+          one of the reasons SC_Server was crashing at shutdown.
+
+        * examples/ASX/CCM_App/SC_Server.cpp
+          Removing signal handler before main exit to present SEGV
+
+        This fixes Bugzilla #2916 and #3205.
+
+Mon Apr 19 12:44:56 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Service_Types.h
+        * ace/Service_Types.inl
+        * ace/Service_Types.cpp
+          Added service_type_ attr to expose the type of service being
+          managed to the ACE_Service_Repository. This allows the ASR to
+          manage the lifecycle of the ACE_Module and ACE_Stream in order to
+          avoid a double delete of ACE_Module at shutdown.
+
+          ACE_Stream_Type::fini was modified to not call ACE_Module_Type::fini
+          as this will results in a double delete when
+          ACE_Service_Repository::fini is called.
+          ACE_Stream_Type::remove(module_name) was modified to not call
+          ACE_Module_Type::fini as this will results in a double delete
+          when ACE_Service_Repository::fini is called also.
+
+        * ace/Service_Repository.cpp
+          Modified ASR::fini to iterate over the service_array_ twice.
+          ACE_Service_Type::fini is called on all ACE_Stream_Type and
+          ACE_Service_Object_Type instances first. Then, fini is called on
+          all ACE_Modules_Type instances. All calls to fini are done in the
+          order the services appear in the ASR::service_array_ except for
+          the grouping described here. The calls to ACE_Module_Type::fini
+          must be done last because ACE_Stream_Type::fini accesses the Modules
+          so they must not be deleted by a call to ACE_Module_Type::fini
+          before that.
+
+        * tests/Bug_3334_Regresssion_Test.cpp
+          Added call to ACE_Service_Repository::fini_svcs() to capture all
+          debug output before the application exits.
+
+        * tests/run_tests.lst
+          Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+
+        This fixes Bugzilla #3334
+
 Tue Apr 13 19:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Dev_Poll_Reactor.{h cpp}: Reorder the enqueue/pipe operations
