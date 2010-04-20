@@ -58,13 +58,15 @@ public:
   AST_Structure *be_add_structure (AST_Structure *t);
   AST_Typedef *be_add_typedef (AST_Typedef *t);
 
-  ACE_CDR::ULong n_provides (void);
-  ACE_CDR::ULong n_uses (void);
-  bool has_uses_multiple (void);
-  ACE_CDR::ULong n_publishes (void);
-  ACE_CDR::ULong n_consumes (void);
-  ACE_CDR::ULong n_emits (void);
-  bool has_rw_attributes (void);
+  ACE_CDR::ULong n_provides (void) const;
+  ACE_CDR::ULong n_remote_provides (void) const;
+  ACE_CDR::ULong n_uses (void) const;
+  ACE_CDR::ULong n_remote_uses (void) const;
+  bool has_uses_multiple (void) const;
+  ACE_CDR::ULong n_publishes (void) const;
+  ACE_CDR::ULong n_consumes (void) const;
+  ACE_CDR::ULong n_emits (void) const;
+  bool has_rw_attributes (void) const;
   
   // Narrowing.
 
@@ -81,7 +83,9 @@ private:
 private:
   /// Used by visitors to reduce footprint.
   ACE_CDR::ULong n_provides_;
+  ACE_CDR::ULong n_remote_provides_;
   ACE_CDR::ULong n_uses_;
+  ACE_CDR::ULong n_remote_uses_;
   bool has_uses_multiple_;
   ACE_CDR::ULong n_publishes_;
   ACE_CDR::ULong n_consumes_;
