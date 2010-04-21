@@ -159,6 +159,9 @@ sub wanted {
     /^CVS\z/s &&
     ($File::Find::prune = 1)
     ||
+    /^\.svn\z/s &&
+    ($File::Find::prune = 1)
+    ||
     /^build\z/s &&
     ($File::Find::prune = 1)
     ||
