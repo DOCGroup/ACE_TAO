@@ -1,3 +1,15 @@
+Wed Apr 21 16:10:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bug_3845_Regression/*:
+        
+          New test, consisting of 4 IDL files, a perl script and a
+          README file. Wach IDL file contains a local interface
+          used as a different part of the operation signature
+          (in, inout, out and return) of an operation on a non-local
+          interface. In each case, the perl script process returns
+          successfully if it catches the expected error. This closes
+          [BUGID:3845].
+
 Wed Apr 21 12:27:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
