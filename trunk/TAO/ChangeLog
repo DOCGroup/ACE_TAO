@@ -1,8 +1,15 @@
+Wed Apr 21 12:27:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          At construction time we populate the port tables and than
+          at runtime we than don't have to try to populate them again
+
 Tue Apr 20 18:45:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Added check for local interface as return type of operation
           in non-local interface, similar to the check already in
           place for the operation parameters.
@@ -11,15 +18,15 @@ Tue Apr 20 17:33:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
         * TAO_IDL/be_include/be_component.h:
-        
+
           Added additional members to count the facets and
           receptacles having non-local interface types,
           the associated accessor methods, and the logic to
           maintain them.
-          
+
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        
+
           Changed check for decision to generate populate_port_tables()
           to use the new non-remote facet count described above.
 
@@ -27,19 +34,19 @@ Tue Apr 20 14:25:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
         * TAO_IDL/be_include/be_visitor_interface/ami4ccm_rh_ex_idl.h:
-        
-          Changed logic in decision to generate a comma between 
+
+          Changed logic in decision to generate a comma between
           parameters of an AMI4CCM reply handler IDL operation.
 
 Mon Apr 19 18:27:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component\servant_svh.cpp:
         * TAO_IDL/be/be_visitor_component\servant_svs.cpp:
-        
+
           Changed logic of code generation for get_all_receptacles()
           get_all_pulishers() and get_all_emitters() to generate
           method in the class except when LwCCM flag is present.
-          Otherwise if the component has no ports of the 
+          Otherwise if the component has no ports of the
           given kind, the method returns a sequence (of port
           descriptors) of length 0. This change in logic means
           that these methods can be totally removed from the
@@ -52,20 +59,20 @@ Mon Apr 19 18:27:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Apr 19 10:24:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	      * orbsvcs/tests/Notify/Timeout/run_test.pl:
+              * orbsvcs/tests/Notify/Timeout/run_test.pl:
 
-	        Fixed missing library path customization for test target.
+                Fixed missing library path customization for test target.
 
 Mon Apr 19 07:47:12 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	      * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+              * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
 
-	        Fixed missing library path customization for client processes.
+                Fixed missing library path customization for client processes.
 
 Fri Apr 16 20:11:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp(visit_constant):
-        
+
           This method uses the reifying visitor to fetch the AST
           node created from the template argument. Since for constants,
           this node was created from a parsed literal, the expression
@@ -85,7 +92,7 @@ Fri Apr 16 20:11:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Apr 15 18:59:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_type.cpp:
-        
+
           Changed boolean flag to be used with 'true' and 'false' instead
           of 1 and 0.
 
@@ -93,11 +100,11 @@ Wed Apr 14 19:04:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
         * TAO_IDL/be/be/be_visitor_component_scope.cpp:
-        
+
           Cosmetic changes and corrections to comments.
-          
+
         * TAO_IDL/be/util/utl_global.cpp(create_uses_multiple_stuff):
-        
+
           When creating the AST node for the xxxConnection struct,
           specifically the 'objref' field, changed the argument from
           the result of calling uses_type() on the receptacle node
@@ -112,7 +119,7 @@ Wed Apr 14 19:04:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Apr 14 13:55:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
-        
+
           Fixed bug in code generation of AMI4CCM executor IDL. Thanks
           to Marijke Hengstmengel <mhengstmengel at remedy dot nl> for
           reporting the bug.
@@ -486,7 +493,7 @@ Fri Apr  2 15:32:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * TAO version 1.7.8 released.
+              * TAO version 1.7.8 released.
 
 Wed Mar 31 15:22:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 

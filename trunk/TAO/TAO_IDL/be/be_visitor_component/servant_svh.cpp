@@ -147,13 +147,13 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
       os_ << be_uidt_nl << be_nl
           << "public:" << be_idt_nl
           << "virtual ::" << obj_name << "_ptr" << be_nl
-          << "provide_" << port_name << " (void);"
-          << be_uidt_nl << be_nl;
+          << "provide_" << port_name << " (void);";
     }
 
-  os_ << "private:" << be_idt_nl
-      << "::CORBA::Object_ptr" << be_nl
-      << "provide_" << port_name << "_i (void);"
+  os_ << be_uidt_nl << be_nl
+      << "private:" << be_idt_nl
+      << "void" << be_nl
+      << "setup_" << port_name << "_i (void);"
       << be_uidt_nl << be_nl;
 
   os_ << "private:" << be_idt_nl
@@ -340,8 +340,8 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
 
-  os_ << "::Components::EventConsumerBase_ptr" << be_nl
-      << "get_consumer_" << port_name << "_i (void);";
+  os_ << "void" << be_nl
+      << "setup_consumer_" << port_name << "_i (void);";
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
