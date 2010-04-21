@@ -207,16 +207,6 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "_Servant::populate_port_tables (void)" << be_nl
           << "{" << be_idt_nl;
 
-      if (this->node_->n_remote_provides () > 0UL)
-        {
-          os_ << "::CORBA::Object_var obj_var;" << be_nl;
-        }
-
-      if (this->node_->n_consumes () > 0UL)
-        {
-          os_ << "::Components::EventConsumerBase_var ecb_var;" << be_nl;
-        }
-
       be_visitor_populate_port_tables ppt_visitor (this->ctx_);
 
       if (ppt_visitor.visit_component_scope (node) == -1)
@@ -304,18 +294,6 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
           << port_name << " (void)" << be_nl
           << "{" << be_idt_nl;
 
-      os_ << "if ( ::CORBA::is_nil (this->provide_"
-          << port_name << "_.in ()))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::Object_var obj =" << be_idt_nl
-          << "this->provide_" << port_name << "_i ();"
-          << be_uidt_nl << be_nl
-          << "::" << obj_name << "_var fo =" << be_idt_nl
-          << "::" << obj_name << "::_narrow (obj.in ());"
-          << be_uidt_nl << be_nl
-          << "this->provide_" << port_name << "_ = fo;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
       os_ << "return" << be_idt_nl
           <<  "::" << obj_name << "::_duplicate (this->provide_"
           << port_name << "_.in ());" << be_uidt << be_uidt_nl
@@ -323,17 +301,10 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
     }
 
   os_ << be_nl << be_nl
-      << "::CORBA::Object_ptr" << be_nl
-      << node_->local_name () << "_Servant::provide_"
+      << "void" << be_nl
+      << node_->local_name () << "_Servant::setup_"
       << port_name << "_i (void)" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::Object_ptr ret =" << be_idt_nl
-      << "this->lookup_facet (\"" << port_name << "\");"
-      << be_uidt_nl << be_nl
-      << "if (! ::CORBA::is_nil (ret))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return ret;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "typedef" << be_idt_nl
       << "::CIAO::Port_Activator_T<" << be_idt_nl
       << "::CIAO_FACET" << prefix_connector
@@ -360,11 +331,9 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
-      << "if (! sa->register_port_activator (pa._retn ()))"
+      << "if (sa->register_port_activator (pa._retn ()))"
       << be_idt_nl
       << "{" << be_idt_nl
-      << "return ::" << obj_name << "::_nil ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
       << "this->container_->generate_reference (" << be_idt_nl
       << "obj_id.c_str ()," << be_nl
@@ -372,8 +341,8 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "::CIAO::Container_Types::FACET_CONSUMER_t);"
       << be_uidt_nl << be_uidt_nl
       << "this->add_facet (\"" << port_name << "\", obj.in ());"
-      << be_nl << be_nl
-      << "return obj._retn ();" << be_uidt_nl
+      << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}";
 
   return 0;
@@ -599,20 +568,6 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << node_->local_name () << "_Servant::get_consumer_"
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "if (! ::CORBA::is_nil (this->consumes_" << port_name
-      << "_.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return ::" << fname
-      << "Consumer::_duplicate (this->consumes_"
-      << port_name << "_.in ());" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::Components::EventConsumerBase_var obj =" << be_idt_nl
-      << "this->get_consumer_" << port_name << "_i ();"
-      << be_uidt_nl << be_nl
-      << "::" << fname << "Consumer_var eco =" << be_idt_nl
-      << "::" << fname << "Consumer::_narrow (obj.in ());"
-      << be_uidt_nl << be_nl
-      << "this->consumes_" << port_name << "_ = eco;" << be_nl
       << "return" << be_idt_nl
       << "::" << fname << "Consumer::_duplicate (" << be_idt_nl
       << "this->consumes_" << port_name << "_.in ());"
@@ -620,17 +575,10 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "}";
 
   os_ << be_nl << be_nl
-      << "::Components::EventConsumerBase_ptr" << be_nl
-      << node_->local_name () << "_Servant::get_consumer_"
+      << "void" << be_nl
+      << node_->local_name () << "_Servant::setup_consumer_"
       << port_name << "_i (void)" << be_nl
       << "{" << be_idt_nl
-      << "::Components::EventConsumerBase_ptr ret =" << be_idt_nl
-      << "this->lookup_consumer (\"" << port_name << "\");"
-      << be_uidt_nl << be_nl
-      << "if (! ::CORBA::is_nil (ret))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return ret;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "typedef" << be_idt_nl
       << "::CIAO::Port_Activator_T<" << be_idt_nl
       << node_->local_name () << "_Servant::" << lname
@@ -658,11 +606,9 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
       << "this->container_->ports_servant_activator ();"
       << be_uidt_nl << be_nl
-      << "if (! sa->register_port_activator (pa._retn ()))"
+      << "if (sa->register_port_activator (pa._retn ()))"
       << be_idt_nl
       << "{" << be_idt_nl
-      << "return ::" << fname << "Consumer::_nil ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
       << "this->container_->generate_reference (" << be_idt_nl
       << "obj_id.c_str ()," << be_nl
@@ -681,8 +627,8 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "::Components::EventConsumerBase::_narrow (obj.in ());"
       << be_uidt_nl << be_nl
       << "this->add_consumer (\"" << port_name << "\", ecb.in ());"
-      << be_nl << be_nl
-      << "return ecb._retn ();" << be_uidt_nl
+      << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}";
 
   return 0;
@@ -1613,7 +1559,7 @@ be_visitor_populate_port_tables::visit_provides (
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl
-      << "obj_var = this->provide_"
+      << "this->setup_"
       << port_name << "_i ();";
 
   return 0;
@@ -1624,7 +1570,7 @@ be_visitor_populate_port_tables::visit_consumes (
   be_consumes *node)
 {
   os_ << be_nl
-      << "ecb_var = this->get_consumer_"
+      << "this->setup_consumer_"
       << node->local_name ()->get_string () << "_i ();";
 
   return 0;
