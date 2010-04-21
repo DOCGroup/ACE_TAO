@@ -1,3 +1,9 @@
+Wed Apr 21 13:36:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+   * examples/Connection/blocking/SPIPE-connector.cpp:
+     Use Reactor instead of Proactor, thanks to Dave <dwh0403 at 163 dot com>
+     for reporting this
+
 Tue Apr 20 13:02:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
    * ace/Atomic_Op.h:
