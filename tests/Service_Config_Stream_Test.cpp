@@ -75,8 +75,7 @@ class Decrypter : public ACE_Service_Object, public ACE_Module<ACE_SYNCH>
 {
 public:
   Decrypter ()
-    : writer_(), reader_(),
-      ACE_Module<ACE_SYNCH> (ACE_TEXT ("Decrypter"),
+    : ACE_Module<ACE_SYNCH> (ACE_TEXT ("Decrypter"),
                              &writer_, &reader_,
                              0,
                              M_DELETE_NONE) // Tasks are members; don't delete
