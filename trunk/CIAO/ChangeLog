@@ -286,8 +286,8 @@ Wed Apr 14 09:49:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 Wed Apr 14 08:44:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver.mpc
-        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.mpc
+        * connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver.mpc:
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.mpc:
         Change to long project names.
 
 Wed Apr 14 07:29:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -412,10 +412,10 @@ Tue Apr 13 07:03:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 12 18:39:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ciao/Servants/Connector_Servant_Impl_Base.cpp
-        * ciao/Servants/Connector_Servant_Impl_Base.h
-        * ciao/Servants/Home_Servant_Impl_Base.cpp
-        * ciao/Servants/Home_Servant_Impl_Base.h
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        * ciao/Servants/Home_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_Base.h:
           Disabled some more code with LwCCM
 
 Mon Apr 12 18:29:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
