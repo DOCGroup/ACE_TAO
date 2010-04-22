@@ -87,17 +87,20 @@ be_visitor_servant_svs::visit_component (be_component *node)
     }
 
   /// If a component has neither facets nor event sinks, the
-  /// populate_port_tables() method isn't generated.
+  /// setup methods aren't generated.
   if (this->node_->n_remote_provides () > 0UL
       || this->node_->n_consumes () > 0UL)
     {
-      os_ << "try" << be_idt_nl
-          << "{" << be_idt_nl
-          << "this->populate_port_tables ();" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "catch (const ::CORBA::Exception &)" << be_idt_nl
-          << "{" << be_nl
-          << "}" << be_uidt;
+      be_visitor_populate_port_tables ppt_visitor (this->ctx_);
+      
+      if (ppt_visitor.visit_component_scope (node) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "be_visitor_component_svs::"
+                           "visit_component - "
+                           "populate port tables visitor failed\n"),
+                          -1);
+      }
     }
 
   os_ << be_uidt_nl << "}";
@@ -193,33 +196,6 @@ be_visitor_servant_svs::visit_component (be_component *node)
                          "visit_component - "
                          "visit_component_scope() failed\n"),
                         -1);
-    }
-
-  if (this->node_->n_remote_provides () > 0UL
-      || this->node_->n_consumes () > 0UL)
-    {
-      os_ << be_nl << be_nl
-          << "/// Private method to trigger population of the port"
-          << be_nl
-          << "/// tables (facets and event consumers)." << be_nl
-          << "void" << be_nl
-          << node_->local_name ()
-          << "_Servant::populate_port_tables (void)" << be_nl
-          << "{" << be_idt_nl;
-
-      be_visitor_populate_port_tables ppt_visitor (this->ctx_);
-
-      if (ppt_visitor.visit_component_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_svs::"
-                             "visit_component - "
-                             "populate port tables visitor failed\n"),
-                            -1);
-        }
-
-      os_ << be_uidt_nl
-          << "}";
     }
 
   return 0;

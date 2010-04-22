@@ -438,16 +438,5 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "::CORBA::Object_ptr" << be_nl
           << "get_facet_executor (const char * name);";
     }
-
-  /// No need for this method if the component has neither
-  /// facets nor event sinks.
-  if (this->node_->n_remote_provides () > 0UL
-      || this->node_->n_consumes () > 0UL)
-    {
-      os_ << be_uidt_nl << be_nl
-          << "private:" << be_idt_nl
-          << "void" << be_nl
-          << "populate_port_tables (void);";
-    }
 }
 
