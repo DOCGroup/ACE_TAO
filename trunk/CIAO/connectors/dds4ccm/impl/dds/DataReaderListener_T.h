@@ -37,12 +37,12 @@ namespace CIAO
       /// Destructor
       virtual ~DataReaderListener_T (void);
 
-      virtual void on_data_available( ::DDS::DataReader *rdr);
+      virtual void on_data_available (::DDS::DataReader_ptr rdr);
 
       static ::DDS::StatusMask get_mask (
         ::CCM_DDS::PortStatusListener_ptr listener);
 
-      void on_data_available_i ( ::DDS::DataReader *rdr);
+      void on_data_available_i (::DDS::DataReader_ptr rdr);
 
     private:
       typename CCM_TYPE::listener_type::_var_type listener_;

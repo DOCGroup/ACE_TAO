@@ -64,7 +64,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
     return;
 
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i* rd =
-      dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i*>(rdr);
+      reinterpret_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i*>(rdr);
   if (!rd)
     {
       /* In this specific case, this will never fail */
@@ -72,13 +72,21 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
       return;
     }
 
-  typename DDS_TYPE::data_reader * reader =
-      dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_impl ()));
+  //Retrieve the pointer to the proxy from the QoS
+  ::DDS_DataReaderQos qos;
+  rd->get_impl ()->get_qos (qos);
+  DDS_Property_t * prop =
+    DDSPropertyQosPolicyHelper::lookup_property (qos.property,
+                                                 "CCM_DataReaderProxy");
+  unsigned long ptr = ACE_OS::atol (prop->value);
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
+        reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (ptr);
 
   if (!reader)
     {
-      /* In this specific case, this will never fail */
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::narrow failed.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::on_data_available_i - "
+                                             "Failed to retrieve pointer to proxy from "
+                                             "DDSDataReader.\n")));
       return;
     }
 
@@ -97,12 +105,11 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
                   sample_info,
-                  max_samples,
-                  DDS_NOT_READ_SAMPLE_STATE,
-                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                  DDS_ANY_INSTANCE_STATE);
+                  max_samples);
       if (result == DDS_RETCODE_NO_DATA)
+        {
           return;
+        }
       else if (result != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));

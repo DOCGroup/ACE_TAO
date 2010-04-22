@@ -52,7 +52,7 @@ private:
   ::CCM_DDS::CCM_StateListenerControl_var data_control_;
   ::DDS::DataReaderListener_var data_listener_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
   //@}
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE> DataReaderStateListener;
 };

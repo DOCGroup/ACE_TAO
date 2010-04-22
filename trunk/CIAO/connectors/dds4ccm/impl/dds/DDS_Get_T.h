@@ -51,10 +51,10 @@ private:
    * DDS_Get
    */
   //@{
-  ::DDS::DataReaderListener_var status_;
+  ::DDS::DataReaderListener_var listener_;
   ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED> dds_get_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i ccm_dds_reader_;
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
   //@}
 
   typedef ::CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE> PortStatusListener;

@@ -19,8 +19,7 @@ namespace CIAO
   namespace DDS4CCM
   {
     CCM_DDS_DataReaderListener_i::CCM_DDS_DataReaderListener_i (::DDS::DataReaderListener_ptr p)
-      : impl_ (::DDS::DataReaderListener::_duplicate (p)),
-        dds_reader_ (::DDS::DataReader::_nil ())
+      : impl_ (::DDS::DataReaderListener::_duplicate (p))
     {
     }
 
@@ -32,12 +31,18 @@ namespace CIAO
     CCM_DDS_DataReaderListener_i::get_datareader_proxy (
       ::DDSDataReader * the_reader)
     {
-      if (::CORBA::is_nil (this->dds_reader_.in ()))
-        {
-          ACE_NEW_NORETURN (this->dds_reader_,
-                            CCM_DDS_DataReader_i (the_reader));
-        }
-      return this->dds_reader_.in ();
+      //Retrieve the pointer to the proxy from the QoS
+      ::DDS_DataReaderQos qos;
+      the_reader->get_qos (qos);
+      DDS_Property_t * prop =
+        DDSPropertyQosPolicyHelper::lookup_property (qos.property,
+                                                    "CCM_DataReaderProxy");
+      ::DDS::CCM_DataReader_ptr reader =
+        reinterpret_cast < ::DDS::CCM_DataReader_ptr >
+          (ACE_OS::atol (prop->value));
+
+      return reinterpret_cast < ::DDS::DataReader_ptr >
+          (reader);
     }
 
     void

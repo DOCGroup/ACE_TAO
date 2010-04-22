@@ -26,11 +26,12 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if (! ::CORBA::is_nil (this->control_.in ()) && this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
+  if (! ::CORBA::is_nil (this->control_.in ()) &&
+      this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
     {
       if (this->reactor_)
         {
@@ -56,27 +57,20 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
-  if (::CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+  if (::CORBA::is_nil (this->control_.in ()) ||
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     {
       return;
     }
 
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i* rd =
-      dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i*>(rdr);
-  if (!rd)
-    {
-      /* In this specific case, this will never fail */
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::dynamic_cast failed.\n")));
-      return;
-    }
-
-  typename DDS_TYPE::data_reader * reader =
-      dynamic_cast< typename DDS_TYPE::data_reader * > ((rd->get_impl ()));
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
+    reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
 
   if (!reader)
     {
-      /* In this specific case, this will never fail */
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::narrow failed.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::on_data_available_i - "
+                                             "Failed to retrieve pointer to proxy from "
+                                             "DDSDataReader.\n")));
       return;
     }
 
@@ -84,18 +78,17 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
   DDS_SampleInfoSeq sample_info;
   ::DDS::ReturnCode_t const result = reader->take (
               data,
-              sample_info,
-              DDS_LENGTH_UNLIMITED,
-              DDS_NOT_READ_SAMPLE_STATE,
-              DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-              DDS_ANY_INSTANCE_STATE);
+              sample_info);
+
   if (result == DDS_RETCODE_NO_DATA)
     {
       return;
     }
   else if (result != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %C.\n"), translate_retcode (result)));
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, "
+                                             "error %C.\n"),
+                                             translate_retcode (result)));
       return;
     }
 
@@ -169,7 +162,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
   //always listen to data_available
   ::DDS::StatusMask mask = ::DDS::DATA_AVAILABLE_STATUS;
 
-  if (! ::CORBA::is_nil (listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (listener) ||
+      CIAO_debug_level >= 10)
     {
       mask |= PortStatusListener::get_mask (listener);
     }

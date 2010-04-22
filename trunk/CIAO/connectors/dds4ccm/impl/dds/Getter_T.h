@@ -73,30 +73,15 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_impl (CCM_DDS_DataReader_i *reader);
-
-        DDS_ReturnCode_t passivate (void);
-
-        DDS_ReturnCode_t remove_conditions (void);
-
-        void create_querycondition (const char * query,
-                                    const ::DDS_StringSeq & qp);
-        void set_queryparameters (const ::DDS_StringSeq & qp);
+        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * reader);
 
       protected:
-        typename DDS_TYPE::data_reader * reader_;
-        DDSQueryCondition * condition_;
-        ::DDS::Duration_t time_out_;
+        DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
+
+        ::DDS_Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
-        DDSWaitSet * ws_;
-        DDSReadCondition * rd_condition_;
-        DDSQueryCondition * q_condition_;
 
-        void create_conditions ();
-
-        bool wait (DDSConditionSeq& active_conditions);
-
-        typename DDS_TYPE::data_reader * impl (void);
+        DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
