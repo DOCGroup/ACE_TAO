@@ -309,8 +309,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   this->remove_conditions ();
   this->delete_datareader (sub);
   // Now we need to set the new created DataReader in our proxy classes.
-  this->reader_.set_impl (dr);
-  this->impl_ = DDS_TYPE::data_reader::narrow (this->reader_.get_impl ());
+  this->set_impl (dr);
+  this->impl_ = DDS_TYPE::data_reader::narrow (dr);
   this->create_readcondition ();
 }
 
