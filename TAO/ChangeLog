@@ -1,3 +1,9 @@
+Thu Apr 22 13:00:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/tao_orb_tests.lst:
+        
+          Added Bug_3845_Regression test to the list.
+
 Thu Apr 22 12:13:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
