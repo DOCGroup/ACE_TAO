@@ -1,3 +1,21 @@
+Thu Apr 22 13:47:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+          When PropertyQosProfile cannot be found, return nil.
+
+        * connectors/dds4ccm/impl/dds/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+          Also set PropertyQosProfile (proxy) after set a
+          contentfiltered topic.
+
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Removed unused methods.
+
 Thu Apr 22 11:15:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servants/Home_Servant_Impl_T.h:

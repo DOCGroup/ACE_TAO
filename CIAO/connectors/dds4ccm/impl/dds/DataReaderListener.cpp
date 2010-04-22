@@ -31,12 +31,19 @@ namespace CIAO
     CCM_DDS_DataReaderListener_i::get_datareader_proxy (
       ::DDSDataReader * the_reader)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::get_datareader_proxy");
       //Retrieve the pointer to the proxy from the QoS
       ::DDS_DataReaderQos qos;
       the_reader->get_qos (qos);
       DDS_Property_t * prop =
         DDSPropertyQosPolicyHelper::lookup_property (qos.property,
                                                     "CCM_DataReaderProxy");
+      if (!prop)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
+          return ::DDS::DataReader::_nil ();
+        }
       ::DDS::CCM_DataReader_ptr reader =
         reinterpret_cast < ::DDS::CCM_DataReader_ptr >
           (ACE_OS::atol (prop->value));
