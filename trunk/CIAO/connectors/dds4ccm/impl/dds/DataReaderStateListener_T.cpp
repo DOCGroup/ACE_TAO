@@ -33,24 +33,25 @@ void
 CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available");
-  if (::CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+  if (::CORBA::is_nil (this->control_.in ()) ||
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+      ::CORBA::is_nil (rdr))
+    {
       return;
+    }
+  if (this->reactor_)
+    {
+      drsh* rh = 0;
+      ACE_NEW (rh, drsh (this, rdr));
+      ACE_Event_Handler_var safe_handler (rh);
+      if (this->reactor_->notify (rh) != 0)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
+        }
+    }
   else
     {
-      if (this->reactor_)
-        {
-          drsh* rh = 0;
-          ACE_NEW (rh, drsh (this, rdr));
-          ACE_Event_Handler_var safe_handler (rh);
-          if (this->reactor_->notify (rh) != 0)
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
-            }
-        }
-      else
-        {
-          this->on_data_available_i (rdr);
-        }
+      this->on_data_available_i (rdr);
     }
 }
 
@@ -60,31 +61,19 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i");
 
-  if (::CORBA::is_nil (this->control_.in ()) || this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
-    return;
-
-  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i* rd =
-      reinterpret_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i*>(rdr);
-  if (!rd)
+  if (::CORBA::is_nil (this->control_.in ()) ||
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+      ::CORBA::is_nil (rdr))
     {
-      /* In this specific case, this will never fail */
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::dynamic_cast failed.\n")));
       return;
     }
 
-  //Retrieve the pointer to the proxy from the QoS
-  ::DDS_DataReaderQos qos;
-  rd->get_impl ()->get_qos (qos);
-  DDS_Property_t * prop =
-    DDSPropertyQosPolicyHelper::lookup_property (qos.property,
-                                                 "CCM_DataReaderProxy");
-  unsigned long ptr = ACE_OS::atol (prop->value);
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
-        reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (ptr);
+    reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::on_data_available_i - "
+      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
                                              "Failed to retrieve pointer to proxy from "
                                              "DDSDataReader.\n")));
       return;
