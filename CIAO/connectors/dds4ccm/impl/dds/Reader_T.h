@@ -12,7 +12,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "dds4ccm/impl/dds/Getter_T.h"
+#include "dds4ccm/impl/dds/DataReader_T.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
@@ -61,58 +61,20 @@ namespace CIAO
 
         virtual void filter (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_contentfilteredtopic_data (
-          const char * libary_name,
-          const char * profile_name,
-          Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get=0);
-
-        void set_impl (CCM_DDS_DataReader_i *reader);
-
-        DDS_ReturnCode_t passivate (void);
+        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * dr);
 
       private:
-        CCM_DDS_DataReader_i *reader_;
-        typename DDS_TYPE::data_reader * impl_;
+        DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
 
-        Getter_T<DDS_TYPE, CCM_TYPE, FIXED> * dds_get_;
-
-        ACE_CString library_name_;
-        ACE_CString profile_name_;
-
-        #if (DDS4CCM_USES_QUERY_CONDITION==1)
-          ::DDSQueryCondition * qc_;
-        #else
-          ::DDSContentFilteredTopic * cft_;
-        #endif
-
-        typename DDS_TYPE::data_reader * impl (void);
+        DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
 
         DDS_InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-        void read_with_instance (
-          typename DDS_TYPE::dds_seq_type & data,
-          const ::DDS_InstanceHandle_t & lookup_hnd,
-          DDS_SampleInfoSeq & sample_info);
-
-        void read_without_instance (
-          typename DDS_TYPE::dds_seq_type & data,
-          DDS_SampleInfoSeq & sample_info);
-
         CORBA::ULong get_nr_valid_samples (
           const DDS_SampleInfoSeq & sample_info,
           bool determine_last = false);
-
-        void delete_datareader (
-          ::DDSSubscriber * sub);
-
-        void create_filter (
-          const ::CCM_DDS::QueryFilter & filter);
-
-        void create_contentfilteredtopic (
-          const ::CCM_DDS::QueryFilter & filter,
-          ::DDSSubscriber * sub);
       };
     }
   }

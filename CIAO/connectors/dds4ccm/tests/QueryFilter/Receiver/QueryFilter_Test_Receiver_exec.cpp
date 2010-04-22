@@ -172,12 +172,22 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     if (::CORBA::is_nil (this->getter_))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: No Getter\n"));
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: No Getter\n"));
       }
     QueryFilterTest * qf_info = new QueryFilterTest;
     ::CCM_DDS::ReadInfo readinfo;
     bool result = this->getter_->get_one (qf_info, readinfo);
-    this->check_iter (*qf_info, "GET");
+    if (result)
+      {
+        this->check_iter (*qf_info, "GET");
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: time out when retrieving "
+                              "first sample.\n"));
+      }
     while (result)
       {
         result = this->getter_->get_one (qf_info, readinfo);

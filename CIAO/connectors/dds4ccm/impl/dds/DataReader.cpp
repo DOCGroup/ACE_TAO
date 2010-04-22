@@ -33,10 +33,12 @@ namespace CIAO
     CCM_DDS_DataReader_i::CCM_DDS_DataReader_i (DDSDataReader * dr)
       : impl_ (dr)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataReader_i::CCM_DDS_DataReader_i");
     }
 
     CCM_DDS_DataReader_i::~CCM_DDS_DataReader_i (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataReader_i::~CCM_DDS_DataReader_i");
     }
 
     ::DDS::ReturnCode_t

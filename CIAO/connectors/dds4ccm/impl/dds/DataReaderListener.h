@@ -67,7 +67,6 @@ namespace CIAO
       ::DDS::DataReaderListener_ptr get_datareaderlistener (void);
     private:
       ::DDS::DataReaderListener_var impl_;
-      ::DDS::DataReader_var dds_reader_;
 
       ::DDS::DataReader_ptr
       get_datareader_proxy (::DDSDataReader * the_reader);
