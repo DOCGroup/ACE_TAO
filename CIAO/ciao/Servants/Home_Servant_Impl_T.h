@@ -54,19 +54,19 @@ namespace CIAO
 
     virtual ~Home_Servant_Impl (void);
 
-    // Operations for CCMHome interface.
+    /// Operations for CCMHome interface.
     virtual void remove_component (Components::CCMObject_ptr comp);
 
-    // Operations for keyless home interface.
+    /// Operations for keyless home interface.
     virtual ::Components::CCMObject_ptr create_component (void);
 
-    // Operations for implicit home interface.
+    /// Operations for implicit home interface.
     virtual typename COMP_SVNT::_stub_ptr_type create (void);
 
     virtual void update_component_map (PortableServer::ObjectId &oid);
 
   protected:
-    // CIAO-specific operations.
+    /// CIAO-specific operations.
     typename COMP_SVNT::_stub_ptr_type
     _ciao_activate_component (typename COMP_SVNT::_exec_type::_ptr_type exe);
 

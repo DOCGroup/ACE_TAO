@@ -73,7 +73,7 @@ namespace CIAO
     /// Initialized in this constructor.
     typename EXEC::_var_type executor_;
 
-    /// Initialized in the derived, generated servant constructor.
+    /// Initialized in this constructor.
     CONTEXT * context_;
 
     const char * ins_name_;
