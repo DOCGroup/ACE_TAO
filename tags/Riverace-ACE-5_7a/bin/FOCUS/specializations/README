@@ -1,0 +1,16 @@
+@file README
+============
+
+This file describes certain common conventions regarding how the
+specializations rules are integrated/added to this specialization
+database. This directory will serve as a repository that will host all
+the specialization rules for the different families/components. At the
+moment, all the specialization transformations are specific to the
+ACE+TAO middleware.
+
+For each component framework, the following are the rules for adding
+the specializations:
+
+. Create a directory with the name of the component family, e.g., Reactor_Family
+. Within this directory, create the <<Specific_Component>>.spl file that has the
+  individual transformations defined.
