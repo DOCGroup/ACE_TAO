@@ -1,4 +1,0 @@
-// $Id$
-project : dance {
-  includes += $(DANCE_ROOT)/tools
-}

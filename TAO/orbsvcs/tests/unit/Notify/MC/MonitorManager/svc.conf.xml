@@ -1,7 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <dynamic id="TAO_MonitorAndControl" type="Service_Object">
-   <initializer path="TAO_CosNotification_MC" init="_make_TAO_MonitorAndControl" params="-NoNameSvc -ORBArg -ORBListenEndpoints -ORBArg iiop://127.0.0.1:32101"/>
- </dynamic>
-</ACE_Svc_Conf>

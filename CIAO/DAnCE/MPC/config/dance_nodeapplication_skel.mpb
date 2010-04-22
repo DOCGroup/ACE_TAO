@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance, dance_deployment_skel, dance_nodeapplication_stub {
-  after += Deployment_NodeApplication_skel
-  libs  += DAnCE_NodeApplication_skel
-}
