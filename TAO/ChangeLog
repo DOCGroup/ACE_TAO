@@ -1,3 +1,8 @@
+Thu Apr 22 12:13:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+          Generate doxygen style documentation
+
 Thu Apr 22 07:23:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
