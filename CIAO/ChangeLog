@@ -1,3 +1,13 @@
+Thu Apr 22 10:32:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+          Check whether provided datareader is not nil. Also removed
+          some unnecessary code from DataReaderStateListener_T.
+
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+          Optimizated logging.
+
 Thu Apr 22 09:11:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Get_T.h:

@@ -30,24 +30,27 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DD
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if (! ::CORBA::is_nil (this->control_.in ()) &&
-      this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
+  if (::CORBA::is_nil (this->control_.in ()) ||
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+      ::CORBA::is_nil (rdr))
     {
-      if (this->reactor_)
-        {
-          drh* rh = 0;
-          ACE_NEW (rh, drh (this, rdr));
+      return;
+    }
 
-          ACE_Event_Handler_var safe_handler (rh);
-          if (this->reactor_->notify (rh) != 0)
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
-            }
-        }
-      else
+  if (this->reactor_)
+    {
+      drh* rh = 0;
+      ACE_NEW (rh, drh (this, rdr));
+
+      ACE_Event_Handler_var safe_handler (rh);
+      if (this->reactor_->notify (rh) != 0)
         {
-          this->on_data_available_i (rdr);
+          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
         }
+    }
+  else
+    {
+      this->on_data_available_i (rdr);
     }
 }
 
@@ -58,7 +61,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
   if (::CORBA::is_nil (this->control_.in ()) ||
-      this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+      ::CORBA::is_nil (rdr))
     {
       return;
     }
