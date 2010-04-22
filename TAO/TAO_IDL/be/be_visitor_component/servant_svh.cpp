@@ -434,7 +434,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
   if (this->node_->n_provides () > 0UL)
     {
       os_ << be_nl << be_nl
-          << "// CIAO-specific." << be_nl
+          << "/// CIAO-specific." << be_nl
           << "::CORBA::Object_ptr" << be_nl
           << "get_facet_executor (const char * name);";
     }
