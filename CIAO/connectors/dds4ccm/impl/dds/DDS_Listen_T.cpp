@@ -16,8 +16,7 @@
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Listen_T (void) :
   data_control_ (new CCM_DDS_DataListenerControl_T
-    < ::CCM_DDS::CCM_DataListenerControl> ()),
-  ccm_dds_reader_ (0)
+    < ::CCM_DDS::CCM_DataListenerControl> ())
 {
 }
 
@@ -38,32 +37,13 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 
   try
     {
-      if (!this->ccm_dds_reader_.get_impl ())
+      if (!this->data_reader_.get_impl ())
         {
-          ::DDS::DataReader_var reader;
-          if (library_name && profile_name)
-            {
-              reader = subscriber->create_datareader_with_profile (
-                    topic,
-                    library_name,
-                    profile_name,
-                    ::DDS::DataReaderListener::_nil (),
-                    0);
-            }
-          else
-            {
-              ::DDS::DataReaderQos drqos;
-              reader = subscriber->create_datareader (
-                    topic,
-                    drqos,
-                    ::DDS::DataReaderListener::_nil (),
-                    0);
-            }
-          ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *rd =
-            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
-          this->ccm_dds_reader_.set_impl (rd->get_impl ());
-          this->dds_read_.set_impl (&this->ccm_dds_reader_);
-          this->dds_read_.set_contentfilteredtopic_data (library_name, profile_name);
+          this->data_reader_.create_datareader (topic,
+                                                subscriber,
+                                                library_name,
+                                                profile_name);
+          this->dds_read_.set_impl (&this->data_reader_);
         }
     }
   catch (...)
@@ -93,7 +73,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
                               reactor),
                             CORBA::NO_MEMORY ());
         }
-      this->ccm_dds_reader_.set_listener (
+
+      this->data_reader_.set_listener (
         this->data_listener_.in (),
         DataReaderListener::get_mask (status));
     }
@@ -111,9 +92,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate");
   try
     {
-      this->ccm_dds_reader_.set_listener (
-                ::DDS::DataReaderListener::_nil (),
-                0);
+
+      this->data_reader_.passivate ();
       this->data_listener_= ::DDS::DataReaderListener::_nil ();
     }
   catch (...)
@@ -131,18 +111,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   try
     {
-      DDS::ReturnCode_t retval =
-        subscriber->delete_datareader (&this->ccm_dds_reader_);
-      if (retval != DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-            "DDS_Listen_T::remove - "
-            "Unable to delete DataReader: <%C>\n",
-            ::CIAO::DDS4CCM::translate_retcode (retval)));
-          throw CORBA::INTERNAL ();
-        }
-      this->ccm_dds_reader_.set_impl (0);
-      this->dds_read_.set_impl (0);
+      this->data_reader_.delete_datareader (subscriber);
     }
   catch (...)
     {
@@ -167,7 +136,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
 
-  return &this->ccm_dds_reader_;
+  return &this->data_reader_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
