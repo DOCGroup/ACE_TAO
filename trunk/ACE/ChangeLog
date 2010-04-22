@@ -1,67 +1,77 @@
+Thu Apr 22 07:51:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Release:
+        * bin/make_release.py:
+          Updated because of rename
+
+        * debian:
+        * debianbuild:
+          Renamed debianbuild to debianbuild
+
 Wed Apr 21 13:36:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-   * examples/Connection/blocking/SPIPE-connector.cpp:
-     Use Reactor instead of Proactor, thanks to Dave <dwh0403 at 163 dot com>
-     for reporting this
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+          Use Reactor instead of Proactor, thanks to Dave <dwh0403 at 163 dot com>
+          for reporting this
 
 Tue Apr 20 13:02:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-   * ace/Atomic_Op.h:
-     Fix redefinition warning
+        * ace/Atomic_Op.h:
+          Fix redefinition warning
 
 Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
 
-   * ace/Service_Repository.cpp
-     Modified ASR::fini to print debug info for empty
-     service entries and handle empty service entries.
-     This fixes the ASR remove functionality that was
-     one of the reasons SC_Server was crashing at shutdown.
+        * ace/Service_Repository.cpp
+          Modified ASR::fini to print debug info for empty
+          service entries and handle empty service entries.
+          This fixes the ASR remove functionality that was
+          one of the reasons SC_Server was crashing at shutdown.
 
-   * examples/ASX/CCM_App/SC_Server.cpp
-     Removing signal handler before main exit to present SEGV
+        * examples/ASX/CCM_App/SC_Server.cpp
+          Removing signal handler before main exit to present SEGV
 
-   * tests/run_test.lst
-     Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
-     Apparently it was missed in the last commit.
+        * tests/run_test.lst
+          Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+          Apparently it was missed in the last commit.
 
-  This fixes Bugzilla #2916 and #3205.
-  I'll create another patch for #3334 after this commit.
+       This fixes Bugzilla #2916 and #3205.
+       I'll create another patch for #3334 after this commit.
 
 Mon Apr 19 12:44:56 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
 
-   * ace/Service_Types.h
-   * ace/Service_Types.inl
-   * ace/Service_Types.cpp
-     Added service_type_ attr to expose the type of service being
-     managed to the ACE_Service_Repository. This allows the ASR to
-     manage the lifecycle of the ACE_Module and ACE_Stream in order to
-     avoid a double delete of ACE_Module at shutdown.
+        * ace/Service_Types.h
+        * ace/Service_Types.inl
+        * ace/Service_Types.cpp
+          Added service_type_ attr to expose the type of service being
+          managed to the ACE_Service_Repository. This allows the ASR to
+          manage the lifecycle of the ACE_Module and ACE_Stream in order to
+          avoid a double delete of ACE_Module at shutdown.
 
-     ACE_Stream_Type::fini was modified to not call ACE_Module_Type::fini
-     as this will results in a double delete when ACE_Service_Repository::fini
-     is called. ACE_Stream_Type::remove(module_name) was modified to not call
-     ACE_Module_Type::fini as this will results in a double delete
-     when ACE_Service_Repository::fini is called also.
+          ACE_Stream_Type::fini was modified to not call ACE_Module_Type::fini
+          as this will results in a double delete when ACE_Service_Repository::fini
+          is called. ACE_Stream_Type::remove(module_name) was modified to not call
+          ACE_Module_Type::fini as this will results in a double delete
+          when ACE_Service_Repository::fini is called also.
 
-   * ace/Service_Repository.cpp
-     Modified ASR::fini to iterate over the service_array_ twice.
-     ACE_Service_Type::fini is called on all ACE_Stream_Type and
-     ACE_Service_Object_Type instances first. Then, fini is called on
-     all ACE_Modules_Type instances. All calls to fini are done in the
-     order the services appear in the ASR::service_array_ except for
-     the grouping described here. The calls to ACE_Module_Type::fini
-     must be done last because ACE_Stream_Type::fini accesses the Modules
-     so they must not be deleted by a call to ACE_Module_Type::fini
-     before that.
+        * ace/Service_Repository.cpp
+          Modified ASR::fini to iterate over the service_array_ twice.
+          ACE_Service_Type::fini is called on all ACE_Stream_Type and
+          ACE_Service_Object_Type instances first. Then, fini is called on
+          all ACE_Modules_Type instances. All calls to fini are done in the
+          order the services appear in the ASR::service_array_ except for
+          the grouping described here. The calls to ACE_Module_Type::fini
+          must be done last because ACE_Stream_Type::fini accesses the Modules
+          so they must not be deleted by a call to ACE_Module_Type::fini
+          before that.
 
-   * tests/Bug_3334_Regresssion_Test.cpp
-     Added call to ACE_Service_Repository::fini_svcs() to capture all
-     debug output before the application exits.
+        * tests/Bug_3334_Regresssion_Test.cpp
+          Added call to ACE_Service_Repository::fini_svcs() to capture all
+          debug output before the application exits.
 
-   * tests/run_tests.lst
-     Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+        * tests/run_tests.lst
+          Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
 
-   This fixes Bugzilla #3334
+        This fixes Bugzilla #3334
 
 Mon Apr 19 06:54:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
