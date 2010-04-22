@@ -74,12 +74,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     // Component attributes.
 
     // Port operations.
-    virtual ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener_ptr
-    get_read_port_data_listener (void);
-
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_read_port_status (void);
-
     virtual ::CCM_QueryFilterStarter_ptr
     get_reader_start ();
 
