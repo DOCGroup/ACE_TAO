@@ -1,0 +1,416 @@
+<!-- $Id$ -->
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Venkita Subramonian">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Kokyu</title>
+</head>
+<body>
+
+<center>
+<h2>
+<b><font size=+2>Kokyu - A middleware framework for flexible scheduling
+and dispatching</font></b></h2></center>
+<a href="#Introduction">Introduction</a>
+<br><a href="#SchedFramework">Strategized Scheduling framework</a>
+<br><a href="#FlexDispatch">Flexible Dispatching Framework</a>
+<br><a href="#KokyuEC">Use of Kokyu within the TAO Real-time Event Channel(RTEC)</a>
+<br><a href="#ConfigKokyuEC">Configuration of RTEC to use Kokyu dispatching</a>
+<br><a href="#KokyuDSRTCORBA">Use of Kokyu within the Dynamic Scheduling
+Real-time CORBA (DSRTCORBA) schedulers</a>
+<br><a href="#newDSRTSched">How to write a new DSRT scheduler using Kokyu</a>
+<br><a href="#DSRTCORBAvsRTEC">Kokyu DSRTCORBA vs Kokyu RTEC</a>
+<br><a href="#Status">Current status</a>
+<br><a href="#Future">Future work</a>
+<br><a href="#Papers">Papers on Kokyu</a>
+<br>&nbsp;
+<h3>
+<a NAME="Introduction"></a>Introduction</h3>
+Kokyu is a portable middleware scheduling framework designed to provide
+flexible scheduling and dispatching services within the context of higher-level
+middleware. Kokyu currently provides real-time scheduling and dispatching
+services for TAO’s real-time CORBA Event Service, which mediates supplier-consumer
+relationships between application operations. Kokyu consists primarily
+of two cooperating infrastructure segments, illustrated in Figure 1:
+<center>
+<p><img SRC="kokyu1.jpg" height=285 width=489>
+<br><b>Figure 1: Kokyu Scheduling and Dispatching Infrastructure</b></center>
+
+<ol>
+<li>
+A pluggable scheduling infrastructure with efficient support for adaptive
+execution of diverse static, dynamic, and hybrid static/dynamic scheduling
+heuristics.</li>
+
+<li>
+A flexible dispatching infrastructure that allows composition of primitive
+operating system and middleware mechanisms to enforce arbitrary scheduling
+heuristics.</li>
+</ol>
+The scheduler is responsible for specifying how operation dispatch requests
+are ordered, by assigning priority levels and rates to tasks, and producing
+a configuration specification for the dispatching mechanism. The dispatcher
+is responsible for enforcing the ordering of operation dispatches using
+different threads, requests queues, and timers configured according to
+the scheduler’s specification. The combined framework provides an implicit
+projection of scheduling heuristics into appropriate dispatching infrastructure
+configurations, so that the scheduling and dispatching infrastructure segments
+can be optimized both separately and in combination.
+<h3>
+<a NAME="SchedFramework"></a>Strategized Scheduling framework</h3>
+The Kokyu scheduling framework is designed to support a variety of scheduling
+heuristics including RMS, EDF, MLF, and MUF. In addition, this framework
+provides a common environment to compare systematically both existing and
+new scheduling strategies. This flexibility is achieved in the Kokyu framework
+via the Strategy pattern, which allows parts of the sequence of steps in
+an algorithm to be replaced, thus providing interchangeable variations
+within a consistent algorithmic framework. The Kokyu scheduling framework
+uses the Strategy pattern to encapsulate a family of scheduling algorithms
+within a fixed CORBA IDL interface, thereby enabling different strategies
+to be configured independently from applications that use them.
+<h3>
+<a NAME="FlexDispatch"></a>Flexible Dispatching Framework</h3>
+The right side of Figure 1 shows the essential features of Kokyu’s flexible
+task dispatching infrastructure. Key features of the dispatching infrastructure
+that are essential to performing our optimizations are as follows:
+<p><b>Dispatching queues:</b> Each task is assigned by our strategized
+Kokyu scheduling framework&nbsp; to a specific dispatching queue, each
+of which has an associated queue number, a queueing discipline, and a unique
+operating-system-specific priority for its single associated dispatching
+thread.
+<p><b>Dispatching threads:</b> Operating-system thread priorities decrease
+as the queue number increases, so that the 0th queue is served by the highest
+priority thread. Each dispatching thread removes the task from the head
+of its queue and runs its entry point function to completion before retrieving
+the next task to dispatch. Adapters can be applied to operations to intercept
+and possibly short-circuit the entry-point upcall. In general, however,
+the outermost operation entry point must complete on each dispatch.
+<p><b>Queueing disciplines: </b>Dispatching thread priorities determine
+which queue is active at any given time: the highest priority queue with
+a task to dispatch is always active, preempting tasks in lower priority
+queues. In addition, each queue may have a distinct discipline for determining
+which of its enqueued tasks has the highest eligibility, and must ensure
+the highest is at the head of the queue at the point when one is to be
+dequeued. We consider three disciplines:
+<ul>
+<li>
+Static – Tasks are ordered by a static subpriority value – results in FIFO
+ordering if all static subpriorities are made the same; static queues at
+different priority levels can be used to implement an RMS scheduling strategy.</li>
+
+<li>
+Deadline – Tasks are ordered by time to deadline; a single deadline queue
+can be used to implement the earliest deadline first (EDF) scheduling strategy.</li>
+
+<li>
+Laxity – Tasks are ordered by slack time, or laxity – the time to deadline
+minus the execution time; a single laxity queue can be used to implement
+the minimum laxity first (MLF) scheduling strategy; laxity queues at different
+priority levels can be used to implement the maximum urgency first (MUF)
+scheduling strategy.</li>
+</ul>
+Any discipline for which a maximal eligibility may be selected can be employed
+to manage a given dispatching queue in this approach. Scheduling strategies
+can be constructed from one or more queues of each discipline alone, or
+combinations of queues with different disciplines can be used. Figure 2&nbsp;
+illustrates the general queueing mechanism used by the dispatching modules
+in the Kokyu dispatching framework.
+<center>
+<p><img SRC="kokyu2.jpg" height=176 width=779>
+<p><b>Figure 2: Example Queueing Mechanism in a Kokyu Dispatching Module</b></center>
+
+<p>In addition, this figure shows how the output information provided by
+the Kokyu scheduling framework is used to configure and operate a dispatching
+module. During system initialization, each dispatching module obtains the
+thread priority and dispatching type for each of its queues, typically
+from the scheduling service’s output interface. Next, each queue is assigned
+a unique dispatching priority number, a unique thread priority, and an
+enumerated dispatching type. Finally, each dispatching module has an ordered
+queue of pending dispatches per dispatching priority. To preserve QoS guarantees,
+operations are inserted into the appropriate dispatching queue according
+to their assigned dispatching priority. Operations within a dispatching
+queue are ordered by their assigned dispatching subpriority. To minimize
+priority inversions, operations are dispatched from the queue with the
+highest thread priority, preempting any operation executing in a lower
+priority thread. To minimize preemption overhead, there is no preemption
+within a given priority queue. The following three values are defined for
+the dispatching type:
+<ul>
+<li>
+<b>STATIC DISPATCHING</b>: This type specifies a queue that only considers
+the static portion of an operation’s dispatching subpriority.</li>
+
+<li>
+<b>DEADLINE DISPATCHING</b>: This type specifies a queue that considers
+the dynamic and static portions of an operation’s dispatching subpriority,
+and updates the dynamic portion according to the time remaining until the
+operation’s deadline.</li>
+
+<li>
+<b>LAXITY DISPATCHING</b>: This type specifies a queue that considers the
+dynamic and static portions of an operation’s dispatching subpriority,
+and updates the dynamic portion according to the operation’s laxity.</li>
+</ul>
+
+<h3>
+<a NAME="KokyuEC"></a>Use of Kokyu within the TAO Real-time Event Channel(RTEC)</h3>
+Figure 3 shows the sequence of operations that take place in the Kokyu
+based dispatching module in the TAO RTEC. The client application registers
+all relevant operations with the scheduler along with their real-time requirements.
+This is done through the concept of an <font face="Courier New,Courier">RT_Info
+</font>(see
+TAO/orbsvcs/orbsvcs/RtecScheduler.idl) structure which is a structure that
+contains the execution time, criticality, period, etc of an operation.&nbsp;
+The client then calls <font face="Courier New,Courier">compute_schedule</font>
+method on the scheduler. The scheduler creates a dependency graphs of all
+operations and partitions operations into equivalence classes based on
+the scheduling parameters supplied. The scheduler can be configured to
+have any scheduling policy which determines the equivalence class partitioning
+(queues) and possibly a partial ordering of operations within an equivalence
+class (ordering within a queue). Once this is done, the scheduler has the
+configuration information for the Kokyu dispatcher like the number of dispatch
+queues, priorities for the threads processing each queue, etc.
+<p>When the client calls <font face="Courier New,Courier">activate</font>
+on the event channel, the EC inturn activates the Kokyu based EC dispatching
+module. The EC dispatching module queries the dispatch configuration from
+the scheduler and uses that to create the Kokyu dispatcher with the appropriate
+number of lanes and threads. When an event is pushed into the EC, the EC
+pushes the event to the appropriate consumers, who are subscribed to that
+event. For each consumer, the EC queries the scheduler for the RT_Info
+of that consumer. It then hands over the event to the Kokyu based dispatching
+module. The dispatching module then enqueues the event into the appropriate
+queue for processing by the thread watching that queue.
+<center>
+<p><img SRC="KokyuEC.jpg" height=784 width=716>
+<p><b>Figure 3: Kokyu based dispatching module within TAO RTEC</b></center>
+
+<h3>
+<a NAME="ConfigKokyuEC"></a>Configuration of RTEC to use Kokyu dispatching</h3>
+<b>Static configuration</b>: In the <b>svc.conf</b> file, make sure you
+have the following configuration for Kokyu dispatching. You can combine
+this with other -ECxxx options.
+<p><font face="Courier New,Courier">static EC_Factory "-ECdispatching kokyu
+SCHED_FIFO -ECscheduling kokyu -ECfiltering kokyu"</font>
+<p>To run the threads in the real-time FIFO class, use SCHED_FIFO. You
+could use SCHED_RR and SCHED_OTHER also.
+<br>The default is SCHED_FIFO.
+<p>In your program, call
+<p><font face="Courier New,Courier">TAO_EC_Kokyu_Factory::init_svcs ();</font>
+<p>to statically create the EC Kokyu dispatching and other Kokyu related
+modules.
+<p><b>Dynamic configuration</b>: In the <b>svc.conf</b> file, make sure
+you have the following configuration for Kokyu dispatching. You can combine
+this with other -ECxxx options.
+<p><font face="Courier New,Courier">dynamic EC_Factory Service_Object *
+TAO_RTKokyuEvent:_make_TAO_EC_Kokyu_Factory() "-ECdispatching kokyu -ECscheduling
+kokyu -ECfiltering kokyu"</font>
+<h3>
+<a NAME="KokyuDSRTCORBA"></a>Use of Kokyu within the Dynamic Scheduling
+Real-time CORBA (DSRTCORBA) schedulers</h3>
+An initial implementation of mechanisms to support DSRTCORBA schedulers
+have been released. DSRTCORBA uses the concept of distributed threads,
+which traverse multiple end systems giving the application the illusion
+of a single logical thread executing an end-to-end task. The distributed
+thread carries with it the scheduling parameters like importance, deadline,
+etc so that it can get scheduled by a local scheduler on each endsystem.
+The Kokyu DSRT dispatching framework is used as an enforcing mechanism.
+<p>The DSRT schedulers are available in the directory $TAO_ROOT/examples/Kokyu_dsrt_schedulers.
+They use the Kokyu DSRT
+<br>dispatching classes present in $ACE_ROOT/Kokyu. These act as wrappers/adapters
+around the Kokyu DSRT dispatcher. The Kokyu DSRT dispatcher is responsible
+for scheduling threads which ask the dispatcher to schedule themselves.
+Currently there are two implementations for the Kokyu DSRT dispatcher.
+One uses a condition-variable based approach for scheduling threads and
+the other manipulates priorities of threads and relies on the OS scheduler
+for dispatching the threads appropriately.
+<h4>
+CV-based approach:</h4>
+In this approach, it is assumed that the threads "yield" on a regular basis
+to the scheduler by calling <tt>update_scheduling_segment</tt>. Only one
+thread is running at any point in time. All the other threads are blocked
+on a condition variable. When the currently running thread yields, it will
+cause the condition variable to be signalled. All the eligible threads
+are stored in a scheduler queue (rbtree), the most eligible thread determined
+by the scheduling discipline. This approach has the drawback that it requires
+a cooperative threading model, where threads yield voluntarily on a regular
+basis. The application threads are responsible for doing this voluntary
+yielding.
+<h4>
+OS-based approach:</h4>
+This approach relies on the OS scheduler to do the actual thread dispatching.
+The Kokyu DSRT dispatcher manipulates the priorities of the threads. The
+scheduler maintains a queue (rbtree) of threads. The scheduler also has
+an executive thread, which runs at the maximum available priority. This
+thread runs in a continuous loop until the dispatcher is shut down. The
+executive thread is responsible for selecting the most eligible thread
+from the scheduler queue and bump up its priority if necessary while bumping
+down the priority of the currently running thread, if it is not the most
+eligible. There are four priority levels required for this mechanism to
+work, listed in descending order of priorities. For example, a thread running
+at <i>Active</i> priority will preempt a
+<br>thread running at <i>Inactive</i> priority level.
+<ol>
+<li>
+Executive priority - priority at which the scheduler executive thread runs.</li>
+
+<li>
+Blocked priority - this is the priority to which threads about to block
+on remote calls will be bumped up to.</li>
+
+<li>
+Active priority - this is the priority to which the most eligible thread
+is set to.</li>
+
+<li>
+Inactive priority - this is the priority to which all threads except the
+most eligible thread is set to.</li>
+</ol>
+As soon as a thread asks to be scheduled, a wrapper object is created and
+inserted into the queue. This object carries the qos (sched params) associated
+with that thread. A condition variable is signalled to inform the executive
+thread that the queue is "dirty". The scheduler thread picks up the most
+eligble one and sets its priority to <i>active</i> and sets the currently
+running thread priority to
+<br><i>inactive</i>.
+<p>The drawback to this approach is that it relies on the OS scheduler
+to dispatch the threads. Also, with the current implementation, there is
+only one thread running at active priority and others are all at <i>inactive</i>
+level. This will create undesirable effects with multi-processor systems,
+which could select any one of the <i>inactive</i> level threads and this
+could cause priority inversions.
+<h3>
+<a NAME="newDSRTSched"></a>How to write a new DSRT scheduler using Kokyu</h3>
+One can use one of the schedulers as a starting point. The variation points
+are
+<ol>
+<li>
+The scheduler parameters that need to be propagated along with the service
+context.</li>
+
+<li>
+The QoS comparison function, that determines which thread is more eligible.</li>
+</ol>
+To aid (1), we have created a Svc_Ctxt_DSRT_QoS idl interface (see ./Kokyu_qos.pidl).
+This interface currently has the necessary things to be propagated for
+FP, MIF and MUF schedulers. This can be altered if necessary to accomodate
+new sched params. The idea here is to let the IDL compiler generate the
+marshalling code (including Any operators) so that these parameters can
+be shipped across in the service context in an encapsulated CDR.
+<p>To create customized QoS comparator functions, we used the idea of C++
+traits to let the user define customized comparator functions. For example,
+the MIF scheduler uses the following traits class.
+<p><tt>&nbsp; struct MIF_Scheduler_Traits</tt>
+<br><tt>&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; typedef RTScheduling::Current::IdType Guid_t;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; struct _QoSDescriptor_t</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; typedef long Importance_t;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Importance_t importance_;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; };</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; typedef _QoSDescriptor_t QoSDescriptor_t;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; typedef Kokyu::MIF_Comparator&lt;QoSDescriptor_t>
+QoSComparator_t;</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; class _Guid_Hash</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; public:</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; u_long operator () (const Guid_t&amp;
+id)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return ACE::hash_pjw
+((const char *) id.get_buffer (),</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+id.length ());</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; };</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; typedef _Guid_Hash Guid_Hash;</tt>
+<br><tt>&nbsp; };</tt>
+<p>The idea of traits makes the Kokyu dispatcher more flexible in terms
+of creating new schedulers. For example, the Kokyu classes do not care
+about what concrete type Guid is. It could be an OctetSequence for some
+applications, whereas it could be an int for some others. The exact type
+is defined by the application (in this case, the MIF scheduler) using the
+traits class. In the above traits class the Guid's type is defined to be
+an octet sequence (indirectly). The Kokyu dispatcher expects the following
+typedef's to
+<br>be present in the traits class:
+<p><tt>Guid_t - </tt>Type of GUID.
+<br><tt>QoSDescriptor_t - </tt>aggregate for scheduler parameters
+<br><tt>QoSComparator_t - </tt>used by the scheduler queue to determine
+most eligible item
+<br><tt>Guid_Hash - </tt>used by the internal hash map in the scheduler
+to hash the guid.
+<p>It is also expected that the following operator be defined for comparing
+QoS parameters. This comparator function will be used by the scheduler
+queue to determine the most eligible item in the queue.
+<p><tt>QoSComparator_t::operator ()(const QoSDescriptor_t&amp; qos1,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+const QoSDescriptor_t&amp; qos2)</tt>
+<h3>
+<a NAME="DSRTCORBAvsRTEC"></a>Kokyu DSRTCORBA vs Kokyu RTEC</h3>
+Currently we have separate interfaces for DSRTCORBA and RTEC dispatching
+mechanisms. Once we get more use cases and experience, there is a possibility
+of these getting merged in the future. The RTEC related dispatching interface
+is in <tt>Kokyu::Dispatcher (Kokyu.h)</tt> and DSRTCORBA related dispatching
+interface is in <tt>Kokyu::DSRT_Dispatcher (Kokyu_dsrt.h)</tt>
+<h3>
+<a NAME="Status"></a>Current status</h3>
+Kokyu dispatching framework is available as a separate module under <tt><font size=+1>ACE_wrappers/Kokyu</font></tt>
+as part of the <a href="http://download.dre.vanderbilt.edu">ACE/TAO
+distribution</a>. Note that this module is not dependent on TAO, though
+it is built on top of ACE. The TAO Event Channel uses the Strategy and
+Service Configurator patterns to use configurable dispatching modules.
+A Kokyu based EC dispatching module is available in the <tt><font size=+1>TAO/orbsvcs/orbsvcs/RTKokyuEvent</font></tt>
+module. This module acts as an adapter between the Kokyu dispatcher and
+the RTEC.
+<p>Kokyu scheduling framework is available under the TAO source tree (<tt><font size=+1>TAO/orbsvcs/orbsvcs/Sched</font></tt>).
+<p>An example using the RTEC Kokyu dispatching module is available under
+<tt><font size=+1>TAO/orbsvcs/examples/RtEC/Kokyu</font></tt>.
+<h3>
+<a NAME="Future"></a>Future work</h3>
+
+<ol>
+<li>
+Currently there is no support for timers in the Kokyu dispatching module.
+We plan to do this in the near future.</li>
+
+<li>
+It looks like there is a general structure to the different schedulers.
+May be this can be abstracted using templates or some similar mechanism.</li>
+
+<li>
+Thread sched policy and sched scope are currently being passed explicitly
+from the application to the scheduler. This can be changed later to get
+this information from the ORB. This requires the usage of RTORB and the
+actual values can be set using svc.conf parameters for RT_ORB_Loader.</li>
+
+<br>&nbsp;
+<li>
+See whether the approaches could be extended to multiprocessor systems.</li>
+</ol>
+
+<h3>
+<a NAME="Papers"></a>Papers on Kokyu</h3>
+
+<ol>
+<li>
+Christopher D. Gill, <a href="http://www.cse.wustl.edu/~cdgill/PDF/cdgill_dissertation.pdf">Dissertation:Flexible
+Scheduling in Middleware for Distributed Rate-Based Real-Time Applications</a></li>
+
+<li>
+Christopher D. Gill, David L. Levine, and Douglas C. Schmidt <a href="http://www.cse.wustl.edu/~cdgill/PDF/dynamic.pdf">The
+Design and Performance of a Real-Time CORBA Scheduling Service</a>, Real-Time
+Systems: the International Journal of Time-Critical Computing Systems,
+special issue on Real-Time Middleware, guest editor Wei Zhao, March 2001,
+Vol. 20 No. 2</li>
+
+<li>
+Christopher D. Gill, Douglas C. Schmidt, and Ron Cytron, <a href="http://www.cs.wustl.edu/~schmidt/PDF/embedded_sched.pdf">Multi-Paradigm
+Scheduling for Distributed Real-Time Embedded Computing</a>, IEEE Proceedings
+Special Issue on Modeling and Design of Embedded Systems, Volume 91, Number
+1, January 2003.</li>
+</ol>
+
+</body>
+</html>

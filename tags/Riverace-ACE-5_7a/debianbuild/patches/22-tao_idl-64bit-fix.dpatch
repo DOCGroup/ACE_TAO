@@ -1,0 +1,65 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 22-tao_idl-64bit-fix.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## DP: backport 64bit fix for tao_idl from upstream
+@DPATCH@
+--- ACE_wrappers/TAO/TAO_IDL/be/be_helper.cpp-	2008-11-04 22:18:23.000000000 +0100
++++ ACE_wrappers/TAO/TAO_IDL/be/be_helper.cpp	2008-11-04 22:19:14.000000000 +0100
+@@ -360,7 +360,7 @@
+ 
+   return *this;
+ }
+-#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
++
+ TAO_OutStream &
+ TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
+ {
+@@ -380,26 +380,6 @@
+ 
+   return *this;
+ }
+-#endif
+-TAO_OutStream &
+-TAO_OutStream::operator<< (const unsigned long num)
+-{
+-  ACE_OS::fprintf (this->fp_,
+-                   "%lu",
+-                   num);
+-
+-  return *this;
+-}
+-
+-TAO_OutStream &
+-TAO_OutStream::operator<< (const long num)
+-{
+-  ACE_OS::fprintf (this->fp_,
+-                   "%ld",
+-                   num);
+-
+-  return *this;
+-}
+ 
+ TAO_OutStream &
+ TAO_OutStream::operator<< (const TAO_NL&)
+--- ACE_wrappers/TAO/TAO_IDL/be_include/be_helper.h-	2008-11-04 22:14:08.000000000 +0100
++++ ACE_wrappers/TAO/TAO_IDL/be_include/be_helper.h	2008-11-04 22:16:53.000000000 +0100
+@@ -174,18 +174,12 @@
+ 
+   TAO_OutStream &operator<< (const ACE_CDR::Long num);
+   // output the integer and return a reference to ourselves
+-#if defined (ACE_WIN64) || ! (! defined (ACE_HAS_UINT64_T) && ACE_SIZEOF_LONG == 8)
++
+   TAO_OutStream &operator<< (const ACE_CDR::ULongLong num);
+   // output the integer and return a reference to ourselves
+ 
+   TAO_OutStream &operator<< (const ACE_CDR::LongLong num);
+   // output the integer and return a reference to ourselves
+-#endif
+-  TAO_OutStream &operator<< (const unsigned long num);
+-  // output the integer and return a reference to ourselves
+-
+-  TAO_OutStream &operator<< (const long num);
+-  // output the integer and return a reference to ourselves
+ 
+   // = MANIPULATORS
+ 
