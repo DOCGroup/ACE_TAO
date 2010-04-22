@@ -113,6 +113,9 @@ namespace CIAO
             DDS_Duration_t & time_out);
 
       void
+      set_proxy (DDSDataReader * dr);
+
+      void
       passivate (void);
 
       void

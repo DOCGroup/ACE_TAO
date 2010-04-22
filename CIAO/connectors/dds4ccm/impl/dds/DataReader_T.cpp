@@ -311,6 +311,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
   // Now we need to set the new created DataReader in our proxy classes.
   this->set_impl (dr);
   this->impl_ = DDS_TYPE::data_reader::narrow (dr);
+  this->set_proxy (dr);
   this->create_readcondition ();
 }
 
@@ -495,7 +496,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (void)
           throw CCM_DDS::InternalError (retcode, 1);
         }
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::DataReader_T::create_readcondition - "
-                                          "Read condition created and attched to Waitset.\n"));
+                                          "Read condition created and attached to Waitset.\n"));
     }
 }
 
@@ -635,6 +636,29 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
   this->ws_ = 0;
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_proxy (
+  DDSDataReader * dr)
+{
+  //pass this proxy on to the listener
+  DDS_DataReaderQos qos;
+  dr->get_qos (qos);
+  char * value = 0;
+  ACE_NEW_THROW_EX (value,
+                    char[15],
+                    CORBA::NO_MEMORY ());
+  ACE_OS::sprintf (value ,
+                   "%ld",
+                   reinterpret_cast <unsigned long> (this));
+
+  DDSPropertyQosPolicyHelper::add_property (qos.property,
+                                            "CCM_DataReaderProxy",
+                                            value,
+                                            DDS_BOOLEAN_FALSE);
+  dr->set_qos (qos);
+  delete value;
+}
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
@@ -680,23 +704,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
   ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *rd =
     dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
 
-  //pass this proxy on to the listener
-  DDS_DataReaderQos qos;
-  rd->get_impl ()->get_qos (qos);
-  char * value = 0;
-  ACE_NEW_THROW_EX (value,
-                    char[15],
-                    CORBA::NO_MEMORY ());
-  ACE_OS::sprintf (value ,
-                   "%ld",
-                   reinterpret_cast <unsigned long> (this));
-
-  DDSPropertyQosPolicyHelper::add_property (qos.property,
-                                            "CCM_DataReaderProxy",
-                                            value,
-                                            DDS_BOOLEAN_FALSE);
-  rd->get_impl ()->set_qos (qos);
-  delete value;
+  this->set_proxy (rd->get_impl ());
 
   this->set_impl (rd->get_impl ());
   this->impl_ = DDS_TYPE::data_reader::narrow (rd->get_impl ());

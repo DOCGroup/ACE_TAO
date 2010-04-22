@@ -451,18 +451,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener_ptr
-  Receiver_exec_i::get_read_port_data_listener (void)
-  {
-    return ::QueryFilter_Test::QueryFilterTestConn::CCM_Listener::_nil ();
-  }
-
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_read_port_status (void)
-  {
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
-  }
-
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_get_port_status (void)
   {
