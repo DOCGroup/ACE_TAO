@@ -1,3 +1,13 @@
+Thu Apr 22 14:31:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReader.h:
+        * connectors/dds4ccm/impl/dds/DataReader.cpp:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+          It appears that when a contentfilteredTopic is created
+          a new DataReader is created. The listening mask on this
+          Reader contains a DDS_DATA_AVAILABLE-mask while it should
+          use the mask which was originally set when the listener was set.
+
 Thu Apr 22 13:47:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
