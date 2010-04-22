@@ -31,7 +31,8 @@ namespace CIAO
   namespace DDS4CCM
   {
     CCM_DDS_DataReader_i::CCM_DDS_DataReader_i (DDSDataReader * dr)
-      : impl_ (dr)
+      : impl_ (dr),
+        lst_mask_ (0)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReader_i::CCM_DDS_DataReader_i");
     }
@@ -224,6 +225,7 @@ namespace CIAO
                             CCM_DDS_DataReaderListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
+      this->lst_mask_ = mask;
       return this->impl ()->set_listener (ccm_dds_drl, mask);
 #else
       return this->impl ()->set_listener (a_listener, mask);
@@ -438,6 +440,12 @@ namespace CIAO
     CCM_DDS_DataReader_i::get_impl (void)
     {
       return this->impl_;
+    }
+
+    ::DDS::StatusMask
+    CCM_DDS_DataReader_i::get_mask (void)
+    {
+      return this->lst_mask_;
     }
 
     void

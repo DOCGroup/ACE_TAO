@@ -286,9 +286,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
                                                 this->library_name_.c_str (),
                                                 this->profile_name_.c_str (),
                                                 drl,
-                                                ::DDS::DATA_AVAILABLE_STATUS |
-                                                ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
-                                                ::DDS::SAMPLE_LOST_STATUS);
+                                                this->get_mask ());
     }
   else
     {
@@ -296,9 +294,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
       dr = sub->create_datareader (this->cft_,
                                    qos,
                                    drl,
-                                   ::DDS::DATA_AVAILABLE_STATUS |
-                                   ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
-                                   ::DDS::SAMPLE_LOST_STATUS);
+                                   this->get_mask ());
     }
   if (!dr)
     {
