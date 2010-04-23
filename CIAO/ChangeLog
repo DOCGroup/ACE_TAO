@@ -1,3 +1,27 @@
+Fri Apr 23 14:12:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/ContentFilteredTopic:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Base:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Base/CFT_Test_Base.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Base/CFT_Test_Base.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Connector:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Connector/CFT_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Connector/CFT_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/descriptors:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/descriptors/run_test.pl:
+          Added a test which checks the uniqueness of
+          a contentfilteredTopic.
+
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
+          Changed naming convention.
+
 Fri Apr 23 13:37:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO-INSTALL.html:
