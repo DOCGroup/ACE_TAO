@@ -32,7 +32,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class In_Fixed_Size_Argument_T : public InArgument
   {
   public:
@@ -55,7 +55,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class In_Fixed_Size_Clonable_Argument_T :
           public In_Fixed_Size_Argument_T<S, Insert_Policy>
   {
@@ -76,7 +76,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Inout_Fixed_Size_Argument_T : public InoutArgument
   {
   public:
@@ -100,7 +100,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Out_Fixed_Size_Argument_T : public OutArgument
   {
   public:
@@ -124,7 +124,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Ret_Fixed_Size_Argument_T : public RetArgument
   {
   public:
@@ -149,7 +149,7 @@ namespace TAO
    *
    */
   template<typename T,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Fixed_Size_Arg_Traits_T
   {
     typedef T                                            ret_type;
