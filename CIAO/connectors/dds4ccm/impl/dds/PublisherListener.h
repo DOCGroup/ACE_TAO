@@ -83,7 +83,6 @@ namespace CIAO
       ::DDS::PublisherListener_ptr get_publisher_listener (void);
     private:
       ::DDS::PublisherListener_var impl_;
-      ::DDS::DataWriter_var dds_writer_;
 
       ::DDS::DataWriter_ptr
       get_datawriter_proxy (::DDSDataWriter * the_writer);
