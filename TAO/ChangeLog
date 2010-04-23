@@ -1,3 +1,9 @@
+Fri Apr 23 12:26:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Layout changes to the generated code
+
 Fri Apr 23 08:22:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
