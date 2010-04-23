@@ -568,8 +568,10 @@ namespace CIAO
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
       if (this->remove_topic (top))
         {
+          ACE_CString name (ACE_TEXT ("DDS4CCM_CFT_"));
+          name.append (ACE_TEXT (top->get_name ()), ACE_OS::strlen (top->get_name ()));
           ::DDS::TopicDescription_var td =
-              lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
+              lookup_topicdescription (ACE_TEXT (name.c_str ()));
           if (! ::CORBA::is_nil (td.in ()))
             {
               ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
@@ -582,6 +584,13 @@ namespace CIAO
                                                   "Unable to delete ContentFilteredTopic. Retval is %C.\n",
                                                   topic_name,
                                                   translate_retcode (ret)));
+                    }
+                  else
+                    {
+                      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
+                                    "Successfully deleted ContentFilteredTopic <%C>\n",
+                                    topic_name,
+                                    name.c_str ()));
                     }
                 }
             }
