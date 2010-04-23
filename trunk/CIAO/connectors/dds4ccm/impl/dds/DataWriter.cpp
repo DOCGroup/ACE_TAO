@@ -285,6 +285,26 @@ namespace CIAO
     void
     CCM_DDS_DataWriter_i::set_impl (DDSDataWriter * dw)
     {
+      //set a pointer to this class for the listener to use.
+      if (dw)
+        {
+          ::DDS_DataWriterQos qos;
+          dw->get_qos (qos);
+          char * value = 0;
+          ACE_NEW_THROW_EX (value,
+                            char[15],
+                            CORBA::NO_MEMORY ());
+          ACE_OS::sprintf (value ,
+                          "%ld",
+                          reinterpret_cast <unsigned long> (this));
+
+          DDSPropertyQosPolicyHelper::add_property (qos.property,
+                                                    "CCM_DataWriterProxy",
+                                                    value,
+                                                    DDS_BOOLEAN_FALSE);
+          dw->set_qos (qos);
+          delete value;
+        }
       this->impl_ = dw;
     }
 
