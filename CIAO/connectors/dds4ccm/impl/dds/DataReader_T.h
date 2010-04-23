@@ -24,7 +24,7 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class DDS4CCM_DDS_IMPL_Export DataReader_T
+    class DataReader_T
       : public virtual CCM_DDS_DataReader_i
     {
     public:
