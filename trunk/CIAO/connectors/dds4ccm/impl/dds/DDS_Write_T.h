@@ -9,6 +9,7 @@
 #define DDS_WRITE_T_H_
 
 #include "dds4ccm/impl/dds/DDS_TopicBase_Connector_T.h"
+#include "dds4ccm/impl/dds/DataWriterListener_T.h"
 #include "dds4ccm/impl/dds/Writer_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
