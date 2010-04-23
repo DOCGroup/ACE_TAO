@@ -1,7 +1,83 @@
+Fri Apr 23 08:22:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+          Layout changes
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * tao/AnyTypeCode/Any_Arg_Traits.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/Object.h:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Object_Argument_T.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/BD_String_SArgument_T.h:
+        * tao/PortableServer/BD_String_SArgument_T.inl:
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/PortableServer/Basic_SArgument_T.h:
+        * tao/PortableServer/Basic_SArgument_T.inl:
+        * tao/PortableServer/Basic_SArgument_T.cpp:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl:
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Size_SArgument_T.h:
+        * tao/PortableServer/Fixed_Size_SArgument_T.inl:
+        * tao/PortableServer/Fixed_Size_SArgument_T.cpp:
+        * tao/PortableServer/Object_SArg_Traits.h:
+        * tao/PortableServer/Object_SArgument_T.h:
+        * tao/PortableServer/Object_SArgument_T.inl:
+        * tao/PortableServer/Object_SArgument_T.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Special_Basic_SArgument_T.h:
+        * tao/PortableServer/Special_Basic_SArgument_T.inl:
+        * tao/PortableServer/Special_Basic_SArgument_T.cpp:
+        * tao/PortableServer/Special_Basic_SArguments.h:
+        * tao/PortableServer/TypeCode_SArg_Traits.h:
+        * tao/PortableServer/Var_Array_SArgument_T.h:
+        * tao/PortableServer/Var_Array_SArgument_T.inl:
+        * tao/PortableServer/Var_Array_SArgument_T.cpp:
+        * tao/PortableServer/Var_Size_SArgument_T.h:
+        * tao/PortableServer/Var_Size_SArgument_T.inl:
+        * tao/PortableServer/Var_Size_SArgument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Arguments.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+          Introduce template template arguments, this simplifies the
+          code generation and resolves bugzilla 2567
+
 Thu Apr 22 13:00:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/tao_orb_tests.lst:
-        
+
           Added Bug_3845_Regression test to the list.
 
 Thu Apr 22 12:13:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

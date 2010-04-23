@@ -68,8 +68,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl
-          << "::CORBA::ULong max" << be_uidt_nl
-          << ")" << be_nl
+          << "::CORBA::ULong max)" << be_uidt_nl
           << ": " << be_idt;
 
       // Pass it to the base constructor.
@@ -114,8 +113,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     }
 
   *os << " * buffer," << be_nl
-      << "::CORBA::Boolean release" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "::CORBA::Boolean release)" << be_uidt << be_uidt_nl
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
@@ -143,8 +141,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << node->name () << "::" << node->local_name ()
       << " (" << be_idt << be_idt_nl
       << "const " << node->local_name ()
-      << " &seq" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << " &seq)" << be_uidt
+      << be_uidt_nl
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
@@ -172,8 +170,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << "void "
           << node->name () << "::_tao_any_destructor (" << be_idt << be_idt_nl
-          << "void * _tao_void_pointer" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << "void * _tao_void_pointer)" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << node->local_name () << " * _tao_tmp_pointer =" << be_idt_nl
           << "static_cast<" << node->local_name ()
