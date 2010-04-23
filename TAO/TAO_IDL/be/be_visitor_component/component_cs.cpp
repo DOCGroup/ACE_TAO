@@ -59,8 +59,8 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << "_ptr p)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
           << "}";
@@ -69,8 +69,8 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << "_ptr p)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::release (p);" << be_uidt_nl
           << "}";
@@ -88,8 +88,8 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
           << "const " << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << "TAO_OutputCDR & cdr)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "return cdr << p;" << be_uidt_nl
           << "}";
@@ -129,8 +129,7 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer) ("
           << be_idt << be_idt_nl
-          << "::CORBA::Object_ptr obj" << be_uidt_nl
-          << ") = 0;" << be_uidt;
+          << "::CORBA::Object_ptr obj) = 0;" << be_uidt << be_uidt;
     }
 
    // Generate the destructor and default constructor.
