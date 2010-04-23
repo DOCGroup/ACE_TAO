@@ -1,3 +1,8 @@
+Fri Apr 23 12:03:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Home.idl:
+          Enable the key exceptions for the moment, we need more work in TAO_IDL
+
 Fri Apr 23 11:24:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Home.idl:

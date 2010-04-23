@@ -14,11 +14,9 @@ module Components
 {
   typeprefix Components "omg.org";
 
-#if !defined (CCM_LW)
   exception DuplicateKeyValue {};
   exception InvalidKey {};
   exception UnknownKeyValue {};
-#endif
 
   interface CCMObject;
 
