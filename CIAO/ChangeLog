@@ -1,3 +1,9 @@
+Fri Apr 23 12:29:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/LatencyTT/Sender/LatencyTT_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+          Extra loginfo about whether a threadswitch is used or not.
+
 Fri Apr 23 12:03:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Home.idl:
