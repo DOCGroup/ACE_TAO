@@ -1,3 +1,8 @@
+Fri Apr 23 11:24:40 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Home.idl:
+          Don't include IFR with LwCCM
+
 Fri Apr 23 09:43:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.h:

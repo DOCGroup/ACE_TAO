@@ -4,7 +4,10 @@
 #if !defined (CCM_HOME_IDL)
 #define CCM_HOME_IDL
 
+#if !defined (CCM_LW)
 #include "tao/IFR_Client/IFR_Base.pidl"
+#endif
+
 #include "ccm/CCM_Exceptions.idl"
 
 module Components
