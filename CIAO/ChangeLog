@@ -1,9 +1,15 @@
+Fri Apr 23 13:37:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Updated some links
+
 Fri Apr 23 14:34:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc
-         Move lib dir into project.
-        * connectors/ami4ccm/tests/IDL_Test/Hello.idl
-        Add test for void operation with an in- and out argument.
+        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
+          Move lib dir into project.
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+          Add test for void operation with an in- and out argument.
 
 Fri Apr 23 12:29:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
