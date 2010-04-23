@@ -222,8 +222,11 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
   // Now create the ContentFilteredTopic
   DDS_StringSeq params;
   params <<= filter.query_parameters;
+
+  ACE_CString name (ACE_TEXT ("DDS4CCM_CFT_"));
+  name.append (ACE_TEXT (tp->get_name ()), ACE_OS::strlen (tp->get_name ()));
   this->cft_ = dp->create_contentfilteredtopic (
-                        "DDS4CCMContentFilteredTopic",
+                        name.c_str (),
                         tp,
                         filter.query,
                         params);
@@ -232,6 +235,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
                     "Error: Unable to create ContentFilteredTopic.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 4);
+    }
+  else
+    {
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
+                    "Successfully created a ContentFilteredTopic <%C>.\n",
+                    name.c_str ()));
     }
 }
 
