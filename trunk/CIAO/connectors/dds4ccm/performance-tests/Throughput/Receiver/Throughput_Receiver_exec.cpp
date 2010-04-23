@@ -2,8 +2,10 @@
 //
 // $Id$
 #include "Throughput_Receiver_exec.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ace/High_Res_Timer.h"
+
 
 namespace CIAO_Throughput_Receiver_Impl
 {
@@ -152,12 +154,19 @@ namespace CIAO_Throughput_Receiver_Impl
 
         if(this->run_ == 1)
           {
-             ACE_DEBUG((LM_DEBUG,
+            #if (CIAO_DDS4CCM_CONTEXT_SWITCH==1)
+              ACE_DEBUG ((LM_DEBUG, "\n\nYES, we're using a threadswitch between "
+                                    "DDS and CMM\n\n"));
+            #else
+              ACE_DEBUG ((LM_DEBUG, "\n\nNO, we're not using a threadswitch between "
+                                    "DDS and CMM\n\n"));
+            #endif
+             ACE_DEBUG ((LM_DEBUG,
                         " bytes, demand, samples,sample/s, Mbit/s,lost samples\n"));
-             ACE_DEBUG((LM_DEBUG,
+             ACE_DEBUG ((LM_DEBUG,
                         "------,-------,--------,--------,-------,------------\n"));
           }
-        ACE_DEBUG((LM_DEBUG, "%6u,%7q,%8q,%8.1f,%7.1f,%7q\n",
+        ACE_DEBUG ((LM_DEBUG, "%6u,%7q,%8q,%8.1f,%7.1f,%7q\n",
                         this->interval_data_length_,
                         this->demand_,
                         this->interval_messages_received_,

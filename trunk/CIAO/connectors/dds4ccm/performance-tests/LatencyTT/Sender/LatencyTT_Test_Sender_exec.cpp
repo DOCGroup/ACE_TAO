@@ -2,6 +2,7 @@
 // $Id$
 
 #include "LatencyTT_Test_Sender_exec.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/Timer_Queue.h"
@@ -270,6 +271,13 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
       {
         if( this->datalen_idx_ == 0)
           {
+            #if (CIAO_DDS4CCM_CONTEXT_SWITCH==1)
+              ACE_DEBUG ((LM_DEBUG, "\n\nYES, we're using a threadswitch between "
+                                    "DDS and CMM\n\n"));
+            #else
+              ACE_DEBUG ((LM_DEBUG, "\n\nNO, we're not using a threadswitch between "
+                                    "DDS and CMM\n\n"));
+            #endif
             ACE_DEBUG ((LM_DEBUG,
              "Collecting statistics on %d samples per message size.\n"
              "This is the roundtrip time, *not* the one-way-latency\n"
