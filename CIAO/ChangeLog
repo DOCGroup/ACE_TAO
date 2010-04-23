@@ -1,3 +1,11 @@
+Fri Apr 23 09:15:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_StateIdFactory.idl:
+          Disabled completely for LwCCM
+
+        * docs/TODO.html:
+          Removed reference to ciao_pre/post methods
+
 Fri Apr 23 09:08:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
