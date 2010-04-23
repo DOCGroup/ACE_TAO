@@ -150,8 +150,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer) ("
           << be_idt << be_idt_nl
-          << "::CORBA::Object_ptr obj" << be_uidt_nl
-          << ") = 0;" << be_uidt;
+          << "::CORBA::Object_ptr obj) = 0;" << be_uidt
+          << be_uidt;
     }
 
   // Generate code for the elements of the interface.
@@ -502,9 +502,9 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
       *os << "::CORBA::Object_ptr";
     }
 
-  *os << " _tao_objref"
+  *os << " _tao_objref)"
+      << be_uidt
       << be_uidt_nl
-      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (node->is_local ())
