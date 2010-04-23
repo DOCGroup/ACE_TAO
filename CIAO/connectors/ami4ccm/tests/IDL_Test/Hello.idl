@@ -18,7 +18,9 @@ module Hello
 
   interface MyFoo
     {
-      long foo (in string in_str, out string answer)
+      long foo_return (in string in_str, out string answer)
+        raises (InternalError);
+      void foo_no_return (in string in_str, out string answer)
         raises (InternalError);
       void hello (out long answer)
         raises (InternalError);
