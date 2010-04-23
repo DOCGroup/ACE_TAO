@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * @file CFT_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CONTENTFILTEREDTOPIC_TEST_CONNECTOR_IDL_
+#define CONTENTFILTEREDTOPIC_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CFT_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CFT_Test_ConnectorE.idl"
+
+module CFTTwoDimensional_Test
+{
+  module ::CCM_DDS::Typed < ::CFTTwoDimensionalTest, ::CFTTwoDimensionalTestSeq> CFTTwoDimensionalTestConn;
+  connector CFTTwoDimensionalTest_Connector : CFTTwoDimensionalTestConn::DDS_Event
+  {
+  };
+};
+
+module CFTThreeDimensional_Test
+{
+  module ::CCM_DDS::Typed < ::CFTThreeDimensionalTest, ::CFTThreeDimensionalTestSeq> CFTThreeDimensionalTestConn;
+  connector CFTThreeDimensionalTest_Connector : CFTThreeDimensionalTestConn::DDS_Event
+  {
+  };
+};
+
+#endif /* CONTENTFILTEREDTOPIC_TEST_CONNECTOR_IDL_ */

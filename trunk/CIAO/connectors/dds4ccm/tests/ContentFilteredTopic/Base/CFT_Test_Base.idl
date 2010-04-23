@@ -1,0 +1,36 @@
+// $Id$
+
+/**
+ * @file CFT_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CONTENTFILTEREDTOPIC_TEST_BASE_IDL
+#define CONTENTFILTEREDTOPIC_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/CFT_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "CFTTwoDimensionalTest"
+#pragma DCPS_DATA_KEY "CFTTwoDimensionalTest symbol"
+
+struct CFTTwoDimensionalTest {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<CFTTwoDimensionalTest> CFTTwoDimensionalTestSeq;
+
+#pragma DCPS_DATA_TYPE "CFTThreeDimensionalTest"
+#pragma DCPS_DATA_KEY "CFTThreeDimensionalTest symbol"
+
+struct CFTThreeDimensionalTest {
+  string symbol; //@key
+  long x;
+  long y;
+  long z;
+};
+
+typedef sequence<CFTThreeDimensionalTest> CFTThreeDimensionalTestSeq;
+
+#endif /* CONTENTFILTEREDTOPIC_TEST_BASE_IDL */

@@ -1,12 +1,11 @@
 // $Id$
 
 /**
- * @file
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef RECEIVER_IDL
-#define RECEIVER_IDL
+#ifndef COMPONENT_IDL
+#define COMPONENT_IDL
 
 #include "Connector/QosProfile_Test_Connector.idl"
 
@@ -18,4 +17,4 @@ module QosProfile_Test
   };
 };
 
-#endif
+#endif /* COMPONENT_IDL */
