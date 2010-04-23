@@ -5,6 +5,7 @@
 
 #include <CosPersistentState.idl>
 
+#if !defined (CCM_LW)
 module Components
 {
   typeprefix Components "omg.org";
@@ -16,9 +17,7 @@ module Components
   const FacetId COMPONENT_FACET = 0;
 
   typedef sequence<octet> IdData;
-#if !defined (CCM_LW)
   typedef CosPersistentState::Pid PersistentId;
-#endif
 
   exception InvalidStateIdData {};
 
@@ -37,14 +36,12 @@ module Components
       raises (InvalidStateIdData);
   };
 
-#if !defined (CCM_LW)
   valuetype PersistentIdValue : StateIdValue
   {
     private PersistentId pid;
     PersistentId get_pid();
     factory init (in PersistentId pid);
   };
-#endif
 
   valuetype SegmentDescr
   {
@@ -60,4 +57,6 @@ module Components
   typedef sequence<SegmentDescr> SegmentDescrSeq;
 
 };
+#endif
+
 #endif /* CCM_STATEIDFACTORY */
