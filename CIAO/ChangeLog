@@ -1,9 +1,18 @@
+Mon Apr 26 10:16:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Implemented create_multitopic and delete_multitopic.
+
+        * connectors/dds4ccm/impl/dds/Publisher.cpp:
+          DDSDataWriter on proxy was set twice. This let to
+          test issues. These should be resolved now.
+
 Fri Apr 23 19:33:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
         * MPC/config/dance_domainapplicationmanager.mpb:
         * MPC/config/dance_domainapplication.mpb:
         * ExecutionManager/ExecutionManager.mpc:
-	  Fixes for static link problems.
+          Fixes for static link problems.
 
 
 Fri Apr 23 14:12:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
