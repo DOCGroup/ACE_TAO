@@ -1,3 +1,10 @@
+Mon Apr 26 08:27:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          get_all_emitters and get_all_publishers are now always generated
+          because they are not defined in the base class anymore
+
 Fri Apr 23 13:28:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
