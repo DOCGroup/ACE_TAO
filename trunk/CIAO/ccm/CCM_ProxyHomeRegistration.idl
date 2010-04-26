@@ -1,4 +1,5 @@
 // $Id$
+/// Compliant with OMG 06-04-01 Section 9.4.1.3
 
 #if !defined (CCM_PROXYHOMEREGISTRATION_IDL)
 #define CCM_PROXYHOMEREGISTRATION_IDL
