@@ -1,3 +1,16 @@
+Mon Apr 26 17:35:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_EntityComponent.idl:
+        * ccm/CCM_Object.idl:
+        * ccm/CCM_PrimaryKeyBase.idl:
+        * ccm/CCM_ProxyHomeRegistration.idl:
+        * ccm/CCM_Receptacle.idl:
+        * ccm/CCM_Session2Context.idl:
+        * ccm/CCM_SessionSynchronization.idl:
+        * ccm/CCM_StateIdFactory.idl:
+        * ccm/CCM_Transaction.idl:
+          Improved spec compliance
+
 Mon Apr 26 14:56:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Base.idl:

@@ -1,4 +1,5 @@
 // $Id$
+/// Compliant with OMG 06-04-01 Section 6.7.2.2
 
 #if !defined (CCM_PRIMARYKEYBASE_IDL)
 #define CCM_PRIMARYKEYBASE_IDL
