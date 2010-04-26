@@ -1,3 +1,20 @@
+Mon Apr 26 08:29:58 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Bug_2740_Regression_Test.cpp:
+        * tests/Dev_Poll_Reactor_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+          All these tests need to block SIGPIPE signal. POSIX defines that
+          newly created threads must inherit signal mask from the creating
+          thread. The later doesn't happen at least on Solaris 10. With this
+          change each new thread in the above tests will block SIGPIPE signal
+          individually.
+
 Thu Apr 22 07:51:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Release:
