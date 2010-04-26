@@ -1,3 +1,16 @@
+Mon Apr 26 14:56:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Base.idl:
+        * ccm/CCM_CCM2Context.idl:
+        * ccm/CCM_CCMException.idl:
+        * ccm/CCM_ComponentId.idl:
+        * ccm/CCM_Context.idl:
+        * ccm/CCM_EnterpriseComponent.idl:
+        * ccm/CCM_Entity2Context.idl:
+        * ccm/CCM_EntityContext.idl:
+          Checked these file for spec compliance and list from which section
+          this is coming
+
 Mon Apr 26 14:52:13 UTC 2010  Marijke  Hengstmengel  <mhengstmengel@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt

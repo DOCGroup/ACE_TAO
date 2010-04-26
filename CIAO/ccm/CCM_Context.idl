@@ -1,4 +1,5 @@
 // $Id$
+// Compliant to OMG 06-04-01, section 9.3.2.1
 
 #if !defined (CCM_CONTEXT_IDL)
 #define CCM_CONTEXT_IDL
