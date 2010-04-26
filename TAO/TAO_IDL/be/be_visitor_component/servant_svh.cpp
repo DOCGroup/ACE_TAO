@@ -381,6 +381,19 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "get_all_receptacles (void);";
     }
 
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_nl << be_nl
+          << "virtual ::Components::PublisherDescriptions *"
+          << be_nl
+          << "get_all_publishers (void);";
+
+      os_ << be_nl << be_nl
+          << "virtual ::Components::EmitterDescriptions *"
+          << be_nl
+          << "get_all_emitters (void);";
+    }
+
   /// If the node is a connector, event sources and sinks cannot
   /// be declared.
   if (this->node_->node_type () == AST_Decl::NT_component)
@@ -400,19 +413,6 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << "unsubscribe (const char * publisher_name,"
               << be_nl
               << "             ::Components::Cookie * ck);";
-        }
-
-      if (!be_global->gen_lwccm ())
-        {
-          os_ << be_nl << be_nl
-              << "virtual ::Components::PublisherDescriptions *"
-              << be_nl
-              << "get_all_publishers (void);";
-
-          os_ << be_nl << be_nl
-              << "virtual ::Components::EmitterDescriptions *"
-              << be_nl
-              << "get_all_emitters (void);";
         }
 
       if (this->node_->n_emits () > 0UL)
