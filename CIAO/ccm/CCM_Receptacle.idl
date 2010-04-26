@@ -35,7 +35,7 @@ module Components
 
   interface Receptacles
   {
-    Cookie connect (in FeatureName name, in Object connection )
+    Cookie connect (in FeatureName name, in Object connection)
       raises (InvalidName,
               InvalidConnection,
               AlreadyConnected,
