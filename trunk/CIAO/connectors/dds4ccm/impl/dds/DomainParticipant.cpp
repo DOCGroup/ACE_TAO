@@ -766,23 +766,39 @@ namespace CIAO
     }
 
     ::DDS::MultiTopic_ptr
-    CCM_DDS_DomainParticipant_i::create_multitopic (const char * /*name*/,
-                                                const char * /*type_name*/,
-                                                const char * /*subscription_expression*/,
-                                                const ::DDS::StringSeq & /*expression_parameters*/)
+    CCM_DDS_DomainParticipant_i::create_multitopic (
+      const char * name,
+      const char * type_name,
+      const char * subscription_expression,
+      const ::DDS::StringSeq & expression_parameters)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_multitopic");
+#if (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (name);
+      ACE_UNUSED_ARG (type_name);
+      ACE_UNUSED_ARG (subscription_expression);
+      ACE_UNUSED_ARG (expression_parameters);
+      //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
       throw CORBA::NO_IMPLEMENT ();
-
+#else
+      return this->impl ()->create_multitopic (name,
+                                               type_name,
+                                               subscription_expression,
+                                               expression_parameters);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr /*a_multitopic*/)
+    CCM_DDS_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
     {
-      //this->impl ()->delete_multitopic (
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
+#if (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (a_multitopic);
+      //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
       throw CORBA::NO_IMPLEMENT ();
-
+#else
+      return this->impl ()->delete_multitopic (a_multitopic);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -1035,8 +1051,9 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & /*impl_data*/,
-                                                        DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
+    CCM_DDS_DomainParticipant_i::get_discovered_topic_data (
+      ::DDS::TopicBuiltinTopicData & /*impl_data*/,
+      DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
       throw CORBA::NO_IMPLEMENT ();

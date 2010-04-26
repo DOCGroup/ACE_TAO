@@ -81,9 +81,6 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
       ccm_dds_dw->enable ();
-      CCM_DDS_DataWriter_i *dw = dynamic_cast< CCM_DDS_DataWriter_i * > (retval.in ());
-      dw->set_impl (ccm_dds_dw);
-
       return retval._retn ();
 #else
       return this->impl ()->create_datawriter (
@@ -146,7 +143,6 @@ namespace CIAO
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_DataWriter_i (ccm_dds_dw),
                         CORBA::NO_MEMORY ());
-
       ccm_dds_dw->enable ();
 
       return retval._retn ();
