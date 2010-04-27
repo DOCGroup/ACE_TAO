@@ -115,7 +115,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      DDS::ReturnCode_t retval =
+      DDS::ReturnCode_t const retval =
         publisher->delete_datawriter (&this->ccm_dds_writer_);
       if (retval != DDS::RETCODE_OK)
         {
