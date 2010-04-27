@@ -156,10 +156,10 @@ namespace CIAO_Throughput_Receiver_Impl
           {
             #if (CIAO_DDS4CCM_CONTEXT_SWITCH==1)
               ACE_DEBUG ((LM_DEBUG, "\n\nYES, we're using a threadswitch between "
-                                    "DDS and CMM\n\n"));
+                                    "DDS and CCM\n\n"));
             #else
               ACE_DEBUG ((LM_DEBUG, "\n\nNO, we're not using a threadswitch between "
-                                    "DDS and CMM\n\n"));
+                                    "DDS and CCM\n\n"));
             #endif
              ACE_DEBUG ((LM_DEBUG,
                         " bytes, demand, samples,sample/s, Mbit/s,lost samples\n"));
