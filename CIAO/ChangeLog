@@ -1,3 +1,25 @@
+Tue Apr 27 08:55:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.mpc:
+          Renamed projects.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+          Moved templated connector from the CCM_DDS namespace to the
+          connectors namespace.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
+          Renamed projects and added own connector executor files.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+          Added these in order to test if the NonChangeable exception is
+          thrown after the connector attributes are set for the first time. There
+          created a new class, derived from the (generated) connector class and created
+          an extra entry point.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+          Calling the new entry point.
+
 Tue Apr 27 06:55:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/Subscriber.cpp:
