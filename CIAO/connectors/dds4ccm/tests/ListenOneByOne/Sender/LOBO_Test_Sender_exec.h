@@ -35,20 +35,6 @@ namespace CIAO_LOBO_Test_Sender_Impl
     Sender_exec_i &callback_;
   };
 
-  //============================================================
-  // WriteManyHandler
-  //============================================================
-  class WriteManyHandler :
-    public ACE_Event_Handler
-  {
-  public:
-    WriteManyHandler (Sender_exec_i &callback);
-    virtual int handle_exception (ACE_HANDLE fc = ACE_INVALID_HANDLE);
-  private:
-    /// Maintains a handle that actually process the event
-    Sender_exec_i &callback_;
-  };
-
   class Sender_exec_i
     : public virtual Sender_Exec,
       public virtual ::CORBA::LocalObject
