@@ -101,8 +101,13 @@ be_visitor_ami4ccm_rh_ex_idl::visit_operation (be_operation *node)
       
   if (!node->void_return_type ())
     {
+      be_type *t =
+        be_type::narrow_from_decl (node->return_type ());
+    
       os_ << be_nl
-          << "in long ami_return_val";
+          << "in "
+          << IdentifierHelper::type_name (t, this)
+          << " ami_return_val";
     }
     
   if (this->visit_scope (node) == -1)
