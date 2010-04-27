@@ -1,3 +1,14 @@
+Tue Apr 27 06:25:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Implemented get_discovered_participant_data and
+          get_discovered_topic_data.
+
+        * connectors/dds4ccm/impl/dds/ndds/ParticipantBuiltinTopicData.h:
+        * connectors/dds4ccm/impl/dds/ndds/TopicBuiltinTopicData.h:
+          Created streaming operators for ParticipantBuiltinTopicData and
+          TopicBuiltinTopicData.
+
 Mon Apr 26 17:35:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_EntityComponent.idl:

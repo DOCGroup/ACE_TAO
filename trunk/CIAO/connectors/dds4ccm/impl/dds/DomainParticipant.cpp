@@ -21,6 +21,8 @@
 #include "ndds/Duration_t.h"
 #include "ndds/Time_t.h"
 #include "ndds/InstanceHandleSeq.h"
+#include "ndds/TopicBuiltinTopicData.h"
+#include "ndds/ParticipantBuiltinTopicData.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -1030,11 +1032,25 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & /*impl_data*/,
-                                                              DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
+    CCM_DDS_DomainParticipant_i::get_discovered_participant_data (
+      ::DDS::ParticipantBuiltinTopicData & impl_data,
+      DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
-      throw CORBA::NO_IMPLEMENT ();
+#if (CIAO_DDS4CCM_NDDS==1)
+      DDS_ParticipantBuiltinTopicData dds_part_data;
+      dds_part_data <<= impl_data;
+      ::DDS_InstanceHandle_t dds_hnd;
+      dds_hnd <<= impl_handle;
+      ::DDS_ReturnCode_t retcode =
+        this->impl ()->get_discovered_participant_data (dds_part_data,
+                                                        dds_hnd);
+      impl_data <<= dds_part_data;
+      return retcode;
+#else
+      return this->impl ()->get_discovered_topic_data (impl_data,
+                                                       impl_handle);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -1052,11 +1068,24 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_i::get_discovered_topic_data (
-      ::DDS::TopicBuiltinTopicData & /*impl_data*/,
-      DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
+      ::DDS::TopicBuiltinTopicData & impl_data,
+      DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
-      throw CORBA::NO_IMPLEMENT ();
+#if (CIAO_DDS4CCM_NDDS==1)
+      DDS_TopicBuiltinTopicData dds_tp_data;
+      dds_tp_data <<= impl_data;
+      ::DDS_InstanceHandle_t dds_hnd;
+      dds_hnd <<= impl_handle;
+      ::DDS_ReturnCode_t retcode =
+        this->impl ()->get_discovered_topic_data (dds_tp_data,
+                                                  dds_hnd);
+      impl_data <<= dds_tp_data;
+      return retcode;
+#else
+      return this->impl ()->get_discovered_topic_data (impl_data,
+                                                       impl_handle);
+#endif
     }
 
     ::CORBA::Boolean
