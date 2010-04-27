@@ -1,3 +1,9 @@
+Tue Apr 27 12:25:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.cpp:
+          Removed WriteManyHandler since it wasn't used.
+
 Tue Apr 27 08:55:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.mpc:
