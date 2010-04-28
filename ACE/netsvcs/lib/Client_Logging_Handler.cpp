@@ -607,7 +607,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                    this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Can't connect to logging server %s on port %d: ")
+                  ACE_TEXT ("Can't connect to logging server %C on port %d: ")
                   ACE_TEXT ("%m, using stderr\n"),
                   this->server_addr_.get_host_name (),
                   this->server_addr_.get_port_number (),
@@ -628,7 +628,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client Logging Daemon is connected to Server ")
-                  ACE_TEXT ("Logging Daemon %s on port %d on handle %u\n"),
+                  ACE_TEXT ("Logging Daemon %C on port %d on handle %u\n"),
                   server_addr.get_host_name (),
                   server_addr.get_port_number (),
                   stream.get_handle ()));
