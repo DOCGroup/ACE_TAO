@@ -535,11 +535,11 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "utl_tmpl/UTL_Scope_T.cpp"
+#include "utl_scope_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("utl_tmpl/UTL_Scope_T.cpp")
+#pragma implementation ("utl_scope_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH
