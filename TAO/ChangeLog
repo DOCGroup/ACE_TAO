@@ -1,3 +1,9 @@
+Wed Apr 28 19:12:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_uns_long.h:
+        
+          Removed this unused file
+
 Wed Apr 28 17:00:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_tmpl/utl_idlist.h:
