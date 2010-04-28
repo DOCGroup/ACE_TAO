@@ -1,3 +1,31 @@
+Wed Apr 28 17:50:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+	Redesign and reimplementation of plan splitter library and tool.
+	More modular design implementing multiple splitting levels and providing
+	framework with which changes and/or additions can be more easily implemented.
+
+	* tools/Split_Plan/Split_Plan.mpc:
+	* tools/Split_Plan/Split_Plan.cpp:
+	Updated existing files.
+
+	* tools/Split_Plan/Node_Splitter.h:
+	* tools/Split_Plan/Node_Splitter.cpp:
+	* tools/Split_Plan/Locality_Splitter.h:
+	* tools/Split_Plan/Locality_Splitter.cpp:
+	* tools/Split_Plan/Sub_UUID_Generator.cpp:
+	* tools/Split_Plan/Sub_UUID_Generator.h:
+	* tools/Split_Plan/Split_Plan_exec.cpp:
+	* tools/Split_Plan/Split_Plan.h:
+	Added new files.
+
+	* tools/Split_Plan/Split_Plan_impl.h:
+	* tools/Split_Plan/Split_Plan_impl.cpp:
+	Removed deprecated files.
+
+	* DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	* DomainApplicationManager/DomainApplicationManager_Impl.h:
+	Changed to use new Split_Plan (template) class.
+
 Wed Apr 28 14:41:13 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
 	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
