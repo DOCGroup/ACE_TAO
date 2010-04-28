@@ -3,6 +3,8 @@
 #include "DomainApplicationManager_Impl.h"
 #include "Deployment/Deployment_ConnectionC.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "Split_Plan/Split_Plan.h"
+#include "Split_Plan/Node_Splitter.h"
 
 using namespace DAnCE;
 
@@ -319,9 +321,9 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
   try
     {
       // Map of sub plans for each node
-      Split_Plan::TNodePlans sub_plans;
-      Split_Plan split_plan (this->plan_, sub_plans);
-      split_plan.split_plan ();
+      Split_Plan<Node_Splitter> split_plan;
+      split_plan.split_plan (this->plan_);
+      Split_Plan<Node_Splitter>::TSubPlans &sub_plans = split_plan.plans ();
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                                         ACE_TEXT("Plan %C successfully split. %u nodes to prepare.\n"),
@@ -338,7 +340,7 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
       DAM_NM_ReplyHandlerImpl::Counter_AutoPtr _counter_ptr (_cp);
 
       // Executing preparePlan on each NodeManager described in DeploymentPlan
-      for (Split_Plan::TNodePlans::iterator iter_plans = sub_plans.begin();
+      for (Split_Plan<Node_Splitter>::TSubPlanIterator iter_plans = sub_plans.begin();
            iter_plans != sub_plans.end();
            ++iter_plans)
         {

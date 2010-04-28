@@ -27,7 +27,6 @@
 #include "Completion/CompletionHandler_T.h"
 #include "Completion/Completion_Counter_Base.h"
 #include "Deployment/Deployment_DomainApplicationManagerS.h"
-#include "Split_Plan/Split_Plan_impl.h"
 
 namespace DAnCE
   {
