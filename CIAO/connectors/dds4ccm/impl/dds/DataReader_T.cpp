@@ -223,7 +223,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
   DDS_StringSeq params;
   params <<= filter.query_parameters;
 
-  ACE_CString name (ACE_TEXT ("DDS4CCM_CFT_"));
+  ACE_CString name ("DDS4CCM_CFT_");
   name.append (ACE_TEXT (tp->get_name ()), ACE_OS::strlen (tp->get_name ()));
   this->cft_ = dp->create_contentfilteredtopic (
                         name.c_str (),

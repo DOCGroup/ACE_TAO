@@ -1,86 +1,92 @@
+Wed Apr 28 19:13:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Removed ACE_TEXT since this isn't necessary.
+
 Wed Apr 28 17:50:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	Redesign and reimplementation of plan splitter library and tool.
-	More modular design implementing multiple splitting levels and providing
-	framework with which changes and/or additions can be more easily implemented.
+        Redesign and reimplementation of plan splitter library and tool.
+        More modular design implementing multiple splitting levels and providing
+        framework with which changes and/or additions can be more easily implemented.
 
-	* tools/Split_Plan/Split_Plan.mpc:
-	* tools/Split_Plan/Split_Plan.cpp:
-	Updated existing files.
+        * tools/Split_Plan/Split_Plan.mpc:
+        * tools/Split_Plan/Split_Plan.cpp:
+        Updated existing files.
 
-	* tools/Split_Plan/Node_Splitter.h:
-	* tools/Split_Plan/Node_Splitter.cpp:
-	* tools/Split_Plan/Locality_Splitter.h:
-	* tools/Split_Plan/Locality_Splitter.cpp:
-	* tools/Split_Plan/Sub_UUID_Generator.cpp:
-	* tools/Split_Plan/Sub_UUID_Generator.h:
-	* tools/Split_Plan/Split_Plan_exec.cpp:
-	* tools/Split_Plan/Split_Plan.h:
-	Added new files.
+        * tools/Split_Plan/Node_Splitter.h:
+        * tools/Split_Plan/Node_Splitter.cpp:
+        * tools/Split_Plan/Locality_Splitter.h:
+        * tools/Split_Plan/Locality_Splitter.cpp:
+        * tools/Split_Plan/Sub_UUID_Generator.cpp:
+        * tools/Split_Plan/Sub_UUID_Generator.h:
+        * tools/Split_Plan/Split_Plan_exec.cpp:
+        * tools/Split_Plan/Split_Plan.h:
+        Added new files.
 
-	* tools/Split_Plan/Split_Plan_impl.h:
-	* tools/Split_Plan/Split_Plan_impl.cpp:
-	Removed deprecated files.
+        * tools/Split_Plan/Split_Plan_impl.h:
+        * tools/Split_Plan/Split_Plan_impl.cpp:
+        Removed deprecated files.
 
-	* DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	* DomainApplicationManager/DomainApplicationManager_Impl.h:
-	Changed to use new Split_Plan (template) class.
+        * DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DomainApplicationManager/DomainApplicationManager_Impl.h:
+        Changed to use new Split_Plan (template) class.
 
 Wed Apr 28 14:41:13 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
-	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.mpc
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
-	Change too long projrct names.
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
+        Change too long projrct names.
 
 Wed Apr 28 14:15:13 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
-	* connectors/ami4ccm/tests/InterInArgs
-	* connectors/ami4ccm/tests/InterInArgs/Base
-	* connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl
-	* connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc
-	* connectors/ami4ccm/tests/InterInArgs/descriptors
-	* connectors/ami4ccm/tests/InterInArgs/descriptors/Plan.cdp
-	* connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl
-	* connectors/ami4ccm/tests/InterInArgs/Receiver
-	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.idl
-	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
-	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp
-	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.h
-	* connectors/ami4ccm/tests/InterInArgs/Sender
-	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.idl
-	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.mpc
-	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp
-	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h
-	* connectors/ami4ccm/tests/InterOutArgs
-	* connectors/ami4ccm/tests/InterOutArgs/Base
-	* connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl
-	* connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc
-	* connectors/ami4ccm/tests/InterOutArgs/descriptors
-	* connectors/ami4ccm/tests/InterOutArgs/descriptors/Plan.cdp
-	* connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.idl
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.mpc
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.cpp
-	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.h
-	* connectors/ami4ccm/tests/InterOutArgs/Sender
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.idl
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
-	AMI4CCM tests for interfaces with different in- and out arguments.
+        * connectors/ami4ccm/tests/InterInArgs
+        * connectors/ami4ccm/tests/InterInArgs/Base
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc
+        * connectors/ami4ccm/tests/InterInArgs/descriptors
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/InterInArgs/Receiver
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.idl
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.h
+        * connectors/ami4ccm/tests/InterInArgs/Sender
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.idl
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.mpc
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h
+        * connectors/ami4ccm/tests/InterOutArgs
+        * connectors/ami4ccm/tests/InterOutArgs/Base
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.idl
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.h
+        * connectors/ami4ccm/tests/InterOutArgs/Sender
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.idl
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
+        AMI4CCM tests for interfaces with different in- and out arguments.
 
 Wed Apr 28 10:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
-	* DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
-	  Fixed total byte check in Convert_Plan_Impl::write_cdr_plan().
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+          Fixed total byte check in Convert_Plan_Impl::write_cdr_plan().
 
 Wed Apr 28 09:45:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
         * docs/OMG-CCM-Tutorial.pptx:
-	  Converted to MS Powerpoint 2007 format
+          Converted to MS Powerpoint 2007 format
 
 Wed Apr 28 09:29:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
