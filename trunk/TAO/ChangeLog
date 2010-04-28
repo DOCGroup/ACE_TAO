@@ -1,3 +1,8 @@
+Wed Apr 28 07:05:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.am:
+          Updated for recent changes from Jeff
+
 Wed Apr 28 01:51:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
@@ -72,7 +77,7 @@ Wed Apr 28 01:51:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Apr 27 15:31:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:
-        
+
           Fixed generation of operation return type, as applied to
           the parameter 'ami_return_val' in the associated reply handler
           operation. It was mistakenly hard-coded to 'long'.
