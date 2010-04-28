@@ -29,7 +29,8 @@ void
 TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_var>::any_insert (any, this->x_);
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -51,7 +52,7 @@ template<typename S_var,
 TAO::Argument*
 TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::clone ()
 {
-  size_t len = ACE_OS::strlen (this->x_);
+  size_t const len = ACE_OS::strlen (this->x_);
   typename S_var::s_traits::char_type * clone_x =
            new typename S_var::s_traits::char_type [len + 1];
   ACE_OS::strncpy (clone_x, this->x_, len);
@@ -91,7 +92,8 @@ void
 TAO::Inout_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_var>::any_insert (any, this->x_);
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -114,7 +116,7 @@ void
 TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_var>::any_insert (any, this->x_);
+  Insert_Policy<typename S_var::s_traits::char_type const *>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -137,7 +139,8 @@ void
 TAO::Ret_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::char_type const *>::any_insert (any, this->x_.in ());
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

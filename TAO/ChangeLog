@@ -1,3 +1,12 @@
+Wed Apr 28 08:26:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/BD_String_Argument_T.cpp:
+          Layout changes
+
+        * tao/UB_String_Argument_T.cpp:
+          Use different traits
+
 Wed Apr 28 07:05:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:
