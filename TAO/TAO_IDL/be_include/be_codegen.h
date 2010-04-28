@@ -20,7 +20,6 @@
 #include "ace/Synch_Traits.h"
 #include "TAO_IDL_BE_Export.h"
 
-class TAO_Visitor_Factory;
 class TAO_OutStream;
 class be_visitor_context;
 class be_visitor;
@@ -78,8 +77,6 @@ public:
 
       // Emitting code for the valuetype.
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
-      TAO_VALUETYPE_OBV_CI,
-      TAO_VALUETYPE_OBV_CS,
 
       // Emitting code for the module,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
@@ -114,10 +111,6 @@ public:
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header
       TAO_OBV_OPERATION_ARGLIST_IH,           // ... for implementation header
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header
-
-      // AMI next generation states
-      TAO_AMI_SENDC_OPERATION_CS,
-      TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS,
 
       // Emitting code for root.
       TAO_ROOT_CH,
@@ -217,13 +210,6 @@ public:
 
   /// Destructor
   ~TAO_CodeGen (void);
-
-  /// Factory that makes the right visitor based on the contex. This
-  /// delegates the task to its factory data member.
-  be_visitor *make_visitor (be_visitor_context *);
-
-  /// Generate the C++ mapping for CORBA IDL.
-  int gen_cplusplus_mapping (void);
 
   /// Set the client header stream.
   int start_client_header (const char *fname);
@@ -396,25 +382,6 @@ public:
    */
   char *gperf_input_filename (void);
 
-  /// Set current out stream.
-  void outstream (TAO_OutStream *os);
-
-  /// Retrieve current out stream being used.
-  TAO_OutStream *outstream (void);
-
-  /**
-   * Set the visitor factory  object. In this respect, this behaves as the
-   * "strategy" pattern in which the TAO_CodeGen object is the context and the
-   * visitor_factory is the strategy object.
-   */
-  void config_visitor_factory (void);
-
-  /// Pass info.
-  void node (be_decl *n);
-
-  /// Retrieve passed info.
-  be_decl *node (void);
-
   /// Convert input string to all upcase.
   const char *upcase (const char *str);
 
@@ -534,21 +501,12 @@ private:
   /// Component connector impl source file.
   TAO_OutStream *ciao_ami_conn_idl_;
 
-  /// Currently used out stream.
-  TAO_OutStream *curr_os_;
-
   /**
    * Name of the temp file used to collect the input for gperf
    * program. This is needed coz I do ACE_OS::open on this when I need
    * ACE_HANDLE for the file instead FILE*.
    */
   char *gperf_input_filename_;
-
-  /// Save current node in this.
-  be_decl *node_;
-
-  /// Visitor factory object.
-  TAO_Visitor_Factory *visitor_factory_;
 
   /// The enumerated value indicating the lookup strategy.
   LOOKUP_STRATEGY strategy_;

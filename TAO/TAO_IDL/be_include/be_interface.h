@@ -455,9 +455,6 @@ protected:
   /// value is -1 => not computed yet.
   int in_mult_inheritance_;
 
-  /// Member for holding the strategy for generating names.
-//  be_interface_strategy *strategy_;
-
   /// The original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface_;
