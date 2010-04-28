@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p InterInArgsT_Base InterInArgsT_Receiver"
 
-project(AMI_InterInArgsT_Base_Receiver_idl_gen) : componentidldefaults {
+project(AMI_InArgsT_Base_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   after += AMI_InterInArgsT_idl_gen
   idlflags += -Wb,stub_export_macro=INTERINARGS_T_RECEIVER_STUB_Export \
@@ -17,8 +17,8 @@ project(AMI_InterInArgsT_Base_Receiver_idl_gen) : componentidldefaults {
   }
 }
 
-project(AMI_InterInArgsT_Base_Receiver_lem_gen) : ciaoidldefaults {
-  after += AMI_InterInArgsT_Base_Receiver_idl_gen
+project(AMI_InArgsT_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_InArgsT_Base_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INTERINARGS_T_RECEIVER_LEM_STUB_Export \
               -Wb,stub_export_include=InterInArgsT_Receiver_lem_stub_export.h \
@@ -30,7 +30,7 @@ project(AMI_InterInArgsT_Base_Receiver_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_InterInArgsT_Base_Receiver_l_stub) : ccm_svnt, messaging {
-  after += AMI_InterInArgsT_Base_Receiver_lem_gen AMI_InterInArgsT_Base_Receiver_stub AMI_InterInArgsT_stub
+  after += AMI_InArgsT_Base_Receiver_lem_gen AMI_InterInArgsT_Base_Receiver_stub AMI_InterInArgsT_stub
   libs  += InterInArgsT_stub InterInArgsT_Receiver_stub
   libpaths += ../lib
   libout = ../lib
@@ -55,7 +55,7 @@ project(AMI_InterInArgsT_Base_Receiver_l_stub) : ccm_svnt, messaging {
 }
 
 project(AMI_InterInArgsT_Base_Receiver_stub) : ccm_stub, messaging {
-  after += AMI_InterInArgsT_Base_Receiver_idl_gen AMI_InterInArgsT_stub
+  after += AMI_InArgsT_Base_Receiver_idl_gen AMI_InterInArgsT_stub
   libs  += InterInArgsT_stub
   libpaths += ../lib
   libout = ../lib
