@@ -3921,7 +3921,6 @@ AST_Generator *
 BE_GlobalData::generator_init (void)
 {
   tao_cg = TAO_CODEGEN::instance ();
-  tao_cg->config_visitor_factory ();
 
   AST_Generator *gen = 0;
   ACE_NEW_RETURN (gen,

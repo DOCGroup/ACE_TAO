@@ -14,7 +14,6 @@
 
 #include "be_codegen.h"
 #include "be_helper.h"
-#include "be_visitor_factory.h"
 #include "be_extern.h"
 #include "global_extern.h"
 #include "utl_string.h"
@@ -49,31 +48,13 @@ TAO_CodeGen::TAO_CodeGen (void)
     ciao_conn_header_ (0),
     ciao_conn_source_ (0),
     ciao_ami_conn_idl_ (0),
-    curr_os_ (0),
-    gperf_input_filename_ (0),
-    visitor_factory_ (0)
+    gperf_input_filename_ (0)
 {
 }
 
 // destructor
 TAO_CodeGen::~TAO_CodeGen (void)
 {
-}
-
-// visitor factory method
-be_visitor *
-TAO_CodeGen::make_visitor (be_visitor_context *ctx)
-{
-
-  if (this->visitor_factory_ == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO_CodeGen::make_visitor - ")
-                         ACE_TEXT ("No Visitor Factory\n\n")),
-                        0);
-    }
-
-  return this->visitor_factory_->make_visitor (ctx);
 }
 
 // Change the string to all upper case.
@@ -1998,36 +1979,6 @@ TAO_CodeGen::gperf_input_filename (void)
 }
 
 void
-TAO_CodeGen::outstream (TAO_OutStream *os)
-{
-  this->curr_os_ = os;
-}
-
-TAO_OutStream *
-TAO_CodeGen::outstream (void)
-{
-  return this->curr_os_;
-}
-
-void
-TAO_CodeGen::node (be_decl *n)
-{
-  this->node_ = n;
-}
-
-be_decl *
-TAO_CodeGen::node (void)
-{
-  return this->node_;
-}
-
-void
-TAO_CodeGen::config_visitor_factory (void)
-{
-  this->visitor_factory_ = TAO_VISITOR_FACTORY::instance ();
-}
-
-void
 TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 {
   const char *str = idl_global->ident_string ();
@@ -3608,5 +3559,4 @@ TAO_CodeGen::destroy (void)
   delete this->ciao_ami_conn_idl_;
   delete this->gperf_input_stream_;
   delete [] this->gperf_input_filename_;
-  this->curr_os_ = 0;
 }
