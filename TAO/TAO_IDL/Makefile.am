@@ -249,13 +249,11 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_init.cpp \
   be/be_interface.cpp \
   be/be_interface_fwd.cpp \
-  be/be_interface_strategy.cpp \
   be/be_mirror_port.cpp \
   be/be_module.cpp \
   be/be_native.cpp \
   be/be_null_return_emitter.cpp \
   be/be_operation.cpp \
-  be/be_operation_strategy.cpp \
   be/be_param_holder.cpp \
   be/be_porttype.cpp \
   be/be_predefined_type.cpp \
@@ -358,13 +356,11 @@ noinst_HEADERS += \
   be_include/be_identifier_helper.h \
   be_include/be_interface.h \
   be_include/be_interface_fwd.h \
-  be_include/be_interface_strategy.h \
   be_include/be_mirror_port.h \
   be_include/be_module.h \
   be_include/be_native.h \
   be_include/be_null_return_emitter.h \
   be_include/be_operation.h \
-  be_include/be_operation_strategy.h \
   be_include/be_param_holder.h \
   be_include/be_porttype.h \
   be_include/be_predefined_type.h \
