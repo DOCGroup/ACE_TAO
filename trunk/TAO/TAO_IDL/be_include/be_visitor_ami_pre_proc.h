@@ -46,30 +46,17 @@ public:
 
   virtual ~be_visitor_ami_pre_proc (void);
 
-  /// visit a root
   virtual int visit_root (be_root *node);
 
-  /// visit module
   virtual int visit_module (be_module *node);
 
-  /// visit interface
   virtual int visit_interface (be_interface *node);
 
-  /// visit an operation
   virtual int visit_operation (be_operation *node);
 
-  /// visit an attribute
   virtual int visit_attribute (be_attribute *node);
 
 private:
-  /**
-   * Creates a raise operation from node and inserts it in
-   * excep_holder, while obeying if it is a normal operation
-   * or a set or get attribute.
-   */
-  int create_raise_operation (be_decl *node,
-                              Operation_Kind operation_kind);
-
   /// create the reply handler interface
   be_interface *create_reply_handler (be_interface *node);
 
@@ -79,8 +66,7 @@ private:
    * object reference to the reply handler as the first argument,
    * but this should not be marhaled, therefor we need the switch
    */
-  be_operation *create_sendc_operation (be_operation *node,
-                                        int for_arguments);
+  be_operation *create_sendc_operation (be_operation *node);
 
   /// create a method with "_excep" appended
   int create_excep_operation (be_operation *node,
@@ -113,6 +99,5 @@ private:
   /// Generate an *A.idl file for AMI4CCM.
   int generate_ami4ccm_idl (void);
 };
-
 
 #endif // TAO_BE_VISITOR_AMI_PRE_PROC_H

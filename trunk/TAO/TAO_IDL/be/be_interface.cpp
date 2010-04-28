@@ -16,7 +16,6 @@
 //=============================================================================
 
 #include "be_interface.h"
-#include "be_interface_strategy.h"
 #include "be_component.h"
 #include "be_connector.h"
 #include "be_attribute.h"
@@ -47,6 +46,21 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
+const char *be_interface::suffix_table_[] =
+{
+  "_Proxy_Impl",
+  "_Proxy_Broker"
+};
+
+const char *be_interface::tag_table_[] =
+{
+  "_ThruPOA",
+  "_Direct",
+  "_Remote",
+  "_Strategized",
+  "_TAO_"
+};
+
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
                             long nih,
@@ -73,17 +87,35 @@ be_interface::be_interface (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_interface,
              n),
-    var_out_seq_decls_gen_ (0),
+    var_out_seq_decls_gen_ (false),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
-    strategy_ (0),
     original_interface_ (0),
     has_mixed_parentage_ (-1),
-    session_component_child_ (-1)
+    session_component_child_ (-1),
+    is_ami_rh_ (false),
+    full_skel_name_ (0),
+    full_coll_name_ (0),
+    local_coll_name_ (0),
+    relative_skel_name_ (0),
+    base_proxy_impl_name_ (0),
+    remote_proxy_impl_name_ (0),
+    direct_proxy_impl_name_ (0),
+    full_base_proxy_impl_name_ (0),
+    full_remote_proxy_impl_name_ (0),
+    full_direct_proxy_impl_name_ (0),
+    base_proxy_broker_ (0),
+    remote_proxy_broker_ (0),
+    strategized_proxy_broker_ (0),
+    full_base_proxy_broker_name_ (0),
+    full_remote_proxy_broker_name_ (0),
+    full_strategized_proxy_broker_name_ (0),
+    client_scope_ (0),
+    flat_client_scope_ (0),
+    server_scope_ (0),
+    flat_server_scope_ (0),
+    cached_type_ (-1)
 {
-  ACE_NEW (this->strategy_,
-           be_interface_default_strategy (this));
-
   AST_Decl::NodeType nt = this->node_type ();
 
   if (this->imported ()
@@ -126,159 +158,279 @@ be_interface::~be_interface (void)
 {
 }
 
-be_interface_strategy *
-be_interface::set_strategy (be_interface_strategy *new_strategy)
-{
-  be_interface_strategy *old = this->strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->strategy_ = new_strategy;
-    }
-
-  return old;
-}
-
 const char *
-be_interface::local_name (void) const
+be_interface::local_name (void)
 {
   // Return the local name.
-  return this->strategy_->local_name ();
+//  return this->strategy_->local_name ();
+  return this->AST_Decl::local_name ()->get_string ();
 }
 
 const char *
-be_interface::full_name (void)
+be_interface::full_skel_name (void)
 {
-  return this->strategy_->full_name ();
+  if (this->full_skel_name_ == 0)
+    {
+      this->compute_full_skel_name ("POA_");
+    }
+
+  return this->full_skel_name_;
 }
 
 const char *
-be_interface::flat_name (void)
+be_interface::full_coll_name (int type)
 {
-  // Return the flattened full scoped name.
-  return this->strategy_->flat_name ();
+  this->compute_coll_names (type,
+                            0,  // prefix
+                            0); // suffix
+
+  return this->full_coll_name_;
 }
 
 const char *
-be_interface::repoID (void) const
+be_interface::local_coll_name (int type)
 {
-  // Retrieve the repository ID.
-  return this->strategy_->repoID ();
-}
+  this->compute_coll_names (type,
+                            0,  // prefix
+                            0); // suffix
 
-const char *
-be_interface::full_skel_name (void) const
-{
-  // Retrieve the fully scoped skel class name.
-  return this->strategy_->full_skel_name ();
-}
-
-const char *
-be_interface::full_coll_name (int type) const
-{
-  // Retrieve the fully qualified collocated class name
-  return this->strategy_->full_coll_name (type);
-}
-
-const char *
-be_interface::local_coll_name (int type) const
-{
-  // Retrieve the fully qualified collocated class name.
-  return this->strategy_->local_coll_name (type);
+  return this->local_coll_name_;
 }
 
 const char *
 be_interface::relative_skel_name (const char *skel_name)
 {
-  // Relative skeleton name.
-  return this->strategy_->relative_skel_name (skel_name);
+  return be_interface::relative_name (this->full_skel_name (),
+                                      skel_name);
 }
 
 void
-be_interface::compute_full_skel_name (const char *prefix,
-                                      char *&skelname)
+be_interface::compute_full_skel_name (const char *prefix)
 {
-  if (skelname != 0)
+  if (this->full_skel_name_ != 0)
+    {
+      return;
+    }
+    
+  size_t namelen = ACE_OS::strlen (prefix);
+  long first = true;
+  long second = false;
+  char *item_name = 0;
+
+  // In the first loop compute the total length.
+  for (UTL_IdListActiveIterator i (this->name ());
+       !i.is_done ();
+       i.next ())
+    {
+      if (!first)
+        {
+          namelen += 2; // for "::"
+        }
+      else if (second)
+        {
+          first = second = false;
+        }
+
+      // Print the identifier.
+      item_name = i.item ()->get_string ();
+      namelen += ACE_OS::strlen (item_name);
+
+      // Additional 4 for the POA_ characters.
+      if (first)
+        {
+          if (ACE_OS::strcmp (item_name, "") != 0)
+            {
+              // Does not start with a "".
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
+        }
+    }
+
+  ACE_NEW (this->full_skel_name_,
+           char [namelen + 1]);
+  this->full_skel_name_[0] = '\0';
+  first = true;
+  second = false;
+  ACE_OS::strcat (this->full_skel_name_, prefix);
+
+  for (UTL_IdListActiveIterator j (this->name ());
+       !j.is_done ();
+       j.next ())
+    {
+      if (!first)
+        {
+          ACE_OS::strcat (this->full_skel_name_, "::");
+        }
+      else if (second)
+        {
+          first = second = false;
+        }
+
+      // Print the identifier.
+      item_name = j.item ()->get_string ();
+      ACE_OS::strcat (this->full_skel_name_, item_name);
+
+      if (first)
+        {
+          if (ACE_OS::strcmp (item_name, "") != 0)
+            {
+              // Does not start with a "".
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
+        }
+    }
+}
+
+// Compute stringified fully qualified collocated class name.
+void
+be_interface::compute_coll_names (int type,
+                                  const char *prefix,
+                                  const char *suffix)
+{
+  if (type == this->cached_type_ && this->full_coll_name_ != 0)
     {
       return;
     }
   else
     {
-      size_t namelen = ACE_OS::strlen (prefix);
-      long first = true;
-      long second = false;
-      char *item_name = 0;
+      this->cached_type_ = type;
+      delete [] this->full_coll_name_;
+      delete [] this->local_coll_name_;
 
-      // In the first loop compute the total length.
-      for (UTL_IdListActiveIterator i (this->name ());
-           !i.is_done ();
-           i.next ())
+      // Reset to zero in case allocations below fail, and cause
+      // premature return to caller.
+      this->full_coll_name_ = 0;
+      this->local_coll_name_ = 0;
+    }
+
+  static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
+                                           "_tao_direct_collocated_"};
+  static const char *poa = "POA_";
+
+  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
+  // prefix and the local name and the (optional) "::"
+  const char *collocated = collocated_names[type];
+
+  size_t name_len = ACE_OS::strlen (collocated)
+                    + ACE_OS::strlen (poa)
+                    + 1;
+
+  if (prefix)
+    {
+      name_len += ACE_OS::strlen (prefix);
+    }
+
+  if (suffix)
+    {
+      name_len += ACE_OS::strlen (suffix);
+    }
+
+  for (UTL_IdListActiveIterator i (this->name ());
+       !i.is_done ();
+       i.next ())
+    {
+      // Reserve 2 characters for "::".
+      name_len += ACE_OS::strlen (i.item ()->get_string ()) + 2;
+    }
+
+  ACE_NEW (this->full_coll_name_,
+           char[name_len + 1]);
+
+  // Null terminate the string.
+  this->full_coll_name_[0] = 0;
+
+  // Only the first component get the "POA_" preffix.
+  int poa_added = 0;
+
+  // Iterate again.
+  // Must advance the iterator explicitly inside the loop.
+  for (UTL_IdListActiveIterator j (this->name ());
+       !j.is_done ();)
+    {
+      const char *item = j.item ()->get_string ();
+
+      // Increase right away, so we can test for the final component
+      // in the loop.
+      j.next ();
+
+      // We add the POA_ preffix only if the first component is not
+      // the global scope...
+      if (ACE_OS::strcmp (item, "") != 0)
         {
-          if (!first)
+          if (!j.is_done ())
             {
-              namelen += 2; // for "::"
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
-
-          // Print the identifier.
-          item_name = i.item ()->get_string ();
-          namelen += ACE_OS::strlen (item_name);
-
-          // Additional 4 for the POA_ characters.
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, "") != 0)
+              // We only add the POA_ preffix if there are more than
+              // two components in the name, in other words, if the
+              // class is inside some scope.
+              if (!poa_added)
                 {
-                  // Does not start with a "".
-                  first = false;
+                  ACE_OS::strcat (this->full_coll_name_, poa);
+                  poa_added = 1;
                 }
-              else
+              ACE_OS::strcat (this->full_coll_name_, item);
+              ACE_OS::strcat (this->full_coll_name_, "::");
+            }
+          else
+            {
+              ACE_OS::strcat (this->full_coll_name_, collocated);
+
+              if (prefix)
                 {
-                  second = true;
+                  ACE_OS::strcat (this->full_coll_name_, prefix);
+                }
+
+              ACE_OS::strcat (this->full_coll_name_, item);
+
+              if (suffix)
+                {
+                  ACE_OS::strcat (this->full_coll_name_, suffix);
                 }
             }
         }
+    }
 
-      ACE_NEW (skelname,
-               char [namelen+1]);
-      skelname[0] = '\0';
-      first = true;
-      second = false;
-      ACE_OS::strcat (skelname, prefix);
+  // Compute the local name for the collocated class.
+  char *local_name =
+    this->AST_Interface::local_name ()->get_string ();
+  size_t local_len = ACE_OS::strlen (collocated)
+                     + ACE_OS::strlen (local_name)
+                     + 1;
+  if (prefix)
+    {
+      local_len += ACE_OS::strlen (prefix);
+    }
 
-      for (UTL_IdListActiveIterator j (this->name ());
-           !j.is_done ();
-           j.next ())
-        {
-          if (!first)
-            {
-              ACE_OS::strcat (skelname, "::");
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
+  if (suffix)
+    {
+      local_len += ACE_OS::strlen (suffix);
+    }
 
-          // Print the identifier.
-          item_name = j.item ()->get_string ();
-          ACE_OS::strcat (skelname, item_name);
+  ACE_NEW (this->local_coll_name_,
+           char[local_len]);
 
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
-        }
+  ACE_OS::strcpy (this->local_coll_name_,
+                  collocated);
+
+  if (prefix)
+    {
+      ACE_OS::strcat (this->local_coll_name_,
+                      prefix);
+    }
+
+  ACE_OS::strcat (this->local_coll_name_,
+                  this->AST_Interface::local_name ()->get_string ());
+
+  if (suffix)
+    {
+      ACE_OS::strcat (this->local_coll_name_, suffix);
     }
 }
 
@@ -610,7 +762,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 void
 be_interface:: gen_var_out_seq_decls (void)
 {
-  if (this->var_out_seq_decls_gen_ == 1)
+  if (this->var_out_seq_decls_gen_)
     {
       return;
     }
@@ -624,6 +776,16 @@ be_interface:: gen_var_out_seq_decls (void)
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
+           
+  /// Forward declare the handler interface before declaring
+  /// the original interface.                     
+  if (be_global->ami_call_back () && !this->is_ami_rh ())
+    {
+      *os << be_nl << be_nl
+          << "class AMI_" << lname << "Handler;" << be_nl
+          << "typedef AMI_" << lname << "Handler *AMI_"
+          << lname << "Handler_ptr;";
+    }
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
@@ -643,7 +805,7 @@ be_interface:: gen_var_out_seq_decls (void)
 
   os->gen_endif ();
 
-  this->var_out_seq_decls_gen_ = 1;
+  this->var_out_seq_decls_gen_ = true;
 }
 
 // ****************************************************************
@@ -774,7 +936,7 @@ be_interface::gen_operation_table (const char *flat_name,
       {
         this->skel_count_ = 0;
         // Init the outstream appropriately.
-        TAO_OutStream *os = this->strategy_->get_out_stream ();
+        TAO_OutStream *os = tao_cg->server_skeletons ();
 
         // Start from current indentation level.
         os->indent ();
@@ -1012,6 +1174,7 @@ be_interface::gen_operation_table (const char *flat_name,
             *os << "_repository_id,&"
                 << skeleton_class_name
                 << "::_repository_id_skel, 0" << be_nl;
+                
             ++this->skel_count_;
           }
 
@@ -1078,7 +1241,7 @@ be_interface::gen_gperf_input_header (TAO_OutStream *os)
       << "\n";
 }
 
-// we separate the generation of operation table entries from the
+// We separate the generation of operation table entries from the
 // "gen_operation_table" method. This enables us to invoke generation of
 // entries for interfaces from which we inherit without any additional
 // code. The parameter "derived" is the one for which the entire operation
@@ -1097,11 +1260,19 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
            !si.is_done ();
            si.next ())
         {
-          // get the next AST decl node
+          // Get the next AST decl node
           AST_Decl *d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_op)
             {
+              be_operation *op =
+                be_operation::narrow_from_decl (d);
+                
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
+                
               // We are an operation node.
               *os << "{\"" << d->original_local_name () << "\", &"
                   << full_skeleton_name << "::"
@@ -1195,6 +1366,14 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
           if (d->node_type () == AST_Decl::NT_op)
             {
+              be_operation *op =
+                be_operation::narrow_from_decl (d);
+                
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
+                
               // Generate operation name.
 
               // We are an operation node. We use the original
@@ -1538,7 +1717,7 @@ be_interface::gen_gperf_things (const char *flat_name)
   // GPERF can give Binary search, Linear search and Perfect Hash
   // methods. Generate the class defintion according to that.
 
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
@@ -1602,16 +1781,13 @@ be_interface::gen_gperf_things (const char *flat_name)
 
     default:
       ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"
-        ),
-        -1
-      );
+        LM_ERROR,
+        "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
+       -1);
   }
 
   return 0;
 }
-
 
 // Outputs the class definition for the perfect hashing. This class
 // will inherit from the TAO_Perfect_Hash_OpTable.
@@ -1619,7 +1795,7 @@ void
 be_interface::gen_perfect_hash_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << "class " << "TAO_" << flat_name << "_Perfect_Hash_OpTable"
       << be_idt_nl
@@ -1641,7 +1817,7 @@ void
 be_interface::gen_binary_search_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << "class " << "TAO_" << flat_name << "_Binary_Search_OpTable"
       << be_idt_nl
@@ -1659,7 +1835,7 @@ void
 be_interface::gen_linear_search_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *ss = this->strategy_->get_out_stream ();
+  TAO_OutStream *ss = tao_cg->server_skeletons ();
 
   *ss << "class " << "TAO_" << flat_name << "_Linear_Search_OpTable"
       << be_idt_nl
@@ -1700,6 +1876,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "fclose"),
                         -1);
     }
+    
   // And reset file to 0 because otherwise there is a problem during destruction of stream.
   tao_cg->gperf_input_stream ()->file () = 0;
 
@@ -1728,7 +1905,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 #ifndef ACE_OPENVMS
   // Flush the output stream.  Gperf also uses it as output.  Ensure
   // current contents are written before gperf writes.
-  ACE_OS::fflush (this->strategy_->get_out_stream ()->file ());
+  ACE_OS::fflush (tao_cg->server_skeletons ()->file ());
 #endif  /* !ACE_OPENVMS */
 
   // Stdout is server skeleton.  Do *not* close the file, just open
@@ -1753,7 +1930,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                               "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
+  ACE_HANDLE output = ACE_OS::open (be_global->be_get_server_skeleton_fname (),
                                     O_WRONLY | O_APPEND);
 #endif
 
@@ -1882,7 +2059,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
       // Adjust the file offset to the EOF for the server skeleton
       // file.
-      ACE_OS::fseek (this->strategy_->get_out_stream ()->file (),
+      ACE_OS::fseek (tao_cg->server_skeletons ()->file (),
                      0,
                      SEEK_END);
     }
@@ -1939,7 +2116,7 @@ void
 be_interface::gen_perfect_hash_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Perfect_Hash_OpTable"
@@ -1952,7 +2129,7 @@ void
 be_interface::gen_binary_search_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Binary_Search_OpTable"
@@ -1966,7 +2143,7 @@ void
 be_interface::gen_linear_search_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = this->strategy_->get_out_stream ();
+  TAO_OutStream *os = tao_cg->server_skeletons ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Linear_Search_OpTable"
@@ -2496,14 +2673,66 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
 void
 be_interface::destroy (void)
 {
-  // We know that it cannot be 0, but..
-  if (this->strategy_ != 0)
-    {
-      this->strategy_->destroy ();
-      delete this->strategy_;
-      this->strategy_ = 0;
-    }
-
+  delete [] this->full_skel_name_;
+  this->full_skel_name_ = 0;
+  
+  delete [] this->full_coll_name_;
+  this->full_coll_name_ = 0;
+  
+  delete [] this->local_coll_name_;
+  this->local_coll_name_ = 0;
+  
+  delete [] this->relative_skel_name_;
+  this->relative_skel_name_ = 0;
+  
+  delete [] this->base_proxy_impl_name_;
+  this->base_proxy_impl_name_ = 0;
+  
+  delete [] this->remote_proxy_impl_name_;
+  this->remote_proxy_impl_name_ = 0;
+  
+  delete [] this->direct_proxy_impl_name_;
+  this->direct_proxy_impl_name_ = 0;
+  
+  delete [] this->full_base_proxy_impl_name_;
+  this->full_base_proxy_impl_name_ = 0;
+  
+  delete [] this->full_remote_proxy_impl_name_;
+  this->full_remote_proxy_impl_name_ = 0;
+  
+  delete [] this->full_direct_proxy_impl_name_;
+  this->full_direct_proxy_impl_name_ = 0;
+  
+  delete [] this->base_proxy_broker_;
+  this->base_proxy_broker_ = 0;
+  
+  delete [] this->remote_proxy_broker_;
+  this->remote_proxy_broker_ = 0;
+  
+  delete [] this->strategized_proxy_broker_;
+  this->strategized_proxy_broker_ = 0;
+  
+  delete [] this->full_base_proxy_broker_name_;
+  this->full_base_proxy_broker_name_ = 0;
+  
+  delete [] this->full_remote_proxy_broker_name_;
+  this->full_remote_proxy_broker_name_ = 0;
+  
+  delete [] this->full_strategized_proxy_broker_name_;
+  this->full_strategized_proxy_broker_name_ = 0;
+  
+  delete [] this->client_scope_;
+  this->client_scope_ = 0;
+  
+  delete [] this->flat_client_scope_;
+  this->flat_client_scope_ = 0;
+  
+  delete [] this->server_scope_;
+  this->server_scope_ = 0;
+  
+  delete [] this->flat_server_scope_;
+  this->flat_server_scope_ = 0;
+  
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
   this->be_scope::destroy ();
@@ -2516,20 +2745,6 @@ be_interface::accept (be_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
-
-TAO_CodeGen::CG_STATE
-be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
-                          int is_extra_state)
-{
-  return this->strategy_->next_state (current_state, is_extra_state);
-}
-
-int
-be_interface::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
-{
-  return this->strategy_->has_extra_code_generation (current_state);
-}
-
 void
 be_interface::original_interface (be_interface *original_interface)
 {
@@ -2540,12 +2755,6 @@ be_interface *
 be_interface::original_interface (void)
 {
   return this->original_interface_;
-}
-
-be_interface *
-be_interface::replacement (void)
-{
-  return this->strategy_->replacement ();
 }
 
 int
@@ -3049,97 +3258,350 @@ be_interface::gen_nesting_close (TAO_OutStream &os)
     }
 }
 
+bool
+be_interface::is_ami_rh (void) const
+{
+  return this->is_ami_rh_;
+}
+
+void
+be_interface::is_ami_rh (bool val)
+{
+  this->is_ami_rh_ = val;
+}
+
 const char *
 be_interface::base_proxy_impl_name (void)
 {
-  return this->strategy_->base_proxy_impl_name ();
+  if (this->base_proxy_impl_name_ == 0)
+    {
+      this->base_proxy_impl_name_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_IMPL]);
+    }
+    
+  return this->base_proxy_impl_name_;
 }
 
 const char *
 be_interface::full_base_proxy_impl_name (void)
 {
-  return this->strategy_->full_base_proxy_impl_name ();
+  if (this->full_base_proxy_impl_name_ == 0)
+    {
+      const char *scope = this->client_enclosing_scope ();
+      const char *base_name =
+        this->base_proxy_impl_name ();
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_base_proxy_impl_name_,
+                      scope);
+      ACE_OS::strcat (this->full_base_proxy_impl_name_,
+                      base_name);
+    }
+    
+  return this->full_base_proxy_impl_name_;
 }
 
 const char *
 be_interface::remote_proxy_impl_name (void)
 {
-  return this->strategy_->remote_proxy_impl_name ();
+  if (this->remote_proxy_impl_name_ = 0)
+    {
+      this->remote_proxy_impl_name_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_IMPL],
+          this->tag_table_[REMOTE]);
+    }
+    
+  return this->remote_proxy_impl_name_;
 }
 
 const char *
 be_interface::full_remote_proxy_impl_name (void)
 {
-  return this->strategy_->full_remote_proxy_impl_name ();
+  if (this->full_remote_proxy_impl_name_ == 0)
+    {
+      const char *scope = this->client_enclosing_scope ();
+      const char *base_name = this->remote_proxy_impl_name ();
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_remote_proxy_impl_name_,
+                      scope);
+      ACE_OS::strcat (this->full_remote_proxy_impl_name_,
+                      base_name);
+    }
+    
+  return this->full_remote_proxy_impl_name_;
 }
 
 const char *
 be_interface::direct_proxy_impl_name (void)
 {
-  return this->strategy_->direct_proxy_impl_name ();
+  if (this->direct_proxy_impl_name_ == 0)
+    {
+      this->direct_proxy_impl_name_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_IMPL],
+          this->tag_table_[DIRECT]);
+    }
+    
+  return this->direct_proxy_impl_name_;
 }
 
 const char *
 be_interface::full_direct_proxy_impl_name (void)
 {
-  return this->strategy_->full_direct_proxy_impl_name ();
+  if (this->full_direct_proxy_impl_name_ == 0)
+    {
+      const char *scope = this->server_enclosing_scope ();
+      const char *base_name = this->direct_proxy_impl_name ();
+
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_direct_proxy_impl_name_,
+                      scope);
+      ACE_OS::strcat (this->full_direct_proxy_impl_name_,
+                      base_name);
+    }
+    
+  return this->full_direct_proxy_impl_name_;
 }
 
 
 const char *
 be_interface::base_proxy_broker_name (void)
 {
-  return this->strategy_->base_proxy_broker_name ();
+  if (this->base_proxy_broker_ == 0)
+    {
+      this->base_proxy_broker_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_BROKER]);
+    }
+    
+  return this->base_proxy_broker_;
 }
 
 const char *
 be_interface::full_base_proxy_broker_name (void)
 {
-  return this->strategy_->full_base_proxy_broker_name ();
+  if (this->full_base_proxy_broker_name_ == 0)
+    {
+      const char *scope = this->client_enclosing_scope ();
+      const char *base_name = this->base_proxy_broker_name ();
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_base_proxy_broker_name_,
+                      scope);
+      ACE_OS::strcat (this->full_base_proxy_broker_name_,
+                      base_name);
+    }
+    
+  return this->full_base_proxy_broker_name_;
 }
 
 
 const char *
 be_interface::remote_proxy_broker_name (void)
 {
-  return this->strategy_->remote_proxy_broker_name ();
+  if (this->remote_proxy_broker_ == 0)
+    {
+      this->remote_proxy_broker_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_BROKER],
+          this->tag_table_[REMOTE]);
+    }
+    
+  return this->remote_proxy_broker_;
 }
 
 const char *
 be_interface::full_remote_proxy_broker_name (void)
 {
-  return this->strategy_->full_remote_proxy_broker_name ();
+  if (this->full_remote_proxy_broker_name_ == 0)
+    {
+      const char *scope = this->client_enclosing_scope ();
+      const char *base_name = this->remote_proxy_broker_name ();
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_remote_proxy_broker_name_,
+                      scope);
+      ACE_OS::strcat (this->full_remote_proxy_broker_name_,
+                      base_name);
+    }
+    
+  return this->full_remote_proxy_broker_name_;
 }
 
 
 const char *
 be_interface::strategized_proxy_broker_name (void)
 {
-  return this->strategy_->strategized_proxy_broker_name ();
+  if (this->strategized_proxy_broker_ == 0)
+    {
+      this->strategized_proxy_broker_ =
+        this->create_with_prefix_suffix (
+          this->tag_table_[GC_PREFIX],
+          this->local_name (),
+          this->suffix_table_[PROXY_BROKER],
+          this->tag_table_[STRATEGIZED]);
+    }
+    
+  return this->strategized_proxy_broker_;
 }
 
 const char *
 be_interface::full_strategized_proxy_broker_name (void)
 {
-  return this->strategy_->full_strategized_proxy_broker_name ();
+  if (this->full_strategized_proxy_broker_name_ == 0)
+    {
+      const char *scope = this->server_enclosing_scope ();
+      const char *base_name =
+        this->strategized_proxy_broker_name ();
+      size_t length =
+        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
+        
+      ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strcpy (this->full_strategized_proxy_broker_name_,
+                      scope);
+      ACE_OS::strcat (this->full_strategized_proxy_broker_name_,
+                      base_name);
+    }
+    
+  return this->full_strategized_proxy_broker_name_;
 }
 
 const char *
 be_interface::client_enclosing_scope (void)
 {
-  return this->strategy_->client_scope ();
+  if (this->client_scope_ == 0)
+    {
+      const char *full_name = this->full_name ();
+      const char *name = this->local_name ();
+
+      size_t offset = ACE_OS::strlen (name);
+      size_t length = ACE_OS::strlen (full_name) - offset;
+      ACE_NEW_RETURN (this->client_scope_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strncpy (this->client_scope_, full_name, length);
+      this->client_scope_[length] = '\0';
+    }
+    
+  return this->client_scope_;
 }
 
 const char *
 be_interface::flat_client_enclosing_scope (void)
 {
-  return this->strategy_->flat_client_scope ();
+  if (this->flat_client_scope_ == 0)
+    {
+      const char *full_name = this->flat_name ();
+      const char *name =
+        this->original_local_name ()->get_string ();
+
+      size_t offset = ACE_OS::strlen (name);
+      size_t length = ACE_OS::strlen (full_name) - offset;
+      
+      ACE_NEW_RETURN (this->flat_client_scope_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strncpy (this->flat_client_scope_,
+                       full_name,
+                       length);
+      this->flat_client_scope_[length] = '\0';
+    }
+    
+  return this->flat_client_scope_;
 }
 
 const char *
 be_interface::server_enclosing_scope (void)
 {
-  return this->strategy_->server_scope ();
+  if (this->server_scope_ == 0)
+    {
+      const char *full_name =
+        this->full_coll_name (be_interface::DIRECT);
+
+      const char *name =
+        this->local_coll_name (be_interface::DIRECT);
+
+      size_t offset = ACE_OS::strlen (name);
+      size_t length = ACE_OS::strlen (full_name) - offset;
+      ACE_NEW_RETURN (this->server_scope_,
+                      char[length + 1],
+                      0);
+
+      ACE_OS::strncpy (this->server_scope_, full_name, length);
+      this->server_scope_[length] = '\0';
+    }
+    
+  return this->server_scope_;
+}
+
+char *
+be_interface::create_with_prefix_suffix (const char *prefix,
+                                         const char *str,
+                                         const char *suffix,
+                                         const char *separator)
+{
+  char *cat_string = 0;
+  size_t length =
+    ACE_OS::strlen (str) +
+    ACE_OS::strlen (prefix) +
+    ACE_OS::strlen (suffix) +
+    ACE_OS::strlen (separator) +
+    1; // The '/0'
+
+  ACE_NEW_RETURN (cat_string,
+                  char[length],
+                  0);
+
+  ACE_OS::strcpy (cat_string, prefix);
+  ACE_OS::strcat (cat_string, str);
+  ACE_OS::strcat (cat_string, separator);
+  ACE_OS::strcat (cat_string, suffix);
+
+  return cat_string;
 }
 
 IMPL_NARROW_FROM_DECL (be_interface)

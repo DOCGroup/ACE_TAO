@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for client stubs.
 // ************************************************************
@@ -49,8 +48,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (
 
 int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
-    be_operation *node
-  )
+  be_operation *node)
 {
   be_type *bt = 0;
   be_visitor_context ctx;
@@ -77,7 +75,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   os->indent ();
 
   // Generate the return type. Return type is simply void.
-  *os << be_nl << "void" << be_nl;
+  *os << be_nl << be_nl
+      << "void" << be_nl;
 
   // Get the scope name.
   be_decl *parent =
@@ -101,24 +100,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Generate the operation name.
   *os << "::";
 
-  // Check if we are an attribute node in disguise
-  if (this->ctx_->attribute ())
-    {
-      // Now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1)
-        {
-          *os << "_set_";
-        }
-      else
-        {
-          *os << "_get_";
-        }
-    }
-
-  *os << node->local_name () << "_reply_stub (" << be_idt_nl;
-
-  // Generate the argument list.
-  *os << "TAO_InputCDR &_tao_in, " << be_nl
+  *os << node->local_name () << "_reply_stub (" << be_idt_nl
+      << "TAO_InputCDR &_tao_in, " << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "::CORBA::ULong reply_status"
       << ")" << be_uidt << be_uidt_nl
@@ -167,18 +150,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "case TAO_AMI_REPLY_SYSTEM_EXCEPTION:" << be_nl
       << "{" << be_idt_nl
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
-
-  be_interface *original =
-    (be_interface::narrow_from_decl (parent))->original_interface ();
-
-  if (!original)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%1) ami_handler_reply_stub_operation_cs::"
-                         "visit_operation - "
-                         "original interface is not set\n"),
-                        -1);
-    }
 
   const char *exception_data_arg = "0";
   const char *exception_count_arg = "0";
@@ -276,7 +247,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "//             We have to think about this case." << be_nl
       << "break;" << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
   return 0;
 }
@@ -296,17 +267,16 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
   if (!bt)
     {
       ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
-          "visit_argument - "
-          "Bad argument type\n"
-        ),
-        -1
-      );
+        LM_ERROR,
+        "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
+        "visit_argument - "
+        "Bad argument type\n"),
+       -1);
     }
 
   os->indent ();
   *os << "{" << bt->tc_name () << ", ";
+  
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
@@ -341,14 +311,12 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) "
-              "be_visitor_operation_ami_handler_reply_stub_operation_cs::"
-              "gen_pre_stub_info - "
-              "Exceptionlist generation error\n"
-            ),
-            -1
-          );
+            LM_ERROR,
+            "(%N:%l) "
+            "be_visitor_operation_ami_handler_reply_stub_operation_cs::"
+            "gen_pre_stub_info - "
+            "Exceptionlist generation error\n"),
+          -1);
         }
     }
 
@@ -413,7 +381,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
     }
 
   *os << node->local_name () << " (" << be_idt << be_idt_nl;
-
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);

@@ -28,6 +28,12 @@ be_visitor_operation_ss::~be_visitor_operation_ss (void)
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
 {
+  /// No server-side code generation for these implied IDL nodes.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+    
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt = 0;
 

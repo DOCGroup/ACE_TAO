@@ -38,19 +38,8 @@ be_attribute::be_attribute (bool ro,
                    local,
                    abstract),
     be_decl (AST_Decl::NT_attr,
-             n),
-    original_attribute_ (0)
+             n)
 {
-  be_operation_default_strategy *bods = 0;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->get_strategy_ = bods;
-
-  ACE_NEW (bods,
-           be_operation_default_strategy (0));
-  this->set_strategy_ = bods;
-
   if (!this->imported () && !this->is_local ())
     {
       // For the return types of the two operations
@@ -74,76 +63,11 @@ be_attribute::accept (be_visitor *visitor)
   return visitor->visit_attribute (this);
 }
 
-
-be_operation_strategy *
-be_attribute::set_set_strategy (be_operation_strategy *new_strategy)
-{
-  be_operation_strategy *old = this->set_strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->set_strategy_ = new_strategy;
-    }
-
-  return old;
-}
-
-be_operation_strategy *
-be_attribute::set_get_strategy (be_operation_strategy *new_strategy)
-{
-  be_operation_strategy *old = this->get_strategy_;
-
-  if (new_strategy != 0)
-    {
-      this->get_strategy_ = new_strategy;
-    }
-
-  return old;
-}
-
-be_operation_strategy *
-be_attribute::get_set_strategy ()
-{
-  return this->set_strategy_;
-}
-
-be_operation_strategy *
-be_attribute::get_get_strategy ()
-{
-  return this->get_strategy_;
-}
-
 void
 be_attribute::destroy (void)
 {
-  if (0 != this->get_strategy_)
-    {
-      this->get_strategy_->destroy ();
-      delete this->get_strategy_;
-      this->get_strategy_ = 0;
-    }
-
-  if (0 != this->set_strategy_)
-    {
-      this->set_strategy_->destroy ();
-      delete this->set_strategy_;
-      this->set_strategy_ = 0;
-    }
-
   this->be_decl::destroy ();
   this->AST_Attribute::destroy ();
-}
-
-void
-be_attribute::original_attribute (be_attribute *original_attribute)
-{
-  this->original_attribute_ = original_attribute;
-}
-
-be_attribute *
-be_attribute::original_attribute (void)
-{
-  return this->original_attribute_;
 }
 
 IMPL_NARROW_FROM_DECL (be_attribute)

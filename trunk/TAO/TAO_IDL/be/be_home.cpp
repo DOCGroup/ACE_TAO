@@ -15,7 +15,6 @@
 
 #include "be_home.h"
 #include "be_component.h"
-#include "be_interface_strategy.h"
 #include "be_visitor.h"
 #include "global_extern.h"
 #include "utl_err.h"
@@ -88,16 +87,66 @@ be_home::~be_home (void)
 void
 be_home::destroy (void)
 {
-  // Skip be_interface, since our decls were added to
-  // the equivalent interface and will get destroyed
-  // there.
-  if (this->strategy_ != 0)
-    {
-      this->strategy_->destroy ();
-      delete this->strategy_;
-      this->strategy_ = 0;
-    }
-    
+  delete [] this->full_skel_name_;
+  this->full_skel_name_ = 0;
+  
+  delete [] this->full_coll_name_;
+  this->full_coll_name_ = 0;
+  
+  delete [] this->local_coll_name_;
+  this->local_coll_name_ = 0;
+  
+  delete [] this->relative_skel_name_;
+  this->relative_skel_name_ = 0;
+  
+  delete [] this->base_proxy_impl_name_;
+  this->base_proxy_impl_name_ = 0;
+  
+  delete [] this->remote_proxy_impl_name_;
+  this->remote_proxy_impl_name_ = 0;
+  
+  delete [] this->direct_proxy_impl_name_;
+  this->direct_proxy_impl_name_ = 0;
+  
+  delete [] this->full_base_proxy_impl_name_;
+  this->full_base_proxy_impl_name_ = 0;
+  
+  delete [] this->full_remote_proxy_impl_name_;
+  this->full_remote_proxy_impl_name_ = 0;
+  
+  delete [] this->full_direct_proxy_impl_name_;
+  this->full_direct_proxy_impl_name_ = 0;
+  
+  delete [] this->base_proxy_broker_;
+  this->base_proxy_broker_ = 0;
+  
+  delete [] this->remote_proxy_broker_;
+  this->remote_proxy_broker_ = 0;
+  
+  delete [] this->strategized_proxy_broker_;
+  this->strategized_proxy_broker_ = 0;
+  
+  delete [] this->full_base_proxy_broker_name_;
+  this->full_base_proxy_broker_name_ = 0;
+  
+  delete [] this->full_remote_proxy_broker_name_;
+  this->full_remote_proxy_broker_name_ = 0;
+  
+  delete [] this->full_strategized_proxy_broker_name_;
+  this->full_strategized_proxy_broker_name_ = 0;
+  
+  delete [] this->client_scope_;
+  this->client_scope_ = 0;
+  
+  delete [] this->flat_client_scope_;
+  this->flat_client_scope_ = 0;
+  
+  delete [] this->server_scope_;
+  this->server_scope_ = 0;
+  
+  delete [] this->flat_server_scope_;
+  this->flat_server_scope_ = 0;
+  
   this->be_scope::destroy ();
   this->be_type::destroy ();
   
@@ -112,8 +161,6 @@ be_home::accept (be_visitor *visitor)
             ? 0
             : visitor->visit_home (this));
 }
-
-
 
 IMPL_NARROW_FROM_DECL (be_home)
 IMPL_NARROW_FROM_SCOPE (be_home)

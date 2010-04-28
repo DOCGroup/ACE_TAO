@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // OBV module visitor for server header.
 // ************************************************************
@@ -89,19 +88,26 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_MODULE_OBV_CH:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
+        be_visitor_valuetype_obv_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_MODULE_OBV_CI:
       {
-        // This context state is not involved in any strategies.
         ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
         be_visitor_valuetype_obv_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_MODULE_OBV_CS:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
+        be_visitor_valuetype_obv_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       return 0;
     }
@@ -119,160 +125,11 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  // Change the state depending on the kind of node strategy.
-  ctx.state (node->next_state (ctx.state ()));
-
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_obv_module::"
-                         "visit_valuetype - "
-                         "NUL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_obv_module::"
-                         "visit_valuetype - "
-                         "failed to accept visitor\n"),  
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-   // Do addtional "extra" code generation if necessary.
-  if (node->has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (node->next_state (ctx.state (), 1));
-
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_obv_module::"
-                             "visit_valuetype - "
-                             "NUL visitor\n"),  
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_obv_module::"
-                             "visit_valuetype - "
-                             "failed to accept visitor\n"),  
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
-    }
-
   return 0;
 }
 
 int
 be_visitor_obv_module::visit_eventtype (be_eventtype *node)
 {
-  be_visitor_context ctx (*this->ctx_);
-  ctx.node (node);
-  int status = 1;
-
-  switch (this->ctx_->state ())
-    {
-      case TAO_CodeGen::TAO_MODULE_OBV_CH:
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CH);
-        break;
-      case TAO_CodeGen::TAO_MODULE_OBV_CI:
-      {
-        // This context state is not involved in any strategies.
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
-        be_visitor_valuetype_obv_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-      case TAO_CodeGen::TAO_MODULE_OBV_CS:
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
-        break;
-      default:
-        return 0;
-    }
-
-  if (status == 0)
-    {
-      return 0;
-    }
-  else if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_obv_module::"
-                         "visit_valuetype - "
-                         "failed to accept visitor\n"),  
-                        -1);
-    }
-
-  // Change the state depending on the kind of node strategy.
-  ctx.state (node->next_state (ctx.state ()));
-
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_obv_module::"
-                         "visit_valuetype - "
-                         "NUL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_obv_module::"
-                         "visit_valuetype - "
-                         "failed to accept visitor\n"),  
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-   // Do addtional "extra" code generation if necessary.
-  if (node->has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (node->next_state (ctx.state (), 1));
-
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_obv_module::"
-                             "visit_valuetype - "
-                             "NUL visitor\n"),  
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_obv_module::"
-                             "visit_valuetype - "
-                             "failed to accept visitor\n"),  
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
-    }
-
-  return 0;
+  return this->visit_valuetype (node);
 }
