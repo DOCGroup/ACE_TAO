@@ -13,24 +13,22 @@
  */
 //=============================================================================
 
-
-be_visitor_operation_upcall_command_ss
-::be_visitor_operation_upcall_command_ss (
-    be_visitor_context *ctx)
+be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
+      be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_upcall_command_ss
-::~be_visitor_operation_upcall_command_ss (void)
+be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
+  void)
 {
 }
 
 // The following needs to be done to deal until the MSVC compiler's broken
 // handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
-be_visitor_operation_upcall_command_ss
-::gen_nested_namespace_begin (be_module *node)
+be_visitor_operation_upcall_command_ss::gen_nested_namespace_begin (
+  be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   char *item_name = 0;
@@ -63,8 +61,8 @@ be_visitor_operation_upcall_command_ss
 // The following needs to be done to deal until the MSVC compiler's broken
 // handling of namespaces is fixed (hopefully forthcoming in version 7).
 int
-be_visitor_operation_upcall_command_ss
-::gen_nested_namespace_end (be_module *node)
+be_visitor_operation_upcall_command_ss::gen_nested_namespace_end (
+  be_module *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -81,10 +79,16 @@ be_visitor_operation_upcall_command_ss
 }
 
 int
-be_visitor_operation_upcall_command_ss::visit (be_operation * node,
-                                               char const * full_skel_name,
-                                               char const * upcall_command_name)
+be_visitor_operation_upcall_command_ss::visit (
+  be_operation * node,
+  char const * full_skel_name,
+  char const * upcall_command_name)
 {
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+    
   be_interface * const intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
@@ -263,7 +267,8 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
 }
 
 int
-be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
+be_visitor_operation_upcall_command_ss::gen_upcall (
+  be_operation *node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -277,6 +282,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
   bool excep_method = ((ACE_OS::strstr (op_name, excep_suffix) +
                         excep_suffix_len) ==
                        (op_name + ACE_OS::strlen (op_name)));
+                       
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
@@ -399,6 +405,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
       exceplist.visit_operation (node);
 
       unsigned int exceptions_count = 0;
+      
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done (); ei.next ())
         {

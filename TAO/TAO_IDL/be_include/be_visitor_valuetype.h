@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H
 
@@ -42,8 +41,6 @@
 #include "be_visitor_valuetype/field_cdr_ch.h"
 #include "be_visitor_valuetype/field_cdr_cs.h"
 #include "be_visitor_valuetype/obv_module.h"
-#include "be_visitor_valuetype/ami_exception_holder_ch.h"
-#include "be_visitor_valuetype/ami_exception_holder_cs.h"
 #include "be_visitor_valuetype/valuetype_init.h"
 #include "be_visitor_valuetype/valuetype_init_ch.h"
 #include "be_visitor_valuetype/valuetype_init_ci.h"

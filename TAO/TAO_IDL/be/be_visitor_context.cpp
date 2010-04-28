@@ -239,8 +239,6 @@ be_visitor_context::export_macro (void) const
       case TAO_CodeGen::TAO_ARRAY_CH:
       case TAO_CodeGen::TAO_INTERFACE_CH:
       case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
-      case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
-      case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH:
       case TAO_CodeGen::TAO_ROOT_CH:
         return be_global->stub_export_macro ();
       case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:

@@ -74,9 +74,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    abstract,
                    truncatable,
                    custom),
-    full_obv_skel_name_ (0),
     supports_abstract_ (false),
-    var_out_seq_decls_gen_ (0)
+    var_out_seq_decls_gen_ (false)
 {
   // Check that redefine() copies all members.
 
@@ -100,7 +99,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
         
       if (intf == 0)
         {
-          // The item is a temploate param holder.
+          // The item is a template param holder.
           continue;
         }
 
@@ -151,20 +150,19 @@ be_valuetype::opt_accessor (void)
 void
 be_valuetype::compute_fullobvskelname (void)
 {
-  this->compute_full_skel_name ("OBV_",
-                                this->full_obv_skel_name_);
+  this->compute_full_skel_name ("OBV_");
 }
 
 // Retrieve the fully scoped skeleton name.
 const char*
 be_valuetype::full_obv_skel_name (void)
 {
-  if (0 == this->full_obv_skel_name_)
+  if (0 == this->full_skel_name_)
     {
       compute_fullobvskelname ();
     }
 
-  return this->full_obv_skel_name_;
+  return this->full_skel_name_;
 }
 
 const char *
@@ -324,7 +322,6 @@ be_valuetype::have_operation (void)
 bool
 be_valuetype::have_supported_op (be_interface * node)
 {
-
   bool have_supported_op = 0;
 
   if (node->nmembers () == 0)
@@ -529,9 +526,9 @@ be_valuetype::gen_ostream_operator (TAO_OutStream *os,
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_valuetype:: gen_var_out_seq_decls (void)
+be_valuetype::gen_var_out_seq_decls (void)
 {
-  if (this->var_out_seq_decls_gen_ == 1)
+  if (this->var_out_seq_decls_gen_)
     {
       return;
     }
@@ -562,7 +559,7 @@ be_valuetype:: gen_var_out_seq_decls (void)
 
   os->gen_endif ();
 
-  this->var_out_seq_decls_gen_ = 1;
+  this->var_out_seq_decls_gen_ = true;
 }
 
 // For building the pre and postfix of private data fields.
@@ -583,7 +580,9 @@ be_valuetype::statefull_inherit (void)
 {
   if (this->pd_inherits_concrete != 0)
     {
-      return be_valuetype::narrow_from_decl (this->pd_inherits_concrete);
+      return
+        be_valuetype::narrow_from_decl (
+          this->pd_inherits_concrete);
     }
   else
     {
@@ -601,9 +600,6 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy (void)
 {
-  delete [] this->full_obv_skel_name_;
-  this->full_obv_skel_name_ = 0;
-
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
 }
@@ -846,8 +842,6 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
 
   return 0;
 }
-
-
 
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)

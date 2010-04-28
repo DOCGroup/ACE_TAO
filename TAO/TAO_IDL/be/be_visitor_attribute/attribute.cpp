@@ -73,18 +73,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       get_op.be_add_exceptions (get_exceptions->copy ());
     }
 
-  // Get the strategy from the attribute and hand it over
-  // to the operation.
-  be_operation_strategy *old_strategy =
-    get_op.set_strategy (node->get_get_strategy ()->copy ());
-
-  if (0 != old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
-
   be_visitor_context ctx (*this->ctx_);
   int status = 1;
 
@@ -93,11 +81,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     // These two cases are the only ones that could involve a strategy.
     case TAO_CodeGen::TAO_ROOT_CH:
     case TAO_CodeGen::TAO_INTERFACE_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
+        be_visitor_operation_ch visitor (&ctx);
+        status = get_op.accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+        be_visitor_operation_cs visitor (&ctx);
+        status = get_op.accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_operation_sh visitor (&ctx);
@@ -202,50 +198,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                          "codegen for get_attribute failed\n"),
                         -1);
     }
-  else if (status == 1)
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (get_op.next_state (ctx.state ()));
-
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (get_op.accept (visitor) == -1))
-        {
-          delete visitor;
-          visitor = 0;
-          get_op.destroy ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_attribute::"
-                             "visit_attribute - "
-                             "codegen for get_attribute failed\n"),
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
-
-      if (get_op.has_extra_code_generation (ctx.state ()))
-        {
-          // Change the state depending on the kind of node strategy.
-          ctx.state (get_op.next_state (ctx.state (), 1));
-          be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-          if (!visitor || (get_op.accept (visitor) == -1))
-            {
-              delete visitor;
-              visitor = 0;
-              get_op.destroy ();
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_attribute::"
-                                 "visit_attribute - "
-                                 "codegen for get_attribute failed\n"),
-                                -1);
-            }
-
-          delete visitor;
-          visitor = 0;
-        }
-    }
 
   get_op.destroy ();
 
@@ -290,18 +242,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       set_op.be_add_exceptions (set_exceptions->copy ());
     }
 
-  // Get the strategy from the attribute and hand it over
-  // to the operation, thereby deleting the old one.
-  old_strategy =
-    set_op.set_strategy (node->get_set_strategy ()->copy ());
-
-  if (0 != old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
-
   ctx = *this->ctx_;
   status = 1;
 
@@ -310,11 +250,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     // These two cases are the only ones that could involved a strategy.
     case TAO_CodeGen::TAO_ROOT_CH:
     case TAO_CodeGen::TAO_INTERFACE_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
+        be_visitor_operation_ch visitor (&ctx);
+        status = set_op.accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+        be_visitor_operation_cs visitor (&ctx);
+        status = set_op.accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_operation_sh visitor (&ctx);
@@ -431,50 +379,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                          "visit_attribute - "
                          "codegen for get_attribute failed\n"),
                         -1);
-    }
-
-  // Change the state depending on the kind of node strategy
-  ctx.state (set_op.next_state (ctx.state ()));
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor || (set_op.accept (visitor) == -1))
-    {
-      delete visitor;
-      visitor = 0;
-      set_op.destroy ();
-      rt.destroy ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_attribute::"
-                         "visit_attribute - "
-                         "codegen for set_attribute failed\n"),
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-  if (set_op.has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy
-      ctx.state (set_op.next_state (ctx.state (), 1));
-
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (set_op.accept (visitor) == -1))
-        {
-          delete visitor;
-          visitor = 0;
-          set_op.destroy ();
-          rt.destroy ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_attribute::"
-                             "visit_attribute - "
-                             "codegen for set_attribute failed\n"),
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
     }
 
   set_op.destroy ();
