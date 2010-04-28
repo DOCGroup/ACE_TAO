@@ -174,13 +174,11 @@ public:
   bool has_member (void);
 
 private:
-  char *full_obv_skel_name_;
-
   /// Do we support at least one abstract interface?
   bool supports_abstract_;
 
   /// Have these been done already?
-  int var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_;
 };
 
 #endif  // if !defined

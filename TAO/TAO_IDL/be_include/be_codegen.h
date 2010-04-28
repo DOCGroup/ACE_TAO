@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
 
@@ -117,14 +116,8 @@ public:
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header
 
       // AMI next generation states
-      TAO_AMI_INTERFACE_CH,
-      TAO_AMI_SENDC_OPERATION_CH,
       TAO_AMI_SENDC_OPERATION_CS,
-      TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH,
       TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS,
-      TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH,
-      TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS,
-      TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS,
 
       // Emitting code for root.
       TAO_ROOT_CH,

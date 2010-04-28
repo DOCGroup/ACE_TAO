@@ -27,7 +27,7 @@
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
 class be_visitor;
-class be_interface_strategy;
+//class be_interface_strategy;
 
 class UTL_ExceptList;
 
@@ -41,12 +41,6 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
-  enum
-  {
-    THRU_POA = 0,
-    DIRECT = 1
-  };
-
   // Used to pass functions to the template method.
   typedef int (*tao_code_emitter) (be_interface *,
                                    be_interface *,
@@ -63,31 +57,19 @@ public:
   /// Destructor.
   ~be_interface (void);
 
-  /// Set the strategy to generate the names.
-  be_interface_strategy *set_strategy (be_interface_strategy *new_strategy);
-
   // Methods, which access the strategy.
 
   /// Return the local name.
-  const char *local_name (void) const;
-
-  /// Return the stringified full name.
-  virtual const char *full_name (void);
-
-  /// Return the flattened full scoped name.
-  virtual const char *flat_name (void);
-
-  /// Retrieve the repository ID.
-  virtual const char *repoID (void) const;
+  const char *local_name (void);
 
   /// Retrieve the fully scoped skel class name.
-  const char *full_skel_name (void) const;
+  const char *full_skel_name (void);
 
   /// Retrieve the fully qualified collocated class name.
-  const char *full_coll_name (int) const;
+  const char *full_coll_name (int);
 
   /// Retrieve the fully qualified collocated class name.
-  const char *local_coll_name (int) const;
+  const char *local_coll_name (int);
 
   /// retrieve the name of the base proxy implementation.
   virtual const char *base_proxy_impl_name (void);
@@ -144,8 +126,12 @@ public:
   const char *relative_skel_name (const char *skel_name);
 
   /// Build up the skeleton name.
-  void compute_full_skel_name (const char *prefix,
-                               char *&skel_name);
+  void compute_full_skel_name (const char *prefix);
+
+  /// Compute the collocation names.
+  void compute_coll_names (int type,
+                           const char *prefix,
+                           const char *suffix);
 
   static const char *relative_name (const char *localname,
                                     const char *othername);
@@ -316,15 +302,6 @@ public:
   /// and make a list of the abstract parents, if any.
   void analyze_parentage (void);
 
-  /// Find the next state, used to hide differences between variants of
-  /// interfaces.
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                    int is_extra_state = 0);
-
-  /// Returns 1 if additional code needs to be generated, the behavior
-  /// is driven by the strategy connected with this interface.
-  int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
   void original_interface (be_interface *original_interface);
@@ -332,10 +309,6 @@ public:
   /// Returns the original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface (void);
-
-  /// Returns an interface, which can be used instead.
-  /// Needs to get set by the strategy.
-  be_interface *replacement ();
 
   /// Do we have both abstract and concrete parents?
   int has_mixed_parentage (void);
@@ -363,6 +336,65 @@ public:
   /// Helper function called from visitors and used internally.
   void gen_nesting_open (TAO_OutStream &os);
   void gen_nesting_close (TAO_OutStream &os);
+
+  bool is_ami_rh (void) const;
+  void is_ami_rh (bool val);
+
+protected:
+  /**
+   * CDreate a new string made by the concatenation
+   * of "str" and "suffix" and using the
+   * "separator" to concatenate the two.
+   */
+  char *create_with_prefix_suffix (const char *prefix,
+                                   const char *str,
+                                   const char *suffix,
+                                   const char *separator = "");
+
+protected:
+  enum Suffix_Code
+  {
+    PROXY_IMPL = 0,
+    PROXY_BROKER = 1
+  };
+
+  enum Tag_Code
+  {
+    THRU_POA = 0,
+    DIRECT = 1,
+    REMOTE = 2,
+    STRATEGIZED = 3,
+    GC_PREFIX = 4 // Prefix used for the generated class
+                  // This prefix is used to avoid name conflicts
+                  // with the user classes.
+  };
+
+  static const char *suffix_table_[];
+  static const char *tag_table_[];
+
+  // Proxy Implementation names.
+  char *base_proxy_impl_name_;
+  char *remote_proxy_impl_name_;
+  char *direct_proxy_impl_name_;
+
+  char *full_base_proxy_impl_name_;
+  char *full_remote_proxy_impl_name_;
+  char *full_direct_proxy_impl_name_;
+
+  // Proxy Broker Names.
+  char *base_proxy_broker_;
+  char *remote_proxy_broker_;
+  char *strategized_proxy_broker_;
+
+  char *full_base_proxy_broker_name_;
+  char *full_remote_proxy_broker_name_;
+  char *full_strategized_proxy_broker_name_;
+
+  char *client_scope_;
+  char *flat_client_scope_;
+
+  char *server_scope_;
+  char *flat_server_scope_;
 
 private:
   /// Output the header (type declaration and %%) to the gperf's input
@@ -410,10 +442,10 @@ private:
    */
   void enqueue_base_component_r (AST_Component *node);
   void enqueue_base_home_r (AST_Home *node);
-
+  
 protected:
   /// Have these been done already?
-  int var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_;
 
 protected:
   /// Number of static skeletons in the operation table.
@@ -424,7 +456,7 @@ protected:
   int in_mult_inheritance_;
 
   /// Member for holding the strategy for generating names.
-  be_interface_strategy *strategy_;
+//  be_interface_strategy *strategy_;
 
   /// The original interface from which this one was created,
   /// applies only to implied IDL
@@ -435,6 +467,20 @@ protected:
 
   /// Are we a direct child of Components::SessionComponent?
   int session_component_child_;
+  
+  /// Are we an AMI reply handler?
+  bool is_ami_rh_;
+
+  char *full_skel_name_;
+
+  char *full_coll_name_;
+
+  char *local_coll_name_;
+
+  char *relative_skel_name_;
+
+  /// Current cached collocated name.
+  int cached_type_;
 };
 
 /**

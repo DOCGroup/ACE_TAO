@@ -1,3 +1,74 @@
+Wed Apr 28 01:51:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami_interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami_interface_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_handler_reply_stub_operation_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_exception_holder_operation_cs.h:
+        * TAO_IDL/be_include/be_operation_strategy.h:
+        * TAO_IDL/be_include/be_interface_strategy.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/ami_exception_holder_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/ami_exception_holder_cs.h:
+
+          Removed these files, containing AMI-related visitors plus
+          the classes be_operation_strategy and be_interface_strategy.
+
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+
+          Replaced the strategy pattern that formerly controlled AMI
+          code generation by:
+
+          - adding implied IDL nodes to the AST instead of containing them
+            in the original interfaces.
+
+          - adding some flags to operation and interface AST nodes to
+            indicate that the interface is a reply handler, or that the
+            operation is a sendc_* operation, a reply handler *_excep
+            operation, or an attribute operation added by the AMI
+            preprocessing visitor.
+
 Tue Apr 27 15:31:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp:

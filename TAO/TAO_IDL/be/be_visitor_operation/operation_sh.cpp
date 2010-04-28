@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for server header
 // ************************************************************
@@ -29,6 +28,12 @@ be_visitor_operation_sh::~be_visitor_operation_sh (void)
 int
 be_visitor_operation_sh::visit_operation (be_operation *node)
 {
+  /// No server-side code generation for these implied IDL nodes.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+    
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 

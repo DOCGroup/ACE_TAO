@@ -314,27 +314,6 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
 
   this->visit_operation (get_operation);
 
-  be_operation_default_strategy *default_strategy = 0;
-  ACE_NEW_RETURN (default_strategy,
-                  be_operation_default_strategy (get_operation),
-                  -1);
-
-  be_operation_strategy *get_operation_strategy =
-    get_operation->set_strategy (default_strategy);
-
-  if (0 != get_operation_strategy)
-    {
-      be_operation_strategy *gos =
-        node->set_get_strategy (get_operation_strategy);
-        
-      if (0 != gos)
-        {
-          gos->destroy ();
-          delete gos;
-          gos = 0;
-        }
-    }
-
   int status =
     this->create_response_handler_operation (get_operation,
                                              response_handler,
@@ -358,28 +337,6 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
   be_operation *set_operation = this->generate_set_operation (node);
 
   this->visit_operation (set_operation);
-
-  // Retrieve the strategy set by the visit operation.
-  ACE_NEW_RETURN (default_strategy,
-                  be_operation_default_strategy (set_operation),
-                  -1);
-
-  be_operation_strategy *set_operation_strategy =
-    set_operation->set_strategy (default_strategy);
-
-  // Assign it to the attribute as set_operation strategy.
-  if (0 != set_operation_strategy)
-    {
-      be_operation_strategy *sos =
-        node->set_set_strategy (set_operation_strategy);
-        
-      if (0 != sos)
-        {
-          sos->destroy ();
-          delete sos;
-          sos = 0;
-        }
-    }
 
   status =
     this->create_response_handler_operation (set_operation,
@@ -571,21 +528,6 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
       return 0;
     }
 
-  // Set the proper strategy
-  be_operation_amh_strategy *strategy = 0;
-  ACE_NEW_RETURN (strategy,
-                  be_operation_amh_strategy (node),
-                  -1);
-
-  be_operation_strategy *old_strategy = node->set_strategy (strategy);
-
-  if (old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
-    }
-
   return 0;
 }
 
@@ -762,24 +704,6 @@ be_visitor_amh_pre_proc::create_raise_operation (
               operation->be_add_exceptions (exceptions->copy ());
             }
         }
-    }
-
-  // Set the proper strategy.
-  be_operation_ami_exception_holder_raise_strategy *ehrs = 0;
-  ACE_NEW_RETURN (
-      ehrs,
-      be_operation_ami_exception_holder_raise_strategy (operation),
-      -1
-    );
-
-  be_operation_strategy *old_strategy =
-    operation->set_strategy (ehrs);
-
-  if (old_strategy)
-    {
-      old_strategy->destroy ();
-      delete old_strategy;
-      old_strategy = 0;
     }
 
   // After having generated the operation we insert it into the

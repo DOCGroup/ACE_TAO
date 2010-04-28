@@ -202,7 +202,7 @@ be_visitor_interface::visit_constant (be_constant *node)
         break;
       }
     default:
-                  return 0; // nothing to be done
+      return 0; // nothing to be done
     }
 
   if (status == -1)
@@ -398,10 +398,26 @@ be_visitor_interface::visit_operation (be_operation *node)
     // These first two cases may have the context state changed
     // by a strategy, so we use the visitor factory below.
     case TAO_CodeGen::TAO_INTERFACE_CH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
+        be_visitor_operation_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+      
+      if (node->is_sendc_ami ())
+        {
+          be_visitor_operation_ami_cs visitor (&ctx);
+          status = node->accept (&visitor);
+        }
+      else
+        {
+          be_visitor_operation_cs visitor (&ctx);
+          status = node->accept (&visitor);
+        }
+        
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       {
@@ -504,66 +520,6 @@ be_visitor_interface::visit_operation (be_operation *node)
                          "visit_operation - "
                          "failed to accept visitor\n"),
                         -1);
-    }
-
-  // Change the state depending on the kind of node strategy.
-  ctx.state (node->next_state (ctx.state ()));
-
-  // Grab the appropriate visitor.
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "NUL visitor\n"),
-                         -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_operation - "
-                         "failed to accept visitor\n"),
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-  // Do additional code generation is necessary.
-  // Note, this call is delegated to the strategy connected to
-  // the node.
-  if (node->has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (node->next_state (ctx.state (), 1));
-
-      // Grab the appropriate visitor.
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "NUL visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface::"
-                             "visit_operation - "
-                             "failed to accept visitor\n"),
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
     }
 
   return 0;
