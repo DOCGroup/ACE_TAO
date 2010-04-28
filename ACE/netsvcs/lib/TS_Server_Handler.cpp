@@ -110,7 +110,7 @@ ACE_TS_Server_Handler::open (void *)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %s on fd %d\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
               client_addr.get_host_name (),
               this->peer ().get_handle ()));
 
