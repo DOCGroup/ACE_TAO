@@ -1,3 +1,41 @@
+Wed Apr 28 14:15:13 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+	* connectors/ami4ccm/tests/InterInArgs
+	* connectors/ami4ccm/tests/InterInArgs/Base
+	* connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl
+	* connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc
+	* connectors/ami4ccm/tests/InterInArgs/descriptors
+	* connectors/ami4ccm/tests/InterInArgs/descriptors/Plan.cdp
+	* connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl
+	* connectors/ami4ccm/tests/InterInArgs/Receiver
+	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.idl
+	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver.mpc
+	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp
+	* connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.h
+	* connectors/ami4ccm/tests/InterInArgs/Sender
+	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.idl
+	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.mpc
+	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp
+	* connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h
+	* connectors/ami4ccm/tests/InterOutArgs
+	* connectors/ami4ccm/tests/InterOutArgs/Base
+	* connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl
+	* connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc
+	* connectors/ami4ccm/tests/InterOutArgs/descriptors
+	* connectors/ami4ccm/tests/InterOutArgs/descriptors/Plan.cdp
+	* connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl
+	* connectors/ami4ccm/tests/InterOutArgs/Receiver
+	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.idl
+	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver.mpc
+	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.cpp
+	* connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.h
+	* connectors/ami4ccm/tests/InterOutArgs/Sender
+	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.idl
+	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
+	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
+	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
+	AMI4CCM tests for interfaces with different in- and out arguments.
+
 Wed Apr 28 10:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
 
 	* DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
