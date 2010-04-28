@@ -1,3 +1,41 @@
+Wed Apr 28 17:00:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_tmpl/utl_idlist.h:
+        * TAO_IDL/include/utl_tmpl/utl_exprlist.h:
+        * TAO_IDL/include/utl_tmpl/utl_labellist.h:
+        * TAO_IDL/include/utl_tmpl/utl_list.h:
+        * TAO_IDL/include/utl_tmpl/utl_namelist.h:
+        * TAO_IDL/include/utl_tmpl/utl_decllist.h:
+        * TAO_IDL/include/utl_tmpl/utl_exceptlist.h:
+        * TAO_IDL/include/utl_tmpl/utl_strlist.h:
+        * TAO_IDL/util/utl_tmpl/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_labellist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_list.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_namelist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_decllist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_strlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+
+          Removed these template files/classes,
+          they are not used.
+
+        * TAO_IDL/include/utl_scope_T.cpp:
+
+          Moved this file from 
+          $TAO_ROOT/TAO_IDL/include/utl_tmpl. It
+          contains implementations of 2 template
+          methods declared in utl_scope.h.
+
+        * TAO_IDL/include/utl_scope.h:
+
+          Changed path of include of template source.
+
+        * TAO_IDL/tao_idl_fe.mpc:
+
+          Added utl_scope_T.cpp in a Template_Files
+          block.
+
 Wed Apr 28 16:03:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_factory.cpp:
