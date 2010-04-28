@@ -1,3 +1,17 @@
+Wed Apr 28 14:04:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Bug fixes related to
+          
+          Wed Apr 28 01:51:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Wed Apr 28 11:54:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/UB_String_Argument_T.cpp:

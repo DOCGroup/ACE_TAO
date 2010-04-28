@@ -287,9 +287,15 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
     be_valuetype *exception_holder
   )
 {
-  if (!node)
+  if (node == 0)
     {
       return -1;
+    }
+    
+  /// These are for the stub side only.  
+  if (node->is_sendc_ami ())
+    {
+      return 0;
     }
 
   if (this->add_normal_reply (node, response_handler) == -1)

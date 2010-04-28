@@ -30,6 +30,12 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
+  /// These are not for the server side.  
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 

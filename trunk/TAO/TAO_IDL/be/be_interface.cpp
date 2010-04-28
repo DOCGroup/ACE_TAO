@@ -2202,9 +2202,19 @@ be_interface::gen_skel_helper (be_interface *derived,
         {
           // Get the next AST decl node
           AST_Decl *d = si.item ();
+          AST_Decl::NodeType nt = d->node_type ();
 
-          if (d->node_type () == AST_Decl::NT_op)
+          if (nt == AST_Decl::NT_op)
             {
+              be_operation *op =
+                be_operation::narrow_from_decl (d);
+               
+              /// These are not generated on the server side.  
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
+        
               *os << be_nl << be_nl
                   << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__
@@ -2250,7 +2260,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "}";
                 }
             }
-          else if (d->node_type () == AST_Decl::NT_attr)
+          else if (nt == AST_Decl::NT_attr)
             {
               AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
@@ -2258,7 +2268,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                 {
                   return -1;
                 }
-
+                
               *os << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)

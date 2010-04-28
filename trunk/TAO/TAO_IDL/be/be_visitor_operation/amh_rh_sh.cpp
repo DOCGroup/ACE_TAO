@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Visitor for generating AMH-RH skeleton for "operation"
 // in skeleton header.
@@ -34,6 +33,12 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
 {
   // Nothing to be done for oneway operations.
   if (node->flags () == AST_Operation::OP_oneway)
+    {
+      return 0;
+    }
+
+  /// These are not for the server side.  
+  if (node->is_sendc_ami ())
     {
       return 0;
     }
