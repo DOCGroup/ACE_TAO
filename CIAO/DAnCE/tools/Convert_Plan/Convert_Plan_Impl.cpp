@@ -153,11 +153,11 @@ namespace DAnCE
         
         // First write the byte order
         char byte_order = ACE_CDR_BYTE_ORDER;
-        size_t n = ACE_OS::fwrite (&byte_order, sizeof(byte_order), 1, file);
+        size_t n = ACE_OS::fwrite (&byte_order, 1, sizeof(byte_order), file);
         
         // Next write the length
         ACE_UINT32 cdr_length (output_cdr.total_length ());
-        n += ACE_OS::fwrite (&cdr_length, sizeof (cdr_length), 1, file);
+        n += ACE_OS::fwrite (&cdr_length, 1, sizeof (cdr_length), file);
 
         DANCE_DEBUG (9, (LM_TRACE, DLINFO  "Convert_Plan_Impl::write_cdr_plan - "
                          ACE_TEXT ("Writing plan to file %s in %s endian format and length %u\n"),

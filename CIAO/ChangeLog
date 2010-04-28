@@ -1,3 +1,8 @@
+Wed Apr 28 10:10:13 UTC 2010  Martin Corino <mcorino@remedy.nl>
+
+	* DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+	  Fixed total byte check in Convert_Plan_Impl::write_cdr_plan().
+
 Wed Apr 28 09:45:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.ppt:
