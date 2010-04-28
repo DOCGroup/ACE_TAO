@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p InterOutArgsT_Base InterOutArgsT_Receiver"
+
+project(AMI_InterOutArgsT_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_InterOutArgsT_idl_gen
+  idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=InterOutArgsT_Receiver_stub_export.h \
+              -Wb,skel_export_macro=INTEROUTARGS_T_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=InterOutArgsT_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=INTEROUTARGS_T_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=InterOutArgsT_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    InterOutArgsT_Receiver.idl
+  }
+}
+
+project(AMI_InterOutArgsT_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_InterOutArgsT_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=InterOutArgsT_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    InterOutArgsT_ReceiverE.idl
+  }
+}
+
+project(AMI_InterOutArgsT_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_InterOutArgsT_Base_Receiver_lem_gen AMI_InterOutArgsT_Base_Receiver_stub AMI_InterOutArgsT_stub
+  libs  += InterOutArgsT_stub InterOutArgsT_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = InterOutArgsT_Receiver_lem_stub
+  dynamicflags   = INTEROUTARGS_T_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsT_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    InterOutArgsT_ReceiverEC.h
+    InterOutArgsT_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    InterOutArgsT_ReceiverEC.inl
+  }
+}
+
+project(AMI_InterOutArgsT_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_InterOutArgsT_Base_Receiver_idl_gen AMI_InterOutArgsT_stub
+  libs  += InterOutArgsT_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = InterOutArgsT_Receiver_stub
+  dynamicflags   = INTEROUTARGS_T_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsT_ReceiverC.cpp
+  }
+
+  Header_Files {
+    InterOutArgsT_ReceiverC.h
+    InterOutArgsT_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    InterOutArgsT_ReceiverC.inl
+  }
+}
+
+project(AMI_InterOutArgsT_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_InterOutArgsT_Base_Receiver_l_stub AMI_InterOutArgsT_Base_Receiver_stub AMI_InterOutArgsT_stub AMI_InterOutArgsT_lem_stub
+  sharedname = InterOutArgsT_Receiver_exec
+  libs += InterOutArgsT_Receiver_stub InterOutArgsT_Receiver_lem_stub InterOutArgsT_stub InterOutArgsT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = INTEROUTARGS_T_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsT_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    InterOutArgsT_Receiver_exec.h
+    InterOutArgsT_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_InterOutArgsT_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_InterOutArgsT_Base_skel AMI_InterOutArgsT_Base_Receiver_l_stub AMI_InterOutArgsT_stub AMI_InterOutArgsT_skel AMI_InterOutArgsT_lem_stub
+  sharedname  = InterOutArgsT_Receiver_svnt
+  libs       += InterOutArgsT_Receiver_stub InterOutArgsT_Receiver_lem_stub  \
+                InterOutArgsT_skel \
+                InterOutArgsT_stub InterOutArgsT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = INTEROUTARGS_T_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsT_ReceiverS.cpp
+    InterOutArgsT_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    InterOutArgsT_ReceiverS.h
+    InterOutArgsT_Receiver_svnt.h
+    InterOutArgsT_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    InterOutArgsT_ReceiverS.inl
+  }
+}
+
