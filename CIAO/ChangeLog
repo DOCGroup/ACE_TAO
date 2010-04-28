@@ -1,3 +1,9 @@
+Wed Apr 28 09:45:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.ppt:
+        * docs/OMG-CCM-Tutorial.pptx:
+	  Converted to MS Powerpoint 2007 format
+
 Wed Apr 28 09:29:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
