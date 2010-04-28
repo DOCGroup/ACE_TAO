@@ -96,14 +96,12 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
       }
     case TAO_CodeGen::TAO_MODULE_OBV_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CI);
         be_visitor_valuetype_obv_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_MODULE_OBV_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
         be_visitor_valuetype_obv_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
