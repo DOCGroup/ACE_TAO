@@ -1,3 +1,11 @@
+Wed Apr 28 09:23:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+          Use %C for logging the hostname instead of %s. This fixes bugzilla
+          3846, thanks to Christian Freund <freund at wrz dot de> for reporting
+          this
+
 Mon Apr 26 08:29:58 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/SSL/SSL_Asynch_Stream_Test.cpp:
