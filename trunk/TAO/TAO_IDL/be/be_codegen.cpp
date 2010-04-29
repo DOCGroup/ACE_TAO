@@ -3268,8 +3268,39 @@ TAO_CodeGen::gen_exec_idl_includes (void)
 {
   this->gen_standard_include (
     this->ciao_exec_idl_,
-    "ccm/CCM_Container.idl");
+    "ccm/CCM_Events.idl");
 
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_Home.idl");
+
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_Object.idl");
+
+  if (!be_global->gen_lwccm ())
+    {    
+      this->gen_standard_include (
+        this->ciao_exec_idl_,
+        "ccm/CCM_Enumeration.idl");
+    }
+    
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_CCMException.idl");
+    
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_HomeExecutorBase.idl");
+
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_SessionContext.idl");
+
+  this->gen_standard_include (
+    this->ciao_exec_idl_,
+    "ccm/CCM_SessionComponent.idl");
+    
   if (be_global->ami4ccm_call_back ())
     {
       this->gen_standard_include (
