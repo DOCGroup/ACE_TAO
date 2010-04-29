@@ -171,7 +171,8 @@ be_interface::full_skel_name (void)
 {
   if (this->full_skel_name_ == 0)
     {
-      this->compute_full_skel_name ("POA_");
+      this->compute_full_skel_name ("POA_",
+                                    this->full_skel_name_);
     }
 
   return this->full_skel_name_;
@@ -205,9 +206,10 @@ be_interface::relative_skel_name (const char *skel_name)
 }
 
 void
-be_interface::compute_full_skel_name (const char *prefix)
+be_interface::compute_full_skel_name (const char *prefix,
+                                      char *&skel_name)
 {
-  if (this->full_skel_name_ != 0)
+  if (skel_name != 0)
     {
       return;
     }
@@ -250,12 +252,12 @@ be_interface::compute_full_skel_name (const char *prefix)
         }
     }
 
-  ACE_NEW (this->full_skel_name_,
+  ACE_NEW (skel_name,
            char [namelen + 1]);
-  this->full_skel_name_[0] = '\0';
+  skel_name[0] = '\0';
   first = true;
   second = false;
-  ACE_OS::strcat (this->full_skel_name_, prefix);
+  ACE_OS::strcat (skel_name, prefix);
 
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();
@@ -263,7 +265,7 @@ be_interface::compute_full_skel_name (const char *prefix)
     {
       if (!first)
         {
-          ACE_OS::strcat (this->full_skel_name_, "::");
+          ACE_OS::strcat (skel_name, "::");
         }
       else if (second)
         {
@@ -272,7 +274,7 @@ be_interface::compute_full_skel_name (const char *prefix)
 
       // Print the identifier.
       item_name = j.item ()->get_string ();
-      ACE_OS::strcat (this->full_skel_name_, item_name);
+      ACE_OS::strcat (skel_name, item_name);
 
       if (first)
         {

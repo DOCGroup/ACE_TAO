@@ -126,7 +126,8 @@ public:
   const char *relative_skel_name (const char *skel_name);
 
   /// Build up the skeleton name.
-  void compute_full_skel_name (const char *prefix);
+  void compute_full_skel_name (const char *prefix,
+                               char *&skel_name);
 
   /// Compute the collocation names.
   void compute_coll_names (int type,

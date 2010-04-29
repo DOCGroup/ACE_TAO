@@ -1,3 +1,18 @@
+Thu Apr 29 19:42:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+          
+          Fixed bug in getting distinct results from the valuetype
+          AST node method full_obv_skel_name() and its base class
+          interface AST node method full_skel_name().
+
 Thu Apr 29 16:02:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp(visit_operation):
