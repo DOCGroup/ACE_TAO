@@ -94,6 +94,11 @@ be_visitor_ami4ccm_rh_ex_idl::visit_operation (be_operation *node)
       // We do nothing for oneways!
       return 0;
     }
+    
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
 
   os_ << be_nl
       << "void " << node->original_local_name ()

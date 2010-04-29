@@ -33,16 +33,11 @@ public:
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
   virtual int visit_argument (be_argument *node);
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);
   
   virtual int pre_process (be_decl *node);
-  
-private:
-  void gen_attr_sendc_ops (bool is_set_op,
-                           be_attribute *node);
   
 private:
   TAO_OutStream &os_;
