@@ -1,7 +1,15 @@
+Thu Apr 29 10:59:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Generate more specific includes for CCM
+
+        * tao/UB_String_Argument_T.cpp:
+          Fixed compile error 
+
 Wed Apr 28 19:12:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_uns_long.h:
-        
+
           Removed this unused file
 
 Wed Apr 28 17:00:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -28,7 +36,7 @@ Wed Apr 28 17:00:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_scope_T.cpp:
 
-          Moved this file from 
+          Moved this file from
           $TAO_ROOT/TAO_IDL/include/utl_tmpl. It
           contains implementations of 2 template
           methods declared in utl_scope.h.
@@ -77,9 +85,9 @@ Wed Apr 28 14:04:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Bug fixes related to
-          
+
           Wed Apr 28 01:51:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr 28 11:54:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
