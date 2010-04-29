@@ -1,14 +1,9 @@
 // $Id$
 
-/**
- * This file is included in the generated executor
- * mapping IDL file,
- */
-
 #if !defined (CCM_COMPONENTS_IDL)
 #define CCM_COMPONENTS_IDL
 
-#include "ccm/CCM_Component.idl"
+#include "ccm/CCM_Events.idl"
 #include "ccm/CCM_KeylessCCMHome.idl"
 #include "ccm/CCM_Home.idl"
 #include "ccm/CCM_Object.idl"

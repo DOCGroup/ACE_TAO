@@ -1,3 +1,41 @@
+Thu Apr 29 11:26:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+          Removed not needed include
+
+        * ccm/CCM_CCM2Context.idl:
+          Updated includes
+
+        * ccm/CCM_EventConsumerBase.idl:
+        * ccm/CCM_ExecutorLocator.idl:
+          Check for compliancy and list the section from the OMG specification
+
+        * ccm/CCM_lem_stub.mpc:
+        * ccm/CCM_stub.mpc:
+        * ccm/CCM_svnt.mpc:
+          Updated for removed files
+
+        * ccm/Components.idl:
+          Updated includes
+
+        * ciao/ComponentServer/Server_init.cpp:
+        * ciao/Containers/Container_Base.h:
+          Removed not needed include
+
+        * ciao/Containers/Session/Session_Container.h:
+          Added needed includes
+
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+          Updated includes
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+          Docu change
+
+        * ccm/CCM_Component.idl:
+        * ccm/CCM_Container.idl:
+        * ccm/CCM_Container_Ex.idl:
+          Removed these files, IDL compiler now generates more specific includes
+
 Wed Apr 28 19:13:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.cpp:

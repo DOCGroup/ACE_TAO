@@ -26,6 +26,8 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "ciao/Containers/Container_Base.h"
+#include "ccm/CCM_HomeExecutorBaseC.h"
+#include "ccm/CCM_EnterpriseComponentC.h"
 
 namespace CIAO
 {

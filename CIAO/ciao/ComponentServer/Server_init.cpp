@@ -2,7 +2,6 @@
 
 #include "Server_init.h"
 
-#include <ccm/CCM_ComponentC.h>
 #include <ccm/CCM_StandardConfiguratorC.h>
 #include "ciao/Valuetype_Factories/Cookies.h"
 #include "ciao/Logger/Log_Macros.h"

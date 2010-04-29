@@ -17,7 +17,6 @@ project(CCM_svnt_idl) : ciaolib_with_idl, valuetype {
     CCM_Session2Context.idl
     CCM_Transaction.idl
     CosPersistentState.idl
-    CCM_Container_Ex.idl
     CCM_StateIdFactory.idl
     CCM_Entity2Context.idl
     CCM_ComponentId.idl
@@ -47,7 +46,6 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
     CCM_TransactionC.cpp
     CosPersistentStateC.cpp
     CCM_SessionSynchronizationC.cpp
-    CCM_Container_ExC.cpp
     CCM_StateIdFactoryC.cpp
     CCM_ComponentIdC.cpp
     CCM_Entity2ContextC.cpp
@@ -72,7 +70,6 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
     CCM_HomeFinderS.cpp
     CCM_NavigationS.cpp
     CCM_ReceptacleS.cpp
-    ComponentsS.cpp
   }
 }
 

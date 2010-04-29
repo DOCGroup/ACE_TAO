@@ -4,7 +4,7 @@
 #if !defined (CCM_2CONTEXT_IDL)
 #define CCM_2CONTEXT_IDL
 
-#include "ccm/CCM_Container.idl"
+#include "ccm/CCM_Context.idl"
 #include "ccm/CCM_HomeRegistration.idl"
 #include <CosPersistentState.idl>
 
