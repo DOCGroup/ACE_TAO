@@ -46,7 +46,7 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
-const char *EXCEP_NAMES[] =
+const char *LW_EXCEP_NAMES[] =
   {
     "AlreadyConnected",
     "InvalidConnection",
@@ -54,16 +54,23 @@ const char *EXCEP_NAMES[] =
     "ExceededConnectionLimit",
     "CreateFailure",
     "RemoveFailure",
-    "FinderFailure",
-    "InvalidKey",
-    "UnknownKeyValue",
-    "DuplicateKeyValue",
-    "CreateFailure",
     "FinderFailure"
   };
 
-const int N_EXCEPS = sizeof (EXCEP_NAMES) / sizeof (char *);
-be_exception *EXCEPS[N_EXCEPS];
+const char *ADDL_EXCEP_NAMES[] =
+  {
+    "InvalidKey",
+    "UnknownKeyValue",
+    "DuplicateKeyValue"
+  };
+
+const int N_LW_EXCEPS =
+  sizeof (LW_EXCEP_NAMES) / sizeof (char *);
+const int N_ADDL_EXCEPS =
+  sizeof (ADDL_EXCEP_NAMES) / sizeof (char *);
+  
+be_exception *LW_EXCEPS[N_LW_EXCEPS];
+be_exception *ADDL_EXCEPS[N_ADDL_EXCEPS];
 
 be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
       be_visitor_context *ctx)
@@ -93,6 +100,26 @@ be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc (void)
 int
 be_visitor_ccm_pre_proc::visit_root (be_root *node)
 {
+  if (this->lookup_cookie () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_root - ")
+                         ACE_TEXT ("Components::Cookie ")
+                         ACE_TEXT ("lookup failed\n")),
+                        -1);
+    }
+
+  if (this->lookup_exceptions () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                         ACE_TEXT ("visit_root - ")
+                         ACE_TEXT ("component exception ")
+                         ACE_TEXT ("lookups failed\n")),
+                        -1);
+    }
+
   if (be_global->ami4ccm_call_back ())
     {
       /// Do this before traversing the tree so the traversal
@@ -140,26 +167,6 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
-  if (this->lookup_cookie (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("Components::Cookie ")
-                         ACE_TEXT ("lookup failed\n")),
-                        -1);
-    }
-
-  if (this->lookup_exceptions (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_component - ")
-                         ACE_TEXT ("component exception ")
-                         ACE_TEXT ("lookups failed\n")),
-                        -1);
-    }
-
   // Set working node for all port code generation.
   this->comp_ = node;
 
@@ -1130,7 +1137,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                   0),
                   -1);
 
-  if (pk != 0)
+  if (pk != 0 && !be_global->gen_lwccm ())
     {
       Identifier arg_id ("key");
       UTL_ScopedName arg_name (&arg_id,
@@ -1143,6 +1150,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                       -1);
       arg_id.destroy ();
       op->be_add_argument (arg);
+      
       UTL_ExceptList *tail = 0;
       ACE_NEW_RETURN (tail,
                       UTL_ExceptList (this->invalid_key_,
@@ -1197,16 +1205,22 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                   -1);
   arg_id.destroy ();
   op->be_add_argument (arg);
+  
   UTL_ExceptList *tail = 0;
-  ACE_NEW_RETURN (tail,
-                  UTL_ExceptList (this->invalid_key_,
-                                  0),
-                  -1);
   UTL_ExceptList *middle = 0;
-  ACE_NEW_RETURN (middle,
-                  UTL_ExceptList (this->unknown_key_value_,
-                                  tail),
-                  -1);
+  
+  if (!be_global->gen_lwccm ())
+    {
+      ACE_NEW_RETURN (tail,
+                      UTL_ExceptList (this->invalid_key_,
+                                      0),
+                      -1);
+      ACE_NEW_RETURN (middle,
+                      UTL_ExceptList (this->unknown_key_value_,
+                                      tail),
+                      -1);
+    }
+                    
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->finder_failure_,
@@ -1253,16 +1267,22 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                   -1);
   arg_id.destroy ();
   op->be_add_argument (arg);
+  
   UTL_ExceptList *tail = 0;
-  ACE_NEW_RETURN (tail,
-                  UTL_ExceptList (this->invalid_key_,
-                                  0),
-                  -1);
   UTL_ExceptList *middle = 0;
-  ACE_NEW_RETURN (middle,
-                  UTL_ExceptList (this->unknown_key_value_,
-                                  tail),
-                  -1);
+  
+  if (!be_global->gen_lwccm ())
+    {
+      ACE_NEW_RETURN (tail,
+                      UTL_ExceptList (this->invalid_key_,
+                                      0),
+                      -1);
+      ACE_NEW_RETURN (middle,
+                      UTL_ExceptList (this->unknown_key_value_,
+                                      tail),
+                      -1);
+    }
+    
   UTL_ExceptList *exceps = 0;
   ACE_NEW_RETURN (exceps,
                   UTL_ExceptList (this->remove_failure_,
@@ -1335,7 +1355,7 @@ be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
+be_visitor_ccm_pre_proc::lookup_cookie (void)
 {
   if (this->cookie_ == 0)
     {
@@ -1344,8 +1364,9 @@ be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
                                  0);
       UTL_ScopedName cookie_name (&this->module_id_,
                                   &local_name);
-      AST_Decl *d = node->lookup_by_name (&cookie_name,
-                                          true);
+      AST_Decl *d =
+        idl_global->root ()->lookup_by_name (&cookie_name,
+                                             true);
       local_id.destroy ();
 
       if (d == 0)
@@ -1367,15 +1388,14 @@ be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_exceptions (be_component *node)
+be_visitor_ccm_pre_proc::lookup_exceptions (void)
 {
   int status = 0;
 
-  for (int i = 0; i < N_EXCEPS; ++i)
+  for (int i = 0; i < N_LW_EXCEPS; ++i)
     {
-      status = this->lookup_one_exception (node,
-                                           EXCEP_NAMES[i],
-                                           EXCEPS[i]);
+      status = this->lookup_one_exception (LW_EXCEP_NAMES[i],
+                                           LW_EXCEPS[i]);
 
       if (status == -1)
         {
@@ -1383,23 +1403,37 @@ be_visitor_ccm_pre_proc::lookup_exceptions (be_component *node)
         }
     }
 
-  this->already_connected_          = EXCEPS[0];
-  this->invalid_connection_         = EXCEPS[1];
-  this->no_connection_              = EXCEPS[2];
-  this->exceeded_connection_limit_  = EXCEPS[3];
-  this->create_failure_             = EXCEPS[4];
-  this->remove_failure_             = EXCEPS[5];
-  this->finder_failure_             = EXCEPS[6];
-  this->invalid_key_                = EXCEPS[7];
-  this->unknown_key_value_          = EXCEPS[8];
-  this->duplicate_key_value_        = EXCEPS[9];
+  this->already_connected_          = LW_EXCEPS[0];
+  this->invalid_connection_         = LW_EXCEPS[1];
+  this->no_connection_              = LW_EXCEPS[2];
+  this->exceeded_connection_limit_  = LW_EXCEPS[3];
+  this->create_failure_             = LW_EXCEPS[4];
+  this->remove_failure_             = LW_EXCEPS[5];
+  this->finder_failure_             = LW_EXCEPS[6];
+  
+  if (!be_global->gen_lwccm ())
+    {
+      for (int j = 0; j < N_ADDL_EXCEPS; ++j)
+        {
+          status = this->lookup_one_exception (ADDL_EXCEP_NAMES[j],
+                                               ADDL_EXCEPS[j]);
 
+          if (status == -1)
+            {
+              return -1;
+            }
+        }
+
+      this->invalid_key_                = ADDL_EXCEPS[0];
+      this->unknown_key_value_          = ADDL_EXCEPS[1];
+      this->duplicate_key_value_        = ADDL_EXCEPS[2];
+    }
+    
   return 0;
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_one_exception (be_component *node,
-                                               const char *name,
+be_visitor_ccm_pre_proc::lookup_one_exception (const char *name,
                                                be_exception *&result)
 {
   Identifier id (name);
@@ -1407,8 +1441,9 @@ be_visitor_ccm_pre_proc::lookup_one_exception (be_component *node,
                              0);
   UTL_ScopedName scoped_name (&this->module_id_,
                               &local_name);
-  AST_Decl *d = node->lookup_by_name (&scoped_name,
-                                      true);
+  AST_Decl *d =
+    idl_global->root ()->lookup_by_name (&scoped_name,
+                                         true);
   id.destroy ();
 
   if (d == 0)
