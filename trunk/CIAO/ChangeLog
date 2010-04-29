@@ -1,3 +1,15 @@
+Thu Apr 29 13:43:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/StaticDAnCE:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/Messenger_StaticDAnCE.mpc:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/README.txt:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/StaticDAnCEApp.cpp:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/plan.h:
+        * examples/DevGuideExamples/Messenger/StaticDAnCE/run_test.pl:
+        * examples/Null_Component/StaticDAnCEApp.cpp:
+        * examples/Null_Component/StaticDAnCEApp.mpc:
+          Removed these files, static dance is completely deprecated
+
 Thu Apr 29 11:26:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
