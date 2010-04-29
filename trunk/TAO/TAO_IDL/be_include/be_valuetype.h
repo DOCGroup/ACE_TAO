@@ -179,6 +179,9 @@ private:
 
   /// Have these been done already?
   bool var_out_seq_decls_gen_;
+  
+  /// To differentiate from the interface skeleton name.
+  char *full_obv_skel_name_;
 };
 
 #endif  // if !defined
