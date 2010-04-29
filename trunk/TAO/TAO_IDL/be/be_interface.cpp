@@ -3322,7 +3322,7 @@ be_interface::full_base_proxy_impl_name (void)
 const char *
 be_interface::remote_proxy_impl_name (void)
 {
-  if (this->remote_proxy_impl_name_ = 0)
+  if (this->remote_proxy_impl_name_ == 0)
     {
       this->remote_proxy_impl_name_ =
         this->create_with_prefix_suffix (
