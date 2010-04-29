@@ -60,12 +60,15 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_operation (be_operation *node)
       // We do nothing for oneways!
       return 0;
     }
+    
+  if (!node->is_sendc_ami ())
+    {
+      return 0;
+    }
 
   os_ << be_nl
-      << "void sendc_" << node->original_local_name ()
-      << " (" << be_idt_nl
-      << "in AMI_" << this->iface_->original_local_name ()
-      << "Callback ami_handler";
+      << "void " << node->original_local_name ()
+      << " (" << be_idt;
       
   if (this->visit_scope (node) == -1)
     {
@@ -81,19 +84,6 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_operation (be_operation *node)
 }
 
 int
-be_visitor_ami4ccm_sendc_ex_idl::visit_attribute (be_attribute *node)
-{
-  this->gen_attr_sendc_ops (false, node);
-  
-  if (!node->readonly ())
-    {
-      this->gen_attr_sendc_ops (true, node);
-    }
-    
-  return 0;
-}
-
-int
 be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
 {
   if (node->direction () != AST_Argument::dir_IN)
@@ -101,14 +91,26 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
       return 0;
     }
     
-  be_type *t =
-    be_type::narrow_from_decl (node->field_type ());
-    
-  os_ << be_nl
-      << "in ";
-  
-  os_ << IdentifierHelper::type_name (t, this);
-  
+  /// AMI4CCM uses a different reply handler type, so we just
+  /// replace the original handler parameter (which is always the
+  /// first one) type.
+  if (this->elem_number () == 1)
+    {
+      os_ << be_nl
+          << "in AMI_" << this->iface_->original_local_name ()
+          << "Callback";
+    }
+  else
+    {
+      be_type *t =
+        be_type::narrow_from_decl (node->field_type ());
+        
+      os_ << be_nl
+          << "in ";
+      
+      os_ << IdentifierHelper::type_name (t, this);
+    }
+      
   os_ << " " << node->original_local_name ();
     
   return 0;
@@ -160,34 +162,13 @@ be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
     {
       return 0;
     }
+    
+  if (this->elem_number () == 1)
+    {
+      return 0;
+    }
 
   os_ << ",";
     
   return 0;
-}
-
-void
-be_visitor_ami4ccm_sendc_ex_idl::gen_attr_sendc_ops (
-  bool is_set_op,
-  be_attribute *node)
-{
-  os_ << be_nl
-      << "void sendc_" << (is_set_op ? "set_" : "get_")
-      << node->original_local_name () << " (" << be_idt_nl
-      << "in AMI_" << this->iface_->original_local_name ()
-      << "Callback ami_handler";
-      
-  if (is_set_op)
-    {
-      be_type *t =
-        be_type::narrow_from_decl (node->field_type ());
-        
-      os_ << "," << be_nl << "in ";
-      
-      os_ << IdentifierHelper::type_name (t, this);
-      
-      os_ << " " << node->original_local_name ();
-    }
-    
-  os_ << ");" << be_uidt;
 }
