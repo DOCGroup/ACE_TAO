@@ -1,3 +1,9 @@
+Thu Apr 29 13:16:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Fixed cut and paste error.
+
 Thu Apr 29 10:59:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
