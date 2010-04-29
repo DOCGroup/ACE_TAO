@@ -1,3 +1,23 @@
+Thu Apr 29 16:02:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_rh_ex_idl.cpp(visit_operation):
+        
+          Added check to skip sendc_* operations, since we don't want them
+          in the reply handler and they are now added to the AST instead
+          of being contained in the original operation node.
+            
+        * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/ami4ccm_sendc_ex_idl.h:
+        
+          In AMI4CCM, we generate a separate interface for the sendc_*
+          operations, so all we have to do now in generating IDL for
+          this interface is to process the sendc_* operations of the
+          original interface, changing the type of the first argument
+          to the AMI4CCM-specific one. Since sendc_* operations are
+          also added to the AST for attributes, visit_attribute()
+          has been removed, along with a private utility method
+          called by it.
+
 Thu Apr 29 13:16:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
