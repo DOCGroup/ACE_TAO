@@ -6,9 +6,23 @@
  *
  *  @brief  Encapsulate string representation of stack trace.
  *
- *  Portions of the platform-specific code have been based on
- *  code found in various places on the internet e.g., google groups,
- *  VxWorks FAQ, etc., and adapted for use here.
+ *  Some platform-specific areas of this code have been adapted from
+ *  examples found elsewhere.  Specifically,
+ *  - the GLIBC stack generation uses the documented "backtrace" API
+ *    and is adapted from examples shown in relevant documentation
+ *    and repeated elsewhere, e.g.,
+ *    http://www.linuxselfhelp.com/gnu/glibc/html_chapter/libc_33.html
+ *  - the Solaris stack generation is adapted from a 1995 post on
+ *    comp.unix.solaris by Bart Smaalders,
+ *    http://groups.google.com/group/comp.unix.solaris/browse_thread/thread/8b9f3de8be288f1c/31550f93a48231d5?lnk=gst&q=how+to+get+stack+trace+on+solaris+group:comp.unix.solaris#31550f93a48231d5
+ *  - VxWorks kernel-mode stack tracing is adapted from a code example
+ *    in the VxWorks FAQ at http://www.xs4all.nl/~borkhuis/vxworks/vxw_pt5.html
+ *    although the undocumented functions it uses are also mentioned in
+ *    various documents available on the WindRiver support website.
+ *
+ *  If you add support for a new platform, please add a bullet to the
+ *  above list with durable references to the origins of your code.
+ *    
  */
 //=============================================================================
 
