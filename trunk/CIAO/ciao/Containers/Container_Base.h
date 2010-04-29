@@ -27,8 +27,6 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ccm/CCM_ContainerC.h"
-
 #include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO

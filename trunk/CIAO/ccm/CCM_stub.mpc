@@ -9,7 +9,6 @@ project(CCM_stub_idl) : ciaolib_with_idl, valuetype {
   IDL_Files {
     idlflags += -SS -Sci
     CCM_Base.idl
-    CCM_Component.idl
     CCM_Exceptions.idl
   }
 
@@ -63,7 +62,6 @@ project(CCM_stub) : ciaolib_with_idl, ciao_output, valuetype, ifr_client {
     CCM_EventsC.cpp
     CCM_EventBaseC.cpp
     CCM_EventConsumerBaseC.cpp
-    CCM_ComponentC.cpp
     CCM_EnumerationC.cpp
     CCM_HomeC.cpp
     CCM_HomesC.cpp
