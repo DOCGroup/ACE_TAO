@@ -1,3 +1,8 @@
+Thu Apr 29 14:27:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/descriptors/run_test_without_ns.pl:
+          Did some improvements to this script but it doesn't run yet
+
 Thu Apr 29 13:43:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/StaticDAnCE:
