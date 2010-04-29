@@ -86,10 +86,9 @@ protected:
   // Utility functions to create and destroy the various things
   // needed by operations generated from CCM-related declarations.
 
-  int lookup_cookie (be_component *node);
-  int lookup_exceptions (be_component *node);
-  int lookup_one_exception (be_component *node,
-                            const char *name,
+  int lookup_cookie (void);
+  int lookup_exceptions (void);
+  int lookup_one_exception (const char *name,
                             be_exception *&result);
 
   int create_event_consumer (be_eventtype *node);

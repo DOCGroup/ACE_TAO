@@ -1,3 +1,14 @@
+Thu Apr 29 20:45:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        
+          Added checks to prevent the IDL compiler from looking up
+          or using the CCM exceptions InvalidKey, UnknownKeyValue,
+          and DuplicateKeyValue if it is generating according to
+          the LwCCM profile (the default), since primary keys are
+          not supported in LwCCM.
+
 Thu Apr 29 19:42:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
