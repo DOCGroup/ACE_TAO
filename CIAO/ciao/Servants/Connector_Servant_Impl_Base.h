@@ -27,8 +27,7 @@
 #include "Home_Servant_Impl_Base.h"
 
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
-
-#include "ccm/CCM_ContainerC.h"
+#include "ccm/CCM_SessionComponentC.h"
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 

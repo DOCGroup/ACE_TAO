@@ -32,7 +32,7 @@ namespace CIAO
       ::DDSDataReader * the_reader)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::get_datareader_proxy");
-      //Retrieve the pointer to the proxy from the QoS
+      // Retrieve the pointer to the proxy from the QoS
       ::DDS_DataReaderQos qos;
       the_reader->get_qos (qos);
       DDS_Property_t * prop =

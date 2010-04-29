@@ -1,4 +1,5 @@
 // $Id$
+/// Compliant with OMG 06-04-01 Section 8.3.2
 
 #if !defined (CCM_EXECUTORLOCATOR_IDL)
 #define CCM_EXECUTORLOCATOR_IDL
