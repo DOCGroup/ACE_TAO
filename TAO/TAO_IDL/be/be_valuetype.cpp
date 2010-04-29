@@ -75,7 +75,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    truncatable,
                    custom),
     supports_abstract_ (false),
-    var_out_seq_decls_gen_ (false)
+    var_out_seq_decls_gen_ (false),
+    full_obv_skel_name_ (0)
 {
   // Check that redefine() copies all members.
 
@@ -150,19 +151,20 @@ be_valuetype::opt_accessor (void)
 void
 be_valuetype::compute_fullobvskelname (void)
 {
-  this->compute_full_skel_name ("OBV_");
+  this->compute_full_skel_name ("OBV_",
+                                this->full_obv_skel_name_);
 }
 
 // Retrieve the fully scoped skeleton name.
 const char*
 be_valuetype::full_obv_skel_name (void)
 {
-  if (0 == this->full_skel_name_)
+  if (0 == this->full_obv_skel_name_)
     {
-      compute_fullobvskelname ();
+      this->compute_fullobvskelname ();
     }
 
-  return this->full_skel_name_;
+  return this->full_obv_skel_name_;
 }
 
 const char *
