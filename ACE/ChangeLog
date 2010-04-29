@@ -1,3 +1,8 @@
+Thu Apr 29 03:34:56 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
+
+        * ace/Stack_Trace.cpp: Clarified origins of platform-specific
+          code in the leading comments for the file.
+
 Wed Apr 28 09:23:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:
