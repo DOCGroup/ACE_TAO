@@ -105,11 +105,11 @@ protected:
   UTL_NameList *compute_inheritance (be_home *node);
   
 protected:
-  // These are created for operations implied by 'uses multiple' declarations.
+  /// These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
   be_valuetype *cookie_;
 
-  // Exceptions thrown by implied CCM operations.
+  /// Exceptions thrown by implied CCM operations.
   be_exception *already_connected_;
   be_exception *invalid_connection_;
   be_exception *no_connection_;
@@ -121,9 +121,15 @@ protected:
   be_exception *unknown_key_value_;
   be_exception *duplicate_key_value_;
   
-  // Working nodes.
+  /// Working nodes.
   be_component *comp_;
   be_home *home_;
+  
+  /// So we can look up Cookie and the CCM exceptions
+  /// once when the first component is seen (then we
+  /// know that Components.idl is included and the
+  /// lookups will succeed).
+  bool ccm_lookups_done_;
   
 private:                                  
   /// Generate a sendc_* receptacle for AMI4CCM.
