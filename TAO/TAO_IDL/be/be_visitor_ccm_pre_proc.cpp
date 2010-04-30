@@ -88,7 +88,8 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
     unknown_key_value_ (0),
     duplicate_key_value_ (0),
     comp_ (0),
-    home_ (0)
+    home_ (0),
+    ccm_lookups_done_ (false)
 {
 }
 
@@ -100,26 +101,6 @@ be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc (void)
 int
 be_visitor_ccm_pre_proc::visit_root (be_root *node)
 {
-  if (this->lookup_cookie () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_root - ")
-                         ACE_TEXT ("Components::Cookie ")
-                         ACE_TEXT ("lookup failed\n")),
-                        -1);
-    }
-
-  if (this->lookup_exceptions () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ccm_pre_proc::")
-                         ACE_TEXT ("visit_root - ")
-                         ACE_TEXT ("component exception ")
-                         ACE_TEXT ("lookups failed\n")),
-                        -1);
-    }
-
   if (be_global->ami4ccm_call_back ())
     {
       /// Do this before traversing the tree so the traversal
@@ -167,6 +148,35 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
+  /// Waiting to do this until a component is seen will ensure
+  /// that Components.idl is present and the lookups will
+  /// succeed. The flag ensures that the lookup is done only
+  /// once.
+  if (!this->ccm_lookups_done_)
+    {
+      if (this->lookup_cookie () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_root - ")
+                             ACE_TEXT ("Components::Cookie ")
+                             ACE_TEXT ("lookup failed\n")),
+                            -1);
+        }
+
+      if (this->lookup_exceptions () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ccm_pre_proc::")
+                             ACE_TEXT ("visit_root - ")
+                             ACE_TEXT ("component exception ")
+                             ACE_TEXT ("lookups failed\n")),
+                            -1);
+        }
+        
+      this->ccm_lookups_done_ = true;
+    }
+
   // Set working node for all port code generation.
   this->comp_ = node;
 
