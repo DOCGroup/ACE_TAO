@@ -1,3 +1,18 @@
+Fri Apr 30 18:21:02 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        
+          Moved the lookups of Cookie and the CCM exceptions back
+          into the body of visit_component() (from visit_root()).
+          The CCM preprocessing visitor runs by default unless it
+          is explicitly disabled. If no components are found, it
+          does no harm and adds little overhead, but unless
+          Components.idl is included, the lookups will fail. If a
+          component is present, this file must be included, so we
+          know the lookups will succeed. However, a flag has been
+          added so the lookup need be done only once.
+
 Thu Apr 29 20:45:10 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
