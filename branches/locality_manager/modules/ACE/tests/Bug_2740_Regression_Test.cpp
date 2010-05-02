@@ -282,11 +282,45 @@ ServerSvcHandler::handle_close(ACE_HANDLE handle, ACE_Reactor_Mask mask)
                                                                          mask);
 }
 
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  sigset_t signal_set;
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    ACE_OS::sigaddset (&signal_set, i);
+
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+
+  return 0;
+}
 
 ACE_THR_FUNC_RETURN
 event_loop(void *arg)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: Starting reactor event loop\n")));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Reactor *reactor = static_cast<ACE_Reactor*>(arg);
   int s = reactor->run_reactor_event_loop();
@@ -301,11 +335,7 @@ int run_main(int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_2740_Regression_Test"));
 
   // Make sure we ignore SIGPIPE
-  sigset_t sigsetNew[1];
-  sigset_t sigsetOld[1];
-  ACE_OS::sigemptyset (sigsetNew);
-  ACE_OS::sigaddset (sigsetNew, SIGPIPE);
-  ACE_OS::sigprocmask (SIG_BLOCK, sigsetNew, sigsetOld);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (1);          // Restart on EINTR

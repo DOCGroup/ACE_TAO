@@ -339,9 +339,9 @@ def update_spec_file ():
     return [doc_root + "/ACE/rpmbuild/ace-tao.spec"]
 
 def update_debianbuild ():
-    """ Updates ACE_ROOT/debianbuild directory.
+    """ Updates ACE_ROOT/debian directory.
     - renames all files with version nrs in name to new scheme.
-    - updates version nrs in file debianbuild/control
+    - updates version nrs in file debian/control
     Currently ONLY ACE & TAO stuff is handled here """
 
     global comp_versions
@@ -360,7 +360,7 @@ def update_debianbuild ():
     mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
     tao = re.compile ("tao", re.IGNORECASE)
 
-    for fname in glob.iglob(doc_root + '/ACE/debianbuild/*'):
+    for fname in glob.iglob(doc_root + '/ACE/debian/*'):
         match = None
 
         fbase = basename (fname)
@@ -391,7 +391,7 @@ def update_debianbuild ():
         else:
             return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    with open (doc_root + "/ACE/debianbuild/control", 'r+') as control_file:
+    with open (doc_root + "/ACE/debian/control", 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
@@ -409,9 +409,9 @@ def update_debianbuild ():
             print "New control file:"
             print "".join (new_ctrl)
 
-    files.append (doc_root + "/ACE/debianbuild/control")
+    files.append (doc_root + "/ACE/debian/control")
 
-    # rewrite debianbuild/dsc
+    # rewrite debian/dsc
     dsc_lines = """# Format: 1.0
 # Source: ace
 # Version: %s
@@ -424,7 +424,7 @@ def update_debianbuild ():
 #
 """ % (comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
-        with open (doc_root + "/ACE/debianbuild/dsc", 'r+') as dsc_file:
+        with open (doc_root + "/ACE/debian/dsc", 'r+') as dsc_file:
             dsc_file.seek (0)
             dsc_file.truncate (0)
             dsc_file.writelines (dsc_lines)
@@ -432,7 +432,7 @@ def update_debianbuild ():
         print "New dsc file:\n"
         print dsc_lines
 
-    files.append (doc_root + "/ACE/debianbuild/dsc")
+    files.append (doc_root + "/ACE/debian/dsc")
 
     return files
 

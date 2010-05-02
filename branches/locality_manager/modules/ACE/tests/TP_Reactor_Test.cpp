@@ -248,6 +248,8 @@ MyTask::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask started\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   // signal that we are ready
   sem_.release (1);
 
@@ -1118,7 +1120,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -1128,17 +1130,24 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  //  Put the <signal_set>.
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("Error: (%P | %t):%p\n"),
-                ACE_TEXT("pthread_sigmask failed")));
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);
-#endif /* ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
+#endif /* ACE_LACKS_UNIX_SIGNALS */
 
-  return 1;
+  return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -1152,7 +1161,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (::parse_args (argc, argv) == -1)
     return -1;
 
-  ::disable_signal (SIGPIPE, SIGPIPE);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   MyTask    task1;
   Acceptor  acceptor;
