@@ -1,4 +1,5 @@
 // $Id$
+/// Compliant with OMG 06-04-01 Section 9.4.2.1
 
 #if !defined (CCM_SESSION2CONTEXT_IDL)
 #define CCM_SESSION2CONTEXT_IDL
@@ -6,6 +7,8 @@
 #include "ccm/CCM_CCM2Context.idl"
 
 // *************** Extended Container Interfaces ***************
+
+#if !defined (CCM_LW)
 
 module Components
 {
@@ -34,4 +37,6 @@ module Components
               BadComponentReference);
   };
 };
+#endif
+
 #endif /* CCM_SESSION2CONTEXT_IDL */

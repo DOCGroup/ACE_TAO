@@ -78,11 +78,8 @@ namespace CIAO_Throughput_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    void start ();
-    void reset_results (void);
     void record_data (ThroughputTest & an_instance);
     void handle_run (ThroughputCommand & an_instance);
-    void show_results (void);
 
     virtual ::Throughput::ThroughputTestConn::CCM_Listener_ptr
     get_info_listen_data_listener (void);
@@ -108,8 +105,7 @@ namespace CIAO_Throughput_Receiver_Impl
   private:
     ::Throughput::CCM_Receiver_Context_var context_;
 
-    CORBA::ULongLong  count_;
-    ACE_UINT64 interval_time_;
+    CORBA::ULongLong count_;
     CORBA::ULongLong interval_messages_received_;
     CORBA::ULongLong interval_bytes_received_;
     CORBA::ULong interval_data_length_;
@@ -119,6 +115,10 @@ namespace CIAO_Throughput_Receiver_Impl
     CORBA::ULongLong seq_num_;
     CORBA::ULongLong messages_lost_;
     Atomic_Bool log_;
+
+    void start ();
+    void reset_results (void);
+    void show_results (const ACE_UINT64& interval_time);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

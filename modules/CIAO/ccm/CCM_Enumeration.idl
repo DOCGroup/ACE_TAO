@@ -4,6 +4,8 @@
 #if !defined (CCM_ENUMERATION_IDL)
 #define CCM_ENUMERATION_IDL
 
+#if !defined (CCM_LW)
+
 #include "ccm/CCM_Object.idl"
 
 module Components
@@ -21,4 +23,7 @@ module Components
     private CCMObjectSeq objects;
   };
 };
+
+#endif
+
 #endif /* CCM_ENUMERATION_IDL */

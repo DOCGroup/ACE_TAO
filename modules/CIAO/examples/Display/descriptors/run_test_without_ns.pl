@@ -79,10 +79,12 @@ sub run_node_daemons {
         $port = $ports[$i];
 
         $iiop = "iiop://localhost:$port";
-        $node_app = "$CIAO_ROOT/bin/NodeApplication";
+        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-        $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -t 30";
+
+        print "Run dance_node_manager with $d_param\n";
 
         $Daemons[$i] = $tg->CreateProcess ($d_cmd, $d_param);
         $Daemons[$i]->Spawn ();
@@ -114,7 +116,7 @@ if ($status != 0) {
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = $tg->CreateProcess ("$CIAO_ROOT/bin/Execution_Manager",
+$EM = $tg->CreateProcess ("$CIAO_ROOT/bin/dance_execution_manager",
                             "-o $ior_emfile -i $dat_file");
 $EM->Spawn ();
 
@@ -130,7 +132,7 @@ $em_running = 1;
 
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
-$E = $tg->CreateProcess ("$CIAO_ROOT/bin/plan_launcher",
+$E = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-p flattened_deploymentplan.cdp -k file://$ior_emfile -o DAM.ior");
 
 $E->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
@@ -174,7 +176,7 @@ sleep (2);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-$E = $tg->CreateProcess ("$CIAO_ROOT/bin/plan_launcher",
+$E = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -i file://DAM.ior");
 $E->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
 

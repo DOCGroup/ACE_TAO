@@ -4,7 +4,9 @@ project (DAnCE_Split_Plan_Impl) : dance_lib, dance_deployment_stub, dance_output
   dynamicflags = DANCE_SPLIT_PLAN_BUILD_DLL
   includes += $(DANCE_ROOT)/tools
   Source_Files {
-    Split_Plan_impl.cpp
+    Node_Splitter.cpp
+    Locality_Splitter.cpp
+    Sub_UUID_Generator.cpp
   }
 }
 
@@ -13,6 +15,6 @@ project (DAnCE_Split_Plan_Exec) : dance_exe, dance_output, dance_split_plan, \
   exename = dance_split_plan
 
   Source_Files {
-    Split_Plan.cpp
+    Split_Plan_exec.cpp
   }
 }

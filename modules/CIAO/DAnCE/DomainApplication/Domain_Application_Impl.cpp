@@ -532,7 +532,7 @@ namespace DAnCE
   DA_NAM_ReplyHandlerImpl::startLaunch_excep (
     ::Messaging::ExceptionHolder * excep_holder)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep called")));
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep called\n")));
 
       try
         {

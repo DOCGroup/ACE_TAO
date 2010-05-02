@@ -147,7 +147,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
             {
               options.em_ior_ = get_opt.opt_arg ();
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::parse_args -")
+                               ACE_TEXT ("Plan_Launcher::parse_args - ")
                                ACE_TEXT ("Using ExecutionManager IOR: %s\n"),
                                options.em_ior_));
             }
@@ -157,7 +157,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           options.nm_ior_ = get_opt.opt_arg ();
           options.output_ = true;
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using NodeManager IOR: %s\n"),
                            options.nm_ior_));
           break;
@@ -165,7 +165,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'x':
           options.xml_plan_ = get_opt.opt_arg ();
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using XML plan: %s\n"),
                            options.xml_plan_));
           break;
@@ -173,7 +173,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'c':
           options.cdr_plan_ = get_opt.opt_arg ();
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using CDR plan: %s\n"),
                            options.cdr_plan_));
           break;
@@ -181,7 +181,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'u':
           options.uuid_ = get_opt.opt_arg ();
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using UUID: %s\n"),
                            options.uuid_));
           break;
@@ -189,7 +189,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'm':
           options.am_ior_ = get_opt.opt_arg ();
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Using ApplicationManager IOR %s\n"),
                            options.am_ior_));
           break;
@@ -197,7 +197,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'a':
           options.app_ior_ = get_opt.opt_arg ();
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Application IOR: %s\n"),
                            options.app_ior_));
           break;
@@ -205,14 +205,14 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'l':
           options.mode_ = Options::LAUNCH;
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Launching nominated plan\n")));
           break;
 
         case 's':
           options.mode_ = Options::TEARDOWN;
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args -")
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Tearing down nominated plan\n")));
           break;
 

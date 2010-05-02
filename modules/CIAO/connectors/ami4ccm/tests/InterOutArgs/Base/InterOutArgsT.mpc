@@ -1,0 +1,196 @@
+// $Id$
+
+project(AMI_InterOutArgsT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_STUB_Export \
+              -Wb,stub_export_include=InterOutArgsT_stub_export.h \
+              -Wb,skel_export_macro=INTEROUTARGS_T_SKEL_Export \
+              -Wb,skel_export_include=InterOutArgsT_skel_export.h \
+              -Wb,conn_export_macro=INTEROUTARGS_T_CONN_Export \
+              -Wb,conn_export_include=InterOutArgsT_conn_export.h \
+              -Wb,exec_export_macro=INTEROUTARGS_T_EXEC_Export \
+              -Wb,exec_export_include=InterOutArgsT_exec_export.h \
+              -I.. -GM -Gxhcn
+  idlflags -= -Gsv
+
+  IDL_Files {
+    InterOutArgsT.idl
+  }
+}
+
+project(AMI_InterOutArgsT_lem_gen) : ciaoidldefaults {
+  after += AMI_InterOutArgsT_idl_gen AMI_InterOutArgsT_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=INTEROUTARGS_T_LEM_STUB_Export \
+              -Wb,export_include=InterOutArgsT_lem_stub_export.h \
+              -I.. -SS -Gxhst
+
+  IDL_Files {
+    InterOutArgsTE.idl
+  }
+}
+
+project(AMI_InterOutArgsT_lema_gen) : ciaoidldefaults {
+  after += AMI_InterOutArgsT_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_STUB_Export \
+              -Wb,stub_export_include=InterOutArgsT_stub_export.h \
+              -Wb,conn_export_macro=INTEROUTARGS_T_CONN_Export \
+              -Wb,conn_export_include=InterOutArgsT_conn_export.h \
+              -Wb,svnt_export_macro=INTEROUTARGS_T_SVNT_Export \
+              -Wb,svnt_export_include=InterOutArgsT_svnt_export.h \
+              -Wb,skel_export_macro=INTEROUTARGS_T_SKEL_Export \
+              -Wb,skel_export_include=InterOutArgsT_skel_export.h \
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+
+  IDL_Files {
+    InterOutArgsTA.idl
+  }
+}
+
+project(AMI_InterOutArgsT_lemae_gen) : ciaoidldefaults {
+  after += AMI_InterOutArgsT_lema_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_LEM_STUB_Export \
+              -Wb,stub_export_include=InterOutArgsT_lem_stub_export.h \
+              -I.. -SS
+
+  IDL_Files {
+    InterOutArgsTAE.idl
+  }
+}
+
+project(AMI_InterOutArgsT_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_InterOutArgsT_lem_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = InterOutArgsT_stub
+  dynamicflags = INTEROUTARGS_T_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsTC.cpp
+    InterOutArgsTAC.cpp
+  }
+
+  Header_Files {
+    InterOutArgsTC.h
+    InterOutArgsT_stub_export.h
+}
+
+  Inline_Files {
+    InterOutArgsTC.inl
+  }
+}
+
+project(AMI_InterOutArgsT_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_InterOutArgsT_lem_gen AMI_InterOutArgsT_stub AMI_InterOutArgsT_lemae_gen AMI_InterOutArgsT_skel
+  libs += InterOutArgsT_stub InterOutArgsT_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = InterOutArgsT_lem_stub
+  dynamicflags = INTEROUTARGS_T_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsTEC.cpp
+    InterOutArgsTAEC.cpp
+  }
+
+  Header_Files {
+    InterOutArgsTEC.h
+    InterOutArgsT_lem_stub_export.h
+}
+
+  Inline_Files {
+    InterOutArgsTEC.inl
+  }
+}
+
+project(AMI_InterOutArgsT_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_InterOutArgsT_stub
+  sharedname  = InterOutArgsT_skel
+  libs       += InterOutArgsT_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  dynamicflags = INTEROUTARGS_T_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsTS.cpp
+    InterOutArgsTAS.cpp
+  }
+
+  Header_Files {
+    InterOutArgsTS.h
+   
+    InterOutArgsT_skel_export.h
+  }
+
+  Inline_Files {
+    InterOutArgsTS.inl
+   
+  }
+}
+
+project(AMI_InterOutArgsT_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_InterOutArgsT_lem_stub InterOutArgsT_Base_AMI_stub AMI_InterOutArgsT_skel AMI_InterOutArgsT_lema_gen AMI_InterOutArgsT_lemae_gen
+  sharedname = InterOutArgsT_conn
+  libs += InterOutArgsT_stub InterOutArgsT_skel InterOutArgsT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = INTEROUTARGS_T_CONN_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsTA_conn.cpp
+  }
+
+  Header_Files {
+    InterOutArgsTA_conn.h
+    InterOutArgsTA_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_InterOutArgsT_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_InterOutArgsT_lem_stub InterOutArgsT_Base_AMI_stub AMI_InterOutArgsT_skel AMI_InterOutArgsT_lema_gen AMI_InterOutArgsT_lemae_gen AMI_InterOutArgsT_conn
+  sharedname = InterOutArgsT_svnt
+  libs += InterOutArgsT_stub InterOutArgsT_skel InterOutArgsT_lem_stub InterOutArgsT_conn
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = INTEROUTARGS_T_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterOutArgsTA_svnt.cpp
+  }
+
+  Header_Files {
+    InterOutArgsTA_svnt.h
+    InterOutArgsTA_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+

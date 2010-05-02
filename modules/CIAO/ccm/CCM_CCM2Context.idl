@@ -1,13 +1,12 @@
 // $Id$
+// Compliant to OMG 06-04-01, section 9.4.1.1
 
 #if !defined (CCM_2CONTEXT_IDL)
 #define CCM_2CONTEXT_IDL
 
-#include "ccm/CCM_Container.idl"
+#include "ccm/CCM_Context.idl"
 #include "ccm/CCM_HomeRegistration.idl"
 #include <CosPersistentState.idl>
-
-// *************** Extended Container Interfaces ***************
 
 module Components
 {

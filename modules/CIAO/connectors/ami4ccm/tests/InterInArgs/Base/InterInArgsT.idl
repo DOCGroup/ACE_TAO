@@ -1,0 +1,74 @@
+// $Id$
+
+#ifndef INTERINARGS_T_IDL
+#define INTERINARGS_T_IDL
+
+#pragma ciao lem "Base/InterInArgsTE.idl"
+#pragma ciao ami4ccm interface "InterInArgsT::MyFoo"
+#pragma ciao lem "Base/InterInArgsTAE.idl"
+
+module InterInArgsT
+{
+  const short update_val = 999;
+
+  // Mixed struct
+  struct TestTopic {
+    string key;
+    long x;
+    };
+
+  // String struct
+  struct TopicString {
+    string key;
+    string x_str;
+    };
+
+  // Array
+  struct TopicArray {
+    string key;
+    short x_array[5];
+    };
+
+  // Union
+  union X_Union switch (short) {
+    case 0:
+      string x_test;
+    case 1:
+      long   x_long;
+  };
+
+  struct TopicUnion {
+    string key;
+    X_Union x_uni;
+    };
+
+  // Sequence
+  struct test {
+    short x_test;
+    string x_teststr;
+    };
+  typedef sequence<test> test_seq;
+  
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+      void var_ins (in string in_str,  out string answer, in double cmd)
+        raises (InternalError);
+      void var_div_ins (in TestTopic test_topic,  in TopicString topic_str,
+                        in TopicArray topic_arr, out string answer)
+        raises (InternalError);
+      void var_div2_ins (in TopicUnion topic_union,  in test_seq seq,
+                         out string answer)
+        raises (InternalError);
+    };
+};
+
+#endif

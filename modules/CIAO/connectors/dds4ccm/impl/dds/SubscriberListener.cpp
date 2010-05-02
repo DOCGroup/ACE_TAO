@@ -41,6 +41,31 @@ namespace CIAO
       the_subscriber->notify_datareaders ();
     }
 
+    ::DDS::DataReader_ptr
+    CCM_DDS_SubscriberListener_i::get_datareader_proxy (
+      ::DDSDataReader * the_reader)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::get_datareader_proxy");
+      //Retrieve the pointer to the proxy from the QoS
+      ::DDS_DataReaderQos qos;
+      the_reader->get_qos (qos);
+      DDS_Property_t * prop =
+        DDSPropertyQosPolicyHelper::lookup_property (qos.property,
+                                                    "CCM_DataReaderProxy");
+      if (!prop)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
+          return ::DDS::DataReader::_nil ();
+        }
+      ::DDS::CCM_DataReader_ptr reader =
+        reinterpret_cast < ::DDS::CCM_DataReader_ptr >
+          (ACE_OS::atol (prop->value));
+
+      return reinterpret_cast < ::DDS::DataReader_ptr >
+          (reader);
+    }
+
     void
     CCM_DDS_SubscriberListener_i::on_requested_deadline_missed (
       ::DDSDataReader* the_reader,
@@ -48,15 +73,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_requested_deadline_missed");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_requested_deadline_missed (dds_reader.in (), ddsstatus);
+      this->impl_->on_requested_deadline_missed (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_requested_deadline_missed (dds_reader.in (), status);
+      this->impl_->on_requested_deadline_missed (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 
@@ -67,15 +93,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_requested_incompatible_qos");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_requested_incompatible_qos (dds_reader.in (), ddsstatus);
+      this->impl_->on_requested_incompatible_qos (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_requested_incompatible_qos (dds_reader.in (), status);
+      this->impl_->on_requested_incompatible_qos (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 
@@ -86,15 +113,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_sample_rejected");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_sample_rejected (dds_reader.in (), ddsstatus);
+      this->impl_->on_sample_rejected (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_sample_rejected (dds_reader.in (), status);
+      this->impl_->on_sample_rejected (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 
@@ -105,15 +133,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_liveliness_changed");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_liveliness_changed (dds_reader.in (), ddsstatus);
+      this->impl_->on_liveliness_changed (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_liveliness_changed (dds_reader.in (), status);
+      this->impl_->on_liveliness_changed (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 
@@ -123,10 +152,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_data_available");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
-      this->impl_->on_data_available (dds_reader.in ());
+      this->impl_->on_data_available (
+        this->get_datareader_proxy (the_reader));
     }
 
     void
@@ -136,15 +163,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_subscription_matched");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_subscription_matched (dds_reader.in (), ddsstatus);
+      this->impl_->on_subscription_matched (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_subscription_matched (dds_reader.in (), status);
+      this->impl_->on_subscription_matched (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 
@@ -155,15 +183,16 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_sample_lost");
 
-      ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
-      ACE_NEW (dds_reader,
-               CCM_DDS_DataReader_i (the_reader));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
-      this->impl_->on_sample_lost (dds_reader.in (), ddsstatus);
+      this->impl_->on_sample_lost (
+        this->get_datareader_proxy (the_reader),
+        ddsstatus);
 #else
-      this->impl_->on_sample_lost (dds_reader.in (), status);
+      this->impl_->on_sample_lost (
+        this->get_datareader_proxy (the_reader),
+        status);
 #endif
     }
 

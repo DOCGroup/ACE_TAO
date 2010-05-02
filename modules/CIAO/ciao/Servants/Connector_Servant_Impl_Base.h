@@ -27,12 +27,10 @@
 #include "Home_Servant_Impl_Base.h"
 
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
-
-#include "ccm/CCM_ContainerC.h"
+#include "ccm/CCM_SessionComponentC.h"
 #include "ccm/CCM_ObjectS.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Array_Map.h"
 
 namespace CIAO
@@ -86,7 +84,9 @@ namespace CIAO
 
     virtual void remove (void);
 
+#if !defined (CCM_LW)
     virtual CORBA::IRObject_ptr get_component_def (void);
+#endif
 
     virtual Components::SessionComponent_ptr get_executor () = 0;
 
@@ -129,9 +129,6 @@ namespace CIAO
 #if !defined (CCM_LW)
     virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
-
-    virtual ::Components::EmitterDescriptions *
-    get_all_emitters (void);
 #endif
 
  #if !defined (CCM_LW)
@@ -139,17 +136,9 @@ namespace CIAO
     get_named_receptacles (const ::Components::NameList & names);
 #endif
 
- #if !defined (CCM_LW)
-    virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (void);
-#endif
-
 #if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
-
-    virtual ::Components::PublisherDescriptions *
-    get_all_publishers (void);
 #endif
 
     virtual ::Components::Cookie *
@@ -165,7 +154,7 @@ namespace CIAO
                       ::Components::EventConsumerBase_ptr consumer);
 
     virtual ::Components::EventConsumerBase_ptr
-    disconnect_consumer ( const char * source_name);
+    disconnect_consumer (const char * source_name);
 
     virtual ::Components::Cookie *
     connect (const char * name,
@@ -205,27 +194,12 @@ namespace CIAO
       const char *port_name);
 #endif
 
-    void add_receptacle (const char *receptacle_name,
-                         CORBA::Object_ptr recept_ref,
-                         ::Components::Cookie * cookie);
-
   protected:
- #if !defined (CCM_LW)
-    // @todo, rework this
     typedef ACE_Array_Map<ACE_CString,
-                          ::Components::FacetDescription_var>
+                          ::CORBA::Object_var>
        FacetTable;
 
-    typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                    ::Components::ReceptacleDescription_var,
-                                    ACE_Hash<const char *>,
-                                    ACE_Equal_To<const char *>,
-                                    ACE_Null_Mutex>
-       ReceptacleTable;
-
     FacetTable facet_table_;
-    ReceptacleTable receptacle_table_;
-#endif
     Container_var container_;
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;

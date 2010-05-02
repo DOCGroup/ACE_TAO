@@ -28,7 +28,7 @@
       <li>
         CIAO Deployment and Configuration Framework: This part of CIAO includes all the 
         directories in <code>$CIAO_ROOT/DAnCE</code>. DAnCE is an implementation of the 
-        new <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">Deployment and 
+        new <a href="http://www.omg.org/spec/DEPL/">Deployment and 
           Configuration</a> specification. We refer, henceforth, to all pieces as CIAO 
         in general. This piece will be referred specifically by their name
         as DAnCE though they are part of CIAO.
@@ -42,7 +42,7 @@
     <p>If you have <A href="../../docs/ACE-porting.html">porting questions</A> or 
       have a problem compiling CIAO with TAO and ACE on the platforms shown above 
       please send email to either <A href="news:comp.soft-sys.ace">ACE Newsgroup</A> or 
-      the <A href="mailto:ciao-users@cs.wustl.edu">CIAO mailing list</A> and we'll 
+      the <A href="mailto:ciao-users@list.isis.vanderbilt.edu">CIAO mailing list</A> and we'll
       try to help you fix the problems. You can also submit bug reports and 
       enhancement requests in our <A href="../../docs/usage-bugzilla.html">bug tracking 
         system</A>.
@@ -61,8 +61,7 @@
       Earlier versions of the Xerces-C library may work.
     </p>
     <h4>Building Xerces-C</h4>
-    <p>You may check <a href="http://www.dre.vanderbilt.edu/~wotte/xerces/">here</a> to 
-      see if there is a prebuilt binary available for your platform. Otherwise, you 
+    <p>You 
       will have to obtain the source from the <a href="http://xml.apache.org/xerces-c/download.cgi">
         Xerces-C webpage</a> and build it. Building Xerces-C is fairly 
       straightfoward. Please see the documentation available <a href="http://xml.apache.org/xerces-c/build.html">
@@ -125,7 +124,7 @@
         </ul>
       <li>
         Generate the Makefile/Solution/Project files and build
-        <p>For the supported build tools please see <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">
+        <p>For the supported build tools please see <a href="../../MPC/docs/html/MakeProjectCreator.html">
             MPC manual</a>.
         </p>
         <p>You have to execute the MPC command in the following directories if you only 
@@ -139,7 +138,7 @@
         <p>On <strong>Linux</strong>: do <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> at the 
           locations specified above then <code>make</code>.
         </p>
-        <p>On <strong>Windows/VC71</strong>: do <code>%ACE_ROOT%/bin/mwc.pl -type vc71</code>
+        <p>On <strong>Windows/VC8</strong>: do <code>%ACE_ROOT%/bin/mwc.pl -type vc8</code>
           at the locations specified above then Open the solution file and build.
         </p>
         <p><strong>Note:</strong> You can run <code>mwc.pl</code> at <code>$CIAO_ROOT.</code>

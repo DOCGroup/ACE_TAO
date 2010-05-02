@@ -14,17 +14,19 @@ namespace CIAO
   {
   }
 
-  // Operations for CCMHome interface.
+#if !defined (CCM_LW)
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_component_def (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+#endif
 
+#if !defined (CCM_LW)
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_home_def (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
-
+#endif
 }

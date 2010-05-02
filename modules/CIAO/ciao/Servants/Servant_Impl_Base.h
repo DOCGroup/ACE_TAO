@@ -95,16 +95,6 @@ namespace CIAO
     get_named_emitters (const ::Components::NameList & names);
 #endif
 
- #if !defined (CCM_LW)
-    virtual ::Components::ReceptacleDescriptions *
-    get_named_receptacles (const ::Components::NameList & names);
-#endif
-
- #if !defined (CCM_LW)
-    virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (void);
-#endif
-
 #if !defined (CCM_LW)
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
@@ -123,13 +113,11 @@ namespace CIAO
 #endif
 
   protected:
-#if !defined (CCM_LW)
     typedef ACE_Array_Map<ACE_CString,
-                          ::Components::ConsumerDescription_var>
+                          ::Components::EventConsumerBase_var>
        ConsumerTable;
 
     ConsumerTable consumer_table_;
-#endif    
   };
 }
 

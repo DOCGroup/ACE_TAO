@@ -346,13 +346,39 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     CCM_DDS_Subscriber_i::get_datareaders (
-      ::DDS::DataReaderSeq & /*readers*/,
-      ::DDS::SampleStateMask /*sample_states*/,
-      ::DDS::ViewStateMask /*view_states*/,
-      ::DDS::InstanceStateMask /*instance_states*/)
+      ::DDS::DataReaderSeq & readers,
+      ::DDS::SampleStateMask sample_states,
+      ::DDS::ViewStateMask view_states,
+      ::DDS::InstanceStateMask instance_states)
     {
-      throw CORBA::NO_IMPLEMENT ();
-      // Add your implementation here
+      CIAO_TRACE ("CCM_DDS_Subscriber_i::set_qos");
+#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
+      ::DDSDataReaderSeq dds_readers;
+
+      ::DDS_ReturnCode_t retcode =
+        this->impl ()->get_datareaders (dds_readers,
+                                        sample_states,
+                                        view_states,
+                                        instance_states);
+      if (retcode == DDS_RETCODE_OK)
+        {
+          readers.length (dds_readers.length ());
+          for (::DDS_Long i = 0; i < dds_readers.length (); ++i)
+            {
+              ::DDS::DataReader_var rdr;
+              ACE_NEW_THROW_EX (rdr,
+                                CCM_DDS_DataReader_i (dds_readers[i]),
+                                CORBA::NO_MEMORY ());
+              readers [i] = rdr._retn ();
+            }
+        }
+      return retcode;
+#else
+      return this->impl ()->get_datareaders (readers,
+                                             sample_states,
+                                             view_states,
+                                             instance_states);
+#endif
     }
 
     ::DDS::ReturnCode_t
