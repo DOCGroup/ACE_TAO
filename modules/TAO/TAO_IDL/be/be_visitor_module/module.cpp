@@ -277,8 +277,12 @@ be_visitor_module::visit_interface (be_interface *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ROOT_CH:
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
+        be_visitor_interface_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CI:
       {
         be_visitor_interface_ci visitor (&ctx);
@@ -395,64 +399,6 @@ be_visitor_module::visit_interface (be_interface *node)
                          "visit_interface - "
                          "failed to accept visitor\n"),
                         -1);
-    }
-
-  // Change the state depending on the kind of node strategy
-  ctx.state (node->next_state (ctx.state ()));
-
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_interface - "
-                         "NUL visitor\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_interface - "
-                         "failed to accept visitor\n"),
-                        -1);
-    }
-
-  delete visitor;
-  visitor = 0;
-
-  // Do additional code generation is necessary.
-  // Note, this call is delegated to the strategy connected to
-  // the node.
-  if (node->has_extra_code_generation (ctx.state ()))
-    {
-      // Change the state depending on the kind of node strategy.
-      ctx.state (node->next_state (ctx.state (), 1));
-
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_module::"
-                             "visit_interface - "
-                             "NUL visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_module::"
-                             "visit_interface - "
-                             "failed to accept visitor\n"),
-                            -1);
-        }
-
-      delete visitor;
-      visitor = 0;
     }
 
   ctx.state (TAO_CodeGen::TAO_ROOT_CH);

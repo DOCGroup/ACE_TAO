@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Visitor for generating AMH skeleton for "operation" in skeleton header.
 // ******************************************************
@@ -32,8 +31,14 @@ be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh (void)
 int
 be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 {
-  // If there is an argument of type "native", return immediately.
+  /// If there is an argument of type "native", return immediately.
   if (node->has_native ())
+    {
+      return 0;
+    }
+    
+  /// These are not for the server side.  
+  if (node->is_sendc_ami ())
     {
       return 0;
     }

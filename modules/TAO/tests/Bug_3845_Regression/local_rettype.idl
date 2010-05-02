@@ -1,0 +1,11 @@
+// $Id$
+
+local interface foo
+{
+};
+
+interface bar
+{
+  foo bar_op ();
+};
+

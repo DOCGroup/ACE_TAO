@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "be_argument.h"
 #include "be_array.h"
 #include "be_attribute.h"
@@ -87,8 +86,6 @@
 #include "be_visitor_valuetype/field_cdr_ch.cpp"
 #include "be_visitor_valuetype/field_cdr_cs.cpp"
 #include "be_visitor_valuetype/obv_module.cpp"
-#include "be_visitor_valuetype/ami_exception_holder_ch.cpp"
-#include "be_visitor_valuetype/ami_exception_holder_cs.cpp"
 #include "be_visitor_valuetype/valuetype_init.cpp"
 #include "be_visitor_valuetype/valuetype_init_ch.cpp"
 #include "be_visitor_valuetype/valuetype_init_ci.cpp"

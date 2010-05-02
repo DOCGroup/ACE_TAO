@@ -46,6 +46,7 @@ private:
   
 private:
   TAO_OutStream &os_;
+  bool seen_in_or_inout_arg_;
 };
 
 #endif /* _AMI4CCM_RH_EX_IDL_H_ */

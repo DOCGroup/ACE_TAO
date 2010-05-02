@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_INTERFACE_H
 #define TAO_BE_VISITOR_INTERFACE_H
 
@@ -49,9 +48,6 @@
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.h"
 #include "be_visitor_interface/direct_proxy_impl_ss.h"
-
-// AMI
-#include "be_visitor_interface/ami_interface_ch.h"
 
 // AMI4CCM
 #include "be_visitor_interface/ami4ccm_rh_ex_idl.h"

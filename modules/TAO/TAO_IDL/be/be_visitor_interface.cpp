@@ -84,9 +84,6 @@
 #include "be_visitor_interface/direct_proxy_impl_sh.cpp"
 #include "be_visitor_interface/direct_proxy_impl_ss.cpp"
 
-// AMI
-#include "be_visitor_interface/ami_interface_ch.cpp"
-
 // AMI4CCM
 #include "be_visitor_interface/ami4ccm_rh_ex_idl.cpp"
 #include "be_visitor_interface/ami4ccm_sendc_ex_idl.cpp"

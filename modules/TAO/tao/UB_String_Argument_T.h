@@ -33,7 +33,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class In_UB_String_Argument_T : public InArgument
   {
   public:
@@ -56,7 +56,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class In_UB_String_Clonable_Argument_T :
             public In_UB_String_Argument_T<S_var, Insert_Policy>
   {
@@ -77,7 +77,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Inout_UB_String_Argument_T : public InoutArgument
   {
   public:
@@ -101,7 +101,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Out_UB_String_Argument_T : public OutArgument
   {
   public:
@@ -124,7 +124,7 @@ namespace TAO
    *
    */
   template<typename S_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Ret_UB_String_Argument_T : public RetArgument
   {
   public:
@@ -149,7 +149,7 @@ namespace TAO
    *
    */
   template<typename T_var,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   struct UB_String_Arg_Traits_T
   {
     typedef typename T_var::s_traits::char_type *            ret_type;

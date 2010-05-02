@@ -40,6 +40,11 @@ $SV = $server->CreateProcess ("server_main", "-ORBdebuglevel $debug_level ".
 for ($i = 0; $i < $num_clients; $i++) {
     $clients[$i] = PerlACE::TestTarget::create_target ($i + 2) || die "Create target " . ($i + 2) . " failed\n";
 
+    $clients[$i]->AddLibPath ('../TP_Foo_A/.');
+    $clients[$i]->AddLibPath ('../TP_Foo_B/.');
+    $clients[$i]->AddLibPath ('../TP_Foo_C/.');
+    $clients[$i]->AddLibPath ('../TP_Common/.');
+
     $clients_iorfile[$i] = $clients[$i]->LocalFile ($iorbase);
     $clients[$i]->DeleteFile($iorbase);
 

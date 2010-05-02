@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
@@ -105,13 +104,44 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (node->accept (&al_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
+                         "be_visitor_operation_cs::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
 
-  return this->gen_stub_operation_body (node, bt);
+  if (this->gen_stub_operation_body (node, bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for stub body failed\n"),
+                        -1);
+    }
+    
+  /// If we are in a reply handler, are not an execp_* operation,
+  /// and have no native args, then generate the AMI static
+  /// reply stub declaration.  
+  if (intf->is_ami_rh ()
+      && !node->is_excep_ami ()
+      && !node->has_native ())
+    {
+      be_visitor_operation_ami_handler_reply_stub_operation_cs v (
+        this->ctx_);
+        
+      int status = v.visit_operation (node);
+      
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for AMI reply stub failed\n"),
+                            -1);
+        }
+    }
+    
+  return 0;
 }
 
 int
@@ -148,5 +178,6 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
     }
 
   *os << "0}";
+  
   return 0;
 }

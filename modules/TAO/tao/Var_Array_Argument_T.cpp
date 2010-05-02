@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
@@ -24,18 +24,18 @@ TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Var_Array_Clonable_Argument_T (void)
 {
   if (this->is_clone_)
@@ -48,7 +48,7 @@ TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Var_Array_Clo
 }
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone (void)
 {
@@ -68,7 +68,7 @@ TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone (void)
 // ===========================================================
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
@@ -78,7 +78,7 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::marshal (
 }
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -90,12 +90,12 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -104,7 +104,7 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::interceptor_value (
 
 template<typename S_out,
          typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -122,13 +122,13 @@ TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::demarshal (
 
 template<typename S_out,
          typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
   S_forany tmp (this->x_);
-  Insert_Policy::any_insert (any, tmp);
+  Insert_Policy<S_forany>::any_insert (any, tmp);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -137,7 +137,7 @@ interceptor_value (CORBA::Any *any) const
 
 template<typename S_var,
          typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -157,12 +157,12 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
 
 template<typename S_var,
          typename S_forany,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy::any_insert (any, S_forany (this->x_.ptr ()));
+  Insert_Policy<S_forany>::any_insert (any, S_forany (this->x_.ptr ()));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
