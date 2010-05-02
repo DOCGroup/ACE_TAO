@@ -18,11 +18,14 @@ module Hello
 
   interface MyFoo
     {
-      long foo (in string in_str, out string answer)
+      long foo_return (in string in_str, out string answer)
+        raises (InternalError);
+      void foo_no_return (in string in_str, out string answer)
         raises (InternalError);
       void hello (out long answer)
         raises (InternalError);
-
+      void no_answer (in string in_str)
+        raises (InternalError);
       attribute short rw_attrib
         getraises (InternalError)
         setraises (InternalError);

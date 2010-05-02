@@ -14,10 +14,12 @@ interface pface {};
 interface uface {};
 interface umface {};
 
+#if !defined (CCM_LW)
 valuetype pkey : Components::PrimaryKeyBase
 {
   public string info;
 };
+#endif
 
 valuetype pubtype_base {};
 eventtype pubtype : pubtype_base {};
@@ -42,6 +44,7 @@ home CompBaseHome supports sface manages CompBase
 {
 };
 
+#if !defined (CCM_LW)
 home CompDerivedHome : CompBaseHome manages CompDerived primarykey pkey
 {
   exception ch_except {};
@@ -50,4 +53,5 @@ home CompDerivedHome : CompBaseHome manages CompDerived primarykey pkey
   finder kitchen_sink (in string uid, in pkey key, in boolean all)
     raises (ch_except);
 };
+#endif
 

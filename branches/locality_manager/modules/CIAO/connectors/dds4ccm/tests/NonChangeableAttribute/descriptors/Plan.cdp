@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>NonChangeableAttribute_Depl_1</label>
-  <UUID>NonChangeableAttribute_Depl_1</UUID>
+  <label>NonChangeableAttribute_Depl</label>
+  <UUID>NonChangeableAttribute_Depl</UUID>
 
 
   <implementation xmi:id="NonChangeableConnectorComponentImplementation">
@@ -20,7 +20,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NonChangeable_NonChangeable_Connector_Impl</string>
+          <string>create_NonChangeable_NonChangeable_Connector_i</string>
         </value>
       </value>
     </execParameter>
@@ -81,18 +81,18 @@
     <name>NonChangeableConnector_exec</name>
     <source/>
     <node/>
-    <location>DDS_NonChangeableConnector_exec</location>
+    <location>NonChangeableConnector_exec</location>
   </artifact>
   <artifact xmi:id="NonChangeableConnector_SvntArtifact">
     <name>NonChangeableConnector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_NonChangeableConnector_svnt</location>
+    <location>NonChangeableConnector_svnt</location>
   </artifact>
   <artifact xmi:id="NonChangeableConnector_StubArtifact">
     <name>NonChangeableConnector_stub</name>
     <source/>
     <node/>
-    <location>DDS_NonChangeableConnector_stub</location>
+    <location>NonChangeableConnector_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>

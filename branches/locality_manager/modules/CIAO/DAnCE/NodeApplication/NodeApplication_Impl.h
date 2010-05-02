@@ -23,7 +23,6 @@
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
-#include "ccm/ComponentsC.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 

@@ -31,23 +31,19 @@ namespace CIAO
   void
   Connector_Servant_Impl_Base::remove (void)
   {
- #if !defined (CCM_LW)
-    // @todo, reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::remove (void)");
 
     try
     {
       // Removing Facets
-      Components::FacetDescriptions_var facets =
-        this->get_all_facets ();
-
-      CORBA::ULong const facet_len = facets->length ();
-
-      for (CORBA::ULong i = 0; i < facet_len; ++i)
+      for (FacetTable::const_iterator iter =
+             this->facet_table_.begin ();
+           iter != this->facet_table_.end ();
+           ++iter)
         {
           PortableServer::ObjectId_var facet_id =
             this->container_->the_port_POA ()->reference_to_id (
-              facets[i]->facet_ref ());
+              iter->second);
 
           this->container_->the_port_POA ()->deactivate_object (
             facet_id);
@@ -61,8 +57,7 @@ namespace CIAO
             }
         }
 
-      Components::SessionComponent_var temp =
-        this->get_executor ();
+      Components::SessionComponent_var temp = this->get_executor ();
 
       if (!::CORBA::is_nil (temp.in ()))
         {
@@ -86,17 +81,18 @@ namespace CIAO
     {
       ex._tao_print_exception ("Port not active\n");
     }
-#endif
   }
 
+#if !defined (CCM_LW)
   CORBA::IRObject_ptr
   Connector_Servant_Impl_Base::get_component_def (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::get_component_def");
     throw ::CORBA::NO_IMPLEMENT ();
   }
+#endif
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
   ::Components::ConnectionDescriptions *
   Connector_Servant_Impl_Base::get_connections (
     const char * /* name */)
@@ -182,7 +178,13 @@ namespace CIAO
          iter != this->facet_table_.end ();
          ++iter, ++i)
       {
-        retval[i] = iter->second;
+        ::Components::FacetDescription *fd = 0;
+        ACE_NEW_THROW_EX (fd,
+                          ::OBV_Components::FacetDescription (iter->first.c_str (),
+                                                              iter->second->_interface_repository_id (),
+                                                              iter->second),
+                          CORBA::NO_MEMORY ());
+        retval[i] = fd;
       }
 
     return retval._retn ();
@@ -253,12 +255,6 @@ namespace CIAO
   {
     return 0;
   }
-
-  ::Components::EmitterDescriptions *
-  Connector_Servant_Impl_Base::get_all_emitters (void)
-  {
-    return 0;
-  }
 #endif
 
  #if !defined (CCM_LW)
@@ -272,65 +268,9 @@ namespace CIAO
 #endif
 
  #if !defined (CCM_LW)
-  ::Components::ReceptacleDescriptions *
-  Connector_Servant_Impl_Base::get_all_receptacles (void)
-  {
-    CIAO_TRACE("  Connector_Servant_Impl_Base::get_all_receptacles (void)");
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles\n"));
-
-    ::Components::ReceptacleDescriptions *tmp = 0;
-    ACE_NEW_THROW_EX (tmp,
-                      ::Components::ReceptacleDescriptions,
-                      CORBA::NO_MEMORY ());
-
-    ::Components::ReceptacleDescriptions_var retval = tmp;
-
-    retval->length (this->receptacle_table_.current_size ());
-    CORBA::ULong i = 0;
-
-    CIAO_DEBUG (6,
-                (LM_DEBUG,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
-                 retval->length ()));
-
-    for (ReceptacleTable::iterator iter =
-           this->receptacle_table_.begin ();
-         iter != this->receptacle_table_.end ();
-         ++iter, ++i)
-      {
-        CIAO_DEBUG (9,
-                    (LM_TRACE,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::get_all_receptacles - Starting loop iteration...\n",
-                     retval->length ()));
-
-        ReceptacleTable::ENTRY & entry = *iter;
-        retval[i] = entry.int_id_;
-      }
-
-    CIAO_DEBUG (9,
-                (LM_TRACE,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
-
-    return retval._retn ();
-  }
-#endif
-
-#if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)
-  {
-    return 0;
-  }
-
-  ::Components::PublisherDescriptions *
-  Connector_Servant_Impl_Base::get_all_publishers (void)
   {
     return 0;
   }
@@ -452,8 +392,6 @@ namespace CIAO
     const char *port_name,
     ::CORBA::Object_ptr port_ref)
   {
- #if !defined (CCM_LW)
-    // @todo reimplement for LwCCM
     CIAO_TRACE("Connector_Servant_Impl_Base::add_facet");
 
     if (0 == port_name || ::CORBA::is_nil (port_ref))
@@ -461,17 +399,9 @@ namespace CIAO
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::Components::FacetDescription *fd = 0;
-    ACE_NEW_THROW_EX (fd,
-                      ::OBV_Components::FacetDescription (port_name,
-                                                          port_ref->_interface_repository_id (),
-                                                          port_ref),
-                      CORBA::NO_MEMORY ());
-    ::Components::FacetDescription_var safe = fd;
-
     FacetTable::value_type entry;
     entry.first = port_name;
-    entry.second = safe._retn ();
+    entry.second = ::CORBA::Object::_duplicate (port_ref);
 
     {
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
@@ -479,18 +409,12 @@ namespace CIAO
 
       (void) this->facet_table_.insert (entry);
     }
-#else
-    ACE_UNUSED_ARG (port_name);
-    ACE_UNUSED_ARG (port_ref);
-#endif
   }
 
   CORBA::Object_ptr
   Connector_Servant_Impl_Base::lookup_facet (const char *port_name)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::lookup_facet");
- #if !defined (CCM_LW)
-    // @todo Reimplement for LwCCM
     if (!port_name)
       {
         return CORBA::Object::_nil ();
@@ -508,10 +432,7 @@ namespace CIAO
         return CORBA::Object::_nil ();
       }
 
-    return CORBA::Object::_duplicate (iter->second->facet_ref ());
-#else
-    return CORBA::Object::_nil ();
-#endif
+    return CORBA::Object::_duplicate (iter->second);
   }
 
 #if !defined (CCM_LW)
@@ -522,11 +443,11 @@ namespace CIAO
 
     if (!port_name)
       {
-        /// Calling function will throw InvalidName after getting this.
+        // Calling function will throw InvalidName after getting this.
         return 0;
       }
 
-    ::Components::FacetDescription_var fd;
+    ::Components::FacetDescription_var safe;
 
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -538,104 +459,18 @@ namespace CIAO
 
       if (iter != this->facet_table_.end ())
         {
-          fd = iter->second;
+          ::Components::FacetDescription *fd = 0;
+          ACE_NEW_THROW_EX (fd,
+                            ::OBV_Components::FacetDescription (iter->first.c_str (),
+                                                                iter->second->_interface_repository_id (),
+                                                                iter->second),
+                            CORBA::NO_MEMORY ());
+          safe = fd;
         }
     }
 
-    return fd._retn ();
+    return safe._retn ();
   }
 #endif
-
-  void
-  Connector_Servant_Impl_Base::add_receptacle (
-    const char *receptacle_name,
-    CORBA::Object_ptr recept_ref,
-    ::Components::Cookie * cookie)
-  {
-#if !defined (CCM_LW)
-    // @todo Reimplement for LwCCM
-    CIAO_TRACE("Connector_Servant_Impl_Base::add_receptacle");
-    CIAO_DEBUG (6,
-                (LM_INFO,
-                 CLINFO
-                 "Connector_Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%C)\n",
-                 receptacle_name));
-
-    ::Components::ReceptacleDescription_var safe;
-    ::Components::ReceptacleDescription *rd = 0;
-
-    if (this->receptacle_table_.find (receptacle_name, safe) == -1)
-      {
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
-                     receptacle_name));
-
-        ACE_NEW_THROW_EX (rd,
-                          OBV_Components::ReceptacleDescription,
-                          CORBA::NO_MEMORY ());
-        safe = rd;
-
-        rd->name (receptacle_name);
-        rd->type_id ();
-        // The receptacle is a multiplex receptacle if and only if a
-        // cookie was given.
-        rd->is_multiple (cookie != 0);
-
-        ::Components::ConnectionDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          OBV_Components::ConnectionDescription (cookie,
-                                                                 recept_ref),
-                          CORBA::NO_MEMORY ());
-
-        ::Components::ConnectionDescription_var cd_safe = cd;
-        ::Components::ConnectionDescriptions cds (1);
-
-        cds.length (1);
-        cds[0] = cd_safe;
-        rd->connections (cds);
-      }
-    else
-      {
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
-                     receptacle_name));
-
-        rd = safe.inout ();
-
-        ::Components::ConnectionDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          OBV_Components::ConnectionDescription (cookie,
-                                                                 recept_ref),
-                          CORBA::NO_MEMORY ());
-
-        ::Components::ConnectionDescription_var cd_safe = cd;
-        ::Components::ConnectionDescriptions & cds =
-          rd->connections ();
-        CORBA::ULong old_length = cds.length ();
-        cds.length (old_length + 1);
-        cds [old_length] = cd_safe;
-
-        CIAO_DEBUG (6,
-                    (LM_DEBUG,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Added new connection to "
-                     "existing receptacle named (%C)\n",
-                     receptacle_name));
-      }
-
-    if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
-      {
-        CIAO_DEBUG (6,
-                    (LM_INFO,
-                     CLINFO
-                     "Connector_Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
-                     receptacle_name));
-      }
-#endif
-  }
 }
 

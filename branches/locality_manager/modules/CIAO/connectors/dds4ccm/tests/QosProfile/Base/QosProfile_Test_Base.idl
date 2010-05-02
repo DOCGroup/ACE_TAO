@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef COHERENT_WRITE_TEST_BASE_IDL
-#define COHERENT_WRITE_TEST_BASE_IDL
+#ifndef QOSPROFILE_TEST_BASE_IDL
+#define QOSPROFILE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/QosProfile_Test_BaseSupport.h"
 

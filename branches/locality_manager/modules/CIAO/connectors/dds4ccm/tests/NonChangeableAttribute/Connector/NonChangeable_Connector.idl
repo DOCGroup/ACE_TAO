@@ -14,14 +14,10 @@
 
 #pragma ciao lem "Connector/NonChangeable_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTestSeq> NonChangeableTest;
-};
-
 module NonChangeable
 {
-  connector NonChangeable_Connector : ::CCM_DDS::NonChangeableTest::DDS_Event
+  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTestSeq> NonChangeableTestConn;
+  connector NonChangeable_Connector : NonChangeableTestConn::DDS_Event
   {
   };
 };

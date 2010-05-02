@@ -1,0 +1,67 @@
+// $Id$
+
+#ifndef INTEROUTARGS_T_IDL
+#define INTEROUTARGS_T_IDL
+
+#pragma ciao lem "Base/InterOutArgsTE.idl"
+#pragma ciao ami4ccm interface "InterOutArgsT::MyFoo"
+#pragma ciao lem "Base/InterOutArgsTAE.idl"
+
+module InterOutArgsT
+{
+  // Mixed struct
+  struct TestTopic {
+    string key;
+    long x;
+    };
+
+  // String struct
+  struct TopicString {
+    string key;
+    string x_str;
+    };
+
+  // Array
+  struct TopicArray {
+    string key; 
+    short x_array[5];
+    };
+
+  // Union
+  union X_Union switch (short) {
+    case 0:
+      string x_test;
+    case 1:
+      long   x_long;
+    };
+
+  // Sequence
+  struct test {
+    short x_test;
+    string x_teststr;
+    };
+  typedef sequence<test> test_seq;
+  
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+  
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      void var_outs (in string in_str,  out string answer, out double d_cmd,
+                     out long l_cmd )
+        raises (InternalError);
+      void var_div_outs (out TestTopic test_topic, out TopicString topic_str,
+                         out TopicArray topic_arr)
+        raises (InternalError);
+      void var_div2_outs (out X_Union x_uni,
+                          out test_seq seq) 
+        raises (InternalError);
+    };
+};
+
+#endif
+

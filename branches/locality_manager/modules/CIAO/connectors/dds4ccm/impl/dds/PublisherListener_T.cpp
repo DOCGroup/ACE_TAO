@@ -63,7 +63,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
   else
     {
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
+                  ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
                   ACE_TEXT ("No error listener connected\n")));
     }
 }

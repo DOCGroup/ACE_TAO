@@ -22,3 +22,32 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
     DAnCE_ArtifactInstallation.idl
   }
 }
+
+project (DAnCE_stub) : ciaolib_with_idl, dance_output, dance_deployment_stub, \
+      ami, amh {
+  after += DAnCE_IDL
+  IDL_Files {
+  }
+
+  Source_Files {
+    DAnCE_DeploymentInterceptorsC.cpp
+    DAnCE_PropertiesC.cpp
+    DAnCE_LocalityManagerC.cpp
+    DAnCE_ArtifactInstallationC.cpp
+    DAnCE_Utility.cpp
+  }
+}
+
+project (DAnCE_svnt) : ciaolib_with_idl, dance_output, dance_deployment_skel,\
+        ami, amh {
+  after += DAnCE_stub
+  libs += DAnCE_stub
+ 
+  IDL_Files {
+  }
+
+  Source_Files {
+    DAnCE_LocalityManagerS.cpp
+    DAnCE_ArtifactInstallationS.cpp
+  }
+}

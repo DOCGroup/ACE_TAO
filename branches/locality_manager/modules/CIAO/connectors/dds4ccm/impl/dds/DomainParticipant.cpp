@@ -21,6 +21,8 @@
 #include "ndds/Duration_t.h"
 #include "ndds/Time_t.h"
 #include "ndds/InstanceHandleSeq.h"
+#include "ndds/TopicBuiltinTopicData.h"
+#include "ndds/ParticipantBuiltinTopicData.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 
@@ -568,8 +570,10 @@ namespace CIAO
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
       if (this->remove_topic (top))
         {
+          ACE_CString name ("DDS4CCM_CFT_");
+          name.append (ACE_TEXT (top->get_name ()), ACE_OS::strlen (top->get_name ()));
           ::DDS::TopicDescription_var td =
-              lookup_topicdescription (ACE_TEXT ("DDS4CCMContentFilteredTopic"));
+              lookup_topicdescription (ACE_TEXT (name.c_str ()));
           if (! ::CORBA::is_nil (td.in ()))
             {
               ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
@@ -582,6 +586,13 @@ namespace CIAO
                                                   "Unable to delete ContentFilteredTopic. Retval is %C.\n",
                                                   topic_name,
                                                   translate_retcode (ret)));
+                    }
+                  else
+                    {
+                      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
+                                    "Successfully deleted ContentFilteredTopic <%C>\n",
+                                    topic_name,
+                                    name.c_str ()));
                     }
                 }
             }
@@ -757,23 +768,39 @@ namespace CIAO
     }
 
     ::DDS::MultiTopic_ptr
-    CCM_DDS_DomainParticipant_i::create_multitopic (const char * /*name*/,
-                                                const char * /*type_name*/,
-                                                const char * /*subscription_expression*/,
-                                                const ::DDS::StringSeq & /*expression_parameters*/)
+    CCM_DDS_DomainParticipant_i::create_multitopic (
+      const char * name,
+      const char * type_name,
+      const char * subscription_expression,
+      const ::DDS::StringSeq & expression_parameters)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_multitopic");
+#if (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (name);
+      ACE_UNUSED_ARG (type_name);
+      ACE_UNUSED_ARG (subscription_expression);
+      ACE_UNUSED_ARG (expression_parameters);
+      //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
       throw CORBA::NO_IMPLEMENT ();
-
+#else
+      return this->impl ()->create_multitopic (name,
+                                               type_name,
+                                               subscription_expression,
+                                               expression_parameters);
+#endif
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr /*a_multitopic*/)
+    CCM_DDS_DomainParticipant_i::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
     {
-      //this->impl ()->delete_multitopic (
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
+#if (CIAO_DDS4CCM_NDDS==1)
+      ACE_UNUSED_ARG (a_multitopic);
+      //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
       throw CORBA::NO_IMPLEMENT ();
-
+#else
+      return this->impl ()->delete_multitopic (a_multitopic);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -1005,11 +1032,25 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_discovered_participant_data (::DDS::ParticipantBuiltinTopicData & /*impl_data*/,
-                                                              DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
+    CCM_DDS_DomainParticipant_i::get_discovered_participant_data (
+      ::DDS::ParticipantBuiltinTopicData & impl_data,
+      DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
-      throw CORBA::NO_IMPLEMENT ();
+#if (CIAO_DDS4CCM_NDDS==1)
+      DDS_ParticipantBuiltinTopicData dds_part_data;
+      dds_part_data <<= impl_data;
+      ::DDS_InstanceHandle_t dds_hnd;
+      dds_hnd <<= impl_handle;
+      ::DDS_ReturnCode_t retcode =
+        this->impl ()->get_discovered_participant_data (dds_part_data,
+                                                        dds_hnd);
+      impl_data <<= dds_part_data;
+      return retcode;
+#else
+      return this->impl ()->get_discovered_topic_data (impl_data,
+                                                       impl_handle);
+#endif
     }
 
     ::DDS::ReturnCode_t
@@ -1026,11 +1067,25 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_i::get_discovered_topic_data (::DDS::TopicBuiltinTopicData & /*impl_data*/,
-                                                        DDS_INSTANCE_HANDLE_T_IN /*impl_handle*/)
+    CCM_DDS_DomainParticipant_i::get_discovered_topic_data (
+      ::DDS::TopicBuiltinTopicData & impl_data,
+      DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
-      throw CORBA::NO_IMPLEMENT ();
+#if (CIAO_DDS4CCM_NDDS==1)
+      DDS_TopicBuiltinTopicData dds_tp_data;
+      dds_tp_data <<= impl_data;
+      ::DDS_InstanceHandle_t dds_hnd;
+      dds_hnd <<= impl_handle;
+      ::DDS_ReturnCode_t retcode =
+        this->impl ()->get_discovered_topic_data (dds_tp_data,
+                                                  dds_hnd);
+      impl_data <<= dds_tp_data;
+      return retcode;
+#else
+      return this->impl ()->get_discovered_topic_data (impl_data,
+                                                       impl_handle);
+#endif
     }
 
     ::CORBA::Boolean

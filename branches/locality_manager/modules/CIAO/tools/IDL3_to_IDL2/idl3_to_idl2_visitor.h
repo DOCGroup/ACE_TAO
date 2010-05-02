@@ -53,6 +53,7 @@ public:
   virtual int visit_publishes (AST_Publishes *node);
   virtual int visit_emits (AST_Emits *node);
   virtual int visit_consumes (AST_Consumes *node);
+  virtual int visit_porttype (AST_PortType *node);
   virtual int visit_extended_port (AST_Extended_Port *node);
   virtual int visit_mirror_port (AST_Mirror_Port *node);
   virtual int visit_connector (AST_Connector *node);
@@ -69,10 +70,18 @@ private:
                                       const char *local_name,
                                       const char *suffix,
                                       AST_Decl *parent);
+                                      
   void tranfer_scope_elements (AST_Home *src, AST_Interface &dst);
+  
+  /// We don't want to visit a porttype when its declaration is
+  /// encountered but rather by navigating to it from an
+  /// extended port or a mirror port.
+  int visit_porttype_scope (AST_PortType *node);
+  int visit_porttype_scope_mirror (AST_PortType *node);
   
 private:
   AST_Home *home_;
+  ACE_CString port_prefix_;
 };
 
 #endif /* TAO_IDL3_TO_IDL2_VISITOR_H */

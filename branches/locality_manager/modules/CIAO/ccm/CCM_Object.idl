@@ -1,5 +1,5 @@
 // $Id$
-/// NOT Compliant with OMG 06-04-01 Section 6.11.1
+// Compliant with OMG 06-04-01 Section 6.11.1
 
 #if !defined (CCM_OBJECT_IDL)
 #define CCM_OBJECT_IDL
@@ -13,19 +13,8 @@ module Components
 {
   typeprefix Components "omg.org";
 
-  /// This typedef and consts shouldn't be here but are here because of CIAO
-  /// specific additions
-  typedef FailureReason InvalidConfigurationReason;
-  const InvalidConfigurationReason UnknownConfigValueName = 0;
-  const InvalidConfigurationReason InvalidConfigValueType = 1;
-  const InvalidConfigurationReason ConfigValueRequired = 2;
-  const InvalidConfigurationReason ConfigValueNotExpected = 3;
-
-  /// Shouldn't be here but is now here because of CIAO additions
   exception InvalidConfiguration
   {
-    InvalidConfigurationReason reason;
-    FeatureName name;
   };
 
 #if !defined (CCM_LW)
@@ -62,7 +51,6 @@ module Components
 #endif
   };
 
-  // From OMG 06-04-01 Section 10.3.1.2
   typedef sequence<CCMObject> CCMObjectSeq;
 };
 #endif /* CCM_OBJECT_IDL */
