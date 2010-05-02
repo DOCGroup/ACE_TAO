@@ -108,6 +108,39 @@ static int test_configs[][5] =
     // { 1, 1, 1, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
   };
 
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  sigset_t signal_set;
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    ACE_OS::sigaddset (&signal_set, i);
+
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+
+  return 0;
+}
+
 /* Replication of the ACE_Pipe class.  Only difference is that this
    class always uses two sockets to create the pipe, even on platforms
    that support pipes. */
@@ -420,6 +453,8 @@ Receiver::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%t) Receiver::svc commencing, handle = %d\n"),
               this->handle_));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   while (result != -1)
     {
@@ -848,6 +883,8 @@ Invocation_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Invocation_Thread::svc commencing\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   for (int message_counter = 1;; ++message_counter)
     {
       // Get a connection from the cache.
@@ -983,6 +1020,8 @@ Close_Socket_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Close_Socket_Thread::svc commencing\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
       // Wait for the new connection to be established.
@@ -1061,6 +1100,8 @@ Event_Loop_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Event_Loop_Thread::svc commencing\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   while (!this->reactor_.reactor_event_loop_done ())
     {
       this->reactor_.handle_events ();
@@ -1101,6 +1142,8 @@ Purger_Thread::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Purger_Thread::svc commencing\n")));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
@@ -1384,17 +1427,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-#if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
-  // There's really no way to deal with this in a portable manner, so
-  // we just have to suck it up and get preprocessor conditional and
-  // ugly.
-  //
-  // Impractical to have each call to the ORB protect against the
-  // implementation artifact of potential writes to dead connections,
-  // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
-  // these kinds of applications, anyway?
-  (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
-#endif /* SIGPIPE */
+  disable_signal (SIGPIPE, SIGPIPE);
 
   int ignore_nested_upcalls = 1;
   int perform_nested_upcalls = 0;
