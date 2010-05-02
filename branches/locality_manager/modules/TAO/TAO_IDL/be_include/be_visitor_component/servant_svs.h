@@ -45,23 +45,18 @@ public:
   virtual int visit_consumes (be_consumes *node);
   
 private:
-  void compute_slots (AST_Component *node);
-                  
   void gen_provides_top (void);
   void gen_uses_top (void);
   void gen_publishes_top (void);
   void gen_emits_top (void);
+  
+  /// This method gets generated (unless we are
+  /// generating the LwCCM profile) whether the
+  /// comonent has any emitters or not.
+  void gen_get_all_emitters (void);
 
 private:
   be_interface *op_scope_;
-  
-  // Not used for now, but might be useful if generated
-  // code is optimized.
-  ACE_CDR::ULong n_provides_;
-  ACE_CDR::ULong n_uses_;
-  ACE_CDR::ULong n_publishes_;
-  ACE_CDR::ULong n_emits_;
-  ACE_CDR::ULong n_consumes_;
 };
 
 // ======================================================

@@ -113,5 +113,9 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output, fe_mcpp {
     include
     fe
   }
+  
+  Template_Files {
+    include/utl_scope_T.cpp
+  }
 }
 

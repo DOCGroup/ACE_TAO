@@ -81,23 +81,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Generate the scope::operation name.
   *os << parent->full_name ()
-      << "::sendc_";
-
-    // Check if we are an attribute node in disguise.
-  if (this->ctx_->attribute ())
-    {
-      // Now check if we are a "get" or "set" operation.
-      if (node->nmembers () == 1)
-        {
-          *os << "set_";
-        }
-      else
-        {
-          *os << "get_";
-        }
-    }
-
-  *os << node->local_name ()->get_string ();
+      << "::" << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -105,7 +89,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_visitor_operation_arglist oa_visitor (&ctx);
 
   // Get the AMI version from the strategy class.
-  be_operation *ami_op = node->arguments ();
+  be_operation *ami_op = node;//node->arguments ();
 
   if (ami_op->accept (&oa_visitor) == -1)
     {
@@ -147,7 +131,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation()
+          || be_global->gen_thru_poa_collocation ())
         {
           *os << "if (this->the_TAO_" << parent->local_name ()
               << "_Proxy_Broker_ == 0)" << be_idt_nl
@@ -208,27 +193,15 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
-  const char *lname = node->local_name ()->get_string ();
-  ACE_CDR::ULong opname_len =
-    static_cast<ACE_CDR::ULong> (ACE_OS::strlen (lname));
-  ACE_CString opname;
-
-  if (this->ctx_->attribute ())
-    {
-      // If we are a attribute node, add 5 for '_get_' or '_set_'.
-      opname_len += 5;
-
-      // Now check if we are a "get" or "set" operation.
-      if (node->nmembers () == 1)
-        {
-          opname = "_set_";
-        }
-      else
-        {
-          opname = "_get_";
-        }
-    }
-
+//  const char *lname = node->local_name ()->get_string ();
+  ACE_CString base (node->local_name ()->get_string ());
+  
+  /// The sendc_* operation makes the invocation with the
+  /// original operation name.
+  ACE_CString lname_str (base.substr (ACE_OS::strlen ("sendc_")));
+  const char *lname = lname_str.c_str ();
+  
+  ACE_CString opname (node->is_attr_op () ? "_" : "");
   opname += lname;
 
   *os << be_nl << be_nl
@@ -236,8 +209,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
-      << "\"" << opname.fast_rep () << "\"," << be_nl
-      << opname_len << "," << be_nl;
+      << "\"" << opname.c_str () << "\"," << be_nl
+      << opname.length () << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
@@ -265,8 +238,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
     }
 
   *os << "AMI_" << parent->local_name () << "Handler::"
-      << opname.fast_rep () + (this->ctx_->attribute () != 0)
-      << "_reply_stub" << be_uidt_nl
+      << lname << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;
 
   *os << be_uidt_nl
@@ -316,14 +288,11 @@ be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
-                                                be_type *bt)
+be_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *,
+                                                be_type *)
 {
-  // Nothing to be done here, we do not through any exceptions,
+  // Nothing to be done here, we do not throw any exceptions
   // besides system exceptions, so we do not need an user exception table.
-  ACE_UNUSED_ARG (node);
-  ACE_UNUSED_ARG (bt);
-
   return 0;
 }
 

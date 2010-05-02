@@ -25,7 +25,7 @@
 class AST_Type;
 class be_visitor;
 class be_argument;
-class be_operation_strategy;
+//class be_operation_strategy;
 
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,
@@ -46,57 +46,29 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Add an argument to the scope.
+  /// Add an argument to the scope.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
 
-  // Insert an exception at the head of the list.
+  /// Insert an exception at the head of the list.
   int be_insert_exception (AST_Exception *ex);
+  
+  bool is_sendc_ami (void) const;
+  void is_sendc_ami (bool val);
+  
+  bool is_excep_ami (void) const;
+  void is_excep_ami (bool val);
 
-  be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
-
-  /// Decide on the next state.
-  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                    int is_extra_state = 0);
-
-  /// Returns true if we have to generate extra code.
-  int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-
-  /**
-   * returns the operation containing special marshaling information,
-   * this makes sense if not all arguments get marshaled, e.g. AMI
-   * sendc_ operations.
-   */
-  be_operation *marshaling (void);
-
-  /**
-   * Returns a customized arguments list, e.g. AMI sendc_ operations
-   * only use the in and inout arguments but not the out arguments,
-   * also the first argument is the reply handler.
-   */
-  be_operation *arguments (void);
-
-  /// Sets the original operation from which this one was created,
-  /// applies only to implied IDL.
-  void original_operation (be_operation *original_operation);
-
-  /// Returns the original operation from which this one was created,
-  /// applies only to implied IDL
-  be_operation *original_operation (void);
+  bool is_attr_op (void) const;
+  void is_attr_op (bool val);
 
   // Narrowing
-
   DEF_NARROW_FROM_DECL (be_operation);
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
-  /**
-   * Member for holding the strategy for covering
-   * differences between various operations, e.g. sendc_, raise_
-   * operations in the AMI spec.
-   */
-  be_operation_strategy *strategy_;
-  
-  be_operation *original_operation_;
+  bool is_sendc_ami_;
+  bool is_excep_ami_;
+  bool is_attr_op_;
 };
 
 #endif

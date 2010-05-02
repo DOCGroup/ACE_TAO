@@ -238,11 +238,6 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-  // Use the name without the possible '_cxx_' here.
-  ACE_CDR::ULong tmp_len =
-    static_cast<ACE_CDR::ULong> (
-      ACE_OS::strlen (node->original_local_name ()->get_string ()));
-
   *os << be_nl << be_nl
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
       << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
@@ -251,27 +246,33 @@ be_visitor_operation::gen_stub_operation_body (
       << node->argument_count () + 1 << "," << be_nl
       << "\"";
 
-  // Check if we are an attribute node in disguise.
+  /// This logic handles the implied IDL for attributes.
+  /// The AMI ReplyHandler version of generated get/set ops
+  /// for attributes doesn't have the leading underscore.
+  bool escape = (node->is_attr_op () && !intf->is_ami_rh ());
+  ACE_CString opname (escape ? "_" : "");
+
+  /// This logic handles regular IDL for attributes. The AMI
+  /// backend preprocessing visitor doesn't set the context
+  /// member for attributes, but sets flags in the interface
+  /// and operation nodes instead.
   if (this->ctx_->attribute ())
     {
-      // If we are a attribute node, add th elength of the operation
-      // name.
-      tmp_len += 5;
-
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
-          *os << "_set_";
+          opname += "_set_";
         }
       else
         {
-          *os << "_get_";
+          opname += "_get_";
         }
     }
 
-  // original_local_name() strips off the leading '_cxx_' if any.
-  *os << node->original_local_name () << "\"," << be_nl
-      << tmp_len << "," << be_nl;
+  opname += node->original_local_name ()->get_string ();
+  
+  *os << opname.c_str () << "\"," << be_nl
+      << opname.length () << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {

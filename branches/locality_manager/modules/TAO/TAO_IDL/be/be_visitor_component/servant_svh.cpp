@@ -132,25 +132,28 @@ be_visitor_servant_svh::visit_attribute (be_attribute *node)
 int
 be_visitor_servant_svh::visit_provides (be_provides *node)
 {
-  if (node->provides_type ()->is_local () || be_global->gen_lwccm ())
+  if (node->provides_type ()->is_local ()) // @TODO || be_global->gen_lwccm ())
     {
       return 0;
     }
 
   ACE_CString prefix (this->port_prefix_);
-  prefix +=node->local_name ()->get_string ();
+  prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   const char *obj_name = node->provides_type ()->full_name ();
 
-  os_ << be_uidt_nl << be_nl
-      << "public:" << be_idt_nl
-      << "virtual ::" << obj_name << "_ptr" << be_nl
-      << "provide_" << port_name << " (void);"
-      << be_uidt_nl << be_nl;
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_uidt_nl << be_nl
+          << "public:" << be_idt_nl
+          << "virtual ::" << obj_name << "_ptr" << be_nl
+          << "provide_" << port_name << " (void);";
+    }
 
-  os_ << "private:" << be_idt_nl
-      << "::CORBA::Object_ptr" << be_nl
-      << "provide_" << port_name << "_i (void);"
+  os_ << be_uidt_nl << be_nl
+      << "private:" << be_idt_nl
+      << "void" << be_nl
+      << "setup_" << port_name << "_i (void);"
       << be_uidt_nl << be_nl;
 
   os_ << "private:" << be_idt_nl
@@ -337,8 +340,8 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
 
-  os_ << "::Components::EventConsumerBase_ptr" << be_nl
-      << "get_consumer_" << port_name << "_i (void);";
+  os_ << "void" << be_nl
+      << "setup_consumer_" << port_name << "_i (void);";
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
@@ -357,7 +360,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
       << be_uidt_nl << be_nl
       << "public:" << be_idt;
 
-  if (this->node_->has_uses ())
+  if (this->node_->n_uses () > 0UL)
     {
       os_ << be_nl
           << "virtual ::Components::Cookie *" << be_nl
@@ -368,21 +371,34 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "virtual ::CORBA::Object_ptr" << be_nl
           << "disconnect (const char * name," << be_nl
           << "            ::Components::Cookie * ck);";
+    }
+    
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_nl << be_nl
+          << "virtual ::Components::ReceptacleDescriptions *"
+          << be_nl
+          << "get_all_receptacles (void);";
+    }
 
-      if (!be_global->gen_lwccm ())
-        {
-          os_ << be_nl << be_nl
-              << "virtual ::Components::ReceptacleDescriptions *"
-              << be_nl
-              << "get_all_receptacles (void);";
-        }
+  if (!be_global->gen_lwccm ())
+    {
+      os_ << be_nl << be_nl
+          << "virtual ::Components::PublisherDescriptions *"
+          << be_nl
+          << "get_all_publishers (void);";
+
+      os_ << be_nl << be_nl
+          << "virtual ::Components::EmitterDescriptions *"
+          << be_nl
+          << "get_all_emitters (void);";
     }
 
   /// If the node is a connector, event sources and sinks cannot
   /// be declared.
   if (this->node_->node_type () == AST_Decl::NT_component)
     {
-      if (this->node_->has_publishes ())
+      if (this->node_->n_publishes () > 0UL)
         {
           os_ << be_nl << be_nl
               << "virtual ::Components::Cookie *" << be_nl
@@ -397,17 +413,9 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << "unsubscribe (const char * publisher_name,"
               << be_nl
               << "             ::Components::Cookie * ck);";
-
-          if (!be_global->gen_lwccm ())
-            {
-              os_ << be_nl << be_nl
-                  << "virtual ::Components::PublisherDescriptions *"
-                  << be_nl
-                  << "get_all_publishers (void);";
-            }
         }
 
-      if (this->node_->has_emits ())
+      if (this->node_->n_emits () > 0UL)
         {
           os_ << be_nl << be_nl
               << "virtual void" << be_nl
@@ -420,33 +428,15 @@ be_visitor_servant_svh::gen_non_type_specific (void)
               << "virtual ::Components::EventConsumerBase_ptr"
               << be_nl
               << "disconnect_consumer (const char * source_name);";
-
-          if (!be_global->gen_lwccm ())
-            {
-              os_ << be_nl << be_nl
-                  << "virtual ::Components::EmitterDescriptions *"
-                  << be_nl
-                  << "get_all_emitters (void);";
-            }
         }
     }
 
-  if (this->node_->has_provides ())
+  if (this->node_->n_provides () > 0UL)
     {
       os_ << be_nl << be_nl
-          << "// CIAO-specific." << be_nl
+          << "/// CIAO-specific." << be_nl
           << "::CORBA::Object_ptr" << be_nl
           << "get_facet_executor (const char * name);";
-    }
-
-  /// No need for this method if the component has neither
-  /// facets nor event sinks.
-  if (!be_global->gen_lwccm () && (this->node_->has_provides () || this->node_->has_consumes ()))
-    {
-      os_ << be_uidt_nl << be_nl
-          << "private:" << be_idt_nl
-          << "void" << be_nl
-          << "populate_port_tables (void);";
     }
 }
 

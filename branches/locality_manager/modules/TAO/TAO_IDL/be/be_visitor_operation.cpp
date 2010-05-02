@@ -73,11 +73,8 @@
 #include "be_visitor_operation/upcall_command_ss.cpp"
 
 // AMI
-#include "be_visitor_operation/ami_ch.cpp"
 #include "be_visitor_operation/ami_cs.cpp"
-#include "be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp"
-#include "be_visitor_operation/ami_exception_holder_operation_cs.cpp"
 
 // Smart proxy
 #include "be_visitor_operation/smart_proxy_ch.cpp"

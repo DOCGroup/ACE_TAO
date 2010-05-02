@@ -18,6 +18,7 @@
 
 #include "ast_mirror_port.h"
 #include "ast_uses.h"
+#include "ast_provides.h"
 #include "ast_attribute.h"
 
 #include "global_extern.h"
@@ -61,12 +62,14 @@ be_component::be_component (UTL_ScopedName *n,
                   n_supports_flat,
                   false,
                   false),
-    has_provides_ (false),
-    has_uses_ (false),
+    n_provides_ (0UL),
+    n_remote_provides_ (0UL),
+    n_uses_ (0UL),
+    n_remote_uses_ (0UL),
     has_uses_multiple_ (false),
-    has_publishes_ (false),
-    has_consumes_ (false),
-    has_emits_ (false),
+    n_publishes_ (0UL),
+    n_consumes_ (0UL),
+    n_emits_ (0UL),
     has_rw_attributes_ (false)
 {
   this->size_type (AST_Type::VARIABLE);
@@ -120,44 +123,56 @@ be_component::be_add_typedef (AST_Typedef *t)
   return this->fe_add_typedef (t);
 }
 
-bool
-be_component::has_provides (void)
+ACE_CDR::ULong
+be_component::n_provides (void) const
 {
-  return this->has_provides_;
+  return this->n_provides_;
+}
+
+ACE_CDR::ULong
+be_component::n_remote_provides (void) const
+{
+  return this->n_remote_provides_;
+}
+
+ACE_CDR::ULong
+be_component::n_uses (void) const
+{
+  return this->n_uses_;
+}
+
+ACE_CDR::ULong
+be_component::n_remote_uses (void) const
+{
+  return this->n_remote_uses_;
 }
 
 bool
-be_component::has_uses (void)
-{
-  return this->has_uses_;
-}
-
-bool
-be_component::has_uses_multiple (void)
+be_component::has_uses_multiple (void) const
 {
   return this->has_uses_multiple_;
 }
 
-bool
-be_component::has_publishes (void)
+ACE_CDR::ULong
+be_component::n_publishes (void) const
 {
-  return this->has_publishes_;
+  return this->n_publishes_;
+}
+
+ACE_CDR::ULong
+be_component::n_consumes (void) const
+{
+  return this->n_consumes_;
+}
+
+ACE_CDR::ULong
+be_component::n_emits (void) const
+{
+  return this->n_emits_;
 }
 
 bool
-be_component::has_consumes (void)
-{
-  return this->has_consumes_;
-}
-
-bool
-be_component::has_emits (void)
-{
-  return this->has_emits_;
-}
-
-bool
-be_component::has_rw_attributes (void)
+be_component::has_rw_attributes (void) const
 {
   return this->has_rw_attributes_;
 }
@@ -176,6 +191,7 @@ be_component::scan (UTL_Scope *s)
   AST_Extended_Port *ep = 0;
   AST_Mirror_Port *mp = 0;
   AST_Uses *u = 0;
+  AST_Provides *p = 0;
   AST_Attribute *a = 0;
 
   for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
@@ -187,10 +203,17 @@ be_component::scan (UTL_Scope *s)
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
-            this->has_provides_ = true;
+            ++this->n_provides_;
+            p = AST_Provides::narrow_from_decl (d);
+            
+            if (!p->provides_type ()->is_local ())
+              {
+                ++this->n_remote_provides_;
+              }
+              
             continue;
           case AST_Decl::NT_uses:
-            this->has_uses_ = true;
+            ++this->n_uses_;
             u = AST_Uses::narrow_from_decl (d);
             
             if (u->is_multiple ())
@@ -198,15 +221,20 @@ be_component::scan (UTL_Scope *s)
                 this->has_uses_multiple_ = true;
               }
               
+            if (!u->uses_type ()->is_local ())
+              {
+                ++this->n_remote_uses_;
+              }
+              
             continue;
           case AST_Decl::NT_publishes:
-            this->has_publishes_ = true;
+            ++this->n_publishes_;
             continue;
           case AST_Decl::NT_consumes:
-            this->has_consumes_ = true;
+            ++this->n_consumes_;
             continue;
           case AST_Decl::NT_emits:
-            this->has_emits_ = true;
+            ++this->n_emits_;
             continue;
           case AST_Decl::NT_ext_port:
             ep = AST_Extended_Port::narrow_from_decl (d);
@@ -250,10 +278,10 @@ be_component::mirror_scan (AST_PortType *p)
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
-            this->has_uses_ = true;
+            ++this->n_uses_;
             continue;
           case AST_Decl::NT_uses:
-            this->has_provides_ = true;
+            ++this->n_provides_;
             continue;
           default:
             continue;

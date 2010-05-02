@@ -86,10 +86,9 @@ protected:
   // Utility functions to create and destroy the various things
   // needed by operations generated from CCM-related declarations.
 
-  int lookup_cookie (be_component *node);
-  int lookup_exceptions (be_component *node);
-  int lookup_one_exception (be_component *node,
-                            const char *name,
+  int lookup_cookie (void);
+  int lookup_exceptions (void);
+  int lookup_one_exception (const char *name,
                             be_exception *&result);
 
   int create_event_consumer (be_eventtype *node);
@@ -106,11 +105,11 @@ protected:
   UTL_NameList *compute_inheritance (be_home *node);
   
 protected:
-  // These are created for operations implied by 'uses multiple' declarations.
+  /// These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
   be_valuetype *cookie_;
 
-  // Exceptions thrown by implied CCM operations.
+  /// Exceptions thrown by implied CCM operations.
   be_exception *already_connected_;
   be_exception *invalid_connection_;
   be_exception *no_connection_;
@@ -122,9 +121,15 @@ protected:
   be_exception *unknown_key_value_;
   be_exception *duplicate_key_value_;
   
-  // Working nodes.
+  /// Working nodes.
   be_component *comp_;
   be_home *home_;
+  
+  /// So we can look up Cookie and the CCM exceptions
+  /// once when the first component is seen (then we
+  /// know that Components.idl is included and the
+  /// lookups will succeed).
+  bool ccm_lookups_done_;
   
 private:                                  
   /// Generate a sendc_* receptacle for AMI4CCM.
