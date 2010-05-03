@@ -111,8 +111,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "::CORBA::Boolean operator<< (" << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const std:;vector<" << bt->full_name ()
-          << " &_tao_vector)"
+          << "const std::vector<" << bt->full_name ()
+          << "> &_tao_vector)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::ULong length = _tao_vector.size ();"
@@ -121,10 +121,10 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << "if (! strm << _tao_vector[i]" << be_idt_nl
+          << "if (! (strm << _tao_vector[i]))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "return true;" << be_uidt_nl
           << "}" << be_nl << be_nl;
@@ -151,7 +151,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "::CORBA::Boolean operator>> (" << be_idt_nl
           << "TAO_InputCDR &strm," << be_nl
           << "std::vector<" << bt->full_name ()
-          << " &_tao_vector)" << be_uidt_nl
+          << "> &_tao_vector)" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::ULong length = 0UL;" << be_nl
           << bt->full_name ();
@@ -162,10 +162,14 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
           
       *os << " tmp;" << be_nl << be_nl
+          << "if (! (strm >> length))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << "if (! strm >> tmp)" << be_idt_nl
+          << "if (! (strm >> tmp))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl

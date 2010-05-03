@@ -40,10 +40,10 @@ TAO::Out_Vector_SArgument_T<S,Insert_Policy>::Out_Vector_SArgument_T (void)
 
 template<typename S,
          class Insert_Policy>
-S *&
+S &
 TAO::Out_Vector_SArgument_T<S,Insert_Policy>::arg (void)
 {
-  return this->x_.out ();
+  return this->x_;
 }
 
 // ==========================================================================
@@ -58,10 +58,10 @@ TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::Ret_Vector_SArgument_T (void)
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S *&
+S &
 TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::arg (void)
 {
-  return this->x_.out ();
+  return this->x_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

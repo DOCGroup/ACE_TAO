@@ -18,11 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           rettype, 
-           "$Id$")
-
-
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return
 // type in an operation signature
@@ -136,24 +131,11 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_operation_rettype::visit_sequence (be_sequence *node)
 {
-  // We should never directly be here because anonymous
-  // sequence return types are not allowed.
-  if (be_global->alt_mapping ())
+  *os << "::" << this->type_name (node);
+  
+  if (!be_global->alt_mapping () || !node->unbounded ())
     {
-      /// Temporarily remove and store the context's 'alias'
-      /// member, if any, so we can work with the sequence's
-      /// element type, and restore the alias value when we're done.
-      be_typedef *td = this->ctx_->alias ();
-      this->ctx_->alias (0);
-      
-      *os << "std::vector<" << this->type_name (node->base_type ())
-          << ">";
-          
-      this->ctx_->alias (td);
-    }
-  else
-    {
-      *os << "::" << this->type_name (node) << " *";
+      *os << " *";
     }
 
   return 0;

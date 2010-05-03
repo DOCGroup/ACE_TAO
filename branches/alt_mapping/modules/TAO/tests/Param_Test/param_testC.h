@@ -521,41 +521,20 @@ public:
 #if !defined (_PARAM_TEST_PATHSPEC_CH_)
 #define _PARAM_TEST_PATHSPEC_CH_
   
-  class PathSpec;
-  
-  typedef
-    TAO_VarSeq_Var_T<
-        PathSpec
-      >
-    PathSpec_var;
-  
-  typedef
-    TAO_Seq_Out_T<
-        PathSpec
-      >
-    PathSpec_out;
-  
   class  PathSpec
     : public
-        TAO::unbounded_value_sequence<
-            Step
-          >
+        std::vector<Step>
   {
   public:
     PathSpec (void);
     PathSpec ( ::CORBA::ULong max);
-    PathSpec (
-      ::CORBA::ULong max,
-      ::CORBA::ULong length,
-      Step* buffer, 
-      ::CORBA::Boolean release = false);
     PathSpec (const PathSpec &);
     virtual ~PathSpec (void);
     
-    static void _tao_any_destructor (void *);
+    virtual ::CORBA::ULong length (void) const;
+    virtual void length (::CORBA::ULong);
     
-    typedef PathSpec_var _var_type;
-    typedef PathSpec_out _out_type;
+    static void _tao_any_destructor (void *);
   };
 
 #endif /* end #if !defined */
@@ -842,41 +821,20 @@ public:
 #if !defined (_PARAM_TEST_STRUCTSEQ_CH_)
 #define _PARAM_TEST_STRUCTSEQ_CH_
   
-  class StructSeq;
-  
-  typedef
-    TAO_FixedSeq_Var_T<
-        StructSeq
-      >
-    StructSeq_var;
-  
-  typedef
-    TAO_Seq_Out_T<
-        StructSeq
-      >
-    StructSeq_out;
-  
   class  StructSeq
     : public
-        TAO::unbounded_value_sequence<
-            Fixed_Struct
-          >
+        std::vector<Fixed_Struct>
   {
   public:
     StructSeq (void);
     StructSeq ( ::CORBA::ULong max);
-    StructSeq (
-      ::CORBA::ULong max,
-      ::CORBA::ULong length,
-      Fixed_Struct* buffer, 
-      ::CORBA::Boolean release = false);
     StructSeq (const StructSeq &);
     virtual ~StructSeq (void);
     
-    static void _tao_any_destructor (void *);
+    virtual ::CORBA::ULong length (void) const;
+    virtual void length (::CORBA::ULong);
     
-    typedef StructSeq_var _var_type;
-    typedef StructSeq_out _out_type;
+    static void _tao_any_destructor (void *);
   };
 
 #endif /* end #if !defined */
@@ -959,42 +917,20 @@ public:
 #if !defined (_PARAM_TEST_COFFEE_MIX_CH_)
 #define _PARAM_TEST_COFFEE_MIX_CH_
   
-  class Coffee_Mix;
-  
-  typedef
-    TAO_VarSeq_Var_T<
-        Coffee_Mix
-      >
-    Coffee_Mix_var;
-  
-  typedef
-    TAO_Seq_Out_T<
-        Coffee_Mix
-      >
-    Coffee_Mix_out;
-  
   class  Coffee_Mix
     : public
-        TAO::unbounded_object_reference_sequence<
-            Coffee,
-            Coffee_var
-          >
+        std::vector<Coffee>
   {
   public:
     Coffee_Mix (void);
     Coffee_Mix ( ::CORBA::ULong max);
-    Coffee_Mix (
-      ::CORBA::ULong max,
-      ::CORBA::ULong length,
-      Coffee_ptr* buffer, 
-      ::CORBA::Boolean release = false);
     Coffee_Mix (const Coffee_Mix &);
     virtual ~Coffee_Mix (void);
     
-    static void _tao_any_destructor (void *);
+    virtual ::CORBA::ULong length (void) const;
+    virtual void length (::CORBA::ULong);
     
-    typedef Coffee_Mix_var _var_type;
-    typedef Coffee_Mix_out _out_type;
+    static void _tao_any_destructor (void *);
   };
 
 #endif /* end #if !defined */
@@ -1406,43 +1342,20 @@ public:
 #if !defined (_PARAM_TEST_ARRAYSEQ_CH_)
 #define _PARAM_TEST_ARRAYSEQ_CH_
   
-  class ArraySeq;
-  
-  typedef
-    TAO_FixedSeq_Var_T<
-        ArraySeq
-      >
-    ArraySeq_var;
-  
-  typedef
-    TAO_Seq_Out_T<
-        ArraySeq
-      >
-    ArraySeq_out;
-  
   class  ArraySeq
     : public
-        TAO::unbounded_array_sequence<
-            Fixed_Array,
-            Fixed_Array_slice,
-            Fixed_Array_tag
-          >
+        std::vector<Fixed_Array>
   {
   public:
     ArraySeq (void);
     ArraySeq ( ::CORBA::ULong max);
-    ArraySeq (
-      ::CORBA::ULong max,
-      ::CORBA::ULong length,
-      Fixed_Array* buffer, 
-      ::CORBA::Boolean release = false);
     ArraySeq (const ArraySeq &);
     virtual ~ArraySeq (void);
     
-    static void _tao_any_destructor (void *);
+    virtual ::CORBA::ULong length (void) const;
+    virtual void length (::CORBA::ULong);
     
-    typedef ArraySeq_var _var_type;
-    typedef ArraySeq_out _out_type;
+    static void _tao_any_destructor (void *);
   };
 
 #endif /* end #if !defined */
@@ -2043,20 +1956,16 @@ public:
     
     class  _tao_seq_Param_Test_Recursive_Struct_
       : public
-          TAO::unbounded_value_sequence<
-              Param_Test::Recursive_Struct
-            >
+          std::vector<Param_Test::Recursive_Struct>
     {
     public:
       _tao_seq_Param_Test_Recursive_Struct_ (void);
       _tao_seq_Param_Test_Recursive_Struct_ ( ::CORBA::ULong max);
-      _tao_seq_Param_Test_Recursive_Struct_ (
-        ::CORBA::ULong max,
-        ::CORBA::ULong length,
-        Param_Test::Recursive_Struct* buffer, 
-        ::CORBA::Boolean release = false);
       _tao_seq_Param_Test_Recursive_Struct_ (const _tao_seq_Param_Test_Recursive_Struct_ &);
       virtual ~_tao_seq_Param_Test_Recursive_Struct_ (void);
+      
+      virtual ::CORBA::ULong length (void) const;
+      virtual void length (::CORBA::ULong);
     };
 
 #endif /* end #if !defined */
@@ -2135,20 +2044,16 @@ public:
     
     class  _tao_seq_Param_Test_nested_rec_union_
       : public
-          TAO::unbounded_value_sequence<
-              Param_Test::nested_rec_union
-            >
+          std::vector<Param_Test::nested_rec_union>
     {
     public:
       _tao_seq_Param_Test_nested_rec_union_ (void);
       _tao_seq_Param_Test_nested_rec_union_ ( ::CORBA::ULong max);
-      _tao_seq_Param_Test_nested_rec_union_ (
-        ::CORBA::ULong max,
-        ::CORBA::ULong length,
-        Param_Test::nested_rec_union* buffer, 
-        ::CORBA::Boolean release = false);
       _tao_seq_Param_Test_nested_rec_union_ (const _tao_seq_Param_Test_nested_rec_union_ &);
       virtual ~_tao_seq_Param_Test_nested_rec_union_ (void);
+      
+      virtual ::CORBA::ULong length (void) const;
+      virtual void length (::CORBA::ULong);
     };
 
 #endif /* end #if !defined */
@@ -2239,20 +2144,16 @@ public:
     
     class  _tao_seq_Param_Test_Recursive_Union_
       : public
-          TAO::unbounded_value_sequence<
-              Param_Test::Recursive_Union
-            >
+          std::vector<Param_Test::Recursive_Union>
     {
     public:
       _tao_seq_Param_Test_Recursive_Union_ (void);
       _tao_seq_Param_Test_Recursive_Union_ ( ::CORBA::ULong max);
-      _tao_seq_Param_Test_Recursive_Union_ (
-        ::CORBA::ULong max,
-        ::CORBA::ULong length,
-        Param_Test::Recursive_Union* buffer, 
-        ::CORBA::Boolean release = false);
       _tao_seq_Param_Test_Recursive_Union_ (const _tao_seq_Param_Test_Recursive_Union_ &);
       virtual ~_tao_seq_Param_Test_Recursive_Union_ (void);
+      
+      virtual ::CORBA::ULong length (void) const;
+      virtual void length (::CORBA::ULong);
     };
 
 #endif /* end #if !defined */

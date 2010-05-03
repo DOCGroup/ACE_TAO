@@ -517,7 +517,7 @@ operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
 }
 
 ACE_INLINE void
-operator <<= (CORBA::Any &any, std::string & str)
+operator <<= (CORBA::Any &any, const std::string & str)
 {
   any <<= str.c_str ();
 }

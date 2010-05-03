@@ -449,20 +449,6 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
       alias = AST_Typedef::narrow_from_decl (bt);
-      
-      AST_Type *pbt = alias->primitive_base_type ();
-      
-      if (pbt->node_type () == AST_Decl::NT_sequence)
-        {
-          AST_Sequence *seq =
-            AST_Sequence::narrow_from_decl (pbt);
-            
-          AST_Type *elem_type = seq->base_type ();
-          
-          *os << "std::vector<" << elem_type->name () << ">";
-          
-          return;
-        }
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();

@@ -629,25 +629,19 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
                        guard_suffix.c_str (),
                        false);
                        
-  bool bounded = (node->max_size ()->ev ()->u.ulval != 0);
-  UTL_ScopedName *sn =
-    (bounded ? alias->name () : bt->name ());
+  bool use_vec = (node->unbounded () && be_global->alt_mapping ());
+  UTL_ScopedName *sn = alias->name ();
   
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class "
-      << this->S_ << "Arg_Traits<"
-      << (bounded ? "" : "std::vector<") << sn
-      << (bounded ? "" : "> ") << ">" << be_idt_nl
+      << "class " << this->S_ << "Arg_Traits<" << sn << ">"
+      << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << (bounded ? "Var_Size_" : "Vector_")
+      << (use_vec ? "Vector_" : "Var_Size_")
       << this->S_ << "Arg_Traits_T<"
       << be_idt << be_idt_nl
-      << (bounded ? "" : "std::vector<") << sn
-      << (bounded ? "" : ">") << "," << be_nl
-      << this->insert_policy () << "<"
-      << (bounded ? "" : "std::vector<") << sn
-      << (bounded ? "" : "> ") << ">" << be_uidt_nl
+      << sn << "," << be_nl
+      << this->insert_policy () << "<" << sn << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";

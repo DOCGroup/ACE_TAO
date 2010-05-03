@@ -73,10 +73,7 @@ template<typename S,
 CORBA::Boolean
 TAO::Out_Vector_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  if (0 == this->x_.ptr())
-    throw ::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE);
-
-  return cdr << this->x_.in ();
+  return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -87,7 +84,7 @@ void
 TAO::Out_Vector_SArgument_T<S,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy::any_insert (any, this->x_.in ());
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -99,7 +96,7 @@ template<typename S,
 CORBA::Boolean
 TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  return cdr << this->x_.in ();
+  return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -110,7 +107,7 @@ void
 TAO::Ret_Vector_SArgument_T<S,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy::any_insert (any, this->x_.in ());
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

@@ -80,7 +80,7 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::Ret_Vector_Argument_T (void)
 template<typename S,
          class Insert_Policy>
 ACE_INLINE
-S
+S &
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::arg (void)
 {
   return this->x_;
