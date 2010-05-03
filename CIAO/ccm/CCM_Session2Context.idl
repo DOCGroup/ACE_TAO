@@ -5,6 +5,7 @@
 #define CCM_SESSION2CONTEXT_IDL
 
 #include "ccm/CCM_CCM2Context.idl"
+#include "ccm/CCM_SessionContext.idl"
 
 // *************** Extended Container Interfaces ***************
 
