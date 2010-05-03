@@ -1,36 +1,16 @@
 // $Id$
 
 // ============================================================================
-// This version of Param_Test has been modified to use std::string for
-// the test_unbounded_string operation, and std::vector for the
-// test_long_sequence operation. Since modifications were done to generated
-// code, Param_TestC.h, Param_TestC.cpp, Param_TestS.h, and Param_TestS.cpp
-// have been added to the repository in this branch, for the time being until
-// the branch is merged or until a dedicated test/example is created.
 //
-// Each data type tested in Param_Test has its own class that plugs into the
-// test framework. In this version, the classes in ub_string.{h,cpp} and
-// ub_long_sequence.{h,cpp} have also been modified to use the respective
-// STL types. These classes handle the nuts and bolts of a particular test -
-// initializing and resetting the argument values, and validating the
-// results. In this way, a single driver can run any or all of the tests.
-// To test the modified data types, use the options '-t ubstring' or
-// '-t ub_long_sequence'. All other options work as usual.
+// = LIBRARY
+//    TAO/tests/Param_Test
 //
-// Alternate versions of the CDR insertion and extraction operators were
-// added, and the appropriate Arg_Traits<> declarations made at the top
-// of Param_TestC.cpp. The arg traits specializations are then used in
-// the stub code, which is not otherwise modified at all.
-// Since the arg traits template classes (in the ORB) are also parameterized
-// with an Any insert policy (for interceptors), dummy Any insertion and
-// extraction operators had to be added for the std::* types as well.
-// Since these operators are currently no-ops, the DII tests of the
-// data types in question have been disabled.
+// = FILENAME
+//    README
 //
-// One final note, the MPC file for this test has been modified to remove
-// the IDL processing step, since the generated stub files have been
-// modified by hand. Since these generated files have been added to the
-// repository, the test will build normally.
+// = AUTHOR
+//    Aniruddha Gokhale
+//
 // ============================================================================
 
 This directory contains an application that tests all the parameter

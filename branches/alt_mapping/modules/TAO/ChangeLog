@@ -1,3 +1,34 @@
+Mon May  3 22:21:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/param_testC.cpp:
+        * tests/Param_Test/param_testS.cpp:
+        * tests/Param_Test/param_testC.h:
+        * tests/Param_Test/param_testS.h:
+        * tests/Param_Test/param_testC.inl:
+        * tests/Param_Test/param_testS.inl:
+
+          Removed these from the repository in this
+          branch, all hand-crafted hacks have been
+          removed.
+
+        * tests/Param_Test/ub_string.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_long_seq.h:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/README:
+        * tests/Param_Test/ub_long_seq.cpp:
+
+          Restored these files to head version, the
+          STL support is now covered in its own test.
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Fixed bug in code generation for unbounded
+          strings, in the logic to decide when to use
+          "std::string" and when not to.
+
 Mon May  3 21:39:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/driver.h:

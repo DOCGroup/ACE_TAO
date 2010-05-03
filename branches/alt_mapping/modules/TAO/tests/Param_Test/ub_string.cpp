@@ -19,19 +19,35 @@
 #include "helper.h"
 #include "ub_string.h"
 
+ACE_RCSID (Param_Test,
+           ub_string,
+           "$Id$")
+
 // ************************************************************************
 //               Test_Unbounded_String
 // ************************************************************************
 
 Test_Unbounded_String::Test_Unbounded_String (void)
-  : opname_ (CORBA::string_dup ("test_unbounded_string"))
+  : opname_ (CORBA::string_dup ("test_unbounded_string")),
+    in_ (0),
+    inout_ (0),
+    out_ (0),
+    ret_ (0)
 {
 }
 
 Test_Unbounded_String::~Test_Unbounded_String (void)
 {
   CORBA::string_free (this->opname_);
+  CORBA::string_free (this->in_);
+  CORBA::string_free (this->inout_);
+  CORBA::string_free (this->out_);
+  CORBA::string_free (this->ret_);
   this->opname_ = 0;
+  this->in_ = 0;
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
 }
 
 const char *
@@ -41,9 +57,8 @@ Test_Unbounded_String::opname (void) const
 }
 
 void
-Test_Unbounded_String::dii_req_invoke (CORBA::Request * /* req */)
+Test_Unbounded_String::dii_req_invoke (CORBA::Request *req)
 {
-/*
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
   req->add_out_arg ("s3") <<= this->out_;
@@ -68,7 +83,6 @@ Test_Unbounded_String::dii_req_invoke (CORBA::Request * /* req */)
     req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = CORBA::string_dup (tmp);
-*/
 }
 
 int
@@ -76,19 +90,34 @@ Test_Unbounded_String::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
+
+  // release any previously occupied values
+  CORBA::string_free (this->in_);
+  CORBA::string_free (this->inout_);
+  CORBA::string_free (this->out_);
+  CORBA::string_free (this->ret_);
+  this->in_ = 0;
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
+
   this->in_ = gen->gen_string ();
-  this->inout_ = this->in_.c_str ();
-  
+  this->inout_ = CORBA::string_dup (this->in_);
   return 0;
 }
 
 int
 Test_Unbounded_String::reset_parameters (void)
 {
-  this->inout_ = this->in_.c_str ();
-  this->out_.clear ();
-  this->ret_.clear ();
-  
+  // release any previously occupied values
+  CORBA::string_free (this->inout_);
+  CORBA::string_free (this->out_);
+  CORBA::string_free (this->ret_);
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
+
+  this->inout_ = CORBA::string_dup (this->in_);
   return 0;
 }
 
@@ -97,33 +126,35 @@ Test_Unbounded_String::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
+      CORBA::String_out str_out (this->out_);
+
       this->ret_ = objref->test_unbounded_string (this->in_,
                                                   this->inout_,
-                                                  this->out_);//str_out);
+                                                  str_out);
 
       return 0;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Unbounded_String::run_sii_test\n");
+
     }
-    
   return -1;
 }
 
 CORBA::Boolean
 Test_Unbounded_String::check_validity (void)
 {
-  CORBA::ULong len = this->in_.length ();
+  CORBA::ULong len = ACE_OS::strlen (this->in_);
 
-  std::string first_half = this->inout_.substr (0, len);
-  std::string second_half = this->inout_.substr (len, len);
-  
-  return (this->in_ == this->out_
-          && this->in_ == this->ret_
-          && this->inout_.length () == 2 * len
-          && this->in_ == first_half
-          && this->in_ == second_half);
+  if (!ACE_OS::strcmp (this->in_, this->out_) &&
+      !ACE_OS::strcmp (this->in_, this->ret_) &&
+      ACE_OS::strlen (this->inout_) == 2*len &&
+      !ACE_OS::strncmp (this->in_, this->inout_, len) &&
+      !ACE_OS::strncmp (this->in_, &this->inout_[len], len))
+    return 1;
+
+  return 0; // otherwise
 }
 
 CORBA::Boolean
@@ -144,12 +175,12 @@ Test_Unbounded_String::print_values (void)
               "out with len (%d) = %s\n"
               "ret with len (%d) = %s\n"
               "\n=*=*=*=*=*=*\n",
-              this->in_.length (),
-              this->in_.c_str (),
-              this->inout_.length (),
-              this->inout_.c_str (),
-              this->out_.length (),
-              this->out_.c_str (),
-              this->ret_.length (),
-              this->ret_.c_str ()));
+              (this->in_ ? ACE_OS::strlen (this->in_):0),
+              (this->in_ ? this->in_:"<nul string>"),
+              (this->inout_ ? ACE_OS::strlen (this->inout_):0),
+              (this->inout_ ? this->inout_:"<nul string>"),
+              (this->out_ ? ACE_OS::strlen (this->out_):0),
+              (this->out_ ? this->out_:"<nul string>"),
+              (this->ret_ ? ACE_OS::strlen (this->ret_):0),
+              (this->ret_ ? this->ret_:"<nul string>")));
 }

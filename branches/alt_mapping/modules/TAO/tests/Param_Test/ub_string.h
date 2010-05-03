@@ -60,11 +60,18 @@ public:
 private:
   char *opname_;
   // operation name
-  
-  std::string in_;
-  std::string inout_;
-  std::string out_;
-  std::string ret_;
+
+  char *in_;
+  // in parameter
+
+  char *inout_;
+  // inout parameter
+
+  char *out_;
+  // out parameter
+
+  char *ret_;
+  // return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_STRING_H */

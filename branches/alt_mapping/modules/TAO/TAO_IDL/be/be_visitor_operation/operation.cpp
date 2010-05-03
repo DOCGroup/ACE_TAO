@@ -533,7 +533,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // in case it is a sequence or array.
   if (nt == AST_Decl::NT_string && bound == 0)
     {
-      if (ACE_OS::strcmp (this->ctx_->node ()->local_name ()->get_string (), "test_unbounded_string") == 0)
+      if (be_global->alt_mapping ())
         {
           *os << "std::string";
         }
