@@ -26,7 +26,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   // FOO methods
   void
   MyFoo_callback_exec_i::var_outs (
-  const char * answer, CORBA::Double d_cmd, CORBA::Long l_cmd )
+  const char * /*answer*/, CORBA::Double d_cmd, CORBA::Long l_cmd )
   {
     if (d_cmd != 3.14)
       {
@@ -68,7 +68,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                               "received the wrong struct, "
                               "expected key 'aaa', x = 10,"
                               " received key '%C' , x = %u\n",
-                              test_topic.key,test_topic.x));
+                              test_topic.key.in(),test_topic.x));
         error = true;
       }
     if (( ACE_OS::strcmp (topic_str.key,"bbb") != 0) ||
@@ -78,7 +78,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                               "received the wrong struct, "
                               "expected key 'bbb', x = 'ccc',"
                               " received key '%C' , x = %C\n",
-                              topic_str.key ,topic_str.x_str));
+                              topic_str.key.in() ,topic_str.x_str.in()));
         error = true;
       }
     if (( ACE_OS::strcmp (topic_arr.key,"ddd") != 0) ||
@@ -88,7 +88,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                               "received the wrong struct, "
                               "expected key 'ddd', second elem 100 ,"
                               " received key '%C', second elem %u\n",
-                              topic_arr.key, topic_arr.x_array[1]));
+                              topic_arr.key.in(), topic_arr.x_array[1]));
         error = true;
       }
     if (error == false)
@@ -127,7 +127,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                               "received the wrong sequence, "
                               "expected key 'fff', x = 12,"
                               " received key '%C' , x = %u\n",
-                              seq[0].x_teststr,seq[0].x_test));
+                              seq[0].x_teststr.in(),seq[0].x_test));
         error = true;
       }
     if (error == false)

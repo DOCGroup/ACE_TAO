@@ -15,7 +15,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_outs (const char * in_str,  
+  MyFoo_exec_i::var_outs (const char * /*in_str*/,  
                           ::CORBA::String_out answer,
                           ::CORBA::Double_out d_cmd,
                           ::CORBA::Long_out l_cmd)

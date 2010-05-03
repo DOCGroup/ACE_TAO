@@ -35,7 +35,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   }
 
   void
-  MyFoo_exec_i::var_ins (const char * in_str,  
+  MyFoo_exec_i::var_ins (const char * /*in_str*/,  
                          ::CORBA::String_out answer,
                          ::CORBA::Double cmd)
   {
@@ -67,7 +67,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong struct, "
                               "expected key 'aaa', x = 10,"
                               " received key '%C' , x = %u\n",
-                              test_topic.key,test_topic.x));
+                              test_topic.key.in(),test_topic.x));
         error = true;
       }
     if ((ACE_OS::strcmp (topic_str.key, "bbb") != 0) ||
@@ -77,7 +77,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong struct, "
                               "expected key 'bbb', x = 'ccc',"
                               " received key '%C' , x = %C\n",
-                              topic_str.key ,topic_str.x_str));
+                              topic_str.key.in() ,topic_str.x_str.in()));
         error = true;
       }
     if ((ACE_OS::strcmp (topic_arr.key, "ddd") != 0) ||
@@ -87,7 +87,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong struct, "
                               "expected key 'ddd', elem 11"
                               " received key '%C', elem %u\n",
-                              topic_arr.key,topic_arr.x_array[0] ));
+                              topic_arr.key.in(),topic_arr.x_array[0] ));
         error = true;
       }
     answer = CORBA::string_dup ("This is my answer from var_div_ins");
@@ -110,7 +110,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong struct, "
                               "expected key 'eee', x = 11,"
                               " received key '%C' , x = %u\n",
-                              topic_union.key,topic_union.x_uni.x_long()));
+                              topic_union.key.in(),topic_union.x_uni.x_long()));
         error = true;
       }
     if ((ACE_OS::strcmp (seq[0].x_teststr, "fff") != 0)||
@@ -120,7 +120,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               "received the wrong struct, "
                               "expected key 'fff', x = 10,"
                               " received key '%C' , x = %u\n",
-                              seq[0].x_teststr,seq[0].x_test));
+                              seq[0].x_teststr.in(),seq[0].x_test));
         error = true;
       }
     answer = CORBA::string_dup ("This is my answer from var_div2_ins");
