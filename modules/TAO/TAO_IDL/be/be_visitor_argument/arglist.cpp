@@ -297,44 +297,25 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (be_global->alt_mapping ())
+  switch (this->direction ())
     {
-      /// Temporarily remove and store the context's 'alias'
-      /// member, if any, so we can work with the sequence's
-      /// element type, and restore the alias value when we're done.
-      be_typedef *td = this->ctx_->alias ();
-      this->ctx_->alias (0);
-    
-      const char *elem_name =
-        this->type_name (node->base_type ());
-
-      switch (this->direction ())
+    case AST_Argument::dir_IN:
+      *os << "const " << this->type_name (node) << " &";
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << " &";
+      break;
+    case AST_Argument::dir_OUT:
+      if (be_global->alt_mapping () && node->unbounded ())
         {
-        case AST_Argument::dir_IN:
-          *os << "const std::vector<" << elem_name << "> &";
-          break;
-        case AST_Argument::dir_INOUT:
-        case AST_Argument::dir_OUT:
-          *os << "std::vector<" << elem_name << "> &";
-          break;
+          *os << this->type_name (node) << " &";
+        }
+      else
+        {
+          *os << this->type_name (node, "_out");
         }
         
-      this->ctx_->alias (td);
-    }
-  else
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          *os << "const " << this->type_name (node) << " &";
-          break;
-        case AST_Argument::dir_INOUT:
-          *os << this->type_name (node) << " &";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << this->type_name (node, "_out");
-          break;
-        }
+      break;
     }
 
   return 0;

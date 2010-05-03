@@ -2889,6 +2889,12 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
     );
 
   this->gen_cond_file_include (
+      idl_global->seq_seen_ && be_global->alt_mapping (),
+      "tao/PortableServer/Vector_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
       idl_global->any_arg_seen_,
       "tao/PortableServer/Any_SArg_Traits.h",
       stream

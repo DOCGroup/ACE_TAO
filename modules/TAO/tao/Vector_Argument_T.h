@@ -137,13 +137,13 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S arg (void);
+    S & arg (void);
 
     S excp (void);
     S retn (void);
 
   protected:
-    typename S x_;
+    S x_;
   };
 
   /**

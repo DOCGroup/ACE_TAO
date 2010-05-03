@@ -36,7 +36,6 @@ namespace TAO
   class In_Vector_SArgument_T : public InArgument
   {
   public:
-
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
@@ -90,10 +89,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    S & arg (void);
 
   private:
-    typename S::_var_type x_;
+    S x_;
   };
 
   /**
@@ -114,10 +113,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    S & arg (void);
 
   private:
-    typename S::_var_type x_;
+    S x_;
   };
 
   /**
