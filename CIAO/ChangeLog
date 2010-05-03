@@ -1,3 +1,8 @@
+Mon May  3 06:18:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Home.idl:
+          Disabled a few exceptions with LwCCM
+
 Thu Apr 29 14:27:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Display/descriptors/run_test_without_ns.pl:
