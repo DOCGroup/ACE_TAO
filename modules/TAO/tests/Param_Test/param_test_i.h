@@ -67,9 +67,9 @@ public:
                                            CORBA::ULongLong_out s3);
   // test for unsigned long long
 
-  virtual std::string test_unbounded_string (const std::string s1,
-                                             std::string &s2,
-                                             std::string &s3);
+  virtual char *test_unbounded_string (const char *s1,
+                                       char *&s2,
+                                       CORBA::String_out s3);
   // test for unbounded strings
 
   virtual char *test_bounded_string (const char *s1,
@@ -94,81 +94,66 @@ public:
   // test for fixed structures
 
   // = Start of sequences tests...
-  virtual std::vector<CORBA::Long> test_long_sequence (
-      const std::vector<CORBA::Long> & s1,
-      std::vector<CORBA::Long> & s2,
-      std::vector<CORBA::Long> & s3);
-      
+  virtual CORBA::LongSeq * test_long_sequence (
+      const CORBA::LongSeq & s1,
+      CORBA::LongSeq & s2,
+      CORBA::LongSeq_out s3);
   virtual Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
       const Param_Test::Bounded_Long_Seq & s1,
       Param_Test::Bounded_Long_Seq & s2,
       Param_Test::Bounded_Long_Seq_out s3);
-      
   virtual CORBA::ShortSeq * test_short_sequence (
       const CORBA::ShortSeq & s1,
       CORBA::ShortSeq & s2,
       CORBA::ShortSeq_out s3);
-      
   virtual Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
           const Param_Test::Bounded_Short_Seq & s1,
       Param_Test::Bounded_Short_Seq & s2,
       Param_Test::Bounded_Short_Seq_out s3);
-      
   virtual CORBA::StringSeq * test_strseq (
       const CORBA::StringSeq & s1,
       CORBA::StringSeq & s2,
       CORBA::StringSeq_out s3);
-      
   virtual Param_Test::Bounded_StrSeq * test_bounded_strseq (
       const Param_Test::Bounded_StrSeq & s1,
       Param_Test::Bounded_StrSeq & s2,
       Param_Test::Bounded_StrSeq_out s3);
-      
   virtual CORBA::WStringSeq * test_wstrseq (
       const CORBA::WStringSeq & ws1,
       CORBA::WStringSeq & ws2,
       CORBA::WStringSeq_out ws3);
-      
   virtual Param_Test::Bounded_WStrSeq * test_bounded_wstrseq (
       const Param_Test::Bounded_WStrSeq & ws1,
       Param_Test::Bounded_WStrSeq & ws2,
       Param_Test::Bounded_WStrSeq_out ws3);
-      
   virtual Param_Test::StructSeq * test_struct_sequence (
       const Param_Test::StructSeq & s1,
       Param_Test::StructSeq & s2,
       Param_Test::StructSeq_out s3);
-      
-  virtual std::vector<Param_Test::Step> test_unbounded_struct_sequence (
-      const std::vector<Param_Test::Step> & s1,
-      std::vector<Param_Test::Step> & s2,
-      std::vector<Param_Test::Step> s3);
-      
+  virtual Param_Test::PathSpec * test_unbounded_struct_sequence (
+      const Param_Test::PathSpec & s1,
+      Param_Test::PathSpec & s2,
+      Param_Test::PathSpec_out s3);
   virtual Param_Test::Bounded_StructSeq * test_bounded_struct_sequence (
       const Param_Test::Bounded_StructSeq & s1,
       Param_Test::Bounded_StructSeq & s2,
       Param_Test::Bounded_StructSeq_out s3);
-      
   virtual Param_Test::ArraySeq * test_array_sequence (
       const Param_Test::ArraySeq & s1,
       Param_Test::ArraySeq & s2,
       Param_Test::ArraySeq_out s3);
-      
   virtual Param_Test::Bounded_ArraySeq * test_bounded_array_sequence (
       const Param_Test::Bounded_ArraySeq & s1,
       Param_Test::Bounded_ArraySeq & s2,
       Param_Test::Bounded_ArraySeq_out s3);
-      
   virtual Param_Test::Coffee_Mix * test_coffe_mix (
       const Param_Test::Coffee_Mix & s1,
       Param_Test::Coffee_Mix & s2,
       Param_Test::Coffee_Mix_out s3);
-      
   virtual Param_Test::Bounded_Coffee_Mix * test_bounded_coffe_mix (
       const Param_Test::Bounded_Coffee_Mix & s1,
       Param_Test::Bounded_Coffee_Mix & s2,
       Param_Test::Bounded_Coffee_Mix_out s3);
-      
   virtual CORBA::AnySeq * test_anyseq (
           const CORBA::AnySeq & s1,
           CORBA::AnySeq & s2,
