@@ -1,3 +1,18 @@
+Tue May  4 07:03:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/Coherent_Changes_Guard.cpp:
+        * connectors/dds4ccm/impl/dds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/dds/Updater_T.cpp:
+          Layout changes, removed some reinterpret_casts that where not needed
+
 Tue May  4 06:25:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ccm/CCM_Session2Context.idl:

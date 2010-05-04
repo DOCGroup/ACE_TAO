@@ -72,9 +72,10 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::on_data_available_i - "
-                                             "Failed to retrieve pointer to proxy from "
-                                             "DDSDataReader.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR,
+                         ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                         ACE_TEXT ("Failed to retrieve pointer to proxy from ")
+                         ACE_TEXT ("DDSDataReader.\n")));
       return;
     }
 

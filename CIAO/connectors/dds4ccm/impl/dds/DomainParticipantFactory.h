@@ -47,26 +47,26 @@ namespace CIAO
       virtual ::DDS::DomainParticipantFactory_ptr get_instance (void);
 #endif
 
-      virtual
-        ::DDS::DomainParticipant_ptr create_participant (::DDS::DomainId_t domain_id,
-                                                         const ::DDS::DomainParticipantQos & qos,
-                                                         ::DDS::DomainParticipantListener_ptr a_listener,
-                                                         ::DDS::StatusMask mask);
+      virtual ::DDS::DomainParticipant_ptr create_participant (
+          ::DDS::DomainId_t domain_id,
+          const ::DDS::DomainParticipantQos & qos,
+          ::DDS::DomainParticipantListener_ptr a_listener,
+          ::DDS::StatusMask mask);
 
 #if (CIAO_DDS4CCM_NDDS==1)
-      virtual
-        ::DDS::DomainParticipant_ptr create_participant_with_profile (::DDS::DomainId_t domain_id,
-                                                        const char * library_name,
-                                                        const char * profile_name,
-                                                         ::DDS::DomainParticipantListener_ptr a_listener,
-                                                         ::DDS::StatusMask mask);
+      virtual ::DDS::DomainParticipant_ptr create_participant_with_profile (
+          ::DDS::DomainId_t domain_id,
+          const char * library_name,
+          const char * profile_name,
+          ::DDS::DomainParticipantListener_ptr a_listener,
+          ::DDS::StatusMask mask);
 #endif
 
-      virtual
-        ::DDS::ReturnCode_t delete_participant (::DDS::DomainParticipant_ptr a_participant);
+      virtual ::DDS::ReturnCode_t delete_participant (
+        ::DDS::DomainParticipant_ptr a_participant);
 
-      virtual
-        ::DDS::DomainParticipant_ptr lookup_participant (::DDS::DomainId_t domain_id);
+      virtual ::DDS::DomainParticipant_ptr lookup_participant (
+        ::DDS::DomainId_t domain_id);
 
       virtual
         ::DDS::ReturnCode_t set_default_participant_qos (const ::DDS::DomainParticipantQos & qos);
