@@ -1,3 +1,25 @@
+Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Stream.cpp
+	  Added debug and warning logging in ACE_Stream::remove
+
+	* ace/Service_Types.cpp
+	  One of problems is that ACE_Module_Type::name gets its
+	  value from the svc.conf file. The ACE_Module that it references
+	  gets its name from the static factory method used to create the
+	  module. When the names don't match the call to ACE_Stream_Type::fini
+	  fails to remove any ACE_Modules from the underlying ACE_Stream.
+	  Since none of the ACE_Modules are removed, ACE_Module_Type::fini
+	  tries to call fini on the ACE_Module reader and writer ACE_Task
+	  instances. And they've already been deleted by ACE_Stream::close
+	  called from ACE_Stream_Type::fini.
+
+          Reassigned ACE_Module::name in ACE_Module_Type::init to
+	  ACE_Module_Type::name and fixed the SEGV at shutdown because of the
+	  issue described above.
+	
+          All of these issues are related: #3334 #3205 #2916 #3847
+
 Thu Apr 29 03:34:56 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
 
         * ace/Stack_Trace.cpp: Clarified origins of platform-specific
