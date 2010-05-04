@@ -16,6 +16,13 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     be_operation *node
   )
 {
+  /// These implied IDL operations are not to be processed on
+  /// the skeleton side.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+    
   TAO_OutStream *os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,

@@ -1,3 +1,21 @@
+Tue May  4 16:23:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Fixed several cases where sendc_* operations needed to be
+          skipped on the skeleton side.
+          
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Added empty inline and header file blocks on some projects
+          for easier reading in graphic developement environments.
+
 Tue May  4 12:24:49 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp
