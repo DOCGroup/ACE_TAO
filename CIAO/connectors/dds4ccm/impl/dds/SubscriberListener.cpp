@@ -41,7 +41,7 @@ namespace CIAO
       the_subscriber->notify_datareaders ();
     }
 
-    ::DDS::DataReader_ptr
+    ::DDS::CCM_DataReader_ptr
     CCM_DDS_SubscriberListener_i::get_datareader_proxy (
       ::DDSDataReader * the_reader)
     {
@@ -56,7 +56,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
                                               "Unable to retrieve proxy from PropertyQosProfile\n"));
-          return ::DDS::DataReader::_nil ();
+          return ::DDS::CCM_DataReader::_nil ();
         }
       ::DDS::CCM_DataReader_ptr reader =
         reinterpret_cast < ::DDS::CCM_DataReader_ptr >
