@@ -126,8 +126,8 @@ namespace CIAO_InterInArgsT_Sender_Impl
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-    ::InterInArgsT::AMI_MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::InterInArgsT::AMI_MyFoo::_duplicate (my_foo_ami))
+    ::InterInArgsT::AMI4CCM_MyFoo_ptr my_foo_ami)
+  : my_foo_ami_ (::InterInArgsT::AMI4CCM_MyFoo::_duplicate (my_foo_ami))
   {
   }
 
@@ -256,7 +256,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::InterInArgsT::AMI_MyFoo_var asynch_foo =
+    ::InterInArgsT::AMI4CCM_MyFoo_var asynch_foo =
       this->context_->get_connection_sendc_run_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
