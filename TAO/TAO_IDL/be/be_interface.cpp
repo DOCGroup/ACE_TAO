@@ -2483,10 +2483,17 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
     {
       // Get the next AST decl node
       d = si.item ();
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_op)
+      if (nt == AST_Decl::NT_op)
         {
           op = be_operation::narrow_from_decl (d);
+          
+          /// Skip these on the skeleton side.
+          if (op->is_sendc_ami ())
+            {
+              continue;
+            }
 
           if (be_global->gen_direct_collocation ())
             {
@@ -2499,7 +2506,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                                                       os);
             }
         }
-      else if (d->node_type () == AST_Decl::NT_attr)
+      else if (nt == AST_Decl::NT_attr)
         {
           AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 

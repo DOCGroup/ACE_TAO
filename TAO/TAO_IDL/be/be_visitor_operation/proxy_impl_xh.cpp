@@ -13,6 +13,13 @@ be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh (void)
 
 int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
 {
+  /// These implied IDL operations are not to be processed on
+  /// the skeleton side.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+    
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
