@@ -117,7 +117,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << "public:" << be_idt_nl
       << iface_name << suffix << " (" << be_idt_nl
       << "::" << scope_name << "::" << iface_name
-      << "Callback_ptr callback);" << be_uidt_nl << be_nl
+      << "ReplyHandler_ptr callback);" << be_uidt_nl << be_nl
       << "virtual ~" << iface_name << suffix << " (void);";
 
   /// The reply handler class we are generating inherits from the
@@ -159,7 +159,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << scope_name << "::" << iface_name
-      << "Callback_var callback_;" << be_uidt_nl
+      << "ReplyHandler_var callback_;" << be_uidt_nl
       << "};";
 
   return 0;

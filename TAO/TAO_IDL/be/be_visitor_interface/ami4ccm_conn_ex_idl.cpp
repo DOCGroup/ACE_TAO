@@ -33,8 +33,8 @@ be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   os_ << be_nl << be_nl
-      << "module CCM_AMI::Connector_T<" << oln << ", AMI_"
-      << oln << "> AMI_" << oln << "_Connector;";
+      << "module CCM_AMI::Connector_T<" << oln << ", AMI4CCM_"
+      << oln << "> AMI4CCM_" << oln << "_Connector;";
 
   return 0;
 }

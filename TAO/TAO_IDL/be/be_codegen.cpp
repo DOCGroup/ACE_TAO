@@ -1448,7 +1448,8 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
 
   int status =
     this->ciao_ami_conn_idl_->open (fname,
-                                    TAO_OutStream::CIAO_AMI_CONN_IDL);
+                                    TAO_OutStream::CIAO_AMI4CCM_CONN_IDL);
+ //                                   TAO_OutStream::CIAO_AMI_CONN_IDL);
 
   if (status == -1)
     {
