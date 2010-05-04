@@ -79,7 +79,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
   DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
               ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
-              ACE_TEXT ("last instance handle <length <%d> - isValid <%d>\n"),
+              ACE_TEXT ("last instance handle length <%d> - isValid <%d>\n"),
               status.total_count, status.total_count_change,
               status.last_instance_handle.length,
               status.last_instance_handle.isValid));
@@ -204,7 +204,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
               ACE_TEXT ("PublisherListener_T::on_publication_matched: ")
               ACE_TEXT ("total count <%d> - count change <%d> - ")
               ACE_TEXT ("current count <%d> - current count change <%d> ")
-              ACE_TEXT ("last publication handle <length <%d> - isValid <%d>\n"),
+              ACE_TEXT ("last publication handle length <%d> - isValid <%d>\n"),
               status.total_count, status.total_count_change,
               status.current_count, status.current_count_change,
               status.last_subscription_handle.length,
@@ -260,7 +260,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
               ACE_TEXT ("PublisherListener_T::on_reliable_reader_activity_changed: ")
               ACE_TEXT ("active count <%d> - active change <%d> - ")
               ACE_TEXT ("not active count <%d> - inactive count change <%d>")
-              ACE_TEXT ("last instance handle <length <%d> - isValid <%d>\n"),
+              ACE_TEXT ("last instance handle length <%d> - isValid <%d>\n"),
               status.active_count, status.active_count_change,
               status.inactive_count, status.inactive_count_change,
               status.last_instance_handle.length,

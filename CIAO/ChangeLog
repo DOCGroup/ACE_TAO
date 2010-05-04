@@ -1,3 +1,19 @@
+Tue May  4 18:16:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+          Fixed layout of debug message
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.h:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener.h:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.h:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.cpp:
+          Let the proxy methods return DDS::CCM_* pointers
+
 Tue May  4 12:41:49 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.idl
@@ -23,8 +39,8 @@ Tue May  4 12:41:49 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp
         * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h
         Renaming changes for AMI4CCM:
-        Rename interface AMI4CCM from AMI_ to AMI4CCM_. 
-        Rename Ports in cdp files and ami4ccm.idl: The_Connector to AMI4CCM_Connector 
+        Rename interface AMI4CCM from AMI_ to AMI4CCM_.
+        Rename Ports in cdp files and ami4ccm.idl: The_Connector to AMI4CCM_Connector
         and The_Port to ami4ccm_port,  change xxx_run to xxx_uses and xxx_provides.
         Rename Callback ami_handler to ReplyHandler ami4ccm_handler.
         Change -GC option to -GM option for lema_gen (for right naming of replyhandler)
