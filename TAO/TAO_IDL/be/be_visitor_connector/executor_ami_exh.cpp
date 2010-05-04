@@ -39,7 +39,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << scope->local_name () << suffix << be_idt_nl
-      << ": public virtual The_Connector_Exec," << be_idt_nl
+      << ": public virtual AMI4CCM_Connector_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
       << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -92,8 +92,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 
   os_ << smart_scope << i_scope->full_name () << "::"
       << half_stripped_name.c_str ()
-      << "Callback_var callback_;" << be_nl;
-
+      << "ReplyHandler_var callback_;" << be_nl;
   os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
 
   os_ << be_uidt_nl
