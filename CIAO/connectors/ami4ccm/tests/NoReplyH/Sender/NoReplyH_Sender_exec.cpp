@@ -117,8 +117,8 @@ namespace CIAO_NoReplyH_Sender_Impl
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-    ::NoReplyH::AMI_MyFoo_ptr my_foo_ami)
-    : my_foo_ami_ (::NoReplyH::AMI_MyFoo::_duplicate (my_foo_ami))
+    ::NoReplyH::AMI4CCM_MyFoo_ptr my_foo_ami)
+    : my_foo_ami_ (::NoReplyH::AMI4CCM_MyFoo::_duplicate (my_foo_ami))
   {
   }
 
@@ -138,18 +138,18 @@ namespace CIAO_NoReplyH_Sender_Impl
                                  "Do something asynchronous");
         
         //test without replyhandlers.
-        my_foo_ami_->sendc_foo ( NoReplyH::AMI_MyFooCallback::_nil (),
+        my_foo_ami_->sendc_foo ( NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (),
                           "Do something asynchronous with no replyhandler");
-        my_foo_ami_->sendc_hello ( NoReplyH::AMI_MyFooCallback::_nil ());
-        my_foo_ami_->sendc_get_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil ());
-        my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil (),
+        my_foo_ami_->sendc_hello ( NoReplyH::AMI4CCM_MyFooReplyHandler::_nil ());
+        my_foo_ami_->sendc_get_rw_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil ());
+        my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (),
                                           15);
-        my_foo_ami_->sendc_get_ro_attrib (NoReplyH::AMI_MyFooCallback::_nil ());
+        my_foo_ami_->sendc_get_ro_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil ());
       }
       //Invoke Asynchronous calls to test exception handling 
       //without replyhandlers.
-      my_foo_ami_->sendc_foo ( NoReplyH::AMI_MyFooCallback::_nil (), "");
-      my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI_MyFooCallback::_nil (),
+      my_foo_ami_->sendc_foo ( NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (), "");
+      my_foo_ami_->sendc_set_rw_attrib (NoReplyH::AMI4CCM_MyFooReplyHandler::_nil (),
                                         0);
  
       return 0;
@@ -235,7 +235,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::NoReplyH::AMI_MyFoo_var asynch_foo =
+    ::NoReplyH::AMI4CCM_MyFoo_var asynch_foo =
       this->context_->get_connection_sendc_run_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);

@@ -41,7 +41,7 @@ project(AMI_ExceptionT_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=ExceptionT_svnt_export.h \
               -Wb,skel_export_macro=EXCEPTION_T_SKEL_Export \
               -Wb,skel_export_include=ExceptionT_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
 
   IDL_Files {
     ExceptionTA.idl
@@ -163,7 +163,7 @@ project(AMI_ExceptionT_conn) : ciao_executor, ami, ami4ccm_lem_stub {
 
   Header_Files {
     ExceptionTA_conn.h
-    ExceptionTA_conn_export.h
+    ExceptionT_conn_export.h
   }
 
   Inline_Files {

@@ -117,7 +117,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NoReplyH_AMI_MyFoo_Connector_Impl</string>
+          <string>create_NoReplyH_AMI4CCM_MyFoo_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -139,7 +139,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NoReplyH_AMI_MyFoo_Connector_The_Connector_Servant</string>
+          <string>create_NoReplyH_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -223,7 +223,7 @@
       <instance xmi:idref="NoReplyH.ComponentImplementations.NoReplyHImplementation.NoReplyH.Sender" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>The_Port_sendc_run</portName>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="NoReplyH.ComponentImplementations.NoReplyHImplementation.NoReplyH.AMI" />
@@ -239,7 +239,7 @@
       <instance xmi:idref="NoReplyH.ComponentImplementations.NoReplyHImplementation.NoReplyH.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>The_Port_run</portName>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="NoReplyH.ComponentImplementations.NoReplyHImplementation.NoReplyH.AMI" />
@@ -274,7 +274,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NoReplyH_AMI_MyFoo_Connector_The_Connector_Servant</string>
+          <string>create_NoReplyH_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
