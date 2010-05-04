@@ -157,8 +157,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
                   translate_retcode (result)));
       throw CCM_DDS::InternalError (result, index);
     }
-  result =
-    this->impl ()->unregister_instance (an_instance, hnd);
+  result = this->impl ()->unregister_instance (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR,
@@ -228,7 +227,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
   ::CCM_DDS::NonExistent exception;
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
-      DDS_InstanceHandle_t const hnd = this->impl ()->lookup_instance (data[index]);
+      DDS_InstanceHandle_t const hnd =
+        this->impl ()->lookup_instance (data[index]);
       if (::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
         {
           CORBA::ULong const length = exception.indexes.length ();
@@ -251,7 +251,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
   ::CCM_DDS::AlreadyCreated exception;
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
-      DDS_InstanceHandle_t const hnd = this->impl ()->lookup_instance (data[index]);
+      DDS_InstanceHandle_t const hnd =
+        this->impl ()->lookup_instance (data[index]);
       if (!::DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
         {
           CORBA::ULong const length = exception.indexes.length ();
@@ -276,7 +277,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
   // Check for existance of instances
   this->check_existent (data);
 
-  Coherent_Changes_Guard guard (this->impl ()->get_publisher(), this->is_coherent_write_);
+  Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
+                                this->is_coherent_write_);
 
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {
@@ -294,7 +296,8 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
   // Check for existance of instances
   this->check_existent (data);
 
-  Coherent_Changes_Guard guard (this->impl ()->get_publisher(), this->is_coherent_write_);
+  Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
+                                this->is_coherent_write_);
 
   for (typename CCM_TYPE::seq_type::size_type index = 0; index < data.length (); index++)
     {

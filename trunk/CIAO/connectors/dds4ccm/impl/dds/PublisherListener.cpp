@@ -42,16 +42,16 @@ namespace CIAO
                                                     "CCM_DataWriterProxy");
       if (!prop)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
-                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                        "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::DataWriter::_nil ();
         }
       ::DDS::CCM_DataWriter_ptr writer =
         reinterpret_cast < ::DDS::CCM_DataWriter_ptr >
           (ACE_OS::atol (prop->value));
 
-      return reinterpret_cast < ::DDS::DataWriter_ptr >
-          (writer);
+      return writer;
     }
 
     void

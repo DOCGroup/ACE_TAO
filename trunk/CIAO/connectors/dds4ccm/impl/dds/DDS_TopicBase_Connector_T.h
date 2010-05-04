@@ -63,11 +63,10 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
-typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener;
-typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener;
-typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE> PublisherListener;
-typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE> BaseConnector;
-
+  typedef ::CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener;
+  typedef ::CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener;
+  typedef ::CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE> PublisherListener;
+  typedef DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE> BaseConnector;
 };
 
 #include "dds4ccm/impl/dds/DDS_TopicBase_Connector_T.cpp"

@@ -35,8 +35,8 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i::get_expression_parameters");
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
-      ::DDS::ReturnCode_t retval = this->impl ()->get_expression_parameters (
-                                                                  parameters);
+      ::DDS::ReturnCode_t retval =
+        this->impl ()->get_expression_parameters (parameters);
       expression_parameters <<= parameters;
 #else
       ::DDS::ReturnCode_t retval =
