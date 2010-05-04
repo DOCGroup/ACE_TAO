@@ -6,6 +6,7 @@
 
 #include "ccm/CCM_CCM2Context.idl"
 #include "ccm/CCM_SessionContext.idl"
+#include "tao/OctetSeq.pidl"
 
 // *************** Extended Container Interfaces ***************
 
