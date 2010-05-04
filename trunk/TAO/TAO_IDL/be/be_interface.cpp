@@ -783,11 +783,21 @@ be_interface:: gen_var_out_seq_decls (void)
   /// the original interface.                     
   if (be_global->ami_call_back () && !this->is_ami_rh ())
     {
-      *os << be_nl << be_nl
-          << "class AMI_" << lname << "Handler;" << be_nl
-          << "typedef AMI_" << lname << "Handler *AMI_"
-          << lname << "Handler_ptr;";
-    }
+      if (be_global->ami4ccm_call_back ())
+        {
+          *os << be_nl << be_nl
+              << "class AMI4CCM_" << lname << "Handler;" << be_nl
+              << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
+              << lname << "Handler_ptr;";
+        }
+      else
+        {
+          *os << be_nl << be_nl
+            << "class AMI_" << lname << "Handler;" << be_nl
+            << "typedef AMI_" << lname << "Handler *AMI_"
+            << lname << "Handler_ptr;";
+        }
+     }
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl

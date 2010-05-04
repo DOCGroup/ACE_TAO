@@ -2702,7 +2702,9 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'M')
           {
-            // Generate tie classes and files
+            // AMI4CCM calls implicit option 'C': AMI with Call back.
+            be_global->ami_call_back (true); 
+             // Generate tie classes and files
             be_global->ami4ccm_call_back (true);
           }
         else if (av[i][2] == 'T')

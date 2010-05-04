@@ -132,10 +132,11 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << iface_name << suffix << " ("
       << be_idt << be_idt << be_idt_nl
       << smart_scope << scope_name << "::" << iface_name
-      << "Callback_ptr callback)" << be_uidt << be_uidt_nl
+      << "ReplyHandler_ptr callback)" << be_uidt << be_uidt_nl
       << ": callback_ (" << be_idt << be_idt_nl
       << smart_scope << scope_name << "::" << iface_name
-      << "Callback::_duplicate (callback))"
+      << "ReplyHandler::_duplicate (callback))"
+
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
@@ -349,7 +350,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
   
-  const char *prefix = "AMI_";
+  const char *prefix = "AMI4CCM_";
   ACE_CString iface_str (this->iface_->local_name ());
   ACE_CString orig_iface_str (
     iface_str.substr (ACE_OS::strlen (prefix)));
@@ -359,19 +360,22 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "{" << be_idt_nl
       << smart_scope << scope->full_name () << "::"
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
-      << "this->context_->get_connection_The_Port_run ();"
+      << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
+ 
       << be_uidt_nl << be_nl
       << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::" << this->iface_->full_name ()
       << "Handler_var the_handler_var;" << be_nl << be_nl
-      << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (ami4ccm_handler))" << be_idt_nl
+ 
       << "{" << be_idt_nl
       << this->iface_->local_name () << "_reply_handler *handler ="
       << be_idt_nl
       << "new " << this->iface_->local_name ()
-      << "_reply_handler (ami_handler);" << be_uidt_nl
+      << "_reply_handler (ami4ccm_handler);" << be_uidt_nl
+
       << "the_handler_var = handler->_this ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "receptacle_objref->" << node->local_name ()

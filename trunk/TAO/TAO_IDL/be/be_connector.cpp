@@ -116,7 +116,9 @@ be_connector::check_ancestors (void)
           idl_global->dds_connector_seen_ = true;
           break;
         }
-      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI_Base") == 0)
+//      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI_Base") == 0)
+      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI4CCM_Base") == 0)
+ 
         {
           this->ami_connector_ = true;
           idl_global->ami_connector_seen_ = true;

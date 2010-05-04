@@ -33,7 +33,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   os_ << be_nl << be_nl
-      << "local interface AMI_"
+      << "local interface AMI4CCM_"
       << node->original_local_name () << be_nl
       << "{" << be_idt;
       
@@ -97,8 +97,8 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
   if (this->elem_number () == 1)
     {
       os_ << be_nl
-          << "in AMI_" << this->iface_->original_local_name ()
-          << "Callback";
+          << "in AMI4CCM_" << this->iface_->original_local_name ()
+          << "ReplyHandler";
     }
   else
     {
