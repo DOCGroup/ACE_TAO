@@ -43,8 +43,7 @@ namespace CIAO
         reinterpret_cast < ::DDS::CCM_DataWriter_ptr >
           (ACE_OS::atol (prop->value));
 
-      return reinterpret_cast < ::DDS::DataWriter_ptr >
-          (writer);
+      return writer;
     }
 
     void

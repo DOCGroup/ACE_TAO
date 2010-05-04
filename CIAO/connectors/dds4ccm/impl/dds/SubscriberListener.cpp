@@ -62,8 +62,7 @@ namespace CIAO
         reinterpret_cast < ::DDS::CCM_DataReader_ptr >
           (ACE_OS::atol (prop->value));
 
-      return reinterpret_cast < ::DDS::DataReader_ptr >
-          (reader);
+      return reader;
     }
 
     void

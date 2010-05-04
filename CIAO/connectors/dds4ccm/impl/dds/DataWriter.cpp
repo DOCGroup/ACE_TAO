@@ -61,7 +61,7 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     CCM_DDS_DataWriter_i::set_listener (::DDS::DataWriterListener_ptr a_listener,
-                                    ::DDS::StatusMask mask)
+                                        ::DDS::StatusMask mask)
     {
       CCM_DDS_DataWriterListener_i* ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
@@ -154,12 +154,14 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_i::get_offered_deadline_missed_status (::DDS::OfferedDeadlineMissedStatus & status)
+    CCM_DDS_DataWriter_i::get_offered_deadline_missed_status (
+      ::DDS::OfferedDeadlineMissedStatus & status)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_deadline_missed_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_offered_deadline_missed_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
 #else
@@ -168,12 +170,14 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_i::get_offered_incompatible_qos_status (::DDS::OfferedIncompatibleQosStatus & status)
+    CCM_DDS_DataWriter_i::get_offered_incompatible_qos_status (
+      ::DDS::OfferedIncompatibleQosStatus & status)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_offered_incompatible_qos_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_offered_incompatible_qos_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
 #else
@@ -182,12 +186,14 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_i::get_publication_matched_status (::DDS::PublicationMatchedStatus & status)
+    CCM_DDS_DataWriter_i::get_publication_matched_status (
+      ::DDS::PublicationMatchedStatus & status)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_publication_matched_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_publication_matched_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
 #else
@@ -202,7 +208,8 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_i::get_matched_subscriptions (::DDS::InstanceHandleSeq & subscription_handles)
+    CCM_DDS_DataWriter_i::get_matched_subscriptions (
+      ::DDS::InstanceHandleSeq & subscription_handles)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
@@ -216,16 +223,17 @@ namespace CIAO
     }
 
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_i::get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & subscription_data,
-                                                         DDS_INSTANCE_HANDLE_T_IN subscription_handle)
+    CCM_DDS_DataWriter_i::get_matched_subscription_data (
+      ::DDS::SubscriptionBuiltinTopicData & subscription_data,
+      DDS_INSTANCE_HANDLE_T_IN subscription_handle)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriter_i::get_matched_subscription_data");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriptionBuiltinTopicData ccm_dds_sub_data;
       ::DDS_InstanceHandle_t ccm_dds_sub_handle;
       ccm_dds_sub_handle <<= subscription_handle;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_subscription_data (ccm_dds_sub_data,
-                                                                                       ccm_dds_sub_handle);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_matched_subscription_data (ccm_dds_sub_data, ccm_dds_sub_handle);
       subscription_data <<= ccm_dds_sub_data;
       return retval;
 #else
@@ -267,7 +275,8 @@ namespace CIAO
     CCM_DDS_DataWriter_i::get_instance_handle (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+      ::DDS_InstanceHandle_t const rtihandle =
+        this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
