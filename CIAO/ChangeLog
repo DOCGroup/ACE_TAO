@@ -1,3 +1,14 @@
+Wed May  5 09:53:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/dds/SubscriberListener.cpp:
+          For the moment just allocate the proxies on each invocation
+
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+          Layout change
+
 Wed May  5 08:44:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
