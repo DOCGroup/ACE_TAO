@@ -111,6 +111,9 @@ ACE_Service_Type::fini (void)
 
   int ret = this->type_->fini ();
 
+  // Ensure type is 0 to prevent invalid access after call to fini.
+  this->type_ = 0;
+
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,
   // which resides in the DLL
