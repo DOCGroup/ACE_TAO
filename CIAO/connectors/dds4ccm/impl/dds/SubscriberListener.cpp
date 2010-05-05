@@ -45,7 +45,7 @@ namespace CIAO
     CCM_DDS_SubscriberListener_i::get_datareader_proxy (
       ::DDSDataReader * the_reader)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::get_datareader_proxy");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::get_datareader_proxy");
       // Retrieve the pointer to the proxy from the QoS
       ::DDS_DataReaderQos qos;
       the_reader->get_qos (qos);
@@ -54,7 +54,7 @@ namespace CIAO
                                                     "CCM_DataReaderProxy");
       if (!prop)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i::get_datareader_proxy -"
                                               "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::CCM_DataReader::_nil ();
         }
@@ -65,7 +65,7 @@ namespace CIAO
           
       if (::CORBA::is_nil (reader))
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i::get_datareader_proxy -"
                                               "Unable to retrieve reader from PropertyQosProfile\n"));
         }
 
