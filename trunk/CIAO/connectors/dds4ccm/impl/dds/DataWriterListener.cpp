@@ -27,6 +27,11 @@ namespace CIAO
     CCM_DDS_DataWriterListener_i::get_datawriter_proxy (::DDSDataWriter * the_writer)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::get_datawriter_proxy");
+      ::DDS::CCM_DataWriter_var dds_writer = ::DDS::CCM_DataWriter::_nil ();
+      ACE_NEW_NORETURN (dds_writer,
+                        CCM_DDS_DataWriter_i (the_writer));
+      return dds_writer._retn ();
+/*                        
       // Retrieve the pointer to the proxy from the QoS
       ::DDS_DataWriterQos qos;
       the_writer->get_qos (qos);
@@ -51,6 +56,7 @@ namespace CIAO
         }
 
       return writer;
+*/      
     }
 
     void
