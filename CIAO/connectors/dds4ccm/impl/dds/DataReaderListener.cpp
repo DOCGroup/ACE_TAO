@@ -47,6 +47,11 @@ namespace CIAO
       ::DDS::CCM_DataReader_ptr reader =
         reinterpret_cast < ::DDS::CCM_DataReader_ptr >
           (ACE_OS::atol (prop->value));
+      if (::CORBA::is_nil (reader))
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                                              "Unable to retrieve reader from PropertyQosProfile\n"));
+        }
 
       return reader;
     }
