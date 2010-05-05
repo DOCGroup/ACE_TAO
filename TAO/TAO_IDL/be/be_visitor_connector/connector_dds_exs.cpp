@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -36,17 +35,9 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       return 0;
     }
 
-  AST_Connector *base = node->base_connector ();
-
-  // Hack for the time being to skip codegen for DDS_State
-  // and DDS_Event, both of which come along with the template
-  // module instantiation.
-  if (base == 0)
-    {
-      return 0;
-    }
-
   node_ = node;
+
+  AST_Connector *base = node->base_connector ();
 
   // Shaky logic that will have to be improved. If our
   // base connector does not come from an instantiated
@@ -55,7 +46,12 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
   if (this->t_args_ == 0)
     {
-      return 0;
+      this->process_template_args (node);
+      
+      if (this->t_args_ == 0)
+        {
+          return 0;
+        }
     }
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -65,12 +61,24 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
+  ACE_CString lname = node->local_name ();  
+  const char *base_tname = 0;
+  
+  if (lname == "DDS_Event" || lname == "DDS_State")
+    {
+      base_tname = lname.c_str ();
+    }
+  else
+    {
+      base_tname =
+        node->base_connector ()->local_name ()->get_string ();
+    }
+    
   os_ << be_nl
       << this->node_->local_name () << "_exec_i::"
       << this->node_->local_name () << "_exec_i (void)"
       << be_idt_nl
-      << ": " << node->base_connector ()->local_name ()
-      << "_Connector_T";
+      << ": " << base_tname << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);

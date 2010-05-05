@@ -3378,7 +3378,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
         }
 
-      if (idl_global->dds_state_connector_seen_)
+     if (idl_global->dds_state_connector_seen_)
         {
           this->gen_standard_include (
             this->ciao_conn_header_,
