@@ -27,11 +27,6 @@ namespace CIAO
     CCM_DDS_DataWriterListener_i::get_datawriter_proxy (::DDSDataWriter * the_writer)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::get_datawriter_proxy");
-      ::DDS::CCM_DataWriter_var dds_writer = ::DDS::CCM_DataWriter::_nil ();
-      ACE_NEW_NORETURN (dds_writer,
-                        CCM_DDS_DataWriter_i (the_writer));
-      return dds_writer._retn ();
-/*                        
       // Retrieve the pointer to the proxy from the QoS
       ::DDS_DataWriterQos qos;
       the_writer->get_qos (qos);
@@ -45,18 +40,17 @@ namespace CIAO
           return ::DDS::CCM_DataWriter::_nil ();
         }
 
-      ::DDS::CCM_DataWriter_ptr writer =
-        reinterpret_cast < ::DDS::CCM_DataWriter_ptr >
+      CCM_DDS_DataWriter_i* writer =
+        reinterpret_cast < CCM_DDS_DataWriter_i* >
           (ACE_OS::atol (prop->value));
 
-      if (::CORBA::is_nil (writer))
+      if (!writer)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataWriterListener_i::get_datareader_proxy -"
                                               "Unable to get writer from PropertyQosProfile\n"));
         }
 
       return writer;
-*/      
     }
 
     void
@@ -64,6 +58,7 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_OfferedDeadlineMissedStatus & status)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::on_offered_deadline_missed");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
@@ -82,6 +77,7 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_OfferedIncompatibleQosStatus & status)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::on_offered_incompatible_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::OfferedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
@@ -100,6 +96,7 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_LivelinessLostStatus & status)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::on_liveliness_lost");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessLostStatus ddsstatus;
       ddsstatus <<= status;
@@ -118,6 +115,7 @@ namespace CIAO
       ::DDSDataWriter *the_writer,
       const ::DDS_PublicationMatchedStatus & status)
     {
+      DDS4CCM_TRACE ("CCM_DDS_DataWriterListener_i::on_publication_matched");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::PublicationMatchedStatus ddsstatus;
       ddsstatus <<= status;
