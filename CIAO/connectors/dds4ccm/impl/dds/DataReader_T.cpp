@@ -15,15 +15,15 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (void)
     impl_ (0),
     rd_condition_ (0),
     ws_ (0),
-    #if (DDS4CCM_USES_QUERY_CONDITION==1)
-      qc_reader_ (0),
-      qc_getter_ (0),
-      qc_listener_ (0)
-    #else
-      cft_ (0),
-      library_name_ (""),
-      profile_name_ ("")
-    #endif
+#if (DDS4CCM_USES_QUERY_CONDITION==1)
+    qc_reader_ (0),
+    qc_getter_ (0),
+    qc_listener_ (0)
+#else
+    cft_ (0),
+    library_name_ (""),
+    profile_name_ ("")
+#endif
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::DataReader_T");
 }

@@ -46,6 +46,11 @@ namespace CIAO
       ::DDSDataReader * the_reader)
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::get_datareader_proxy");
+      ::DDS::CCM_DataReader_var dds_reader = ::DDS::CCM_DataReader::_nil ();
+      ACE_NEW_NORETURN (dds_reader,
+                        CCM_DDS_DataReader_i (the_reader));
+      return dds_reader._retn ();
+/*
       // Retrieve the pointer to the proxy from the QoS
       ::DDS_DataReaderQos qos;
       the_reader->get_qos (qos);
@@ -70,6 +75,7 @@ namespace CIAO
         }
 
       return reader;
+*/
     }
 
     void
