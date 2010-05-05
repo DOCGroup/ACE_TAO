@@ -47,9 +47,17 @@ namespace CIAO
                         "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::CCM_DataWriter::_nil ();
         }
+
       ::DDS::CCM_DataWriter_ptr writer =
         reinterpret_cast < ::DDS::CCM_DataWriter_ptr >
           (ACE_OS::atol (prop->value));
+
+      if (::CORBA::is_nil (writer))
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                        "Unable to retrieve writer from PropertyQosProfile\n"));
+        }
 
       return writer;
     }
