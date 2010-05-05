@@ -141,7 +141,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       read_data_ (true),
       raw_listen_ (false),
       received_ (0),
-      rejected_(0),
+      rejected_(false),
       thread_id_listener_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);

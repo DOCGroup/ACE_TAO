@@ -1,3 +1,17 @@
+Wed May  5 17:25:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
+          Do the correct cast
+
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/dds/DataWriterListener.cpp:
+          Do correct cast, added missing trace statements
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+          Use false for bool
+
 Wed May  5 09:53:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:

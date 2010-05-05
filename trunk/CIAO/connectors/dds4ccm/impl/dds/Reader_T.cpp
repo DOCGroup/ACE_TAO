@@ -21,8 +21,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::~Reader_T (void)
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::~Reader_T");
 }
 
-// For the requirement : 'samples ordered by instances' the following settings are necessary:
-// ordered_access -> true   and     DDS_INSTANCE_PRESENTATION_QOS (default) .
+// For the requirement : 'samples ordered by instances' the following settings 
+// are necessary: ordered_access -> true and
+// DDS_INSTANCE_PRESENTATION_QOS (default)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 CORBA::ULong
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_nr_valid_samples (
@@ -68,13 +69,15 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
                     ::CCM_DDS::ReadInfoSeq,
                     CORBA::NO_MEMORY ());
 
-  CORBA::ULong const nr_of_last_samples = this->get_nr_valid_samples (sample_info, true);
+  CORBA::ULong const nr_of_last_samples =
+    this->get_nr_valid_samples (sample_info, true);
 
-  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - ")
-                            ACE_TEXT ("total number of samples <%u> - ")
-                            ACE_TEXT ("last number of samples <%u>\n"),
-                            data.length(),
-                            nr_of_last_samples));
+  DDS4CCM_DEBUG (6, (LM_DEBUG,
+                     ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - ")
+                     ACE_TEXT ("total number of samples <%u> - ")
+                     ACE_TEXT ("last number of samples <%u>\n"),
+                     data.length(),
+                     nr_of_last_samples));
   CORBA::ULong ix = 0;
 
   infoseq->length (nr_of_last_samples);
@@ -191,7 +194,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_last (
   ::CCM_DDS::ReadInfo_out info,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t const lookup_hnd = this->check_handle (an_instance, instance_handle);
+  DDS_InstanceHandle_t const lookup_hnd =
+    this->check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
@@ -244,12 +248,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
   this->impl ()->read_w_instance (data, lookup_hnd, sample_info);
 
   // Count the number of valid samples
-  CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
-  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
-                            ACE_TEXT ("total number of samples <%u> - ")
-                            ACE_TEXT ("valid number of samples <%u>\n"),
-                            data.length (),
-                            nr_of_valid_samples));
+  CORBA::ULong const nr_of_valid_samples =
+    this->get_nr_valid_samples (sample_info);
+  DDS4CCM_DEBUG (6, (LM_DEBUG,
+                     ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
+                     ACE_TEXT ("total number of samples <%u> - ")
+                     ACE_TEXT ("valid number of samples <%u>\n"),
+                     data.length (),
+                     nr_of_valid_samples));
 
   typename CCM_TYPE::seq_type * inst_seq = 0;
   ACE_NEW_THROW_EX (inst_seq,
@@ -276,7 +282,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
     }
 
   // Return the loan
-  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+  DDS_ReturnCode_t const retval =
+    this->impl ()->return_loan (data, sample_info);
   if (retval != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
