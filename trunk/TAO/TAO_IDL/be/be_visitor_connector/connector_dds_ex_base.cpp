@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),

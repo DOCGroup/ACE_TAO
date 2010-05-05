@@ -89,7 +89,10 @@ be_connector::ami_connector (void)
 void
 be_connector::check_ancestors (void)
 {
-  AST_Connector *base = this->base_connector ();
+  /// Start from derived connector since we are no longer
+  /// (2010-05-05) putting derived DDS4CCM connector declarations
+  /// in application IDL.
+  AST_Connector *base = this;
   
   while (base != 0)
     {
@@ -116,7 +119,6 @@ be_connector::check_ancestors (void)
           idl_global->dds_connector_seen_ = true;
           break;
         }
-//      else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI_Base") == 0)
       else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI4CCM_Base") == 0)
  
         {
