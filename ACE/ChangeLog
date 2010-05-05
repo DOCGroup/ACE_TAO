@@ -1,6 +1,21 @@
+Wed May  5 16:17:15 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
+
+	* ace/Service_Object.cpp
+	  Setting type_ to 0 in ACE_Service_Type::fini after call to
+	  type_->fini ()
+	  This allows us to check for the value 0 in the double
+	  loop inside ASR::fini
+
+	* ace/Service_Repository.cpp
+	  Checking for  s->type () != 0 inside ASR::fini
+	  This ensures we don't access ACE_Service_Type instances that
+	  have been fini'd already.
+
+	  This resolves Bugzilla #3847
+
 Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
 
-        * ace/Stream.cpp
+	* ace/Stream.cpp
 	  Added debug and warning logging in ACE_Stream::remove
 
 	* ace/Service_Types.cpp
@@ -14,657 +29,657 @@ Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
 	  instances. And they've already been deleted by ACE_Stream::close
 	  called from ACE_Stream_Type::fini.
 
-          Reassigned ACE_Module::name in ACE_Module_Type::init to
+	  Reassigned ACE_Module::name in ACE_Module_Type::init to
 	  ACE_Module_Type::name and fixed the SEGV at shutdown because of the
 	  issue described above.
-	
-          All of these issues are related: #3334 #3205 #2916 #3847
+
+	  All of these issues are related: #3334 #3205 #2916 #3847
 
 Thu Apr 29 03:34:56 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
 
-        * ace/Stack_Trace.cpp: Clarified origins of platform-specific
-          code in the leading comments for the file.
+	* ace/Stack_Trace.cpp: Clarified origins of platform-specific
+	  code in the leading comments for the file.
 
 Wed Apr 28 09:23:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * netsvcs/lib/Client_Logging_Handler.cpp:
-        * netsvcs/lib/TS_Server_Handler.cpp:
-          Use %C for logging the hostname instead of %s. This fixes bugzilla
-          3846, thanks to Christian Freund <freund at wrz dot de> for reporting
-          this
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+	* netsvcs/lib/TS_Server_Handler.cpp:
+	  Use %C for logging the hostname instead of %s. This fixes bugzilla
+	  3846, thanks to Christian Freund <freund at wrz dot de> for reporting
+	  this
 
 Mon Apr 26 08:29:58 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
-        * tests/SSL/Bug_2912_Regression_Test.cpp:
-        * tests/Proactor_UDP_Test.cpp:
-        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
-        * tests/Proactor_Test_IPV6.cpp:
-        * tests/Bug_2740_Regression_Test.cpp:
-        * tests/Dev_Poll_Reactor_Test.cpp:
-        * tests/Proactor_Test.cpp:
-        * tests/TP_Reactor_Test.cpp:
-          All these tests need to block SIGPIPE signal. POSIX defines that
-          newly created threads must inherit signal mask from the creating
-          thread. The later doesn't happen at least on Solaris 10. With this
-          change each new thread in the above tests will block SIGPIPE signal
-          individually.
+	* tests/SSL/SSL_Asynch_Stream_Test.cpp:
+	* tests/SSL/Bug_2912_Regression_Test.cpp:
+	* tests/Proactor_UDP_Test.cpp:
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp:
+	* tests/Bug_2740_Regression_Test.cpp:
+	* tests/Dev_Poll_Reactor_Test.cpp:
+	* tests/Proactor_Test.cpp:
+	* tests/TP_Reactor_Test.cpp:
+	  All these tests need to block SIGPIPE signal. POSIX defines that
+	  newly created threads must inherit signal mask from the creating
+	  thread. The later doesn't happen at least on Solaris 10. With this
+	  change each new thread in the above tests will block SIGPIPE signal
+	  individually.
 
 Thu Apr 22 07:51:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * Release:
-        * bin/make_release.py:
-          Updated because of rename
+	* Release:
+	* bin/make_release.py:
+	  Updated because of rename
 
-        * debian:
-        * debianbuild:
-          Renamed debianbuild to debianbuild
+	* debian:
+	* debianbuild:
+	  Renamed debianbuild to debianbuild
 
 Wed Apr 21 13:36:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * examples/Connection/blocking/SPIPE-connector.cpp:
-          Use Reactor instead of Proactor, thanks to Dave <dwh0403 at 163 dot com>
-          for reporting this
+	* examples/Connection/blocking/SPIPE-connector.cpp:
+	  Use Reactor instead of Proactor, thanks to Dave <dwh0403 at 163 dot com>
+	  for reporting this
 
 Tue Apr 20 13:02:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op.h:
-          Fix redefinition warning
+	* ace/Atomic_Op.h:
+	  Fix redefinition warning
 
 Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
 
-        * ace/Service_Repository.cpp
-          Modified ASR::fini to print debug info for empty
-          service entries and handle empty service entries.
-          This fixes the ASR remove functionality that was
-          one of the reasons SC_Server was crashing at shutdown.
+	* ace/Service_Repository.cpp
+	  Modified ASR::fini to print debug info for empty
+	  service entries and handle empty service entries.
+	  This fixes the ASR remove functionality that was
+	  one of the reasons SC_Server was crashing at shutdown.
 
-        * examples/ASX/CCM_App/SC_Server.cpp
-          Removing signal handler before main exit to present SEGV
+	* examples/ASX/CCM_App/SC_Server.cpp
+	  Removing signal handler before main exit to present SEGV
 
-        * tests/run_test.lst
-          Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
-          Apparently it was missed in the last commit.
+	* tests/run_test.lst
+	  Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+	  Apparently it was missed in the last commit.
 
        This fixes Bugzilla #2916 and #3205.
        I'll create another patch for #3334 after this commit.
 
 Mon Apr 19 12:44:56 UTC 2010 Chad Beaulac <chad@objectivesolutions.com>
 
-        * ace/Service_Types.h
-        * ace/Service_Types.inl
-        * ace/Service_Types.cpp
-          Added service_type_ attr to expose the type of service being
-          managed to the ACE_Service_Repository. This allows the ASR to
-          manage the lifecycle of the ACE_Module and ACE_Stream in order to
-          avoid a double delete of ACE_Module at shutdown.
+	* ace/Service_Types.h
+	* ace/Service_Types.inl
+	* ace/Service_Types.cpp
+	  Added service_type_ attr to expose the type of service being
+	  managed to the ACE_Service_Repository. This allows the ASR to
+	  manage the lifecycle of the ACE_Module and ACE_Stream in order to
+	  avoid a double delete of ACE_Module at shutdown.
 
-          ACE_Stream_Type::fini was modified to not call ACE_Module_Type::fini
-          as this will results in a double delete when ACE_Service_Repository::fini
-          is called. ACE_Stream_Type::remove(module_name) was modified to not call
-          ACE_Module_Type::fini as this will results in a double delete
-          when ACE_Service_Repository::fini is called also.
+	  ACE_Stream_Type::fini was modified to not call ACE_Module_Type::fini
+	  as this will results in a double delete when ACE_Service_Repository::fini
+	  is called. ACE_Stream_Type::remove(module_name) was modified to not call
+	  ACE_Module_Type::fini as this will results in a double delete
+	  when ACE_Service_Repository::fini is called also.
 
-        * ace/Service_Repository.cpp
-          Modified ASR::fini to iterate over the service_array_ twice.
-          ACE_Service_Type::fini is called on all ACE_Stream_Type and
-          ACE_Service_Object_Type instances first. Then, fini is called on
-          all ACE_Modules_Type instances. All calls to fini are done in the
-          order the services appear in the ASR::service_array_ except for
-          the grouping described here. The calls to ACE_Module_Type::fini
-          must be done last because ACE_Stream_Type::fini accesses the Modules
-          so they must not be deleted by a call to ACE_Module_Type::fini
-          before that.
+	* ace/Service_Repository.cpp
+	  Modified ASR::fini to iterate over the service_array_ twice.
+	  ACE_Service_Type::fini is called on all ACE_Stream_Type and
+	  ACE_Service_Object_Type instances first. Then, fini is called on
+	  all ACE_Modules_Type instances. All calls to fini are done in the
+	  order the services appear in the ASR::service_array_ except for
+	  the grouping described here. The calls to ACE_Module_Type::fini
+	  must be done last because ACE_Stream_Type::fini accesses the Modules
+	  so they must not be deleted by a call to ACE_Module_Type::fini
+	  before that.
 
-        * tests/Bug_3334_Regresssion_Test.cpp
-          Added call to ACE_Service_Repository::fini_svcs() to capture all
-          debug output before the application exits.
+	* tests/Bug_3334_Regresssion_Test.cpp
+	  Added call to ACE_Service_Repository::fini_svcs() to capture all
+	  debug output before the application exits.
 
-        * tests/run_tests.lst
-          Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
+	* tests/run_tests.lst
+	  Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
 
-        This fixes Bugzilla #3334
+	This fixes Bugzilla #3334
 
 Mon Apr 19 06:54:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/MakeProjectCreator/config/global.features:
-          Enabled LightWeigth CCM as default, if you want to use the
-          full ccm features set ccm_lw to 0 in your default.features file
+	* bin/MakeProjectCreator/config/global.features:
+	  Enabled LightWeigth CCM as default, if you want to use the
+	  full ccm features set ccm_lw to 0 in your default.features file
 
 Fri Apr 16 13:02:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op.h:
-        * ace/Atomic_Op.inl:
-        * ace/Atomic_Op.cpp:
-        * ace/config-sunos5.10.h:
-          Added support for the Solaris 10 Atomic support, thanks
-          to Aleksandar Vukajlovic <aleksandar dot vukajlovic at finsoft dot rs>
-          for providing the patches
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+	* ace/Atomic_Op.cpp:
+	* ace/config-sunos5.10.h:
+	  Added support for the Solaris 10 Atomic support, thanks
+	  to Aleksandar Vukajlovic <aleksandar dot vukajlovic at finsoft dot rs>
+	  for providing the patches
 
 Wed Apr 14 11:22:27 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * ace/Dev_Poll_Reactor.cpp: Fixed compile error on some g++ versions.
+	* ace/Dev_Poll_Reactor.cpp: Fixed compile error on some g++ versions.
 
 Tue Apr 13 20:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * bin/PerlACE/Process_Unix.pm: Fix typo that broke all tests.
+	* bin/PerlACE/Process_Unix.pm: Fix typo that broke all tests.
 
 Tue Apr 13 19:34:40 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * ace/Dev_Poll_Reactor.{h cpp}: Reorder the enqueue/pipe operations
-          when adding a notification to close the race where notifies can get
-          lost in the ACE_HAS_NOTIFICATION_QUEUE case. Also fixed a misplaced
-          #endif in read_notification_pipe() and cleaned it up some.
+	* ace/Dev_Poll_Reactor.{h cpp}: Reorder the enqueue/pipe operations
+	  when adding a notification to close the race where notifies can get
+	  lost in the ACE_HAS_NOTIFICATION_QUEUE case. Also fixed a misplaced
+	  #endif in read_notification_pipe() and cleaned it up some.
 
 Mon Apr 12 09:31:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-        * bin/PerlACE/TestTarget_WinCE.pm:
-        * bin/PerlACE/ProcessVX_Win32.pm:
-        * bin/PerlACE/Process_Unix.pm:
-        * bin/PerlACE/ProcessLVRT.pm:
-        * bin/PerlACE/TestTarget.pm:
-        * bin/PerlACE/TestTarget_VxWorks.pm:
-        * bin/PerlACE/ProcessVX.pm:
-        * bin/PerlACE/TestTarget_LVRT.pm:
-        * bin/PerlACE/ProcessVX_Unix.pm:
-        * bin/PerlACE/Process_Win32.pm:
-        * bin/PerlACE/Run_Test.pm:
-        * bin/PerlACE/Process_VMS.pm:
+	* bin/PerlACE/TestTarget_WinCE.pm:
+	* bin/PerlACE/ProcessVX_Win32.pm:
+	* bin/PerlACE/Process_Unix.pm:
+	* bin/PerlACE/ProcessLVRT.pm:
+	* bin/PerlACE/TestTarget.pm:
+	* bin/PerlACE/TestTarget_VxWorks.pm:
+	* bin/PerlACE/ProcessVX.pm:
+	* bin/PerlACE/TestTarget_LVRT.pm:
+	* bin/PerlACE/ProcessVX_Unix.pm:
+	* bin/PerlACE/Process_Win32.pm:
+	* bin/PerlACE/Run_Test.pm:
+	* bin/PerlACE/Process_VMS.pm:
 
-          Added support for running multiplatform tests using remote shell
-          connections.
-          Currently only supported for *nix-like platforms
-          (like Linux PPC64 <-> Linux x86_64).
+	  Added support for running multiplatform tests using remote shell
+	  connections.
+	  Currently only supported for *nix-like platforms
+	  (like Linux PPC64 <-> Linux x86_64).
 
 Thu Apr  8 21:25:54 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
-        * ace/OS_NS_netdb.cpp:
+	* ace/OS_NS_netdb.cpp:
 
-          Fixed compile time error encountered in MAC and iPhone platforms.
+	  Fixed compile time error encountered in MAC and iPhone platforms.
 
 Thu Apr  8 14:51:45 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * docs/ACE-guidelines.html: Clarified the style recommendations
-          for loop and if statement bodies.
+	* docs/ACE-guidelines.html: Clarified the style recommendations
+	  for loop and if statement bodies.
 
 Wed Apr  7 16:27:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
-        * bin/cle.pl:
+	* bin/cle.pl:
 
-          Added the ability to use an environment variable (CL_CHANGELOG_FILE)
-          to specify the name of the ChangeLog file to use.
+	  Added the ability to use an environment variable (CL_CHANGELOG_FILE)
+	  to specify the name of the ChangeLog file to use.
 
 Tue Apr  6 14:37:38 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ACE-INSTALL.html (http): Updated the link to the OCI MPC
-          website.  Thanks to Tim <tim at burmair dot com> for suggesting
-          this.
+	* ACE-INSTALL.html (http): Updated the link to the OCI MPC
+	  website.  Thanks to Tim <tim at burmair dot com> for suggesting
+	  this.
 
 Wed Apr  7 07:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/MakeProjectCreator/config/global.features:
-          ccm_lw is disabled by default
+	* bin/MakeProjectCreator/config/global.features:
+	  ccm_lw is disabled by default
 
 Tue Apr 06 06:08:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/os_include/os_stddef.h:
-          Fixed incorrect semicolon
+	* ace/os_include/os_stddef.h:
+	  Fixed incorrect semicolon
 
-        * ace/OS_NS_netdb.cpp:
-          Initialise pointers to 0
+	* ace/OS_NS_netdb.cpp:
+	  Initialise pointers to 0
 
-        * configure.ac:
-          Fix for cross compilation, thanks to Ed Blackmond
-          <ed dot blackmond at themis dot com> for reporting this
+	* configure.ac:
+	  Fix for cross compilation, thanks to Ed Blackmond
+	  <ed dot blackmond at themis dot com> for reporting this
 
 Fri Apr 02 13:57:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/diff-builds-and-group-fixed-tests-only.sh:
-          Updated latest release date
+	* bin/diff-builds-and-group-fixed-tests-only.sh:
+	  Updated latest release date
 
-        * bin/generate_rel_manpages:
-          Don't automatically copy the files to ISIS, added the copy
-          step to the release instructions
+	* bin/generate_rel_manpages:
+	  Don't automatically copy the files to ISIS, added the copy
+	  step to the release instructions
 
-        * docs/bczar/bczar.html:
-          Small improvements and manually copy the html files using
-          scp. Makes it easier to run this from another host
+	* docs/bczar/bczar.html:
+	  Small improvements and manually copy the html files using
+	  scp. Makes it easier to run this from another host
 
-        * docs/Download.html:
-          Updated links to point to x.7.8
+	* docs/Download.html:
+	  Updated links to point to x.7.8
 
-        * html/index.html:
-          Added link for x.7.8
+	* html/index.html:
+	  Added link for x.7.8
 
-        * NEWS:
-          Added 5.7.8 section
+	* NEWS:
+	  Added 5.7.8 section
 
 Fri Apr 02 10:50:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ACE version 5.7.8 released.
+	* ACE version 5.7.8 released.
 
 Tue Mar 30 09:38:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * debianbuild/*:
-          Pulled in latest files from pkg-ace
+	* debianbuild/*:
+	  Pulled in latest files from pkg-ace
 
 Tue Mar 30 09:34:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
-          Fixed compilation problems with single threaded builds
+	* tests/Thread_Timer_Queue_Adapter_Test.cpp:
+	  Fixed compilation problems with single threaded builds
 
 Tue Mar 30 07:50:02 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/MT_NonBlocking_Connect_Test.cpp:
-          Fixed compilation problem for single threaded builds.
+	* tests/MT_NonBlocking_Connect_Test.cpp:
+	  Fixed compilation problem for single threaded builds.
 
 Mon Mar 29 12:25:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
-        * tests/NDDS_Timer_Test.cpp:
-          Resolved test issues.
+	* tests/NDDS_Timer_Test.cpp:
+	  Resolved test issues.
 
 Mon Mar 29 11:05:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
-        * tests/NDDS_Timer_Test.cpp:
-        * tests/run_test.lst:
-        * tests/tests.mpc:
-          Added timer test which uses the ndds timers.
+	* tests/NDDS_Timer_Test.cpp:
+	* tests/run_test.lst:
+	* tests/tests.mpc:
+	  Added timer test which uses the ndds timers.
 
 Mon Mar 29 06:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
-          New base project, thanks to Marek Brudka <mbrudka at aster dot pl>
-          for providing this
+	* bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
+	  New base project, thanks to Marek Brudka <mbrudka at aster dot pl>
+	  for providing this
 
 Mon Mar 29 06:54:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * debianbuild/*:
-          Pulled in latest files from pkg-ace
+	* debianbuild/*:
+	  Pulled in latest files from pkg-ace
 
 Fri Mar 26 14:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * ace/Dev_Poll_Reactor.{h inl cpp}: Refinements to the way notifies
-          are handled:
-            1. The notify handler was being dispatched multiple times per
-               notify; this has been fixed, which increases performance.
-            2. Notifications are now dispatched in only one thread at a time.
-               This brings more parity to the way notifies are handled in
-               other reactor implementations.
+	* ace/Dev_Poll_Reactor.{h inl cpp}: Refinements to the way notifies
+	  are handled:
+	    1. The notify handler was being dispatched multiple times per
+	       notify; this has been fixed, which increases performance.
+	    2. Notifications are now dispatched in only one thread at a time.
+	       This brings more parity to the way notifies are handled in
+	       other reactor implementations.
 
 Fri Mar 26 13:43:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * debianbuild/tao-utils.install:
-          Corrected filenames
+	* debianbuild/tao-utils.install:
+	  Corrected filenames
 
-        * debianbuild/libtao-orbsvcs-dev.install:
-          Added missing libraries
+	* debianbuild/libtao-orbsvcs-dev.install:
+	  Added missing libraries
 
 Fri Mar 26 09:02:50 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/run_test.pl:
-          Added -l option which allows to run tests selectively.
+	* tests/run_test.pl:
+	  Added -l option which allows to run tests selectively.
 
 Wed Mar 24 07:17:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
-        * bin/fuzz.pl:
-          Added dds4ccm_trace checks.
+	* bin/fuzz.pl:
+	  Added dds4ccm_trace checks.
 
 Tue Mar 23 10:59:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * debianbuild/patches/34-bts386713.dpatch:
-          Updated from debian
+	* debianbuild/patches/34-bts386713.dpatch:
+	  Updated from debian
 
 Fri Mar 19 16:52:08 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/MT_NonBlocking_Connect_Test.cpp:
-          And another attempt to workaround WFMO reactor. The previous
-          changes could break the test on other platforms.
+	* tests/MT_NonBlocking_Connect_Test.cpp:
+	  And another attempt to workaround WFMO reactor. The previous
+	  changes could break the test on other platforms.
 
 Fri Mar 19 16:44:37 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * ace/Dev_Poll_Reactor.cpp (find_handler): If the handle isn't
-          registered, don't try to dereference a null pointer; return 0.
+	* ace/Dev_Poll_Reactor.cpp (find_handler): If the handle isn't
+	  registered, don't try to dereference a null pointer; return 0.
 
 Fri Mar 19 16:16:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/MT_NonBlocking_Connect_Test.cpp:
-          Fixed a typo in previous commit.
+	* tests/MT_NonBlocking_Connect_Test.cpp:
+	  Fixed a typo in previous commit.
 
 Fri Mar 19 15:58:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/MT_NonBlocking_Connect_Test.cpp:
-          Fixed a test on Windows for WFMO reactor which doesn't support
-          work_pending() function.
+	* tests/MT_NonBlocking_Connect_Test.cpp:
+	  Fixed a test on Windows for WFMO reactor which doesn't support
+	  work_pending() function.
 
 Fri Mar 19 13:23:18 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
-        * ace/OS_NS_Thread.cpp:
+	* ace/OS_NS_Thread.cpp:
 
-          Added a helper function for starting tasks on VxWorks.
+	  Added a helper function for starting tasks on VxWorks.
 
-        * bin/PerlACE/ProcessVX_Unix.pm:
-        * bin/PerlACE/ProcessVX_Win32.pm:
-        * bin/PerlACE/TestTarget_VxWorks.pm:
+	* bin/PerlACE/ProcessVX_Unix.pm:
+	* bin/PerlACE/ProcessVX_Win32.pm:
+	* bin/PerlACE/TestTarget_VxWorks.pm:
 
-          Fixed a bug that was triggered with CreateProcess was called with
-          only one argument.
-          Also, set the correct relative path to the executable when it's not
-          in the current directory.
+	  Fixed a bug that was triggered with CreateProcess was called with
+	  only one argument.
+	  Also, set the correct relative path to the executable when it's not
+	  in the current directory.
 
 Fri Mar 19 08:56:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * include/makeinclude/platform_linux.GNU:
-          Added support for archmodelflag
+	* include/makeinclude/platform_linux.GNU:
+	  Added support for archmodelflag
 
 Thu Mar 18 10:40:29 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * tests/NonBlocking_Conn_Test.cpp:
-          Made logging a bit more verbose.
+	* tests/NonBlocking_Conn_Test.cpp:
+	  Made logging a bit more verbose.
 
 Wed Mar 17 20:00:45 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * include/makeinclude/platform_linux_common.GNU: Make the ARFLAGS
-          setting overridable.
+	* include/makeinclude/platform_linux_common.GNU: Make the ARFLAGS
+	  setting overridable.
 
 Wed Mar 17 14:24:20 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * ace/Logging_Strategy.cpp:
-        * ace/Logging_Strategy.h:
-          Extended ACE_Logging_Strategy to allow safely change reactor
-          used by this logging strategy.
+	* ace/Logging_Strategy.cpp:
+	* ace/Logging_Strategy.h:
+	  Extended ACE_Logging_Strategy to allow safely change reactor
+	  used by this logging strategy.
 
 Wed Mar 17 11:58:10 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        Committed the changes that I had to revert before x.7.7.
+	Committed the changes that I had to revert before x.7.7.
 
-        * ace/Strategies_T.cpp:
-          Changed the code so that close() is called in case of failure
-          instead of destroy().
+	* ace/Strategies_T.cpp:
+	  Changed the code so that close() is called in case of failure
+	  instead of destroy().
 
-        * ace/Connector.cpp:
-        * ace/Connector.h:
-          Changed the fix for bug#3731. Now NBCH adds a reference in
-          constructor and removes it in destructor if the SVC_HANDLER that
-          it owns is reference counted. This is a cleaner solution than the
-          one used before.
+	* ace/Connector.cpp:
+	* ace/Connector.h:
+	  Changed the fix for bug#3731. Now NBCH adds a reference in
+	  constructor and removes it in destructor if the SVC_HANDLER that
+	  it owns is reference counted. This is a cleaner solution than the
+	  one used before.
 
-        * tests/NonBlocking_Conn_Test.h:
-        * tests/Process_Strategy_Test.cpp:
-        * tests/NonBlocking_Conn_Test.cpp:
-          Extended NonBlocking_Conn_Test and changed Process_Strategy_Test
-          because of the change in Strategies_T.cpp.
+	* tests/NonBlocking_Conn_Test.h:
+	* tests/Process_Strategy_Test.cpp:
+	* tests/NonBlocking_Conn_Test.cpp:
+	  Extended NonBlocking_Conn_Test and changed Process_Strategy_Test
+	  because of the change in Strategies_T.cpp.
 
-        * tests/MT_NonBlocking_Connect_Test.cpp:
-        * tests/tests.mpc:
-        * tests/run_test.lst:
-          Added a new test. This can be a reproducer for the bug#3731 which
-          currently doesn't have its own test.
+	* tests/MT_NonBlocking_Connect_Test.cpp:
+	* tests/tests.mpc:
+	* tests/run_test.lst:
+	  Added a new test. This can be a reproducer for the bug#3731 which
+	  currently doesn't have its own test.
 
 Wed Mar 17 08:57:30 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * ace/Service_Gestalt.h:
-        * ace/Service_Config.h:
-          Extended doxygen documentaion related to the order of processing
-          of command-line directives and service configuration files.
+	* ace/Service_Gestalt.h:
+	* ace/Service_Config.h:
+	  Extended doxygen documentaion related to the order of processing
+	  of command-line directives and service configuration files.
 
-        * ace/Service_Gestalt.cpp:
-          Changed the order of processing. First, service configuration files
-          are processed then command-line directive. This way default svc.conf
-          can not override results of user provided command-line directives.
+	* ace/Service_Gestalt.cpp:
+	  Changed the order of processing. First, service configuration files
+	  are processed then command-line directive. This way default svc.conf
+	  can not override results of user provided command-line directives.
 
-        * NEWS:
-          Added a news entry for this change.
+	* NEWS:
+	  Added a news entry for this change.
 
 Mon Mar 15 20:08:32 UTC 2010  Olli Savia  <ops@iki.fi>
 
-        * ace/config-WinCE.h:
-        * ace/config-hpux-11.00.h:
-        * ace/config-lynxos.h:
-        * ace/config-netbsd.h:
-        * ace/config-openbsd.h:
-        * ace/config-sunos5.10.h:
-        * ace/config-sunos5.5.h:
-        * ace/config-vxworks6.4.h:
-        * configure.ac:
-          Removed floorl and ceill related settings which are no longer
-          needed.
+	* ace/config-WinCE.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-lynxos.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h:
+	* ace/config-sunos5.10.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-vxworks6.4.h:
+	* configure.ac:
+	  Removed floorl and ceill related settings which are no longer
+	  needed.
 
 Mon Mar 15 12:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * bin/MakeProjectCreator/templates/gnu.mpd:
-          When generating with -static set static_libs_only to 1. This fixes
-          bugzilla 3815. Thanks to Chad Elliot for assisting with this
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+	  When generating with -static set static_libs_only to 1. This fixes
+	  bugzilla 3815. Thanks to Chad Elliot for assisting with this
 
 Mon Mar 15 09:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        Reverted change below, it breaks unix builds
+	Reverted change below, it breaks unix builds
 
-        Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
-        * ace/High_Res_Timer.cpp
-        * ace/High_Res_Timer.h
-        * ace/High_Res_Timer.inl
-          Use 64bit calculations to increase our precision. If you want to have the 32bit
-          calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
-          the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
-          before the next micro release goes out
-          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-          This fixes bugzilla 3703.
+	Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+	* ace/High_Res_Timer.cpp
+	* ace/High_Res_Timer.h
+	* ace/High_Res_Timer.inl
+	  Use 64bit calculations to increase our precision. If you want to have the 32bit
+	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+	  before the next micro release goes out
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3703.
 
 Mon Mar 15 07:58:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/High_Res_Timer.cpp
-        * ace/High_Res_Timer.h
-        * ace/High_Res_Timer.inl
-          Use 64bit calculations to increase our precision. If you want to have the 32bit
-          calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
-          the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
-          before the next micro release goes out
-          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-          This fixes bugzilla 3703.
+	* ace/High_Res_Timer.cpp
+	* ace/High_Res_Timer.h
+	* ace/High_Res_Timer.inl
+	  Use 64bit calculations to increase our precision. If you want to have the 32bit
+	  calculations, add ACE_USE_WINDOWS_32BIT_HIGH_RES_TIMER_CALCULATIONS as define. If
+	  the scoreboard doesn't show any platforms requiring 32bit, we will remove that code
+	  before the next micro release goes out
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3703.
 
-        * ace/Timer_Queue_Adapters.cpp
-        * ace/Timer_Queue_Adapters.h
-        * ace/Timer_Queue_Adapters.inl
-          Make it possible to use a customer event handler in ACE_Thread_Timer_Queue_Adapter.
-          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
-          This fixes bugzilla 3614
+	* ace/Timer_Queue_Adapters.cpp
+	* ace/Timer_Queue_Adapters.h
+	* ace/Timer_Queue_Adapters.inl
+	  Make it possible to use a customer event handler in ACE_Thread_Timer_Queue_Adapter.
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for supplying the patches.
+	  This fixes bugzilla 3614
 
-        * tests/tests.mpc:
-        * tests/Thread_Timer_Queue_Adapter_Test.cpp:
-          New test for testing custom event handlers in ACE_Thread_Timer_Queue_Adapter.
-          Thanks to Alon Diamant <diamant dot alon at gmail dot com> for creating
-          this new test
+	* tests/tests.mpc:
+	* tests/Thread_Timer_Queue_Adapter_Test.cpp:
+	  New test for testing custom event handlers in ACE_Thread_Timer_Queue_Adapter.
+	  Thanks to Alon Diamant <diamant dot alon at gmail dot com> for creating
+	  this new test
 
 Fri Mar 12 21:53:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
-        * bin/PerlACE/ProcessVX.pm:
-        * bin/PerlACE/ProcessVX_Unix.pm:
+	* bin/PerlACE/ProcessVX.pm:
+	* bin/PerlACE/ProcessVX_Unix.pm:
 
-          Added an option to use the 'expect' program to interact with
-          the remote target (via telnet).  This is only enabled when the
-          environment variable ACE_RUN_VX_USE_EXPECT is defined.
+	  Added an option to use the 'expect' program to interact with
+	  the remote target (via telnet).  This is only enabled when the
+	  environment variable ACE_RUN_VX_USE_EXPECT is defined.
 
-        * tests/Log_Msg_Test.cpp:
+	* tests/Log_Msg_Test.cpp:
 
-          Updated the ACE_VXWORKS version check to include version 6.8.
+	  Updated the ACE_VXWORKS version check to include version 6.8.
 
-        * tests/run_test.lst:
+	* tests/run_test.lst:
 
-          Added !VxWorks to exclude Pipe_Test which can't be run
-          on VxWorks (kernel mode) because it depends on ACE_Process::spawn().
+	  Added !VxWorks to exclude Pipe_Test which can't be run
+	  on VxWorks (kernel mode) because it depends on ACE_Process::spawn().
 
 Fri Mar 12 12:09:02 UTC 2010  Olli Savia  <ops@iki.fi>
 
-        * ace/OS_NS_math.h:
-        * ace/OS_NS_math.inl:
-          Rewrote ceil and floor functions using templates and overloaded
-          ceil/floor functions provided by standard C++.
+	* ace/OS_NS_math.h:
+	* ace/OS_NS_math.inl:
+	  Rewrote ceil and floor functions using templates and overloaded
+	  ceil/floor functions provided by standard C++.
 
-        * tests/OS_Test.cpp:
-          Added tests for ceil(float) and floor(float).
+	* tests/OS_Test.cpp:
+	  Added tests for ceil(float) and floor(float).
 
 Thu Mar 11 09:33:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/config-g++-common.h:
-          PPU 4.1.1 for PPC doesn't have atomic builtin support
-          for datatypes of size 1 and 2
+	* ace/config-g++-common.h:
+	  PPU 4.1.1 for PPC doesn't have atomic builtin support
+	  for datatypes of size 1 and 2
 
-        * ace/Atomic_Op.h:
-        * ace/Atomic_Op.inl:
-          Added defines to just disable short/unsigned short/bool specializations
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+	  Added defines to just disable short/unsigned short/bool specializations
 
-        * tests/run_test.lst:
-          Enable 2610 but mark it as not fixed
+	* tests/run_test.lst:
+	  Enable 2610 but mark it as not fixed
 
-        * ace/Process_Manager.cpp:
-          Layout change
+	* ace/Process_Manager.cpp:
+	  Layout change
 
-        * ace/WIN32_Asynch_IO.cpp:
-          Const changes
+	* ace/WIN32_Asynch_IO.cpp:
+	  Const changes
 
 Wed Mar 10 10:31:16 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
-        * ace/Svc_Handler.cpp:
-        * tests/run_test.lst:
-          Fixed bug#2609 and enabled the test for it. Thanks to Milan
-          Cvetkovic <milan dot cvetkovic at mpathix dot com> for
-          contributing this.
+	* ace/Svc_Handler.cpp:
+	* tests/run_test.lst:
+	  Fixed bug#2609 and enabled the test for it. Thanks to Milan
+	  Cvetkovic <milan dot cvetkovic at mpathix dot com> for
+	  contributing this.
 
 Tue Mar  9 12:20:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * include/makeinclude/platform_g++_common.GNU:
-          Added CXX_MACHINE
+	* include/makeinclude/platform_g++_common.GNU:
+	  Added CXX_MACHINE
 
 Mon Mar  8 15:36:55 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
-        * bin/mpc.pl:
-        * bin/mwc.pl:
+	* bin/mpc.pl:
+	* bin/mwc.pl:
 
-          Some platforms have been reported to return undef from
-          $FindBin::RealBin.  In this case, fall back on dirname($0).
+	  Some platforms have been reported to return undef from
+	  $FindBin::RealBin.  In this case, fall back on dirname($0).
 
 Mon Mar  8 13:53:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op_GCC_T.inl:
-          Fixed gcc warning
+	* ace/Atomic_Op_GCC_T.inl:
+	  Fixed gcc warning
 
 Mon Mar  8 08:35:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op.h:
-        * ace/Atomic_Op.inl:
-          Added specializations for bool/unsigned short/short, is around 7 times
-          faster than the default atomic op
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+	  Added specializations for bool/unsigned short/short, is around 7 times
+	  faster than the default atomic op
 
 Mon Mar  8 08:24:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Atomic_Op_Test.cpp:
-          Added tests for short/unsigned short/bool
+	* tests/Atomic_Op_Test.cpp:
+	  Added tests for short/unsigned short/bool
 
 Fri Mar  5 14:02:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * configure.ac:
-          Added test for GCC builtin support
+	* configure.ac:
+	  Added test for GCC builtin support
 
 Fri Mar  5 12:40:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op.h:
-        * ace/Atomic_Op.inl:
-          We did a benchmark on a FC10 64bit system with the GCC builtin support
-          for long/unsigned long. In a release/inline build the performance
-          results using the GCC builtin support is around 2 times faster than
-          when using the ACE assembly version. When we have the GCC builtin support,
-          we now also going to use that for long/unsigned long.
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+	  We did a benchmark on a FC10 64bit system with the GCC builtin support
+	  for long/unsigned long. In a release/inline build the performance
+	  results using the GCC builtin support is around 2 times faster than
+	  when using the ACE assembly version. When we have the GCC builtin support,
+	  we now also going to use that for long/unsigned long.
 
 Fri Mar  5 12:20:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * ace/Atomic_Op.h:
-        * ace/Atomic_Op.inl:
-        * ace/Atomic_Op_GCC_T.cpp:
-        * ace/Atomic_Op_GCC_T.h:
-        * ace/Atomic_Op_GCC_T.inl:
-          Added new Atomic template for the GCC builtin atomic op support.
-          This is used on PPC64/PPC32/IA64 for int/unsigned int/long/unsigned long.
-          On EM64T we do use this for int/unsigned int, the ACE assembly version for
-          long/unsigned long is faster than the GCC.
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+	* ace/Atomic_Op_GCC_T.cpp:
+	* ace/Atomic_Op_GCC_T.h:
+	* ace/Atomic_Op_GCC_T.inl:
+	  Added new Atomic template for the GCC builtin atomic op support.
+	  This is used on PPC64/PPC32/IA64 for int/unsigned int/long/unsigned long.
+	  On EM64T we do use this for int/unsigned int, the ACE assembly version for
+	  long/unsigned long is faster than the GCC.
 
-          On FC10 64bit the int/unsigned int Atomic_Op is now around 6 to 7 times
-          faster than before this change
+	  On FC10 64bit the int/unsigned int Atomic_Op is now around 6 to 7 times
+	  faster than before this change
 
-        * ace/config-g++-common.h:
-          Enable the new builtin atomic also for EM64T
+	* ace/config-g++-common.h:
+	  Enable the new builtin atomic also for EM64T
 
-        * ace/ace.mpc:
-        * ace/Makefile.am:
-          Added new files
+	* ace/ace.mpc:
+	* ace/Makefile.am:
+	  Added new files
 
 Fri Mar  5 11:30:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Atomic_Op_Test.cpp:
-          Print the number of iterations
+	* tests/Atomic_Op_Test.cpp:
+	  Print the number of iterations
 
 Fri Mar  5 11:28:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Atomic_Op_Test.cpp:
-          Also measure postfix increment/decrement
+	* tests/Atomic_Op_Test.cpp:
+	  Also measure postfix increment/decrement
 
 Fri Mar  5 11:21:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Atomic_Op_Test.cpp:
-          Added more checks to make sure Atomic_Op does work
+	* tests/Atomic_Op_Test.cpp:
+	  Added more checks to make sure Atomic_Op does work
 
 Tue Mar  2 21:02:51 UTC 2010  Steve Huston  <shuston@riverace.com>
 
-        * ace/Dev_Poll_Reactor.cpp (mask_ops_i): If the specified handle is
-          not registered, return -1 instead of crashing.
+	* ace/Dev_Poll_Reactor.cpp (mask_ops_i): If the specified handle is
+	  not registered, return -1 instead of crashing.
 
 Thu Mar  4 09:15:54 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-        * bin/make_release.py:
-          Fix for problems with creating MPC release tag.
+	* bin/make_release.py:
+	  Fix for problems with creating MPC release tag.
 
 Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/Atomic_Op_Test.cpp:
-          Rewritten this test to use a template method so that we can
-          test atomic op easily for various data types
+	* tests/Atomic_Op_Test.cpp:
+	  Rewritten this test to use a template method so that we can
+	  test atomic op easily for various data types
 
-        * ace/Time_Value.cpp:
-          Layout changes and fixed compile problem with CB2010. This fixes
-          bugzilla 3835, thanks to Jan Kalin <jan dot kalin at zag dot si>
-          for reporting this.
+	* ace/Time_Value.cpp:
+	  Layout changes and fixed compile problem with CB2010. This fixes
+	  bugzilla 3835, thanks to Jan Kalin <jan dot kalin at zag dot si>
+	  for reporting this.
 
-        * ace/config-win32-borland.h:
-          CB also has long timevalue mismatch
+	* ace/config-win32-borland.h:
+	  CB also has long timevalue mismatch
 
 Thu Mar  4 07:50:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * NEWS:
-          Updated for next micro
+	* NEWS:
+	  Updated for next micro
 
-        * rpmbuild/ace-tao.spec:
-          Fixed problem with installation of nslist readme
+	* rpmbuild/ace-tao.spec:
+	  Fixed problem with installation of nslist readme
 
-        * etc/index.html:
-          Added 5.7.7
+	* etc/index.html:
+	  Added 5.7.7
 
-        * docs/Download.html:
-          Updated for 5.7.7
+	* docs/Download.html:
+	  Updated for 5.7.7
 
-        * docs/bczar/bczar.html:
-          Several updates because we now package on a FC12 system
+	* docs/bczar/bczar.html:
+	  Several updates because we now package on a FC12 system
 
-        * debianbuild/rules:
-          Removed commented out part
+	* debianbuild/rules:
+	  Removed commented out part
 
-        * bin/make_release.py:
-          Next micro release will not ship msvc71 solutions, it is still
-          supported but the end user should generate the solutions him self.
-          Also WinCE solutions are not generated anymore for CIAO and the
-          autoconf bootstrapping is done much earlier in the release process
-          so when it fails we know early. The hostname check has been removed
+	* bin/make_release.py:
+	  Next micro release will not ship msvc71 solutions, it is still
+	  supported but the end user should generate the solutions him self.
+	  Also WinCE solutions are not generated anymore for CIAO and the
+	  autoconf bootstrapping is done much earlier in the release process
+	  so when it fails we know early. The hostname check has been removed
 
-        * bin/diff-builds-and-group-fixed-tests-only.sh:
-          Updated because of micro release
+	* bin/diff-builds-and-group-fixed-tests-only.sh:
+	  Updated because of micro release
 
 Local Variables:
 mode: change-log
