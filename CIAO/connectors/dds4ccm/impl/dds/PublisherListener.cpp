@@ -43,7 +43,7 @@ namespace CIAO
       if (!prop)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                        "CCM_DDS_PublisherListener_i::get_datareader_proxy -"
                         "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::CCM_DataWriter::_nil ();
         }
@@ -55,7 +55,7 @@ namespace CIAO
       if (::CORBA::is_nil (writer))
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
+                        "CCM_DDS_PublisherListener_i::get_datareader_proxy -"
                         "Unable to retrieve writer from PropertyQosProfile\n"));
         }
 
