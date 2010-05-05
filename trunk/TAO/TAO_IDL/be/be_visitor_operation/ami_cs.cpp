@@ -89,7 +89,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_visitor_operation_arglist oa_visitor (&ctx);
 
   // Get the AMI version from the strategy class.
-  be_operation *ami_op = node;//node->arguments ();
+  be_operation *ami_op = node;
 
   if (ami_op->accept (&oa_visitor) == -1)
     {
@@ -193,7 +193,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
-//  const char *lname = node->local_name ()->get_string ();
   ACE_CString base (node->local_name ()->get_string ());
   
   /// The sendc_* operation makes the invocation with the
@@ -203,14 +202,18 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   
   ACE_CString opname (node->is_attr_op () ? "_" : "");
   opname += lname;
+  
+  /// Some compilers can't resolve the stream operator overload.
+  const char *op_name = opname.c_str ();
+  ACE_CDR::ULong len = opname.length ();
 
   *os << be_nl << be_nl
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
-      << "\"" << opname.c_str () << "\"," << be_nl
-      << opname.length () << "," << be_nl;
+      << "\"" << op_name << "\"," << be_nl
+      << len << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
@@ -246,18 +249,12 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       *os << gparent->name () << "::";
     }
-if (be_global->ami4ccm_call_back ())
-{
- *os << "AMI4CCM_" << parent->local_name () << "Handler::"
+    
+  *os << "AMI" << (be_global->ami4ccm_call_back () ? "4CCM_" : "_")
+      << parent->local_name () << "Handler::"
       << lname << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;
-}
-else{
-    *os << "AMI_" << parent->local_name () << "Handler::"
-// *os << "AMI4CCM_" << parent->local_name () << "Handler::"
-      << lname << "_reply_stub" << be_uidt_nl
-      << ");" << be_uidt;
-}
+
   *os << be_uidt_nl
       << "}";
 
