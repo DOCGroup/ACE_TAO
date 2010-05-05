@@ -1,3 +1,15 @@
+Wed May  5 13:26:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation\operation.cpp:
+        * TAO_IDL/be/be_visitor_operation\ami_cs.cpp:
+        
+          In a chain of insertions to TAO_OutStream, replaced calls
+          to ACE_CString::c_str() and ACE_CString::length() with
+          local variables, initialized outside the insertion chain.
+          Some compilers apparently have trouble resolving the
+          overloads. Also removed commented out code and made
+          cosmetic changes.
+
 Tue May  4 16:23:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/amh_si.cpp:

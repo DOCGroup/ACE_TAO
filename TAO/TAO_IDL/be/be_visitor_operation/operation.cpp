@@ -271,8 +271,12 @@ be_visitor_operation::gen_stub_operation_body (
 
   opname += node->original_local_name ()->get_string ();
   
-  *os << opname.c_str () << "\"," << be_nl
-      << opname.length () << "," << be_nl;
+  /// Some compilers can't resolve the stream operator overload.
+  const char *lname = opname.c_str ();
+  ACE_CDR::ULong len = opname.length ();
+  
+  *os << lname << "\"," << be_nl
+      << len << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
