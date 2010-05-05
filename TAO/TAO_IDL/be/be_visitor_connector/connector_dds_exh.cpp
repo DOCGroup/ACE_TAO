@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -36,17 +35,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       return 0;
     }
 
-  AST_Connector *base = node->base_connector ();
-
-  // Hack for the time being to skip codegen for DDS_State
-  // and DDS_Event, both of which come along with the template
-  // module instantiation.
-  if (base == 0)
-    {
-      return 0;
-    }
-
   node_ = node;
+
+  AST_Connector *base = node->base_connector ();
 
   // More shaky logic that will have to be improved. If our
   // base connector does not come from an instantiated
@@ -55,7 +46,12 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   if (this->t_args_ == 0)
     {
-      return 0;
+      this->process_template_args (node);
+      
+      if (this->t_args_ == 0)
+        {
+          return 0;
+        }
     }
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
@@ -72,15 +68,27 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       return 0;
     }
-
+    
+  ACE_CString lname = node->local_name ();  
+  const char *base_tname = 0;
+  
+  if (lname == "DDS_Event" || lname == "DDS_State")
+    {
+      base_tname = lname.c_str ();
+    }
+  else
+    {
+      base_tname =
+        node->base_connector ()->local_name ()->get_string ();
+    }
+    
   /// Assumes parent connector exists and is either DDS_State
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
-      << ": public " << node->base_connector ()->local_name ()
-      << "_Connector_T";
+      << ": public " << base_tname << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
