@@ -15,6 +15,7 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
 feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
     commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1
+    keyword opendds_ts_flags = commandflags
   }
 
   dynamicflags += NDDS_USER_DLL_EXPORT
@@ -25,16 +26,9 @@ feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
   }
 }
 
-feature(!dds4ccm_opendds) {
-  // this allows the user's project to reference opendds_ts_flags,
-  // which will simply be ignored
-  Define_Custom(DummyTypeSupport) {
-    keyword opendds_ts_flags
-  }
-}
-
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
   Define_Custom(DDSGenerator) {
+    keyword opendds_ts_flags = commandflags
   }
 }
 
