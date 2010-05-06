@@ -728,6 +728,8 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
   AST_Module *instance =
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        node->name ());
+                                       
+  instance->from_inst (node);
 
   // Add the new module to the scope containing the template
   // module instantiation.

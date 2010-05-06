@@ -108,13 +108,229 @@ AST_Module::AST_Module (UTL_ScopedName *n)
  : AST_Decl (AST_Decl::NT_module,
              n),
    UTL_Scope (AST_Decl::NT_module),
-   pd_has_nested_valuetype (0)
+   pd_has_nested_valuetype (0),
+   from_inst_ (0)
 {
 }
 
 AST_Module::~AST_Module (void)
 {
 }
+
+// Dump this AST_Module node to the ostream o.
+void
+AST_Module::dump (ACE_OSTREAM_TYPE &o)
+{
+  this->dump_i (o, "module ");
+  this->local_name ()->dump (o);
+  this->dump_i (o, " {\n");
+  UTL_Scope::dump (o);
+  idl_global->indent ()->skip_to (o);
+  this->dump_i (o, "}");
+}
+
+
+// Involved in OBV_ namespace generation.
+void
+AST_Module::set_has_nested_valuetype (void)
+{
+  UTL_Scope *parent = this->defined_in ();
+
+  if (!this->pd_has_nested_valuetype && parent)
+    {
+      AST_Module *pm = AST_Module::narrow_from_scope (parent);
+
+      if (pm != 0)
+        {
+          pm->set_has_nested_valuetype ();
+        }
+    }
+
+  this->pd_has_nested_valuetype = 1;
+}
+
+bool
+AST_Module::has_nested_valuetype (void)
+{
+  return this->pd_has_nested_valuetype;
+}
+
+int
+AST_Module::be_add_interface (AST_Interface *i,
+                              AST_Interface *ix)
+{
+  // Add it to scope.
+  this->add_to_scope (i,
+                      ix);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (i,
+                           false,
+                           i->local_name (),
+                           ix);
+
+  return 0;
+}
+
+int
+AST_Module::be_add_valuetype (AST_ValueType *v)
+{
+  // Add it to scope.
+  this->add_to_scope (v);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (v,
+                           false,
+                           v->local_name ());
+
+  return 0;
+}
+
+// Has this node been referenced here before?
+bool
+AST_Module::referenced (AST_Decl *e,
+                        Identifier *id)
+{
+  bool refd = this->UTL_Scope::referenced (e, id);
+
+  if (refd)
+    {
+      return true;
+    }
+
+  AST_Decl *d = this->look_in_previous (e->local_name (), true);
+  
+  if (0 == d)
+    {
+      return false;
+    }
+    
+  AST_Type *t = AST_Type::narrow_from_decl (d);
+  return 0 == t || t->is_defined ();
+}
+
+void
+AST_Module::add_to_previous (AST_Module *m)
+{
+  // Here, we depend on the scope iterator in
+  // be_generator::create_module (which calls this function)
+  // to return items in the order they were declared or included.
+  // That means that the last module returned that matches the name
+  // of this one will have all the decls from all previous
+  // reopenings in its previous_ member.
+  this->previous_ = m->previous_;
+
+  AST_Decl *d = 0;
+
+  for (UTL_ScopeActiveIterator iter (DeclAsScope (m), IK_decls);
+       !iter.is_done ();
+       iter.next ())
+    {
+      d = iter.item ();
+
+      // Add all the previous opening's decls (except
+      // for the predefined types) to the 'previous' list
+      // of this one.
+      if (d->node_type () == AST_Decl::NT_pre_defined)
+        {
+          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (d);
+
+          if (pdt->pt () != AST_PredefinedType::PT_pseudo)
+            {
+              continue;
+            }
+        }
+      else if (d->node_type () == AST_Decl::NT_interface_fwd)
+        {
+          AST_InterfaceFwd *f = AST_InterfaceFwd::narrow_from_decl (d);
+          AST_Interface *i = f->full_definition ();
+
+          // If i is defined, it means that the interface was forward
+          // declared AFTER it was defined, perhaps in a subsequent
+          // opening of the same module - legal, but superfluous.
+          // Adding d to previous_ in that case can only bung up the
+          // results of look_in_previous() later, so we skip it.
+          if (i->is_defined ())
+            {
+              continue;
+            }
+        }
+
+      this->previous_.insert (d);
+    }
+}
+
+AST_Decl *
+AST_Module::look_in_previous (Identifier *e, bool ignore_fwd)
+{
+  AST_Decl **d = 0;
+  AST_Decl *retval = 0;
+
+  // If there are more than two openings of this module, we want
+  // to get the last one - the one that will have the decls from
+  // all the previous openings added to previous_.
+  for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
+       !iter.done ();
+       iter.advance ())
+    {
+      iter.next (d);
+
+      if (ignore_fwd)
+        {
+          AST_Decl::NodeType nt = (*d)->node_type ();
+
+          if (nt == AST_Decl::NT_interface_fwd
+              || nt == AST_Decl::NT_eventtype_fwd
+              || nt == AST_Decl::NT_component_fwd
+              || nt == AST_Decl::NT_struct_fwd
+              || nt == AST_Decl::NT_union_fwd
+              || nt == AST_Decl::NT_valuetype_fwd)
+            {
+              continue;
+            }
+        }
+
+      if (e->case_compare ((*d)->local_name ()))
+        {
+          retval = *d;
+        }
+    }
+
+  return retval;
+}
+
+ACE_Unbounded_Set<AST_Decl *> &
+AST_Module::previous (void)
+{
+  return this->previous_;
+}
+
+void
+AST_Module::destroy (void)
+{
+  this->UTL_Scope::destroy ();
+  this->AST_Decl::destroy ();
+}
+
+int
+AST_Module::ast_accept (ast_visitor *visitor)
+{
+  return visitor->visit_module (this);
+}
+
+AST_Template_Module_Inst *
+AST_Module::from_inst (void) const
+{
+  return this->from_inst_;
+}
+
+void
+AST_Module::from_inst (AST_Template_Module_Inst *node)
+{
+  this->from_inst_ = node;
+}
+
+//================================================
 
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
@@ -380,209 +596,6 @@ AST_Module::fe_add_porttype (AST_PortType *t)
     AST_PortType::narrow_from_decl (
       this->fe_add_decl (t));
 }
-
-// Dump this AST_Module node to the ostream o.
-void
-AST_Module::dump (ACE_OSTREAM_TYPE &o)
-{
-  this->dump_i (o, "module ");
-  this->local_name ()->dump (o);
-  this->dump_i (o, " {\n");
-  UTL_Scope::dump (o);
-  idl_global->indent ()->skip_to (o);
-  this->dump_i (o, "}");
-}
-
-
-// Involved in OBV_ namespace generation.
-void
-AST_Module::set_has_nested_valuetype (void)
-{
-  UTL_Scope *parent = this->defined_in ();
-
-  if (!this->pd_has_nested_valuetype && parent)
-    {
-      AST_Module *pm = AST_Module::narrow_from_scope (parent);
-
-      if (pm != 0)
-        {
-          pm->set_has_nested_valuetype ();
-        }
-    }
-
-  this->pd_has_nested_valuetype = 1;
-}
-
-bool
-AST_Module::has_nested_valuetype (void)
-{
-  return this->pd_has_nested_valuetype;
-}
-
-int
-AST_Module::be_add_interface (AST_Interface *i,
-                              AST_Interface *ix)
-{
-  // Add it to scope.
-  this->add_to_scope (i,
-                      ix);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (i,
-                           false,
-                           i->local_name (),
-                           ix);
-
-  return 0;
-}
-
-int
-AST_Module::be_add_valuetype (AST_ValueType *v)
-{
-  // Add it to scope.
-  this->add_to_scope (v);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (v,
-                           false,
-                           v->local_name ());
-
-  return 0;
-}
-
-// Has this node been referenced here before?
-bool
-AST_Module::referenced (AST_Decl *e,
-                        Identifier *id)
-{
-  bool refd = this->UTL_Scope::referenced (e, id);
-
-  if (refd)
-    {
-      return true;
-    }
-
-  AST_Decl *d = this->look_in_previous (e->local_name (), true);
-  
-  if (0 == d)
-    {
-      return false;
-    }
-    
-  AST_Type *t = AST_Type::narrow_from_decl (d);
-  return 0 == t || t->is_defined ();
-}
-
-void
-AST_Module::add_to_previous (AST_Module *m)
-{
-  // Here, we depend on the scope iterator in
-  // be_generator::create_module (which calls this function)
-  // to return items in the order they were declared or included.
-  // That means that the last module returned that matches the name
-  // of this one will have all the decls from all previous
-  // reopenings in its previous_ member.
-  this->previous_ = m->previous_;
-
-  AST_Decl *d = 0;
-
-  for (UTL_ScopeActiveIterator iter (DeclAsScope (m), IK_decls);
-       !iter.is_done ();
-       iter.next ())
-    {
-      d = iter.item ();
-
-      // Add all the previous opening's decls (except
-      // for the predefined types) to the 'previous' list
-      // of this one.
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (d);
-
-          if (pdt->pt () != AST_PredefinedType::PT_pseudo)
-            {
-              continue;
-            }
-        }
-      else if (d->node_type () == AST_Decl::NT_interface_fwd)
-        {
-          AST_InterfaceFwd *f = AST_InterfaceFwd::narrow_from_decl (d);
-          AST_Interface *i = f->full_definition ();
-
-          // If i is defined, it means that the interface was forward
-          // declared AFTER it was defined, perhaps in a subsequent
-          // opening of the same module - legal, but superfluous.
-          // Adding d to previous_ in that case can only bung up the
-          // results of look_in_previous() later, so we skip it.
-          if (i->is_defined ())
-            {
-              continue;
-            }
-        }
-
-      this->previous_.insert (d);
-    }
-}
-
-AST_Decl *
-AST_Module::look_in_previous (Identifier *e, bool ignore_fwd)
-{
-  AST_Decl **d = 0;
-  AST_Decl *retval = 0;
-
-  // If there are more than two openings of this module, we want
-  // to get the last one - the one that will have the decls from
-  // all the previous openings added to previous_.
-  for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
-       !iter.done ();
-       iter.advance ())
-    {
-      iter.next (d);
-
-      if (ignore_fwd)
-        {
-          AST_Decl::NodeType nt = (*d)->node_type ();
-
-          if (nt == AST_Decl::NT_interface_fwd
-              || nt == AST_Decl::NT_eventtype_fwd
-              || nt == AST_Decl::NT_component_fwd
-              || nt == AST_Decl::NT_struct_fwd
-              || nt == AST_Decl::NT_union_fwd
-              || nt == AST_Decl::NT_valuetype_fwd)
-            {
-              continue;
-            }
-        }
-
-      if (e->case_compare ((*d)->local_name ()))
-        {
-          retval = *d;
-        }
-    }
-
-  return retval;
-}
-
-ACE_Unbounded_Set<AST_Decl *> &
-AST_Module::previous (void)
-{
-  return this->previous_;
-}
-
-void
-AST_Module::destroy (void)
-{
-  this->UTL_Scope::destroy ();
-  this->AST_Decl::destroy ();
-}
-
-int
-AST_Module::ast_accept (ast_visitor *visitor)
-{
-  return visitor->visit_module (this);
-}
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Module)
 IMPL_NARROW_FROM_SCOPE(AST_Module)
