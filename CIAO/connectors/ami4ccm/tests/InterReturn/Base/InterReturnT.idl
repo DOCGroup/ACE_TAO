@@ -1,0 +1,70 @@
+// $Id$
+
+#ifndef INTERRETURN_T_IDL
+#define INTERRETURN_T_IDL
+
+#pragma ciao lem "Base/InterReturnTE.idl"
+#pragma ciao ami4ccm interface "InterReturnT::MyFoo"
+#pragma ciao lem "Base/InterReturnTAE.idl"
+
+module InterReturnT
+{
+  // Mixed struct
+  struct TestStruct {
+    string key;
+    long x;
+    };
+
+ // Array
+  struct TestArr {
+    string key; 
+    short x_array[5];
+    };
+ 
+  typedef TestArr TestArray[5];
+
+  // Union
+  union X_Union switch (short) {
+    case 0:
+      string x_test;
+    case 1:
+      long   x_long;
+    };
+
+  // Sequence
+  struct test {
+    short x_test;
+    string x_teststr;
+    };
+  typedef sequence<test> TestSeq;
+  
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+  
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      void ret_void (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+      long ret_long (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+      double ret_double (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+      TestStruct ret_struct ( in string in_str, out string answer,
+                              out long l_cmd)
+        raises (InternalError);
+      TestArray ret_array (in string in_str, out string answer,
+                           out long l_cmd)
+        raises (InternalError);
+      TestSeq ret_seq (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+      X_Union ret_union (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+    };
+};
+
+#endif
+
