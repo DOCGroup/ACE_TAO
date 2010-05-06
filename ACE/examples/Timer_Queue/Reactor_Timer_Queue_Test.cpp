@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Reactor_Timer_Queue_Test
+*  @file    Reactor_Timer_Queue_Test.cpp
  *
  *  $Id$
  *
@@ -31,12 +31,9 @@ Reactor_Timer_Handler::set_timer_id (long tid)
 }
 
 int
-Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
+Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &,
                                        const void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (tv);
-
   ACE_Time_Value txv = ACE_OS::gettimeofday ();
   ACE_DEBUG ((LM_DEBUG,
               "\nTimer #%d fired at %d.%06d (%T)!\n",
@@ -102,11 +99,8 @@ Input_Handler::cancel_timer (void *argument)
 }
 
 int
-Input_Handler::shutdown_timer (void *argument)
+Input_Handler::shutdown_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   this->done_ = 1;
   ACE_DEBUG ((LM_DEBUG,
               "Shutting down event loop\n"));
@@ -114,11 +108,8 @@ Input_Handler::shutdown_timer (void *argument)
 }
 
 int
-Input_Handler::list_timer (void *argument)
+Input_Handler::list_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   ACE_Timer_Queue_Iterator &iter = this->tq_->iter ();
   ACE_DEBUG ((LM_DEBUG,
               "\n\nTimers in queue:\n"));

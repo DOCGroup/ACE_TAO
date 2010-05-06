@@ -1,3 +1,10 @@
+Thu May  6 12:48:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Fixed fuzz and removed some not used arguments
+
 Thu May  6 12:01:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Async_Timer_Queue_Test.h:
