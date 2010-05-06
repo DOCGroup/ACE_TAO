@@ -1,3 +1,16 @@
+Thu May  6 19:35:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        
+          Added member + accessors to AST_Module pointing to the
+          template module instantiation that created it, if any.
+          Provides a more reliable lookup of the instantiation,
+          and thus its associated template arguments, than relying
+          on scoping assumptions as was done previously.
+
 Thu May  6 15:30:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
