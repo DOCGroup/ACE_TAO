@@ -1,7 +1,12 @@
+Thu May  6 18:16:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Reverted change from Abdul, it breaks svn head with ndds
+
 Thu May  6 14:34:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Added a test case where an instantiated template module
           reopens a pre-existing module, which is legal IDL but was
           causing a bogus redefinition error (now fixed).
@@ -34,7 +39,7 @@ Thu May  6 11:37:14 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
 
           Minor enhancement to treat all DDS implementation uniformally.
           opendds_ts_flags now is used for all DDS implementations.
-          In the future, this perhaps should be changed to just dds_ts_flags. 
+          In the future, this perhaps should be changed to just dds_ts_flags.
 
 Thu May  6 10:16:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
