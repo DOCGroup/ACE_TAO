@@ -1,18 +1,23 @@
-
-//=============================================================================
-/**
- *  @file    Thread_Timer_Queue_Test.cpp
- *
- *  $Id$
- *
- *    This test exercises the <ACE_Thread_Timer_Queue_Adapter>
- *    using an <ACE_Timer_Heap>.
- *
- *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Thread_Timer_Queue_Custom_Handler_Test.cpp
+//
+// = DESCRIPTION
+//      This test exercises the <ACE_Thread_Timer_Queue_Adapter>
+//      using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
+//      timer events.
+//
+// = AUTHORS
+//    Carlos O'Ryan <coryan@cs.wustl.edu> and
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+//    Alon Diamant <diamant.alon@gmail.com>
+//
+// ============================================================================
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
@@ -20,54 +25,13 @@
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-#include "Thread_Timer_Queue_Test.h"
+#include "Thread_Timer_Queue_Custom_Handler_Test.h"
 
 #include "ace/Condition_T.h"
 #include "ace/Thread_Mutex.h"
 
-ACE_RCSID(Timer_Queue, Thread_Timer_Queue_Test, "$Id$")
-
-// Administrivia methods...
-Handler::Handler(const ACE_Time_Value &expiration_time)
-  :  expires_ (expiration_time),
-     id_ (0)
-{
-}
-
-Handler::~Handler (void)
-{
-}
-
-void
-Handler::set_id (int id)
-{
-  this->id_ = id;
-}
-
-// This is the method invoked when the Timer expires.
-
-int
-Handler::handle_timeout (const ACE_Time_Value &current_time,
-                         const void *)
-{
-  ACE_Time_Value delay = current_time - this->expires_;
-
-  // No need to protect this printf is always called from a Async safe
-  // point.
-  ACE_OS::printf ("\nexpiring timer %d at %lu.%7.7lu secs\n"
-                  "\tthere was a %lu.%7.7lu secs delay\n",
-                  this->id_,
-                  current_time.sec (),
-                  current_time.usec (),
-                  delay.sec (),
-                  delay.usec ());
-  // Notice this delete is protected.
-  delete this;
-  return 0;
-}
-
-Input_Task::Input_Task (Thread_Timer_Queue *queue,
-                        Thread_Timer_Queue_Test_Driver &timer_queue_driver)
+Custom_Handler_Input_Task::Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
+                        Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
     queue_ (queue),
     usecs_ (ACE_ONE_SECOND_IN_USECS),
@@ -79,7 +43,7 @@ Input_Task::Input_Task (Thread_Timer_Queue *queue,
 // user.
 
 int
-Input_Task::svc (void)
+Custom_Handler_Input_Task::svc (void)
 {
   for (;;)
     // call back to the driver's implementation on how to read and
@@ -98,17 +62,17 @@ Input_Task::svc (void)
 //  <Timer_Queue_Test_Driver> class.  (see Command pattern)
 
 int
-Input_Task::add_timer (void *argument)
+Custom_Handler_Input_Task::add_timer (void *argument)
 {
   u_long useconds = *reinterpret_cast<int *> (argument);
   ACE_Time_Value interval (useconds / usecs_,
                            useconds % usecs_);
   ACE_Time_Value expire_at = ACE_OS::gettimeofday () + interval;
 
-  Handler *h;
+  Custom_Handler *h;
 
   ACE_NEW_RETURN (h,
-                  Handler (expire_at),
+                  Custom_Handler (expire_at),
                   -1);
 
   int id = queue_->schedule (h, 0, expire_at);
@@ -131,7 +95,7 @@ Input_Task::add_timer (void *argument)
 //  <Timer_Queue_Test_Driver> class.  (see Command pattern)
 
 int
-Input_Task::cancel_timer (void *argument)
+Custom_Handler_Input_Task::cancel_timer (void *argument)
 {
   return this->queue_->cancel (*reinterpret_cast<int *> (argument));
 }
@@ -141,7 +105,7 @@ Input_Task::cancel_timer (void *argument)
 // (see Command pattern)
 
 int
-Input_Task::list_timer (void *argument)
+Custom_Handler_Input_Task::list_timer (void *argument)
 {
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (argument);
@@ -156,7 +120,7 @@ Input_Task::list_timer (void *argument)
 // <Timer_Queue_Test_Driver> class that we are done.
 
 int
-Input_Task::shutdown_timer (void *argument)
+Custom_Handler_Input_Task::shutdown_timer (void *argument)
 {
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (argument);
@@ -177,7 +141,7 @@ Input_Task::shutdown_timer (void *argument)
 }
 
 void
-Input_Task::dump (void)
+Custom_Handler_Input_Task::dump (void)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->queue_->mutex ());
 
@@ -195,24 +159,24 @@ Input_Task::dump (void)
 
 // constructor
 
-Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
+Thread_Timer_Queue_Custom_Handler_Test::Thread_Timer_Queue_Custom_Handler_Test (void)
   : input_task_ (&timer_queue_, *this)
 {
 }
 
-Thread_Timer_Queue_Test_Driver::~Thread_Timer_Queue_Test_Driver (void)
+Thread_Timer_Queue_Custom_Handler_Test::~Thread_Timer_Queue_Custom_Handler_Test (void)
 {
 }
 
 int
-Thread_Timer_Queue_Test_Driver::run_test (void)
+Thread_Timer_Queue_Custom_Handler_Test::run_test (void)
 {
   this->init ();
   return 0;
 }
 
 int
-Thread_Timer_Queue_Test_Driver::display_menu (void)
+Thread_Timer_Queue_Custom_Handler_Test::display_menu (void)
 {
   static char menu[] =
     "Usage:\n"
@@ -228,26 +192,26 @@ Thread_Timer_Queue_Test_Driver::display_menu (void)
 }
 
 int
-Thread_Timer_Queue_Test_Driver::init (void)
+Thread_Timer_Queue_Custom_Handler_Test::init (void)
 {
-  typedef Command<Input_Task, Input_Task::ACTION> CMD;
+  typedef Command<Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION> CMD;
 
   // initialize the <Command> objects with their corresponding
-  // methods from <Input_Task>
+  // methods from <Custom_Handler_Input_Task>
   ACE_NEW_RETURN (schedule_cmd_,
-                  CMD (input_task_, &Input_Task::add_timer),
+                  CMD (input_task_, &Custom_Handler_Input_Task::add_timer),
                   -1);
 
   ACE_NEW_RETURN (cancel_cmd_,
-                  CMD (input_task_, &Input_Task::cancel_timer),
+                  CMD (input_task_, &Custom_Handler_Input_Task::cancel_timer),
                   -1);
 
   ACE_NEW_RETURN (list_cmd_,
-                  CMD (input_task_, &Input_Task::list_timer),
+                  CMD (input_task_, &Custom_Handler_Input_Task::list_timer),
                   -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-                  CMD (input_task_, &Input_Task::shutdown_timer),
+                  CMD (input_task_, &Custom_Handler_Input_Task::shutdown_timer),
                   -1);
 
   if (this->input_task_.activate () == -1)
