@@ -1,3 +1,17 @@
+Thu May  6 15:30:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
+        
+          - Fixed indentation error in generated connector header code.
+          
+          - Changed connector traits prefix from DDS to DDS_.
+          
+          - Consolidated common code from header and source visitors
+            into the base class.
+
 Thu May  6 14:29:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp(fe_add_decl):
