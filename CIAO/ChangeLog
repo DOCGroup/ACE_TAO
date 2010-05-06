@@ -1,3 +1,11 @@
+Thu May  6 14:34:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Added a test case where an instantiated template module
+          reopens a pre-existing module, which is legal IDL but was
+          causing a bogus redefinition error (now fixed).
+
 Thu May  6 12:21:20 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst

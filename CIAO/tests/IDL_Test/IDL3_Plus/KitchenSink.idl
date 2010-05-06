@@ -293,8 +293,9 @@ module T
   typedef sequence <X> XSeq;
 };
 
-// Jeff, this is currently rejected and should work to my idea
-//module ::M::N < ::T::X> T;
+/// An instantiated template module can be a reopening
+/// of an existing module.
+module ::M::N < ::T::X> T;
 
 /*
 Support for native is there, but this results in non compiling code
