@@ -71,11 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Set.h"
 
-// Representation of module.
-//
 // NOTE: add(AST_EnumValue *) is defined here because enums can
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
+
+class AST_Template_Module_Inst;
 
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
@@ -117,7 +117,8 @@ public:
 
   // Called by lookup_by_name_local, to check for declaration
   // in a previous opening of this module.
-  virtual AST_Decl *look_in_previous (Identifier *e, bool ignore_fwd = false);
+  virtual AST_Decl *look_in_previous (Identifier *e,
+                                      bool ignore_fwd = false);
 
   // Accessor to the member.
   ACE_Unbounded_Set<AST_Decl *> &previous (void);
@@ -127,7 +128,12 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+  // Accessors for the member.
+  AST_Template_Module_Inst *from_inst (void) const;
+  void from_inst (AST_Template_Module_Inst *node);
 
+public:
   static AST_Decl::NodeType const NT;
 
 private:
@@ -212,10 +218,14 @@ private:
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
   
+private:  
   bool pd_has_nested_valuetype;
 
   ACE_Unbounded_Set<AST_Decl *> previous_;
-  // Container for declaration from previous openings of this module.
+  ///; Container for declaration from previous openings of this module.
+  
+  AST_Template_Module_Inst *from_inst_;
+  /// Reference to the instantiation that created us, if any.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

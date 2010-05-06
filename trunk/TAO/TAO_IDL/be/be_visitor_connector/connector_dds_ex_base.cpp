@@ -78,31 +78,29 @@ void
 be_visitor_connector_dds_ex_base::process_template_args (
   AST_Connector *node)
 {
-  AST_Decl *d =
-    this->node_->defined_in ()->lookup_by_name (
-      ScopeAsDecl (node->defined_in ())->name (),
-      true);
+  AST_Module *m =
+    AST_Module::narrow_from_scope (node->defined_in ());
 
-  // The template module instantiation and the corresponding
-  // implied IDL module have the same name, but the instantiation
-  // comes first in the scope list, so that is what the scope
-  // iteration will find first.
-  this->t_inst_ =
-    AST_Template_Module_Inst::narrow_from_decl (d);
+  /// If the connector comes from the instantiation of a
+  /// template module, then the regular module it's
+  /// defined in will have a reference to it.
+  this->t_inst_ = m->from_inst ();
 
   if (this->t_inst_ == 0)
     {
-      // More shaky logic, but it's the best we have for now.
-      // Depends on the application connector have a base
-      // connector declared in the instantiation of a template
-      // module.
+      /// Probably means we're trying the base connector
+      /// of DDS_State or DDS_Event, in which case we
+      /// return so the caller can try again with the
+      /// derived connector, which will succeed in
+      /// finding the template module instantiation and
+      /// its associated template arguments.
       return;
     }
 
   this->t_args_ = this->t_inst_->template_args ();
 
-  // We depend on the DDS datatype being the first template
-  // argument for now, this may change.
+  /// We depend on the DDS datatype being the first template
+  /// argument for now, this may change.
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
 
