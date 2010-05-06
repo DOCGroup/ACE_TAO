@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p InterReturnT_Base InterReturnT_Receiver"
+
+project(AMI_ReturnT_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_InterReturnT_idl_gen
+  idlflags += -Wb,stub_export_macro=INTERRETURN_T_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=InterReturnT_Receiver_stub_export.h \
+              -Wb,skel_export_macro=INTERRETURN_T_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=InterReturnT_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=INTERRETURN_T_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=InterReturnT_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    InterReturnT_Receiver.idl
+  }
+}
+
+project(AMI_ReturnT_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_ReturnT_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=INTERRETURN_T_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=InterReturnT_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    InterReturnT_ReceiverE.idl
+  }
+}
+
+project(AMI_ReturnT_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_ReturnT_Base_Receiver_lem_gen AMI_InterReturnT_Base_Receiver_stub AMI_InterReturnT_stub
+  libs  += InterReturnT_stub InterReturnT_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = InterReturnT_Receiver_lem_stub
+  dynamicflags   = INTERRETURN_T_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterReturnT_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    InterReturnT_ReceiverEC.h
+    InterReturnT_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    InterReturnT_ReceiverEC.inl
+  }
+}
+
+project(AMI_InterReturnT_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_ReturnT_Base_Receiver_idl_gen AMI_InterReturnT_stub
+  libs  += InterReturnT_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = InterReturnT_Receiver_stub
+  dynamicflags   = INTERRETURN_T_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterReturnT_ReceiverC.cpp
+  }
+
+  Header_Files {
+    InterReturnT_ReceiverC.h
+    InterReturnT_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    InterReturnT_ReceiverC.inl
+  }
+}
+
+project(AMI_InterReturnT_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_ReturnT_Base_Receiver_l_stub AMI_InterReturnT_Base_Receiver_stub AMI_InterReturnT_stub AMI_InterReturnT_lem_stub
+  sharedname = InterReturnT_Receiver_exec
+  libs += InterReturnT_Receiver_stub InterReturnT_Receiver_lem_stub InterReturnT_stub InterReturnT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = INTERRETURN_T_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterReturnT_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    InterReturnT_Receiver_exec.h
+    InterReturnT_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_InterReturnT_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_InterReturnT_Base_skel AMI_ReturnT_Base_Receiver_l_stub AMI_InterReturnT_stub AMI_InterReturnT_skel AMI_InterReturnT_lem_stub
+  sharedname  = InterReturnT_Receiver_svnt
+  libs       += InterReturnT_Receiver_stub InterReturnT_Receiver_lem_stub  \
+                InterReturnT_skel \
+                InterReturnT_stub InterReturnT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = INTERRETURN_T_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    InterReturnT_ReceiverS.cpp
+    InterReturnT_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    InterReturnT_ReceiverS.h
+    InterReturnT_Receiver_svnt.h
+    InterReturnT_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    InterReturnT_ReceiverS.inl
+  }
+}
+
