@@ -1,3 +1,12 @@
+Thu May  6 14:29:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp(fe_add_decl):
+        
+          Fixed bug where an instantiated template module with the
+          same name as an existing module would cause a redefinition
+          error. Since a template module instantiation is just a
+          module itself, it may reopen a previous one.
+
 Thu May  6 10:35:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/Makefile.am:

@@ -411,14 +411,31 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
                                       d);
           return 0;
         }
+        
+      /// For convenience, AST_Template_Module_Inst inherits
+      /// from AST_Field, but has a node type of NT_module.
+      /// Since we then can't add it using fe_add_module(), a
+      /// check is needed here to avoid a redefinition error,
+      /// if the instantiated module is meant to reopen a
+      /// previous one.
+      
+      AST_Decl::NodeType lnt = d->node_type ();
+      AST_Decl::NodeType ant = t->node_type ();
+      
+      bool need_ref_check =
+        (lnt != AST_Decl::NT_module
+         || ant != AST_Decl::NT_module);
 
-      if (this->referenced (d, t->local_name ()))
+      if (need_ref_check)
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      d);
-          return 0;
+          if (this->referenced (d, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          ScopeAsDecl (this),
+                                          d);
+              return 0;
+            }
         }
 
       if (t->has_ancestor (d))
