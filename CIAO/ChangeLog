@@ -1,3 +1,11 @@
+Thu May  6 11:37:14 UTC 2010  Abdul Sowayan  <sowayan@gmail.com>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+
+          Minor enhancement to treat all DDS implementation uniformally.
+          opendds_ts_flags now is used for all DDS implementations.
+          In the future, this perhaps should be changed to just dds_ts_flags. 
+
 Thu May  6 10:16:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
