@@ -105,11 +105,8 @@ Custom_Handler_Input_Task::cancel_timer (void *argument)
 // (see Command pattern)
 
 int
-Custom_Handler_Input_Task::list_timer (void *argument)
+Custom_Handler_Input_Task::list_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
   // Dump the timer queue contents.
   this->dump ();
 
@@ -120,11 +117,8 @@ Custom_Handler_Input_Task::list_timer (void *argument)
 // <Timer_Queue_Test_Driver> class that we are done.
 
 int
-Custom_Handler_Input_Task::shutdown_timer (void *argument)
+Custom_Handler_Input_Task::shutdown_timer (void *)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (argument);
-
 #if defined (ACE_LACKS_PTHREAD_CANCEL)
   // Cancel the thread timer queue task "voluntarily."
   this->queue_->deactivate ();
