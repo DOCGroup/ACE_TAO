@@ -35,60 +35,21 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       return 0;
     }
 
-  node_ = node;
-
-  AST_Connector *base = node->base_connector ();
-
-  // More shaky logic that will have to be improved. If our
-  // base connector does not come from an instantiated
-  // template module, we skip the code generation.
-  this->process_template_args (base);
-
-  if (this->t_args_ == 0)
+  if (!this->begin (node))
     {
-      this->process_template_args (node);
-      
-      if (this->t_args_ == 0)
-        {
-          return 0;
-        }
+      return -1;
     }
-
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
-      << "namespace CIAO_" << node->flat_name ()
-      << "_Impl" << be_nl
-      << "{" << be_idt;
-
+    
   this->gen_dds_traits ();
   this->gen_connector_traits ();
-
-  if (this->t_args_ == 0)
-    {
-      return 0;
-    }
-    
-  ACE_CString lname = node->local_name ();  
-  const char *base_tname = 0;
   
-  if (lname == "DDS_Event" || lname == "DDS_State")
-    {
-      base_tname = lname.c_str ();
-    }
-  else
-    {
-      base_tname =
-        node->base_connector ()->local_name ()->get_string ();
-    }
-    
   /// Assumes parent connector exists and is either DDS_State
   /// or DDS_Event, so we generate inheritance from the
   /// corresponding template. May have to generalize this logic.
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << this->node_->local_name () << "_exec_i" << be_idt_nl
-      << ": public " << base_tname << "_Connector_T";
+      << ": public " << this->base_tname_ << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
@@ -107,7 +68,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
   os_ << " <" << be_idt << be_idt_nl
       << this->dds_traits_name_.c_str () << "," << be_nl
-      << "DDS" << this->node_->local_name ()
+      << "DDS_" << this->node_->local_name ()
       << "_Traits," << be_nl;
 
   if (ut->size_type () == AST_Type::FIXED)
@@ -233,8 +194,9 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << "::Listener," << be_nl
       << "::" << this->t_inst_->name ()
       << "::StateListener," << be_nl
-      << "::CCM_DDS::ConnectorStatusListener> DDS"
-      << this->node_->local_name () << "_Traits;";
+      << "::CCM_DDS::ConnectorStatusListener> DDS_"
+      << this->node_->local_name () << "_Traits;"
+      << be_uidt;
 }
 
 

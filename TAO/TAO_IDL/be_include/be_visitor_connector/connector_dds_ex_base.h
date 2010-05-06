@@ -36,7 +36,7 @@ public:
   ~be_visitor_connector_dds_ex_base (void);
   
 protected:
-  void process_template_args (AST_Connector *base);
+  bool begin (be_connector *node);
   
 protected:
   // Storage for the current template module instantiation we
@@ -47,6 +47,10 @@ protected:
   // Derives from the DDS datatype, so we want to calculate it
   // once and store it.
   ACE_CString dds_traits_name_;
+  const char *base_tname_;
+  
+private:
+  void process_template_args (AST_Connector *node);
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_ */
