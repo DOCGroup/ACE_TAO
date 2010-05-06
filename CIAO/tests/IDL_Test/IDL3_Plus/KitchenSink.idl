@@ -284,6 +284,18 @@ module M
   };
 };
 
+module T
+{
+  struct X
+  {
+    unsigned long Z;
+  };
+  typedef sequence <X> XSeq;
+};
+
+// Jeff, this is currently rejected and should work to my idea
+//module ::M::N < ::T::X> T;
+
 /*
 Support for native is there, but this results in non compiling code
 native NAT;

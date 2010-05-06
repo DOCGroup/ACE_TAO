@@ -1,3 +1,9 @@
+Thu May  6 09:54:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Extended this file with a new constuct which is commented out because
+          tao_idl doesn't like it
+
 Wed May  5 17:25:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/PublisherListener.cpp:
