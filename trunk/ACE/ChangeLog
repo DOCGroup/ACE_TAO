@@ -1,3 +1,25 @@
+Thu May  6 12:01:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Async_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Driver.h:
+        * examples/Timer_Queue/Driver.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Timer_Queue.mpc:
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+        * examples/Timer_Queue/main_thread_custom_handler.cpp:
+          Converted to doxygen style and added a seperate example that uses
+          a thread timer queue with customer event handler.
+
 Thu May  6 11:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Diffserv/run_test.pl:

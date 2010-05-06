@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Reactor_Timer_Queue_Test
-//
-// = DESCRIPTION
-//    This example tests the timer queue mechanism of ACE_Reactor.
-//
-// = AUTHOR
-//    Nanbor Wang <nw1@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Timer_Queue_Test
+ *
+ *  $Id$
+ *
+ *  This example tests the timer queue mechanism of ACE_Reactor.
+ *
+ *
+ *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Thread_Manager.h"
