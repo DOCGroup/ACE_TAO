@@ -60,21 +60,21 @@ Custom_Handler::on_timeout (const ACE_Time_Value &current_time,
   return 0;
 }
 
-int Custom_Handler_Upcall::registration(TTimerQueue& timer_queue, Custom_Handler* handler, const void* arg)
+int Custom_Handler_Upcall::registration(TTimerQueue& , Custom_Handler* , const void* )
 {
     ACE_TRACE(ACE_TEXT ("registration"));
     
     return 0;
 }
 
-int Custom_Handler_Upcall::preinvoke(TTimerQueue& timer_queue, Custom_Handler* handler, const void* arg, int recurring_timer, const ACE_Time_Value& cur_time, const void*& upcall_act)
+int Custom_Handler_Upcall::preinvoke(TTimerQueue& , Custom_Handler* , const void* , int , const ACE_Time_Value& , const void*& )
 {
     ACE_TRACE(ACE_TEXT ("preinvoke"));
     
     return 0;
 }
 
-int Custom_Handler_Upcall::timeout(TTimerQueue& timer_queue, Custom_Handler* handler, const void* arg, int recurring_timer, const ACE_Time_Value& cur_time)
+int Custom_Handler_Upcall::timeout(TTimerQueue& , Custom_Handler* handler, const void* arg, int , const ACE_Time_Value& cur_time)
 {
     ACE_TRACE(ACE_TEXT ("timeout"));
 
@@ -84,28 +84,28 @@ int Custom_Handler_Upcall::timeout(TTimerQueue& timer_queue, Custom_Handler* han
     return 0;
 }
 
-int Custom_Handler_Upcall::postinvoke(TTimerQueue& timer_queue, Custom_Handler* handler, const void* arg, int recurring_timer, const ACE_Time_Value& cur_time, const void* upcall_act)
+int Custom_Handler_Upcall::postinvoke(TTimerQueue& , Custom_Handler* , const void* , int , const ACE_Time_Value& , const void* )
 {
     ACE_TRACE(ACE_TEXT ("postinvoke"));
     
     return 0;
 }
 
-int Custom_Handler_Upcall::cancel_type(TTimerQueue& timer_queue, Custom_Handler* handler, int dont_call, int& requires_reference_counting)
+int Custom_Handler_Upcall::cancel_type(TTimerQueue& , Custom_Handler* , int , int& )
 {
     ACE_TRACE(ACE_TEXT ("cancel_type"));
     
     return 0;
 }
 
-int Custom_Handler_Upcall::cancel_timer(TTimerQueue& timer_queue, Custom_Handler* handler, int dont_call, int requires_reference_counting)
+int Custom_Handler_Upcall::cancel_timer(TTimerQueue& , Custom_Handler* handler, int , int )
 {
     ACE_TRACE(ACE_TEXT ("cancel_timer"));
     delete handler;
     return 0;
 }
 
-int Custom_Handler_Upcall::deletion(TTimerQueue& timer_queue, Custom_Handler* handler, const void* arg)
+int Custom_Handler_Upcall::deletion(TTimerQueue& , Custom_Handler* handler, const void* )
 {
     ACE_TRACE(ACE_TEXT ("deletion"));
     delete handler;
