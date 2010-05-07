@@ -3456,7 +3456,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       this->gen_standard_include (
         this->ciao_conn_header_,
-        BE_GlobalData::be_get_server_hdr (&str));
+        BE_GlobalData::be_get_server_hdr (&str, true));
         
       str.destroy ();
     }
