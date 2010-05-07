@@ -1,3 +1,9 @@
+Fri May  7 09:07:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+          Fixed gcc warnings
+
 Thu May  6 12:48:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
