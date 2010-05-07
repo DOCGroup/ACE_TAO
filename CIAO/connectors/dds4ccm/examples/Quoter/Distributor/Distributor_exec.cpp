@@ -8,7 +8,6 @@
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_time.h"
 #include "tao/ORB_Core.h"
-#include <iostream>
 
 namespace CIAO_Quoter_Distributor_Impl
 {

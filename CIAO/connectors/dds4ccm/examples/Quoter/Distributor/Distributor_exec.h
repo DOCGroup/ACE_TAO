@@ -56,13 +56,13 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
 
     virtual
       void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
-                                      const DDS::InconsistentTopicStatus & status);
+                                  const DDS::InconsistentTopicStatus & status);
     virtual
     void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
                                       const DDS::RequestedIncompatibleQosStatus & status);
     virtual
-    void on_sample_rejected( ::DDS::DataReader_ptr the_reader,
-                                      const DDS::SampleRejectedStatus & status);
+    void on_sample_rejected(::DDS::DataReader_ptr the_reader,
+                            const DDS::SampleRejectedStatus & status);
     virtual
       void on_offered_deadline_missed( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedDeadlineMissedStatus & status);
@@ -70,8 +70,8 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
     void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
-    void on_unexpected_status( ::DDS::Entity_ptr the_entity,
-                                      ::DDS::StatusKind  status_kind);
+    void on_unexpected_status(::DDS::Entity_ptr the_entity,
+                              ::DDS::StatusKind  status_kind);
     virtual
     void on_publication_matched ( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::PublicationMatchedStatus & status);
@@ -87,58 +87,24 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
 
     void tick (void);
 
-    // Supported operations and attributes.
+    virtual void add_stock (const char * stock);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    virtual void del_stock (const char * stock);
 
-    virtual void
-    add_stock (
-      const char * stock);
+    virtual void start (void);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    virtual void stop (void);
 
-    virtual void
-    del_stock (
-      const char * stock);
+    virtual ::CORBA::ULong rate (void);
 
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
-    virtual void
-    start (void);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
-    virtual void
-    stop (void);
-
-    // Component attributes.
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
-    virtual ::CORBA::ULong
-    rate (void);
-
-    // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
-    virtual void
-    rate (
-      ::CORBA::ULong rate);
+    virtual void rate (::CORBA::ULong rate);
 
     // Port operations.
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
 
-    // Operations from Components::SessionComponent.
-
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -153,7 +119,7 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
     typedef std::map<ACE_CString, Quoter::Stock_Info_var> Stock_Table;
     Stock_Table stocks_;
     CORBA::ULong rate_;
-    CCM_DDS::Quoter::Writer_var writer_;
+    ::Quoter::Writer_var writer_;
   };
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

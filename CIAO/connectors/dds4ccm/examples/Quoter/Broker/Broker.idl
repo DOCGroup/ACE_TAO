@@ -14,7 +14,7 @@ module Quoter
 {
   component Broker
   {
-    port CCM_DDS::Quoter::DDS_Listen info_out;
+    port ::Quoter::DDS_Listen info_out;
   };
 };
 
