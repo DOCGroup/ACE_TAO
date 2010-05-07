@@ -1,3 +1,18 @@
+Fri May  7 13:37:44 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp (pace_data):
+          Commented out the rewind() call.  Thanks to Inma Perea <inma dot
+          perea dot fdz at gmail dot com> for reporting this.
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp
+          (dump_samples): changed the last parameter to the fopen() method
+          to "rb" to handle binary files.  Thanks to Inma Perea <inma dot
+          perea dot fdz at gmail dot com> for reporting this.
+  
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp (init):
+          changed the last parameter to the fopen() method to "wb" to
+          handle binary files.
+
 Fri May  7 16:11:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(gen_conn_hdr_includes):
