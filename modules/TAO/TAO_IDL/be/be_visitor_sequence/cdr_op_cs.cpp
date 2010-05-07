@@ -15,10 +15,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           cdr_op_cs,
-           "$Id$")
-
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
 // stubs file.
@@ -166,6 +162,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
+          << "_tao_vector.resize (length);" << be_nl << be_nl
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl

@@ -1,3 +1,24 @@
+Fri May  7 19:44:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        
+          Added a check to generate the SArg_Trait parameter for
+          the repo id arg to _is_a() as char* instead of std::string.
+          We would have to regenerate ORB code for that to work,
+          and it may be a choice later on to do that.
+          
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        
+          To set the length of a sequence, changed the call to the
+          underlying vector from capacity() to resize() - capacity()
+          wasn't behaving as expected.
+          
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+        
+          Cosmetic changes, and other changes in parameter init
+          and results checking to make debugging easier.
+
 Mon May  3 22:21:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/param_testC.cpp:

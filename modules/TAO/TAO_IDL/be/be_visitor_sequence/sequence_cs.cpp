@@ -18,10 +18,6 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence,
-           sequence_cs,
-           "$Id$")
-
 // ************************************************************
 // Root visitor for client stub class
 // ************************************************************
@@ -192,7 +188,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << node->name () << "::length ( ::CORBA::ULong length)"
           << be_nl
           << "{" << be_idt_nl
-          << "this->reserve (length);" << be_uidt_nl
+          << "this->resize (length);" << be_uidt_nl
           << "}";
           
       *os << be_nl << be_nl

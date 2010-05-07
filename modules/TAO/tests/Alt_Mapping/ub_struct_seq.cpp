@@ -49,20 +49,22 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  // get some sequence length (not more than 10)
+  // Get some sequence length (not more than 10).
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_.length (len);
   this->inout_.length (len);
-  // now set each individual element
+  
+  // Now set each individual element.
   for (CORBA::ULong i = 0; i < this->in_.length (); i++)
     {
-      // generate some arbitrary struct to be filled into the ith location in
-      // the sequence
+      // Generate some arbitrary struct to be filled into the ith location in
+      // the sequence.
       this->in_[i] = gen->gen_fixed_struct ();
       this->inout_[i] = gen->gen_fixed_struct ();
     }
+    
   return 0;
 }
 
@@ -130,10 +132,21 @@ Test_Unbounded_Struct_Sequence::compare (
   const Alt_Mapping::StructSeq &s1,
   const Alt_Mapping::StructSeq &s2)
 {
-  if (s1.maximum () != s2.maximum ())
-      return 0;
-  if (s1.length () != s2.length ())
-    return 0;
+  ACE_CDR::ULong s1v = s1.maximum ();
+  ACE_CDR::ULong s2v = s2.maximum ();
+  
+  if (s1v != s2v)
+    {
+      return false;
+    }
+     
+  s1v = s1.length ();
+  s2v = s2.length ();   
+      
+  if (s1v != s2v)
+    {
+      return false;
+    }
 
   for (CORBA::ULong i=0; i < s1.length (); i++)
     {
@@ -147,10 +160,10 @@ Test_Unbounded_Struct_Sequence::compare (
           || vs1.f != vs2.f
           || vs1.b != vs2.b
           || vs1.d != vs2.d )
-        return 0;
+        return false;
     }
 
-  return 1; // success
+  return true; // success
 }
 
 void
