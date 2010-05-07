@@ -1,3 +1,17 @@
+Fri May  7 08:51:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor.idl:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the Quoter module, this
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          Quoter module.
+
 Thu May  6 18:16:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:
