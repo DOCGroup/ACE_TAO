@@ -1,3 +1,12 @@
+Fri May  7 16:11:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp(gen_conn_hdr_includes):
+        
+          Fixed bug in generation of includes corresponding to included
+          IDL files, where the path of the -o option (if used) was
+          mistakenly applied. Thanks to Trent Nadeau
+          <Trent dot Nadeau at ngc dot com> for reporting the problem.
+
 Thu May  6 19:35:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
