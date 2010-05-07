@@ -27,7 +27,8 @@ namespace CIAO_Quoter_Distributor_Impl
   /**
   * @class pulse generator
   *
-  * @brief an active object used by StockDistributor to perform periodical pulse generation
+  * @brief An active object used by StockDistributor to perform periodical
+  * pulse generation
   *
   */
   class pulse_Generator : public ACE_Event_Handler
@@ -35,7 +36,7 @@ namespace CIAO_Quoter_Distributor_Impl
   public:
     pulse_Generator (Distributor_exec_i &callback);
 
-    ~pulse_Generator ();
+    virtual ~pulse_Generator ();
 
     /// Handle the timeout.
     virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -43,7 +44,6 @@ namespace CIAO_Quoter_Distributor_Impl
   private:
     /// Maintains a handle that actually process the event
     Distributor_exec_i &pulse_callback_;
-
   };
 
 class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
