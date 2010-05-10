@@ -1,3 +1,13 @@
+Mon May 10 12:43:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.idl:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpc:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.idl:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+          Added (IDL)compiler test which tests whether the -o  option of the
+          IDL compiler works properly.
+
 Mon May 10 11:39:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/Config_Handlers/RDD_Handler.cpp:
