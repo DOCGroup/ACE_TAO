@@ -80,7 +80,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
 
   private:
     ::CoherentWrite_Test::CCM_Sender_Context_var context_;
-    CCM_DDS::CoherentWriteTest::Writer_var writer_;
+    CoherentWriteTestConnector::Writer_var writer_;
     CoherentWriteStarter_var starter_;
 
     CORBA::UShort iterations_;
