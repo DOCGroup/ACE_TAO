@@ -22,7 +22,8 @@ project(DiffDir_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DIFFDIR_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=DiffDir_Connector_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst \
+              -o Connector
 
   IDL_Files {
     Connector/DiffDir_ConnectorE.idl
