@@ -16,7 +16,7 @@ module Hello
 {
   component Sender
   {
-    port HelloConn::DDS_Write info_in;
+    port Hello::DDS_Write info_in;
     attribute unsigned long rate;
     attribute unsigned long iterations;
     attribute string message;
