@@ -571,9 +571,9 @@ namespace CIAO
       if (this->remove_topic (top))
         {
           ACE_CString name ("DDS4CCM_CFT_");
-          name.append (ACE_TEXT (top->get_name ()), ACE_OS::strlen (top->get_name ()));
+          name.append (top->get_name (), ACE_OS::strlen (top->get_name ()));
           ::DDS::TopicDescription_var td =
-              lookup_topicdescription (ACE_TEXT (name.c_str ()));
+              lookup_topicdescription (name.c_str ());
           if (! ::CORBA::is_nil (td.in ()))
             {
               ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
