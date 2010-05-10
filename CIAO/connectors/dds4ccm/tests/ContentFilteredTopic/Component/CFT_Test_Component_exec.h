@@ -48,8 +48,8 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
 
   private:
     ::CFT_Test::CCM_CFTTestComponent_Context_var context_;
-    ::CFTTwoDimensional_Test::CFTTwoDimensionalTestConn::Reader_var two_reader_;
-    ::CFTThreeDimensional_Test::CFTThreeDimensionalTestConn::Reader_var three_reader_;
+    ::CFTTwoDimensionalTestConn::Reader_var two_reader_;
+    ::CFTThreeDimensionalTestConn::Reader_var three_reader_;
 
     bool test_two_dimensional_filter (void);
 
