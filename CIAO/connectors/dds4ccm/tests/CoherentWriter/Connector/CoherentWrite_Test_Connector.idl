@@ -14,16 +14,6 @@
 
 #pragma ciao lem "Connector/CoherentWrite_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::CoherentWriteTest, ::CoherentWriteTestSeq> CoherentWriteTest;
-};
-
-module CoherentWrite_Test
-{
-  connector CoherentWrite_Test_Connector : ::CCM_DDS::CoherentWriteTest::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::CoherentWriteTest, ::CoherentWriteTestSeq> CoherentWriteTestConnector;
 
 #endif /* CoherentWrite_Test_CONNECTOR_IDL_ */

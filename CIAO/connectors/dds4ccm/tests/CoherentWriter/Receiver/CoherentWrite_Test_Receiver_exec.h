@@ -72,7 +72,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
     // Component attributes.
 
     // Port operations.
-    virtual ::CCM_DDS::CoherentWriteTest::CCM_Listener_ptr
+    virtual ::CoherentWriteTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -104,7 +104,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
 
   private:
     ::CoherentWrite_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::CoherentWriteTest::Reader_var reader_;
+    ::CoherentWriteTestConnector::Reader_var reader_;
     CoherentWriteRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   run_;

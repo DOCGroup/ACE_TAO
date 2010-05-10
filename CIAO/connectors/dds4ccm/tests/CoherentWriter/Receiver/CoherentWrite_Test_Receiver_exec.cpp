@@ -220,10 +220,10 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::CoherentWriteTest::CCM_Listener_ptr
+  ::CoherentWriteTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return ::CCM_DDS::CoherentWriteTest::CCM_Listener::_nil ();
+    return ::CoherentWriteTestConnector::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
