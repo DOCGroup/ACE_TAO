@@ -1,3 +1,8 @@
+Mon May  10 07:28:20 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
+        Solved 'not used' warnings.
+
 Fri May  7 08:51:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Broker/Broker.idl:
