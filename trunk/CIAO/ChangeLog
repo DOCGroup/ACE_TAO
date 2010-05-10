@@ -1,3 +1,16 @@
+Mon May 10 13:52:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the CoherentUpdateTest module, this
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          CoherentUpdateTest module.
+
 Mon May 10 12:53:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
