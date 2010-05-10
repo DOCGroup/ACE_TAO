@@ -25,7 +25,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   //============================================================
   // FOO methods
   void
-  MyFoo_callback_exec_i::ret_void (const char * answer, CORBA::Long l_cmd)
+  MyFoo_callback_exec_i::ret_void (const char * /*answer*/, CORBA::Long l_cmd)
   {
     if (l_cmd != 1)
       {
@@ -49,7 +49,7 @@ namespace CIAO_InterReturnT_Sender_Impl
 
   void
   MyFoo_callback_exec_i::ret_long (::CORBA::Long ami_return_val, 
-                           const char * answer, CORBA::Long l_cmd)
+                           const char * /*answer*/, CORBA::Long l_cmd)
   {
     if ((l_cmd != 2) || (ami_return_val != 200))
       {
@@ -73,7 +73,7 @@ namespace CIAO_InterReturnT_Sender_Impl
 
   void
   MyFoo_callback_exec_i::ret_double (::CORBA::Double ami_return_val,
-                              const char * answer, CORBA::Long l_cmd)
+                              const char * /*answer*/, CORBA::Long l_cmd)
   {
     if ((l_cmd != 3) || (ami_return_val != 3.14))
       {
@@ -98,7 +98,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   void
     MyFoo_callback_exec_i::ret_struct (
                             const InterReturnT::TestStruct &ami_return_val,
-                            const char *  answer, CORBA::Long l_cmd)
+                            const char *  /*answer*/, CORBA::Long l_cmd)
   {
     if (l_cmd != 4)
       {
@@ -131,7 +131,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   void
     MyFoo_callback_exec_i::ret_array (
                        const InterReturnT::TestArr ami_return_val[],
-                       const char * answer, CORBA::Long l_cmd)
+                       const char * /*answer*/, CORBA::Long l_cmd)
   {
      if ((l_cmd != 5) || (ami_return_val[1].x_array[2] != 102))
       {
@@ -155,7 +155,7 @@ namespace CIAO_InterReturnT_Sender_Impl
 
   void
     MyFoo_callback_exec_i::ret_seq (const InterReturnT::TestSeq &ami_return_val,
-                           const char * answer, CORBA::Long l_cmd)
+                           const char * /*answer*/, CORBA::Long l_cmd)
   {
     if (l_cmd != 6)
       {
@@ -189,7 +189,7 @@ namespace CIAO_InterReturnT_Sender_Impl
   void
     MyFoo_callback_exec_i::ret_union (
                           const InterReturnT::X_Union &ami_return_val,
-                          const char * answer, CORBA::Long l_cmd)
+                          const char * /*answer*/, CORBA::Long l_cmd)
   {     
     if ((l_cmd != 7) || (ami_return_val.x_long() != 11))
       {
@@ -257,7 +257,6 @@ namespace CIAO_InterReturnT_Sender_Impl
     //run some synch calls
     InterReturnT::TestStruct_var test_topic = 0;
     InterReturnT::TestArray_var topic_arr = 0;
-    CORBA::Double d_cmd = 0;
     CORBA::Long l_cmd = 0;
     char * out_str = 0;
     try
