@@ -171,7 +171,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
       CIAO_debug_level >= 10)
     {
       mask |= PortStatusListener::get_mask (listener);
-      DDS4CCM_DEBUG (9, (LM_DEBUG, "DataReaderListener_T::get_mask - "
+      DDS4CCM_DEBUG (10, (LM_DEBUG, "DataReaderListener_T::get_mask - "
                                    "Mask becomes %d\n",
                                    mask));
     }

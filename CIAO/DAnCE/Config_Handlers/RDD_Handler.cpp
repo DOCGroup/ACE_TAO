@@ -18,9 +18,9 @@ namespace CIAO
     {
       DANCE_TRACE("RDD_Handler::resource_deployment_descr");
 
-      dest.requirementName = src.requirementName ().c_str ();
+      dest.requirementName = ACE_TEXT_ALWAYS_CHAR (src.requirementName ().c_str ());
 
-      dest.resourceName= src.resourceName ().c_str ();
+      dest.resourceName= ACE_TEXT_ALWAYS_CHAR (src.resourceName ().c_str ());
 
       std::for_each (src.begin_property (),
                      src.end_property (),
