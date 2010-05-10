@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
 
 namespace CIAO_Shapes_Sender_Impl
@@ -81,7 +80,7 @@ namespace CIAO_Shapes_Sender_Impl
     void start (void);
     void stop (void);
 
-    Shapes::ShapeTypeConn::Writer_var writer_;
+    Shapes::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Shapes::CCM_Sender_Context_var context_;

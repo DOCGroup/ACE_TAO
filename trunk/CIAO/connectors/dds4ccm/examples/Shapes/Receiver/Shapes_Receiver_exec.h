@@ -13,7 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
 
 namespace CIAO_Shapes_Receiver_Impl
@@ -45,7 +44,7 @@ namespace CIAO_Shapes_Receiver_Impl
   // ShapeType_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ShapeType_Listener_exec_i
-    : public virtual ::Shapes::ShapeTypeConn::CCM_Listener,
+    : public virtual ::Shapes::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -113,7 +112,7 @@ namespace CIAO_Shapes_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::Shapes::ShapeTypeConn::CCM_Listener_ptr
+    virtual ::Shapes::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -135,8 +134,8 @@ namespace CIAO_Shapes_Receiver_Impl
 
   private:
     ::Shapes::CCM_Receiver_Context_var context_;
-    ::Shapes::ShapeTypeConn::Reader_var reader_;
-    ::Shapes::ShapeTypeConn::Getter_var getter_;
+    ::Shapes::Reader_var reader_;
+    ::Shapes::Getter_var getter_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
