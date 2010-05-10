@@ -21,27 +21,19 @@ module CCM_AMI
   {
   };
 
-//  connector AMI_Base
- // {
- // };
-    connector AMI4CCM_Base
+  connector AMI4CCM_Base
   {
   };
   
   module Connector_T<interface T, interface AMI4CCM_T>
-//      module Connector_T<interface T, interface AMI_T>
   {
-     porttype AMI4CCM_Port //AMI_Port
+    porttype AMI4CCM_Port
     {
-      provides AMI4CCM_T ami4ccm_provides; //sendc_run;
-//      provides AMI_T ami4ccm_provides; //sendc_run;
-
-      uses T ami4ccm_uses; //run;
+      provides AMI4CCM_T ami4ccm_provides;
+      uses T ami4ccm_uses;
     };
     
- //  connector The_Connector : AMI_Base
     connector AMI4CCM_Connector : AMI4CCM_Base
- //       connector AMI4CCM_Connector : AMI_Base
     {
       port AMI4CCM_Port ami4ccm_port;
     };
