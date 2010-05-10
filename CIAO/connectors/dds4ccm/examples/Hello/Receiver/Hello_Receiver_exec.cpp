@@ -208,7 +208,7 @@ namespace CIAO_Hello_Receiver_Impl
   }
 
   // Port operations.
-  ::Hello::HelloConn::CCM_Listener_ptr
+  ::Hello::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new DDSHello RAW listener\n")));
