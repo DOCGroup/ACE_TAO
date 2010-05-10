@@ -1,3 +1,16 @@
+Mon May 10 07:53:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender.idl:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the Shapes module, this
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          Shapes module.
+
 Mon May  10 07:28:20 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
