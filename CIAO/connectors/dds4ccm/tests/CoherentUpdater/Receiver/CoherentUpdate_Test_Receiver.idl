@@ -15,7 +15,7 @@ module CoherentUpdate_Test
 {
   component Receiver
   {
-    port CoherentUpdateTestConn::DDS_Read info_out;
+    port CoherentUpdate_Test::DDS_Read info_out;
 
     provides CoherentUpdateStarter reader_start;
     uses CoherentUpdateRestarter updater_restart;

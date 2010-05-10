@@ -14,12 +14,6 @@
 
 #pragma ciao lem "Connector/CoherentUpdate_Test_ConnectorE.idl"
 
-module CoherentUpdate_Test
-{
-  module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTestSeq> CoherentUpdateTestConn;
-  connector CoherentUpdate_Test_Connector : CoherentUpdateTestConn::DDS_State
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::CoherentUpdateTest, ::CoherentUpdateTestSeq> CoherentUpdate_Test;
 
 #endif /* CoherentUpdate_TestCONNECTOR_IDL_ */
