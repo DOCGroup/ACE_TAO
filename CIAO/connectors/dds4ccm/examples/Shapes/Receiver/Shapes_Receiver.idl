@@ -14,8 +14,8 @@ module Shapes
 {
   component Receiver
   {
-    port ShapeTypeConn::DDS_Listen info_out;
-    port ShapeTypeConn::DDS_Get info_get;
+    port Shapes::DDS_Listen info_out;
+    port Shapes::DDS_Get info_get;
     attribute unsigned long rate;
     attribute boolean get_data; //if true, get_one and get_all are invoked
     attribute boolean read_data;//if true, read_one and read_all are invoked.

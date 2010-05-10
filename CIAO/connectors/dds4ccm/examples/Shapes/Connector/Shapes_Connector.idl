@@ -14,13 +14,7 @@
 
 #pragma ciao lem "Connector/Shapes_ConnectorE.idl"
 
-module Shapes
-{
-  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapeTypeConn;
-  connector Shapes_Connector : ShapeTypeConn::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> Shapes;
 
 #endif /* SHAPES_CONNECTOR_IDL_ */
 

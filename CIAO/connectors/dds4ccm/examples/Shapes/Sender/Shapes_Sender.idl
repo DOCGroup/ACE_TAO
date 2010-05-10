@@ -16,7 +16,7 @@ module Shapes
 {
   component Sender
   {
-    port ShapeTypeConn::DDS_Write info_write;
+    port Shapes::DDS_Write info_write;
     attribute unsigned long rate;
     attribute unsigned short max_x;
     attribute unsigned short max_y;
