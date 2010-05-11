@@ -1,3 +1,8 @@
+Tue May 11 09:16:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc:
+          Resolved build issues.
+
 Tue May 11 09:11:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
