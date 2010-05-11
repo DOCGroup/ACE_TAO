@@ -16,10 +16,9 @@
 
 module NonChangeable
 {
-  module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTestSeq> NonChangeableTestConn;
-  connector NonChangeable_Connector : NonChangeableTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed
+    < ::NonChangeableTest, ::NonChangeableTestSeq>
+    NonChangeableTestConnector;
 };
 
 #endif /* NonChangeable_CONNECTOR_IDL_ */

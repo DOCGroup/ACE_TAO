@@ -16,10 +16,8 @@
 
 module OIT_Test
 {
-  module ::CCM_DDS::Typed < ::OIT_Receiver_Topic, ::OIT_Receiver_TopicSeq> OIT_Receiver_TopicConn;
-  connector OIT_Receiver_Connector : OIT_Receiver_TopicConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::OIT_Receiver_Topic, ::OIT_Receiver_TopicSeq>
+    OIT_Receiver_TopicConnector;
 };
 
 #endif /* ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_ */
