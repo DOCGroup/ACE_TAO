@@ -67,7 +67,7 @@ namespace CIAO_Writer_Sender_Impl
     void start (void);
 
     WriterTestDataWriter * dds_writer_;
-    CCM_DDS::WriterTest::Writer_var ccm_writer_;
+    ::WriterTestConnector::Writer_var ccm_writer_;
 
     ::Writer::CCM_Sender_Context_var context_;
     CORBA::UShort keys_;

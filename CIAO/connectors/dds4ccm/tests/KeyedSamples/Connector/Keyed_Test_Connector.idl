@@ -14,16 +14,6 @@
 
 #pragma ciao lem "Connector/Keyed_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTestSeq> KeyedTest;
-};
-
-module Keyed_Test
-{
-  connector Keyed_Test_Connector : ::CCM_DDS::KeyedTest::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::KeyedTest, ::KeyedTestSeq> KeyedTestConnector;
 
 #endif /* Keyed_Test_CONNECTOR_IDL_ */

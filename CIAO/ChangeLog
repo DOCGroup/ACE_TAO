@@ -1,3 +1,27 @@
+Tue May 11 11:44:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May 11 09:39:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
