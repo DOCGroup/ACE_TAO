@@ -16,7 +16,7 @@ module CSL_QoSTest
 {
   component Sender
   {
-     port TestTopicConn::DDS_Write info_write;
+     port CSLQoSConnector::DDS_Write info_write;
      provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
 
   };
