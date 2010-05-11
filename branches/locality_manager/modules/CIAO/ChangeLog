@@ -1,3 +1,9 @@
+Tue May 11 23:06:20 UTC 2010  wotte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+          Fixed error when --help is passed, reverse -a and -m in usage.
+
 Wed Apr 14 15:06:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_ArtifactInstallation.idl:
