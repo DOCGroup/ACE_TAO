@@ -89,7 +89,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  ::LOBO_Test::ListenOneByOneTestConn::CCM_Listener_ptr
+  ::LOBO_Test::ListenOneByOneTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ListenOneByOneTest_Listener_exec_i (

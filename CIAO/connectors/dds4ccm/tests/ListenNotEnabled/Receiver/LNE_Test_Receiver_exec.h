@@ -24,7 +24,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
   // ListenNotEnabledTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ListenNotEnabledTest_Listener_exec_i
-    : public virtual ::CCM_DDS::ListenNotEnabledTest::CCM_Listener,
+    : public virtual ::LNE_Test::ListenNotEnabledTestConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -57,7 +57,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    virtual ::CCM_DDS::ListenNotEnabledTest::CCM_Listener_ptr
+    virtual ::LNE_Test::ListenNotEnabledTestConnector::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
