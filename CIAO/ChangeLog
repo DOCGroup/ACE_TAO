@@ -1,3 +1,13 @@
+Tue May 11 07:34:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+          Resolved test errors.
+
 Mon May 10 14:10:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component.idl:
