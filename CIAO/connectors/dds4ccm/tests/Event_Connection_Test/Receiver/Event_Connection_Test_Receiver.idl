@@ -14,8 +14,8 @@ module Event_Connection_Test
 {
   component Receiver
   {
-    port CCM_DDS::Event_ConnectionTest::DDS_Listen  info_listen;
-    port CCM_DDS::Event_ConnectionTest::DDS_Get     info_get;
+    port Event_ConnectionConnector::DDS_Listen  info_listen;
+    port Event_ConnectionConnector::DDS_Get     info_get;
     provides CCM_DDS::ConnectorStatusListener status_listener;
   };
 };

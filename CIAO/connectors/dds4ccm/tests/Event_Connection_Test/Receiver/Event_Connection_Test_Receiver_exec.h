@@ -28,7 +28,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::Event_ConnectionTest::CCM_Listener_ptr
+    virtual ::Event_ConnectionConnector::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -55,9 +55,9 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   private:
     ::Event_Connection_Test::CCM_Receiver_Context_var context_;
     //DDS_Get
-    ::CCM_DDS::Event_ConnectionTest::Getter_var getter_getter_;
+    ::Event_ConnectionConnector::Getter_var getter_getter_;
     ::DDS::DataReader_var getter_dds_data_reader_;
-    ::CCM_DDS::Event_ConnectionTest::Reader_var getter_reader_;
+    ::Event_ConnectionConnector::Reader_var getter_reader_;
 
     bool getter_ok_;
     bool getter_dds_data_reader_ok_;
@@ -65,7 +65,7 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
 
     //DDS_Listen
     ::CCM_DDS::DataListenerControl_var listen_data_control_;
-    ::CCM_DDS::Event_ConnectionTest::Reader_var listen_reader_;
+    ::Event_ConnectionConnector::Reader_var listen_reader_;
     ::DDS::DataReader_var listen_dds_data_reader_;
 
     bool listen_data_control_ok_;

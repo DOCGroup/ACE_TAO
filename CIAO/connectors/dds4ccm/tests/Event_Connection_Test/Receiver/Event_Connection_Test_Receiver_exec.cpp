@@ -32,12 +32,12 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::Event_ConnectionTest::CCM_Listener_ptr
+  ::Event_ConnectionConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new Event_ConnectionTest RAW listener\n")));
     this->raw_listener_created_ = true;
-    return ::CCM_DDS::Event_ConnectionTest::CCM_Listener::_nil ();
+    return ::Event_ConnectionConnector::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -230,4 +230,3 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
     return retval;
   }
 }
-
