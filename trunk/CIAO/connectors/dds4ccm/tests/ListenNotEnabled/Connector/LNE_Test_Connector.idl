@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/LNE_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::ListenNotEnabledTest, ::ListenNotEnabledTestSeq> ListenNotEnabledTest;
-};
-
 module LNE_Test
 {
-  connector LNE_Test_Connector : ::CCM_DDS::ListenNotEnabledTest::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::ListenNotEnabledTest, ::ListenNotEnabledTestSeq> ListenNotEnabledTestConnector;
 };
 
 #endif /* LNE_Test_CONNECTOR_IDL_ */
