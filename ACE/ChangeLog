@@ -1,3 +1,10 @@
+Tue May 11 06:52:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+          Layout changes. Resolved linker errors on static
+          windows builds.
+
 Fri May  7 09:07:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Timer_Queue/Custom_Handler.h:
