@@ -1,0 +1,26 @@
+// $Id$
+
+#ifndef ONEPROCESS_IDL
+#define ONEPROCESS_IDL
+
+#pragma ciao lem "Base/OneProcessE.idl"
+#pragma ciao ami4ccm interface "OneProcess::MyFoo"
+#pragma ciao lem "Base/OneProcessAE.idl"
+
+module OneProcess
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+     };
+};
+
+#endif
