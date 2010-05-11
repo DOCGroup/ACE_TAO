@@ -16,7 +16,7 @@ module OIT_Test
 {
   component Sender
   {
-    port OIT_Sender_TopicConn::DDS_Write topic_write;
+    port OIT_Sender_TopicConnector::DDS_Write topic_write;
     provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };

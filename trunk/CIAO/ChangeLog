@@ -1,3 +1,21 @@
+Tue May 11 12:45:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May  11 13:39:20 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/OneProcess

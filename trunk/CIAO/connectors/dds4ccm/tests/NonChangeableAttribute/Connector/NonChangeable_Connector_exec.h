@@ -8,7 +8,8 @@
 namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
 {
   class NONCHANGEABLE_CONNECTOR_CONN_Export NonChangeable_Connector_exec_impl
-    : public virtual NonChangeable_Connector_exec_i
+    : public virtual
+      ::CIAO_NonChangeable_NonChangeableTestConnector_DDS_Event_Impl::DDS_Event_exec_i
   {
   public:
     NonChangeable_Connector_exec_impl (void);

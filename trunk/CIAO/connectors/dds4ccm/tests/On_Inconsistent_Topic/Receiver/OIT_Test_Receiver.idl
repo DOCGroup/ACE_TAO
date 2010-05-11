@@ -14,7 +14,7 @@ module OIT_Test
 {
   component Receiver
   {
-    port OIT_Receiver_TopicConn::DDS_Listen info_out;
+    port OIT_Receiver_TopicConnector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener connector_status;
   };
 };

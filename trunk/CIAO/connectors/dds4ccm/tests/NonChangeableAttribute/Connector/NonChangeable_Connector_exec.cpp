@@ -120,7 +120,8 @@ namespace CIAO_NonChangeable_NonChangeable_Connector_Impl
   void
   NonChangeable_Connector_exec_impl::ccm_activate (void)
   {
-    NonChangeable_Connector_exec_i::ccm_activate ();
+    ::CIAO_NonChangeable_NonChangeableTestConnector_DDS_Event_Impl::
+      DDS_Event_exec_i::ccm_activate ();
     if (this->test_topic_name ())
       {
         ACE_DEBUG ((LM_DEBUG, "Set topic_name test passed.\n"));
