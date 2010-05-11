@@ -197,7 +197,7 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                                    ACE_TEXT("server-args")) == 0)
             {
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
-                            ACE_TEXT("Using provided compoent server arguments: '%s'\n"),
+                            ACE_TEXT("Using provided component server arguments: '%s'\n"),
                             get_opts.opt_arg ()));
               this->options_.server_args_ = get_opts.opt_arg ();
             }

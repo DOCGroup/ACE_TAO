@@ -17,7 +17,6 @@ project(DiffDir_Connector_idl_gen) : connectoridldefaults, dds4ccm {
 }
 
 project(DiffDir_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
-  requires += dummy_label
   after    += DiffDir_Connector_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DIFFDIR_CONNECTOR_LEM_STUB_Export \
@@ -31,7 +30,6 @@ project(DiffDir_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DiffDir_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
-  requires += dummy_label
   after    += DiffDir_Connector_lem_gen DiffDir_Connector_stub
   libs     += DiffDir_Connector_stub
   includes += .
@@ -57,7 +55,6 @@ project(DiffDir_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
 }
 
 project(DiffDir_Connector_stub) : ccm_stub, dds4ccm_base {
-  requires += dummy_label
   after    += DiffDir_Connector_idl_gen DiffDir_stub
   libs     += DiffDir_stub
   includes += .
@@ -83,7 +80,6 @@ project(DiffDir_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
-  requires += dummy_label
   after    += DiffDir_Connector_lem_stub DiffDir_Connector_stub
   sharedname = DiffDir_Connector_exec
   libs     += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
@@ -109,7 +105,6 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 
 
 project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
-  requires   += dummy_label
   after      += DiffDir_Connector_lem_stub
   sharedname  = DiffDir_Connector_svnt
   libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub  DiffDir_stub
