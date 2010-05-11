@@ -16,7 +16,7 @@ module CSL_DeadlineTest
 {
   component Sender
   {
-     port TestTopicConn::DDS_Write test_topic_write;
+     port CSLDeadlineConnector::DDS_Write test_topic_write;
      provides CCM_DDS::ConnectorStatusListener test_topic_connector_status;
   };
 };
