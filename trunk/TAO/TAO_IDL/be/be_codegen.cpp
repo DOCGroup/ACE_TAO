@@ -3313,7 +3313,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     this->ciao_exec_idl_,
     idl_global->stripped_filename ()->get_string ());
 
-  char **path_tmp  = 0;
+  char **path_tmp = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
          idl_global->ciao_lem_file_names ());
@@ -3321,9 +3321,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
        riter.advance ())
     {
       riter.next (path_tmp);
-
-      this->gen_standard_include (this->ciao_exec_idl_,
-                                  *path_tmp);
+      
+      const char *exec_idl_fname =
+        be_global->be_get_ciao_exec_idl_fname (true);
+        
+      /// No need to have the exec IDL file include itself.  
+      if (ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0)
+        {
+          this->gen_standard_include (this->ciao_exec_idl_,
+                                      *path_tmp);
+        }
     }
 }
 
