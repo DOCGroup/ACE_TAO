@@ -38,7 +38,7 @@ namespace CIAO_DNM_Test_Sender_Nested_Sender_Sender_Impl
 
   private:
     ::DNM_Test_Sender::Nested_Sender::CCM_Sender_Context_var context_;
-    ::DNM_Test_Connector::Nested_Connector::DNM_TestConn::Writer_var writer_;
+    ::DNM_Test_Connector::Nested_Connector::DNM_TestConnector::Writer_var writer_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

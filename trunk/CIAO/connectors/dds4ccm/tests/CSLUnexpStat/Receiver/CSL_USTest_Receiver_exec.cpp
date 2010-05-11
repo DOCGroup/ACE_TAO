@@ -167,7 +167,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CSL_USTest::TestTopicConn::CCM_Listener_ptr
+  ::CSL_US_Connector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));
