@@ -53,24 +53,24 @@ Custom_Handler::on_timeout (const ACE_Time_Value &current_time,
                   current_time.usec (),
                   delay.sec (),
                   delay.usec ());
-                  
+
   // Notice this delete is protected.
   delete this;
-  
+
   return 0;
 }
 
 int Custom_Handler_Upcall::registration(TTimerQueue& , Custom_Handler* , const void* )
 {
     ACE_TRACE(ACE_TEXT ("registration"));
-    
+
     return 0;
 }
 
 int Custom_Handler_Upcall::preinvoke(TTimerQueue& , Custom_Handler* , const void* , int , const ACE_Time_Value& , const void*& )
 {
     ACE_TRACE(ACE_TEXT ("preinvoke"));
-    
+
     return 0;
 }
 
@@ -79,7 +79,7 @@ int Custom_Handler_Upcall::timeout(TTimerQueue& , Custom_Handler* handler, const
     ACE_TRACE(ACE_TEXT ("timeout"));
 
     // Do the actual timer call
-    handler->on_timeout(cur_time, arg);       
+    handler->on_timeout(cur_time, arg);
 
     return 0;
 }
@@ -87,14 +87,14 @@ int Custom_Handler_Upcall::timeout(TTimerQueue& , Custom_Handler* handler, const
 int Custom_Handler_Upcall::postinvoke(TTimerQueue& , Custom_Handler* , const void* , int , const ACE_Time_Value& , const void* )
 {
     ACE_TRACE(ACE_TEXT ("postinvoke"));
-    
+
     return 0;
 }
 
 int Custom_Handler_Upcall::cancel_type(TTimerQueue& , Custom_Handler* , int , int& )
 {
     ACE_TRACE(ACE_TEXT ("cancel_type"));
-    
+
     return 0;
 }
 
