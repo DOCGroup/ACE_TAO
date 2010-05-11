@@ -1,3 +1,26 @@
+Tue May  11 13:39:20 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/OneProcess
+        * connectors/ami4ccm/tests/OneProcess/Base
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.idl
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc
+        * connectors/ami4ccm/tests/OneProcess/descriptors
+        * connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/OneProcess/descriptors/PlanOne.cdp
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl
+        * connectors/ami4ccm/tests/OneProcess/Receiver
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver.idl
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver.mpc
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.h
+        * connectors/ami4ccm/tests/OneProcess/Sender
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender.idl
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender.mpc
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.h
+        Test with Client, AMI-Connector and Receievr in one node.
+
 Tue May 11 11:59:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl:
