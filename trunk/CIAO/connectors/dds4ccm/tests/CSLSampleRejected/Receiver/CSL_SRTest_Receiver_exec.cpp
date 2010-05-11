@@ -221,7 +221,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   // Port operations.
-  ::CSL_SRTest::TestTopicConn::CCM_Listener_ptr
+  ::CSL_SR_Connector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));

@@ -59,7 +59,7 @@ namespace CIAO_CSL_SRTest_Sender_Impl
     void start (void);
     void stop (void);
 
-    ::CSL_SRTest::TestTopicConn::Writer_var writer_;
+    ::CSL_SR_Connector::Writer_var writer_;
     ::CSL_SRTest::CCM_Sender_Context_var context_;
     pulse_Generator * ticker_;
 
