@@ -14,16 +14,6 @@
 
 #pragma ciao lem "Connector/Writer_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::WriterTest, ::WriterTestSeq> WriterTest;
-};
-
-module Writer
-{
-  connector Writer_Connector : ::CCM_DDS::WriterTest::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::WriterTest, ::WriterTestSeq> WriterTestConnector;
 
 #endif /* Writer_CONNECTOR_IDL_ */

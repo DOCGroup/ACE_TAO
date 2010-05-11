@@ -14,7 +14,7 @@ module Writer
 {
   component Receiver
   {
-    port CCM_DDS::WriterTest::DDS_Listen info_out;
+    port WriterTestConnector::DDS_Listen info_out;
   };
 };
 
