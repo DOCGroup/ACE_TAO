@@ -94,7 +94,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
     Receiver_exec_i (void);
     virtual ~Receiver_exec_i (void);
 
-    virtual ::Getter_Test::GetterTestConn::CCM_Listener_ptr
+    virtual ::Getter_Test::GetterTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -134,8 +134,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
   private:
     ::Getter_Test::CCM_Receiver_Context_var context_;
-    ::Getter_Test::GetterTestConn::Getter_var getter_;
-    ::Getter_Test::GetterFixedConn::Getter_var fixed_;
+    ::Getter_Test::GetterTestConnector::Getter_var getter_;
+    ::Getter_Test::GetterFixedConnector::Getter_var fixed_;
 
     void timeout_get_one_fixed ();
     void timeout_get_one_variable ();

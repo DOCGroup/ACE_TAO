@@ -1,3 +1,25 @@
+Tue May 11 09:39:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
+        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May 11 09:16:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.mpc:

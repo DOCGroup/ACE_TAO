@@ -14,16 +14,6 @@
 
 #pragma ciao lem "Connector/Event_Connection_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::Event_ConnectionTest, ::Event_ConnectionTestSeq> Event_ConnectionTest;
-};
-
-module Event_Connection_Test
-{
-  connector Event_Connection_Test_Connector : ::CCM_DDS::Event_ConnectionTest::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::Event_ConnectionTest, ::Event_ConnectionTestSeq> Event_ConnectionConnector;
 
 #endif /* Event_Connection_Test_CONNECTOR_IDL_ */

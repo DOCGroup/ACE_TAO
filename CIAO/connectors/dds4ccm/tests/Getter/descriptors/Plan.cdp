@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Getter_Test_Getter_Fixed_Connector_Impl</string>
+          <string>create_Getter_Test_GetterFixedConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Getter_Test_Getter_Fixed_Connector_Servant</string>
+          <string>create_Getter_Test_GetterFixedConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Getter_Test_Getter_Test_Connector_Impl</string>
+          <string>create_Getter_Test_GetterTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -134,7 +134,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Getter_Test_Getter_Test_Connector_Servant</string>
+          <string>create_Getter_Test_GetterTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

@@ -16,7 +16,7 @@ module Event_Connection_Test
 {
   component Sender
   {
-    port CCM_DDS::Event_ConnectionTest::DDS_Write info_write;
+    port Event_ConnectionConnector::DDS_Write info_write;
   };
 };
 
