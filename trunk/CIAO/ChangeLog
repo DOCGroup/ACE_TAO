@@ -1,3 +1,15 @@
+Tue May 11 08:42:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May 11 08:07:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl:
