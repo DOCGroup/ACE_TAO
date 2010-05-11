@@ -1,7 +1,16 @@
+Tue May 11 18:21:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+          Removed dummy_label so that it will be visible on the scoreboard.
+
 Tue May 11 17:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
-        
+
           Tweaks to help the C++ compiler deal with the results of the -o option
           to the IDL compiler.
 

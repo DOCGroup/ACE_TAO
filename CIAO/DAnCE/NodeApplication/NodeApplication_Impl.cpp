@@ -103,7 +103,7 @@ namespace
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<const char *>");
     CORBA::Any any;
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<const char *> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -111,6 +111,9 @@ namespace
       {
         if (any >>= CORBA::Any::to_string(val, 0))
           {
+            DANCE_DEBUG (9, (LM_TRACE,
+                          DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<const char *> - ")
+                          ACE_TEXT("Value is %C\n"), val));
             return true;
           }
         else
@@ -121,7 +124,7 @@ namespace
           }
       }
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<bool> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<const char *> - ")
                   ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
     return false;
@@ -165,7 +168,7 @@ namespace
   {
     DANCE_TRACE ("NodeApplication::<anonymous>::get_property_value<const char *>");
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value< const char *> - ")
                   ACE_TEXT("Finding property value for name '%C'\n"),
                   name));
 
@@ -173,18 +176,18 @@ namespace
       {
         if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
           {
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value< const char *> - ")
                           ACE_TEXT("Found property '%C'\n"), name));
             if (properties[i].value >>= CORBA::Any::to_string (val, 0))
               {
                 DANCE_DEBUG (9, (LM_TRACE,
-                              DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+                              DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value< const char *> - ")
                               ACE_TEXT("Value is %C\n"), val));
                 return true;
               }
             else
               {
-                DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value<T> - ")
+                DANCE_ERROR (1, (LM_WARNING, DLINFO ACE_TEXT("NodeApplication::<anonymous>::get_property_value< const char *> - ")
                               ACE_TEXT("Failed to extract property value for %C\n"), name));
                 return false;
               }
