@@ -69,7 +69,7 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CSL_QoSTest::TestTopicConn::CCM_Listener_ptr
+    virtual ::CSLQoSConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

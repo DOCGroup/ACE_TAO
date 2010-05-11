@@ -14,7 +14,7 @@ module CSL_QoSTest
 {
   component Receiver
   {
-    port TestTopicConn::DDS_Listen info_out;
+    port CSLQoSConnector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
    };
 };
