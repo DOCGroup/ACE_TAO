@@ -1,3 +1,10 @@
+Tue May 11 17:50:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+        
+          Tweaks to help the C++ compiler deal with the results of the -o option
+          to the IDL compiler.
+
 Tue May 11 12:45:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
