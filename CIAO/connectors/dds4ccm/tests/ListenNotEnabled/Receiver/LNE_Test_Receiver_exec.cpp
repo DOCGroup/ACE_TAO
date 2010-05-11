@@ -53,7 +53,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
   {
   }
 
-  ::CCM_DDS::ListenNotEnabledTest::CCM_Listener_ptr
+  ::LNE_Test::ListenNotEnabledTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ListenNotEnabledTest_Listener_exec_i (
