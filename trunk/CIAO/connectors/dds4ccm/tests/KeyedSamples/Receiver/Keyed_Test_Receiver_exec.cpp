@@ -145,7 +145,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
     this->expected_ = this->iterations_ * this->keys_;
   }
 
-  ::CCM_DDS::KeyedTest::CCM_Listener_ptr
+  ::KeyedTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     return 0;

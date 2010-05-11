@@ -72,7 +72,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::KeyedTest::Writer_var writer_;
+    KeyedTestConnector::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Keyed_Test::CCM_Sender_Context_var context_;
