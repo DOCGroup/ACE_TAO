@@ -31,7 +31,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NonChangeable_NonChangeable_Connector_Servant</string>
+          <string>create_NonChangeable_NonChangeableTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

@@ -16,10 +16,8 @@
 
 module OIT_Test
 {
-  module ::CCM_DDS::Typed < ::OIT_Sender_Topic, ::OIT_Sender_TopicSeq> OIT_Sender_TopicConn;
-  connector OIT_Sender_Connector : OIT_Sender_TopicConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::OIT_Sender_Topic, ::OIT_Sender_TopicSeq>
+    OIT_Sender_TopicConnector;
 };
 
 #endif /* ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_ */
