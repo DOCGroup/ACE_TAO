@@ -98,7 +98,9 @@ int be_visitor_args_arglist::visit_array (be_array *node)
 
 int be_visitor_args_arglist::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
+  
+  *os << "::";
 
   switch (this->direction ())
     {
