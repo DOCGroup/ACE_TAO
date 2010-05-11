@@ -18,7 +18,7 @@ module DNM_Test_Sender
   {
     component Sender
     {
-      port DNM_Test_Connector::Nested_Connector::DNM_TestConn::DDS_Write info_write;
+      port DNM_Test_Connector::Nested_Connector::DNM_TestConnector::DDS_Write info_write;
     };
   };
 };

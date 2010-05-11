@@ -1,3 +1,33 @@
+Tue May 11 09:11:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.h:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May 11 08:48:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl:
