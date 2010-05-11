@@ -33,8 +33,8 @@ project(DiffDir_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 project(DiffDir_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   requires += dummy_label
   after    += DiffDir_Connector_lem_gen DiffDir_Connector_stub
-  libs     +=  DiffDir_Connector_stub
-
+  libs     += DiffDir_Connector_stub
+  includes += .
 
   sharedname = DiffDir_Connector_lem_stub
   dynamicflags = DIFFDIR_CONNECTOR_LEM_STUB_BUILD_DLL
@@ -43,16 +43,16 @@ project(DiffDir_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   }
 
   Source_Files {
-    DiffDir_ConnectorEC.cpp
+    Connector/DiffDir_ConnectorEC.cpp
   }
 
   Header_Files {
-    DiffDir_ConnectorEC.h
-    DiffDir_Connector_lem_stub_export.h
+    Connector/DiffDir_ConnectorEC.h
+    Connector/DiffDir_Connector_lem_stub_export.h
   }
 
   Inline_Files {
-    DiffDir_ConnectorEC.inl
+    Connector/DiffDir_ConnectorEC.inl
   }
 }
 
@@ -60,7 +60,7 @@ project(DiffDir_Connector_stub) : ccm_stub, dds4ccm_base {
   requires += dummy_label
   after    += DiffDir_Connector_idl_gen DiffDir_stub
   libs     += DiffDir_stub
-
+  includes += .
 
   sharedname = DiffDir_Connector_stub
   dynamicflags = DIFFDIR_CONNECTOR_STUB_BUILD_DLL
@@ -86,7 +86,8 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
   requires += dummy_label
   after    += DiffDir_Connector_lem_stub DiffDir_Connector_stub
   sharedname = DiffDir_Connector_exec
-  libs += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
+  libs     += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
+  includes += .
 
   dynamicflags = DIFFDIR_CONNECTOR_CONN_BUILD_DLL
 
@@ -94,12 +95,12 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
   }
 
   Source_Files {
-    DiffDir_Connector_conn.cpp
+    Connector/DiffDir_Connector_conn.cpp
   }
 
   Header_Files {
-    DiffDir_Connector_conn.h
-    DiffDir_Connector_conn_export.h
+    Connector/DiffDir_Connector_conn.h
+    Connector/DiffDir_Connector_conn_export.h
   }
 
   Inline_Files {
@@ -112,7 +113,7 @@ project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  
   after      += DiffDir_Connector_lem_stub
   sharedname  = DiffDir_Connector_svnt
   libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub  DiffDir_stub
-
+  includes   += .
 
   dynamicflags = DIFFDIR_CONNECTOR_SVNT_BUILD_DLL
 
@@ -120,18 +121,18 @@ project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  
   }
 
   Source_Files {
-    DiffDir_ConnectorS.cpp
-    DiffDir_Connector_svnt.cpp
+    Connector/DiffDir_ConnectorS.cpp
+    Connector/DiffDir_Connector_svnt.cpp
   }
 
   Header_Files {
-    DiffDir_ConnectorS.h
-    DiffDir_Connector_svnt.h
-    DiffDir_Connector_svnt_export.h
+    Connector/DiffDir_ConnectorS.h
+    Connector/DiffDir_Connector_svnt.h
+    Connector/DiffDir_Connector_svnt_export.h
   }
 
   Inline_Files {
-    DiffDir_ConnectorS.inl
+    Connector/DiffDir_ConnectorS.inl
   }
 }
 
