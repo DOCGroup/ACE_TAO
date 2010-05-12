@@ -28,7 +28,7 @@ namespace CIAO_Updater_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ListenOneByOneTest_Listener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
+    : public virtual ::Updater::UpdaterConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -59,7 +59,7 @@ namespace CIAO_Updater_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_Listener_ptr
+    virtual ::Updater::UpdaterConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

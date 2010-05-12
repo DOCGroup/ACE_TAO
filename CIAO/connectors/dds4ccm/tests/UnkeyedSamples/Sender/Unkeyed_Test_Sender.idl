@@ -16,7 +16,7 @@ module Unkeyed_Test
 {
   component Sender
   {
-    port CCM_DDS::UnkeyedTest::DDS_Write info_write;
+    port UnkeyedTestConnector::DDS_Write info_write;
     attribute unsigned short rate;
     attribute unsigned short iterations;
     attribute unsigned short keys;

@@ -1,3 +1,32 @@
+Wed May 12 10:13:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver.idl:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender.idl:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h:
+        * connectors/dds4ccm/tests/Updater/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Wed May 12 09:50:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
