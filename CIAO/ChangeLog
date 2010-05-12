@@ -1,3 +1,20 @@
+Wed May 12 11:15:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Receiver/VTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Sender/VTopic_Sender.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Wed May 12 10:13:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
