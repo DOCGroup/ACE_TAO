@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p DelReplyH_Base DelReplyH_Receiver"
+
+project(AMI_DelReplyH_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_DelReplyH_idl_gen
+  idlflags += -Wb,stub_export_macro=DELREPLYH_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=DelReplyH_Receiver_stub_export.h \
+              -Wb,skel_export_macro=DELREPLYH_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=DelReplyH_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=DELREPLYH_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=DelReplyH_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    DelReplyH_Receiver.idl
+  }
+}
+
+project(AMI_DelReplyH_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_DelReplyH_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=DELREPLYH_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=DelReplyH_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    DelReplyH_ReceiverE.idl
+  }
+}
+
+project(AMI_DelReplyH_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_DelReplyH_Base_Receiver_lem_gen AMI_DelReplyH_Base_Receiver_stub AMI_DelReplyH_stub
+  libs  += DelReplyH_stub DelReplyH_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = DelReplyH_Receiver_lem_stub
+  dynamicflags   = DELREPLYH_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    DelReplyH_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    DelReplyH_ReceiverEC.h
+    DelReplyH_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    DelReplyH_ReceiverEC.inl
+  }
+}
+
+project(AMI_DelReplyH_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_DelReplyH_Base_Receiver_idl_gen AMI_DelReplyH_stub
+  libs  += DelReplyH_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = DelReplyH_Receiver_stub
+  dynamicflags   = DELREPLYH_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    DelReplyH_ReceiverC.cpp
+  }
+
+  Header_Files {
+    DelReplyH_ReceiverC.h
+    DelReplyH_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    DelReplyH_ReceiverC.inl
+  }
+}
+
+project(AMI_DelReplyH_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_DelReplyH_Base_Receiver_l_stub AMI_DelReplyH_Base_Receiver_stub AMI_DelReplyH_stub AMI_DelReplyH_lem_stub
+  sharedname = DelReplyH_Receiver_exec
+  libs += DelReplyH_Receiver_stub DelReplyH_Receiver_lem_stub DelReplyH_stub DelReplyH_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = DELREPLYH_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    DelReplyH_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    DelReplyH_Receiver_exec.h
+    DelReplyH_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_DelReplyH_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_DelReplyH_Base_skel AMI_DelReplyH_Base_Receiver_l_stub AMI_DelReplyH_stub AMI_DelReplyH_skel AMI_DelReplyH_lem_stub
+  sharedname  = DelReplyH_Receiver_svnt
+  libs       += DelReplyH_Receiver_stub DelReplyH_Receiver_lem_stub  \
+                DelReplyH_skel \
+                DelReplyH_stub DelReplyH_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = DELREPLYH_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    DelReplyH_ReceiverS.cpp
+    DelReplyH_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    DelReplyH_ReceiverS.h
+    DelReplyH_Receiver_svnt.h
+    DelReplyH_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    DelReplyH_ReceiverS.inl
+  }
+}
+

@@ -1,3 +1,24 @@
+Wed May 12 15:38:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/DelReplyH
+        * connectors/ami4ccm/tests/DelReplyH/Base
+        * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.idl
+        * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.mpc
+        * connectors/ami4ccm/tests/DelReplyH/descriptors
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/DelReplyH/Receiver
+        * connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver.idl
+        * connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver.mpc
+        * connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver_exec.h
+        * connectors/ami4ccm/tests/DelReplyH/Sender
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.idl
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h
+        Test deleting replyhandlers.
+
 Wed May 12 11:28:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
