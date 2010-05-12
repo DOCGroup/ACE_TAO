@@ -74,7 +74,7 @@ namespace CIAO_Writer_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::WriterTest::CCM_Listener_ptr
+  ::Writer::WriterTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new WriterTest RAW listener\n")));

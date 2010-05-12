@@ -68,7 +68,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::UnkeyedTest::Writer_var writer_;
+    ::Unkeyed_Test::UnkeyedTestConnector::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Unkeyed_Test::CCM_Sender_Context_var context_;

@@ -144,7 +144,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::UnkeyedTest::CCM_Listener_ptr
+  ::Unkeyed_Test::UnkeyedTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new UnkeyedTest RAW listener\n")));

@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/Unkeyed_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::UnkeyedTest, ::UnkeyedTestSeq> UnkeyedTest;
-};
-
 module Unkeyed_Test
 {
-  connector Unkeyed_Test_Connector : ::CCM_DDS::UnkeyedTest::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::UnkeyedTest, ::UnkeyedTestSeq> UnkeyedTestConnector;
 };
 
 #endif /* Unkeyed_Test_CONNECTOR_IDL_ */
