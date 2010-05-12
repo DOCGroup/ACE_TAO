@@ -140,8 +140,8 @@ namespace CIAO_SL_Disabled_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_StateListener_ptr
-    Receiver_exec_i::get_info_out_data_listener (void)
+  ::SL_Disabled::SL_DisabledConnector::CCM_StateListener_ptr
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
      return new StateListener_exec_i(this->no_operation_);
   }

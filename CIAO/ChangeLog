@@ -1,3 +1,28 @@
+Wed May 12 09:28:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/DefaultQoS.cdp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Wed May 12 09:01:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component.idl:
