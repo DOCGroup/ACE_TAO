@@ -13,7 +13,7 @@ module QosProfile_Test
 {
   component QosProfileComponent
   {
-    port QosProfileTestConn::DDS_Write info_write;
+    port QosProfileTestConnector::DDS_Write info_write;
   };
 };
 

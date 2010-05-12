@@ -80,7 +80,7 @@ namespace CIAO_QueryFilter_Test_Sender_Impl
 
   private:
     ::QueryFilter_Test::CCM_Sender_Context_var context_;
-    ::QueryFilter_Test::QueryFilterTestConn::Writer_var writer_;
+    ::QueryFilter_Test::QueryFilterTestConnector::Writer_var writer_;
     QueryFilterStarter_var starter_;
 
     CORBA::UShort iterations_;

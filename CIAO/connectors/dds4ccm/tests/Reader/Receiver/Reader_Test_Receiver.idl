@@ -15,7 +15,7 @@ module Reader_Test
 {
   component Receiver
   {
-    port CCM_DDS::ReaderTest::DDS_Listen info_out;
+    port ReaderTestConnector::DDS_Listen info_out;
 
     provides ReaderStarter reader_start;
   };
