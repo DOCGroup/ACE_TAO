@@ -29,7 +29,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
   // QueryFilterListenStateTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export QueryFilterListenStateTest_Listener
-    : public virtual ::QFLS_Test::QueryFilterListenStateTestConn::CCM_StateListener,
+    : public virtual ::QFLS_Test::QueryFilterListenStateTestConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -78,7 +78,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::QFLS_Test::QueryFilterListenStateTestConn::CCM_StateListener_ptr
+    virtual ::QFLS_Test::QueryFilterListenStateTestConnector::CCM_StateListener_ptr
     get_info_state_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -96,7 +96,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
 
   private:
     ::QFLS_Test::CCM_Receiver_Context_var context_;
-    ::QFLS_Test::QueryFilterListenStateTestConn::Reader_var reader_;
+    ::QFLS_Test::QueryFilterListenStateTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

@@ -16,7 +16,7 @@ module QFLE_Test
 {
   component Sender
   {
-    port QueryFilterListenEventTestConn::DDS_Write info_write;
+    port QueryFilterListenEventTestConnector::DDS_Write info_write;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
