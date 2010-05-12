@@ -1,3 +1,9 @@
+Wed May 12 09:16:58 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp
+        Solved some compile warnings.
+
 Wed May 12 06:37:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl:

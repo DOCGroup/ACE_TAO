@@ -62,10 +62,10 @@ namespace CIAO_OneProcess_Sender_Impl
     for (int i = 0; i < 5; ++i)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: SEND ASYNCHROON\n")); 
-        if (nr_of_sent > 1)
+        if (nr_of_sent.value() > 1)
           {
             ACE_DEBUG ((LM_DEBUG, "OK: number of asynchroon sent = %u\n",
-                                  nr_of_sent)); 
+                        nr_of_sent.value())); 
             asynch = true;
           }
         if (CORBA::is_nil (my_foo_ami_))

@@ -15,7 +15,7 @@ namespace CIAO_OneProcess_Receiver_Impl
   }
 
   ::CORBA::Long
-  MyFoo_exec_i::foo (const char * in_str,::CORBA::Long cmd,
+  MyFoo_exec_i::foo (const char * /*in_str*/,::CORBA::Long cmd,
                      ::CORBA::String_out answer)
   {
     if (cmd == 1)
