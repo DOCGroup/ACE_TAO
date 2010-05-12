@@ -1,3 +1,12 @@
+Wed May 12 08:38:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Timer_Queue.mpc:
+          Custom_Handler wasn't a template so removed
+          all template declarations. This should resolve
+          the static link issues on the scoreboard.
+
 Tue May 11 06:52:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Timer_Queue/Custom_Handler.h:
