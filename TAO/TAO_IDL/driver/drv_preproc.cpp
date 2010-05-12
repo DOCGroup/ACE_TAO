@@ -162,58 +162,55 @@ DRV_cpp_expand_output_arg (const char *filename)
 
 // Get a line from stdin.
 static bool
-DRV_get_line (FILE *f)
+DRV_get_line (FILE *file)
 {
-  char *l = ACE_OS::fgets (drv_line,
-                           drv_line_size,
-                           f);
-
-  if (l == 0)
+  char *line = ACE_OS::fgets (drv_line,
+                              drv_line_size,
+                              file);
+  if (!line || (!*line && feof (file)))
     {
+      // End of file, nothing else read in.
       return false;
     }
 
-  if (*l == '\0' && feof (f))
+  do
     {
-      return false;
-    }
-
-  if (*l == '\0')
-    {
-      return true;
-    }
-
-  while (ACE_OS::strchr (drv_line, '\n') == 0)
-    {
-      // Haven't got to a newline yet.
-      // Create a bigger buffer and keep reading.
-      size_t temp_size;
-      temp_size = drv_line_size * 2;
-      char *temp = 0;
-      ACE_NEW_RETURN (temp,
-                      char[temp_size],
-                      false);
-      ACE_OS::strcpy (temp, drv_line);
-      delete [] drv_line;
-      drv_line = temp;
-      drv_line_size = temp_size;
-
-      l = ACE_OS::fgets (drv_line + ACE_OS::strlen (drv_line),
-                         drv_line_size - ACE_OS::strlen(drv_line),
-                         f);
-
-      if (l == 0 || *l == '\0')
+      // Check for line continuation escape...
+      size_t len = ACE_OS::strlen (drv_line);
+      if (2 <= len &&
+          '\n' == drv_line [len-1] &&
+          '\\' == drv_line [len-2]    )
         {
-          break;
+          // This is a "false" end-of-line, remove token
+          len-= 2;
+          drv_line [len]= '\0';
         }
-    }
+      // Check for end-of-line
+      if (len && '\n' == drv_line [len-1])
+        {
+          // Replace the end-of-line with a null
+          drv_line [len-1] = '\0';
+          return true;
+        }
 
-  size_t i = ACE_OS::strlen (drv_line) - 1;
+      // Need to continue to read more of this line in,
+      // is there enough space left in the buffer?
+      if (drv_line_size - len < 10)
+        {
+          // Create a bigger buffer
+          size_t temp_size = drv_line_size * 2;
+          char *temp = 0;
+          ACE_NEW_RETURN (temp, char [temp_size], false);
+          ACE_OS::strcpy (temp, drv_line);
+          delete [] drv_line;
+          drv_line = temp;
+          drv_line_size = temp_size;
+        }
 
-  if (drv_line[i] == '\n')
-    {
-      drv_line[i] = '\0';
-    }
+      line = ACE_OS::fgets (drv_line + len,
+                            drv_line_size - len,
+                            file);
+    } while (line && *line);
 
   return true;
 }
@@ -616,247 +613,196 @@ DRV_cpp_post_init (void)
     }
 }
 
-// We really need to know whether this line is a "#include ...". If
-// so, we would like to separate the "file name" and keep that in the
-// idl_global. We need them to produce "#include's in the stubs and
-// skeletons.
-void
-DRV_check_for_include (const char* buf)
+namespace // local/internal helper function
 {
-  const char* r = buf;
-  const char* h;
+  // Advances the input char buffer to the first non-white
+  // space character, handles /**/ comments as well.
+  char
+  DRV_skip_over_white_spaces (const char *&input)
+  {
+    while (*input)
+      {
+        // Skip the spaces, tabs, vertical-tabs and form feeds.
+        while (' ' == *input ||
+              '\t' == *input ||
+              '\v' == *input ||
+              '\f' == *input   )
+          {
+            ++input;
+          }
 
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
+        // Skip any "/*...*/" inline comments
+        // (Note we can't cope with fully multi-line comments since we
+        //  are scanning only single lines at a time here.)
+        if ('/' != *input)
+          {
+            // This is the first non-white space character (could be
+            // end of line).
+            return *input;
+          }
+        if ('*' != *++input)
+          {
+            // Wasn't the start of a comment so / was the first non-white space character.
+            return *--input;
+          }
+
+        // Skip over the contents of the comment (if we reach the end of the input
+        // line we have no option but to concider the comment closed, bummer).
+        do
+          {
+            // Looking for the closing "*/" characters
+            while ('*' != *++input && *input)
+              {}
+            while ('*' == *input)
+              {
+                ++input;
+              }
+          } while ('/' != *input && *input);
+          if ('/' == *input)
+            {
+              ++input;
+            }
+      }
+
+    return '\0'; // Reached end of line.
+  }
+
+  // Checks for and skips over #include, positions buffer
+  // at the leading quote character of the filename if
+  // #include is found.
+  bool
+  DRV_find_include_filename (const char *&input)
+  {
+    // Must have initial # character
+    if ('#' != DRV_skip_over_white_spaces (input))
+      {
+        return false;
+      }
+    // Only want #include to match
+    const char *include_str = "include";
+    if (*include_str != DRV_skip_over_white_spaces (++input))
+      {
+        return false;
+      }
+    while (*++include_str == *++input && *input)
+      {}
+    if (*include_str || !*input)
+      {
+        return false; // Not #include (or it ends before filename given)
+      }
+
+    // Next thing is finding the file that has been `#include'd. Skip
+    // over to the starting " or < character.
+    const char start_char = DRV_skip_over_white_spaces (input);
+    return ('"' == start_char || '<' == start_char);
+  }
+
+  // We really need to know whether this line is a "#include ...". If
+  // so, we would like to separate the "file name" and keep that in the
+  // idl_global. We need them to produce "#include's in the stubs and
+  // skeletons.
+  void
+  DRV_check_for_include (const char *buf)
+  {
+    if (!DRV_find_include_filename (buf))
+      {
+        return;
+      }
+
+    // Skip over this leading " or < and copy the filename upto the
+    // closing " or > character.
+    const char
+      start_char = *buf++,
+      end_char   = ('<' == start_char) ? '>' : start_char;
+    char
+      incl_file[MAXPATHLEN + 1],
+      *fi = incl_file;
+    while (*buf && *buf != end_char)
+      {
+        // Put Microsoft-style pathnames into a canonical form.
+        if ('\\' == buf[0] && '\\' == buf [1])
+          {
+            ++buf;
+          }
+        *fi++ = *buf++;
+        if (fi == incl_file + sizeof(incl_file)-1)
+          {
+            break; // Safety valve, filename given was too long!
+          }
+      }
+    *fi= '\0';
+    const size_t len = fi - incl_file;
+    if (!len)
     {
-      ++r;
+      return; // Null filename not allowed.
     }
+ 
+    ACE_CString const name_str (incl_file);
+    ACE_CString const simple ("orb.idl");
+    ACE_CString const nix_path ("tao/orb.idl");
+    ACE_CString const win_path ("tao\\orb.idl");
 
-  // Skip initial '#'.
-  if (*r != '#')
-    {
-      return;
-    }
-  else
-    {
-      r++;
-    }
+    // Some backends pass this file through, others don't.
+    if (name_str == simple || name_str == nix_path || name_str == win_path)
+      {
+        if (idl_global->pass_orb_idl ())
+          {
+            idl_global->add_to_included_idl_files (incl_file);
+          }
+        else
+          {
+            DRV_get_orb_idl_includes ();
+          }
+      }
 
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
-    {
-      ++r;
-    }
+    // We have special lookup for orb.idl (TAO_ROOT/tao) that
+    // also kicks in for .pidl files. If one of the latter is
+    // included as a local name only, we add the 'tao/' prefix
+    // so the generated C++ include files will be correct.
+    else if ((5 <= len && !ACE_OS::strcmp (incl_file + len - 5, ".pidl"))
+            && !ACE_OS::strchr (incl_file, '/')
+            && !ACE_OS::strchr (incl_file, '\\'))
+      {
+        ACE_CString fixed_name ("tao/");
+        fixed_name += incl_file;
 
-  // Probably we are at the word `include`. If not return.
-  if (*r != 'i')
-    {
-      return;
-    }
+        idl_global->add_to_included_idl_files (fixed_name.rep ());
+      }
+    else
+      {
+        idl_global->add_to_included_idl_files (incl_file);
+      }
+  }
 
-  // Check whether this word is `include` or no.
-  static const char include_str[] = "include";
+  // This method turns a line like '#include "a.idl"' into the
+  // line '#include <a.idl>'
+  void
+  DRV_convert_includes (char *buf)
+  {
+    const char *input = buf;
+    if (!DRV_find_include_filename (input) || '"' != *input)
+      {
+        return; // Only interested in #include "" type
+      }
+    buf = const_cast<char *> (input);
 
-  for (size_t ii = 0;
-       ii < (sizeof (include_str) / sizeof (include_str[0]) - 1)
-         && *r != '\0' && *r != ' ' && *r != '\t';
-       ++r, ++ii)
-    {
-      // Return if it doesn't match.
-      if (include_str[ii] != *r)
-        {
-          return;
-        }
-    }
-
-  // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " or < character.
-  for (; (*r != '"') && (*r != '<'); ++r)
-    {
-      if (*r == '\n' || *r == '\0')
-        {
-          return;
-        }
-    }
-
-  // Decide on the end char.
-  char end_char = '"';
-
-  if (*r == '<')
-    {
-      end_char = '>';
-    }
-
-  // Skip this " or <.
-  ++r;
-
-  // Store this position.
-  h = r;
-
-  // We're not handling redirection from stdin.
-  if (*h == '\0')
-    {
-      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
-
-      throw Bailout ();
-    }
-
-  // Find the closing " or < character.
-  for (; *r != end_char; ++r)
-    {
-      continue;
-    }
-
-  // Copy the chars.
-  char incl_file[MAXPATHLEN + 1] = { 0 };
-  size_t fi = 0;
-
-  for (; h != r; ++fi, ++h)
-    {
-      incl_file [fi] = *h;
-    }
-
-  // Terminate the string.
-  incl_file [fi] = '\0';
-
-  // Put Microsoft-style pathnames into a canonical form.
-  size_t i = 0;
-
-  for (size_t j = 0; incl_file [j] != '\0'; ++i, ++j)
-    {
-      if (incl_file [j] == '\\' && incl_file [j + 1] == '\\')
-        {
-          j++;
-        }
-
-      incl_file [i] = incl_file [j];
-    }
-
-  // Terminate this string.
-  incl_file [i] = '\0';
-
-  size_t const len = ACE_OS::strlen (incl_file);
-  ACE_CString const name_str (incl_file);
-  ACE_CString const simple ("orb.idl");
-  ACE_CString const nix_path ("tao/orb.idl");
-  ACE_CString const win_path ("tao\\orb.idl");
-
-  // Some backends pass this file through, others don't.
-  if (name_str == simple || name_str == nix_path || name_str == win_path)
-    {
-      if (idl_global->pass_orb_idl ())
-        {
-          idl_global->add_to_included_idl_files (incl_file);
-        }
-      else
-        {
-          DRV_get_orb_idl_includes ();
-        }
-    }
-
-  // We have special lookup for orb.idl (TAO_ROOT/tao) that
-  // also kicks in for .pidl files. If one of the latter is
-  // included as a local name only, we add the 'tao/' prefix
-  // so the generated C++ include files will be correct.
-  else if (ACE_OS::strcmp (incl_file + len - 5, ".pidl") == 0
-           && ACE_OS::strchr (incl_file, '/') == 0
-           && ACE_OS::strchr (incl_file, '\\') == 0)
-    {
-      ACE_CString fixed_name ("tao/");
-      fixed_name += incl_file;
-
-      idl_global->add_to_included_idl_files (fixed_name.rep ());
-    }
-  else
-    {
-      idl_global->add_to_included_idl_files (incl_file);
-    }
-}
-
-// This method turns a line like '#include "a.idl"' into the
-// line '#include <a.idl>'
-void
-DRV_convert_includes (const char* buf)
-{
-  // Remove constness
-  char* r = const_cast<char*> (buf);
-
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
-    {
-      ++r;
-    }
-
-  // Skip initial '#'.
-  if (*r != '#')
-    {
-      return;
-    }
-  else
-    {
-      r++;
-    }
-
-  // Skip the tabs and spaces.
-  while (*r == ' ' || *r == '\t')
-    {
-      ++r;
-    }
-
-  // Probably we are at the word `include`. If not return.
-  if (*r != 'i')
-    {
-      return;
-    }
-
-  // Check whether this word is `include` or no.
-  static const char include_str[] = "include";
-
-  for (size_t ii = 0;
-       ii < (sizeof (include_str) / sizeof (include_str[0]) - 1)
-         && *r != '\0' && *r != ' ' && *r != '\t';
-       ++r, ++ii)
-    {
-      // Return if it doesn't match.
-      if (include_str[ii] != *r)
-        {
-          return;
-        }
-    }
-
-  // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " character.
-  for (; (*r != '"'); ++r)
-    {
-      if (*r == '\n' || *r == '\0')
-        {
-          return;
-        }
-    }
-
-  // Replace the opening quote with an angle bracket.
-  *r = '<';
-
-  // We're not handling redirection from stdin.
-  if (*r == '\0')
-    {
-      ACE_ERROR ((LM_ERROR, "TAO_IDL: No input files\n"));
-
-      throw Bailout ();
-    }
-
-  // Find the closing '"' character.
-  for (; *r != '"'; ++r)
-    {
-      continue;
-    }
-
-  // Swap it for a '>'
-  if (*r == '"')
-    {
-      *r = '>';
-    }
-}
+    // Find the closing '"' character.
+    char *open_quote= buf;
+    while ('"' != *++buf && *buf)
+      {
+        if ('>' == *buf)
+          {
+            return; // Can't change to #include <> as it has a > character in the filename!
+          }
+      }
+    if ('"' == *buf)
+      {
+        // Replace the quotes with angle brackets.
+        *open_quote = '<';
+        *buf = '>';
+      }
+  }
+} // End of local/internal namespace
 
 void
 DRV_get_orb_idl_includes (void)
@@ -1325,8 +1271,7 @@ DRV_pre_proc (const char *myfile)
         {
           buffer[bytes] = 0;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      buffer));
+          ACE_DEBUG ((LM_DEBUG, buffer));
         }
 
       ACE_OS::fclose (preproc);
