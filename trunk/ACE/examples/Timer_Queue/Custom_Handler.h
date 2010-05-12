@@ -21,10 +21,6 @@
 #ifndef _CUSTOM_HANDLER_H_
 #define _CUSTOM_HANDLER_H_
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Timer_Queue.h"
 
 class Custom_Handler
@@ -40,7 +36,7 @@ class Custom_Handler
 
         Custom_Handler (const ACE_Time_Value &expiration_time);
 
-        ~Custom_Handler (void);
+        virtual ~Custom_Handler (void);
 
         // Set the custom handler's id
         void set_id (int id);
@@ -129,13 +125,5 @@ class Custom_Handler_Upcall
                      Custom_Handler* handler,
                      const void* arg);
 };
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Custom_Handler.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Custom_Handler.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif

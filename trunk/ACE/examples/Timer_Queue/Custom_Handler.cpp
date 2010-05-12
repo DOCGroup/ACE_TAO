@@ -15,9 +15,6 @@
 //
 // ============================================================================
 
-#if !defined (_CUSTOM_HANDLER_CPP_)
-#define _CUSTOM_HANDLER_CPP_
-
 #include "Custom_Handler.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -111,5 +108,4 @@ int Custom_Handler_Upcall::deletion(TTimerQueue& , Custom_Handler* handler, cons
     delete handler;
     return 0;
 }
-#endif /* _CUSTOM_HANDLER_CPP_ */
 
