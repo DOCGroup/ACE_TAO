@@ -14,7 +14,7 @@ module SL_OneByOne
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_StateListen info_out;
+    port SL_OneByOneConnector::DDS_StateListen info_out;
   };
 };
 

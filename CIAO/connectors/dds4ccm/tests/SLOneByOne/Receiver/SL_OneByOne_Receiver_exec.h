@@ -28,7 +28,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   // StateListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export StateListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_StateListener,
+    : public virtual ::SL_OneByOne::SL_OneByOneConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -75,7 +75,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+    virtual ::SL_OneByOne::SL_OneByOneConnector::CCM_StateListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

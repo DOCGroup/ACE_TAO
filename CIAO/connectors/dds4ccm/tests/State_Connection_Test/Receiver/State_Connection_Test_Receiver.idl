@@ -14,10 +14,10 @@ module State_Connection_Test
 {
   component Receiver
   {
-    port CCM_DDS::State_ConnectionTest::DDS_Read info_read;
-    port CCM_DDS::State_ConnectionTest::DDS_Get info_get;
-    port CCM_DDS::State_ConnectionTest::DDS_Listen info_listen;
-    port CCM_DDS::State_ConnectionTest::DDS_StateListen info_statelisten;
+    port State_ConnectionTestConnector::DDS_Read info_read;
+    port State_ConnectionTestConnector::DDS_Get info_get;
+    port State_ConnectionTestConnector::DDS_Listen info_listen;
+    port State_ConnectionTestConnector::DDS_StateListen info_statelisten;
   };
 };
 

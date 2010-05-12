@@ -37,8 +37,10 @@ namespace CIAO_State_Connection_Test_Sender_Impl
 
   private:
     ::State_Connection_Test::CCM_Sender_Context_var context_;
-    CCM_DDS::State_ConnectionTest::Updater_var updater_;
-    DDS::DataWriter_var updater_dds_datawriter_;
+    ::State_Connection_Test
+      ::State_ConnectionTestConnector
+      ::Updater_var       updater_;
+    ::DDS::DataWriter_var updater_dds_datawriter_;
 
     bool updater_ok_;
     bool updater_dds_datawriter_ok_;
