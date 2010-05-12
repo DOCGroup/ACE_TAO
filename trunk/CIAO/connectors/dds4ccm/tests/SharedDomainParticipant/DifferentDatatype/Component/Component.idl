@@ -17,9 +17,9 @@ module SharedDP
 {
   component SharedDPComponent
   {
-    port CCM_DDS::SharedDPTest1::DDS_Write write1;
-    port CCM_DDS::SharedDPTest2::DDS_Write write2;
-    port CCM_DDS::SharedDPTest3::DDS_Write write3;
+    port SharedDP_Connector1::SharedDPTest1Connector::DDS_Write write1;
+    port SharedDP_Connector2::SharedDPTest2Connector::DDS_Write write2;
+    port SharedDP_Connector3::SharedDPTest3Connector::DDS_Write write3;
   };
 };
 
