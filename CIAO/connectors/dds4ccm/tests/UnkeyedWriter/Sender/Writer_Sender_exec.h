@@ -75,7 +75,7 @@ namespace CIAO_Writer_Sender_Impl
     void start (void);
     void stop (void);
 
-    CCM_DDS::WriterTest::Writer_var writer_;
+    ::Writer::WriterTestConnector::Writer_var writer_;
 
     pulse_Generator * ticker_;
     ::Writer::CCM_Sender_Context_var context_;

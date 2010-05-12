@@ -48,7 +48,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   };
 
   class RECEIVER_EXEC_Export UnkeyedTest_Listener_exec_i
-    : public virtual ::CCM_DDS::UnkeyedTest::CCM_Listener,
+    : public virtual ::Unkeyed_Test::UnkeyedTestConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -81,7 +81,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
     virtual void iterations (::CORBA::UShort iterations);
 
     // Port operations.
-    virtual ::CCM_DDS::UnkeyedTest::CCM_Listener_ptr
+    virtual ::Unkeyed_Test::UnkeyedTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -103,8 +103,8 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 
   private:
     ::Unkeyed_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::UnkeyedTest::Reader_var reader_;
-    ::CCM_DDS::UnkeyedTest::Getter_var getter_;
+    ::Unkeyed_Test::UnkeyedTestConnector::Reader_var reader_;
+    ::Unkeyed_Test::UnkeyedTestConnector::Getter_var getter_;
 
     CORBA::UShort iterations_;
     Atomic_ULong received_;

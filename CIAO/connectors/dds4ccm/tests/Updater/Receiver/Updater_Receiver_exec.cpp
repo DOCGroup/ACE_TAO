@@ -82,8 +82,8 @@ namespace CIAO_Updater_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_Listener_ptr
-    Receiver_exec_i::get_info_out_data_listener (void)
+  ::Updater::UpdaterConnector::CCM_Listener_ptr
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
     return new ListenOneByOneTest_Listener_exec_i (
                                   this->thread_id_listener_);

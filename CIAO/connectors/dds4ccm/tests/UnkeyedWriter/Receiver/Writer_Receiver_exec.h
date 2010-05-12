@@ -19,7 +19,7 @@
 namespace CIAO_Writer_Receiver_Impl
 {
   class RECEIVER_EXEC_Export WriterTest_Listener_exec_i
-    : public virtual ::CCM_DDS::WriterTest::CCM_Listener,
+    : public virtual ::Writer::WriterTestConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -52,7 +52,7 @@ namespace CIAO_Writer_Receiver_Impl
     virtual void iterations (::CORBA::UShort iterations);
 
     // Port operations.
-    virtual ::CCM_DDS::WriterTest::CCM_Listener_ptr
+    virtual ::Writer::WriterTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

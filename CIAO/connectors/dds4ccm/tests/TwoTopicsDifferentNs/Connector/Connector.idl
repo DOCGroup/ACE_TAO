@@ -21,46 +21,28 @@
 module Hello
 {
   // Hello connector
-  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbyeSeq> HelloConn;
-  connector Hello_Connector : HelloConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbyeSeq> HelloConnector;
 };
 
 module Goodbye
 {
   // Goodbye connector
-  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbyeSeq> GoodbyeConn;
-  connector Goodbye_Connector : GoodbyeConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < HelloGoodbye, HelloGoodbyeSeq> GoodbyeConnector;
 };
 
 module HelloGoodbye
 {
   // Hello connector
-  module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbyeSeq> HelloConn;
-  connector Hello_Connector : HelloConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbyeSeq> HelloConnector;
 
   // Goodbye connector
-  module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbyeSeq> GoodbyeConn;
-  connector Goodbye_Connector : GoodbyeConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbyeSeq> GoodbyeConnector;
 };
 
 // Hello connector
-module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbyeSeq> HelloConn;
-connector Hello_Connector : HelloConn::DDS_Event
-{
-};
+module ::CCM_DDS::Typed < ::Hello::HelloGoodbye, ::Hello::HelloGoodbyeSeq> HelloConnector;
 
 // Goodbye connector
-module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbyeSeq> GoodbyeConn;
-connector Goodbye_Connector : GoodbyeConn::DDS_Event
-{
-};
+module ::CCM_DDS::Typed < ::Goodbye::HelloGoodbye, ::Goodbye::HelloGoodbyeSeq> GoodbyeConnector;
 
 #endif /* CONNECTOR_IDL_ */
