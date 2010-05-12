@@ -30,17 +30,26 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
     //Provides for DDS_Read
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_read_status (void);
+
     //Provides for DDS_Get
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_get_status (void);
+
     //Provides for DDS_Listen
-    virtual ::CCM_DDS::State_ConnectionTest::CCM_Listener_ptr
+    virtual ::State_Connection_Test
+            ::State_ConnectionTestConnector
+            ::CCM_Listener_ptr
     get_info_listen_data_listener ();
+
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_listen_status (void);
+
     //Provides for DDS_StateListen
-    virtual ::CCM_DDS::State_ConnectionTest::CCM_StateListener_ptr
+    virtual ::State_Connection_Test
+            ::State_ConnectionTestConnector
+            ::CCM_StateListener_ptr
     get_info_statelisten_data_listener (void);
+
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_statelisten_status (void);
 
@@ -59,23 +68,28 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   private:
     ::State_Connection_Test::CCM_Receiver_Context_var context_;
     //DDS_Read
-    ::CCM_DDS::State_ConnectionTest::Reader_var reader_data_;
-    ::DDS::DataReader_var                       reader_dds_entity_;
+    ::State_Connection_Test::State_ConnectionTestConnector
+      ::Reader_var        reader_data_;
+    ::DDS::DataReader_var reader_dds_entity_;
 
     //DDS_Get
-    ::CCM_DDS::State_ConnectionTest::Reader_var getter_data_;
-    ::CCM_DDS::State_ConnectionTest::Getter_var getter_fresh_data_;
-    ::DDS::DataReader_var                       getter_dds_entity_;
+    ::State_Connection_Test::State_ConnectionTestConnector
+      ::Reader_var        getter_data_;
+    ::State_Connection_Test::State_ConnectionTestConnector
+      ::Getter_var        getter_fresh_data_;
+    ::DDS::DataReader_var getter_dds_entity_;
 
     //DDS_Listen
-    ::CCM_DDS::State_ConnectionTest::Reader_var listen_data_;
-    ::CCM_DDS::DataListenerControl_var          listen_data_control_;
-    ::DDS::DataReader_var                       listen_dds_entity_;
+    ::State_Connection_Test::State_ConnectionTestConnector
+      ::Reader_var                      listen_data_;
+    ::CCM_DDS::DataListenerControl_var  listen_data_control_;
+    ::DDS::DataReader_var               listen_dds_entity_;
 
     //DDS_StateListen
-    ::CCM_DDS::State_ConnectionTest::Reader_var statelisten_data_;
-    ::CCM_DDS::StateListenerControl_var         statelisten_data_control_;
-    ::DDS::DataReader_var                       statelisten_dds_entity_;
+    ::State_Connection_Test::State_ConnectionTestConnector
+      ::Reader_var                      statelisten_data_;
+    ::CCM_DDS::StateListenerControl_var statelisten_data_control_;
+    ::DDS::DataReader_var               statelisten_dds_entity_;
 
     //DDS_Read
     bool reader_data_ok_;

@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SL_ManyByMany_SL_ManyByMany_Connector_Impl</string>
+          <string>create_SL_ManyByMany_SLManyByManyConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SL_ManyByMany_SL_ManyByMany_Connector_Servant</string>
+          <string>create_SL_ManyByMany_SLManyByManyConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
