@@ -1,3 +1,17 @@
+Wed May 12 08:40:45 UTC 2010  Simon Massey <sma at prismtech dot com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+     
+          Fixed some buffer over-runs and other segfaults within the
+          internal #include parsing code (prior to the hand over to
+          the pre-processor). The code assumed that the lines were
+          syntaxically correct, missing > off the end of an #include
+          etc. would cause segfaults. Also allowed for /**/ inline
+          comments, correct white-space and muti-line continuation.
+          This fix protects tao_idl and allows the pre-processor to
+          handle the errors correctly.
+
 Tue May 11 17:44:52 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(gen_exec_idl_includes):
