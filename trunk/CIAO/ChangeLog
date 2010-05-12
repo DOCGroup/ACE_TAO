@@ -1,3 +1,30 @@
+Wed May 12 09:50:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/Plan.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Wed May 12 09:28:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:

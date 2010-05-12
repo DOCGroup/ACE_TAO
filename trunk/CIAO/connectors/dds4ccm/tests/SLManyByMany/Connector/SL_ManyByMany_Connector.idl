@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/SL_ManyByMany_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
-};
-
 module SL_ManyByMany
 {
-  connector SL_ManyByMany_Connector : ::CCM_DDS::TestTopic::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> SLManyByManyConnector;
 };
 
 #endif /* SL_ManyByMany_CONNECTOR_IDL_ */

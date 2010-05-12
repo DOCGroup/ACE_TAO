@@ -235,8 +235,8 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     return new PortStatusListener_exec_i ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_StateListener_ptr
-    Receiver_exec_i::get_info_out_data_listener (void)
+  ::SL_ManyByMany::SLManyByManyConnector::CCM_StateListener_ptr
+  Receiver_exec_i::get_info_out_data_listener (void)
   {
     return new StateListener_exec_i(this->no_operation_,
                                      this->on_creation_,

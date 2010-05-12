@@ -16,7 +16,7 @@ module SL_ManyByMany
 {
   component Sender
   {
-     port CCM_DDS::TestTopic::DDS_Update test_topic_update;
+     port ::SL_ManyByMany::SLManyByManyConnector::DDS_Update test_topic_update;
   };
 };
 
