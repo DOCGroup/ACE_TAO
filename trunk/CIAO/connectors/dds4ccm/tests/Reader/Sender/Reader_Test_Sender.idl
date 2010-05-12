@@ -17,7 +17,7 @@ module Reader_Test
 {
   component Sender
   {
-    port CCM_DDS::ReaderTest::DDS_Write info_write;
+    port ReaderTestConnector::DDS_Write info_write;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 
     uses ReaderStarter start_reader;

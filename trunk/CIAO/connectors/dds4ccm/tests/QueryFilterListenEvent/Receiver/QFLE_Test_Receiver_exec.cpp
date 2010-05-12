@@ -91,7 +91,7 @@ namespace CIAO_QFLE_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  ::QFLE_Test::QueryFilterListenEventTestConn::CCM_Listener_ptr
+  ::QFLE_Test::QueryFilterListenEventTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new QueryFilterListenEventTest_Listener (

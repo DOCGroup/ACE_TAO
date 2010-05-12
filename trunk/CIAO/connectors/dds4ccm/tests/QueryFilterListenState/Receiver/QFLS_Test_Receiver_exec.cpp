@@ -98,7 +98,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  ::QFLS_Test::QueryFilterListenStateTestConn::CCM_StateListener_ptr
+  ::QFLS_Test::QueryFilterListenStateTestConnector::CCM_StateListener_ptr
   Receiver_exec_i::get_info_state_data_listener (void)
   {
     return new QueryFilterListenStateTest_Listener (

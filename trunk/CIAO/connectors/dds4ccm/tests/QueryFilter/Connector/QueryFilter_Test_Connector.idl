@@ -16,10 +16,7 @@
 
 module QueryFilter_Test
 {
-  module ::CCM_DDS::Typed < ::QueryFilterTest, ::QueryFilterTestSeq> QueryFilterTestConn;
-  connector QueryFilter_Test_Connector : QueryFilterTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::QueryFilterTest, ::QueryFilterTestSeq> QueryFilterTestConnector;
 };
 
 #endif /* QUERY_FILTER_TEST_CONNECTOR_IDL_ */

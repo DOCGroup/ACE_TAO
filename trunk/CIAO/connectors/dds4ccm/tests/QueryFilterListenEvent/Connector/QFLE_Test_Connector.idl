@@ -16,10 +16,7 @@
 
 module QFLE_Test
 {
-  module ::CCM_DDS::Typed < ::QueryFilterListenEventTest, ::QueryFilterListenEventTestSeq> QueryFilterListenEventTestConn;
-  connector QFLE_Test_Connector : QueryFilterListenEventTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::QueryFilterListenEventTest, ::QueryFilterListenEventTestSeq> QueryFilterListenEventTestConnector;
 };
 
 #endif /* QFLE_Test_CONNECTOR_IDL_ */

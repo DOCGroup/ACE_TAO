@@ -64,7 +64,7 @@ namespace CIAO_QFLE_Test_Sender_Impl
 
   private:
     ::QFLE_Test::CCM_Sender_Context_var context_;
-    ::QFLE_Test::QueryFilterListenEventTestConn::Writer_var writer_;
+    ::QFLE_Test::QueryFilterListenEventTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 
