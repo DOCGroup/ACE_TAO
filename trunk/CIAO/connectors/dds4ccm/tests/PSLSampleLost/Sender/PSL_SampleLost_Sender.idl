@@ -16,7 +16,7 @@ module PSL_SampleLost
 {
   component Sender
   {
-     port CCM_DDS::TestTopic::DDS_Write test_topic_write;
+     port PSL_SampleLostConnector::DDS_Write test_topic_write;
   };
 };
 

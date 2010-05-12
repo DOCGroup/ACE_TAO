@@ -254,10 +254,10 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     return CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  PortUsageState_Test::PortUsageTestConn::CCM_StateListener_ptr
+  PortUsageState_Test::PortUsageTestConnector::CCM_StateListener_ptr
   Component_exec_i::get_state_listen_port_data_listener()
   {
-    return PortUsageState_Test::PortUsageTestConn::CCM_StateListener::_nil ();
+    return PortUsageState_Test::PortUsageTestConnector::CCM_StateListener::_nil ();
   }
 
   CCM_DDS::CCM_PortStatusListener_ptr
@@ -280,10 +280,10 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     return CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  PortUsageState_Test::PortUsageTestConn::CCM_Listener_ptr
+  PortUsageState_Test::PortUsageTestConnector::CCM_Listener_ptr
   Component_exec_i::get_listen_port_data_listener (void)
   {
-    return PortUsageState_Test::PortUsageTestConn::CCM_Listener::_nil ();
+    return PortUsageState_Test::PortUsageTestConnector::CCM_Listener::_nil ();
   }
 
   CCM_DDS::CCM_PortStatusListener_ptr

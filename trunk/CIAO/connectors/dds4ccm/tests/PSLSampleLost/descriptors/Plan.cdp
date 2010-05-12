@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_PSL_SampleLost_PSL_SampleLost_Connector_Impl</string>
+          <string>create_PSL_SampleLost_PSL_SampleLostConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_PSL_SampleLost_PSL_SampleLost_Connector_Servant</string>
+          <string>create_PSL_SampleLost_PSL_SampleLostConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

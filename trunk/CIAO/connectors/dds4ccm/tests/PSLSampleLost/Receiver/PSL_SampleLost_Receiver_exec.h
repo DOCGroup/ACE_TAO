@@ -28,7 +28,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   // TestTopic_RawListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_Listener,
+    : public virtual ::PSL_SampleLost::PSL_SampleLostConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -114,7 +114,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_Listener_ptr
+    virtual ::PSL_SampleLost::PSL_SampleLostConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -139,7 +139,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
 
   private:
     ::PSL_SampleLost::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
+    ::PSL_SampleLost::PSL_SampleLostConnector::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
     Atomic_Boolean sample_port_1_;
