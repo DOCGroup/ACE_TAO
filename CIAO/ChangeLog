@@ -1,3 +1,39 @@
+Wed May 12 06:37:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.h:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component.idl:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component_exec.cpp:
+        * connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.idl:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component.idl:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.cpp:
+        * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Get.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Listen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Write.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Get.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Listen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Read.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_StateListen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Update.cdp:
+          Instantiate the Typed CCM_DDS module inside the module of this test. This
+          way the IDL type and all CCM_DDS typed interfaces are all in the
+          module.
+
 Tue May 11 18:21:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:

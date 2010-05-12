@@ -75,7 +75,7 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
     virtual CCM_DDS::CCM_PortStatusListener_ptr
     get_get_port_status (void);
 
-    virtual PortUsageEvent_Test::PortUsageTestConn::CCM_Listener_ptr
+    virtual PortUsageEvent_Test::PortUsageTestConnector::CCM_Listener_ptr
     get_listen_port_data_listener (void);
 
     virtual CCM_DDS::CCM_PortStatusListener_ptr
@@ -97,9 +97,9 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
 
   private:
     ::PortUsageEvent_Test::CCM_PortUsageEventComponent_Context_var context_;
-    ::PortUsageEvent_Test::PortUsageTestConn::Reader_var reader_; //Listener
-    ::PortUsageEvent_Test::PortUsageTestConn::Writer_var writer_; //Writer
-    ::PortUsageEvent_Test::PortUsageTestConn::Getter_var getter_; //Getter
+    ::PortUsageEvent_Test::PortUsageTestConnector::Reader_var reader_; //Listener
+    ::PortUsageEvent_Test::PortUsageTestConnector::Writer_var writer_; //Writer
+    ::PortUsageEvent_Test::PortUsageTestConnector::Getter_var getter_; //Getter
 
     PortUsageAssignment assignment_;
 
