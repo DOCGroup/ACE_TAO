@@ -1,8 +1,13 @@
+Wed May 12 10:17:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+          Resolved compile warning.
+
 Wed May 12 08:40:45 UTC 2010  Simon Massey <sma at prismtech dot com>
 
         * TAO_IDL/driver/drv_preproc.cpp:
         * TAO_IDL/driver/drv_mcpp_preproc.cpp:
-     
+
           Fixed some buffer over-runs and other segfaults within the
           internal #include parsing code (prior to the hand over to
           the pre-processor). The code assumed that the lines were
@@ -15,10 +20,10 @@ Wed May 12 08:40:45 UTC 2010  Simon Massey <sma at prismtech dot com>
 Tue May 11 17:44:52 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(gen_exec_idl_includes):
-        
+
           In iteration over the list of '#pragma ciao lem' files,
           added a check to ensure that the exec IDL file doesn't
-          include itself. 
+          include itself.
 
 Fri May  7 13:37:44 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
@@ -30,7 +35,7 @@ Fri May  7 13:37:44 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           (dump_samples): changed the last parameter to the fopen() method
           to "rb" to handle binary files.  Thanks to Inma Perea <inma dot
           perea dot fdz at gmail dot com> for reporting this.
-  
+
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp (init):
           changed the last parameter to the fopen() method to "wb" to
           handle binary files.
@@ -38,7 +43,7 @@ Fri May  7 13:37:44 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Fri May  7 16:11:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(gen_conn_hdr_includes):
-        
+
           Fixed bug in generation of includes corresponding to included
           IDL files, where the path of the -o option (if used) was
           mistakenly applied. Thanks to Trent Nadeau
@@ -50,7 +55,7 @@ Thu May  6 19:35:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
         * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
         * TAO_IDL/ast/ast_module.cpp:
-        
+
           Added member + accessors to AST_Module pointing to the
           template module instantiation that created it, if any.
           Provides a more reliable lookup of the instantiation,
@@ -63,18 +68,18 @@ Thu May  6 15:30:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
         * TAO_IDL/be_include/be_visitor_connector/connector_dds_ex_base.h:
-        
+
           - Fixed indentation error in generated connector header code.
-          
+
           - Changed connector traits prefix from DDS to DDS_.
-          
+
           - Consolidated common code from header and source visitors
             into the base class.
 
 Thu May  6 14:29:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp(fe_add_decl):
-        
+
           Fixed bug where an instantiated template module with the
           same name as an existing module would cause a redefinition
           error. Since a template module instantiation is just a
