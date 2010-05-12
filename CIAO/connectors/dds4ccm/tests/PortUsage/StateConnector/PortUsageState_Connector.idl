@@ -16,10 +16,7 @@
 
 module PortUsageState_Test
 {
-  module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConn;
-  connector PortUsageState_Connector : PortUsageTestConn::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConnector;
 };
 
 #endif /* PORTUSAGE_STATE_CONNECTOR_IDL_ */
