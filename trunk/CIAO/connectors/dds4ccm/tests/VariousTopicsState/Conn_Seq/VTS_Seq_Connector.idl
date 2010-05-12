@@ -16,10 +16,7 @@
 
 module VTopics
 {
-  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeqSeq> TopicSeqConn;
-  connector VTS_Seq_Connector : TopicSeqConn::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::TopicSeq, ::TopicSeqSeq> TopicSeqConnector;
 };
 
 #endif /* VTS_SEQ_CONNECTOR_IDL_ */
