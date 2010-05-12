@@ -59,8 +59,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
       << "{" << be_idt;
 
   ACE_CString lname = node->local_name ();  
-  const char *base_tname = 0;
-  
+
   if (lname == "DDS_Event" || lname == "DDS_State")
     {
       this->base_tname_ = node->local_name ();  
