@@ -10,6 +10,7 @@ project(*Library) : acelib {
     Reactor_Timer_Queue_Test.cpp
     Thread_Timer_Queue_Test.cpp
     Thread_Timer_Queue_Custom_Handler_Test.cpp
+    Custom_Handler.cpp
   }
 }
 
