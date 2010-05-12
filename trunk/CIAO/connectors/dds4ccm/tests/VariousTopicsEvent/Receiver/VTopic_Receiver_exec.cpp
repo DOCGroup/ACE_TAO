@@ -85,16 +85,16 @@ namespace CIAO_VTopic_Receiver_Impl
     return new ConnectorStatusListener_exec_i (this->subscription_matched_);
   }
 
-  CCM_DDS::CCM_PortStatusListener_ptr
+  ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
     return CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  VTopic::TestTopicConn::CCM_Listener_ptr
+  ::VTopic::TestTopicConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return VTopic::TestTopicConn::CCM_Listener::_nil ();
+    return ::VTopic::TestTopicConnector::CCM_Listener::_nil ();
   }
 
 

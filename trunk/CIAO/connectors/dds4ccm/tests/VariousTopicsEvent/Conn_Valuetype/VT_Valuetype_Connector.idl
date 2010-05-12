@@ -16,10 +16,7 @@
 
 module VTopic
 {
-  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConn;
-  connector VT_Valuetype_Connector : TopicValuetypeConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
 };
 
 #endif /* VT_VALUETYPE_CONNECTOR_IDL_ */

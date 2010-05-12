@@ -66,10 +66,10 @@ namespace CIAO_VTopic_Receiver_Impl
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
 
-    virtual CCM_DDS::CCM_PortStatusListener_ptr
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
-    virtual VTopic::TestTopicConn::CCM_Listener_ptr
+    virtual ::VTopic::TestTopicConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     // Operations from Components::SessionComponent.
