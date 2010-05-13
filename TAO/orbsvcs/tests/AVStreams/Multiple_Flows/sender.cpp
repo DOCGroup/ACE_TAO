@@ -178,6 +178,7 @@ Sender::init (int argc,
                                     "",
                                     this->protocol_.c_str (),
                                     0);
+  // &addr1_local, // ACE_INET_Addr addr1_local ("IP1:Port1");
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (2);
@@ -185,11 +186,12 @@ Sender::init (int argc,
 
     // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry1 ("Data_Receiver_Two",
-                                    "IN",
-                                    "USER_DEFINED",
-                                    "",
-                                    this->protocol_.c_str (),
-                                    0);
+                                     "IN",
+                                     "USER_DEFINED",
+                                     "",
+                                     this->protocol_.c_str (),
+                                     0);
+  // &addr2_local, // ACE_INET_Addr addr2_local ("IP2:Port2");
 
   flow_spec [1] = CORBA::string_dup (entry1.entry_to_string ());
 
@@ -337,6 +339,8 @@ Sender::pace_data (void)
           this->mb_.reset ();
 
         } // end while
+
+      ACE_OS::sleep (1);
 
       this->shutdown ();
     }
