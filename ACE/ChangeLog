@@ -1,3 +1,9 @@
+Thu May 13 21:47:59 UTC 2010  Thomas Girard  <thomas.g.girard@free.fr>
+
+        * ace/ace_qt4reactor.mpc:
+	  Explicit the file on which moc must operate. This removes a warning
+	  during ACE_QtReactor build when moc was invoked.
+
 Wed May 12 08:38:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Timer_Queue/Custom_Handler.h:
