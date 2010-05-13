@@ -1,3 +1,10 @@
+Thu May 13 13:30:29 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp (Sender::pace_data):
+          Added a call to ACE_OS::sleep(1) before calling
+          this->shutdown ().  Thanks to Inma Perea <inma dot perea dot fdz
+          at gmail dot com> for reporting this.
+
 Wed May 12 10:17:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
