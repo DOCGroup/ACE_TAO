@@ -1,8 +1,15 @@
+Fri May 14 22:22:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Added another #ifdef guard around ace_wb_exec(), since it's not
+          appropriate for all use cases (see Fri Mar 19 13:23:18 UTC 2010).
+
 Thu May 13 21:47:59 UTC 2010  Thomas Girard  <thomas.g.girard@free.fr>
 
         * ace/ace_qt4reactor.mpc:
-	  Explicit the file on which moc must operate. This removes a warning
-	  during ACE_QtReactor build when moc was invoked.
+          Explicit the file on which moc must operate. This removes a warning
+          during ACE_QtReactor build when moc was invoked.
 
 Wed May 12 08:38:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
