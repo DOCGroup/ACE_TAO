@@ -9,7 +9,7 @@ namespace DAnCE
     ACE_INLINE Completion_Counter_Base<ACE_LOCK>::~Completion_Counter_Base ()
       {
       }
-    
+
     template <class ACE_LOCK>
     ACE_INLINE Completion_Counter_Base<ACE_LOCK>::Completion_Counter_Base (
         unsigned int exec_count,
@@ -89,4 +89,4 @@ namespace DAnCE
         return this->fail_count_;
       }
 
-  }; /*DAnCE */
+  } /*DAnCE */

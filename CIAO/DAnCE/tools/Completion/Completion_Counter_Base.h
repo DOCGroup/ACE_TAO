@@ -55,7 +55,7 @@ namespace DAnCE
       unsigned int fail_count_;
     };
 
-  }; /* DAnCE */
+  } /* DAnCE */
 
 #if defined (__ACE_INLINE__)
 #include "Completion/Completion_Counter_Base.inl"
