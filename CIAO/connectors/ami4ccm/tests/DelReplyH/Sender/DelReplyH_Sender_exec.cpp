@@ -14,14 +14,28 @@ namespace CIAO_DelReplyH_Sender_Impl
   //============================================================
   MyFoo_callback_exec_i::MyFoo_callback_exec_i (void)
   {
-      ACE_DEBUG ((LM_DEBUG,"CONSTRUCTOR replyhandle\n"));
-      ++nr_callbacks;
+    ACE_DEBUG ((LM_DEBUG,"CONSTRUCTOR replyhandle\n"));
+    ++nr_callbacks;
   }
 
   MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
   {
-     ACE_DEBUG ((LM_DEBUG,"DESTRUCTOR replyhandle\n"));
-     --nr_callbacks;
+    ACE_DEBUG ((LM_DEBUG,"DESTRUCTOR replyhandle\n"));
+    --nr_callbacks;
+  }
+
+  void
+  MyFoo_callback_exec_i::_add_ref (void)
+  {
+    ACE_DEBUG ((LM_DEBUG,"add_ref replyhandle\n"));
+    ::CORBA::Object::_add_ref ();
+  }
+
+  void
+  MyFoo_callback_exec_i::_remove_ref (void)
+  {
+    ACE_DEBUG ((LM_DEBUG,"remove_ref replyhandle\n"));
+    ::CORBA::Object::_remove_ref ();
   }
 
   //============================================================
@@ -44,7 +58,6 @@ namespace CIAO_DelReplyH_Sender_Impl
   {
     ++nr_exceptions;
   }
-
 
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
@@ -74,7 +87,10 @@ namespace CIAO_DelReplyH_Sender_Impl
    
       }
       //Invoke Asynchronous calls to test exception handling 
-      my_foo_ami_->sendc_foo ( new MyFoo_callback_exec_i (), "");
+      ::DelReplyH::CCM_AMI4CCM_MyFooReplyHandler_var cb2 =
+          new MyFoo_callback_exec_i ();
+      my_foo_ami_->sendc_foo (cb2.in (), "");
+      
       return 0;
   }
 
@@ -116,11 +132,6 @@ namespace CIAO_DelReplyH_Sender_Impl
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-
-  // Supported operations and attributes.
-  // Component attributes.
-  // Port operations.
-  // Operations from Components::SessionComponent.
 
   void
   Sender_exec_i::set_session_context (
