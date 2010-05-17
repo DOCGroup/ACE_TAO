@@ -93,7 +93,7 @@ namespace CIAO_DelReplyH_Sender_Impl
     try 
       {
         char *answer = 0;
-        CORBA::Long ret = my_foo_ami_->foo("synchroon call", answer);
+        my_foo_ami_->foo("synchroon call", answer);
         ACE_DEBUG ((LM_DEBUG, "OK: SYNCH foo returns <%C>.\n",
                               answer));
       }

@@ -1,3 +1,8 @@
+Mon May 17 13:33:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
+        Removed unused variable.
+        
 Wed May 12 15:38:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/DelReplyH
