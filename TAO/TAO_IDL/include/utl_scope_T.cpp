@@ -124,7 +124,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add() calls only
       // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
+      // and look_in_prev_mods() for modules. If look_in_prev_mods()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
       if (nt == FULL_DECL::NT)

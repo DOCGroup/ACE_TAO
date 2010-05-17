@@ -131,6 +131,8 @@ public:
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                        bool treat_as_ref);
+                                       
+  AST_Decl *look_in_inherited_local (Identifier *e);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,

@@ -284,8 +284,6 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
       // full definition node (if it exists) on which to call is_defined().
       // The last 'true' arg below filters out full-def members of fwd decls.
       AST_Decl *d = node->defined_in ()->lookup_by_name (node->name (),
-                                                         true,
-                                                         true,
                                                          true);
 
       be_interface * const intf =

@@ -301,22 +301,29 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
     {
-      AST_Decl **d = 0;
       AST_Module *m = AST_Module::narrow_from_decl (this);
 
-      for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (m->previous ());
+      for (ACE_Unbounded_Set_Iterator<AST_Module *> iter (m->prev_mods ());
            !iter.done ();
            iter.advance ())
         {
-          iter.next (d);
-
-          if ((*d)->node_type () == AST_Decl::NT_pre_defined)
+          AST_Module **m = 0;
+          iter.next (m);
+          
+          for (UTL_ScopeActiveIterator si (*m, UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
             {
-              continue;
-            }
+              AST_Decl *d = si.item ();
 
-          (*d)->set_prefix_with_typeprefix_r (value,
-                                              appeared_in);
+              if (d->node_type () == AST_Decl::NT_pre_defined)
+                {
+                  continue;
+                }
+
+              d->set_prefix_with_typeprefix_r (value,
+                                               appeared_in);
+            }
         }
     }
 
@@ -787,21 +794,31 @@ AST_Decl::has_ancestor (AST_Decl *s)
     {
       return true;
     }
+    
+  AST_Module *m = AST_Module::narrow_from_decl (s);
 
-  if (s->node_type () == AST_Decl::NT_module)
+  if (m != 0)
     {
-      UTL_Scope *enclosing = s->defined_in ();
-      AST_Decl *other_opening = s;
+      ACE_Unbounded_Set<AST_Module *> &prev = m->prev_mods ();
 
-      for (int index = 1; other_opening != 0; ++index)
+      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (prev);
+           !i.done ();
+           i.advance ())
         {
-          if (this == other_opening)
+          AST_Module **m = 0;
+          i.next (m);
+          
+          for (UTL_ScopeActiveIterator si (*m, UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
             {
-              return true;
+              AST_Decl *d = si.item ();
+          
+              if (this == d)
+                {
+                  return true;
+                }
             }
-
-          other_opening = enclosing->lookup_by_name_local (s->local_name (),
-                                                           index);
         }
     }
 
@@ -1417,6 +1434,14 @@ Identifier *
 AST_Decl::original_local_name (void)
 {
   return this->pd_original_local_name;
+}
+
+bool
+AST_Decl::is_defined (void)
+{
+  // AST_Interface, AST_Structure, and AST_Union will
+  // override this, as will AST_InterfaceFwd, etc.
+  return true;
 }
 
 UTL_ScopedName *

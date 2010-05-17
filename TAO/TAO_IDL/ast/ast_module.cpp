@@ -198,7 +198,8 @@ AST_Module::referenced (AST_Decl *e,
       return true;
     }
 
-  AST_Decl *d = this->look_in_previous (e->local_name (), true);
+  AST_Decl *d =
+    this->look_in_prev_mods (e->local_name (), true);
   
   if (0 == d)
     {
@@ -212,97 +213,75 @@ AST_Module::referenced (AST_Decl *e,
 void
 AST_Module::add_to_previous (AST_Module *m)
 {
-  // Here, we depend on the scope iterator in
-  // be_generator::create_module (which calls this function)
-  // to return items in the order they were declared or included.
-  // That means that the last module returned that matches the name
-  // of this one will have all the decls from all previous
-  // reopenings in its previous_ member.
-  this->previous_ = m->previous_;
-
-  AST_Decl *d = 0;
-
-  for (UTL_ScopeActiveIterator iter (DeclAsScope (m), IK_decls);
-       !iter.is_done ();
-       iter.next ())
+  // This will eventually replace the individual declarations
+  // list below.
+  this->prev_mods_.insert (m);
+  
+  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
+         m->prev_mods ());
+       !i.done ();
+       i.advance ())
     {
-      d = iter.item ();
-
-      // Add all the previous opening's decls (except
-      // for the predefined types) to the 'previous' list
-      // of this one.
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (d);
-
-          if (pdt->pt () != AST_PredefinedType::PT_pseudo)
-            {
-              continue;
-            }
-        }
-      else if (d->node_type () == AST_Decl::NT_interface_fwd)
-        {
-          AST_InterfaceFwd *f = AST_InterfaceFwd::narrow_from_decl (d);
-          AST_Interface *i = f->full_definition ();
-
-          // If i is defined, it means that the interface was forward
-          // declared AFTER it was defined, perhaps in a subsequent
-          // opening of the same module - legal, but superfluous.
-          // Adding d to previous_ in that case can only bung up the
-          // results of look_in_previous() later, so we skip it.
-          if (i->is_defined ())
-            {
-              continue;
-            }
-        }
-
-      this->previous_.insert (d);
+      AST_Module **mm = 0;
+      i.next (mm);
+      
+      this->prev_mods_.insert (*mm);
     }
 }
 
 AST_Decl *
-AST_Module::look_in_previous (Identifier *e, bool ignore_fwd)
+AST_Module::look_in_prev_mods (Identifier *e,
+                               bool ignore_fwd)
 {
-  AST_Decl **d = 0;
+  AST_Module **m = 0;
+  AST_Decl *d = 0;
   AST_Decl *retval = 0;
 
   // If there are more than two openings of this module, we want
   // to get the last one - the one that will have the decls from
   // all the previous openings added to previous_.
-  for (ACE_Unbounded_Set_Iterator<AST_Decl *> iter (this->previous_);
+  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR iter (
+         this->prev_mods_);
        !iter.done ();
        iter.advance ())
     {
-      iter.next (d);
-
-      if (ignore_fwd)
+      iter.next (m);
+      
+      for (UTL_ScopeActiveIterator i (*m, UTL_Scope::IK_decls);
+           !i.is_done ();
+           i.next ())
         {
-          AST_Decl::NodeType nt = (*d)->node_type ();
+          d = i.item ();
 
-          if (nt == AST_Decl::NT_interface_fwd
-              || nt == AST_Decl::NT_eventtype_fwd
-              || nt == AST_Decl::NT_component_fwd
-              || nt == AST_Decl::NT_struct_fwd
-              || nt == AST_Decl::NT_union_fwd
-              || nt == AST_Decl::NT_valuetype_fwd)
+          if (ignore_fwd)
             {
-              continue;
+              AST_Decl::NodeType nt = d->node_type ();
+
+              if (nt == AST_Decl::NT_interface_fwd
+                  || nt == AST_Decl::NT_eventtype_fwd
+                  || nt == AST_Decl::NT_component_fwd
+                  || nt == AST_Decl::NT_struct_fwd
+                  || nt == AST_Decl::NT_union_fwd
+                  || nt == AST_Decl::NT_valuetype_fwd)
+                {
+                  continue;
+                }
+            }
+
+          if (e->case_compare (d->local_name ()))
+            {
+              retval = d;
             }
         }
-
-      if (e->case_compare ((*d)->local_name ()))
-        {
-          retval = *d;
-        }
     }
-
+    
   return retval;
 }
 
-ACE_Unbounded_Set<AST_Decl *> &
-AST_Module::previous (void)
+ACE_Unbounded_Set<AST_Module *> &
+AST_Module::prev_mods (void)
 {
-  return this->previous_;
+  return this->prev_mods_;
 }
 
 void

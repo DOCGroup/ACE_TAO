@@ -172,13 +172,10 @@ public:
 
   // Name Lookup Mechanism
   AST_Decl *lookup_by_name (UTL_ScopedName *,
-                            bool treat_as_ref,
-                            bool in_parent = true,
                             bool full_def_only = false);
 
   // Look up the Identifier * specified only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
-                                  long index,
                                   bool full_def_only = false);
 
   // Look up a predefined type by its ExprType.
@@ -187,8 +184,8 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  virtual AST_Decl *look_in_previous (Identifier *e,
-                                      bool ignore_fwd = false);
+  virtual AST_Decl *look_in_prev_mods (Identifier *e,
+                                       bool ignore_fwd = false);
 
   // How many entries are used?
   virtual unsigned long nmembers (void);
@@ -305,6 +302,18 @@ protected:
 
   // Have we seen a #pragma prefix declaration in this scope?
   bool has_prefix_;
+  
+  // Used in lookup of various CORBA pseudo objects, which also
+  // determines generation of specific #include headers.
+  enum WHICH_PSEUDO
+  {
+    PSEUDO_TYPECODE,
+    PSEUDO_OBJECT,
+    PSEUDO_VALUEBASE,
+    PSEUDO_ABSTRACTBASE
+  };
+  
+  WHICH_PSEUDO which_pseudo_;
 
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
@@ -491,7 +500,6 @@ private:
   AST_Decl *
   iter_lookup_by_name_local (AST_Decl *d,
                              UTL_ScopedName *e,
-                             long index,
                              bool full_def_only = false);
 };
 

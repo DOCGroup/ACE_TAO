@@ -295,8 +295,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         
       // Look it up.
       d = s->lookup_by_name  (item,
-                              true,
-                              true,
                               true); // full_def_only
 
        // Undefined interface?
@@ -304,7 +302,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         {
           // If the lookup now succeeds, without the full_def_only
           // constraint, it's an error.
-          d = s->lookup_by_name (item, true, true);
+          d = s->lookup_by_name (item, true);
 
           if (0 != d)
             {
@@ -324,7 +322,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
             {
               AST_Module *m = AST_Module::narrow_from_decl (sad);
 
-              d = m->look_in_previous (item->last_component ());
+              d = m->look_in_prev_mods (item->last_component ());
             }
         }
 
