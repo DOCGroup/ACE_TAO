@@ -42,9 +42,9 @@ module AA
     {
       interface x2 
       {
-        // 'A::B::' should be implicit
+        // 'AA::BB::' should be implicit
         void op1 (in x1 obj);
-        // 'A::' should be implicit
+        // 'AA::' should be implicit
         void op2 (in BB::x1 obj);
         // Just for reference
         void op3 (in AA::BB::x1 obj);
@@ -95,7 +95,6 @@ module Outside
 
 interface OpHolder
   {
-
     void  Operation (in ::Outside::Tricky p1,
                      out ::Outside::Reopened::Tricky p2,
                      inout ::Outside::Reopened::Newdef p3);
@@ -310,5 +309,3 @@ module A_mod
     interface Foo : A_mod::Foo {};
   };  
 };
-
-

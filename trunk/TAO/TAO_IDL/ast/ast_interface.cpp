@@ -345,7 +345,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
   AST_Decl *d = s->lookup_by_name_local (i->local_name (),
-                                         0);
+                                         false);
                                          
   AST_Interface *fd = 0;
 
@@ -839,9 +839,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
           continue;
         }
         
-      d = (i)->lookup_by_name (e,
-                               treat_as_ref,
-                               0 /* not in parent */);
+      d = (i)->lookup_by_name (e);
       if (d != 0)
         {
           if (d_before == 0)
@@ -883,6 +881,43 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 }
 
 AST_Decl *
+AST_Interface::look_in_inherited_local (Identifier *e)
+{
+  // Can't look in an interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  AST_Type **is = 0;
+  long nis = -1;
+
+  /// OK, loop through inherited interfaces.
+  for (nis = this->n_inherits (), is = this->inherits ();
+       nis > 0;
+       nis--, is++)
+    {
+      AST_Interface *i = 
+        AST_Interface::narrow_from_decl (*is);
+        
+      if (i == 0)
+        {
+          continue;
+        }
+        
+      d = i->lookup_by_name_local (e, false);
+      
+      if (d != 0)
+        {
+          break;
+        }
+    }
+    
+  return d;
+}
+
+AST_Decl *
 AST_Interface::lookup_for_add (AST_Decl *d)
 {
   if (d == 0)
@@ -901,8 +936,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
       return 0;
     }
 
-  prev = this->lookup_by_name_local (id,
-                                     0);
+  prev = this->lookup_by_name_local (id, false);
 
   if (prev != 0)
     {
@@ -918,8 +952,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
        nis > 0;
        nis--, is++)
     {
-      prev = (*is)->lookup_by_name_local (id,
-                                          0);
+      prev = (*is)->lookup_by_name_local (id, false);
 
       if (prev != 0)
         {

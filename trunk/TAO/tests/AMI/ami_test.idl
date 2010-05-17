@@ -13,8 +13,6 @@
  */
 //=============================================================================
 
-
-
 module A
   {
     exception DidTheRightThing {
@@ -35,5 +33,4 @@ module A
 
         void inout_arg_test (inout string str);
       };
-
   };

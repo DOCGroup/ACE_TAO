@@ -109,9 +109,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
         
-      d = (i)->lookup_by_name (e,
-                               treat_as_ref,
-                               0 /* not in parent */);
+      d = (i)->lookup_by_name (e);
                                
       if (d != 0)
         {

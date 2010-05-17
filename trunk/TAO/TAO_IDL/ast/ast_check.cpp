@@ -137,7 +137,6 @@ AST_check_fwd_decls (void)
           // this lookup fails.
           AST_Decl *f =
             d->defined_in ()->lookup_by_name_local (d->local_name (),
-                                                    0,
                                                     true);
 
           if (f == 0)

@@ -45,9 +45,6 @@ public:
   virtual int visit_string (be_string *node);
   
 private:
-  void gen_nesting_open (AST_Decl *node);
-  void gen_nesting_close (AST_Decl *node);
-  
   void gen_implicit (void);
   void gen_explicit (void);
   void gen_derived (void);

@@ -1,3 +1,57 @@
+Mon May 17 21:55:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/AMI/ami_test.idl:
+        * tests/IDL_Test/interface.idl:
+        * tests/IDL_Test/union.idl:
+
+          Cosmetic changes.
+
+        * tests/IDL_Test/reopened_modules.idl:
+
+          Fixed typos in comments and cosmetic changes.
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/utl_scope_T.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_home/home_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_check.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_home/home_ex_idl.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Cleanup of internal lookup methods, including
+          removal of 2 parameters from the methods'
+          signatures. Also removed 2 redundant implementations
+          of gen_nesting_open() and gen_nesting_close(),
+          keeping the one in class be_utils.
+
 Thu May 13 13:30:29 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp (Sender::pace_data):

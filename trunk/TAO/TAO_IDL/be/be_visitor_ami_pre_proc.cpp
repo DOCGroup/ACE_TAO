@@ -123,7 +123,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
   // home itself, which was declared first.
   Identifier *node_lname = node->AST_Decl::local_name ();
   AST_Decl *first_stored =
-    node->defined_in ()->lookup_by_name_local (node_lname, 0);
+    node->defined_in ()->lookup_by_name_local (node_lname, false);
 
   if (0 != first_stored && first_stored->node_type () == AST_Decl::NT_home)
     {
@@ -137,7 +137,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     {
       UTL_Scope *s = node->defined_in ();
       Identifier local_id (lname.substr (0, lname.length () - 8).c_str ());
-      AST_Decl *d = s->lookup_by_name_local (&local_id, 0);
+      AST_Decl *d = s->lookup_by_name_local (&local_id, false);
       local_id.destroy ();
 
       if (0 != d)
@@ -288,7 +288,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   AST_Type **p_intf =
     this->create_inheritance_list (node, n_parents);
 
-  if (!p_intf)
+  if (p_intf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
@@ -1044,14 +1044,15 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                       AST_Type *[n_rh_parents],
                       0);
 
-      ACE_CString prefix; 
+      ACE_CString prefix;
+      
       if (be_global->ami4ccm_call_back ())
         {
-          prefix.set("AMI4CCM_"); 
+          prefix.set ("AMI4CCM_"); 
         }
       else
         { 
-          prefix.set("AMI_");
+          prefix.set ("AMI_");
         }
 
       ACE_CString suffix ("Handler");
