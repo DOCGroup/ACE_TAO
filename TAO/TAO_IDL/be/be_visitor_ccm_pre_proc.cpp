@@ -1555,7 +1555,7 @@ be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
   rettype_string += "Consumer";
   Identifier rettype_id (rettype_string.fast_rep ());
   AST_Decl *d =
-    impl->defined_in ()->lookup_by_name_local (&rettype_id, 0);
+    impl->defined_in ()->lookup_by_name_local (&rettype_id, false);
   rettype_id.destroy ();
 
   if (d == 0)

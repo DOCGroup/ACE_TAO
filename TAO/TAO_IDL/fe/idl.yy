@@ -702,7 +702,8 @@ template_module_ref
             IDL_GlobalData::PS_ModuleRefIDSeen);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
 
           if (d == 0)
             {
@@ -789,7 +790,7 @@ template_module_inst
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName *sn = $1;
           AST_Template_Module *ref = 0;
-          AST_Decl *d = s->lookup_by_name (sn, true);
+          AST_Decl *d = s->lookup_by_name (sn);
 
           if (d == 0)
             {
@@ -1882,7 +1883,7 @@ const_type
            * to a scalar constant type
            */
           AST_Decl *d =
-            s->lookup_by_name (sn, true);
+            s->lookup_by_name (sn);
 
           if (s != 0 && d != 0)
             {
@@ -2111,8 +2112,8 @@ primary_expr
            * as a constant value).
            */
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($1,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($1);
 
           if (d == 0)
             {
@@ -2442,8 +2443,8 @@ simple_type_spec
 
           if (s != 0)
             {
-              d = s->lookup_by_name ($1,
-                                     true);
+              d =
+                s->lookup_by_name ($1);
             }
 
           if (d == 0)
@@ -3076,8 +3077,8 @@ switch_type_spec :
            * typedef's to arrive at the base type at the end of the
            * chain.
            */
-          d = s->lookup_by_name ($1,
-                                 true);
+          d =
+            s->lookup_by_name ($1);
 
           if (s != 0 && d != 0)
             {
@@ -4629,29 +4630,17 @@ param_type_spec
 
           if (s != 0)
             {
-              d = s->lookup_by_name (n, true);
+              d = s->lookup_by_name (n);
             }
 
           if (d == 0)
             {
-              bool so_far_so_good = false;
+              idl_global->err ()->lookup_error (n);
+              (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+              (tao_yyvsp[(1) - (1)].idlist) = 0;
 
-              // We're looking for a template parameter ref, so
-              // the scoped name would just be a simple identifier.
-              if (n->length () == 1)
-                {
-                  // TODO
-                }
-
-              if (!so_far_so_good)
-                {    
-                  idl_global->err ()->lookup_error (n);
-                  $1->destroy ();
-                  $1 = 0;
-
-                  /* If we don't return here, we'll crash later.*/
-                  return 1;
-                }
+              /* If we don't return here, we'll crash later.*/
+              return 1;
             }
           else
             {
@@ -4889,8 +4878,8 @@ typeid_dcl
         {
 // typeid_dcl : IDL_TYPEID scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
 
           if (d == 0)
             {
@@ -4926,8 +4915,8 @@ typeprefix_dcl
           // of this opening would never get checked or set.
           if (d->name ()->compare ($2) != 0)
             {
-              d = s->lookup_by_name ($2,
-                                     true);
+              d =
+                s->lookup_by_name ($2);
             }
 
           if (d == 0)
@@ -5201,8 +5190,9 @@ provides_decl : IDL_PROVIDES interface_type id
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
+            
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
@@ -5324,8 +5314,8 @@ uses_decl : uses_opt_multiple interface_type id
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
@@ -5452,8 +5442,8 @@ emits_decl : IDL_EMITS scoped_name id
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
 
           if (0 == d)
             {
@@ -5525,8 +5515,8 @@ publishes_decl : IDL_PUBLISHES scoped_name id
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
           
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
 
           if (0 == d)
             {
@@ -5598,8 +5588,8 @@ consumes_decl : IDL_CONSUMES scoped_name id
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
           
-          AST_Decl *d = s->lookup_by_name ($2,
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
 
           if (0 == d)
             {
@@ -6576,7 +6566,8 @@ extended_port_decl
 // extended_port_decl : IDL_PORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
           AST_PortType *pt = 0;
           bool so_far_so_good = true;
 
@@ -6645,7 +6636,8 @@ extended_port_decl
 //        | IDL_MIRRORPORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ($2, true);
+          AST_Decl *d =
+            s->lookup_by_name ($2);
           AST_PortType *pt = 0;
           bool so_far_so_good = true;
 
@@ -6744,7 +6736,7 @@ actual_parameter
 
           if (sn != 0)
             {
-              d = s->lookup_by_name (sn, true);
+              d = s->lookup_by_name (sn);
 
               if (d == 0)
                 {
@@ -6816,7 +6808,8 @@ connector_header
 
           if ($5 != 0)
             {
-              AST_Decl *d = s->lookup_by_name ($5, true);
+              AST_Decl *d =
+                s->lookup_by_name ($5);
 
               if (d == 0)
                 {

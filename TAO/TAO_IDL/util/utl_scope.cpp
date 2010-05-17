@@ -182,7 +182,7 @@ UTL_Scope::lookup_for_add (AST_Decl *d)
       return 0;
     }
 
-  return this->lookup_by_name_local (id, 0);
+  return this->lookup_by_name_local (id, false);
 }
 
 int
@@ -405,11 +405,25 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
     {
       if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                      t,
-                                      ScopeAsDecl (this),
-                                      d);
-          return 0;
+          AST_Decl::NodeType tnt = t->node_type ();
+          AST_Decl::NodeType dnt = d->node_type ();
+          
+          /// Factories are not inherited, so they can be
+          /// redefined, but not in the same scope (home or
+          /// valuetype).
+          bool inherited_factory =
+            (tnt == AST_Decl::NT_factory
+             && dnt == AST_Decl::NT_factory
+             && t->defined_in () != d->defined_in ());
+          
+          if (!inherited_factory)
+            {  
+              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                          t,
+                                          ScopeAsDecl (this),
+                                          d);
+              return 0;
+            }
         }
         
       /// For convenience, AST_Template_Module_Inst inherits
@@ -563,7 +577,7 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add() calls only
       // lookup_by_name_local(), which does not bump up the scope,
-      // and look_in_previous() for modules. If look_in_previous()
+      // and look_in_prev_mods() for modules. If look_in_prev_mods()
       // finds something, the scopes will NOT be the same pointer
       // value, but the result is what we want.
       if (nt == AST_Decl::NT_struct)
@@ -890,84 +904,75 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 
   Identifier *item_name = 0;
   AST_Decl *d = 0;
-  UTL_ScopeActiveIterator *i = 0;
   char *name_string = e->get_string ();
-  bool tc_lookup = false;
-  bool obj_lookup = false;
-  bool vb_lookup = false;
-  bool ab_lookup = false;
-
+  
   if (ACE_OS::strcasecmp (name_string, "Object") == 0)
     {
-      obj_lookup = true;
+      this->which_pseudo_ = PSEUDO_OBJECT;
     }
   else if (ACE_OS::strcasecmp (name_string, "ValueBase") == 0)
     {
-      vb_lookup = true;
+      this->which_pseudo_ = PSEUDO_VALUEBASE;
     }
   else if (ACE_OS::strcasecmp (name_string, "AbstractBase") == 0)
     {
-      ab_lookup = true;
-    }
-
-  if (obj_lookup || vb_lookup || ab_lookup)
-    {
-      // Iterate over the global scope.
-      ACE_NEW_RETURN (i,
-                      UTL_ScopeActiveIterator (
-                              idl_global->scopes ().bottom (),
-                              UTL_Scope::IK_decls),
-                      0);
+      this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
     }
   else if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
            || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
     {
-      // Occurrences of "TypeCode" or TCKind in IDL files must be
-      // scoped with "CORBA" so we know we'll be in the CORBA module
-      // if we get this far, and we can use "this" for the scope of
-      // the iterator.
-      ACE_NEW_RETURN (i,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      0);
-      tc_lookup = true;
+      this->which_pseudo_ = PSEUDO_TYPECODE;
     }
   else
     {
       return 0;
     }
-
-  for (; !i->is_done (); i->next ())
+    
+  UTL_Scope *start_scope = 0;
+  
+  switch (this->which_pseudo_)
     {
-      d = i->item ();
+      case PSEUDO_TYPECODE:
+        start_scope = this;
+        break;
+      case PSEUDO_OBJECT:
+      case PSEUDO_VALUEBASE:
+      case PSEUDO_ABSTRACTBASE:
+        start_scope = idl_global->root ();
+        break;
+      default:
+        break;
+    }
 
+  for (UTL_ScopeActiveIterator i (start_scope, UTL_Scope::IK_decls);
+       !i.is_done ();
+       i.next ())
+    {
+      d = i.item ();
       item_name = d->local_name ();
 
       if (e->case_compare (item_name))
         {
-          delete i;
-
           // These have to be located here because we are just looking
           // up a scoped name - skip for imported nodes.
           if (idl_global->in_main_file ())
             {
-              if (tc_lookup)
+              switch (this->which_pseudo_)
                 {
-                  // Generation of #includes for Typecode.h
-                  // checks this bit, so we set it for TCKind as well.
-                  idl_global->typecode_seen_ = true;
-                }
-              else if (obj_lookup)
-                {
-                  idl_global->base_object_seen_ = true;
-                }
-              else if (vb_lookup)
-                {
-                  idl_global->valuebase_seen_ = true;
-                }
-              else if (ab_lookup)
-                {
-                  idl_global->abstractbase_seen_ = true;
+                  case PSEUDO_TYPECODE:
+                    idl_global->typecode_seen_ = true;
+                    break;
+                  case PSEUDO_OBJECT:
+                    idl_global->base_object_seen_ = true;
+                    break;
+                  case PSEUDO_VALUEBASE:
+                    idl_global->valuebase_seen_ = true;
+                    break;
+                  case PSEUDO_ABSTRACTBASE:
+                    idl_global->abstractbase_seen_ = true;
+                    break;
+                  default:
+                    break;
                 }
             }
 
@@ -975,26 +980,24 @@ UTL_Scope::lookup_pseudo (Identifier *e)
         }
     }
 
-  if (tc_lookup)
+  if (this->which_pseudo_ == PSEUDO_TYPECODE)
     {
-      d = this->look_in_previous (e);
+      d = this->look_in_prev_mods (e);
 
       if (d != 0)
         {
           // Generation of #includes for Typecode.h
           // checks this bit, so we set it for TCKind as well.
           idl_global->typecode_seen_ = true;
-          delete i;
           return d;
         }
     }
 
-  delete i;
   return 0;
 }
 
 AST_Decl *
-UTL_Scope::look_in_previous (Identifier *, bool /*ignore_fwd */)
+UTL_Scope::look_in_prev_mods (Identifier *, bool /* ignore_fwd */)
 {
   return 0;
 }
@@ -1135,16 +1138,19 @@ UTL_Scope::look_in_supported (UTL_ScopedName *,
   return 0;
 }
 
-// Look up a String * in local scope only.
+#define OVERHAUL
+
 AST_Decl *
 UTL_Scope::lookup_by_name_local (Identifier *e,
-                                 long index,
                                  bool full_def_only)
 {
-  AST_Type *t = 0;
+  AST_Decl *d = 0;            
 
-  // Will catch Object, TypeCode, ValueBase and AbstractBase.
-  AST_Decl *d = this->lookup_pseudo (e);
+  // Will catch Object, TypeCode, TCKind, ValueBase and
+  // AbstractBase. A non-zero result of this lookup determines the
+  // generation of some #includes and, whether successful or not,
+  // incurs no extra overhead.
+  d = this->lookup_pseudo (e);
 
   if (d != 0)
     {
@@ -1161,18 +1167,14 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   bool in_corba =
     ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
 
-  // Iterate over this scope. We need IK_both here for the legacy
-  // case where a recursive type is defined via an anonymous sequence.
-  // Looking up the anonymous sequence parameter succeeds only if
-  // references are included, since the decl for the (unfinished)
-  // enclosing type has not yet been added to the scope decls.
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
+  // We search only the decls here, the local types are done
+  // below as a last resort.
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
-      d = i.item ();
-
-      item_name = d->local_name ();
+      AST_Decl *tmp = i.item ();
+      item_name = tmp->local_name ();
 
       if (item_name == 0)
         {
@@ -1184,91 +1186,184 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       // match, unless we skip over these items. This is a workaround until
       // there's time to fix the code generation for CORBA basic types.
       if (!in_corba
-          && ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") == 0)
+          && ACE_OS::strcmp (tmp->name ()->head ()->get_string (), "CORBA") == 0)
         {
           continue;
         }
 
       if (e->case_compare (item_name))
         {
-          if (index == 0)
+          d = tmp;
+          AST_Decl::NodeType nt = tmp->node_type ();
+
+          // Special case for forward declared types,
+          // In this case, we want to return
+          // the full definition member, whether defined yet or not.
+          // NOTE: corresponding full_definition fe_add_* methods
+          // depend on the behavior below!
+          if (nt == AST_Decl::NT_interface_fwd
+              || nt == AST_Decl::NT_valuetype_fwd
+              || nt == AST_Decl::NT_component_fwd
+              || nt == AST_Decl::NT_eventtype_fwd)
             {
-              AST_Decl::NodeType nt = d->node_type ();
-
-              // Special case for forward declared types,
-              // In this case, we want to return
-              // the full definition member, whether defined yet or not.
-              // NOTE: corresponding full_definition fe_add_* methods
-              // depend on the behavior below!
-              if (nt == AST_Decl::NT_interface_fwd
-                  || nt == AST_Decl::NT_valuetype_fwd
-                  || nt == AST_Decl::NT_component_fwd
-                  || nt == AST_Decl::NT_eventtype_fwd)
-                {
-                  d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
-                }
-              else if (nt == AST_Decl::NT_struct_fwd
-                       || nt == AST_Decl::NT_union_fwd)
-                {
-                  d = AST_StructureFwd::narrow_from_decl (d)->full_definition ();
-                }
-
-              t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-
-              if (0 != t && full_def_only && !t->is_defined ())
-                {
-                  continue;
-                }
-                
-              if (AST_Template_Module_Ref::narrow_from_decl (d) != 0)
-                {
-                  // An IDL module has been created in this scope corresponding
-                  // to this node. That's the one we want to match, and it
-                  // occurs in the scope right after this node, so we'll match
-                  // what we're looking for on the next iteration.
-                  continue;
-                }
-                
-              return d;
+              d = AST_InterfaceFwd::narrow_from_decl (d)->full_definition ();
             }
-          else
-          // If the index has been incremented, it means the identifier
-          // matched on a previous call to this function, but after
-          // returning, the rest of the scoped name didn't match. So we
-          // see if there's another matching identifier to the 'head' of
-          // the scoped name we're working with.
+          else if (nt == AST_Decl::NT_struct_fwd
+                   || nt == AST_Decl::NT_union_fwd)
             {
-              --index;
+              d = AST_StructureFwd::narrow_from_decl (d)->full_definition ();
+            }
+        
+          if (AST_Template_Module_Ref::narrow_from_decl (d) != 0)
+            {
+              // An IDL module has been created in this scope corresponding
+              // to this node. That's the one we want to match, and it
+              // occurs in the scope right after this node, so we'll match
+              // what we're looking for on the next iteration.
               continue;
             }
         }
     }
 
-  // OK, not found, check if this scope is a module, and if so,
-  // look in previous openings, if any.
-  AST_Decl *last_chance = ScopeAsDecl (this);
-
-  if (0 == index
-      && last_chance->node_type () == AST_Decl::NT_module)
+  if (d == 0)
     {
-      // Check the result using the full_def_only constraint.
-      AST_Module *m = AST_Module::narrow_from_decl (last_chance);
-      d = m->look_in_previous (e);
-      t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-
-      if (0 != t && full_def_only && !t->is_defined ())
+      AST_Module *m = AST_Module::narrow_from_scope (this);
+      
+      if (m != 0)
         {
-          return 0;
-        }
+          d = m->look_in_prev_mods (e);
 
-      return d;
+          if (0 != d && full_def_only && !d->is_defined ())
+            {
+              d = 0;
+            }
+        }
     }
-  else
+        
+  if (d == 0)
+    {  
+      AST_Interface *i =
+        AST_Interface::narrow_from_scope (this);
+      
+      if (i != 0)
+        {
+          d = i->look_in_inherited_local (e);
+        }
+    }
+  
+  /// There are some cases where the iteration over IK_decls
+  /// above will fail because what we're searching for has been
+  /// added only to the local types. It's less complicated to
+  /// do the iteration below only as a last resort.
+  if (d == 0)
+    {
+      for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_localtypes);
+           !i.is_done ();
+           i.next ())
+        {
+          AST_Decl *l = i.item ();
+          
+          if (e->case_compare (l->local_name ()))
+            {
+              d = l;
+              break;
+            }
+        }
+    }
+        
+  return d;
+}
+
+#if defined (OVERHAUL)
+AST_Decl *
+UTL_Scope::lookup_by_name (UTL_ScopedName *e,
+                           bool full_def_only)
+{
+  /// Empty name? Exit immediately.
+  if (e == 0)
     {
       return 0;
     }
-}
+    
+  UTL_ScopedName *work = e;
+    
+  /// If name starts with "::" or "" start lookup in global scope,
+  /// if we're not there already, short_circuiting the
+  /// scope-expanding iteration below.
+  if (this->is_global_name (e->head ()))
+    {
+      work = static_cast<UTL_ScopedName *> (e->tail ());
+      
+      if (this != idl_global->root ())
+        {
+          return
+            idl_global->root ()->lookup_by_name (work,
+                                                 full_def_only);
+        }
+    }
+   
+  /// Before proceeding to normal lookup, check if the name
+  /// matches a template module parameter. If so, the return
+  /// value is created on the heap and is owned by the caller
+  /// of this lookup. 
+  if (work->length () == 1)
+    {
+      AST_Param_Holder *param_holder =
+        UTL_Scope::match_param (e);
+        
+      // Since we are inside the scope of a template module, any
+      // single-segment scoped name that matches a template
+      // parameter name has to be a reference to that parameter,
+      // so we return the created placeholder. If there's no
+      // match, 0 is returned, and we proceed with the regular
+      // lookup.  
+      if (param_holder != 0)
+        {
+          return param_holder;
+        }
+    }
 
+  AST_Decl *d = 0;
+  UTL_Scope *s = this;
+  long index = 0;
+  
+  d = s->lookup_by_name_local (work->head (),
+                               full_def_only);
+     
+  UTL_Scope *outer = ScopeAsDecl (s)->defined_in ();
+    
+  /// If all else fails, expand the scope, otherwise
+  /// try to match the rest of the scoped name.                             
+  if (d == 0)
+    {
+      return (outer == 0
+                ? 0
+                : outer->lookup_by_name (work, full_def_only));
+    }
+  else
+    {
+      UTL_ScopedName *sn =
+        static_cast<UTL_ScopedName *> (work->tail ());
+      
+      if (sn != 0)
+        {
+          d = this->iter_lookup_by_name_local (d,
+                                               sn,
+                                               full_def_only);
+            
+          if (d == 0)
+            {
+              return (outer == 0
+                        ? 0
+                        : outer->lookup_by_name (work,
+                                                 full_def_only));
+            }
+        }
+    }
+
+  return d;
+}
+#else
 // Implements lookup by name for scoped names.
 AST_Decl *
 UTL_Scope::lookup_by_name (UTL_ScopedName *e,
@@ -1562,7 +1657,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
     }
 }
-
+#endif 
 // Add a node to set of nodes referenced in this scope.
 void
 UTL_Scope::add_to_referenced (AST_Decl *e,
@@ -2298,7 +2393,6 @@ UTL_Scope::is_global_name (Identifier *i)
 AST_Decl *
 UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
                                       UTL_ScopedName *e,
-                                      long index,
                                       bool full_def_only)
 {
   AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
@@ -2327,17 +2421,22 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
     {
       return 0;
     }
+    
+  AST_Interface *i = AST_Interface::narrow_from_decl (d);
 
-  if (index < static_cast<long> (sc->nmembers ()))
+  if (sc->nmembers () > 0)
     {
       // Look up the first component of the scoped name.
       result = sc->lookup_by_name_local (e->head (),
-                                         index,
                                          full_def_only);
+    }
+  else if (i != 0)
+    {
+      result = i->look_in_inherited_local (e->head ());
     }
   else
     {
-      return 0;
+      result = sc->look_in_prev_mods (e->head (), true);
     }
 
   UTL_ScopedName *sn = (UTL_ScopedName *) e->tail ();
@@ -2363,27 +2462,10 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
           // Look up the next component of the scoped name.
           result = iter_lookup_by_name_local (result,
                                               sn,
-                                              0,
                                               full_def_only);
         }
 
-      if (result != 0)
-        {
-          // We're done.
-          return result;
-        }
-      else
-        {
-          // Maybe we're on the wrong branch of reopened
-          // and/or nested modules, so let's see if there's
-          // another branch. If 'index' gets as high as the
-          // number of members in the scope, the call above
-          // to lookup_by_name_local will catch it and return 0.
-          return this->iter_lookup_by_name_local (d,
-                                                  e,
-                                                  index + 1,
-                                                  full_def_only);
-        }
+      return result;
     }
 }
 

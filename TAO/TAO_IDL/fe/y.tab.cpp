@@ -3034,7 +3034,8 @@ tao_yyreduce:
             IDL_GlobalData::PS_ModuleRefIDSeen);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (8)].idlist), true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (8)].idlist));
 
           if (d == 0)
             {
@@ -3127,7 +3128,7 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName *sn = (tao_yyvsp[(1) - (6)].idlist);
           AST_Template_Module *ref = 0;
-          AST_Decl *d = s->lookup_by_name (sn, true);
+          AST_Decl *d = s->lookup_by_name (sn);
 
           if (d == 0)
             {
@@ -4327,7 +4328,7 @@ tao_yyreduce:
            * to a scalar constant type
            */
           AST_Decl *d =
-            s->lookup_by_name (sn, true);
+            s->lookup_by_name (sn);
 
           if (s != 0 && d != 0)
             {
@@ -4564,8 +4565,8 @@ tao_yyreduce:
            * as a constant value).
            */
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist));
 
           if (d == 0)
             {
@@ -4939,8 +4940,8 @@ tao_yyreduce:
 
           if (s != 0)
             {
-              d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
-                                     true);
+              d =
+                s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist));
             }
 
           if (d == 0)
@@ -5614,8 +5615,7 @@ tao_yyreduce:
            * typedef's to arrive at the base type at the end of the
            * chain.
            */
-          d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist),
-                                 true);
+          d = s->lookup_by_name ((tao_yyvsp[(1) - (1)].idlist));
 
           if (s != 0 && d != 0)
             {
@@ -7314,29 +7314,17 @@ tao_yyreduce:
 
           if (s != 0)
             {
-              d = s->lookup_by_name (n, true);
+              d = s->lookup_by_name (n);
             }
 
           if (d == 0)
             {
-              bool so_far_so_good = false;
+              idl_global->err ()->lookup_error (n);
+              (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+              (tao_yyvsp[(1) - (1)].idlist) = 0;
 
-              // We're looking for a template parameter ref, so
-              // the scoped name would just be a simple identifier.
-              if (n->length () == 1)
-                {
-                  // TODO
-                }
-
-              if (!so_far_so_good)
-                {
-                  idl_global->err ()->lookup_error (n);
-                  (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-                  (tao_yyvsp[(1) - (1)].idlist) = 0;
-
-                  /* If we don't return here, we'll crash later.*/
-                  return 1;
-                }
+              /* If we don't return here, we'll crash later.*/
+              return 1;
             }
           else
             {
@@ -7617,8 +7605,8 @@ tao_yyreduce:
     {
 // typeid_dcl : IDL_TYPEID scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
 
           if (d == 0)
             {
@@ -7654,8 +7642,7 @@ tao_yyreduce:
           // of this opening would never get checked or set.
           if (d->name ()->compare ((tao_yyvsp[(2) - (3)].idlist)) != 0)
             {
-              d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                     true);
+              d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
             }
 
           if (d == 0)
@@ -7978,8 +7965,8 @@ tao_yyreduce:
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
@@ -8105,8 +8092,8 @@ tao_yyreduce:
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
@@ -8237,8 +8224,8 @@ tao_yyreduce:
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
 
           if (0 == d)
             {
@@ -8311,8 +8298,8 @@ tao_yyreduce:
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
 
           if (0 == d)
             {
@@ -8385,8 +8372,8 @@ tao_yyreduce:
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
 
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist),
-                                           true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
 
           if (0 == d)
             {
@@ -9477,7 +9464,8 @@ tao_yyreduce:
 // extended_port_decl : IDL_PORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
           AST_PortType *pt = 0;
           bool so_far_so_good = true;
 
@@ -9549,7 +9537,8 @@ tao_yyreduce:
 //        | IDL_MIRRORPORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true);
+          AST_Decl *d =
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
           AST_PortType *pt = 0;
           bool so_far_so_good = true;
 
@@ -9651,7 +9640,7 @@ tao_yyreduce:
 
           if (sn != 0)
             {
-              d = s->lookup_by_name (sn, true);
+              d = s->lookup_by_name (sn);
 
               if (d == 0)
                 {
@@ -9725,7 +9714,8 @@ tao_yyreduce:
 
           if ((tao_yyvsp[(5) - (5)].idlist) != 0)
             {
-              AST_Decl *d = s->lookup_by_name ((tao_yyvsp[(5) - (5)].idlist), true);
+              AST_Decl *d =
+                s->lookup_by_name ((tao_yyvsp[(5) - (5)].idlist));
 
               if (d == 0)
                 {

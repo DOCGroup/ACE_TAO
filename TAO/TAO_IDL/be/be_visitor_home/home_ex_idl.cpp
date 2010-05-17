@@ -44,13 +44,13 @@ be_visitor_home_ex_idl::visit_home (be_home *node)
   /// IDL, we need to move it all back.
   this->restore_scope ();
 
-  this->gen_nesting_open (node_);
+  be_util::gen_nesting_open (os_, node_);
 
   this->gen_implicit ();
   this->gen_explicit ();
   this->gen_derived ();
 
-  this->gen_nesting_close (node_);
+  be_util::gen_nesting_close (os_, node_);
 
   this->gen_home_executor ();
 
@@ -213,70 +213,6 @@ be_visitor_home_ex_idl::visit_string (be_string *node)
     }
 
   return 0;
-}
-
-void
-be_visitor_home_ex_idl::gen_nesting_open (AST_Decl *node)
-{
-  os_ << be_nl;
-
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
-    {
-      UTL_ScopedName tmp (i.item (), 0);
-      AST_Decl *scope =
-        node->defined_in ()->lookup_by_name (&tmp, true);
-
-      if (scope == 0)
-        {
-          i.next ();
-          continue;
-        }
-
-      ACE_CString module_name =
-        IdentifierHelper::try_escape (scope->original_local_name ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os_ << be_nl
-          << "module " << module_name.c_str () << be_nl
-          << "{" << be_idt;
-    }
-}
-
-void
-be_visitor_home_ex_idl::gen_nesting_close (AST_Decl *node)
-{
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
-    {
-      ACE_CString module_name (i.item ()->get_string ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os_ << be_uidt_nl
-          << "};";
-    }
 }
 
 void

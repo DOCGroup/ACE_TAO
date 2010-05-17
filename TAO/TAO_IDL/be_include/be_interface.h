@@ -334,10 +334,6 @@ public:
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
 
-  /// Helper function called from visitors and used internally.
-  void gen_nesting_open (TAO_OutStream &os);
-  void gen_nesting_close (TAO_OutStream &os);
-
   bool is_ami_rh (void) const;
   void is_ami_rh (bool val);
 

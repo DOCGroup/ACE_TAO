@@ -145,14 +145,6 @@ AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
 }
 
 bool
-AST_Type::is_defined (void)
-{
-  // AST_Interface, AST_Structure, and AST_Union will
-  // override this, as will AST_InterfaceFwd, etc.
-  return 1;
-}
-
-bool
 AST_Type::ifr_added (void)
 {
   return this->ifr_added_;

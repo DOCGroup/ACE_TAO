@@ -198,7 +198,7 @@ be_generator::create_module (UTL_Scope *s,
           // entry only once, but previous_ will contain the decls
           // from all previous openings. See comment in
           // AST_Module::add_to_previous() body.
-          d = m->look_in_previous (n->last_component ());
+          d = m->look_in_prev_mods (n->last_component ());
 
           if (d != 0)
             {

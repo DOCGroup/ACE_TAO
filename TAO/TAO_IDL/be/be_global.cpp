@@ -1916,8 +1916,6 @@ BE_GlobalData::ccmobject (void)
 
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
-                                                               true,
-                                                               true,
                                                                true);
 
       sn.destroy ();

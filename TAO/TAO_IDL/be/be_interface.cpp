@@ -23,6 +23,7 @@
 #include "be_exception.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+#include "be_util.h"
 #include "be_identifier_helper.h"
 #include "be_extern.h"
 
@@ -2876,7 +2877,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
       return;
     }
 
-  this->gen_nesting_open (os);
+  be_util::gen_nesting_open (os, this);
 
   os << be_nl
      << "local interface CCM_"
@@ -2889,7 +2890,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   os << be_uidt_nl
      << "};";
 
-  this->gen_nesting_close (os);
+  be_util::gen_nesting_close (os, this);
 
   this->ex_idl_facet_gen (true);
 }
@@ -3181,7 +3182,7 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
       return 0;
     }
 
-  this->gen_nesting_open (*os);
+  be_util::gen_nesting_open (*os, this);
 
   be_visitor_context ctx;
   ctx.stream (os);
@@ -3216,75 +3217,11 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
                         -1);
     }
 
-  this->gen_nesting_close (*os);
+  be_util::gen_nesting_close (*os, this);
 
   this->ami4ccm_ex_idl_gen (true);
 
   return 0;
-}
-
-void
-be_interface::gen_nesting_open (TAO_OutStream &os)
-{
-  os << be_nl;
-
-  for (UTL_IdListActiveIterator i (this->name ()); ! i.is_done () ;)
-    {
-      UTL_ScopedName tmp (i.item (), 0);
-      AST_Decl *scope =
-        this->defined_in ()->lookup_by_name (&tmp, true);
-
-      if (scope == 0)
-        {
-          i.next ();
-          continue;
-        }
-
-      ACE_CString module_name =
-        IdentifierHelper::try_escape (scope->original_local_name ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os << be_nl
-         << "module " << module_name.c_str () << be_nl
-         << "{" << be_idt;
-    }
-}
-
-void
-be_interface::gen_nesting_close (TAO_OutStream &os)
-{
-  for (UTL_IdListActiveIterator i (this->name ()); ! i.is_done () ;)
-    {
-      ACE_CString module_name (i.item ()->get_string ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os << be_uidt_nl
-         << "};";
-    }
 }
 
 bool
