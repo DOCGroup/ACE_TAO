@@ -32,5 +32,4 @@ namespace DAnCE
     {
       sub_plan.UUID = CORBA::string_dup (parent_plan.UUID.in ());
     }
-
-};
+}

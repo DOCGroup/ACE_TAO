@@ -1,3 +1,14 @@
+Mon May 17 16:21:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tools/Completion/CompletionHandler_T.h:
+        * DAnCE/tools/Completion/Completion_Counter_Base.h:
+        * DAnCE/tools/Completion/Completion_Counter_Base.inl:
+        * DAnCE/tools/Split_Plan/Locality_Splitter.cpp:
+        * DAnCE/tools/Split_Plan/Node_Splitter.cpp:
+        * DAnCE/tools/Split_Plan/Sub_UUID_Generator.cpp:
+          Removed not needed semi colon which gives compile errors
+          with FC8
+
 Mon May 17 14:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
