@@ -17,9 +17,9 @@ namespace DAnCE
   class DAnCE_Convert_Plan_Export Convert_Plan
   {
   public:
-    static Deployment::DeploymentPlan * read_xml_plan (const char *filename);
-    static Deployment::DeploymentPlan * read_cdr_plan (const char *filename);
-    static bool write_cdr_plan (const char *filename, Deployment::DeploymentPlan &plan);
+    static Deployment::DeploymentPlan * read_xml_plan (const ACE_TCHAR *filename);
+    static Deployment::DeploymentPlan * read_cdr_plan (const ACE_TCHAR *filename);
+    static bool write_cdr_plan (const ACE_TCHAR *filename, Deployment::DeploymentPlan &plan);
   };
 }
 
