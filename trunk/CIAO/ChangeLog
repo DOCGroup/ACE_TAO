@@ -1,3 +1,11 @@
+Mon May 17 14:36:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.h:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+          Unicode fixes
+
 Mon May 17 14:12:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT:

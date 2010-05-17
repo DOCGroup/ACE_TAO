@@ -20,8 +20,8 @@
 struct Options
 {
   Options (void)
-    : rm_ior_ (""),
-      domain_nc_ (""),
+    : rm_ior_ (ACE_TEXT("")),
+      domain_nc_ (ACE_TEXT("")),
       list_ (false),
       shutdown_ (false)
   {
