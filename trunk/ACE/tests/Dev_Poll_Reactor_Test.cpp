@@ -191,7 +191,16 @@ Client::handle_close (ACE_HANDLE handle,
               handle,
               mask));
 
-  return 0;
+  // There is no point in running reactor after this client is closed.
+  if (this->reactor ()->end_reactor_event_loop () == 0)
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("(%t) Successful client reactor shutdown.\n")));
+  else
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("Failed client reactor shutdown")));
+
+  return SVC_HANDLER::handle_close (handle, mask);
 }
 
 // ----------------------------------------------------
@@ -301,11 +310,9 @@ Server::handle_close (ACE_HANDLE handle,
                   handle,
                   this->get_handle (),
                   mask));
-
-      return this->peer ().close ();
     }
 
-  return 0;
+  return SVC_HANDLER::handle_close (handle, mask);
 }
 
 // ----------------------------------------------------

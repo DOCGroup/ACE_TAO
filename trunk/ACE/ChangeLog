@@ -1,3 +1,15 @@
+Mon May 17 11:32:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Dev_Poll_Reactor_Test.cpp:
+          Fixed 2 memory leaks in this test. Previously both client and
+          server svc handlers were leaked. After fixing that it turned out
+          that client is not able to finish properly as its reactor is not
+          shutdown. The later was happening because server was reaching
+          desired exit condition faster and once it get closed client could
+          never get a chance to reach its own exit condition. So, in short,
+          there is no point in this test to run client side reactor if the
+          client's svc handler got closed.
+
 Fri May 14 22:22:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
