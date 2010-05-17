@@ -126,8 +126,7 @@ namespace CIAO_DelReplyH_Sender_Impl
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::DelReplyH::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::DelReplyH::CCM_Sender_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -166,7 +165,7 @@ namespace CIAO_DelReplyH_Sender_Impl
     if (nr_callbacks.value() != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Not all ReplyHandlers were "
-                              "deleted.\n"));
+                              "deleted, %d left.\n", nr_callbacks.value ()));
       }
     if (nr_exceptions.value() != 1)
       {

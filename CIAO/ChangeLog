@@ -1,3 +1,15 @@
+Mon May 17 18:14:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Renamed LatencyTT to Latency and put all AMI4CCM together
+
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+          Print number left
+
+        * connectors/dds4ccm/performance-tests/Latency:
+        * connectors/dds4ccm/performance-tests/LatencyTT:
+          Renamed LatencyTT to Latency
+
 Mon May 17 16:21:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tools/Completion/CompletionHandler_T.h:
