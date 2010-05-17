@@ -173,6 +173,43 @@ connector Comp3_T
 
 module B::second_B<iface, ifaceSeq> second_B_Inst;
 
+module H
+{
+  module Nested_H<typename T, sequence <T> TSeq>
+  {
+    alias A::Nested<T, TSeq> NestedA;
+    interface B
+    {
+      void send (in T arg);
+    };
+    connector Y
+    {
+      provides B myport;
+      provides NestedA::XX myxx;
+    };
+  };
+};
+
+module I
+{
+  module Nested_I<typename T, sequence <T> TSeq>
+  {
+    alias A::Nested<T, TSeq> NestedA;
+    interface B
+    {
+      void send (in T arg);
+    };
+    connector Y
+    {
+      provides B myport;
+      provides NestedA::XX myxx;
+    };
+  };
+};
+
+module H::Nested_H<iface, ifaceSeq> nested_H_inst;
+module I::Nested_I<iface, ifaceSeq> nested_I_inst;
+
 module Ast<typename T,
            eventtype E,
            exception S,
@@ -296,6 +333,7 @@ module T
 /// An instantiated template module can be a reopening
 /// of an existing module.
 module ::M::N < ::T::X> T;
+
 
 /*
 Support for native is there, but this results in non compiling code
