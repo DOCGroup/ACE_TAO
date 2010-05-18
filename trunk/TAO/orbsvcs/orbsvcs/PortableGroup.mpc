@@ -19,16 +19,11 @@ project(PortableGroup) : orbsvcslib, orbsvcs_output, install, naming, iormanip, 
   }
 
   Source_Files {
-    miopC.cpp
-    miopS.cpp
-    PortableGroupC.cpp
-    PortableGroupS.cpp
-    PortableGroup_Simple_DSC.cpp
     PortableGroup
   }
 
   Header_Files {
-    PortableGroup/portablegroup_export.h
+    PortableGroup
   }
 
   Template_Files {

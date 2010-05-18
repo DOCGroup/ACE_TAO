@@ -11,6 +11,10 @@ project(RTSched) : orbsvcslib, orbsvcs_output, install, naming, portableserver, 
     RtecScheduler.idl
   }
 
+  Header_Files {
+    Sched
+  }
+
   Source_Files(ORBSVCS_COMPONENTS) {
     Sched {
       RtecSchedulerC.cpp
@@ -23,6 +27,7 @@ project(RTSched) : orbsvcslib, orbsvcs_output, install, naming, portableserver, 
   }
 
   Template_Files {
+    Sched
   }
 
   // To avoid picking up RTSchedEvent.rc as well, explicitly list the files.

@@ -41,8 +41,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
     CosNotifyChannelAdminC.h
     NotifyExtC.h
     Event_ForwarderC.h
-    Notify/Notify_Extensions.h
-    Notify/notify_export.h
+    Notify
   }
 
   Inline_Files {
@@ -55,6 +54,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
   }
 
   Template_Files {
+    Notify
   }
 
   Resource_Files {

@@ -35,6 +35,11 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_
     endif
   }
 
+  verbatim(gnuace, postinstall) {
+"	@mkdir -p $(INSTALL_PREFIX)/share/ace/bin"
+"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl $(INSTALL_PREFIX)/share/ace/bin"
+  }
+
   Source_Files {
     driver/drv_args.cpp
     tao_idl.cpp

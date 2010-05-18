@@ -26,6 +26,7 @@ project(RTEvent) : orbsvcslib, orbsvcs_output, install, svc_utils, tao_versionin
 
   Header_Files {
     Event_Utilities.h
+    Event_Service_Constants.h
     RtecDefaultEventDataC.h
     RtecEventCommC.h
     RtecEventChannelAdminC.h
