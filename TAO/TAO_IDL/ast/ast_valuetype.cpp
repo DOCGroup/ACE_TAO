@@ -229,7 +229,7 @@ AST_ValueType::will_have_factory (void)
 // Look through supported interface list.
 AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
-                                  bool treat_as_ref)
+                                  bool)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;

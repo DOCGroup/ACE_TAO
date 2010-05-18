@@ -289,6 +289,9 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
+  os_ << "if (! ::CORBA::is_nil (this->callback_.in ()))"
+      << be_idt_nl << "{" << be_idt_nl;
+      
   if (is_excep)
     {
       os_ << "::CCM_AMI::ExceptionHolder_i holder (excep_holder);"
@@ -319,6 +322,8 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
         }
     }
 
+  os_ << be_uidt_nl << "}" << be_uidt_nl;
+  
   os_ << be_nl
       << "this->_remove_ref ();" << be_uidt_nl
       << "}";
@@ -376,6 +381,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "new " << this->iface_->local_name ()
       << "_reply_handler (ami4ccm_handler);" << be_uidt_nl
 
+      << "PortableServer::ServantBase_var owner_transfer(handler);"
+      << be_nl
+      
       << "the_handler_var = handler->_this ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "receptacle_objref->" << node->local_name ()
