@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
+#include "test_config.h"
 
 ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 

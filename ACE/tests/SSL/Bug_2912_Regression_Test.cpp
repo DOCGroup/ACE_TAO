@@ -28,7 +28,7 @@
  */
 
 #include "ace/ACE.h"
-#include "tests/test_config.h"
+#include "../test_config.h"
 #include "ace/SSL/SSL_Asynch_Stream.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"

@@ -53,7 +53,7 @@ makefile_name.local:
 	@echo
 endif
 
-all.local: makefile_name.local build.objdirs build.local install.local
+all.local: makefile_name.local build.objdirs build.local binout.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
@@ -225,9 +225,9 @@ ifneq ($(INSBIN),)
 endif
 
 INSTALL ?=
-install.local: $(INSTALL)
+binout.local: $(INSTALL)
 
-deinstall.local:
+clean_binout.local:
 ifdef CLEANUP_INSTALL
   ifneq ($(strip $(CLEANUP_INSTALL)),)
 	$(RM) $(CLEANUP_INSTALL)
@@ -257,9 +257,9 @@ endif # ! LN_S
 # Don't call shell/call directly below since we may need to 
 # add the architecture specific suffix to the directory
 ifneq ($(mingw32),1)
-ARCH_SOURCE_DIR := $(patsubst /,,$(shell pwd)/$(ARCH))
+ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
 else
-ARCH_SOURCE_DIR := $(patsubst /,,$(call PWD)/$(ARCH))
+ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
 endif
 
 $(INSBIN)/%$(VAR)$(EXEEXT) \
@@ -276,11 +276,8 @@ $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
 ifeq ($(vxworks_ntbuild),1)
-	@if exist $@ echo "$(@F) already installed"
-	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
-		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+	@if not exist $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
-		echo "Installing $(@F) to $(@D)" && \
 		$(RM) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
@@ -289,30 +286,28 @@ else #not vxworks_ntbuild
       ifneq ($(SOVERSION),)
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
-			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test $@ -nt $(@F) ; then \
-			echo "$(@F) already installed" ; \
-		else \
-			echo "Installing $(@F) -> $(@D)" ; \
+		if test $@ -ot $(@F) ; then \
 			$(RM) $@; \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
-	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
-		if test -s $@ ; then \
-			echo "$(@F) already installed" ; \
-		else \
-			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
+      ifneq ($(SOVERSION),)
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
+		if test ! -s $@ ; then \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			echo "Installing $(@F) -> $(@D)" ; \
+		fi ; \
+	fi
+      endif #SOVERSION
+	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
+		if test ! -s $@ ; then \
 			$(RM) $@; \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
@@ -323,10 +318,7 @@ endif #vxworks_ntbuild
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
-		if test -s $(@:.$(SOEXT)=.x) ; then \
-			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
-		else \
-			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
+		if test ! -s $(@:.$(SOEXT)=.x) ; then \
 			$(RM) $(@); $(LN_S) $(ARCH_SOURCE_DIR)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
@@ -394,7 +386,7 @@ ifdef DO_CLEANUP
 	templateregistry templateregistry.* ir.out core.* *.core $(CLEANUP_OBJS)
 endif # DO_CLEANUP
 
-realclean.local: clean.local deinstall.local clean_idl_stubs.local
+realclean.local: clean.local clean_binout.local clean_idl_stubs.local
 ifdef DO_CLEANUP
 	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS)) $(ARCH)
 endif # DO_CLEANUP

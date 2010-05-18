@@ -99,7 +99,7 @@ sub write_comps {
   if ($named) {
     $self->write_named_targets($fh, $crlf, \%targnum, \@list,
                                'REMAINING_TARGETS := ' .
-                               '$(subst all, , $(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)' .
+                               '$(filter-out all,$(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)' .
                                "$crlf$crlf\$(REMAINING_TARGETS)", '', '',
                                $self->project_target_translation(1), 1);
   }

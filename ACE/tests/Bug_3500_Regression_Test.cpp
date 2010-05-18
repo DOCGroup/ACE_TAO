@@ -11,7 +11,7 @@
 
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/SString.h"
-#include "tests/test_config.h"
+#include "test_config.h"
 
 ACE_RCSID (tests,
            Bug_3500_Regression_Test,

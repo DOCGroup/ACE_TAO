@@ -11,6 +11,10 @@ project(QoS) : acelib, ace_output, install {
     macros += ACE_HAS_WINSOCK2_GQOS
   }
 
+  specific {
+    install_dir = ace/qos
+  }
+
   pkgconfig_files {
     ACE_QoS.pc.in
   }

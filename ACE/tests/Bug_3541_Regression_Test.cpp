@@ -14,7 +14,7 @@
 #include "ace/Semaphore.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/SString.h"
-#include "tests/test_config.h"
+#include "test_config.h"
 
 
 ACE_RCSID (tests,
