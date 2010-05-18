@@ -1,3 +1,20 @@
+Tue May 18 09:54:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+          Fixed argument not used warnings
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Reduced the size of the generated connector and fixed the problem that
+          the reply handler wasn't deleted after it has been used
+
+        * tao/Object.h:
+        * tests/AMI/simple_client.cpp:
+          Layout changes
+
 Mon May 17 21:55:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/AMI/ami_test.idl:

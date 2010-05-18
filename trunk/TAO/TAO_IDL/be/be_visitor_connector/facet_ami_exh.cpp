@@ -140,7 +140,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   be_interface *callback_iface =
     be_interface::narrow_from_decl (d);
 
-  int status =
+  int const status =
     callback_iface->traverse_inheritance_graph (
       be_interface::op_attr_decl_helper,
       &os_,
