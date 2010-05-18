@@ -1,7 +1,7 @@
 // $Id$
 #include "ace/OS_NS_stdio.h"
-#include <orbsvcs/orbsvcs/CosNamingC.h>
-#include <orbsvcs/orbsvcs/Naming/Naming_Loader.h>
+#include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/Naming/Naming_Loader.h>
 #include "DAnCE/Logger/Log_Macros.h"
 
 #include "DummyC.h"

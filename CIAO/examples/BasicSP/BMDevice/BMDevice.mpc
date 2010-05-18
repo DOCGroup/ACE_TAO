@@ -3,7 +3,7 @@
 project(BMDevice_idl_gen): componentidldefaults {
   custom_only = 1
   after += BasicSP_idl_gen
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -I.. \
               -Wb,stub_export_macro=BMDEVICE_STUB_Export \
               -Wb,stub_export_include=BMDevice_stub_export.h \
               -Wb,skel_export_macro=BMDEVICE_SVNT_Export \
@@ -22,7 +22,7 @@ project(BMDevice_lem_gen) : ciaoidldefaults {
   idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export \
                 -Wb,export_include=BMDevice_exec_export.h \
                 -SS \
-                -I $(CIAO_ROOT)/examples/BasicSP
+                -I ..
 
   IDL_Files {
     BMDeviceE.idl
@@ -34,7 +34,7 @@ project(BMDevice_stub): ccm_stub {
   libpaths += ../lib
   after += BasicSP_stub BMDevice_idl_gen
   sharedname = BMDevice_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
 
   libs += BasicSP_stub
 
@@ -63,7 +63,7 @@ project(BMDevice_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
 
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
 
   dynamicflags   = BMDEVICE_EXEC_BUILD_DLL
 
@@ -87,7 +87,7 @@ project(BMDevice_exec) : ciao_executor {
 
 project(BMDevice_svnt) : ciao_servant {
   after += BasicSP_svnt BMDevice_exec BasicSP_exec
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
 
   sharedname = BMDevice_svnt
 

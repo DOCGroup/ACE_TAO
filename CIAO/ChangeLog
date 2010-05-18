@@ -1,3 +1,57 @@
+Tue May 18 21:48:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+        * DAnCE/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * DAnCE/DAnCE/DAnCE_Properties.mpc:
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * DAnCE/DomainApplication/DomainApplication.mpc:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DAnCE/ExecutionManager/ExecutionManager.mpc:
+        * DAnCE/Logger/Logger.mpc:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * ccm/CCM_lem_stub.mpc:
+        * ccm/CCM_stub.mpc:
+        * ccm/CCM_svnt.mpc:
+        * ccm/ComponentServer/CCM_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/Containers/CIAO_Servant_Activator.mpc:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * ciao/Contexts/Context.mpc:
+        * ciao/Logger/Logger.mpc:
+        * ciao/Servants/Servants.mpc:
+        * ciao/Valuetype_Factories/Factories.mpc:
+        * ciao/install_versionh.mpc:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+        * connectors/dds4ccm/impl/dds/dds4ccm_impl.mpc:
+        * connectors/dds4ccm/impl/logger/Logger.mpc:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+        * tools/XML/XML.mpc:
+
+          Enabled "make install" for CIAO with the gnuace makefiles (bug 3244)
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+        * DAnCE/tests/NameServiceTest/clt_main.cpp:
+        * DAnCE/tests/NameServiceTest/srv_main.cpp:
+        * DAnCE/tests/NodeManager-NodeApplicationManager/NodeManager-NodeApplicationManager.mpc:
+
+          Adjusted tests and examples to be able to build outside of the
+          CIAO_ROOT tree, which is how we can verify that an "installed" CIAO
+          is properly installed.
+
 Tue May 18 14:10:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:

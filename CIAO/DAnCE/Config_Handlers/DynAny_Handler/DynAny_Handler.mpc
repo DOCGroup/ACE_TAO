@@ -1,6 +1,6 @@
 // $Id$
 
-project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, dance_deployment_stub, \
+project (XSC_DynAny_Handler) : install, xerces, dynamicany, typecodefactory, dance_deployment_stub, \
   dance_config_handlers_base, dance_lib, dance, ifr_client {
   after += XSC_XML_Handlers
   libs += XSC_XML_Handlers
@@ -18,5 +18,9 @@ project (XSC_DynAny_Handler) : xerces, dynamicany, typecodefactory, dance_deploy
 
   Header_Files {
     DynAny_Handler_Export.h
+  }
+
+  specific {
+    install_dir = Config_Handlers/DynAny_Handler
   }
 }

@@ -1,23 +1,31 @@
 //$Id$
-project(CCM_Cookie_Factory) : ccm_stub, ciao_lib {
+project(CCM_Cookie_Factory) : install, ccm_stub, ciao_lib {
    dynamicflags = COOKIE_FACTORY_BUILD_DLL
    Source_Files {
      Cookies.cpp
    }
    Header_Files {
      Cookies.h
+     Cookie_Export.h
    }
    Inline_Files {
      Cookies.inl
    }
+  specific {
+    install_dir = ciao/Valuetype_Factories
+  }
 }
 
-project(CCM_ConfigValue_Factory) : ccm_stub, ciao_lib {
+project(CCM_ConfigValue_Factory) : install, ccm_stub, ciao_lib {
    dynamicflags = CONFIGVALUE_FACTORY_BUILD_DLL
    Source_Files {
      ConfigValue.cpp
    }
    Header_Files {
      ConfigValue.h
+     ConfigValue_Export.h
    }
+  specific {
+    install_dir = ciao/Valuetype_Factories
+  }
 }
