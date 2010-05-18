@@ -32,6 +32,10 @@ project (FtRtEvent) : orbsvcslib, orbsvcs_output, install, ftorbutils, rtevent_s
     }
   }
 
+  Header_Files {
+    FtRtEvent/Utils
+  }
+
   Template_Files {
   }
 }
@@ -48,6 +52,10 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, orbsvcs_output, pi, install {
     FTRT_ClientORB {
       FtRtEvent/ClientORB
     }
+  }
+
+  Header_Files {
+    FtRtEvent/ClientORB
   }
 
   Inline_Files {

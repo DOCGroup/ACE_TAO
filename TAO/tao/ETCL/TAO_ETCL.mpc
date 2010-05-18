@@ -27,4 +27,8 @@ project(TAO_ETCL) : anytypecode, ace_etcl, install, tao_output {
   Pkgconfig_Files {
     TAO_ETCL.pc.in
   }
+
+  specific {
+    install_dir = tao/ETCL
+  }
 }

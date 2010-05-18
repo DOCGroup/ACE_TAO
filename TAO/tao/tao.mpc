@@ -1,6 +1,6 @@
 //$Id$
 
-project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream {
+project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_install {
   custom_only = 1
   idlflags += -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode \
               -Wb,export_macro=TAO_Export \
@@ -54,6 +54,12 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream {
     WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
   }
 
+  PidlInstallWithoutBuilding_Files {
+    Object_Key.pidl
+    Policy.pidl
+    Typecode_types.pidl
+    WrongTransaction.pidl
+  }
 }
 
 project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop, valuetype_out_indirection {
@@ -653,5 +659,22 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   }
 
   IDL_Files {
+  }
+
+  InstallData_Files {
+    gendir = .
+    ../rules.tao.GNU
+    ../README*
+    ../VERSION
+    ../PROBLEM-REPORT-FORM
+    ../NEWS
+    ../COPYING*
+    ../docs
+    ../MPC
+  }
+
+  verbatim(gnuace, postinstall) {
+"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
+"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(INSTALL_PREFIX)/share/tao/tao-devel.sh"
   }
 }

@@ -41,6 +41,10 @@ project(CosLoadBalancing) : orbsvcslib, orbsvcs_output, install, naming, iormani
     }
   }
 
+  Header_Files {
+    LoadBalancing
+  }
+
   Template_Files {
   }
 

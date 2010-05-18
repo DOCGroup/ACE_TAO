@@ -6,13 +6,13 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 
-#include "orbsvcs/orbsvcs/Notify/Service.h"
-#include "orbsvcs/orbsvcs/Notify/Factory.h"
+#include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Notify/Factory.h"
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
+#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtC.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

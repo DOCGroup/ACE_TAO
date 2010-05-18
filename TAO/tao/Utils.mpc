@@ -16,7 +16,9 @@ project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
   }
 
   Template_Files {
-    Utils
+    Utils/RIR_Narrow.cpp
+    Utils/Servant_Var.cpp
+    Utils/Server_Main.cpp
   }
 
   Resource_Files {
