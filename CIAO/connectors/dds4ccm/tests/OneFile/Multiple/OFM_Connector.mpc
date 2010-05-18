@@ -11,6 +11,8 @@ project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
               -Wb,conn_export_macro=OFM_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OFM_Connector_conn_export.h \
               -Gxhex -Gxhsk -Gxhst
+  dynamicflags -= NDDS_USER_DLL_EXPORT
+
   IDL_Files {
     OFM_Connector.idl
   }

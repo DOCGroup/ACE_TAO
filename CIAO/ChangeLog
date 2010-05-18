@@ -1,3 +1,8 @@
+Tue May 18 14:10:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+          Resolved unresolved externals on windows.
+
 Tue May 18 12:10:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile:
