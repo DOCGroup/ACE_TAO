@@ -2,7 +2,7 @@
 
 project(BMDisplay_idl_gen): componentidldefaults,anytypecode {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -I.. \
               -Wb,stub_export_macro=BMDISPLAY_STUB_Export \
               -Wb,stub_export_include=BMDisplay_stub_export.h \
               -Wb,skel_export_macro=BMDISPLAY_SVNT_Export \
@@ -19,7 +19,7 @@ project(BMDisplay_lem_gen) : ciaoidldefaults {
   after += BasicSP_lem_gen BMDisplay_idl_gen
   custom_only = 1
 
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -I.. \
               -Wb,export_macro=BMDISPLAY_EXEC_Export \
               -Wb,export_include=BMDisplay_exec_export.h \
               -SS
@@ -33,7 +33,7 @@ project(BMDisplay_lem_gen) : ciaoidldefaults {
 project(BMDisplay_stub): ccm_stub {
   after += BasicSP_stub BMDisplay_idl_gen
   sharedname = BMDisplay_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libout = ../lib
   libpaths += ../lib
 
@@ -63,7 +63,7 @@ project(BMDisplay_exec) : ciao_executor {
   sharedname = BMDisplay_exec
   libs       += BMDisplay_stub
   libs       += BasicSP_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libout = ../lib
   libpaths += ../lib
 
@@ -89,7 +89,7 @@ project(BMDisplay_exec) : ciao_executor {
 
 project(BMDisplay_svnt) : ciao_servant {
   after += BasicSP_svnt BMDisplay_exec
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
 
   sharedname = BMDisplay_svnt
 

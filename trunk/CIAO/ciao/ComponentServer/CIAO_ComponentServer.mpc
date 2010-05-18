@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
+project(CIAO_ComponentServer_IDL) : install, ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \
                   -Wb,skel_export_macro=CIAO_COMPONENTSERVER_SVNT_Export \
@@ -12,9 +12,12 @@ project(CIAO_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
   IDL_Files {
     CIAO_ComponentServer.idl
   }
+  specific {
+    install_dir = ciao/ComponentServer
+  }
 }
 
-project(CIAO_CS_Client_IDL) : ciaoidldefaults, anytypecode {
+project(CIAO_CS_Client_IDL) : install, ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=CIAO_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=CIAO_ComponentServer_stub_export.h \
                   -Wb,skel_export_macro=CIAO_CS_CLIENT_SVNT_Export \
@@ -33,9 +36,12 @@ project(CIAO_CS_Client_IDL) : ciaoidldefaults, anytypecode {
     idlflags += -Sci -SS
     CIAO_FailureReasons.idl
   }
+  specific {
+    install_dir = ciao/ComponentServer
+  }
 }
 
-project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl, ciao_output, \
+project(CIAO_ComponentServer_stub) : install, ccm_componentserver_stub, ciaolib_with_idl, ciao_output, \
 				     messaging,  anytypecode, ciao_lib  {
   after += CIAO_ComponentServer_IDL CIAO_CS_Client_IDL
   dynamicflags = CIAO_COMPONENTSERVER_STUB_BUILD_DLL
@@ -50,9 +56,12 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl,
   Header_Files {
     CIAO_ComponentServer_stub_export.h
   }
+  specific {
+    install_dir = ciao/ComponentServer
+  }
 }
 
-project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
+project(CIAO_CS_Client_svnt) : install, ccm_svnt, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
     ciao_lib, threads, avoids_ace_for_tao, ciao_logger {
   dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
   after += CIAO_CS_Client_IDL
@@ -71,9 +80,12 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
     CIAO_CS_ClientS.h
     CIAO_CS_Client_svnt_export.h
   }
+  specific {
+    install_dir = ciao/ComponentServer
+  }
 }
 
-project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
+project(CIAO_ComponentServer_svnt) : install, ccm_componentserver_svnt, ciao_componentserver_stub, portableserver, \
                                      ciao_session_container, ciao_lib, ciao_cs_client {
   dynamicflags = CIAO_COMPONENTSERVER_SVNT_BUILD_DLL
 
@@ -87,9 +99,12 @@ project(CIAO_ComponentServer_svnt) : ccm_componentserver_svnt, ciao_componentser
   Header_Files {
     CIAO_ComponentServer_svnt_export.h
   }
+  specific {
+    install_dir = ciao/ComponentServer
+  }
 }
 
-project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
+project(CIAO_ComponentServer_exe) : install, ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
                                     messaging, anytypecode, ciaoexe, ciao_session_container,\
                                     ciao_logger {
   exename = ciao_componentserver
@@ -101,9 +116,29 @@ project(CIAO_ComponentServer_exe) : ccm_componentserver_svnt, portableserver, ci
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = ciao
+  }
+  InstallData_Files {
+    gendir = .
+    ../../COPYING
+    ../../NEWS
+    ../../PROBLEM-REPORT-FORM
+    ../../README
+    ../../VERSION
+    ../../docs
+    ../../MPC
+  }
+  verbatim(gnuace, postinstall) {
+"	cp ../../rules.ciao.GNU $(INSTALL_PREFIX)/share/ciao"
+"	perl -i -pe's!\\$$[{(]CIAO_ROOT[})]!$(INSTALL_PREFIX)/include!g;' -e'if (/ifndef TAO_IDL3_TO_IDL2\\b/) {print qq!TAO_IDL3_TO_IDL2=$(INSTALL_PREFIX)/share/ciao/bin/tao_idl3_to_idl2\\nTAO_IDL3_TO_IDL2_DEP=\\$$(TAO_IDL3_TO_IDL2)\\$$(EXEEXT)\\n!}' $(INSTALL_PREFIX)/share/ciao/rules.ciao.GNU"
+"	echo export CIAO_ROOT=$(INSTALL_PREFIX)/share/ciao> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+"	echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/DAnCE>> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+  }
 }
 
-project(CIAO_RTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
+project(CIAO_RTComponentServer_exe) : install, ccm_componentserver_svnt, portableserver, ciao_componentserver_svnt, \
                                       messaging, anytypecode, ciaoexe, ciao_session_container,\
                                       ciao_logger, rt_server, rtportableserver {
   exename = ciao_rtcomponentserver
@@ -115,5 +150,6 @@ project(CIAO_RTComponentServer_exe) : ccm_componentserver_svnt, portableserver, 
   }
   IDL_Files {
   }
+
 }
 

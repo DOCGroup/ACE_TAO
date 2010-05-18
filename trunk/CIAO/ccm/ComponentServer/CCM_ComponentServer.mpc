@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CCM_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
+project(CCM_ComponentServer_IDL) : install, ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=DANCE_COMPONENTSERVER_STUB_Export \
                   -Wb,stub_export_include=DAnCE_ComponentServer_stub_export.h \
                   -Wb,skel_export_macro=DANCE_COMPONENTSERVER_SVNT_Export \
@@ -23,9 +23,13 @@ project(CCM_ComponentServer_IDL) : ciaoidldefaults, anytypecode {
     idlflags += -Ssi
     CCM_ComponentServer.idl
   }
+
+  specific {
+    install_dir = ccm/ComponentServer
+  }
 }
 
-project(CCM_ComponentServer_stub) : ciaolib_with_idl, ciao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
+project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
   after += CCM_ComponentServer_IDL
 
@@ -43,9 +47,13 @@ project(CCM_ComponentServer_stub) : ciaolib_with_idl, ciao_output, messaging, cc
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = ccm/ComponentServer
+  }
 }
 
-project(CCM_ComponentServer_svnt) : ciaolib_with_idl, ciao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
+project(CCM_ComponentServer_svnt) : install, ciaolib_with_idl, ciao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
   dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
 
   Header_Files {
@@ -60,6 +68,10 @@ project(CCM_ComponentServer_svnt) : ciaolib_with_idl, ciao_output, messaging, cc
     CCM_ComponentServer_ClientS.cpp
   }
   IDL_Files {
+  }
+
+  specific {
+    install_dir = ccm/ComponentServer
   }
 }
 

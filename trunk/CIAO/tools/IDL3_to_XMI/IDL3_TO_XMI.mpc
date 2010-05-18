@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, ciao_xml_utils, tao_idl_fe {
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, ciao_xml_utils, tao_idl_fe {
   sharedname   = CIAO_IDL3_TO_XMI_BE
   dynamicflags = CIAO_IDL3_TO_XMI_BUILD_DLL
 

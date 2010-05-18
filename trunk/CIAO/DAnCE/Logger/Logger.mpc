@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_Logger): dance_lib, taolib, acelib {
+project(DAnCE_Logger): install, dance_lib, taolib, acelib {
   sharedname   = DAnCE_Logger
   dynamicflags = DANCE_LOGGER_BUILD_DLL
 
@@ -9,8 +9,13 @@ project(DAnCE_Logger): dance_lib, taolib, acelib {
     Logger_Service.cpp
     Log_Macros.cpp
   }
+
+  Header_Files {
+    DAnCE_Logger_Export.h
+  }
+
+  specific {
+    install_dir = DAnCE/Logger
+  }
+
 }
-
-
-
-

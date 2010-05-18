@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_NodeApplicationManager) : dance_lib, naming, dance_nodeapplicationmanager_skel, \
+project (DAnCE_NodeApplicationManager) : install, dance_lib, naming, dance_nodeapplicationmanager_skel, \
         dynamicinterface, ccm_componentserver_svnt, ciao_cs_client, \
         dance_nodeapplication, avoids_ace_for_tao {
   sharedname   = DAnCE_NodeApplicationManager
@@ -9,5 +9,9 @@ project (DAnCE_NodeApplicationManager) : dance_lib, naming, dance_nodeapplicatio
 
   Source_Files {
     NodeApplicationManager_Impl.cpp
+  }
+
+  specific {
+    install_dir = DAnCE/NodeApplicationManager
   }
 }
