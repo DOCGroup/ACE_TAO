@@ -259,7 +259,10 @@ sub IgnoreExeSubDir
 {
     my $self = shift;
 
-    if (@_ != 0) {
+    # If we have -Config ARCH, do not set IGNOREEXESUBDIR, since with ARCH
+    # all executables (even those in $ACE_ROOT/bin, etc.) are located in the
+    # architecture-specific subdirectory.
+    if (@_ != 0 && !grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
         $self->{IGNOREEXESUBDIR} = shift;
     }
 

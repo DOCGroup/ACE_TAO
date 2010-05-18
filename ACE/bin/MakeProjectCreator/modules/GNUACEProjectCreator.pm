@@ -64,6 +64,11 @@ sub fill_value {
     return ((defined $incs && $incs =~ /ciao/i) ||
             (defined $libs && $libs =~ /ciao/i));
   }
+  elsif ($name eq 'genins') {
+    my $ins = '';
+    $self->get_install_info(sub { $ins .= '#' . $_[0] });
+    return $ins;
+  }
 
   return undef;
 }

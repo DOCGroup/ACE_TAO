@@ -34,6 +34,10 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
     Monitor_Control_utils.h
   }
 
+  specific {
+    install_dir = ace/Monitor_Control
+  }
+
   specific (prop:microsoft) {
     lit_libs += pdh
   }
