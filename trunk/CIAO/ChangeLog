@@ -1,3 +1,15 @@
+Tue May 18 12:10:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile:
+        * connectors/dds4ccm/tests/OneFile/Multiple:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Added compilation tests which tests whether the declaration of a
+          topic and a connector in one single IDL file compiles correctly.
+
 Tue May 18 12:11:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:

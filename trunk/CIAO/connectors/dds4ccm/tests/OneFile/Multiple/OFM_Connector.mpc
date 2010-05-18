@@ -1,0 +1,131 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -b dds4ccm_base OFM_Connector"
+
+project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
+                                 dds4ccm, anytypecode, dds4ccm_ts_default {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=OFM_Connector_stub_export.h \
+              -Wb,skel_export_macro=OFM_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=OFM_Connector_svnt_export.h \
+              -Wb,conn_export_macro=OFM_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=OFM_Connector_conn_export.h \
+              -Gxhex -Gxhsk -Gxhst
+  IDL_Files {
+    OFM_Connector.idl
+  }
+
+  DDSGenerator_Files {
+    OFM_Connector.idl
+  }
+}
+
+project(OFM_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  after    += OFM_Connector_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=OFM_Connector_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    OFM_ConnectorE.idl
+  }
+}
+
+project(OFM_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
+  after    += OFM_Connector_lem_gen OFM_Connector_stub
+  libs     += OFM_Connector_stub
+
+  sharedname = OFM_Connector_lem_stub
+  dynamicflags = OFM_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OFM_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    OFM_ConnectorEC.h
+    OFM_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    OFM_ConnectorEC.inl
+  }
+}
+
+project(OFM_Connector_stub) : ccm_stub, dds4ccm_base {
+  after    += OFM_Connector_idl_gen
+  sharedname = OFM_Connector_stub
+  dynamicflags = OFM_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OFM_ConnectorC.cpp
+  }
+
+  Header_Files {
+    OFM_ConnectorC.h
+    OFM_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    OFM_ConnectorC.inl
+  }
+}
+
+project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
+  after    += OFM_Connector_lem_stub OFM_Connector_stub
+  sharedname = OFM_Connector_exec
+  libs     += OFM_Connector_stub OFM_Connector_lem_stub
+
+  dynamicflags = OFM_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OFM_Connector_conn.cpp
+  }
+
+  Header_Files {
+    OFM_Connector_conn.h
+    OFM_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(OFM_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
+  after      += OFM_Connector_lem_stub
+  sharedname  = OFM_Connector_svnt
+  libs       += OFM_Connector_stub OFM_Connector_lem_stub
+
+  dynamicflags = OFM_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    OFM_ConnectorS.cpp
+    OFM_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    OFM_ConnectorS.h
+    OFM_Connector_svnt.h
+    OFM_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    OFM_ConnectorS.inl
+  }
+}
+
+
