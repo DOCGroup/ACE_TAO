@@ -1,6 +1,6 @@
 // $Id$
 
-project (Package_Config_Handlers) : acelib, dance_deployment_stub, dance_config_handlers_base, dance, typecodefactory, dance_output  {
+project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, dance_config_handlers_base, dance, typecodefactory, dance_output  {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
 
@@ -39,5 +39,8 @@ project (Package_Config_Handlers) : acelib, dance_deployment_stub, dance_config_
     SID_Handler.h
   }
 
+  specific {
+    install_dir = Config_Handlers/Package_Handlers
+  }
 }
 

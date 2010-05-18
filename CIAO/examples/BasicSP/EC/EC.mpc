@@ -2,7 +2,7 @@
 
 project(EC_idl_gen): componentidldefaults {
   custom_only = 1
-  idlflags += -I $(CIAO_ROOT)/examples/BasicSP \
+  idlflags += -I.. \
               -Wb,stub_export_macro=EC_STUB_Export \
               -Wb,stub_export_include=EC_stub_export.h \
               -Wb,skel_export_macro=EC_SVNT_Export \
@@ -22,7 +22,7 @@ project(EC_lem_gen) : ciaoidldefaults {
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export \
                 -Wb,export_include=EC_exec_export.h \
                 -SS \
-                -I $(CIAO_ROOT)/examples/BasicSP
+                -I..
 
   IDL_Files {
     ECE.idl
@@ -32,7 +32,7 @@ project(EC_lem_gen) : ciaoidldefaults {
 project(EC_stub): ccm_stub {
   after += BasicSP_stub EC_idl_gen
   sharedname = EC_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libpaths += ..
   libout = ../lib
   libpaths += ../lib
@@ -61,7 +61,7 @@ project(EC_exec) : ciao_executor {
   after      += EC_stub EC_lem_gen
   sharedname = EC_exec
   libs       += EC_stub BasicSP_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libout = ../lib
   libpaths += ../lib
 
@@ -87,7 +87,7 @@ project(EC_exec) : ciao_executor {
 
 project(EC_svnt) : ciao_servant {
   after += BasicSP_svnt EC_exec
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
 
   sharedname = EC_svnt
 
@@ -116,7 +116,7 @@ project (EC_client) : ccm_stub {
   after += EC_stub
   exename = client
   libs += EC_stub BasicSP_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libout = ../lib
   libpaths += ../lib
 
@@ -137,7 +137,7 @@ project (EC_client) : ccm_stub {
 project (EC_controller) : ccm_stub {
   after += EC_stub
   exename = controller
-  includes += $(CIAO_ROOT)/examples/BasicSP
+  includes += ..
   libs += EC_stub BasicSP_stub
   libout = ../lib
   libpaths += ../lib

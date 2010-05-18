@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance_lib, dance_output, dance_domainapplicationmanager_skel, \
+project : install, dance_lib, dance_output, dance_domainapplicationmanager_skel, \
 	    dance_domainapplication, dance_nodemanager_stub, \
       dance_nodemanager_skel, naming, \
       dance_split_plan, dance_tools  {
@@ -18,5 +18,8 @@ project : dance_lib, dance_output, dance_domainapplicationmanager_skel, \
     DomainApplicationManager_Impl.h
     DomainApplicationManager_Export.h
   }
-}
 
+  specific {
+    install_dir = DAnCE/DomainApplicationManager
+  }
+}

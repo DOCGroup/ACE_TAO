@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Node_Manager_Exec) : utils, dance_exe, naming, avoids_ace_for_tao, \
+project(Node_Manager_Exec) : install, utils, dance_exe, naming, avoids_ace_for_tao, \
     dance_nodeapplicationmanager, dance_nodemanager_skel, ciao_logger {
   exename = dance_node_manager
 

@@ -1,12 +1,25 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_Properties_IDL) : ciaolib_with_idl, dance_output {
+project(DAnCE_Properties_IDL) : install, ciaolib_with_idl, dance_output {
   custom_only = 1
 
   IDL_Files {
     idlflags += -SS -Sci
     DAnCE_Properties.idl
   }
-}
 
+  InstallData_Files {
+    gendir = .
+    ../docs
+    ../MPC
+  }
+  InstallData_Files {
+    gendir = RepositoryManager
+    ../RepositoryManager/README
+  }
+  InstallData_Files {
+    gendir = NodeManager
+    ../NodeManager/README
+  }
+}

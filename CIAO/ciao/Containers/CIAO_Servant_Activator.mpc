@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_Servant_Activator_stub_idl) : ciaoidldefaults {
+project(CIAO_Servant_Activator_stub_idl) : install, ciaoidldefaults {
   custom_only = 1
   idlflags  += -Wb,stub_export_include=CIAO_Servant_Activator_export.h \
                -Wb,stub_export_macro=CIAO_SERVANT_ACTIVATOR_Export \
@@ -8,9 +8,12 @@ project(CIAO_Servant_Activator_stub_idl) : ciaoidldefaults {
   IDL_Files {
     CIAO_Servant_Activator.idl
   }
+  specific {
+    install_dir = ciao/Containers
+  }
 }
 
-project(CIAO_Servant_Activator_stub) : ciao_lib, portableserver, ciao_port_activator_stub, avoids_minimum_corba, ciao_logger {
+project(CIAO_Servant_Activator_stub) : install, ciao_lib, portableserver, ciao_port_activator_stub, avoids_minimum_corba, ciao_logger {
   after += CIAO_Servant_Activator_stub_idl
   dynamicflags = CIAO_SERVANT_ACTIVATOR_BUILD_DLL
 
@@ -19,6 +22,12 @@ project(CIAO_Servant_Activator_stub) : ciao_lib, portableserver, ciao_port_activ
   Source_Files {
     Servant_Activator.cpp
     CIAO_Servant_ActivatorC.cpp
+  }
+  Header_Files {
+    CIAO_Servant_Activator_export.h
+  }
+  specific {
+    install_dir = ciao/Containers
   }
 }
 
