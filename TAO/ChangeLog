@@ -1,3 +1,8 @@
+Tue May 18 12:14:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_scope.cpp:
+          Removed not used local variable
+
 Tue May 18 09:54:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/ast/ast_component.cpp:
