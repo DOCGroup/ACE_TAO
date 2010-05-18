@@ -25,7 +25,7 @@ project (DDS_CCM_Example_PSAT_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
   }
 }
 
-project(DDS_CSL_DT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+project(DDS_PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=CSL_DEADLINETEST_CONNECTOR_STUB_Export \
@@ -43,9 +43,9 @@ project(DDS_CSL_DT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   }
 }
 
-project(DDS_CSL_DT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+project(DDS_PSAT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
-  after += DDS_CSL_DT_Connector_idl_gen
+  after += DDS_PSAT_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=CSL_DEADLINETEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=ccm_dds_psat_lem_stub_export.h \
               -SS -Gxhst \
@@ -56,14 +56,14 @@ project(DDS_CSL_DT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_CSL_DT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+project(DDS_PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   requires += dummy_label
-  after += DDS_CSL_DT_Connector_lem_gen DDS_CCM_PSAT_Test_stub DDS4CCM_lem_stub
+  after += DDS_PSAT_Connector_lem_gen DDS_CCM_PSAT_Test_stub DDS4CCM_lem_stub
   libs  += DDS_CCM_PSAT_Test_stub DDS4CCM_lem_stub
   libpaths += lib
   libout = lib
   includes += ..
-  sharedname = DDS_CSL_DT_Connector_lem_stub
+  sharedname = DDS_PSAT_Connector_lem_stub
   dynamicflags   = CSL_DEADLINETEST_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -85,7 +85,7 @@ project(DDS_CSL_DT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(DDS_CCM_PSAT_Test_stub) : ccm_stub, dds4ccm_base {
   requires += dummy_label
-  after += DDS_CSL_DT_Connector_idl_gen
+  after += DDS_PSAT_Connector_idl_gen
   libs  += 
   libpaths += lib
   libout = lib
