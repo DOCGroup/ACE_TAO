@@ -1,13 +1,18 @@
+Tue May 18 12:11:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Fixed generation problems when no dds vendor is enabled
+
 Tue May 18 11:07:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * connectors/ami4ccm/tests/IDL_Test/Hello.idl
-        Add multiple level of inheritance, more interfaces, different in,
-        out and return types. 
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+          Add multiple level of inheritance, more interfaces, different in,
+          out and return types.
 
 Tue May 18 10:30:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * bin/ciao_tests.lst
-        Add AMI4CCM tests: DelReplyH and OneProcess.
+        * bin/ciao_tests.lst:
+          Add AMI4CCM tests: DelReplyH and OneProcess.
 
 Tue May 18 06:02:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -69,8 +74,8 @@ Mon May 17 13:04:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 17 13:33:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
-        Removed unused variable.
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+          Removed unused variable.
 
 Wed May 12 15:38:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

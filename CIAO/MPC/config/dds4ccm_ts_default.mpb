@@ -28,7 +28,7 @@ feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
 feature(!dds4ccm_opendds) {
   // this allows the user's project to reference opendds_ts_flags,
   // which will simply be ignored
-  Define_Custom(DummyTypeSupport) {
+  Define_Custom(OpenDDSDummyTypeSupport) {
     keyword opendds_ts_flags
   }
 }
@@ -36,8 +36,16 @@ feature(!dds4ccm_opendds) {
 feature(!dds4ccm_ndds) {
   // this allows the user's project to reference opendds_ts_flags,
   // which will simply be ignored
-  Define_Custom(DummyTypeSupport) {
+  Define_Custom(NDDSDummyTypeSupport) {
     keyword ndds_ts_flags
+  }
+}
+
+feature(!dds4ccm_splice) {
+  // this allows the user's project to reference opendds_ts_flags,
+  // which will simply be ignored
+  Define_Custom(SpliceDummyTypeSupport) {
+    keyword splice_ts_flags
   }
 }
 
