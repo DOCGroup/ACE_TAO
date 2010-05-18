@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file TwoTopics_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef ONEFILE_CONNECTOR_IDL_
+#define ONEFILE_CONNECTOR_IDL_
+
+#if defined __TAO_IDL
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+#endif
+
+#pragma ndds typesupport "OneFile_ConnectorSupport.h"
+#pragma ciao lem "OneFile_ConnectorE.idl"
+
+struct OneFileTopic {
+  string hello; //@key
+  long iteration;
+};
+typedef sequence<OneFileTopic> OneFileTopicSeq;
+
+module OneFile_Connector
+{
+  module ::CCM_DDS::Typed < OneFileTopic, OneFileTopicSeq> OneFileConnector;
+};
+
+module ::CCM_DDS::Typed < OneFileTopic, OneFileTopicSeq> OneFileConnector;
+
+#endif /* ONEFILE_CONNECTOR_IDL_ */
