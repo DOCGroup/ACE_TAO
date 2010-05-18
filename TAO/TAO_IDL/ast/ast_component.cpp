@@ -84,7 +84,7 @@ AST_Component::look_in_inherited (UTL_ScopedName *e,
 // Look through supported interface list.
 AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
-                                  bool treat_as_ref)
+                                  bool)
 {
   AST_Decl *d = 0;
   AST_Type **is = 0;
