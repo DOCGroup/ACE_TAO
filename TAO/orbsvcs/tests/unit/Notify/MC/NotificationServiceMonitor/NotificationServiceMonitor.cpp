@@ -5,7 +5,7 @@
 
 #include "tao/TAO_Singleton_Manager.h"
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+#include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

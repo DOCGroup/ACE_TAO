@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
   custom_only = 1
   idlflags += -SS -Sci -Gp -Gd \
               -Wb,export_macro=TAO_PI_Export \
@@ -45,6 +45,10 @@ project(*idl) : tao_versioning_idl_defaults {
                 -Wb,safe_include=tao/PI/PI.h
     idlflags -= -Sa -St
     PI/InvalidSlot.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    PI/PolicyFactory.pidl
   }
 }
 

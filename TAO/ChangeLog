@@ -1,3 +1,111 @@
+Tue May 18 21:42:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/endpointpolicy.mpb:
+        * tao/AnyTypeCode.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Compression.mpc:
+        * tao/ETCL/TAO_ETCL.mpc:
+        * tao/Monitor.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/Utils.mpc:
+        * tao/pidl_install.mpb:
+        * tao/tao.mpc:
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Skel.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+
+          Enabled "make install" for TAO with the gnuace makefiles (bug 3244)
+
+        * DevGuideExamples/AMH_AMI/AMH_AMI.mpc:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h:
+        * examples/Kokyu_dsrt_schedulers/utils.cpp:
+        * examples/examples.mwc:
+        * examples/kokyu_dsrt_scheduler_client.mpb:
+        * examples/kokyu_dsrt_scheduler_server.mpb:
+        * examples/kokyu_dsrt_schedulers.mpb:
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+        * orbsvcs/examples/examples.mwc:
+        * orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp:
+        * orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/test_config.h:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+        * orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
+        * orbsvcs/tests/Notify/Persistent_Filter/Filter.h:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+        * orbsvcs/tests/notifytest.mpb:
+        * orbsvcs/tests/tests.mwc:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorClient.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/csd_pt_test_exe.mpb:
+        * performance-tests/csd_pt_testinf_lib.mpb:
+        * performance-tests/csd_pt_testservant_lib.mpb:
+        * performance-tests/perf.mwc:
+        * tests/CodeSets/libs/UTF16_UCS2/UTF16_UCS2_Translator.mpc:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/seq_tests.mpb:
+        * tests/csd_tp_foo_a_lib.mpb:
+        * tests/csd_tp_foo_b_lib.mpb:
+        * tests/csd_tp_foo_c_lib.mpb:
+        * tests/csd_tp_test_exe_a.mpb:
+        * tests/csd_tp_test_exe_b.mpb:
+        * tests/csd_tp_test_exe_c.mpb:
+        * tests/csd_tp_test_lib.mpb:
+        * tests/tests.mwc:
+
+          Adjusted tests and examples to be able to build outside of the
+          TAO_ROOT tree, which is how we can verify that an "installed" TAO
+          is properly installed.
+
+        * MPC/config/csd_pt_test_exe.mpb:
+        * MPC/config/csd_pt_testinf_lib.mpb:
+        * MPC/config/csd_pt_testservant_lib.mpb:
+        * MPC/config/csd_tp_foo_a_lib.mpb:
+        * MPC/config/csd_tp_foo_b_lib.mpb:
+        * MPC/config/csd_tp_foo_c_lib.mpb:
+        * MPC/config/csd_tp_test_exe_a.mpb:
+        * MPC/config/csd_tp_test_exe_b.mpb:
+        * MPC/config/csd_tp_test_exe_c.mpb:
+        * MPC/config/csd_tp_test_lib.mpb:
+        * MPC/config/kokyu_dsrt_scheduler_client.mpb:
+        * MPC/config/kokyu_dsrt_scheduler_server.mpb:
+        * MPC/config/kokyu_dsrt_schedulers.mpb:
+        * MPC/config/notifytest.mpb:
+
+          Removed these files.  They have been moved to tests, examples, or
+          performance-tests.
+
 Tue May 18 12:14:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_scope.cpp:

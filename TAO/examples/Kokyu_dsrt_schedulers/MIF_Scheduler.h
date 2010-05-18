@@ -7,7 +7,7 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "MIF_SchedulingC.h"
 #include "tao/LocalObject.h"
-#include "Kokyu_dsrt.h"
+#include "Kokyu/Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 
 struct MIF_Scheduler_Traits
