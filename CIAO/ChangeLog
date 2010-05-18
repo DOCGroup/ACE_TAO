@@ -1,3 +1,11 @@
+Tue May 18 06:02:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Make sure ndds_ts_flags is always there
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Fixed duplicate project names
+
 Mon May 17 18:48:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
