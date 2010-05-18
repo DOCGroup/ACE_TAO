@@ -1,3 +1,8 @@
+Tue May 18 10:30:53 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        Add AMI4CCM tests: DelReplyH and OneProcess.
+
 Tue May 18 06:02:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_ts_default.mpb:
