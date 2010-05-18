@@ -306,6 +306,15 @@ sub AddLibPath ($)
 {
     my $self = shift;
     my $dir = shift;
+    my $noarch = shift;
+
+    # If we have -Config ARCH, use the -ExeSubDir setting as a sub-directory
+    # of the lib path.  This is in addition to the regular LibPath.
+    if (!$noarch && grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+        $self->AddLibPath($dir, 1);
+        $dir .= '/' . $self->{EXE_SUBDIR};
+    }
+
     if ($self->ACE_ROOT () eq $ENV{'ACE_ROOT'}) {
         # add (relative) path without rebasing
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {

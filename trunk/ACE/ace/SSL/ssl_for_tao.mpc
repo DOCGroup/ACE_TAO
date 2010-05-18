@@ -39,4 +39,8 @@ project(SSL_FOR_TAO) : acelib, ace_output, install, ace_openssl {
   pkgconfig_files {
     ACE_SSL.pc.in
   }
+
+  specific {
+    install_dir = ace/SSL
+  }
 }
