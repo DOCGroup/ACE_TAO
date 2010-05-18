@@ -1325,7 +1325,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   AST_Decl *d = 0;
   UTL_Scope *s = this;
-  long index = 0;
   
   d = s->lookup_by_name_local (work->head (),
                                full_def_only);
