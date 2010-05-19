@@ -1,3 +1,12 @@
+Wed May 19 14:57:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          For Define_Custom commands, skip looking in the ARCH directory
+          if the command already contains a quote character (because the
+          command may actually be a script/executable followed by initial
+          arguments).
+
 Wed May 19 11:29:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Dev_Poll_Reactor.h:
