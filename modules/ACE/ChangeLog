@@ -1,3 +1,227 @@
+Wed May 19 11:29:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.inl:
+          This fixes bug 3848. Now ACE_Dev_Poll_Reactor::Handler_Repository
+          will maintain its max and current size.
+          ACE_Dev_Poll_Reactor::size() will return number of handlers
+          registered in the reactor. Also this commit fixes code formatting
+          and simplifies conditionally compiled code.
+
+Wed May 19 02:18:13 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/mc_test_utils.mpb:
+
+          Moving this file up to the common mpb area because many scoreboard
+          builds are not set up to include mpbs from the workspace directory.
+          This is not ideal because this file will end up getting installed.
+
+        * examples/mc_test_utils.mpb:
+
+          Removed this file (moved it to bin/MakeProjectCreator/config).
+
+Tue May 18 21:34:34 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * Kokyu/Kokyu.mpc:
+        * ace/ETCL/ETCL.mpc:
+        * ace/Monitor_Control/Monitor_Control.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/SSL/ssl.mpc:
+        * ace/SSL/ssl_for_tao.mpc:
+        * ace/ace.mpc:
+        * apps/JAWS/server/server.mpc:
+        * apps/gperf/src/gperf.mpc:
+        * bin/MakeProjectCreator/config/MPC.cfg:
+        * bin/MakeProjectCreator/config/install.mpb:
+        * bin/MakeProjectCreator/config/install_data.mpb:
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * contrib/minizip/minizip.mpc:
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * protocols/ace/HTBP/HTBP.mpc:
+        * protocols/ace/RMCast/RMCast.mpc:
+        * protocols/ace/TMCast/TMCast.mpc:
+
+          Added support for "make install" with the gnuace makefiles (bug 3244)
+          Improved support for ARCH builds: executables will go to the ARCH
+          subdirectory and MPC requires/avoids are properly accounted for in
+          the gnuace template.
+          Other minor improvements to the gnuace template.
+
+        * examples/Monitor/Bytes_Sent/Bytes_Sent.mpc:
+        * examples/Monitor/CPU_Load/CPU_Load.mpc:
+        * examples/Monitor/Constraint/Constraint.mpc:
+        * examples/Monitor/Group/Group.mpc:
+        * examples/Monitor/MC_Test_Utilities.h:
+        * examples/Monitor/MC_Test_Utilities.cpp:
+        * examples/Monitor/MC_Test_Utilities.mpc:
+        * examples/Monitor/Memory_Usage/Memory_Usage.mpc:
+        * examples/Monitor/Message_Queue_Size/Message_Queue_Size.mpc:
+        * examples/Monitor/Num_Threads/Num_Threads.mpc:
+        * examples/example_base.mpb:
+        * examples/mc_test_utils.mpb:
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Bug_2975_Regression_Test.cpp:
+        * tests/Bug_3319_Regression_Test.cpp:
+        * tests/Bug_3500_Regression_Test.cpp:
+        * tests/Bug_3541_Regression_Test.cpp:
+        * tests/Framework_Component_Test.cpp:
+        * tests/Get_Opt_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+        * tests/SSL/Bug_2912_Regression_Test.cpp:
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * tests/Singleton_Test.cpp:
+        * tests/Test_Output.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * tests/Timer_Cancellation_Test.cpp:
+        * tests/Token_Strategy_Test.cpp:
+        * tests/WFMO_Reactor_Test.cpp:
+        * tests/test_config.h:
+
+          Adjusted tests and examples to be able to build outside of the
+          ACE_ROOT tree, which is how we can verify that an "installed" ACE
+          is properly installed.
+
+Mon May 17 11:32:52 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Dev_Poll_Reactor_Test.cpp:
+          Fixed 2 memory leaks in this test. Previously both client and
+          server svc handlers were leaked. After fixing that it turned out
+          that client is not able to finish properly as its reactor is not
+          shutdown. The later was happening because server was reaching
+          desired exit condition faster and once it get closed client could
+          never get a chance to reach its own exit condition. So, in short,
+          there is no point in this test to run client side reactor if the
+          client's svc handler got closed.
+
+Fri May 14 22:22:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Added another #ifdef guard around ace_wb_exec(), since it's not
+          appropriate for all use cases (see Fri Mar 19 13:23:18 UTC 2010).
+
+Thu May 13 21:47:59 UTC 2010  Thomas Girard  <thomas.g.girard@free.fr>
+
+        * ace/ace_qt4reactor.mpc:
+          Explicit the file on which moc must operate. This removes a warning
+          during ACE_QtReactor build when moc was invoked.
+
+Wed May 12 08:38:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Timer_Queue.mpc:
+          Custom_Handler wasn't a template so removed
+          all template declarations. This should resolve
+          the static link issues on the scoreboard.
+
+Tue May 11 06:52:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+          Layout changes. Resolved linker errors on static
+          windows builds.
+
+Fri May  7 09:07:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+          Fixed gcc warnings
+
+Thu May  6 12:48:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Fixed fuzz and removed some not used arguments
+
+Thu May  6 12:01:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Timer_Queue/Async_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Driver.h:
+        * examples/Timer_Queue/Driver.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Timer_Queue.mpc:
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+        * examples/Timer_Queue/main_thread_custom_handler.cpp:
+          Converted to doxygen style and added a seperate example that uses
+          a thread timer queue with customer event handler.
+
+Thu May  6 11:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/QOS/Diffserv/run_test.pl:
+        * examples/Reactor/TP_Reactor/run_test.pl:
+          Use TestTarget
+
+        * tests/OS_Test.cpp:
+          Prefix increment, const changes
+
+Wed May  5 16:17:15 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Service_Object.cpp
+          Setting type_ to 0 in ACE_Service_Type::fini after call to
+          type_->fini ()
+          This allows us to check for the value 0 in the double
+          loop inside ASR::fini
+
+        * ace/Service_Repository.cpp
+          Checking for  s->type () != 0 inside ASR::fini
+          This ensures we don't access ACE_Service_Type instances that
+          have been fini'd already.
+
+          This resolves Bugzilla #3847
+
+Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Stream.cpp
+          Added debug and warning logging in ACE_Stream::remove
+
+        * ace/Service_Types.cpp
+          One of problems is that ACE_Module_Type::name gets its
+          value from the svc.conf file. The ACE_Module that it references
+          gets its name from the static factory method used to create the
+          module. When the names don't match the call to ACE_Stream_Type::fini
+          fails to remove any ACE_Modules from the underlying ACE_Stream.
+          Since none of the ACE_Modules are removed, ACE_Module_Type::fini
+          tries to call fini on the ACE_Module reader and writer ACE_Task
+          instances. And they've already been deleted by ACE_Stream::close
+          called from ACE_Stream_Type::fini.
+
+          Reassigned ACE_Module::name in ACE_Module_Type::init to
+          ACE_Module_Type::name and fixed the SEGV at shutdown because of the
+          issue described above.
+
+          All of these issues are related: #3334 #3205 #2916 #3847
+
 Thu Apr 29 03:34:56 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
 
         * ace/Stack_Trace.cpp: Clarified origins of platform-specific

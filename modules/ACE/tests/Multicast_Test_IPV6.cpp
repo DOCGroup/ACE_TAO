@@ -34,7 +34,7 @@
 // ============================================================================
 //FUZZ: enable check_for_lack_ACE_OS
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Vector_T.h"
 #include "ace/SOCK_Dgram_Mcast.h"

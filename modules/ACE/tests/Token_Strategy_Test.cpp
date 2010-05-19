@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Token.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"

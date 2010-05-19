@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ACE_gperf) : acelib, install, crosscompile, ace_output {
+project(ACE_gperf) : acelib, install_lib, crosscompile, ace_output {
   sharedname   = ACE_gperf_lib
   dynamicflags = ACE_GPERF_BUILD_DLL
   Source_Files {
@@ -24,5 +24,10 @@ project(gperf) : aceexe, install, crosscompile {
   exename = ace_gperf
   Source_Files {
     gperf.cpp
+  }
+
+  verbatim(gnuace, postinstall) {
+"	@mkdir -p $(INSTALL_PREFIX)/share/ace/bin"
+"	ln -sf $(INSTALL_PREFIX)/bin/ace_gperf $(INSTALL_PREFIX)/share/ace/bin"
   }
 }

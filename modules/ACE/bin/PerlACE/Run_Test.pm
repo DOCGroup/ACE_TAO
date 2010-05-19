@@ -232,12 +232,14 @@ sub add_lib_path {
     my($value) = shift;
   
     # Set the library path supporting various platforms.
-    add_path('PATH', $value);
-    add_path('DYLD_LIBRARY_PATH', $value);
-    add_path('LD_LIBRARY_PATH', $value);
-    add_path('LIBPATH', $value);
-    add_path('SHLIB_PATH', $value);
-  
+    foreach my $env ('PATH', 'DYLD_LIBRARY_PATH', 'LD_LIBRARY_PATH',
+                     'SHLIB_PATH') {
+      add_path($env, $value);
+      if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+        add_path($env, $value . '/' . $PerlACE::Process::ExeSubDir);
+      }
+    }
+
     if (defined $ENV{"HOST_ROOT"}) {
         add_path('PATH', VX_HostFile ($value));
         add_path('LD_LIBRARY_PATH', VX_HostFile ($value));

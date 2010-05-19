@@ -26,6 +26,10 @@ project(ACE_ETCL) : acelib, install, ace_output {
   Pkgconfig_Files {
     ACE_ETCL.pc.in
   }
+
+  specific {
+    install_dir = ace/ETCL
+  }
 }
 
 project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
@@ -52,5 +56,9 @@ project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
 
   Pkgconfig_Files {
     ACE_ETCL_Parser.pc.in
+  }
+
+  specific {
+    install_dir = ace/ETCL
   }
 }

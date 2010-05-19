@@ -36,6 +36,14 @@ ACE_Dev_Poll_Reactor::Handler_Repository::size (void) const
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::size");
 
+  return this->size_;
+}
+
+ACE_INLINE size_t
+ACE_Dev_Poll_Reactor::Handler_Repository::max_size (void) const
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::max_size");
+
   return this->max_size_;
 }
 

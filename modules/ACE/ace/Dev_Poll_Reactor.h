@@ -420,6 +420,9 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Returns the current table size.
     size_t size (void) const;
 
+    /// Returns the current table size.
+    size_t max_size (void) const;
+
     /// Dump the state of an object.
     void dump (void) const;
 
@@ -427,6 +430,9 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
+
+    /// Current number of handles.
+    int size_;
 
     /// Maximum number of handles.
     int max_size_;
@@ -1043,10 +1049,6 @@ protected:
    * done through this file descriptor.
    */
   ACE_HANDLE poll_fd_;
-
-  /// The maximum number of file descriptors over which demultiplexing
-  /// will occur.
-  size_t size_;
 
   /// Track HANDLES we are interested in for various events that must
   /// be dispatched *without* polling.

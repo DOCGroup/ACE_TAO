@@ -152,7 +152,9 @@ ACE_Service_Repository::fini (void)
     ACE_Service_Type *s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-    if (s != 0 && (s->type ()->service_type () != ACE_Service_Type::MODULE))
+    if (s != 0 &&
+        s->type () != 0 &&
+        (s->type ()->service_type () != ACE_Service_Type::MODULE))
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
@@ -171,6 +173,7 @@ ACE_Service_Repository::fini (void)
 
       // Collect any errors.
       retval += s->fini ();
+      this->service_array_[i] = 0;
     }
   }
   //
@@ -182,7 +185,9 @@ ACE_Service_Repository::fini (void)
     ACE_Service_Type *s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-    if (s != 0 && (s->type ()->service_type () == ACE_Service_Type::MODULE))
+    if (s != 0 &&
+        s->type () != 0 &&
+        (s->type ()->service_type () == ACE_Service_Type::MODULE))
     {
 #ifndef ACE_NLOGGING
       if (ACE::debug ())

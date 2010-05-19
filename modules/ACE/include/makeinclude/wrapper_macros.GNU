@@ -323,48 +323,56 @@ ifndef COMSPEC
   LIB_CHECKED ?= $(LIB)
 endif # ! COMPSPEC (and, therefore, assumed !Windows
 
-# default to not using an architecture specific output directory
-ARCH        ?=
-ARCH_BIN     = $(BIN)
-ARCH_BIN2    = $(BIN2)
-ARCH_LIB     = $(LIB_CHECKED)
-ARCH_LIB2    = $(LIB2)
-ARCH_SHLIB   = $(SHLIB)
-ARCH_SHLIB2  = $(SHLIB2)
-ARCH_SHLIBA  = $(SHLIBA)
-ARCH_SHLIBA2 = $(SHLIBA2)
+# default to not using an architecture-specific output directory
+ARCH ?=
+
+ifdef ARCH
+  INSLIB := $(INSLIB:%=%/$(ARCH))
+
+  # ADD_ARCH is a function used with $(call) to "ARCHIFY" a variable which
+  # contains the name and path of an executable or library.  If the file is not
+  # located in the ARCH subdir, the non-ARCH location is used.  First we need
+  # some helper functions to deal with quoting/protecting spaces.
+  # ADD_ARCH can return a path containing a space, the caller must quote it or
+  # escape the space, depending on the context.
+  PROT_SPC = $(subst $(SPACE),?,$(1))
+  UNPROT_SPC = $(subst ?,$(SPACE),$(1))
+  FILE_EXISTS = $(wildcard $(subst $(SPACE),\$(SPACE),$(1)))
+  ADD_ARCH_HLP = $(call UNPROT_SPC,$(dir $(1))$(ARCH)/$(notdir $(1)))
+  ARCH_FILE = $(call FILE_EXISTS,$(call ADD_ARCH_HLP,$(call PROT_SPC,$(1))))
+  ADD_ARCH = $(if $(call ARCH_FILE,$(1)),$(call ARCH_FILE,$(1)),$(call FILE_EXISTS,$(1)))
+
+  ARCH_BIN     = $(if $(BIN),$(ARCH)/$(BIN))
+  ARCH_BIN2    = $(if $(BIN2),$(ARCH)/$(BIN2))
+  ARCH_LIB     = $(if $(LIB_CHECKED),$(ARCH)/$(LIB_CHECKED))
+  ARCH_LIB2    = $(if $(LIB2),$(ARCH)/$(LIB2))
+  ARCH_SHLIB   = $(if $(SHLIB),$(ARCH)/$(SHLIB))
+  ARCH_SHLIB2  = $(if $(SHLIB2),$(ARCH)/$(SHLIB2))
+  ARCH_SHLIBA  = $(if $(SHLIBA),$(ARCH)/$(SHLIBA))
+  ARCH_SHLIBA2 = $(if $(SHLIBA2),$(ARCH)/$(SHLIBA2))
+
+else #ARCH is not defined
+
+  ADD_ARCH = $(1)
+
+  ARCH_BIN     = $(BIN)
+  ARCH_BIN2    = $(BIN2)
+  ARCH_LIB     = $(LIB_CHECKED)
+  ARCH_LIB2    = $(LIB2)
+  ARCH_SHLIB   = $(SHLIB)
+  ARCH_SHLIB2  = $(SHLIB2)
+  ARCH_SHLIBA  = $(SHLIBA)
+  ARCH_SHLIBA2 = $(SHLIBA2)
+
+endif #ARCH
+
+# for use with the result of ADD_ARCH
+ADD_QUOTE = $(if $(findstring $(SPACE),$(1)),"$(1)",$(1))
+
 
 INSINC      ?= $(ACE_ROOT)/ace
 INSLIB      ?= $(ACE_ROOT)/lib
 INSMAN      ?= $(ACE_ROOT)/man
-
-ifdef ARCH
-  INSLIB := $(INSLIB:%=%/$(ARCH))
-ifdef BIN
-  ARCH_BIN = $(ARCH)/$(BIN)
-endif
-ifdef BIN2
-  ARCH_BIN2 = $(ARCH)/$(BIN2)
-endif
-ifdef LIB_CHECKED
-  ARCH_LIB = $(ARCH)/$(LIB_CHECKED)
-endif
-ifdef LIB2
-  ARCH_LIB2 = $(ARCH)/$(LIB2)
-endif
-ifdef SHLIB
-  ARCH_SHLIB = $(ARCH)/$(SHLIB)
-endif
-ifdef SHLIB2
-  ARCH_SHLIB2 = $(ARCH)/$(SHLIB2)
-endif
-ifdef SHLIBA
-  ARCH_SHLIBA = $(ARCH)/$(SHLIBA)
-endif
-ifdef SHLIBA2
-  ARCH_SHLIBA2 = $(ARCH)/$(SHLIBA2)
-endif
-endif
 
 ifeq (,$(findstring -L$(INSLIB),$(LDFLAGS)))
   LDFLAGS         += -L$(INSLIB)
