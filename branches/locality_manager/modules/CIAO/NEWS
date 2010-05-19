@@ -64,6 +64,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
   If you need any of the full CCM features, set ccm_lw=0 in your
   default.features file.
 
+. Updated AMI4CCM naming and extended the test suite
+
+. DDS4CCM tests and examples now instantiate the CCM_DDS::Typed module which
+  gives us the DDS_Event and DDS_State connectors directly without requiring
+  the user to manually derive a connector from DDS_Event and/or DDS_State
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
 
