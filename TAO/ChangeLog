@@ -1,3 +1,9 @@
+Wed May 19 09:55:30 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * tests/IDL_Test/run_test.pl:
+
+          Wrong tao_idl location used.
+
 Wed May 19 09:52:30 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * tests/IDL_Test/invalid_scoping.idl:
