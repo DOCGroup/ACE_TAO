@@ -1,3 +1,9 @@
+Wed May 19 18:14:05 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+
+          Set the install_dir for AMI4CCM.
+
 Wed May 19 11:00:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
