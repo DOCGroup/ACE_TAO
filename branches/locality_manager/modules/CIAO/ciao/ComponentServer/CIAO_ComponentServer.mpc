@@ -46,6 +46,8 @@ project(CIAO_ComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl,
     CIAO_ComponentServerC.cpp
     CIAO_CS_ClientC.cpp
     CIAO_PropertiesC.cpp
+    Server_init.cpp
+    Client_init.cpp
   }
   Header_Files {
     CIAO_ComponentServer_stub_export.h
@@ -60,8 +62,6 @@ project(CIAO_CS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_componen
   }
   Source_Files {
     CIAO_ServerActivator_Impl.cpp
-    Server_init.cpp
-    Client_init.cpp
     CIAO_ComponentInstallation_Impl.cpp
     CIAO_CS_ClientS.cpp
   }
