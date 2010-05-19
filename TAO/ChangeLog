@@ -1,3 +1,15 @@
+Wed May 19 18:45:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Added is_ami4ccm_rh
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Set is_ami4ccm_rh
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Const change
+
 Wed May 19 09:55:30 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * tests/IDL_Test/run_test.pl:

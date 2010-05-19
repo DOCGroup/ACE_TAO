@@ -401,6 +401,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
     } // end of if
 
   reply_handler->is_ami_rh (true);
+  reply_handler->is_ami4ccm_rh (true);
+  
   return reply_handler;
 }
 

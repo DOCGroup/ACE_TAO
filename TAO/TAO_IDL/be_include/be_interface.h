@@ -337,6 +337,9 @@ public:
   bool is_ami_rh (void) const;
   void is_ami_rh (bool val);
 
+  bool is_ami4ccm_rh (void) const;
+  void is_ami4ccm_rh (bool val);
+  
 protected:
   /**
    * CDreate a new string made by the concatenation
@@ -464,6 +467,9 @@ protected:
   
   /// Are we an AMI reply handler?
   bool is_ami_rh_;
+
+  /// Are we an AMI4CCM reply handler?
+  bool is_ami4ccm_rh_;
 
   char *full_skel_name_;
 

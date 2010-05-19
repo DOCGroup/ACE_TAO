@@ -249,7 +249,7 @@ be_visitor_operation::gen_stub_operation_body (
   /// This logic handles the implied IDL for attributes.
   /// The AMI ReplyHandler version of generated get/set ops
   /// for attributes doesn't have the leading underscore.
-  bool escape = (node->is_attr_op () && !intf->is_ami_rh ());
+  bool const escape = (node->is_attr_op () && !intf->is_ami_rh ());
   ACE_CString opname (escape ? "_" : "");
 
   /// This logic handles regular IDL for attributes. The AMI
