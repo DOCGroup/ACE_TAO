@@ -111,6 +111,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     has_mixed_parentage_ (-1),
     session_component_child_ (-1),
     is_ami_rh_ (false),
+    is_ami4ccm_rh_ (false),
     full_skel_name_ (0),
     full_coll_name_ (0),
     local_coll_name_ (0),
@@ -782,23 +783,21 @@ be_interface:: gen_var_out_seq_decls (void)
            
   /// Forward declare the handler interface before declaring
   /// the original interface.                     
-  if (be_global->ami_call_back () && !this->is_ami_rh ())
+  if (be_global->ami_call_back () && !this->is_ami_rh () && !this->is_ami4ccm_rh ())
     {
-      if (be_global->ami4ccm_call_back ())
-        {
-          *os << be_nl << be_nl
-              << "class AMI4CCM_" << lname << "Handler;" << be_nl
-              << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
-              << lname << "Handler_ptr;";
-        }
-      else
-        {
-          *os << be_nl << be_nl
-            << "class AMI_" << lname << "Handler;" << be_nl
-            << "typedef AMI_" << lname << "Handler *AMI_"
-            << lname << "Handler_ptr;";
-        }
+      *os << be_nl << be_nl
+          << "class AMI_" << lname << "Handler;" << be_nl
+          << "typedef AMI_" << lname << "Handler *AMI_"
+          << lname << "Handler_ptr;";
      }
+
+  if (be_global->ami4ccm_call_back () && !this->is_ami_rh () && !this->is_ami4ccm_rh ())
+    {
+      *os << be_nl << be_nl
+          << "class AMI4CCM_" << lname << "Handler;" << be_nl
+          << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
+          << lname << "Handler_ptr;";
+    }
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
@@ -3234,6 +3233,18 @@ void
 be_interface::is_ami_rh (bool val)
 {
   this->is_ami_rh_ = val;
+}
+
+bool
+be_interface::is_ami4ccm_rh (void) const
+{
+  return this->is_ami4ccm_rh_;
+}
+
+void
+be_interface::is_ami4ccm_rh (bool val)
+{
+  this->is_ami4ccm_rh_ = val;
 }
 
 const char *
