@@ -1,11 +1,14 @@
-Wed May 19 12:14:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+Wed May 19 12:17:27 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
         * ciao/ComponentServer/CIAO_Properties.idl:
         * ciao/ComponentServer/Client_init.h:
         * ciao/ComponentServer/Server_init.h:
+
         * ciao/Deployment:
+
         * ciao/Deployment/Handlers:
+
         * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
         * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
         * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
@@ -22,9 +25,10 @@ Wed May 19 12:14:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Deployment/Handlers/Home_Handler.cpp:
         * ciao/Deployment/Handlers/Homed_Component_Handler.h:
         * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
         * ciao/Deployment/Interceptors:
 
-          First round CIAO deployment handlers. 
+          First round CIAO deployment handlers.
 
 Wed May 19 12:11:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
