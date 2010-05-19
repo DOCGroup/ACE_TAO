@@ -1158,7 +1158,7 @@ ceilf_test (void)
                       values [i],
                       result,
                       results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1181,10 +1181,10 @@ floorf_test (void)
       result = ACE_OS::floor (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR, 
-                      ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"), 
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"),
                       values [i], result, results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1212,7 +1212,7 @@ ceil_test (void)
                       values [i],
                       result,
                       results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1240,7 +1240,7 @@ floor_test (void)
                       values [i],
                       result,
                       results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1268,7 +1268,7 @@ ceill_test (void)
                       values [i],
                       result,
                       results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1291,10 +1291,10 @@ floorl_test (void)
       result = ACE_OS::floor (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR, 
-                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), 
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
                       values [i], result, results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -1308,7 +1308,7 @@ log2_test (void)
               ACE_TEXT ("Testing log2 method\n")));
 
   double values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
-  int results[] = {0, 1, 2, 3, 20};
+  int const results[] = {0, 1, 2, 3, 20};
   int result = 0;
   int error_count = 0;
 
@@ -1318,7 +1318,7 @@ log2_test (void)
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %.1F, output %d, expected %d\n"), values [i], result, results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 

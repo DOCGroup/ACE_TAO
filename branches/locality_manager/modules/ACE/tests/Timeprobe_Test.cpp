@@ -20,7 +20,7 @@
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
