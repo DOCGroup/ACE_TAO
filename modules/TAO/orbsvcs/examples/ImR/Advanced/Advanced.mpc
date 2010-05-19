@@ -49,6 +49,6 @@ project(*Client): orbsvcsexe {
   IDL_Files {
   }
   verbatim(gnuace, macros) {
-    VDIR := .obj/Client/
+    VDIR = $(if $(ARCH),$(ARCH)/).obj/Client/
   }
 }

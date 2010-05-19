@@ -229,7 +229,7 @@ AST_ValueType::will_have_factory (void)
 // Look through supported interface list.
 AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
-                                  bool treat_as_ref)
+                                  bool)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
@@ -239,8 +239,6 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-//      idl_global->err ()->fwd_decl_lookup (this,
-//                                           e);
       return 0;
     }
 
@@ -261,9 +259,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
         
-      d = (i)->lookup_by_name (e,
-                               treat_as_ref,
-                               0 /* not in parent */);
+      d = (i)->lookup_by_name (e);
                                
       if (d != 0)
         {

@@ -123,7 +123,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
   // home itself, which was declared first.
   Identifier *node_lname = node->AST_Decl::local_name ();
   AST_Decl *first_stored =
-    node->defined_in ()->lookup_by_name_local (node_lname, 0);
+    node->defined_in ()->lookup_by_name_local (node_lname, false);
 
   if (0 != first_stored && first_stored->node_type () == AST_Decl::NT_home)
     {
@@ -137,7 +137,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     {
       UTL_Scope *s = node->defined_in ();
       Identifier local_id (lname.substr (0, lname.length () - 8).c_str ());
-      AST_Decl *d = s->lookup_by_name_local (&local_id, 0);
+      AST_Decl *d = s->lookup_by_name_local (&local_id, false);
       local_id.destroy ();
 
       if (0 != d)
@@ -262,10 +262,21 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   // Create the reply handler name.
   ACE_CString reply_handler_local_name;
-  this->generate_name (reply_handler_local_name,
+
+  if (be_global->ami4ccm_call_back ())
+    {
+      this->generate_name (reply_handler_local_name,
+                      "AMI4CCM_",
+                      node->name ()->last_component ()->get_string(),
+                      "Handler");
+    }
+  else
+    {
+      this->generate_name (reply_handler_local_name,
                        "AMI_",
                        node->name ()->last_component ()->get_string(),
                        "Handler");
+    }
 
   UTL_ScopedName *reply_handler_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -277,7 +288,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   AST_Type **p_intf =
     this->create_inheritance_list (node, n_parents);
 
-  if (!p_intf)
+  if (p_intf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
@@ -440,10 +451,21 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Add the pre- and suffix
   ACE_CString handler_local_name;
-  this->generate_name (handler_local_name,
+
+  if (be_global->ami4ccm_call_back ())
+    {
+      this->generate_name (handler_local_name,
+                      "AMI4CCM_",
+                      parent->name ()->last_component ()->get_string (),
+                      "Handler");
+    }
+  else
+    {
+       this->generate_name (handler_local_name,
                        "AMI_",
                        parent->name ()->last_component ()->get_string (),
                        "Handler");
+  }
 
   UTL_ScopedName *field_name =
     static_cast<UTL_ScopedName *> (parent->name ()->copy ());
@@ -466,12 +488,19 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
     }
 
   be_interface *field_type = be_interface::narrow_from_decl (d);
-
-  // Create the argument.
+ if (be_global->ami4ccm_call_back ())
+    {  // Create the argument.
   ACE_NEW_RETURN (id,
-                  Identifier ("ami_handler"),
+                  Identifier ("ami4ccm_handler"),
+//                Identifier ("ami_handler"),
                   0);
-
+ }
+ else
+ {
+  ACE_NEW_RETURN (id,
+                Identifier ("ami_handler"),
+                  0);
+ }
   UTL_ScopedName *tmp = 0;
 
   ACE_NEW_RETURN (tmp,
@@ -1015,7 +1044,17 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                       AST_Type *[n_rh_parents],
                       0);
 
-      ACE_CString prefix ("AMI_");
+      ACE_CString prefix;
+      
+      if (be_global->ami4ccm_call_back ())
+        {
+          prefix.set ("AMI4CCM_"); 
+        }
+      else
+        { 
+          prefix.set ("AMI_");
+        }
+
       ACE_CString suffix ("Handler");
       long index = 0;
 

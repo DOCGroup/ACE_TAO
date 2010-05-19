@@ -23,6 +23,7 @@
 #include "be_exception.h"
 #include "be_visitor.h"
 #include "be_helper.h"
+#include "be_util.h"
 #include "be_identifier_helper.h"
 #include "be_extern.h"
 
@@ -783,11 +784,21 @@ be_interface:: gen_var_out_seq_decls (void)
   /// the original interface.                     
   if (be_global->ami_call_back () && !this->is_ami_rh ())
     {
-      *os << be_nl << be_nl
-          << "class AMI_" << lname << "Handler;" << be_nl
-          << "typedef AMI_" << lname << "Handler *AMI_"
-          << lname << "Handler_ptr;";
-    }
+      if (be_global->ami4ccm_call_back ())
+        {
+          *os << be_nl << be_nl
+              << "class AMI4CCM_" << lname << "Handler;" << be_nl
+              << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
+              << lname << "Handler_ptr;";
+        }
+      else
+        {
+          *os << be_nl << be_nl
+            << "class AMI_" << lname << "Handler;" << be_nl
+            << "typedef AMI_" << lname << "Handler *AMI_"
+            << lname << "Handler_ptr;";
+        }
+     }
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
@@ -2473,10 +2484,17 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
     {
       // Get the next AST decl node
       d = si.item ();
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_op)
+      if (nt == AST_Decl::NT_op)
         {
           op = be_operation::narrow_from_decl (d);
+          
+          /// Skip these on the skeleton side.
+          if (op->is_sendc_ami ())
+            {
+              continue;
+            }
 
           if (be_global->gen_direct_collocation ())
             {
@@ -2489,7 +2507,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                                                       os);
             }
         }
-      else if (d->node_type () == AST_Decl::NT_attr)
+      else if (nt == AST_Decl::NT_attr)
         {
           AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
@@ -2859,7 +2877,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
       return;
     }
 
-  this->gen_nesting_open (os);
+  be_util::gen_nesting_open (os, this);
 
   os << be_nl
      << "local interface CCM_"
@@ -2872,7 +2890,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
   os << be_uidt_nl
      << "};";
 
-  this->gen_nesting_close (os);
+  be_util::gen_nesting_close (os, this);
 
   this->ex_idl_facet_gen (true);
 }
@@ -3164,7 +3182,7 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
       return 0;
     }
 
-  this->gen_nesting_open (*os);
+  be_util::gen_nesting_open (*os, this);
 
   be_visitor_context ctx;
   ctx.stream (os);
@@ -3199,75 +3217,11 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
                         -1);
     }
 
-  this->gen_nesting_close (*os);
+  be_util::gen_nesting_close (*os, this);
 
   this->ami4ccm_ex_idl_gen (true);
 
   return 0;
-}
-
-void
-be_interface::gen_nesting_open (TAO_OutStream &os)
-{
-  os << be_nl;
-
-  for (UTL_IdListActiveIterator i (this->name ()); ! i.is_done () ;)
-    {
-      UTL_ScopedName tmp (i.item (), 0);
-      AST_Decl *scope =
-        this->defined_in ()->lookup_by_name (&tmp, true);
-
-      if (scope == 0)
-        {
-          i.next ();
-          continue;
-        }
-
-      ACE_CString module_name =
-        IdentifierHelper::try_escape (scope->original_local_name ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os << be_nl
-         << "module " << module_name.c_str () << be_nl
-         << "{" << be_idt;
-    }
-}
-
-void
-be_interface::gen_nesting_close (TAO_OutStream &os)
-{
-  for (UTL_IdListActiveIterator i (this->name ()); ! i.is_done () ;)
-    {
-      ACE_CString module_name (i.item ()->get_string ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
-      os << be_uidt_nl
-         << "};";
-    }
 }
 
 bool

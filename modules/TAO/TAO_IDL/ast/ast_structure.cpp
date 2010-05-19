@@ -408,8 +408,8 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
 
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
-                                         0);
+  AST_Decl *d =
+    s->lookup_by_name_local (i->local_name (), false);
 
   AST_Structure *fd = 0;
 

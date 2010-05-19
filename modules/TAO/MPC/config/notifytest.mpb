@@ -4,8 +4,8 @@
 project: orbsvcsexe, notification, notification_skel, notification_serv, naming, svc_utils, event_serv, ifr_client, dynamicinterface, messaging, pi, codecfactory, valuetype {
   after    += NotifyTests_Lib
   libs     += TAO_NotifyTests
-  includes += $(TAO_ROOT)/orbsvcs/tests/Notify/lib
-  libpaths += $(TAO_ROOT)/orbsvcs/tests/Notify/lib
+  includes += ../lib ../../lib
+  libpaths += ../lib ../../lib
 
   specific(automake) {
    includes += $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib

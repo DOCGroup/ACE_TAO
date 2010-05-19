@@ -183,6 +183,8 @@ be_visitor_valuetype::visit_constant (be_constant *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
@@ -623,6 +625,8 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:

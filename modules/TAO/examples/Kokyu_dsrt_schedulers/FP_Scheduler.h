@@ -7,7 +7,7 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/LocalObject.h"
 #include "FP_SchedulingC.h"
-#include "Kokyu_dsrt.h"
+#include "Kokyu/Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 
 struct FP_Scheduler_Traits

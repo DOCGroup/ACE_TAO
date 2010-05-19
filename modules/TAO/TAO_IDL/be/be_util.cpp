@@ -62,15 +62,18 @@ be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 
   for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
     {
-      UTL_ScopedName tmp (i.item (), 0);
-      AST_Decl *scope =
-        node->defined_in ()->lookup_by_name (&tmp, true);
-
-      if (scope == 0)
+      Identifier *id = i.item ();
+      ACE_CString test (id->get_string (), 0, false);
+      
+      if (test == "" || test == "::")
         {
           i.next ();
           continue;
         }
+        
+      UTL_ScopedName tmp (id, 0);
+      AST_Decl *scope =
+        node->defined_in ()->lookup_by_name (&tmp, true);
 
       ACE_CString module_name =
         IdentifierHelper::try_escape (scope->original_local_name ());

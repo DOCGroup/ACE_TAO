@@ -53,6 +53,10 @@ project(FT_ClientORB) : orbsvcslib, orbsvcs_output, ftorbutils, install, messagi
     }
   }
 
+  Header_Files {
+    FaultTolerance
+  }
+
   Template_Files {
   }
 

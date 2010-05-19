@@ -214,7 +214,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
             {
               AST_Module *m = AST_Module::narrow_from_decl (sad);
 
-              d = m->look_in_previous (item->last_component ());
+              d = m->look_in_prev_mods (item->last_component ());
             }
         }
 

@@ -39,7 +39,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   os_ << be_nl << be_nl
       << "class " << this->export_macro_.c_str () << " "
       << scope->local_name () << suffix << be_idt_nl
-      << ": public virtual The_Connector_Exec," << be_idt_nl
+      << ": public virtual AMI4CCM_Connector_Exec," << be_idt_nl
       << "public virtual ::CORBA::LocalObject"
       << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -69,9 +69,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << "virtual void ccm_remove (void);";
 
   os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl
-      << "::" << scope->full_name () << "::CCM_"
-      << node->local_name () << "_Context_var context_;" << be_nl;
+      << "private:" << be_idt_nl;
 
   /// We make use of the naming conventions AMI_xxx_Connector
   /// and AMI_xxx for the AMI connector instantiated module
@@ -83,16 +81,6 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   ACE_CString connector_name (scope->local_name ()->get_string ());
   ACE_CString half_stripped_name (
     connector_name.substr (0, connector_name.find ("_Connector")));
-
-  /// And remember that the implied IDL interfaces are created
-  /// in the same scope as the instantiated module.
-  AST_Decl *i_scope = ScopeAsDecl (scope->defined_in ());
-  bool global = (i_scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
-
-  os_ << smart_scope << i_scope->full_name () << "::"
-      << half_stripped_name.c_str ()
-      << "Callback_var callback_;" << be_nl;
 
   os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_;";
 

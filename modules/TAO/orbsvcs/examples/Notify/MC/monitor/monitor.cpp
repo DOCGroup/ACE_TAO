@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_ctype.h"
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
+#include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
 static const ACE_TCHAR* monitor_ior = 0;
 static const char* shutdown_cmd = "shutdown";

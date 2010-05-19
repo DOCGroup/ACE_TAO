@@ -248,10 +248,12 @@ public:
   // prefix to the all the reserved keywords. But when we invoke the
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
-  //
-
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
+
+  // To be overridden by the subclasses interface, struct, union, and
+  // the corresponding forward declaration classes.
+  virtual bool is_defined (void);
 
   // Narrowing.
 

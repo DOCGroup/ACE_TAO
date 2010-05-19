@@ -23,6 +23,7 @@
 
 #include "be_helper.h"
 #include "be_identifier_helper.h"
+#include "be_util.h"
 #include "be_extern.h"
 #include "be_argument.h"
 #include "be_attribute.h"

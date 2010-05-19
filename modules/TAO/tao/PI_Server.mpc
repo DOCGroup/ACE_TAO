@@ -1,5 +1,5 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
+project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
   custom_only = 1
   idlflags += \
               -Wb,export_macro=TAO_PI_Server_Export \
@@ -18,6 +18,10 @@ project(*idl) : tao_versioning_idl_defaults {
     idlflags += -SS -Sorb -GX -Sci \
                 -Wb,unique_include=tao/PI_Server/PI_Server.h
     PI_Server/PI_Server_include.pidl
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    PI_Server/ServerRequestInterceptor.pidl
   }
 }
 

@@ -1448,7 +1448,8 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
 
   int status =
     this->ciao_ami_conn_idl_->open (fname,
-                                    TAO_OutStream::CIAO_AMI_CONN_IDL);
+                                    TAO_OutStream::CIAO_AMI4CCM_CONN_IDL);
+ //                                   TAO_OutStream::CIAO_AMI_CONN_IDL);
 
   if (status == -1)
     {
@@ -3312,7 +3313,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
     this->ciao_exec_idl_,
     idl_global->stripped_filename ()->get_string ());
 
-  char **path_tmp  = 0;
+  char **path_tmp = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
          idl_global->ciao_lem_file_names ());
@@ -3320,9 +3321,16 @@ TAO_CodeGen::gen_exec_idl_includes (void)
        riter.advance ())
     {
       riter.next (path_tmp);
-
-      this->gen_standard_include (this->ciao_exec_idl_,
-                                  *path_tmp);
+      
+      const char *exec_idl_fname =
+        be_global->be_get_ciao_exec_idl_fname (true);
+        
+      /// No need to have the exec IDL file include itself.  
+      if (ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0)
+        {
+          this->gen_standard_include (this->ciao_exec_idl_,
+                                      *path_tmp);
+        }
     }
 }
 
@@ -3377,7 +3385,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
         }
 
-      if (idl_global->dds_state_connector_seen_)
+     if (idl_global->dds_state_connector_seen_)
         {
           this->gen_standard_include (
             this->ciao_conn_header_,
@@ -3455,7 +3463,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
       this->gen_standard_include (
         this->ciao_conn_header_,
-        BE_GlobalData::be_get_server_hdr (&str));
+        BE_GlobalData::be_get_server_hdr (&str, true));
         
       str.destroy ();
     }

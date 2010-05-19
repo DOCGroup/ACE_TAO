@@ -218,6 +218,12 @@ project(*Main): taoserver, messaging, gen_ostream {
   Source_Files {
     main.cpp
   }
+  
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
 
   Template_Files {
   }

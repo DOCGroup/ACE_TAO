@@ -1555,7 +1555,7 @@ be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
   rettype_string += "Consumer";
   Identifier rettype_id (rettype_string.fast_rep ());
   AST_Decl *d =
-    impl->defined_in ()->lookup_by_name_local (&rettype_id, 0);
+    impl->defined_in ()->lookup_by_name_local (&rettype_id, false);
   rettype_id.destroy ();
 
   if (d == 0)
@@ -1873,7 +1873,9 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       /// we create a dummy as the uses type for the implied
       /// receptacle created below.
 
-      ACE_CString iname ("AMI_");
+ //     ACE_CString iname ("AMI_");
+          ACE_CString iname ("AMI4CCM_");
+ 
       iname += iface->local_name ();
       Identifier itmp_id (iname.c_str ());
       UTL_ScopedName itmp_sn (&itmp_id, 0);

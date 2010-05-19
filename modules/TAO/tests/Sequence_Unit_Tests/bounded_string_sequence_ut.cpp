@@ -8,7 +8,7 @@
  * @author Carlos O'Ryan
  */
 #define TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE \
-        "tests/Sequence_Unit_Tests/testing_range_checking.hpp"
+        "testing_range_checking.hpp"
 
 #include "testing_string_traits.hpp"
 #include "tao/String_Traits_T.h"
