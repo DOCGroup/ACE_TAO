@@ -26,10 +26,10 @@ open (STDERR, ">&STDOUT");
 
 # The location of the tao_idl utility - depends on O/S
 if ($^O eq "MSWin32"){
-   $tao_idl = "../../bin/tao_idl";
+   $tao_idl = "../../../bin/tao_idl";
 }
 else{
-   $tao_idl = "../TAO_IDL/tao_idl";
+   $tao_idl = "../../TAO_IDL/tao_idl";
 }
 
 my $server2 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
