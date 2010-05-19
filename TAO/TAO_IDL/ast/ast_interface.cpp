@@ -809,7 +809,7 @@ AST_Interface::redef_clash (void)
 // Look through inherited interfaces.
 AST_Decl *
 AST_Interface::look_in_inherited (UTL_ScopedName *e,
-                                  bool treat_as_ref)
+                                  bool /* treat_as_ref */)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
