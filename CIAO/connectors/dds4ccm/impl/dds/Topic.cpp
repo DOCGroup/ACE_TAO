@@ -78,7 +78,8 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSTopicListener *ccm_dds_topic_list = this->impl ()->get_listener ();
-      CCM_DDS_TopicListener_i *list_proxy = dynamic_cast <CCM_DDS_TopicListener_i *> (ccm_dds_topic_list);
+      CCM_DDS_TopicListener_i *list_proxy =
+        dynamic_cast <CCM_DDS_TopicListener_i *> (ccm_dds_topic_list);
       if (!list_proxy)
         {
           DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Topic_i::get_listener - "
@@ -97,7 +98,8 @@ namespace CIAO
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_InconsistentTopicStatus ddsstatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_inconsistent_topic_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_inconsistent_topic_status (ddsstatus);
       a_status <<= ddsstatus;;
       return retval;
 #else
@@ -139,7 +141,8 @@ namespace CIAO
     CCM_DDS_Topic_i::get_instance_handle (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+      ::DDS_InstanceHandle_t const rtihandle =
+        this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
