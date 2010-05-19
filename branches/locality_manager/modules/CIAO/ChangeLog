@@ -1,3 +1,82 @@
+Wed May 19 12:11:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+        * DAnCE/DAnCE/DAnCE_Utility.tpp:
+
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+        * DAnCE/LocalityManager/Daemon:
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl_Export.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+
+        * DAnCE/LocalityManager/Handler:
+
+        * DAnCE/LocalityManager/Handler/DAnCE_Locality_Handler_export.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+
+        * DAnCE/MPC/config/dance_locality_handler.mpb:
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+        * DAnCE/MPC/config/dance_nodeapplication.mpb:
+        * DAnCE/MPC/config/dance_skel.mpb:
+        * DAnCE/MPC/config/dance_split_plan.mpb:
+        * DAnCE/MPC/config/dance_stub.mpb:
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleAttributeExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/TwoComponentsOneHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+
+        * DAnCE/tests/LocalityManager:
+
+        * DAnCE/tests/LocalityManager/SpawnMultiple:
+
+        * DAnCE/tests/LocalityManager/SpawnMultiple/Deployment.cdp:
+        * DAnCE/tests/LocalityManager/SpawnMultiple/run_test.pl:
+
+        * DAnCE/tests/LocalityManager/SpawnOne:
+
+        * DAnCE/tests/LocalityManager/SpawnOne/Deployment.cdp:
+        * DAnCE/tests/LocalityManager/SpawnOne/run_test.pl:
+
+        * DAnCE/tools:
+
+          First round LocalityManager implementation.
+
+        * DAnCE/DAnCE/Deployment_common.h:
+
+          Removed this file.
+
 Tue May 11 23:06:20 UTC 2010  wotte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
