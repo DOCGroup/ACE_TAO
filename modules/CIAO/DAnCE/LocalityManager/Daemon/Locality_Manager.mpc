@@ -1,0 +1,29 @@
+// $Id$
+
+project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
+        dance_skel {
+   
+   dynamicflags = LOCALITY_MANAGER_IMPL_BUILD_DLL
+
+   includes += $(CIAO_ROOT)
+   libs += CIAO_Deployment_Handlers
+
+   Source_Files {
+     Locality_Manager_Impl.cpp
+   }
+   
+   Header_Files {
+     Locality_Manager_Impl.h
+     Locality_Manager_Impl_Export.h
+   }
+}
+
+project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
+        dance_locality_manager {
+  exename = dance_locality_manager
+  libs += CIAO_Deployment_Handlers
+  Source_Files {
+     Locality_Manager_Task.cpp
+     Locality_Manager.cpp
+  }
+}

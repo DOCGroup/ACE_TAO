@@ -1,6 +1,6 @@
 // $Id$
 project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
-    ami, amh, dance_deployment_stub {
+      dance_deployment_stub {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DANCE_STUB_Export \
                   -Wb,stub_export_include=DAnCE_stub_export.h \
@@ -23,9 +23,11 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
   }
 }
 
-project (DAnCE_stub) : ciaolib_with_idl, dance_output, dance_deployment_stub, \
-      ami, amh {
+project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
+         dance_applicationmanager_stub, dance_deployment_stub, \
+       {
   after += DAnCE_IDL
+  dynamicflags = DANCE_STUB_BUILD_DLL
   IDL_Files {
   }
 
@@ -38,11 +40,12 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, dance_deployment_stub, \
   }
 }
 
-project (DAnCE_svnt) : ciaolib_with_idl, dance_output, dance_deployment_skel,\
-        ami, amh {
+project (DAnCE_skel) : ciaolib_with_idl, dance_output, \
+         dance_applicationmanager_skel, dance_deployment_skel \
+         {
   after += DAnCE_stub
   libs += DAnCE_stub
- 
+  dynamicflags = DANCE_SKEL_BUILD_DLL
   IDL_Files {
   }
 

@@ -30,7 +30,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "DAnCE/DAnCE/Deployment_common.h"
+#include "DAnCE/DAnCE/DAnCE_Utility.h"
 
 namespace DAnCE
 {
@@ -87,7 +87,7 @@ class DAnCE_NodeManager_Module
 
   void register_value_factories (void);
   void create_poas (void);
-  void create_nm_properties (DAnCE::PROPERTY_MAP &props);
+  void create_nm_properties (DAnCE::Utility::PROPERTY_MAP &props);
 
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_TString,

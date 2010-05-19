@@ -8,8 +8,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ciao/Valuetype_Factories/Cookies.h"
-#include "ciao/ComponentServer/CIAO_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
@@ -46,7 +44,7 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     create_plan_ns_ior_ (0),
     rebind_plan_ns_ (false),
     rebind_plan_ns_ior_ (0),
-    cs_path_ (ACE_TEXT("ciao_componentserver")),
+    cs_path_ (ACE_TEXT("dance_locality_manager")),
     timeout_ (5),
     standalone_ (false),
     server_args_ (0),
@@ -438,7 +436,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
                         ACE_TEXT ("Allocating new NodeManger servant instance for NodeManager\n")));
           int size = 64;
-          DAnCE::PROPERTY_MAP properties (size);
+          DAnCE::Utility::PROPERTY_MAP properties (size);
           this->create_nm_properties (properties);
 
           ACE_NEW_RETURN (nm,
@@ -560,17 +558,17 @@ DAnCE_NodeManager_Module::create_poas (void)
 }
 
 void
-DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
+DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &props)
 {
   {
     CORBA::Any val;
     val <<= this->options_.timeout_;
-    props.bind (CIAO::Deployment::SERVER_TIMEOUT, val);
+    props.bind (DAnCE::LOCALITY_TIMEOUT, val);
   }
   {
     CORBA::Any val;
     val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.cs_path_)),0);
-    props.bind (CIAO::Deployment::SERVER_EXECUTABLE, val);
+    props.bind (DAnCE::LOCALITY_EXECUTABLE, val);
   }
   {
     CORBA::Any val;
@@ -580,7 +578,7 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::PROPERTY_MAP &props)
   {
     CORBA::Any val;
     val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.server_args_)),0);
-    props.bind (CIAO::Deployment::SERVER_ARGUMENTS, val);
+    props.bind (DAnCE::LOCALITY_ARGUMENTS, val);
   }
   if (this->options_.instance_nc_)
     {

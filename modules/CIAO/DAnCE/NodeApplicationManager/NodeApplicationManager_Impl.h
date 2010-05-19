@@ -27,7 +27,6 @@
 
 namespace DAnCE
   {
-  class NodeManager_Impl;
 
   class NodeApplicationManager_Export NodeApplicationManager_Impl :
     public virtual POA_Deployment::NodeApplicationManager

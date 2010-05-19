@@ -31,12 +31,27 @@ module DAnCE
               Deployment::InvalidProperty,
               Deployment::InvalidNodeExecParameter,
               Deployment::InvalidComponentExecParameter);
-    
+
+    void activate_instance (in ::Deployment::DeploymentPlan plan,
+                            in unsigned long instanceRef,
+                            in any instance_reference)
+      raises (Deployment::StartError);
+
+    void passivate_instance (in ::Deployment::DeploymentPlan plan,
+                          in unsigned long instanceRef,
+                          in any instance_reference)
+      raises (Deployment::StopError);
+
     void remove_instance (in ::Deployment::DeploymentPlan plan,
                           in unsigned long instanceRef,
                           in any instance_reference)
       raises (::Deployment::StopError);
     
+    void provide_endpoint_reference (in ::Deployment::DeploymentPlan plan,
+                                     in unsigned long connectionRef,
+                                     out any endpoint_reference)
+      raises (Deployment::PlanError);
+
     void connect_instance (in ::Deployment::DeploymentPlan plan,
                            in unsigned long connectionRef,
                            in any provided_reference)
@@ -46,8 +61,12 @@ module DAnCE
     void disconnect_instance (in ::Deployment::DeploymentPlan plan,
                               in unsigned long connectionRef)
       raises (::Deployment::StopError);
+    
+    void instance_configured (in ::Deployment::DeploymentPlan plan,
+                              in unsigned long instanceRef)
+      raises (Deployment::StartError);
   };
-  
+
   interface LocalityManager :
     Deployment::Application,
     Deployment::ApplicationManager
@@ -64,6 +83,15 @@ module DAnCE
       raises (Deployment::StopError);
 
     oneway void shutdown ();
+  };
+  
+  interface LocalityManagerActivator
+  {
+    void locality_manager_callback (in LocalityManager ref,
+                                    in string uuid,
+                                    out Deployment::Properties config);
+    
+    void configuration_complete (in string uuid);
   };
 };
 

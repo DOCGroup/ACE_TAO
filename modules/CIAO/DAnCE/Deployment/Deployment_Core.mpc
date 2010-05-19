@@ -187,6 +187,11 @@ project(Deployment_stub) : ciaolib_with_idl, dance_output, valuetype, ifr_client
     Deployment_PlanErrorC.cpp
     DeploymentC.cpp
     Deployment_ResourceCommitmentManagerC.cpp
+    Deployment_InvalidPropertyC.cpp
+    Deployment_InvalidNodeExecParameterC.cpp
+    Deployment_InvalidComponentExecParameterC.cpp
+    Deployment_InvalidConnectionC.cpp
+    Deployment_ResourceNotAvailableC.cpp
   }
 }
 
