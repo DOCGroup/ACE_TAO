@@ -1,3 +1,14 @@
+Wed May 19 11:29:14 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.inl:
+          This fixes bug 3848. Now ACE_Dev_Poll_Reactor::Handler_Repository
+          will maintain its max and current size.
+          ACE_Dev_Poll_Reactor::size() will return number of handlers
+          registered in the reactor. Also this commit fixes code formatting
+          and simplifies conditionally compiled code.
+
 Wed May 19 02:18:13 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/config/mc_test_utils.mpb:
