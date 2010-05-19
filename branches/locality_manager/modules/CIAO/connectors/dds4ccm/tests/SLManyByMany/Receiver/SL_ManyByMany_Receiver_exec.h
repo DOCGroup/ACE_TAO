@@ -57,7 +57,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       const ::DDS::SampleLostStatus & status);
   };
   class RECEIVER_EXEC_Export StateListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_StateListener,
+    : public virtual ::SL_ManyByMany::SLManyByManyConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -100,7 +100,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+    virtual ::SL_ManyByMany::SLManyByManyConnector::CCM_StateListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -119,7 +119,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
 
   private:
     ::SL_ManyByMany::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
+    ::SL_ManyByMany::SLManyByManyConnector::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
     Atomic_Boolean no_operation_;

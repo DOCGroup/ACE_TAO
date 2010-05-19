@@ -64,7 +64,7 @@ namespace CIAO_LOBO_Test_Sender_Impl
 
   private:
     ::LOBO_Test::CCM_Sender_Context_var context_;
-    ::LOBO_Test::ListenOneByOneTestConn::Writer_var writer_;
+    ::LOBO_Test::ListenOneByOneTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 

@@ -210,10 +210,10 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
     return CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  PortUsageEvent_Test::PortUsageTestConn::CCM_Listener_ptr
+  PortUsageEvent_Test::PortUsageTestConnector::CCM_Listener_ptr
   Component_exec_i::get_listen_port_data_listener()
   {
-    return PortUsageEvent_Test::PortUsageTestConn::CCM_Listener::_nil ();
+    return PortUsageEvent_Test::PortUsageTestConnector::CCM_Listener::_nil ();
   }
 
   CCM_DDS::CCM_PortStatusListener_ptr

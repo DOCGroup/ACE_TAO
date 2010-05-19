@@ -1,6 +1,6 @@
 // $Id$
 
-project(CCM_svnt_idl) : ciaolib_with_idl, valuetype {
+project(CCM_svnt_idl) : install, ciaolib_with_idl, valuetype {
   idlflags   += -Wb,export_include=CCM_Svnt_Export.h
   idlflags   += -Wb,export_macro=CCM_Svnt_Export
   custom_only = 1
@@ -27,7 +27,7 @@ project(CCM_svnt_idl) : ciaolib_with_idl, valuetype {
 
 }
 
-project(CCM_svnt) : orbsvcslib, orbsvcs_output \
+project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
                            , portableserver \
                            , valuetype \
                            , ifr_client \
@@ -40,6 +40,13 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
   dynamicflags = CCM_SVNT_BUILD_DLL
   after += CCM_svnt_idl
   IDL_Files {
+  }
+
+  Header_Files {
+    CCM_Svnt_Export.h
+    CCM_BaseS.h
+    CCM_CookieS.h
+    CCM_ExceptionsS.h
   }
 
   Source_Files {
@@ -70,6 +77,7 @@ project(CCM_svnt) : orbsvcslib, orbsvcs_output \
     CCM_HomeFinderS.cpp
     CCM_NavigationS.cpp
     CCM_ReceptacleS.cpp
+    ComponentsS.cpp
   }
 }
 

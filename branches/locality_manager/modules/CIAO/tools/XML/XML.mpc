@@ -1,9 +1,17 @@
 // $Id$
 
-project (CIAO_XML_Utils) : acelib, xerces, ciao_lib {
+project (CIAO_XML_Utils) : install, acelib, xerces, ciao_lib {
   sharedname   += CIAO_XML_Utils
   dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
   includes      += ..
+
+  specific {
+    install_dir = tools/XML
+  }
+
+  Header_Files {
+    CIAO_XML_Utils_Export.h
+  }
 
   Source_Files {
     XML_Error_Handler.cpp

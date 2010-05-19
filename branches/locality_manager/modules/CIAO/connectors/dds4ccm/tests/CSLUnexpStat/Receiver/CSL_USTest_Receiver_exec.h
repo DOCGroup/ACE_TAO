@@ -43,7 +43,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   // TestTopic_RawListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
-    : public virtual ::CSL_USTest::TestTopicConn::CCM_Listener,
+    : public virtual ::CSL_US_Connector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -127,7 +127,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
 
-    virtual ::CSL_USTest::TestTopicConn::CCM_Listener_ptr
+    virtual ::CSL_US_Connector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -149,7 +149,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   private:
     ::CSL_USTest::CCM_Receiver_Context_var context_;
     ::CCM_DDS::DataListenerControl_var lc_;
-    ::CSL_USTest::TestTopicConn::Reader_var reader_;
+    ::CSL_US_Connector::Reader_var reader_;
 
     Pulser *pulser_;
 

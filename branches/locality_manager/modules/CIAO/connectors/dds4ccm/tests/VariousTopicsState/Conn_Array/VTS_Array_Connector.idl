@@ -16,10 +16,7 @@
 
 module VTopics
 {
-  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConn;
-  connector VTS_Array_Connector : TopicArrayConn::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConnector;
 };
 
 #endif /* VTS_Array_CONNECTOR_IDL_ */

@@ -17,15 +17,8 @@
 
 module TT_Connector
 {
-  module ::CCM_DDS::Typed < HelloTopic, HelloTopicSeq> HelloConn;
-  connector TwoTopicsHello_Connector : HelloConn::DDS_Event
-  {
-  };
-
-  module ::CCM_DDS::Typed < GoodbyeTopic, GoodbyeTopicSeq> GoodbyeConn;
-  connector TwoTopicsGoodbye_Connector : GoodbyeConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < HelloTopic, HelloTopicSeq> HelloConnector;
+  module ::CCM_DDS::Typed < GoodbyeTopic, GoodbyeTopicSeq> GoodbyeConnector;
 };
 
 #endif /* TWOTOPICS_CONNECTOR_IDL_ */

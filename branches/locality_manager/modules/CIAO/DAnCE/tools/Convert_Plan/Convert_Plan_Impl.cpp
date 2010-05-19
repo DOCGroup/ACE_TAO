@@ -9,7 +9,7 @@
 namespace DAnCE
 {
   Deployment::DeploymentPlan * 
-  Convert_Plan::read_xml_plan (const char *filename)
+  Convert_Plan::read_xml_plan (const ACE_TCHAR *filename)
   {
     if (!filename)
       {
@@ -27,7 +27,7 @@ namespace DAnCE
   }
 
   Deployment::DeploymentPlan * 
-  Convert_Plan::read_cdr_plan (const char *filename)
+  Convert_Plan::read_cdr_plan (const ACE_TCHAR *filename)
   {
     if (!filename)
       {
@@ -41,7 +41,7 @@ namespace DAnCE
     if (!file)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan::read_cdr_plan - ")
-                         ACE_TEXT ("Error: Unable to open file for reasding %C\n"),
+                         ACE_TEXT ("Error: Unable to open file for reading %s\n"),
                          filename));
         return 0;
       }
@@ -107,13 +107,13 @@ namespace DAnCE
     input_cdr.reset_byte_order ((int) byte_order);
   
     DANCE_DEBUG (9, (LM_TRACE, DLINFO "Convert_Plan_Impl::read_cdr_plan - "
-                     "Reading file %C in %s endian format with size %u\n",
+                     "Reading file %s in %s endian format with size %u\n",
                      filename, 
                      ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
                      bufsize));
   
   
-    Deployment::DeploymentPlan *retval;
+    Deployment::DeploymentPlan *retval = 0;
     
     ACE_NEW_RETURN (retval, Deployment::DeploymentPlan (), 0);
   
@@ -130,7 +130,7 @@ namespace DAnCE
   }
 
   bool
-  Convert_Plan::write_cdr_plan (const char *output_filename, Deployment::DeploymentPlan &plan)
+  Convert_Plan::write_cdr_plan (const ACE_TCHAR *output_filename, Deployment::DeploymentPlan &plan)
   {
     if (!output_filename)
       {
@@ -146,7 +146,7 @@ namespace DAnCE
         
         if (file == 0)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan_Impl::write_cdr_plan - failed to open file %C\n",
+            DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan_Impl::write_cdr_plan - failed to open file %s\n",
                              output_filename));
             return false;
           }

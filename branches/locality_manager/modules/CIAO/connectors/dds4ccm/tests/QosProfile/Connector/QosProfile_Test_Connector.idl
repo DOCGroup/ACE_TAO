@@ -16,10 +16,7 @@
 
 module QosProfile_Test
 {
-  module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTestConn;
-  connector QosProfile_Test_Connector : QosProfileTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::QosProfileTest, ::QosProfileTestSeq> QosProfileTestConnector;
 };
 
 #endif /* QOS_PROFILE_TEST_CONNECTOR_IDL_ */

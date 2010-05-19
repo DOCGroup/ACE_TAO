@@ -73,7 +73,7 @@ namespace CIAO_SL_Disabled_Sender_Impl
 
     pulse_Generator * ticker_;
     ::SL_Disabled::CCM_Sender_Context_var context_;
-    CCM_DDS::TestTopic::Updater_var updater_;
+    ::SL_Disabled::SL_DisabledConnector::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
     TestTopicSeq topic_seq_one_;

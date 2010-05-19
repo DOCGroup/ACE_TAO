@@ -14,11 +14,11 @@ module PortUsageState_Test
 {
   component PortUsageStateComponent
   {
-    port PortUsageTestConn::DDS_Update update_port;
-    port PortUsageTestConn::DDS_Read read_port;
-    port PortUsageTestConn::DDS_Get get_port;
-    port PortUsageTestConn::DDS_Listen listen_port;
-    port PortUsageTestConn::DDS_StateListen state_listen_port;
+    port PortUsageTestConnector::DDS_Update update_port;
+    port PortUsageTestConnector::DDS_Read read_port;
+    port PortUsageTestConnector::DDS_Get get_port;
+    port PortUsageTestConnector::DDS_Listen listen_port;
+    port PortUsageTestConnector::DDS_StateListen state_listen_port;
 
     provides CCM_DDS::ConnectorStatusListener connector_status;
 

@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/Reader_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTestSeq> ReaderTest;
-};
-
 module Reader_Test
 {
-  connector Reader_Test_Connector : ::CCM_DDS::ReaderTest::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::ReaderTest, ::ReaderTestSeq> ReaderTestConnector;
 };
 
 #endif /* Reader_Test_CONNECTOR_IDL_ */

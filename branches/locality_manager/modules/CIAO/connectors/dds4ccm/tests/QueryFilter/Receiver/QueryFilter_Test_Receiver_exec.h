@@ -105,8 +105,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
   private:
     ::QueryFilter_Test::CCM_Receiver_Context_var context_;
-    ::QueryFilter_Test::QueryFilterTestConn::Reader_var reader_;
-    ::QueryFilter_Test::QueryFilterTestConn::Getter_var getter_;
+    ::QueryFilter_Test::QueryFilterTestConnector::Reader_var reader_;
+    ::QueryFilter_Test::QueryFilterTestConnector::Getter_var getter_;
     QueryFilterRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;

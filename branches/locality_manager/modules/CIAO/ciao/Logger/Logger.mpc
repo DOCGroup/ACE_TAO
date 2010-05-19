@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_Logger): ciao_lib, taolib, acelib {
+project(CIAO_Logger): install, ciao_lib, taolib, acelib {
   sharedname   = CIAO_Logger
   dynamicflags = CIAO_LOGGER_BUILD_DLL
 
@@ -9,8 +9,13 @@ project(CIAO_Logger): ciao_lib, taolib, acelib {
     Logger_Service.cpp
     Log_Macros.cpp
   }
+
+  Header_Files {
+    CIAO_Logger_Export.h
+  }
+
+  specific {
+    install_dir = ciao/Logger
+  }
 }
-
-
-
 

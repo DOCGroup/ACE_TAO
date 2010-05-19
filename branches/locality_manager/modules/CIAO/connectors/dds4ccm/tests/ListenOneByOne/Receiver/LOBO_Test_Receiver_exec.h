@@ -31,7 +31,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   // ListenOneByOneTest_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export ListenOneByOneTest_Listener_exec_i
-    : public virtual ::LOBO_Test::ListenOneByOneTestConn::CCM_Listener,
+    : public virtual ::LOBO_Test::ListenOneByOneTestConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -76,7 +76,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::LOBO_Test::ListenOneByOneTestConn::CCM_Listener_ptr
+    virtual ::LOBO_Test::ListenOneByOneTestConnector::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

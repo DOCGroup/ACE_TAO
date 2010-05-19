@@ -17,10 +17,7 @@
 
 module FSS_Event
 {
-  module ::CCM_DDS::Typed < ::FixedStructSizeTest, ::FixedStructSizeTestSeq> FixedStructSizeTestConn;
-  connector FSS_Event_Connector : FixedStructSizeTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::FixedStructSizeTest, ::FixedStructSizeTestSeq> FixedStructSizeTestConnector;
 };
 
 #endif /* FSS_Event_CONNECTOR_IDL_ */

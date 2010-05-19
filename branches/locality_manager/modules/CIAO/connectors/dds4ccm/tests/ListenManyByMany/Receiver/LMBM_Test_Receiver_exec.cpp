@@ -93,7 +93,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::MANY_BY_MANY);
   }
 
-  ::LMBM_Test::ListenManyByManyTestConn::CCM_Listener_ptr
+  ::LMBM_Test::ListenManyByManyTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ListenManyByManyTest_Listener_exec_i (

@@ -45,7 +45,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   // StateListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export StateListener_exec_i
-    : public virtual ::CCM_DDS::TestTopic::CCM_StateListener,
+    : public virtual ::SL_Disabled::SL_DisabledConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -84,7 +84,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+    virtual ::SL_Disabled::SL_DisabledConnector::CCM_StateListener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -103,7 +103,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
 
   private:
     ::SL_Disabled::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::TestTopic::Reader_var reader_;
+    ::SL_Disabled::SL_DisabledConnector::Reader_var reader_;
     read_action_Generator * ticker_;
 
     CORBA::ULong rate_;

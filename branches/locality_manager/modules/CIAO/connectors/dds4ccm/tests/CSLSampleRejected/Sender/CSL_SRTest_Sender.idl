@@ -16,7 +16,7 @@ module CSL_SRTest
 {
   component Sender
   {
-     port TestTopicConn::DDS_Write test_topic_write;
+     port CSL_SR_Connector::DDS_Write test_topic_write;
   };
 };
 

@@ -269,7 +269,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   // Port operations.
-  ::Shapes::ShapeTypeConn::CCM_Listener_ptr
+  ::Shapes::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new ShapeType RAW listener\n")));

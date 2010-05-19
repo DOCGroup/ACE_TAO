@@ -110,7 +110,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
 
   private:
     ::CSL_USTest::CCM_Sender_Context_var context_;
-    ::CSL_USTest::TestTopicConn::Writer_var writer_;
+    ::CSL_US_Connector::Writer_var writer_;
 
     Atomic_Boolean publication_matched_received_;
     Atomic_Boolean liveliness_lost_received_;

@@ -18,10 +18,7 @@ module LMBM_Test
 {
   module ::CCM_DDS::Typed
     < ::ListenManyByManyTest, ::ListenManyByManyTestSeq>
-    ListenManyByManyTestConn;
-  connector LMBM_Test_Connector : ListenManyByManyTestConn::DDS_Event
-  {
-  };
+    ListenManyByManyTestConnector;
 };
 
 #endif /* LMBM_Test_CONNECTOR_IDL_ */

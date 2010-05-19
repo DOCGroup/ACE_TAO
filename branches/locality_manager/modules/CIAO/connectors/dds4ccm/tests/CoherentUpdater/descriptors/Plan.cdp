@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CoherentUpdate_Test_CoherentUpdate_Test_Connector_Impl</string>
+          <string>create_CoherentUpdate_Test_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CoherentUpdate_Test_CoherentUpdate_Test_Connector_Servant</string>
+          <string>create_CoherentUpdate_Test_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>

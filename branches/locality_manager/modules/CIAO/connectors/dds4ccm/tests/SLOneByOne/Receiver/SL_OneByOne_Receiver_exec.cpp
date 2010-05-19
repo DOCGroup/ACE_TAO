@@ -129,7 +129,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
-  ::CCM_DDS::TestTopic::CCM_StateListener_ptr
+  ::SL_OneByOne::SL_OneByOneConnector::CCM_StateListener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     return new StateListener_exec_i (this->on_many_updates_,

@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS4CCM_idl_gen) : dds4ccm, componentidldefaults {
+project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS4CCM_STUB_Export \
               -Wb,stub_export_include=dds4ccm_stub_export.h \
@@ -25,7 +25,7 @@ project (DDS4CCM_idl_gen) : dds4ccm, componentidldefaults {
   }
 }
 
-project (DDS4CCM_stub) : dds4ccm, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
+project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
 
   after += DDS4CCM_idl_gen
   includes += $(CIAO_ROOT)/connectors

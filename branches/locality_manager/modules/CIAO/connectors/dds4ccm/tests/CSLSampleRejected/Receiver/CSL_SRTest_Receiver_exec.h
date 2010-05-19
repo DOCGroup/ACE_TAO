@@ -82,7 +82,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   // TestTopic_Listener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export TestTopic_Listener_exec_i
-    : public virtual ::CSL_SRTest::TestTopicConn::CCM_Listener,
+    : public virtual ::CSL_SR_Connector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -129,7 +129,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     virtual void raw_listen (::CORBA::Boolean raw_listen);
 
     // Port operations.
-    virtual ::CSL_SRTest::TestTopicConn::CCM_Listener_ptr
+    virtual ::CSL_SR_Connector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -152,7 +152,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 
   private:
     ::CSL_SRTest::CCM_Receiver_Context_var context_;
-    ::CSL_SRTest::TestTopicConn::Reader_var reader_;
+    ::CSL_SR_Connector::Reader_var reader_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;

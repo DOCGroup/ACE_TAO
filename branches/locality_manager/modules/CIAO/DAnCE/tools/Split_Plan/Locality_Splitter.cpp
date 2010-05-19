@@ -265,5 +265,4 @@ namespace DAnCE
           sub_plan.label = CORBA::string_dup (sub_label.c_str ());
         }
     }
-
-};
+}

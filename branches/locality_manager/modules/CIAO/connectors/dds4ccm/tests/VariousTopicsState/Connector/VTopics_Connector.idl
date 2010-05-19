@@ -16,10 +16,7 @@
 
 module VTopics
 {
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
-  connector VTopics_Connector : TestTopicConn::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConnector;
 };
 
 #endif /* VTopics_CONNECTOR_IDL_ */

@@ -171,7 +171,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::TestTopic::CCM_Listener_ptr
+  ::PSL_DeadlineTest::PSLDeadlineConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     return new TestTopic_RawListener_exec_i ();

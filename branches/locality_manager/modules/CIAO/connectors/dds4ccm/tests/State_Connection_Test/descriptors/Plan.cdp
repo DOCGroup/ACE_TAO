@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_State_Connection_Test_State_Connection_Test_Connector_Impl</string>
+          <string>create_State_Connection_Test_State_ConnectionTestConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_State_Connection_Test_State_Connection_Test_Connector_Servant</string>
+          <string>create_State_Connection_Test_State_ConnectionTestConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>

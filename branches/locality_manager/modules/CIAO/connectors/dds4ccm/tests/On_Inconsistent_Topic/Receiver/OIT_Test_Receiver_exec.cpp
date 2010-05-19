@@ -88,10 +88,10 @@ namespace CIAO_OIT_Test_Receiver_Impl
                                                this->thread_id_listener_);
   }
 
-  ::OIT_Test::OIT_Receiver_TopicConn::CCM_Listener_ptr
+  ::OIT_Test::OIT_Receiver_TopicConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return ::OIT_Test::OIT_Receiver_TopicConn::CCM_Listener::_nil ();
+    return ::OIT_Test::OIT_Receiver_TopicConnector::CCM_Listener::_nil ();
   }
 
   // Operations from Components::SessionComponent.

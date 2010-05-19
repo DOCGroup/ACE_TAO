@@ -84,7 +84,7 @@ namespace CIAO
     private:
       ::DDS::PublisherListener_var impl_;
 
-      ::DDS::DataWriter_ptr
+      ::DDS::CCM_DataWriter_ptr
       get_datawriter_proxy (::DDSDataWriter * the_writer);
     };
   }

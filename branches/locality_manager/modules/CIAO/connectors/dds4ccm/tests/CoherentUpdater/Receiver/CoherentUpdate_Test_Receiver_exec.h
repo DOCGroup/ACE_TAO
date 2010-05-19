@@ -72,7 +72,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     // Component attributes.
 
     // Port operations.
-    virtual ::CoherentUpdate_Test::CoherentUpdateTestConn::CCM_Listener_ptr
+    virtual ::CoherentUpdate_Test::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -104,7 +104,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
 
   private:
     ::CoherentUpdate_Test::CCM_Receiver_Context_var context_;
-    ::CoherentUpdate_Test::CoherentUpdateTestConn::Reader_var reader_;
+    ::CoherentUpdate_Test::Reader_var reader_;
     CoherentUpdateRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   run_;

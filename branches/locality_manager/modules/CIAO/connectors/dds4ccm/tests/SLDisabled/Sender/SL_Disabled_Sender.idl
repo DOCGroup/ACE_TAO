@@ -16,7 +16,7 @@ module SL_Disabled
 {
   component Sender
   {
-     port CCM_DDS::TestTopic::DDS_Update test_topic_update;
+     port SL_DisabledConnector::DDS_Update test_topic_update;
   };
 };
 

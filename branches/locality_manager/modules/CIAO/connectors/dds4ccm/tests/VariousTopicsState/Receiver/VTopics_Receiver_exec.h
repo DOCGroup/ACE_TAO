@@ -64,7 +64,7 @@ namespace CIAO_VTopics_Receiver_Impl
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
 
-    virtual VTopics::TestTopicConn::CCM_Listener_ptr
+    virtual ::VTopics::TestTopicConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual CCM_DDS::CCM_PortStatusListener_ptr

@@ -14,6 +14,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
@@ -68,7 +69,7 @@ namespace CIAO
     private:
       ::DDS::DataReaderListener_var impl_;
 
-      ::DDS::DataReader_ptr
+      ::DDS::CCM_DataReader_ptr
       get_datareader_proxy (::DDSDataReader * the_reader);
     };
   }

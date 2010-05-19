@@ -16,10 +16,7 @@
 
 module QFLS_Test
 {
-  module ::CCM_DDS::Typed < ::QueryFilterListenStateTest, ::QueryFilterListenStateTestSeq> QueryFilterListenStateTestConn;
-  connector QFLS_Test_Connector : QueryFilterListenStateTestConn::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::QueryFilterListenStateTest, ::QueryFilterListenStateTestSeq> QueryFilterListenStateTestConnector;
 };
 
 #endif /* QFLS_Test_CONNECTOR_IDL_ */

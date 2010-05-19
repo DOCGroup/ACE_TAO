@@ -28,7 +28,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
   // TestTopic_RawListener_exec_i
   //============================================================
   class RECEIVER_EXEC_Export TestTopic_RawListener_exec_i
-    : public virtual ::CSL_DeadlineTest::TestTopicConn::CCM_Listener,
+    : public virtual ::CSLDeadlineConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -96,7 +96,7 @@ namespace CIAO_CSL_DeadlineTest_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CSL_DeadlineTest::TestTopicConn::CCM_Listener_ptr
+    virtual ::CSLDeadlineConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr

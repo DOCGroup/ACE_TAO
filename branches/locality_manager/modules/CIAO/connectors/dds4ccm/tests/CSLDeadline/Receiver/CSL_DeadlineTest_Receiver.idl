@@ -14,7 +14,7 @@ module CSL_DeadlineTest
 {
   component Receiver
   {
-    port TestTopicConn::DDS_Listen info_out;
+    port CSLDeadlineConnector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
    };
 };

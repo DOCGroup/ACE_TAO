@@ -23,7 +23,6 @@ $nr_daemon = 2;
 @nodenames = ( "SenderNode", "ReceiverNode" );
 
 # ior files other than daemon
-# ior files other than daemon
 $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
 $ior_embase = "EM.ior";

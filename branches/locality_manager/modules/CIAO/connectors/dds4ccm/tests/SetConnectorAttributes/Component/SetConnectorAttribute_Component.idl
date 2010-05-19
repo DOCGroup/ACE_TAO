@@ -14,7 +14,7 @@ module SetConnectorAttribute
 {
   component SetConnectorAttributeComponent
   {
-    port SetConnectorAttributeTestConn::DDS_Write info_write;
+    port SetConnectorAttributeTestConnector::DDS_Write info_write;
   };
 };
 

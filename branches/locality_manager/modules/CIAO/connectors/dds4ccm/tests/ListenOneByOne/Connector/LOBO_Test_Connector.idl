@@ -18,10 +18,7 @@ module LOBO_Test
 {
   module ::CCM_DDS::Typed
     < ::ListenOneByOneTest, ::ListenOneByOneTestSeq>
-    ListenOneByOneTestConn;
-  connector LOBO_Test_Connector : ListenOneByOneTestConn::DDS_Event
-  {
-  };
+    ListenOneByOneTestConnector;
 };
 
 #endif /* LOBO_Test_CONNECTOR_IDL_ */

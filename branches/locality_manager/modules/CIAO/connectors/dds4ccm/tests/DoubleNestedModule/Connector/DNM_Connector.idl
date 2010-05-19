@@ -19,10 +19,7 @@ module DNM_Test_Connector
 {
   module Nested_Connector
   {
-    module ::CCM_DDS::Typed < X::Y::Z::DNM_Test_Struct, X::Y::Z::DNM_Test_StructSeq> DNM_TestConn;
-    connector Double_Nested_Module_Connector : DNM_TestConn::DDS_Event
-    {
-    };
+    module ::CCM_DDS::Typed < X::Y::Z::DNM_Test_Struct, X::Y::Z::DNM_Test_StructSeq> DNM_TestConnector;
   };
 };
 

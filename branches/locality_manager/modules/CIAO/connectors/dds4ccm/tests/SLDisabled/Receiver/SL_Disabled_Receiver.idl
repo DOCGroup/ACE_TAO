@@ -14,7 +14,7 @@ module SL_Disabled
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_StateListen info_out;
+    port SL_DisabledConnector::DDS_StateListen info_out;
   };
 };
 

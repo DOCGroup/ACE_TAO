@@ -17,7 +17,7 @@ module CoherentUpdate_Test
 {
   component Sender
   {
-    port CoherentUpdateTestConn::DDS_Update info_update;
+    port CoherentUpdate_Test::DDS_Update info_update;
 
     uses CoherentUpdateStarter start_reader;
     provides CoherentUpdateRestarter restart_updater;

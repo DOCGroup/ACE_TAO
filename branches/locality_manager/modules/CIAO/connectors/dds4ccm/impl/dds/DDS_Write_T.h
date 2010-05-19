@@ -39,8 +39,7 @@ public:
 
   void passivate (void);
 
-  void remove (
-    ::DDS::Publisher_ptr publisher);
+  void remove (::DDS::Publisher_ptr publisher);
 
 private:
   /**

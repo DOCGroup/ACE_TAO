@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/State_Connection_Test_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::State_ConnectionTest, ::State_ConnectionTestSeq> State_ConnectionTest;
-};
-
 module State_Connection_Test
 {
-  connector State_Connection_Test_Connector : ::CCM_DDS::State_ConnectionTest::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::State_ConnectionTest, ::State_ConnectionTestSeq> State_ConnectionTestConnector;
 };
 
 #endif /* State_Connection_Test_CONNECTOR_IDL_ */

@@ -10,8 +10,8 @@
 #include "Convert_Plan_Impl.h"
 
 
-const char *input_filename = 0;
-const char *output_filename = 0;
+const ACE_TCHAR *input_filename = 0;
+const ACE_TCHAR *output_filename = 0;
 void
 usage (void)
 {

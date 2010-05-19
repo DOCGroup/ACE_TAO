@@ -14,8 +14,8 @@ module PSL_SampleLost
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_Get info_get;
-    port CCM_DDS::TestTopic::DDS_Listen info_out;
+    port PSL_SampleLostConnector::DDS_Get info_get;
+    port PSL_SampleLostConnector::DDS_Listen info_out;
    };
 };
 

@@ -13,8 +13,8 @@ module CFT_Test
 {
   component CFTTestComponent
   {
-    port CFTTwoDimensional_Test::CFTTwoDimensionalTestConn::DDS_Get two_dim_get;
-    port CFTThreeDimensional_Test::CFTThreeDimensionalTestConn::DDS_Get three_dim_get;
+    port CFTTwoDimensionalTestConn::DDS_Get two_dim_get;
+    port CFTThreeDimensionalTestConn::DDS_Get three_dim_get;
   };
 };
 

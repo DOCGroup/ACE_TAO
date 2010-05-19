@@ -16,10 +16,7 @@
 
 module VTopic
 {
-  module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnionSeq> TopicUnionConn;
-  connector VT_Union_Connector : TopicUnionConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::TopicUnion, ::TopicUnionSeq> TopicUnionConnector;
 };
 
 #endif /* VT_UNION_CONNECTOR_IDL_ */

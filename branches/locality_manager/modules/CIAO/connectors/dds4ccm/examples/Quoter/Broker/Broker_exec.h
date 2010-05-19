@@ -43,7 +43,7 @@ namespace CIAO_Quoter_Broker_Impl
   };
 
   class BROKER_EXEC_Export Stock_Info_Listener_exec_i
-    : public virtual ::CCM_DDS::Quoter::CCM_Listener,
+    : public virtual ::Quoter::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -94,7 +94,7 @@ namespace CIAO_Quoter_Broker_Impl
 
     // Port operations.
 
-    virtual ::CCM_DDS::Quoter::CCM_Listener_ptr
+    virtual ::Quoter::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -120,8 +120,8 @@ namespace CIAO_Quoter_Broker_Impl
   private:
     ::Quoter::CCM_Broker_Context_var context_;
     read_action_Generator * ticker_;
-    ::CCM_DDS::Quoter::Reader_var reader_;
-    ::CCM_DDS::Quoter::Getter_var getter_;
+    ::Quoter::Reader_var reader_;
+    ::Quoter::Getter_var getter_;
   };
 
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr

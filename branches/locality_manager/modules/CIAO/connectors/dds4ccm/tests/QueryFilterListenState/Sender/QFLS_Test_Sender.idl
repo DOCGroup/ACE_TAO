@@ -16,7 +16,7 @@ module QFLS_Test
 {
   component Sender
   {
-    port QueryFilterListenStateTestConn::DDS_Update info_update;
+    port QueryFilterListenStateTestConnector::DDS_Update info_update;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

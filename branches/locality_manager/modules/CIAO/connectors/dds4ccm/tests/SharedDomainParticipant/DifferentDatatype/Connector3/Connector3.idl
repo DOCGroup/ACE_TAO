@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector3/Connector3E.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::SharedDPTest3, ::SharedDPTest3Seq> SharedDPTest3;
-};
-
 module SharedDP_Connector3
 {
-  connector Connector3 : ::CCM_DDS::SharedDPTest3::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::SharedDPTest3, ::SharedDPTest3Seq> SharedDPTest3Connector;
 };
 
 #endif /* SHARED_DP_CONNECTOR3_IDL_ */

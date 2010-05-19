@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_Session_Container_idl) : ciaoidldefaults {
+project(CIAO_Session_Container_idl) : install, ciaoidldefaults {
   custom_only = 1
   idlflags   += -Wb,export_include=Session_Container_export.h \
                 -Wb,export_macro=SESSION_CONTAINER_Export \
@@ -9,9 +9,12 @@ project(CIAO_Session_Container_idl) : ciaoidldefaults {
   IDL_Files {
     Session_Container.idl
   }
+  specific {
+    install_dir = ciao/Containers/Session
+  }
 }
 
-project(CIAO_Session_Container) : ccm_svnt, ciao_lib, ciao_container_base, utils,  \
+project(CIAO_Session_Container) : install, ccm_svnt, ciao_lib, ciao_container_base, utils,  \
                                   ccm_componentserver_stub, ciao_servant_activator, ciao_servant {
   after += CIAO_Session_Container_idl
   dynamicflags += SESSION_CONTAINER_BUILD_DLL
@@ -26,5 +29,8 @@ project(CIAO_Session_Container) : ccm_svnt, ciao_lib, ciao_container_base, utils
   }
   Header_Files {
     Session_Container.h
+  }
+  specific {
+    install_dir = ciao/Containers/Session
   }
 }

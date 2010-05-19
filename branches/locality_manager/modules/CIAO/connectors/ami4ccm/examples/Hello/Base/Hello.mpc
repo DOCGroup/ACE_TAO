@@ -41,7 +41,7 @@ project(AMI_Hello_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=Hello_svnt_export.h \
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
 
   IDL_Files {
     HelloA.idl
@@ -161,7 +161,7 @@ project(AMI_Hello_conn) : ciao_executor, ami, ami4ccm_lem_stub {
 
   Header_Files {
     HelloA_conn.h
-    HelloA_conn_export.h
+    Hello_conn_export.h
   }
 
   Inline_Files {

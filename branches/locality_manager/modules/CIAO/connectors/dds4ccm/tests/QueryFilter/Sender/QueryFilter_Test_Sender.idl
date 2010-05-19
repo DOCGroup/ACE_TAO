@@ -17,7 +17,7 @@ module QueryFilter_Test
 {
   component Sender
   {
-    port QueryFilter_Test::QueryFilterTestConn::DDS_Write info_write;
+    port QueryFilter_Test::QueryFilterTestConnector::DDS_Write info_write;
 
     uses QueryFilterStarter start_reader;
     provides QueryFilterRestarter restart_writer;

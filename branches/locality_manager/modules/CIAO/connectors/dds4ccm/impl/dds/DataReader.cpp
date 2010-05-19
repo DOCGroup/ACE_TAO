@@ -82,7 +82,8 @@ namespace CIAO
     CCM_DDS_DataReader_i::get_instance_handle (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
+      ::DDS_InstanceHandle_t const rtihandle =
+        this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
@@ -99,7 +100,8 @@ namespace CIAO
     {
       ::DDS::ReadCondition_var retval = ::DDS::ReadCondition::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
-      DDSReadCondition* rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
+      DDSReadCondition* rc =
+        this->impl ()->create_readcondition (sample_states, view_states, instance_states);
       if (rc)
         {
           ACE_NEW_THROW_EX (retval,
@@ -107,7 +109,8 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 #else
-      ::DDS::ReadCondition_var rc = this->impl ()->create_readcondition (sample_states, view_states, instance_states);
+      ::DDS::ReadCondition_var rc =
+        this->impl ()->create_readcondition (sample_states, view_states, instance_states);
       if (! ::CORBA::is_nil (rc.in ()))
         {
           ACE_NEW_THROW_EX (retval,
@@ -239,7 +242,8 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSDataReaderListener *drl = this->impl ()->get_listener ();
-      CCM_DDS_DataReaderListener_i *ccm_dds_drl = dynamic_cast <CCM_DDS_DataReaderListener_i *> (drl);
+      CCM_DDS_DataReaderListener_i *ccm_dds_drl =
+        dynamic_cast <CCM_DDS_DataReaderListener_i *> (drl);
       if (!ccm_dds_drl)
         {
           DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DataReader_i::get_listener - "
@@ -351,7 +355,8 @@ namespace CIAO
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_RequestedIncompatibleQosStatus ddsstatus;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_incompatible_qos_status (ddsstatus);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_requested_incompatible_qos_status (ddsstatus);
       status <<= ddsstatus;
       return retval;
 #else

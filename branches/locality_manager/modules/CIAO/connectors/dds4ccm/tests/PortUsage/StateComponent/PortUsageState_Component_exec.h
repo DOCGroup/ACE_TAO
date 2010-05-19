@@ -75,7 +75,7 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     virtual CCM_DDS::CCM_PortStatusListener_ptr
     get_read_port_status (void);
 
-    virtual PortUsageState_Test::PortUsageTestConn::CCM_StateListener_ptr
+    virtual PortUsageState_Test::PortUsageTestConnector::CCM_StateListener_ptr
     get_state_listen_port_data_listener (void);
 
     virtual CCM_DDS::CCM_PortStatusListener_ptr
@@ -87,7 +87,7 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     virtual CCM_DDS::CCM_PortStatusListener_ptr
     get_get_port_status (void);
 
-    virtual PortUsageState_Test::PortUsageTestConn::CCM_Listener_ptr
+    virtual PortUsageState_Test::PortUsageTestConnector::CCM_Listener_ptr
     get_listen_port_data_listener (void);
 
     virtual CCM_DDS::CCM_PortStatusListener_ptr
@@ -106,9 +106,9 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
 
   private:
     ::PortUsageState_Test::CCM_PortUsageStateComponent_Context_var context_;
-    ::PortUsageState_Test::PortUsageTestConn::Reader_var reader_; //Listener
-    ::PortUsageState_Test::PortUsageTestConn::Writer_var writer_; //Writer
-    ::PortUsageState_Test::PortUsageTestConn::Getter_var getter_; //Getter
+    ::PortUsageState_Test::PortUsageTestConnector::Reader_var reader_; //Listener
+    ::PortUsageState_Test::PortUsageTestConnector::Writer_var writer_; //Writer
+    ::PortUsageState_Test::PortUsageTestConnector::Getter_var getter_; //Getter
 
     PortUsageAssignment assignment_;
 

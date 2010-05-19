@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTopics_Connector_Impl</string>
+          <string>create_VTopics_TestTopicConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTopics_Connector_Servant</string>
+          <string>create_VTopics_TestTopicConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_String_Connector_Impl</string>
+          <string>create_VTopics_TopicStringConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -134,7 +134,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_String_Connector_Servant</string>
+          <string>create_VTopics_TopicStringConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -175,7 +175,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_Array_Connector_Impl</string>
+          <string>create_VTopics_TopicArrayConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -186,7 +186,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_Array_Connector_Servant</string>
+          <string>create_VTopics_TopicArrayConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -227,7 +227,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_Seq_Connector_Impl</string>
+          <string>create_VTopics_TopicSeqConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -238,7 +238,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopics_VTS_Seq_Connector_Servant</string>
+          <string>create_VTopics_TopicSeqConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>

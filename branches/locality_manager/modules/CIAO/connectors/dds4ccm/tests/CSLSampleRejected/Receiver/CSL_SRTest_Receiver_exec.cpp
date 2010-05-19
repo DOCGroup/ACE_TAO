@@ -141,7 +141,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       read_data_ (true),
       raw_listen_ (false),
       received_ (0),
-      rejected_(0),
+      rejected_(false),
       thread_id_listener_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);
@@ -221,7 +221,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   // Port operations.
-  ::CSL_SRTest::TestTopicConn::CCM_Listener_ptr
+  ::CSL_SR_Connector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("new TestTopic RAW listener\n")));

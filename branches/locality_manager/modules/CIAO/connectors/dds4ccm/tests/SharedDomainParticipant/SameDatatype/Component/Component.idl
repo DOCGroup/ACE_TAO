@@ -15,10 +15,10 @@ module SharedDP
 {
   component SharedDPComponent
   {
-    port CCM_DDS::SharedDPTest::DDS_Write write1;
-    port CCM_DDS::SharedDPTest::DDS_Write write2;
-    port CCM_DDS::SharedDPTest::DDS_Write write3;
-    port CCM_DDS::SharedDPTest::DDS_Write write4;
+    port SharedDPTestConnector::DDS_Write write1;
+    port SharedDPTestConnector::DDS_Write write2;
+    port SharedDPTestConnector::DDS_Write write3;
+    port SharedDPTestConnector::DDS_Write write4;
 
     attribute boolean perform_test;
   };

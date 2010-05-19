@@ -78,7 +78,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_connector_status (void);
 
-    virtual ::OIT_Test::OIT_Receiver_TopicConn::CCM_Listener_ptr
+    virtual ::OIT_Test::OIT_Receiver_TopicConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     // Operations from Components::SessionComponent.

@@ -31,12 +31,12 @@ namespace CIAO_NoReplyH_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::NoReplyH::AMI_MyFoo_ptr my_foo_ami);
+    asynch_foo_generator (::NoReplyH::AMI4CCM_MyFoo_ptr my_foo_ami);
 
     virtual int svc (void);
 
   private:
-    ::NoReplyH::AMI_MyFoo_var my_foo_ami_;
+    ::NoReplyH::AMI4CCM_MyFoo_var my_foo_ami_;
   };
 
   /// Worker thread for synchronous invocations
@@ -52,7 +52,7 @@ namespace CIAO_NoReplyH_Sender_Impl
   };
 
   class MyFoo_callback_exec_i
-    : public virtual ::NoReplyH::CCM_AMI_MyFooCallback,
+    : public virtual ::NoReplyH::CCM_AMI4CCM_MyFooReplyHandler,
       public virtual ::CORBA::LocalObject
   {
   public:

@@ -80,7 +80,7 @@ namespace CIAO_Updater_Sender_Impl
 
     pulse_Generator * ticker_;
      ::Updater::CCM_Sender_Context_var context_;
-    CCM_DDS::TestTopic::Updater_var updater_;
+    ::Updater::UpdaterConnector::Updater_var updater_;
     UPDATER_TEST test_nr_;
     Atomic_Boolean test_ok_;
     TestTopicSeq topic_seq_one_;

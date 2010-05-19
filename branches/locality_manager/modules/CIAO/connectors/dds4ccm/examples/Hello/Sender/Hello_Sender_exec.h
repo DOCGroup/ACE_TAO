@@ -14,7 +14,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
 #include "ace/Reactor.h"
 
 #include <map>
@@ -127,7 +126,7 @@ namespace CIAO_Hello_Sender_Impl
 
   private:
     ::Hello::CCM_Sender_Context_var context_;
-    Hello::HelloConn::Writer_var writer_;
+    Hello::Writer_var writer_;
     pulse_Generator * ticker_;
     CORBA::ULong rate_;
     CORBA::ULong iteration_, iterations_;

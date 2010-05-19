@@ -14,7 +14,7 @@ module SL_ManyByMany
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_StateListen info_out;
+    port SLManyByManyConnector::DDS_StateListen info_out;
   };
 };
 

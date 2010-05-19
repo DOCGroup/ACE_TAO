@@ -14,7 +14,7 @@ module CSL_SRTest
 {
   component Receiver
   {
-    port TestTopicConn::DDS_Listen info_out;
+    port CSL_SR_Connector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
     attribute unsigned long rate;
     attribute boolean read_data;//if true, read_all is invoked.
