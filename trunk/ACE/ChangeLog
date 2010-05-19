@@ -1,3 +1,13 @@
+Wed May 19 22:06:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Apply a "collapse slashes" function to exeout, libout, and dllout.
+          This will transform paths with consecutive slashes into the same
+          logical path with just a single slash.  The multiple slahses caused
+          unexepected results with the "test" comparison in rules.local.GNU and
+          also with bin/add_rel_link.sh.
+
 Wed May 19 14:57:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
