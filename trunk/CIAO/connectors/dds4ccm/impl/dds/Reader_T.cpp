@@ -21,9 +21,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::~Reader_T (void)
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::~Reader_T");
 }
 
-// For the requirement : 'samples ordered by instances' the following settings 
-// are necessary: ordered_access -> true and
-// DDS_INSTANCE_PRESENTATION_QOS (default)
+/// For the requirement : 'samples ordered by instances' the following settings 
+/// are necessary: ordered_access -> true and
+/// DDS_INSTANCE_PRESENTATION_QOS (default)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 CORBA::ULong
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_nr_valid_samples (
@@ -194,7 +194,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_last (
   ::CCM_DDS::ReadInfo_out info,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t const lookup_hnd =
+  ::DDS_InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;
@@ -239,7 +239,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
   ::CCM_DDS::ReadInfoSeq_out infos,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
-  DDS_InstanceHandle_t const lookup_hnd =
+  ::DDS_InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
   DDS_SampleInfoSeq sample_info;

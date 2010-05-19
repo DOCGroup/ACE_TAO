@@ -213,7 +213,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
               DDS_ReturnCode_t retcode =
                 this->impl ()->read_w_condition (data,
                                                  sample_info);
-              if (retcode == DDS_RETCODE_NO_DATA)
+              if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
@@ -299,7 +299,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
               DDS_ReturnCode_t retcode =
                 this->impl ()->read_w_condition (data,
                                                  sample_info);
-              if (retcode == DDS_RETCODE_NO_DATA)
+              if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one - "
