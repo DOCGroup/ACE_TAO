@@ -1,3 +1,15 @@
+Wed May 19 02:18:13 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/mc_test_utils.mpb:
+
+          Moving this file up to the common mpb area because many scoreboard
+          builds are not set up to include mpbs from the workspace directory.
+          This is not ideal because this file will end up getting installed.
+
+        * examples/mc_test_utils.mpb:
+
+          Removed this file (moved it to bin/MakeProjectCreator/config).
+
 Tue May 18 21:34:34 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ACEXML/apps/svcconf/svcconf.mpc:
