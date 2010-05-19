@@ -12,6 +12,10 @@ project(AMI4CCM_idl_gen) : install, componentidldefaults {
   IDL_Files {
     ami4ccm.idl
   }
+
+  specific {
+    install_dir = connectors/ami4ccm/ami4ccm
+  }
 }
 
 project (AMI4CCM_lem_gen) : install, ciaoidldefaults {
@@ -24,6 +28,10 @@ project (AMI4CCM_lem_gen) : install, ciaoidldefaults {
   IDL_Files {
      idlflags += -Gxhst
      ami4ccmE.idl
+  }
+
+  specific {
+    install_dir = connectors/ami4ccm/ami4ccm
   }
 }
 
@@ -49,6 +57,10 @@ project(AMI4CCM_stub) : install, ciao_lib, messaging, ccm_stub {
 
   IDL_Files {
   }
+
+  specific {
+    install_dir = connectors/ami4ccm/ami4ccm
+  }
 }
 
 project (AMI4CCM_lem_stub) : install, ccm_lem_stub, ciao_lib, ciao_output, taolib, valuetype, ifr_client {
@@ -67,10 +79,15 @@ project (AMI4CCM_lem_stub) : install, ccm_lem_stub, ciao_lib, ciao_output, taoli
 
   Header_Files {
    ami4ccmEC.h
+   ami4ccm_lem_stub_export.h
   }
 
   Inline_Files {
    ami4ccmEC.inl
+  }
+
+  specific {
+    install_dir = connectors/ami4ccm/ami4ccm
   }
 }
 
@@ -97,5 +114,9 @@ project (AMI4CCM_svnt) : install, ciao_servant, ciao_lib {
 
   Inline_Files {
     ami4ccmS.inl
+  }
+
+  specific {
+    install_dir = connectors/ami4ccm/ami4ccm
   }
 }
