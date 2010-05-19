@@ -19,7 +19,6 @@
 //
 // ============================================================================
 
-
 // Implicit default case
 
 enum DataType
@@ -71,7 +70,7 @@ union foo switch (short)
   default: long   foo_iface_member;
   case  0: long   foo_iface_member2;
 };
-#endif /* !__SUNPRO_CC || __SUNPRO_CC > 0x5100 */
+#endif // !__SUNPRO_CC || __SUNPRO_CC > 0x5100
 
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
@@ -220,7 +219,7 @@ union FieldValue switch (FieldType)
 
 struct Field
 {
-    FieldValue value;
+  FieldValue value;
 };
 
 // Tricky case of lookup for a recursive union. When defined

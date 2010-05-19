@@ -84,6 +84,10 @@ project(RTEvent_Serv) : orbsvcslib, orbsvcs_output, install, rtevent_skel, svc_u
     Event/EC_Thread_Flags.cpp
   }
 
+  Header_Files {
+    Event
+  }
+
   Template_Files {
     Event/EC_Busy_Lock.cpp
     Event/EC_Lifetime_Utils_T.cpp

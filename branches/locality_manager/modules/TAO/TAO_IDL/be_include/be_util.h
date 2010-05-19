@@ -40,6 +40,5 @@ public:
   gen_nesting_close (TAO_OutStream &os, AST_Decl *node);
 };
 
-
 #endif // if !defined
 

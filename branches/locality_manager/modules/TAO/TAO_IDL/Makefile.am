@@ -189,7 +189,6 @@ noinst_HEADERS = \
   include/idl_defines.h \
   include/idl_global.h \
   include/idl_narrow.h \
-  include/idl_uns_long.h \
   include/nr_extern.h \
   include/utl_decllist.h \
   include/utl_err.h \
@@ -299,7 +298,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_decl.cpp \
   be/be_visitor_enum.cpp \
   be/be_visitor_exception.cpp \
-  be/be_visitor_factory.cpp \
   be/be_visitor_field.cpp \
   be/be_visitor_home.cpp \
   be/be_visitor_interface.cpp \
@@ -404,7 +402,6 @@ noinst_HEADERS += \
   be_include/be_visitor_decl.h \
   be_include/be_visitor_enum.h \
   be_include/be_visitor_exception.h \
-  be_include/be_visitor_factory.h \
   be_include/be_visitor_field.h \
   be_include/be_visitor_home.h \
   be_include/be_visitor_interface.h \

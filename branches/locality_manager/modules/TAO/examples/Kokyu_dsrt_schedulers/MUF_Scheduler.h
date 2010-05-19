@@ -6,7 +6,7 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "tao/CodecFactory/CodecFactory.h"
 #include "MUF_SchedulingC.h"
-#include "Kokyu_dsrt.h"
+#include "Kokyu/Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 #include "tao/LocalObject.h"
 

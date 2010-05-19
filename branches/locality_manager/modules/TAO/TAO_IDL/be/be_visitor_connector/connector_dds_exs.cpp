@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -36,41 +35,16 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       return 0;
     }
 
-  AST_Connector *base = node->base_connector ();
-
-  // Hack for the time being to skip codegen for DDS_State
-  // and DDS_Event, both of which come along with the template
-  // module instantiation.
-  if (base == 0)
+  if (!this->begin (node))
     {
-      return 0;
+      return -1;
     }
-
-  node_ = node;
-
-  // Shaky logic that will have to be improved. If our
-  // base connector does not come from an instantiated
-  // template module, we skip the code generation.
-  this->process_template_args (base);
-
-  if (this->t_args_ == 0)
-    {
-      return 0;
-    }
-
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
-      << "namespace CIAO_" << node->flat_name ()
-      << "_Impl" << be_nl
-      << "{" << be_idt;
-
+    
   os_ << be_nl
       << this->node_->local_name () << "_exec_i::"
       << this->node_->local_name () << "_exec_i (void)"
       << be_idt_nl
-      << ": " << node->base_connector ()->local_name ()
-      << "_Connector_T";
+      << ": " << this->base_tname_ << "_Connector_T";
 
   AST_Decl **datatype = 0;
   int status = this->t_args_->get (datatype, 0UL);
@@ -92,7 +66,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
   /// corresponding template. May have to generalize this logic.
   os_ << " <" << be_idt << be_idt_nl
       << this->dds_traits_name_.c_str () << "," << be_nl
-      << "DDS" << this->node_->local_name () << "_Traits," << be_nl;
+      << "DDS_" << this->node_->local_name () << "_Traits," << be_nl;
 
   if (ut->size_type () == AST_Type::FIXED)
     {
@@ -102,6 +76,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     {
       os_ << "false> ";
     }
+    
   os_ << "()"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl

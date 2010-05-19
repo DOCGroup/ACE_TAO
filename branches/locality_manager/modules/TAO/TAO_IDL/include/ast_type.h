@@ -98,10 +98,6 @@ public:
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
 
-  // To be overridden by the subclasses interface, struct, union, and
-  // the corresponding forward declaration classes.
-  virtual bool is_defined (void);
-
   virtual void size_type (SIZE_TYPE);
   // Set the size type.
 

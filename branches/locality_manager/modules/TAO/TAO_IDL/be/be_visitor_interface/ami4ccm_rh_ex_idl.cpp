@@ -32,9 +32,9 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   os_ << be_nl << be_nl
-      << "local interface AMI_"
+      << "local interface AMI4CCM_"
       << node->original_local_name ()
-      << "Callback" << be_idt_nl
+      << "ReplyHandler" << be_idt_nl
       << ": ";
     
   long n_parents = node->n_inherits ();
@@ -61,8 +61,8 @@ be_visitor_ami4ccm_rh_ex_idl::visit_interface (be_interface *node)
           bool global = (d->node_type () == AST_Decl::NT_root);
           
           os_ << (global ? "" : "::") << d->full_name ()
-              << "::AMI_" << parent->original_local_name ()
-              << "Callback";
+              << "::AMI4CCM_" << parent->original_local_name ()
+              << "ReplyHandler";
         }
         
       os_ << be_uidt;

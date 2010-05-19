@@ -30,9 +30,6 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   const char *suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  const char *scope_name = scope->full_name ();
-  bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
   ACE_CString class_name_str (scope->local_name ()->get_string ());
   class_name_str += suffix;
   const char *class_name = class_name_str.c_str ();
@@ -86,17 +83,8 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "::Components::SessionContext_ptr ctx)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "this->context_ =" << be_idt_nl
-      << smart_scope << scope_name
-      << "::CCM_" << node->local_name ()
-      << "_Context::_narrow (ctx);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (this->context_.in ()))"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
       << "this->facet_exec_->set_session_context "
-      << "(this->context_.in ());" << be_uidt_nl
+      << "(ctx);" << be_uidt_nl
       << "}";
       
   os_ << be_nl << be_nl

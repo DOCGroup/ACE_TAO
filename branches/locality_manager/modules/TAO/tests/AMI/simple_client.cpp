@@ -163,9 +163,7 @@ public:
                   "Callback method <set_yadda_excep> called:\n"));
     };
 
-  void inout_arg_test (
-      const char *
-      )
+  void inout_arg_test (const char *)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called:\n"));
@@ -179,8 +177,6 @@ public:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
-
   try
     {
       CORBA::ORB_var orb =
@@ -226,10 +222,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Try out sending asynchronous messages without a reply handler
       // registered. Things fail if we get an exception.
-
-      ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (),
-                               0,
-                               "");
+      ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (), 0, "");
 
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
