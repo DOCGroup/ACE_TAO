@@ -1,3 +1,31 @@
+Wed May 19 12:14:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_Properties.idl:
+        * ciao/ComponentServer/Client_init.h:
+        * ciao/ComponentServer/Server_init.h:
+        * ciao/Deployment:
+        * ciao/Deployment/Handlers:
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/CIAO_Locality_Handler_Export.h:
+        * ciao/Deployment/Handlers/CIAO_State.h:
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Deployment/Interceptors:
+
+          First round CIAO deployment handlers. 
+
 Wed May 19 12:11:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Core.mpc:
