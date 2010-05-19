@@ -1,3 +1,41 @@
+Wed May 19 02:52:27 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/csd_pt_test_exe.mpb:
+        * MPC/config/csd_pt_testinf_lib.mpb:
+        * MPC/config/csd_pt_testservant_lib.mpb:
+        * MPC/config/csd_tp_foo_a_lib.mpb:
+        * MPC/config/csd_tp_foo_b_lib.mpb:
+        * MPC/config/csd_tp_foo_c_lib.mpb:
+        * MPC/config/csd_tp_test_exe_a.mpb:
+        * MPC/config/csd_tp_test_exe_b.mpb:
+        * MPC/config/csd_tp_test_exe_c.mpb:
+        * MPC/config/csd_tp_test_lib.mpb:
+        * MPC/config/kokyu_dsrt_scheduler_client.mpb:
+        * MPC/config/kokyu_dsrt_scheduler_server.mpb:
+        * MPC/config/kokyu_dsrt_schedulers.mpb:
+        * MPC/config/notifytest.mpb:
+
+          Moving these files back to the common mpb area because many scoreboard
+          builds are not set up to include mpbs from the workspace directory.
+          This is not ideal because these files will end up getting installed.
+
+        * examples/kokyu_dsrt_scheduler_client.mpb:
+        * examples/kokyu_dsrt_scheduler_server.mpb:
+        * examples/kokyu_dsrt_schedulers.mpb:
+        * orbsvcs/tests/notifytest.mpb:
+        * performance-tests/csd_pt_test_exe.mpb:
+        * performance-tests/csd_pt_testinf_lib.mpb:
+        * performance-tests/csd_pt_testservant_lib.mpb:
+        * tests/csd_tp_foo_a_lib.mpb:
+        * tests/csd_tp_foo_b_lib.mpb:
+        * tests/csd_tp_foo_c_lib.mpb:
+        * tests/csd_tp_test_exe_a.mpb:
+        * tests/csd_tp_test_exe_b.mpb:
+        * tests/csd_tp_test_exe_c.mpb:
+        * tests/csd_tp_test_lib.mpb:
+
+          Removed these files (moved them back to MPC/config).
+
 Tue May 18 21:42:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/endpointpolicy.mpb:
