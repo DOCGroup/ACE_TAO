@@ -80,7 +80,7 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
 
   private:
     ::CoherentUpdate_Test::CCM_Sender_Context_var context_;
-    ::CoherentUpdate_Test::CoherentUpdateTestConn::Updater_var updater_;
+    ::CoherentUpdate_Test::Updater_var updater_;
     CoherentUpdateStarter_var starter_;
 
     CORBA::UShort iterations_;

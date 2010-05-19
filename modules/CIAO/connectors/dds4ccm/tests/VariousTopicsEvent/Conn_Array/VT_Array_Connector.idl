@@ -16,10 +16,7 @@
 
 module VTopic
 {
-  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConn;
-  connector VT_Array_Connector : TopicArrayConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::TopicArray, ::TopicArraySeq> TopicArrayConnector;
 };
 
 #endif /* VT_ARRAY_CONNECTOR_IDL_ */

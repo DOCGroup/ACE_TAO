@@ -16,7 +16,7 @@ module State_Connection_Test
 {
   component Sender
   {
-    port CCM_DDS::State_ConnectionTest::DDS_Update info_update;
+    port State_ConnectionTestConnector::DDS_Update info_update;
   };
 };
 

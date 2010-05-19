@@ -18,7 +18,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SharedDP_Connector_SDP_Connector_Impl</string>
+          <string>create_SharedDP_SharedDPTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -29,7 +29,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_SharedDP_Connector_SDP_Connector_Servant</string>
+          <string>create_SharedDP_SharedDPTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

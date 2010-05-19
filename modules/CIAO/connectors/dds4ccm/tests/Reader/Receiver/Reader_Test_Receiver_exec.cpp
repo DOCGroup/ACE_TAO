@@ -556,10 +556,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CCM_DDS::ReaderTest::CCM_Listener_ptr
+  ::Reader_Test::ReaderTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return ::CCM_DDS::ReaderTest::CCM_Listener::_nil ();
+    return ::Reader_Test::ReaderTestConnector::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr

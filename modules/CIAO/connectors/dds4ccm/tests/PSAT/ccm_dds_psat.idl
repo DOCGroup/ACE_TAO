@@ -1,0 +1,1408 @@
+// $Id$
+
+//==============================================================================
+//                            U N C L A S S I F I E D
+//==============================================================================
+/// @addtogroup PSAT_API
+/// @{
+/// @file   ccm_dds_psat.idl
+/// @brief  Defines the data and interfaces for the Pub/Sub Attachment Transfer
+//          (PSAT) DDS4CCM connector.
+//==============================================================================
+
+#ifndef CCM_DDS_PSAT_IDL
+#define CCM_DDS_PSAT_IDL
+
+/// @todo DETAILED DESIGN - Put more info on how fields are initialized before
+///       use. Also put any "restricted" or "for internal use" ranges of values.
+
+/// @todo DETAILED DESIGN - May want to have constants defined for default
+///       values (for example, AD_BUFFER_ID_DEFAULT)
+
+/// @todo DETAILED DESIGN - Document which groups of settings are considered to
+///       be inconsistent or invalid and what sort of error(s) or exception(s)
+///       may result.
+
+/// @todo DETAILED DESIGN - Figure out what should go into a "discovery info"
+///       structure
+
+/// @todo Move these two group definitions below where the rest live for CSS
+///       (Core/tools/Doxygen/common/SNA_API_modules/PSAT_API_modules)
+
+/// @todo Need to split this file up into two parts.  The first part would
+///       be in a new file named "ccm_dds_psat_header.idl" which contains the
+///       PSAT_Header and all related sub-structures/types/enums, etc.
+///       The second would remain in this file and would contain everything
+///       else.
+///       Naturally this file would #include the new file.
+
+/**
+ * @defgroup PSAT_Publisher PSAT Publisher Side
+ * Group of interfaces for the @ref PSAT connector that are only used by
+ * @ref PSAT publishers
+ */
+
+/**
+ * @defgroup PSAT_Subscriber PSAT Subscriber Side
+ * Group of interfaces for the @ref PSAT connector that are only used by
+ * @ref PSAT subscribers
+ */
+
+#include "ccm_dds.idl"
+
+/**
+ * @namespace CCM_DDS_PSAT
+ *
+ * Module containing all @ref PSAT related entities. Non-typed constructs are
+ * directly defined in this module, while typed constructs are in a templated
+ * sub-module.
+ */
+module CCM_DDS_PSAT
+{
+   // ---------------------------
+   // Enums, structs and Typedefs
+   // ---------------------------
+
+   /**
+    * Size in characters of a fixed size string (char array).
+    * @todo DETAILED DESIGN - FIGURE OUT MAX SIZE
+    */
+   const long FIXED_STRING_SIZE = 50;
+
+   /**
+    * @typedef FixedString
+    *
+    * Typedef for the fixed-size string of size #FIXED_STRING_SIZE
+    */
+   typedef char FixedString[FIXED_STRING_SIZE];
+
+   /**
+    * @typedef StrSeq
+    *
+    * Unbounded sequence of strings.
+    */
+   typedef sequence<string> StrSeq;
+
+   /**
+    * @enum EndianType
+    *
+    * Byte endianness of data in the @ref AD buffer.
+    */
+   enum EndianType
+   {
+      /**
+       * Little endian byte order (for example, x86_64).
+       */
+      PSAT_AD_LITTLE_ENDIAN,
+
+      /**
+       * Big endian byte order (for example, PowerPC/Cell).
+       */
+      PSAT_AD_BIG_ENDIAN
+   };
+
+   /**
+    * @struct DataShape
+    *
+    * Structure defining a bounding box describing the sample or subsample that
+    * is to be transferred.
+    *
+    * @par Important:
+    * When the underlying attachment transport is zero-copy shared memory, the
+    * following restrictions apply to what the
+    * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept may alter in the
+    * @ref UDM "UDM":
+    *
+    * @li The DataShape::stride field cannot change as that would force a copy.
+    *
+    * @li Changes to any field within this structure will alter the shape of
+    *     the bounding box. This new shape must not fall outside the bounding
+    *     box defined by the original values in this structure.
+    *
+    * @par
+    * Bounds checking will be performed by the @ref PSAT connector using the
+    * following equation and inequalities:
+    * @f[end\_offset = source\_offset + [(num\_blocks - 1) * stride] +
+    *                  block\_length@f]
+    * After performing the above calculation on both the old and new values of
+    * these fields, the following must be true:
+    * @f[new\_end\_offset \le old\_end\_offset@f]
+    * @f[new\_source\_offset \ge old\_source\_offset@f]
+    *
+    * @todo VERIFY THAT THESE FORMULAS are sufficient to prevent going outside
+    *       the bounding box created when publishing
+    *
+    * @par
+    * For the above, the PSAT_Header::source_offset is the upper-left corner of
+    * the bounding box. The @f$end\_offset@f$ (calculated above) is the
+    * lower-right corner of the same box.
+    *
+    * @par Example:
+    * <pre>
+    * # # # # # # #
+    * # # * * * # #
+    * # # * * * # #
+    * # # * * * # #
+    * # # * * * # #
+    * # # # # # # #
+    * </pre>
+    *
+    * @par
+    * In the above picture, the '#' elements are not to be sent while the '*'
+    * elements will be sent. In this case, the publisher wishes to send the
+    * 4x3 subset of data shown using asterisks. To do this, the user would fill
+    * out the DataShape structure (as well as the PSAT_Header::source_offset
+    * field as shown:
+    *
+    * @code
+    * MyModule::MyUDM udm; // a custom UDM created by the user
+    *
+    * // fill out the UDM by using one of the create_data* calls and write
+    * // into buffer
+    *
+    * // A variable to hold the size of each element in this matrix.
+    * // ELEMENT_TYPE could be, for example, long long, std::complex<float>,
+    * // double, etc.
+    * unsigned long long elementSizeInBytes = sizeof(ELEMENT_TYPE);
+    *
+    * // 4 rows/blocks of data
+    * udm.psatHeader.psat_view.num_blocks   = 4;
+    *
+    * // 3 elements per row/block
+    * udm.psatHeader.psat_view.block_length = 3 * elementSizeInBytes;
+    *
+    * // 7 elements between beginnings of consecutive rows/blocks
+    * udm.psatHeader.psat_view.stride       = 7 * elementSizeInBytes;
+    *
+    * // Beginning of first row/block to send is 9 elements from the beginning
+    * // of the PSAT sample
+    * udm.psatHeader.source_offset          = 9 * elementSizeInBytes;
+    * @endcode
+    */
+   struct DataShape
+   {
+      /**
+       * Num blocks of @ref AD data to send (each of contiguous
+       * DataShape::block_length bytes). The following groups of settings are
+       * possible:
+       *
+       * @li num_blocks = 0
+       * @par
+       *  - @b Publisher  - This is an error condition that will result in an
+       *    InvalidUDM exception being thrown.
+       *  - @b Subscriber - This will result in canceling the attachment data
+       *    transfer for the current subsample.
+       *      - This subsample will not be transferred or delivered to the
+       *        application component.
+       *      - If the sample only contains one subsample, this has the
+       *        effect of canceling the entire sample transfer.
+       *
+       * @li num_blocks = 1
+       * @par
+       * Indicates one contiguous block of the @ref AD buffer to transfer.
+       *
+       * @li num_blocks > 1
+       * @par
+       * Indicates a scatter/gather operation of a set of individual blocks
+       * each of which are contiguous DataShape::block_length bytes in size.
+       * @par
+       * If the underlying @ref PSAT transport is zero-copy shared memory, and
+       * a call is made wherein num_blocks > 1, on the
+       *  - @b Publisher  - an InvalidUDM exception will be thrown.
+       *  - @b Subscriber - the @ref PSAT connector will invoke the
+       *    Typed_PSAT::PSAT_ReaderStatusListener::on_copy_unsupported error
+       *    callback.
+       * @par
+       * Data copying is implied when performing a scatter/gather operation,
+       * and is only possible on underlying transports that support at least
+       * one copy.
+       */
+      long long num_blocks;
+
+      /**
+       * Number of bytes per contiguous block of @ref AD data to transfer.
+       *
+       * @note
+       * This field is initialized with the @ref AD buffer maximum size
+       * specified in the @ref PSAT connector attributes. If the user wishes to
+       * send less than that max size, they should set it to the correct number
+       * of bytes before publishing.
+       */
+      long long block_length;
+
+      /**
+       * The offset (in bytes) from the beginning of a row in the
+       * "rectangular shaped data" to the beginning of the next row. This
+       * supports a single @ref AD buffer transfer of a non-contiguous,
+       * sub-sample of "rectangular shaped data" (e.g., a rectangular sub-block
+       * within a larger rectangular sample buffer).
+       *
+       * @par Note 1:
+       * The value of this field is a "don't care" if
+       * DataShape::num_blocks <= 1.
+       *
+       * @par Note 2:
+       * The value of this field cannot be negative or the following behavior
+       * will result:
+       *   <dl>
+       *     <dt><strong>Publisher Side:</strong></dt>
+       *        <dd>An InvalidUDM exception will be thrown</dd>
+       *     <dt><strong>Subscriber Side:</strong></dt>
+       *        <dd>The Typed_PSAT::PSAT_ReaderStatusListener::on_invalid_UDM
+       *            error callback will be invoked.</dd>
+       *  </dl>
+       */
+      long long stride;
+   };
+
+   /**
+    * @ingroup PSAT_Subscriber
+    * @struct SubscriberSideInfo
+    *
+    * Collection of fields used only on the subscriber side, which have no
+    * meaning to the publisher.
+    *
+    * @warning
+    * Publisher use of these fields will result in exceptions or possibly
+    * undefined behavior.
+    */
+   struct SubscriberSideInfo
+   {
+      /**
+       * Total number of bytes of @ref AD data actually sent over the attachment
+       * transport.
+       *
+       * @par Note 1:
+       * If @e transferred_length and (DataShape::num_blocks *
+       * DataShape::block_length) do not match after the transfer
+       * is complete, the @ref PSAT connector will invoke the
+       * Typed_PSAT::PSAT_ReaderStatusListener::on_incomplete_transfer callback.
+       *
+       * @par Note 2:
+       * This field has no meaning in the
+       * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback, since it
+       * is set after that callback returns.
+       */
+      long long transferred_length;
+
+      /**
+       * @ref AD deadline (in microseconds) for partial buffer transfers. This
+       * is a subscriber-side deadline time-out. If non-zero, a timer is set to
+       * this value each time a subsample is received. The next subsample must
+       * be received before this timer expires.
+       *
+       * If this timer expires, the @ref PSAT connector will deliver an
+       * "incomplete" sample to the
+       * Typed_PSAT::PSAT_ReaderStatusListener::on_incomplete_transfer callback.
+       * The "incomplete" sample is indicated by having the
+       * PSAT_Header::sample_complete field in the @ref UDM be @b false.
+       *
+       * @note
+       * The timer is only set if this field is non-zero and
+       * SubscriberSideInfo::sample_complete is @b false upon return from the
+       * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback.
+       */
+      long long sample_incomplete_deadline_usec;
+
+      /**
+       * @ref PSAT sample flag to control sample delivery to the application
+       * component. It is targeted for use by the
+       * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback to support
+       * the ability to send multiple partial samples. When this flag is set to
+       * true, the attachment transfer will commence and the @ref PSAT sample
+       * will be delivered to the application component's
+       * @b DDS_Typed::Listener::on_one_data callback.
+       *
+       * @note
+       * This field has the following effects when combined with the
+       * PSAT_Header::sample_complete field:
+       * <table>
+       * <tr>
+       * <th>deliver_sample</th>
+       * <th>sample_complete</th>
+       * <th>Effect</th>
+       * </tr>
+       * <tr>
+       * <td>false</td>
+       * <td>false</td>
+       * <td>@ref PSAT Sample is still incomplete. Don't deliver yet</td>
+       * </tr>
+       * <tr>
+       * <td>false</td>
+       * <td>true</td>
+       * <td>Cancel transfer and cleanup any previously received subsamples</td>
+       * </tr>
+       * <tr>
+       * <td>true</td>
+       * <td>false</td>
+       * <td>Deliver any @ref PSAT subsamples received so far</td>
+       * </tr>
+       * <tr>
+       * <td>true</td>
+       * <td>true</td>
+       * <td>Deliver complete @ref PSAT sample</td>
+       * </tr>
+       * </table>
+       */
+      boolean   deliver_sample;
+
+      /**
+       * Offset (in bytes) from the start of the destination @ref AD sample
+       * buffer to the location where the received data will be placed.
+       *
+       * @note
+       * This field will be initialized to a default value when the @ref UDM is
+       * filled out by any of the Typed_PSAT::PSAT_Writer::create_data* calls.
+       * When the value equals this default, the field is treated as if it were
+       * equal to the PSAT_Header::source_offset field.
+       *
+       * @par
+       * This field should only be changed in the
+       * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback. The
+       * publisher does not have the required insight into the management of
+       * the subscriber's memory in order to intelligently change this field.
+       *
+       * @par Important:
+       * If the underlying attachment transport is zero-copy shared memory, this
+       * field can only have one of the following values upon return from
+       * the Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback:
+       *   - The value it had when the callback was entered
+       *   - The same value as the PSAT_Header::source_offset field
+       *   .
+       * Any other value will cause the
+       * Typed_PSAT::PSAT_ReaderStatusListener::on_copy_unsupported error
+       * callback to be invoked and the attachment transfer will be cancelled.
+       * The reason for this is that having different offsets forces a copy
+       * which a zero-copy transport by definition does not support.
+       */
+      long long            destination_offset;
+   };
+
+   /**
+    * @struct ConnectorPrivateInfo
+    *
+    * Information used only by @ref PSAT connectors to correctly setup
+    * attachment transfers.
+    */
+   struct ConnectorPrivateInfo
+   {
+      /// @todo We may want this structure and its contents to only show up in
+      ///       the internal Doxygen documentation.
+
+      /**
+       * A string (unique to each @ref PSAT connector instance) which is used to
+       * correlate a @ref UDM sample with its publisher in order to properly
+       * setup the corresponding @ref AD attachment transfer.
+       *
+       * After receiving the @ref UDM, the subscriber side of the connector
+       * "pulls" the associated @ref AD from the publisher. Unlike the
+       * publishing of the @ref UDM, this is done as a one to one transfer.
+       * This field lets the connector know which publisher it needs to pull
+       * from.
+       */
+      FixedString publisher_connector_id;
+
+      /**
+       * An ID number which, along with the #publisher_connector_id, creates a
+       * topic-unique ID which is used internally by the connector for buffer
+       * lifecycle management.
+       */
+      long long   internal_buffer_id;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @struct PSAT_Header
+    *
+    * Defines a set of @ref PSAT "PSAT" "core" attributes shared by the user's
+    * application component and the connector. This structure describes the
+    * @ref PSAT @ref AD attachment as well as containing information used to
+    * set up the attachment transfer. This struct must be in all @ref UDM
+    * messages with the field name @b psatHeader.
+    */
+   struct PSAT_Header
+   {
+      /**
+       * Pointer to the beginning of the complete @ref AD sample buffer. The
+       * shared memory associated with this buffer is mapped (by the @ref PSAT
+       * connector) to the local address space of the publisher and subscriber
+       * processes (typically this is @b NOT the same address on both sides).
+       *
+       * @note
+       * Since the value of this field is set locally on each end of a
+       * connection, its value during transport is a don't care.
+       *
+       * @note
+       * The @ref PSAT connector will fill in this field:
+       *   - @b Publisher @b Side: During a call to
+       *     Typed_PSAT::PSAT_Writer::create_data.  That call returns an
+       *     allocated @ref UDM message containing the address of a separately
+       *     allocated @ref AD buffer in this field.
+       *   - @b Subscriber @b Side: Before the user application component's
+       *     @b DDS_Typed::Listener::on_one_data callback is invoked
+       *
+       * @warning
+       * This field should @b NOT be used in the
+       * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback as the
+       * attachment transfer has yet to start and the buffer this field will
+       * point to (into which the data will be put/shared from) is unknown at
+       * that time.
+       *
+       * @see Typed_PSAT::PSAT_Writer for an example of how this field would be
+       * used in code.
+       */
+      long long            sample_start_address;
+
+      /**
+       * Topic-unique @ref AD buffer identifier assigned by the application when
+       * a new PSAT AD buffer is allocated on the publisher side with a
+       * Typed_PSAT::PSAT_Writer::create_data() call.  Used to specify which
+       * sample buffer to update in the case where sub-samples are sent via
+       * multiple, sequential sub-sample Typed_PSAT::PSAT_Writer::write_one
+       * calls (either from a single publisher or as parallel writes from
+       * multiple publishers).
+       *
+       * The @ref PSAT connector will maintain one outstanding @ref AD sample
+       * buffer for each unique buffer ID value until a
+       * Typed_PSAT::PSAT_BufferControl::release_buffer call is made by the
+       * subscriber to free it.
+       *
+       * @par Important:
+       * For any individual sample that consists of multiple subsamples, each
+       * subsample must utilize the same buffer ID.
+       *
+       * @par
+       * In the multi-publisher case, it is incumbent upon the application
+       * developer to ensure that a consistent buffer ID value is utilized
+       * and set by each separate publisher intending to update only a
+       * sub-sample portion of a target subscriber sample buffer.
+       *
+       * @par
+       * The value of this field @b MUST be unique between samples over the
+       * lifetime of the topic.
+       */
+      long long            ad_buffer_id;
+
+      /**
+       * Offset (in bytes) from the start of the source @ref AD sample buffer to
+       * the first block of data to transfer.
+       */
+      long long            source_offset;
+
+      /**
+       * @copybrief DataShape
+       *
+       * @see DataShape for further information and an example of this field's
+       * use.
+       */
+      DataShape            psat_view;
+
+      /**
+       * Endianness ("big endian" or "little endian") of the @ref AD data. A
+       * default value is set for this field by any of the
+       * Typed_PSAT::PSAT_Writer::create_data* calls based on the machine
+       * architecture on which the publisher is executing.
+       *
+       * @par Note 1:
+       * "Endianness" refers to how the machine architecture is setup to store
+       * the individual bytes of a multi-byte value (i.e., is the most
+       * significant byte first or last).
+       *
+       * @par Note 2:
+       * This does not preclude the user's publisher component from changing
+       * this field if the endianess of the @ref AD does not match the
+       * publisher's native machine architecture.
+       */
+      EndianType           source_endian;
+
+      /**
+       * Flag indicating that the @ref AD buffer is complete and the last
+       * transfer is about to take place.  A setting of @b false indicates that
+       * the subscriber should expect the reception of subsequent sub-samples.
+       *
+       * @par Publisher:
+       * This field is initialized to be @b true (no subsamples) by any of the
+       * Typed_PSAT::PSAT_Writer::create_data* calls. The publisher application
+       * component may then change the value to @b false if sending subsamples
+       * is desired. The value of this field must then again be set to @b true
+       * when sending the final subsample.
+       *
+       * @par Subscriber:
+       *   - The subscriber application component should keep some type of
+       *     "scoreboard" so that it knows when it has received all the
+       *     aub-samples it expects.
+       *   - See the definition of SubscriberSideInfo::deliver_sample for
+       *     details because the values of these two fields are always used
+       *     together on the subscriber side.
+       *   - It is an error if the following conditions are all satisfied. In
+       *     that case an InvalidUDM exception will be thrown from whichever
+       *     method is used with the @ref UDM.
+       *       - This flag is @b false
+       *       - The PSAT_Header::ad_buffer_id field is still set to its default
+       *         value
+       *       .
+       *     This is because subsamples require a buffer ID so they can be
+       *     correlated and collected on the subscriber side.
+       *   .
+       *
+       * @see SubscriberSideInfo::deliver_sample for how this field is used
+       * with that field on the subscriber side to control the delivery of
+       * samples or subsamples.
+       */
+      boolean              sample_complete;
+
+      /**
+       * Data fields that are only used by @ref PSAT subscribers.
+       */
+      SubscriberSideInfo   subscriber_side_info;
+
+      /**
+       * Data fields that should only be accessed by the @ref PSAT connector.
+       */
+      ConnectorPrivateInfo connector_only_info;
+   };
+
+   /**
+    * @struct BasicUDM
+    *
+    * Basic @ref UDM to use if the user does not want to add any other
+    * information.
+    *
+    * @note
+    * If a user wishes to create a custom @ref UDM with additional information,
+    * the user should create a new fixed-length IDL structure (a struct without
+    * sequence or string types anywhere in it) with a field named @b psatHeader
+    * of type PSAT_Header. All UDM structures @b must be defined in a
+    * non-templated module and must have no dependencies on templated modules
+    * (e.g., have a member which is of a type defined in a templated module).
+    *
+    * @par
+    * For example, to create a custom @ref UDM that has a long and a double as
+    * additional information, the IDL would be:
+    * @code
+    * struct MyUDM // name it whatever you want
+    * {
+    *    PSAT_Header psatHeader;    // The only required field
+    *    long        myLongField;   // names of additional fields do not matter
+    *    double      myDoubleField;
+    * };
+    * @endcode
+    */
+   struct BasicUDM
+   {
+      /**
+       * @ref UDM required header. All @ref UDM types must have a field of
+       * this name and type.
+       */
+      PSAT_Header psatHeader;
+   };
+
+   /**
+    * @struct AsynchErrorInfo
+    *
+    * Information about the cause of an asynchronous error (i.e. outside of a
+    * method invocation). This structure is an input to the various
+    * @ref PSAT error callbacks.
+    *
+    * @todo DETAILED DESIGN - This may eventually be split into a structure type
+    * for each callback, similar to the DDS API.
+    */
+   struct AsynchErrorInfo
+   {
+      string get_rid_of_this; // TEMPORARY FIELD SO THE STRUCT COMPILES
+      
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @struct SharedMemoryConfig
+    *
+    * Information needed to create and/or attach to a piece of shared memory
+    * into which the @ref AD buffers will be put.
+    */
+   struct SharedMemoryConfig
+   {
+      /**
+       * @todo DETAILED DESIGN - Once we figure out exactly how the shared mem
+       *                         name will be created/used, this comment needs
+       *                         to be updated with more detail on what
+       *                         constitutes a valid name, and any other details
+       *                         like does a file already need to be existing.
+       */
+
+      /**
+       * @todo DETAILED DESIGN - The PSAT connector will internally convert this
+       *                         to a valid shared memory name for the system it
+       *                         is executing on.
+       */
+
+      /**
+       * Name of the shared memory segment.
+       */
+      string    name;
+
+      /**
+       * Size (in bytes) of the shared memory segment.
+       */
+      long long size;
+
+      /**
+       * Alignment in bytes (for cache lines, etc.) required. This value is
+       * processor dependent.
+       */
+      long long alignment;
+   };
+
+   /**
+    * @struct BufferPoolConfig
+    *
+    * Information needed to create a pool of @ref AD buffers in a piece of
+    * shared memory.
+    */
+   struct BufferPoolConfig
+   {
+      /**
+       * Offset (in bytes) from the start of the shared memory segment
+       * associated with this connector to the start of the @ref AD buffer.
+       */
+      long long buffer_start_offset;
+
+      /**
+       * Number of @ref AD buffers to place into this shared memory segment.
+       */
+      long long num_buffers;
+
+      /**
+       * The maximum size (in bytes) of each @ref AD buffer.
+       */
+      long long buffer_size;
+   };
+
+   /**
+    * @struct TransportConfig
+    *
+    * Information used to setup the transport used for attachment transfers.
+    *
+    * If the user wishes to use only shared memory, then they should set
+    * the TransportConfig::transport_preference field to only have
+    * support for shared memory (i.e., only have
+    * @b "PSAT_TRANSPORT_SHARED_MEM" in the sequence).
+    *
+    * If the user wishes to only allow or disallow specific interfaces, they
+    * can specify these in TransportConfig::allowed_interfaces list,
+    * TransportConfig::denied_interfaces list, or both. In the case where both
+    * lists are used, the TransportConfig::denied_interfaces list takes
+    * precedence.
+    */
+   struct TransportConfig
+   {
+      /**
+       * @todo DETAILED DESIGN - Think about what the behavior should be when
+       *                         an interface name and its associated IP address
+       *                         both show up in the same list.
+       */
+
+      /**
+       * Sequence of names of allowed interfaces to use for attachment
+       * transfers. Each "name" in this list can either be an interface name
+       * (e.g., "eth0") or an IP address (e.g., "10.14.255.7").
+       *
+       * If this list is empty, then all network interfaces can potentially be
+       * used for attachment transfers as long as they are not also listed in
+       * the TransportConfig::denied_interfaces list.
+       *
+       * @par Note 1:
+       * This field should only be used to allow specific interfaces @b within a
+       * transport (i.e. to allow @b eth1 in the case where a machine has @b
+       * @b eth0, @b eth1 and @b eth2 interfaces). It is @b not intended to
+       * allow an entire transport. TransportConfig::transport_preference should
+       * be used for that purpose.
+       *
+       * @par Note 2:
+       * These interfaces are only allowed if they do not also show up in the
+       * TransportConfig::denied_interfaces list since the latter takes
+       * precedence.
+       */
+      StrSeq  allowed_interfaces;
+
+      /**
+       * Sequence of names of denied interfaces that cannot be used for
+       * attachment transfers. Each "name" in this list can either be an
+       * interface name (e.g., "eth0") or an IP address (e.g., "10.14.255.7").
+       *
+       * If this list is empty, then all network interfaces can be used for
+       * attachment transfers.
+       *
+       * @par Note 1:
+       * This field should only be used to deny specific interfaces @b within a
+       * transport (i.e. to deny @b eth1 in the case where a machine has @b
+       * @b eth0, @b eth1 and @b eth2 interfaces). It is @b not intended to
+       * disallow an entire transport. TransportConfig::transport_preference
+       * should be used for that purpose.
+       *
+       * @par Note 2:
+       * These interfaces are always denied even if they show up in the
+       * TransportConfig::allowed_interfaces list since this field takes
+       * precedence.
+       */
+      StrSeq  denied_interfaces;
+
+      /// @todo DETAILED DESIGN - Figure out how to deal with conflicting
+      ///                         priorities in publisher and subscriber.
+
+      /// @todo DETAILED DESIGN - Figure out what to do when seeing a string
+      ///                         for a currently-unsupported type. Throw an
+      ///                         exception??
+
+      /**
+       * Sequence of strings listing all the transports that can be used for
+       * attachment transfers. This list is ordered by priority (first
+       * entry is highest priority and last entry is lowest). The @ref PSAT
+       * connector will attempt to find the highest priority transport that is
+       * available to both the publisher and subscriber.
+       *
+       * If a value appears in this sequence more than once, an
+       * InvalidConnectorAttributes exception will be thrown at connector
+       * initialization.
+       *
+       * @par Note 1:
+       * This is a sequence of strings so that IDL definitions will not have to
+       * be rewritten if and when future transports are supported.
+       *
+       * @par Note 2:
+       * The currently supported string values for transports are:
+       * @li "PSAT_TRANSPORT_SHARED_MEM"
+       * @li "PSAT_TRANSPORT_RDMA"
+       * @li "PSAT_TRANSPORT_TCP_IP"
+       *
+       * @par
+       * In the future, other transports may be added which would extend the
+       * list of valid strings for elements of this sequence.
+       */
+      StrSeq  transport_preference;
+   };
+
+   // ----------
+   // Exceptions
+   // ----------
+
+   /**
+    * @idlexcept SharedMemoryInitError
+    *
+    * Indicates a shared memory creation or attachment error. This exception
+    * will be thrown in the connector's ccm_activate.
+    */
+   exception SharedMemoryInitError
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @idlexcept InvalidConnectorAttributes
+    *
+    * Indicates that the @ref PSAT connector could not be initialized properly
+    * due to one or more invalid connector attributes. This exception will be
+    * thrown in the connector's ccm_activate.
+    */
+   exception InvalidConnectorAttributes
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @idlexcept NoAvailableAD_Buffer
+    *
+    * Indicates that no @ref AD buffers are available (all are in use).
+    */
+   exception NoAvailableAD_Buffer
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @idlexcept InvalidAD_BufferState
+    *
+    * Indicates that an @ref AD buffer would have been placed in an incorrect
+    * state if a method had been allowed to continue. For example, this
+    * exception would be thrown when
+    * Typed_PSAT::PSAT_BufferControl::release_buffer is called for an already
+    * released buffer.
+    */
+   exception InvalidAD_BufferState
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @idlexcept InvalidUDM
+    *
+    * Indicates that a @ref UDM has a @ref PSAT header with inconsistent values
+    * (such as negative offsets or inconsistent fields).
+    */
+   exception InvalidUDM
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /**
+    * @idlexcept UnsucessfulFlush
+    *
+    * Indicates that the @ref PSAT connector could not flush the @ref AD buffer
+    * memory in order to release all its resources so they become available for
+    * use by another connector instance or application component.
+    */
+   exception UnsucessfulFlush
+   {
+      /**
+       * @publicsection
+       */
+
+      /**
+       * Text message explaining cause of error.
+       */
+      string explanation;
+
+      /// @todo DETAILED DESIGN - figure out contents
+   };
+
+   /// @todo DETAILED DESIGN - do we need any more exceptions?
+
+   /**
+    * @namespace CCM_DDS_PSAT::Typed_PSAT
+    *
+    * Templated module which is the collection of all of the constructs that
+    * depend on the user's @ref UDM data type either directly or indirectly.
+    *
+    * @tparam T    @ref UDM data type
+    * @tparam TSeq typedef of sequence of the @ref UDM data type
+    */
+   module Typed_PSAT<typename T, sequence<T> TSeq>
+   {
+      /**
+       * Alias of the templated module corresponding to the typed DDS4CCM
+       * entities.
+       *
+       * @cond DOXYGEN_UNDERSTANDS_IDL3_PLUS
+       */
+      alias CCM_DDS::Typed<T, TSeq> DDS_Typed;
+      /**
+       * @endcond
+       */
+
+      // -------------------------------------
+      // Interfaces to be 'used' or 'provided'
+      // -------------------------------------
+
+      /**
+       * @interface PSAT_BufferControl
+       *
+       * Provides buffer lifecycle management.
+       */
+      local interface PSAT_BufferControl
+      {
+         /**
+          * Tells the @ref PSAT connector that the application component is
+          * finished writing to or reading from an @ref AD buffer. Any use of
+          * that buffer after this call is considered to be data corruption.
+          *
+          * This method only needs to be called when using the @ref AD buffer
+          * functionality. If @a datum was previously created with
+          * Typed_PSAT::PSAT_Writer::create_data_no_attach, then this method
+          * acts as a no-op.
+          *
+          * @param[in] datum @ref UDM corresponding to the @ref AD buffer
+          *
+          * @throws InvalidAD_BufferState if the buffer has already been
+          *         released.
+          * @throws InvalidUDM if the PSAT_Header portion of the @ref UDM cannot
+          *         be validated
+          *
+          * @note
+          * For every @b DDS_Typed::Listener::on_one_data callback invocation,
+          * the application component should have a corresponding
+          * Typed_PSAT::PSAT_BufferControl::release_buffer call.
+          *
+          * @warning
+          * This method should @b NOT be called in the
+          * Typed_PSAT::PSAT_Interceptor::on_metadata_intercept callback.
+          */
+         void release_buffer(in T datum)
+               raises(InvalidAD_BufferState, InvalidUDM);
+
+         /**
+          * Requests that the @ref PSAT connector give up use of its buffers
+          * entirely as soon as possible.
+          *
+          * When this method is called on the publisher-side, all of its buffers
+          * currently in use will be invalidated.
+          *
+          * Certain transports (e.g., zero-copy shared memory) share buffers
+          * between the publisher and the subscriber. In those cases, the
+          * subscribers will be notified of the buffer invalidation by having
+          * their
+          * Typed_PSAT::PSAT_ReaderStatusListener::on_data_corruption callbacks
+          * called for each buffer they are using from the flushed publisher.
+          * Any further use of these @ref AD buffers after this point is
+          * considered to be data corruption.
+          *
+          * When this method is called on the subscriber-side, all of its
+          * buffers in use will be released and any further use after that point
+          * is considered to be data corruption.
+          *
+          * @throws UnsucessfulFlush if a fatal error happened during flush.
+          */
+         void flush() raises(UnsucessfulFlush);
+      };
+
+      /**
+       * @addtogroup PSAT_Publisher
+       * @{
+       */
+
+      /**
+       * @interface PSAT_Writer
+       *
+       * Publisher side @ref UDM/@ref AD message setup and management.
+       *
+       * @note
+       * The following code is an example of how one might use this interface:
+       * @code
+       * void MyClass::someMethod()
+       * {
+       *    // call create data and get new UDM
+       *    //
+       *    MyUDM_Module::MyUDM_udm::PSAT_Writer_var writerObj;
+       *
+       *    // ... get PSAT_Writer object reference from context ...
+       *
+       *    // All UDMs are fixed-length so they must be allocated by the caller
+       *    //
+       *    MyUDM_Module::MyUDM udm;
+       *
+       *    try
+       *    {
+       *       writerObj->create_data(udm);
+       *
+       *       // get AD buffer pointer. Note: bufferPtr is defined as "void *"
+       *       // for the purposes of this example.  In reality, it could be
+       *       // any type of pointer. Additionally this pointer could be placed
+       *       // into a member variable, used in a method call, etc. instead of
+       *       // being used directly in this try block.
+       *       //
+       *       void * bufferPtr = reinterpret_cast<void *>(
+       *             udm.psatHeader.sample_start_address);
+       *
+       *       // put data into buffer using pointer
+       *       // change any UDM parameters you would like
+       *
+       *       // write data to PSAT
+       *       //
+       *       writerObj->write_one(udm);
+       *
+       *       // finished with buffer so release it
+       *       //
+       *       writerObj->release_buffer(udm);
+       *    }
+       *    catch(CCM_DDS::InternalError & excep) // DDS error
+       *    {
+       *       // do logging, recovery, etc.
+       *    }
+       *    catch(CCM_DDS_PSAT::NoAvailableAD_Buffer & excep) // no buffers
+       *    {
+       *       // do logging, recovery, etc.
+       *    }
+       *    catch(CCM_DDS_PSAT::InvalidAD_BufferState & excep)
+       *    { // could not release
+       *       // do logging, recovery, etc.
+       *    }
+       *    catch(CCM_DDS_PSAT::InvalidUDM & excep) // UDM is invalid
+       *    {
+       *       // do logging, recovery, etc.
+       *    }
+       * }
+       * @endcode
+       *
+       * @par Important:
+       * The code example above assumes the developer wishes to perform
+       * different logging and recovery actions for each possible error. This
+       * is not always necessary. All CORBA user exceptions inherit from
+       * CORBA::UserException in the IDL to C++ mapping. Therefore, the user
+       * may only catch this one exception type and do common logging, etc. if
+       * desired.
+       */
+      local interface PSAT_Writer : PSAT_BufferControl
+      {
+         /**
+          * Get a new @ref UDM with a new @ref AD buffer to use (if a buffer is
+          * available) for a new sample to write.
+          *
+          * @param[out] datum @ref UDM corresponding to the new sample
+          *
+          * @throws CCM_DDS::InternalError on DDS error
+          * @throws NoAvailableAD_Buffer if all @ref AD buffers are in use
+          *
+          * @par Note 1:
+          * The @ref UDM type given as an output parameter has the information
+          * needed to get to the actual @ref AD buffer in memory. The pointer is
+          * located in the PSAT_Header (the @b psatHeader field of the @ref UDM)
+          * in the field PSAT_Header.sample_start_address
+          *
+          * @par Note 2:
+          * This method and Typed_PSAT::PSAT_Writer::create_data_override differ
+          * only in how they handle "out of buffer" conditions.
+          */
+         void create_data(out T datum)
+               raises(CCM_DDS::InternalError, NoAvailableAD_Buffer);
+
+         /**
+          * Get a new @ref UDM with a new @ref AD buffer to use (without regard
+          * to buffer availability) for a new sample to write.
+          *
+          * If no free buffers are available (all are in use), then the oldest
+          * "in use" buffer will be reclaimed. The @ref PSAT connector will
+          * notify any existing readers of that buffer that it has been
+          * "corrupted." The reclaimed @ref AD buffer will be made available to
+          * the caller to use for a new sample.
+          *
+          * In addition to being used directly in the application component's
+          * main path, this method can also be used in an exception handler that
+          * was invoked as a result of a Typed_PSAT::PSAT_Writer::create_data
+          * call failing and throwing a NoAvailableAD_Buffer exception.
+          *
+          * @param[out] datum @ref UDM corresponding to the new sample
+          *
+          * @throws CCM_DDS::InternalError on DDS error
+          *
+          * @par Note 1:
+          * The @ref UDM type given as an output parameter has the information
+          * needed to get to the actual @ref AD buffer in memory. The pointer is
+          * located in the PSAT_Header (the @b psatHeader field of the @ref UDM)
+          * in the field PSAT_Header.sample_start_address
+          *
+          * @par Note 2:
+          * This method and Typed_PSAT::PSAT_Writer::create_data differ only in
+          * how they handle "out of buffer" conditions.
+          */
+         void create_data_override(out T datum)
+               raises(CCM_DDS::InternalError);
+
+         /**
+          * Get a new @ref UDM that corresponds to an existing @ref AD buffer to
+          * use for a new sample to write.
+          *
+          * @param[in] existing_datum @ref UDM from a previous create_data
+          * call to be used in providing the existing @ref AD buffer to use
+          * when creating the new @ref UDM in this method.
+          *
+          * @param[out] datum @ref UDM corresponding to the new sample created
+          * using the existing @ref AD buffer referenced in @ref existing_datum.
+          *
+          * @throws CCM_DDS::InternalError on DDS error
+          * @throws InvalidAD_BufferState if no such buffer exists
+          */
+         void create_data_w_existing(in T existing_datum, out T datum)
+               raises(CCM_DDS::InternalError, InvalidAD_BufferState);
+
+         /**
+          * This method is used to request notification (via the
+          * PSAT_WriterStatusListener::on_buffer_available callback) when an
+          * @ref AD buffer becomes available.
+          *
+          * If a timeout occurs while waiting for a free buffer, then the
+          * PSAT_WriterStatusListener::on_buffer_wait_timeout callback will be
+          * called. If the timeout argument is 0, then the timeout is infinite.
+          *
+          * This method is intended to be used after first attempting to get an
+          * entirely new @ref AD buffer using the
+          * Typed_PSAT::PSAT_Writer::create_data call and failing with a
+          * NoAvailableAD_Buffer exception.
+          *
+          * @param[in] timeoutUsec timeout (in microseconds) to wait for
+          *                        a new buffer. Infinite = 0 value.
+          *
+          * @todo Add code example here showing the create data call failing
+          *       the check of that, and then calling this function
+          */
+         void notify_on_buffer_available(in long long timeoutUsec);
+
+         /**
+          * Publishes the @ref UDM portion of the @ref PSAT sample.
+          *
+          * @note
+          * If the @ref UDM corresponds with an @ref AD buffer, an attachment
+          * transfer may then be setup on the subscriber side. If the attachment
+          * transport supports @b zero-copy, then the "transfer" will only
+          * consist of validating portions of the PSAT_Header in the @ref UDM.
+          *
+          * @param[in] datum @ref UDM to publish
+          *
+          * @throws CCM_DDS::InternalError on DDS error
+          * @throws InvalidUDM if the PSAT_Header portion of the @ref UDM
+          *         cannot be validated
+          */
+         void write_one(in T datum)
+               raises(CCM_DDS::InternalError, InvalidUDM);
+      };
+
+      /**
+       * @interface PSAT_WriterStatusListener
+       *
+       * Set of callbacks on the user application's writer (publisher) component
+       * which the connector will call in the event of an asynchronous error or
+       * major status change (e.g., buffer now available).
+       */
+      local interface PSAT_WriterStatusListener
+      {
+         /**
+          * Called when a buffer becomes available if the user previously
+          * requested notification via the
+          * PSAT_Writer::notify_on_buffer_available() call.
+          *
+          * @note
+          * This callback will only be called a maximum of one time after
+          * a PSAT_Writer::notify_on_buffer_available() call. Another notify
+          * call must be made to be notified again.
+          */
+         void on_buffer_available();
+
+         /**
+          * Called when the available buffer wait timeout has expired and no
+          * buffer is available. This will only happen if the user previously
+          * requested notification of an available buffer via the
+          * PSAT_Writer::notify_on_buffer_available() call.
+          *
+          * @note
+          * This callback will only be called a maximum of one time after
+          * a PSAT_Writer::notify_on_buffer_available() call. Another notify
+          * call must be made to be notified again.
+          */
+         void on_buffer_wait_timeout();
+
+         /// @todo DETAILED DESIGN - figure out if any other error/status
+         ///       callbacks need to be here
+      };
+
+      /**
+       * @}
+       */
+
+      /**
+       * @addtogroup PSAT_Subscriber
+       * @{
+       */
+
+      /**
+       * @interface PSAT_Interceptor
+       *
+       * User subscriber application callback to intercept and allow
+       * modification of the published @ref UDM prior to its associated @ref AD
+       * buffer being pulled from the publisher.
+       */
+      local interface PSAT_Interceptor
+      {
+         /**
+          * Callback called by the @ref PSAT connector upon reception of a
+          * @ref UDM (prior to the attachment transfer of the @ref AD portion).
+          * This callback (which is part of the subscriber application
+          * component) can change the @ref UDM to affect how and whether the
+          * attachment transfer occurs.
+          *
+          * For example, the subscriber application component may change the
+          * offset into local memory where the data is placed or may even elect
+          * not to perform the attachment transfer at all.
+          *
+          * @note
+          * If the changes made here would force a copy and no copies are
+          * supported by the underlying attachment transport (i.e. the zero-copy
+          * shared memory transport), the
+          * PSAT_ReaderStatusListener::on_copy_unsupported callback will be
+          * invoked and the transfer will be cancelled.
+          *
+          * @note
+          * If the @ref UDM received does not correspond to an attachment
+          * transfer, this callback will @b NOT be invoked.
+          *
+          * @warning
+          * This callback executes in the context of the @ref DDS transport
+          * receive thread. This is different than any threads which are part
+          * of the @ref CCM container. Additional caveats are in order:
+          *   - Proper multi-threading programming techniques should be used
+          *     here (for example, using locks for shared state)
+          *   - Lengthy computations should be avoided since they will hold off
+          *     any other messages on that transport and may cause the other
+          *     messages to backup or be dropped.
+          *
+          * @param[in,out] datum received @ref UDM
+          */
+         void on_metadata_intercept(inout T datum);
+      };
+
+      /**
+       * @interface PSAT_ReaderStatusListener
+       *
+       * Set of callbacks on the user's reader component which the @ref PSAT
+       * connector will call in the event of an asynchronous error or major
+       * status change (e.g., data corruption).
+       */
+      local interface PSAT_ReaderStatusListener : CCM_DDS::PortStatusListener
+      {
+         /**
+          * Callback invoked by the @ref PSAT connector when an operation
+          * requiring a copy is attempted, but the attachment transport (i.e.
+          * zero-copy shared memory) does not support copies.
+          *
+          * @param[in] datum @ref UDM which caused the error
+          * @param[in] info  additional info which may be helpful for debug
+          */
+         void on_copy_unsupported(in T datum, in AsynchErrorInfo info);
+
+         /**
+          * Callback invoked by the @ref PSAT connector when an @ref AD buffer
+          * has possibly been corrupted. The user component should stop using
+          * this buffer as soon as possible.
+          *
+          * This callback could be invoked if a publisher calls
+          * PSAT_Writer::create_data_override in order to force a new buffer to
+          * be available.
+          * If so, that buffer, which is shared with local subscribers, can be
+          * overwritten at any time and so must be considered corrupted by any
+          * local subscribers.
+          *
+          * @param[in] datum @ref UDM which corresponds to the corrupted
+          * @ref AD buffer
+          *
+          * @param[in] info  additional info which may be helpful for debug
+          */
+         void on_data_corruption(in T datum, in AsynchErrorInfo info);
+
+         /**
+          * Callback invoked by the @ref PSAT connector when an attachment
+          * transfer could not be completed. This could be caused by, for
+          * example, a publisher component crashing in the middle of the
+          * transfer.
+          *
+          * @param[in] datum @ref UDM which corresponds to the incompletely
+          *                  transferred buffer
+          * @param[in] info  additional info which may be helpful for debug
+          */
+         void on_incomplete_transfer(in T datum, in AsynchErrorInfo info);
+
+         /**
+          * Callback invoked by the @ref PSAT connector when a @ref UDM cannot
+          * be validated (i.e., it contains negative offsets or inconsistent
+          * fields).
+          *
+          * @param[in] datum @ref UDM which caused the error
+          * @param[in] info  additional info which may be helpful for debug
+          */
+         void on_invalid_UDM(in T datum, in AsynchErrorInfo info);
+
+         /// @todo DETAILED DESIGN - figure out if any other error/status
+         ///       callbacks need to be here
+      };
+
+      /**
+       * @}
+       */
+
+      // --------------
+      // DDS PSAT Ports
+      // --------------
+
+      /**
+       * @cond DOXYGEN_UNDERSTANDS_IDL3_PLUS
+       */
+      porttype DDS_PSAT_Write
+      {
+         uses     PSAT_Writer               data;
+         uses     DDS::DataWriter           dds_entity;
+         provides PSAT_WriterStatusListener status;
+      };
+
+      porttype DDS_PSAT_Listen
+      {
+         uses     DDS_Typed::Reader            data;
+         provides DDS_Typed::Listener          data_listener;
+         uses     CCM_DDS::DataListenerControl data_control;
+         provides PSAT_ReaderStatusListener    status;
+         uses     DDS::DataReader              dds_entity;
+         provides PSAT_Interceptor             interceptor;
+         uses     PSAT_BufferControl           buffer_control;
+      };
+
+      // ------------------
+      // DDS PSAT Connector
+      // ------------------
+
+      connector DDS_PSAT_Event : CCM_DDS::DDS_TopicBase
+      {
+         mirrorport DDS_PSAT_Write       supplier;
+         mirrorport DDS_PSAT_Listen      consumer;
+
+         attribute  SharedMemoryConfig   shared_memory_config
+               setraises(NonChangeable);
+
+         attribute  BufferPoolConfig     attach_buffer_config
+               setraises(NonChangeable);
+
+         attribute  TransportConfig      transports_config
+               setraises(NonChangeable);
+      };
+      /**
+       * @endcond
+       */
+   };
+};
+
+#endif // CCM_DDS_PSAT_IDL
+
+/// @}
+//==============================================================================
+//                            U N C L A S S I F I E D
+//==============================================================================

@@ -6,7 +6,9 @@
 #pragma ciao lem "HelloE.idl"
 #pragma ciao ami4ccm interface "Hello::MyFoo"
 #pragma ciao ami4ccm interface "Hello::MyDerived"
+#pragma ciao ami4ccm interface "Hello::MyBar"
 #pragma ciao ami4ccm interface "Foo::MyFoo"
+#pragma ciao ami4ccm interface "Foo::MyBar"
 
 module Hello
 {
@@ -39,15 +41,38 @@ module Hello
       long do_someting (in string str);
       attribute long my_attribute;
     };
+
+  interface MyBar : MyDerived
+    {
+      double bar_return (in string in_str, in string answer)
+        raises (InternalError);
+      void bye (out long answer, out double db)
+        raises (InternalError);
+      attribute short rw_bar_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+      readonly attribute short ro_bar_attrib
+        raises (InternalError);
+    };
 };
 
 module Foo
 {
+  struct TestTopic 
+    {
+      string key;
+      long x;
+    };
+
   interface MyFoo
     {
-      long myop (in string str);
+      long myop (in TestTopic topic);
+    };
+
+  interface MyBar : MyFoo
+    {
+      TestTopic mybarop (in string str, in long lg, out double db);
     };
 };
 
 #endif
-

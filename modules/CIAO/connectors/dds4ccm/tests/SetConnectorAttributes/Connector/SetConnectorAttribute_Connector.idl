@@ -18,10 +18,7 @@ module SetConnectorAttribute
 {
   module ::CCM_DDS::Typed
     < ::SetConnectorAttributeTest, ::SetConnectorAttributeTestSeq>
-    SetConnectorAttributeTestConn;
-  connector SetConnectorAttribute_Connector : SetConnectorAttributeTestConn::DDS_Event
-  {
-  };
+    SetConnectorAttributeTestConnector;
 };
 
 #endif /* SetConnectorAttribute_CONNECTOR_IDL_ */

@@ -14,7 +14,7 @@ module LOBO_Test
 {
   component Receiver
   {
-    port ListenOneByOneTestConn::DDS_Listen info_listen;
+    port ListenOneByOneTestConnector::DDS_Listen info_listen;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

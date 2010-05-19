@@ -14,7 +14,7 @@ module QFLS_Test
 {
   component Receiver
   {
-    port QueryFilterListenStateTestConn::DDS_StateListen info_state;
+    port QueryFilterListenStateTestConnector::DDS_StateListen info_state;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

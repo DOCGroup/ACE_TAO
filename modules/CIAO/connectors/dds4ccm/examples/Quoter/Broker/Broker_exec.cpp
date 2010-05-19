@@ -243,7 +243,7 @@ namespace CIAO_Quoter_Broker_Impl
 
   // Port operations.
 
-  ::CCM_DDS::Quoter::CCM_Listener_ptr
+  ::Quoter::CCM_Listener_ptr
   Broker_exec_i::get_info_out_data_listener (void)
   {
     ACE_DEBUG ((LM_DEBUG, "*************** out listener\n"));

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_Plan_Launcher_Impl) : dance_lib, dance_logger, dance_convert_plan, \
+project(DAnCE_Plan_Launcher_Impl) : install_lib, dance_lib, dance_logger, dance_convert_plan, \
                             dance_executionmanager_stub, \
                             dance_domainapplication_stub, \
                             dance_domainapplicationmanager_stub, \
@@ -21,7 +21,7 @@ project(DAnCE_Plan_Launcher_Impl) : dance_lib, dance_logger, dance_convert_plan,
   }
 }
         
-project(Plan_Launcher_Exec) : dance_exe, dance_plan_launcher {
+project(Plan_Launcher_Exec) : install, dance_exe, dance_plan_launcher {
   exename = dance_plan_launcher
   Source_Files {
     Plan_Launcher.cpp

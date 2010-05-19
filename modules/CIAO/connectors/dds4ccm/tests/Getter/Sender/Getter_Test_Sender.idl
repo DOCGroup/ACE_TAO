@@ -17,8 +17,8 @@ module Getter_Test
 {
   component Sender
   {
-    port GetterTestConn::DDS_Write info_write;
-    port GetterFixedConn::DDS_Write info_fixed;
+    port GetterTestConnector::DDS_Write info_write;
+    port GetterFixedConnector::DDS_Write info_fixed;
 
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 

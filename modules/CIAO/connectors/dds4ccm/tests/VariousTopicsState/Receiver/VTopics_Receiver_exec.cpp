@@ -84,10 +84,10 @@ namespace CIAO_VTopics_Receiver_Impl
     return new ConnectorStatusListener_exec_i (this->subscription_matched_);
   }
 
-  VTopics::TestTopicConn::CCM_Listener_ptr
+  ::VTopics::TestTopicConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return VTopics::TestTopicConn::CCM_Listener::_nil ();
+    return ::VTopics::TestTopicConnector::CCM_Listener::_nil ();
   }
 
   CCM_DDS::CCM_PortStatusListener_ptr

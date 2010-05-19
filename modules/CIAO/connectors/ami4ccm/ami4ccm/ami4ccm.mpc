@@ -1,6 +1,6 @@
 // $Id$
 
-project(AMI4CCM_idl_gen) : componentidldefaults {
+project(AMI4CCM_idl_gen) : install, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMI4CCM_STUB_Export \
               -Wb,stub_export_include=ami4ccm_stub_export.h \
@@ -14,7 +14,7 @@ project(AMI4CCM_idl_gen) : componentidldefaults {
   }
 }
 
-project (AMI4CCM_lem_gen) : ciaoidldefaults {
+project (AMI4CCM_lem_gen) : install, ciaoidldefaults {
   custom_only = 1
   after += AMI4CCM_idl_gen
   idlflags += -I$(CIAO_ROOT)/connectors \
@@ -27,7 +27,7 @@ project (AMI4CCM_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI4CCM_stub) : ciao_lib, messaging, ccm_stub {
+project(AMI4CCM_stub) : install, ciao_lib, messaging, ccm_stub {
   after += AMI4CCM_idl_gen
   sharedname = AMI4CCM_stub
   dynamicflags = AMI4CCM_STUB_BUILD_DLL
@@ -45,14 +45,13 @@ project(AMI4CCM_stub) : ciao_lib, messaging, ccm_stub {
   }
 
   Inline_Files {
-    ami4ccmC.inl
   }
 
   IDL_Files {
   }
 }
 
-project (AMI4CCM_lem_stub) : ccm_lem_stub, ciao_lib, ciao_output, taolib, valuetype, ifr_client {
+project (AMI4CCM_lem_stub) : install, ccm_lem_stub, ciao_lib, ciao_output, taolib, valuetype, ifr_client {
   after += AMI4CCM_stub AMI4CCM_lem_gen
   libs  += AMI4CCM_stub
   includes += $(CIAO_ROOT)/connectors
@@ -75,7 +74,7 @@ project (AMI4CCM_lem_stub) : ccm_lem_stub, ciao_lib, ciao_output, taolib, valuet
   }
 }
 
-project (AMI4CCM_svnt) : ciao_servant, ciao_lib {
+project (AMI4CCM_svnt) : install, ciao_servant, ciao_lib {
   after += AMI4CCM_lem_stub
   libs += AMI4CCM_lem_stub AMI4CCM_stub
   includes += $(CIAO_ROOT)/connectors
@@ -98,6 +97,5 @@ project (AMI4CCM_svnt) : ciao_servant, ciao_lib {
 
   Inline_Files {
     ami4ccmS.inl
-    ami4ccm_svnt.inl
   }
 }

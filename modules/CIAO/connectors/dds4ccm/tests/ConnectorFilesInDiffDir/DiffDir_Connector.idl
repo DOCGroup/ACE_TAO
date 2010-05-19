@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef DIFFDIR_CONNECTOR_IDL
+#define DIFFDIR_CONNECTOR_IDL
+
+#include <Components.idl>
+#include "DiffDir.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "DiffDir_ConnectorE.idl"
+
+module ::CCM_DDS::Typed < ::DiffDirType, ::DiffDirTypeSeq> DiffDirConnector;
+
+#endif

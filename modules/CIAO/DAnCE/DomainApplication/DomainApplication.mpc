@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: dance_lib, dance_output, dance_domainapplication_skel, \
+project: install, dance_lib, dance_output, dance_domainapplication_skel, \
     dance_nodeapplicationmanager_stub, \
     dance_nodeapplicationmanager_skel, \
     dance_tools, dance_logger {
@@ -11,5 +11,8 @@ project: dance_lib, dance_output, dance_domainapplication_skel, \
   Source_Files {
     Domain_Application_Impl.cpp
   }
-}
 
+  specific {
+    install_dir = DAnCE/DomainApplication
+  }
+}

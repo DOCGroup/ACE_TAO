@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VTopic_Connector_Impl</string>
+          <string>create_VTopic_TestTopicConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VTopic_Connector_Servant</string>
+          <string>create_VTopic_TestTopicConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_String_Connector_Impl</string>
+          <string>create_VTopic_TopicStringConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -134,7 +134,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_String_Connector_Servant</string>
+          <string>create_VTopic_TopicStringConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -175,7 +175,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Array_Connector_Impl</string>
+          <string>create_VTopic_TopicArrayConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -186,7 +186,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Array_Connector_Servant</string>
+          <string>create_VTopic_TopicArrayConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -227,7 +227,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Valuetype_Connector_Impl</string>
+          <string>create_VTopic_TopicValuetypeConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -238,7 +238,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Valuetype_Connector_Servant</string>
+          <string>create_VTopic_TopicValuetypeConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -279,7 +279,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Union_Connector_Impl</string>
+          <string>create_VTopic_TopicUnionConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -290,7 +290,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Union_Connector_Servant</string>
+          <string>create_VTopic_TopicUnionConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -331,7 +331,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Seq_Connector_Impl</string>
+          <string>create_VTopic_TopicSeqConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -342,7 +342,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_VTopic_VT_Seq_Connector_Servant</string>
+          <string>create_VTopic_TopicSeqConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>

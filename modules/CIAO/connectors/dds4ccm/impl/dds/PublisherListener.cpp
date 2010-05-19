@@ -30,7 +30,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::~CCM_DDS_PublisherListener_i");
     }
 
-    ::DDS::DataWriter_ptr
+    ::DDS::CCM_DataWriter_ptr
     CCM_DDS_PublisherListener_i::get_datawriter_proxy (::DDSDataWriter * the_writer)
     {
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_i::get_datawriter_proxy");
@@ -42,16 +42,24 @@ namespace CIAO
                                                     "CCM_DataWriterProxy");
       if (!prop)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataReaderListener_i::get_datareader_proxy -"
-                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
-          return ::DDS::DataWriter::_nil ();
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        "CCM_DDS_PublisherListener_i::get_datareader_proxy -"
+                        "Unable to retrieve proxy from PropertyQosProfile\n"));
+          return ::DDS::CCM_DataWriter::_nil ();
         }
-      ::DDS::CCM_DataWriter_ptr writer =
-        reinterpret_cast < ::DDS::CCM_DataWriter_ptr >
+
+      CCM_DDS_DataWriter_i* writer =
+        reinterpret_cast < CCM_DDS_DataWriter_i* >
           (ACE_OS::atol (prop->value));
 
-      return reinterpret_cast < ::DDS::DataWriter_ptr >
-          (writer);
+      if (!writer)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        "CCM_DDS_PublisherListener_i::get_datareader_proxy -"
+                        "Unable to retrieve writer from PropertyQosProfile\n"));
+        }
+
+      return writer;
     }
 
     void

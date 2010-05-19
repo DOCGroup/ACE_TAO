@@ -14,12 +14,6 @@
 
 #pragma ciao lem "Connector/CSL_QoSTest_ConnectorE.idl"
 
-module CSL_QoSTest
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
-  connector CSL_QoSTest_Connector : TestTopicConn::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> CSLQoSConnector;
 
 #endif /* CSL_QoSTest_CONNECTOR_IDL_ */

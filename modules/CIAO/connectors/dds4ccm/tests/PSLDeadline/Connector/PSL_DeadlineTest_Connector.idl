@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/PSL_DeadlineTest_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
-};
-
 module PSL_DeadlineTest
 {
-  connector PSL_DeadlineTest_Connector : ::CCM_DDS::TestTopic::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> PSLDeadlineConnector;
 };
 
 #endif /* PSL_DeadlineTest_CONNECTOR_IDL_ */

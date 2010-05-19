@@ -220,10 +220,10 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   }
 
   // Port operations.
-  ::CoherentUpdate_Test::CoherentUpdateTestConn::CCM_Listener_ptr
+  ::CoherentUpdate_Test::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return ::CoherentUpdate_Test::CoherentUpdateTestConn::CCM_Listener::_nil ();
+    return ::CoherentUpdate_Test::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr

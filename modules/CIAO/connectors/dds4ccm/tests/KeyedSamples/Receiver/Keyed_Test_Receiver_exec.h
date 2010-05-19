@@ -64,7 +64,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::CCM_DDS::KeyedTest::CCM_Listener_ptr
+    virtual ::KeyedTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -82,7 +82,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
   private:
     ::Keyed_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::KeyedTest::Reader_var reader_;
+    ::KeyedTestConnector::Reader_var reader_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;

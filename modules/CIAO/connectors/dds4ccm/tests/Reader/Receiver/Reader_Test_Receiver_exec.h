@@ -71,7 +71,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Port operations.
-    virtual ::CCM_DDS::ReaderTest::CCM_Listener_ptr
+    virtual ::Reader_Test::ReaderTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -106,7 +106,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
   private:
     ::Reader_Test::CCM_Receiver_Context_var context_;
-    ::CCM_DDS::ReaderTest::Reader_var reader_;
+    ::Reader_Test::ReaderTestConnector::Reader_var reader_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     CORBA::Boolean has_run_;

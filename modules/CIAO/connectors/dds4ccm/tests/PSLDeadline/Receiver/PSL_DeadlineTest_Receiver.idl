@@ -14,8 +14,8 @@ module PSL_DeadlineTest
 {
   component Receiver
   {
-    port CCM_DDS::TestTopic::DDS_Get info_get;
-    port CCM_DDS::TestTopic::DDS_Listen info_out;
+    port PSLDeadlineConnector::DDS_Get info_get;
+    port PSLDeadlineConnector::DDS_Listen info_out;
   };
 };
 

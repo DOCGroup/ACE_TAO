@@ -16,7 +16,7 @@ module Updater
 {
   component Sender
   {
-     port CCM_DDS::TestTopic::DDS_Update test_topic_update;
+     port UpdaterConnector::DDS_Update test_topic_update;
   };
 };
 

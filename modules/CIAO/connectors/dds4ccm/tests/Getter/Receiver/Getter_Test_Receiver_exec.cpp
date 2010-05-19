@@ -476,10 +476,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
       }
   }
 
-  ::Getter_Test::GetterTestConn::CCM_Listener_ptr
+  ::Getter_Test::GetterTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return ::Getter_Test::GetterTestConn::CCM_Listener::_nil ();
+    return ::Getter_Test::GetterTestConnector::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr

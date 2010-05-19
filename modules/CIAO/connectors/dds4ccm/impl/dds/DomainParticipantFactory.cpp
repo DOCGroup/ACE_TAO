@@ -54,7 +54,7 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
 
-      ACE_CString qos_profile = ACE_TEXT ("default");
+      ACE_CString qos_profile = "default";
 
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                       this->dps_mutex_, CORBA::INTERNAL ());
@@ -131,7 +131,7 @@ namespace CIAO
         }
 
       ACE_CString qos_profile = library_name;
-      qos_profile += ACE_TEXT ("#");
+      qos_profile += "#";
       qos_profile += profile_name;
 
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,

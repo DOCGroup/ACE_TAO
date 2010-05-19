@@ -14,12 +14,6 @@
 
 #pragma ciao lem "Connector/CSL_USTest_ConnectorE.idl"
 
-module CSL_USTest
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopicConn;
-  connector CSL_USTest_Connector : TestTopicConn::DDS_Event
-  {
-  };
-};
+module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> CSL_US_Connector;
 
 #endif /* CSL_USTest_CONNECTOR_IDL_ */

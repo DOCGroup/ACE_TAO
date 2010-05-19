@@ -17,7 +17,7 @@ module CoherentWrite_Test
 {
   component Sender
   {
-    port CCM_DDS::CoherentWriteTest::DDS_Write info_write;
+    port CoherentWriteTestConnector::DDS_Write info_write;
 
     uses CoherentWriteStarter start_reader;
     provides CoherentWriteRestarter restart_writer;

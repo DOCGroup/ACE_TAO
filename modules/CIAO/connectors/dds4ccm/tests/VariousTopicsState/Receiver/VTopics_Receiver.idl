@@ -14,7 +14,7 @@ module VTopics
 {
   component Receiver
   {
-    port TestTopicConn::DDS_Listen info_out;
+    port TestTopicConnector::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener connector_status;
    };
 };

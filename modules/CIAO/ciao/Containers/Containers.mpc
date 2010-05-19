@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIAO_Container_Base_idl) : taoidldefaults {
+project(CIAO_Container_Base_idl) : install, taoidldefaults {
   custom_only = 1
 
   idlflags  += -Wb,export_include=Container_Base_export.h \
@@ -10,8 +10,11 @@ project(CIAO_Container_Base_idl) : taoidldefaults {
   IDL_Files {
     Container_Base.idl
   }
+  specific {
+    install_dir = ciao/Containers
+  }
 }
-project(CIAO_Container_Base) : ciao_lib, ccm_svnt, ciao_servant_activator, ciao_port_activator_stub  {
+project(CIAO_Container_Base) : install, ciao_lib, ccm_svnt, ciao_servant_activator, ciao_port_activator_stub  {
   after += CIAO_Container_Base_idl
   dynamicflags += CIAO_CONTAINER_BASE_BUILD_DLL
 
@@ -26,5 +29,9 @@ project(CIAO_Container_Base) : ciao_lib, ccm_svnt, ciao_servant_activator, ciao_
   }
   Header_Files {
     Container_Base.h
+    Container_Base_export.h
+  }
+  specific {
+    install_dir = ciao/Containers
   }
 }

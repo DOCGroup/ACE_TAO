@@ -15,8 +15,8 @@ module Getter_Test
 {
   component Receiver
   {
-    port GetterTestConn::DDS_Get info_get;
-    port GetterFixedConn::DDS_Get info_fixed;
+    port GetterTestConnector::DDS_Get info_get;
+    port GetterFixedConnector::DDS_Get info_fixed;
 
     provides GetInvoker getter_invoke;
   };

@@ -14,7 +14,7 @@ module Hello
 {
   component Receiver
   {
-    port HelloConn::DDS_Listen info_out;
+    port Hello::DDS_Listen info_out;
     provides CCM_DDS::ConnectorStatusListener info_out_connector_status;
 
     attribute string name;

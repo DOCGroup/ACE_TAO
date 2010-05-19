@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/PSL_SampleLost_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
-};
-
 module PSL_SampleLost
 {
-  connector PSL_SampleLost_Connector : ::CCM_DDS::TestTopic::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> PSL_SampleLostConnector;
 };
 
 #endif /* PSL_SampleLost_CONNECTOR_IDL_ */

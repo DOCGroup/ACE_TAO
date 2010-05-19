@@ -14,16 +14,9 @@
 
 #pragma ciao lem "Connector/SL_OneByOne_ConnectorE.idl"
 
-module CCM_DDS
-{
-  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> TestTopic;
-};
-
 module SL_OneByOne
 {
-  connector SL_OneByOne_Connector : ::CCM_DDS::TestTopic::DDS_State
-  {
-  };
+  module ::CCM_DDS::Typed < ::TestTopic, ::TestTopicSeq> SL_OneByOneConnector;
 };
 
 #endif /* SL_OneByOne_CONNECTOR_IDL_ */

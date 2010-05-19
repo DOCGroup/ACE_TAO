@@ -1,6 +1,6 @@
 //$Id$
 
-project (XSC_XML_Generation) : xscdefaults {
+project (XSC_XML_Generation) : install, xscdefaults {
   requires += xsc
 
   xscflags += --cxx-banner-file $(DANCE_ROOT)/docs/schema/xsc-banner.cpp
@@ -31,7 +31,7 @@ project (XSC_XML_Generation) : xscdefaults {
   }
 }
 
-project (XSC_XML_Handlers) : acelib, xerces, dance_lib, ciao_xml_utils {
+project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, ciao_xml_utils {
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros += XML_USE_PTHREADS
@@ -64,7 +64,7 @@ project (XSC_XML_Handlers) : acelib, xerces, dance_lib, ciao_xml_utils {
 
 }
 
-project (XSC_Config_Handlers) : dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance, dance_logger {
+project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance, dance_logger {
   after += XSC_DynAny_Handler \
            XSC_Config_Handlers_Common
 
@@ -105,7 +105,7 @@ project (XSC_Config_Handlers) : dance_deployment_stub, dance_config_handlers_bas
 
 }
 
-project (XSC_Config_Handlers_Common) : dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance {
+project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance {
   after += XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers_Common
   dynamicflags = CONFIG_HANDLERS_COMMON_BUILD_DLL

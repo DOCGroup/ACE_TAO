@@ -16,10 +16,7 @@
 
 module PortUsageEvent_Test
 {
-  module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConn;
-  connector PortUsageEvent_Connector : PortUsageTestConn::DDS_Event
-  {
-  };
+  module ::CCM_DDS::Typed < ::PortUsageTest, ::PortUsageTestSeq> PortUsageTestConnector;
 };
 
 #endif /* PORTUSAGE_EVENT_TEST_CONNECTOR_IDL_ */
