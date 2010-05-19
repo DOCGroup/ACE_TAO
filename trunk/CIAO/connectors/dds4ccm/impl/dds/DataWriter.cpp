@@ -312,7 +312,7 @@ namespace CIAO
                                                     value,
                                                     DDS_BOOLEAN_FALSE);
           dw->set_qos (qos);
-          delete value;
+          delete[] value;
         }
       this->impl_ = dw;
     }

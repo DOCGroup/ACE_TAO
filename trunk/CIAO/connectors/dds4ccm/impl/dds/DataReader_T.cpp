@@ -662,7 +662,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_proxy (
                                             value,
                                             DDS_BOOLEAN_FALSE);
   dr->set_qos (qos);
-  delete value;
+  delete[] value;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
