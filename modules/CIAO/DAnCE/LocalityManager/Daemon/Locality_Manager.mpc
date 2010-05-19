@@ -7,7 +7,7 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
 
    includes += $(CIAO_ROOT)
    libs += CIAO_Deployment_Handlers
-
+   after += CIAO_Deployment_Handlers
    Source_Files {
      Locality_Manager_Impl.cpp
    }
@@ -22,6 +22,7 @@ project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
         dance_locality_manager {
   exename = dance_locality_manager
   libs += CIAO_Deployment_Handlers
+  after += CIAO_Deployment_Handlers
   Source_Files {
      Locality_Manager_Task.cpp
      Locality_Manager.cpp
