@@ -124,7 +124,8 @@ PRJ_TYPE = library
 
 <%if(exename)%>
 <%if(install)%>
-INSBIN ?= <%install%>
+COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
+INSBIN ?= $(call COLLAPSE_SLASHES,<%install%>)
 <%endif%>
 ifeq ($(INSBIN),.)
   ifeq ($(CURDIR),)
@@ -145,7 +146,8 @@ endif
 OUTPUT_DIRECTORY = $(if $(ARCH),$(if $(INSBIN),$(INSBIN)/$(ARCH)),$(INSBIN))
 <%else%>
 <%if(dllout || libout)%>
-INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
+INSLIB ?= $(call COLLAPSE_SLASHES,<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>)
 <%endif%>
 ifeq ($(INSLIB),.)
   ifeq ($(CURDIR),)
