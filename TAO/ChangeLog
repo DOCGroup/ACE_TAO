@@ -1,3 +1,10 @@
+Wed May 19 09:12:30 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+
+          Removed unused local variable
+
 Wed May 19 02:52:27 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/csd_pt_test_exe.mpb:
