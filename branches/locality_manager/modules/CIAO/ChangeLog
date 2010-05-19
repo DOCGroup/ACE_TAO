@@ -1,3 +1,12 @@
+Wed May 19 18:37:49 UTC 2010  wotte  <wotte@>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * MPC/config/ciao_componentserver_stub.mpb:
+
+          Build ordering issues.
+
 Wed May 19 12:17:27 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:

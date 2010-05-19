@@ -12,14 +12,12 @@ project(DAnCE_NodeApplication): install, dance_lib, dynamicinterface, \
     NodeApplication_Impl.cpp
     ComponentAttributesSetter.cpp
     Name_Utilities.cpp
-    LocalityActivator_Impl.cpp
   }
 
   Header_Files {
     NodeApplication_Impl.h
     ComponentAttributesSetter.h
     Name_Utilities.h
-    LocalityActivator_Impl.h
   }
 
   specific {
