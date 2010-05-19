@@ -87,7 +87,8 @@ namespace CIAO
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
-      ::DDS::ReturnCode_t const retval = this->impl ()->get_query_parameters (parameters);
+      ::DDS::ReturnCode_t const retval =
+        this->impl ()->get_query_parameters (parameters);
       query_parameters <<= parameters;
       return retval;
 #else

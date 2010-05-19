@@ -1,3 +1,14 @@
+Wed May 19 11:00:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/dds/Topic.cpp:
+          Layout and const changes
+
 Wed May 19 09:49:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
