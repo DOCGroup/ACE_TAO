@@ -1,3 +1,10 @@
+Thu May 20 22:05:24 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/ace_tests.lst:
+        * tests/run_test.lst:
+
+          Added !ARCH to two tests that won't run properly in ARCH builds.
+
 Thu May 20 21:50:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:

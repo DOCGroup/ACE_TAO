@@ -234,7 +234,7 @@ SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !ST
-UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
+UnloadLibACE: !STATIC !WinCE !LabVIEW_RT !ARCH
 UUID_Test: !NO_UUID !ACE_FOR_TAO
 Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
