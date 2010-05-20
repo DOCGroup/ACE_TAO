@@ -1,3 +1,11 @@
+Thu May 20 14:31:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.h:
+        * tests/CIF/Common/CIF_Common.cpp:
+        * tests/CIF/Navigation/client.cpp:
+          Optimized interface.
+          Also implemented parse_args.
+
 Thu May 20 14:19:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:

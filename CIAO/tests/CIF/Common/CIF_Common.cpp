@@ -3,8 +3,12 @@
 #include "CIF_Common.h"
 #include "ciao/Logger/Logger_Service.h"
 #include "ciao/ComponentServer/Client_init.h"
+#include "ace/Get_Opt.h"
 
 CIF_Common::CIF_Common (void)
+  : artifact_name_ (""),
+    cs_path_ ("ciao_componentserver"),
+    spawn_delay_ (30)
 {
 }
 
@@ -12,9 +16,44 @@ CIF_Common::~CIF_Common (void)
 {
 }
 
-void
-CIF_Common::init (int argc, ACE_TCHAR *argv[])
+int
+CIF_Common::parse_args (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:d:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 's':
+        this->cs_path_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        break;
+
+      case 'd':
+        this->spawn_delay_ = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage: %s "
+                           "-s <path> "
+                           "-d <uint> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  return 0;
+}
+
+int
+CIF_Common::init (int argc, ACE_TCHAR *argv[],
+                  const char * artifact_name)
+{
+  if (this->parse_args (argc, argv) != 0)
+    return 1;
+
+  this->artifact_name_ = artifact_name;
   ::CIAO::Logger_Service logger;
   logger.init (argc, argv);
   this->orb_ = CORBA::ORB_init (argc, argv);
@@ -30,24 +69,27 @@ CIF_Common::init (int argc, ACE_TCHAR *argv[])
     this->root_poa_->the_POAManager ();
 
   poa_manager->activate ();
+  return 0;
 }
 
 void
 CIF_Common::shutdown (::CIAO::Deployment::ComponentServer_ptr server,
                       ::CIAO::Deployment::Container_ptr cont,
-                      ::Components::CCMObject_ptr comp)
+                      ::Components::CCMObject_ptr comp,
+                      bool orb_shutdown)
 {
   cont->remove_component (comp);
   server->remove_container (cont);
 
   this->sa_->remove_component_server (server);
-  this->orb_->shutdown ();
+  if (orb_shutdown)
+    {
+      this->orb_->shutdown ();
+    }
 }
 
 ::CIAO::Deployment::ComponentServer_ptr
-CIF_Common::create_componentserver (const int& spawn_delay,
-                                    const char * cs_path,
-                                    const char * artifact_name)
+CIF_Common::create_componentserver ()
 {
   ::CIAO::Deployment::ComponentInstallation_Impl *tmp_ci = 0;
 
@@ -60,8 +102,8 @@ CIF_Common::create_componentserver (const int& spawn_delay,
   ::CIAO::Deployment::CIAO_ServerActivator_i *sa_tmp = 0;
   ACE_NEW_THROW_EX (
     sa_tmp,
-    ::CIAO::Deployment::CIAO_ServerActivator_i (spawn_delay,
-                                                cs_path,
+    ::CIAO::Deployment::CIAO_ServerActivator_i (this->spawn_delay_,
+                                                this->cs_path_,
                                                 0,
                                                 false,
                                                 tmp_ci->_this (),
@@ -85,7 +127,8 @@ CIF_Common::create_componentserver (const int& spawn_delay,
                          0);
     }
 
-  ACE_CString svnt = artifact_name, exec = artifact_name;
+  ACE_CString svnt = this->artifact_name_;
+  ACE_CString exec = this->artifact_name_;
   svnt += "_svnt";
   exec += "_exec";
   tmp_ci->install (svnt.c_str (), svnt.c_str ());
@@ -105,7 +148,7 @@ CIF_Common::create_container (::CIAO::Deployment::ComponentServer_ptr server)
 
 ::Components::CCMObject_ptr
 CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
-                               const char * artifact_name)
+                               const char * entrypoint_name)
 {
   CORBA::Any val;
   ::Components::ConfigValues configs(3);
@@ -114,8 +157,8 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
   ACE_CString tmp = "create_";
   ACE_CString impl_name = tmp;
 
-  tmp       += artifact_name;
-  impl_name += artifact_name;
+  tmp       += entrypoint_name;
+  impl_name += entrypoint_name;
   tmp += "_Servant";
   impl_name += "_Impl";
 
@@ -125,7 +168,7 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
     CIAO::ConfigValue_impl (CIAO::Deployment::SVNT_ENTRYPT,
                             val),
     CORBA::NO_MEMORY ());
-  tmp = artifact_name;
+  tmp = this->artifact_name_;
   tmp += "_svnt";
   val <<= tmp.c_str ();
   ACE_NEW_THROW_EX (
@@ -134,7 +177,7 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
                             val),
     CORBA::NO_MEMORY ());
 
-  tmp = artifact_name;
+  tmp = this->artifact_name_;
   tmp += "_exec";
   val <<= tmp.c_str ();
   ACE_NEW_THROW_EX (
