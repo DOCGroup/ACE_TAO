@@ -1,3 +1,9 @@
+Thu May 20 13:01:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.cpp:
+          No initialization. Also removed some
+          unnecessary code.
+
 Thu May 20 11:16:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
