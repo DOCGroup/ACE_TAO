@@ -49,10 +49,21 @@ project(ObjRefTemplate) : valuetype, portableserver, install, tao_output, taoidl
 
   Header_Files {
     ObjRefTemplate
+    ObjRefTemplate/ObjectReferenceTemplateC.h
+    ObjRefTemplate/ObjectReferenceTemplateS.h
+    ObjRefTemplate/ObjectReferenceTemplateA.h
+    ObjRefTemplate/ObjectReferenceTemplate_includeC.h
+    ObjRefTemplate/ObjectReferenceTemplate_includeS.h
+    ObjRefTemplate/ObjectReferenceTemplate_includeA.h
+    ObjRefTemplate/Default_ORTC.h
+    ObjRefTemplate/Default_ORTS.h
+    ObjRefTemplate/Default_ORTA.h
   }
 
   Inline_Files {
     ObjRefTemplate
+    ObjRefTemplate/Default_ORTC.inl
+    ObjRefTemplate/ObjectReferenceTemplateC.inl
   }
 
   Template_Files {

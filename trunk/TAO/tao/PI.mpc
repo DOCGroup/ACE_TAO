@@ -87,6 +87,39 @@ project(PI) : taolib, tao_output, codecfactory, install, taoidldefaults {
 
   Header_Files {
     PI
+    PI/ClientRequestInfoA.h
+    PI/ClientRequestInfoC.h
+    PI/ClientRequestInterceptorA.h
+    PI/ClientRequestInterceptorC.h
+    PI/InterceptorA.h
+    PI/InterceptorC.h
+    PI/InvalidSlotA.h
+    PI/InvalidSlotC.h
+    PI/ORBInitializerA.h
+    PI/ORBInitializerC.h
+    PI/ORBInitInfoA.h
+    PI/ORBInitInfoC.h
+    PI/PICurrentA.h
+    PI/PICurrentC.h
+    PI/PIForwardRequestA.h
+    PI/PIForwardRequestC.h
+    PI/PI_includeA.h
+    PI/PI_includeC.h
+    PI/ProcessingModePolicyA.h
+    PI/ProcessingModePolicyC.h
+    PI/RequestInfoA.h
+    PI/RequestInfoC.h
+    PI/ClientRequestInfoS.h
+    PI/ClientRequestInterceptorS.h
+    PI/InterceptorS.h
+    PI/InvalidSlotS.h
+    PI/ORBInitializerS.h
+    PI/ORBInitInfoS.h
+    PI/PICurrentS.h
+    PI/PIForwardRequestS.h
+    PI/PI_includeS.h
+    PI/ProcessingModePolicyS.h
+    PI/RequestInfoS.h
   }
 
   Inline_Files {

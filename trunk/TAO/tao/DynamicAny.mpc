@@ -39,6 +39,8 @@ project(DynamicAny) : install, tao_output, valuetype, taoidldefaults {
 
   Header_Files {
     DynamicAny
+    DynamicAny/DynamicAnyC.h
+    DynamicAny/DynamicAnyS.h
   }
 
   Inline_Files {

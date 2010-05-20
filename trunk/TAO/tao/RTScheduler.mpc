@@ -37,6 +37,12 @@ project(RTScheduler) : taolib, tao_output, rtcorba, pi, pi_server, portableserve
 
   Header_Files {
     RTScheduling
+    RTScheduling/RTSchedulerC.h
+    RTScheduling/RTSchedulerS.h
+    RTScheduling/RTSchedulerA.h
+    RTScheduling/RTScheduler_includeC.h
+    RTScheduling/RTScheduler_includeS.h
+    RTScheduling/RTScheduler_includeA.h
   }
 
   Inline_Files {

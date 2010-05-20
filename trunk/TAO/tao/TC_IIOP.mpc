@@ -31,9 +31,13 @@ project(TC_IIOP) : taolib_with_idl, tao_output, taoidldefaults, install, tc, int
     TransportCurrent/IIOP_Current_Impl.h
     TransportCurrent/IIOP_Current_Loader.h
     TransportCurrent/IIOP_Transport_Current.h
+    TransportCurrent/TC_IIOPC.h
+    TransportCurrent/TC_IIOPS.h
   }
 
   Inline_Files {
+    TransportCurrent/TC_IIOPC.inl
+    TransportCurrent/TC_IIOPS.inl
   }
 
   Template_Files {

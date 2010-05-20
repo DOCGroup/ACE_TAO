@@ -41,6 +41,12 @@ project(RTCORBA) : taolib, tao_output, install, pi, taoidldefaults {
 
   Header_Files {
     RTCORBA
+    RTCORBA/RTCORBA_includeC.h
+    RTCORBA/RTCORBA_includeS.h
+    RTCORBA/RTCORBA_includeA.h
+    RTCORBA/RTCORBAC.h
+    RTCORBA/RTCORBAS.h
+    RTCORBA/RTCORBAA.h
   }
 
   Inline_Files {
