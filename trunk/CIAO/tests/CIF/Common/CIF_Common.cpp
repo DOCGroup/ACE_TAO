@@ -5,9 +5,6 @@
 #include "ciao/ComponentServer/Client_init.h"
 
 CIF_Common::CIF_Common (void)
-  : orb_ (::CORBA::ORB::_nil ()),
-    root_poa_ (::PortableServer::POA::_nil ()),
-    sa_ (::CIAO::Deployment::ServerActivator::_nil ())
 {
 }
 
@@ -130,7 +127,6 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
     CORBA::NO_MEMORY ());
   tmp = artifact_name;
   tmp += "_svnt";
-  printf ("%s\n", tmp.c_str ());
   val <<= tmp.c_str ();
   ACE_NEW_THROW_EX (
     configs[1],
@@ -140,7 +136,6 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
 
   tmp = artifact_name;
   tmp += "_exec";
-  printf ("%s\n", tmp.c_str ());
   val <<= tmp.c_str ();
   ACE_NEW_THROW_EX (
     configs[2],
@@ -148,7 +143,7 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
                             val),
     CORBA::NO_MEMORY ());
 
-  // Install Components
+  // Install Component
   Components::CCMObject_var cmp = Components::CCMObject::_nil ();
   try
     {
