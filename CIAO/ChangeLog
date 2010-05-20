@@ -1,3 +1,8 @@
+Thu May 20 15:15:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Common/CIF_Common.h:
+          Resolved fuzz error.
+
 Thu May 20 14:31:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.h:
