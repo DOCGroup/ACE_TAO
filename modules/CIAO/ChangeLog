@@ -1,3 +1,28 @@
+Thu May 20 19:29:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+
+         Windows compile fixes.
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Bugfixes.
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+
+          Default connect_consumer behavior should throw an
+          InvalidName exception.
+
 Wed May 19 18:37:49 UTC 2010  wotte  <wotte@>
 
         * DAnCE/NodeApplication/NodeApplication.mpc:

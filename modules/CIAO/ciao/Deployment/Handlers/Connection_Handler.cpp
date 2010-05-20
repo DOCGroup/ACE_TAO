@@ -495,8 +495,8 @@ namespace CIAO
                                                "Emitting component not deployed.");
       }
     
-    emitter->subscribe (endpoint.portName.in (),
-                        event.in ());
+    emitter->connect_consumer (endpoint.portName.in (),
+                               event.in ());
     
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_emitter - "

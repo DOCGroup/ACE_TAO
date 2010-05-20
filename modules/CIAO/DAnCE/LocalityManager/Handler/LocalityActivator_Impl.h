@@ -60,7 +60,7 @@ namespace DAnCE
    * so there will be only one actor *modifying* data at a particular
    * point in time.
    */
-  class NodeApplication_Export DAnCE_LocalityActivator_i
+  class DAnCE_LocalityActivator_i
     : public virtual ::POA_DAnCE::LocalityManagerActivator
   {
   public:

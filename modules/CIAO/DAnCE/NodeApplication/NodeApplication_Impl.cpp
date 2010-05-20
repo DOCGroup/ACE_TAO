@@ -416,7 +416,7 @@ NodeApplication_Impl::remove_instances (void)
   DANCE_TRACE ("NodeApplication_Impl::remove_instances");
   
   ::Deployment::StopError final_exception;
-  bool flag;
+  bool flag (false);
   
   
     for (LOCALITY_MAP::iterator i = this->localities_.begin ();
