@@ -1,3 +1,9 @@
+Thu May 20 14:19:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+          Unicode fixes
+
 Thu May 20 13:01:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.cpp:
