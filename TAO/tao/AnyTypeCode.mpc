@@ -113,7 +113,6 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     AnyTypeCode/CurrentA.h
     AnyTypeCode/DoubleSeqA.h
     AnyTypeCode/FloatSeqA.h
-    AnyTypeCode/LongSeqA.h
     AnyTypeCode/IIOPA.h
     AnyTypeCode/IOPA.h
     AnyTypeCode/IIOP_EndpointsA.h
@@ -142,6 +141,24 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     AnyTypeCode/WCharSeqA.h
     AnyTypeCode/WStringSeqA.h
     AnyTypeCode/orb_typesA.h
+    AnyTypeCode/AnySeqA.h
+    AnyTypeCode/AnySeqC.h
+    AnyTypeCode/AnySeqS.h
+    AnyTypeCode/BoundsA.h
+    AnyTypeCode/BoundsC.h
+    AnyTypeCode/BoundsS.h
+    AnyTypeCode/DynamicA.h
+    AnyTypeCode/DynamicC.h
+    AnyTypeCode/Dynamic_ParameterA.h
+    AnyTypeCode/Dynamic_ParameterC.h
+    AnyTypeCode/Dynamic_ParameterS.h
+    AnyTypeCode/DynamicS.h
+    AnyTypeCode/ValueModifierA.h
+    AnyTypeCode/ValueModifierC.h
+    AnyTypeCode/ValueModifierS.h
+    AnyTypeCode/VisibilityA.h
+    AnyTypeCode/VisibilityC.h
+    AnyTypeCode/VisibilityS.h
   }
 
   Inline_Files {

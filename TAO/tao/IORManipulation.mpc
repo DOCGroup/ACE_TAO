@@ -28,6 +28,9 @@ project(IORManipulation) : taolib, tao_output, install, anytypecode, taoidldefau
 
   Header_Files {
     IORManipulation
+    IORManipulation/IORC.h
+    IORManipulation/IORS.h
+    IORManipulation/IORA.h
   }
 
   Inline_Files {

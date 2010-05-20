@@ -28,6 +28,9 @@ project(DiffServPolicy) : taolib, tao_output, install, portableserver, pi, taoid
 
   Header_Files {
     DiffServPolicy
+    DiffServPolicy/DiffServPolicyC.h
+    DiffServPolicy/DiffServPolicyS.h
+    DiffServPolicy/DiffServPolicyA.h
   }
 
   Inline_Files {

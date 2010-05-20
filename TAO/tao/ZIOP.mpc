@@ -28,6 +28,8 @@ project(ZIOP) : tao_output, install, taolib, compression, pi, taoidldefaults {
 
   Header_Files {
     ZIOP
+    ZIOP/ZIOPC.h
+    ZIOP/ZIOPS.h
   }
 
   Inline_Files {

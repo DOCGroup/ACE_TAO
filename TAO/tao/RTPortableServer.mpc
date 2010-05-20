@@ -36,6 +36,12 @@ project(RTPortableServer) : taolib, tao_output, install, rtcorba, portableserver
 
   Header_Files {
     RTPortableServer
+    RTPortableServer/RTPortableServerC.h
+    RTPortableServer/RTPortableServerS.h
+    RTPortableServer/RTPortableServerA.h
+    RTPortableServer/RTPortableServer_includeC.h
+    RTPortableServer/RTPortableServer_includeS.h
+    RTPortableServer/RTPortableServer_includeA.h
   }
 
   Inline_Files {
