@@ -1,3 +1,25 @@
+Thu May 20 11:16:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+
+        * ciao/ComponentServer/Client_init.h:
+          Code alignment
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+          Minor changes to get_all_facets
+
+        * tests/CIF:
+          Tests for Component Implementation Framework
+
+        * tests/CIF/Common/*:
+          Base library for all CIF tests.
+
+        * tests/CIF/Navigation/*:
+          Test which tests the Navigation interface.
+
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc:
+          Code alignment.
+
 Thu May 20 10:33:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/DDS4CCM FTF2 Issue List batch2.doc:

@@ -163,13 +163,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::get_all_facets (void)");
 
-    ::Components::FacetDescriptions *tmp = 0;
-    ACE_NEW_THROW_EX (tmp,
+    ::Components::FacetDescriptions_var retval = 0;
+    ACE_NEW_THROW_EX (retval,
                       ::Components::FacetDescriptions,
                       CORBA::NO_MEMORY ());
-
-    ::Components::FacetDescriptions_var retval = tmp;
-
     retval->length (this->facet_table_.size ());
     CORBA::ULong i = 0UL;
 
