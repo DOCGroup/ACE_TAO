@@ -302,8 +302,8 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::destroyApplication");
     
-    for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
-         i != this->handler_order_.end ();
+    for (HANDLER_ORDER::const_reverse_iterator i = this->handler_order_.rbegin ();
+         i != this->handler_order_.rend ();
          ++i)
       {
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
@@ -316,6 +316,25 @@ namespace DAnCE
           {
             CORBA::Any_var reference;
             handler->passivate_instance (this->plan_,
+                                         *i,
+                                         reference.in ());
+          }
+      }
+    
+    for (HANDLER_ORDER::const_reverse_iterator i = this->handler_order_.rbegin ();
+           i != this->handler_order_.rend ();
+         ++i)
+      {
+        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
+          this->instance_handlers_[*i].handler_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+        
+        for (INSTANCE_LIST::const_iterator i = inst_list.begin ();
+             i != inst_list.end ();
+             ++i)
+          {
+            CORBA::Any_var reference;
+            handler->remove_instance (this->plan_,
                                          *i,
                                          reference.in ());
           }

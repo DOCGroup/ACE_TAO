@@ -301,7 +301,7 @@ namespace CIAO
   void
   Component_Handler_i::remove_instance (const ::Deployment::DeploymentPlan & plan,
                                         ::CORBA::ULong instanceRef,
-                                        const ::CORBA::Any & instance_reference)
+                                        const ::CORBA::Any &)
   {
     CIAO_TRACE ("Component_Handler_i::remove_instance");
     
@@ -323,21 +323,7 @@ namespace CIAO
                     "Component_Handler_i::remove_instance - "
                     "Attempting removal of component instance <%C>\n",
                     name));
-    
-    Components::CCMObject_var ref;
-    
-    if (!(instance_reference >>= ref) ||
-        CORBA::is_nil (ref))
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO 
-                        "Component_Handler_i::remove_instance - "
-                        "Unable to convert provided instance reference to CCMObject "
-                        "while removing instance <%C>\n",
-                        name));
-        throw ::Deployment::StopError (name,
-                                       "Unable to narrow reference to CCMObject");
-      }
-    
+        
     CORBA::Any val;
     const char *cont_id;
     
@@ -369,6 +355,9 @@ namespace CIAO
                                          "Invalid container\n");
         }
       
+      Components::CCMObject_var ref
+        = DEPLOYMENT_STATE::instance ()->fetch_component (name);
+
       try
         {
           container->uninstall_component (ref);
@@ -392,6 +381,7 @@ namespace CIAO
         }
       
       this->instances_.erase (instance);
+      DEPLOYMENT_STATE::instance ()->remove_component (name);
       
       CIAO_DEBUG (4, (LM_INFO, CLINFO
                       "Component_Handler_i::remove_instance - "

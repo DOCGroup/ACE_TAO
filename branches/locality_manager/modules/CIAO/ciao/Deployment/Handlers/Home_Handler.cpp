@@ -232,7 +232,7 @@ namespace CIAO
   void
   Home_Handler_i::remove_instance (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
-                                   const ::CORBA::Any & instance_reference)
+                                   const ::CORBA::Any &)
   {
     CIAO_TRACE ("Home_Handler_i::remove_instance");
     
@@ -254,20 +254,6 @@ namespace CIAO
                     "Home_Handler_i::remove_instance - "
                     "Attempting removal of home instance <%C>\n",
                     name));
-    
-    Components::CCMHome_var ref;
-    
-    if (!(instance_reference >>= ref) ||
-        CORBA::is_nil (ref))
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO 
-                        "Home_Handler_i::remove_instance - "
-                        "Unable to convert provided instance reference to CCMHome "
-                        "while removing instance <%C>\n",
-                        name));
-        throw ::Deployment::StopError (name,
-                                       "Unable to narrow reference to CCMHome");
-      }
     
     CORBA::Any val;
     const char *cont_id;
@@ -299,7 +285,10 @@ namespace CIAO
         throw ::Deployment::StopError (name,
                                        "Invalid container\n");
       }
-      
+    
+    Components::CCMHome_var ref
+      = DEPLOYMENT_STATE::instance ()->fetch_home (name);  
+
     try
       {
         container->uninstall_home (ref);

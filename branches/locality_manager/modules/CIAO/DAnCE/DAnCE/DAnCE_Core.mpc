@@ -25,6 +25,7 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
 
 project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
          dance_applicationmanager_stub, dance_deployment_stub, \
+	 dance_logger \
        {
   after += DAnCE_IDL
   dynamicflags = DANCE_STUB_BUILD_DLL

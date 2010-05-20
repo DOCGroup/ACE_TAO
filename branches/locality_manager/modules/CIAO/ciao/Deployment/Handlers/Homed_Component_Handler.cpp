@@ -73,8 +73,8 @@ namespace CIAO
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
                           "Homed_Component_Handler_i::install_instance - "
-                       "Error: No home ID  provided, aborting installation\n"));
-          throw ::Deployment::PlanError (idd.name.in (),
+                          "Error: No home ID  provided, aborting installation\n"));
+          throw ::Deployment::StartError (idd.name.in (),
                                          "No Home identified.");
         }
 
@@ -243,7 +243,7 @@ namespace CIAO
   void
   Homed_Component_Handler_i::remove_instance (const ::Deployment::DeploymentPlan & plan,
                                               ::CORBA::ULong instanceRef,
-                                              const ::CORBA::Any & instance_reference)
+                                              const ::CORBA::Any &)
   {
     CIAO_TRACE ("Homed_Component_Handler_i::remove_instance");
     
@@ -265,20 +265,7 @@ namespace CIAO
                     "Homed_Component_Handler_i::remove_instance - "
                     "Attempting removal of homed component instance <%C>\n",
                     name));
-    
-    Components::CCMObject_var ref;
-    if (!(instance_reference >>= ref) ||
-        CORBA::is_nil (ref))
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO 
-                        "Homed_Component_Handler_i::remove_instance - "
-                        "Unable to convert provided instance reference to CCMObject "
-                        "while removing instance <%C>\n",
-                        name));
-        throw ::Deployment::StopError (name,
-                                       "Unable to narrow reference to CCMObject"); 
-      }
-    
+        
     using namespace CIAO::Deployment;
     CORBA::Any val;
     const char *tmp;
@@ -311,6 +298,9 @@ namespace CIAO
                                        "Home ID is not available");
       }
     
+      Components::CCMObject_var ref
+        = DEPLOYMENT_STATE::instance ()->fetch_component (name);
+
     try
       {
         home->remove_component (ref.in ());
