@@ -37,7 +37,7 @@ namespace CIAO
 {
   /**
    * The initialize routine for any clients that need to access
-   * component.  This routine now simply registers various valuetype
+   * components. This routine now simply registers various valuetype
    * factories defined in CIAO_Component.pidl.  Currently, this method
    * should be call right after ORB initialization but we should try
    * to register these stuff automatically.
