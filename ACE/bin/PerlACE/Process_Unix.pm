@@ -265,6 +265,9 @@ sub IgnoreExeSubDir
     if (@_ != 0 && !grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
         $self->{IGNOREEXESUBDIR} = shift;
     }
+    elsif (@_ != 0 && $self->{EXECUTABLE} =~ /perl$/) {
+        $self->{IGNOREEXESUBDIR} = shift;
+    }
 
     return $self->{IGNOREEXESUBDIR};
 }
