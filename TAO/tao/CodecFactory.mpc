@@ -38,6 +38,12 @@ project(CodecFactory) : taolib, tao_output, install, anytypecode, taoidldefaults
 
   Header_Files {
     CodecFactory
+    CodecFactory/IOP_CodecA.h
+    CodecFactory/IOP_CodecC.h
+    CodecFactory/IOP_Codec_includeA.h
+    CodecFactory/IOP_Codec_includeC.h
+    CodecFactory/IOP_Codec_includeS.h
+    CodecFactory/IOP_CodecS.h
   }
 
   Inline_Files {

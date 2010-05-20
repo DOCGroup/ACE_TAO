@@ -27,6 +27,8 @@ project(IORTable) : taolib, tao_output, install, taoidldefaults {
 
   Header_Files {
     IORTable
+    IORTable/IORTableC.h
+    IORTable/IORTableS.h
   }
 
   Inline_Files {

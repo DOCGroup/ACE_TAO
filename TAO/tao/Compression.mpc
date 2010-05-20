@@ -40,6 +40,12 @@ project(Compression) : taolib, tao_output, install, taoidldefaults, anytypecode 
 
   Header_Files {
     Compression
+    Compression/CompressionC.h
+    Compression/CompressionS.h
+    Compression/CompressionA.h
+    Compression/Compression_includeC.h
+    Compression/Compression_includeS.h
+    Compression/Compression_includeA.h
   }
 
   Inline_Files {

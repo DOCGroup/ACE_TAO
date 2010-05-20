@@ -34,9 +34,13 @@ project(TC) : taolib_with_idl, tao_output, taoidldefaults, install, interceptors
     TransportCurrent/Current_ORBInitializer_Base.h
     TransportCurrent/Transport_Current.h
     TransportCurrent/Transport_Current_Export.h
+    TransportCurrent/TCC.h
+    TransportCurrent/TCS.h
   }
 
   Inline_Files {
+    TransportCurrent/TCC.inl
+    TransportCurrent/TCS.inl
   }
 
   Template_Files {

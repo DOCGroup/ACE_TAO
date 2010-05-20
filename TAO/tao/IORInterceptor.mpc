@@ -36,6 +36,10 @@ project(IORInterceptor) : taolib, tao_output, portableserver, objreftemplate, pi
 
   Header_Files {
     IORInterceptor
+    IORInterceptor/IORInterceptorC.h
+    IORInterceptor/IORInterceptorS.h
+    IORInterceptor/IORInfoC.h
+    IORInterceptor/IORInfoS.h
   }
 
   Inline_Files {

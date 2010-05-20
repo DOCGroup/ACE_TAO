@@ -45,6 +45,12 @@ project(PI_Server) : taolib, tao_output, pi, portableserver, install, taoidldefa
 
   Header_Files {
     PI_Server
+    PI_Server/ServerRequestInfoC.h
+    PI_Server/ServerRequestInfoS.h
+    PI_Server/ServerRequestInfoA.h
+    PI_Server/PI_Server_includeC.h
+    PI_Server/PI_Server_includeS.h
+    PI_Server/PI_Server_includeA.h
   }
 
   Inline_Files {

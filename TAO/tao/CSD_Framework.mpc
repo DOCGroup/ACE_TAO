@@ -27,6 +27,9 @@ project(CSD_Framework) : taolib, tao_output, portableserver, install, pi, avoids
 
   Header_Files {
     CSD_Framework
+    CSD_Framework/CSD_FrameworkC.h
+    CSD_Framework/CSD_FrameworkS.h
+    CSD_Framework/CSD_FrameworkA.h
   }
 
   Inline_Files {

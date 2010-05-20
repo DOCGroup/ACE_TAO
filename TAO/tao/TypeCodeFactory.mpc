@@ -26,6 +26,8 @@ project(TypeCodeFactory) : taolib, tao_output, install, ifr_client, taoidldefaul
 
   Header_Files {
     TypeCodeFactory
+    TypeCodeFactory/TypeCodeFactoryC.h
+    TypeCodeFactory/TypeCodeFactoryS.h
   }
 
   Inline_Files {

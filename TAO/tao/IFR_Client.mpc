@@ -32,10 +32,26 @@ project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
 
   Header_Files {
     IFR_Client
+    IFR_Client/IFR_BaseC.h
+    IFR_Client/IFR_BaseS.h
+    IFR_Client/IFR_BaseA.h
+    IFR_Client/IFR_BasicC.h
+    IFR_Client/IFR_BasicS.h
+    IFR_Client/IFR_BasicA.h
+    IFR_Client/IFR_ComponentsC.h
+    IFR_Client/IFR_ComponentsS.h
+    IFR_Client/IFR_ComponentsA.h
+    IFR_Client/IFR_ExtendedC.h
+    IFR_Client/IFR_ExtendedS.h
+    IFR_Client/IFR_ExtendedA.h
   }
 
   Inline_Files {
     IFR_Client
+    IFR_Client/IFR_BaseC.inl
+    IFR_Client/IFR_BasicC.inl
+    IFR_Client/IFR_ComponentsC.inl
+    IFR_Client/IFR_ExtendedC.inl
   }
 
   Template_Files {
