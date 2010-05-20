@@ -1,0 +1,16 @@
+// $Id$
+
+project (CIF_Common) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
+   sharedname = CIF_Common
+   libout = ../lib
+   IDL_Files {
+   }
+
+   Source_Files {
+     CIF_Common.cpp
+   }
+
+   Header_Files {
+     CIF_Common.h
+   }
+}
