@@ -35,12 +35,12 @@ struct Options
 
     bool init (const ACE_TCHAR *inst)
     {
-      ACE_CString tmp (inst);
+      ACE_TString tmp (inst);
 
       size_t begin = 0;
       size_t pos = tmp.find (',', begin);
 
-      if (pos != ACE_CString::npos)
+      if (pos != ACE_TString::npos)
         path_ = tmp.substring (begin, pos - begin);
       else
         {
@@ -54,7 +54,7 @@ struct Options
       begin = pos + 1;
       pos = tmp.find (',', begin);
 
-      if (pos != ACE_CString::npos)
+      if (pos != ACE_TString::npos)
         name_ = tmp.substring (begin, pos - begin);
       else
         {
@@ -85,7 +85,8 @@ struct Options
         (name_ == rhs.name_);
     }
 
-    ACE_CString path_, name_;
+    ACE_TString path_;
+    ACE_TString name_;
     bool replace_;
   };
 
@@ -97,12 +98,12 @@ struct Options
 
     bool init (const ACE_TCHAR *inst)
     {
-      ACE_CString tmp (inst);
+      ACE_TString tmp (inst);
 
       size_t begin = 0;
       size_t pos = tmp.find (',', begin);
 
-      if (pos != ACE_CString::npos)
+      if (pos != ACE_TString::npos)
         path_ = tmp.substring (begin, pos - begin);
       else
         {
@@ -116,7 +117,7 @@ struct Options
       begin = pos + 1;
       pos = tmp.find (',', begin);
 
-      if (pos != ACE_CString::npos)
+      if (pos != ACE_TString::npos)
         name_ = tmp.substring (begin, pos - begin);
       else
         {
@@ -129,7 +130,7 @@ struct Options
       begin = pos + 1;
       pos = tmp.find (',', begin);
 
-      if (pos != ACE_CString::npos)
+      if (pos != ACE_TString::npos)
         base_location_ = tmp.substring (begin, pos - begin);
       else
         {
@@ -160,7 +161,7 @@ struct Options
         (name_ == rhs.name_);
     }
 
-    ACE_CString path_, name_, base_location_;
+    ACE_TString path_, name_, base_location_;
     bool replace_;
   };
 
@@ -168,7 +169,7 @@ struct Options
   const ACE_TCHAR *domain_nc_;
   ACE_Unbounded_Set< Installation > install_;
   ACE_Unbounded_Set< Creation > create_;
-  ACE_Unbounded_Set< ACE_CString > uninstall_;
+  ACE_Unbounded_Set< ACE_TString > uninstall_;
   bool list_;
   bool shutdown_;
 
@@ -395,8 +396,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
           creat_it.advance ();
         }
 
-      ACE_Unbounded_Set_Iterator<ACE_CString> uninst_it (options.uninstall_);
-      ACE_CString *uninst = 0;
+      ACE_Unbounded_Set_Iterator<ACE_TString> uninst_it (options.uninstall_);
+      ACE_TString *uninst = 0;
 
       while (uninst_it.next (uninst) == 1)
         {
@@ -435,7 +436,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO "repository_manager_admin_exec::main - "
                     "Caught unexpected CORBA Exception: %s\n",
