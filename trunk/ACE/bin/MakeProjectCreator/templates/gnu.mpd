@@ -769,6 +769,10 @@ DATA_INST_TAGS = <%foreach(custom_types)%><%if(compares(custom_type, installdata
 INST_LOCATIONS += $(if $(DATA_INST_TAGS),-x installdata_files -b installdata_files=share$(INST_DIR))
 INST_TAGS := $(INST_TAGS)$(if $(DATA_INST_TAGS), $(DATA_INST_TAGS))
 
+ifeq ($(INSTALLER),/prj_install.pl)
+INSTALLER = $(ACE_ROOT)/MPC/prj_install.pl
+endif
+
 ifeq ($(LIBCHECK),1)
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
