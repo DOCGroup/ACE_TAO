@@ -22,13 +22,29 @@ if ($^O eq "MSWin32") {
     $exec_extn = ".exe";
 }
 
-$nslist_path = "../../../../bin/tao_nslist";
-if (! -e $nslist_path . $exec_extn ) {
-    $nslist_path = "../../../../TAO/utils/nslist/tao_nslist";
-    if (! -e $nslist_path . $exec_extn ) {
-        print STDERR "ERROR: tao_nslist utility not found.\n";
-        exit 1;
-    }
+my @nslist_paths = (["../../../../bin", ""],
+                    ["../../../../TAO/utils/nslist", ""]);
+if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+    push @nslist_paths, ["../../../../bin/" . $PerlACE::Process::ExeSubDir,
+                         "../../../../bin"];
+}
+
+my $nslist_path = "";
+for my $p (@nslist_paths) {
+  my $use_path = ($p->[1] eq "") ? $p->[0] : $p->[1];
+  if (-e $p->[0] . '/tao_nslist') {
+    $nslist_path = $use_path . '/tao_nslist';
+    last;
+  }
+  if ($exec_extn ne "" && -e $p . '/tao_nslist' . $exec_extn) {
+    $nslist_path = $use_path . '/tao_nslist' . $exec_extn;
+    last;
+  }
+}
+
+if ($nslist_path eq "") {
+    print STDERR "ERROR: tao_nslist utility not found.\n";
+    exit 1;
 }
 
 my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
