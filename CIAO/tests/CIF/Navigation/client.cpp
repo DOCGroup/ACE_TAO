@@ -1,44 +1,9 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
 #include "Common/CIF_Common.h"
 #include "NavigationEC.h"
 
-const char *cs_path = "ciao_componentserver";
-CORBA::ULong spawn_delay = 30;
-
 const char * artifact_name = "Navigation";
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:d:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        cs_path = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-        break;
-
-      case 'd':
-        spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s "
-                           "-s <path> "
-                           "-d <uint> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates sucessful parsing of the command line
-  return 0;
-}
 
 int
 run_test (::Navigation_ptr nav)
@@ -55,7 +20,7 @@ run_test (::Navigation_ptr nav)
           ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
                                 "while testing provide_facet\n"));
         }
-      ACE_DEBUG ((LM_DEBUG, "Provide facet test succeeded\n"));
+      ACE_DEBUG ((LM_DEBUG, "Provide facet test passed !\n"));
 
       try
         {
@@ -78,7 +43,6 @@ run_test (::Navigation_ptr nav)
         {
           ACE_DEBUG ((LM_DEBUG, "Expected InvalidName exception caught.\n"));
         }
-      ACE_DEBUG ((LM_DEBUG, "Provide facet Exception test succeeded\n"));
 
       #if !defined (CCM_LW)
         ::Components::FacetDescriptions_var all_facets = nav->get_all_facets ();
@@ -152,14 +116,10 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
   CIF_Common cmd;
   try
     {
-      cmd.init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
+      if (cmd.init (argc, argv, artifact_name) != 0)
         return 1;
 
-      ComponentServer_var server = cmd.create_componentserver (spawn_delay,
-                                                               cs_path,
-                                                               artifact_name);
+      ComponentServer_var server = cmd.create_componentserver ();
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Error: Got nil object reference from create_component_server "

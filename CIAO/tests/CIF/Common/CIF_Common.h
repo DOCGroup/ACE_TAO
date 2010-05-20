@@ -16,28 +16,36 @@ public:
   CIF_Common (void);
   ~CIF_Common (void);
 
-  void init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc,
+            ACE_TCHAR *argv[],
+            const char * artifact_name);
 
   void shutdown (::CIAO::Deployment::ComponentServer_ptr server,
                  ::CIAO::Deployment::Container_ptr cont,
-                 ::Components::CCMObject_ptr comp);
+                 ::Components::CCMObject_ptr comp,
+                 bool orb_shutdown=true);
 
   ::CIAO::Deployment::ComponentServer_ptr
-  create_componentserver (const int& spawn_delay,
-                          const char * cs_path,
-                          const char * artifact_name);
+  create_componentserver ();
 
   ::CIAO::Deployment::Container_ptr
   create_container (::CIAO::Deployment::ComponentServer_ptr server);
 
   ::Components::CCMObject_ptr
   install_component (::CIAO::Deployment::Container_ptr cont,
-                     const char * artifact_name);
+                     const char * entrypoint_name);
 
 private:
   ::CORBA::ORB_var orb_;
   ::PortableServer::POA_var root_poa_;
   ::CIAO::Deployment::ServerActivator_var sa_;
+  const char * artifact_name_;
+  const char *cs_path_;
+  CORBA::ULong spawn_delay_;
+
+  int
+  parse_args (int argc, ACE_TCHAR *argv[]);
+
 };
 
 #endif
