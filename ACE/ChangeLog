@@ -1,3 +1,11 @@
+Thu May 20 21:50:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          With ARCH builds, if the executable ends in "perl", don't look for
+          it in the ARCH directory.
+
 Thu May 20 18:40:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
