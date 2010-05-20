@@ -55,6 +55,13 @@ project(CIAO_ComponentServer_stub) : install, ccm_componentserver_stub, ciaolib_
   }
   Header_Files {
     CIAO_ComponentServer_stub_export.h
+    CIAO_ComponentServerC.h
+    CIAO_CS_ClientC.h
+    CIAO_PropertiesC.h
+  }
+  Inline_Files {
+    CIAO_ComponentServerC.inl
+    CIAO_CS_ClientC.inl
   }
   specific {
     install_dir = ciao/ComponentServer
@@ -80,6 +87,9 @@ project(CIAO_CS_Client_svnt) : install, ccm_svnt, ccm_componentserver_svnt, ciao
     CIAO_CS_ClientS.h
     CIAO_CS_Client_svnt_export.h
   }
+  Inline_Files {
+    CIAO_CS_ClientS.inl
+  }
   specific {
     install_dir = ciao/ComponentServer
   }
@@ -92,12 +102,17 @@ project(CIAO_ComponentServer_svnt) : install, ccm_componentserver_svnt, ciao_com
   IDL_Files {
   }
   Source_Files {
-     CIAO_ComponentServer_Impl.cpp
-     CIAO_ComponentServerS.cpp
-     CIAO_Container_Impl.cpp
+    CIAO_ComponentServer_Impl.cpp
+    CIAO_ComponentServerS.cpp
+    CIAO_Container_Impl.cpp
   }
   Header_Files {
     CIAO_ComponentServer_svnt_export.h
+    CIAO_ComponentServerS.h
+    CIAO_PropertiesS.h
+  }
+  Inline_Files {
+    CIAO_ComponentServerS.inl
   }
   specific {
     install_dir = ciao/ComponentServer

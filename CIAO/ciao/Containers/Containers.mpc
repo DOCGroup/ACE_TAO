@@ -30,6 +30,8 @@ project(CIAO_Container_Base) : install, ciao_lib, ccm_svnt, ciao_servant_activat
   Header_Files {
     Container_Base.h
     Container_Base_export.h
+    Container_BaseC.h
+    Container_BaseS.h
   }
   specific {
     install_dir = ciao/Containers
