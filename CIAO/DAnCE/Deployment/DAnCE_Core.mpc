@@ -217,6 +217,23 @@ project(Deployment_stub) : install, ciaolib_with_idl, dance_output, valuetype, i
   }
   Header_Files {
     Deployment_stub_export.h
+    Deployment_ApplicationC.h
+    Deployment_BaseC.h
+    DeploymentC.h
+    Deployment_ConnectionC.h
+    Deployment_DataC.h
+    Deployment_DeploymentPlanC.h
+    Deployment_Packaging_DataC.h
+    Deployment_PlanErrorC.h
+    Deployment_ResourceCommitmentManagerC.h
+    Deployment_StartErrorC.h
+    Deployment_StopErrorC.h
+    Deployment_TargetDataC.h
+  }
+  Inline_Files {
+    Deployment_ApplicationC.inl
+    Deployment_ResourceCommitmentManagerC.inl
+    Deployment_BaseC.inl
   }
   specific {
     install_dir = DAnCE/Deployment
@@ -240,6 +257,11 @@ project(Deployment_AM_stub) : install, dance_output, dance_deployment_stub, amh 
 
   Header_Files {
     Deployment_ApplicationManager_stub_export.h
+    Deployment_ApplicationManagerC.h
+  }
+
+  Inline_Files {
+    Deployment_ApplicationManagerC.inl
   }
 
   specific {
@@ -261,6 +283,16 @@ project(Deployment_AM_skel) : install, dance_output, dance_deployment_skel, danc
   Source_Files {
     Deployment_ApplicationManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_ApplicationManagerS.h
+    Deployment_ApplicationManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_ApplicationManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -284,6 +316,11 @@ project(Deployment_DAM_stub) : install, dance_output, dance_applicationmanager_s
 
   Header_Files {
     Deployment_DomainApplicationManager_stub_export.h
+    Deployment_DomainApplicationManagerC.h
+  }
+
+  Inline_Files {
+    Deployment_DomainApplicationManagerC.inl
   }
 
   specific {
@@ -305,6 +342,16 @@ project(Deployment_DAM_skel) : install, dance_output, dance_applicationmanager_s
   Source_Files {
     Deployment_DomainApplicationManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_DomainApplicationManagerS.h
+    Deployment_DomainApplicationManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_DomainApplicationManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -327,6 +374,11 @@ project(Deployment_ExecutionManager_stub) : install, dance_output, dance_deploym
 
   Header_Files {
     Deployment_ExecutionManager_stub_export.h
+    Deployment_ExecutionManagerC.h
+  }
+
+  Inline_Files {
+    Deployment_ExecutionManagerC.inl
   }
 
   specific {
@@ -348,6 +400,16 @@ project(Deployment_ExecutionManager_skel) : install, dance_output, dance_deploym
   Source_Files {
     Deployment_ExecutionManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_ExecutionManagerS.h
+    Deployment_ExecutionManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_ExecutionManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -369,7 +431,12 @@ project(Deployment_DomainApplication_stub) : install, dance_output, dance_deploy
   }
 
   Header_Files {
+    Deployment_DomainApplicationC.h
     Deployment_DomainApplication_stub_export.h
+  }
+
+  Inline_Files {
+    Deployment_DomainApplicationC.inl
   }
 
   specific {
@@ -391,6 +458,16 @@ project(Deployment_DomainApplication_skel) : install, dance_output, dance_deploy
   Source_Files {
     Deployment_DomainApplicationS.cpp
   }
+
+  Header_Files {
+    Deployment_DomainApplicationS.h
+    Deployment_DomainApplication_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_DomainApplicationS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -413,6 +490,11 @@ project(Deployment_NAM_stub) : install, dance_output, dance_applicationmanager_s
 
   Header_Files {
     Deployment_NodeApplicationManager_stub_export.h
+    Deployment_NodeApplicationManagerC.h
+  }
+
+  Inline_Files {
+    Deployment_NodeApplicationManagerC.inl
   }
 
   specific {
@@ -434,6 +516,16 @@ project(Deployment_NAM_skel) : install, dance_output, dance_applicationmanager_s
   Source_Files {
     Deployment_NodeApplicationManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_NodeApplicationManagerS.h
+    Deployment_NodeApplicationManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_NodeApplicationManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -456,6 +548,11 @@ project(Deployment_NodeManager_stub) : install, dance_output, dance_deployment_s
 
   Header_Files {
     Deployment_NodeManager_stub_export.h
+    Deployment_NodeManagerC.h
+  }
+
+  Inline_Files {
+    Deployment_NodeManagerC.inl
   }
 
   specific {
@@ -477,6 +574,16 @@ project(Deployment_NodeManager_skel) : install, dance_output, dance_deployment_s
   Source_Files {
     Deployment_NodeManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_NodeManagerS.h
+    Deployment_NodeManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_NodeManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -498,7 +605,12 @@ project(Deployment_TargetManager_stub) : install, dance_output, dance_deployment
   }
 
   Header_Files {
+    Deployment_TargetManagerC.h
     Deployment_TargetManager_stub_export.h
+  }
+
+  Inline_Files {
+    Deployment_TargetManagerC.inl
   }
 
   specific {
@@ -520,6 +632,12 @@ project(Deployment_TargetManager_skel) : install, dance_output, dance_deployment
   Source_Files {
     Deployment_TargetManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_TargetManagerS.h
+    Deployment_TargetManager_skel_export.h
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -539,6 +657,16 @@ project(Deployment_RepositoryManager_stub) : install, dance_output, dance_deploy
   Source_Files {
     Deployment_RepositoryManagerC.cpp
   }
+
+  Header_Files {
+    Deployment_RepositoryManagerC.h
+    Deployment_RepositoryManager_stub_export.h
+  }
+
+  Inline_Files {
+    Deployment_RepositoryManagerC.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -558,6 +686,16 @@ project(Deployment_RepositoryManager_skel) : install, dance_output, dance_deploy
   Source_Files {
     Deployment_RepositoryManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_RepositoryManagerS.h
+    Deployment_RepositoryManager_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_RepositoryManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -580,6 +718,11 @@ project(Deployment_NodeApplication_stub) : install, dance_output, dance_deployme
 
   Header_Files {
     Deployment_NodeApplication_stub_export.h
+    Deployment_NodeApplicationC.h
+  }
+
+  Inline_Files {
+    Deployment_NodeApplicationC.inl
   }
 
   specific {
@@ -601,6 +744,16 @@ project(Deployment_NodeApplication_skel) : install, dance_output, dance_deployme
   Source_Files {
     Deployment_NodeApplicationS.cpp
   }
+
+  Header_Files {
+    Deployment_NodeApplicationS.h
+    Deployment_NodeApplication_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_NodeApplicationS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -623,6 +776,26 @@ project(Deployment_skel) : install, dance_deployment_stub, dance_output, ciaolib
   Source_Files {
     Deployment_ApplicationS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
+  }
+
+  Header_Files {
+    Deployment_ApplicationS.h
+    Deployment_BaseS.h
+    Deployment_ConnectionS.h
+    Deployment_DataS.h
+    Deployment_DeploymentPlanS.h
+    Deployment_Packaging_DataS.h
+    Deployment_PlanErrorS.h
+    Deployment_ResourceCommitmentManagerS.h
+    DeploymentS.h
+    Deployment_skel_export.h
+    Deployment_StartErrorS.h
+    Deployment_StopErrorS.h
+    Deployment_TargetDataS.h
+  }
+
+  Inline_Files {
+    Deployment_ApplicationS.inl
   }
 
   specific {

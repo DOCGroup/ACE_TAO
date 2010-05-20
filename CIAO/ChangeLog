@@ -1,3 +1,17 @@
+Thu May 20 21:13:32 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc:
+        * ccm/CCM_lem_stub.mpc:
+        * ccm/CCM_stub.mpc:
+        * ccm/CCM_svnt.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/Containers/CIAO_Servant_Activator.mpc:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Servants/Servants.mpc:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.mpc:
+
+          List generated headers and inline files so they can be installed.
+
 Thu May 20 15:15:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Common/CIF_Common.h:

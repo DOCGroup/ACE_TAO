@@ -25,6 +25,8 @@ project(CIAO_Servant_Activator_stub) : install, ciao_lib, portableserver, ciao_p
   }
   Header_Files {
     CIAO_Servant_Activator_export.h
+    CIAO_Servant_ActivatorC.h
+    CIAO_Servant_ActivatorS.h
   }
   specific {
     install_dir = ciao/Containers
