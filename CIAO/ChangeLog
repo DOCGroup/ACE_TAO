@@ -1,3 +1,9 @@
+Fri May 21 21:07:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+          Reinstated installation info that was lost in the merge.
+
 Fri May 21 20:01:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Properties.idl:
