@@ -62,6 +62,17 @@
   <artifact xmi:idref="Null_Component_ExecArtifact" />
   <artifact xmi:idref="Null_Component_SvntArtifact" />
   <artifact xmi:idref="Null_Component_StubArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
 </implementation>    
   <instance xmi:id="Null_ComponentHomeInstance">
   <name>Null_ComponentHome</name>
@@ -77,7 +88,7 @@
   <source/>
   <implementation xmi:idref="Null_ComponentComponentImplementation" />
   <configProperty>
-    <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+    <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
     <value>
       <type>
         <kind>tk_string</kind>
