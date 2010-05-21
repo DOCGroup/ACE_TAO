@@ -115,10 +115,14 @@ public:
   // own 'previous' set.
   void add_to_previous (AST_Module *m);
 
-  // Called to check for some declaration
+  // Called to look up some declaration
   // in a previous opening of this module.
-  AST_Decl *look_in_prev_mods (Identifier *e,
-                               bool ignore_fwd = false);
+  AST_Decl *look_in_prev_mods_local (Identifier *e,
+                                     bool ignore_fwd = false);
+  // Called to look up some declaration
+  // in a previous opening of this module.
+  AST_Decl *look_in_prev_mods (UTL_ScopedName *e,
+                               bool full_def_only = false);
 
   // Accessor to the member.
   ACE_Unbounded_Set<AST_Module *> &prev_mods (void);
@@ -132,6 +136,10 @@ public:
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst (void) const;
   void from_inst (AST_Template_Module_Inst *node);
+  
+  // Override that looks in previous openings.
+  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+                                    bool full_def_only);
 
 public:
   static AST_Decl::NodeType const NT;

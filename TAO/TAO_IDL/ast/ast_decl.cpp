@@ -805,10 +805,10 @@ AST_Decl::has_ancestor (AST_Decl *s)
            !i.done ();
            i.advance ())
         {
-          AST_Module **m = 0;
-          i.next (m);
+          AST_Module **mm = 0;
+          i.next (mm);
           
-          for (UTL_ScopeActiveIterator si (*m, UTL_Scope::IK_decls);
+          for (UTL_ScopeActiveIterator si (*mm, UTL_Scope::IK_decls);
                !si.is_done ();
                si.next ())
             {
@@ -1218,7 +1218,7 @@ AST_Decl::set_line (long l)
   this->pd_line = l;
 }
 
-ACE_CString
+ACE_CString &
 AST_Decl::file_name (void)
 {
   return this->pd_file_name;
@@ -1538,6 +1538,37 @@ void
 AST_Decl::contains_wstring (int val)
 {
   this->contains_wstring_ = val;
+}
+
+bool
+AST_Decl::masking_checks (AST_Decl *mod)
+{
+  if (!this->pd_local_name->case_compare (mod->local_name ()))
+    {
+      return true;
+    }
+
+  AST_Module *me_mod = AST_Module::narrow_from_decl (this);
+  AST_Module *of_mod = AST_Module::narrow_from_decl (mod);
+  
+  if (me_mod != 0 && of_mod != 0)
+    {
+      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
+             of_mod->prev_mods ());
+           !i.done ();
+           i.advance ())
+        {
+          AST_Module **m = 0;
+          i.next (m);
+          
+          if (*m == me_mod)
+            {
+              return true;
+            }
+        }
+    }
+    
+  return false;
 }
 
 //Narrowing methods for AST_Decl.

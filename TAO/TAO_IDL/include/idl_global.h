@@ -622,6 +622,9 @@ public:
   void add_ciao_ami_recep_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_recep_names (void);
   // Accessor/mutator for the ciao_ami_recep_names_ member.
+  
+  ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
+  // Accessor for the member
 
   FILE * open_included_file (char const * filename,
                              char const *& directory);
@@ -708,7 +711,7 @@ public:
 
   void original_local_name (Identifier *local_name);
   // Strips _cxx_ prefix for use in port names.
-
+  
 private:
   bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                ACE_CString &param_id,
@@ -859,6 +862,10 @@ private:
   
   ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
   // Receptacles that get a sendc_ version added for AMI4CCM.
+  
+  ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
+  // Used to check for an incorrect lookup success that should
+  // have been masked by an inner scope of the same name.
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

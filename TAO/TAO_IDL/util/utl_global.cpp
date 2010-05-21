@@ -1373,6 +1373,12 @@ IDL_GlobalData::ciao_ami_recep_names (void)
   return this->ciao_ami_recep_names_;
 }
 
+ACE_Unbounded_Queue<AST_Decl *> &
+IDL_GlobalData::masking_scopes (void)
+{
+  return this->masking_scopes_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {

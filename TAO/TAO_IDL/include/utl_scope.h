@@ -173,6 +173,9 @@ public:
   // Name Lookup Mechanism
   AST_Decl *lookup_by_name (UTL_ScopedName *,
                             bool full_def_only = false);
+                            
+  AST_Decl *lookup_by_name_r (UTL_ScopedName *,
+                              bool full_def_only);
 
   // Look up the Identifier * specified only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
@@ -184,8 +187,13 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  virtual AST_Decl *look_in_prev_mods (Identifier *e,
-                                       bool ignore_fwd = false);
+  virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
+                                             bool ignore_fwd = false);
+     
+  // A no-op here, overridden for types like interface
+  // (look_in_inherited), modules (look_in_prev_mods) etc.                                     
+  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+                                    bool ful_def_only);
 
   // How many entries are used?
   virtual unsigned long nmembers (void);
@@ -314,7 +322,7 @@ protected:
   };
   
   WHICH_PSEUDO which_pseudo_;
-
+  
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
   friend class  UTL_ScopeActiveIterator;
@@ -501,6 +509,8 @@ private:
   iter_lookup_by_name_local (AST_Decl *d,
                              UTL_ScopedName *e,
                              bool full_def_only = false);
+                             
+  AST_Decl *local_checks (AST_Decl *d, bool full_def_only);
 };
 
 // Active iterator for a UTL_Scope node

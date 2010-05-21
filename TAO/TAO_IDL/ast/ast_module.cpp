@@ -199,7 +199,7 @@ AST_Module::referenced (AST_Decl *e,
     }
 
   AST_Decl *d =
-    this->look_in_prev_mods (e->local_name (), true);
+    this->look_in_prev_mods_local (e->local_name (), true);
   
   if (0 == d)
     {
@@ -213,29 +213,15 @@ AST_Module::referenced (AST_Decl *e,
 void
 AST_Module::add_to_previous (AST_Module *m)
 {
-  // This will eventually replace the individual declarations
-  // list below.
   this->prev_mods_.insert (m);
-  
-  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
-         m->prev_mods ());
-       !i.done ();
-       i.advance ())
-    {
-      AST_Module **mm = 0;
-      i.next (mm);
-      
-      this->prev_mods_.insert (*mm);
-    }
 }
 
 AST_Decl *
-AST_Module::look_in_prev_mods (Identifier *e,
-                               bool ignore_fwd)
+AST_Module::look_in_prev_mods_local (Identifier *e,
+                                     bool ignore_fwd)
 {
   AST_Module **m = 0;
   AST_Decl *d = 0;
-  AST_Decl *retval = 0;
 
   // If there are more than two openings of this module, we want
   // to get the last one - the one that will have the decls from
@@ -270,12 +256,76 @@ AST_Module::look_in_prev_mods (Identifier *e,
 
           if (e->case_compare (d->local_name ()))
             {
-              retval = d;
+              return d;
             }
         }
     }
     
-  return retval;
+  return 0;
+}
+
+AST_Decl *
+AST_Module::look_in_prev_mods (UTL_ScopedName *e,
+                               bool full_def_only)
+{
+  AST_Module **m = 0;
+  AST_Decl *d = 0;
+
+  // If there are more than two openings of this module, we want
+  // to get the last one - the one that will have the decls from
+  // all the previous openings added to previous_.
+  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR iter (
+         this->prev_mods_);
+       !iter.done ();
+       iter.advance ())
+    {
+      iter.next (m);
+      
+      for (UTL_ScopeActiveIterator i (*m, UTL_Scope::IK_decls);
+           !i.is_done ();
+           i.next ())
+        {
+          d = i.item ();
+
+          if (full_def_only)
+            {
+              AST_Decl::NodeType nt = d->node_type ();
+
+              if (nt == AST_Decl::NT_interface_fwd
+                  || nt == AST_Decl::NT_eventtype_fwd
+                  || nt == AST_Decl::NT_component_fwd
+                  || nt == AST_Decl::NT_struct_fwd
+                  || nt == AST_Decl::NT_union_fwd
+                  || nt == AST_Decl::NT_valuetype_fwd)
+                {
+                  continue;
+                }
+            }
+
+          if (e->head ()->case_compare (d->local_name ()))
+            {
+              UTL_Scope *s = DeclAsScope (d);
+              UTL_ScopedName *sn =
+                static_cast<UTL_ScopedName *> (e->tail ());
+                
+              if (sn == 0)
+                {
+                  return d;
+                }  
+              else if (s != 0)
+                {
+                  d = s->lookup_by_name_r (sn, full_def_only);
+                  
+                  if (d != 0)
+                    {
+                      return d;
+                    }
+                }
+            }
+        }
+    }
+    
+  return 0;
 }
 
 ACE_Unbounded_Set<AST_Module *> &
@@ -307,6 +357,13 @@ void
 AST_Module::from_inst (AST_Template_Module_Inst *node)
 {
   this->from_inst_ = node;
+}
+
+AST_Decl *
+AST_Module::special_lookup (UTL_ScopedName *e,
+                            bool full_def_only)
+{
+  return this->look_in_prev_mods (e, full_def_only);
 }
 
 //================================================

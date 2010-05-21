@@ -33,11 +33,11 @@ public:
 
   // Extend lookup to the base component.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool treat_as_ref);
+                                       bool full_def_only);
 
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool treat_as_ref);
+                                       bool full_def_only);
 
   // Accessors.
 
@@ -46,6 +46,10 @@ public:
   AST_Type **supports (void) const;
 
   long n_supports (void) const;
+  
+  // Override for component of UTL_Scope method.
+  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
+                                    bool full_def_only);
 
   // Cleanup function.
   virtual void destroy (void);
