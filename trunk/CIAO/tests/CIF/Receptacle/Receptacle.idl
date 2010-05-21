@@ -1,0 +1,17 @@
+// $Id$
+#include <Components.idl>
+
+interface foo
+{
+  void do_foo ();
+};
+
+component Receptacle
+{
+  uses foo rec_foo;
+};
+
+component Provider
+{
+  provides foo prov_foo;
+};
