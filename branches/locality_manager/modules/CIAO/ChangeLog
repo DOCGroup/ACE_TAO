@@ -1,3 +1,73 @@
+Fri May 21 03:08:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Name_Utilities.h:
+        * DAnCE/LocalityManager/Daemon/Name_Utilities.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/tests/CIAO/CommandlinePassage/Component.cdp:
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+
+          Various bug fixes, and added support for 1) attribute
+          initialization, 2) external reference endpoints.
+
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
+
+          Log message fix.
+
+        * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeFailureAtActivate.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeFailureAtStartup.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/2NodeFailureAtActivate.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/2NodeFailureAtStartup.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/2NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/5NodeFailureAtActivate.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/5NodeFailureAtStartup.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/5NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+        * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/MultiplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleComponentExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_DP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NS_PL_SP.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimplexConnectionExplicitHome_NilFacet.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_A.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_B.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/Plan_C.cdp:
+        * DAnCE/tests/CIAO/Progressive_Deployments/run_test.pl:
+
+          Ported DAnCE tests.
+
+        * DAnCE/NodeApplication/Name_Utilities.h:
+        * DAnCE/NodeApplication/Name_Utilities.cpp:
+
+          Removed these files.
+
 Thu May 20 19:29:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Core.mpc:

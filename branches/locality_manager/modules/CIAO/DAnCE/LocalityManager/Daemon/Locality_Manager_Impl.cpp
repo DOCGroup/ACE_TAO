@@ -16,6 +16,7 @@
 #include "ciao/Deployment/Handlers/Component_Handler.h"
 #include "ciao/Deployment/Handlers/Home_Handler.h"
 #include "ciao/Deployment/Handlers/Homed_Component_Handler.h"
+#include "Deployment_Interceptors.h"
 //
 
 namespace DAnCE
@@ -76,6 +77,10 @@ namespace DAnCE
     
     this->instance_handlers_[tmp->instance_type ()] = Handler (tmp);
     this->handler_order_.push_back (tmp->instance_type ());
+    
+    ACE_NEW_THROW_EX (this->ii_interceptor_,
+                      DAnCE_StoreReferences_i (this->orb_.in ()),
+                      CORBA::NO_MEMORY ());
   }
 
   ::Deployment::Properties *
@@ -140,13 +145,23 @@ namespace DAnCE
                              this->plan_.instance[*j].name.in ()));
                              
                              
-            // @@ todo: pre-interceptor
+            this->ii_interceptor_->instance_pre_install (this->plan_,
+                                                         *j);
+
             CORBA::Any_var reference;
             handler->install_instance (this->plan_,
                                        *j,
                                        reference.out ());
             
+            CORBA::Any exception;
+
+            this->ii_interceptor_->instance_post_install (this->plan_,
+                                                          *j,
+                                                          reference.in (),
+                                                          exception);
             this->instance_references_[*j] = reference._retn ();
+            
+
             // @@ todo: post-interceptor
           }
       }
@@ -214,6 +229,14 @@ namespace DAnCE
     typedef std::map < std::string, CORBA::ULong > ConnMap;
     ConnMap conns;
     
+    DANCE_DEBUG (6, (LM_TRACE, DLINFO 
+                     "LocalityManager_i::finishLaunch - "
+                     "Starting finsihLaunch, received %u references, "
+                     "have %u connections\n",
+                     providedReference.length (),
+                     this->plan_.connection.length ()
+                     ));
+
     for (CORBA::ULong i = 0; i < this->plan_.connection.length (); ++i)
       {
         conns[this->plan_.connection[i].name.in ()] = i;
@@ -222,8 +245,37 @@ namespace DAnCE
     for (CORBA::ULong i = 0; i < providedReference.length (); ++i)
       {
         const char * name = providedReference[i].name.in ();
-        ConnMap::const_iterator conn = conns.find (name);
+        ConnMap::const_iterator conn_ref = conns.find (name);
         
+        if (conn_ref == conns.end ())
+          continue;
+        
+        CORBA::ULong j (0);
+        
+        const ::Deployment::PlanConnectionDescription &conn = 
+          this->plan_.connection[conn_ref->second];
+        
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                         "LocalityManager_i::finishLaunch - "
+                         "Connection <%C> has %u endpoints\n",
+                         conn.name.in (),
+                         conn.internalEndpoint.length ()));
+
+        if (conn.internalEndpoint.length () == 2)
+          {
+            if (!conn.internalEndpoint[1].provider)
+              j = 1;
+          }
+        else if (conn.internalEndpoint[0].provider &&
+                 conn.externalReference.length () == 0)
+          {
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                             "LocalityManager_i::finishLaunch - "
+                             "Skipping connection <%C>\n",
+                             conn.name.in ()));
+            continue;
+          }
+          
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
                          "LocalityManager_i::finishLaunch - "
                          "Starting connection <%C>\n",
@@ -234,7 +286,7 @@ namespace DAnCE
         reference <<= providedReference[i].endpoint[0];
 
         CORBA::ULong instRef =
-          this->plan_.connection[conn->second].internalEndpoint[i].instanceRef;
+          conn.internalEndpoint[j].instanceRef;
         CORBA::ULong implRef = 
           this->plan_.instance[instRef].implementationRef;
         
@@ -244,7 +296,7 @@ namespace DAnCE
         // @@ placeholder for pre_connect interceptor
         this->instance_handlers_[inst_type].handler_->
           connect_instance (this->plan_,
-                            conn->second,
+                            conn_ref->second,
                             reference);
         // @@ placeholder for post_connect interceptor
       }

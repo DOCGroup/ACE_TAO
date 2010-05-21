@@ -8,6 +8,7 @@
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "ccm/CCM_Home.idl"
 #include "ccm/CCM_Base.idl"
+#include "ccm/CCM_StandardConfigurator.idl"
 #include "ciao/Containers/CIAO_Servant_Activator.idl"
 
 module CIAO
@@ -51,6 +52,9 @@ module CIAO
                                              in string servant_artifact,
                                              in string servant_entrypoint,
                                              in string name);
+    
+    void set_attributes (in Components::CCMObject name,
+                         in Components::ConfigValues values);
 
     void activate_component (in Components::CCMObject name);
 

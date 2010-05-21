@@ -3,6 +3,7 @@
 
 #include "Deployment/Deployment_PlanErrorC.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "ciao/Valuetype_Factories/ConfigValue.h"
 
 namespace CIAO
 {
@@ -44,4 +45,19 @@ namespace CIAO
                                    "Nonexistant artifact");
     return 0;
   } 
+  
+  void 
+  Deployment_Common::create_attribute_configuration (const ::Deployment::Properties &props,
+                                                     ::Components::ConfigValues & values)
+  {
+    values.length (props.length ());
+    
+    for (CORBA::ULong i = 0;
+         i < props.length ();
+         ++i)
+      {
+        values[i] = new CIAO::ConfigValue_impl (props[i].name.in (),
+                                                props[i].value);
+      }
+  }
 }

@@ -216,16 +216,18 @@ namespace CIAO
                                                "Expected external reference connection.");
       }
 
-    ::Components::CCMObject_var provided;
+    ::CORBA::Object_var obj;
+    provided_reference >>= CORBA::Any::to_object (obj);
+        
+    ::Components::CCMObject_var provided = ::Components::CCMObject::_narrow (obj.in ());
 
-    if (!(provided_reference >>= provided) &&
-        CORBA::is_nil (provided))
+    if (CORBA::is_nil (provided))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_facet - "
                         "While connecting <%C>:"
                         "Provided reference for connection where primary is Facet must be "
-                        "non-nil.",
+                        "non-nil.\n",
                         plan.connection[connectionRef].name.in ()));
         throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
                                                "Provided reference for connection where primary is Facet must "

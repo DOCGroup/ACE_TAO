@@ -163,6 +163,7 @@ namespace CIAO
       typename COMP_SVNT::_exec_type::_ptr_type exe)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
+    
 
     CORBA::Object_var hobj = this->container_->get_objref (this);
 
@@ -193,7 +194,6 @@ namespace CIAO
       this->container_->install_servant (svt,
                                          Container_Types::COMPONENT_t,
                                          oid.out ());
-
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
 
@@ -203,7 +203,6 @@ namespace CIAO
     this->objref_map_.bind (
       oid.in (),
       Components::CCMObject::_duplicate (ccmobjref.in ()));
-
     return ho._retn ();
   }
 

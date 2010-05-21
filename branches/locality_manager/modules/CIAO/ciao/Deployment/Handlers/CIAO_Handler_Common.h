@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 
+#include "ccm/CCM_StandardConfiguratorC.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "DAnCE/DAnCE_Utility.h"
 
@@ -24,6 +25,8 @@ namespace CIAO
     static const char * get_implementation (const char *name,
                                             const ::Deployment::DeploymentPlan &plan);
     
+    static void create_attribute_configuration (const ::Deployment::Properties &props,
+                                                ::Components::ConfigValues & values);
     struct Instance_Info
     {
       std::string name;

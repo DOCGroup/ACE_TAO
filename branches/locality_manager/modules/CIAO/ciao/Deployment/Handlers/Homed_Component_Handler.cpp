@@ -91,10 +91,23 @@ namespace CIAO
                                         "Home ID is not available");
       }
     
+    const char *cont_id = 
+      DEPLOYMENT_STATE::instance ()->instance_to_container (tmp);
+    
+    ::CIAO::Container_var container = DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
+
     Components::CCMObject_var ref;
     try
       {
         ref = home->create_component ();
+        
+        ::Components::ConfigValues attr_config;
+        Deployment_Common::create_attribute_configuration (idd.configProperty,
+                                                           attr_config);
+        
+        
+        container->set_attributes (ref.in (),
+                                   attr_config);
       }
     catch (const CORBA::Exception &ex)
       {
@@ -136,9 +149,6 @@ namespace CIAO
     
     this->instances_[idd.name.in ()] = info;
     
-    const char *cont_id = 
-      DEPLOYMENT_STATE::instance ()->instance_to_container (tmp);
-
     DEPLOYMENT_STATE::instance ()->add_component (idd.name.in (),
                                                   cont_id,
                                                   ref.in ());

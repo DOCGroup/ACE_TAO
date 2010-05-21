@@ -10,6 +10,8 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
    after += CIAO_Deployment_Handlers
    Source_Files {
      Locality_Manager_Impl.cpp
+     Deployment_Interceptors.cpp
+     Name_Utilities.h
    }
    
    Header_Files {

@@ -1013,6 +1013,78 @@ namespace CIAO
   }
 
   void
+  Session_Container::set_attributes (Components::CCMObject_ptr compref,
+                                     const ::Components::ConfigValues & values)
+  {
+    CIAO_TRACE("Session_Container::activate_component");
+
+    try
+      {
+
+        CIAO::Connector_Servant_Impl_Base * svt = 0;
+
+        try
+          {
+            svt =
+              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
+                this->component_poa_->reference_to_servant (compref));
+          }
+        catch (...)
+          {
+            throw InvalidComponent ();
+          }
+
+        if (!svt)
+          {
+            throw CIAO::InvalidComponent  ();
+          }
+        else
+          {
+            CIAO_DEBUG (9,
+                        (LM_TRACE,
+                         CLINFO
+                         "Session_Container::set_attributes - "
+                         "Configuring attribute values on "
+                         "component object reference.\n"));
+
+            svt->set_attributes (values);
+          }
+      }
+    catch (const CIAO::InvalidComponent &)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Session_Container::set_attributes - "
+                     "Failed to retrieve servant and/or cast "
+                     "to servant pointer.\n"));
+        throw;
+      }
+    catch (const CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Session_Container::set_attributes - "
+                     "Caught CORBA exception while configuring "
+                     "component attributes: %C\n",
+                     ex._info ().c_str ()));
+        throw;
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Session_Container::set_attributes - "
+                     "Caught unknown C++ eception while "
+                     "configuring component attributes.\n"));
+
+        throw;
+      }
+  }
+
+  void
   Session_Container::activate_component (
     Components::CCMObject_ptr compref)
   {
