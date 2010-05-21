@@ -188,7 +188,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           // cipher only disables encryption.  However, certificate
           // exchanges will still occur.
           if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
-                                         "DEFAULT:eNULL") == 0)
+                                         "ALL:eNULL") == 0)
             {
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
