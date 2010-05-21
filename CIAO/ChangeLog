@@ -1,3 +1,13 @@
+Fri May 21 16:53:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub.idl:
+        
+          Fixed incorrect IDL. References to DDS_Write, DDS_Listen and DDS_Get
+          were incorrectly scoped inside the connector Large_Connector. They
+          are actually defined in the instantiated template module
+          LargeTypeConn.
+
 Fri May 21 16:13:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
