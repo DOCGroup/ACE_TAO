@@ -1,3 +1,11 @@
+Fri May 21 14:52:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+
+          Use a mapped keyword "dds_ts_flags" that's the same for any DDS
+          implementation.  This would be used by projects for generic flags
+          accepted by any of the code generators, such as -D and -I.
+
 Fri May 21 14:38:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Utility.h:
