@@ -1,3 +1,27 @@
+Fri May 21 03:54:36 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/BasicSP/descriptors/BasicSP_Homed.cdp:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component/descriptors/Null_Homed.cdp:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component_Glfa/descriptors/Null_Homed.cdp:
+        * examples/Null_Component_Glfa/descriptors/run_test.pl:
+        * tests/Bug_2130_Regression/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+        * tests/Bug_3834_Regression/descriptors/run_test.pl:
+        * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+
+          Ported tests.
+
 Fri May 21 03:08:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Utility.cpp:

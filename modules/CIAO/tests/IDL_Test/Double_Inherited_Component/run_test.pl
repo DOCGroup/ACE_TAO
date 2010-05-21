@@ -103,7 +103,7 @@ sub kill_open_processes {
     }
     
     # in case the planlauncher wasn't able to shut everything down as supposed
-    $tg_executor->KillAll ('ciao_componentserver');
+    $tg_executor->KillAll ('dance_locality_manager');
 }
 
 sub run_node_daemons {
@@ -113,7 +113,7 @@ sub run_node_daemons {
         $port = $ports[$i];
         $nodename = $nodenames[$i];
         $iiop = "iiop://localhost:$port";
-        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+        $node_app = "$DANCE_ROOT/bin/dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
