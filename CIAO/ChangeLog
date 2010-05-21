@@ -1,3 +1,9 @@
+Fri May 21 15:06:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/MPC/config/dance_locality_handler.mpb:
+
+          Fixed comment line that didn't start with //.
+
 Fri May 21 14:52:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/dds4ccm_ts_default.mpb:
@@ -23,7 +29,7 @@ Fri May 21 14:38:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Deployment/Handlers/Homed_Component_Handler.h:
 
           Fuzz fixes.
-        
+
 Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
 
         * .:
