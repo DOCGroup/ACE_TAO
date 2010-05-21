@@ -158,8 +158,7 @@ namespace DAnCE
 
             DANCE_DEBUG (9, (LM_TRACE, DLINFO "LocalityManager_Task::svc - "
                             "Configuration received\n"));
-            // @@WO: Probably need to do something with these config values.
-
+            
             lm_srv->init (config._retn ());
 
             DANCE_DEBUG (6, (LM_NOTICE, DLINFO "LocalityManager_Task::svc - "

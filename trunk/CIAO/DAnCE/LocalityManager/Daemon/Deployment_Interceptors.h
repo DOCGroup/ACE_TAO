@@ -27,7 +27,8 @@ namespace DAnCE
   public:
     // Constructor 
     
-    DAnCE_StoreReferences_i (CORBA::ORB_ptr orb);
+    DAnCE_StoreReferences_i (CORBA::ORB_ptr orb,
+                             const ::Deployment::Properties *props);
   
     // Destructor 
     virtual ~DAnCE_StoreReferences_i (void);

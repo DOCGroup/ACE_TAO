@@ -50,7 +50,7 @@ namespace DAnCE
   public:
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
-                          const ::Deployment::DeploymentPlan& plan,
+                          ::Deployment::DeploymentPlan& plan,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
@@ -80,7 +80,7 @@ namespace DAnCE
 
     PortableServer::POA_var poa_;
 
-    const ::Deployment::DeploymentPlan& plan_;
+    ::Deployment::DeploymentPlan& plan_;
 
     ACE_CString node_name_;
 

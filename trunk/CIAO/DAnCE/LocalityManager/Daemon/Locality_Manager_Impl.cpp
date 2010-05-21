@@ -39,17 +39,19 @@ namespace DAnCE
   }
   
   void
-  LocalityManager_i::init (Deployment::Properties *)
+  LocalityManager_i::init (Deployment::Properties *props)
   {
     DANCE_TRACE ("LocalityManager_i::init");
+    
+    this->props_ = props;
     
     // Initialize the CIAO instance handlers
     ::DAnCE::InstanceDeploymentHandler_ptr tmp;
     
-    DAnCE::Utility::PROPERTY_MAP props;
+    DAnCE::Utility::PROPERTY_MAP tmp_props;
     
     ACE_NEW_THROW_EX (tmp,
-                      CIAO::Container_Handler_i (props,
+                      CIAO::Container_Handler_i (tmp_props,
                                                  this->orb_,
                                                  this->poa_),
                       CORBA::NO_MEMORY ());
@@ -79,7 +81,8 @@ namespace DAnCE
     this->handler_order_.push_back (tmp->instance_type ());
     
     ACE_NEW_THROW_EX (this->ii_interceptor_,
-                      DAnCE_StoreReferences_i (this->orb_.in ()),
+                      DAnCE_StoreReferences_i (this->orb_.in (),
+                                               props),
                       CORBA::NO_MEMORY ());
   }
 

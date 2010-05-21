@@ -439,14 +439,27 @@ namespace DAnCE
 
     void
     DAnCE_LocalityActivator_i::create_properties (
-      const Server_Info &,
+      const Server_Info &info,
       Deployment::Properties_out &config)
     {
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                       "DAnCE_LocalityActivator_i::create_properties - "
+                       "Creating property sequence for LocalityManager <%C> with "
+                       "length %u\n",
+                       info.uuid_.c_str (),
+                       info.cmap_->current_size ()));
+      
       ACE_NEW_THROW_EX (config,
-                        Deployment::Properties (1),
+                        Deployment::Properties (info.cmap_->current_size ()),
                         CORBA::NO_MEMORY ());
-
-
+      
+      CORBA::ULong pos = 0;
+      for (Utility::PROPERTY_MAP::iterator i = info.cmap_->begin ();
+           (i.advance ()) != 0; ++pos)
+        {
+          config[pos].name = i->ext_id_.c_str ();
+          config[pos].value = i->int_id_;
+        }
     }
 }
 
