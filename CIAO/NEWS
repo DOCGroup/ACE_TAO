@@ -59,6 +59,10 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
 
+. CIAO's default makefiles (traditional ACE/GNU, not autoconf/automake)
+  now support installation with "make install".
+  Please see the ACE-INSTALL.html file for instructions.
+
 . CIAO now enabled the LwCCM profile by default. This reduces the
   size of the generated code and the core libraries significantly.
   If you need any of the full CCM features, set ccm_lw=0 in your

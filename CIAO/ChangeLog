@@ -1,3 +1,9 @@
+Fri May 21 21:32:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+
+          Documented "make install"
+
 Fri May 21 21:07:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * DAnCE/Deployment/Deployment_Core.mpc:
