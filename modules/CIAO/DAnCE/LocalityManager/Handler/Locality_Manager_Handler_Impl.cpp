@@ -103,6 +103,11 @@ namespace DAnCE
                                 mdd.execParameter);
     Utility::append_properties (allprops,
                                 idd.configProperty);
+    
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                     "Locality_Handler_i::install_instance - "
+                     "Passing %u properties to activator\n",
+                     allprops.length ()));
 
     ::DAnCE::LocalityManager_var lm_ref =
         this->activator_->create_locality_manager (allprops);

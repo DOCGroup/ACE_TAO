@@ -13,6 +13,7 @@
 #define DANCE_LOCALITYMANAGERI_PDD6RP_H_
 
 #include "DAnCE/DAnCE_LocalityManagerS.h"
+#include "DAnCE/DAnCE_DeploymentInterceptorsC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -102,6 +103,8 @@ namespace DAnCE
     REFERENCE_MAP instance_references_;
       
     ::Deployment::DeploymentPlan plan_;
+    
+    ::DAnCE::InstanceInstallation_var ii_interceptor_;
   };
 
 }

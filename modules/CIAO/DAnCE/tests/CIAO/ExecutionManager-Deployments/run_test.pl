@@ -86,7 +86,7 @@ sub kill_node_daemon {
     }
     for ($i = 0; $i < $nr_daemon; ++$i) {
         # in case shutdown did not perform as expected
-        $tg_daemons[$i]->KillAll ('ciao_componentserver');
+        $tg_daemons[$i]->KillAll ('dance_locality_manager');
     }
 }
 
@@ -113,7 +113,7 @@ sub run_node_daemons {
         $nodename = $nodenames[$i];
         $node_host = $tg_daemons[$i]->HostName ();
         $iiop = "iiop://$node_host:$port";
-        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+        $node_app = "$DANCE_ROOT/bin/dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";

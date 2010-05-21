@@ -144,6 +144,10 @@ namespace CIAO
                                          ::Components::CCMObject_ptr user,
                                          const char * user_port);
 
+    /// Set attributes on a component
+    virtual void set_attributes (Components::CCMObject_ptr compref,
+                                 const ::Components::ConfigValues & values);
+
     /// Activate component
     virtual void activate_component (Components::CCMObject_ptr compref);
 

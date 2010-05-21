@@ -11,13 +11,11 @@ project(DAnCE_NodeApplication): install, dance_lib, dynamicinterface, \
   Source_Files {
     NodeApplication_Impl.cpp
     ComponentAttributesSetter.cpp
-    Name_Utilities.cpp
   }
 
   Header_Files {
     NodeApplication_Impl.h
     ComponentAttributesSetter.h
-    Name_Utilities.h
   }
 
   specific {

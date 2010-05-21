@@ -21,7 +21,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>edu.vanderbilt.dre.DAnCE.ServerExecutable</string>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
         </value>
       </value>
     </execParameter>
@@ -84,8 +84,8 @@
     <node>CommandlinePassageNode</node>
     <source />
     <implementation xmi:idref="CompSvrImpl" />
-        <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentServer.Args</name>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -123,7 +123,7 @@
     <name>CompoSvrArtifactName</name>
     <source />
     <node />
-    <location>ciao_componentserver</location>
+    <location>dance_locality_manager</location>
   </artifact>
   <artifact xmi:id="CommandlinePassage_ExecArtifact">
     <name>CommandlinePassage_exec</name>
