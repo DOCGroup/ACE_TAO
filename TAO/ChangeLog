@@ -1,3 +1,35 @@
+Fri May 21 23:04:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_home.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/fe/fe_obv_header.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/fe_component_header.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Overhauled IDL compiler's internal mechanism to look up
+          nodes in the AST from the scoped name.
+
 Fri May 21 21:31:47 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * NEWS:
