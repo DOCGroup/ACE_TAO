@@ -9,18 +9,26 @@
 namespace DAnCE
 {
   // Implementation skeleton constructor
-  DAnCE_StoreReferences_i::DAnCE_StoreReferences_i (CORBA::ORB_ptr orb)
+  DAnCE_StoreReferences_i::DAnCE_StoreReferences_i (CORBA::ORB_ptr orb,
+                                                    const ::Deployment::Properties *prop_ptr)
     : orb_ (CORBA::ORB::_duplicate (orb))
       
   {
-    try
+    if (prop_ptr)
       {
-        CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
-        ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
-      }
-    catch (...)
-      {
-        // swallow
+        const ::Deployment::Properties &props = *prop_ptr;
+
+        for (CORBA::ULong i = 0; i < props.length (); ++i)
+          {
+            if (ACE_OS::strcmp (props[i].name.in (),
+                                DAnCE::LOCALITY_NAMINGCONTEXT) == 0)
+              {
+                CORBA::Object_var obj;
+                props[i].value >>= CORBA::Any::to_object (obj);
+                
+                ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
+              }
+          }
       }
   }
 
@@ -29,16 +37,16 @@ namespace DAnCE
   {
   }
 
-  void DAnCE_StoreReferences_i::instance_pre_install (::Deployment::DeploymentPlan & plan,
-                                                      ::CORBA::ULong instanceRef)
+  void DAnCE_StoreReferences_i::instance_pre_install (::Deployment::DeploymentPlan &,
+                                                      ::CORBA::ULong)
   {
     // no-op
   }
 
-  void DAnCE_StoreReferences_i::instance_post_install (const ::Deployment::DeploymentPlan & plan,
+  void DAnCE_StoreReferences_i::instance_post_install (const ::Deployment::DeploymentPlan &plan,
                                                        ::CORBA::ULong instance_index,
-                                                       const ::CORBA::Any & instance_reference,
-                                                       const ::CORBA::Any & exception_thrown)
+                                                       const ::CORBA::Any &instance_reference,
+                                                       const ::CORBA::Any &)
   {
     const ::Deployment::InstanceDeploymentDescription &inst =
       plan.instance[instance_index];
@@ -102,16 +110,16 @@ namespace DAnCE
   }
 
   void 
-  DAnCE_ReferenceLookup_i::instance_pre_connect (::Deployment::DeploymentPlan & plan,
-                                                 ::CORBA::ULong connection_index,
-                                                 ::CORBA::Any & provided_reference)
+  DAnCE_ReferenceLookup_i::instance_pre_connect (::Deployment::DeploymentPlan &,
+                                                 ::CORBA::ULong,
+                                                 ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
-  void DAnCE_ReferenceLookup_i::instance_post_connect (const ::Deployment::DeploymentPlan & plan,
-                                                       ::CORBA::ULong connectionRef,
-                                                       const ::CORBA::Any & exceptionThrown)
+  void DAnCE_ReferenceLookup_i::instance_post_connect (const ::Deployment::DeploymentPlan &,
+                                                       ::CORBA::ULong,
+                                                       const ::CORBA::Any &)
   {
     // Add your implementation here
   }
