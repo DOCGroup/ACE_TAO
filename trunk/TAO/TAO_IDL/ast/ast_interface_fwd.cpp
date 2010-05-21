@@ -134,8 +134,8 @@ AST_InterfaceFwd::full_def_seen (void)
     {
       AST_Module *m = AST_Module::narrow_from_scope (s);
       AST_Decl *d =
-        m->look_in_prev_mods (this->local_name (),
-                              false);
+        m->look_in_prev_mods_local (this->local_name (),
+                                    false);
 
       if (0 != d)
         {
@@ -219,7 +219,8 @@ AST_InterfaceFwd::is_defined (void)
 
       if (0 != m)
         {
-          AST_Decl *d = m->look_in_prev_mods (this->local_name ());
+          AST_Decl *d =
+            m->look_in_prev_mods_local (this->local_name ());
 
           if (0 != d)
             {

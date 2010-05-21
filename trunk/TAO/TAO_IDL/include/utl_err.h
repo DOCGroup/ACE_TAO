@@ -362,6 +362,12 @@ public:
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
   void mismatch_seq_of_param (const char *param_id);
+  
+  // Informative message when a lookup fails because a
+  // masking scope has not been correctly differentiated
+  // in the scoped name from the scope it masks.
+  void scope_masking_error (AST_Decl *masked,
+                            AST_Decl *loc);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

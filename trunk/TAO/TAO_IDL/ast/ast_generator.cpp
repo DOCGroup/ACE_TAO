@@ -166,30 +166,32 @@ AST_Generator::create_module (UTL_Scope *s,
   // If this scope is itself a module, and has been previously
   // opened, the previous opening may contain a previous opening
   // of the module we're creating.
-  AST_Decl *d = ScopeAsDecl (s);
-  AST_Decl::NodeType nt = d->node_type ();
+  m = AST_Module::narrow_from_scope (s);
 
-  if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
+  if (m != 0)
     {
-      // Also check this to week out a template module or its
-      // instantiation.
-      m = AST_Module::narrow_from_decl (d);
-
-      if (m != 0)
+      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
+             m->prev_mods ());
+           !i.done ();
+           i.advance ())
         {
-          // AST_Module::previous_ is a set, so it contains each
-          // entry only once, but previous_ will contain the decls
-          // from all previous openings. See comment in
-          // AST_Module::add_to_previous() body.
-          d = m->look_in_prev_mods (n->last_component ());
-
-          if (d != 0)
+          AST_Module **mm = 0;
+          i.next (mm);
+          
+          for (UTL_ScopeActiveIterator si (*mm, UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
             {
-              if (d->node_type () == AST_Decl::NT_module)
+              AST_Decl *d = si.item ();
+              
+              if (retval->local_name ()->case_compare (d->local_name ()))
                 {
                   m = AST_Module::narrow_from_decl (d);
-
-                  retval->add_to_previous (m);
+                  
+                  if (m != 0)
+                    {
+                      retval->add_to_previous (m);
+                    }
                 }
             }
         }

@@ -63,13 +63,14 @@ AST_Home::~AST_Home (void)
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
-                             bool treat_as_ref)
+                             bool full_def_only)
 {
   AST_Decl *d = 0;
 
   if (this->pd_base_home != 0)
     {
-      d = this->pd_base_home->lookup_by_name (e, treat_as_ref);
+      d =
+        this->pd_base_home->lookup_by_name (e, full_def_only);
     }
 
   return d;
@@ -78,7 +79,7 @@ AST_Home::look_in_inherited (UTL_ScopedName *e,
 // Look through supported interface list.
 AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
-                             bool /* treat_as_ref */)
+                             bool full_def_only)
 {
   AST_Decl *d = 0;
   AST_Type **is = 0;
@@ -109,7 +110,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
         
-      d = (i)->lookup_by_name (e);
+      d = (i)->lookup_by_name_r (e, full_def_only);
                                
       if (d != 0)
         {
@@ -117,6 +118,20 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
         }
     }
 
+  return d;
+}
+
+AST_Decl *
+AST_Home::special_lookup (UTL_ScopedName *e,
+                          bool full_def_only)
+{
+  AST_Decl *d = this->look_in_inherited (e, full_def_only);
+  
+  if (d == 0)
+    {
+      d = this->look_in_supported (e, full_def_only);
+    }
+    
   return d;
 }
 
