@@ -1,4 +1,4 @@
-$Id$
+// $Id$
 project : dance_skel, dance_split_plan {
   after += DAnCE_Locality_Handler
   libs += DAnCE_Locality_Handler
