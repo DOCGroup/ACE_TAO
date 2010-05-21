@@ -45,6 +45,12 @@ project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, mess
     CCM_ComponentServer_ClientC.cpp
     CCM_ComponentServer_BaseC.cpp
   }
+
+  Inline_Files {
+    CCM_ComponentServer_ClientC.inl
+    CCM_ComponentServerC.inl
+  }
+
   IDL_Files {
   }
 
