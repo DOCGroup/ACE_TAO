@@ -229,7 +229,7 @@ AST_ValueType::will_have_factory (void)
 // Look through supported interface list.
 AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
-                                  bool)
+                                  bool full_def_only)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
@@ -259,7 +259,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
         
-      d = (i)->lookup_by_name (e);
+      d = (i)->lookup_by_name_r (e, full_def_only);
                                
       if (d != 0)
         {
@@ -299,6 +299,20 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
     }
 
   return d_before;
+}
+
+AST_Decl *
+AST_ValueType::special_lookup (UTL_ScopedName *e,
+                               bool full_def_only)
+{
+  AST_Decl *d = this->look_in_inherited (e, full_def_only);
+  
+  if (d == 0)
+    {
+      d = this->look_in_supported (e, full_def_only);
+    }
+    
+  return d;
 }
 
 bool

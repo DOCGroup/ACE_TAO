@@ -322,7 +322,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
             {
               AST_Module *m = AST_Module::narrow_from_decl (sad);
 
-              d = m->look_in_prev_mods (item->last_component ());
+              d = m->look_in_prev_mods_local (item->last_component ());
             }
         }
 

@@ -1521,3 +1521,58 @@ UTL_Error::mismatch_seq_of_param (const char *param_id)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+void
+UTL_Error::scope_masking_error (AST_Decl *masked,
+                                AST_Decl *masking)
+{
+  const char *this_file = idl_global->filename ()->get_string ();
+  const char *masked_file = masked->file_name ().c_str ();
+  const char *masking_file = masking->file_name ().c_str ();
+
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("%C: \"%C\", line %d: Did you mean \"::%C\"\n")
+              ACE_TEXT ("   declared at "),
+              idl_global->prog_name (),
+              this_file,
+              idl_global->lineno (),
+              masked->full_name () ));
+              
+  const bool same_file =
+    (0 == ACE_OS::strcmp (this_file, masked_file));
+            
+  if (!same_file)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%C "),
+                  masked_file));
+    }
+    
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("line %d but hidden by local \""),
+              masked->line ()));
+
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("::%C\""),
+              masking->full_name ()));
+    
+  const bool same_file_again =
+    (same_file
+     && 0 == ACE_OS::strcmp (this_file, masking_file));
+            
+  if (!same_file_again)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("\n")
+                  ACE_TEXT ("   declared at %C "),
+                  masking_file));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT (" at ")));
+    }
+    
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("line %d ?\n"),
+              masking->line () ));
+}                                

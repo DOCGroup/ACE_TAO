@@ -26,11 +26,15 @@ public:
 
   // Extend lookup to the base home.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool treat_as_ref);
+                                       bool full_def_only);
 
   // Extend lookup to the supported interfaces.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool treat_as_ref);
+                                       bool full_def_only);
+     
+  // Overridden for homes from the UTL_Scope method.                                     
+  virtual AST_Decl *special_lookup (UTL_ScopedName *,
+                                    bool full_def_only);
 
   // Accessors.
 

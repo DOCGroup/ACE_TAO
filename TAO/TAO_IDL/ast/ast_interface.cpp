@@ -809,7 +809,7 @@ AST_Interface::redef_clash (void)
 // Look through inherited interfaces.
 AST_Decl *
 AST_Interface::look_in_inherited (UTL_ScopedName *e,
-                                  bool /* treat_as_ref */)
+                                  bool full_def_only)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
@@ -839,7 +839,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
           continue;
         }
         
-      d = (i)->lookup_by_name (e);
+      d = (i)->lookup_by_name_r (e, full_def_only);
       if (d != 0)
         {
           if (d_before == 0)
@@ -881,7 +881,8 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 }
 
 AST_Decl *
-AST_Interface::look_in_inherited_local (Identifier *e)
+AST_Interface::look_in_inherited_local (Identifier *e,
+                                        bool full_def_only)
 {
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -906,7 +907,7 @@ AST_Interface::look_in_inherited_local (Identifier *e)
           continue;
         }
         
-      d = i->lookup_by_name_local (e, false);
+      d = i->lookup_by_name_local (e, full_def_only);
       
       if (d != 0)
         {
@@ -972,6 +973,27 @@ bool
 AST_Interface::legal_for_primary_key (void) const
 {
   return false;
+}
+
+AST_Decl *
+AST_Interface::special_lookup (UTL_ScopedName *e,
+                               bool full_def_only)
+{
+  AST_Decl *d = this->look_in_inherited_local (e->head (),
+                                               full_def_only);
+  
+  if (d != 0)
+    {
+      UTL_Scope *s = DeclAsScope (d);
+      UTL_ScopedName *sn =
+        static_cast<UTL_ScopedName *> (e->tail ());
+        
+      return (s != 0 && sn != 0
+                ? s->lookup_by_name_r (sn, full_def_only)
+                : d);
+    }
+    
+  return 0;
 }
 
 void

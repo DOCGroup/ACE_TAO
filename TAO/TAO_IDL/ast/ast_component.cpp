@@ -69,13 +69,16 @@ AST_Component::redefine (AST_Interface *from)
 
 AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
-                                  bool treat_as_ref)
+                                  bool full_def_only)
 {
   AST_Decl *d = 0;
-
+  
   if (this->pd_base_component != 0)
     {
-      d = this->pd_base_component->lookup_by_name (e, treat_as_ref);
+      d =
+        this->pd_base_component->lookup_by_name_r (
+          e,
+          full_def_only);
     }
 
   return d;
@@ -84,7 +87,7 @@ AST_Component::look_in_inherited (UTL_ScopedName *e,
 // Look through supported interface list.
 AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
-                                  bool)
+                                  bool full_def_only)
 {
   AST_Decl *d = 0;
   AST_Type **is = 0;
@@ -93,15 +96,11 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      idl_global->err ()->fwd_decl_lookup (this,
-                                           e);
+      idl_global->err ()->fwd_decl_lookup (this, e);
       return 0;
     }
 
   // OK, loop through supported interfaces.
-
-  // (Don't leave the inheritance hierarchy, no module or global ...)
-  // Find all and report ambiguous results as error.
 
   for (nis = this->n_supports (), is = this->supports ();
        nis > 0;
@@ -115,7 +114,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
 
-      d = (i)->lookup_by_name (e);
+      d = (i)->lookup_by_name_r (e, full_def_only);
 
       if (d != 0)
         {
@@ -144,6 +143,20 @@ AST_Component::n_supports (void) const
   return this->n_inherits ();
 }
 
+AST_Decl *
+AST_Component::special_lookup (UTL_ScopedName *e,
+                               bool full_def_only)
+{
+  AST_Decl *d = this->look_in_inherited (e, full_def_only);
+  
+  if (d == 0)
+    {
+      d = this->look_in_supported (e, full_def_only);
+    }
+    
+  return d;
+}
+                                    
 void
 AST_Component::destroy (void)
 {
