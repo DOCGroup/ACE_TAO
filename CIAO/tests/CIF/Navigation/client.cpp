@@ -97,7 +97,22 @@ run_test (::Navigation_ptr nav)
                                   "while testing get_named_facets\n"));
           }
 
-//         boolean same_component (in Object object_ref);
+        if (nav->same_component (nav))
+          {
+            ACE_DEBUG ((LM_DEBUG, "Same component test passed !\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "Error: Same component test failed!\n"));
+          }
+        try
+          {
+            nav->same_component (0);
+          }
+        catch (const CORBA::Exception& ex)
+          {
+            ex._tao_print_exception ("Expected exception caught:");
+          }
       #endif
     }
   catch (...)
