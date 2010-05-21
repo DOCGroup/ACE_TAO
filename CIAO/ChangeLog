@@ -1,10 +1,28 @@
+Fri May 21 14:38:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/MPC/config/dance_locality_handler.mpb:
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+
+          Fuzz fixes.
+        
 Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
 
         * .:
           Merged in locality_manager branch.  details to follow:
-        
+
         Fri May 21 03:57:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
                 * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
                 * connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl:
@@ -72,11 +90,11 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
                 * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
                 * connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl:
-        
+
                   Ported tests.
-                
+
         Fri May 21 03:54:36 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * examples/BasicSP/descriptors/BasicSP_Homed.cdp:
                 * examples/BasicSP/descriptors/run_test.pl:
                 * examples/Hello/descriptors/DeploymentPlan.cdp:
@@ -96,11 +114,11 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * tests/Bug_3834_Regression/descriptors/run_test.pl:
                 * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
                 * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
-        
+
                   Ported tests.
-        
+
         Fri May 21 03:08:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * DAnCE/DAnCE/DAnCE_Utility.cpp:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
@@ -121,14 +139,14 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * ciao/Deployment/Handlers/Connection_Handler.cpp:
                 * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
                 * ciao/Servants/Home_Servant_Impl_T.cpp:
-        
+
                   Various bug fixes, and added support for 1) attribute
                   initialization, 2) external reference endpoints.
-        
+
                 * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
-        
+
                   Log message fix.
-        
+
                 * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeFailureAtActivate.cdp:
                 * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeFailureAtStartup.cdp:
                 * DAnCE/tests/CIAO/EM-Launch-Failures/1NodeNoFailure.cdp:
@@ -161,23 +179,23 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * DAnCE/tests/CIAO/Progressive_Deployments/Plan_B.cdp:
                 * DAnCE/tests/CIAO/Progressive_Deployments/Plan_C.cdp:
                 * DAnCE/tests/CIAO/Progressive_Deployments/run_test.pl:
-        
+
                   Ported DAnCE tests.
-        
+
                 * DAnCE/NodeApplication/Name_Utilities.h:
                 * DAnCE/NodeApplication/Name_Utilities.cpp:
-        
+
                   Removed these files.
-        
+
         Thu May 20 19:29:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * DAnCE/DAnCE/DAnCE_Core.mpc:
                 * ciao/ComponentServer/CIAO_ComponentServer.mpc:
                 * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
-        
+
                  Windows compile fixes.
-        
+
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
                 * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
                 * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
@@ -186,34 +204,34 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * ciao/Deployment/Handlers/Connection_Handler.cpp:
                 * ciao/Deployment/Handlers/Home_Handler.cpp:
                 * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
-        
+
                   Bugfixes.
-        
+
                 * ciao/Servants/Connector_Servant_Impl_Base.cpp:
-        
+
                   Default connect_consumer behavior should throw an
                   InvalidName exception.
-        
+
         Wed May 19 18:37:49 UTC 2010  wotte  <wotte@>
-        
+
                 * DAnCE/NodeApplication/NodeApplication.mpc:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
                 * ciao/ComponentServer/CIAO_ComponentServer.mpc:
                 * MPC/config/ciao_componentserver_stub.mpb:
-        
+
                   Build ordering issues.
-        
+
         Wed May 19 12:17:27 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * ciao/ComponentServer/CIAO_ComponentServer.mpc:
                 * ciao/ComponentServer/CIAO_Properties.idl:
                 * ciao/ComponentServer/Client_init.h:
                 * ciao/ComponentServer/Server_init.h:
-        
+
                 * ciao/Deployment:
-        
+
                 * ciao/Deployment/Handlers:
-        
+
                 * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
                 * ciao/Deployment/Handlers/CIAO_Handler_Common.h:
                 * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
@@ -230,24 +248,24 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * ciao/Deployment/Handlers/Home_Handler.cpp:
                 * ciao/Deployment/Handlers/Homed_Component_Handler.h:
                 * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
-        
+
                 * ciao/Deployment/Interceptors:
-        
+
                   First round CIAO deployment handlers.
-        
+
         Wed May 19 12:11:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * DAnCE/DAnCE/DAnCE_Core.mpc:
                 * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
                 * DAnCE/DAnCE/DAnCE_Properties.idl:
                 * DAnCE/DAnCE/DAnCE_Utility.h:
                 * DAnCE/DAnCE/DAnCE_Utility.cpp:
                 * DAnCE/DAnCE/DAnCE_Utility.tpp:
-        
+
                 * DAnCE/Deployment/Deployment_Core.mpc:
-        
+
                 * DAnCE/LocalityManager/Daemon:
-        
+
                 * DAnCE/LocalityManager/Daemon/Locality_Manager.cpp:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
@@ -255,36 +273,36 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl_Export.h:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.h:
                 * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
-        
+
                 * DAnCE/LocalityManager/Handler:
-        
+
                 * DAnCE/LocalityManager/Handler/DAnCE_Locality_Handler_export.h:
                 * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
                 * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
                 * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
                 * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
                 * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
-        
+
                 * DAnCE/MPC/config/dance_locality_handler.mpb:
                 * DAnCE/MPC/config/dance_locality_manager.mpb:
                 * DAnCE/MPC/config/dance_nodeapplication.mpb:
                 * DAnCE/MPC/config/dance_skel.mpb:
                 * DAnCE/MPC/config/dance_split_plan.mpb:
                 * DAnCE/MPC/config/dance_stub.mpb:
-        
+
                 * DAnCE/NodeApplication/NodeApplication.mpc:
                 * DAnCE/NodeApplication/NodeApplication_Impl.h:
                 * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
+
                 * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
                 * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
                 * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        
+
                 * DAnCE/NodeManager/NodeManager.mpc:
                 * DAnCE/NodeManager/NodeManager_Impl.h:
                 * DAnCE/NodeManager/Node_Manager_Module.h:
                 * DAnCE/NodeManager/Node_Manager_Module.cpp:
-        
+
                 * DAnCE/tests/CIAO/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
                 * DAnCE/tests/CIAO/NodeManager-Deployments/MultiplexConnectionExplicitHome.cdp:
                 * DAnCE/tests/CIAO/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
@@ -293,35 +311,35 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * DAnCE/tests/CIAO/NodeManager-Deployments/SimplexConnectionExplicitHome.cdp:
                 * DAnCE/tests/CIAO/NodeManager-Deployments/TwoComponentsOneHome.cdp:
                 * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
-        
+
                 * DAnCE/tests/LocalityManager:
-        
+
                 * DAnCE/tests/LocalityManager/SpawnMultiple:
-        
+
                 * DAnCE/tests/LocalityManager/SpawnMultiple/Deployment.cdp:
                 * DAnCE/tests/LocalityManager/SpawnMultiple/run_test.pl:
-        
+
                 * DAnCE/tests/LocalityManager/SpawnOne:
-        
+
                 * DAnCE/tests/LocalityManager/SpawnOne/Deployment.cdp:
                 * DAnCE/tests/LocalityManager/SpawnOne/run_test.pl:
-        
+
                 * DAnCE/tools:
-        
+
                   First round LocalityManager implementation.
-        
+
                 * DAnCE/DAnCE/Deployment_common.h:
-        
+
                   Removed this file.
-        
+
         Tue May 11 23:06:20 UTC 2010  wotte  <wotte@dre.vanderbilt.edu>
-        
+
                 * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
-        
+
                   Fixed error when --help is passed, reverse -a and -m in usage.
-        
+
         Wed Apr 14 15:06:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
                 * DAnCE/DAnCE/DAnCE_ArtifactInstallation.idl:
                 * DAnCE/DAnCE/DAnCE_Core.mpc:
                 * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
@@ -335,12 +353,12 @@ Fri May 21 13:56:01 UTC 2010  William Otte  <wotte@zifnab>
                 * DAnCE/Deployment/Deployment_InvalidProperty.idl:
                 * DAnCE/Deployment/Deployment_ResourceNotAvailable.idl:
                 * DAnCE/LocalityManager:
-        
+
                   Integrated new IDL.
-        
+
                 * DAnCE/DAnCE/DAnCE_Properties.mpc:
                 * DAnCE/Deployment/DAnCE_Core.mpc:
-        
+
                   Removed these files.
 
 Fri May 21 13:51:16 UTC 2010  Adam Mitz  <mitza@ociweb.com>

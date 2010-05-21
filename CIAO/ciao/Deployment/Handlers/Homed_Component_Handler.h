@@ -3,7 +3,7 @@
 // $Id$
 
 /**
- * @file Locality_Manager_Handler_Impl.h
+ * @file Homed_Component_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * 
  * Installation handler implementation for spawning LocalityManagers. 
