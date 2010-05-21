@@ -488,8 +488,7 @@ endif
 #----------------------------------------------------------------------------
 <%marker(local)%>
 lib_warning:
-	@echo <%project_name%> will not be built due to the following missing library: >&2
-	@echo $(LIBCHECK) >&2
+	@echo <%project_name%> will not be built due to the following missing library: $(LIBCHECK) >&2
 
 <%if(requires)%>
 <%foreach(requires)%>

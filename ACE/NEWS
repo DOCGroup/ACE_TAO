@@ -1,6 +1,15 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.8 and ACE-5.7.9
 ====================================================
 
+. ACE's default makefiles (traditional ACE/GNU, not autoconf/automake)
+  now support installation with "make install".
+  Please see the ACE-INSTALL.html file for instructions.
+
+. Support for the ARCH make variable has been enhanced to apply to executables
+  (in addition to libraries and object files), and the ARCH feature has been
+  integrated into the MPC-generated makefiles (to work with MPC's requires
+  and avoids features).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.7 and ACE-5.7.8
 ====================================================
 
