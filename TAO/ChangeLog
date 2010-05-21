@@ -1,3 +1,36 @@
+Fri May 21 17:19:23 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Fix for bug reported in 3849. Ensuring a null cipher may be 
+          used for an unencrypted but integrity-assured session.
+        
+        * orbsvcs/tests/Security/Null_Cipher:
+
+        * orbsvcs/tests/Security/Null_Cipher/Foo.idl:
+        * orbsvcs/tests/Security/Null_Cipher/Foo_i.h:
+        * orbsvcs/tests/Security/Null_Cipher/Foo_i.cpp:
+        * orbsvcs/tests/Security/Null_Cipher/Makefile.am:
+        * orbsvcs/tests/Security/Null_Cipher/Null_Cipher.mpc:
+        * orbsvcs/tests/Security/Null_Cipher/README:
+        * orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client.conf:
+        * orbsvcs/tests/Security/Null_Cipher/client.conf.xml:
+        * orbsvcs/tests/Security/Null_Cipher/client.cpp:
+        * orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+        * orbsvcs/tests/Security/Null_Cipher/run_test.pl:
+        * orbsvcs/tests/Security/Null_Cipher/server.conf:
+        * orbsvcs/tests/Security/Null_Cipher/server.conf.xml:
+        * orbsvcs/tests/Security/Null_Cipher/server.cpp:
+        * orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+        
+          Test to validate this fix.
+          
+
 Thu May 20 21:52:02 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
