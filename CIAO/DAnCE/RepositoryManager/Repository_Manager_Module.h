@@ -30,7 +30,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
-#include "DAnCE/Deployment_common.h"
+#include "DAnCE/DAnCE_Utility.h"
 
 /**
  * @class Repository_Manager_Module
