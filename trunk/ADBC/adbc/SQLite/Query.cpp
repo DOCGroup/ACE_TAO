@@ -114,7 +114,7 @@ void Query::finalize (void)
 //
 void Query::reset (void)
 {
-  //::sqlite3_reset (this->stmt_);
+  ::sqlite3_reset (this->stmt_);
   //this->needs_reseting_ = false;
 }
 
