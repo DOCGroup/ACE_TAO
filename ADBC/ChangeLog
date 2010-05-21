@@ -1,3 +1,9 @@
+Thu May 20 14:57:25 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/SQLite/Query.cpp:
+        
+          Implemented the reset () method.
+
 Mon Apr 19 13:50:33 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * MPC/config/adbc_odbc.mpb:
