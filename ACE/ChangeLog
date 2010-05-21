@@ -1,3 +1,15 @@
+Fri May 21 21:30:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * NEWS:
+
+          Documented "make install"
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the libcheck message to look more like the requires/avoids
+          messages.
+
 Thu May 20 22:05:24 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/ace_tests.lst:
