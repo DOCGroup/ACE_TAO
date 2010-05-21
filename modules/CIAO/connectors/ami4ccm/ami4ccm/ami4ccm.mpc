@@ -53,6 +53,7 @@ project(AMI4CCM_stub) : install, ciao_lib, messaging, ccm_stub {
   }
 
   Inline_Files {
+    ami4ccmC.inl
   }
 
   IDL_Files {
@@ -79,6 +80,7 @@ project (AMI4CCM_lem_stub) : install, ccm_lem_stub, ciao_lib, ciao_output, taoli
 
   Header_Files {
    ami4ccmEC.h
+   ami4ccmES.h
    ami4ccm_lem_stub_export.h
   }
 

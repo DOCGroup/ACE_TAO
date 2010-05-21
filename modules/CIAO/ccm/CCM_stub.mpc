@@ -59,6 +59,72 @@ project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_clien
 
   Header_Files {
     CCM_Stub_Export.h
+    CCM_BaseC.h
+    CCM_ConfiguratorC.h
+    CCM_CookieC.h
+    CCM_EnumerationC.h
+    CCM_EventBaseC.h
+    CCM_EventConsumerBaseC.h
+    CCM_EventsC.h
+    CCM_ExceptionsC.h
+    CCM_HomeC.h
+    CCM_HomeConfigurationC.h
+    CCM_HomeFinderC.h
+    CCM_HomesC.h
+    CCM_KeylessCCMHomeC.h
+    CCM_NavigationC.h
+    CCM_ObjectC.h
+    CCM_PrimaryKeyBaseC.h
+    CCM_ReceptacleC.h
+    CCM_StandardConfiguratorC.h
+    ComponentsC.h
+    CCM_BaseS.h
+    CCM_ConfiguratorS.h
+    CCM_CookieS.h
+    CCM_EnumerationS.h
+    CCM_EventBaseS.h
+    CCM_EventConsumerBaseS.h
+    CCM_EventsS.h
+    CCM_ExceptionsS.h
+    CCM_HomeConfigurationS.h
+    CCM_HomeFinderS.h
+    CCM_HomeS.h
+    CCM_HomesS.h
+    CCM_KeylessCCMHomeS.h
+    CCM_NavigationS.h
+    CCM_ObjectS.h
+    CCM_PrimaryKeyBaseS.h
+    CCM_ReceptacleS.h
+    CCM_StandardConfiguratorS.h
+    ComponentsS.h
+  }
+
+  Inline_Files {
+    CCM_ConfiguratorC.inl
+    CCM_EnumerationC.inl
+    CCM_EventBaseC.inl
+    CCM_EventConsumerBaseC.inl
+    CCM_EventsC.inl
+    CCM_HomeC.inl
+    CCM_HomeConfigurationC.inl
+    CCM_HomeFinderC.inl
+    CCM_HomesC.inl
+    CCM_KeylessCCMHomeC.inl
+    CCM_NavigationC.inl
+    CCM_ObjectC.inl
+    CCM_PrimaryKeyBaseC.inl
+    CCM_ReceptacleC.inl
+    CCM_StandardConfiguratorC.inl
+    CCM_CookieC.inl
+    CCM_EventBaseS.inl
+    CCM_EventConsumerBaseS.inl
+    CCM_EventsS.inl
+    CCM_HomeConfigurationS.inl
+    CCM_HomeS.inl
+    CCM_HomesS.inl
+    CCM_ObjectS.inl
+    CCM_PrimaryKeyBaseS.inl
+    CCM_StandardConfiguratorS.inl
   }
 
   Source_Files {

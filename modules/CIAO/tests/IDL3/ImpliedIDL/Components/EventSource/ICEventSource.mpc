@@ -4,8 +4,12 @@
 project(ICEventSource_stub): ccm_stub {
 
   sharedname = ICEventSource_stub
-  idlflags += -Wb,stub_export_macro=ICEVENTSOURCE_STUB_Export -Wb,stub_export_include=ICEventSource_stub_export.h -Wb,skel_export_macro=ICEVENTSOURCE_SVNT_Export -Wb,skel_export_include=ICEventSource_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = ICEVENTSOURCE_STUB_BUILD_DLL
+  idlflags += -Wb,stub_export_macro=ICEVENTSOURCE_STUB_Export \
+              -Wb,stub_export_include=ICEventSource_stub_export.h \
+              -Wb,skel_export_macro=ICEVENTSOURCE_SVNT_Export \
+              -Wb,skel_export_include=ICEventSource_svnt_export.h \
+              -Gxhst -Gxhsk
+  dynamicflags = ICEVENTSOURCE_STUB_BUILD_DLL
 
   IDL_Files {
     ICEventSource.idl

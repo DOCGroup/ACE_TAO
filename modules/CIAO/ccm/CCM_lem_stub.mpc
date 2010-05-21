@@ -40,6 +40,27 @@ project(CCM_lem_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_c
 
   Header_Files {
     CCM_LEM_Stub_Export.h
+    CCM_CCMExceptionC.h
+    CCM_ContextC.h
+    CCM_EnterpriseComponentC.h
+    CCM_HomeExecutorBaseC.h
+    CCM_SessionComponentC.h
+    CCM_SessionContextC.h
+    SecurityC.h
+    CCM_CCMExceptionS.h
+    CCM_ContextS.h
+    CCM_EnterpriseComponentS.h
+    CCM_HomeExecutorBaseS.h
+    CCM_SessionComponentS.h
+    CCM_SessionContextS.h
+    SecurityS.h
+  }
+
+  Inline_Files {
+    CCM_HomeExecutorBaseC.inl
+    CCM_EnterpriseComponentC.inl
+    CCM_SessionContextC.inl
+    CCM_SessionComponentC.inl
   }
 
   Source_Files {
