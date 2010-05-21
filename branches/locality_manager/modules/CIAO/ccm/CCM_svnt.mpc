@@ -44,9 +44,46 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
 
   Header_Files {
     CCM_Svnt_Export.h
-    CCM_BaseS.h
-    CCM_CookieS.h
-    CCM_ExceptionsS.h
+    CCM_CCM2ContextC.h
+    CCM_ComponentIdC.h
+    CCM_Entity2ContextC.h
+    CCM_EntityComponentC.h
+    CCM_EntityContextC.h
+    CCM_ExecutorLocatorC.h
+    CCM_HomeRegistrationC.h
+    CCM_TransactionC.h
+    CCM_StateIdFactoryC.h
+    CosPersistentStateC.h
+    CCM_ProxyHomeRegistrationC.h
+    CCM_Session2ContextC.h
+    CCM_SessionSynchronizationC.h
+    CCM_CCM2ContextS.h
+    CCM_ComponentIdS.h
+    CCM_Entity2ContextS.h
+    CCM_EntityComponentS.h
+    CCM_EntityContextS.h
+    CCM_ExecutorLocatorS.h
+    CCM_HomeRegistrationS.h
+    CCM_ProxyHomeRegistrationS.h
+    CCM_Session2ContextS.h
+    CCM_SessionSynchronizationS.h
+    CCM_StateIdFactoryS.h
+    CCM_TransactionS.h
+    CosPersistentStateS.h
+  }
+
+  Inline_Files {
+    CCM_Session2ContextC.inl
+    CCM_ProxyHomeRegistrationC.inl
+    CCM_SessionSynchronizationC.inl
+    CCM_StateIdFactoryC.inl
+    CCM_TransactionC.inl
+    CosPersistentStateC.inl
+    CCM_ComponentIdC.inl
+    CCM_Entity2ContextC.inl
+    CCM_CCM2ContextC.inl
+    CCM_ExecutorLocatorC.inl
+    CCM_HomeRegistrationC.inl
   }
 
   Source_Files {

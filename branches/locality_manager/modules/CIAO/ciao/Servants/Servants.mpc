@@ -22,6 +22,8 @@ project(CIAO_Port_Activator_stub) : install, portableserver, ciao_lib {
      CIAO_Port_ActivatorC.cpp
    }
    Header_Files {
+     CIAO_Port_ActivatorC.h
+     CIAO_Port_ActivatorS.h
    }
   specific {
     install_dir = ciao/Servants

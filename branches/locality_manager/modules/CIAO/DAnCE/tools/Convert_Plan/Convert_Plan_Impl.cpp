@@ -18,10 +18,10 @@ namespace DAnCE
       }
 
     CIAO::Config_Handlers::XML_File_Intf xml_intf (filename);
-    xml_intf.add_search_path ("ACE_ROOT", "/docs/schema/");
-    xml_intf.add_search_path ("TAO_ROOT", "/docs/schema/");
-    xml_intf.add_search_path ("CIAO_ROOT", "/docs/schema/");
-    xml_intf.add_search_path ("DANCE_ROOT", "/docs/schema/");
+    xml_intf.add_search_path (ACE_TEXT("ACE_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
+    xml_intf.add_search_path (ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
   
     return xml_intf.release_plan ();  
   }
