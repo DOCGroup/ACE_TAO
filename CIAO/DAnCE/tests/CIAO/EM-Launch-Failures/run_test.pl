@@ -89,7 +89,7 @@ sub kill_node_daemons {
     }
     for ($i = 0; $i < $nr_daemon; ++$i) {
         # in case shutdown did not perform as expected
-        $tg_daemons[$i]->KillAll ('ciao_componentserver');
+        $tg_daemons[$i]->KillAll ('dance_locality_manager');
     }
 }
 
@@ -116,7 +116,7 @@ sub run_node_daemons {
         $nodename = $nodebase . ($i + 1);
         $node_host = $tg_daemons[$i]->HostName ();
         $iiop = "iiop://$node_host:$port";
-        $node_app = "$CIAO_ROOT/bin/ciao_componentserver";
+        $node_app = "$DANCE_ROOT/bin/dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";
@@ -229,7 +229,7 @@ foreach $file (@files) {
       if ($status >= 0) {
           # cleanup any leftover comp.servers (might happen when not correctly
           # started or torn down) otherwise we won't be able to start new ones
-          $tg_executor->KillAll ('ciao_componentserver');
+          $tg_executor->KillAll ('dance_locality_manager');
 
           $file =~ s/Failure.*\.cdp$/NoFailure.cdp/;
 

@@ -7,7 +7,6 @@
 
 #include "NodeApplicationManager_Impl.h"
 #include "NodeApplication/NodeApplication_Impl.h"
-#include "NodeManager/NodeManager_Impl.h"
 
 using namespace DAnCE;
 
@@ -68,7 +67,7 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
 }
 
 Deployment::Application_ptr
-NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
+NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
                                           Deployment::Connections_out providedReference)
 {
   DANCE_TRACE ("NodeApplicationManager_Impl::startLaunch");
@@ -85,16 +84,22 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
                     CORBA::NO_MEMORY ());
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-               ACE_TEXT("Instructing NodeApplication to initialize components.\n")));
+                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                   ACE_TEXT("Instructing NodeApplication to initialize instances.\n")));
 
-  this->application_->init_components();
+  this->application_->init_instances();
+  
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                   ACE_TEXT("Instructing NodeApplication to prepare locality managers.\n")));
+
+  this->application_->prepare_instances ();
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO
-               ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-               ACE_TEXT("Collecting connection references\n")));
-
-  providedReference = this->application_->getAllConnections();
+                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
+                   ACE_TEXT("Instructing NodeApplication to start launch localities.\n")));
+  
+  this->application_->start_launch_instances (prop, providedReference);
 
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
@@ -105,7 +110,15 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &,
 
   CORBA::Object_var as_obj = this->poa_->id_to_reference (as_id.in ());
   Deployment::Application_var app = Deployment::Application::_narrow (as_obj.in ());
-
+  
+  if (CORBA::is_nil (app))
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO,
+                       "NodeApplicationManager_Impl::startLaunch - ",
+                       "NodeApplication servant failed to activate\n"));
+      throw ::Deployment::StartError ("NodeApplication",
+                                      "Activation failure");
+    }
   return app._retn ();
 }
 
@@ -121,24 +134,12 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                      ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
                      ACE_TEXT("application is equivalent to current application\n")));
-        throw ::Deployment::StopError();
+        throw ::Deployment::StopError("NodeApplicationManager",
+                                      "Wrong application passed to destroyApplication");
       }
-
-    CORBA::Any val;
-
-    if (this->properties_.find (DAnCE::STANDALONE_NM, val) == 0)
-      {
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeApplicationManager_Impl::destroyApplication - ")
-                      ACE_TEXT("Found STANDALONE_NM property\n")));
-
-        CORBA::Boolean standalone = false;
-
-        val >>= CORBA::Any::to_boolean (standalone);
-
-        this->application_->passivate_components ();
-        this->application_->remove_components ();
-      }
-
+    
+    this->application_->remove_instances ();
+    
     PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
     this->poa_->deactivate_object (id);
 
@@ -161,10 +162,10 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
       throw Deployment::StopError(e._name(), e._info().c_str());
     }
   catch (...)
-  {
-    DANCE_ERROR (1, (LM_ERROR, DLINFO
-                ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n")));
-    throw Deployment::StopError();
-  }
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
+                       ACE_TEXT("NodeApplicationManager_Impl::destroyApplication failed with unknown exception.\n")));
+      throw Deployment::StopError("NodeApplicatoinManager", "Unknown C++ exception in destroyApplication");
+    }
 }
 

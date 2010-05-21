@@ -1,0 +1,8 @@
+project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance_output, dance_logger {
+  
+   dynamicflags = DANCE_LOCALITY_HANDLER_BUILD_DLL   
+   Source_Files {
+     LocalityActivator_Impl.cpp
+     Locality_Manager_Handler_Impl.cpp
+   }
+}

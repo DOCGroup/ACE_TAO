@@ -6,14 +6,10 @@
 #include "DAnCE/Deployment/Deployment_Connection.idl"
 #include "DAnCE/Deployment/Deployment_StartError.idl"
 #include "DAnCE/Deployment/Deployment_StopError.idl"
+#include "DAnCE/Deployment/Deployment_InvalidConnection.idl"
 
 module Deployment
 {
-  exception InvalidConnection {
-    string name;
-    string reason;
-  };
-
   interface Application {
     void finishLaunch (in Connections providedReference, in boolean start)
       raises (StartError, InvalidConnection);

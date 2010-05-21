@@ -15,6 +15,10 @@ module CIAO
     const string SVNT_ENTRYPT = "edu.vanderbilt.dre.CIAO.ServantEntrypoint";
     const string SVNT_ARTIFACT = "edu.vanderbilt.dre.CIAO.ServantArtifact";
     const string EXEC_ARTIFACT = "edu.vanderbilt.dre.CIAO.ExecutorArtifact";
+    const string COMPONENT_FACTORY = "component factory";
+    const string HOME_FACTORY = "home factory";
+    const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
+    const string CONTAINER_ID = "edu.vanderbilt.dre.CIAO.ContainerId";
     const string SERVER_UUID = "edu.vanderbilt.dre.CIAO.ServerUUID";
     const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.CIAO.ComponentServer.Executable";
     const string SERVER_ARGUMENTS = "edu.vanderbilt.dre.CIAO.ComponentServer.Args";

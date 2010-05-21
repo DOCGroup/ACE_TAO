@@ -1,0 +1,40 @@
+// $Id$
+
+#ifndef DANCE_ARTIFACTINSTALLATION_IDL
+#define DANCE_ARTIFACTINSTALLATION_IDL
+
+#include "Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_PlanError.idl"
+
+module DAnCE
+{
+  /// Each ArtifactInstallationHandler knows how to handle
+  /// a single protocol.
+  local interface ArtifactInstallationHandler
+  {
+    readonly attribute string protocol;
+
+    void install (inout ::Deployment::ArtifactDeploymentDescription artifact,
+                  in string uuid)
+      raises (::Deployment::PlanError);
+
+    void uninstall (in string uuid);
+  };
+
+  interface ArtifactInstallation
+  {
+    /// Acts as a front end to the ArtifactInstallationHandlers
+    /// that were installed at object creation. Each InstallationHandler
+    /// is capable of handling a single URI type;
+    void install (in ::Deployment::ArtifactDeploymentDescription artifact,
+                  in string uuid)
+      raises (::Deployment::PlanError);
+
+    void uninstall (in string uuid);
+
+    /// Used by component/locality server to query location of a given artifact
+    string get_artifact_location (in string uuid);
+  };
+};
+
+#endif
