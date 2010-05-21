@@ -3,18 +3,21 @@
 feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps {
   Define_Custom(DDSGenerator) : TypeSupport {
     keyword opendds_ts_flags = commandflags
+    keyword dds_ts_flags = commandflags
   }
 }
 
 feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   Define_Custom(DDSGenerator) : SpliceTypeSupport {
     keyword splice_ts_flags = commandflags
+    keyword dds_ts_flags = commandflags
   }
 }
 
 feature(dds4ccm_ndds) : dds4ccm, ndds_ts_defaults, nddslib {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
     commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT)
+    keyword dds_ts_flags = commandflags
   }
 
   dynamicflags += NDDS_USER_DLL_EXPORT
@@ -51,6 +54,7 @@ feature(!dds4ccm_splice) {
 
 feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
   Define_Custom(DDSGenerator) {
+    keyword dds_ts_flags
   }
 }
 
