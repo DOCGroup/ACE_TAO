@@ -1,11 +1,27 @@
+Fri May 21 20:01:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.h:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Added capability to pass selected instance naming context to
+          LocalityManager, so non naming service enabled deployments
+          won't stall out trying to resolve a naming server.
+
 Fri May 21 18:55:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/IDL3/Lookup/lookup_test.mpc:
         * tests/IDL_Test/Keywords/Keywords.mpc:
 
           Disabled temporarily as these aren't fixed yet, and it's making it
-          difficult to read the scoreboard. 
-        
+          difficult to read the scoreboard.
+
 Fri May 21 16:53:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub.idl:

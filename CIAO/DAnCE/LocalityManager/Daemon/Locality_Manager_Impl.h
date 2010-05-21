@@ -105,6 +105,8 @@ namespace DAnCE
     ::Deployment::DeploymentPlan plan_;
     
     ::DAnCE::InstanceInstallation_var ii_interceptor_;
+    
+    ::Deployment::Properties_var props_;
   };
 
 }

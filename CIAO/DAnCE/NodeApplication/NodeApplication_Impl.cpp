@@ -31,7 +31,7 @@ using namespace DAnCE::Utility;
 
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
-                                            const ::Deployment::DeploymentPlan& plan,
+                                            ::Deployment::DeploymentPlan& plan,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -135,6 +135,13 @@ NodeApplication_Impl::init_instances (void)
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                            ACE_TEXT("NodeApplication_Impl::init_instances - ")
                            ACE_TEXT("Found LocalityManager instance, deploying\n")));
+          
+          
+          // Need to add naming service reference to properties. 
+          CORBA::ULong pos = this->plan_.instance[i].configProperty.length ();
+          this->plan_.instance[i].configProperty.length (pos + 1);
+          this->plan_.instance[i].configProperty[pos].name = DAnCE::LOCALITY_NAMINGCONTEXT;
+          this->plan_.instance[i].configProperty[pos].value <<= this->instance_nc_;
           
           CORBA::Any_var reference;
           this->handler_.install_instance (this->plan_,
