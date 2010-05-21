@@ -1,5 +1,5 @@
 /**
- * @file LocalityManager_Task.cpp
+ * @file Locality_Manager_Task.cpp
  * @author William R. Otte
  * $Id$
  *

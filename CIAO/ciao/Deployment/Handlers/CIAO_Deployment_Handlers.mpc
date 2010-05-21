@@ -1,3 +1,4 @@
+// $Id$
 project (CIAO_Deployment_Handlers) : dance_stub, ciao_lib, ciao_output, \
         ciao_session_container, ciao_logger, ciao_componentserver_stub {
   dynamicflags = CIAO_LOCALITY_HANDLER_BUILD_DLL

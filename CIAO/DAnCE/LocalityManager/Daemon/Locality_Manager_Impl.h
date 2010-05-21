@@ -2,7 +2,7 @@
 // $Id$
 
 /**
- * @file DAnCE_LocalityManager_impl.h
+ * @file Locality_Manager_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  **/
 

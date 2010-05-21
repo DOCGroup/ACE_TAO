@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file DAnCE_Uility.h
+ * @file DAnCE_Utility.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Utility methods used throughought DAnCE.

@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file LocalityManager_Task.h
+ * @file Locality_Manager_Task.h
  * @author William R. Otte
  *
  * Defines interface for the bootstrap element of the Locality Manager.
