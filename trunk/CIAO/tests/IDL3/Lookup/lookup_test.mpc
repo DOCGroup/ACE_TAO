@@ -1,7 +1,7 @@
 // $Id$
 
 project(LookupTest_stub): ccm_stub {
-
+  requires += dummy_label
   sharedname = LookupTest_stub
 
   IDL_Files {
