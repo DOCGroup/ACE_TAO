@@ -1,0 +1,98 @@
+// $Id$
+
+#ifndef DANCE_LOCALITYMANAGER_IDL
+#define DANCE_LOCALITYMANAGER_IDL
+
+#include "Deployment/Deployment_Application.idl"
+#include "Deployment/Deployment_ApplicationManager.idl"
+#include "Deployment/Deployment_InvalidProperty.idl"
+#include "Deployment/Deployment_InvalidNodeExecParameter.idl"
+#include "Deployment/Deployment_InvalidComponentExecParameter.idl"
+#include "Deployment/Deployment_InvalidConnection.idl"
+#include "Deployment/Deployment_StopError.idl"
+#include "Deployment/Deployment_StopError.idl"
+#include "Deployment/Deployment_PlanError.idl"
+#include "Deployment/Deployment_ResourceNotAvailable.idl"
+#include "Deployment/Deployment_ResourceCommitmentManager.idl"
+
+module DAnCE
+{
+  /// intended to implement installation logic for a particular instance
+  /// type
+  local interface InstanceDeploymentHandler
+  {
+    readonly attribute string instance_type;
+    
+    void install_instance (in ::Deployment::DeploymentPlan plan,
+                           in unsigned long instanceRef,
+                           out any instance_reference)
+      raises (Deployment::ResourceNotAvailable,
+              Deployment::StartError,
+              Deployment::InvalidProperty,
+              Deployment::InvalidNodeExecParameter,
+              Deployment::InvalidComponentExecParameter);
+
+    void activate_instance (in ::Deployment::DeploymentPlan plan,
+                            in unsigned long instanceRef,
+                            in any instance_reference)
+      raises (Deployment::StartError);
+
+    void passivate_instance (in ::Deployment::DeploymentPlan plan,
+                          in unsigned long instanceRef,
+                          in any instance_reference)
+      raises (Deployment::StopError);
+
+    void remove_instance (in ::Deployment::DeploymentPlan plan,
+                          in unsigned long instanceRef,
+                          in any instance_reference)
+      raises (::Deployment::StopError);
+    
+    void provide_endpoint_reference (in ::Deployment::DeploymentPlan plan,
+                                     in unsigned long connectionRef,
+                                     out any endpoint_reference)
+      raises (Deployment::PlanError);
+
+    void connect_instance (in ::Deployment::DeploymentPlan plan,
+                           in unsigned long connectionRef,
+                           in any provided_reference)
+      raises (Deployment::StartError, 
+              Deployment::InvalidConnection);
+    
+    void disconnect_instance (in ::Deployment::DeploymentPlan plan,
+                              in unsigned long connectionRef)
+      raises (::Deployment::StopError);
+    
+    void instance_configured (in ::Deployment::DeploymentPlan plan,
+                              in unsigned long instanceRef)
+      raises (Deployment::StartError);
+  };
+
+  interface LocalityManager :
+    Deployment::Application,
+    Deployment::ApplicationManager
+  {
+    readonly attribute ::Deployment::Properties configuration;
+
+    Deployment::ApplicationManager
+      preparePlan (in Deployment::DeploymentPlan plan,
+                   in Deployment::ResourceCommitmentManager resourceCommitment)
+      raises (Deployment::StartError, 
+              Deployment::PlanError);
+
+    void destroyManager (in ::Deployment::ApplicationManager manager)
+      raises (Deployment::StopError);
+
+    oneway void shutdown ();
+  };
+  
+  interface LocalityManagerActivator
+  {
+    void locality_manager_callback (in LocalityManager ref,
+                                    in string uuid,
+                                    out Deployment::Properties config);
+    
+    void configuration_complete (in string uuid);
+  };
+};
+
+#endif

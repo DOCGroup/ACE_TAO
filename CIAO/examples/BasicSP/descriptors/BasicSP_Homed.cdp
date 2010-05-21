@@ -215,6 +215,17 @@
     <artifact xmi:idref="EC_ExecArtifact" />
     <artifact xmi:idref="EC_SvntArtifact" />
     <artifact xmi:idref="EC_StubArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
   <implementation xmi:id="BMClosedEDComponentImplementation">
     <name>BMClosedEDComponentImplementation</name>
@@ -222,6 +233,17 @@
     <artifact xmi:idref="BMClosedED_ExecArtifact" />
     <artifact xmi:idref="BMClosedED_SvntArtifact" />
     <artifact xmi:idref="BMClosedED_StubArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
   <implementation xmi:id="BMDeviceComponentImplementation">
     <name>BMDeviceComponentImplementation</name>
@@ -229,6 +251,17 @@
     <artifact xmi:idref="BMDevice_ExecArtifact" />
     <artifact xmi:idref="BMDevice_SvntArtifact" />
     <artifact xmi:idref="BMDevice_StubArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
   <implementation xmi:id="BMDisplayComponentImplementation">
     <name>BMDisplayComponentImplementation</name>
@@ -236,6 +269,17 @@
     <artifact xmi:idref="BMDisplay_ExecArtifact" />
     <artifact xmi:idref="BMDisplay_SvntArtifact" />
     <artifact xmi:idref="BMDisplay_StubArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
   <instance xmi:id="ECHomeInstance">
     <name>ECHome</name>
@@ -272,7 +316,7 @@
     <source/>
     <implementation xmi:idref="ECComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -301,7 +345,7 @@
     <source/>
     <implementation xmi:idref="BMClosedEDComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -319,7 +363,7 @@
     <source/>
     <implementation xmi:idref="BMDeviceComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -337,7 +381,7 @@
     <source/>
     <implementation xmi:idref="BMDisplayComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>

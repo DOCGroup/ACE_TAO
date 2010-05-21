@@ -5,33 +5,14 @@
 #define DEPLOYMENT_APPLICATIONMANAGER_IDL
 
 #include "DAnCE/Deployment/Deployment.idl"
+#include "DAnCE/Deployment/Deployment_InvalidProperty.idl"
 #include "DAnCE/Deployment/Deployment_Application.idl"
 #include "DAnCE/Deployment/Deployment_Connection.idl"
+#include "DAnCE/Deployment/Deployment_ResourceNotAvailable.idl"
+#include "DAnCE/Deployment/Deployment_InvalidNodeExecParameter.idl"
+#include "DAnCE/Deployment/Deployment_InvalidComponentExecParameter.idl"
 
 module Deployment {
-
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
-
-  exception InvalidNodeExecParameter {
-    string name;
-    string reason;
-  };
-
-  exception InvalidComponentExecParameter {
-    string name;
-    string reason;
-  };
-
-  exception InvalidProperty {
-    string name;
-    string reason;
-  };
 
   interface ApplicationManager {
     Application startLaunch (in Properties configProperty,

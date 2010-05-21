@@ -67,6 +67,17 @@
     <source/>
     <artifact xmi:idref="SimpleFailure_ExecArtifact" />
     <artifact xmi:idref="SimpleFailure_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
 
   <!-- Node One -->
@@ -86,7 +97,7 @@
     <source/>
     <implementation xmi:idref="SimpleFailureComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -135,7 +146,7 @@
     <source/>
     <implementation xmi:idref="SimpleFailureComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -184,7 +195,7 @@
     <source/>
     <implementation xmi:idref="SimpleFailureComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -233,7 +244,7 @@
     <source/>
     <implementation xmi:idref="SimpleFailureComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -282,7 +293,7 @@
     <source/>
     <implementation xmi:idref="SimpleFailureComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
