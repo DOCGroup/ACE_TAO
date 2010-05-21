@@ -1,0 +1,5 @@
+// $Id$
+project : dance_skel {
+  after += DAnCE_LocalityManager_Impl
+  libs += DAnCE_LocalityManager_Impl
+}

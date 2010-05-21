@@ -1,0 +1,59 @@
+// $Id$
+
+#ifndef DANCE_DEPLOYMENTINTERCEPTOR_IDL
+#define DANCE_DEPLOYMENTINTERCEPTOR_IDL
+
+#include "Deployment/Deployment_DeploymentPlan.idl"
+#include "Deployment/Deployment_PlanError.idl"
+#include "Deployment/Deployment_InvalidProperty.idl"
+#include "Deployment/Deployment_InvalidNodeExecParameter.idl"
+#include "Deployment/Deployment_InvalidComponentExecParameter.idl"
+#include "Deployment/Deployment_InvalidConnection.idl"
+
+module DAnCE
+{
+  local interface DeploymentInterceptor
+  {
+    
+  };
+
+  local interface PlanPreprocessing : DeploymentInterceptor
+  {
+    void preprocess_plan (inout ::Deployment::DeploymentPlan plan)
+      raises (::Deployment::PlanError);
+  };
+
+  local interface InstanceInstallation : DeploymentInterceptor
+  {
+    void instance_pre_install (inout ::Deployment::DeploymentPlan plan,
+                               in unsigned long instanceRef)
+      raises (::Deployment::PlanError,
+              ::Deployment::InvalidProperty,
+              ::Deployment::InvalidNodeExecParameter,
+              ::Deployment::InvalidComponentExecParameter);
+
+    void instance_post_install (in ::Deployment::DeploymentPlan plan,
+                                in unsigned long instance_index,
+                                in any instance_reference,
+                                in any exception_thrown)
+      raises (::Deployment::PlanError,
+              ::Deployment::InvalidProperty,
+              ::Deployment::InvalidNodeExecParameter,
+              ::Deployment::InvalidComponentExecParameter);
+  };
+
+  local interface InstanceConnection
+  {
+    void instance_pre_connect (inout ::Deployment::DeploymentPlan plan,
+                               in unsigned long connection_index,
+                               inout any provided_reference)
+      raises (::Deployment::InvalidConnection);
+
+    void instance_post_connect (in Deployment::DeploymentPlan plan,
+                                in unsigned long connectionRef,
+                                in any exceptionThrown)
+      raises (::Deployment::InvalidConnection);
+  };
+};
+
+#endif

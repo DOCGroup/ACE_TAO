@@ -278,6 +278,7 @@ namespace CIAO
     const char * /* publisher_name */,
     ::Components::EventConsumerBase_ptr /* subscriber */)
   {
+    throw ::Components::InvalidName ();
     return 0;
   }
 
@@ -286,6 +287,7 @@ namespace CIAO
     const char * /* publisher_name */,
     ::Components::Cookie * /* ck */)
   {
+    throw ::Components::InvalidName ();
     return ::Components::EventConsumerBase::_nil ();
   }
 

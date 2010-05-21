@@ -1,0 +1,57 @@
+// $Id$
+project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
+      dance_deployment_stub {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=DANCE_STUB_Export \
+                  -Wb,stub_export_include=DAnCE_stub_export.h \
+                  -Wb,skel_export_macro=DANCE_SKEL_Export \
+                  -Wb,skel_export_include=DAnCE_skel_export.h
+
+  IDL_Files {
+    idlflags += -SS -Sci
+    DAnCE_DeploymentInterceptors.idl
+    DAnCE_Properties.idl
+  }
+  
+  IDL_Files {
+    idlflags += -Gxhst -Gxhsk
+    DAnCE_LocalityManager.idl
+  }
+  
+  IDL_Files {
+    DAnCE_ArtifactInstallation.idl
+  }
+}
+
+project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
+         dance_applicationmanager_stub, dance_deployment_stub, \
+	 dance_logger \
+       {
+  after += DAnCE_IDL
+  dynamicflags = DANCE_STUB_BUILD_DLL
+  IDL_Files {
+  }
+
+  Source_Files {
+    DAnCE_DeploymentInterceptorsC.cpp
+    DAnCE_PropertiesC.cpp
+    DAnCE_LocalityManagerC.cpp
+    DAnCE_ArtifactInstallationC.cpp
+    DAnCE_Utility.cpp
+  }
+}
+
+project (DAnCE_skel) : ciaolib_with_idl, dance_output, \
+         dance_applicationmanager_skel, dance_deployment_skel \
+         {
+  after += DAnCE_stub
+  libs += DAnCE_stub
+  dynamicflags = DANCE_SKEL_BUILD_DLL
+  IDL_Files {
+  }
+
+  Source_Files {
+    DAnCE_LocalityManagerS.cpp
+    DAnCE_ArtifactInstallationS.cpp
+  }
+}

@@ -1,0 +1,5 @@
+// $Id$
+project : dance_deployment_stub, dance_applicationmanager_stub {
+  after += DAnCE_stub
+  libs += DAnCE_stub
+}

@@ -204,7 +204,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
         this->long_ == -1 ||
         this->short_ == -1)
       {
-        ACE_ERROR ((LM_ERROR, "SimpleAttribute_exec_i::ccm_activate - "
+        ACE_ERROR ((LM_ERROR, "SimpleAttributeHom_exec_i::create - "
                      "Error: Attribute values didin't initialize correctly!\n"));
       }
     else
@@ -213,6 +213,7 @@ namespace CIAO_Simple_SimpleAttribute_Impl
                      "Test passed!  String attribute is %s\n",
                      this->str_.c_str ()));
       }
+
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 

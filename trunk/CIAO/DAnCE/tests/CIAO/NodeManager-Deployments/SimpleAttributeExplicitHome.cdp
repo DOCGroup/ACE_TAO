@@ -67,6 +67,17 @@
     <source/>
     <artifact xmi:idref="SimpleAttribute_ExecArtifact" />
     <artifact xmi:idref="SimpleAttribute_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
 
   <instance xmi:id="SimpleAttributeHomeInstance">
@@ -117,7 +128,7 @@
     <source/>
     <implementation xmi:idref="SimpleAttributeComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>

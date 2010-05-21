@@ -586,10 +586,10 @@ namespace DAnCE
 
     for (CORBA::ULong i = 0; i < plan.connection.length(); i++)
       {
-        if (plan.connection[i].externalReference.length() > 0
-            && plan.connection[i].externalReference[0].provider)
+        if (plan.connection[i].externalReference.length() > 0)
+          //&& plan.connection[i].externalReference[0].provider)
           {
-            DANCE_DEBUG (6, (LM_DEBUG,
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              "Plan_Launcher_i::create_external_connections - create connection %C from IOR %C\n",
                              plan.connection[i].name.in(),
                              plan.connection[i].externalReference[0].location.in()));
@@ -598,10 +598,18 @@ namespace DAnCE
               {
                 CORBA::Object_ptr
                   obj = this->orb_->string_to_object(plan.connection[i].externalReference[0].location.in());
+                
                 if (!CORBA::is_nil (obj))
                   {
-                    CORBA::ULong const indx = conn.length();
-                    conn.length(indx + 1);
+                    CORBA::ULong indx = 0;
+                    for (; indx < conn.length (); ++indx)
+                      
+                      if (ACE_OS::strcmp (conn[indx].name.in (),
+                                          plan.connection[i].name.in ()) == 0)
+                        break;
+
+                    if (indx ==  conn.length())
+                      conn.length(indx + 1);
                     conn[indx].name= CORBA::string_dup (plan.connection[i].name.in());
                     conn[indx].endpoint.length(1L);
                     conn[indx].endpoint[0] = obj;
@@ -623,9 +631,9 @@ namespace DAnCE
               }
             catch (...)
               {
-                 DANCE_ERROR (1, (LM_ERROR, DLINFO
-                                  ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-                                  ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
+                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                                 ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
+                                 ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
               }
           }
       }

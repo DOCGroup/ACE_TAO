@@ -1,0 +1,23 @@
+project (CIAO_Deployment_Handlers) : dance_stub, ciao_lib, ciao_output, \
+        ciao_session_container, ciao_logger, ciao_componentserver_stub {
+  dynamicflags = CIAO_LOCALITY_HANDLER_BUILD_DLL
+
+  Source_Files {
+    Component_Handler.cpp
+    Container_Handler.cpp
+    Home_Handler.cpp
+    Homed_Component_Handler.cpp
+    CIAO_State.cpp
+    CIAO_Handler_Common.cpp
+    Connection_Handler.cpp
+  }
+
+  Header_Files {
+    Component_Handler.h
+    Container_Handler.h
+    Home_Handler.h
+    Homed_Component_Handler.h
+    CIAO_State.h
+    CIAO_Locality_Handler_Export.h
+  }
+}

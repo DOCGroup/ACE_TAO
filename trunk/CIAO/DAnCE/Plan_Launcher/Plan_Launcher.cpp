@@ -78,10 +78,10 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("Only supported for EM-based deployments\n")
 
               ACE_TEXT ("\t-a|--app-ior <APP IOR>\t\t")
-              ACE_TEXT ("IOR for ApplicationManager entity (Domain or Node)\n")
+              ACE_TEXT ("IOR for Application entity (Domain or Node)\n")
 
               ACE_TEXT ("\t-m|--am-ior <AM IOR>\t\t")
-              ACE_TEXT ("IOR For Application entity (Domain or Node)\n")
+              ACE_TEXT ("IOR For ApplicationManager entity (Domain or Node)\n")
 
               ACE_TEXT ("\nPlan Control Options:\n")
               ACE_TEXT ("The default action is to fully launch a plan. ")
@@ -510,9 +510,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Options options;
       if (!parse_args (argc, argv, options))
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                      ACE_TEXT ("Failed to parse ")
-                      ACE_TEXT ("command line arguments, exiting.\n")));
           return 1;
         }
 

@@ -66,6 +66,17 @@
     <source/>
     <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
     <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
 
   <implementation xmi:id="Hello_SenderHomeImplementation">
@@ -125,6 +136,17 @@
     <source/>
     <artifact xmi:idref="Hello_Sender_ExecArtifact" />
     <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
   </implementation>
 
   <instance xmi:id="Hello_ReceiverHomeInstance">
@@ -164,7 +186,7 @@
     <source/>
     <implementation xmi:idref="Hello_ReceiverComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -246,7 +268,7 @@
     <source/>
     <implementation xmi:idref="Hello_SenderComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
       <value>
         <type>
           <kind>tk_string</kind>

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ccm_cookie, ccm_configvalue, ccm_componentserver_stub {
+project : ccm_cookie, ccm_configvalue, ccm_componentserver_stub, ciao_logger {
    after += CIAO_ComponentServer_stub
    libs += CIAO_ComponentServer_stub
 }
