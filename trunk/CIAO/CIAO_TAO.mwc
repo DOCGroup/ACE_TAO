@@ -20,9 +20,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/Security.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
   ccm
   ciao
   DAnCE

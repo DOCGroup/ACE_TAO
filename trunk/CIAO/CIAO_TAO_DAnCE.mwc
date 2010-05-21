@@ -16,9 +16,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
   $(TAO_ROOT)/orbsvcs/Naming_Service/Naming_Service.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent.mpc
   ccm
   ciao
