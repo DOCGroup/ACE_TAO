@@ -1,8 +1,14 @@
+Sat May 22 11:52:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+
+          Static linking fix.
+
 Fri May 21 23:17:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Keywords/Keywords.mpc:
         * tests/IDL3/Lookup/lookup_test.mpc:
-        
+
           Removed the temporary 'dummy_label' tags added to these
           projects while bug fixes were in progress.
 
