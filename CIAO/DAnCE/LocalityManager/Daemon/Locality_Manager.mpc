@@ -11,10 +11,11 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
    Source_Files {
      Locality_Manager_Impl.cpp
      Deployment_Interceptors.cpp
-     Name_Utilities.h
+     Name_Utilities.cpp
    }
    
    Header_Files {
+     Name_Utilities.h
      Locality_Manager_Impl.h
      Locality_Manager_Impl_Export.h
    }
