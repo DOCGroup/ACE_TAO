@@ -1,3 +1,9 @@
+Sat May 22 12:14:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+
+          Had Name_Utilites.h, instad of Name_Utilites.cpp.
+
 Sat May 22 12:12:08 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.h:
