@@ -137,7 +137,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'k':
           if (get_opt.opt_arg () == 0)
             {
-              options.em_ior_ = "corbaname:rir:/NameService#ExecutionManager";
+              options.em_ior_ = ACE_TEXT ("corbaname:rir:/NameService#ExecutionManager");
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                                ACE_TEXT ("Plan_Launcher::parse_args - ")
                                ACE_TEXT ("Defaulting to NameService lookup")

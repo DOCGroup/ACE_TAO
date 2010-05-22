@@ -1,3 +1,11 @@
+Sat May 22 12:22:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/tools/Split_Plan/Split_Plan_exec.cpp:
+
+          Wchar fixes.
+
 Sat May 22 12:14:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:

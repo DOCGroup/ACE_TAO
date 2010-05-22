@@ -49,12 +49,12 @@ parse_args (int argc, ACE_TCHAR *argv [])
         {
         case 'c':
           cdr_encoded_ = true;
-          input_filename = get_opt.opt_arg ();
+          input_filename = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
           
         case 'x':
           cdr_encoded_ = false;
-          input_filename = get_opt.opt_arg ();
+          input_filename = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 't':
@@ -110,11 +110,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       
       if (!cdr_encoded_)
         {
-          plan.reset (DAnCE::Convert_Plan::read_xml_plan (input_filename));
+          plan.reset (DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
       else 
         {
-          plan.reset (DAnCE::Convert_Plan::read_cdr_plan (input_filename));
+          plan.reset (DAnCE::Convert_Plan::read_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (input_filename)));
         }
       
       if (plan.get () == 0)
@@ -141,7 +141,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               ACE_CString name ((*iter_plans).ext_id_);
               name += "-";
               name += input_filename;
-              DAnCE::Convert_Plan::write_cdr_plan (name.c_str (), (*iter_plans).int_id_);
+              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 
+                                                   (*iter_plans).int_id_);
             }
         }
       else
@@ -161,7 +162,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               ACE_CString name ((*iter_plans).ext_id_);
               name += "-";
               name += input_filename;
-              DAnCE::Convert_Plan::write_cdr_plan (name.c_str (), (*iter_plans).int_id_);
+              DAnCE::Convert_Plan::write_cdr_plan (ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()),
+                                                   (*iter_plans).int_id_);
             }
         }
     }
