@@ -142,7 +142,7 @@ namespace CIAO
       }
     
     
-    CIAO_DEBUG (4, (LM_ERROR, CLINFO
+    CIAO_DEBUG (4, (LM_INFO, CLINFO
                     "Homed_Component_Handler_i::install_instance - "
                     "Successfully created component <%C>\n",
                     idd.name.in ()));
