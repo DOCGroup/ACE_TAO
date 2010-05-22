@@ -48,7 +48,7 @@ namespace DAnCE
     CosNaming::NamingContext_var ctx_;
   };
 
-  class DANCE_STUB_Export DAnCE_ReferenceLookup_i
+  class DAnCE_ReferenceLookup_i
     : public virtual DAnCE::InstanceConnection,
       public virtual ::CORBA::LocalObject
   {
