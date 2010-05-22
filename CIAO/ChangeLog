@@ -1,3 +1,18 @@
+Sat May 22 12:44:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/descriptors/run_test.pl:
+
+          Ported to locality manager.
+
 Sat May 22 12:42:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
