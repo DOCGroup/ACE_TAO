@@ -94,7 +94,7 @@ namespace DAnCE
             
             ACE_CString ior = this->orb_->object_to_string (obj.in ());
 
-            DAnCE::Utility::write_IOR (name, ior.c_str ());
+            DAnCE::Utility::write_IOR (ACE_TEXT_CHAR_TO_TCHAR (name), ior.c_str ());
           }
       }
   }
