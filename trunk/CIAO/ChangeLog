@@ -1,9 +1,22 @@
+Sun May 23 07:09:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Fixed a bug whereby naming service configuration was sometimes not
+          properly passed to LocalityManager, added new logging.
+
 Sun May 23 06:45:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
 
           Disable the "Home Attribute" portion of the test, as we don't
-          support that in LocalityManager yet. 
+          support that in LocalityManager yet.
 
 Sun May 23 00:21:10 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

@@ -157,7 +157,8 @@ namespace DAnCE
                                            config.out ());
 
             DANCE_DEBUG (9, (LM_TRACE, DLINFO "LocalityManager_Task::svc - "
-                            "Configuration received\n"));
+			     "Configuration received, got %u values\n",
+			     config->length ()));
             
             lm_srv->init (config._retn ());
 

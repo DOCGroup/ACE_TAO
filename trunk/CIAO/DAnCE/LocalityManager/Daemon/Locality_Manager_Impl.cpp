@@ -43,6 +43,11 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::init");
     
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+		     "LocalityManager_i::init - "
+		     "Received %u properties from init\n",
+		     props->length ()));
+
     this->props_ = props;
     
     // Initialize the CIAO instance handlers

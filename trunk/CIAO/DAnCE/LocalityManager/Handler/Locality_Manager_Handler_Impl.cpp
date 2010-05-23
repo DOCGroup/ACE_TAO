@@ -96,7 +96,7 @@ namespace DAnCE
       plan.implementation[idd.implementationRef];
 
     CORBA::ULong allprops_len =
-      idd.configProperty.length () + mdd.execParameter.length ();
+      idd.configProperty.length () + mdd.execParameter.length () + 1;
     ::Deployment::Properties allprops (allprops_len);
 
     Utility::append_properties (allprops,

@@ -116,7 +116,7 @@ namespace DAnCE
                                            ACE_Time_Value &timeout);
 
     void create_properties (const Server_Info &info,
-                            Deployment::Properties_out &config);
+                            Deployment::Properties_out config);
 
     struct Server_Info
     {
