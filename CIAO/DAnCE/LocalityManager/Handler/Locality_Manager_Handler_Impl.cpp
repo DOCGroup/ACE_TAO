@@ -82,9 +82,9 @@ namespace DAnCE
     if (plan.instance.length () <= instanceRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         "Locality_Handler_i::install_instance - "
-                         "Invalid instance reference %u provided "
-                         "to install_instance\n",
+                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                         ACE_TEXT ("Invalid instance reference %u provided ")
+                         ACE_TEXT ("to install_instance\n"),
                       instanceRef));
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
@@ -105,8 +105,8 @@ namespace DAnCE
                                 idd.configProperty);
     
     DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     "Locality_Handler_i::install_instance - "
-                     "Passing %u properties to activator\n",
+                     ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                     ACE_TEXT ("Passing %u properties to activator\n"),
                      allprops.length ()));
 
     ::DAnCE::LocalityManager_var lm_ref =
@@ -115,8 +115,8 @@ namespace DAnCE
     if (CORBA::is_nil (lm_ref))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         "Locality_Handler_i::install_instance - "
-                      "Received nil reference from LocalityActivator\n"));
+                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
+			 ACE_TEXT ("Received nil reference from LocalityActivator\n")));
         throw ::Deployment::StartError (idd.name.in (),
                                         "Received nil object reference for "
                                         "LocalityManager from Activator\n");
@@ -142,9 +142,9 @@ namespace DAnCE
         CORBA::is_nil (lm_ref.in ()))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         "Locality_Handler_i::remove_instance - ",
-                         "Unable to extract valid LocalityManager "
-                         "reference from parameter\n"));
+                         ACE_TEXT ("Locality_Handler_i::remove_instance - "),
+                         ACE_TEXT ("Unable to extract valid LocalityManager ")
+                         ACE_TEXT ("reference from parameter\n")));
       }
     this->activator_->remove_locality_manager (lm_ref.in ());
   }
