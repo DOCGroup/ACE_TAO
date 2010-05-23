@@ -1,10 +1,33 @@
+Sun May 23 12:40:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          Additional logging.
+        
+        * DAnCE/tests/CIAO/Components/SimpleCommon.idl:
+        * DAnCE/tests/CIAO/Components/SimpleLocalProvider.idl:
+        * DAnCE/tests/CIAO/Components/SimpleLocalProvider.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleLocalProvider_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleLocalProvider_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleLocalUser.idl:
+        * DAnCE/tests/CIAO/Components/SimpleLocalUser.mpc:
+        * DAnCE/tests/CIAO/Components/SimpleLocalUser_exec.h:
+        * DAnCE/tests/CIAO/Components/SimpleLocalUser_exec.cpp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/LocalSimplexConnectionExplicitHome.cdp:
+
+          New test for local facets. 
+        
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+
+          Bugfix for local facets.
+
 Sun May 23 07:50:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp.bak:
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp.bak:
-        
-          Disabled the event nameservice test, as this isn't yet supported by 
-          LocalityManager. 
+
+          Disabled the event nameservice test, as this isn't yet supported by
+          LocalityManager.
 
 Sun May 23 07:49:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

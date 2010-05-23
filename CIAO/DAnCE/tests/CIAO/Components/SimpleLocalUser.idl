@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef SIMPLE_USER_IDL
+#define SIMPLE_USER_IDL
+
+#include "SimpleCommon.idl"
+#include "Components.idl"
+
+module Simple
+{
+  component SimpleLocalUser
+  {
+    uses LocalTrigger trig;
+  };
+  
+  home SimpleLocalUserHome manages SimpleLocalUser
+  {
+  };
+};
+
+#endif /*SIMPLE_USER_IDL*/
