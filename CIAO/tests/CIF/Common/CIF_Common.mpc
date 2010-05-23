@@ -1,7 +1,8 @@
 // $Id$
 
 project (CIF_Common) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
-   sharedname = CIF_Common
+  dynamicflags = CIF_COMMON_BUILD_DLL
+  sharedname = CIF_Common
    libout = ../lib
    IDL_Files {
    }
