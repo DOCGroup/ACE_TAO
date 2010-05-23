@@ -51,8 +51,9 @@ namespace DAnCE
     const ::Deployment::InstanceDeploymentDescription &inst =
       plan.instance[instance_index];
     
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_StoreReferences_i::instance_post_install - "
-                     "Interceptor post install for instance %C\n",
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+		     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                     ACE_TEXT ("Interceptor post install for instance %C\n"),
                      plan.instance[instance_index].name.in ()));
     
     for (CORBA::ULong i = 0;
@@ -67,15 +68,16 @@ namespace DAnCE
             if (!(instance_reference >>= CORBA::Any::to_object (obj)))
               {
                 DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                 "DAnCE_StoreReferences_i::instance_post_install - "
-                                 "Unable to extract instance reference from Any\n"));
+                                 ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                                 ACE_TEXT ("Unable to extract instance reference from Any\n")));
               }
             
             const char * name;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE_StoreReferences_i::instance_post_install - "
-                             "Registering name %C for instance %C\n",
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+			     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                             ACE_TEXT ("Registering name %C for instance %C\n"),
                              name,
                              plan.instance[instance_index].name.in ()));
 
