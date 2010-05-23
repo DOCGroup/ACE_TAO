@@ -135,8 +135,8 @@ namespace DAnCE
          ++i)
       {
         DANCE_DEBUG (8, (LM_TRACE, DLINFO
-                         "LocalityManager_i::startLaunch - "
-                         "Starting installation of %C type instances\n",
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Starting installation of %C type instances\n"),
                          i->c_str ()));
 
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
@@ -148,8 +148,8 @@ namespace DAnCE
              ++j)
           {
             DANCE_DEBUG (7, (LM_TRACE, DLINFO
-                             "LocalityManager_i::startLaunch - "
-                             "Starting installation of instance %C\n",
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("Starting installation of instance %C\n"),
                              this->plan_.instance[*j].name.in ()));
                              
                              
@@ -238,9 +238,9 @@ namespace DAnCE
     ConnMap conns;
     
     DANCE_DEBUG (6, (LM_TRACE, DLINFO 
-                     "LocalityManager_i::finishLaunch - "
-                     "Starting finsihLaunch, received %u references, "
-                     "have %u connections\n",
+                     ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                     ACE_TEXT ("Starting finsihLaunch, received %u references, ")
+                     ACE_TEXT ("have %u connections\n"),
                      providedReference.length (),
                      this->plan_.connection.length ()
                      ));
@@ -264,8 +264,8 @@ namespace DAnCE
           this->plan_.connection[conn_ref->second];
         
         DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                         "LocalityManager_i::finishLaunch - "
-                         "Connection <%C> has %u endpoints\n",
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Connection <%C> has %u endpoints\n"),
                          conn.name.in (),
                          conn.internalEndpoint.length ()));
 
@@ -278,15 +278,15 @@ namespace DAnCE
                  conn.externalReference.length () == 0)
           {
             DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                             "LocalityManager_i::finishLaunch - "
-                             "Skipping connection <%C>\n",
+                             ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                             ACE_TEXT ("Skipping connection <%C>\n"),
                              conn.name.in ()));
             continue;
           }
           
         DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
-                         "LocalityManager_i::finishLaunch - "
-                         "Starting connection <%C>\n",
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Starting connection <%C>\n"),
                          name));
         
         CORBA::Any reference;
@@ -417,7 +417,7 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::shutdown");
     
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     "DAnCE LocalityManager shutdown request received for UUID <%C>\n",
+                     ACE_TEXT ("DAnCE LocalityManager shutdown request received for UUID <%C>\n"),
                      uuid_.c_str ()));
     
     this->orb_->shutdown ();

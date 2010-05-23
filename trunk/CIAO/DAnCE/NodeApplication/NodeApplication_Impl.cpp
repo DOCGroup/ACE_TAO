@@ -188,8 +188,8 @@ NodeApplication_Impl::prepare_instances (void)
        ++i)
     {
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       "NodeApplication_Impl::prepare_instances - "
-                       "Considering sub-plan %u\n",
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT ("Considering sub-plan %u\n"),
                        plan++));
       ::Deployment::DeploymentPlan &sub_plan = 
         (*i).int_id_;
@@ -213,8 +213,8 @@ NodeApplication_Impl::prepare_instances (void)
             {
               locality_found = true;
               DANCE_DEBUG (4, (LM_DEBUG, DLINFO
-                               "NodeApplication_Impl::prepare_instances - "
-                               "Invoking preparePlan on locality %C\n",
+                               ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                               ACE_TEXT ("Invoking preparePlan on locality %C\n"),
                                inst.name.in ()));
               this->prepare_instance (inst.name.in (),
                                       sub_plan);
@@ -226,9 +226,9 @@ NodeApplication_Impl::prepare_instances (void)
         {
           // Need to spawn default locality. 
           DANCE_DEBUG (4, (LM_DEBUG, DLINFO
-                           "NodeApplication_Impl::prepare_instances - "
-                           "No locality manager found, creating a default locality "
-                           "named <%C>\n",
+                           ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                           ACE_TEXT ("No locality manager found, creating a default locality ")
+                           ACE_TEXT ("named <%C>\n"),
                            sub_plan.instance[0].name.in ()
                            ));
           
@@ -289,23 +289,24 @@ NodeApplication_Impl::prepare_instance (const char *name,
       app = this->localities_[name]->preparePlan (plan,
                                                  0);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       "NodeApplication_Impl::prepare_instance - "
-                       "Locality <%C> successfully prepared.\n",
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
+                       ACE_TEXT ("Locality <%C> successfully prepared.\n"),
                        name));
     }
   catch (CORBA::Exception &ex)
     {
       DANCE_ERROR (2, (LM_ERROR, DLINFO
-                       "NodeApplication_Impl::prepare_instance - "
-                       "Caugt unexpected CORBA exception while invoking preparePlan %C\n",
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
+                       ACE_TEXT ("Caugt unexpected CORBA exception while invoking preparePlan %C\n"),
                        ex._info ().c_str ()));
     }
 
   if (CORBA::is_nil (app.in ()))
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO "NodeApplication_Impl::prepare_instance - "
-                       "Error: Didn't get a valid reference back from LM preparePlan "
-                       "for locality %C\n",
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
+		       ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
+                       ACE_TEXT ("Error: Didn't get a valid reference back from LM preparePlan ")
+                       ACE_TEXT ("for locality %C\n"),
                        name));
       
       // For the time being, we don't need to cache this reference.
@@ -331,8 +332,8 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
        i != this->localities_.end (); ++i)
     {
       DANCE_DEBUG (4, (LM_INFO, DLINFO
-                       "NodeApplication_Impl::start_launch_instances - "
-                       "StartLaunching locality <%C>\n",
+                       ACE_TEXT ("NodeApplication_Impl::start_launch_instances - ")
+                       ACE_TEXT ("StartLaunching locality <%C>\n"),
                        i->first.c_str ()));
       
       try
@@ -343,8 +344,8 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
       catch (Deployment::PlanError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::start_launch_instances - "
-                           "Caught PlanError Exception %C:%C\n",
+                           ACE_TEXT ("NodeApplication_Impl::start_launch_instances - ")
+                           ACE_TEXT ("Caught PlanError Exception %C:%C\n"),
                            ex.name.in (),
                            ex.reason.in ()));
           throw;
@@ -352,8 +353,8 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::start_launch_instances - "
-                           "Caught CORBA Exception %C\n",
+                           ACE_TEXT ("NodeApplication_Impl::start_launch_instances - ")
+                           ACE_TEXT ("Caught CORBA Exception %C\n"),
                            ex._info ().c_str ()));
           throw;
         }
@@ -371,8 +372,8 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
        i != this->localities_.end (); ++i)
     {
       DANCE_DEBUG (4, (LM_INFO, DLINFO
-                       "NodeApplication_Impl::finish_launch_instances - "
-                       "FinishLaunching locality <%C>\n",
+                       ACE_TEXT ("NodeApplication_Impl::finish_launch_instances - ")
+                       ACE_TEXT ("FinishLaunching locality <%C>\n"),
                        i->first.c_str ()));
       
       try
@@ -383,8 +384,8 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::finish_launch_instances - "
-                           "Caught CORBA Exception %C\n",
+                           ACE_TEXT ("NodeApplication_Impl::finish_launch_instances - ")
+                           ACE_TEXT ("Caught CORBA Exception %C\n"),
                            ex._info ().c_str ()));
           throw;
         }
@@ -400,8 +401,8 @@ NodeApplication_Impl::start ()
        i != this->localities_.end (); ++i)
     {
       DANCE_DEBUG (4, (LM_INFO, DLINFO
-                       "NodeApplication_Impl::start - "
-                       "Starting locality <%C>\n",
+                       ACE_TEXT ("NodeApplication_Impl::start - ")
+                       ACE_TEXT ("Starting locality <%C>\n"),
                        i->first.c_str ()));
       
       try
@@ -411,8 +412,8 @@ NodeApplication_Impl::start ()
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::start - "
-                           "Caught CORBA Exception %C\n",
+                           ACE_TEXT ("NodeApplication_Impl::start - ")
+                           ACE_TEXT ("Caught CORBA Exception %C\n"),
                            ex._info ().c_str ()));
           throw;
         }
@@ -432,8 +433,8 @@ NodeApplication_Impl::remove_instances (void)
        i != this->localities_.end (); ++i)
     {
       DANCE_DEBUG (4, (LM_INFO, DLINFO
-                       "NodeApplication_Impl::remove_instances - "
-                       "Removing locality <%C>\n",
+                       ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                       ACE_TEXT ("Removing locality <%C>\n"),
                        i->first.c_str ()));
       
       try
@@ -451,8 +452,8 @@ NodeApplication_Impl::remove_instances (void)
       catch (::Deployment::StopError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::remove_instances - "
-                           "Caught StopError final_exception %C, %C\n",
+                           ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                           ACE_TEXT ("Caught StopError final_exception %C, %C\n"),
                            ex.name.in (),
                            ex.reason.in ()));
           Utility::test_and_set_exception (flag,
@@ -464,8 +465,8 @@ NodeApplication_Impl::remove_instances (void)
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                           "NodeApplication_Impl::remove_instances - "
-                           "Caught CORBA Final_Exception %C\n",
+                           ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                           ACE_TEXT ("Caught CORBA Final_Exception %C\n"),
                            ex._info ().c_str ()));
           Utility::test_and_set_exception (flag,
                                              final_exception,

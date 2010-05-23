@@ -1,3 +1,15 @@
+Sun May 23 07:49:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Unicode fixes.
+
 Sun May 23 07:09:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:

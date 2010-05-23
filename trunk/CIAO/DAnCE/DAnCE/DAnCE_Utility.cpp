@@ -24,23 +24,23 @@ namespace DAnCE
           if (retval == 1)
             {
               DANCE_ERROR (1, (LM_WARNING, DLINFO
-                               "build_property_map: Duplicate value "
-                               "for %C encountered, "
-                               "old value overwritten.\n",
+                               ACE_TEXT ("build_property_map: Duplicate value ")
+                               ACE_TEXT ("for %C encountered, ")
+                               ACE_TEXT ("old value overwritten.\n"),
                                prop[i].name.in ()));
             }
           else if (retval == -1)
             {
               DANCE_ERROR (1, (LM_WARNING, DLINFO
-                               "build_property_map: "
-                               "Error binding value for %C, ignoring.\n",
+                               ACE_TEXT ("build_property_map: ")
+                               ACE_TEXT ("Error binding value for %C, ignoring.\n"),
                                prop[i].name.in ()));
             }
           else
             {
               DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                               "build_property_map: "
-                               "Bound value for config value %C\n",
+                               ACE_TEXT ("build_property_map: ")
+                               ACE_TEXT ("Bound value for config value %C\n"),
                                prop[i].name.in ()));
             }
         }
@@ -51,8 +51,8 @@ namespace DAnCE
       FILE* ior_output_file_ = ACE_OS::fopen (pathname, ACE_TEXT("w"));
 
       DANCE_DEBUG (7, (LM_DEBUG, DLINFO
-                       "DAnCE::Utility::write_IOR - "
-                       "Writing ior <%C> to file <%C>\n",
+                       ACE_TEXT ("DAnCE::Utility::write_IOR - ")
+                       ACE_TEXT ("Writing ior <%C> to file <%C>\n"),
                        ior, pathname));
 
       if (ior_output_file_)
