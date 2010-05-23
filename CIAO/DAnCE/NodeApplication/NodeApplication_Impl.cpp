@@ -241,6 +241,11 @@ NodeApplication_Impl::prepare_instances (void)
           tmp_plan.instance[0].implementationRef = 0;
           tmp_plan.instance[0].name = sub_plan.instance[0].name.in ();
           
+          // Need to add naming service reference to properties. 
+          tmp_plan.instance[0].configProperty.length (1);
+          tmp_plan.instance[0].configProperty[0].name = DAnCE::LOCALITY_NAMINGCONTEXT;
+          tmp_plan.instance[0].configProperty[0].value <<= this->instance_nc_;
+
           CORBA::Any_var reference;
           this->handler_.install_instance (tmp_plan,
                                            0,

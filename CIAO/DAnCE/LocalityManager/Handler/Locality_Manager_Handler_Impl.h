@@ -83,6 +83,7 @@ namespace DAnCE
     static const char *instance_type_;
     DAnCE_LocalityActivator_i *activator_;
     const Utility::PROPERTY_MAP &properties_;
+    
   };
 }
 #endif
