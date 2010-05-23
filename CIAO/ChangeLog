@@ -1,3 +1,10 @@
+Sun May 23 00:10:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_Core.mpc:
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+
+          Temporarily disable the RepositoryManager project, until it works again.
+        
 Sun May 23 01:34:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl:

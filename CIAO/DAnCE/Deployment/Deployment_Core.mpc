@@ -86,7 +86,7 @@ project(Deployment_RepositoryManager_IDL) : install, ciaolib_with_idl, dance_out
                   -Wb,skel_export_macro=DEPLOYMENT_REPOSITORYMANAGER_SKEL_Export \
                   -Wb,skel_export_include=Deployment_RepositoryManager_skel_export.h \
                   -Gxhst -Gxhsk
-
+  requires += dummy_label
   IDL_Files {
     Deployment_RepositoryManager.idl
   }
@@ -576,7 +576,7 @@ project(Deployment_RepositoryManager_stub) : install, dance_output, dance_deploy
   sharedname = DAnCE_RepositoryManager_stub
   after += Deployment_RepositoryManager_IDL
   dynamicflags = DEPLOYMENT_REPOSITORYMANAGER_STUB_BUILD_DLL
-
+  requires += dummy_label
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
 
@@ -602,7 +602,7 @@ project(Deployment_RepositoryManager_skel) : install, dance_output, dance_deploy
   sharedname = DAnCE_RepositoryManager_skel
   after += Deployment_RepositoryManager_stub
   dynamicflags = DEPLOYMENT_REPOSITORYMANAGER_SKEL_BUILD_DLL
-
+  requires += dummy_label
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
 
