@@ -168,6 +168,11 @@ namespace DAnCE
       DANCE_TRACE("DAnCE_LocalityActivator_i::create_locality_manager");
 
       Safe_Server_Info server (new Server_Info (config.length () + 1));
+      
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+		       "DAnCE_LocalityActivator_i::create_locality_manager - "
+		       "Received %u config properties\n",
+		       config.length ()));
 
       DAnCE::Utility::build_property_map (*server->cmap_, config);
 
@@ -440,7 +445,7 @@ namespace DAnCE
     void
     DAnCE_LocalityActivator_i::create_properties (
       const Server_Info &info,
-      Deployment::Properties_out &config)
+      Deployment::Properties_out config)
     {
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        "DAnCE_LocalityActivator_i::create_properties - "
@@ -449,17 +454,22 @@ namespace DAnCE
                        info.uuid_.c_str (),
                        info.cmap_->current_size ()));
       
+      if (info.cmap_->current_size () == 0) return;
+
       ACE_NEW_THROW_EX (config,
                         Deployment::Properties (info.cmap_->current_size ()),
                         CORBA::NO_MEMORY ());
       
+      config->length (info.cmap_->current_size ());
+      
       CORBA::ULong pos = 0;
-      for (Utility::PROPERTY_MAP::iterator i = info.cmap_->begin ();
-           (i.advance ()) != 0; ++pos)
-        {
-          config[pos].name = i->ext_id_.c_str ();
-          config[pos].value = i->int_id_;
-        }
+      Utility::PROPERTY_MAP::iterator i = info.cmap_->begin ();
+      
+      do {
+	config[pos].name = i->ext_id_.c_str ();
+	config[pos].value = i->int_id_;
+	++pos;
+      } while (i.advance () != 0);
     }
 }
 
