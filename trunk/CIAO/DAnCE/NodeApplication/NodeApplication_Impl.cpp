@@ -187,12 +187,15 @@ NodeApplication_Impl::prepare_instances (void)
        i != plans.end ();
        ++i)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
-                       ACE_TEXT ("Considering sub-plan %u\n"),
-                       plan++));
       ::Deployment::DeploymentPlan &sub_plan = 
         (*i).int_id_;
+
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT ("Considering sub-plan %u with %u instances\n"),
+                       plan++,
+		       sub_plan.instance.length ()
+		       ));
       
       bool locality_found (false);
 

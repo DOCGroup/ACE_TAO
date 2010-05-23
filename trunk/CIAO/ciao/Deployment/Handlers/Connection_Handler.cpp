@@ -51,26 +51,30 @@ namespace CIAO
                                   CORBA::NO_MEMORY ());
                 
                 endpoint_reference = out;
-
-                switch (conn.internalEndpoint[i].kind)
-                  {
-                  case ::Deployment::Facet:
-                    ref = 
-                      comp->provide_facet (conn.internalEndpoint[i].portName.in ());
-                    (*out) <<= ref.in ();
-                    break;
-                    
-                  case ::Deployment::EventConsumer:
-                    ref = 
-                      comp->get_consumer (conn.internalEndpoint[i].portName.in ());
-                    (*out) <<= ref.in ();
-                    break;
-                    
-                  default:
-                    throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                           "Invalid provider port type.");
-                  };
-                
+		
+		if (this->is_local_facet (conn))
+		  (*out) <<= comp.in ();
+		else
+		  {
+		    switch (conn.internalEndpoint[i].kind)
+		      {
+		      case ::Deployment::Facet:
+			ref = 
+			  comp->provide_facet (conn.internalEndpoint[i].portName.in ());
+			(*out) <<= ref.in ();
+			break;
+		      
+		      case ::Deployment::EventConsumer:
+			ref = 
+			  comp->get_consumer (conn.internalEndpoint[i].portName.in ());
+			(*out) <<= ref.in ();
+			break;
+		      
+		      default:
+			throw ::Deployment::InvalidConnection (conn.name.in (),
+							       "Invalid provider port type.");
+		      };
+		  }
                 return;
               }
           }
