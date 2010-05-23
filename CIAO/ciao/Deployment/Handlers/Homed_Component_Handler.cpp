@@ -40,6 +40,10 @@ namespace CIAO
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
     
+    CIAO_DEBUG (7, (LM_DEBUG, CLINFO
+                    "Homed_Component_Handler_i::install_instance - "
+                    "Starting deployment of <%C>\n",
+                    plan.instance[instanceRef].name.in ()));
     DAnCE::Utility::PROPERTY_MAP *pmap;
     
     ACE_NEW_THROW_EX (pmap,
@@ -172,7 +176,11 @@ namespace CIAO
     CIAO_TRACE ("Homed_Component_Handler_i::activate_instance");
     
     const char *name = plan.instance[instanceRef].name.in ();
-
+    
+    CIAO_DEBUG (8, (LM_TRACE, DLINFO
+                    "Homed_Component_Handler_i::activate_instance - "
+                    "Starting activation of component instance <%C>\n",
+                    name));
     const char *container = 
       DEPLOYMENT_STATE::instance ()->instance_to_container (name);
     
@@ -215,7 +223,11 @@ namespace CIAO
     CIAO_TRACE ("Homed_Component_Handler_i::passivate_instance");
     
     const char *name = plan.instance[instanceRef].name.in ();
-
+    
+    CIAO_DEBUG (8, (LM_TRACE, DLINFO
+                    "Homed_Component_Handler_i::passivate_instance - "
+                    "Starting passivation of component instance <%C>\n",
+                    name));
     const char *container = 
       DEPLOYMENT_STATE::instance ()->instance_to_container (name);
     
@@ -387,6 +399,27 @@ namespace CIAO
     Components::CCMObject_var ref = 
       DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[instanceRef].name.in ());
     
-    ref->configuration_complete ();
+    try
+      {
+        ref->configuration_complete ();
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Homed_Component_Handler_i::instance_configured - "
+                        "Caught CORBA Exception: %C\n",
+                        ex._info ().c_str ()));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        ex._info ().c_str ());
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Homed_Component_Handler_i::instance_configured - "
+                        "Caught C++ Exception\n"));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        "Unknown C++ exception\n");
+                        
+      }    
   }
 }

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_NodeApplication): install, dance_lib, dynamicinterface, \
+project(DAnCE_NodeApplication): install, dance_lib, \
                           dance_nodeapplication_skel, \
                           dance_logger, iortable, naming, dance_locality_handler, \
                           gen_ostream, avoids_ace_for_tao, dance_applicationmanager_stub {
@@ -10,12 +10,10 @@ project(DAnCE_NodeApplication): install, dance_lib, dynamicinterface, \
 
   Source_Files {
     NodeApplication_Impl.cpp
-    ComponentAttributesSetter.cpp
   }
 
   Header_Files {
     NodeApplication_Impl.h
-    ComponentAttributesSetter.h
   }
 
   specific {

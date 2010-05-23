@@ -440,7 +440,29 @@ namespace CIAO
     Components::CCMObject_var ref = 
       DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[instanceRef].name.in ());
     
-    ref->configuration_complete ();
+    try
+      {
+        ref->configuration_complete ();
+      }
+    catch (CORBA::Exception &ex)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Caught CORBA Exception: %C\n",
+                        ex._info ().c_str ()));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        ex._info ().c_str ());
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Caught C++ Exception\n"));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        "Unknown C++ exception");
+                        
+      }
+    
   }  
 
 }
