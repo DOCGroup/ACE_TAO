@@ -428,14 +428,16 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                     ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StartError: %C\n"),
                     ex._info ().c_str ()));
-      throw ::Deployment::StartError ();
+      throw ::Deployment::StartError (this->plan_.UUID.in (),
+                                      ex._info ().c_str ());
     }
   catch (...)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StartError\n")));
-      throw ::Deployment::StartError ();
+      throw ::Deployment::StartError (this->plan_.UUID.in (),
+				      "Unknown C++ exception");
     }
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::preparePlan - finished\n")));
 }
@@ -528,14 +530,16 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                     ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                     ACE_TEXT("Caught a CORBA exception, propagating StopError: %C\n"),
                     ex._info ().c_str ()));
-      throw ::Deployment::StopError ();
+      throw ::Deployment::StopError (this->plan_.UUID.in (),
+                                     ex._info ().c_str ());
     }
   catch (...)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplicationManager_Impl::destroyManager - ")
                     ACE_TEXT("Caught unknown exception.  Propagating StopError\n")));
-      throw ::Deployment::StopError ();
+      throw ::Deployment::StopError (this->plan_.UUID.in (),
+                                     "Unknown C++ exception");
     }
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplicationManager_Impl::destroyManager - finished\n")));
 }

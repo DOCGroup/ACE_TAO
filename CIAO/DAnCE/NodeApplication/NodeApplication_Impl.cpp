@@ -17,8 +17,6 @@
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_LocalityManagerC.h"
 
-#include "ComponentAttributesSetter.h"
-
 #include <string>
 
 #ifdef GEN_OSTREAM_OPS
