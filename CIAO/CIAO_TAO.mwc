@@ -24,6 +24,7 @@ workspace {
   ciao
   DAnCE
   tools
+  connectors
   tests
   examples
   performance-tests
