@@ -1,3 +1,11 @@
+Sun May 23 07:50:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp.bak:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp.bak:
+        
+          Disabled the event nameservice test, as this isn't yet supported by 
+          LocalityManager. 
+
 Sun May 23 07:49:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Utility.cpp:
