@@ -112,7 +112,8 @@ namespace DAnCE
         DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - ")
                       ACE_TEXT("ApplicationManager for UUID %C already exists\n"),
                       plan.UUID.in ()));
-        throw ::Deployment::PlanError();
+        throw ::Deployment::PlanError(plan.UUID.in (),
+                                      "Plan with same UUID already exists");
       }
     DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - creating NodeApplicationManager...\n")));
     NodeApplicationManager_Impl* manager = 0;

@@ -75,6 +75,11 @@ namespace CIAO
               }
           }
       }
+    catch (const ::Deployment::InvalidConnection &)
+      {
+        // pass through
+        throw;
+      }
     catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO 
@@ -87,6 +92,17 @@ namespace CIAO
                                                ex._info ().c_str ());
                         
       }
+    catch (...)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO 
+                        "Connection_Handler::provide_endpoint_reference - "
+                        "Caught unknown C++ exception on instance %C",
+                        plan.connection[connectionRef].name.in ()));
+        throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
+					       "Unknown C++ exception whilst establishing "
+					       "connection");
+      }
+    
   }
 
   void
@@ -122,36 +138,63 @@ namespace CIAO
           }
       }
     
-    switch (conn.internalEndpoint[endpoint].kind)
+    try
       {
-      case Deployment::Facet:
-        this->connect_facet (plan, c_id, endpoint, provided_reference);
-        break;
+        switch (conn.internalEndpoint[endpoint].kind)
+          {
+          case Deployment::Facet:
+            this->connect_facet (plan, c_id, endpoint, provided_reference);
+            break;
 
-      case Deployment::SimplexReceptacle:
-      case Deployment::MultiplexReceptacle:
-        this->connect_receptacle (plan, c_id, endpoint, provided_reference);
-        break;
+          case Deployment::SimplexReceptacle:
+          case Deployment::MultiplexReceptacle:
+            this->connect_receptacle (plan, c_id, endpoint, provided_reference);
+            break;
 
-      case Deployment::EventEmitter:
-        this->connect_emitter (plan, c_id, endpoint, provided_reference);
-        break;
+          case Deployment::EventEmitter:
+            this->connect_emitter (plan, c_id, endpoint, provided_reference);
+            break;
 
-      case Deployment::EventPublisher:
-        this->connect_publisher (plan, c_id, endpoint, provided_reference);
-        break;
+          case Deployment::EventPublisher:
+            this->connect_publisher (plan, c_id, endpoint, provided_reference);
+            break;
 
-      case Deployment::EventConsumer:
-        this->connect_consumer (plan, c_id, endpoint, provided_reference);
-        break;
+          case Deployment::EventConsumer:
+            this->connect_consumer (plan, c_id, endpoint, provided_reference);
+            break;
         
-      default:
+          default:
+            CIAO_ERROR (1, (LM_ERROR, CLINFO
+                            "Connection_Handler::connect_instance - "
+                            "Unsupported port type.\n"));
+            throw ::Deployment::InvalidConnection (name,
+                                                   "Unsupported port type");
+        
+          }
+      }
+    catch (const ::Deployment::InvalidConnection &ex)
+      {
+        // pass through
+        throw;
+      }
+    catch (CORBA::Exception &ex)
+      {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
-                        "Unsupported port type.\n"));
+                        "Caught CORBA exception whilst connecting <%C>: %C\n",
+                        name,
+                        ex._info ().c_str ()));
         throw ::Deployment::InvalidConnection (name,
-                                               "Unsupported port type");
-        
+					       ex._info ().c_str ());
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Connection_Handler::connect_instance - "
+                        "Caught C++ exception whilst connecting <%C>\n",
+                        name));
+        throw ::Deployment::InvalidConnection (name,
+					       "Unknown C++ Exception");
       }
   }
   
