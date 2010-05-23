@@ -1,3 +1,9 @@
+Sun May 23 01:34:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl:
+
+          Fixed location of dance_locality_manager.
+
 Sat May 22 12:44:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
