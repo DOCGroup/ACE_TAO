@@ -17,6 +17,7 @@
 module VTopics
 {
   module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
+  //module ::CCM_DDS::Typed < ::X_Valuetype, ::X_ValuetypeSeq> X_ValuetypeConnector;
 };
 
 #endif /* VTS_VALUE_TYPE_CONNECTOR_IDL_ */
