@@ -47,8 +47,9 @@
  * Group of interfaces for the @ref PSAT connector that are only used by
  * @ref PSAT subscribers
  */
-
+#if defined (__TAO_IDL)
 #include "ccm_dds.idl"
+#endif
 
 /**
  * @namespace CCM_DDS_PSAT
