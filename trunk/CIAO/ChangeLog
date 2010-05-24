@@ -1,3 +1,10 @@
+Mon May 24 12:13:08 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ccm/CCM_stub.mpc:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Using $(MKDIR) instead of raw mkdir.
+
 Mon May 24 07:42:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
