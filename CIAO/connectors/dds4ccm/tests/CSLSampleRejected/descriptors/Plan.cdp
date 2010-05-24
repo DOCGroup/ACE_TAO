@@ -172,10 +172,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>1</long>
+          <ulong>1</ulong>
         </value>
       </value>
     </configProperty>
