@@ -21,9 +21,11 @@ ACE_OS::closedir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
-    ::FindClose (d->current_handle_);
+    {
+      ::FindClose (d->current_handle_);
+      d->current_handle_ = INVALID_HANDLE_VALUE;
+    }
 
-  d->current_handle_ = INVALID_HANDLE_VALUE;
   d->started_reading_ = 0;
   if (d->dirent_ != 0)
     {
@@ -174,7 +176,6 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   ACE_DIRENT **vector = 0;
   ACE_DIRENT *dp = 0;
   int arena_size = 0;
-
   int nfiles = 0;
   int fail = 0;
 
