@@ -1,3 +1,11 @@
+Mon May 24 13:53:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+          Make sure that rtiddsgen doesn't pick up ccm_dds idl
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Enabled several projects
+
 Mon May 24 09:45:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager.cpp:
