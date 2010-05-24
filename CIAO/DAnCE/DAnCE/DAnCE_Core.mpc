@@ -1,4 +1,5 @@
 // $Id$
+
 project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
       dance_deployment_stub {
   custom_only = 1
@@ -26,7 +27,7 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
 project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
          dance_applicationmanager_stub, dance_deployment_stub, \
 	 dance_logger \
-       {
+{
   after += DAnCE_IDL
   dynamicflags = DANCE_STUB_BUILD_DLL
   IDL_Files {
@@ -43,7 +44,7 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
 
 project (DAnCE_skel) : ciaolib_with_idl, dance_output, \
          dance_applicationmanager_skel, dance_deployment_skel \
-         {
+{
   after += DAnCE_stub
   libs += DAnCE_stub
   dynamicflags = DANCE_SKEL_BUILD_DLL

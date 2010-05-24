@@ -1,7 +1,16 @@
+Mon May 24 11:31:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/Deployment/Deployment_Core.mpc:
+          Enabled these again
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+          Layout changes
+
 Mon May 24 03:30:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
-        
+
           Fixed incorrectly scoped references to the exception
           NonChangeable.
 
@@ -13,9 +22,9 @@ Sun May 23 23:30:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sun May 23 12:40:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
+
           Additional logging.
-        
+
         * DAnCE/tests/CIAO/Components/SimpleCommon.idl:
         * DAnCE/tests/CIAO/Components/SimpleLocalProvider.idl:
         * DAnCE/tests/CIAO/Components/SimpleLocalProvider.mpc:
@@ -27,8 +36,8 @@ Sun May 23 12:40:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/Components/SimpleLocalUser_exec.cpp:
         * DAnCE/tests/CIAO/NodeManager-Deployments/LocalSimplexConnectionExplicitHome.cdp:
 
-          New test for local facets. 
-        
+          New test for local facets.
+
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
 
           Bugfix for local facets.

@@ -3,7 +3,6 @@
 
 project (DAnCE_RepositoryManagerDaemon_IDL) : install, taoidldefaults {
   custom_only = 1
-  requires += dummy_label
   IDL_Files {
     RepositoryManagerDaemon.idl
   }
@@ -16,7 +15,6 @@ project (DAnCE_RepositoryManager_Exec) : install, dance_logger, dance_config_han
   exename = dance_repository_manager
   after += DAnCE_RepositoryManagerDaemon_IDL
   requires += zlib
-  requires += dummy_label
   Source_Files {
     RepositoryManagerDaemonC.cpp
     RepositoryManagerDaemonS.cpp
@@ -40,7 +38,6 @@ project (DAnCE_RepositoryManager_Exec) : install, dance_logger, dance_config_han
 
 project (DAnCE_RepositoryManager_Admin_Exec) : install, dance_repositorymanager_stub, dance_config_handlers, naming, dance_exe, dance_logger {
   exename = dance_rm_admin
-  requires += dummy_label
   after += DAnCE_RepositoryManagerDaemon_IDL
 
   IDL_Files {
