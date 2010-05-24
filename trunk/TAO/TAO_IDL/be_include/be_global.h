@@ -711,13 +711,6 @@ public:
   /// can use non-defined interfaces as members and parameters.
   ACE_Unbounded_Queue<be_interface_fwd *> non_defined_interfaces;
 
-  /**
-   * Used in the generation of overrides for CORBA::release and
-   * CORBA::is_nil, needed when the interface inherits versions from
-   * both CORBA::Object and CORBA::AbstractBase.
-   */
-  ACE_Unbounded_Queue<be_interface *> mixed_parentage_interfaces;
-
   /// Accessor for the member, sets it on the first call.
   AST_PredefinedType *void_type (void);
 

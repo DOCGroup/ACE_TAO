@@ -259,7 +259,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
 void
 be_visitor_root_ch::gen_static_corba_overrides (void)
 {
-  size_t size = be_global->mixed_parentage_interfaces.size ();
+  size_t size = idl_global->mixed_parentage_interfaces ().size ();
   
   if (size == 0)
     {
@@ -267,7 +267,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
     }
     
   size_t index = 0;
-  be_interface *i = 0;
+  AST_Interface *i = 0;
 
   *o_ << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
@@ -286,7 +286,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
 
   for (index = 0; index < size; ++index)
     {
-      be_global->mixed_parentage_interfaces.dequeue_head (i);
+      idl_global->mixed_parentage_interfaces ().dequeue_head (i);
 
       *o_ << be_nl
           << "TAO_NAMESPACE_STORAGE_CLASS void release ("

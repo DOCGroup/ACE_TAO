@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 
 class AST_Root;
+class AST_Interface;
 class AST_ValueType;
 class AST_Component;
 class AST_Uses;
@@ -625,6 +626,9 @@ public:
   
   ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
   // Accessor for the member
+  
+  ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces (void);
+  // Accessor for the member
 
   FILE * open_included_file (char const * filename,
                              char const *& directory);
@@ -866,6 +870,13 @@ private:
   ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
   // Used to check for an incorrect lookup success that should
   // have been masked by an inner scope of the same name.
+  
+  /**
+   * Used in the generation of overrides for CORBA::release and
+   * CORBA::is_nil, needed when the interface inherits versions from
+   * both CORBA::Object and CORBA::AbstractBase.
+   */
+  ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

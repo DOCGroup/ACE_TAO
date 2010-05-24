@@ -108,7 +108,6 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
-    has_mixed_parentage_ (-1),
     session_component_child_ (-1),
     is_ami_rh_ (false),
     is_ami4ccm_rh_ (false),
@@ -587,10 +586,10 @@ be_interface::redefine (AST_Interface *from)
 
   if (bi->has_mixed_parentage_)
     {
-      ACE_Unbounded_Queue<be_interface *> &q =
-        be_global->mixed_parentage_interfaces;
+      ACE_Unbounded_Queue<AST_Interface *> &q =
+        idl_global->mixed_parentage_interfaces ();
       size_t slot = 0;
-      be_interface **t = 0;
+      AST_Interface **t = 0;
 
       // The queue of interfaces with mixed parentage must
       // replace each interface that has been forward
@@ -681,7 +680,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
          && this->pd_inherits[0]->is_abstract ())
         || this->is_abstract_;
 
-      if (this->has_mixed_parentage_)
+      if (this->has_mixed_parentage_ || this->is_abstract_)
         {
           *os << "::CORBA::"
               << (the_check ? "AbstractBase" : "Object")
@@ -737,7 +736,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
           *os << "," << be_nl
-              << "the"<< this->base_proxy_broker_name () << "_ (0)"
+              << "the" << this->base_proxy_broker_name () << "_ (0)"
               << be_uidt << be_uidt;
         }
 
@@ -1533,50 +1532,6 @@ be_interface::gen_member_ostream_operator (TAO_OutStream *os,
                                            bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : ".in ()");
-}
-
-void
-be_interface::analyze_parentage (void)
-{
-  if (this->has_mixed_parentage_ != -1)
-    {
-      return;
-    }
-
-  this->has_mixed_parentage_ = 0;
-
-  for (long i = 0; i < this->pd_n_inherits; ++i)
-    {
-      be_interface *parent =
-        be_interface::narrow_from_decl (this->pd_inherits[i]);
-
-      if (parent == 0)
-        {
-          // The item is a template param holder.
-          continue;
-        }
-
-      if (parent->is_abstract ()
-          || parent->has_mixed_parentage ())
-        {
-          this->has_mixed_parentage_ = 1;
-          break;
-        }
-    }
-
-  AST_Decl::NodeType nt = this->node_type ();
-  bool can_be_mixed = nt == AST_Decl::NT_interface
-                          || nt == AST_Decl::NT_component
-                          || nt == AST_Decl::NT_home
-                          || nt == AST_Decl::NT_connector;
-
-  if (this->has_mixed_parentage_ == 1
-      && can_be_mixed
-      && this->is_defined ()
-      && !this->imported ())
-    {
-      be_global->mixed_parentage_interfaces.enqueue_tail (this);
-    }
 }
 
 // ****************************************************************
@@ -2784,31 +2739,6 @@ be_interface *
 be_interface::original_interface (void)
 {
   return this->original_interface_;
-}
-
-int
-be_interface::has_mixed_parentage (void)
-{
-  if (this->is_abstract_)
-    {
-      return 0;
-    }
-
-  AST_Decl::NodeType nt = this->node_type ();
-
-  if (AST_Decl::NT_component == nt
-      || AST_Decl::NT_home == nt
-      || AST_Decl::NT_connector == nt)
-    {
-      return 0;
-    }
-
-  if (this->has_mixed_parentage_ == -1)
-    {
-      this->analyze_parentage ();
-    }
-
-  return this->has_mixed_parentage_;
 }
 
 int

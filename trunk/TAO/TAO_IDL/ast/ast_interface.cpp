@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_interface_fwd.h"
 #include "ast_valuetype.h"
 #include "ast_component.h"
+#include "ast_template_module.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
 #include "ast_attribute.h"
@@ -122,7 +123,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat),
     home_equiv_ (false),
-    fwd_decl_ (0)
+    fwd_decl_ (0),
+    has_mixed_parentage_ (-1)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -967,6 +969,95 @@ AST_Interface::lookup_for_add (AST_Decl *d)
     }
 
   return 0;
+}
+
+int
+AST_Interface::has_mixed_parentage (void)
+{
+  if (this->is_abstract_)
+    {
+      return 0;
+    }
+
+  AST_Decl::NodeType nt = this->node_type ();
+
+  if (AST_Decl::NT_component == nt
+      || AST_Decl::NT_home == nt
+      || AST_Decl::NT_connector == nt)
+    {
+      return 0;
+    }
+
+  if (this->has_mixed_parentage_ == -1)
+    {
+      this->analyze_parentage ();
+    }
+
+  return this->has_mixed_parentage_;
+}
+
+void
+AST_Interface::analyze_parentage (void)
+{
+  if (this->has_mixed_parentage_ != -1)
+    {
+      return;
+    }
+
+  this->has_mixed_parentage_ = 0;
+  
+  // Only interfaces may have mixed parentage.
+  if (this->node_type () != AST_Decl::NT_interface)
+    {
+      return;
+    }
+
+  for (long i = 0; i < this->pd_n_inherits; ++i)
+    {
+      AST_Interface *parent =
+         AST_Interface::narrow_from_decl (this->pd_inherits[i]);
+
+      if (parent == 0)
+        {
+          // The item is a template param holder.
+          continue;
+        }
+
+      if (parent->is_abstract ()
+          || parent->has_mixed_parentage ())
+        {
+          this->has_mixed_parentage_ = 1;
+          break;
+        }
+    }
+
+  // Must check if we are declared in a template module, in
+  // which case no code will be generated, so we should not
+  // be enqueued.                        
+  bool in_tmpl_module = false;
+  UTL_Scope *s = this->defined_in ();
+  
+  while (s != 0)
+    {
+      AST_Template_Module *m =
+        AST_Template_Module::narrow_from_scope (s);
+        
+      if (m != 0)
+        {
+          in_tmpl_module = true;
+          break;
+        }
+        
+      s = ScopeAsDecl (s)->defined_in ();
+    }
+
+  if (this->has_mixed_parentage_ == 1
+      && this->is_defined ()
+      && !this->imported ()
+      && !in_tmpl_module)
+    {
+      idl_global->mixed_parentage_interfaces ().enqueue_tail (this);
+    }
 }
 
 bool

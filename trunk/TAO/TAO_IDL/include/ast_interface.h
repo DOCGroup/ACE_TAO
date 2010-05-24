@@ -135,6 +135,13 @@ public:
   AST_Decl *look_in_inherited_local (Identifier *e,
                                      bool full_def_only = false);
 
+  /// Do we have both abstract and concrete parents?
+  int has_mixed_parentage (void);
+
+  /// Compute whether or not we have both abstract and concrete parents,
+  /// and make a list of the abstract parents, if any.
+  void analyze_parentage (void);
+
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
@@ -198,6 +205,9 @@ protected:
   // probably already be destroyed and the pointers will be
   // garbage.
   ACE_Unbounded_Queue<AST_Type *> param_holders_;
+
+  /// Do we have both abstract and concrete parents?
+  int has_mixed_parentage_;
 
 protected:
   // Scope Management Protocol.
