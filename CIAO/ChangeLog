@@ -1,3 +1,12 @@
+Mon May 24 20:39:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+          Fixed errors in these deployment plans
+
+        * connectors/dds4ccm/impl/dds/PortStatusListener_T.cpp:
+          Fixed logging line
+
 Mon May 24 20:07:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:

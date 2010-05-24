@@ -276,10 +276,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -287,10 +287,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
@@ -381,10 +381,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -392,10 +392,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
@@ -486,10 +486,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -497,10 +497,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
@@ -591,10 +591,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -602,10 +602,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
@@ -726,10 +726,10 @@
       <name>expected_samples</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>500</long>
+          <ulong>500</ulong>
         </value>
       </value>
     </configProperty>
