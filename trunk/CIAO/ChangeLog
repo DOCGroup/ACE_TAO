@@ -1,3 +1,18 @@
+Mon May 24 14:04:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/tests/CIAO/Components/SimpleLocalProvider.mpc:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+
+          Fuzz.
+
 Mon May 24 13:53:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:

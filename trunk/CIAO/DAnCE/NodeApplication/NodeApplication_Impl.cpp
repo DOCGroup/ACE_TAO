@@ -194,8 +194,8 @@ NodeApplication_Impl::prepare_instances (void)
                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
                        ACE_TEXT ("Considering sub-plan %u with %u instances\n"),
                        plan++,
-		       sub_plan.instance.length ()
-		       ));
+                       sub_plan.instance.length ()
+                       ));
       
       bool locality_found (false);
 
@@ -307,7 +307,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
   if (CORBA::is_nil (app.in ()))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
-		       ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
                        ACE_TEXT ("Error: Didn't get a valid reference back from LM preparePlan ")
                        ACE_TEXT ("for locality %C\n"),
                        name));
