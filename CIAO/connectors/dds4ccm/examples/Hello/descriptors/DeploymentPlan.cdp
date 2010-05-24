@@ -271,7 +271,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -282,7 +282,7 @@
           <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
