@@ -299,10 +299,6 @@ public:
                                             bool use_underscore,
                                             bool accessor = false);
 
-  /// Compute whether or not we have both abstract and concrete parents,
-  /// and make a list of the abstract parents, if any.
-  void analyze_parentage (void);
-
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
   void original_interface (be_interface *original_interface);
@@ -310,9 +306,6 @@ public:
   /// Returns the original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface (void);
-
-  /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage (void);
 
   /// Is Components::SessionComponent an immediate parent?
   int session_component_child (void);
@@ -458,9 +451,6 @@ protected:
   /// The original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface_;
-
-  /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage_;
 
   /// Are we a direct child of Components::SessionComponent?
   int session_component_child_;
