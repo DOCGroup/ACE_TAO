@@ -7334,47 +7334,40 @@ tao_yyreduce:
               AST_Typedef *td = 0;
               bool can_be_undefined = false;
 
-              if (nt == AST_Decl::NT_struct_fwd
-                  || nt == AST_Decl::NT_union_fwd
-                  || nt == AST_Decl::NT_struct
-                  || nt == AST_Decl::NT_union
-                  || nt == AST_Decl::NT_typedef)
+              if (nt == AST_Decl::NT_typedef)
                 {
                   // This code block ensures that a sequence of
                   // as-yet-undefined struct or union isn't used
                   // as a return type or argument.
-                  if (nt == AST_Decl::NT_typedef)
+                  td = AST_Typedef::narrow_from_decl (d);
+                  AST_Type *pbt = td->primitive_base_type ();
+
+                  if (pbt->node_type () == AST_Decl::NT_sequence)
                     {
-                      td = AST_Typedef::narrow_from_decl (d);
-                      AST_Type *pbt = td->primitive_base_type ();
+                      t = pbt;
+                      AST_Sequence *seq_type =
+                        AST_Sequence::narrow_from_decl (pbt);
+                      AST_Type *elem_type =
+                        seq_type->base_type ();
+                      AST_Decl::NodeType elem_nt =
+                        elem_type->node_type ();
 
-                      if (pbt->node_type () == AST_Decl::NT_sequence)
+                      if (elem_nt == AST_Decl::NT_typedef)
                         {
-                          t = pbt;
-                          AST_Sequence *seq_type =
-                            AST_Sequence::narrow_from_decl (pbt);
-                          AST_Type *elem_type =
-                            seq_type->base_type ();
-                          AST_Decl::NodeType elem_nt =
-                            elem_type->node_type ();
+                          AST_Typedef *elem_td =
+                            AST_Typedef::narrow_from_decl (elem_type);
+                          elem_type = elem_td->primitive_base_type ();
+                          elem_nt = elem_type->node_type ();
+                        }
 
-                          if (elem_nt == AST_Decl::NT_typedef)
-                            {
-                              AST_Typedef *elem_td =
-                                AST_Typedef::narrow_from_decl (elem_type);
-                              elem_type = elem_td->primitive_base_type ();
-                              elem_nt = elem_type->node_type ();
-                            }
-
-                          if (elem_nt == AST_Decl::NT_interface
-                              || elem_nt == AST_Decl::NT_interface_fwd
-                              || elem_nt == AST_Decl::NT_valuetype
-                              || elem_nt == AST_Decl::NT_valuetype_fwd
-                              || elem_nt == AST_Decl::NT_component
-                              || elem_nt == AST_Decl::NT_component_fwd)
-                            {
-                              can_be_undefined = true;
-                            }
+                      if (elem_nt == AST_Decl::NT_interface
+                          || elem_nt == AST_Decl::NT_interface_fwd
+                          || elem_nt == AST_Decl::NT_valuetype
+                          || elem_nt == AST_Decl::NT_valuetype_fwd
+                          || elem_nt == AST_Decl::NT_component
+                          || elem_nt == AST_Decl::NT_component_fwd)
+                        {
+                          can_be_undefined = true;
                         }
                     }
 
@@ -7388,8 +7381,32 @@ tao_yyreduce:
                       return 1;
                     }
                 }
-            }
+              else
+                {
+                  // For forward declared structs and unions, we
+                  // want the full definition, but we need to
+                  // check that it's been fully defined.
+                  AST_StructureFwd *fwd =
+                    AST_StructureFwd::narrow_from_decl (d);
+                    
+                  if (fwd != 0)
+                    {
+                      t = fwd->full_definition ();
+                      
+                      if (! t->is_defined ())
+                        {
+                          idl_global->err ()->error1 (
+                            UTL_Error::EIDL_ILLEGAL_ADD,
+                            t);
 
+                          /* If we don't return here, we'll crash later.*/
+                          return 1;
+                        }
+                    
+                      d = t;
+                    }
+                }
+            }
 
           (tao_yyval.dcval) = d;
         }

@@ -1,3 +1,11 @@
+Mon May 24 03:01:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Fixed a bug in the logic of the lookup of a forward
+          declared struct or union.
+
 Fri May 21 23:04:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
