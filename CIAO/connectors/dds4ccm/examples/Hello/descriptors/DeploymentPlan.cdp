@@ -170,10 +170,10 @@
       <name>expected_samples</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>100</long>
+          <ulong>100</ulong>
         </value>
       </value>
     </configProperty>
