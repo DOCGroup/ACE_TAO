@@ -1,7 +1,12 @@
+Mon May 24 19:01:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed typos
+
 Mon May 24 15:39:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Added use case of a mixed parentage (abstract and
           concrete) interface in a template module.
 
