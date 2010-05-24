@@ -51,30 +51,30 @@ namespace CIAO
                                   CORBA::NO_MEMORY ());
                 
                 endpoint_reference = out;
-		
-		if (this->is_local_facet (conn))
-		  (*out) <<= comp.in ();
-		else
-		  {
-		    switch (conn.internalEndpoint[i].kind)
-		      {
-		      case ::Deployment::Facet:
-			ref = 
-			  comp->provide_facet (conn.internalEndpoint[i].portName.in ());
-			(*out) <<= ref.in ();
-			break;
-		      
-		      case ::Deployment::EventConsumer:
-			ref = 
-			  comp->get_consumer (conn.internalEndpoint[i].portName.in ());
-			(*out) <<= ref.in ();
-			break;
-		      
-		      default:
-			throw ::Deployment::InvalidConnection (conn.name.in (),
-							       "Invalid provider port type.");
-		      };
-		  }
+                
+                if (this->is_local_facet (conn))
+                  (*out) <<= comp.in ();
+                else
+                  {
+                    switch (conn.internalEndpoint[i].kind)
+                      {
+                      case ::Deployment::Facet:
+                        ref = 
+                          comp->provide_facet (conn.internalEndpoint[i].portName.in ());
+                        (*out) <<= ref.in ();
+                        break;
+                      
+                      case ::Deployment::EventConsumer:
+                        ref = 
+                          comp->get_consumer (conn.internalEndpoint[i].portName.in ());
+                        (*out) <<= ref.in ();
+                        break;
+                      
+                      default:
+                        throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                               "Invalid provider port type.");
+                      };
+                  }
                 return;
               }
           }
@@ -103,8 +103,8 @@ namespace CIAO
                         "Caught unknown C++ exception on instance %C",
                         plan.connection[connectionRef].name.in ()));
         throw ::Deployment::InvalidConnection (plan.connection[connectionRef].name.in (),
-					       "Unknown C++ exception whilst establishing "
-					       "connection");
+                                               "Unknown C++ exception whilst establishing "
+                                               "connection");
       }
     
   }
@@ -189,7 +189,7 @@ namespace CIAO
                         name,
                         ex._info ().c_str ()));
         throw ::Deployment::InvalidConnection (name,
-					       ex._info ().c_str ());
+                                               ex._info ().c_str ());
       }
     catch (...)
       {
@@ -198,7 +198,7 @@ namespace CIAO
                         "Caught C++ exception whilst connecting <%C>\n",
                         name));
         throw ::Deployment::InvalidConnection (name,
-					       "Unknown C++ Exception");
+                                               "Unknown C++ Exception");
       }
   }
   
