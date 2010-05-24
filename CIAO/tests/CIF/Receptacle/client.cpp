@@ -173,7 +173,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
         {
           facet = prov->provide_facet ("prov_foo");
         }
-      catch (const ::Components::InvalidName &e)
+      catch (const ::Components::InvalidName &)
         {
           ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
                                 "while providing facet\n"));

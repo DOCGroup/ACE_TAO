@@ -177,7 +177,7 @@ namespace CIAO
     
     const char *name = plan.instance[instanceRef].name.in ();
     
-    CIAO_DEBUG (8, (LM_TRACE, DLINFO
+    CIAO_DEBUG (8, (LM_TRACE, CLINFO
                     "Homed_Component_Handler_i::activate_instance - "
                     "Starting activation of component instance <%C>\n",
                     name));
@@ -224,7 +224,7 @@ namespace CIAO
     
     const char *name = plan.instance[instanceRef].name.in ();
     
-    CIAO_DEBUG (8, (LM_TRACE, DLINFO
+    CIAO_DEBUG (8, (LM_TRACE, CLINFO
                     "Homed_Component_Handler_i::passivate_instance - "
                     "Starting passivation of component instance <%C>\n",
                     name));

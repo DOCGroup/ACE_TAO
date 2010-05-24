@@ -154,7 +154,7 @@ namespace DAnCE
           {
             // Callback to NodeApplication to get configuration
             sa->locality_manager_callback (lm.in (),
-                                           this->uuid_.c_str (),
+                                           ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
                                            config.out ());
 
             DANCE_DEBUG (9, (LM_TRACE, DLINFO 
@@ -169,7 +169,7 @@ namespace DAnCE
 			     ACE_TEXT ("Configuration complete for component server %C\n"),
                             this->uuid_.c_str ()));
 
-            sa->configuration_complete (this->uuid_.c_str ());
+            sa->configuration_complete (ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()));
           }
         catch (const CORBA::BAD_PARAM &)
           {
@@ -256,7 +256,7 @@ namespace DAnCE
 			     ACE_TEXT ("LocalityManager_Task::parse_args - ")
 			     ACE_TEXT ("uuid is %s\n"),
                             opts.opt_arg ()));
-            this->uuid_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+            this->uuid_ = opts.opt_arg ();
             break;
 
           case 'c':
@@ -299,7 +299,7 @@ namespace DAnCE
       }
 
     // check required options.
-    if (this->uuid_ == "")
+    if (this->uuid_ == ACE_TEXT (""))
       throw Error ("Option required: -u|--uuid");
     if (this->callback_ior_str_ == ACE_TEXT(""))
       {

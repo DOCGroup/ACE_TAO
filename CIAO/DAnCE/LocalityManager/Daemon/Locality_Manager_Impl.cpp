@@ -44,8 +44,8 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::init");
     
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-		     "LocalityManager_i::init - "
-		     "Received %u properties from init\n",
+		     ACE_TEXT ("LocalityManager_i::init - ")
+		     ACE_TEXT ("Received %u properties from init\n"),
 		     props->length ()));
 
     this->props_ = props;
@@ -362,41 +362,41 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::destroyApplication");
     
-    for (HANDLER_ORDER::const_reverse_iterator i = this->handler_order_.rbegin ();
-         i != this->handler_order_.rend ();
-         ++i)
+    for (size_t i = this->handler_order_.size ();
+	 i > 0;
+	 --i)
       {
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[*i].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+          this->instance_handlers_[this->handler_order_[i-1]].handler_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]].instances_;
         
-        for (INSTANCE_LIST::const_iterator i = inst_list.begin ();
-             i != inst_list.end ();
-             ++i)
+        for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
+             j != inst_list.end ();
+             ++j)
           {
             CORBA::Any_var reference;
             handler->passivate_instance (this->plan_,
-                                         *i,
+                                         *j,
                                          reference.in ());
           }
       }
     
-    for (HANDLER_ORDER::const_reverse_iterator i = this->handler_order_.rbegin ();
-           i != this->handler_order_.rend ();
-         ++i)
+    for (size_t i = this->handler_order_.size ();
+	 i > 0;
+	 --i)
       {
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[*i].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+          this->instance_handlers_[this->handler_order_[i-1]].handler_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]].instances_;
         
-        for (INSTANCE_LIST::const_iterator i = inst_list.begin ();
-             i != inst_list.end ();
-             ++i)
+        for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
+             j != inst_list.end ();
+             ++j)
           {
             CORBA::Any_var reference;
             handler->remove_instance (this->plan_,
-                                         *i,
-                                         reference.in ());
+				      *j,
+				      reference.in ());
           }
       }
     // Add your implementation here
