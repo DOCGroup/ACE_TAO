@@ -213,10 +213,10 @@
       <name>keys</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>5</ulong>
+          <ushort>5</ushort>
         </value>
       </value>
     </configProperty>
@@ -224,10 +224,10 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
