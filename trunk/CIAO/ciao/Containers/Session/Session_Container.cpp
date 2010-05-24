@@ -1077,7 +1077,7 @@ namespace CIAO
                     (LM_ERROR,
                      CLINFO
                      "Session_Container::set_attributes - "
-                     "Caught unknown C++ eception while "
+                     "Caught unknown C++ exception while "
                      "configuring component attributes.\n"));
 
         throw;
@@ -1149,7 +1149,7 @@ namespace CIAO
                     (LM_ERROR,
                      CLINFO
                      "Session_Container::activate_component - "
-                     "Caught unknown C++ eception while "
+                     "Caught unknown C++ exception while "
                      "activating a component.\n"));
 
         throw;
@@ -1210,7 +1210,7 @@ namespace CIAO
                     (LM_ERROR,
                      CLINFO
                      "Session_Container::passivate_component - "
-                     "Caught unknown C++ eception while "
+                     "Caught unknown C++ exception while "
                      "passivating a component.\n"));
 
         throw;
