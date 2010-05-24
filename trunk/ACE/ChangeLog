@@ -1,3 +1,11 @@
+Mon May 24 15:17:41 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Use $(KEEP_GOING) so that when make is run with -k and multiple
+          commands are run for a single target, subsequent commands are tried
+          even if the earlier command fails.
+
 Mon May 24 14:42:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.cpp:

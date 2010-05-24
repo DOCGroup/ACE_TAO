@@ -69,7 +69,7 @@ sub write_project_targets {
   foreach my $project (@$list) {
     my($dname) = $self->mpc_dirname($project);
     my($chdir) = ($dname ne '.');
-    print $fh "\t\@",
+    print $fh "\t\$(KEEP_GOING)\@",
               ($chdir ? "cd $dname && " : ''),
               "\$(MAKE) -f ",
               ($chdir ? $self->mpc_basename($project) : $project),
