@@ -261,6 +261,6 @@ ifneq ($(SOVERSION),)
 # refer to the same place). SHLIB_WITH_VER should be the same as $@ but
 # without the ARCH subdir.
 	-$(RM) $(VSHLIB_NO_VER)
-	-$(LN_S) $(@) $(VSHLIB_NO_VER)
+	-$(LN_S) $(if $(findstring cp,$(firstword $(LN_S))),$(@),$(SHLIB_WITH_VER)) $(VSHLIB_NO_VER)
 endif
 	-chmod a+rx $@

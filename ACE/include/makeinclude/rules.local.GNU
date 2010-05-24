@@ -279,17 +279,20 @@ ifeq ($(vxworks_ntbuild),1)
 	@if not exist $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(RM) $@ && \
+		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		$(RM) $@; \
+		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
@@ -297,6 +300,7 @@ else #not vxworks_ntbuild
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test ! -s $@ ; then \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
@@ -304,6 +308,7 @@ else #not vxworks_ntbuild
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
 		if test ! -s $@ ; then \
 			$(RM) $@; \
+			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
