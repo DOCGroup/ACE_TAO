@@ -1,3 +1,10 @@
+Mon May 24 14:16:15 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Further refinement and simplification of commands for LN_S=cp.
+          This may work on OpenVMS.
+
 Mon May 24 11:56:32 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
