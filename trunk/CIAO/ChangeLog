@@ -1,3 +1,10 @@
+Mon May 24 15:39:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Added use case of a mixed parentage (abstract and
+          concrete) interface in a template module.
+
 Mon May 24 14:19:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:

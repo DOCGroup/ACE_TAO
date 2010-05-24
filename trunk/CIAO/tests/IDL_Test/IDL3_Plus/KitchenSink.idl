@@ -66,8 +66,20 @@ module A
   module Nested<typename T, sequence <T> TSeq>
   {
     typedef short y;
+    
+    abstract interface abs_XX
+    {
+    };
 
     interface XX
+    {
+    };
+    
+    // To make sure the overrides of _is_nil() and
+    // release() that we need for mixed parentage
+    // interfaces get generated when the template
+    // module is instantiated.
+    interface mixed_XX : abs_XX, XX
     {
     };
 
