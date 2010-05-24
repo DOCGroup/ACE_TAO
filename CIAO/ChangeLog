@@ -1,4 +1,12 @@
+Mon May 24 03:30:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+        
+          Fixed incorrectly scoped references to the exception
+          NonChangeable.
+
 Sun May 23 23:30:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * CIAO_TAO.mwc:
           Readded connectors again
 
