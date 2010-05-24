@@ -52,7 +52,7 @@ namespace DAnCE
       plan.instance[instance_index];
     
     DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-		     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
                      ACE_TEXT ("Interceptor post install for instance %C\n"),
                      plan.instance[instance_index].name.in ()));
     
@@ -76,7 +76,7 @@ namespace DAnCE
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
             DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-			     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                             ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
                              ACE_TEXT ("Registering name %C for instance %C\n"),
                              name,
                              plan.instance[instance_index].name.in ()));

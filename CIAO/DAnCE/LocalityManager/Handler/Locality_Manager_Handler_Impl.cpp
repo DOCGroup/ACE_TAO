@@ -116,7 +116,7 @@ namespace DAnCE
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                          ACE_TEXT ("Locality_Handler_i::install_instance - ")
-			 ACE_TEXT ("Received nil reference from LocalityActivator\n")));
+                         ACE_TEXT ("Received nil reference from LocalityActivator\n")));
         throw ::Deployment::StartError (idd.name.in (),
                                         "Received nil object reference for "
                                         "LocalityManager from Activator\n");

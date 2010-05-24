@@ -44,9 +44,9 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::init");
     
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-		     ACE_TEXT ("LocalityManager_i::init - ")
-		     ACE_TEXT ("Received %u properties from init\n"),
-		     props->length ()));
+                     ACE_TEXT ("LocalityManager_i::init - ")
+                     ACE_TEXT ("Received %u properties from init\n"),
+                     props->length ()));
 
     this->props_ = props;
     
@@ -363,8 +363,8 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::destroyApplication");
     
     for (size_t i = this->handler_order_.size ();
-	 i > 0;
-	 --i)
+         i > 0;
+         --i)
       {
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
           this->instance_handlers_[this->handler_order_[i-1]].handler_;
@@ -382,8 +382,8 @@ namespace DAnCE
       }
     
     for (size_t i = this->handler_order_.size ();
-	 i > 0;
-	 --i)
+         i > 0;
+         --i)
       {
         ::DAnCE::InstanceDeploymentHandler_ptr handler = 
           this->instance_handlers_[this->handler_order_[i-1]].handler_;
@@ -395,8 +395,8 @@ namespace DAnCE
           {
             CORBA::Any_var reference;
             handler->remove_instance (this->plan_,
-				      *j,
-				      reference.in ());
+                                      *j,
+                                      reference.in ());
           }
       }
     // Add your implementation here
