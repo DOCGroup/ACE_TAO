@@ -281,21 +281,16 @@ ifeq ($(vxworks_ntbuild),1)
 		$(RM) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
-    #If we're actually copying instead of linking, pay attention to timestamps to know when to install
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test $(ARCH_SOURCE_DIR)/$(@F) -nt $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
-			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-		fi ; \
+		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test $(ARCH_SOURCE_DIR)/$(@F) -nt $@ ; then \
-			$(RM) $@; \
-			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-		fi ; \
+		$(RM) $@; \
+		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 	fi
     else #firstword of LN_S is not cp, so we're using real symlinks
       ifneq ($(SOVERSION),)
