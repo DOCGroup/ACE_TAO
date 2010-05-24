@@ -15,7 +15,7 @@ run_test (::Navigation_ptr nav)
           nav->provide_facet ("navigation_foo");
           nav->provide_facet ("inherited_foo");
         }
-      catch (const ::Components::InvalidName &e)
+      catch (const ::Components::InvalidName &)
         {
           ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
                                 "while testing provide_facet\n"));
@@ -28,7 +28,7 @@ run_test (::Navigation_ptr nav)
           ACE_ERROR ((LM_ERROR, "Error: No InvalidName exception caught "
                                 "while testing provide_facet\n"));
         }
-      catch (const ::Components::InvalidName &e)
+      catch (const ::Components::InvalidName &)
         {
           ACE_DEBUG ((LM_DEBUG, "Expected InvalidName exception caught.\n"));
         }
@@ -39,7 +39,7 @@ run_test (::Navigation_ptr nav)
           ACE_ERROR ((LM_ERROR, "Error: No InvalidName exception caught "
                                 "while testing provide_facet\n"));
         }
-      catch (const ::Components::InvalidName &e)
+      catch (const ::Components::InvalidName &)
         {
           ACE_DEBUG ((LM_DEBUG, "Expected InvalidName exception caught.\n"));
         }
