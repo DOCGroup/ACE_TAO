@@ -37,7 +37,7 @@ namespace CIAO
     else
       {
         CIAO_DEBUG (6,
-                    (LM_DEBUG,
+                    (LM_DEBUG, CLINFO
                      "Servant_Impl_T::Servant_Impl_T - "
                      "Couldn't set session context for %C\n",
                      ins_name));
@@ -52,7 +52,7 @@ namespace CIAO
     if (this->executor_->_refcount_value () > 1)
       {
         CIAO_DEBUG (6,
-                    (LM_INFO,
+                    (LM_INFO, CLINFO
                      "Servant_Impl_T::~Servant_Impl_T - "
                      "Executor object reference count is %u\n",
                      this->executor_->_refcount_value ()));

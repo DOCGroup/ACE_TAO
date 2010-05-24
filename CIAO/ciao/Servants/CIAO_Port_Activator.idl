@@ -26,7 +26,7 @@ module CIAO
     /// OID of port this activator encapsulates
     attribute string oid;
 
-    /// name of the port
+    /// Name of the port
     readonly attribute string name;
 
     PortableServer::Servant activate (in PortableServer::ObjectId oid);

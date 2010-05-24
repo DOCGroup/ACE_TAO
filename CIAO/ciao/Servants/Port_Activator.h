@@ -67,8 +67,7 @@ namespace CIAO
     virtual void deactivate (::PortableServer::Servant servant) = 0;
 
   protected:
-    /// The object ID that is used to activate the servant within the
-    /// POA.
+    /// The object ID that is used to activate the servant within the POA.
     CORBA::String_var oid_;
 
     /// Name of the port
