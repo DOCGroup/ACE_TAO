@@ -25,8 +25,7 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   int
-  pulse_Generator::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+  pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
     // Notify the subscribers
     try
@@ -35,7 +34,8 @@ namespace CIAO_Quoter_Distributor_Impl
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "Distributor pulse_Generator::handle_timeout: Caught exception\n"));
+        ACE_ERROR ((LM_ERROR, "Distributor pulse_Generator::handle_timeout: "
+                              "Caught exception\n"));
       }
 
     return 0;
@@ -180,7 +180,8 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::del_stock (const char * stock)
   {
-    ACE_DEBUG ((LM_DEBUG, "Distributor_exec_i::del_stock - Removing stock: %C\n", stock));
+    ACE_DEBUG ((LM_DEBUG,
+                "Distributor_exec_i::del_stock - Removing stock: %C\n", stock));
 
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->mutex_, CORBA::INTERNAL ());
@@ -193,7 +194,9 @@ namespace CIAO_Quoter_Distributor_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "Distributor_exec_i::del_stock - Stock not present: %C\n", stock));
+        ACE_ERROR ((LM_ERROR,
+                   "Distributor_exec_i::del_stock - Stock not present: %C\n",
+                    stock));
       }
   }
 
@@ -221,7 +224,6 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   // Component attributes.
-
   ::CORBA::ULong
   Distributor_exec_i::rate (void)
   {

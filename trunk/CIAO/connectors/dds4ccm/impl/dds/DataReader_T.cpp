@@ -47,9 +47,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_wo_instance (
   if (this->qc_reader_)
     {
       retval = this->impl ()->read_w_condition (data,
-                                       sample_info,
-                                       DDS_LENGTH_UNLIMITED,
-                                       this->qc_reader_);
+                                                sample_info,
+                                                DDS_LENGTH_UNLIMITED,
+                                                this->qc_reader_);
     }
   else
     {
@@ -434,7 +434,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (
       {
         DDS_StringSeq params;
         params <<= filter.query_parameters;
-        ::DDS::ReturnCode_t retval = this->cft_->set_expression_parameters (
+        ::DDS::ReturnCode_t const retval = this->cft_->set_expression_parameters (
           params);
         if (retval != ::DDS::RETCODE_OK)
           {
@@ -456,8 +456,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_filter (
 {
   ::DDS_StringSeq dds_qp;
   dds_qp <<= filter.query_parameters;
-  ::DDS::ReturnCode_t retval = qc->set_query_parameters (
-                                            dds_qp);
+  ::DDS::ReturnCode_t const retval = qc->set_query_parameters (dds_qp);
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
@@ -493,7 +492,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (void)
       ACE_NEW_THROW_EX (this->ws_,
                         DDSWaitSet (),
                         CORBA::NO_MEMORY ());
-      DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->get_readcondition ());
+      DDS_ReturnCode_t const retcode = this->ws_->attach_condition (this->get_readcondition ());
       if (retcode != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_readcondition - "
@@ -529,7 +528,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::attach_querycondition (void)
                         DDSWaitSet (),
                         CORBA::NO_MEMORY ());
     }
-  DDS_ReturnCode_t retcode = this->ws_->attach_condition (this->get_querycondition ());
+  DDS_ReturnCode_t const retcode = this->ws_->attach_condition (this->get_querycondition ());
   if (retcode != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_querycondition - "
@@ -548,7 +547,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::wait (
 {
    DDS_ReturnCode_t const retcode =
      this->ws_->wait (active_conditions, time_out);
-   if (retcode == DDS_RETCODE_TIMEOUT)
+   if (retcode == ::DDS::RETCODE_TIMEOUT)
      {
        DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
        return false;

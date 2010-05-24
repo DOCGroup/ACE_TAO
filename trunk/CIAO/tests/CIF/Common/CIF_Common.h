@@ -43,8 +43,7 @@ private:
   const char *cs_path_;
   CORBA::ULong spawn_delay_;
 
-  int
-  parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 };
 
