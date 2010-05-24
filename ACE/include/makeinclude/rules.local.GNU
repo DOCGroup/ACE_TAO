@@ -285,14 +285,14 @@ else #not vxworks_ntbuild
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
+		if test $(ARCH_SOURCE_DIR)/$(@F) -nt $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test $@ -ot $(@F) ; then \
+		if test $(ARCH_SOURCE_DIR)/$(@F) -nt $@ ; then \
 			$(RM) $@; \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \

@@ -1,3 +1,14 @@
+Mon May 24 11:56:32 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+
+          Fixed cases where LN_S=cp.
+
+        * apps/gperf/src/gperf.mpc:
+
+          Using $(MKDIR) instead of raw mkdir.
+
 Fri May 21 21:30:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ACE-INSTALL.html:
