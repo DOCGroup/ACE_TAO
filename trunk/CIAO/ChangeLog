@@ -1,3 +1,16 @@
+Mon May 24 07:42:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Components/SimpleAttribute_exec.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+
+          Re-enabled tests.
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp.bak:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp.bak:
+
+          Removed these files.
+
 Mon May 24 11:31:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
