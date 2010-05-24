@@ -176,7 +176,7 @@ namespace CIAO
         
           }
       }
-    catch (const ::Deployment::InvalidConnection &ex)
+    catch (const ::Deployment::InvalidConnection &)
       {
         // pass through
         throw;

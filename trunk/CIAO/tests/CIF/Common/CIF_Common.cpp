@@ -194,25 +194,25 @@ CIF_Common::install_component (::CIAO::Deployment::Container_ptr cont,
                                      impl_name.c_str (),
                                      configs);
     }
-  catch (const ::Components::Deployment::UnknownImplId &e)
+  catch (const ::Components::Deployment::UnknownImplId &)
     {
       ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
                   "::Components::Deployment::UnknownImplId caught.\n"));
       return ::Components::CCMObject::_nil ();
     }
-  catch (const ::Components::Deployment::ImplEntryPointNotFound &e)
+  catch (const ::Components::Deployment::ImplEntryPointNotFound &)
     {
       ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
                   "::Components::Deployment::ImplEntryPointNotFound caught\n"));
       return ::Components::CCMObject::_nil ();
     }
-  catch (const ::Components::Deployment::InstallationFailure &e)
+  catch (const ::Components::Deployment::InstallationFailure &)
     {
       ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
                   "::Components::Deployment::InstallationFailure caught\n"));
       return ::Components::CCMObject::_nil ();
     }
-  catch (const ::Components::Deployment::InvalidConfiguration &e)
+  catch (const ::Components::Deployment::InvalidConfiguration &)
     {
       ACE_ERROR ((LM_ERROR, "CIF_Common::install_component - "
                   "::Components::Deployment::InvalidConfiguration caught\n"));
