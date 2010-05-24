@@ -439,25 +439,25 @@ be_visitor_traits::visit_array (be_array *node)
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice"
+      << name << "_slice * _tao_slice);"
+      << be_uidt
       << be_uidt_nl
-      << ");" << be_uidt_nl
       << "static " << name << "_slice * dup ("
       << be_idt << be_idt_nl
-      << "const " << name << "_slice * _tao_slice"
+      << "const " << name << "_slice * _tao_slice);"
+      << be_uidt
       << be_uidt_nl
-      << ");" << be_uidt_nl
       << "static void copy (" << be_idt << be_idt_nl
       << name << "_slice * _tao_to," << be_nl
-      << "const " << name << "_slice * _tao_from"
+      << "const " << name << "_slice * _tao_from);"
+      << be_uidt
       << be_uidt_nl
-      << ");" << be_uidt_nl
       << "static " << name << "_slice * alloc (void);"
       << be_nl
       << "static void zero (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice"
-      << be_uidt_nl
-      << ");" << be_uidt
+      << name << "_slice * _tao_slice);"
+      << be_uidt
+      << be_uidt
       << be_uidt_nl
       << "};";
   //FUZZ: enable check_for_lack_ACE_OS

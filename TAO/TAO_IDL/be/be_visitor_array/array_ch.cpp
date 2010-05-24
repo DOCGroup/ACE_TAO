@@ -287,24 +287,24 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice " << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice") << " *_tao_to," << be_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt << be_nl;
+          << " *_tao_from);" << be_uidt
+          << be_uidt << be_nl;
     }
   else
     {
@@ -317,16 +317,16 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup", "_")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << " *_tao_slice);" << be_uidt
+          << be_uidt_nl << be_nl;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << be_idt << be_idt_nl;
