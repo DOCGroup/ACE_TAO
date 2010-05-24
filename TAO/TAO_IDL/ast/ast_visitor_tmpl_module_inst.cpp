@@ -910,6 +910,11 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
     }
 
   idl_global->scopes ().top ()->add_to_scope (added_iface);
+  
+  // If this interface has both abstract and concrete parents,
+  // extra code needs to be generated for it, such as overrides
+  // of _is_nil() and release().
+  added_iface->analyze_parentage ();
 
   // Update the scope stack.
   idl_global->scopes ().push (added_iface);
