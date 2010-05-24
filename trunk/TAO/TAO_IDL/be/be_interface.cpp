@@ -779,10 +779,26 @@ be_interface:: gen_var_out_seq_decls (void)
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
+          
+  // Need this clunky string compare for when we are processing
+  // the *A.idl file. The *_sendc operations are generated in
+  // a separate interface distinguished only by the AMI4CCM_
+  // prefix. Since it does not come from implied IDL (in this
+  // execution of the IDL compiler) there is nothing
+  // to tell the IDL compiler that this interface is in any
+  // way special. All we can do is search for the prefix.                  
+  ACE_CString test (lname, 0, false);
+  bool has_ami4ccm_prefix = (test.find ("AMI4CCM_") == 0);
+    
+  bool already_ami =
+    (this->is_ami_rh ()
+     || this->is_ami4ccm_rh ()
+     || has_ami4ccm_prefix);
            
   /// Forward declare the handler interface before declaring
   /// the original interface.                     
-  if (be_global->ami_call_back () && !this->is_ami_rh () && !this->is_ami4ccm_rh ())
+  if (be_global->ami_call_back ()
+      && !already_ami)
     {
       *os << be_nl << be_nl
           << "class AMI_" << lname << "Handler;" << be_nl
@@ -790,7 +806,8 @@ be_interface:: gen_var_out_seq_decls (void)
           << lname << "Handler_ptr;";
      }
 
-  if (be_global->ami4ccm_call_back () && !this->is_ami_rh () && !this->is_ami4ccm_rh ())
+  if (be_global->ami4ccm_call_back ()
+      && !already_ami)
     {
       *os << be_nl << be_nl
           << "class AMI4CCM_" << lname << "Handler;" << be_nl
