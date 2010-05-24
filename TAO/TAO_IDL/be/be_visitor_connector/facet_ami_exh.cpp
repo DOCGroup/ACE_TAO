@@ -122,7 +122,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 
   /// The reply handler class we are generating inherits from the
   /// CORBA AMI skeleton class, not the AMI_xxxCallback class
-  /// generated from the corresponding interface in this IDl file.
+  /// generated from the corresponding interface in this IDL file.
   /// So to get the correct *_excep operation signatures, we
   /// visit the scope of the AMI_xxxHandler interface generated
   /// by -GC, which must be applied to this IDL file.
@@ -147,7 +147,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       false,
       false);
 
-  if (status == -1)//this->visit_scope (callback_iface) == -1)
+  if (status == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_facet_ami_exh")
