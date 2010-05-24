@@ -52,7 +52,8 @@ namespace CIAO
 
     /// Template method from the base class, please see the base class
     /// documentation for details.
-    virtual PortableServer::Servant activate (const PortableServer::ObjectId &oid);
+    virtual PortableServer::Servant activate (
+      const PortableServer::ObjectId &oid);
 
     virtual void deactivate (PortableServer::Servant servant);
 
