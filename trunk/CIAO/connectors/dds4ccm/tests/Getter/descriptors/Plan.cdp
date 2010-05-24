@@ -306,7 +306,7 @@
       <name>keys</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
           <ulong>5</ulong>
@@ -317,7 +317,7 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_ulong</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
           <ulong>10</ulong>
