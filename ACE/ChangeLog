@@ -1,3 +1,17 @@
+Mon May 24 14:40:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Fixed a bug introduced by my earlier commit of this file today.
+          The value needs to be different in LN_S=cp vs. LN_S=ln scenarios.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Echo back the ln or cp command used for symlinking/copying the
+          library or executable to the libout/dllout/exeout location.
+          This takes the place of the old "Installing..." messages which are
+          too confusing now that we have "make install".
+
 Mon May 24 14:16:15 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
