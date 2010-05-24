@@ -1,8 +1,14 @@
+Mon May 24 12:08:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Using $(MKDIR) instead of raw mkdir.
+        
 Mon May 24 03:01:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Fixed a bug in the logic of the lookup of a forward
           declared struct or union.
 
@@ -34,7 +40,7 @@ Fri May 21 23:04:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Overhauled IDL compiler's internal mechanism to look up
           nodes in the AST from the scoped name.
 
@@ -50,9 +56,9 @@ Fri May 21 17:19:23 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-          Fix for bug reported in 3849. Ensuring a null cipher may be 
+          Fix for bug reported in 3849. Ensuring a null cipher may be
           used for an unencrypted but integrity-assured session.
-        
+
         * orbsvcs/tests/Security/Null_Cipher:
 
         * orbsvcs/tests/Security/Null_Cipher/Foo.idl:
@@ -73,9 +79,9 @@ Fri May 21 17:19:23 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/tests/Security/Null_Cipher/server.cpp:
         * orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
         * orbsvcs/tests/Security/Null_Cipher/server_key.pem:
-        
+
           Test to validate this fix.
-          
+
 Thu May 20 21:52:02 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
