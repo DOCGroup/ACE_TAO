@@ -27,7 +27,7 @@ project(gperf) : aceexe, install, crosscompile {
   }
 
   verbatim(gnuace, postinstall) {
-"	@mkdir -p $(INSTALL_PREFIX)/share/ace/bin"
+"	@$(MKDIR) $(INSTALL_PREFIX)/share/ace/bin"
 "	ln -sf $(INSTALL_PREFIX)/bin/ace_gperf $(INSTALL_PREFIX)/share/ace/bin"
   }
 }
