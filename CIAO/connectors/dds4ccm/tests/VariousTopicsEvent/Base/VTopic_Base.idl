@@ -69,7 +69,9 @@ typedef sequence<TestTopic> TestTopicSeq;
 typedef sequence<TopicString> TopicStringSeq;
 typedef sequence<TopicArray> TopicArraySeq;
 typedef sequence<TopicUnion> TopicUnionSeq;
+typedef sequence<X_Union> X_UnionSeq;
 typedef sequence<TopicSeq> TopicSeqSeq;
 typedef sequence<TopicValuetype> TopicValuetypeSeq;
+typedef sequence<X_Valuetype> X_ValuetypeSeq;
 
 #endif
