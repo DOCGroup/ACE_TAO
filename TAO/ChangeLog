@@ -1,3 +1,21 @@
+Mon May 24 18:23:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_interface.cpp(gen_var_out_seq_decls):
+        
+          Added additional check for AMI-related interface. When
+          processing the *A.idl file, all interfaces are AMI-related,
+          but the IDL itself has been generated, and there is no
+          convenient flag to tell the IDL compiler that these are
+          AMI-related interfaces. The only recourse is to check the
+          prefix of the interfaces' names for "AMI4CCM_". Finding
+          this prefix will disable the generation of the forward
+          declarations of the class and _var with the AMI_ and
+          AMI4CCM_ prefixes added yet again.
+
 Mon May 24 17:56:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
