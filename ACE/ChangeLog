@@ -1,3 +1,11 @@
+Mon May 24 14:42:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.cpp:
+          Small code improvements to closedir
+
+        * tests/FlReactor_Test.cpp:
+          Small changes
+
 Mon May 24 14:40:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:

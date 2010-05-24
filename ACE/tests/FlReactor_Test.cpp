@@ -271,8 +271,10 @@ int run_main (int argc, ACE_TCHAR *argv[])
   window.show (argc, argv);
   tw.show ();
 
-  return Fl::run ();
+  int const retval = Fl::run ();
 
   ACE_END_TEST;
+
+  return retval;
 }
 
