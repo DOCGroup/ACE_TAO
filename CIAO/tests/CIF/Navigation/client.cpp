@@ -8,6 +8,7 @@ const char * artifact_name = "Navigation";
 int
 run_test (::Navigation_ptr nav)
 {
+  int ret = 0;
   try
     {
       try
@@ -19,6 +20,7 @@ run_test (::Navigation_ptr nav)
         {
           ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
                                 "while testing provide_facet\n"));
+          ++ret;
         }
       ACE_DEBUG ((LM_DEBUG, "Provide facet test passed !\n"));
 
@@ -27,6 +29,7 @@ run_test (::Navigation_ptr nav)
           nav->provide_facet ("navigation_foo_1");
           ACE_ERROR ((LM_ERROR, "Error: No InvalidName exception caught "
                                 "while testing provide_facet\n"));
+          ++ret;
         }
       catch (const ::Components::InvalidName &)
         {
@@ -38,6 +41,7 @@ run_test (::Navigation_ptr nav)
           nav->provide_facet ("inherited_foo_1");
           ACE_ERROR ((LM_ERROR, "Error: No InvalidName exception caught "
                                 "while testing provide_facet\n"));
+          ++ret;
         }
       catch (const ::Components::InvalidName &)
         {
@@ -51,6 +55,7 @@ run_test (::Navigation_ptr nav)
             ACE_ERROR ((LM_ERROR, "Error: unexpected number of descriptions: "
                         "expected <%u> - received <%u>\n",
                         2, all_facets->length ()));
+            ++ret;
           }
         else
           {
@@ -69,6 +74,7 @@ run_test (::Navigation_ptr nav)
                 ACE_ERROR ((LM_ERROR, "Error: unexpected number of descriptions: "
                             "expected <%u> - received <%u>\n",
                             2, named_facets->length ()));
+                ++ret;
               }
             else
               {
@@ -79,6 +85,7 @@ run_test (::Navigation_ptr nav)
           {
             ACE_ERROR ((LM_ERROR, "Error: Unexpected InvalidName exception caught "
                                   "while testing get_named_facets\n"));
+            ++ret;
           }
 
         try
@@ -90,7 +97,8 @@ run_test (::Navigation_ptr nav)
             ::Components::FacetDescriptions_var named_facets = nav->get_named_facets (names);
             ACE_ERROR ((LM_ERROR, "Error: No InvalidName exception caught "
                                   "while testing get_named_facets\n"));
-          }
+            ++ret;
+        }
         catch (const ::Components::InvalidName &e)
           {
             ACE_DEBUG ((LM_DEBUG, "Expected InvalidName exception caught "
@@ -104,6 +112,7 @@ run_test (::Navigation_ptr nav)
         else
           {
             ACE_DEBUG ((LM_DEBUG, "Error: Same component test failed!\n"));
+            ++ret;
           }
         try
           {
@@ -112,15 +121,16 @@ run_test (::Navigation_ptr nav)
         catch (const CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Expected exception caught:");
+            ++ret;
           }
       #endif
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Unexpected exception caught while running test.\n"));
-      return 1;
+      ++ret;
     }
-  return 0;
+  return ret;
 }
 
 int
@@ -129,10 +139,14 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
   using namespace ::CIAO::Deployment;
 
   CIF_Common cmd;
+  int ret = 0;
   try
     {
       if (cmd.init (argc, argv, artifact_name) != 0)
-        return 1;
+        {
+          ACE_ERROR ((LM_ERROR, "ACE_TMAIN : Initialisation failed.\n"));
+          return 1;
+        }
 
       ComponentServer_var server = cmd.create_componentserver ();
       if (CORBA::is_nil (server.in ()))
@@ -165,7 +179,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
           return 1;
         }
 
-      run_test (nav.in ());
+      ret = run_test (nav.in ());
 
       cmd.shutdown (server.in (), cont.in (), comp.in ());
     }
@@ -184,5 +198,16 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));
       return  1;
     }
-  return 0;
+  if (ret != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "ACE_TMAIN : "
+              " %d error found during tests.\n",
+              ret));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, "ACE_TMAIN : "
+              " No error found during tests.\n"));
+    }
+  return ret;
 }
