@@ -268,7 +268,7 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
           <long>10</long>
@@ -279,7 +279,7 @@
       <name>iterations</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
           <long>100</long>
