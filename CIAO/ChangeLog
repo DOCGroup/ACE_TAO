@@ -1,3 +1,16 @@
+Tue May 25 01:31:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tools/Split_Plan/Split_Plan.h:
+        * DAnCE/tools/Split_Plan/Split_Plan.cpp:
+        * ciao/Deployment/Handlers/CIAO_State.h:
+        * connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Receiver/InterReturnT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+          Fixed compile errors
+
 Tue May 25 01:12:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:

@@ -327,7 +327,6 @@ namespace DAnCE
         }
       return false;
     }
-
-};
+}
 
 #endif /* DANCE_SPLIT_PLAN_CPP */

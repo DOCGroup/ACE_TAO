@@ -52,7 +52,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
        }
      answer = CORBA::string_alloc(20); 
      sprintf(answer,"double was %2.2f",cmd);
-  };
+  }
 
   void
   MyFoo_exec_i::var_div_ins (const ::InterInArgsT::TestTopic &test_topic, 
@@ -95,7 +95,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_exec_i::var_div2_ins (const ::InterInArgsT::TopicUnion &topic_union, 
@@ -128,7 +128,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   Receiver_exec_i::Receiver_exec_i (void)
   {
