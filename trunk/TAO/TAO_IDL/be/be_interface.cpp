@@ -115,7 +115,8 @@ be_interface::be_interface (UTL_ScopedName *n,
     full_coll_name_ (0),
     local_coll_name_ (0),
     relative_skel_name_ (0),
-    cached_type_ (-1)
+    cached_type_ (-1),
+    has_rw_attributes_ (false)
 {
   AST_Decl::NodeType nt = this->node_type ();
 
@@ -575,6 +576,12 @@ be_interface::in_mult_inheritance (int mi)
     {
       this->in_mult_inheritance_ = mi;
     }
+}
+
+bool
+be_interface::has_rw_attributes (void) const
+{
+  return this->has_rw_attributes_;
 }
 
 void

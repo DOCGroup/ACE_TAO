@@ -66,7 +66,6 @@ public:
   ACE_CDR::ULong n_publishes (void) const;
   ACE_CDR::ULong n_consumes (void) const;
   ACE_CDR::ULong n_emits (void) const;
-  bool has_rw_attributes (void) const;
   
   // Narrowing.
 
@@ -90,7 +89,6 @@ private:
   ACE_CDR::ULong n_publishes_;
   ACE_CDR::ULong n_consumes_;
   ACE_CDR::ULong n_emits_;
-  bool has_rw_attributes_;
 };
 
 #endif  // if !defined

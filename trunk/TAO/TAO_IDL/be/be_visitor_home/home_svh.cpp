@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Home visitor for server header
 // ******************************************************
@@ -46,6 +45,7 @@ be_visitor_home_svh::visit_home (be_home *node)
       return 0;
     }
 
+  node->scan (node);
   node_ = node;
   comp_ = node_->managed_component ();
 
@@ -159,7 +159,15 @@ be_visitor_home_svh::gen_servant_class (void)
   os_ << be_nl << be_nl
       << "virtual ~" << lname << "_Servant (void);";
 
-  AST_Type *pk = node_->primary_key ();
+  if (this->node_->has_rw_attributes ())
+    {
+      os_ << be_nl << be_nl
+          << "virtual void" << be_nl
+          << "set_attributes (const "
+          << "::Components::ConfigValues & descr);";
+    }
+
+AST_Type *pk = node_->primary_key ();
 
   if (pk != 0)
     {

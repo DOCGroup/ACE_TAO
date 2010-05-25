@@ -1,3 +1,41 @@
+Tue May 25 18:26:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Tue May 25 18:23:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_attribute/component_init.cpp:
+        * TAO_IDL/be_include/be_visitor_attribute/component_init.h:
+
+          Renamed these files, and the class they contain, to the
+          name below, since the visitor is now used for homes as
+          well as for components.
+
+        * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:
+        * TAO_IDL/be_include/be_visitor_attribute/ccm_init.h:
+
+          Renamed from the files above.
+
+        * TAO_IDL/be/be_visitor_home/home_svs.cpp:
+        * TAO_IDL/be/be_visitor_home/home_svh.cpp:
+        * TAO_IDL/be/be_visitor_home/home_exh.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_visitor_home/home_svs.h:
+        * TAO_IDL/be_include/be_visitor_attribute.h:
+        * TAO_IDL/be_include/be_home.h:
+        * TAO_IDL/be_include/be_visitor_home.h:
+
+          Added generation of set_attributes() method to the
+          home servant, similar to that for the component
+          servant.
+
+
+
 Tue May 25 13:42:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/client.cpp:
