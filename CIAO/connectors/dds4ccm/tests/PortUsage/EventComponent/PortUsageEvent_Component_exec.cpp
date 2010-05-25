@@ -174,14 +174,14 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
   }
 
   // Component attributes.
-  PortUsageAssignment
+  PORT_USAGE_ASSIGNMENT
   Component_exec_i::portusage_assignment()
   {
     return this->assignment_;
   }
 
   void
-  Component_exec_i::portusage_assignment(PortUsageAssignment assignment)
+  Component_exec_i::portusage_assignment(PORT_USAGE_ASSIGNMENT assignment)
   {
     switch (assignment)
       {

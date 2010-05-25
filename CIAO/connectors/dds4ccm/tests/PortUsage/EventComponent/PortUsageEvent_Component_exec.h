@@ -65,11 +65,11 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
     virtual ~Component_exec_i (void);
 
     // Component attributes.
-    virtual PortUsageAssignment
+    virtual PORT_USAGE_ASSIGNMENT
     portusage_assignment (void);
 
     virtual void
-    portusage_assignment (PortUsageAssignment assignment);
+    portusage_assignment (PORT_USAGE_ASSIGNMENT assignment);
 
     // Port operations.
     virtual CCM_DDS::CCM_PortStatusListener_ptr
@@ -101,7 +101,7 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
     ::PortUsageEvent_Test::PortUsageTestConnector::Writer_var writer_; //Writer
     ::PortUsageEvent_Test::PortUsageTestConnector::Getter_var getter_; //Getter
 
-    PortUsageAssignment assignment_;
+    PORT_USAGE_ASSIGNMENT assignment_;
 
     Atomic_ULong datareaders_count_;
     Atomic_ULong datawriters_count_;
