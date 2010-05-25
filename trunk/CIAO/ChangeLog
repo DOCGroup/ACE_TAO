@@ -1,3 +1,8 @@
+Tue May 25 13:40:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIF/Navigation/Navigation.mpc:
+          Fixed windows problem
+
 Tue May 25 11:47:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:
