@@ -132,7 +132,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       if (as_visitor.visit_component_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_component_svs::"
+                             "servant_svs::"
                              "visit_component - "
                              "attr init visitor failed\n"),
                             -1);
@@ -1041,14 +1041,14 @@ be_visitor_attr_set::~be_visitor_attr_set (void)
 int
 be_visitor_attr_set::visit_attribute (be_attribute *node)
 {
-  be_visitor_attribute_component_init v (this->ctx_);
+  be_visitor_attribute_ccm_init v (this->ctx_);
 
   if (v.visit_attribute (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_attr_set")
                          ACE_TEXT ("::visit_attribute - ")
-                         ACE_TEXT ("component attr init visitor ")
+                         ACE_TEXT ("ccm attr init visitor ")
                          ACE_TEXT ("failed\n")),
                         -1);
     }

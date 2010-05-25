@@ -1,32 +1,32 @@
 
 //=============================================================================
 /**
- *  @file    component_init.cpp
+ *  @file    ccm_init.cpp
  *
  *  $Id$
  *
- *  Visitor for generation of code for CIAO component attribute
- *  initialization
+ *  Visitor for generation of code for CIAO component or home
+ *  attribute initialization
  *
  *
  *  @author Jeff Parsons
  */
 //=============================================================================
 
-be_visitor_attribute_component_init::be_visitor_attribute_component_init (
+be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx),
     attr_ (0)
 {
 }
 
-be_visitor_attribute_component_init::~be_visitor_attribute_component_init (
+be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init (
   void)
 {
 }
 
 int
-be_visitor_attribute_component_init::visit_attribute (
+be_visitor_attribute_ccm_init::visit_attribute (
   be_attribute *node)
 {
   if (node->readonly ())
@@ -40,7 +40,7 @@ be_visitor_attribute_component_init::visit_attribute (
 }
 
 int
-be_visitor_attribute_component_init::visit_array (
+be_visitor_attribute_ccm_init::visit_array (
   be_array *)
 {
   this->emit_error ("array");
@@ -48,7 +48,7 @@ be_visitor_attribute_component_init::visit_array (
 }
 
 int
-be_visitor_attribute_component_init::visit_component (
+be_visitor_attribute_ccm_init::visit_component (
   be_component *)
 {
   this->emit_error ("component");
@@ -56,7 +56,7 @@ be_visitor_attribute_component_init::visit_component (
 }
 
 int
-be_visitor_attribute_component_init::visit_enum (
+be_visitor_attribute_ccm_init::visit_enum (
   be_enum *)
 {
   this->emit_init_block ();
@@ -64,7 +64,7 @@ be_visitor_attribute_component_init::visit_enum (
 }
 
 int
-be_visitor_attribute_component_init::visit_eventtype (
+be_visitor_attribute_ccm_init::visit_eventtype (
   be_eventtype *)
 {
   this->emit_error ("eventtype");
@@ -72,7 +72,7 @@ be_visitor_attribute_component_init::visit_eventtype (
 }
 
 int
-be_visitor_attribute_component_init::visit_home (
+be_visitor_attribute_ccm_init::visit_home (
   be_home *)
 {
   this->emit_error ("home");
@@ -80,7 +80,7 @@ be_visitor_attribute_component_init::visit_home (
 }
 
 int
-be_visitor_attribute_component_init::visit_interface (
+be_visitor_attribute_ccm_init::visit_interface (
   be_interface *)
 {
   this->emit_error ("interface");
@@ -88,7 +88,7 @@ be_visitor_attribute_component_init::visit_interface (
 }
 
 int
-be_visitor_attribute_component_init::visit_predefined_type (
+be_visitor_attribute_ccm_init::visit_predefined_type (
   be_predefined_type *)
 {
   this->emit_init_block ();
@@ -96,7 +96,7 @@ be_visitor_attribute_component_init::visit_predefined_type (
 }
 
 int
-be_visitor_attribute_component_init::visit_sequence (
+be_visitor_attribute_ccm_init::visit_sequence (
   be_sequence *)
 {
   this->emit_init_block ();
@@ -104,7 +104,7 @@ be_visitor_attribute_component_init::visit_sequence (
 }
 
 int
-be_visitor_attribute_component_init::visit_string (
+be_visitor_attribute_ccm_init::visit_string (
   be_string *node)
 {
   if (node->max_size ()->ev ()->u.ulval == 0)
@@ -120,7 +120,7 @@ be_visitor_attribute_component_init::visit_string (
 }
 
 int
-be_visitor_attribute_component_init::visit_structure (
+be_visitor_attribute_ccm_init::visit_structure (
   be_structure *)
 {
   this->emit_error ("structure");
@@ -128,14 +128,14 @@ be_visitor_attribute_component_init::visit_structure (
 }
 
 int
-be_visitor_attribute_component_init::visit_typedef (
+be_visitor_attribute_ccm_init::visit_typedef (
   be_typedef *node)
 {
   return node->primitive_base_type ()->accept (this);
 }
 
 int
-be_visitor_attribute_component_init::visit_union (
+be_visitor_attribute_ccm_init::visit_union (
   be_union *)
 {
   this->emit_error ("union");
@@ -143,7 +143,7 @@ be_visitor_attribute_component_init::visit_union (
 }
 
 int
-be_visitor_attribute_component_init::visit_valuebox (
+be_visitor_attribute_ccm_init::visit_valuebox (
   be_valuebox *)
 {
   this->emit_error ("valuebox");
@@ -151,7 +151,7 @@ be_visitor_attribute_component_init::visit_valuebox (
 }
 
 int
-be_visitor_attribute_component_init::visit_valuetype (
+be_visitor_attribute_ccm_init::visit_valuetype (
   be_valuetype *)
 {
   this->emit_error ("valuetype");
@@ -159,7 +159,7 @@ be_visitor_attribute_component_init::visit_valuetype (
 }
 
 void
-be_visitor_attribute_component_init::emit_init_block (void)
+be_visitor_attribute_ccm_init::emit_init_block (void)
 {
   this->open_if_block ();
 
@@ -169,7 +169,7 @@ be_visitor_attribute_component_init::emit_init_block (void)
   if (ft->accept (&decl_emitter) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_attribute_component_init")
+                  ACE_TEXT ("be_visitor_attribute_ccm_init")
                   ACE_TEXT ("::emit_init_block - ")
                   ACE_TEXT ("Any extraction type visitor ")
                   ACE_TEXT ("failed\n")));
@@ -190,7 +190,7 @@ be_visitor_attribute_component_init::emit_init_block (void)
   if (ft->accept (&arg_emitter) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_attribute_component_init")
+                  ACE_TEXT ("be_visitor_attribute_ccm_init")
                   ACE_TEXT ("::emit_init_block - ")
                   ACE_TEXT ("Attribute set type visitor ")
                   ACE_TEXT ("failed\n")));
@@ -204,13 +204,13 @@ be_visitor_attribute_component_init::emit_init_block (void)
 }
 
 void
-be_visitor_attribute_component_init::emit_error (
+be_visitor_attribute_ccm_init::emit_error (
   const char *corba_kind)
 {
   this->open_if_block ();
   
   os_ << "ACE_ERROR ((LM_ERROR," << be_nl
-      << "            \"Component attributes of "
+      << "            \"CCM attributes of "
       << corba_kind << "\"" << be_nl
       << "            \"IDL type are not yet "
       << "supported by CIAO\\n\"));"
@@ -221,7 +221,7 @@ be_visitor_attribute_component_init::emit_error (
 }
 
 void
-be_visitor_attribute_component_init::open_if_block (void)
+be_visitor_attribute_ccm_init::open_if_block (void)
 {
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (descr_name, \""
@@ -231,7 +231,7 @@ be_visitor_attribute_component_init::open_if_block (void)
 }
 
 void
-be_visitor_attribute_component_init::close_if_block (void)
+be_visitor_attribute_ccm_init::close_if_block (void)
 {
   os_ << be_nl
       << "continue;" << be_uidt_nl

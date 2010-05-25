@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_HOME_HOME_SVS_H_
 #define _BE_HOME_HOME_SVS_H_
 
@@ -66,6 +65,17 @@ public:
 
 private:
   be_visitor_scope * visitor_;
+};
+
+class be_visitor_home_attr_set : public be_visitor_decl
+{
+public:
+  be_visitor_home_attr_set (be_visitor_context *ctx);
+  
+  ~be_visitor_home_attr_set (void);
+  
+  virtual int visit_home (be_home *node);
+  virtual int visit_attribute (be_attribute *node);
 };
 
 #endif /* _BE_HOME_HOME_SVS_H_ */

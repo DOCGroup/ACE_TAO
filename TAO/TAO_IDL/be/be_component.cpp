@@ -69,8 +69,7 @@ be_component::be_component (UTL_ScopedName *n,
     has_uses_multiple_ (false),
     n_publishes_ (0UL),
     n_consumes_ (0UL),
-    n_emits_ (0UL),
-    has_rw_attributes_ (false)
+    n_emits_ (0UL)
 {
   this->size_type (AST_Type::VARIABLE);
   this->has_constructor (true);
@@ -169,12 +168,6 @@ ACE_CDR::ULong
 be_component::n_emits (void) const
 {
   return this->n_emits_;
-}
-
-bool
-be_component::has_rw_attributes (void) const
-{
-  return this->has_rw_attributes_;
 }
 
 IMPL_NARROW_FROM_DECL (be_component)

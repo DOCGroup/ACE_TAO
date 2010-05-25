@@ -192,6 +192,9 @@ public:
   /// Set a new value.
   void in_mult_inheritance (int mi);
 
+  /// Applies to interfaces, components, and homes.
+  bool has_rw_attributes (void) const;
+
   /// Pass along BE-specific member values when redefining a fwd decl.
   virtual void redefine (AST_Interface *from);
 
@@ -471,6 +474,8 @@ protected:
 
   /// Current cached collocated name.
   int cached_type_;
+
+  bool has_rw_attributes_;
 };
 
 /**

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Home visitor for server source
 // ******************************************************
@@ -227,6 +226,38 @@ be_visitor_home_svs::gen_servant_class (void)
       << "{" << be_nl
       << "}";
 
+  if (this->node_->has_rw_attributes ())
+    {
+      os_ << be_nl << be_nl
+          << "void" << be_nl
+          << lname << "_Servant::set_attributes (" << be_idt_nl
+          << "const ::Components::ConfigValues & descr)"
+          << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      os_ << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)"
+          << be_idt_nl
+          << "{" << be_idt_nl
+          << "const char * descr_name = descr[i]->name ();"
+          << be_nl
+          << "::CORBA::Any & descr_value = descr[i]->value ();";
+
+      be_visitor_home_attr_set as_visitor (this->ctx_);
+
+      if (as_visitor.visit_home (node_) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "home_svs::"
+                             "gen_servant_class - "
+                             "attr init visitor failed\n"),
+                            -1);
+        }
+
+      os_ << be_uidt_nl
+          << "}" << be_uidt << be_uidt_nl
+          << "}";
+    }
+
   AST_Type *pk = node_->primary_key ();
 
   if (pk != 0)
@@ -372,6 +403,8 @@ be_visitor_home_svs::gen_entrypoint (void)
       << "}";
 }
 
+//=======================================================
+
 Home_Op_Attr_Generator::Home_Op_Attr_Generator (
     be_visitor_scope * visitor)
   : visitor_ (visitor)
@@ -384,5 +417,64 @@ Home_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
                               be_interface * base_interface)
 {
   return visitor_->visit_scope (base_interface);
+}
+
+// ==========================================================
+
+be_visitor_home_attr_set::be_visitor_home_attr_set (
+      be_visitor_context *ctx)
+  : be_visitor_decl (ctx)
+{
+}
+
+be_visitor_home_attr_set::~be_visitor_home_attr_set (void)
+{
+}
+
+int
+be_visitor_home_attr_set::visit_home (be_home *node)
+{
+  if (node == 0)
+    {
+      return 0;
+    }
+
+  for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+       !i.is_done ();
+       i.next ())
+    {
+      be_decl *d = be_decl::narrow_from_decl (i.item ());
+      
+      if (d->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_home_attr_set")
+                             ACE_TEXT ("::visit_home - ")
+                             ACE_TEXT ("accept () failed\n")),
+                            -1);
+        }
+    }
+    
+  be_home *h = be_home::narrow_from_decl (node->base_home ());
+  
+  return this->visit_home (h);
+}
+
+int
+be_visitor_home_attr_set::visit_attribute (be_attribute *node)
+{
+  be_visitor_attribute_ccm_init v (this->ctx_);
+
+  if (v.visit_attribute (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_home_attr_set")
+                         ACE_TEXT ("::visit_attribute - ")
+                         ACE_TEXT ("ccm attr init visitor ")
+                         ACE_TEXT ("failed\n")),
+                        -1);
+    }
+
+  return 0;
 }
 
