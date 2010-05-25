@@ -23,7 +23,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     answer = CORBA::string_dup ("This is my answer from var_outs");
     d_cmd = 3.14;
     l_cmd = 100;
-  };
+  }
 
   void  MyFoo_exec_i::var_div_outs (::InterOutArgsT::TestTopic_out test_topic, 
                                     ::InterOutArgsT::TopicString_out topic_str, 
@@ -43,7 +43,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
        {
          topic_arr->x_array[i] = i * 100;
        } 
-  };
+  }
 
   void  MyFoo_exec_i::var_div2_outs (::InterOutArgsT::X_Union_out x_uni, 
                                      ::InterOutArgsT::test_seq_out seq)
@@ -57,8 +57,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     seq = new InterOutArgsT::test_seq();
     seq->length(2);
     (*seq)[0]= ttt; 
-   
-  };
+  }
 
   Receiver_exec_i::Receiver_exec_i (void)
   {

@@ -33,7 +33,7 @@ namespace DAnCE
     typedef typename TPlanSplitter::KEY     TSubPlanKey;
     typedef typename TPlanSplitter::FILTER  TSplitFilter;
     typedef UUIDGEN                         TSubUUIDGen;
-    
+
     typedef ACE_Map_Manager<TSubPlanKey,
                             Deployment::DeploymentPlan,
                             ACE_Null_Mutex> TSubPlans;
@@ -52,10 +52,10 @@ namespace DAnCE
                         TSubPlanKey &sub_plan_key,
                         Deployment::DeploymentPlan &sub_plan);
 
-    
+
     TSubPlans sub_plans_;
   };
-};
+}
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Split_Plan.cpp"

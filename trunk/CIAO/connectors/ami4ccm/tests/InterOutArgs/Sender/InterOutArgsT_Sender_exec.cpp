@@ -46,14 +46,14 @@ namespace CIAO_InterOutArgsT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::var_outs_excep (
                     ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
   MyFoo_callback_exec_i::var_div_outs (
@@ -95,14 +95,14 @@ namespace CIAO_InterOutArgsT_Sender_Impl
       {
         ++nr_of_received;
       }
-   };
+  }
 
   void
   MyFoo_callback_exec_i::var_div_outs_excep (
                    ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
   
   void
   MyFoo_callback_exec_i::var_div2_outs (
@@ -134,14 +134,14 @@ namespace CIAO_InterOutArgsT_Sender_Impl
       {
         ++nr_of_received;
       }
-   };
+  }
 
   void
   MyFoo_callback_exec_i::var_div2_outs_excep (
                      ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
 
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo

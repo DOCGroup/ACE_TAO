@@ -20,7 +20,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
   {
     answer = CORBA::string_dup ("This is my answer from ret_void");
     l_cmd = 1;
-  };
+  }
 
   CORBA::Long MyFoo_exec_i::ret_long (const char * /*in_str*/,
                                   ::CORBA::String_out answer,
@@ -29,7 +29,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     answer = CORBA::string_dup ("This is my answer from ret_long");
     l_cmd = 2;
     return 200;
-  };
+  }
 
   CORBA::Double MyFoo_exec_i::ret_double (const char * /*in_str*/,
                                       ::CORBA::String_out answer,
@@ -38,7 +38,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     answer = CORBA::string_dup ("This is my answer from ret_double");
     l_cmd = 3;
     return 3.14;
-  };
+  }
 
   InterReturnT::TestStruct * MyFoo_exec_i::ret_struct (const char * /*in_str*/,
                                     ::CORBA::String_out answer,
@@ -50,7 +50,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     test_struct->key = CORBA::string_dup("aaa");
     test_struct->x = 10;
     return test_struct;
-  };
+  }
 
   InterReturnT::TestArray_slice * MyFoo_exec_i::ret_array (
                                  const char * /*in_str*/,
@@ -69,7 +69,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
         } 
       }
     return InterReturnT::TestArray_dup(test_array);
-  };
+  }
 
   InterReturnT::TestSeq * MyFoo_exec_i::ret_seq (const char * /*in_str*/,
                              ::CORBA::String_out,
@@ -85,7 +85,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     ttt.x_teststr = CORBA::string_dup("ddd");
     (*seq)[1]= ttt;
     return seq;
-  };
+  }
 
   InterReturnT::X_Union *MyFoo_exec_i::ret_union (const char * /*in_str*/,
                                ::CORBA::String_out answer,
@@ -96,7 +96,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     InterReturnT::X_Union *x_uni = new InterReturnT::X_Union();
     x_uni->x_long(11);
     return x_uni;
-  };
+  }
 
   Receiver_exec_i::Receiver_exec_i (void)
   {
