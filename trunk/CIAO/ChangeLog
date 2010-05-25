@@ -1,3 +1,23 @@
+Tue May 25 14:13:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.idl:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component.idl:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component_exec.cpp:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component.idl:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.cpp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Get.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Listen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/Event_Write.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Get.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Listen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Read.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_StateListen.cdp:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/State_Update.cdp:
+          Resolved test error regarding enum declaration in the deployment
+          plans.
+
 Tue May 25 14:11:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
