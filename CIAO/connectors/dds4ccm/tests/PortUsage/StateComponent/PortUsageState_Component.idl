@@ -22,7 +22,7 @@ module PortUsageState_Test
 
     provides CCM_DDS::ConnectorStatusListener connector_status;
 
-    attribute PortUsageAssignment portusage_assignment;
+    attribute PORT_USAGE_ASSIGNMENT portusage_assignment;
   };
 };
 

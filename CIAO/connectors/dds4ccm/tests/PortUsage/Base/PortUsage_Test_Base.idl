@@ -20,7 +20,7 @@ struct PortUsageTest {
 
 typedef sequence<PortUsageTest> PortUsageTestSeq;
 
-enum PortUsageAssignment {
+enum PORT_USAGE_ASSIGNMENT {
   //event ports
   PORTUSAGE_ASSIGNMENT_WRITE,
   //event and state ports

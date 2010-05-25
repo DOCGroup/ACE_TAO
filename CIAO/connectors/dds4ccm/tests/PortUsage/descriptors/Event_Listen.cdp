@@ -122,8 +122,8 @@
         <type>
           <kind>tk_enum</kind>
           <enum>
-            <name>Assigment</name>
-            <typeId>IDL:Simple/Assignment:1.0</typeId>
+            <name>PORT_USAGE_ASSIGNMENT</name>
+            <typeId>IDL:PORT_USAGE_ASSIGNMENT:1.0</typeId>
             <member>PORTUSAGE_ASSIGNMENT_WRITE</member>
             <member>PORTUSAGE_ASSIGNMENT_GET</member>
             <member>PORTUSAGE_ASSIGNMENT_LISTEN</member>
