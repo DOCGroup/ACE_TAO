@@ -38,7 +38,7 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_void_excep (
@@ -62,14 +62,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_long_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
-                  {
+  {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_double (::CORBA::Double ami_return_val,
@@ -86,14 +86,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_double_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
-                  {
+  {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
     MyFoo_callback_exec_i::ret_struct (
@@ -119,14 +119,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_struct_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
     MyFoo_callback_exec_i::ret_array (
@@ -144,14 +144,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_array_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
-                  {
+  {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
     MyFoo_callback_exec_i::ret_seq (const InterReturnT::TestSeq &ami_return_val,
@@ -177,14 +177,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_seq_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
-                  {
+  {
     excep_holder->raise_exception ();
-  };
+  }
 
   void
     MyFoo_callback_exec_i::ret_union (
@@ -202,14 +202,14 @@ namespace CIAO_InterReturnT_Sender_Impl
       {
         ++nr_of_received;
       }
-  };
+  }
 
   void
   MyFoo_callback_exec_i::ret_union_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
-                  {
+  {
     excep_holder->raise_exception ();
-  };
+  }
 
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
