@@ -145,7 +145,7 @@ project (Navigation_client_test) : ciao_componentserver_stub, ccm_configvalue, c
   after += Navigation_stub Navigation_svnt CIF_Common
   libpaths += ../lib
   libs += Navigation_stub CIF_Common
-  includes += ../
+  includes += ..
 
   IDL_Files {
   }
