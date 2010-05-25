@@ -74,6 +74,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
   gives us the DDS_Event and DDS_State connectors directly without requiring
   the user to manually derive a connector from DDS_Event and/or DDS_State
 
+. The way attributes are set from the cdp file onto the components
+  has changed, any mismatch between the attribute datatype in IDL
+  and the CDP file will cause to a StartError
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
 

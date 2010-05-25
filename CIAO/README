@@ -1,11 +1,10 @@
-
 BUILDING CIAO
 ========================
 
 * Supported platform:
 
-  We have tried CIAO examples on Win32 using MSVC 7.1 and above and on
-  Linux.
+  We have tried CIAO examples on Win32 using MSVC 7.1 and above, on Solaris,
+  on HPUX, and on Linux.
 
 * Documentation:
 
@@ -17,16 +16,8 @@ BUILDING CIAO
 
     *************************************************
 
-    There has been some big changes in MPC and
-    a few "problems" are being sorted out before
-    ACE/TAO switched to use MPC generated Makefile
-    projects files exclusively.  CIAO only uses
-    MPC.  MPC, however, assumes a slightly different
-    directory structure than the stock, old ACE
-    Makefile/project files.  Therefore, it is
-    a bit adventurous to compile CIAO at this time
-    of transition.  Here are some hints that you
-    can try to make this work a bit easier.
+    CIAO only uses MPC. Here are some hints that you
+    can try to compile CIAO.
 
     1. Make sure to add $ACE_ROOT/lib into your
        PATH, or LD_LIBRARY_PATH (before
@@ -37,7 +28,7 @@ BUILDING CIAO
 
     3. If prefered, you can re-generate the Makefile,
        project files for all/core ACE/TAO libraries.
-       (e.g., using $ACE_ROOT/TAO/TAOACE.mwc.)
+       (e.g., using $ACE_ROOT/TAO/TAO_ACE.mwc.)
 
     *************************************************
 
@@ -70,14 +61,8 @@ and also the libraries they depends on.
 
   Compile the following directories:
 
-
+  $CIAO_ROOT/ccm/
   $CIAO_ROOT/ciao/
-
-  $CIAO_ROOT/tools/XML_Helpers
-  $CIAO_ROOT/tools/ComponentServer
-  $CIAO_ROOT/tools/ServerActivator
-  $CIAO_ROOT/tools/Assembly_Deployer
-  $CIAO_ROOT/tools/Daemon
 
   You need to creating the Makefile of your choice..
   For example, for unix makefile:
@@ -86,17 +71,10 @@ and also the libraries they depends on.
         $ $(ACE_ROOT)/bin/mwc.pl
         $ make
 
-  To regenerate VC7.1.NET project files, do:
+  To regenerate VC71.NET project files, do:
 
         > cd $CIAO_ROOT/ciao
         > $(ACE_ROOT)/bin/mwc.pl -type vc71
-
-* You also need to build the CIDL compiler before trying out any
-  examples. The CIDL compiler, CIDLC, compiles your component
-  implementation definition and generates the necessary glue code for
-  developing and deploying components. Pleas see
-  $CIAO_ROOT/CIDLC/README.html for instructions on how to build and
-  use CIDLC.
 
 * Now you can play with the examples:
 
@@ -129,9 +107,8 @@ and also the libraries they depends on.
     This is a new multi-component example.  It has the similar
     struture as the Dsiplay example above.
 
-
 * If you can not find the
-  Makefiles for unix platform you are using, you can use mwc to create
+  Makefiles for the unix platform you are using, you can use mwc to create
   them.  For examples, to compile the multi-component example, use the
   following:
 
@@ -139,14 +116,7 @@ and also the libraries they depends on.
         $ $(ACE_ROOT)/bin/mwc.pl
         $ make
 
-  To regenerate VC6 dsp files, do:
+  To regenerate VC71.NET project files, do:
 
         > cd $CIAO_ROOT/examples/Display
-        > $(ACE_ROOT)/bin/mwc.pl -type vc6
-
-  Likewise, to regenerate VC7.NET project files, do:
-
-        > cd $CIAO_ROOT/examples/Display
-        > $(ACE_ROOT)/bin/mwc.pl -type vc7
-
-
+        > $(ACE_ROOT)/bin/mwc.pl -type vc71
