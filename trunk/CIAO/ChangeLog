@@ -1,10 +1,21 @@
+Tue May 25 20:56:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
+        * examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/Display/NavDisplayGUI_exec/NavUnit.cpp:
+        * examples/Display/NavDisplayGUI_exec/NodeItem.cpp:
+        * examples/Display/NavDisplayGUI_exec/QuitCmd.cpp:
+        * examples/Display/NavDisplayGUI_exec/RootPanel.cpp:
+        * examples/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+          Fixed argument not used warning and various layout changes
+
 Tue May 25 20:07:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
         * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
         * tests/IDL_Test/Inherited_Component/IhC_Foo.idl:
         * tests/IDL_Test/Inherited_Component/IhC_Bar.idl:
-        
+
           - Removed dummy_label tags and updated build projects
           - Added corresponding base and derived homes, with
             attributes to test the recently added set_attributes()

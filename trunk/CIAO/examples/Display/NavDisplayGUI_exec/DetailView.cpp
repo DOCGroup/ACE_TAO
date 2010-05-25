@@ -111,12 +111,10 @@ DetailView::DetailView(QWidget *parent, const char *name)
   grid->addMultiCellWidget(tabs, 5, 5, 0, 9);
 }
 
-
 DetailView::~DetailView()
 {
   delete movie;
 }
-
 
 void
 DetailView::currentNode(NavUnit *unit)
@@ -149,7 +147,7 @@ DetailView::movieUpdate( const QRect& )
 
 
 void
-DetailView::movieStatus( int s )
+DetailView::movieStatus( int )
 {
 /*  switch ( s )
     {

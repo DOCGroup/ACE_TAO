@@ -5,11 +5,9 @@
 #include <Qt/qlcdnumber.h>
 #include "NavUnit.h"
 
-
 UpdatePositionCmd::UpdatePositionCmd()
 {
 }
-
 
 UpdatePositionCmd *
 UpdatePositionCmd::create(
@@ -20,7 +18,6 @@ UpdatePositionCmd::create(
   cmd->unit_ = unit;
   return cmd;
 }
-
 
 int
 UpdatePositionCmd::execute (void * /* context */)
