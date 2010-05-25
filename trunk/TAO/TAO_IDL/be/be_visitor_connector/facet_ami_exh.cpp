@@ -108,26 +108,29 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   const char *smart_scope = (global ? "" : "::");
   const char *iface_name = this->iface_->local_name ();
 
-  os_ << be_nl
-      << "class " << this->export_macro_.c_str () << " "
-      << iface_name << suffix << be_idt_nl
-      << ": public ::POA_" << scope_name << smart_scope
-      << iface_name << "Handler" << be_uidt_nl
-      << "{" << be_nl
-      << "public:" << be_idt_nl
-      << iface_name << suffix << " (" << be_idt_nl
-      << "::" << scope_name << "::" << iface_name
-      << "ReplyHandler_ptr callback);" << be_uidt_nl << be_nl
-      << "virtual ~" << iface_name << suffix << " (void);";
-
   /// The reply handler class we are generating inherits from the
   /// CORBA AMI skeleton class, not the AMI_xxxCallback class
   /// generated from the corresponding interface in this IDL file.
   /// So to get the correct *_excep operation signatures, we
   /// visit the scope of the AMI_xxxHandler interface generated
   /// by -GC, which must be applied to this IDL file.
-  ACE_CString handler_str (this->iface_->full_name ());
+  ACE_CString handler_str (scope_name);
+  handler_str += smart_scope;
+  handler_str += "AMI_";
+  ACE_CString tmp (iface_name);
+  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
   handler_str += "Handler";
+
+  os_ << be_nl
+      << "class " << this->export_macro_.c_str () << " "
+      << iface_name << suffix << be_idt_nl
+      << ": public ::POA_" << handler_str.c_str () << be_uidt_nl
+      << "{" << be_nl
+      << "public:" << be_idt_nl
+      << iface_name << suffix << " (" << be_idt_nl
+      << "::" << scope_name << "::" << iface_name
+      << "ReplyHandler_ptr callback);" << be_uidt_nl << be_nl
+      << "virtual ~" << iface_name << suffix << " (void);";
 
   UTL_ScopedName *sn =
     idl_global->string_to_scoped_name (handler_str.c_str ());
