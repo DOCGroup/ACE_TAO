@@ -1,3 +1,13 @@
+Tue May 25 21:14:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc:
+        
+          Changed the -GM option on the file DelReplyH_Sender.idl
+          to -GC, eliminating the potential problem of generating
+          an unwanted *A.idl file. Some extra code generation
+          also depends on the "#pragma ciao ami4ccm receptacle xxx"
+          directive in this file.
+
 Tue May 25 20:56:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
