@@ -16,6 +16,9 @@
 #include "be_home.h"
 #include "be_component.h"
 #include "be_visitor.h"
+
+#include "ast_attribute.h"
+
 #include "global_extern.h"
 #include "utl_err.h"
 
@@ -82,6 +85,37 @@ be_home::be_home (UTL_ScopedName *n,
 
 be_home::~be_home (void)
 {
+}
+
+void
+be_home::scan (UTL_Scope *s)
+{
+  if (s == 0)
+    {
+      return;
+    }
+
+  for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
+       !i.is_done ();
+       i.next ())
+    {
+      AST_Decl *d = i.item ();
+      AST_Attribute *attr =
+        AST_Attribute::narrow_from_decl (d);
+        
+      if (attr != 0 && ! attr->readonly ())
+        {
+          this->has_rw_attributes_ = true;
+          return;
+        }
+    }
+
+  AST_Home *h = AST_Home::narrow_from_scope (s);
+
+  if (h != 0)
+    {
+      this->scan (h->base_home ());
+    }
 }
 
 void

@@ -1,37 +1,36 @@
 /* -*- c++ -*- */
 //=============================================================================
 /**
- *  @file    component_init.h
+ *  @file    ccm_init.h
  *
  *  $Id$
  *
  *  Visitor generating a block of code to initialize
- *  each of a component's read/write attributes
+ *  each of a component or home's read/write attributes
  *
  *
  *  @author Jeff Parsons
  */
 //=============================================================================
 
+#ifndef BE_VISITOR_ATTRIBUTE_CCM_INIT_H
+#define BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 
-#ifndef BE_VISITOR_ATTRIBUTE_COMPONENT_INIT_H
-#define BE_VISITOR_ATTRIBUTE_COMPONENT_INIT_H
-
-class be_visitor_attribute_component_init
+class be_visitor_attribute_ccm_init
   : public be_visitor_any_extracted_type_decl
 {
   //
   // = TITLE
-  //   be_visitor_attribute_component_init
+  //   be_visitor_attribute_ccm_init
   //
   // = DESCRIPTION
   //   Generates the body of a
-  //   CIAO component's set_attributes() method.
+  //   CIAO component or home's set_attributes() method.
   //
   //
 public:
-  be_visitor_attribute_component_init (be_visitor_context *ctx);
-  ~be_visitor_attribute_component_init (void);
+  be_visitor_attribute_ccm_init (be_visitor_context *ctx);
+  ~be_visitor_attribute_ccm_init (void);
   
   virtual int visit_attribute (be_attribute *node);
 
@@ -60,5 +59,5 @@ private:
   be_attribute *attr_;
 };
 
-#endif /* BE_VISITOR_ATTRIBUTE_COMPONENT_INIT_H */
+#endif /* BE_VISITOR_ATTRIBUTE_CCM_INIT_H */
 

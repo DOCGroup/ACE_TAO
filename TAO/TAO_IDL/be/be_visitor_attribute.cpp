@@ -46,5 +46,5 @@
 
 #include "be_visitor_attribute/attribute.cpp"
 #include "be_visitor_attribute/set_from_extracted.cpp"
-#include "be_visitor_attribute/component_init.cpp"
+#include "be_visitor_attribute/ccm_init.cpp"
 
