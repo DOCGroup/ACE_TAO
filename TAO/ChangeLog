@@ -1,3 +1,12 @@
+Tue May 25 20:03:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Fixed bug in generation of implied explicit interface
+          for homes, where for homes in included IDL files, this
+          generation did not take place.
+
 Tue May 25 18:26:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Tue May 25 18:23:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>

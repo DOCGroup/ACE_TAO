@@ -95,6 +95,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   (void) m->be_add_interface (i);
 
   i->original_interface (node);
+  i->set_imported (node->imported ());
 
   idl_global->scopes ().push (i);
 
