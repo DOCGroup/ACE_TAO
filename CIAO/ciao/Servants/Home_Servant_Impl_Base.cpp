@@ -29,4 +29,11 @@ namespace CIAO
     throw CORBA::NO_IMPLEMENT ();
   }
 #endif
+
+  void
+  Home_Servant_Impl_Base::set_attributes (
+    const Components::ConfigValues & /* descr */)
+  {
+  }
 }
+

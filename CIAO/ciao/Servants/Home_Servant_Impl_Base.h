@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ccm/CCM_HomeS.h"
+#include "ccm/CCM_StandardConfiguratorC.h"
 #include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
@@ -54,6 +55,9 @@ namespace CIAO
 #if !defined (CCM_LW)
     virtual ::CORBA::IRObject_ptr get_home_def (void);
 #endif
+
+    /// Operation to set attributes on the home.
+    virtual void set_attributes (const Components::ConfigValues &descr);
 
     virtual void update_component_map (PortableServer::ObjectId &oid) = 0;
 
