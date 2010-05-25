@@ -1,3 +1,10 @@
+Tue May 25 01:12:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+          Fixed errors in these deployment plans
+
 Mon May 24 20:39:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:

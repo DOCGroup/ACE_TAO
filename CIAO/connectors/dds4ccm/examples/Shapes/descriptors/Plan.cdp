@@ -170,10 +170,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>1</long>
+          <ulong>1</ulong>
         </value>
       </value>
     </configProperty>
@@ -257,10 +257,10 @@
       <name>rate</name>
       <value>
         <type>
-          <kind>tk_long</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <long>10</long>
+          <ulong>10</ulong>
         </value>
       </value>
     </configProperty>
@@ -268,10 +268,10 @@
       <name>max_x</name>
       <value>
         <type>
-          <kind>tk_short</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <short>225</short>
+          <ushort>225</ushort>
         </value>
       </value>
     </configProperty>
@@ -279,10 +279,10 @@
       <name>max_y</name>
       <value>
         <type>
-          <kind>tk_short</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <short>250</short>
+          <ushort>250</ushort>
         </value>
       </value>
     </configProperty>
@@ -290,10 +290,10 @@
       <name>max_size</name>
       <value>
         <type>
-          <kind>tk_short</kind>
+          <kind>tk_ushort</kind>
         </type>
         <value>
-          <short>25</short>
+          <ushort>25</ushort>
         </value>
       </value>
     </configProperty>
