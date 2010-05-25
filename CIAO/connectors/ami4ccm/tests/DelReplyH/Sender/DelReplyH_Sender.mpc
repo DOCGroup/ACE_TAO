@@ -104,7 +104,7 @@ project(AMI_DelReplyH_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_DelReplyH_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_DelReplyH_Base_skel AMI_DelReplyH_Base_Sender_lem_stub AMI_DelReplyH_Base_exec AMI_DelReplyH_skel
+  after      += AMI_DelReplyH_Base_skel AMI_DelReplyH_Base_Sender_lem_stub AMI_DelReplyH_Base_Sender_stub AMI_DelReplyH_Base_exec AMI_DelReplyH_skel
   sharedname  = DelReplyH_Sender_svnt
   libs       += DelReplyH_Sender_stub DelReplyH_Sender_lem_stub  \
                 DelReplyH_skel \
