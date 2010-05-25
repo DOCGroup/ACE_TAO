@@ -1,3 +1,11 @@
+Tue May 25 13:42:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/client.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/Big_AMI/client.cpp:
+          Layout changes
+
 Tue May 25 11:41:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp:
@@ -5,18 +13,18 @@ Tue May 25 11:41:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
-        
+
           Changes to follow naming conventions for AMI and
           AMI4CCM.
 
 Mon May 24 18:23:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_interface.cpp(gen_var_out_seq_decls):
-        
+
           Added additional check for AMI-related interface. When
           processing the *A.idl file, all interfaces are AMI-related,
           but the IDL itself has been generated, and there is no
