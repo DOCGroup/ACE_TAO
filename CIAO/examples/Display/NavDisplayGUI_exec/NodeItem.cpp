@@ -6,7 +6,6 @@
 QBrush *NodeItem::normal = new QBrush(Qt::red);
 QBrush *NodeItem::highlighted = new QBrush(Qt::green);
 
-
 NodeItem::NodeItem(Q3Canvas *canvas, NavUnit &unit)
   : Q3CanvasEllipse(8, 8, canvas),
     unit_(unit),
@@ -17,12 +16,10 @@ NodeItem::NodeItem(Q3Canvas *canvas, NavUnit &unit)
   setZ(128);
 }
 
-
 void NodeItem::moveBy(double dx, double dy, double /* dz */)
 {
   Q3CanvasEllipse::moveBy (dx, dy);
 }
-
 
 void
 NodeItem::timerDone()
@@ -37,7 +34,6 @@ NodeItem::timerDone()
     canvas()->update();
   }
 }
-
 
 void
 NodeItem::setSelected(bool yes)

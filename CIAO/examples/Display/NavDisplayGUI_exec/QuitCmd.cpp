@@ -3,11 +3,9 @@
 #include "QuitCmd.h"
 #include "RootPanel.h"
 
-
 QuitCmd::QuitCmd()
 {
 }
-
 
 QuitCmd *
 QuitCmd::create(RootPanel *form)
@@ -16,7 +14,6 @@ QuitCmd::create(RootPanel *form)
   cmd->form_ = form;
   return cmd;
 }
-
 
 int
 QuitCmd::execute (void * /* context */)
