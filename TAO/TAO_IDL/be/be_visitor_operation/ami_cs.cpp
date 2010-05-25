@@ -227,20 +227,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   *os << be_uidt_nl
       << ");" << be_uidt;
   
-  if (be_global->ami4ccm_call_back ())
-    {
-      *os << be_nl << be_nl
-          << "_tao_call.invoke (" << be_idt << be_idt_nl
-          << "ami4ccm_handler," << be_nl
-          << "&";
-    }
-  else
-    {
-      *os << be_nl << be_nl
-          << "_tao_call.invoke (" << be_idt << be_idt_nl
-          << "ami_handler," << be_nl
-          << "&";
-    }
+  *os << be_nl << be_nl
+      << "_tao_call.invoke (" << be_idt << be_idt_nl
+      << "ami_handler," << be_nl
+      << "&";
 
   if (parent->is_nested ())
     {
@@ -250,8 +240,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << gparent->name () << "::";
     }
     
-  *os << "AMI" << (be_global->ami4ccm_call_back () ? "4CCM_" : "_")
-      << parent->local_name () << "Handler::"
+  *os << "AMI_"  << parent->local_name () << "Handler::"
       << lname << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;
 
