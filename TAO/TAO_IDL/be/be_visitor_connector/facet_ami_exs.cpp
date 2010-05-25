@@ -153,7 +153,11 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   /// So to get the correct *_excep operation signatures, we
   /// visit the scope of the AMI_xxxHandler interface generated
   /// by -GC, which must be applied to this IDL file.
-  ACE_CString handler_str (this->iface_->full_name ());
+  ACE_CString handler_str (
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
+  handler_str += "::AMI_";
+  ACE_CString tmp (this->iface_->local_name ());
+  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
   handler_str += "Handler";
 
   UTL_ScopedName *sn =
@@ -182,7 +186,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       false,
       false);
 
-  if (status == -1)//this->visit_scope (callback_iface) == -1)
+  if (status == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_facet_ami_exs")
@@ -363,27 +367,26 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 
   os_ << be_nl
       << "{" << be_idt_nl
-      << smart_scope << scope->full_name () << "::"
+      << "::" << scope->full_name () << smart_scope
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
       << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
- 
-      << be_uidt_nl << be_nl
-      << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
+      << be_uidt_nl << be_nl;
+      
+  os_ << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
-      << "::" << this->iface_->full_name ()
-      << "Handler_var the_handler_var;" << be_nl << be_nl
-      << "if (! ::CORBA::is_nil (ami4ccm_handler))" << be_idt_nl
- 
+      << "::" << scope->full_name () << smart_scope << "AMI_"
+      << orig_iface_name << "Handler_var the_handler_var;"
+      << be_nl << be_nl;
+      
+  os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl
       << this->iface_->local_name () << "_reply_handler *handler ="
       << be_idt_nl
       << "new " << this->iface_->local_name ()
-      << "_reply_handler (ami4ccm_handler);" << be_uidt_nl
-
-      << "PortableServer::ServantBase_var owner_transfer(handler);"
-      << be_nl
-      
+      << "_reply_handler (ami_handler);" << be_uidt_nl << be_nl
+      << "PortableServer::ServantBase_var owner_transfer (handler);"
+      << be_nl << be_nl
       << "the_handler_var = handler->_this ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "receptacle_objref->" << node->local_name ()
