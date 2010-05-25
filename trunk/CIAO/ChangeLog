@@ -1,3 +1,9 @@
+Tue May 25 14:11:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+          Fixed errors in these deployment plans
+
 Tue May 25 13:40:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIF/Navigation/Navigation.mpc:
