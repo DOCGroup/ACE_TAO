@@ -1,18 +1,25 @@
+Tue May 25 18:29:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+          Added checking to ensure that data values are consistent with
+          their stated types.
+
 Tue May 25 18:14:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servants/Home_Servant_Impl_Base.cpp:
         * ciao/Servants/Home_Servant_Impl_Base.h:
-        
+
           Added no-op set_attributes() method similar to that in
           class Connector_Servant_Impl_Base. It can now be overridden
-          (or not, if there are no read/write attributes) in 
+          (or not, if there are no read/write attributes) in
           generated home servants.
 
 Tue May 25 16:10:18 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_deployment_handlers.mpb:
 
-          Fuzz. 
+          Fuzz.
 
 Tue May 25 16:07:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
