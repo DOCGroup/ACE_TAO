@@ -1,8 +1,22 @@
 // $Id$
 
+#ifndef IHC_BAR_IDL
+#define IHC_BAR_IDL
+
 #include <Components.idl>
 #include "IhC_Foo.idl"
 
 component Bar : Foo
 {
 };
+
+// This IDL also tests the generation of
+// the set_attributes() method for home
+// servants.
+home BarHome : FooHome manages Bar
+{
+  readonly attribute long long_attr;
+  attribute boolean bool_attr;
+};
+
+#endif // IHC_BAR_IDL
