@@ -1,3 +1,12 @@
+Tue May 25 11:47:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+          Removed several directories that are not needed
+
+        * README:
+          Removed this file, read CIAO-INSTALL.html
+
 Tue May 25 01:31:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tools/Split_Plan/Split_Plan.h:

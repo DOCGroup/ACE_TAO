@@ -4,10 +4,6 @@
 workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
-  $(ACE_ROOT)/apps/JAWS/server
-  $(ACE_ROOT)/ACEXML/common
-  $(ACE_ROOT)/ACEXML/parser/parser
-  $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/contrib
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
@@ -18,7 +14,6 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
   $(TAO_ROOT)/orbsvcs/Naming_Service
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Security.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
   ccm
   ciao
