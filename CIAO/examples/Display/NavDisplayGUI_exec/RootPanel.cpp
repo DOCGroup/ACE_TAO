@@ -32,12 +32,10 @@ RootPanel::RootPanel(Q3Canvas &c, QWidget *parent, const char *name)
   setCentralWidget(s1);
 }
 
-
 RootPanel::~RootPanel()
 {
   clear();
 }
-
 
 void
 RootPanel::addUnit(NavUnit *unit)
@@ -61,7 +59,6 @@ RootPanel::updateUnit(NavUnit *unit)
 
   this->details->updateLocation(loc);
 }
-
 
 void
 RootPanel::clear()
