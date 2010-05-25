@@ -1,8 +1,16 @@
+Tue May 25 16:07:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+        * MPC/config/ciao_deployment_handlers.mpb:
+
+          Static linking fix. 
+
 Tue May 25 14:38:55 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.mpc
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc
-        Change flag of lema_gen Base from -GM back to -GC. 
+        Change flag of lema_gen Base from -GM back to -GC.
 
 Tue May 25 14:13:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

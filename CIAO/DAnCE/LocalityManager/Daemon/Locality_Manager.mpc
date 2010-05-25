@@ -1,13 +1,10 @@
 // $Id$
 
 project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
-        dance_skel, dance_logger {
+        dance_skel, dance_logger, ciao_deployment_handlers {
    
    dynamicflags = LOCALITY_MANAGER_IMPL_BUILD_DLL
 
-   includes += $(CIAO_ROOT)
-   libs += CIAO_Deployment_Handlers
-   after += CIAO_Deployment_Handlers
    Source_Files {
      Locality_Manager_Impl.cpp
      Deployment_Interceptors.cpp
