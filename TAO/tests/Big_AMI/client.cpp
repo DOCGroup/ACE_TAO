@@ -7,7 +7,6 @@
  *
  *  A very simple client which uses the AMI callback model.
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -121,8 +120,6 @@ private:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
-
   try
     {
       CORBA::ORB_var orb =
