@@ -384,11 +384,6 @@ be_visitor_ccm_pre_proc::visit_consumes (be_consumes *node)
 int
 be_visitor_ccm_pre_proc::visit_home (be_home *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
