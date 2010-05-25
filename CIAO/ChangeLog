@@ -1,3 +1,15 @@
+Tue May 25 20:07:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.mpc:
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
+        * tests/IDL_Test/Inherited_Component/IhC_Foo.idl:
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.idl:
+        
+          - Removed dummy_label tags and updated build projects
+          - Added corresponding base and derived homes, with
+            attributes to test the recently added set_attributes()
+            generation for homes.
+
 Tue May 25 18:29:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:

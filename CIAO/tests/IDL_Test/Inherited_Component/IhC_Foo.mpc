@@ -8,7 +8,8 @@ project(IhC_Foo_idl_gen) : componentidldefaults {
               -Wb,skel_export_macro=IHC_FOO_SVNT_Export \
               -Wb,skel_export_include=IhC_Foo_svnt_export.h \
               -Wb,exec_export_macro=IHC_FOO_EXEC_Export \
-              -Wb,exec_export_include=IhC_Foo_exec_export.h -Gex
+              -Wb,exec_export_include=IhC_Foo_exec_export.h \
+              -Gex
 
   IDL_Files {
     IhC_Foo.idl

@@ -1,13 +1,24 @@
 // $Id$
 
+#ifndef IHC_FOO_IDL
+#define IHC_FOO_IDL
+
 #include <Components.idl>
+
+#pragma ciao lem "IhC_FooE.idl"
 
 interface foo_intf
 {
 };
 
-
 component Foo
 {
   provides foo_intf foo_port;
 };
+
+home FooHome manages Foo
+{
+  attribute string str_attr;
+};
+
+#endif // IHC_FOO_IDL
