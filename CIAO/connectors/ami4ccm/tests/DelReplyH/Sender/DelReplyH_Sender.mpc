@@ -10,7 +10,7 @@ project(AMI_DelReplyH_Base_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=DelReplyH_Sender_svnt_export.h \
               -Wb,exec_export_macro=DELREPLYH_SENDER_EXEC_Export \
               -Wb,exec_export_include=DelReplyH_Sender_exec_export.h \
-              -I.. -GM
+              -I.. -GC
 
   IDL_Files {
     DelReplyH_Sender.idl
