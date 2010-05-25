@@ -41,7 +41,7 @@ project(AMI_DelReplyH_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=DelReplyH_svnt_export.h \
               -Wb,skel_export_macro=DELREPLYH_SKEL_Export \
               -Wb,skel_export_include=DelReplyH_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     DelReplyHA.idl
