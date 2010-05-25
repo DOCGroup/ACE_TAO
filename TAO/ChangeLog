@@ -1,3 +1,16 @@
+Tue May 25 21:08:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Changed the generation on ami4ccm receptacles to depend
+          only on -GC and the contents of the list populated from
+          "#pragma ciao ami4ccm receptacle xxx" directives, not on
+          the use of -GM. The latter option triggers the generation
+          of an *A.idl file. which is not always what we want. The
+          -GC option is necessary to get us into the AMI
+          proprocessing visitor, where the extra receptacles are
+          generated.
+
 Tue May 25 20:03:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
