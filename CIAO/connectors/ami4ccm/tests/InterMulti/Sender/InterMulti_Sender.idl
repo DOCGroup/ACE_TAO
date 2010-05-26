@@ -1,0 +1,26 @@
+// $Id$
+
+#ifndef INTERMULTI_SENDER_IDL
+#define INTERMULTI_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/InterMulti.idl"
+
+#pragma ciao ami4ccm receptacle "InterMulti::Sender::run_my_one"
+#pragma ciao ami4ccm receptacle "InterMulti::Sender::run_my_two"
+#pragma ciao ami4ccm receptacle "InterMulti::Sender::run_my_three"
+
+
+module InterMulti
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses One run_my_one;
+    uses Two run_my_two;
+    uses Three run_my_three;
+  };
+};
+
+#endif

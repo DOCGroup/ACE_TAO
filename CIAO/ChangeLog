@@ -1,3 +1,23 @@
+Wed May 26 13:25:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl
+        * connectors/ami4ccm/tests/InterMulti
+        * connectors/ami4ccm/tests/InterMulti/Base
+        * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.idl
+        * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.mpc
+        * connectors/ami4ccm/tests/InterMulti/descriptors
+        * connectors/ami4ccm/tests/InterMulti/Receiver
+        * connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver.idl
+        * connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver.mpc
+        * connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver_exec.h
+        * connectors/ami4ccm/tests/InterMulti/Sender
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender.idl
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender.mpc
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
+        AMI4CCM test multiple inheritance.
+        
 Wed May 26 13:20:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/CIAO_State.h:
