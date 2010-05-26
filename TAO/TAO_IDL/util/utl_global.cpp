@@ -1898,7 +1898,7 @@ IDL_GlobalData::current_params (FE_Utils::T_PARAMLIST_INFO *params)
 UTL_String *
 IDL_GlobalData::utl_string_factory (const char *str)
 {
-  return new UTL_String (str);
+  return new UTL_String (str, true);
 }
 
 ACE_CString

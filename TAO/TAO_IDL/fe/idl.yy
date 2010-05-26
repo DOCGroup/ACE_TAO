@@ -6490,7 +6490,7 @@ formal_parameter_name
         {
 // formal_parameter_name : IDENTIFIER
           ACE_NEW_RETURN ($$,
-                          UTL_String ($1),
+                          UTL_String ($1, true),
                           1);
         }
         ;
