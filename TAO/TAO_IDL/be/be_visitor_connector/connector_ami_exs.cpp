@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -88,7 +87,7 @@ be_visitor_connector_ami_exs::gen_entrypoint (void)
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
       << s->local_name () << "_exec_i);" << be_nl
-      << be_nl
+      << be_uidt_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }

@@ -45,6 +45,23 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
                          ACE_TEXT ("visit_scope() failed\n")),
                         -1);         
     }
+    
+  AST_Interface **inh_flat = node->inherits_flat ();
+    
+  for (long i = 0; i < node->n_inherits_flat (); ++i)
+    {
+      be_interface *ancestor =
+        be_interface::narrow_from_decl (inh_flat[i]);
+        
+      if (this->visit_scope (ancestor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_ami4ccm_sendc_ex_idl")
+                             ACE_TEXT ("::visit_interface - visit ")
+                             ACE_TEXT ("ancestor scope failed\n")),
+                            -1);         
+        }
+    }
   
   os_ << be_uidt_nl
       << "};";
@@ -172,3 +189,4 @@ be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
     
   return 0;
 }
+
