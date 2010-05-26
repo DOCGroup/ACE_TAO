@@ -53,7 +53,7 @@ module CIAO
                                              in string servant_entrypoint,
                                              in string name);
     
-    void set_attributes (in Components::CCMObject name,
+    void set_attributes (in Object name,
                          in Components::ConfigValues values);
 
     void activate_component (in Components::CCMObject name);
