@@ -87,6 +87,30 @@ module Foo
     {
       TestTopic mybarop (in string str, in long lg, out double db);
     };
+
+};
+
+module Bar
+{
+  struct TestTopic 
+    {
+      string key;
+      long x;
+    };
+
+  interface One
+    {
+      long myop (in TestTopic topic);
+    };
+
+  interface Two
+    {
+      TestTopic mybarop (in string str, in long lg, out double db);
+    };
+
+  interface Three : One, Two
+    {
+    };
 };
 
 #endif
