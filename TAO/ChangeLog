@@ -1,7 +1,33 @@
+Wed May 26 10:10:33 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3755_Ext_Regression/ziop_svc.conf:
+        * tests/Bug_3755_Ext_Regression/rt_scheduler_svc.conf:
+        * tests/Bug_3755_Ext_Regression/rt_svc.conf:
+        * tests/Bug_3755_Ext_Regression/server.cpp:
+        * tests/Bug_3755_Ext_Regression/bidir_svc.conf:
+        * tests/Bug_3755_Ext_Regression/README:
+        * tests/Bug_3755_Ext_Regression/pi_server_svc.conf:
+        * tests/Bug_3755_Ext_Regression/Bug_3755_Ext_Regression.mpc:
+        * tests/Bug_3755_Ext_Regression/dp_svc.conf:
+        * tests/Bug_3755_Ext_Regression/ep_svc.conf:
+        * tests/Bug_3755_Ext_Regression/csd_svc.conf:
+        * tests/Bug_3755_Ext_Regression/all.lst:
+        * tests/Bug_3755_Ext_Regression/common.cpp:
+        * tests/Bug_3755_Ext_Regression/messaging_svc.conf:
+        * tests/Bug_3755_Ext_Regression/run_test.pl:
+        * tests/Bug_3755_Ext_Regression/common.h:
+        * bin/tao_orb_tests.lst:
+          Added an extended version of the 3755 test which tests that
+          dynamic loading of same service in different gestalts works fine.
+          Tested libraries are BiDir_GIOP, CSD_Framework, Messaging,
+          PI_Server, RTScheduling, ZIOP, DiffservPolicy, and EndpointPolicy.
+          A fix for the broken libraries will be similar to the one used
+          for RTCORBA in 3755. Scheduled the tests for run.
+
 Tue May 25 21:08:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Changed the generation on ami4ccm receptacles to depend
           only on -GC and the contents of the list populated from
           "#pragma ciao ami4ccm receptacle xxx" directives, not on
@@ -15,7 +41,7 @@ Tue May 25 20:03:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Fixed bug in generation of implied explicit interface
           for homes, where for homes in included IDL files, this
           generation did not take place.
