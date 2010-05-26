@@ -170,12 +170,12 @@ namespace CIAO
                                             svnt_entry,
                                             idd.name.in ());
 
-	::Components::ConfigValues attr_config;
-	Deployment_Common::create_attribute_configuration (idd.configProperty,
-							   attr_config);
-	
-	container->set_attributes (home_ref.in (),
-				   attr_config);
+        ::Components::ConfigValues attr_config;
+        Deployment_Common::create_attribute_configuration (idd.configProperty,
+                                                           attr_config);
+        
+        container->set_attributes (home_ref.in (),
+                                   attr_config);
       }
     catch (::CORBA::Exception &ex)
       {
