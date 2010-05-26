@@ -95,11 +95,11 @@ def add_pub_connector (name, topic, node) :
 
     conn += generator.connection.template (name + "writer",
                                            deploy_req,
-                                           generator.internal_endpoint.template ("info_write_data",
+                                           generator.internal_endpoint.template ("info_data",
                                                                                  "false",
                                                                                  "SimplexReceptacle",
                                                                                  name + "ComponentInstance"),
-                                           generator.internal_endpoint.template ("info_data",
+                                           generator.internal_endpoint.template ("supplier_data",
                                                                                  "true",
                                                                                  "Facet",
                                                                                  name + "DDSConnector" + "ComponentInstance"))

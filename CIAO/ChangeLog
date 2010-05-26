@@ -1,3 +1,11 @@
+Wed May 26 19:51:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/LargePlan.cdp:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/generate_large_plan.py:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl:
+
+        Updated plan. 
+        
 Wed May 26 15:48:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp:
