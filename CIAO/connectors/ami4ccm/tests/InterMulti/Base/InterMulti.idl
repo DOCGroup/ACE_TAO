@@ -1,0 +1,44 @@
+// $Id$
+
+#ifndef INTERMULTI_IDL
+#define INTERMULTI_IDL
+
+#pragma ciao lem "Base/InterMultiE.idl"
+#pragma ciao ami4ccm interface "InterMulti::One"
+#pragma ciao ami4ccm interface "InterMulti::Two"
+#pragma ciao ami4ccm interface "InterMulti::Three"
+#pragma ciao lem "Base/InterMultiAE.idl"
+
+module InterMulti
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface One
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+      long sec (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+
+    };
+  interface Two
+    {
+      void bar (in long cmd, out string answer)
+        raises (InternalError);
+    };
+
+  //multiple inheritance
+  interface Three: One, Two
+    {
+       void plus (in long cmd, out string answer)
+         raises (InternalError);
+    };
+
+};
+
+#endif
