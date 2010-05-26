@@ -1,3 +1,11 @@
+Wed May 26 15:48:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome_NS.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome_NS.cdp:
+
+        Removed these files, as we no longer support externalReference connections for
+        pub/sub connections.
+
 Wed May 26 15:01:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
@@ -5,7 +13,7 @@ Wed May 26 15:01:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Deployment/Handlers/Home_Handler.cpp:
         * tests/IDL_Test/Inherited_Component/IhC_Bar.idl:
 
-          Fuzz. 
+          Fuzz.
 
 Wed May 26 14:43:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
