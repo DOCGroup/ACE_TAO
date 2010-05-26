@@ -1,3 +1,12 @@
+Wed May 26 15:01:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.idl:
+
+          Fuzz. 
+
 Wed May 26 14:43:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_Receiver.mpc:
