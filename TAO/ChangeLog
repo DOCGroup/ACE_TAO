@@ -1,3 +1,11 @@
+Wed May 26 14:38:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        
+          Eliminated generation of declarations for get_all_emitters()
+          and get_all_publishers() for connectors, if LwCCM is not
+          defined, they are now in the base class.
+
 Wed May 26 14:26:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/include/utl_scope.h:

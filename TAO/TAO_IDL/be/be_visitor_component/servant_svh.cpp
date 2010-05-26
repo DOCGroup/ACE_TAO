@@ -380,8 +380,11 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << be_nl
           << "get_all_receptacles (void);";
     }
+    
+  AST_Decl::NodeType nt = this->node_->node_type ();
+  bool is_connector = (nt == AST_Decl::NT_connector);
 
-  if (!be_global->gen_lwccm ())
+  if (!be_global->gen_lwccm () && !is_connector)
     {
       os_ << be_nl << be_nl
           << "virtual ::Components::PublisherDescriptions *"
@@ -396,7 +399,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
 
   /// If the node is a connector, event sources and sinks cannot
   /// be declared.
-  if (this->node_->node_type () == AST_Decl::NT_component)
+  if (!is_connector)
     {
       if (this->node_->n_publishes () > 0UL)
         {
