@@ -141,7 +141,6 @@ project(CIAO_ComponentServer_exe) : install, ccm_componentserver_svnt, portables
     ../../COPYING
     ../../NEWS
     ../../PROBLEM-REPORT-FORM
-    ../../README
     ../../VERSION
     ../../docs
     ../../MPC
