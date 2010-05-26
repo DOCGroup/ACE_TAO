@@ -82,6 +82,6 @@ namespace CIAO
 
 CIAO_LOCALITY_HANDLER_SINGLETON_DECLARE (ACE_Singleton,
                                          CIAO::Deployment_State,
-                                         ACE_SYNCH_MUTEX);
+                                         ACE_SYNCH_MUTEX)
 
 #endif
