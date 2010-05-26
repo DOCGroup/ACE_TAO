@@ -1,3 +1,8 @@
+Wed May 26 11:27:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/descriptors/Plan.cdp:
+          Fixed error in this deployment plan
+
 Wed May 26 09:27:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl
@@ -41,7 +46,7 @@ Wed May 26 08:04:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 Tue May 25 21:14:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc:
-        
+
           Changed the -GM option on the file DelReplyH_Sender.idl
           to -GC, eliminating the potential problem of generating
           an unwanted *A.idl file. Some extra code generation

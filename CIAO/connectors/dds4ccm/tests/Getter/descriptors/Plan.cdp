@@ -309,7 +309,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>5</ulong>
+          <ushort>5</ushort>
         </value>
       </value>
     </configProperty>
@@ -320,7 +320,7 @@
           <kind>tk_ushort</kind>
         </type>
         <value>
-          <ulong>10</ulong>
+          <ushort>10</ushort>
         </value>
       </value>
     </configProperty>
