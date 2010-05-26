@@ -247,6 +247,14 @@ namespace CIAO
 
 #if !defined (CCM_LW)
   ::Components::EmitterDescriptions *
+  Connector_Servant_Impl_Base::get_all_emitters (void)
+  {
+    return 0;
+  }
+#endif
+
+#if !defined (CCM_LW)
+  ::Components::EmitterDescriptions *
   Connector_Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */)
   {
@@ -254,7 +262,7 @@ namespace CIAO
   }
 #endif
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
   ::Components::ReceptacleDescriptions *
   Connector_Servant_Impl_Base::get_named_receptacles (
     const ::Components::NameList & /* names */)
@@ -264,7 +272,15 @@ namespace CIAO
   }
 #endif
 
- #if !defined (CCM_LW)
+#if !defined (CCM_LW)
+  ::Components::PublisherDescriptions *
+  Connector_Servant_Impl_Base::get_all_publishers (void)
+  {
+    return 0;
+  }
+#endif
+
+#if !defined (CCM_LW)
   ::Components::PublisherDescriptions *
   Connector_Servant_Impl_Base::get_named_publishers (
     const ::Components::NameList & /* names */)

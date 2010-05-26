@@ -128,12 +128,22 @@ namespace CIAO
 
 #if !defined (CCM_LW)
     virtual ::Components::EmitterDescriptions *
+    get_all_emitters (void);
+#endif
+
+#if !defined (CCM_LW)
+    virtual ::Components::EmitterDescriptions *
     get_named_emitters (const ::Components::NameList & names);
 #endif
 
  #if !defined (CCM_LW)
     virtual ::Components::ReceptacleDescriptions *
     get_named_receptacles (const ::Components::NameList & names);
+#endif
+
+#if !defined (CCM_LW)
+    virtual ::Components::PublisherDescriptions *
+    get_all_publishers (void);
 #endif
 
 #if !defined (CCM_LW)

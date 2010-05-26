@@ -1,3 +1,12 @@
+Wed May 26 14:34:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.h:
+        
+          Added no-ops for get_all_publishers() and get_all_emitters()
+          if CCM_LW is not defined, so for generated connector servants,
+          we can skip generation of these methods.
+
 Wed May 26 14:15:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation_Default.cdp:
