@@ -575,7 +575,7 @@ public:
             this->stage_ = UTL_Scope::IK_both;
             this->limit_ = this->source_->pd_decls_used;
             this->item_  = source_->pd_decls;
-	  }
+          }
       }
   }
 

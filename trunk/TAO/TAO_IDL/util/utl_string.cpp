@@ -112,7 +112,7 @@ UTL_String::strcmp_caseless (
         {
           ++lhs;
           ++rhs;
-	}
+        }
     }
 
   // true is match (no difference found), false is difference found.
