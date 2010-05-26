@@ -188,17 +188,17 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << iface_name << suffix << " (void);" << be_nl << be_nl
       << "virtual ~" << iface_name << suffix
       << " (void);";
-
+      
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_connector_ami_exh")
                          ACE_TEXT ("::gen_facet_executor_class - ")
-                         ACE_TEXT ("visit_scope() on facet ")
+                         ACE_TEXT ("visit_scope() on sendc ")
                          ACE_TEXT ("interface failed\n")),
                         -1);
     }
-
+    
   os_ << be_nl << be_nl
       << "void" << be_nl
       << "set_session_context (" << be_idt_nl
