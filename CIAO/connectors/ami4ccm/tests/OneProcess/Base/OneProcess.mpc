@@ -41,7 +41,7 @@ project(AMI_OneProcess_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=OneProcess_svnt_export.h \
               -Wb,skel_export_macro=ONEPROCESS_SKEL_Export \
               -Wb,skel_export_include=OneProcess_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     OneProcessA.idl

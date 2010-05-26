@@ -41,7 +41,7 @@ project(AMI_InterReturnT_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=InterReturnT_svnt_export.h \
               -Wb,skel_export_macro=INTERRETURN_T_SKEL_Export \
               -Wb,skel_export_include=InterReturnT_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     InterReturnTA.idl

@@ -10,7 +10,7 @@ project(AMI_NoReplyH_Base_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=NoReplyH_Sender_svnt_export.h \
               -Wb,exec_export_macro=NOREPLYH_SENDER_EXEC_Export \
               -Wb,exec_export_include=NoReplyH_Sender_exec_export.h \
-              -I.. -GM
+              -I.. -GC
 
   IDL_Files {
     NoReplyH_Sender.idl
@@ -104,7 +104,7 @@ project(AMI_NoReplyH_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_NoReplyH_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_NoReplyH_Base_skel AMI_NoReplyH_Base_Sender_lem_stub AMI_NoReplyH_Base_exec AMI_NoReplyH_skel
+  after      += AMI_NoReplyH_Base_skel AMI_NoReplyH_Base_Sender_lem_stub AMI_NoReplyH_Base_Sender_stub AMI_NoReplyH_Base_exec AMI_NoReplyH_skel
   sharedname  = NoReplyH_Sender_svnt
   libs       += NoReplyH_Sender_stub NoReplyH_Sender_lem_stub  \
                 NoReplyH_skel \

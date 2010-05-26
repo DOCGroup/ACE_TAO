@@ -1,3 +1,23 @@
+Wed May 26 08:04:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender.mpc
+        * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.mpc
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender.mpc
+        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender.mpc
+        * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.mpc
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender.mpc
+        * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.mpc
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender.mpc
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender.mpc
+        Changed the -GM option on the files *_Sender.idl
+        to -GC. Changed the -GM option with the lema_gen in the Base/*.mpc files
+
 Tue May 25 21:14:01 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender.mpc:

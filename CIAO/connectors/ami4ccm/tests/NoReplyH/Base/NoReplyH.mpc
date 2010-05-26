@@ -41,7 +41,7 @@ project(AMI_NoReplyH_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=NoReplyH_svnt_export.h \
               -Wb,skel_export_macro=NOREPLYH_SKEL_Export \
               -Wb,skel_export_include=NoReplyH_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     NoReplyHA.idl

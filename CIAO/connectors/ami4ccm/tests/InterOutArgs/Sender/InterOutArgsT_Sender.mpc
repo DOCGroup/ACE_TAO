@@ -10,7 +10,7 @@ project(AMI_InterOutArgsT_Base_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=InterOutArgsT_Sender_svnt_export.h \
               -Wb,exec_export_macro=INTEROUTARGS_T_SENDER_EXEC_Export \
               -Wb,exec_export_include=InterOutArgsT_Sender_exec_export.h \
-              -I.. -GM
+              -I.. -GC
 
   IDL_Files {
     InterOutArgsT_Sender.idl
@@ -104,7 +104,7 @@ project(AMI_InterOutArgsT_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_InterOutArgsT_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_InterOutArgsT_Base_skel AMI_OutArgsT_Base_Sender_lem_stub AMI_InterOutArgsT_Base_exec AMI_InterOutArgsT_skel
+  after      += AMI_InterOutArgsT_Base_skel AMI_OutArgsT_Base_Sender_lem_stub AMI_OutArgsT_Base_Sender_stub AMI_InterOutArgsT_Base_exec AMI_InterOutArgsT_skel
   sharedname  = InterOutArgsT_Sender_svnt
   libs       += InterOutArgsT_Sender_stub InterOutArgsT_Sender_lem_stub  \
                 InterOutArgsT_skel \
