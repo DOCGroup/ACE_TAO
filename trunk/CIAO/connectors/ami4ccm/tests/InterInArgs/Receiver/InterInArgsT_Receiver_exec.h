@@ -29,11 +29,13 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                           ::CORBA::Double cmd);
     virtual void var_div_ins (const InterInArgsT::TestTopic &test_topic,
                               const InterInArgsT::TopicString &topic_str,
-                              const InterInArgsT::TopicArray &topic_arr,
+                              const InterInArgsT::TestArray topic_arr,
                               ::CORBA::String_out answer);
-    virtual void var_div2_ins (const InterInArgsT::TopicUnion &topic_union,
-                               const InterInArgsT::test_seq &seq,
-                               ::CORBA::String_out answer);
+   virtual void var_div2_ins (const InterInArgsT::X_Union &topic_union,
+                              const InterInArgsT::test_seq &seq,
+                              ::CORBA::String_out answer);
+    virtual void enum_in(::CORBA::String_out answer,
+                         InterInArgsT::test_enum in_test);
    };
 
   class  Receiver_exec_i

@@ -37,12 +37,13 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     topic_str = new InterOutArgsT::TopicString();
     topic_str->key = CORBA::string_dup("bbb");
     topic_str->x_str = CORBA::string_dup("ccc");
+
     topic_arr = new InterOutArgsT::TopicArray();
     topic_arr->key = CORBA::string_dup("ddd");
-     for (CORBA::UShort i = 0; i < 5; i ++)
-       {
-         topic_arr->x_array[i] = i * 100;
-       } 
+    for (CORBA::UShort i = 0; i < 5; i ++)
+      {
+        topic_arr->x_array[i] = i * 100;
+      }
   }
 
   void  MyFoo_exec_i::var_div2_outs (::InterOutArgsT::X_Union_out x_uni, 
@@ -57,6 +58,11 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
     seq = new InterOutArgsT::test_seq();
     seq->length(2);
     (*seq)[0]= ttt; 
+  }
+
+  void  MyFoo_exec_i::enum_out (::InterOutArgsT::test_enum_out out_test)
+  {
+    out_test = ::InterOutArgsT::ONE;
   }
 
   Receiver_exec_i::Receiver_exec_i (void)

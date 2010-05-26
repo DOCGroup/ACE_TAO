@@ -43,6 +43,9 @@ namespace CIAO_InterReturnT_Receiver_Impl
     virtual InterReturnT::X_Union *ret_union (const char * in_str,
                              ::CORBA::String_out,
                              ::CORBA::Long_out l_cmd);
+    virtual InterReturnT::test_enum ret_enum (const char * in_str,
+                             ::CORBA::String_out,
+                             ::CORBA::Long_out l_cmd);
   };
 
   class  Receiver_exec_i

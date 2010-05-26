@@ -3,7 +3,7 @@
 
 #include "InterInArgsT_Receiver_exec.h"
 #include "ace/OS_NS_unistd.h"
-
+ 
 namespace CIAO_InterInArgsT_Receiver_Impl
 {
   CORBA::UShort nr_of_received = 0;
@@ -57,7 +57,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   void
   MyFoo_exec_i::var_div_ins (const ::InterInArgsT::TestTopic &test_topic, 
                              const ::InterInArgsT::TopicString &topic_str, 
-                             const ::InterInArgsT::TopicArray &topic_arr, 
+                             const ::InterInArgsT::TestArray topic_arr, 
                              ::CORBA::String_out answer)
   {
     CORBA::Boolean error = false;
@@ -80,37 +80,36 @@ namespace CIAO_InterInArgsT_Receiver_Impl
                               topic_str.key.in() ,topic_str.x_str.in()));
         error = true;
       }
-    if ((ACE_OS::strcmp (topic_arr.key, "ddd") != 0) ||
-        (topic_arr.x_array[0] != 11))
+    if ((ACE_OS::strcmp (topic_arr[0].key, "ddd") != 0) ||
+        (topic_arr[1].x_array[2] != 102))
       {
         ACE_ERROR ((LM_ERROR, "MyFoo_exec_i::var_div_ins: "
                               "received the wrong struct, "
-                              "expected key 'ddd', elem 11"
+                              "expected key 'ddd', elem 102"
                               " received key '%C', elem %u\n",
-                              topic_arr.key.in(),topic_arr.x_array[0] ));
-        error = true;
+                              topic_arr[0].key.in(),topic_arr[1].x_array[2] ));
+         error = true;
       }
     answer = CORBA::string_dup ("This is my answer from var_div_ins");
-   if(error == false)
+    if(error == false)
       {
         ++nr_of_received;
       }
   }
 
   void
-  MyFoo_exec_i::var_div2_ins (const ::InterInArgsT::TopicUnion &topic_union, 
+  MyFoo_exec_i::var_div2_ins (const ::InterInArgsT::X_Union &topic_union, 
                               const ::InterInArgsT::test_seq &seq, 
                               ::CORBA::String_out answer)
   {
     CORBA::Boolean error = false;
-    if ((ACE_OS::strcmp (topic_union.key, "eee") != 0) ||
-        (topic_union.x_uni.x_long() != 11))
+    if (topic_union.x_long() != 11)
       {
         ACE_ERROR ((LM_ERROR, "MyFoo_exec_i::var_div2_ins: "
-                              "received the wrong struct, "
-                              "expected key 'eee', x = 11,"
-                              " received key '%C' , x = %u\n",
-                              topic_union.key.in(),topic_union.x_uni.x_long()));
+                              "received the wrong union, "
+                              "expected x = 11,"
+                              " received x = %u\n",
+                              topic_union.x_long()));  
         error = true;
       }
     if ((ACE_OS::strcmp (seq[0].x_teststr, "fff") != 0)||
@@ -128,6 +127,24 @@ namespace CIAO_InterInArgsT_Receiver_Impl
       {
         ++nr_of_received;
       }
+  }
+
+  void
+  MyFoo_exec_i::enum_in(::CORBA::String_out answer, 
+                               InterInArgsT::test_enum in_test)
+  {
+    if ( in_test != InterInArgsT::ONE)
+      {
+        ACE_ERROR ((LM_ERROR, "MyFoo_exec_i::enum_in: "
+                              "received the wrong enum value, expected ONE,"
+                              " received %u\n",
+                              in_test));
+      }
+    else
+      {
+        ++nr_of_received;
+      }
+    answer = CORBA::string_dup ("This is my answer from enum_in");
   }
 
   Receiver_exec_i::Receiver_exec_i (void)
@@ -174,7 +191,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (nr_of_received == 5)
+    if (nr_of_received == 6)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received all expected data"
                               " from syn- and asynchronous calls\n"));  
@@ -182,7 +199,7 @@ namespace CIAO_InterInArgsT_Receiver_Impl
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive all"
-                              " expected data  (%u of 5)"
+                              " expected data  (%u of 6)"
                               " from syn- and asynchronous calls\n",
                               nr_of_received));  
       }

@@ -29,6 +29,8 @@ module InterInArgsT
     short x_array[5];
     };
 
+  typedef TopicArray TestArray[5];
+
   // Union
   union X_Union switch (short) {
     case 0:
@@ -37,18 +39,20 @@ module InterInArgsT
       long   x_long;
   };
 
-  struct TopicUnion {
-    string key;
-    X_Union x_uni;
-    };
-
   // Sequence
   struct test {
     short x_test;
     string x_teststr;
     };
   typedef sequence<test> test_seq;
-  
+
+  enum test_enum
+  {
+    ZERO,
+    ONE,
+    TWO
+  };
+
   exception InternalError
     {
       long id;
@@ -63,10 +67,12 @@ module InterInArgsT
       void var_ins (in string in_str,  out string answer, in double cmd)
         raises (InternalError);
       void var_div_ins (in TestTopic test_topic,  in TopicString topic_str,
-                        in TopicArray topic_arr, out string answer)
+                        in TestArray topic_arr, out string answer)
         raises (InternalError);
-      void var_div2_ins (in TopicUnion topic_union,  in test_seq seq,
+      void var_div2_ins (in X_Union topic_union,  in test_seq seq,
                          out string answer)
+        raises (InternalError);
+      void enum_in(out string answer, in test_enum in_test)
         raises (InternalError);
     };
 };

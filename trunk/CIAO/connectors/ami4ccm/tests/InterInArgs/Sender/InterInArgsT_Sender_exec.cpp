@@ -13,7 +13,7 @@ namespace CIAO_InterInArgsT_Sender_Impl
   const CORBA::Short cmd_synch_ok = 1;
   const CORBA::Short cmd_synch_nok = 2;
   const CORBA::Short cmd_asynch_ok = 3;
-  const CORBA::Short cmd_asynch_nok = 4;
+  const CORBA::Short cmd_asynch_nok =  4;
 
   void HandleException (
       long id,
@@ -122,6 +122,18 @@ namespace CIAO_InterInArgsT_Sender_Impl
     excep_holder->raise_exception ();
   }
 
+  void 
+  MyFoo_callback_exec_i::enum_in(const char * /*answer*/)
+  {
+    ++nr_of_received;
+  };
+
+  void
+  MyFoo_callback_exec_i::enum_in_excep (
+                 ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  };
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -156,16 +168,20 @@ namespace CIAO_InterInArgsT_Sender_Impl
         InterInArgsT::TopicString topic_str;
         topic_str.key = "bbb";
         topic_str.x_str = "ccc";
-        InterInArgsT::TopicArray topic_arr;
-        topic_arr.key = "ddd";
-        topic_arr.x_array[0] = 11;
-  
+        InterInArgsT::TestArray topic_arr;
+        for ( CORBA::UShort i = 0; i < 5; i ++)
+          {
+            topic_arr[i].key = CORBA::string_dup("ddd");
+            for (CORBA::UShort y = 0; y < 5; y ++)
+              {
+                topic_arr[i].x_array[y] = i * 100 + y ;
+              } 
+          }
         my_foo_ami_->sendc_var_div_ins (new MyFoo_callback_exec_i (),
                                         test_topic,topic_str,topic_arr);
 
-        InterInArgsT::TopicUnion topic_union;
-        topic_union.key = "eee";
-        topic_union.x_uni.x_long(11);
+        InterInArgsT::X_Union topic_union;
+        topic_union.x_long(11);
         InterInArgsT::test ttt;
         ttt.x_test = 12;
         ttt.x_teststr = "fff" ;
@@ -175,6 +191,10 @@ namespace CIAO_InterInArgsT_Sender_Impl
 
         my_foo_ami_->sendc_var_div2_ins (new MyFoo_callback_exec_i (),
                                          topic_union, seq);
+        InterInArgsT::test_enum in_test;
+        in_test = ::InterInArgsT::ONE;
+        my_foo_ami_->sendc_enum_in(new MyFoo_callback_exec_i (), 
+                                          in_test);
       }
     return 0;
   }
@@ -284,15 +304,15 @@ namespace CIAO_InterInArgsT_Sender_Impl
                               "Expected: 2, Received: %u.\n",
                               nr_of_excep_received));  
       }
-    if (nr_of_received != 5)
+    if (nr_of_received != 6)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Sender not received the expected number"
                               " of callbacks and returns  for syn- and "
-                              "asynchronous calls. Expected: 5,"
+                              "asynchronous calls. Expected: 6,"
                               " Received: %u.\n",
                               nr_of_excep_received));  
       }
-    if ((nr_of_received == 5) && (nr_of_excep_received == 2))
+    if ((nr_of_received == 6) && (nr_of_excep_received == 2))
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Sender received the expected number of"
                               " callbacks and exceptions for syn- and "

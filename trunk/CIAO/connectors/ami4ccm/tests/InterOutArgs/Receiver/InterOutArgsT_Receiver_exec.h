@@ -29,6 +29,7 @@ namespace CIAO_InterOutArgsT_Receiver_Impl
                                InterOutArgsT::TopicArray_out topic_arr);
     virtual void var_div2_outs (InterOutArgsT::X_Union_out x_uni,
                                 InterOutArgsT::test_seq_out seq);
+    virtual void enum_out (InterOutArgsT::test_enum_out out_test);
   };
 
   class  Receiver_exec_i

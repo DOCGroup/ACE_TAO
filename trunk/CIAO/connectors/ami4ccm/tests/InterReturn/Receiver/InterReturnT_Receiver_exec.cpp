@@ -98,6 +98,17 @@ namespace CIAO_InterReturnT_Receiver_Impl
     return x_uni;
   }
 
+  InterReturnT::test_enum MyFoo_exec_i::ret_enum (const char * /*in_str*/,
+                               ::CORBA::String_out answer,
+                               ::CORBA::Long_out l_cmd)
+  {
+    answer = CORBA::string_dup ("This is my answer from ret_enum");
+    l_cmd = 8;
+    InterReturnT::test_enum test_enum;
+    test_enum = InterReturnT::TWO;
+    return test_enum;
+  };
+
   Receiver_exec_i::Receiver_exec_i (void)
   {
   }

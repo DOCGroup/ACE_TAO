@@ -41,13 +41,20 @@ module InterOutArgsT
     string x_teststr;
     };
   typedef sequence<test> test_seq;
-  
+
+  enum test_enum
+  {
+    ZERO,
+    ONE,
+    TWO
+  };
+
   exception InternalError
     {
       long id;
       string error_string;
     };
-  
+
   // Sender/Receiver interface
   interface MyFoo
     {
@@ -59,6 +66,8 @@ module InterOutArgsT
         raises (InternalError);
       void var_div2_outs (out X_Union x_uni,
                           out test_seq seq) 
+        raises (InternalError);
+      void enum_out (out test_enum out_test)
         raises (InternalError);
     };
 };

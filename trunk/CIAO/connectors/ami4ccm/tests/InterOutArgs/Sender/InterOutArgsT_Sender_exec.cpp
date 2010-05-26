@@ -143,6 +143,28 @@ namespace CIAO_InterOutArgsT_Sender_Impl
     excep_holder->raise_exception ();
   }
 
+  void
+  MyFoo_callback_exec_i::enum_out ( InterOutArgsT::test_enum test_enum)
+  {
+    if (test_enum != InterOutArgsT::ONE)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::enum_out: "
+                              "received the wrong value, expected ONE,"
+                              " received %u\n",
+                              test_enum));
+      }
+    else
+      {
+        ++nr_of_received;
+      }
+  }
+
+  void
+  MyFoo_callback_exec_i::enum_out_excep (
+                     ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  };
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -167,6 +189,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                                       "Send me a double and a long.");
         my_foo_ami_->sendc_var_div_outs (new MyFoo_callback_exec_i ());
         my_foo_ami_->sendc_var_div2_outs (new MyFoo_callback_exec_i ());
+        my_foo_ami_->sendc_enum_out (new MyFoo_callback_exec_i ());
       }
     return 0;
   }
@@ -285,14 +308,14 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (nr_of_received == 5)
+    if (nr_of_received == 6)
       {
-        ACE_DEBUG ((LM_DEBUG, "OK: Received all expected data"
+        ACE_DEBUG ((LM_DEBUG, "OK: Sender received all expected data"
                               " for syn- and asynchronous calls\n"));  
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Received not all expected data"
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender didn't receive all expected data"
                               " for syn- and asynchronous calls\n"));  
       }
   }
