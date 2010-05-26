@@ -220,6 +220,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "{" << be_nl
       << "}";
 
+
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
