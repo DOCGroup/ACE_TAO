@@ -1239,11 +1239,11 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           d = tmp;
           AST_Decl::NodeType nt = tmp->node_type ();
           if (nt == AST_Decl::NT_module)
-	    {
+            {
               // We are wanting the LAST module opening in this scope, so having
               // stored this one, keep searching in case we find another later on.
               continue;
-	    }
+            }
 
           // Special case for forward declared types,
           // In this case, we want to return
@@ -1279,14 +1279,14 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
             }
         }
       else
-	{
+        {
           AST_Interface *i =
             AST_Interface::narrow_from_scope (this);
           if (i)
             {
               d = i->look_in_inherited_local (e);
             }
-	}
+        }
     }
 
   /// There are some cases where the iteration over IK_decls

@@ -1,3 +1,9 @@
+Wed May 26 14:26:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+
 Wed May 26 13:20:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/include/utl_string.h:
