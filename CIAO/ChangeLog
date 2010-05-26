@@ -1,3 +1,12 @@
+Wed May 26 14:15:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/SimpleProcessColocation_Default.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/SimpleProcessColocation_Default.cdp:
+
+         Removed the deault locality test, as we no longer support the former behavior,
+         that is, if instances are not explicitly included as part of a locality group,
+         they will no longer be considered as part of a seperate locality.
+
 Wed May 26 13:38:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Container_Base.idl:
@@ -5,7 +14,7 @@ Wed May 26 13:38:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Containers/Session/Session_Container.cpp:
         * ciao/Deployment/Handlers/Home_Handler.cpp:
 
-         Enabled home attribute configuration. 
+         Enabled home attribute configuration.
 
 Wed May 26 13:25:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
