@@ -145,7 +145,7 @@ project (Receptacle_client_test) : ciao_componentserver_stub, ccm_configvalue, c
   after += Receptacle_stub Receptacle_svnt CIF_Common
   libpaths += ../lib
   libs += Receptacle_stub CIF_Common
-  includes += ../
+  includes += ..
 
   IDL_Files {
   }
