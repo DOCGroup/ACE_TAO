@@ -211,6 +211,31 @@ namespace CIAO_InterReturnT_Sender_Impl
     excep_holder->raise_exception ();
   }
 
+  void
+  MyFoo_callback_exec_i::ret_enum(
+                           const InterReturnT::test_enum ami_return_val,
+                           const char * /*answer*/, CORBA::Long l_cmd)
+  {
+    if ((l_cmd != 8) || (ami_return_val != InterReturnT::TWO))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR MyFoo_callback_exec_i::ret_enum: "
+                              "received the wrong long or enum value, expected 8"
+                              " and TWO, received %u and %u\n",
+                              l_cmd, ami_return_val));
+      }
+    else
+      {
+        ++nr_of_received;
+      }
+  }
+
+  void
+  MyFoo_callback_exec_i::ret_enum_excep(
+                 ::CCM_AMI::ExceptionHolder_ptr excep_holder)
+  {
+    excep_holder->raise_exception ();
+  };
+
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
@@ -238,6 +263,8 @@ namespace CIAO_InterReturnT_Sender_Impl
         my_foo_ami_->sendc_ret_array (new MyFoo_callback_exec_i (),"Send me an array.");
         my_foo_ami_->sendc_ret_seq (new MyFoo_callback_exec_i (),"Send me a sequence.");
         my_foo_ami_->sendc_ret_union (new MyFoo_callback_exec_i (),"Send me a union.");
+        my_foo_ami_->sendc_ret_enum (new MyFoo_callback_exec_i (),"Send me a enum value.");
+
       }
     return 0;
   }
@@ -356,15 +383,16 @@ namespace CIAO_InterReturnT_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (nr_of_received == 9)
+    if (nr_of_received == 10)
       {
-        ACE_DEBUG ((LM_DEBUG, "OK: Received all expected data"
+        ACE_DEBUG ((LM_DEBUG, "OK: Sender received all expected return data"
                               " for syn- and asynchronous calls\n"));  
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Received not all expected data"
-                              " for syn- and asynchronous calls\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender didn't receive all expected"
+                              " return data for syn- and asynchronous"
+                              " calls\n"));  
       }
   }
 

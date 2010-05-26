@@ -64,6 +64,10 @@ namespace CIAO_InterOutArgsT_Sender_Impl
                                  const InterOutArgsT::test_seq &seq);
     virtual void var_div2_outs_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual void enum_out ( InterOutArgsT::test_enum test_enum);
+    virtual void enum_out_excep (
+                 ::CCM_AMI::ExceptionHolder_ptr excep_holder);
   };
 
   class Sender_exec_i

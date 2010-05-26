@@ -38,6 +38,13 @@ module InterReturnT
     };
   typedef sequence<test> TestSeq;
   
+  enum test_enum
+  {
+    ZERO,
+    ONE,
+    TWO
+  };
+
   exception InternalError
     {
       long id;
@@ -62,6 +69,8 @@ module InterReturnT
       TestSeq ret_seq (in string in_str, out string answer, out long l_cmd)
         raises (InternalError);
       X_Union ret_union (in string in_str, out string answer, out long l_cmd)
+        raises (InternalError);
+      test_enum ret_enum (in string in_str, out string answer, out long l_cmd)
         raises (InternalError);
     };
 };

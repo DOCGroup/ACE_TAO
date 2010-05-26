@@ -82,6 +82,11 @@ namespace CIAO_InterReturnT_Sender_Impl
                             const char * answer, CORBA::Long l_cmd);
     virtual void ret_union_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual void ret_enum (InterReturnT::test_enum ami_return_val,
+                            const char * answer, CORBA::Long l_cmd);
+    virtual void ret_enum_excep (
+                 ::CCM_AMI::ExceptionHolder_ptr excep_holder);
   };
 
   class Sender_exec_i
