@@ -138,12 +138,22 @@ class UTL_ScopeActiveIterator;
 
 class TAO_IDL_FE_Export UTL_Scope : public virtual COMMON_Base
 {
+  // Friend class UTL_ScopeActiveIterator defines active iterator for
+  // UTL_Scope. Definition follows below.
+  friend class  UTL_ScopeActiveIterator;
+  friend int tao_yyparse (void);
+  friend class AST_Enum;
+  friend class IDL_GlobalData;
+
 public:
   // Enum to denote the kind of iteration desired.
   enum ScopeIterationKind {
       IK_both           // Iterate through both decls and local types.
     , IK_decls          // Iterate only through decls.
     , IK_localtypes     // Iterate only through local types.
+
+      // End users should not use this value directly
+    , IK_both_local     // (Same as IK_both)
   };
 
   // Operations.
@@ -323,15 +333,7 @@ protected:
   
   WHICH_PSEUDO which_pseudo_;
   
-  // Friend class UTL_ScopeActiveIterator defines active iterator for
-  // UTL_Scope. Definition follows below.
-  friend class  UTL_ScopeActiveIterator;
-
 protected:
-  friend int tao_yyparse (void);
-  friend class AST_Enum;
-  friend class IDL_GlobalData;
-
   /// Scope Management Protocol.
   
   /// Common code for most basic adding action.
@@ -517,39 +519,97 @@ private:
 class TAO_IDL_FE_Export UTL_ScopeActiveIterator
 {
 public:
-  // Operations.
-
-  // Constructor.
-  UTL_ScopeActiveIterator (UTL_Scope *s,
-                           UTL_Scope::ScopeIterationKind ik);
-
-  // Advance to next item.
-  void next (void);
-
-  // Get current item.
-  AST_Decl *item (void);
-
-  // Have we iterated over entire scope?
-  bool is_done (void);
-
-  // What kind of iterator is this?
-  UTL_Scope::ScopeIterationKind iteration_kind (void);
-
-  // What stage are we in with this iterator?
-  UTL_Scope::ScopeIterationKind iteration_stage (void);
-
-private:
+  // data members:
   // Scope to iterate over.
-  UTL_Scope *iter_source;
-
-  // What kind of iteration?
-  UTL_Scope::ScopeIterationKind ik;
+  UTL_Scope *source_;
 
   // What stage?
-  UTL_Scope::ScopeIterationKind stage;
+  UTL_Scope::ScopeIterationKind stage_;
 
-  // What location in stage?
-  long il;
+  // How many items left in this stage
+  unsigned long limit_;
+
+  // The current item
+  AST_Decl **item_;
+
+public:
+  // Constructors.
+  UTL_ScopeActiveIterator ()
+  : stage_ (UTL_Scope::IK_decls),
+    limit_ (0)
+  {}
+
+  UTL_ScopeActiveIterator (UTL_Scope *s,
+                           const UTL_Scope::ScopeIterationKind k)
+  : source_ (s),
+    stage_ ((UTL_Scope::IK_both == k && source_->pd_locals_used)
+            ? UTL_Scope::IK_both_local
+            : k),
+    limit_ ((UTL_Scope::IK_decls == stage_ ||
+             UTL_Scope::IK_both  == stage_   )
+            ? source_->pd_decls_used
+            : source_->pd_locals_used),
+    item_ ((UTL_Scope::IK_decls == stage_ ||
+            UTL_Scope::IK_both  == stage_   )
+           ? source_->pd_decls
+           : source_->pd_local_types)
+  {}
+
+  // Advance to next item.
+  void next (void)
+  {
+    // If not done
+    if (this->limit_)
+      {
+        if (--this->limit_)
+          {
+            // Still more left, so advance to next item
+            ++this->item_;
+          }
+        // Out of data in this stage, move onto another?
+        else if (UTL_Scope::IK_both_local == this->stage_)
+          {
+            // Switch to next stage. Note that IK_both
+            // is the same as IK_decls but also notes
+            // that both types were being asked for!
+            this->stage_ = UTL_Scope::IK_both;
+            this->limit_ = this->source_->pd_decls_used;
+            this->item_  = source_->pd_decls;
+	  }
+      }
+  }
+
+  // Get the current item.
+  AST_Decl *item (void)
+  {
+    return (this->limit_) ? *this->item_ : 0;
+  }
+
+  // Have we iterated over the entire scope?
+  bool is_done (void)
+  {
+    return !this->limit_;
+  }
+
+  // What kind of iterator is this?
+  UTL_Scope::ScopeIterationKind iteration_kind (void)
+  {
+    return (UTL_Scope::IK_decls      == this->stage_ ||
+            UTL_Scope::IK_localtypes == this->stage_   )
+           ? this->stage_
+           : UTL_Scope::IK_both;
+  }
+
+  // What stage are we at with this iterator?
+  UTL_Scope::ScopeIterationKind iteration_stage (void)
+  {
+    return (UTL_Scope::IK_decls      == this->stage_ ||
+            UTL_Scope::IK_localtypes == this->stage_   )
+           ? this->stage_
+           : (UTL_Scope::IK_both     == this->stage_)
+             ? UTL_Scope::IK_decls
+             : UTL_Scope::IK_localtypes;
+  }
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

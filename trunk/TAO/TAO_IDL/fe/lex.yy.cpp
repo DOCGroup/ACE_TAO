@@ -1692,7 +1692,7 @@ TAO_YY_RULE_SETUP
                   }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (tmp + 1),
+                                  UTL_String (tmp + 1, true),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
@@ -2977,7 +2977,7 @@ idl_parse_line_and_file (char *buf)
       if (temp_h) h = temp_h;
 #endif
       ACE_NEW (tmp,
-               UTL_String (h));
+               UTL_String (h, true));
       idl_global->update_prefix (tmp->get_string ());
       idl_global->set_filename (tmp);
     }
@@ -3025,7 +3025,7 @@ idl_parse_line_and_file (char *buf)
       ACE_NEW (nm,
                UTL_String (
                  idl_global->stripped_preproc_include (
-                   fname->get_string ())));
+                   fname->get_string ()), true));
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
