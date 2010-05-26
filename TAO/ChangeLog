@@ -1,3 +1,36 @@
+Wed May 26 13:20:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/util/utl_string.cpp:
+
+          A huge amount of time was being wasted in very short lived
+          UTL_String objects. The UTL_String class was very badly
+          optomised for such heavy use given such short lifetimes of
+          the majority of it's use cases. Refactored, exposing it's
+          internal functions to make them available to external
+          const char * strings, which obviates the need for most of
+          the set-up, destruction and the multiple string allocations,
+          duplications and deallocations.
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Refactored the UTL_ScopeActiveIterator class. This was biased
+          towards light set-up cost but heavy interation and dereferancing.
+          (The reverse requirement of its very tight loop use.) Set-up
+          now contains the logic to drive it whilst the iteration and
+          dereferaning costs are now a couple of statements each. Since
+          these are executed many times in the loop bodies, time savings
+          accrue rapidly. Also tidied up the layout and redundant variable
+          initialisations.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Updated due to changes to the utl_string class.
+
 Wed May 26 10:10:33 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3755_Ext_Regression/ziop_svc.conf:
