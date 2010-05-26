@@ -10,7 +10,7 @@ project(AMI_InterReturnT_Base_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=InterReturnT_Sender_svnt_export.h \
               -Wb,exec_export_macro=INTERRETURN_T_SENDER_EXEC_Export \
               -Wb,exec_export_include=InterReturnT_Sender_exec_export.h \
-              -I.. -GM
+              -I.. -GC
 
   IDL_Files {
     InterReturnT_Sender.idl
@@ -104,7 +104,7 @@ project(AMI_InterReturnT_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_InterReturnT_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_InterReturnT_Base_skel AMI_ReturnT_Base_Sender_lem_stub AMI_InterReturnT_Base_exec AMI_InterReturnT_skel
+  after      += AMI_InterReturnT_Base_skel AMI_ReturnT_Base_Sender_lem_stub AMI_ReturnT_Base_Sender_stub AMI_InterReturnT_Base_exec AMI_InterReturnT_skel
   sharedname  = InterReturnT_Sender_svnt
   libs       += InterReturnT_Sender_stub InterReturnT_Sender_lem_stub  \
                 InterReturnT_skel \

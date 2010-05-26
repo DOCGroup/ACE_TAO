@@ -41,7 +41,7 @@ project(AMI4CCM_IDL_Test_lema_gen) : ciaoidldefaults {
               -Wb,svnt_export_include=Hello_svnt_export.h \
               -Wb,skel_export_macro=HELLO_SKEL_Export \
               -Wb,skel_export_include=Hello_skel_export.h \
-              -I.. -Gsv -Gcn -Glem -GM -Gxhst -Gxhsv
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
 
   IDL_Files {
     HelloA.idl

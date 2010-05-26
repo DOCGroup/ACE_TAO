@@ -10,7 +10,7 @@ project(AMI_ExceptionT_Base_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=ExceptionT_Sender_svnt_export.h \
               -Wb,exec_export_macro=EXCEPTION_T_SENDER_EXEC_Export \
               -Wb,exec_export_include=ExceptionT_Sender_exec_export.h \
-              -I.. -GM
+              -I.. -GC
 
   IDL_Files {
     ExceptionT_Sender.idl
@@ -104,7 +104,7 @@ project(AMI_ExceptionT_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
 }
 
 project(AMI_ExceptionT_Base_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_ExceptionT_Base_skel AMI_ExceptionT_Base_Sender_lem_stub AMI_ExceptionT_Base_exec AMI_ExceptionT_skel
+  after      += AMI_ExceptionT_Base_skel AMI_ExceptionT_Base_Sender_lem_stub AMI_ExceptionT_Base_Sender_stub AMI_ExceptionT_Base_exec AMI_ExceptionT_skel
   sharedname  = ExceptionT_Sender_svnt
   libs       += ExceptionT_Sender_stub ExceptionT_Sender_lem_stub  \
                 ExceptionT_skel \
