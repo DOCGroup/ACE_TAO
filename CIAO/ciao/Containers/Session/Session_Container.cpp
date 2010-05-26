@@ -1013,41 +1013,70 @@ namespace CIAO
   }
 
   void
-  Session_Container::set_attributes (Components::CCMObject_ptr compref,
+  Session_Container::set_attributes (CORBA::Object_ptr compref,
                                      const ::Components::ConfigValues & values)
   {
     CIAO_TRACE("Session_Container::activate_component");
 
     try
       {
-
-        CIAO::Connector_Servant_Impl_Base * svt = 0;
+	PortableServer::Servant svt;
 
         try
           {
-            svt =
-              dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
-                this->component_poa_->reference_to_servant (compref));
+            svt = this->component_poa_->reference_to_servant (compref);
           }
+	catch (CORBA::Exception &ex)
+	  {
+	    CIAO_ERROR (1, (LM_ERROR, CLINFO
+			    "Session_Container::set_attributes - "
+			    "Caught CORBA exception while retrieving servant: %C",
+			    ex._info ().c_str ()));
+	    throw CIAO::InvalidComponent ();
+	  }
         catch (...)
           {
-            throw InvalidComponent ();
+	    CIAO_ERROR (1, (LM_EMERGENCY, "ex in ref to servant\n"));
+            throw CIAO::InvalidComponent ();
           }
-
+	
         if (!svt)
           {
+	    CIAO_ERROR (1, (LM_EMERGENCY, "invalid servant reference\n"));
             throw CIAO::InvalidComponent  ();
           }
         else
           {
-            CIAO_DEBUG (9,
-                        (LM_TRACE,
-                         CLINFO
-                         "Session_Container::set_attributes - "
-                         "Configuring attribute values on "
-                         "component object reference.\n"));
+	    CIAO::Connector_Servant_Impl_Base * comp (0);
+	    CIAO::Home_Servant_Impl_Base *home (0);
 
-            svt->set_attributes (values);
+	    if ((comp = dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (svt)))
+	      {
+		CIAO_DEBUG (9,
+			    (LM_TRACE,
+			     CLINFO
+			     "Session_Container::set_attributes - "
+			     "Configuring attribute values on "
+			     "component object reference.\n"));
+		
+		comp->set_attributes (values);
+	      }
+	    else if ((home = dynamic_cast <CIAO::Home_Servant_Impl_Base *> (svt)))
+	      {
+		CIAO_DEBUG (9,
+			    (LM_TRACE,
+			     CLINFO
+			     "Session_Container::set_attributes - "
+			     "Configuring attribute values on "
+			     "home object reference.\n"));
+		
+		home->set_attributes (values);
+	      }
+	    else 
+	      {
+		CIAO_ERROR (1, (LM_EMERGENCY, "not home or component\n"));
+		throw CIAO::InvalidComponent ();
+	      }
           }
       }
     catch (const CIAO::InvalidComponent &)

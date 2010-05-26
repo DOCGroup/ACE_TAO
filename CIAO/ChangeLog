@@ -1,3 +1,12 @@
+Wed May 26 13:38:49 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+
+         Enabled home attribute configuration. 
+
 Wed May 26 13:25:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl
@@ -17,7 +26,7 @@ Wed May 26 13:25:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
         AMI4CCM test multiple inheritance.
-        
+
 Wed May 26 13:20:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/CIAO_State.h:

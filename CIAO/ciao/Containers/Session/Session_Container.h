@@ -145,7 +145,7 @@ namespace CIAO
                                          const char * user_port);
 
     /// Set attributes on a component
-    virtual void set_attributes (Components::CCMObject_ptr compref,
+    virtual void set_attributes (CORBA::Object_ptr compref,
                                  const ::Components::ConfigValues & values);
 
     /// Activate component
