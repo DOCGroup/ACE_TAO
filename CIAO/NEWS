@@ -78,6 +78,34 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
   has changed, any mismatch between the attribute datatype in IDL
   and the CDP file will cause to a StartError
 
+. The interpretation of locality constraints in deployment plans has changed
+  slightly.  Previously, any components not explicitly included as part of
+  a locality group would be installed into their own, seperate locality.  Now
+  they will be installed into an arbitrarily chosen locality on the same node.
+
+. The first version of the DAnCE LocalityManager entity has been added to
+  the repository.  As such, launching components with ciao_componentserver
+  is no longer supported, and dance_locality_manager should be used instead
+  as the component server argument to dance_node_manager.
+
+. The way explicitly homed components are represented in deployment plans
+  has changed.  The <implementation> section needs to have an execParameter
+  with name "edu.vanderbilt.dre.DAnCE.ImplementationType" and value
+  "edu.vanderbilt.dre.CCM.HomedComponent".  The <instance> section needs
+  to have a configProperty with name "edu.vanderbilt.dre.CIAO.ComponentHomeId"
+  and value is the <name> field of the home that is managing that component.
+
+. The way component server processes are explicitly deployed and passed
+  command line arguments has changed.  The <implementation> field must
+  have an execParameter named "edu.vanderbilt.dre.DAnCE.ImplementationType"
+  and value "edu.vanderbilt.dre.DAnCE.LocalityManager".  To pass command
+  line arguments, the instance must have a configProperty named
+  "edu.vanderbilt.dre.DAnCE.LocalityArguments". 
+
+. Connection of emits/publish/consume ports is no longer supported via
+  externalReference endpoints.  Simplex and multiplex facet/receptacle 
+  connections continue to be supported. 
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
 
