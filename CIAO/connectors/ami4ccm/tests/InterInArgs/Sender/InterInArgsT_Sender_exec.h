@@ -68,6 +68,10 @@ namespace CIAO_InterInArgsT_Sender_Impl
     virtual void var_div2_ins (const char * answer);
     virtual void var_div2_ins_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder);
+
+    virtual void enum_in(const char * answer);
+    virtual void enum_in_excep (
+                 ::CCM_AMI::ExceptionHolder_ptr excep_holder);
   };
 
   class Sender_exec_i

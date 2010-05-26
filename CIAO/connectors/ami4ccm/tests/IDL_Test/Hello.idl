@@ -12,6 +12,13 @@
 
 module Hello
 {
+  enum test_enum
+  {
+    ZERO,
+    ONE,
+    TWO
+  };
+
   exception InternalError
     {
       long id;
@@ -28,6 +35,13 @@ module Hello
         raises (InternalError);
       void no_answer (in string in_str)
         raises (InternalError);
+      test_enum enum_return(in string in_str)
+        raises (InternalError); 
+      void enum_no_return(in string in_str, 
+                          in test_enum in_test,
+                          out test_enum out_test)
+        raises (InternalError); 
+
       attribute short rw_attrib
         getraises (InternalError)
         setraises (InternalError);
