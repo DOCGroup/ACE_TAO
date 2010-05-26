@@ -1,3 +1,11 @@
+Wed May 26 14:43:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/DDS_Sender.mpc:
+          Resolved static compile errors.
+
 Wed May 26 14:38:58 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ciao/ComponentServer/CIAO_ComponentServer.mpc:
@@ -8,7 +16,7 @@ Wed May 26 14:34:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
         * ciao/Servants/Connector_Servant_Impl_Base.h:
-        
+
           Added no-ops for get_all_publishers() and get_all_emitters()
           if CCM_LW is not defined, so for generated connector servants,
           we can skip generation of these methods.

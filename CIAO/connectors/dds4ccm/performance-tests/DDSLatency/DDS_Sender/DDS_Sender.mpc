@@ -1,6 +1,6 @@
 // $Id$
 
-project(*latency_sender_plain) : nddslib, acelib, taolib {
+project(*latency_sender_plain) : nddslib, acelib, taolib, anytypecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_Sender
   avoids += ace_for_tao
@@ -14,7 +14,7 @@ project(*latency_sender_plain) : nddslib, acelib, taolib {
   }
 }
 
-project(*ndds_latency_sender_plain) : nddslib, acelib, taolib {
+project(*ndds_latency_sender_plain) : nddslib, acelib, taolib, anytypecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_NDDS_Sender
   avoids += ace_for_tao
