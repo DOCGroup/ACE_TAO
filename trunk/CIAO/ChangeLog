@@ -1,7 +1,12 @@
+Wed May 26 13:20:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/CIAO_State.h:
+          Fixed FC8 compile error
+
 Wed May 26 11:51:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
-        
+
           Added an item to the 'after' list of a build project - apparently
           there is a build order problem on some platforms.
 
