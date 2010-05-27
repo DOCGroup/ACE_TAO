@@ -85,7 +85,7 @@ public:
 
   UTL_String (const char *str, bool take_copy= false);
 
-  UTL_String (UTL_String *s);
+  UTL_String (UTL_String *s, bool force_copy= false);
 
   virtual ~UTL_String (void);
 
