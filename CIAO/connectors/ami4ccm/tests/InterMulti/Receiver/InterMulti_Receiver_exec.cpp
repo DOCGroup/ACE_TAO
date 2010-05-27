@@ -39,7 +39,7 @@ Two_exec_i::Two_exec_i (void)
   }
 
   void
-  Two_exec_i::bar (::CORBA::Long cmd,
+  Two_exec_i::bar (::CORBA::Long /*cmd*/,
                    ::CORBA::String_out answer)
   {
     answer = CORBA::string_dup ("answer bar two");
@@ -54,7 +54,7 @@ Two_exec_i::Two_exec_i (void)
   }
 
   void
-  Three_exec_i::plus (::CORBA::Long cmd,
+  Three_exec_i::plus (::CORBA::Long /*cmd*/,
                      ::CORBA::String_out answer)
   {
     answer = CORBA::string_dup ("answer plus three");
@@ -76,7 +76,7 @@ Two_exec_i::Two_exec_i (void)
   }
 
   void
-  Three_exec_i::bar (::CORBA::Long cmd,
+  Three_exec_i::bar (::CORBA::Long /*cmd*/,
                    ::CORBA::String_out answer)
   {
     answer = CORBA::string_dup ("answer bar three");

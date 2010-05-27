@@ -25,7 +25,7 @@ namespace CIAO_InterMulti_Sender_Impl
   // FOO methods
   void
   One_callback_exec_i::foo (
-    ::CORBA::Long ami_return_val,
+    ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
      ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from ONE::foo,"
@@ -42,7 +42,7 @@ namespace CIAO_InterMulti_Sender_Impl
   }
   void
   One_callback_exec_i::sec (
-    ::CORBA::Long ami_return_val,
+    ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
      ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from ONE::sec,"
@@ -122,7 +122,7 @@ namespace CIAO_InterMulti_Sender_Impl
 
   void
   Three_callback_exec_i::foo (
-    ::CORBA::Long ami_return_val,
+    ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
     ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from THREE::foo,"
@@ -157,7 +157,7 @@ namespace CIAO_InterMulti_Sender_Impl
 
   void
   Three_callback_exec_i::sec (
-    ::CORBA::Long ami_return_val,
+    ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
      ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from Three::sec,"
@@ -243,9 +243,9 @@ namespace CIAO_InterMulti_Sender_Impl
   int synch_foo_generator::svc ()
   {
     char *answer = 0;
-    CORBA::Long result = my_one_ami_->foo ("Do something synchronous",
-                                                     2 ,
-                                                     answer);
+    my_one_ami_->foo ("Do something synchronous",
+                       2 ,
+                       answer);
     return 0;
   }
  //============================================================
@@ -260,9 +260,9 @@ namespace CIAO_InterMulti_Sender_Impl
   int synch_three_generator::svc ()
   {
     char *answer = 0;
-    CORBA::Long result = my_three_ami_->foo ("Do something synchronous",
-                                                     2 ,
-                                                     answer);
+    my_three_ami_->foo ("Do something synchronous",
+                         2 ,
+                        answer);
     return 0;
   }
   //============================================================
