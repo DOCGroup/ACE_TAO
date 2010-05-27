@@ -6,6 +6,7 @@
 
 namespace CIAO_InterMulti_Receiver_Impl
 {
+  Atomic_UShort nr_of_received = 0;
   One_exec_i::One_exec_i (void)
   {
   }
@@ -15,22 +16,27 @@ namespace CIAO_InterMulti_Receiver_Impl
   }
 
   ::CORBA::Long
-  One_exec_i::foo (const char * /*in_str*/,::CORBA::Long cmd,
-                     ::CORBA::String_out answer)
+  One_exec_i::foo (const char * in_str, ::CORBA::Long cmd,
+                   ::CORBA::String_out answer)
   {
+    ACE_DEBUG ((LM_DEBUG, "Receiver: one_foo, in_str = %C"
+                          " cmd = <%u>\n",
+                          in_str, cmd));  
+    if (cmd != 1)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver ONE::foo,"
+                              " origin not 1, but <%u>\n",
+                              cmd));  
+      }
+    else
+      {
+        nr_of_received++;
+      }
     answer = CORBA::string_dup ("answer foo one");
     return cmd;
   }
 
- ::CORBA::Long
-  One_exec_i::sec (const char * /*in_str*/,::CORBA::Long cmd,
-                     ::CORBA::String_out answer)
-  {
-    answer = CORBA::string_dup ("answer sec one");
-    return cmd;
-  }
-
-Two_exec_i::Two_exec_i (void)
+  Two_exec_i::Two_exec_i (void)
   {
   }
 
@@ -39,9 +45,22 @@ Two_exec_i::Two_exec_i (void)
   }
 
   void
-  Two_exec_i::bar (::CORBA::Long /*cmd*/,
+  Two_exec_i::bar (::CORBA::Long cmd,
                    ::CORBA::String_out answer)
   {
+    ACE_DEBUG ((LM_DEBUG, "Receiver: two_bar,"
+                          " cmd = <%u>\n",
+                          cmd)); 
+    if (cmd != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR Receiver: TWO::bar,"
+                              " origin not 2, but <%u>\n",
+                              cmd));  
+      }
+    else
+      {
+        nr_of_received++;
+      }
     answer = CORBA::string_dup ("answer bar two");
   }
 
@@ -54,31 +73,54 @@ Two_exec_i::Two_exec_i (void)
   }
 
   void
-  Three_exec_i::plus (::CORBA::Long /*cmd*/,
+  Three_exec_i::plus (::CORBA::Long cmd,
                      ::CORBA::String_out answer)
   {
+    ACE_DEBUG ((LM_DEBUG, "Receiver: three_plus,"
+                          " cmd = <%u>\n",
+                          cmd));  
+    nr_of_received++;
     answer = CORBA::string_dup ("answer plus three");
   }
-   ::CORBA::Long
-  Three_exec_i::foo (const char * /*in_str*/,::CORBA::Long cmd,
-                     ::CORBA::String_out answer)
-  {
-    answer = CORBA::string_dup ("answer foo three");
-    return cmd;
-  }
 
- ::CORBA::Long
-  Three_exec_i::sec (const char * /*in_str*/,::CORBA::Long cmd,
+  ::CORBA::Long
+  Three_exec_i::foo (const char * in_str,::CORBA::Long cmd,
                      ::CORBA::String_out answer)
   {
-    answer = CORBA::string_dup ("answer sec three");
-    return cmd;
+    ACE_DEBUG ((LM_DEBUG, "Receiver: three_foo, in_str = %C"
+                          " cmd = <%u>\n",
+                          in_str, cmd)); 
+    if (cmd != 3)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver THREE::foo,"
+                              " origin not 3, but <%u>\n",
+                              cmd));  
+      }
+    else
+      {
+        nr_of_received++;
+      }
+    answer = CORBA::string_dup ("answer foo three");
+    return 3;
   }
 
   void
-  Three_exec_i::bar (::CORBA::Long /*cmd*/,
+  Three_exec_i::bar (::CORBA::Long cmd,
                    ::CORBA::String_out answer)
   {
+    ACE_DEBUG ((LM_DEBUG, "Receiver: three_bar,"
+                          " cmd = <%u>\n",
+                          cmd));
+    if (cmd != 3)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver Three::bar,"
+                              " origin not 3, but <%u>\n",
+                              cmd));  
+      }
+    else
+      {
+        nr_of_received++;
+      }
     answer = CORBA::string_dup ("answer bar three");
   }
 
@@ -138,6 +180,20 @@ Two_exec_i::Two_exec_i (void)
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    if (nr_of_received.value() != 7)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: not received the expected number of"
+                              "correct calls"
+                              "Expected: 7, Received: %u.\n",
+                              nr_of_received.value()));  
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
+                              "number of correct calls. "
+                              "Expected: 7, Received: %u.\n",
+                              nr_of_received.value()));  
+      }
   }
 
   extern "C"  ::Components::EnterpriseComponent_ptr

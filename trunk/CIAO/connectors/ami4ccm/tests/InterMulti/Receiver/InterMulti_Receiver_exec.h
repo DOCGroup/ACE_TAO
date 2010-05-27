@@ -15,6 +15,8 @@
 
 namespace CIAO_InterMulti_Receiver_Impl
 {
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
+
   class One_exec_i
     : public virtual ::InterMulti::CCM_One,
       public virtual ::CORBA::LocalObject
@@ -25,10 +27,7 @@ namespace CIAO_InterMulti_Receiver_Impl
 
     virtual ::CORBA::Long foo (const char * in_str, ::CORBA::Long cmd,
                                ::CORBA::String_out answer);
-    virtual ::CORBA::Long sec (const char * in_str, ::CORBA::Long cmd,
-                               ::CORBA::String_out answer);
-
-  };
+ };
    class Two_exec_i
     : public virtual ::InterMulti::CCM_Two,
       public virtual ::CORBA::LocalObject
@@ -40,7 +39,7 @@ namespace CIAO_InterMulti_Receiver_Impl
     virtual void bar (::CORBA::Long cmd,
                       ::CORBA::String_out answer);
   };
-    class Three_exec_i
+  class Three_exec_i
     : public virtual ::InterMulti::CCM_Three,
       public virtual ::CORBA::LocalObject
   {
@@ -51,9 +50,6 @@ namespace CIAO_InterMulti_Receiver_Impl
     virtual void plus (::CORBA::Long cmd,
                        ::CORBA::String_out answer);
     virtual ::CORBA::Long foo (const char * in_str,
-                               ::CORBA::Long cmd,
-                               ::CORBA::String_out answer);
-    virtual ::CORBA::Long sec (const char * in_str,
                                ::CORBA::Long cmd,
                                ::CORBA::String_out answer);
     virtual void bar (::CORBA::Long cmd,
