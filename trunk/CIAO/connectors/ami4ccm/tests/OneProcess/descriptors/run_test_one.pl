@@ -202,7 +202,7 @@ print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-x $cdp_file -k file://$ior_emfile");
 
-$pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
+$pl_status = $E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
 
 if ($pl_status != 0) {
     print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
@@ -228,7 +228,7 @@ print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_fil
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-k file://$ior_emfile -x $cdp_file -s");
-$pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
+$pl_status = $E->SpawnWaitKill (3 * $tg_executor->ProcessStartWaitInterval ());
 
 if ($pl_status != 0) {
     print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
