@@ -17,14 +17,11 @@ module InterMulti
       string error_string;
     };
 
-  // Sender/Receiver interface
+  // Sender/Receiver interfaces
   interface One
     {
       long foo (in string in_str, in long cmd, out string answer)
         raises (InternalError);
-      long sec (in string in_str, in long cmd, out string answer)
-        raises (InternalError);
-
     };
   interface Two
     {
@@ -38,7 +35,6 @@ module InterMulti
        void plus (in long cmd, out string answer)
          raises (InternalError);
     };
-
 };
 
 #endif

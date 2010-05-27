@@ -1,14 +1,13 @@
 // -*- C++ -*-
 // $Id$
 
-// sender, receiver and connector in one node: asynchronous callbacks.
+// test sendc methods with derived classes, multiple inheritance.
 #include "InterMulti_Sender_exec.h"
 #include "ace/OS_NS_unistd.h"
 
 namespace CIAO_InterMulti_Sender_Impl
 {
   Atomic_UShort nr_of_received = 0;
-  CORBA::Boolean asynch = false;
   //============================================================
   // Facet Executor Implementation Class: One_callback_exec_i
   //============================================================
@@ -28,7 +27,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from ONE::foo,"
+     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
                            " answer = <%C>\n",
                            answer));  
      nr_of_received++;
@@ -40,24 +39,7 @@ namespace CIAO_InterMulti_Sender_Impl
   {
         excep_holder->raise_exception ();
   }
-  void
-  One_callback_exec_i::sec (
-    ::CORBA::Long /*ami_return_val*/,
-    const char * answer)
-  {
-     ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from ONE::sec,"
-                           " answer = <%C>\n",
-                           answer));  
-     nr_of_received++;
-  }
-
-  void
-  One_callback_exec_i::sec_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
-  {
-        excep_holder->raise_exception ();
-  }
-   //============================================================
+  //============================================================
   // Facet Executor Implementation Class: Two_callback_exec_i
   //============================================================
   Two_callback_exec_i::Two_callback_exec_i (void)
@@ -67,7 +49,6 @@ namespace CIAO_InterMulti_Sender_Impl
   Two_callback_exec_i::~Two_callback_exec_i (void)
   {
   }
-
   //============================================================
   // Operations from ::CCM_AMI::Two_callback
   //============================================================
@@ -75,11 +56,10 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Two_callback_exec_i::bar (const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from TWO::bar,"
+     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from TWO::bar,"
                            " answer = <%C>\n",
                            answer));  
      nr_of_received++;
-
   }
 
   void
@@ -106,11 +86,10 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Three_callback_exec_i::plus (const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from THREE::plus,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::plus,"
                           " answer = <%C>\n",
                           answer));  
      nr_of_received++;
-
   }
 
   void
@@ -125,7 +104,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from THREE::foo,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::foo,"
                           " answer = <%C>\n",
                           answer));  
     nr_of_received++;
@@ -142,7 +121,7 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Three_callback_exec_i::bar (const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from THREE::bar,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::bar,"
                           " answer = <%C>\n",
                           answer));  
      nr_of_received++;
@@ -150,24 +129,6 @@ namespace CIAO_InterMulti_Sender_Impl
 
   void
   Three_callback_exec_i::bar_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
-  {
-        excep_holder->raise_exception ();
-  }
-
-  void
-  Three_callback_exec_i::sec (
-    ::CORBA::Long /*ami_return_val*/,
-    const char * answer)
-  {
-     ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK from Three::sec,"
-                           " answer = <%C>\n",
-                           answer));  
-     nr_of_received++;
-  }
-
-  void
-  Three_callback_exec_i::sec_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
         excep_holder->raise_exception ();
@@ -185,10 +146,7 @@ namespace CIAO_InterMulti_Sender_Impl
   {
     //Invoke Asynchronous calls to test 
     my_one_ami_->sendc_foo ( new One_callback_exec_i (),
-                                  "Hi foo", 1);
-    my_one_ami_->sendc_sec ( new One_callback_exec_i (),
-                                  "Hi from sec", 1);
-
+      "Hi from asynch call ONE::foo", 1);
     return 0;
   }
 
@@ -203,8 +161,17 @@ namespace CIAO_InterMulti_Sender_Impl
 
   int asynch_two_generator::svc ()
   {
-  //Invoke Asynchronous calls to test 
-    my_two_ami_->sendc_bar ( new Two_callback_exec_i (), 1);
+    if (CORBA::is_nil (my_two_ami_))
+      {
+        ACE_ERROR ((LM_ERROR, 
+                   "ERROR Sender (ASYNCH) :my_two_ami_ is NIL !\n"));  
+        return 1;
+      }
+    else
+      {
+        //Invoke Asynchronous calls to test 
+        my_two_ami_->sendc_bar ( new Two_callback_exec_i (), 2);
+      }
     return 0;
   }
 
@@ -219,16 +186,21 @@ namespace CIAO_InterMulti_Sender_Impl
 
   int asynch_three_generator::svc ()
   {
-    //Invoke Asynchronous calls to test 
-    my_three_ami_->sendc_plus( new Three_callback_exec_i (), 2);
-    //InterMulti::AMI4CCM_One_ptr tt = InterMulti::AMI4CCM_One::_narrow(my_three_ami_);
-    //tt->sendc_foo(new Three_callback_exec_i (),"hoi", 2);
-
-    //!!!!!!!
-    // I expected that the following rules must be  possible, but see in InterMultiAC.h,
-    // there is no inheritance with  class AMI4CCM_Three from class::AMI4CCM_One and  class::AMI4CCM_Two
-  //  my_three_ami_->sendc_foo ( new Three_callback_exec_i (),"hoi", 2);
-  //  my_three_ami_->sendc_bar ( new Three_callback_exec_i (), 2);
+    if (CORBA::is_nil (my_three_ami_))
+      {
+        ACE_ERROR ((LM_ERROR, 
+                    "ERROR Sender (ASYNCH) :my_three_ami_ is NIL !\n"));  
+        return 1;
+      }
+    else
+      {
+        //Invoke Asynchronous calls to test 
+        my_three_ami_->sendc_plus( new Three_callback_exec_i (), 3);
+        // derived from CLASS ONE 
+        my_three_ami_->sendc_foo ( new Three_callback_exec_i (),"hoi", 3);
+        // derived fron CLASS TWO
+        my_three_ami_->sendc_bar ( new Three_callback_exec_i (), 3);
+      }
     return 0;
   }
   //============================================================
@@ -243,9 +215,15 @@ namespace CIAO_InterMulti_Sender_Impl
   int synch_foo_generator::svc ()
   {
     char *answer = 0;
-    my_one_ami_->foo ("Do something synchronous",
-                       2 ,
-                       answer);
+    CORBA::Long result = my_one_ami_->foo (
+                            "Synchronous call foo from class One",
+                            1,
+                            answer);
+    if (result != 1)
+      {
+        ACE_ERROR ((LM_ERROR, 
+                    "ERROR Sender (SYNCH) : CLASS One foo !\n"));
+      }
     return 0;
   }
  //============================================================
@@ -260,9 +238,16 @@ namespace CIAO_InterMulti_Sender_Impl
   int synch_three_generator::svc ()
   {
     char *answer = 0;
-    my_three_ami_->foo ("Do something synchronous",
-                         2 ,
+    CORBA::Long result = my_three_ami_->foo (
+                        "Synchronous call foo from class Three, "
+                        " derived from class ONE",
+                        3 ,
                         answer);
+    if (result != 3)
+      {
+        ACE_ERROR ((LM_ERROR, 
+                    "ERROR Sender (SYNCH) : CLASS Three foo !\n"));
+      }
     return 0;
   }
   //============================================================
@@ -340,8 +325,18 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    ACE_DEBUG ((LM_DEBUG, 
-                    "OK: All messages received back\n"));  
+    if (nr_of_received.value() != 5)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Did not get all callbacks for"
+                              "derived classes."
+                              " Received = %u of 5\n",
+                              nr_of_received.value()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, 
+                    "OK: All messages received back by Sender\n"));  
+      }
   }
 
   extern "C"  ::Components::EnterpriseComponent_ptr

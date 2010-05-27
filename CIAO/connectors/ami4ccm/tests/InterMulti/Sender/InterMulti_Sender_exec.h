@@ -92,9 +92,6 @@ namespace CIAO_InterMulti_Sender_Impl
 
     virtual void foo (::CORBA::Long ami_return_val, const char * answer);
     virtual void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
-    virtual void sec (::CORBA::Long ami_return_val, const char * answer);
-    virtual void sec_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
- 
   };
 
   class Two_callback_exec_i
@@ -123,9 +120,6 @@ namespace CIAO_InterMulti_Sender_Impl
     virtual void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
     virtual void bar (const char * answer);
     virtual void bar_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
-    virtual void sec (::CORBA::Long ami_return_val, const char * answer);
-    virtual void sec_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
-
   };
 
   class Sender_exec_i
