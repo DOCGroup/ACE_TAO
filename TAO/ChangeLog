@@ -1,3 +1,23 @@
+Thu May 27 13:53:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
+
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/util/utl_string.cpp:
+
+          Allow for the force_copy option with utl_string copies.
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Reverted the refactored UTL_ScopeActiveIterator class. Annoyingly
+          some uses of this class require that the original source is
+          changed whilst the itterator continues to be still valid. The new
+          version didn't allow this.
+
+        * TAO_IDL/be/be_identifier_helper.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Updated due to changes to the utl_string class.
+
 Thu May 27 08:58:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
@@ -31,6 +51,9 @@ Wed May 26 14:26:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
         * TAO_IDL/util/utl_string.cpp:
+
+          Removed the tabs that emacs kindly put in these files behind
+          my back.
 
 Wed May 26 13:20:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
