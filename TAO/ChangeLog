@@ -1,22 +1,27 @@
+Thu May 27 08:58:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled 3755_Ext tests on LynxOS.
+
 Wed May 26 19:27:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:
-        
+
           In generation of the AMI4CCM_xxx interface, added code to
           regenerate the operations from all the ancestors.
-          
+
         * TAO_IDL/be/be_visitor_connector/connector_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/connector_ami_exh.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
-        
+
           Cosmetic changes, comments fixes, layout fixes.
 
 Wed May 26 14:38:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
-        
+
           Eliminated generation of declarations for get_all_emitters()
           and get_all_publishers() for connectors, if LwCCM is not
           defined, they are now in the base class.
