@@ -166,15 +166,13 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 bool
 IdentifierHelper::is_idl_keyword (Identifier * local_name)
 {
-  UTL_String utl_tmp (local_name->get_string ());
-  ACE_CString ext_id (utl_tmp.get_canonical_rep (),
-                      0,
-                      false);
+  // Convert the identifier string into a
+  // canonical (uppercase) form as a ACE_CString
+  char *tmp = local_name->get_string ();
+  ACE_CString ext_id (tmp);
+  UTL_String::get_canonical_rep (ext_id);
 
-  int status = idl_global->idl_keywords ().find (ext_id);
-  utl_tmp.destroy ();
-
-  return status == 0;
+  return !idl_global->idl_keywords ().find (ext_id);
 }
 
 ACE_CString 

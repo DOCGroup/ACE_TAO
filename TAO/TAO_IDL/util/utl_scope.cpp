@@ -2244,3 +2244,98 @@ UTL_Scope::local_checks (AST_Decl *d, bool full_def_only)
 }
 
 IMPL_NARROW_FROM_SCOPE(UTL_Scope)
+
+// UTL_SCOPE_ACTIVE_ITERATOR
+
+// Constructor.
+UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
+    UTL_Scope *s,
+    UTL_Scope::ScopeIterationKind i
+  )
+  : iter_source (s),
+    ik (i),
+    stage (i == UTL_Scope::IK_both ? UTL_Scope::IK_localtypes : i),
+    il (0)
+{
+}
+
+// Public operations.
+
+// Advance to next item.
+void
+UTL_ScopeActiveIterator::next (void)
+{
+  this->il++;
+}
+
+// Get current item.
+AST_Decl *
+UTL_ScopeActiveIterator::item (void)
+{
+  if (this->is_done ())
+    {
+      return 0;
+    }
+
+  if (stage == UTL_Scope::IK_decls)
+    {
+      return this->iter_source->pd_decls[il];
+    }
+
+  if (stage == UTL_Scope::IK_localtypes)
+    {
+      return this->iter_source->pd_local_types[il];
+    }
+
+  return 0;
+}
+
+// Is this iteration done?
+bool
+UTL_ScopeActiveIterator::is_done (void)
+{
+  long limit =
+    (stage == UTL_Scope::IK_decls)
+      ? iter_source->pd_decls_used
+      : iter_source->pd_locals_used;
+
+  for (;;)
+    {
+      // Last element?
+      if (this->il < limit)
+        {
+          return false;
+        }
+
+      // Only want decls?
+      if (this->stage == UTL_Scope::IK_decls)
+        {
+          return true;
+        }
+
+      // Already done local types?
+      if (this->ik == UTL_Scope::IK_localtypes)
+        {
+          return true;
+        }
+
+      // Switch to next stage.
+      this->stage = UTL_Scope::IK_decls;
+      this->il = 0;
+      limit = this->iter_source->pd_decls_used;
+    }
+}
+
+// What kind of iterator is this?
+UTL_Scope::ScopeIterationKind
+UTL_ScopeActiveIterator::iteration_kind (void)
+{
+  return this->ik;
+}
+
+// And where are we in the iteration?
+UTL_Scope::ScopeIterationKind
+UTL_ScopeActiveIterator::iteration_stage (void)
+{
+  return this->stage;
+}

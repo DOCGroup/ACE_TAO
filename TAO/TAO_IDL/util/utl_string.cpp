@@ -201,8 +201,8 @@ UTL_String::UTL_String (const char *str, bool take_copy)
 {
 }
 
-UTL_String::UTL_String (UTL_String *s)
-  : copy_taken (s ? s->copy_taken : false),
+UTL_String::UTL_String (UTL_String *s, bool force_copy)
+  : copy_taken (s ? (force_copy ? true : s->copy_taken) : false),
     p_str      (this->copy_taken ? ACE::strnew (s->p_str)
                                  : const_cast<char *>(s->p_str)),
     c_str      (0)

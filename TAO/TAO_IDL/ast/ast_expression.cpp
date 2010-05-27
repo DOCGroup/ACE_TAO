@@ -141,7 +141,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
               AST_ExprValue);
 
       ACE_NEW (this->pd_ev->u.strval,
-               UTL_String (v->pd_ev->u.strval));
+               UTL_String (v->pd_ev->u.strval, true));
 
       this->pd_ev->et = EV_string;
     }
@@ -429,7 +429,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   UTL_String *new_str = 0;
   ACE_NEW (new_str,
-           UTL_String (sv));
+           UTL_String (sv, true));
 
   this->pd_ev->u.strval = new_str;
   this->pd_ev->et = EV_string;
