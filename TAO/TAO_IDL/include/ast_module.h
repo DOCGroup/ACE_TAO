@@ -234,6 +234,10 @@ private:
   
   AST_Template_Module_Inst *from_inst_;
   /// Reference to the instantiation that created us, if any.
+  
+  static bool in_prev_;
+  /// Flag to prevent exponential repeats of search through
+  /// previous openings.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH
