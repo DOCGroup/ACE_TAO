@@ -1,3 +1,8 @@
+Fri May 28 16:16:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Add tpp to cpp files list
+
 Mon May 24 15:17:41 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
