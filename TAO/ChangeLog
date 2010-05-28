@@ -1,3 +1,11 @@
+Fri May 28 01:50:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/ast/ast_module.cpp:
+        
+          Added flag to skip some redundant passes through previous
+          openings during lookups.
+
 Thu May 27 13:53:00 UTC 2010  Simon Massey  <sma at prismtech dot com>
 
         * TAO_IDL/include/utl_string.h:
