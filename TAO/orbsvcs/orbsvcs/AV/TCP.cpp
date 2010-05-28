@@ -210,7 +210,7 @@ TAO_AV_TCP_Object::handle_input (void)
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
+    ACE_ERROR_RETURN ((LM_DEBUG,"TAO_AV_TCP_Flow_Handler::handle_input connection closed\n"),-1);
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
 
   return this->callback_->receive_frame (&this->frame_);
@@ -655,6 +655,19 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
                        "NODELAY failed\n"),
                       -1);
 #endif /* TCP_NODELAY */
+
+//begin: BJE: (allign the sizes of the buffers)
+  int bufSize=BUFSIZ;
+  int s= sizeof (bufSize);
+  if(  this->peer ().get_option (SOL_SOCKET, /*IPPROTO_TCP,*/
+				  SO_RCVBUF,
+                                (void *) &bufSize,&s
+			     ) == -1)
+       bufSize=BUFSIZ;
+
+    
+    ((TAO_AV_TCP_Object*)(this->protocol_object_))->frame_.size (bufSize);
+//end: BJE
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.
