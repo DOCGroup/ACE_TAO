@@ -173,7 +173,6 @@ ACE_Service_Repository::fini (void)
 
       // Collect any errors.
       retval += s->fini ();
-      this->service_array_[i] = 0;
     }
   }
   //
