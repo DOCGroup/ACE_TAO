@@ -12,7 +12,7 @@ project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support {
 
 project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
   after   += Display_NavDisplay_lem_gen \
-             Display_NavDisplay_stub \
+             Display_NavDisplay_svnt \
              Display_NavDisplayGUI_exec_moc
   sharedname = NavDisplayGUI_exec
   libs += NavDisplay_stub Display_Base_stub
