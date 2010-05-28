@@ -1,3 +1,9 @@
+Fri May 28 16:17:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * ciao/Deployment/Handlers/CIAO_State.h:
+          Fixed fuzz
+
 Fri May 28 13:39:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
