@@ -1,3 +1,14 @@
+Fri May 28 17:27:34 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * TAO/orbsvcs/orbsvcs/AV/{VStreams_i.cpp,TCP.h,TCP.cpp}: Added the following fixes:
+           . set length of sequence to proper length: new_flows.length(this->flows_.length ());
+           . frame size is set to OS buffer size
+           . some exceptions are re-thrown rather than just printed out &
+             return, so that user can catch them and react. 
+  
+          Thanks to Bogdan Jeram <bjeram at eso dot org> for contributing
+          this.
+
 Fri May 28 01:50:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:

@@ -656,18 +656,14 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
                       -1);
 #endif /* TCP_NODELAY */
 
-//begin: BJE: (allign the sizes of the buffers)
-  int bufSize=BUFSIZ;
-  int s= sizeof (bufSize);
-  if(  this->peer ().get_option (SOL_SOCKET, /*IPPROTO_TCP,*/
-				  SO_RCVBUF,
-                                (void *) &bufSize,&s
-			     ) == -1)
-       bufSize=BUFSIZ;
-
+  int buf_size = BUFSIZ;
+  int s = sizeof (buf_size);
+  if (this->peer ().get_option (SOL_SOCKET, /*IPPROTO_TCP,*/
+                                SO_RCVBUF,
+                                (void *) &buf_size, &s) == -1)
+       buf_size = BUFSIZ;
     
-    ((TAO_AV_TCP_Object*)(this->protocol_object_))->frame_.size (bufSize);
-//end: BJE
+    ((TAO_AV_TCP_Object*)(this->protocol_object_))->frame_.size (buf_size);
 
   // Called by the <Strategy_Acceptor> when the handler is completely
   // connected.

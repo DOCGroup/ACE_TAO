@@ -108,7 +108,7 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
-  catch(AVStreams::noSuchFlow& ex)
+  catch(const AVStreams::noSuchFlow& ex)
       {
       throw; //ACS mod 2007-08
       }
@@ -159,7 +159,7 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
- catch(AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow& ex)
       {
       throw; //ACS mod 2007-08
       }
@@ -451,7 +451,7 @@ TAO_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->stop (flow_spec);
         }
     }
-  catch(AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow& ex)
     {
     throw; //ACS mod 2007-08
     }
@@ -489,7 +489,7 @@ TAO_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->start (flow_spec);
         }
     }
- catch(AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow& ex)
     {
     throw; //ACS mod 2007-08
     }
@@ -3400,7 +3400,7 @@ TAO_FlowConnection::stop (void)
           (*consumer_begin)->stop ();
         }
     }
- catch(AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow& ex)
     {
     throw; //ACS mod 2007-08
     }
@@ -3438,7 +3438,7 @@ TAO_FlowConnection::start (void)
           (*producer_begin)->start ();
         }
     }
- catch(AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow& ex)
     {
     throw; //ACS mod 2007-08
     }
