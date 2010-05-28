@@ -94,7 +94,7 @@ sub find_files ()
 sub store_file ($)
 {
     my $name = shift;
-    if ($name =~ /\.(c|cc|cpp|cxx)$/i) {
+    if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
     elsif ($name =~ /\.(inl|i)$/i) {
