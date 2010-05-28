@@ -1,4 +1,9 @@
-Thu May 26 15:38:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+Fri May 28 10:00:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        Remove flag fixed_bug_only from test InterMulti. 
+
+Thu May 27 15:38:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
         * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.idl
@@ -11,7 +16,7 @@ Thu May 26 15:38:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
         Finished test after TAO_IDL changes.
 
-Thu May 26 07:27:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
+Thu May 27 07:27:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl
         Increase SpawnWaitKill period .
