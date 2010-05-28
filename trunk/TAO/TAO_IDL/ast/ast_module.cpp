@@ -104,6 +104,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 AST_Decl::NodeType const
 AST_Module::NT = AST_Decl::NT_module;
 
+bool AST_Module::in_prev_ = false;
+
 AST_Module::AST_Module (UTL_ScopedName *n)
  : AST_Decl (AST_Decl::NT_module,
              n),
@@ -363,7 +365,16 @@ AST_Decl *
 AST_Module::special_lookup (UTL_ScopedName *e,
                             bool full_def_only)
 {
-  return this->look_in_prev_mods (e, full_def_only);
+  AST_Decl *d = 0;
+  
+  if (!AST_Module::in_prev_)
+    {
+      AST_Module::in_prev_ = true;
+      d = this->look_in_prev_mods (e, full_def_only);
+      AST_Module::in_prev_ = false;
+    }
+    
+  return d;
 }
 
 //================================================
