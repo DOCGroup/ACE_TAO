@@ -1,13 +1,20 @@
+Fri May 28 13:39:20 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+
+          Adjusted one of the "after" statements so that it builds correctly
+          with parallel make.
+
 Fri May 28 12:30:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
-        
+
           Added a missing build dependency.
 
 Fri May 28 10:00:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
-        Remove flag fixed_bug_only from test InterMulti. 
+        Remove flag fixed_bug_only from test InterMulti.
 
 Thu May 27 15:38:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
@@ -31,8 +38,8 @@ Wed May 26 20:28:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl:
 
-          reduce timeouts. 
-        
+          reduce timeouts.
+
 Wed May 26 19:58:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
