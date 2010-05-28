@@ -7,7 +7,7 @@ Fri May 28 17:27:34 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
              return, so that user can catch them and react. 
   
           Thanks to Bogdan Jeram <bjeram at eso dot org> for contributing
-          this.
+          this.  This fixes bugid 2029.
 
 Fri May 28 01:50:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
