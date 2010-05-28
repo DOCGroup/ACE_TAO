@@ -1,3 +1,9 @@
+Fri May 28 12:30:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
+        
+          Added a missing build dependency.
+
 Fri May 28 10:00:01 UTC 2010  Marijke Hengstmengel <m.hengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst

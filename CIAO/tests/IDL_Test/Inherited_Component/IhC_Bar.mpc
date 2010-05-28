@@ -83,7 +83,9 @@ project(IhC_Foo_IhC_Bar_stub) : ccm_stub   {
 }
 
 project(IhC_Foo_IhC_Bar_exec) : ciao_executor   {
-  after   += IhC_Foo_IhC_Bar_lem_stub IhC_Foo_IhC_Bar_stub
+  after   += IhC_Foo_IhC_Bar_lem_stub \
+             IhC_Foo_IhC_Bar_stub \
+             IhC_Foo_exec
   sharedname = IhC_Bar_exec
   libs += IhC_Bar_stub \
           IhC_Bar_lem_stub \
@@ -91,7 +93,7 @@ project(IhC_Foo_IhC_Bar_exec) : ciao_executor   {
           IhC_Foo_lem_stub \
           IhC_Foo_exec
 
-  dynamicflags   = IHC_BAR_EXEC_BUILD_DLL
+  dynamicflags = IHC_BAR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
