@@ -77,11 +77,11 @@ namespace CIAO
   };
 
   typedef ACE_Singleton <Deployment_State,
-                         ACE_SYNCH_MUTEX> DEPLOYMENT_STATE;
+                         TAO_SYNCH_MUTEX> DEPLOYMENT_STATE;
 }
 
 CIAO_LOCALITY_HANDLER_SINGLETON_DECLARE (ACE_Singleton,
                                          CIAO::Deployment_State,
-                                         ACE_SYNCH_MUTEX)
+                                         TAO_SYNCH_MUTEX)
 
 #endif

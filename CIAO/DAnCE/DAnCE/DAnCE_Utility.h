@@ -33,7 +33,7 @@ namespace DAnCE
                                     ACE_Null_Mutex> PROPERTY_MAP;
 
     typedef ACE_Refcounted_Auto_Ptr <PROPERTY_MAP,
-                                     ACE_SYNCH_MUTEX> PMAP_PTR;
+                                     TAO_SYNCH_MUTEX> PMAP_PTR;
 
     DANCE_STUB_Export void build_property_map (PROPERTY_MAP &map,
                              const ::Deployment::Properties &prop);
