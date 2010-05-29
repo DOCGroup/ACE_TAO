@@ -410,7 +410,7 @@ int teardown_plan (const Options &opts,
           if (plan)
             uuid = plan->UUID.in ();
           else
-            uuid = opts.uuid_;
+            uuid = ACE_TEXT_ALWAYS_CHAR (opts.uuid_);
 
           DAnCE::EM_Launcher *em_launcher =
             dynamic_cast <DAnCE::EM_Launcher *> (pl_base);

@@ -1,3 +1,9 @@
+Sat May 29 01:56:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+          Fix error in wchar.
+
 Sat May 29 01:54:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Utility.tpp:
