@@ -107,7 +107,7 @@ namespace CIAO_InterReturnT_Receiver_Impl
     InterReturnT::test_enum test_enum;
     test_enum = InterReturnT::TWO;
     return test_enum;
-  };
+  }
 
   Receiver_exec_i::Receiver_exec_i (void)
   {

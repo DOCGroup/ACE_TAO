@@ -15,8 +15,9 @@ namespace CIAO_CSL_QoSTest_Receiver_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &incompatible,
-                                                                  Atomic_ThreadId &thread_id)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Atomic_Boolean &incompatible,
+    Atomic_ThreadId &thread_id)
     : incompatible_ (incompatible),
       thread_id_ (thread_id)
   {
