@@ -1,3 +1,8 @@
+Sat May 29 02:28:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIF/Navigation/run_test.pl:
+          No need to run at level 9 by default
+
 Sat May 29 02:08:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Policies/policies.mpc:

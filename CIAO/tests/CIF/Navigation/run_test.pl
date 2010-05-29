@@ -8,8 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-$ENV {'CIAO_LOG_LEVEL'} = 9;
-
 $status = 0;
 $ciao_root = "$ENV{CIAO_ROOT}";
 
