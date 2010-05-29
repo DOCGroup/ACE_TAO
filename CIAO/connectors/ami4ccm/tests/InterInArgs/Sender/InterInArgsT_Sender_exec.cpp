@@ -126,14 +126,15 @@ namespace CIAO_InterInArgsT_Sender_Impl
   MyFoo_callback_exec_i::enum_in(const char * /*answer*/)
   {
     ++nr_of_received;
-  };
+  }
 
   void
   MyFoo_callback_exec_i::enum_in_excep (
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
+  
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
