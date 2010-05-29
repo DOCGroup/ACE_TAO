@@ -1,3 +1,8 @@
+Sat May 29 02:08:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+          Added missing base project
+
 Sat May 29 02:03:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_convert_plan.mpb:
