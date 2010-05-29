@@ -108,14 +108,14 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
-  catch(const AVStreams::noSuchFlow& ex)
-      {
-      throw; //ACS mod 2007-08
-      }
+  catch (const AVStreams::noSuchFlow&)
+    {
+      throw;
+    }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_Basic_StreamCtrl::stop");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_Basic_StreamCtrl::stop");
+      throw;
     }
   catch(...)
     {
@@ -159,14 +159,14 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
-  catch (const AVStreams::noSuchFlow& ex)
-      {
-      throw; //ACS mod 2007-08
-      }
+  catch (const AVStreams::noSuchFlow&)
+    {
+      throw; 
+    }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_Basic_StreamCtrl::start");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_Basic_StreamCtrl::start");
+      throw;  
     }
   catch(...)
     {
@@ -451,14 +451,14 @@ TAO_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->stop (flow_spec);
         }
     }
-  catch (const AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow&)
     {
-    throw; //ACS mod 2007-08
+      throw; 
     }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_StreamCtrl::stop");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_StreamCtrl::stop");
+      throw; 
     }
   catch(...)
     {
@@ -489,14 +489,14 @@ TAO_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->start (flow_spec);
         }
     }
-  catch (const AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow&)
     {
-    throw; //ACS mod 2007-08
+      throw; 
     }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_StreamCtrl::start");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_StreamCtrl::start");
+      throw; 
     }
   catch(...)
     {
@@ -3400,14 +3400,14 @@ TAO_FlowConnection::stop (void)
           (*consumer_begin)->stop ();
         }
     }
-  catch (const AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow&)
     {
-    throw; //ACS mod 2007-08
+      throw;
     }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_FlowConnection::stop");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_FlowConnection::stop");
+      throw;  
     }
   catch(...)
     {
@@ -3438,14 +3438,14 @@ TAO_FlowConnection::start (void)
           (*producer_begin)->start ();
         }
     }
-  catch (const AVStreams::noSuchFlow& ex)
+  catch (const AVStreams::noSuchFlow&)
     {
-    throw; //ACS mod 2007-08
+      throw; 
     }
   catch (const CORBA::Exception& ex)
     {
-    ex._tao_print_exception ("TAO_FlowConnection::start");
-    throw;  //ACS mod 2007-08
+      ex._tao_print_exception ("TAO_FlowConnection::start");
+      throw; 
     }
   catch(...)
     {
