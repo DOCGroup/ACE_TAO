@@ -1,9 +1,15 @@
+Sat May 29 02:18:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-leopard.h:
+
+          Added ACE_HAS_VOID_UNSETENV.
+        
 Sat May 29 02:08:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/ace_for_tao.mpc:
 
           Added Process_Manager, which is used in CIAO.
-        
+
 Fri May 28 19:56:20 UTC 2010 Chad Beaulac <chad.beaulac@objectivesolutions.com>
 
         * ace/Service_Repository.cpp
