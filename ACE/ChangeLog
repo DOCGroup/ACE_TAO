@@ -1,10 +1,16 @@
+Sat May 29 02:08:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/ace_for_tao.mpc:
+
+          Added Process_Manager, which is used in CIAO.
+        
 Fri May 28 19:56:20 UTC 2010 Chad Beaulac <chad.beaulac@objectivesolutions.com>
 
-	* ace/Service_Repository.cpp
-	  Fixed memory leak by removing this->service_array_[i] = 0
-	  in fini method.
-	  Bug was introduced by #3334 fix. This fixes it thanks
-	  to Vladimir Zykov for pointing this out.
+        * ace/Service_Repository.cpp
+          Fixed memory leak by removing this->service_array_[i] = 0
+          in fini method.
+          Bug was introduced by #3334 fix. This fixes it thanks
+          to Vladimir Zykov for pointing this out.
 
 Fri May 28 16:16:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
