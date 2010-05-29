@@ -9,6 +9,8 @@
 #define ACE_HAS_MAC_OSX
 #define ACE_HAS_NET_IF_DL_H
 
+#define ACE_HAS_VOID_UNSETENV
+
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
