@@ -1,3 +1,9 @@
+Sat May 29 01:54:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Utility.tpp:
+
+          Fuzz.
+
 Fri May 28 16:17:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE/DAnCE_Utility.h:
