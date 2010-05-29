@@ -1,3 +1,16 @@
+Sat May 29 14:33:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/10-05-06.pdf:
+        * connectors/dds4ccm/docs/10-05-07.pdf:
+        * connectors/dds4ccm/docs/10-05-09.zip:
+          DDS4CCM Beta 3 documents
+
+        * connectors/dds4ccm/docs/DDS4CCM FTF2 Issue List batch1.doc:
+        * connectors/dds4ccm/docs/DDS4CCM FTF2 Issue List batch2 v2.doc:
+        * connectors/dds4ccm/docs/DDS4CCM v1-1 b1.odt:
+        * connectors/dds4ccm/docs/DDS4CCM v1-1 b2- v2.odt:
+          Removed these files, draft beta 3 files
+
 Sat May 29 02:28:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CIF/Navigation/run_test.pl:
