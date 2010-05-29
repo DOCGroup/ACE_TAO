@@ -1,6 +1,6 @@
 // $Id$
 
-project(DDS_Policies_Test) : taoexe, dds4ccm_base {
+project(DDS_Policies_Test) : taoexe, dds4ccm_base, anytypecode {
   includes += $(CIAO_ROOT)
   exename = policies_test
   requires += dds4ccm_ndds
