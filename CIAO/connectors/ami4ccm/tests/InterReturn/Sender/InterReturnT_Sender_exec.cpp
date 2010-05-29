@@ -234,7 +234,7 @@ namespace CIAO_InterReturnT_Sender_Impl
                  ::CCM_AMI::ExceptionHolder_ptr excep_holder)
   {
     excep_holder->raise_exception ();
-  };
+  }
 
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo

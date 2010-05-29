@@ -1,3 +1,21 @@
+Sat May 29 02:03:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/MPC/config/dance_convert_plan.mpb:
+          Layout changes
+
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Receiver/InterReturnT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+          Fixed FC8 compile errors
+
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub_exec.h:
+        * connectors/dds4ccm/examples/Large_Deployment/DDS_Pub/DDS_Pub_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Layout changes
+
 Sat May 29 01:56:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
