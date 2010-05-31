@@ -1,3 +1,40 @@
+Mon May 31 16:41:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_exception/ctor.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_ch.h:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_field/field_ch.h:
+        * TAO_IDL/be_include/be_visitor_field/field_ci.h:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_field/field_cs.h:
+
+          Added overrides of visit_structure_fwd() and
+          visit_union_fwd() to various visitors that were
+          generating and empty typename for these nodes.
+          When a struct or union is referenced that was
+          forward declared (and defined) in an included
+          IDL file, the lookup returns the forward declaration.
+
+        * tests/IDL_Test/included.idl:
+        * tests/IDL_Test/including.idl:
+
+          Use case above added to the test suite. Thanks to
+          Thanks to Bogdan Jeram <bjeram at eso dot org> for
+          reporting the problem and supplying the test case.
+
 Mon May 31 14:57:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp(gen_gperf_lookup_methods):

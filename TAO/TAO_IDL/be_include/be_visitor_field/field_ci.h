@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_FIELD_CI_H_
 #define _BE_VISITOR_FIELD_CI_H_
 
@@ -28,32 +27,18 @@
 class be_visitor_field_ci : public be_visitor_decl
 {
 public:
-  /// constructor
   be_visitor_field_ci (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_field_ci (void);
 
-  /// visit the field node
   virtual int visit_field (be_field *node);
 
-  // =visit operations on all possible data types that a field can be and for
-  // which inline code must be generated
-
-  /// visit array type
   virtual int visit_array (be_array *node);
-
-  /// visit sequence type
   virtual int visit_sequence (be_sequence *node);
-
-  /// visit structure type
   virtual int visit_structure (be_structure *node);
-
-  /// visit typedefed type
+  virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_typedef (be_typedef *node);
-
-  /// visit union type
   virtual int visit_union (be_union *node);
+  virtual int visit_union_fwd (be_union_fwd *node);
 };
 
 #endif /*  _BE_VISITOR_FIELD_CI_H_ */

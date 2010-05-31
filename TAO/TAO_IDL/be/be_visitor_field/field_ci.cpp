@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_array/array_ci.h"
 #include "be_visitor_structure/structure_ci.h"
 #include "be_visitor_union/union_ci.h"
@@ -110,6 +109,16 @@ be_visitor_field_ci::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_field_ci::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    be_structure::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_structure (s);
+}
+
+int
 be_visitor_field_ci::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
@@ -150,3 +159,13 @@ be_visitor_field_ci::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_field_ci::visit_union_fwd (be_union_fwd *node)
+{
+  be_union *u =
+    be_union::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_union (u);
+}
+
