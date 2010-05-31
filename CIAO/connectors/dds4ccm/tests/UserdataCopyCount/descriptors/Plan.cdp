@@ -1,0 +1,282 @@
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>UCCTest_Depl</label>
+  <UUID>UCCTest_Depl</UUID>
+
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCCTest_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCC_Test_UCCTestComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="TwoDim_UCC_Test_ConnectorImplementation">
+    <name>TwoDim_UCC_Test_ConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="UCC_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="UCC_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCCVariableSizedStruct_Test_UCCVariableSizedStructTestConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCCVariableSizedStruct_Test_UCCVariableSizedStructTestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UCC_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UCC_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ThreeDim_UCC_Test_ConnectorImplementation">
+    <name>ThreeDim_UCC_Test_ConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="UCC_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="UCC_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCCFixedSizeStruct_Test_UCCFixedSizedStructTestConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_UCCFixedSizeStruct_Test_UCCFixedSizedStructTestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UCC_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UCC_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="ComponentInstance">
+    <name>Component</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="TwoDim_UCC_Test_ConnectorInstance">
+    <name>TwoDim_UCC_Test_Connector</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="TwoDim_UCC_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TwoDimensionalTopic</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="ThreeDim_UCC_Test_ConnectorInstance">
+    <name>ThreeDim_UCC_Test_Connector</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ThreeDim_UCC_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ThreeDimensionalTopic</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>var_size_write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>var_size_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TwoDim_UCC_Test_ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>fixed_size_write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>fixed_size_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeDim_UCC_Test_ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="UCC_Test_Connector_ExecArtifact">
+    <name>UCC_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>UCC_Test_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="UCC_Test_Connector_SvntArtifact">
+    <name>UCC_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>UCC_Test_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="UCC_Test_Connector_StubArtifact">
+    <name>UCC_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>UCC_Test_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+</Deployment:DeploymentPlan>
