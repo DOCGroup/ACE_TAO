@@ -24,7 +24,25 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 int
 TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
-  if (!this->initialized_ && TAO_DEF_GIOP_MINOR >= 2)
+  if (this->initialized_)
+    return 0;
+
+  this->initialized_ = true;
+
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+
+  ACE_Service_Object * const bidir_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      gestalt,
+      "BiDirGIOP_Loader",
+      true);
+
+  if (bidir_loader != 0 && bidir_loader != this)
+    {
+      return bidir_loader->init (0, 0);
+    }
+
+  if (TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -45,8 +63,6 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
-
-          this->initialized_ = true;
         }
       catch (const ::CORBA::Exception& ex)
         {
