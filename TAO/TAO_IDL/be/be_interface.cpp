@@ -1863,7 +1863,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (ACE_OS::fclose (tao_cg->gperf_input_stream ()->file ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error:%p:File close failed on temp gperf's input file\n",
+                         ACE_TEXT ("Error:%p:File close failed ")
+                         ACE_TEXT ("on temp gperf's input file\n"),
                          "fclose"),
                         -1);
     }
@@ -1881,16 +1882,21 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                              "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE input = ACE::open_temp_file (ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
-                                          O_RDONLY);
+  ACE_HANDLE input =
+    ACE::open_temp_file (
+      ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
+      O_RDONLY);
 #endif
 
   if (input == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR, "Error:%p:File open failed on gperf's temp input file %s\n",
-                  "open_temp_file",
-                  tao_cg->gperf_input_filename ()));
-      return -1;
+      ACE_ERROR_RETURN ((
+        LM_ERROR,
+        ACE_TEXT ("Error:%p:File open failed on ")
+        ACE_TEXT ("gperf's temp input file %s\n"),
+        "open_temp_file",
+        tao_cg->gperf_input_filename ()),
+        -1);
     }
 
 #ifndef ACE_OPENVMS
@@ -1909,7 +1915,9 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (gperfOutput == 0)
     {
       ACE_OS::close (input);
-      ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("failed to allocate memory\n")),
+                        -1);
     }
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -1921,15 +1929,17 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                               "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE output = ACE_OS::open (be_global->be_get_server_skeleton_fname (),
-                                    O_WRONLY | O_APPEND);
+  ACE_HANDLE output =
+    ACE_OS::open (be_global->be_get_server_skeleton_fname (),
+                  O_WRONLY | O_APPEND);
 #endif
 
   if (output == ACE_INVALID_HANDLE)
     {
       ACE_OS::close (input);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error:%p:File open failed on server skeleton file\n",
+                         ACE_TEXT ("Error:%p:File open failed ")
+                         ACE_TEXT ("on server skeleton file\n"),
                          "open"),
                         -1);
     }
@@ -2015,8 +2025,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
     default:
       ACE_ERROR ((LM_ERROR,
-                  "tao_idl:ERROR:%N:%l:Unknown "
-                  "Operation Lookup Strategy\n"));
+                  ACE_TEXT ("tao_idl:ERROR:%N:%l:Unknown ")
+                  ACE_TEXT ("Operation Lookup Strategy\n")));
 
       result = -1;
   }
@@ -2029,8 +2039,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       if (result == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Couldn't spawn a "
-                      "process for gperf program\n"));
+                      ACE_TEXT ("Error:%p:Couldn't spawn a ")
+                      ACE_TEXT ("process for gperf program\n")));
         }
 
       // Wait for gperf to complete.
@@ -2042,8 +2052,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           if (result == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "Error:%p:gperf program "
-                          "returned exit code %d.\n",
+                          ACE_TEXT ("Error:%p:gperf program ")
+                          ACE_TEXT ("returned exit code %d.\n"),
                           exitcode));
             }
         }
@@ -2059,7 +2069,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   ACE_OS::close (input);
 
 #if defined (ACE_OPENVMS)
-  ACE_OS::unlink(tao_cg->gperf_input_filename ());
+  ACE_OS::unlink (tao_cg->gperf_input_filename ());
   process_options.release_handles ();
 
   if (result != -1)
@@ -2069,13 +2079,14 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       if (gperfOutputFile == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error:%p:Couldn't open gperf output file\n",
-                      "fopen"));
+                      ACE_TEXT ("Error:%p:Couldn't open ")
+                      ACE_TEXT ("gperf output file\n"),
+                      "fopen");
           result = -1;
         }
       else
         {
-          FILE* out = this->strategy_->get_out_stream ()->file ();
+          FILE* out = tao_cg->server_skeletons ()->file ();
           int c;
 
           while ((c = ACE_OS::fgetc(gperfOutputFile)) != EOF)
@@ -2086,7 +2097,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           if (ferror (gperfOutputFile) || ferror (out))
             {
               ACE_ERROR ((LM_ERROR,
-                          "Error:%p:Couldn't open gperf output file\n",
+                          ACE_TEXT ("Error:%p:Couldn't open ")
+                          ACE_TEXT ("gperf output file\n"),
                           "get/put"));
               result = -1;
             }
