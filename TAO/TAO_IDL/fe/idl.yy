@@ -2173,8 +2173,7 @@ literal
         {
 //      | IDL_UINTEGER_LITERAL
           $$ =
-            idl_global->gen ()->create_expr ($1,
-                                             AST_Expression::EV_ulonglong);
+            idl_global->gen ()->create_expr ($1);
         }
         | IDL_STRING_LITERAL
         {

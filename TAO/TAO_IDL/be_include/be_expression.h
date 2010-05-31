@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_EXPRESSION_H
 #define BE_EXPRESSION_H
 
@@ -37,7 +36,13 @@ public:
 
   be_expression (ACE_CDR::Long l);
 
+  be_expression (ACE_CDR::LongLong ll);
+
   be_expression (ACE_CDR::Boolean b);
+
+  be_expression (ACE_CDR::ULong ul);
+
+  be_expression (ACE_CDR::ULongLong ull);
 
   be_expression (ACE_CDR::ULong l,
                  AST_Expression::ExprType t);

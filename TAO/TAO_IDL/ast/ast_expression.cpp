@@ -255,6 +255,25 @@ AST_Expression::AST_Expression (ACE_CDR::Long lv)
   this->pd_ev->u.lval = lv;
 }
 
+// An AST_Expression denoting a long integer.
+AST_Expression::AST_Expression (ACE_CDR::LongLong llv)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0),
+    tdef (0),
+    param_holder_ (0)
+{
+  this->fill_definition_details ();
+
+  ACE_NEW (this->pd_ev,
+           AST_ExprValue);
+
+  this->pd_ev->et = EV_longlong;
+  this->pd_ev->u.llval = llv;
+}
+
 // An AST_Expression denoting a boolean.
 AST_Expression::AST_Expression (ACE_CDR::Boolean b)
   : pd_ec (EC_none),
@@ -291,6 +310,29 @@ AST_Expression::AST_Expression (ACE_CDR::ULong ulv)
 
   this->pd_ev->et = EV_ulong;
   this->pd_ev->u.ulval = ulv;
+}
+
+// An AST_Expression denoting an unsigned long long integer.
+AST_Expression::AST_Expression (ACE_CDR::ULongLong ulv)
+  : pd_ec (EC_none),
+    pd_ev (0),
+    pd_v1 (0),
+    pd_v2 (0),
+    pd_n (0),
+    tdef (0),
+    param_holder_ (0)
+{
+  this->fill_definition_details ();
+
+  ACE_NEW (this->pd_ev,
+           AST_ExprValue);
+
+  this->pd_ev->et = EV_ulonglong;
+#if defined (ACE_LACKS_LONGLONG_T)
+  this->pd_ev->u.ulval = ulv;
+#else
+  this->pd_ev->u.ullval = ulv;
+#endif
 }
 
 // An AST_Expression denoting an unsigned long integer.
@@ -927,7 +969,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
                     return 0;
             }
 
-          ev->u.llval = (ACE_CDR::LongLong) ev->u.ullval;
+          ev->u.llval =
+            static_cast<ACE_CDR::LongLong> (ev->u.ullval);
           ev->et = AST_Expression::EV_longlong;
           return ev;
         case AST_Expression::EV_bool:
@@ -1015,7 +1058,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
                     return 0;
             }
 
-          ev->u.ullval = (ACE_CDR::LongLong) ev->u.llval;
+          ev->u.ullval =
+            static_cast<ACE_CDR::LongLong> (ev->u.llval);
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_ulonglong:
