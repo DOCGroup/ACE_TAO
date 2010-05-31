@@ -131,10 +131,11 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
     ACE_DEBUG ((LM_DEBUG,
                 "In post_init\n"));
 
-  CORBA::Object_var rt_current_obj = info->resolve_initial_references ("RTCurrent");
+  CORBA::Object_var rt_current_obj =
+    info->resolve_initial_references (TAO_OBJID_RTCURRENT);
 
-
-  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ());
+  RTCORBA::Current_var rt_current =
+    RTCORBA::Current::_narrow (rt_current_obj.in ());
 
   if (CORBA::is_nil (rt_current.in ()))
     {

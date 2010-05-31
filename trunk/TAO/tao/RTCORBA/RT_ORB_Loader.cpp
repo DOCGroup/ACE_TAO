@@ -31,6 +31,12 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_RT_ORB_Loader::init");
 
+  // Only allow initialization once.
+  if (this->initialized_)
+    return 0;
+
+  this->initialized_ = true;
+
   ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
 
   ACE_Service_Object * const rt_loader =
@@ -41,15 +47,8 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 
   if (rt_loader != 0 && rt_loader != this)
     {
-      this->initialized_ = true;
       return rt_loader->init (argc, argv);
     }
-
-  // Only allow initialization once.
-  if (this->initialized_)
-    return 0;
-
-  this->initialized_ = true;
 
   // Set defaults.
   int priority_mapping_type =
