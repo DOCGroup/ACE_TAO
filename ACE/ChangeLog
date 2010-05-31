@@ -1,13 +1,22 @@
+Mon May 31 11:26:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Updated for the 5.7.9 release and prepared for the upcoming 5.8.0
+          release
+
 Mon May 31 09:04:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.7.9 released.
+        * ACE version 5.7.9 released.
 
 Sat May 29 02:18:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-leopard.h:
 
           Added ACE_HAS_VOID_UNSETENV.
-        
+
 Sat May 29 02:08:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/ace_for_tao.mpc:
