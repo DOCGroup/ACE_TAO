@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
 #include "utl_err.h"
