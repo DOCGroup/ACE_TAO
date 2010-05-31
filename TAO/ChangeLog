@@ -1,3 +1,23 @@
+Mon May 31 20:34:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_constructor_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_ci.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/serializer_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/private_ch.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_constructor_cs.h:
+
+          More visitors that need visit_structure_fwd() and
+          visit_union_fwd() overridden in the derived class.
+
 Mon May 31 16:41:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception.cpp:
