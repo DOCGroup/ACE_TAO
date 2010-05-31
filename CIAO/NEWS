@@ -100,11 +100,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
   have an execParameter named "edu.vanderbilt.dre.DAnCE.ImplementationType"
   and value "edu.vanderbilt.dre.DAnCE.LocalityManager".  To pass command
   line arguments, the instance must have a configProperty named
-  "edu.vanderbilt.dre.DAnCE.LocalityArguments". 
+  "edu.vanderbilt.dre.DAnCE.LocalityArguments".
 
 . Connection of emits/publish/consume ports is no longer supported via
-  externalReference endpoints.  Simplex and multiplex facet/receptacle 
-  connections continue to be supported. 
+  externalReference endpoints.  Simplex and multiplex facet/receptacle
+  connections continue to be supported.
+
+. DDS4CCM is compliant to the beta 2 specification, the next micro release
+  will be updated to match beta 3.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
 =======================================================
