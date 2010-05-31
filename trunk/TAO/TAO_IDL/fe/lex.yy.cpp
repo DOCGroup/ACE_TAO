@@ -1009,17 +1009,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "y.tab.h"
 
-static char *           idl_wstring_escape_reader (char *);
-static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
-static ACE_CDR::Char    idl_escape_reader (char *);
-static ACE_CDR::Double  idl_atof (char *);
-static ACE_CDR::Long    idl_atoi (char *, long);
-static ACE_CDR::ULong   idl_atoui (char *, long);
-static void             idl_parse_line_and_file (char *);
-static void             idl_store_pragma (char *);
-static char *           idl_get_pragma_string (char *);
-static bool             idl_valid_version (char *);
-static AST_Decl *       idl_find_node (char *);
+static char *               idl_wstring_escape_reader (char *);
+static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
+static ACE_CDR::Char        idl_escape_reader (char *);
+static ACE_CDR::Double      idl_atof (char *);
+static ACE_CDR::LongLong    idl_atoi (char *, long);
+static ACE_CDR::ULongLong   idl_atoui (char *, long);
+static void                 idl_parse_line_and_file (char *);
+static void                 idl_store_pragma (char *);
+static char *               idl_get_pragma_string (char *);
+static bool                 idl_valid_version (char *);
+static AST_Decl *           idl_find_node (char *);
 
 #define ace_tao_yytext tao_yytext
 
@@ -1623,56 +1623,56 @@ TAO_YY_RULE_SETUP
 case 75:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.dval = idl_atof(ace_tao_yytext);
+                  tao_yylval.dval = idl_atof (ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
         TAO_YY_BREAK
 case 76:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.dval = idl_atof(ace_tao_yytext);
+                  tao_yylval.dval = idl_atof (ace_tao_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
         TAO_YY_BREAK
 case 77:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.ival = idl_atoi(ace_tao_yytext, 10);
+                  tao_yylval.ival = idl_atoi (ace_tao_yytext, 10);
                   return IDL_INTEGER_LITERAL;
                 }
         TAO_YY_BREAK
 case 78:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.uival = idl_atoui(ace_tao_yytext, 10);
+                  tao_yylval.uival = idl_atoui (ace_tao_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
                 }
         TAO_YY_BREAK
 case 79:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.ival = idl_atoi(ace_tao_yytext, 16);
+                  tao_yylval.ival = idl_atoi (ace_tao_yytext, 16);
                   return IDL_INTEGER_LITERAL;
                 }
         TAO_YY_BREAK
 case 80:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.uival = idl_atoui(ace_tao_yytext, 16);
+                  tao_yylval.uival = idl_atoui (ace_tao_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
                 }
         TAO_YY_BREAK
 case 81:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.ival = idl_atoi(ace_tao_yytext, 8);
+                  tao_yylval.ival = idl_atoi (ace_tao_yytext, 8);
                   return IDL_INTEGER_LITERAL;
                 }
         TAO_YY_BREAK
 case 82:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.uival = idl_atoui(ace_tao_yytext, 8);
+                  tao_yylval.uival = idl_atoui (ace_tao_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
                 }
         TAO_YY_BREAK
@@ -3335,10 +3335,10 @@ idl_store_pragma (char *buf)
 /*
  * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
-static ACE_CDR::Long
-idl_atoi(char *s, long b)
+static ACE_CDR::LongLong
+idl_atoi (char *s, long b)
 {
-  long    r = 0;
+  ACE_CDR::LongLong r = ACE_CDR_LONGLONG_INITIALIZER;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
@@ -3381,11 +3381,11 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static ACE_CDR::ULong
-idl_atoui(char *s, long b)
+static ACE_CDR::ULongLong
+idl_atoui (char *s, long b)
 {
-  ACE_CDR::ULong  r = 0;
-
+  ACE_CDR::ULongLong r = 0;
+  
   if (b == 8 && *s == '0')
     {
       ++s;

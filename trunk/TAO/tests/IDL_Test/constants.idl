@@ -19,7 +19,6 @@
 //
 // ============================================================================
 
-
 const string all_escape = "\n\t\v\b\r\f\a\\\?\'\"";
 
 const char tick = '\'';
@@ -51,10 +50,17 @@ const char max_char_hex = '\xff';
 // const wstring wstr = L"wstr";
 
 // unsigned longs greater than LONG_MAX
-
 const unsigned long in_range = 3222111000;
 const unsigned long max_ulong_oct = 037777777777;
 const unsigned long max_ulong_hex = 0XFFFFFFFF;
+
+// Testing 64-bit integers. The executable will
+// verify that the generated values are correct.
+const unsigned long long AAA = 122192928000000000;
+const unsigned long AA = 3538947897;
+const long long NAAA = -122192928000000000;
+const long long PAAA = 122192928000000000;
+const long NAA = -1538947897;
 
 // various uncommon but legal formats for floats and doubles
 

@@ -220,12 +220,18 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Long v);
 
+  virtual AST_Expression *create_expr (ACE_CDR::LongLong v);
+
   virtual AST_Expression *create_expr (ACE_CDR::Boolean b);
+
+  virtual AST_Expression *create_expr (ACE_CDR::ULong v);
+
+  virtual AST_Expression *create_expr (ACE_CDR::ULongLong v);
 
   virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr( UTL_String *s);
+  virtual AST_Expression *create_expr (UTL_String *s);
 
   virtual AST_Expression *create_expr (char *s);
 
