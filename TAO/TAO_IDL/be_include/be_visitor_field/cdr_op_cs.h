@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_FIELD_CDR_OP_CS_H_
 #define _BE_VISITOR_FIELD_CDR_OP_CS_H_
 
@@ -27,10 +26,7 @@
 class be_visitor_field_cdr_op_cs : public be_visitor_decl
 {
 public:
-  /// constructor
   be_visitor_field_cdr_op_cs (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_field_cdr_op_cs (void);
 
   /// visit the field node
@@ -53,8 +49,10 @@ public:
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_string (be_string *node);
   virtual int visit_structure (be_structure *node);
+  virtual int visit_structure_fwd (be_structure_fwd *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_union (be_union *node);
+  virtual int visit_union_fwd (be_union_fwd *node);
 
  private:
   int emit_valuetype_common (void);

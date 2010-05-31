@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_visitor_array/cdr_op_ch.h"
 #include "be_visitor_enum/cdr_op_ch.h"
 #include "be_visitor_sequence/cdr_op_ch.h"
@@ -185,6 +184,16 @@ be_visitor_field_cdr_op_ch::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_field_cdr_op_ch::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    be_structure::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_structure (s);
+}
+
+int
 be_visitor_field_cdr_op_ch::visit_typedef (be_typedef *node)
 {
   // Save the node for use in code generation and
@@ -236,3 +245,13 @@ be_visitor_field_cdr_op_ch::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_field_cdr_op_ch::visit_union_fwd (be_union_fwd *node)
+{
+  be_union *u =
+    be_union::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_union (u);
+}
+

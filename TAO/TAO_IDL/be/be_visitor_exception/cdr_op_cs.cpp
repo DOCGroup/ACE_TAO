@@ -12,10 +12,8 @@
  */
 //=============================================================================
 
-
 be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+      be_visitor_context *ctx)
   : be_visitor_exception (ctx)
 {
 }

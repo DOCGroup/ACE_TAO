@@ -68,5 +68,36 @@ module VT_Test
   typedef sequence<VT_Def::VT> VTSeq;
 };
 
+// References to A::MyStructA from included.idl get the
+// forward declaration from lookup, and we were
+// getting empty typename generation in various places,
+// before overriding the visit methods for forward
+// declared structs and unions in the relevant visitors.
+module A
+{
+  const long smth = 6;
+};
+
+exception MyException
+{
+  A::MyStructA exField;
+};
+
+struct TestStr
+{
+  A::MyStructA field;
+};
+
+union TestUnion switch (long)
+{
+  case 0: A::MyStructA  value1;
+  case 1: string value2;
+};
+
+interface MyInt
+{
+  A::MyStructA op (in A::MyStructA a);
+};
+
 #endif /* IDL_TEST_INCLUDING_IDL */
 
