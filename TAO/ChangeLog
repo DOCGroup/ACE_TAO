@@ -1,3 +1,20 @@
+Mon May 31 08:37:17 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Marked 2 tests of 3755_Ext as fixed.
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.cpp:
+        * tao/RTScheduling/RTScheduler_Loader.h:
+          Fixed bug 3755 in BiDir_GIOP and RTScheduler libraries.
+
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+          Changed to use TAO_OBJID_RTCURRENT instead of plain C string.
+
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+          Rearranged the code so that the loader doesn't redo things
+          unnecessarily if it's already initialized.
+
 Mon May 31 09:04:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO version 1.7.9 released.

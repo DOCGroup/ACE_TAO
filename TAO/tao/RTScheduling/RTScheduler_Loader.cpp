@@ -37,6 +37,19 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
 
   this->initialized_ = true;
 
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+
+  ACE_Service_Object * const rts_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      gestalt,
+      "RTScheduler_Loader",
+      true);
+
+  if (rts_loader != 0 && rts_loader != this)
+    {
+      return rts_loader->init (0, 0);
+    }
+
   // Register the ORB initializer.
   try
     {
@@ -67,8 +80,6 @@ TAO_RTScheduler_Loader::init (int, ACE_TCHAR* [])
   return 0;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 /////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_RTScheduler, TAO_RTScheduler_Loader)
@@ -79,3 +90,4 @@ ACE_STATIC_SVC_DEFINE (TAO_RTScheduler_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+TAO_END_VERSIONED_NAMESPACE_DECL
