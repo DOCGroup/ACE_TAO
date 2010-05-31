@@ -168,9 +168,7 @@ public:
           ACE_CDR::Long       lval;     // Contains long expression value.
           ACE_CDR::ULong      ulval;    // Contains unsigned long expr value.
           ACE_CDR::Boolean    bval;     // Contains boolean expression value.
-#if ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   llval;   // Contains long long expr value.
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
 #if  defined (ACE_LACKS_UNSIGNEDLONGLONG_T) && ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   ullval; // Contains unsigned long long expr value
 #elif ! defined (ACE_LACKS_LONGLONG_T)
@@ -204,10 +202,14 @@ public:
   AST_Expression (ACE_CDR::UShort us);
 
   AST_Expression (ACE_CDR::Long l);
+  
+  AST_Expression (ACE_CDR::LongLong ll);
 
   AST_Expression (ACE_CDR::Boolean b);
 
   AST_Expression (ACE_CDR::ULong ul);
+
+  AST_Expression (ACE_CDR::ULongLong ull);
 
   AST_Expression (ACE_CDR::ULong,
                   ExprType t);

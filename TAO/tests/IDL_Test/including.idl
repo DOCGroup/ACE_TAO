@@ -88,7 +88,7 @@ struct TestStr
   A::MyStructA field;
 };
 
-union TestUnion switch (long)
+union TestUn switch (long)
 {
   case 0: A::MyStructA  value1;
   case 1: string value2;

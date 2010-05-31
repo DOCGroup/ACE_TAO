@@ -89,17 +89,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "y.tab.h"
 
-static char *           idl_wstring_escape_reader (char *);
-static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
-static ACE_CDR::Char    idl_escape_reader (char *);
-static ACE_CDR::Double  idl_atof (char *);
-static ACE_CDR::Long    idl_atoi (char *, long);
-static ACE_CDR::ULong   idl_atoui (char *, long);
-static void             idl_parse_line_and_file (char *);
-static void             idl_store_pragma (char *);
-static char *           idl_get_pragma_string (char *);
-static bool             idl_valid_version (char *);
-static AST_Decl *       idl_find_node (char *);
+static char *               idl_wstring_escape_reader (char *);
+static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
+static ACE_CDR::Char        idl_escape_reader (char *);
+static ACE_CDR::Double      idl_atof (char *);
+static ACE_CDR::LongLong    idl_atoi (char *, long);
+static ACE_CDR::ULongLong   idl_atoui (char *, long);
+static void                 idl_parse_line_and_file (char *);
+static void                 idl_store_pragma (char *);
+static char *               idl_get_pragma_string (char *);
+static bool                 idl_valid_version (char *);
+static AST_Decl *           idl_find_node (char *);
 
 #define ace_yytext yytext
 
@@ -234,36 +234,36 @@ oneway          return IDL_ONEWAY;
 }
 
 "-"?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
-                  yylval.dval = idl_atof(ace_yytext);
+                  yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 "-"?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
-                  yylval.dval = idl_atof(ace_yytext);
+                  yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
 "-"[1-9][0-9]*  {
-                  yylval.ival = idl_atoi(ace_yytext, 10);
+                  yylval.ival = idl_atoi (ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
                 }
 [1-9][0-9]*     {
-                  yylval.uival = idl_atoui(ace_yytext, 10);
+                  yylval.uival = idl_atoui (ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[xX][a-fA-F0-9]+ {
-                  yylval.ival = idl_atoi(ace_yytext, 16);
+                  yylval.ival = idl_atoi (ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
                 }
 0[xX][a-fA-F0-9]+ {
-                  yylval.uival = idl_atoui(ace_yytext, 16);
+                  yylval.uival = idl_atoui (ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[0-7]*      {
-                  yylval.ival = idl_atoi(ace_yytext, 8);
+                  yylval.ival = idl_atoi (ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
                 }
 0[0-7]*         {
-                  yylval.uival = idl_atoui(ace_yytext, 8);
+                  yylval.uival = idl_atoui (ace_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
                 }
 
@@ -305,16 +305,16 @@ oneway          return IDL_ONEWAY;
                 }
 "'"\\([0-7]{1,3})"'" {
                   // octal character constant
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\[xX]([0-9a-fA-F]{1,2})"'" {
                   // hexadecimal character constant
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\."'"       {
-                  yylval.cval = idl_escape_reader(ace_yytext + 1);
+                  yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 L"'"."'"        {
@@ -849,10 +849,10 @@ idl_store_pragma (char *buf)
 /*
  * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
-static ACE_CDR::Long
-idl_atoi(char *s, long b)
+static ACE_CDR::LongLong
+idl_atoi (char *s, long b)
 {
-  long    r = 0;
+  ACE_CDR::LongLong r = ACE_CDR_LONGLONG_INITIALIZER;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')
@@ -895,10 +895,10 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static ACE_CDR::ULong
+static ACE_CDR::ULongLong
 idl_atoui(char *s, long b)
 {
-  ACE_CDR::ULong  r = 0;
+  ACE_CDR::ULongLong r = 0;
 
   if (b == 8 && *s == '0')
     {

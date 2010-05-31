@@ -42,15 +42,29 @@ be_expression::be_expression (ACE_CDR::Long l)
 {
 }
 
+be_expression::be_expression (ACE_CDR::LongLong l)
+  : AST_Expression (l)
+{
+}
+
 be_expression::be_expression (ACE_CDR::Boolean b)
   : AST_Expression (b)
 {
 }
 
+be_expression::be_expression (ACE_CDR::ULong l)
+  : AST_Expression (l)
+{
+}
+
+be_expression::be_expression (ACE_CDR::ULongLong l)
+  : AST_Expression (l)
+{
+}
+
 be_expression::be_expression (ACE_CDR::ULong l,
                               AST_Expression::ExprType t)
-  : AST_Expression (l,
-                    t)
+  : AST_Expression (l, t)
 {
 }
 

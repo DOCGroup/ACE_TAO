@@ -716,6 +716,17 @@ AST_Generator::create_expr (ACE_CDR::Long v)
 }
 
 AST_Expression *
+AST_Generator::create_expr (ACE_CDR::LongLong l)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (l),
+                  0);
+
+  return retval;
+}
+
+AST_Expression *
 AST_Generator::create_expr (ACE_CDR::Boolean b)
 {
   AST_Expression *retval = 0;
@@ -727,13 +738,34 @@ AST_Generator::create_expr (ACE_CDR::Boolean b)
 }
 
 AST_Expression *
+AST_Generator::create_expr (ACE_CDR::ULong v)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (v),
+                  0);
+
+  return retval;
+}
+
+AST_Expression *
+AST_Generator::create_expr (ACE_CDR::ULongLong l)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (l),
+                  0);
+
+  return retval;
+}
+
+AST_Expression *
 AST_Generator::create_expr (ACE_CDR::ULong v,
                             AST_Expression::ExprType t)
 {
   AST_Expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (v,
-                                  t),
+                  AST_Expression (v, t),
                   0);
 
   return retval;
