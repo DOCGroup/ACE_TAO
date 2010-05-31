@@ -29,7 +29,9 @@
 #include "be_sequence.h"
 #include "be_string.h"
 #include "be_structure.h"
+#include "be_structure_fwd.h"
 #include "be_union.h"
+#include "be_union_fwd.h"
 #include "be_helper.h"
 #include "utl_identifier.h"
 
