@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef COMPONENT_IDL
+#define COMPONENT_IDL
+
+#include "Connector/UCC_Test_Connector.idl"
+
+module UCC_Test
+{
+  component UCCTestComponent
+  {
+    port UCCVariableSizedStruct_Test::UCCVariableSizedStructTestConnector::DDS_Write var_size_write;
+    port UCCFixedSizeStruct_Test::UCCFixedSizedStructTestConnector::DDS_Write fixed_size_write;
+  };
+};
+
+#endif

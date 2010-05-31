@@ -1,0 +1,27 @@
+// $Id$
+
+/**
+ * @file UCC_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef USERDATA_COPY_COUNT_TEST_CONNECTOR_IDL_
+#define USERDATA_COPY_COUNT_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/UCC_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/UCC_Test_ConnectorE.idl"
+
+module UCCVariableSizedStruct_Test
+{
+  module ::CCM_DDS::Typed < ::UCCVariableSizedStructTest, ::UCCVariableSizedStructTestSeq> UCCVariableSizedStructTestConnector;
+};
+
+module UCCFixedSizeStruct_Test
+{
+  module ::CCM_DDS::Typed < ::UCCFixedSizedStructTest, ::UCCFixedSizedStructTestSeq> UCCFixedSizedStructTestConnector;
+};
+
+#endif /* USERDATA_COPY_COUNT_TEST_CONNECTOR_IDL_ */
