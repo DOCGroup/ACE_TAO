@@ -1,0 +1,22 @@
+This example illustrates the use of the ACE_IOStream and
+ACE_Streambuf_T templates to create an object based on ACE_*_Stream
+classes.  These classes provide C++ iostream functionality across a
+socket.
+
+To run the tests simply build the executables in the client and server
+directories and then do the following in separate windows:
+
+# Window 1
+% server/iostream_server 
+(10049) starting up daemon
+
+# Window 2
+% client/iostream_client
+(10049) starting handler 456d0
+(10049) Client sent:
+        (1) (2.3)
+(10051) Server sent:
+        (1) (2.3)
+(10049) connection closed
+(10049) shutting down handler 456d0
+(10049) shutting down server daemon

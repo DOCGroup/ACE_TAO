@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ami4ccm_lem_stub, portableserver {
+  after += AMI4CCM_svnt
+  libs += AMI4CCM_svnt
+}

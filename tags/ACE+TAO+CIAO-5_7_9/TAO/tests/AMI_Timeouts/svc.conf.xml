@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/AMI_Timeouts/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE -ORBclientconnectionhandler MT"/>
+</ACE_Svc_Conf>

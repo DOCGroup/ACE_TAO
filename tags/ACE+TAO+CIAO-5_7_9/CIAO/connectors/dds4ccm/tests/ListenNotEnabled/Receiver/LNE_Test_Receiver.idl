@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/LNE_Test_Connector.idl"
+
+module LNE_Test
+{
+  component Receiver
+  {
+    port ListenNotEnabledTestConnector::DDS_Listen info_listen;
+  };
+};
+
+#endif

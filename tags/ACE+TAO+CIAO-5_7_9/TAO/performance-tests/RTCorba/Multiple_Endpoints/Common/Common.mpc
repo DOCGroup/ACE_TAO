@@ -1,0 +1,7 @@
+// $Id$
+project(RTCORBA_Common): taolib_with_idl, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  sharedname   = RTCORBA_Common
+  requires    += rt_corba
+  idlflags    += -Wb,export_macro=RTCORBA_COMMON_Export -Wb,export_include=rtcorba_common_export.h
+  dynamicflags = RTCORBA_COMMON_BUILD_DLL
+}

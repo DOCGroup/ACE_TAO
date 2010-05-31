@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file QFLE_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_FILTER_LISTEN_EVENT_TEST_BASE_IDL
+#define QUERY_FILTER_LISTEN_EVENT_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/QFLE_Test_BaseSupport.h"
+
+struct QueryFilterListenEventTest {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<QueryFilterListenEventTest> QueryFilterListenEventTestSeq;
+
+#endif

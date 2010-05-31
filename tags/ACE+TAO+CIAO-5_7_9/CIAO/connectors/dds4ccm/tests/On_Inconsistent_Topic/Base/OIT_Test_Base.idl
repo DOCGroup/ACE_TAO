@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * @file OIT_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef ON_INCONSISTENT_TOPIC_TEST_BASE_IDL
+#define ON_INCONSISTENT_TOPIC_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/OIT_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "OIT_Receiver_Topic"
+#pragma DCPS_DATA_KEY "OIT_Receiver_Topic symbol"
+
+struct OIT_Receiver_Topic {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<OIT_Receiver_Topic> OIT_Receiver_TopicSeq;
+
+struct OIT_Sender_Topic {
+  string symbol; //@key
+  long x;
+  long y;
+  long z;
+};
+
+typedef sequence<OIT_Sender_Topic> OIT_Sender_TopicSeq;
+
+#endif
