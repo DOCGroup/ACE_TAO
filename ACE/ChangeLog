@@ -12,7 +12,7 @@ Sat May 29 02:08:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
 Fri May 28 19:56:20 UTC 2010 Chad Beaulac <chad.beaulac@objectivesolutions.com>
 
-        * ace/Service_Repository.cpp
+        * ace/Service_Repository.cpp:
           Fixed memory leak by removing this->service_array_[i] = 0
           in fini method.
           Bug was introduced by #3334 fix. This fixes it thanks
@@ -312,13 +312,13 @@ Thu May  6 11:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May  5 16:17:15 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
 
-        * ace/Service_Object.cpp
+        * ace/Service_Object.cpp:
           Setting type_ to 0 in ACE_Service_Type::fini after call to
           type_->fini ()
           This allows us to check for the value 0 in the double
           loop inside ASR::fini
 
-        * ace/Service_Repository.cpp
+        * ace/Service_Repository.cpp:
           Checking for  s->type () != 0 inside ASR::fini
           This ensures we don't access ACE_Service_Type instances that
           have been fini'd already.
@@ -327,10 +327,10 @@ Wed May  5 16:17:15 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
 
 Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
 
-        * ace/Stream.cpp
+        * ace/Stream.cpp:
           Added debug and warning logging in ACE_Stream::remove
 
-        * ace/Service_Types.cpp
+        * ace/Service_Types.cpp:
           One of problems is that ACE_Module_Type::name gets its
           value from the svc.conf file. The ACE_Module that it references
           gets its name from the static factory method used to create the
@@ -400,16 +400,16 @@ Tue Apr 20 13:02:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 19 18:17:30 UTC 2010 UTC 2010 Chad Beaulac <chad@objectivesolutions.com
 
-        * ace/Service_Repository.cpp
+        * ace/Service_Repository.cpp:
           Modified ASR::fini to print debug info for empty
           service entries and handle empty service entries.
           This fixes the ASR remove functionality that was
           one of the reasons SC_Server was crashing at shutdown.
 
-        * examples/ASX/CCM_App/SC_Server.cpp
+        * examples/ASX/CCM_App/SC_Server.cpp:
           Removing signal handler before main exit to present SEGV
 
-        * tests/run_test.lst
+        * tests/run_test.lst:
           Removed !FIXED_BUGS_ONLY from Bug_3334_Regression_Test
           Apparently it was missed in the last commit.
 
