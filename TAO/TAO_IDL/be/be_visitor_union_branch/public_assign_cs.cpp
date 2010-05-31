@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // **********************************************
 //  visitor for union_branch in the client stubs file generating the code for
 //  the copy ctor and assignment operator
@@ -765,6 +764,16 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
 }
 
 int
+be_visitor_union_branch_public_assign_cs::visit_structure_fwd (
+  be_structure_fwd *node)
+{
+  be_structure *s =
+    be_structure::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_structure (s);
+}
+
+int
 be_visitor_union_branch_public_assign_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node); // save the typedef node for use in code generation
@@ -850,3 +859,14 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_union_branch_public_assign_cs::visit_union_fwd (
+  be_union_fwd *node)
+{
+  be_union *u =
+    be_union::narrow_from_decl (node->full_definition ());
+    
+  return this->visit_union (u);
+}
+
