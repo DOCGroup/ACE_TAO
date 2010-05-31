@@ -1,3 +1,8 @@
+Mon May 31 11:25:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for upcoming 1.8.0
+
 Mon May 31 08:37:17 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:
@@ -17,7 +22,7 @@ Mon May 31 08:37:17 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
 Mon May 31 09:04:48 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.7.9 released.
+        * TAO version 1.7.9 released.
 
 Sat May 29 12:10:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
