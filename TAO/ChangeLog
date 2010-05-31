@@ -1,3 +1,9 @@
+Mon May 31 14:57:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp(gen_gperf_lookup_methods):
+        
+          Updated VMS-specific code.
+
 Mon May 31 11:25:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
