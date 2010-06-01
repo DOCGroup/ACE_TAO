@@ -62,3 +62,4 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control (void)
     this->data_control_.in ());
 }
 
+
