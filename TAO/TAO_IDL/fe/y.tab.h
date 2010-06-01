@@ -234,8 +234,8 @@ typedef union TAO_YYSTYPE
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
   ACE_CDR::Boolean              bval;           /* Boolean value        */
-  ACE_CDR::LongLong             ival;           /* Long value           */
-  ACE_CDR::ULongLong            uival;          /* Unsigned long value  */
+  ACE_CDR::Long                 ival;           /* Long value           */
+  ACE_CDR::ULong                uival;          /* Unsigned long value  */
   ACE_CDR::Double               dval;           /* Double value         */
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
@@ -252,7 +252,7 @@ typedef union TAO_YYSTYPE
 }
 /* Line 1489 of yacc.c.  */
 
-  TAO_YYSTYPE;
+	TAO_YYSTYPE;
 # define tao_yystype TAO_YYSTYPE /* obsolescent; will be withdrawn */
 # define TAO_YYSTYPE_IS_DECLARED 1
 # define TAO_YYSTYPE_IS_TRIVIAL 1
