@@ -28,6 +28,8 @@ public:
   typename CCM_TYPE::reader_type::_ptr_type get_data (void);
 
   ::DDS::CCM_DataReader_ptr get_dds_entity (void);
+
+  ::CCM_DDS::CCM_ContentFilterSetting_ptr get_filter_config (void);
   //@}
 
   bool configuration_complete (
