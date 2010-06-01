@@ -1,3 +1,24 @@
+Tue Jun  1 15:25:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti
+        * connectors/ami4ccm/tests/UsesMulti/Base
+        * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.idl
+        * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.mpc
+        * connectors/ami4ccm/tests/UsesMulti/descriptors
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/UsesMulti/Receiver
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver.idl
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver.mpc
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.h
+        * connectors/ami4ccm/tests/UsesMulti/Sender
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h
+        AMI4CCM test uses multiple with asynchron invocations.
+
 Tue Jun  1 11:23:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
