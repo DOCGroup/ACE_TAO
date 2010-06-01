@@ -79,10 +79,10 @@ namespace CIAO
         const ::CCM_DDS::QueryFilter & filter);
 
       ::CCM_DDS::QueryFilter *
-      filter (void);
+      query (void);
 
       void
-      filter (const ::CCM_DDS::QueryFilter & filter);
+      query (const ::CCM_DDS::QueryFilter & filter);
 
       void
       set_filter (const ::CCM_DDS::QueryFilter & filter,

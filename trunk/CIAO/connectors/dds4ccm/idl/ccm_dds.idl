@@ -26,7 +26,7 @@ module CCM_DDS
         // -----------------------------
 
         // -- InstanceHandle Manager
-        abstract interface InstanceHandleManager {
+        local interface InstanceHandleManager {
                 DDS::InstanceHandle_t register_instance (in T datum)
                         raises (InternalError);
                 void unregister_instance (in T datum, in DDS::InstanceHandle_t instance_handle)
@@ -97,19 +97,19 @@ module CCM_DDS
 
         // -- Reader: to simply access to the available data (no wait)
         local interface Reader {
-                void read_last (out TSeq data, out ReadInfoSeq infos)
+                void read_last (inout TSeq data, inout ReadInfoSeq infos)
                         raises (InternalError);
-                void read_all (out TSeq data, out ReadInfoSeq infos)
+                void read_all (inout TSeq data, inout ReadInfoSeq infos)
                         raises (InternalError);
                 void read_one_last (inout T datum, out ReadInfo info,
                                 in DDS::InstanceHandle_t instance_handle)
                         raises (NonExistent,
                                 InternalError);
-                void read_one_all (in T datum, out TSeq data, out ReadInfoSeq infos,
+                void read_one_all (in T datum, inout TSeq data, inout ReadInfoSeq infos,
                                 in DDS::InstanceHandle_t instance_handle)
                         raises (NonExistent,
                                 InternalError);
-                attribute QueryFilter filter
+                attribute QueryFilter query
                         setraises (InternalError);
                 // behavior
                 // --------
@@ -117,7 +117,7 @@ module CCM_DDS
                 //              - READ or NO_READ
                 //              - NEW or NOT_NEW
                 //              - ALIVE
-                //              - through the query as specified in the filter ("" means no query)
+                //              - through the query as specified in the expression ("" means no query)
                 // - data returned:
                 //              - read_last returns for each living instance, its last sample
                 //              - read_all returns all the samples of all instances
@@ -132,7 +132,7 @@ module CCM_DDS
         local interface Getter {
                 boolean get_one (out T datum, out ReadInfo info)
                         raises (InternalError);
-                boolean get_many (out TSeq data, out ReadInfoSeq infos)
+                boolean get_many (inout TSeq data, inout ReadInfoSeq infos)
                         raises (InternalError);
                 attribute DDS::Duration_t       time_out;
                 attribute DataNumber_t          max_delivered_data;     // default 0 (no limit)
@@ -213,6 +213,9 @@ module CCM_DDS
                 uses Reader                     data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
+//                attribute QueryFilter           filter
+//                  setraises (NonChangeable);
+//                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_Get {
@@ -220,6 +223,9 @@ module CCM_DDS
                 uses Getter                     fresh_data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
+//                attribute QueryFilter           filter
+//                  setraises (NonChangeable);
+//                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_Listen {
@@ -228,6 +234,9 @@ module CCM_DDS
                 provides Listener               data_listener;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
+//                attribute QueryFilter           filter
+//                  setraises (NonChangeable);
+//                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_StateListen {
@@ -236,6 +245,9 @@ module CCM_DDS
                 provides StateListener          data_listener;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
+//                attribute QueryFilter           filter
+//                  setraises (NonChangeable);
+//                uses ContentFilterSetting       filter_config;
                 };
 
         // ----------------------------

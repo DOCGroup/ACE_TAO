@@ -62,21 +62,20 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all\n"));
 
-    ::Quoter::Stock_InfoSeq_var  stock_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
-    if(readinfoseq->length()!= 0)
+    ::Quoter::Stock_InfoSeq stock_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
+    this->reader_->read_all(stock_infos, readinfoseq);
+    if(readinfoseq.length()!= 0)
       {
-        int nr_of_infos = readinfoseq->length();
-        for(int i = 0; i < nr_of_infos; i ++)
+        for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n",ctime (&tim)));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n",ACE_OS::ctime (&tim)));
           }
       }
-    if(stock_infos->length()!= 0)
+    if(stock_infos.length()!= 0)
       {
-        for(CORBA::ULong i = 0; i < stock_infos->length(); i ++)
+        for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
           {
             ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
@@ -92,22 +91,20 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all_history\n"));
 
-    ::Quoter::Stock_InfoSeq_var  stock_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(stock_infos.out (), readinfoseq.out ());
-    if(readinfoseq->length()!= 0)
+    ::Quoter::Stock_InfoSeq stock_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
+    this->reader_->read_all(stock_infos, readinfoseq);
+    if(readinfoseq.length()!= 0)
       {
-        int nr_of_infos = readinfoseq->length();
-        for(int i = 0; i < nr_of_infos; i ++)
+        for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
           {
             time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ctime (&tim)));
+            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ACE_OS::ctime (&tim)));
           }
       }
-    if(stock_infos->length()!= 0)
+    if(stock_infos.length()!= 0)
       {
-        int nr_of_stock_infos = stock_infos->length();
-        for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+        for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
           {
             ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
@@ -126,24 +123,22 @@ namespace CIAO_Quoter_Broker_Impl
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";  //key of instance to read
 
-    ::Quoter::Stock_InfoSeq_var  stock_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
+    ::Quoter::Stock_InfoSeq stock_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
     try
       {
-        this->reader_->read_one_all(stock_info,stock_infos.out (), readinfoseq.out (), ::DDS::HANDLE_NIL);
-        if(readinfoseq->length()!= 0)
+        this->reader_->read_one_all(stock_info,stock_infos, readinfoseq, ::DDS::HANDLE_NIL);
+        if(readinfoseq.length()!= 0)
           {
-            int nr_of_infos = readinfoseq->length();
-            for(int i = 0; i < nr_of_infos; i ++)
+            for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
               {
                 time_t tim = readinfoseq[i].source_timestamp.sec;
                 ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ctime (&tim)));
               }
           }
-        if(stock_infos->length()!= 0)
+        if(stock_infos.length()!= 0)
           {
-            int nr_of_stock_infos = stock_infos->length();
-            for(CORBA::ULong i = 0; i < (CORBA::ULong)nr_of_stock_infos; i ++)
+            for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
               {
                 ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                     i,

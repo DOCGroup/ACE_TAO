@@ -197,12 +197,12 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {
         return;
       }
-    TestTopicSeq_var TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
+    TestTopicSeq TestTopic_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
     try
       {
-        this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-        for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
+        this->reader_->read_all(TestTopic_infos, readinfoseq);
+        for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
             ACE_Time_Value tv;
             tv <<= readinfoseq[i].source_timestamp;
@@ -210,7 +210,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                                   ACE_TEXT ("-> UTC date =%#T\n"),
                                   &tv));
           }
-        for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+        for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
           {
             this->reader_data_= true;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
