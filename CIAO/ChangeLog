@@ -1,3 +1,9 @@
+Tue Jun  1 11:23:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Resolved linker errors on Windows for ndss.
+
 Tue Jun  1 08:36:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
@@ -9,7 +15,7 @@ Tue Jun  1 08:36:07 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
         * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
           Added infrastructure to provide the ContentFilterSetting
-          for each extended port. 
+          for each extended port.
 
 Tue Jun  1 07:24:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
