@@ -229,16 +229,14 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   {
     try
       {
-        TestTopicSeq           *readertest_info_seq;
-        ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
+        TestTopicSeq readertest_info_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
         if (this->received_ < 30)
           {
-            this->reader_->read_all (
-                    readertest_info_seq,
-                    readinfo_seq);
+            this->reader_->read_all (readertest_info_seq, readinfo_seq);
             ACE_DEBUG ((LM_DEBUG, "Read %u samples\n",
-                                  readinfo_seq->length ()));
-            this->received_ += readinfo_seq->length ();
+                                  readinfo_seq.length ()));
+            this->received_ += readinfo_seq.length ();
           }
         else
           {

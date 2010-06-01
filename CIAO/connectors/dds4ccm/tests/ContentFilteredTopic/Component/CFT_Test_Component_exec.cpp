@@ -55,11 +55,11 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
     try
       {
         CCM_DDS::QueryFilter filter;
-        filter.query = CORBA::string_dup (QUERY);
-        filter.query_parameters.length (2);
-        filter.query_parameters[0] = CORBA::string_dup ("5");
-        filter.query_parameters[1] = CORBA::string_dup ("5");
-        this->two_reader_->filter (filter);
+        filter.expression = CORBA::string_dup (QUERY);
+        filter.parameters.length (2);
+        filter.parameters[0] = CORBA::string_dup ("5");
+        filter.parameters[1] = CORBA::string_dup ("5");
+        this->two_reader_->query (filter);
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -84,11 +84,11 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
     try
       {
         CCM_DDS::QueryFilter filter;
-        filter.query = CORBA::string_dup (QUERY);
-        filter.query_parameters.length (2);
-        filter.query_parameters[0] = CORBA::string_dup ("5");
-        filter.query_parameters[1] = CORBA::string_dup ("5");
-        this->three_reader_->filter (filter);
+        filter.expression = CORBA::string_dup (QUERY);
+        filter.parameters.length (2);
+        filter.parameters[0] = CORBA::string_dup ("5");
+        filter.parameters[1] = CORBA::string_dup ("5");
+        this->three_reader_->query (filter);
       }
     catch (const CCM_DDS::InternalError& ex)
       {

@@ -1,3 +1,47 @@
+Tue Jun  1 07:24:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeManager-NodeApplicationManager/NodeManager-NodeApplicationManager.mpc:
+          Layout changes
+
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/idl/dds4ccm_Base.idl:
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilterListenEvent/Receiver/QFLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilterListenState/Receiver/QFLS_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+          Implemented the resolution of issue 15225, 15172, 15173:
+          - InstahnceHandleManager is now a local interface instead of abstract
+          - All sequences are passed as inout instead of out
+          - The filter attribute on the reader has been renamed to query and
+            the QueryFilter members are now expression and parameters
+
+        * connectors/dds4ccm/docs/09-10-23.pdf:
+        * connectors/dds4ccm/docs/09-10-25.pdf:
+        * connectors/dds4ccm/docs/09-10-27.pdf:
+          Removed these files, We are updating to DDS4CCM FTF2 
+
 Tue Jun  1 07:16:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CIF/Navigation/client.cpp:

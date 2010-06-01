@@ -153,24 +153,24 @@ namespace CIAO_Getter_Test_Receiver_Impl
                           this->getter_->time_out ().sec,
                           this->getter_->time_out ().nanosec));
 
-    GetterTestSeq *gettertest_seq = 0;
-    ::CCM_DDS::ReadInfoSeq *readinfo = 0;
-    bool result = this->getter_->get_many (gettertest_seq, readinfo);
+    GetterTestSeq gettertest_seq;
+    ::CCM_DDS::ReadInfoSeq readinfo;
+    bool const result = this->getter_->get_many (gettertest_seq, readinfo);
     if (result)
       {
-        if (gettertest_seq->length () == 0)
+        if (gettertest_seq.length () == 0)
           {
             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_many: "
                                   "No data returned. "
                                   "number of samples: "
                                   "expected at least one - received <0>\n"));
           }
-        for (CORBA::ULong i = 0; i < gettertest_seq->length (); ++i)
+        for (CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
                                   "Returned data : key <%C> - iteration <%d>\n",
-                                  (*gettertest_seq)[i].key.in (),
-                                  (*gettertest_seq)[i].iteration));
+                                  gettertest_seq[i].key.in (),
+                                  gettertest_seq[i].iteration));
           }
       }
     else
@@ -448,9 +448,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
                               "sec <%d> - nanosec <%u>\n",
                               this->getter_->time_out ().sec,
                               this->getter_->time_out ().nanosec));
-        GetterTestSeq *gettertest_seq;
-        ::CCM_DDS::ReadInfoSeq *readinfo;
-        bool result = this->getter_->get_many (gettertest_seq, readinfo);
+        GetterTestSeq gettertest_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo;
+        bool const result = this->getter_->get_many (gettertest_seq, readinfo);
         if (result)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "

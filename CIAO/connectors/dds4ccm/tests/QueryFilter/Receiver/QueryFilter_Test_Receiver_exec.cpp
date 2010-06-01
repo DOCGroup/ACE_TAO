@@ -151,19 +151,17 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    QueryFilterTestSeq     *queryfiltertest_info_seq;
-    ::CCM_DDS::ReadInfoSeq *readinfo_seq;
-    this->reader_->read_all (
-            queryfiltertest_info_seq,
-            readinfo_seq);
-    if (queryfiltertest_info_seq->length () == 0)
+    QueryFilterTestSeq queryfiltertest_info_seq;
+    ::CCM_DDS::ReadInfoSeq readinfo_seq;
+    this->reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
+    if (queryfiltertest_info_seq.length () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
                               "No samples available in Reader!\n"));
       }
-    for (CORBA::ULong it = 0; it < queryfiltertest_info_seq->length (); ++it)
+    for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
       {
-        this->check_iter ((*queryfiltertest_info_seq)[it], "READ");
+        this->check_iter (queryfiltertest_info_seq[it], "READ");
       }
   }
 
@@ -236,10 +234,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::test_exception ()
   {
-    CCM_DDS::QueryFilter * filter = 0;
+    CCM_DDS::QueryFilter* query = 0;
     try
       {
-        filter = this->reader_->filter ();
+        query = this->reader_->query ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -265,7 +263,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     CCM_DDS::QueryFilter * filter = 0;
     try
       {
-        filter = this->reader_->filter ();
+        filter = this->reader_->query ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -284,43 +282,43 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     //check query
     bool error = false;
-    if (ACE_OS::strcmp (filter->query, QUERY) != 0)
+    if (ACE_OS::strcmp (filter->expression, QUERY) != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
                               "Unexpected query when retrieving filter: "
                               "expected <%C> - received <%C>\n",
-                              QUERY, filter->query.in ()));
+                              QUERY, filter->expression.in ()));
         error = true;
       }
     //check current parameters.
-    if (filter->query_parameters.length () != 2)
+    if (filter->parameters.length () != 2)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
                               "Unexpected number of parameters: "
                               "expected <%d> - received <%d>\n",
-                              2, filter->query_parameters.length ()));
+                              2, filter->parameters.length ()));
         error = true;
       }
 
-    if (filter->query_parameters.length () >= 1)
+    if (filter->parameters.length () >= 1)
       {
-        if (ACE_OS::atoi (filter->query_parameters[0]) != this->current_min_iteration_)
+        if (ACE_OS::atoi (filter->parameters[0]) != this->current_min_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
                                   "Unexpected query when retrieving filter: "
                                   "expected <%C> - received <%C>\n",
-                                  QUERY, filter->query.in ()));
+                                  QUERY, filter->expression.in ()));
             error = true;
           }
       }
-    if (filter->query_parameters.length () >= 2)
+    if (filter->parameters.length () >= 2)
       {
-        if (ACE_OS::atoi (filter->query_parameters[1]) != this->current_max_iteration_)
+        if (ACE_OS::atoi (filter->parameters[1]) != this->current_max_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
                                   "Unexpected query when retrieving filter: "
                                   "expected <%C> - received <%C>\n",
-                                  QUERY, filter->query.in ()));
+                                  QUERY, filter->expression.in ()));
             error = true;
           }
       }
@@ -337,11 +335,11 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     try
       {
         CCM_DDS::QueryFilter filter;
-        filter.query = CORBA::string_dup ("na");
-        filter.query_parameters.length (2);
-        filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
-        filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
-        this->reader_->filter (filter);
+        filter.expression = CORBA::string_dup ("na");
+        filter.parameters.length (2);
+        filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
+        filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
+        this->reader_->query (filter);
         this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
         this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
       }
@@ -366,11 +364,11 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Set filter\n"));
     CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (QUERY);
-    filter.query_parameters.length (2);
-    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-    this->reader_->filter (filter);
+    filter.expression = CORBA::string_dup (QUERY);
+    filter.parameters.length (2);
+    filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
+    filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
+    this->reader_->query (filter);
   }
 
   void

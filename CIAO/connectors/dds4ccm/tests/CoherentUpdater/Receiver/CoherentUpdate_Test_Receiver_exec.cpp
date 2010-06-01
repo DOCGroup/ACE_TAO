@@ -109,17 +109,15 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     try
       {
-        CoherentUpdateTestSeq   *coherentwrite_info_seq;
-        ::CCM_DDS::ReadInfoSeq  *readinfo_seq;
-        this->reader_->read_all (
-                coherentwrite_info_seq,
-                readinfo_seq);
+        CoherentUpdateTestSeq coherentwrite_info_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
+        this->reader_->read_all (coherentwrite_info_seq, readinfo_seq);
 
-        for (CORBA::ULong it = 0; it < coherentwrite_info_seq->length (); ++it)
+        for (CORBA::ULong it = 0; it < coherentwrite_info_seq.length (); ++it)
           {
-            if ((*coherentwrite_info_seq)[it].iteration > this->last_iter_)
+            if (coherentwrite_info_seq[it].iteration > this->last_iter_)
               {
-                if ((*coherentwrite_info_seq)[it].iteration == ++this->last_iter_)
+                if (coherentwrite_info_seq[it].iteration == ++this->last_iter_)
                   {
                     ACE_DEBUG ((LM_DEBUG, "OK: "));
                   }
@@ -130,7 +128,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
                 ACE_DEBUG ((LM_DEBUG, "expected: <%u> - "
                                       "received <%d>\n",
                                       this->last_iter_,
-                                      (*coherentwrite_info_seq)[it].iteration));
+                                      coherentwrite_info_seq[it].iteration));
                }
           }
         if (this->run_ < this->nr_runs () + 1)

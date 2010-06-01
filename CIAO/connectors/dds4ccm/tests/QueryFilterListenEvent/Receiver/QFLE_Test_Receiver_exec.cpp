@@ -158,11 +158,11 @@ namespace CIAO_QFLE_Test_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Set filter.\n"));
     CCM_DDS::QueryFilter filter;
-    filter.query = CORBA::string_dup (QUERY);
-    filter.query_parameters.length (2);
-    filter.query_parameters[0] = CORBA::string_dup (MIN_ITERATION);
-    filter.query_parameters[1] = CORBA::string_dup (MAX_ITERATION);
-    this->reader_->filter (filter);
+    filter.expression = CORBA::string_dup (QUERY);
+    filter.parameters.length (2);
+    filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
+    filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
+    this->reader_->query (filter);
 
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Start listening.\n"));

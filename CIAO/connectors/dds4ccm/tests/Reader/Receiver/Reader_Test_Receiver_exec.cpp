@@ -179,8 +179,8 @@ namespace CIAO_Reader_Test_Receiver_Impl
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
             ReaderTest              readertest_info;
-            ReaderTestSeq          *readertest_info_seq = 0;
-            ::CCM_DDS::ReadInfoSeq *readinfo_seq = 0;
+            ReaderTestSeq readertest_info_seq;
+            ::CCM_DDS::ReadInfoSeq readinfo_seq;
             char key[100];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
@@ -193,27 +193,27 @@ namespace CIAO_Reader_Test_Receiver_Impl
                     readinfo_seq,
                     hnd);
 
-            if (readertest_info_seq->length () != this->iterations_)
+            if (readertest_info_seq.length () != this->iterations_)
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ONE ALL: ")
                     ACE_TEXT ("Didn't receive the expected number of ")
                     ACE_TEXT ("samples for <%C>: expected <%u> - received <%u>\n"),
                     key,
                     this->iterations_,
-                    readertest_info_seq->length ()));
+                    readertest_info_seq.length ()));
               }
             else
               {
-                this->handles_[key] = (*readinfo_seq)[0].instance_handle;
+                this->handles_[key] = readinfo_seq[0].instance_handle;
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
                     ACE_TEXT ("All iterations received for <%C>: number of iterations <%u>\n"),
                     key,
-                    readertest_info_seq->length ()));
+                    readertest_info_seq.length ()));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
                     ACE_TEXT ("Handle created for <%C>: length <%u> - isValid <%d>\n"),
                     key,
-                    (*readinfo_seq)[0].instance_handle.length,
-                    (*readinfo_seq)[0].instance_handle.isValid));
+                    readinfo_seq[0].instance_handle.length,
+                    readinfo_seq[0].instance_handle.isValid));
               }
           }
       }
@@ -253,26 +253,24 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTestSeq          *readertest_info_seq = 0;
-        ::CCM_DDS::ReadInfoSeq *readinfo_seq = 0;
-        this->reader_->read_last (
-                readertest_info_seq,
-                readinfo_seq);
+        ReaderTestSeq readertest_info_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
+        this->reader_->read_last (readertest_info_seq, readinfo_seq);
 
-        if (readertest_info_seq->length () != this->keys_)
+        if (readertest_info_seq.length () != this->keys_)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ LAST: ")
                 ACE_TEXT ("Didn't receive the expected number of ")
                 ACE_TEXT ("instances : expected <%u> - received <%u>\n"),
                 this->keys_,
-                readertest_info_seq->length ()));
+                readertest_info_seq.length ()));
           }
-        for (CORBA::ULong it = 0; it < readertest_info_seq->length (); ++it)
+        for (CORBA::ULong it = 0; it < readertest_info_seq.length (); ++it)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ LAST : ")
                 ACE_TEXT ("last iteration received for <%C>: iteration <%u>\n"),
-                (*readertest_info_seq)[it].key.in (),
-                (*readertest_info_seq)[it].iteration));
+                readertest_info_seq[it].key.in (),
+                readertest_info_seq[it].iteration));
           }
       }
     catch (const CCM_DDS::NonExistent& ex)
@@ -303,51 +301,49 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTestSeq          *readertest_info_seq = 0;
-        ::CCM_DDS::ReadInfoSeq *readinfo_seq = 0;
-        this->reader_->read_all (
-                readertest_info_seq,
-                readinfo_seq);
+        ReaderTestSeq readertest_info_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
+        this->reader_->read_all (readertest_info_seq, readinfo_seq);
 
-        CORBA::ULong nr_samples = this->keys_ * this->iterations_;
-        if (readertest_info_seq->length () != nr_samples)
+        CORBA::ULong const nr_samples = this->keys_ * this->iterations_;
+        if (readertest_info_seq.length () != nr_samples)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
                 ACE_TEXT ("Didn't receive the expected number of ")
                 ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
                 nr_samples,
-                readertest_info_seq->length ()));
+                readertest_info_seq.length ()));
           }
-        if (readertest_info_seq->length () > 0)
+        if (readertest_info_seq.length () > 0)
           {
             CORBA::UShort nr_keys_changed = 1;
-            CORBA::String_var last_key ((*readertest_info_seq)[0].key.in ());
+            CORBA::String_var last_key (readertest_info_seq[0].key.in ());
             CORBA::UShort iterations = 0;
-            for (CORBA::ULong it = 0; it < readertest_info_seq->length (); ++it)
+            for (CORBA::ULong it = 0; it < readertest_info_seq.length (); ++it)
               {
-                if (ACE_OS::strcmp (last_key, (*readertest_info_seq)[it].key.in ()) != 0)
+                if (ACE_OS::strcmp (last_key, readertest_info_seq[it].key.in ()) != 0)
                   {
-                    ACE_OS::strcpy (last_key, (*readertest_info_seq)[it].key.in ());
+                    ACE_OS::strcpy (last_key, readertest_info_seq[it].key.in ());
                     ++nr_keys_changed;
                   }
                 // check readinfo struct.
-                if (!(*readinfo_seq)[it].instance_handle.isValid)
+                if (!readinfo_seq[it].instance_handle.isValid)
                   {
                     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
                             ACE_TEXT ("received instance handle should be valid ")
                             ACE_TEXT ("for keyed data: ")
                             ACE_TEXT ("key <%C> - iteration <%u>\n"),
-                            (*readertest_info_seq)[it].key.in (),
-                            (*readertest_info_seq)[it].iteration));
+                            readertest_info_seq[it].key.in (),
+                            readertest_info_seq[it].iteration));
                   }
-                if ((*readinfo_seq)[it].source_timestamp.sec == 0 &&
-                    (*readinfo_seq)[it].source_timestamp.nanosec == 0)
+                if (readinfo_seq[it].source_timestamp.sec == 0 &&
+                    readinfo_seq[it].source_timestamp.nanosec == 0)
                   {
                     ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
                                         "source timestamp seems to be invalid (nil) "
                                         "key <%C> - iteration <%d>\n",
-                                        (*readertest_info_seq)[it].key.in (),
-                                        (*readertest_info_seq)[it].iteration));
+                                        readertest_info_seq[it].key.in (),
+                                        readertest_info_seq[it].iteration));
                   }
                 ++iterations;
               }
@@ -431,10 +427,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
         readertest_info.key = CORBA::string_dup ("KEY_1");
         ::CCM_DDS::ReadInfo readinfo;
         DDS::InstanceHandle_t hnd = this->handles_["KEY_2"];
-        this->reader_->read_one_last (
-            readertest_info,
-            readinfo,
-            hnd);
+        this->reader_->read_one_last (readertest_info, readinfo, hnd);
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -459,19 +452,17 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     try
       {
-        ReaderTestSeq          *readertest_info_seq = 0;
-        ::CCM_DDS::ReadInfoSeq *readinfo_seq = 0;
-        this->reader_->read_all (
-                readertest_info_seq,
-                readinfo_seq);
+        ReaderTestSeq readertest_info_seq ;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
+        this->reader_->read_all (readertest_info_seq, readinfo_seq);
 
-        if (readertest_info_seq->length () > 0)
+        if (readertest_info_seq.length () > 0)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ NO DATA: ")
                 ACE_TEXT ("Didn't receive the expected number of ")
                 ACE_TEXT ("samples : expected <%u> - received <%u>\n"),
                 0,
-                readertest_info_seq->length ()));
+                readertest_info_seq.length ()));
           }
         else
           {

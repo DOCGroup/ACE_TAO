@@ -221,14 +221,14 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
     }
   // Now create the ContentFilteredTopic
   DDS_StringSeq params;
-  params <<= filter.query_parameters;
+  params <<= filter.parameters;
 
   ACE_CString name ("DDS4CCM_CFT_");
   name.append (ACE_TEXT (tp->get_name ()), ACE_OS::strlen (tp->get_name ()));
   this->cft_ = dp->create_contentfilteredtopic (
                         name.c_str (),
                         tp,
-                        filter.query,
+                        filter.expression, 
                         params);
   if (!this->cft_)
     {
@@ -322,12 +322,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::QueryFilter *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (void)
 {
   #if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_reader_)
       {
-        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
+        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::query - "
                       "Error: No QueryCondition set yet. First set a filter.\n"));
         throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
       }
@@ -351,11 +351,11 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (void)
     ACE_NEW_THROW_EX (filter,
                       ::CCM_DDS::QueryFilter(),
                       CORBA::NO_MEMORY ());
-    filter->query = this->cft_->get_filter_expression ();
+    filter->expression = this->cft_->get_filter_expression ();
     DDS_StringSeq params;
     ::DDS::ReturnCode_t const retval = this->cft_->get_expression_parameters (
                                           params);
-    filter->query_parameters <<= params;
+    filter->parameters <<= params;
     if (retval != DDS::RETCODE_OK)
       {
         DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
@@ -370,10 +370,10 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (
   const ::CCM_DDS::QueryFilter & filter)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::query");
 
   #if (DDS4CCM_USES_QUERY_CONDITION==1)
     if (!this->qc_reader_)
@@ -433,7 +433,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::filter (
     else
       {
         DDS_StringSeq params;
-        params <<= filter.query_parameters;
+        params <<= filter.parameters;
         ::DDS::ReturnCode_t const retval = this->cft_->set_expression_parameters (
           params);
         if (retval != ::DDS::RETCODE_OK)
@@ -455,7 +455,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_filter (
   ::DDSQueryCondition * qc)
 {
   ::DDS_StringSeq dds_qp;
-  dds_qp <<= filter.query_parameters;
+  dds_qp <<= filter.parameters;
   ::DDS::ReturnCode_t const retval = qc->set_query_parameters (dds_qp);
   if (retval != ::DDS::RETCODE_OK)
     {
