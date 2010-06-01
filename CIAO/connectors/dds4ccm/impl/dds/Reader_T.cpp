@@ -51,23 +51,14 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::get_nr_valid_sample
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
-  typename CCM_TYPE::seq_type::_out_type instances,
-  ::CCM_DDS::ReadInfoSeq_out infos)
+  typename CCM_TYPE::seq_type& instances,
+  ::CCM_DDS::ReadInfoSeq& infos)
 {
   // This function has to return the last sample of all instances
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
   this->impl ()->read_wo_instance (data, sample_info);
-
-  typename CCM_TYPE::seq_type * inst_seq = 0;
-  ACE_NEW_THROW_EX (inst_seq,
-                    typename CCM_TYPE::seq_type,
-                    CORBA::NO_MEMORY ());
-  ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-  ACE_NEW_THROW_EX (infoseq,
-                    ::CCM_DDS::ReadInfoSeq,
-                    CORBA::NO_MEMORY ());
 
   CORBA::ULong const nr_of_last_samples =
     this->get_nr_valid_samples (sample_info, true);
@@ -80,16 +71,16 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
                      nr_of_last_samples));
   CORBA::ULong ix = 0;
 
-  infoseq->length (nr_of_last_samples);
-  inst_seq->length (nr_of_last_samples);
+  instances.length (nr_of_last_samples);
+  infos.length (nr_of_last_samples);
 
   // We need only the last sample of each instance
   for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
       if((sample_info[i].sample_rank == 0) && (sample_info[i].valid_data))
         {
-          (*infoseq)[ix] <<= sample_info[i];
-          (*inst_seq)[ix] = data[i];
+          (infos)[ix] <<= sample_info[i];
+          (instances)[ix] = data[i];
           ++ix;
         }
     }
@@ -103,15 +94,13 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
         "Error returning loan to DDS - <%C>\n",
         translate_retcode (retval)));
     }
-  infos = infoseq;
-  instances = inst_seq;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos)
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos)
 {
   // This function has to return all samples of all instances
   DDS_SampleInfoSeq sample_info;
@@ -126,17 +115,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
                             data.length (),
                             nr_of_valid_samples));
 
-  typename CCM_TYPE::seq_type * inst_seq = 0;
-  ACE_NEW_THROW_EX (inst_seq,
-                    typename CCM_TYPE::seq_type,
-                    CORBA::NO_MEMORY ());
-  ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-  ACE_NEW_THROW_EX (infoseq,
-                    ::CCM_DDS::ReadInfoSeq,
-                    CORBA::NO_MEMORY ());
-
-  infoseq->length (nr_of_valid_samples);
-  inst_seq->length (nr_of_valid_samples);
+  instances.length (nr_of_valid_samples);
+  infos.length (nr_of_valid_samples);
 
   CORBA::ULong ix = 0;
 
@@ -144,8 +124,8 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
     {
         if(sample_info[i].valid_data)
           {
-            (*infoseq)[ix] <<= sample_info[i];
-            (*inst_seq)[ix] = data[i];
+            (infos)[ix] <<= sample_info[i];
+            (instances)[ix] = data[i];
             ++ix;
           }
     }
@@ -159,9 +139,6 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
         "Error returning loan to DDS - <%C>\n",
         translate_retcode (retval)));
     }
-
-  infos = infoseq;
-  instances = inst_seq;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -235,8 +212,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
   const typename DDS_TYPE::value_type& an_instance,
-  typename CCM_TYPE::seq_type::_out_type instances,
-  ::CCM_DDS::ReadInfoSeq_out infos,
+  typename CCM_TYPE::seq_type& instances,
+  ::CCM_DDS::ReadInfoSeq& infos,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
   ::DDS_InstanceHandle_t const lookup_hnd =
@@ -257,26 +234,17 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
                      data.length (),
                      nr_of_valid_samples));
 
-  typename CCM_TYPE::seq_type * inst_seq = 0;
-  ACE_NEW_THROW_EX (inst_seq,
-                    typename CCM_TYPE::seq_type (nr_of_valid_samples),
-                    CORBA::NO_MEMORY ());
-  ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-  ACE_NEW_THROW_EX (infoseq,
-                    ::CCM_DDS::ReadInfoSeq (nr_of_valid_samples),
-                    CORBA::NO_MEMORY ());
-
-  infoseq->length (nr_of_valid_samples);
-  inst_seq->length (nr_of_valid_samples);
+  instances.length (nr_of_valid_samples);
+  infos.length (nr_of_valid_samples);
 
   // Copy the valid samples
   CORBA::ULong ix = 0;
   for (::DDS_Long i = 0 ; i < sample_info.length(); ++i)
     {
-      if(sample_info[i].valid_data)
+      if (sample_info[i].valid_data)
         {
-          (*infoseq)[ix] <<= sample_info[i];
-          (*inst_seq)[ix] = data[i];
+          (infos)[ix] <<= sample_info[i];
+          (instances)[ix] = data[i];
           ++ix;
         }
     }
@@ -291,26 +259,23 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
         "Error returning loan to DDS - <%C>\n",
         translate_retcode (retval)));
     }
-
-  infos = infoseq;
-  instances = inst_seq;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::QueryFilter *
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (void)
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
-  return this->impl ()->filter ();
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
+  return this->impl ()->query ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
-  const ::CCM_DDS::QueryFilter & filter)
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (
+  const ::CCM_DDS::QueryFilter & query)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
-  return this->impl ()->filter (filter);
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
+  return this->impl ()->query (query);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

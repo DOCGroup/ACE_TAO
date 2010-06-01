@@ -39,8 +39,8 @@ module CCM_DDS
   typedef sequence<ReadInfo> ReadInfoSeq;
 
   struct QueryFilter {
-    string            query;
-    ::DDS::StringSeq  query_parameters;
+    string            expression;
+    ::DDS::StringSeq  parameters;
   };
 
   enum ListenerMode {
@@ -63,6 +63,11 @@ module CCM_DDS
   };
 
   exception NonChangeable {
+  };
+
+  local interface ContentFilterSetting {
+    void set_filter_parameters (in DDS::StringSeq parameters)
+      raises (InternalError);
   };
 };
 

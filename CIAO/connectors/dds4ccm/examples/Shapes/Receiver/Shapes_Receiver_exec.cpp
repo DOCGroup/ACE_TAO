@@ -5,6 +5,7 @@
 #include "Shapes_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_time.h"
 
 namespace CIAO_Shapes_Receiver_Impl
 {
@@ -137,7 +138,7 @@ namespace CIAO_Shapes_Receiver_Impl
             shape_info.y,
             shape_info.shapesize));
       }
-    catch(CCM_DDS::NonExistent& )
+    catch(const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: ")
                   ACE_TEXT ("no shape_info receieved\n")));
@@ -147,13 +148,13 @@ namespace CIAO_Shapes_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    ShapeTypeSeq_var shape_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(shape_infos.out(), readinfoseq.out());
-    for(unsigned int i = 0; i < readinfoseq->length(); ++i)
+    ShapeTypeSeq shape_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
+    this->reader_->read_all(shape_infos, readinfoseq);
+    for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
       {
         time_t tim = readinfoseq[i].source_timestamp.sec;
-        tm* time = localtime(&tim);
+        tm* time = ACE_OS::localtime(&tim);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
             ACE_TEXT ("-> UTC date = %02d:%02d:%02d.%d\n"),
                             time->tm_hour,
@@ -161,7 +162,7 @@ namespace CIAO_Shapes_Receiver_Impl
                             time->tm_sec,
                             readinfoseq[i].source_timestamp.nanosec));
       }
-    for(CORBA::ULong i = 0; i < shape_infos->length(); ++i)
+    for(CORBA::ULong i = 0; i < shape_infos.length(); ++i)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL Shape Info : ")
               ACE_TEXT ("Number <%d> : received shape_info for <%C> at %u:%u:%u\n"),
@@ -184,7 +185,7 @@ namespace CIAO_Shapes_Receiver_Impl
         if (this->getter_->get_one (shape_info.out (), readinfo.out ()))
           {
             time_t tim = readinfo->source_timestamp.sec;
-            tm* time = localtime(&tim);
+            tm* time = ACE_OS::localtime(&tim);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET_ONE ReadInfo -> ")
                                    ACE_TEXT ("date = %02d:%02d:%02d.%d\n"),
                                 time->tm_hour,
@@ -204,7 +205,7 @@ namespace CIAO_Shapes_Receiver_Impl
                     shape_info->color.in ()));
           }
       }
-    catch(CCM_DDS::NonExistent& )
+    catch(const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ShapeType_Read_One: no shape_info receieved\n")));
       }
@@ -223,8 +224,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::rate (
-    ::CORBA::ULong rate)
+  Receiver_exec_i::rate (::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }
@@ -236,8 +236,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::get_data (
-    ::CORBA::Boolean get_data)
+  Receiver_exec_i::get_data (::CORBA::Boolean get_data)
   {
     this->get_data_ = get_data;
   }
@@ -249,8 +248,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::read_data (
-    ::CORBA::Boolean read_data)
+  Receiver_exec_i::read_data (::CORBA::Boolean read_data)
   {
     this->read_data_ = read_data;
   }
@@ -262,8 +260,7 @@ namespace CIAO_Shapes_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::raw_listen (
-    ::CORBA::Boolean raw_listen)
+  Receiver_exec_i::raw_listen (::CORBA::Boolean raw_listen)
   {
     this->raw_listen_ = raw_listen;
   }

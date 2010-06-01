@@ -1,5 +1,6 @@
 // $Id$
-project : dance_exe, dance_nodemanager_stub, dance_logger  {
+
+project : dance_exe, dance_nodemanager_stub, dance_logger {
   exename   = NodeManagerNodeApplicationManagerTest
   exeout    = .
 

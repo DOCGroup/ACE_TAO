@@ -39,18 +39,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 bool
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos)
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos)
 {
-  instances = 0;
-  ACE_NEW_THROW_EX (instances,
-                    typename CCM_TYPE::seq_type,
-                    CORBA::NO_MEMORY ());
-  infos = 0;
-  ACE_NEW_THROW_EX (infos,
-                    ::CCM_DDS::ReadInfoSeq,
-                    CORBA::NO_MEMORY ());
-
   DDSConditionSeq active_conditions;
   if (!this->impl ()->wait (active_conditions,
                             this->time_out_))
@@ -94,15 +85,15 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
                                 ACE_TEXT ("read <%d> - valid <%d>\n"),
                                 sample_info.length (),
                                 number_read));
-              infos->length (number_read);
-              instances->length (number_read);
+              infos.length (number_read);
+              instances.length (number_read);
               number_read = 0;
               for (::DDS_Long j = 0; j < data.length (); j ++)
                 {
                   if (sample_info[j].valid_data)
                     {
-                      infos->operator[](number_read) <<= sample_info[j];
-                      instances->operator[](number_read) = data[j];
+                      infos.operator[](number_read) <<= sample_info[j];
+                      instances.operator[](number_read) = data[j];
                       ++number_read;
                     }
                 }

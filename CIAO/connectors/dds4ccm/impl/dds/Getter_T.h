@@ -61,8 +61,8 @@ namespace CIAO
          *         that attribute is UNLIMITED (0)
          */
         virtual bool get_many (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos);
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos);
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
 

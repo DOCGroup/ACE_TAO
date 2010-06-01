@@ -160,10 +160,10 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
       {
         return;
       }
-    TestTopicSeq_var TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq_var readinfoseq;
-    this->reader_->read_all(TestTopic_infos.out(), readinfoseq.out());
-    for(CORBA::ULong i = 0; i < readinfoseq->length(); ++i)
+    TestTopicSeq TestTopic_infos;
+    ::CCM_DDS::ReadInfoSeq readinfoseq;
+    this->reader_->read_all(TestTopic_infos, readinfoseq);
+    for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
       {
         ACE_Time_Value tv;
         tv <<= readinfoseq[i].source_timestamp;
@@ -171,7 +171,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
                               ACE_TEXT ("-> UTC date =%#T\n"),
                               &tv));
       }
-    for(CORBA::ULong i = 0; i < TestTopic_infos->length(); ++i)
+    for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
       {
          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
               ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
@@ -201,8 +201,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::read_data (
-    ::CORBA::Boolean read_data)
+  Receiver_exec_i::read_data (::CORBA::Boolean read_data)
   {
     this->read_data_ = read_data;
   }
@@ -214,8 +213,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::raw_listen (
-    ::CORBA::Boolean raw_listen)
+  Receiver_exec_i::raw_listen (::CORBA::Boolean raw_listen)
   {
     this->raw_listen_ = raw_listen;
   }

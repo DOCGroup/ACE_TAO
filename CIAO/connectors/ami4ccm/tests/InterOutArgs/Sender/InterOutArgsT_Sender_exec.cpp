@@ -165,6 +165,7 @@ namespace CIAO_InterOutArgsT_Sender_Impl
   {
     excep_holder->raise_exception ();
   }
+  
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================

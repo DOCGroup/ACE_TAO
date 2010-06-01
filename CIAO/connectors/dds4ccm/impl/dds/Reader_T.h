@@ -39,12 +39,12 @@ namespace CIAO
         virtual ~Reader_T (void);
 
         virtual void read_last (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos);
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos);
 
         virtual void read_all (
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos);
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos);
 
         virtual void read_one_last (
           typename DDS_TYPE::value_type& an_instance,
@@ -53,13 +53,13 @@ namespace CIAO
 
         virtual void read_one_all (
           const typename DDS_TYPE::value_type& an_instance,
-          typename CCM_TYPE::seq_type::_out_type instances,
-          ::CCM_DDS::ReadInfoSeq_out infos,
+          typename CCM_TYPE::seq_type& instances,
+          ::CCM_DDS::ReadInfoSeq& infos,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual ::CCM_DDS::QueryFilter *filter (void);
+        virtual ::CCM_DDS::QueryFilter *query (void);
 
-        virtual void filter (const ::CCM_DDS::QueryFilter & filter);
+        virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
         void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * dr);
 
