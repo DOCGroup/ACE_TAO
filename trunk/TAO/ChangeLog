@@ -1,3 +1,11 @@
+Tue Jun  1 15:34:34 UTC 2010  jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Added attributes as a possible export of porttype and regenerated.
+
 Tue Jun  1 07:25:17 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/tao_orb_tests.lst:

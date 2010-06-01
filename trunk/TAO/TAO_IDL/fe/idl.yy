@@ -4233,8 +4233,7 @@ operation :
           ACE::strdelete ($4);
           $4 = 0;
 
-          UTL_ScopedName n (&id,
-                            0);
+          UTL_ScopedName n (&id, 0);
           AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
 
@@ -4263,15 +4262,15 @@ operation :
                     s->is_local ()
                     || nt == AST_Decl::NT_valuetype
                     || nt == AST_Decl::NT_eventtype;
-                    
+
                   o =
                     idl_global->gen ()->create_operation (
                       tp,
-                      (tao_yyvsp[(1) - (4)].ofval),
+                      $1,
                       &n,
                       local,
                       s->is_abstract ());
-                          
+
                   if (!local && tp->is_local ())
                     {
                       idl_global->err ()->local_remote_mismatch (tp, o);
@@ -4283,6 +4282,7 @@ operation :
                     {
                       (void) s->fe_add_operation (o);
                     }
+                }
             }
 
           /*
@@ -4635,8 +4635,8 @@ param_type_spec
           if (d == 0)
             {
               idl_global->err ()->lookup_error (n);
-              (tao_yyvsp[(1) - (1)].idlist)->destroy ();
-              (tao_yyvsp[(1) - (1)].idlist) = 0;
+              $1->destroy ();
+              $1 = 0;
 
               /* If we don't return here, we'll crash later.*/
               return 1;
@@ -4645,7 +4645,7 @@ param_type_spec
             {
               d->last_referenced_as ($1);
               AST_Decl::NodeType nt = d->node_type ();
-              AST_Type *t = AST_Type::narrow_from_decl (d);                  
+              AST_Type *t = AST_Type::narrow_from_decl (d);
               AST_Typedef *td = 0;
               bool can_be_undefined = false;
 
@@ -4703,11 +4703,11 @@ param_type_spec
                   // check that it's been fully defined.
                   AST_StructureFwd *fwd =
                     AST_StructureFwd::narrow_from_decl (d);
-                    
+
                   if (fwd != 0)
                     {
                       t = fwd->full_definition ();
-                      
+
                       if (! t->is_defined ())
                         {
                           idl_global->err ()->error1 (
@@ -4717,7 +4717,7 @@ param_type_spec
                           /* If we don't return here, we'll crash later.*/
                           return 1;
                         }
-                    
+
                       d = t;
                     }
                 }
@@ -5208,7 +5208,7 @@ provides_decl : IDL_PROVIDES interface_type id
 
           AST_Decl *d =
             s->lookup_by_name ($2);
-            
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
@@ -5218,7 +5218,7 @@ provides_decl : IDL_PROVIDES interface_type id
             {
               int compare = 0;
               nt = d->node_type ();
-            
+
               switch (nt)
                 {
                   case AST_Decl::NT_interface:
@@ -5226,16 +5226,16 @@ provides_decl : IDL_PROVIDES interface_type id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
-                    
+
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
                           ph->info ()->name_.c_str ());
-                          
+
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   case AST_Decl::NT_pre_defined:
                     // Nothing else but CORBA::Object can have
@@ -5251,7 +5251,7 @@ provides_decl : IDL_PROVIDES interface_type id
                         idl_global->err ()->interface_expected (d);
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   default:
                     idl_global->err ()->interface_expected (d);
@@ -5300,21 +5300,21 @@ interface_type
         {
 //      | IDL_OBJECT
           Identifier *corba_id = 0;
-          
+
           ACE_NEW_RETURN (corba_id,
                           Identifier ("Object"),
                           1);
-                          
+
           UTL_IdList *conc_name = 0;
           ACE_NEW_RETURN (conc_name,
                           UTL_IdList (corba_id,
                                       0),
                           1);
-                          
+
           ACE_NEW_RETURN (corba_id,
                           Identifier ("CORBA"),
                           1);
-                          
+
           ACE_NEW_RETURN ($<idlist>$,
                           UTL_IdList (corba_id,
                                       conc_name),
@@ -5341,7 +5341,7 @@ uses_decl : uses_opt_multiple interface_type id
             {
               int compare = 0;
               nt = d->node_type ();
-            
+
               switch (nt)
                 {
                   case AST_Decl::NT_interface:
@@ -5349,16 +5349,16 @@ uses_decl : uses_opt_multiple interface_type id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
-                    
+ 
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
                           ph->info ()->name_.c_str ());
-                          
+
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   case AST_Decl::NT_pre_defined:
                     // Nothing else but CORBA::Object can have
@@ -5374,7 +5374,7 @@ uses_decl : uses_opt_multiple interface_type id
                         idl_global->err ()->interface_expected (d);
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   default:
                     idl_global->err ()->interface_expected (d);
@@ -5530,7 +5530,7 @@ publishes_decl : IDL_PUBLISHES scoped_name id
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
-          
+
           AST_Decl *d =
             s->lookup_by_name ($2);
 
@@ -5542,7 +5542,7 @@ publishes_decl : IDL_PUBLISHES scoped_name id
           else
             {
               nt = d->node_type ();
-            
+
               switch (nt)
                 {
                   case AST_Decl::NT_eventtype:
@@ -5550,16 +5550,16 @@ publishes_decl : IDL_PUBLISHES scoped_name id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
-                    
+
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
                           ph->info ()->name_.c_str ());
-                          
+
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   default:
                     idl_global->err ()->eventtype_expected (d);
@@ -5603,7 +5603,7 @@ consumes_decl : IDL_CONSUMES scoped_name id
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
           AST_Param_Holder *ph = 0;
-          
+
           AST_Decl *d =
             s->lookup_by_name ($2);
 
@@ -5615,7 +5615,7 @@ consumes_decl : IDL_CONSUMES scoped_name id
           else
             {
               nt = d->node_type ();
-            
+
               switch (nt)
                 {
                   case AST_Decl::NT_eventtype:
@@ -5623,16 +5623,16 @@ consumes_decl : IDL_CONSUMES scoped_name id
                   case AST_Decl::NT_param_holder:
                     ph = AST_Param_Holder::narrow_from_decl (d);
                     nt = ph->info ()->type_;
-                    
+
                     if (nt != AST_Decl::NT_type
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
                           ph->info ()->name_.c_str ());
-                          
+
                         so_far_so_good = false;
                       }
-                      
+
                     break;
                   default:
                     idl_global->err ()->eventtype_expected (d);
@@ -5762,7 +5762,7 @@ home_header :
           ACE_NEW_RETURN (n,
                           UTL_ScopedName ($3, 0),
                           1);
-                          
+
           ACE_NEW_RETURN ($<hhval>$,
                           FE_HomeHeader (n,
                                          $5,
@@ -6505,17 +6505,17 @@ porttype_decl
 //        IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          
+
           Identifier id ($3);
           ACE::strdelete ($3);
           $3 = 0;
-          
+
           UTL_ScopedName sn (&id, 0);
           AST_PortType *p =
             idl_global->gen ()->create_porttype (&sn);
-            
+
           (void) s->fe_add_porttype (p);
-          
+
           // Push it on the scopes stack.
           idl_global->scopes ().push (p);
         }
@@ -6569,6 +6569,15 @@ port_export
         | uses_decl
         {
 //        | uses_decl
+        }
+        ';'
+        {
+//        ';'
+        }
+        | attribute
+        {
+//        | attribute
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
         ';'
         {
@@ -6883,10 +6892,6 @@ connector_body
           // Done with this connector - pop it off the scope stack.
           idl_global->scopes ().pop ();
         }
-        ;
-
-at_least_one_connector_export
-        : connector_export connector_exports
         ;
 
 connector_exports
