@@ -47,7 +47,7 @@ IdentifierHelper::original_local_name (Identifier * local_name)
 ACE_CString
 IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
 {
-  ACE_CString retval;
+  ACE_CString retval ("::");
   bool first = true;
   bool second = false;
   Identifier *id = 0;

@@ -140,6 +140,7 @@ module B
 module T
 {
   typedef unsigned long MyLongType;
+  
   module Typed <typename T, sequence <T> TSeq>
   {
     local  interface X
@@ -150,6 +151,8 @@ module T
     porttype Y
     {
       uses X data;
+      attribute string str_attr;
+      attribute T T_attr;
     };
 
     component Z
@@ -207,10 +210,12 @@ module I
   module Nested_I<typename T, sequence <T> TSeq>
   {
     alias A::Nested<T, TSeq> NestedA;
+    
     interface B
     {
       void send (in T arg);
     };
+    
     connector Y
     {
       provides B myport;

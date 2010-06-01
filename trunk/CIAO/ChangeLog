@@ -1,3 +1,14 @@
+Tue Jun  1 19:45:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/identifier_helper.cpp(orig_sn):
+        
+          Added generation of a leading '::' to all scoped names.
+          
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Added a template and a non-template attribute declaration
+          in a porttype, to test support of that language feature.
+
 Tue Jun  1 18:18:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
