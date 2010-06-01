@@ -309,3 +309,32 @@ be_visitor_component::visit_typedef (be_typedef *node)
   return 0;
 }
 
+int
+be_visitor_component::visit_extended_port (be_extended_port *node)
+{
+  be_porttype *pt = node->port_type ();
+  
+  /// If the port visit traverses any attributes defined in the
+  /// original porttype, this is a way for visitors down the
+  /// line to tell what scope we are actually in.
+  this->ctx_->interface (
+    be_interface::narrow_from_scope (node->defined_in ()));
+  
+  return this->visit_scope (pt);
+}
+
+int
+be_visitor_component::visit_mirror_port (be_mirror_port *node)
+{
+  be_porttype *pt = node->port_type ();
+  
+  /// If the port visit traverses any attributes defined in the
+  /// original porttype, this is a way for visitors down the
+  /// line to tell what scope we are actually in.
+  this->ctx_->interface (
+    be_interface::narrow_from_scope (node->defined_in ()));
+  
+  return this->visit_scope (pt);
+}
+
+
