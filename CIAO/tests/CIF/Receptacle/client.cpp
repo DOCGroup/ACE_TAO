@@ -9,87 +9,99 @@ const char * artifact_name = "Receptacle";
 const char * entrypoint_name1 = "Receptacle";
 const char * entrypoint_name2 = "Provider";
 
+::Components::Cookie *
+connect (Receptacle_ptr rec,
+         ::CORBA::Object_ptr facet)
+{
+  ::Components::Cookie_var ck;
+  try
+    {
+      ck = rec->connect ("rec_foo", facet);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: InvalidConnection "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::AlreadyConnected &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: AlreadyConnected "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::ExceededConnectionLimit &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: ExceededConnectionLimit "
+                            "exception during connect\n"));
+    }
+  return ck._retn ();
+}
+
+::CORBA::Object_ptr
+disconnect (Receptacle_ptr rec,
+            ::Components::Cookie * ck)
+{
+  ::CORBA::Object_var obj;
+  try
+    {
+      obj = rec->disconnect ("rec_foo", ck);
+    }
+  catch (const ::Components::InvalidName &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: InvalidName "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::InvalidConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: InvalidConnection "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::CookieRequired &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: CookieRequired "
+                            "exception during connect\n"));
+    }
+  catch (const ::Components::NoConnection &)
+    {
+      ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
+                            "Error: NoConnection "
+                            "exception during connect\n"));
+    }
+  return obj._retn ();
+}
+
 int
 run_test (Receptacle_ptr rec,
           Provider_ptr ,
           ::CORBA::Object_ptr facet)
 {
+  int ret = 0;
   try
     {
-      //CONNECT
-      ::Components::Cookie_var ck;
-      try
+      ::Components::Cookie_var ck = connect (rec, facet);
+      if (ck.in ())
         {
-          ck = rec->connect ("rec_foo", facet);
           ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
                                 "connect test passed !\n"));
         }
-      catch (const ::Components::InvalidName &)
+      ::CORBA::Object_var obj = disconnect (rec, ck.in ());
+      if (!::CORBA::is_nil (obj.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: InvalidName "
-                                "exception during connect\n"));
+          ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
+                                "disconnect test passed !\n"));
         }
-      catch (const ::Components::InvalidConnection &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: InvalidConnection "
-                                "exception during connect\n"));
-        }
-      catch (const ::Components::AlreadyConnected &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: AlreadyConnected "
-                                "exception during connect\n"));
-        }
-      catch (const ::Components::ExceededConnectionLimit &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: ExceededConnectionLimit "
-                                "exception during connect\n"));
-        }
-      // DISCONNECT
-      try
-        {
-          ::CORBA::Object_var obj = rec->disconnect ("rec_foo", ck);
-          if (obj->_is_equivalent(facet))
-            {
-              ACE_DEBUG ((LM_DEBUG, "Receptacle run_test - "
-                                    "disconnect test passed !\n"));
-            }
-          else
-            {
-              ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                    "Error : Returned object unequal to "
-                                    "original object: "
-                                    "expected <%@> - received <%@>\n",
-                                    facet, obj.in ()));
-            }
-        }
-      catch (const ::Components::InvalidName &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: InvalidName "
-                                "exception during connect\n"));
-        }
-      catch (const ::Components::InvalidConnection &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: InvalidConnection "
-                                "exception during connect\n"));
-        }
-      catch (const ::Components::CookieRequired &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: CookieRequired "
-                                "exception during connect\n"));
-        }
-      catch (const ::Components::NoConnection &)
-        {
-          ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
-                                "Error: NoConnection "
-                                "exception during connect\n"));
-        }
+
 //       TODO:
 //       Exception tests for connect/disconnect
 //       #if !defined (CCM_LW)
@@ -104,16 +116,14 @@ run_test (Receptacle_ptr rec,
 //             raises (InvalidName);
 //       #endif
     }
-
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Receptacle run_test - "
                             "Error: Unknown "
                             "exception during run_test\n"));
+      ++ret;
     }
-
-
-  return 0;
+  return ret;
 }
 
 int
@@ -122,6 +132,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
   using namespace ::CIAO::Deployment;
 
   CIF_Common cmd;
+  int ret = 0;
   try
     {
       if (cmd.init (argc, argv, artifact_name) != 0)
@@ -179,7 +190,7 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
                                 "while providing facet\n"));
         }
 
-      run_test (rec.in (), prov.in (), facet.in ());
+      ret = run_test (rec.in (), prov.in (), facet.in ());
 
       cmd.shutdown (server1.in (), cont1.in (), comp1.in (), false);
       cmd.shutdown (server2.in (), cont2.in (), comp2.in ());
@@ -199,5 +210,16 @@ ACE_TMAIN (int argc,  ACE_TCHAR **argv)
       ACE_ERROR ((LM_ERROR, "Error: Caught unknown exception\n"));
       return  1;
     }
-  return 0;
+  if (ret != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "ACE_TMAIN : "
+              " %d error found during tests.\n",
+              ret));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, "ACE_TMAIN : "
+              " No error found during tests.\n"));
+    }
+  return ret;
 }
