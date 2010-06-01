@@ -36,11 +36,16 @@ public:
    * DDS_Get operations
    */
   //@{
-  virtual typename CCM_TYPE::reader_type::_ptr_type get_pull_consumer_data (void);
+  virtual typename CCM_TYPE::reader_type::_ptr_type
+  get_pull_consumer_data (void);
 
-  virtual typename CCM_TYPE::getter_type::_ptr_type get_pull_consumer_fresh_data (void);
+  virtual typename CCM_TYPE::getter_type::_ptr_type
+  get_pull_consumer_fresh_data (void);
 
   virtual ::DDS::CCM_DataReader_ptr get_pull_consumer_dds_entity (void);
+
+  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  get_pull_consumer_filter_config (void);
   //@}
 
   /**
@@ -53,6 +58,9 @@ public:
   virtual ::CCM_DDS::CCM_DataListenerControl_ptr get_push_consumer_data_control (void);
 
   virtual ::DDS::CCM_DataReader_ptr get_push_consumer_dds_entity (void);
+
+  virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
+  get_push_consumer_filter_config (void);
   //@}
 
   virtual void configuration_complete (void);

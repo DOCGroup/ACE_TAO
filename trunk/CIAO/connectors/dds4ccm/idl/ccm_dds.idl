@@ -215,7 +215,7 @@ module CCM_DDS
                 provides PortStatusListener     status;
 //                attribute QueryFilter           filter
 //                  setraises (NonChangeable);
-//                uses ContentFilterSetting       filter_config;
+                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_Get {
@@ -225,7 +225,7 @@ module CCM_DDS
                 provides PortStatusListener     status;
 //                attribute QueryFilter           filter
 //                  setraises (NonChangeable);
-//                uses ContentFilterSetting       filter_config;
+                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_Listen {
@@ -236,7 +236,7 @@ module CCM_DDS
                 provides PortStatusListener     status;
 //                attribute QueryFilter           filter
 //                  setraises (NonChangeable);
-//                uses ContentFilterSetting       filter_config;
+                uses ContentFilterSetting       filter_config;
                 };
 
         porttype DDS_StateListen {
@@ -247,7 +247,7 @@ module CCM_DDS
                 provides PortStatusListener     status;
 //                attribute QueryFilter           filter
 //                  setraises (NonChangeable);
-//                uses ContentFilterSetting       filter_config;
+                uses ContentFilterSetting       filter_config;
                 };
 
         // ----------------------------

@@ -57,3 +57,4 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data_control (void)
 
   return ::CCM_DDS::CCM_DataListenerControl::_duplicate (this->data_control_.in ());
 }
+
