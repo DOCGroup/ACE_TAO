@@ -48,6 +48,10 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_passive_observer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *passive_observer_filter (void);
+
+  virtual void passive_observer_filter (const ::CCM_DDS::QueryFilter & filter);
 //@}
 
   /**
@@ -66,6 +70,10 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_pull_observer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *pull_observer_filter (void);
+
+  virtual void pull_observer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   /**
@@ -84,6 +92,10 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_push_observer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *push_observer_filter (void);
+
+  virtual void push_observer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   /**
@@ -102,6 +114,11 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_push_state_observer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *push_state_observer_filter (void);
+
+  virtual void
+  push_state_observer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   virtual void configuration_complete (void);

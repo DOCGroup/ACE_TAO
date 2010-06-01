@@ -121,6 +121,24 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_filter_confi
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter");
+
+  return this->pull_observer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter");
+
+  this->pull_observer_.filter (filter);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_data (void)
 {
@@ -161,6 +179,24 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_filter_confi
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter");
+
+  return this->push_observer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter");
+
+  this->push_observer_.filter (filter);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data (void)
 {
@@ -198,6 +234,24 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_filter
 
   this->push_state_observer_obtained_ = true;
   return this->push_state_observer_.get_filter_config ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter");
+
+  return this->push_state_observer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter");
+
+  this->push_state_observer_.filter (filter);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

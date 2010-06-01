@@ -108,6 +108,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_consumer_dds_entity (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter");
+
+  return this->pull_consumer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter");
+
+  this->pull_consumer_.filter (filter);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::DDS::CCM_DataReader_ptr
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_dds_entity (void)
 {
@@ -125,6 +143,24 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_consumer_filter_confi
 
   this->push_consumer_obtained_ = true;
   return this->push_consumer_.get_filter_config ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter");
+
+  return this->push_consumer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter");
+
+  this->push_consumer_.filter (filter);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
