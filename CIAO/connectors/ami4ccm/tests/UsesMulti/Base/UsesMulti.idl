@@ -1,0 +1,26 @@
+// $Id$
+
+#ifndef USESMULTI_IDL
+#define USESMULTI_IDL
+
+#pragma ciao lem "Base/UsesMultiE.idl"
+#pragma ciao ami4ccm interface "UsesMulti::One"
+#pragma ciao lem "Base/UsesMultiAE.idl"
+
+module UsesMulti
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interfaces
+  interface One
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+    };
+};
+
+#endif
