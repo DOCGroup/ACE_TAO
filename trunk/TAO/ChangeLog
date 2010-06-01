@@ -1,3 +1,9 @@
+Tue Jun  1 07:25:17 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Disabled 3755_Ext test on MINIMUM builds. RTScheduler doesn't work
+          in those builds.
+
 Mon May 31 20:48:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_generator.h:
@@ -91,7 +97,7 @@ Mon May 31 16:41:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon May 31 14:57:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp(gen_gperf_lookup_methods):
-        
+
           Updated VMS-specific code.
 
 Mon May 31 11:25:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
