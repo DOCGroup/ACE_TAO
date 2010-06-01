@@ -46,6 +46,10 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_pull_consumer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *pull_consumer_filter (void);
+
+  virtual void pull_consumer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   /**
@@ -61,6 +65,10 @@ public:
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_push_consumer_filter_config (void);
+
+  virtual ::CCM_DDS::QueryFilter *push_consumer_filter (void);
+
+  virtual void push_consumer_filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   virtual void configuration_complete (void);

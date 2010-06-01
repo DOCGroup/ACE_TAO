@@ -133,3 +133,24 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config (void)
   // TODO BETA3
   return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter *
+DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (void)
+{
+  DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter");
+
+  // TODO BETA3
+  return 0;
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
+  const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter");
+
+  // TODO BETA3
+  this->filter_ = filter;
+}

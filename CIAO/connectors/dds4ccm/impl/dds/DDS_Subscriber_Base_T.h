@@ -9,6 +9,7 @@
 #define DDS_SUBSCRIBER_BASE_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/dds/Reader_T.h"
 #include "dds4ccm/impl/dds/DataReader_T.h"
 #include "dds4ccm/impl/dds/PortStatusListener_T.h"
@@ -30,6 +31,10 @@ public:
   ::DDS::CCM_DataReader_ptr get_dds_entity (void);
 
   ::CCM_DDS::CCM_ContentFilterSetting_ptr get_filter_config (void);
+
+  ::CCM_DDS::QueryFilter *filter (void);
+
+  void filter (const ::CCM_DDS::QueryFilter & filter);
   //@}
 
   bool configuration_complete (
@@ -54,6 +59,7 @@ protected:
   ::DDS::DataReaderListener_var listener_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
+  ::CCM_DDS::QueryFilter filter_;
   //@}
   typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;
 };
