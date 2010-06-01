@@ -84,6 +84,7 @@ project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
   after    += OFM_Connector_lem_stub OFM_Connector_stub
   sharedname = OFM_Connector_exec
   libs     += OFM_Connector_stub OFM_Connector_lem_stub
+  requires += dds4ccm_ndds
 
   dynamicflags = OFM_CONNECTOR_CONN_BUILD_DLL
 
@@ -92,6 +93,7 @@ project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
 
   Source_Files {
     OFM_Connector_conn.cpp
+    *.cxx
   }
 
   Header_Files {
