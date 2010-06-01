@@ -36,6 +36,7 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
+#include "be_porttype.h"
 #include "be_provides.h"
 #include "be_factory.h"
 #include "be_extern.h"

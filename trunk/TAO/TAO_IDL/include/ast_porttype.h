@@ -42,12 +42,8 @@ protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 
   virtual AST_Uses *fe_add_uses (AST_Uses *p);
-
-  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
-
-  virtual AST_Emits *fe_add_emits (AST_Emits *p);
-
-  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+  
+  virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
 };
 
 #endif           // AST_PORTTYPE_H

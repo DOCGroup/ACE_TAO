@@ -1,3 +1,24 @@
+Tue Jun  1 19:42:56 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_porttype.h:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/ast/ast_porttype.cpp:
+        * TAO_IDL/be_include/be_visitor_component/facet_exs.h:
+        * TAO_IDL/be_include/be_visitor_component/component.h:
+        * TAO_IDL/be_include/be_visitor_component/servant_svs.h:
+
+          Added backend support for attributes in porttypes.
+          This language feature is a proposed addition to IDL3+,
+          and may be refined in the future.
+
 Tue Jun  1 15:34:34 UTC 2010  jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:

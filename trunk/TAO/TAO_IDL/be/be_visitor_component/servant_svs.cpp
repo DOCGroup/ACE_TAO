@@ -1056,24 +1056,6 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
   return 0;
 }
 
-int
-be_visitor_attr_set::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_attr_set::visit_mirror_port (be_mirror_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_attr_set::visit_porttype (be_porttype *)
-{
-  return 0;
-}
-
 // ==========================================================
 
 be_visitor_facet_executor_block::be_visitor_facet_executor_block (
