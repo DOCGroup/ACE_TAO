@@ -613,6 +613,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         };
     }
+  catch (const Deployment::PlanError &ex)
+    {
+      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
+                  ACE_TEXT ("Error in plan: <%C>, <%C>\n"),
+                  ex.name.in (),
+                  ex.reason.in ()));
+      retval = -1;
+    }
   catch (const DAnCE::Deployment_Failure& e)
     {
       ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")

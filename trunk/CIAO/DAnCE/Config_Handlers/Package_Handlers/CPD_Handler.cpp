@@ -76,7 +76,7 @@ namespace CIAO
                        cpd->end_infoProperty (),
                        Property_Functor (toconfig.configProperty));
 
-        //        ACE_ERROR ((LM_ERROR, "***** Count of PCIs is %i\n",
+        //        DANCE_DEBUG (1, (LM_ERROR, "***** Count of PCIs is %i\n",
         //           cpd->count_implementation ()));
 
         // Packaged Component Implementations
@@ -146,7 +146,7 @@ namespace CIAO
           throw Parse_Error (ACE_TEXT ("Unable to create DOM for component package description"));
 
         try {
-          //ACE_ERROR ((LM_ERROR, "Creating new CPD XSC Object\n"));
+          //DANCE_DEBUG (1, (LM_ERROR, "Creating new CPD XSC Object\n"));
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {

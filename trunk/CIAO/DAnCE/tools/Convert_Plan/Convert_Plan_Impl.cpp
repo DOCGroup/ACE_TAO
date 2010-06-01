@@ -3,7 +3,9 @@
 #include "Convert_Plan_Impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/CDR.h"
+#include "Deployment/Deployment_PlanErrorC.h"
 #include "Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/Common.h"
 #include "Logger/Log_Macros.h"
 
 namespace DAnCE
@@ -22,8 +24,16 @@ namespace DAnCE
     xml_intf.add_search_path (ACE_TEXT("TAO_ROOT"), ACE_TEXT("/docs/schema/"));
     xml_intf.add_search_path (ACE_TEXT("CIAO_ROOT"), ACE_TEXT("/docs/schema/"));
     xml_intf.add_search_path (ACE_TEXT("DANCE_ROOT"), ACE_TEXT("/docs/schema/"));
-  
-    return xml_intf.release_plan ();  
+    
+    try
+      {
+        return xml_intf.release_plan ();  
+      }
+    catch (const CIAO::Config_Handlers::Config_Error &ex)
+      {
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (ex.name_.c_str ()),
+                                       ACE_TEXT_ALWAYS_CHAR (ex.error_.c_str ()));
+      }
   }
 
   Deployment::DeploymentPlan * 

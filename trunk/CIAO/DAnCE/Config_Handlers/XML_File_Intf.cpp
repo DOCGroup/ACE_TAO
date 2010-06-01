@@ -59,15 +59,12 @@ namespace CIAO
           if (this->idl_dp_.get ())
             return true;
         }
-      catch (const Config_Error &ex)
-        {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "XML_File_Intf::error at %C: %C\n",
-                      ex.name_.c_str (), ex.error_.c_str ()));
-        }
       catch (...)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "XML_File_Intf::caught - "
                       "Unexpected exception whilst parsing XML into IDL.\n"));
+          throw Config_Error (this->file_,
+                              ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
         }
 
       return false;

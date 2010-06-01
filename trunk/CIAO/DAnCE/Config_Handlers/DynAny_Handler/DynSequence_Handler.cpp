@@ -2,7 +2,7 @@
 
 #include "DynSequence_Handler.h"
 #include "DynAny_Handler.h"
-
+#include "Logger/Log_Macros.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -47,7 +47,7 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
 
-          ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
+          DANCE_DEBUG (1, (LM_WARNING, "I don't know how to handle null or void types\n"));
           throw 1;
 
         case TCKind::tk_short_l:
@@ -85,7 +85,7 @@ namespace CIAO
             }
           catch (DynamicAny::DynAny::InvalidValue)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+              DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
                           ACE_TEXT ("populate %ith element of a sequence\n"),
                           pos));
               throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
@@ -114,7 +114,7 @@ namespace CIAO
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
           
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
       
@@ -125,7 +125,7 @@ namespace CIAO
     DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
+      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr 
@@ -133,7 +133,7 @@ namespace CIAO
     {
       if (!type.sequence_p ())
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type descriptioin required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
       

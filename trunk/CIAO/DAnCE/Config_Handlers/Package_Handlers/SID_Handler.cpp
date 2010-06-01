@@ -80,8 +80,8 @@ namespace CIAO
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
-                      desc.name ().c_str ()));
+          DANCE_ERROR (1, (LM_WARNING, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
+                           desc.name ().c_str ()));
 
       }
 

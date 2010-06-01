@@ -2,7 +2,7 @@
 
 #include "DynAlias_Handler.h"
 #include "DynAny_Handler.h"
-
+#include "Logger/Log_Macros.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -43,7 +43,7 @@ namespace CIAO
               // ========== BASIC TYPES
             case TCKind::tk_null_l:
             case TCKind::tk_void_l:
-              ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
+              DANCE_DEBUG (1, (LM_WARNING, "I don't know how to handle null or void types\n"));
               
             case TCKind::tk_short_l:
               retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*value.begin_short ())));
@@ -127,7 +127,7 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
+          DANCE_DEBUG (1, (LM_ERROR, "Type not supported\n"));
           throw Config_Error ("", "Type not supported");
         }
           */
@@ -137,7 +137,7 @@ namespace CIAO
         }
       catch (DynamicAny::DynAny::InvalidValue)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
                       ACE_TEXT ("initialize an instance of enumerated type %s\n"),
                       type.alias ().typeId ().c_str ()));
           throw Config_Error (type.alias ().typeId (),
@@ -145,7 +145,7 @@ namespace CIAO
         }
       catch (Config_Error &ex)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught Config_Error\n")));
           if (type.alias_p ())
             ex.add_name (type.alias ().typeId ());
 
@@ -153,7 +153,7 @@ namespace CIAO
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAlias_Handler caught unknown exception\n")));
           throw Config_Error (type.alias ().typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
@@ -163,7 +163,7 @@ namespace CIAO
     DynAlias_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
+      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr
@@ -171,7 +171,7 @@ namespace CIAO
     {
       if (!type.alias_p ())
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Alias type description required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected alias type description, tk_kind may be wrong."));
         }
 

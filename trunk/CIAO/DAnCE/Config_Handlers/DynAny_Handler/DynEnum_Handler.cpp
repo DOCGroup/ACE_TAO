@@ -2,7 +2,7 @@
 
 #include "DynEnum_Handler.h"
 #include "DynAny_Handler.h"
-
+#include "Logger/Log_Macros.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -41,7 +41,7 @@ namespace CIAO
         }
       catch (DynamicAny::DynAny::InvalidValue)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
                       ACE_TEXT ("initialize an instance of enumerated type %s\n"),
                       type.enum_ ().typeId ().c_str ()));
           throw Config_Error (type.enum_ ().typeId (),
@@ -49,7 +49,7 @@ namespace CIAO
         }
       catch (Config_Error &ex)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught Config_Error\n")));
           if (type.enum_p ())
             ex.add_name (type.enum_ ().typeId ());
 
@@ -57,7 +57,7 @@ namespace CIAO
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynEnum_Handler caught unknown exception\n")));
           throw Config_Error (type.enum_ ().typeId (),
                               ACE_TEXT ("Unknown exception"));
         }
@@ -67,7 +67,7 @@ namespace CIAO
     DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
+      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr
@@ -75,7 +75,7 @@ namespace CIAO
     {
       if (!type.enum_p ())
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Enum type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Enum type descriptioin required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Did not find expected enum type description, tk_kind may be wrong."));
         }
 
