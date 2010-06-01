@@ -83,7 +83,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_DEBUG ((LM_DEBUG, "Invalid port kind in connection\n"));
+          DANCE_DEBUG (1, (LM_DEBUG, "Invalid port kind in connection\n"));
 
         }
     }
@@ -138,7 +138,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, "Invalid port kind in PSPE\n"));
+          DANCE_ERROR (1, (LM_ERROR, "Invalid port kind in PSPE\n"));
         }
 
 

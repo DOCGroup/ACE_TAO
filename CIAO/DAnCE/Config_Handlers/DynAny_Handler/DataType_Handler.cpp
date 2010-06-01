@@ -97,7 +97,7 @@ namespace CIAO{
 
 
           default:
-            ACE_ERROR ((LM_ERROR, "Invalid typecode in any\n"));
+            DANCE_DEBUG (1, (LM_ERROR, "Invalid typecode in any\n"));
             throw Config_Error ("", "Invalid typecode");
           }
 
@@ -169,7 +169,7 @@ namespace CIAO{
           case CORBA::tk_TypeCode:
             type.kind (TCKind::tk_TypeCode);
           default:
-            ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
+            DANCE_DEBUG (1, (LM_ERROR, "Invalid typecode\n"));
             throw Config_Error ("", "Invalid typecode");
           }
 

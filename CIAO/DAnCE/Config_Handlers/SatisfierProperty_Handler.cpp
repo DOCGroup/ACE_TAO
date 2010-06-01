@@ -6,6 +6,8 @@
 #include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Utils/Exceptions.h"
+#include "Logger/Log_Macros.h"
+
 namespace CIAO
 {
   namespace Config_Handlers
@@ -55,7 +57,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
+          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unknown SatisfierPropertyKind\n")));
           throw Config_Error (desc.name (), ACE_TEXT ("Unknown SatisfierPropertyKind"));
 
         }

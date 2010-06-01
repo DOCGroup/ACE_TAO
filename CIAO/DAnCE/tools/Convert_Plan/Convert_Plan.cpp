@@ -5,6 +5,7 @@
 #include "ace/Auto_Ptr.h"
 #include "tao/ORB.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
+#include "DAnCE/Deployment/Deployment_PlanErrorC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/Logger/Logger_Service.h"
 #include "Convert_Plan_Impl.h"
@@ -127,6 +128,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         }
 
       DAnCE::Convert_Plan::write_cdr_plan (output_filename, *plan);
+    }
+  catch (const ::Deployment::PlanError &ex)
+    {
+      DANCE_ERROR (1, (LM_ERROR, "Convert_Plan - Config error while parsing plan "
+                       "<%C>, <%C>\n",
+                       ex.name.in (),
+                       ex.reason.in ()));
+      retval = -1;
     }
   catch (const CORBA::Exception &ex)
     {

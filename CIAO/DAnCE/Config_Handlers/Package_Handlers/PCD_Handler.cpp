@@ -127,7 +127,6 @@ namespace CIAO
 
         if (src.basePackage.length () > 0)
           {
-            ACE_DEBUG ((LM_DEBUG, "5\n"));
             pcd.basePackage (CPD_Handler::component_package_descr (src.basePackage[0]));
           }
 #if 0

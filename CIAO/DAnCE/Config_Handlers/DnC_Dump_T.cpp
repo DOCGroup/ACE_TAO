@@ -4,7 +4,7 @@
 #include "DnC_Dump.h"
 #include "DnC_Dump_T.h"
 #include "Dump_Obj.h"
-
+#include "Logger/Log_Macros.h"
 ACE_RCSID (Config_Handlers,
            DnC_Dump_T,
            "$Id$")
@@ -19,7 +19,7 @@ ACE_RCSID (Config_Handlers,
       dump_ref (const char* caption, REFERENCE& ref,
                 const char* root, DATA_TYPE CLASS::*data)
       {
-        ACE_DEBUG ((LM_DEBUG, "%s%s:\n",
+        DANCE_DEBUG (1, (LM_DEBUG, "%s%s:\n",
                     Dump_Obj::indent(), caption));
 
         const CORBA::Any &val = Dump_Obj::desc (root);
@@ -31,7 +31,7 @@ ACE_RCSID (Config_Handlers,
         const ROOT &root_obj = *t;
 
         int value = ref;
-        ACE_DEBUG ((LM_DEBUG, "%s%s.name: %s\n",
+        DANCE_DEBUG (1, (LM_DEBUG, "%s%s.name: %s\n",
                     Dump_Obj::indent(), caption,
                     (root_obj.*data)[value].name.in()));
       }
@@ -43,7 +43,7 @@ ACE_RCSID (Config_Handlers,
       dump_ref_seq (const char* caption, SEQUENCE& seq,
                     const char* root, DATA_TYPE CLASS::*data)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        DANCE_DEBUG (1, (LM_DEBUG,
                     "%s%s:\n",
                     Dump_Obj::indent(), caption));
 
@@ -60,7 +60,7 @@ ACE_RCSID (Config_Handlers,
 
             const ROOT &root_obj = *t;
             int value = seq[i];
-            ACE_DEBUG ((LM_DEBUG, "%s%s[%d].name: %s\n",
+            DANCE_DEBUG (1, (LM_DEBUG, "%s%s[%d].name: %s\n",
                         Dump_Obj::indent(), caption, i,
                         (root_obj.*data)[value].name.in()));
           }
@@ -79,7 +79,7 @@ ACE_RCSID (Config_Handlers,
 
             for (CORBA::ULong i = 0; i < size; ++i)
               {
-                ACE_DEBUG ((LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),
+                DANCE_DEBUG (1, (LM_DEBUG, "%s%s %d:\n", Dump_Obj::indent(),
                             caption, i));
                 DnC_Dump::dump (seq[i]);
               }

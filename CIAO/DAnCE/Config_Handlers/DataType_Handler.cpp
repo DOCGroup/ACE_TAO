@@ -100,7 +100,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, "DataType_Handler::data_type, Invalid typecode in any\n"));
+          DANCE_DEBUG (1, (LM_ERROR, "DataType_Handler::data_type, Invalid typecode in any\n"));
           throw 1;
         }
 
@@ -170,7 +170,7 @@ namespace CIAO
         case CORBA::tk_TypeCode:
           return DataType (TCKind::tk_TypeCode);
         default:
-          ACE_ERROR ((LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
+          DANCE_DEBUG (1, (LM_ERROR, "DataType_Handler::data_type, Invalid typecode\n"));
           throw 1;
         }
       throw 1;

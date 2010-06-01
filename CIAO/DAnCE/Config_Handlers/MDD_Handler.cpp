@@ -103,7 +103,7 @@ namespace CIAO
         }
       else
         {
-          ACE_DEBUG((LM_ERROR,
+          DANCE_ERROR(2, (LM_WARNING,
                      "(%P|%t) Warning:  MDD %s has no idref\n",
                      desc.name ().c_str ()));
         }
