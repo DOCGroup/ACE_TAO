@@ -260,9 +260,13 @@ be_component::scan (UTL_Scope *s)
 }
 
 void
-be_component::mirror_scan (AST_PortType *p)
+be_component::mirror_scan (AST_PortType *pt)
 {
-  for (UTL_ScopeActiveIterator i (p, UTL_Scope::IK_decls);
+  AST_Uses *u = 0;
+  AST_Provides *p = 0;
+  AST_Attribute *a = 0;
+
+  for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
@@ -272,9 +276,32 @@ be_component::mirror_scan (AST_PortType *p)
         {
           case AST_Decl::NT_provides:
             ++this->n_uses_;
+            p = AST_Provides::narrow_from_decl (d);
+            
+            if (!p->provides_type ()->is_local ())
+              {
+                ++this->n_remote_uses_;
+              }
+              
             continue;
           case AST_Decl::NT_uses:
             ++this->n_provides_;
+            u = AST_Uses::narrow_from_decl (d);
+            
+            if (!u->uses_type ()->is_local ())
+              {
+                ++this->n_remote_provides_;
+              }
+              
+            continue;
+          case AST_Decl::NT_attr:
+            a = AST_Attribute::narrow_from_decl (d);;
+            
+            if (!a->readonly ())
+              {
+                this->has_rw_attributes_ = true;
+              }
+              
             continue;
           default:
             continue;

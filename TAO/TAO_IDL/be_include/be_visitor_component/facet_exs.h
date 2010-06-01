@@ -37,6 +37,10 @@ public:
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_provides (be_provides *node);
   
+  // Must be overridden to be a no-op.
+  virtual int visit_extended_port (be_extended_port *node);
+  virtual int visit_mirror_port (be_mirror_port *node);
+  
 private:
   be_provides *op_scope_;
   const char *comment_border_;

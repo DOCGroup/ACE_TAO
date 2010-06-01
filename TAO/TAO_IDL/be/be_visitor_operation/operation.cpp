@@ -136,17 +136,29 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
+      
+  be_interface *intf = be_interface::narrow_from_scope (s);
 
-  if (!intf)
+  if (intf == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation::"
-                         "gen_stub_operation_body - "
-                         "bad interface scope\n"),
-                        -1);
+      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      
+      if (pt == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_operation::")
+                             ACE_TEXT ("gen_stub_operation_body - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -183,6 +195,7 @@ be_visitor_operation::gen_stub_operation_body (
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
+          
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
             *os << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"

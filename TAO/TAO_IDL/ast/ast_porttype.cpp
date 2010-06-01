@@ -3,9 +3,7 @@
 #include "ast_porttype.h"
 #include "ast_provides.h"
 #include "ast_uses.h"
-#include "ast_publishes.h"
-#include "ast_emits.h"
-#include "ast_consumes.h"
+#include "ast_attribute.h"
 #include "ast_visitor.h"
 
 #include "utl_err.h"
@@ -64,29 +62,12 @@ AST_PortType::fe_add_uses (AST_Uses *u)
       this->fe_add_ref_decl (u));
 }
 
-AST_Publishes *
-AST_PortType::fe_add_publishes (AST_Publishes *p)
+AST_Attribute *
+AST_PortType::fe_add_attribute (AST_Attribute *t)
 {
   return
-    AST_Publishes::narrow_from_decl (
-      this->fe_add_ref_decl (p));
-}
-
-AST_Emits *
-AST_PortType::fe_add_emits (AST_Emits *e)
-{
-  return
-    AST_Emits::narrow_from_decl (
-      this->fe_add_ref_decl (e));
-  return e;
-}
-
-AST_Consumes *
-AST_PortType::fe_add_consumes (AST_Consumes *c)
-{
-  return
-    AST_Consumes::narrow_from_decl (
-      this->fe_add_ref_decl (c));
+    AST_Attribute::narrow_from_decl (
+      this->fe_add_decl (t));
 }
 
 IMPL_NARROW_FROM_DECL (AST_PortType)
