@@ -2,6 +2,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "Logger/Log_Macros.h"
 #include "DynAny_Handler.h"
 #include "DynEnum_Handler.h"
 #include "DynSequence_Handler.h"
@@ -28,7 +29,7 @@ namespace CIAO
 
       if (CORBA::is_nil (daf_.in ()))
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
         }
     }
@@ -64,7 +65,7 @@ namespace CIAO
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          ACE_ERROR ((LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
+          DANCE_DEBUG (1, (LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
           break;
 
@@ -176,7 +177,7 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -255,7 +256,7 @@ namespace CIAO
         case CORBA::tk_TypeCode:
         case ::CORBA::tk_null:
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a referse mapping.\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a referse mapping.\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("reverse mapping for this type not supported"));
         }
 #endif
@@ -272,7 +273,7 @@ namespace CIAO
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          ACE_ERROR ((LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
+          DANCE_DEBUG (1, (LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
           break;
 
@@ -362,7 +363,7 @@ namespace CIAO
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 

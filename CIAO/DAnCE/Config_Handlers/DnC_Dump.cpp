@@ -21,9 +21,9 @@ namespace Deployment
 
         for (CORBA::ULong i = 0; i < size; ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, "%s%s %d:\n",
+            DANCE_DEBUG (1, (LM_DEBUG, "%s%s %d:\n",
                         Dump_Obj::indent(), caption, i));
-            ACE_DEBUG ((LM_DEBUG, "%s  %s:\n",
+            DANCE_DEBUG (1, (LM_DEBUG, "%s  %s:\n",
                         Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
@@ -32,14 +32,14 @@ namespace Deployment
   // Dumps a string
   void DnC_Dump::dump (const char* caption, const TAO::String_Manager& str)
   {
-    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+    DANCE_DEBUG (1, (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
                 caption, str.in()));
   }
 
   // Dumps a boolean
   void DnC_Dump::dump (const char* caption, const CORBA::Boolean& val)
   {
-    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+    DANCE_DEBUG (1, (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
                 caption, val ? "true" : "false"));
   }
 
@@ -53,17 +53,17 @@ namespace Deployment
     Dump_Obj dump_obj("SatisfierProperty");
     dump ("name", sp.name);
 
-    ACE_DEBUG ((LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (sp.kind) {
-    case Quantity: ACE_DEBUG ((LM_DEBUG, "Quantity\n")); break;
-    case Capacity: ACE_DEBUG ((LM_DEBUG, "Capacity\n")); break;
-    case Minimum: ACE_DEBUG ((LM_DEBUG, "Minimum\n")); break;
-    case Maximum: ACE_DEBUG ((LM_DEBUG, "Maximum\n")); break;
-    case Attribute: ACE_DEBUG ((LM_DEBUG, "Attribute\n")); break;
-    case Selection: ACE_DEBUG ((LM_DEBUG, "Selection\n")); break;
+    case Quantity: DANCE_DEBUG (1, (LM_DEBUG, "Quantity\n")); break;
+    case Capacity: DANCE_DEBUG (1, (LM_DEBUG, "Capacity\n")); break;
+    case Minimum: DANCE_DEBUG (1, (LM_DEBUG, "Minimum\n")); break;
+    case Maximum: DANCE_DEBUG (1, (LM_DEBUG, "Maximum\n")); break;
+    case Attribute: DANCE_DEBUG (1, (LM_DEBUG, "Attribute\n")); break;
+    case Selection: DANCE_DEBUG (1, (LM_DEBUG, "Selection\n")); break;
     }
 
-    ACE_DEBUG ((LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
     dump (sp.value);
   }
 
@@ -206,15 +206,15 @@ namespace Deployment
     dump ("exclusiveUser", compportdesc.exclusiveUser);
     dump ("optional", compportdesc.optional);
 
-    ACE_DEBUG ((LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (compportdesc.kind) {
-    case Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
-    case SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
-    case MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
-    case EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
-    case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
-    default: ACE_DEBUG ((LM_DEBUG, "Unknown port kind\n")); break;
+    case Facet: DANCE_DEBUG (1, (LM_DEBUG, "Facet\n")); break;
+    case SimplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "SimplexReceptacle\n")); break;
+    case MultiplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "MultiplexReceptacle\n")); break;
+    case EventEmitter: DANCE_DEBUG (1, (LM_DEBUG, "EventEmitter\n")); break;
+    case EventPublisher: DANCE_DEBUG (1, (LM_DEBUG, "EventPublisher\n")); break;
+    case EventConsumer: DANCE_DEBUG (1, (LM_DEBUG, "EventConsumer\n")); break;
+    default: DANCE_DEBUG (1, (LM_DEBUG, "Unknown port kind\n")); break;
     }
   }
 
@@ -226,45 +226,45 @@ namespace Deployment
 
     dump ("name", comppropdesc.name);
 
-    ACE_DEBUG ((LM_DEBUG, "%stype: ", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%stype: ", Dump_Obj::indent()));
     switch (comppropdesc.type.in()->kind()) {
-    case ::CORBA::tk_null: ACE_DEBUG ((LM_DEBUG, "tk_null\n")); break;
-    case ::CORBA::tk_void: ACE_DEBUG ((LM_DEBUG, "tk_void\n")); break;
-    case ::CORBA::tk_short: ACE_DEBUG ((LM_DEBUG, "tk_short\n")); break;
-    case ::CORBA::tk_long: ACE_DEBUG ((LM_DEBUG, "tk_long\n")); break;
-    case ::CORBA::tk_ushort: ACE_DEBUG ((LM_DEBUG, "tk_ushort\n")); break;
-    case ::CORBA::tk_ulong: ACE_DEBUG ((LM_DEBUG, "tk_ulong\n")); break;
-    case ::CORBA::tk_float: ACE_DEBUG ((LM_DEBUG, "tk_float\n")); break;
-    case ::CORBA::tk_double: ACE_DEBUG ((LM_DEBUG, "tk_double\n")); break;
-    case ::CORBA::tk_boolean: ACE_DEBUG ((LM_DEBUG, "tk_boolean\n")); break;
-    case ::CORBA::tk_char: ACE_DEBUG ((LM_DEBUG, "tk_char\n")); break;
-    case ::CORBA::tk_octet: ACE_DEBUG ((LM_DEBUG, "tk_octet\n")); break;
-    case ::CORBA::tk_any: ACE_DEBUG ((LM_DEBUG, "tk_any\n")); break;
-    case ::CORBA::tk_TypeCode: ACE_DEBUG ((LM_DEBUG, "tk_TypeCode\n")); break;
-    case ::CORBA::tk_Principal: ACE_DEBUG ((LM_DEBUG, "tk_Principal\n")); break;
-    case ::CORBA::tk_objref: ACE_DEBUG ((LM_DEBUG, "tk_objref\n")); break;
-    case ::CORBA::tk_struct: ACE_DEBUG ((LM_DEBUG, "tk_struct\n")); break;
-    case ::CORBA::tk_union: ACE_DEBUG ((LM_DEBUG, "tk_union\n")); break;
-    case ::CORBA::tk_enum: ACE_DEBUG ((LM_DEBUG, "tk_enum\n")); break;
-    case ::CORBA::tk_string: ACE_DEBUG ((LM_DEBUG, "tk_string\n")); break;
-    case ::CORBA::tk_sequence: ACE_DEBUG ((LM_DEBUG, "tk_sequence\n")); break;
-    case ::CORBA::tk_array: ACE_DEBUG ((LM_DEBUG, "tk_array\n")); break;
-    case ::CORBA::tk_alias: ACE_DEBUG ((LM_DEBUG, "tk_alias\n")); break;
-    case ::CORBA::tk_except: ACE_DEBUG ((LM_DEBUG, "tk_except\n")); break;
-    case ::CORBA::tk_longlong: ACE_DEBUG ((LM_DEBUG, "tk_longlong\n")); break;
-    case ::CORBA::tk_ulonglong: ACE_DEBUG ((LM_DEBUG, "tk_ulonglong\n")); break;
-    case ::CORBA::tk_longdouble: ACE_DEBUG ((LM_DEBUG, "tk_longdouble\n")); break;
-    case ::CORBA::tk_wchar: ACE_DEBUG ((LM_DEBUG, "tk_wchar\n")); break;
-    case ::CORBA::tk_wstring: ACE_DEBUG ((LM_DEBUG, "tk_wstring\n")); break;
-    case ::CORBA::tk_fixed: ACE_DEBUG ((LM_DEBUG, "tk_fixed\n")); break;
-    case ::CORBA::tk_value: ACE_DEBUG ((LM_DEBUG, "tk_value\n")); break;
-    case ::CORBA::tk_value_box: ACE_DEBUG ((LM_DEBUG, "tk_value_box\n")); break;
-    case ::CORBA::tk_native: ACE_DEBUG ((LM_DEBUG, "tk_native\n")); break;
-    case ::CORBA::tk_abstract_interface: ACE_DEBUG ((LM_DEBUG, "tk_abstract_interface\n")); break;
-    case ::CORBA::tk_local_interface: ACE_DEBUG ((LM_DEBUG, "tk_local_interface\n")); break;
-    case ::CORBA::tk_component: ACE_DEBUG ((LM_DEBUG, "tk_component\n")); break;
-    case ::CORBA::tk_home: ACE_DEBUG ((LM_DEBUG, "tk_home\n")); break;
-    case ::CORBA::tk_event: ACE_DEBUG ((LM_DEBUG, "tk_event\n")); break;
+    case ::CORBA::tk_null: DANCE_DEBUG (1, (LM_DEBUG, "tk_null\n")); break;
+    case ::CORBA::tk_void: DANCE_DEBUG (1, (LM_DEBUG, "tk_void\n")); break;
+    case ::CORBA::tk_short: DANCE_DEBUG (1, (LM_DEBUG, "tk_short\n")); break;
+    case ::CORBA::tk_long: DANCE_DEBUG (1, (LM_DEBUG, "tk_long\n")); break;
+    case ::CORBA::tk_ushort: DANCE_DEBUG (1, (LM_DEBUG, "tk_ushort\n")); break;
+    case ::CORBA::tk_ulong: DANCE_DEBUG (1, (LM_DEBUG, "tk_ulong\n")); break;
+    case ::CORBA::tk_float: DANCE_DEBUG (1, (LM_DEBUG, "tk_float\n")); break;
+    case ::CORBA::tk_double: DANCE_DEBUG (1, (LM_DEBUG, "tk_double\n")); break;
+    case ::CORBA::tk_boolean: DANCE_DEBUG (1, (LM_DEBUG, "tk_boolean\n")); break;
+    case ::CORBA::tk_char: DANCE_DEBUG (1, (LM_DEBUG, "tk_char\n")); break;
+    case ::CORBA::tk_octet: DANCE_DEBUG (1, (LM_DEBUG, "tk_octet\n")); break;
+    case ::CORBA::tk_any: DANCE_DEBUG (1, (LM_DEBUG, "tk_any\n")); break;
+    case ::CORBA::tk_TypeCode: DANCE_DEBUG (1, (LM_DEBUG, "tk_TypeCode\n")); break;
+    case ::CORBA::tk_Principal: DANCE_DEBUG (1, (LM_DEBUG, "tk_Principal\n")); break;
+    case ::CORBA::tk_objref: DANCE_DEBUG (1, (LM_DEBUG, "tk_objref\n")); break;
+    case ::CORBA::tk_struct: DANCE_DEBUG (1, (LM_DEBUG, "tk_struct\n")); break;
+    case ::CORBA::tk_union: DANCE_DEBUG (1, (LM_DEBUG, "tk_union\n")); break;
+    case ::CORBA::tk_enum: DANCE_DEBUG (1, (LM_DEBUG, "tk_enum\n")); break;
+    case ::CORBA::tk_string: DANCE_DEBUG (1, (LM_DEBUG, "tk_string\n")); break;
+    case ::CORBA::tk_sequence: DANCE_DEBUG (1, (LM_DEBUG, "tk_sequence\n")); break;
+    case ::CORBA::tk_array: DANCE_DEBUG (1, (LM_DEBUG, "tk_array\n")); break;
+    case ::CORBA::tk_alias: DANCE_DEBUG (1, (LM_DEBUG, "tk_alias\n")); break;
+    case ::CORBA::tk_except: DANCE_DEBUG (1, (LM_DEBUG, "tk_except\n")); break;
+    case ::CORBA::tk_longlong: DANCE_DEBUG (1, (LM_DEBUG, "tk_longlong\n")); break;
+    case ::CORBA::tk_ulonglong: DANCE_DEBUG (1, (LM_DEBUG, "tk_ulonglong\n")); break;
+    case ::CORBA::tk_longdouble: DANCE_DEBUG (1, (LM_DEBUG, "tk_longdouble\n")); break;
+    case ::CORBA::tk_wchar: DANCE_DEBUG (1, (LM_DEBUG, "tk_wchar\n")); break;
+    case ::CORBA::tk_wstring: DANCE_DEBUG (1, (LM_DEBUG, "tk_wstring\n")); break;
+    case ::CORBA::tk_fixed: DANCE_DEBUG (1, (LM_DEBUG, "tk_fixed\n")); break;
+    case ::CORBA::tk_value: DANCE_DEBUG (1, (LM_DEBUG, "tk_value\n")); break;
+    case ::CORBA::tk_value_box: DANCE_DEBUG (1, (LM_DEBUG, "tk_value_box\n")); break;
+    case ::CORBA::tk_native: DANCE_DEBUG (1, (LM_DEBUG, "tk_native\n")); break;
+    case ::CORBA::tk_abstract_interface: DANCE_DEBUG (1, (LM_DEBUG, "tk_abstract_interface\n")); break;
+    case ::CORBA::tk_local_interface: DANCE_DEBUG (1, (LM_DEBUG, "tk_local_interface\n")); break;
+    case ::CORBA::tk_component: DANCE_DEBUG (1, (LM_DEBUG, "tk_component\n")); break;
+    case ::CORBA::tk_home: DANCE_DEBUG (1, (LM_DEBUG, "tk_home\n")); break;
+    case ::CORBA::tk_event: DANCE_DEBUG (1, (LM_DEBUG, "tk_event\n")); break;
     default:
       break;
     };
@@ -319,13 +319,13 @@ namespace Deployment
 
   void DnC_Dump::dump(const Deployment::ResourceUsageKind &ruk)
   {
-    ACE_DEBUG ((LM_DEBUG, "%sresourceUsage: ", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceUsage: ", Dump_Obj::indent()));
     switch (ruk) {
-    case None: ACE_DEBUG ((LM_DEBUG, "None\n")); break;
-    case InstanceUsesResource: ACE_DEBUG ((LM_DEBUG, "InstanceUsesResource\n")); break;
-    case ResourceUsesInstance: ACE_DEBUG ((LM_DEBUG, "ResourceUsesInstance\n")); break;
-    case PortUsesResource: ACE_DEBUG ((LM_DEBUG, "PortUsesResource\n")); break;
-    case ResourceUsesPort: ACE_DEBUG ((LM_DEBUG, "ResourceUsesPort\n")); break;
+    case None: DANCE_DEBUG (1, (LM_DEBUG, "None\n")); break;
+    case InstanceUsesResource: DANCE_DEBUG (1, (LM_DEBUG, "InstanceUsesResource\n")); break;
+    case ResourceUsesInstance: DANCE_DEBUG (1, (LM_DEBUG, "ResourceUsesInstance\n")); break;
+    case PortUsesResource: DANCE_DEBUG (1, (LM_DEBUG, "PortUsesResource\n")); break;
+    case ResourceUsesPort: DANCE_DEBUG (1, (LM_DEBUG, "ResourceUsesPort\n")); break;
     }
   }
 
@@ -338,7 +338,7 @@ namespace Deployment
     dump (irdd.resourceUsage);
     dump ("requirementName", irdd.requirementName);
     dump ("resourceName", irdd.resourceName);
-    ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
     dump_sequence ("property",  irdd.property);
   }
 
@@ -380,15 +380,15 @@ namespace Deployment
 
     dump ("portName", pspe.portName);
     dump ("provider", pspe.provider);
-    ACE_DEBUG ((LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (pspe.kind) {
-    case Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
-    case SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
-    case MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
-    case EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
-    case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
-    default: ACE_DEBUG ((LM_DEBUG, "Unknown port kind\n")); break;
+    case Facet: DANCE_DEBUG (1, (LM_DEBUG, "Facet\n")); break;
+    case SimplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "SimplexReceptacle\n")); break;
+    case MultiplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "MultiplexReceptacle\n")); break;
+    case EventEmitter: DANCE_DEBUG (1, (LM_DEBUG, "EventEmitter\n")); break;
+    case EventPublisher: DANCE_DEBUG (1, (LM_DEBUG, "EventPublisher\n")); break;
+    case EventConsumer: DANCE_DEBUG (1, (LM_DEBUG, "EventConsumer\n")); break;
+    default: DANCE_DEBUG (1, (LM_DEBUG, "Unknown port kind\n")); break;
     }
 #if (_MSC_VER)
     dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
@@ -415,7 +415,7 @@ namespace Deployment
     dump ("targetName", crdd.targetName);
     dump ("requirementName", crdd.requirementName);
     dump ("resourceName", crdd.resourceName);
-    ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
     dump_sequence ("properties", crdd.property);
   }
 
@@ -478,7 +478,7 @@ namespace Deployment
 
     dump ("requirementName", rdd.requirementName);
     dump ("resourceName", rdd.resourceName);
-    ACE_DEBUG ((LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
     dump_sequence ("properties", rdd.property);
   }
 
@@ -555,7 +555,7 @@ namespace Deployment
 
     a >>= v;
 
-    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+    DANCE_DEBUG (1, (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
                 v->instance[value].name.in ()));
   }
 
@@ -588,7 +588,7 @@ namespace Deployment
 
     a >>= v;
 
-    ACE_DEBUG ((LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+    DANCE_DEBUG (1, (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
                 v->instance[value].name.in ()));
   }
 
@@ -688,7 +688,7 @@ namespace Deployment
 
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
-    ACE_DEBUG ((LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
     dump (cid.implements);
     dump_sequence ("assemblyImpl", cid.assemblyImpl);
     dump_sequence ("monolithicImpl", cid.monolithicImpl);
@@ -705,7 +705,7 @@ namespace Deployment
     Dump_Obj dump_obj("PackagedComponentImplementation");
 
     dump ("Name", pci.name);
-    ACE_DEBUG ((LM_DEBUG,
+    DANCE_DEBUG (1, (LM_DEBUG,
                 "%sreferencedImplementation:\n", Dump_Obj::indent()));
     DnC_Dump::dump (pci.referencedImplementation);
   }
@@ -719,7 +719,7 @@ namespace Deployment
 
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
-    ACE_DEBUG ((LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
     dump_sequence ("configProperty", comppkgdesc.configProperty);
     dump_sequence ("implementation", comppkgdesc.implementation);
@@ -746,7 +746,7 @@ namespace Deployment
   {
     Dump_Obj dump_obj("Property");
     dump ("name", property.name);
-    ACE_DEBUG ((LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (1, (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
     dump (property.value);
   }
 
@@ -762,33 +762,33 @@ namespace Deployment
           CORBA::Short temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
 encoded different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
 
       case CORBA::tk_null:
-        ACE_DEBUG ((LM_DEBUG, "%sAny value: null value encoded\n",
+        DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: null value encoded\n",
                     Dump_Obj::indent ()));
         break;
 
       case CORBA::tk_void:
-        ACE_DEBUG ((LM_DEBUG, "Any value: void type encoded\n"));
+        DANCE_DEBUG (1, (LM_DEBUG, "Any value: void type encoded\n"));
         break;
       case CORBA::tk_long:
         {
           CORBA::Long temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -798,11 +798,11 @@ encoded with different type"));
           CORBA::UShort temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -812,11 +812,11 @@ encoded with different type"));
           CORBA::ULong temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -826,11 +826,11 @@ encoded with different type"));
           CORBA::Float temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -839,11 +839,11 @@ encoded with different type"));
           CORBA::Double temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -852,15 +852,15 @@ encoded with different type"));
           CORBA::Boolean temp;
           if (! (any >>= CORBA::Any::to_boolean (temp)))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
 
           if (temp)
-            ACE_DEBUG ((LM_DEBUG, "Any value: True\n"));
+            DANCE_DEBUG (1, (LM_DEBUG, "Any value: True\n"));
           else
-            ACE_DEBUG ((LM_DEBUG, "Any value: False\n"));
+            DANCE_DEBUG (1, (LM_DEBUG, "Any value: False\n"));
         }
         break;
 
@@ -869,11 +869,11 @@ encoded with different type"));
           CORBA::Char temp;
           if (! (any >>= CORBA::Any::to_char (temp)))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -883,11 +883,11 @@ encoded with different type"));
           CORBA::Octet temp;
           if (! (any >>= CORBA::Any::to_octet (temp)))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -897,11 +897,11 @@ encoded with different type"));
           const char * temp = 0;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -910,11 +910,11 @@ encoded with different type"));
           CORBA::LongLong temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -924,11 +924,11 @@ encoded with different type"));
           CORBA::LongDouble temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
 
@@ -938,11 +938,11 @@ encoded with different type"));
           CORBA::WChar temp;
           if (! (any >>= CORBA::Any::to_wchar (temp)))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -952,11 +952,11 @@ encoded with different type"));
           const CORBA::WChar * temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          ACE_DEBUG ((LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
+          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -966,16 +966,16 @@ encoded with different type"));
 /*          CORBA::Enum temp;
           if (! (any >>= temp))
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected enum \
+              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected enum \
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-*/          ACE_DEBUG ((LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
+*/          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
         }
         break;
 
       default:
-        ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
+        DANCE_DEBUG (1, (LM_DEBUG, "Unknown type encoded in Any\n"));
         throw CORBA::INTERNAL ();
       }
   }

@@ -95,7 +95,7 @@ namespace CIAO
           }
         else
           {
-            ACE_ERROR ((LM_ERROR,
+            DANCE_DEBUG (1, (LM_ERROR,
                         "(%P|%t) Warning: ADD %s has no idref.\n",
  ACE_TEXT_ALWAYS_CHAR (                        src.name ().c_str ())));
           }

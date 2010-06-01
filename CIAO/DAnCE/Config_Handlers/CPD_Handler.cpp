@@ -55,7 +55,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, "Invalid port type in connection %s\n",
+          DANCE_DEBUG (1, (LM_ERROR, "Invalid port type in connection %s\n",
                       desc.name ().c_str ()));
           throw 1;
         }
@@ -136,7 +136,7 @@ namespace CIAO
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT("Invalid port kind in connection %C\n"),
                       name.c_str ()));
         }
 

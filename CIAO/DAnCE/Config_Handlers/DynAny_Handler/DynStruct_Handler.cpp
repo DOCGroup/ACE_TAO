@@ -2,7 +2,7 @@
 
 #include "DynStruct_Handler.h"
 #include "DynAny_Handler.h"
-
+#include "Logger/Log_Macros.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -85,7 +85,7 @@ namespace CIAO
     DynStruct_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
       ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
+      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
     }
     
     CORBA::TypeCode_ptr 
@@ -93,7 +93,7 @@ namespace CIAO
     {
       if (!type.struct_p ())
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Struct type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Struct type descriptioin required")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected struct type information, tc_kind may be incorrect\n"));
         }
       

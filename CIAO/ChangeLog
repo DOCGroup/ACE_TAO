@@ -1,11 +1,48 @@
+Tue Jun  1 21:29:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/ADD_Handler.cpp:
+        * DAnCE/Config_Handlers/CPD_Handler.cpp:
+        * DAnCE/Config_Handlers/DP_Handler.cpp:
+        * DAnCE/Config_Handlers/DataType_Handler.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump_T.cpp:
+        * DAnCE/Config_Handlers/Dump_Obj.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DataType_Handler.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+        * DAnCE/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+        * DAnCE/Config_Handlers/IDD_Handler.cpp:
+        * DAnCE/Config_Handlers/MDD_Handler.cpp:
+        * DAnCE/Config_Handlers/PSPE_Handler.cpp:
+        * DAnCE/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * DAnCE/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * DAnCE/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * DAnCE/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+        * DAnCE/Config_Handlers/SatisfierProperty_Handler.cpp:
+        
+          Converted to using DANCE_{ERROR,DEBUG} in lieu of ACE_ constructs.
+
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+
+          Pass Config_Error exceptions through. 
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+
+          Proper exception handling to pass useful diagnostic to user in case of
+          parse error. 
+        
 Tue Jun  1 19:45:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/identifier_helper.cpp(orig_sn):
-        
+
           Added generation of a leading '::' to all scoped names.
-          
+
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
-        
+
           Added a template and a non-template attribute declaration
           in a porttype, to test support of that language feature.
 

@@ -343,8 +343,8 @@ namespace CIAO
             retval.monolithicImpl (MID_Handler::get_mid (src.monolithicImpl[0]));
           }
         else
-          ACE_DEBUG ((LM_WARNING, "Warning: ComponentImplementationDescription lacks "
-                      "either a required assemblyImpl or monolithicImpl, or has too many"));
+          DANCE_ERROR (1, (LM_WARNING, "Warning: ComponentImplementationDescription lacks "
+                         "either a required assemblyImpl or monolithicImpl, or has too many"));
 #if 0
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           {

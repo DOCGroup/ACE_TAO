@@ -56,9 +56,9 @@ namespace CIAO
             }
           else
             {
-              ACE_DEBUG((LM_ERROR,
-                         "(%P|%t) Warning:  IDD %s has no idref\n",
- ACE_TEXT_ALWAYS_CHAR (                         src.name ().c_str ())));
+              DANCE_ERROR (2, (LM_WARNING,
+                               "(%P|%t) Warning:  IDD %s has no idref\n",
+                               ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())));
             }
 
           // We know there should be only one element
@@ -96,8 +96,8 @@ namespace CIAO
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
-                      src.name ().c_str ()));
+          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
+                           src.name ().c_str ()));
           throw Config_Error (src.name (), ACE_TEXT ("Unknown exception"));
         }
 
