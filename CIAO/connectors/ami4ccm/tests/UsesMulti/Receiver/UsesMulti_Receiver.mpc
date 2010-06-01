@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p UsesMulti_Base UsesMulti_Receiver"
+
+project(AMI_UsesMulti_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_UsesMulti_idl_gen
+  idlflags += -Wb,stub_export_macro=USESMULTI_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=UsesMulti_Receiver_stub_export.h \
+              -Wb,skel_export_macro=USESMULTI_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=UsesMulti_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=USESMULTI_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=UsesMulti_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    UsesMulti_Receiver.idl
+  }
+}
+
+project(AMI_UsesMulti_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_UsesMulti_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=USESMULTI_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=UsesMulti_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    UsesMulti_ReceiverE.idl
+  }
+}
+
+project(AMI_UsesMulti_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_UsesMulti_Base_Receiver_lem_gen AMI_UsesMulti_Base_Receiver_stub AMI_UsesMulti_stub
+  libs  += UsesMulti_stub UsesMulti_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = UsesMulti_Receiver_lem_stub
+  dynamicflags   = USESMULTI_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMulti_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    UsesMulti_ReceiverEC.h
+    UsesMulti_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    UsesMulti_ReceiverEC.inl
+  }
+}
+
+project(AMI_UsesMulti_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_UsesMulti_Base_Receiver_idl_gen AMI_UsesMulti_stub
+  libs  += UsesMulti_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = UsesMulti_Receiver_stub
+  dynamicflags   = USESMULTI_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMulti_ReceiverC.cpp
+  }
+
+  Header_Files {
+    UsesMulti_ReceiverC.h
+    UsesMulti_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    UsesMulti_ReceiverC.inl
+  }
+}
+
+project(AMI_UsesMulti_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_UsesMulti_Base_Receiver_l_stub AMI_UsesMulti_Base_Receiver_stub AMI_UsesMulti_stub AMI_UsesMulti_lem_stub
+  sharedname = UsesMulti_Receiver_exec
+  libs += UsesMulti_Receiver_stub UsesMulti_Receiver_lem_stub UsesMulti_stub UsesMulti_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = USESMULTI_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMulti_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    UsesMulti_Receiver_exec.h
+    UsesMulti_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_UsesMulti_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_UsesMulti_Base_skel AMI_UsesMulti_Base_Receiver_l_stub AMI_UsesMulti_stub AMI_UsesMulti_skel AMI_UsesMulti_lem_stub
+  sharedname  = UsesMulti_Receiver_svnt
+  libs       += UsesMulti_Receiver_stub UsesMulti_Receiver_lem_stub  \
+                UsesMulti_skel \
+                UsesMulti_stub UsesMulti_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = USESMULTI_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMulti_ReceiverS.cpp
+    UsesMulti_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    UsesMulti_ReceiverS.h
+    UsesMulti_Receiver_svnt.h
+    UsesMulti_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    UsesMulti_ReceiverS.inl
+  }
+}
+

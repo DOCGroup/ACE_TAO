@@ -1,0 +1,196 @@
+// $Id$
+
+project(AMI_UsesMulti_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=USESMULTI_STUB_Export \
+              -Wb,stub_export_include=UsesMulti_stub_export.h \
+              -Wb,skel_export_macro=USESMULTI_SKEL_Export \
+              -Wb,skel_export_include=UsesMulti_skel_export.h \
+              -Wb,conn_export_macro=USESMULTI_CONN_Export \
+              -Wb,conn_export_include=UsesMulti_conn_export.h \
+              -Wb,exec_export_macro=USESMULTI_EXEC_Export \
+              -Wb,exec_export_include=UsesMulti_exec_export.h \
+              -I.. -GM -Gxhcn
+  idlflags -= -Gsv
+
+  IDL_Files {
+    UsesMulti.idl
+  }
+}
+
+project(AMI_UsesMulti_lem_gen) : ciaoidldefaults {
+  after += AMI_UsesMulti_idl_gen AMI_UsesMulti_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=USESMULTI_LEM_STUB_Export \
+              -Wb,export_include=UsesMulti_lem_stub_export.h \
+              -I.. -SS -Gxhst
+
+  IDL_Files {
+    UsesMultiE.idl
+  }
+}
+
+project(AMI_UsesMulti_lema_gen) : ciaoidldefaults {
+  after += AMI_UsesMulti_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=USESMULTI_STUB_Export \
+              -Wb,stub_export_include=UsesMulti_stub_export.h \
+              -Wb,conn_export_macro=USESMULTI_CONN_Export \
+              -Wb,conn_export_include=UsesMulti_conn_export.h \
+              -Wb,svnt_export_macro=USESMULTI_SVNT_Export \
+              -Wb,svnt_export_include=UsesMulti_svnt_export.h \
+              -Wb,skel_export_macro=USESMULTI_SKEL_Export \
+              -Wb,skel_export_include=UsesMulti_skel_export.h \
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+
+  IDL_Files {
+    UsesMultiA.idl
+  }
+}
+
+project(AMI_UsesMulti_lemae_gen) : ciaoidldefaults {
+  after += AMI_UsesMulti_lema_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=USESMULTI_LEM_STUB_Export \
+              -Wb,stub_export_include=UsesMulti_lem_stub_export.h \
+              -I.. -SS
+
+  IDL_Files {
+    UsesMultiAE.idl
+  }
+}
+
+project(AMI_UsesMulti_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_UsesMulti_lem_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = UsesMulti_stub
+  dynamicflags = USESMULTI_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMultiC.cpp
+    UsesMultiAC.cpp
+  }
+
+  Header_Files {
+    UsesMultiC.h
+    UsesMulti_stub_export.h
+}
+
+  Inline_Files {
+    UsesMultiC.inl
+  }
+}
+
+project(AMI_UsesMulti_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_UsesMulti_lem_gen AMI_UsesMulti_stub AMI_UsesMulti_lemae_gen AMI_UsesMulti_skel
+  libs += UsesMulti_stub UsesMulti_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = UsesMulti_lem_stub
+  dynamicflags = USESMULTI_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMultiEC.cpp
+    UsesMultiAEC.cpp
+  }
+
+  Header_Files {
+    UsesMultiEC.h
+    UsesMulti_lem_stub_export.h
+}
+
+  Inline_Files {
+    UsesMultiEC.inl
+  }
+}
+
+project(AMI_UsesMulti_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_UsesMulti_stub
+  sharedname  = UsesMulti_skel
+  libs       += UsesMulti_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  dynamicflags = USESMULTI_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMultiS.cpp
+    UsesMultiAS.cpp
+  }
+
+  Header_Files {
+    UsesMultiS.h
+   
+    UsesMulti_skel_export.h
+  }
+
+  Inline_Files {
+    UsesMultiS.inl
+   
+  }
+}
+
+project(AMI_UsesMulti_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_UsesMulti_lem_stub UsesMulti_Base_AMI_stub AMI_UsesMulti_skel AMI_UsesMulti_lema_gen AMI_UsesMulti_lemae_gen
+  sharedname = UsesMulti_conn
+  libs += UsesMulti_stub UsesMulti_skel UsesMulti_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = USESMULTI_CONN_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMultiA_conn.cpp
+  }
+
+  Header_Files {
+    UsesMultiA_conn.h
+    UsesMulti_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_UsesMulti_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_UsesMulti_lem_stub UsesMulti_Base_AMI_stub AMI_UsesMulti_skel AMI_UsesMulti_lema_gen AMI_UsesMulti_lemae_gen AMI_UsesMulti_conn
+  sharedname = UsesMulti_svnt
+  libs += UsesMulti_stub UsesMulti_skel UsesMulti_lem_stub UsesMulti_conn
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = USESMULTI_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    UsesMultiA_svnt.cpp
+  }
+
+  Header_Files {
+    UsesMultiA_svnt.h
+    UsesMultiA_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
