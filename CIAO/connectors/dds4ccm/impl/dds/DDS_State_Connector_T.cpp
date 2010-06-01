@@ -71,6 +71,16 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_dds_entit
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::CCM_ContentFilterSetting_ptr
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_filter_config (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_filter_config");
+
+  this->passive_observer_obtained_ = true;
+  return this->passive_observer_.get_filter_config ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data (void)
 {
@@ -96,8 +106,18 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity (
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_dds_entity");
 
-  return this->pull_observer_.get_dds_entity ();
   this->pull_observer_obtained_ = true;
+  return this->pull_observer_.get_dds_entity ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::CCM_ContentFilterSetting_ptr
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_filter_config (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_filter_config");
+
+  this->pull_observer_obtained_ = true;
+  return this->pull_observer_.get_filter_config ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -131,6 +151,16 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_dds_entity (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::CCM_ContentFilterSetting_ptr
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_filter_config (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_observer_filter_config");
+
+  this->push_observer_obtained_ = true;
+  return this->push_observer_.get_filter_config ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_data (void)
 {
@@ -158,6 +188,16 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_dds_en
 
   this->push_state_observer_obtained_ = true;
   return this->push_state_observer_.get_dds_entity ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::CCM_ContentFilterSetting_ptr
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_filter_config (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_push_state_observer_filter_config");
+
+  this->push_state_observer_obtained_ = true;
+  return this->push_state_observer_.get_filter_config ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

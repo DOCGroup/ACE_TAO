@@ -124,3 +124,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
   return &this->data_reader_;
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::CCM_ContentFilterSetting_ptr
+DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config (void)
+{
+  DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config");
+
+  // TODO BETA3
+  return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
+}
