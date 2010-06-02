@@ -1,3 +1,9 @@
+Wed Jun  2 15:27:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Handle_Gobbler.inl:
+        * ace/Log_Msg_UNIX_Syslog.h:
+          Added missing include directives.
+
 Mon May 31 11:26:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
