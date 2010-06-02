@@ -6,6 +6,7 @@
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
+#include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
