@@ -1,3 +1,8 @@
+Wed Jun  2 07:47:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Added new disable test case which fails
+
 Wed Jun  2 06:18:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE/DAnCE_Utility.cpp:
