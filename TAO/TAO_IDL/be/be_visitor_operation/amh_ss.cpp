@@ -332,7 +332,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
-      << skel_prefix
+      << skel_prefix << this->ctx_->port_prefix ().c_str ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl

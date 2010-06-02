@@ -2249,9 +2249,10 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
-                      << " * const impl = static_cast<"
+                      << " * const impl =" << be_idt_nl
+                      << "static_cast<"
                       << derived->full_skel_name ()
-                      << " *> (servant);" << be_nl;
+                      << " *> (servant);" << be_uidt_nl;
 
                   *os << ancestor->full_skel_name ()
                       << "::" << d->local_name ()

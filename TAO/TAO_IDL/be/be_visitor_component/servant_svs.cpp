@@ -245,7 +245,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       return 0;
     }
 
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -332,7 +332,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
       return 0;
     }
 
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -1073,7 +1073,7 @@ int
 be_visitor_facet_executor_block::visit_provides (
   be_provides *node)
 {
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -1103,7 +1103,7 @@ be_visitor_connect_block::~be_visitor_connect_block (void)
 int
 be_visitor_connect_block::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -1166,7 +1166,7 @@ be_visitor_disconnect_block::~be_visitor_disconnect_block (
 int
 be_visitor_disconnect_block::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -1218,7 +1218,7 @@ be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
 int
 be_visitor_receptacle_desc::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
@@ -1512,7 +1512,7 @@ be_visitor_populate_port_tables::visit_provides (
       return 0;
     }
 
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 

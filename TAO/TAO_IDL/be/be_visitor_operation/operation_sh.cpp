@@ -67,7 +67,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
     }
 
   // STEP 2: generate the operation name
-  *os << " " << node->local_name ();
+  *os << " " << this->ctx_->port_prefix ().c_str ()
+      << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
@@ -105,7 +106,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
             }
         }
 
-      *os << node->local_name ()
+      *os << this->ctx_->port_prefix ().c_str ()
+          << node->local_name ()
           << "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest & server_request," << be_nl
           << "void * servant_upcall," << be_nl

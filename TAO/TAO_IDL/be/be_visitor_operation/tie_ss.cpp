@@ -43,7 +43,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_tie_ss::"
+                         "be_visitor_operation_tie_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -112,7 +112,9 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << " " << intf->full_skel_name () << "_tie<" << template_name.c_str () << ">::"
+  *os << " " << intf->full_skel_name () << "_tie<"
+      << template_name.c_str () << ">::"
+      << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as

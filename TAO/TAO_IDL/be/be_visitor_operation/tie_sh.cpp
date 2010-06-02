@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for server header for TIE class operations.
 // ************************************************************
@@ -70,7 +69,8 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
     }
 
   // STEP 2: generate the operation name.
-  *os << " " << node->local_name ();
+  *os << " " << this->ctx_->port_prefix ().c_str ()
+      << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

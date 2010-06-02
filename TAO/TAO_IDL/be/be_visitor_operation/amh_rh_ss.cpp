@@ -39,26 +39,32 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
+      
+  be_interface *intf = be_interface::narrow_from_scope (s);
 
-  if (this->ctx_->attribute () != 0)
+  if (intf == 0)
     {
-      intf = be_interface::narrow_from_scope (
-                 this->ctx_->attribute()->defined_in ()
-               );
+      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      
+      if (pt == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_amh_rh_operation_sh::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
-  if (!intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
-    }
-
-  char *buf;
+  char *buf = 0;
   intf->compute_full_name ("TAO_", "", buf);
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
@@ -88,7 +94,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << node->local_name ();
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name ();
 
   // Step 2 : Generate the params of the method
   be_visitor_context ctx (*this->ctx_);

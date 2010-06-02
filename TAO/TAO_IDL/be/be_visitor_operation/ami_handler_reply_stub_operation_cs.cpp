@@ -84,14 +84,12 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   if (!parent)
     {
-      ACE_ERROR_RETURN ((
-          LM_ERROR,
-          "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
-          "visit_operation - "
-          "node information not sufficient :-<\n"
-        ),
-        -1
-      );
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_operation_ami_")
+                         ACE_TEXT ("handler_reply_stub_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("node information not sufficient :-<\n")),
+                        -1);
     }
 
   // Genereate scope name.
@@ -100,7 +98,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Generate the operation name.
   *os << "::";
 
-  *os << node->local_name () << "_reply_stub (" << be_idt_nl
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << "_reply_stub (" << be_idt_nl
       << "TAO_InputCDR &_tao_in, " << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "::CORBA::ULong reply_status"
