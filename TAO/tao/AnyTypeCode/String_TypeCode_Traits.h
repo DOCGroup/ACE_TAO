@@ -27,6 +27,7 @@
 
 #include "tao/AnyTypeCode/String_TypeCode.h"
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
+#include "tao/AnyTypeCode/Any.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

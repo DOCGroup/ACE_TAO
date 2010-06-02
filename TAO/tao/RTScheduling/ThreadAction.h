@@ -9,6 +9,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

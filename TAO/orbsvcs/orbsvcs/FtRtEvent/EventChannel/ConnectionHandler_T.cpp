@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/INET_Addr.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_PEER_STREAM_1>

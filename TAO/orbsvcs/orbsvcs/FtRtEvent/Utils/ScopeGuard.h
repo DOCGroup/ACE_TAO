@@ -13,6 +13,8 @@
 #ifndef SCOPEGUARD_H_
 #define SCOPEGUARD_H_
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>

@@ -1,29 +1,125 @@
+Wed Jun  2 13:12:16 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/Log/EventLogNotification.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+        * orbsvcs/orbsvcs/Notify/Validate_Worker_T.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.inl:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/resolve_init.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/String_TypeCode_Traits.h:
+        * tao/AnyTypeCode/TypeCode_Value_Field.h:
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/Special_Basic_SArguments.h:
+        * tao/PortableServer/Var_Size_SArgument_T.cpp:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/PortableServer/TypeCode_SArg_Traits.h:
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/PortableServer/Object_SArg_Traits.h:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/String_Sequence_Element_T.h:
+        * tao/Object_Reference_Sequence_Element_T.h:
+        * tao/Array_VarOut_T.h:
+        * tao/Special_Basic_Arguments.h:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Seq_Var_T.h:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Seq_Out_T.h:
+        * tao/Object_T.cpp:
+        * tao/Valuetype/Valuetype_Sequence_Element_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tao/Valuetype/Unbounded_Valuetype_Sequence_T.h:
+        * tao/RTScheduling/ThreadAction.h:
+        * tao/UB_String_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.h:
+          Added missing include directives.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+        * orbsvcs/orbsvcs/Event/EC_Busy_Lock.h:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/ScopeGuard.h:
+        * tao/AnyTypeCode/TypeCode_Struct_Field.h:
+        * tao/default_environment.h:
+        * tao/PortableServer/SArg_Traits_T.h:
+        * tao/PortableServer/Servant_Location.h:
+        * tao/VarOut_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Auto_Functor.h:
+        * tao/Arg_Traits_T.h:
+        * tao/TAO_Internal.h:
+          Added missing include of tao/Versioned_Namespace.h.
+
+        * orbsvcs/orbsvcs/AV/Resource_Factory.h:
+          Fixed misspelt inclusion guard.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.inl:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
+          Removed these files as they are not included in any library
+          and are duplicated partly in FT_ClientPolicy* and partly
+          in FT_ServerPolicy* files.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h:
+          Corrected include file.
+
+        * tao/AnyTypeCode/Any_Arg_Traits.h:
+        * tao/AnyTypeCode/TypeCode_Case_Base_T.h:
+          Added missing includes and removed unnecessary in this case
+          forward declarations.
+
+        * tao/Monitor/Monitor_Types.pidl:
+        * tao/Monitor/Monitor.pidl:
+          Added inclusion guards.
+
+        * orbsvcs/orbsvcs/Notify/Save_Persist_Worker_T.h:
+        * tao/Exception_Data.h:
+          Added forward declarations neccessary for compilation.
+
 Wed Jun  2 13:07:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:
-        
+
           Fixed a bug in the streaming of a scoped name where 2
           leading double colons could be output.
 
 Wed Jun  2 12:47:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.h:
-        
+
           Removed tab apparently put there by bison regeneration.
 
 Wed Jun  2 12:40:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.h:
         * TAO_IDL/fe/idl.yy:
-        
+
           Changes made already in
-          
+
           Mon May 31 20:48:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           but apparently reverted in
-          
+
           Tue Jun  1 15:34:34 UTC 2010  jeff Parsons  <j.parsons@vanderbilt.edu>
-          
+
           that define the signed and unsigned members of the big
           union used by the parser as 64-bit types.
 

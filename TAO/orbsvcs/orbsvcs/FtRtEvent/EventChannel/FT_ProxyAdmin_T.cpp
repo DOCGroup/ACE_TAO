@@ -2,6 +2,7 @@
 
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "tao/PortableServer/POAC.h"
 #include "ace/Synch_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
