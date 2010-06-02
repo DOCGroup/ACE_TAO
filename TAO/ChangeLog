@@ -1,3 +1,10 @@
+Wed Jun  2 13:07:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+        
+          Fixed a bug in the streaming of a scoped name where 2
+          leading double colons could be output.
+
 Wed Jun  2 12:47:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.h:
