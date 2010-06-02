@@ -81,6 +81,24 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_passive_observer_filter_co
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CCM_DDS::QueryFilter*
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter");
+
+  return this->passive_observer_.filter ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter");
+
+  this->passive_observer_.filter (filter);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::reader_type::_ptr_type
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::get_pull_observer_data (void)
 {

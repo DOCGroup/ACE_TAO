@@ -1,3 +1,16 @@
+Wed Jun  2 06:18:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+          Unicode fix, initialise pointers with 0
+
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+          Added missing methods that caused the connectors not to load
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+          Improved logging, fixed some memory leaks, simplified some code
+
 Tue Jun  1 21:29:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/ADD_Handler.cpp:
@@ -21,20 +34,20 @@ Tue Jun  1 21:29:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
         * DAnCE/Config_Handlers/Package_Handlers/SID_Handler.cpp:
         * DAnCE/Config_Handlers/SatisfierProperty_Handler.cpp:
-        
+
           Converted to using DANCE_{ERROR,DEBUG} in lieu of ACE_ constructs.
 
         * DAnCE/Config_Handlers/XML_File_Intf.cpp:
 
-          Pass Config_Error exceptions through. 
-        
+          Pass Config_Error exceptions through.
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
         * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
         * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
 
           Proper exception handling to pass useful diagnostic to user in case of
-          parse error. 
-        
+          parse error.
+
 Tue Jun  1 19:45:51 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/identifier_helper.cpp(orig_sn):
