@@ -16,7 +16,6 @@ namespace DAnCE
     {
       DANCE_TRACE("DAnCE::Utility::build_config_values_map");
       
-
       for (CORBA::ULong i = 0; i < prop.length (); ++i)
         {
           int const retval = map.rebind (prop[i].name.in (), prop[i].value);
@@ -52,7 +51,7 @@ namespace DAnCE
 
       DANCE_DEBUG (7, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE::Utility::write_IOR - ")
-                       ACE_TEXT ("Writing ior <%C> to file <%C>\n"),
+                       ACE_TEXT ("Writing ior <%C> to file <%s>\n"),
                        ior, pathname));
 
       if (ior_output_file_)
@@ -66,7 +65,6 @@ namespace DAnCE
 
       return -1;
     }
-
 
     void append_properties (::Deployment::Properties &dest,
                             const ::Deployment::Properties &src)
@@ -238,10 +236,8 @@ namespace DAnCE
           if (ACE_OS::strcmp (prop[i].name.in (),
                               DAnCE::IMPL_TYPE) == 0)
             {
-              const char *val;
-              if (get_property_value (DAnCE::IMPL_TYPE,
-                                      prop,
-                                      val))
+              const char *val = 0;
+              if (get_property_value (DAnCE::IMPL_TYPE, prop, val))
                 {
                   DANCE_DEBUG (9, (LM_TRACE, DLINFO
                                    ACE_TEXT("DAnCE::Utility::get_instance_type - ")

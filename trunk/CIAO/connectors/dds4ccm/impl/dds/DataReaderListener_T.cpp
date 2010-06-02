@@ -45,7 +45,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DD
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
         }
     }
   else
@@ -72,7 +72,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR,
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
                          ACE_TEXT ("Failed to retrieve pointer to proxy from ")
                          ACE_TEXT ("DDSDataReader.\n")));
@@ -81,9 +81,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 
   typename DDS_TYPE::dds_seq_type data;
   DDS_SampleInfoSeq sample_info;
-  ::DDS::ReturnCode_t const result = reader->take (
-              data,
-              sample_info);
+  ::DDS::ReturnCode_t const result = reader->take (data, sample_info);
 
   if (result == DDS_RETCODE_NO_DATA)
     {
@@ -91,9 +89,10 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
     }
   else if (result != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, "
-                                             "error %C.\n"),
-                                             translate_retcode (result)));
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                          ACE_TEXT ("Unable to take data from data reader, ")
+                          ACE_TEXT ("error %C.\n"),
+                          translate_retcode (result)));
       return;
     }
 
@@ -122,16 +121,11 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 
       if (nr_of_samples > 0)
         {
-          typename CCM_TYPE::seq_type * inst_seq = 0;
-          ACE_NEW (inst_seq,
-                   typename CCM_TYPE::seq_type (nr_of_samples));
+          typename CCM_TYPE::seq_type inst_seq (nr_of_samples);
+          ::CCM_DDS::ReadInfoSeq infoseq (nr_of_samples);
 
-          ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-          ACE_NEW (infoseq,
-                   ::CCM_DDS::ReadInfoSeq (nr_of_samples));
-
-          infoseq->length (nr_of_samples);
-          inst_seq->length (nr_of_samples);
+          infoseq.length (nr_of_samples);
+          inst_seq.length (nr_of_samples);
 
           // Copy the valid samples
           CORBA::ULong ix = 0;
@@ -139,12 +133,12 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
             {
               if(sample_info[i].valid_data)
                 {
-                  (*infoseq)[ix] <<= sample_info[i];
-                  (*inst_seq)[ix] = data[i];
+                  infoseq[ix] <<= sample_info[i];
+                  inst_seq[ix] = data[i];
                   ++ix;
                 }
             }
-          this->listener_->on_many_data (*inst_seq, *infoseq);
+          this->listener_->on_many_data (inst_seq, infoseq);
         }
     }
 
@@ -171,7 +165,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
       CIAO_debug_level >= 10)
     {
       mask |= PortStatusListener::get_mask (listener);
-      DDS4CCM_DEBUG (10, (LM_DEBUG, "DataReaderListener_T::get_mask - "
+      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "DataReaderListener_T::get_mask - "
                                    "Mask becomes %d\n",
                                    mask));
     }

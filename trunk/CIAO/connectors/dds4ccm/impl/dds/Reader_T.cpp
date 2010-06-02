@@ -63,7 +63,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_last (
   CORBA::ULong const nr_of_last_samples =
     this->get_nr_valid_samples (sample_info, true);
 
-  DDS4CCM_DEBUG (6, (LM_DEBUG,
+  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                      ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - ")
                      ACE_TEXT ("total number of samples <%u> - ")
                      ACE_TEXT ("last number of samples <%u>\n"),
@@ -109,7 +109,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_all (
   this->impl ()->read_wo_instance (data, sample_info);
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
-  DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
+  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
                             ACE_TEXT ("total number of samples <%u> - ")
                             ACE_TEXT ("valid number of samples <%u>\n"),
                             data.length (),
@@ -181,7 +181,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_last (
   this->impl ()->read_w_instance (data, lookup_hnd, sample_info);
 
   ::DDS_Long sample = data.length();
-  DDS4CCM_DEBUG (6, (LM_INFO,
+  DDS4CCM_DEBUG (6, (LM_INFO, CLINFO
               ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_last - ")
               ACE_TEXT ("total number of samples <%u>\n"),
               sample));
@@ -227,7 +227,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
   // Count the number of valid samples
   CORBA::ULong const nr_of_valid_samples =
     this->get_nr_valid_samples (sample_info);
-  DDS4CCM_DEBUG (6, (LM_DEBUG,
+  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                      ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
                      ACE_TEXT ("total number of samples <%u> - ")
                      ACE_TEXT ("valid number of samples <%u>\n"),

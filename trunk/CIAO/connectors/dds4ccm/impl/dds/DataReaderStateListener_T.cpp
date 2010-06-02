@@ -46,7 +46,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
         }
     }
   else
@@ -73,7 +73,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
                                              "Failed to retrieve pointer to proxy from "
                                              "DDSDataReader.\n")));
       return;
@@ -149,23 +149,21 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                 {
                   // Sample_new or sample_delete found -> first send out the
                   // updated samples in one go
-                  typename CCM_TYPE::seq_type * inst_seq = 0;
-                  ACE_NEW (inst_seq, typename CCM_TYPE::seq_type);
-                  ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-                  ACE_NEW (infoseq, ::CCM_DDS::ReadInfoSeq);
+                  typename CCM_TYPE::seq_type inst_seq (nr_of_updates);
+                  ::CCM_DDS::ReadInfoSeq infoseq (nr_of_updates);
 
-                  infoseq->length (nr_of_updates);
-                  inst_seq->length (nr_of_updates);
+                  infoseq.length (nr_of_updates);
+                  inst_seq.length (nr_of_updates);
                   CORBA::ULong ix = 0;
                   for(Updates::iterator iter = updates.begin();
                       iter != updates.end();
                       ++iter)
                     {
-                      (*infoseq)[ix] <<= sample_info[*iter];
-                      (*inst_seq)[ix] = data[*iter];
+                      infoseq[ix] <<= sample_info[*iter];
+                      inst_seq[ix] = data[*iter];
                       ++ix;
                     }
-                  this->listener_->on_many_updates (*inst_seq, *infoseq);
+                  this->listener_->on_many_updates (inst_seq, infoseq);
                   // Now invoke on_creation or on_deletion
                   if (sample_info[i].valid_data &&
                       sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
@@ -194,23 +192,21 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
           // Send the latest updates.
           if (updates.size () > 0)
             {
-              typename CCM_TYPE::seq_type * inst_seq = 0;
-              ACE_NEW (inst_seq, typename CCM_TYPE::seq_type);
-              ::CCM_DDS::ReadInfoSeq * infoseq = 0;
-              ACE_NEW (infoseq, ::CCM_DDS::ReadInfoSeq);
+              typename CCM_TYPE::seq_type inst_seq (nr_of_updates);
+              ::CCM_DDS::ReadInfoSeq infoseq (nr_of_updates);
 
-              infoseq->length (nr_of_updates);
-              inst_seq->length (nr_of_updates);
+              infoseq.length (nr_of_updates);
+              inst_seq.length (nr_of_updates);
               CORBA::ULong ix = 0;
               for(Updates::iterator iter = updates.begin();
                   iter != updates.end();
                   ++iter)
                 {
-                  (*infoseq)[ix] <<= sample_info[*iter];
-                  (*inst_seq)[ix] = data[*iter];
+                  infoseq[ix] <<= sample_info[*iter];
+                  inst_seq[ix] = data[*iter];
                   ++ix;
                 }
-              this->listener_->on_many_updates (*inst_seq, *infoseq);
+              this->listener_->on_many_updates (inst_seq, infoseq);
             }
         }
       // Return the loan
