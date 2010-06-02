@@ -445,8 +445,8 @@ TAO_OutStream::print (Identifier *id)
 TAO_OutStream &
 TAO_OutStream::print (UTL_IdList *idl)
 {
-  long first = true;
-  long second = false;
+  bool first = true;
+  bool second = false;
   Identifier *id = 0;
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
@@ -466,7 +466,8 @@ TAO_OutStream::print (UTL_IdList *idl)
 
       if (first)
         {
-          if (ACE_OS::strcmp (id->get_string (), "") != 0)
+          if (ACE_OS::strcmp (id->get_string (), "") != 0
+              && ACE_OS::strcmp (id->get_string (), "::") != 0)
             {
               // Does not start with a "".
               first = false;
