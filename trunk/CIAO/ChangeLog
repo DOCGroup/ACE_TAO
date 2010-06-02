@@ -1,3 +1,9 @@
+Wed Jun  2 13:22:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+          Resolved test issues.
+
 Wed Jun  2 11:17:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_ddsonly.mpb:
