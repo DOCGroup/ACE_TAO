@@ -2079,9 +2079,9 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       if (gperfOutputFile == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error:%p:Couldn't open ")
+                      ACE_TEXT ("Error:%p: Couldn't open ")
                       ACE_TEXT ("gperf output file\n"),
-                      "fopen");
+                      "fopen"));
           result = -1;
         }
       else
@@ -2097,7 +2097,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           if (ferror (gperfOutputFile) || ferror (out))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error:%p:Couldn't open ")
+                          ACE_TEXT ("Error:%p: Couldn't open ")
                           ACE_TEXT ("gperf output file\n"),
                           "get/put"));
               result = -1;
