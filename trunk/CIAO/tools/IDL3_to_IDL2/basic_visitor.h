@@ -109,6 +109,7 @@ protected:
 protected:
   TAO_OutStream *os;
   AST_Type *disc_type_;
+  ACE_CString port_prefix_;
   
 private:
   ACE_CString tmp_retval_;

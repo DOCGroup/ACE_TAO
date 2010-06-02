@@ -158,8 +158,7 @@ module T
     component Z
     {
       port Y myport;
-// Jeff, enable this one to get a compile problem
-//      port Y mysecondport;
+      port Y mysecondport;
     };
   };
 };
