@@ -4,6 +4,7 @@
 #define TAO_BD_STRING_ARGUMENT_T_CPP
 
 #include "tao/BD_String_Argument_T.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"

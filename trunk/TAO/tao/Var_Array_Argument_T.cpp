@@ -4,6 +4,7 @@
 #define TAO_VAR_ARRAY_ARGUMENT_T_CPP
 
 #include "tao/Var_Array_Argument_T.h"
+#include "tao/Array_Traits_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Var_Array_Argument_T.inl"

@@ -4,6 +4,7 @@
 #define TAO_ESF_COPY_ON_WRITE_CPP
 
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "ace/Guard_T.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Copy_On_Write.inl"

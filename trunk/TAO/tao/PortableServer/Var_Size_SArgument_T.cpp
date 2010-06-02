@@ -4,6 +4,7 @@
 #define TAO_VAR_SIZE_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
+#include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Var_Size_SArgument_T.inl"

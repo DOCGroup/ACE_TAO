@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Argument.h"
+#include "tao/Array_Traits_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

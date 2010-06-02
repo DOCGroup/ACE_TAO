@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/Guard_T.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void

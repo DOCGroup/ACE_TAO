@@ -25,6 +25,7 @@
 
 #include "tao/PortableServer/Special_Basic_SArgument_T.h"
 #include "tao/PortableServer/SArg_Traits_T.h"
+#include "tao/Any_Insert_Policy_T.h"
 
 #include "ace/CDR_Stream.h"
 

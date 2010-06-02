@@ -4,6 +4,7 @@
 #define TAO_OBJECT_T_CPP
 
 #include "tao/Object_T.h"
+#include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"

@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers.h"
 
