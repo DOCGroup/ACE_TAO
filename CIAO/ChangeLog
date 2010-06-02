@@ -1,3 +1,25 @@
+Wed Jun  2 08:46:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/Parsing/InvalidConfigPropValueDeclaration.cdp:
+        * DAnCE/tests/Parsing/InvalidConnection.cdp:
+        * DAnCE/tests/Parsing/InvalidDatatypeValue.cdp:
+        * DAnCE/tests/Parsing/InvalidElement.cdp:
+        * DAnCE/tests/Parsing/InvalidReference.cdp:
+          Ready to deploy real components.
+
+        * DAnCE/tests/Parsing/PlanLauncher:
+        * DAnCE/tests/Parsing/PlanLauncher/Component:
+        * DAnCE/tests/Parsing/PlanLauncher/Component/ParseError_Test_Component.idl:
+        * DAnCE/tests/Parsing/PlanLauncher/Component/ParseError_Test_Component.mpc:
+        * DAnCE/tests/Parsing/PlanLauncher/Component/ParseError_Test_Component_exec.h:
+        * DAnCE/tests/Parsing/PlanLauncher/Component/ParseError_Test_Component_exec.cpp:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test.pl:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test_msm.pl:
+        * bin/ciao_tests.lst:
+          Added test which tests the return value of the PlanLauncher
+          when there're errors in a deployment plan.
+
 Wed Jun  2 07:53:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/Parsing:
