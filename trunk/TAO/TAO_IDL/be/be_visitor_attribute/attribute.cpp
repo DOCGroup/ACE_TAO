@@ -177,7 +177,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.port_prefix (this->port_prefix_);
         status = get_op.accept (&visitor);
         break;
       }
@@ -346,7 +345,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
-        visitor.port_prefix (this->port_prefix_);
         status = set_op.accept (&visitor);
         break;
       }
@@ -396,11 +394,5 @@ void
 be_visitor_attribute::op_scope (be_decl *node)
 {
   this->op_scope_ = node;
-}
-
-void
-be_visitor_attribute::port_prefix (ACE_CString &prefix)
-{
-  this->port_prefix_ = prefix;
 }
 

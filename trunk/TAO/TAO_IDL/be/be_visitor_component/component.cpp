@@ -312,29 +312,57 @@ be_visitor_component::visit_typedef (be_typedef *node)
 int
 be_visitor_component::visit_extended_port (be_extended_port *node)
 {
-  be_porttype *pt = node->port_type ();
-  
+  this->ctx_->port_prefix () = node->local_name ()->get_string ();
+  this->ctx_->port_prefix () += '_';
+
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
   
-  return this->visit_scope (pt);
+  be_porttype *pt = node->port_type ();
+  
+  if (this->visit_scope (pt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component::")
+                         ACE_TEXT ("visit_extended_port - ")
+                         ACE_TEXT ("visit_scope () failed\n")),
+                        -1);
+    }
+    
+  this->ctx_->port_prefix () = "";
+  
+  return 0;
 }
 
 int
 be_visitor_component::visit_mirror_port (be_mirror_port *node)
 {
-  be_porttype *pt = node->port_type ();
-  
+  this->ctx_->port_prefix () = node->local_name ()->get_string ();
+  this->ctx_->port_prefix () += '_';
+
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
   
-  return this->visit_scope (pt);
+  be_porttype *pt = node->port_type ();
+  
+  if (this->visit_scope (pt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_component::")
+                         ACE_TEXT ("visit_extended_port - ")
+                         ACE_TEXT ("visit_scope () failed\n")),
+                        -1);
+    }
+    
+  this->ctx_->port_prefix () == "";
+  
+  return 0;
 }
 
 

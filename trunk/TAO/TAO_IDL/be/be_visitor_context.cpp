@@ -43,7 +43,8 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     attr_ (ctx.attr_),
     exception_ (ctx.exception_),
     comma_ (ctx.comma_),
-    interface_ (ctx.interface_)
+    interface_ (ctx.interface_),
+    port_prefix_ (ctx.port_prefix_)
 {
 }
 
@@ -63,6 +64,7 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   this->interface_ = ctx.interface_;
   this->template_args_ = ctx.template_args_;
   this->template_params_ = ctx.template_params_;
+  this->port_prefix_ = ctx.port_prefix_;
 
   return *this;
 }
@@ -90,6 +92,7 @@ be_visitor_context::reset (void)
   this->interface_ = 0;
   this->template_args_ = 0;
   this->template_params_ = 0;
+  this->port_prefix_ = "";
 }
 
 void
@@ -222,6 +225,12 @@ be_interface *
 be_visitor_context::interface (void) const
 {
   return this->interface_;
+}
+
+ACE_CString &
+be_visitor_context::port_prefix (void)
+{
+  return this->port_prefix_;
 }
 
 const char *

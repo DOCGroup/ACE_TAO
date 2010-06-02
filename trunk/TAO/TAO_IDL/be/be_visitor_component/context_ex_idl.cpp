@@ -91,7 +91,7 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   os_ << be_nl
       << "::";
 
-  ACE_CString port_name (this->port_prefix_);
+  ACE_CString port_name (this->ctx_->port_prefix ());
   port_name += node->local_name ()->get_string ();
   const char *lname = port_name.c_str ();
 

@@ -106,7 +106,8 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     
   // Generate the operation name
   *os << be_nl
-      << intf->name () << "::" << node->local_name ();
+      << intf->name () << "::" << this->ctx_->port_prefix ().c_str ()
+      << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)

@@ -182,7 +182,8 @@ be_visitor_attribute_ccm_init::emit_init_block (void)
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "this->" << attr_->local_name ()->get_string ()
+      << "this->" << this->ctx_->port_prefix ().c_str ()
+      << attr_->local_name ()->get_string ()
       << " (";
 
   be_visitor_attribute_set_from_extracted arg_emitter (this->ctx_);
@@ -225,6 +226,7 @@ be_visitor_attribute_ccm_init::open_if_block (void)
 {
   os_ << be_nl << be_nl
       << "if (ACE_OS::strcmp (descr_name, \""
+      << this->ctx_->port_prefix ().c_str ()
       << attr_->local_name ()->get_string ()
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl;
