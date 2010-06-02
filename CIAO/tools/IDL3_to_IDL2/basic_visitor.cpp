@@ -1064,7 +1064,7 @@ basic_visitor::gen_attribute (AST_Attribute *node)
   *os << be_nl << be_nl
      << (rd_only ? "readonly " : "") << "attribute ";
   *os << this->type_name (node->field_type ());
-  *os << " "
+  *os << " " << this->port_prefix_.c_str ()
      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   this->gen_exception_list (node->get_get_exceptions (),
