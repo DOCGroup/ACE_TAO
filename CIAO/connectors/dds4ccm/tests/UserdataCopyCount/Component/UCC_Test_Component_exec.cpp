@@ -147,7 +147,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->fixed_mutex_, CORBA::INTERNAL ());
-    ACE_DEBUG ((LM_DEBUG, "Component_exec_i::create_variable_sized_samples - "
+    ACE_DEBUG ((LM_DEBUG, "Component_exec_i::create_fixed_sized_samples - "
                           "Create fixed sized samples.\n"));
     for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
       {
@@ -170,13 +170,12 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
       {
         char key[7];
-        UCCVariableSizedStructTest_var new_key =
-          new UCCVariableSizedStructTest_i;
+        UCCVariableSizedStructTest_i new_key;
         ACE_OS::sprintf (key, "KEY_%d", i);
-        new_key->symbol = CORBA::string_dup(key);
-        new_key->x = i;
-        new_key->y = new_key->x;
-        this->var_samples_[key] = new_key;
+        new_key.symbol = CORBA::string_dup (key);
+        new_key.x = i;
+        new_key.y = new_key.x;
+        this->var_samples_[key] = &new_key;
       }
   }
 
