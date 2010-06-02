@@ -29,7 +29,8 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
-class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor : public basic_visitor
+class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor
+  : public basic_visitor
 {
   //
   // = TITLE
@@ -81,7 +82,6 @@ private:
   
 private:
   AST_Home *home_;
-  ACE_CString port_prefix_;
 };
 
 #endif /* TAO_IDL3_TO_IDL2_VISITOR_H */

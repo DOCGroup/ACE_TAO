@@ -1,3 +1,17 @@
+Wed Jun  2 17:02:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        
+          Added support for generation of port name as part
+          of an attribute name originating in a porttype.
+          
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Uncommented test case added by Johnny Willemsen
+          <jwillemsen at remedy dot nl>.
+
 Wed Jun  2 13:50:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
