@@ -1,3 +1,19 @@
+Wed Jun  2 12:40:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/idl.yy:
+        
+          Changes made already in
+          
+          Mon May 31 20:48:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          but apparently reverted in
+          
+          Tue Jun  1 15:34:34 UTC 2010  jeff Parsons  <j.parsons@vanderbilt.edu>
+          
+          that define the signed and unsigned members of the big
+          union used by the parser as 64-bit types.
+
 Wed Jun  2 07:17:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
