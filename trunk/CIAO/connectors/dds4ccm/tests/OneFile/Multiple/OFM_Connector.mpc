@@ -34,6 +34,11 @@ project(OFM_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
+project (OneFile_DDS_stub) : dds4ccm_ddsonly {
+  after += OneFile_Connector_idl_gen
+  sharedname = OneFile_DDS_stub
+}
+
 project(OFM_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   after    += OFM_Connector_lem_gen OFM_Connector_stub
   libs     += OFM_Connector_stub
@@ -81,9 +86,9 @@ project(OFM_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
-  after    += OFM_Connector_lem_stub OFM_Connector_stub
+  after    += OFM_Connector_lem_stub OFM_Connector_stub OneFile_DDS_stub
   sharedname = OFM_Connector_exec
-  libs     += OFM_Connector_stub OFM_Connector_lem_stub
+  libs     += OFM_Connector_stub OFM_Connector_lem_stub OneFile_DDS_stub
   requires += dds4ccm_ndds
 
   dynamicflags = OFM_CONNECTOR_CONN_BUILD_DLL
