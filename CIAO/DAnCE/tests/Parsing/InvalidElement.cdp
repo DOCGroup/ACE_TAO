@@ -1,16 +1,16 @@
 <Deployment:DeploymentPlan
-   xmlns:Deployment="http://www.omg.org/Deployment"
-   xmlns:xmi="http://www.omg.org/XMI"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>CoherentUpdate_TestDepl_1</label>
-  <UUID>CoherentUpdate_TestDepl_1</UUID>
-
-  <implementation xmi:id="ReceiverComponentImplementation">
-    <name>ReceiverComponentImplementation</name>
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>ParseError_TestDepl_1</label>
+  <UUID>ParseError_TestDepl_1</UUID>
+  
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Receiver_ExecArtifact" />
-    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <wrong>create_CoherentUpdate_Test_Receiver_Impl</wrong>
+          <wrong>create_ParseErrorTest_Component_Impl</wrong>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CoherentUpdate_Test_Receiver_Servant</string>
+          <string>create_ParseError_Test_ParseErrorTestComponent_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -41,7 +41,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver_svnt</string>
+          <string>Component_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -52,46 +52,84 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver_exec</string>
+          <string>Component_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
-
-  <instance xmi:id="ReceiverComponentInstance">
-    <name>ReceiverComponent</name>
-    <node>ReceiverNode</node>
+  
+  <instance xmi:id="ComponentInstance1">
+    <name>Component1</name>
+    <node>ComponentNode</node>
     <source/>
-    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <implementation xmi:idref="ComponentImplementation" />
     <configProperty>
-      <name>nr_runs</name>
+      <name>test</name>
       <value>
         <type>
-          <kind>tk_ushort</kind>
+          <kind>tk_ulong</kind>
         </type>
         <value>
-          <ushort>5</ushort>
+          <ulong>5</ulong>
         </value>
       </value>
     </configProperty>
   </instance>
-
-  <artifact xmi:id="Receiver_ExecArtifact">
-    <name>Receiver_exec</name>
+  
+  <instance xmi:id="ComponentInstance2">
+    <name>Component2</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>test</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>5</ulong>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <connection>
+    <name>comp_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>do_to</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance1" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>to_do</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
     <source/>
     <node/>
-    <location>Receiver_exec</location>
+    <location>Component_exec</location>
   </artifact>
-  <artifact xmi:id="Receiver_SvntArtifact">
-    <name>Receiver_svnt</name>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
     <source/>
     <node/>
-    <location>Receiver_svnt</location>
+    <location>Component_svnt</location>
   </artifact>
-  <artifact xmi:id="Receiver_StubArtifact">
-    <name>Receiver_stub</name>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
     <source/>
     <node/>
-    <location>Receiver_stub</location>
+    <location>Component_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>
