@@ -47,18 +47,29 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  UTL_Scope *s =
+    this->ctx_->attribute ()
+      ? this->ctx_->attribute ()->defined_in ()
+      : node->defined_in ();
+      
+  be_interface *intf = be_interface::narrow_from_scope (s);
 
-  if (!intf)
+  if (intf == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_amh_rh_operation_sh::"
-                         "visit_operation - "
-                         "bad interface scope\n"),
-                        -1);
+      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      
+      if (pt == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_amh_rh_operation_sh::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("bad scope\n")),
+                            -1);
+        }
+      else
+        {
+          intf = this->ctx_->interface ();
+        }
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -81,7 +92,8 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
         }
     }
 
-  *os << node->local_name();
+  *os << this->ctx_->port_prefix ().c_str ()
+      << node->local_name();
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_arglist visitor (&ctx);

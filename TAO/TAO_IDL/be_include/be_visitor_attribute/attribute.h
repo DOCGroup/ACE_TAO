@@ -43,12 +43,10 @@ public:
 
   void for_facets (bool val);
   void op_scope (be_decl *node);
-  void port_prefix (ACE_CString &prefix);
 
 private:
   bool for_facets_;
   be_decl *op_scope_;
-  ACE_CString port_prefix_;
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

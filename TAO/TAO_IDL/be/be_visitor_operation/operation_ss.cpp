@@ -142,8 +142,9 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
     }
 
   ACE_CString upcall_command_name =
-    ACE_CString (node->local_name ()->get_string()) + "_"  +
-    ACE_CString (intf->local_name());
+    this->ctx_->port_prefix ()
+    + ACE_CString (node->local_name ()->get_string ()) + "_"
+    + ACE_CString (intf->local_name ());
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -185,7 +186,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         }
     }
 
-  *os << node->local_name ()
+  *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl

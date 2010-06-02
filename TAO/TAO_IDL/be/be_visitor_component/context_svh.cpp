@@ -134,7 +134,7 @@ be_visitor_context_svh::visit_connector (be_connector *node)
 int
 be_visitor_context_svh::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 

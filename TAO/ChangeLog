@@ -1,3 +1,52 @@
+Wed Jun  2 17:00:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_private_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_exs.h:
+        * TAO_IDL/be_include/be_visitor_context.h:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_attribute/attribute.h:
+
+          More cases where the port name might have to be part
+          of the generation operation name.
+
 Wed Jun  2 13:12:16 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Log/EventLogNotification.h:

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for implementation skeleton
 // ************************************************************
@@ -78,7 +77,8 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   // STEP 2: generate the operation name
   *os << " " << be_global->impl_class_prefix () << classname
-      << be_global->impl_class_suffix () << "::" << node->local_name ();
+      << be_global->impl_class_suffix () << "::"
+      << this->ctx_->port_prefix ().c_str () << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

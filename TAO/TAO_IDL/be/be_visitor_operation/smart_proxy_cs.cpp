@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
@@ -39,17 +38,30 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
       // information from the context.
-      be_interface *intf = this->ctx_->attribute ()
-        ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-        : be_interface::narrow_from_scope (node->defined_in ());
+      UTL_Scope *s =
+        this->ctx_->attribute ()
+          ? this->ctx_->attribute ()->defined_in ()
+          : node->defined_in ();
+          
+      be_interface *intf = be_interface::narrow_from_scope (s);
 
-      if (!intf)
+      if (intf == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_smart_proxy_cs::"
-                             "visit_operation - "
-                             "bad interface scope\n"),
-                            -1);
+          be_porttype *pt = be_porttype::narrow_from_scope (s);
+          
+          if (pt == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_operation_")
+                                 ACE_TEXT ("smart_proxy_cs::")
+                                 ACE_TEXT ("visit_operation - ")
+                                 ACE_TEXT ("bad scope\n")),
+                                -1);
+            }
+          else
+            {
+              intf = this->ctx_->interface ();
+            }
         }
 
       be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -91,7 +103,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
         *os << "::";
 
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
-      *os << node->local_name () << " ";
+      *os << this->ctx_->port_prefix ().c_str ()
+          << node->local_name () << " ";
 
       // STEP 4: generate the argument list with the appropriate mapping (same as
       // in the header file)

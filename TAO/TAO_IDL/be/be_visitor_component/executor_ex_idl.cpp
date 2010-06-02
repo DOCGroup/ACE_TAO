@@ -95,7 +95,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
    be_type *ft = node->field_type ();
 
    os_ << IdentifierHelper::type_name (ft, this);
-   os_ << " "
+   os_ << " " << this->ctx_->port_prefix ().c_str ()
        << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
    this->gen_exception_list (node->get_get_exceptions (),
@@ -166,7 +166,7 @@ be_visitor_executor_ex_idl::visit_provides (
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  ACE_CString prefix (this->port_prefix_);
+  ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
   
