@@ -13,6 +13,8 @@
 
 #include "tao/Basic_Types.h"
 
+#include <algorithm>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

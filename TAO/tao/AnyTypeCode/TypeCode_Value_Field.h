@@ -17,7 +17,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include "ace/config-all.h"
+
+#include "tao/AnyTypeCode/VisibilityC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

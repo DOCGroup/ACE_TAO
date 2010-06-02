@@ -11,6 +11,8 @@
  * @author Carlos O'Ryan
  */
 
+#include /**/ "tao/Versioned_Namespace.h"
+
 #include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

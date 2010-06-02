@@ -14,6 +14,7 @@
 #include "tao/Generic_Sequence_T.h"
 #include "Valuetype_Sequence_Element_T.h"
 #include "tao/MM_Sequence_Iterator_T.h"
+#include "tao/Unbounded_Reference_Allocation_Traits_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

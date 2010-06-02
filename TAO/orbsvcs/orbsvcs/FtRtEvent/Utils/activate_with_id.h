@@ -13,6 +13,9 @@
 
 #include "tao/Versioned_Namespace.h"
 
+#include "orbsvcs/FtRtecEventCommC.h"
+#include "tao/PortableServer/POAC.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T>
