@@ -1,0 +1,97 @@
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>CoherentUpdate_TestDepl_1</label>
+  <UUID>CoherentUpdate_TestDepl_1</UUID>
+
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoherentUpdate_Test_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoherentUpdate_Test_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>nr_runs</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <short>5</short>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>

@@ -1,3 +1,20 @@
+Wed Jun  2 07:53:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/Parsing:
+        * DAnCE/tests/Parsing/InvalidConfigPropValueDeclaration.cdp:
+        * DAnCE/tests/Parsing/InvalidConnection.cdp:
+        * DAnCE/tests/Parsing/InvalidDatatypeValue.cdp:
+        * DAnCE/tests/Parsing/InvalidElement.cdp:
+        * DAnCE/tests/Parsing/InvalidReference.cdp:
+        * DAnCE/tests/Parsing/Parsing.mpc:
+        * DAnCE/tests/Parsing/run_test.pl:
+        * DAnCE/tests/Parsing/test.cpp:
+        * bin/ciao_tests.lst:
+          Added deployment plans parsing test.
+
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+          Improved logging.
+
 Wed Jun  2 07:47:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:

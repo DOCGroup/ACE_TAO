@@ -120,6 +120,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     {
       for (CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
         {
+          ACE_DEBUG ((LM_DEBUG, "Write fixed %i\n", i));
           this->fixed_writer_->write_one (this->fixed_samples_[i], ::DDS::HANDLE_NIL);
         }
     }
@@ -135,6 +136,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
         {
           char key[7];
           ACE_OS::sprintf (key, "KEY_%d", i);
+          ACE_DEBUG ((LM_DEBUG, "Write variable %C\n", key));
           this->var_writer_->write_one (this->var_samples_[key], ::DDS::HANDLE_NIL);
         }
     }
