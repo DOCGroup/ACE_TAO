@@ -14,9 +14,7 @@ Messenger_i::~Messenger_i()
 {
 }
 
-
-char * Messenger_i::receive_boxedvalue (
-            ::demo::value::idl::boxedValue * b)
+char * Messenger_i::receive_boxedvalue (::demo::value::idl::boxedValue * b)
 {
   std::ostringstream os;
   if (b == 0)
@@ -26,7 +24,6 @@ char * Messenger_i::receive_boxedvalue (
     
   return CORBA::string_dup (os.str().c_str());
 }
-
 
 char * Messenger_i::receive_long (
                                   ::demo::value::idl::boxedLong * p1,
@@ -43,7 +40,6 @@ char * Messenger_i::receive_long (
   return CORBA::string_dup (os.str().c_str());
 }
 
-
 char * Messenger_i::receive_string (
                                     ::demo::value::idl::boxedString * s1,
                                     ::demo::value::idl::boxedString * s2)
@@ -59,9 +55,7 @@ char * Messenger_i::receive_string (
   return CORBA::string_dup (os.str().c_str());
 }
 
-
-char * Messenger_i::receive_list (
-                                  ::demo::value::idl::Node * node)
+char * Messenger_i::receive_list (::demo::value::idl::Node * node)
 {
   std::ostringstream os;
   typedef ACE_Vector< ::demo::value::idl::Node *> NodeVector;
@@ -70,7 +64,7 @@ char * Messenger_i::receive_list (
 
   while (x != 0)
   {
-    size_t len = l.size ();
+    size_t const len = l.size ();
     size_t i = 0;
     for ( i = 0; i < len; ++i)
     {
@@ -85,7 +79,7 @@ char * Messenger_i::receive_list (
     x = x->next ();
   }
 
-  size_t len = l.size ();
+  size_t const len = l.size ();
 
   os << "list of length: " << len << " -- ";
 
@@ -98,7 +92,6 @@ char * Messenger_i::receive_list (
   return CORBA::string_dup (os.str().c_str());
 }
 
-
 char * 
 Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 {
@@ -110,13 +103,12 @@ Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
   return CORBA::string_dup (os.str().c_str());
 }
 
-
 char *  
 Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
 {
   std::ostringstream os;
   os << "valuetype sequence: " << std::endl;
-  CORBA::ULong len = v.length ();
+  CORBA::ULong const len = v.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
   {
     os << v[i]->name();
