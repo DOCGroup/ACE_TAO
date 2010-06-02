@@ -1,3 +1,12 @@
+Wed Jun  2 11:17:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm_ddsonly.mpb:
+          DDS specific file compilation
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Making use of dds4ccm_ddsonly.
+
 Wed Jun  2 08:46:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/Parsing/InvalidConfigPropValueDeclaration.cdp:

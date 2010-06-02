@@ -32,6 +32,11 @@ project(OneFile_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
+project (OneFile_DDS_stub) : dds4ccm_ddsonly {
+  after += OneFile_Connector_idl_gen
+  sharedname = OneFile_DDS_stub
+}
+
 project(OneFile_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   after    += OneFile_Connector_lem_gen OneFile_Connector_stub
   libs     += OneFile_Connector_stub
@@ -79,10 +84,9 @@ project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(OneFile_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
-  after    += OneFile_Connector_lem_stub OneFile_Connector_stub
+  after    += OneFile_Connector_lem_stub OneFile_Connector_stub OneFile_DDS_stub
   sharedname = OneFile_Connector_exec
-  libs     += OneFile_Connector_stub OneFile_Connector_lem_stub
-  requires += dds4ccm_ndds
+  libs     += OneFile_Connector_stub OneFile_Connector_lem_stub OneFile_DDS_stub
 
   dynamicflags = ONEFILE_CONNECTOR_CONN_BUILD_DLL
 
@@ -91,7 +95,6 @@ project(OneFile_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 
   Source_Files {
     OneFile_Connector_conn.cpp
-    *.cxx
   }
 
   Header_Files {
