@@ -52,6 +52,8 @@ int
 be_visitor_component_scope::visit_extended_port (
   be_extended_port *node)
 {
+  this->ctx_->interface (this->node_);
+
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
@@ -121,6 +123,8 @@ be_visitor_component_scope::visit_component_scope (
     {
       return 0;
     }
+    
+  this->ctx_->interface (node);
 
   if (this->visit_scope (node) == -1)
     {
@@ -143,7 +147,8 @@ be_visitor_component_scope::visit_porttype_scope (
 }
 
 int
-be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
+be_visitor_component_scope::visit_porttype_scope_mirror (
+  be_porttype *node)
 {
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -195,7 +200,17 @@ be_visitor_component_scope::visit_porttype_scope_mirror (be_porttype *node)
               break;
             }
           default:
-            return d->accept (this);
+            if (d->accept (this) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("be_visitor_component_scope")
+                                   ACE_TEXT ("::visit_porttype_mirror - ")
+                                   ACE_TEXT ("%s->accept() failed\n"),
+                                   d->full_name ()),
+                                  -1);
+              }
+              
+            break;
         }
     }
 

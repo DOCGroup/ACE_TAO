@@ -1,3 +1,24 @@
+Thu Jun  3 15:36:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:
+        * TAO_IDL/be/be_visitor_component_scope.cpp:
+
+          Changes to enforce the rule that attributes
+          originating from a porttype declaration may are
+          processed only for connectors.
+
+        * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
+
+          Cosmetic changes.
+
 Thu Jun  3 13:43:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
