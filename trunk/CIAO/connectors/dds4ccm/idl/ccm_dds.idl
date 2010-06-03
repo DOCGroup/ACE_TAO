@@ -213,8 +213,8 @@ module CCM_DDS
                 uses Reader                     data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
-//                attribute QueryFilter           filter
-//                  setraises (NonChangeable);
+                attribute QueryFilter           filter
+                  setraises (NonChangeable);
                 uses ContentFilterSetting       filter_config;
                 };
 
@@ -223,8 +223,8 @@ module CCM_DDS
                 uses Getter                     fresh_data;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
-//                attribute QueryFilter           filter
-//                  setraises (NonChangeable);
+                attribute QueryFilter           filter
+                  setraises (NonChangeable);
                 uses ContentFilterSetting       filter_config;
                 };
 
@@ -234,8 +234,8 @@ module CCM_DDS
                 provides Listener               data_listener;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
-//                attribute QueryFilter           filter
-//                  setraises (NonChangeable);
+                attribute QueryFilter           filter
+                  setraises (NonChangeable);
                 uses ContentFilterSetting       filter_config;
                 };
 
@@ -245,8 +245,8 @@ module CCM_DDS
                 provides StateListener          data_listener;
                 uses DDS::DataReader            dds_entity;
                 provides PortStatusListener     status;
-//                attribute QueryFilter           filter
-//                  setraises (NonChangeable);
+                attribute QueryFilter           filter
+                  setraises (NonChangeable);
                 uses ContentFilterSetting       filter_config;
                 };
 
