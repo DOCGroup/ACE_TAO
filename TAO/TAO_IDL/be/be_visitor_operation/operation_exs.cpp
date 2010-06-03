@@ -59,9 +59,9 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
 
   // Generate the operation name
   os_ << be_nl
+      << this->ctx_->port_prefix ().c_str ()
       << scope_->original_local_name ()->get_string ()
       << "_exec_i::"
-      << this->ctx_->port_prefix ().c_str ()
       << node->local_name ();
   
   // Generate the argument list, which will use our overrridden 
