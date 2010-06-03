@@ -1,3 +1,10 @@
+Thu Jun  3 15:38:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        
+          Added test case for attributes on a connector that originate
+          from a porttype declaration.
+
 Wed Jun  2 19:20:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm_ddsonly.mpb:
