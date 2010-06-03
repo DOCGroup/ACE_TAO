@@ -1,3 +1,14 @@
+Thu Jun  3 20:34:13 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Added a check for the lookup result from iteration over
+          the scope decls being 0 before iterating over the scope
+          'local types', which may provide a little performance
+          gain. Also added the top level result of the lookup
+          to the 'referenced' list of the lookup scope, necessary
+          for detecting name clashes.
+
 Thu Jun  3 18:32:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
