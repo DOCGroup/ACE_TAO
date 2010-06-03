@@ -4,7 +4,8 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Subscriber_Base_T (void)
+DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Subscriber_Base_T (void) :
+  configuration_complete_ (false)
 {
 }
 
@@ -23,6 +24,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
+  this->configuration_complete_ = true;
+  
   try
     {
       if (!this->data_reader_.get_impl ())
@@ -151,6 +154,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter");
 
-  // TODO BETA3
-  this->filter_ = filter;
+  if (this->configuration_complete_)
+    {
+      throw ::CCM_DDS::NonChangeable ();
+    }
+  else
+    {
+      this->filter_ = filter;
+    }
 }
