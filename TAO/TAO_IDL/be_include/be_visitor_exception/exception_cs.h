@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_EXCEPTION_EXCEPTION_CS_H_
 #define _BE_VISITOR_EXCEPTION_EXCEPTION_CS_H_
 
@@ -28,15 +27,10 @@
 class be_visitor_exception_cs : public be_visitor_exception
 {
 public:
-  /// ctor
   be_visitor_exception_cs (be_visitor_context *ctx);
-
-  /// dtor
   ~be_visitor_exception_cs (void);
 
-  /// visit exception. We provide code for this method in the derived class
   virtual int visit_exception (be_exception *node);
-
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_EXCEPTION_CS_H_ */

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_EXCEPTION_EXCEPTION_H_
 #define _BE_VISITOR_EXCEPTION_EXCEPTION_H_
 
@@ -28,18 +27,11 @@
 class be_visitor_exception : public be_visitor_scope
 {
 public:
-  /// ctor
   be_visitor_exception (be_visitor_context *ctx);
-
-  /// dtor
   ~be_visitor_exception (void);
 
-  /// visit exception. We provide code for this method in the derived class
   virtual int visit_exception (be_exception *node);
 
-  // =visit operations on syntactically valid elements in our scope
-
-  /// visit field
   virtual int visit_field (be_field *node);
 };
 
