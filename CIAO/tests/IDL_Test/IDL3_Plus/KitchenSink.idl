@@ -143,7 +143,7 @@ module T
   
   module Typed <typename T, sequence <T> TSeq>
   {
-    local  interface X
+    local interface X
     {
       void send (in MyLongType a);
     };
@@ -157,8 +157,14 @@ module T
 
     component Z
     {
-      port Y myport;
-      port Y mysecondport;
+      port Y my_port;
+      port Y my_second_port;
+    };
+  
+    connector C
+    {
+      port Y my_m_port;
+      mirrorport Y my_second_m_port;
     };
   };
 };
