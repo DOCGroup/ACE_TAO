@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_EXCEPTION_EXCEPTION_CH_H_
 #define _BE_VISITOR_EXCEPTION_EXCEPTION_CH_H_
 
@@ -28,15 +27,10 @@
 class be_visitor_exception_ch : public be_visitor_exception
 {
 public:
-  /// constructureor
   be_visitor_exception_ch (be_visitor_context *ctx);
-
-  /// destructureor
   ~be_visitor_exception_ch (void);
 
-  /// visit exception. We provide code for this method in the derived class
   virtual int visit_exception (be_exception *node);
-
 };
 
 #endif /* _BE_VISITOR_EXCEPTION_EXCEPTION_CH_H_ */
