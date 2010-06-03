@@ -34,6 +34,21 @@ be_visitor_attribute_ccm_init::visit_attribute (
       return 0;
     }
 
+  be_interface *intf = this->ctx_->interface ();
+  
+  if (intf != 0)
+    {
+      AST_Decl::NodeType snt = intf->node_type ();
+      AST_Decl::NodeType ant =
+        ScopeAsDecl (node->defined_in ())->node_type ();
+        
+      if (snt == AST_Decl::NT_component
+          && ant == AST_Decl::NT_porttype)
+        {
+          return 0;
+        }
+    }
+
   attr_ = node;
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
   return ft->accept (this);

@@ -47,6 +47,7 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 int
 be_visitor_executor_exs::visit_attribute (be_attribute *node)
 {
+  this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   v.op_scope (op_scope_);
   return v.visit_attribute (node);
@@ -71,7 +72,6 @@ be_visitor_executor_exs::visit_component (be_component *node)
     }
 
   node_ = node;
-
   const char *lname = node->local_name ();
 
   os_ << be_nl

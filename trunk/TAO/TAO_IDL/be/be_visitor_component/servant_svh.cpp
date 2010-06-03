@@ -125,6 +125,7 @@ be_visitor_servant_svh::visit_connector (be_connector *node)
 int
 be_visitor_servant_svh::visit_attribute (be_attribute *node)
 {
+  this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);
 }

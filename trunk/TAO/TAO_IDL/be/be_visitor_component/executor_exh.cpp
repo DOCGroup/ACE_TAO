@@ -30,6 +30,7 @@ be_visitor_executor_exh::~be_visitor_executor_exh (void)
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)
 {
+  this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
   return v.visit_attribute (node);
 }
@@ -37,6 +38,7 @@ be_visitor_executor_exh::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exh::visit_component (be_component *node)
 {
+  this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
   const char *sname = sname_str.c_str ();

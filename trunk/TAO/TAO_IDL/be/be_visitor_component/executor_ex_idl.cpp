@@ -84,27 +84,39 @@ be_visitor_executor_ex_idl::visit_connector (be_connector *node)
 int
 be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
 {
-   bool rd_only = node->readonly ();
+  AST_Decl::NodeType snt = this->node_->node_type ();
+  AST_Decl::NodeType ant =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+    
+  /// For now, we want porttype attributes generated only for
+  /// connectors.
+  if (snt == AST_Decl::NT_component
+      && ant == AST_Decl::NT_porttype)
+    {
+      return 0;
+    }
+  
+  bool rd_only = node->readonly ();
 
-   // Keep output statements separate because of side effects.
-   // No need to check for anonymous array - anonymous types not
-   // accepted by parser for attributes.
-   os_ << be_nl
-       << (rd_only ? "readonly " : "") << "attribute ";
+  // Keep output statements separate because of side effects.
+  // No need to check for anonymous array - anonymous types not
+  // accepted by parser for attributes.
+  os_ << be_nl
+     << (rd_only ? "readonly " : "") << "attribute ";
 
-   be_type *ft = node->field_type ();
+  be_type *ft = node->field_type ();
 
-   os_ << IdentifierHelper::type_name (ft, this);
-   os_ << " " << this->ctx_->port_prefix ().c_str ()
-       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+  os_ << IdentifierHelper::type_name (ft, this);
+  os_ << " " << this->ctx_->port_prefix ().c_str ()
+     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
-   this->gen_exception_list (node->get_get_exceptions (),
-                             rd_only ? "" : "get");
+  this->gen_exception_list (node->get_get_exceptions (),
+                           rd_only ? "" : "get");
 
-   this->gen_exception_list (node->get_set_exceptions (),
-                             "set");
+  this->gen_exception_list (node->get_set_exceptions (),
+                           "set");
 
-   os_ << ";";
+  os_ << ";";
 
   return 0;
 }

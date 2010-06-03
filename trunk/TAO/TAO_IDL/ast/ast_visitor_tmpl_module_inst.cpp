@@ -349,7 +349,8 @@ ast_visitor_tmpl_module_inst::visit_consumes (AST_Consumes *node)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_extended_port (AST_Extended_Port *node)
+ast_visitor_tmpl_module_inst::visit_extended_port (
+  AST_Extended_Port *node)
 {
   AST_PortType *pt =
     AST_PortType::narrow_from_decl (
@@ -366,7 +367,8 @@ ast_visitor_tmpl_module_inst::visit_extended_port (AST_Extended_Port *node)
 }
 
 int
-ast_visitor_tmpl_module_inst::visit_mirror_port (AST_Mirror_Port *node)
+ast_visitor_tmpl_module_inst::visit_mirror_port (
+  AST_Mirror_Port *node)
 {
   AST_PortType *pt =
     AST_PortType::narrow_from_decl (
