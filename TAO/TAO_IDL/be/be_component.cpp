@@ -186,6 +186,8 @@ be_component::scan (UTL_Scope *s)
   AST_Uses *u = 0;
   AST_Provides *p = 0;
   AST_Attribute *a = 0;
+  AST_Decl::NodeType my_nt;
+  AST_Decl::NodeType scope_nt;
 
   for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_both);
        !i.is_done ();
@@ -242,6 +244,18 @@ be_component::scan (UTL_Scope *s)
             
             if (!a->readonly ())
               {
+                my_nt = this->node_type ();
+                scope_nt =
+                  ScopeAsDecl (a->defined_in ())->node_type ();
+                  
+                /// Attributes coming from a porttype appear
+                /// only on connectors.  
+                if (my_nt == AST_Decl::NT_component
+                    && scope_nt == AST_Decl::NT_porttype)
+                  {
+                    continue;
+                  }
+              
                 this->has_rw_attributes_ = true;
               }
               

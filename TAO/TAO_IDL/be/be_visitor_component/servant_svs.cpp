@@ -128,6 +128,11 @@ be_visitor_servant_svs::visit_component (be_component *node)
           << "::CORBA::Any & descr_value = descr[i]->value ();";
 
       be_visitor_attr_set as_visitor (this->ctx_);
+      
+      /// This will get assigned to the visitor's interface_
+      /// member later so it can catch and skip porttype
+      /// attributes in a component.
+      as_visitor.node (this->node_);
 
       if (as_visitor.visit_component_scope (node) == -1)
         {
@@ -229,6 +234,7 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
 int
 be_visitor_servant_svs::visit_attribute (be_attribute *node)
 {
+  this->ctx_->interface (this->node_);
   be_visitor_attribute v (this->ctx_);
 
   v.for_facets (false);
