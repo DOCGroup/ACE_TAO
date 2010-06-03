@@ -26,10 +26,10 @@ be_visitor_operation_svs::~be_visitor_operation_svs (void)
 int
 be_visitor_operation_svs::visit_operation (be_operation *node)
 {
-  TAO_OutStream &os = *this->ctx_->stream ();
+  TAO_OutStream &os_ = *this->ctx_->stream ();
   this->ctx_->node (node);
 
-  os << be_nl << be_nl;
+  os_ << be_nl << be_nl;
 
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -57,11 +57,11 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
     }
 
   // Generate the operation name, avoiding possible _cxx_ prefix.
-  os << be_nl
+  os_ << be_nl
      << scope_->original_local_name ()->get_string ()
      << "_Servant";
 
-  os << "::" << this->ctx_->port_prefix ().c_str ()
+  os_ << "::" << this->ctx_->port_prefix ().c_str ()
      << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
@@ -84,33 +84,32 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
 int
 be_visitor_operation_svs::gen_op_body (be_operation *node)
 {
-  TAO_OutStream &os = *this->ctx_->stream ();
+  os_ << be_nl
+      << "{" << be_idt_nl;
 
-  os << be_nl
-     << "{" << be_idt_nl;
-
-  os << "if ( ::CORBA::is_nil (this->executor_.in ()))" << be_idt_nl
-     << "{"<< be_idt_nl
-     << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl;
+  os_ << "if ( ::CORBA::is_nil (this->executor_.in ()))"
+      << be_idt_nl
+      << "{"<< be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   bool const vrt = node->void_return_type ();
 
   if (!vrt)
     {
-      os << "return ";
+      os_ << "return ";
     }
 
-  os << "this->executor_->" << this->ctx_->port_prefix ().c_str ()
-     << node->local_name () << " (";
+  os_ << "this->executor_->" << this->ctx_->port_prefix ().c_str ()
+      << node->local_name () << " (";
 
   if (node->argument_count () == 0)
     {
-      os << ");";
+      os_ << ");";
     }
   else
     {
-      os << be_idt_nl;
+      os_ << be_idt_nl;
 
       if (this->visit_scope (node) == -1)
         {
@@ -122,7 +121,7 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
         }
     }
 
-  os << be_uidt_nl
+  os_ << be_uidt_nl
      << "}";
 
   return 0;
@@ -131,9 +130,9 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
 int
 be_visitor_operation_svs::visit_argument (be_argument *node)
 {
-  TAO_OutStream &os = *this->ctx_->stream ();
+  TAO_OutStream &os_ = *this->ctx_->stream ();
 
-  os << node->local_name ();
+  os_ << node->local_name ();
 
   return 0;
 }
@@ -141,15 +140,15 @@ be_visitor_operation_svs::visit_argument (be_argument *node)
 int
 be_visitor_operation_svs::post_process (be_decl *bd)
 {
-  TAO_OutStream &os = *this->ctx_->stream ();
+  TAO_OutStream &os_ = *this->ctx_->stream ();
 
   if (this->last_node (bd))
     {
-      os << ");" << be_uidt;
+      os_ << ");" << be_uidt;
     }
   else
     {
-      os << "," << be_nl;
+      os_ << "," << be_nl;
     }
 
   return 0;

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Interface visitor for implementation skeletons.
 // ************************************************************
@@ -135,7 +134,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
+                         "be_visitor_interface_is::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
                         -1);

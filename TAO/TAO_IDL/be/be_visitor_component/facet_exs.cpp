@@ -142,15 +142,3 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   return 0;
 }
 
-int
-be_visitor_facet_exs::visit_extended_port (be_extended_port *)
-{
-  return 0;
-}
-
-int
-be_visitor_facet_exs::visit_mirror_port (be_mirror_port *)
-{
-  return 0;
-}
-
