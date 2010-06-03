@@ -1,3 +1,21 @@
+Thu Jun  3 13:43:15 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be_include/be_visitor_exception/exception_ci.h:
+        * TAO_IDL/be_include/be_visitor_exception/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_exception/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_exception/ctor_assign.h:
+        * TAO_IDL/be_include/be_visitor_exception/exception.h:
+        * TAO_IDL/be_include/be_visitor_exception/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_exception/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_exception/exception_cs.h:
+        * TAO_IDL/be_include/be_visitor_exception/exception_ctor.h:
+        * TAO_IDL/be_include/be_visitor_exception/exception_ch.h:
+
+          Added overrides in class be_visitor_exception_ctor_assign
+          for be_structure_fwd and be_union_fwd, cosmetic changes
+          to the other header files.
+
 Wed Jun  2 17:00:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/smart_proxy_ch.cpp:
