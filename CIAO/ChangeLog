@@ -1,3 +1,14 @@
+Fri Jun  4 14:05:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+          Renamed filter into query.
+
 Fri Jun  4 13:02:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:

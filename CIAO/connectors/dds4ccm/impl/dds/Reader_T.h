@@ -57,9 +57,9 @@ namespace CIAO
           ::CCM_DDS::ReadInfoSeq& infos,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-        virtual ::CCM_DDS::QueryFilter *filter (void);
+        virtual ::CCM_DDS::QueryFilter *query (void);
 
-        virtual void filter (const ::CCM_DDS::QueryFilter & filter);
+        virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
         void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * dr);
 

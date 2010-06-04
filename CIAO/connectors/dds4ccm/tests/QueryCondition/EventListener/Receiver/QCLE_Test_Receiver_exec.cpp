@@ -162,7 +162,7 @@ namespace CIAO_QCLE_Test_Receiver_Impl
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
-    this->reader_->filter (filter);
+    this->reader_->query (filter);
 
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Start listening.\n"));
