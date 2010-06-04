@@ -167,6 +167,7 @@
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
+
   <instance xmi:id="QueryFilter_Test_ConnectorComponentInstance">
     <name>QueryFilter_Test_ConnectorComponent</name>
     <node>SenderNode</node>

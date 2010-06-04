@@ -237,7 +237,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     CCM_DDS::QueryFilter* query = 0;
     try
       {
-        query = this->reader_->query ();
+        query = this->reader_->filter ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -263,7 +263,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     CCM_DDS::QueryFilter * filter = 0;
     try
       {
-        filter = this->reader_->query ();
+        filter = this->reader_->filter ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -339,7 +339,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
         filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
-        this->reader_->query (filter);
+        this->reader_->filter (filter);
         this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
         this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
       }
@@ -368,7 +368,9 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-    this->reader_->query (filter);
+    this->reader_->filter (filter);
+//     this->getter_->pull_observer_filter ();
+//     this->getter_->filter (filter);
   }
 
   void
@@ -484,6 +486,10 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     this->reader_ = this->context_->get_connection_get_port_data ();
     this->getter_ = this->context_->get_connection_get_port_fresh_data ();
+    this->context_->get_connection_get_port_fresh_data ();
+    this->filter_setting_ =
+      this->context_->get_connection_get_port_filter_config ();
+
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;

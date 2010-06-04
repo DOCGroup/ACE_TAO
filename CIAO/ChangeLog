@@ -1,3 +1,25 @@
+Fri Jun  4 09:42:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.h:
+        * connectors/dds4ccm/impl/dds/DataReaderListener.cpp:
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryFilter/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilter/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryFilterListenEvent/Receiver/QFLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryFilterListenState/Receiver/QFLS_Test_Receiver_exec.cpp:
+          Preparation for the refactoring of contentfilteredTopics. Removed 
+          DDS4CCM_USES_QUERY_CONDITION define since it's no longer needed.
+          Resolved issue with QueryCondition in combination with listeners.
+          Beware that the QueryFilter tests are using QueryCondition for now.
+
 Thu Jun  3 18:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:

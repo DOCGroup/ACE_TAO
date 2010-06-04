@@ -23,9 +23,9 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
   if (DDSSubscriberBase::configuration_complete(topic,
-                                                    subscriber,
-                                                    library_name,
-                                                    profile_name))
+                                                subscriber,
+                                                library_name,
+                                                profile_name))
     {
       this->dds_get_.set_impl (&this->data_reader_);
     }

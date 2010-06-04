@@ -29,10 +29,10 @@ namespace CIAO
 
     ::DDS::CCM_DataReader_ptr
     CCM_DDS_DataReaderListener_i::get_datareader_proxy (
-      ::DDSDataReader * the_reader)
+      DDSDataReader * the_reader)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_i::get_datareader_proxy");
-      ::DDS::CCM_DataReader_var dds_reader = ::DDS::CCM_DataReader::_nil ();
+      ::DDS::CCM_DataReader_var dds_reader;
       ACE_NEW_NORETURN (dds_reader,
                         CCM_DDS_DataReader_i (the_reader));
       return dds_reader._retn ();
