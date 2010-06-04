@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef QUERY_FILTER_LISTEN_STATE_TEST_CONNECTOR_IDL_
-#define QUERY_FILTER_LISTEN_STATE_TEST_CONNECTOR_IDL_
+#ifndef QUERY_CONDITION_LISTEN_STATE_TEST_CONNECTOR_IDL_
+#define QUERY_CONDITION_LISTEN_STATE_TEST_CONNECTOR_IDL_
 
 #include  <Components.idl>
 #include "Base/QFLS_Test_Base.idl"
@@ -16,7 +16,7 @@
 
 module QFLS_Test
 {
-  module ::CCM_DDS::Typed < ::QueryFilterListenStateTest, ::QueryFilterListenStateTestSeq> QueryFilterListenStateTestConnector;
+  module ::CCM_DDS::Typed < ::QueryConditionListenStateTest, ::QueryConditionListenStateTestSeq> QueryConditionListenStateTestConnector;
 };
 
 #endif /* QFLS_Test_CONNECTOR_IDL_ */

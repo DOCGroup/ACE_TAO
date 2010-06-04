@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef QUERYFILTER_STARTER_IDL
-#define QUERYFILTER_STARTER_IDL
+#ifndef QUERYCONDITION_STARTER_IDL
+#define QUERYCONDITION_STARTER_IDL
 
 #pragma ciao lem "Base/QueryFilter_StarterE.idl"
 
@@ -22,4 +22,4 @@ interface QueryFilterRestarter
   void restart_write ();
 };
 
-#endif /* QUERYFILTER_STARTER_IDL */
+#endif /* QUERYCONDITION_STARTER_IDL */

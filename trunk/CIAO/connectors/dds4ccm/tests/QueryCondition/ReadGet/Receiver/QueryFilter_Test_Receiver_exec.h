@@ -105,8 +105,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
   private:
     ::QueryFilter_Test::CCM_Receiver_Context_var context_;
-    ::QueryFilter_Test::QueryFilterTestConnector::Reader_var reader_;
-    ::QueryFilter_Test::QueryFilterTestConnector::Getter_var getter_;
+    ::QueryFilter_Test::QueryConditionTestConnector::Reader_var reader_;
+    ::QueryFilter_Test::QueryConditionTestConnector::Getter_var getter_;
     ::CCM_DDS::ContentFilterSetting_var filter_setting_;
     QueryFilterRestarter_var restarter_;
     CORBA::UShort   iterations_;
@@ -121,7 +121,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     void test_all (void);
     void read_all (void);
     void get_all (void);
-    void check_iter (const QueryFilterTest & sample,
+    void check_iter (const QueryConditionTest & sample,
                      const char * test);
     void check_filter (void);
     void test_exception (void);
