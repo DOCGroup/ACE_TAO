@@ -135,6 +135,16 @@ namespace CIAO_Hello_Sender_Impl
     // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
     
     virtual void
+    color_st (
+      const ::Hello::COLOR_STRUCT & the_colors);
+    
+    virtual ::Hello::COLOR_STRUCT *
+    color_st (void);
+    
+    // TAO_IDL - Generated from
+    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
+    
+    virtual void
     the_colors (
       const ::Hello::COLORS & the_colors);
     
@@ -172,7 +182,9 @@ namespace CIAO_Hello_Sender_Impl
     CORBA::String_var message_;
     CORBA::Boolean log_time_;
     ::Hello::COLOR_SELECTION color_;
-
+    ::Hello::COLORS colors_;
+    ::Hello::COLOR_STRUCT color_struct_;
+    ::CORBA::StringSeq strings_;
     friend class ReadMessage_exec_i;
   };
   

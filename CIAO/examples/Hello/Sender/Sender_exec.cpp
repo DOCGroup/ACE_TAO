@@ -36,7 +36,7 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Facet Executor Implementation Class: ReadMessage_exec_i
   //============================================================
-    
+
   ReadMessage_exec_i::ReadMessage_exec_i (Sender_exec_i& component)
     : component_ (component)
   {
@@ -45,9 +45,9 @@ namespace CIAO_Hello_Sender_Impl
   ReadMessage_exec_i::~ReadMessage_exec_i ()
   {
   }
-  
+
   // Operations from ::Hello::ReadMessage
-  
+
   char *
   ReadMessage_exec_i::get_message (void)
   {
@@ -55,11 +55,11 @@ namespace CIAO_Hello_Sender_Impl
     ACE_DEBUG ((LM_EMERGENCY, "Sender returning message: [%C]\n", component_.message_.in ()));
     return CORBA::string_dup (component_.message_.in ());
   }
-  
+
   //============================================================
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
-  
+
   Sender_exec_i::Sender_exec_i (void)
     : message_(CORBA::string_dup ("Default Message")),
       color_ (::Hello::empty)
@@ -71,13 +71,13 @@ namespace CIAO_Hello_Sender_Impl
       color_ (::Hello::empty)
   {
   }
-  
+
   Sender_exec_i::~Sender_exec_i (void)
   {
   }
-  
+
   // Supported operations and attributes.
-  
+
   void
   Sender_exec_i::start (void)
   {
@@ -111,10 +111,46 @@ namespace CIAO_Hello_Sender_Impl
         ACE_DEBUG ((LM_EMERGENCY, "Unknown color!\n"));
 
       }
+
+    // check color sequence
+    ACE_DEBUG ((LM_DEBUG, "Checking color sequence\n"));
+    if (this->colors_.length () == 3)
+      {
+        if ((this->colors_[0] != ::Hello::white) &&
+            (this->colors_[1] != ::Hello::red) &&
+            (this->colors_[2] != ::Hello::yellow))
+          {
+            ACE_ERROR ((LM_EMERGENCY, "error: Unexpected color in color sequence\n"));
+          }
+      }
+    else
+      ACE_ERROR ((LM_EMERGENCY, "error: color sequence is wrong length!\n"));
+
+    ACE_DEBUG ((LM_DEBUG, "Checking string sequence\n"));
+    if (this->strings_.length () == 3)
+      {
+        if ((ACE_OS::strcmp ("Hello", this->strings_[0]) != 0) &&
+            (ACE_OS::strcmp ("World", this->strings_[1]) != 0) &&
+            (ACE_OS::strcmp ("!", this->strings_[2]) != 0))
+          {
+            ACE_ERROR ((LM_EMERGENCY, "error: string in sequence\n"));
+          }
+      }
+    else
+      ACE_ERROR ((LM_EMERGENCY, "error: string sequence is wrong length!\n"));
+
+    ACE_DEBUG ((LM_DEBUG, "Checking color struct\n"));
+    if ((ACE_OS::strcmp ("Yellow!", this->color_struct_.color_name) != 0) &&
+        this->color_struct_.color_id != 42 &&
+        this->color_struct_.color != Hello::yellow)
+      {
+        ACE_ERROR ((LM_EMERGENCY, "error: members of the color struct are wrong\n"));
+      }
+
   }
-  
+
   // Component attributes and port operations.
-  
+
   ::Hello::CCM_ReadMessage_ptr
   Sender_exec_i::get_push_message (void)
   {
@@ -123,14 +159,14 @@ namespace CIAO_Hello_Sender_Impl
                 "Sender_exec.i::get_push_message called\n"));
     return ( new ReadMessage_exec_i (*this) );
   }
-  
+
   char *
   Sender_exec_i::local_message (void)
   {
     /* Your code here. */
     return CORBA::string_dup (message_.in ());
   }
-  
+
   void
   Sender_exec_i::local_message (
     const char * local_message)
@@ -138,14 +174,14 @@ namespace CIAO_Hello_Sender_Impl
     /* Your code here. */
     message_ = CORBA::string_dup (local_message);
   }
-  
+
   ::Hello::COLOR_SELECTION
   Sender_exec_i::color (void)
   {
     /* Your code here. */
     return this->color_;
   }
-  
+
   void
   Sender_exec_i::color (
     ::Hello::COLOR_SELECTION color)
@@ -153,37 +189,57 @@ namespace CIAO_Hello_Sender_Impl
     /* Your code here. */
     this->color_ = color;
   }
-  
+
   ::Hello::COLORS *
   Sender_exec_i::the_colors (void)
   {
     /* Your code here. */
     return 0;
   }
-  
+
   void
   Sender_exec_i::the_colors (
-    const ::Hello::COLORS & /* the_colors */)
+    const ::Hello::COLORS & the_colors)
   {
-    /* Your code here. */
+    this->colors_.length (the_colors.length ());
+    for (CORBA::ULong i = 0; i < the_colors.length (); ++i)
+      {
+        this->colors_[i] = the_colors[i];
+      }
   }
-  
+
   ::CORBA::StringSeq *
   Sender_exec_i::str_seq (void)
   {
-    /* Your code here. */
     return 0;
   }
-  
+
   void
   Sender_exec_i::str_seq (
-    const ::CORBA::StringSeq & /* str_seq */)
+    const ::CORBA::StringSeq & strings)
   {
-    /* Your code here. */
+    this->strings_.length (strings.length ());
+    for (CORBA::ULong i = 0; i < strings.length (); ++i)
+      {
+        this->strings_[i] = strings[i];
+      }
   }
-  
+
+  ::Hello::COLOR_STRUCT *
+  Sender_exec_i::color_st (void)
+  {
+    return 0;
+  }
+
+  void
+  Sender_exec_i::color_st (
+    const ::Hello::COLOR_STRUCT &col_struct)
+  {
+    this->color_struct_ = col_struct;
+  }
+
   // Operations from Components::SessionComponent.
-  
+
   void
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -191,13 +247,13 @@ namespace CIAO_Hello_Sender_Impl
     ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::set_session_context\n"));
     this->context_ =
       ::Hello::CCM_Sender_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
       }
   }
-  
+
   void
   Sender_exec_i::configuration_complete (void)
   {
@@ -205,7 +261,7 @@ namespace CIAO_Hello_Sender_Impl
     ACE_DEBUG ((LM_EMERGENCY,
                 "Sender_exec_i::configuration_complete\n"));
   }
-  
+
   void
   Sender_exec_i::ccm_activate (void)
   {
@@ -213,31 +269,31 @@ namespace CIAO_Hello_Sender_Impl
     ACE_DEBUG ((LM_EMERGENCY,
                 "Sender_exec_i::ccm_activate\n"));
   }
-  
+
   void
   Sender_exec_i::ccm_passivate (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::ccm_passivate\n"));
   }
-  
+
   void
   Sender_exec_i::ccm_remove (void)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_EMERGENCY, "Sender_exec_i::ccm_remove\n"));
   }
-  
+
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Hello_Sender_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Sender_exec_i);
-    
+
     return retval;
   }
 }
@@ -247,48 +303,48 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Home Executor Implementation Class: SenderHome_exec_i
   //============================================================
-  
+
   SenderHome_exec_i::SenderHome_exec_i (void)
   {
   }
-  
+
   SenderHome_exec_i::~SenderHome_exec_i (void)
   {
   }
-  
+
   // All operations and attributes.
-  
+
   // Factory operations.
-  
+
   // Finder operations.
-  
+
   // Implicit operations.
-  
+
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create (void)
   {
     ACE_DEBUG ((LM_EMERGENCY, "(%P|%t) creating SenderHome\n"));
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Sender_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
-  
+
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   create_Hello_SenderHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       SenderHome_exec_i);
-    
+
     return retval;
   }
 }
