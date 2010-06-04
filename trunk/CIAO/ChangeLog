@@ -1,3 +1,23 @@
+Fri Jun  4 13:02:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp:
+
+          Improved logging.
+
+        * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+
+          Layout change.
+
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * examples/Hello/descriptors/PlanLocality_SameProcess.cdp:
+
+          Added sequence and struct attributes.
+
 Fri Jun  4 12:30:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
@@ -135,6 +155,7 @@ Fri Jun  4 11:47:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
           Renamed QueryFilter to QueryCondition in order to reflect what these tests
           are about.
 
+>>>>>>> .r90410
 Fri Jun  4 11:28:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 
