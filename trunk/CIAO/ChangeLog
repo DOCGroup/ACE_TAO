@@ -1,3 +1,15 @@
+Fri Jun  4 11:20:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/*:
+          Grouped all QueryCondition tests in this
+          directory
+
+        * connectors/dds4ccm/tests/QueryFilter/*:
+        * connectors/dds4ccm/tests/QueryFilterListenEvent/*:
+        * connectors/dds4ccm/tests/QueryFilterListenState/*:
+          Moved these to the QueryCondition directory.
+
 Fri Jun  4 10:44:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/Component/CFT_Test_Component_exec.cpp:
