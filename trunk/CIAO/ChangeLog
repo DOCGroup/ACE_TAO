@@ -1,3 +1,9 @@
+Fri Jun  4 12:10:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+          Removed unused variables.
+
 Fri Jun  4 11:58:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
