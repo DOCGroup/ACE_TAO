@@ -485,8 +485,6 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     this->reader_ = this->context_->get_connection_get_port_data ();
     this->getter_ = this->context_->get_connection_get_port_fresh_data ();
     this->context_->get_connection_get_port_fresh_data ();
-    this->filter_setting_ =
-      this->context_->get_connection_get_port_filter_config ();
 
     DDS::Duration_t to;
     to.sec = 5;
