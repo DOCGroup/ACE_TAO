@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file QFLE_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_FILTER_LISTEN_EVENT_TEST_CONNECTOR_IDL_
+#define QUERY_FILTER_LISTEN_EVENT_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/QFLE_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/QFLE_Test_ConnectorE.idl"
+
+module QFLE_Test
+{
+  module ::CCM_DDS::Typed < ::QueryFilterListenEventTest, ::QueryFilterListenEventTestSeq> QueryFilterListenEventTestConnector;
+};
+
+#endif /* QFLE_Test_CONNECTOR_IDL_ */
