@@ -19,13 +19,13 @@ RTI Data Distribution Service user manual.
 
         A QoS library is a named set of QoS profiles.
     -->
-  <qos_library name="QueryFilter_Library">
+  <qos_library name="QueryCondition_Library">
     <!-- QoS profile used to configure reliable communication between the DataWriter 
              and DataReader created in the example code.
 
              A QoS profile groups a set of related QoS.
         -->
-    <qos_profile name="QueryFilter_Profile" is_default_qos="true">
+    <qos_profile name="QueryCondition_Profile" is_default_qos="true">
       <!-- QoS used to configure the data writer created in the example code -->
       <datawriter_qos>
         <reliability>

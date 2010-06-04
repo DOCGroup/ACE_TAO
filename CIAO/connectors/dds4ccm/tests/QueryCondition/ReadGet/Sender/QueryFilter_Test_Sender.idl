@@ -7,8 +7,8 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_QUERY_FILTER_TEST_SENDER_IDL
-#define DDS_QUERY_FILTER_TEST_SENDER_IDL
+#ifndef DDS_QUERY_CONDITION_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_TEST_SENDER_IDL
 
 #include "Connector/QueryFilter_Test_Connector.idl"
 #include "Base/QueryFilter_Starter.idl"
@@ -17,7 +17,7 @@ module QueryFilter_Test
 {
   component Sender
   {
-    port QueryFilter_Test::QueryFilterTestConnector::DDS_Write info_write;
+    port QueryFilter_Test::QueryConditionTestConnector::DDS_Write info_write;
 
     uses QueryFilterStarter start_reader;
     provides QueryFilterRestarter restart_writer;

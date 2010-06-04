@@ -26,24 +26,24 @@ namespace CIAO_QFLE_Test_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
-  // QueryFilterListenEventTest_Listener_exec_i
+  // QueryConditionListenEventTest_Listener_exec_i
   //============================================================
-  class RECEIVER_EXEC_Export QueryFilterListenEventTest_Listener
-    : public virtual ::QFLE_Test::QueryFilterListenEventTestConnector::CCM_Listener,
+  class RECEIVER_EXEC_Export QueryConditionListenEventTest_Listener
+    : public virtual ::QFLE_Test::QueryConditionListenEventTestConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    QueryFilterListenEventTest_Listener (
+    QueryConditionListenEventTest_Listener (
                             Atomic_ThreadId &thread_id);
-    virtual ~QueryFilterListenEventTest_Listener (void);
+    virtual ~QueryConditionListenEventTest_Listener (void);
 
     virtual void
     on_one_data (
-      const QueryFilterListenEventTest & an_instance,
+      const QueryConditionListenEventTest & an_instance,
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const QueryFilterListenEventTestSeq & an_instance,
+      const QueryConditionListenEventTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
     Atomic_ThreadId &thread_id_;
@@ -70,7 +70,7 @@ namespace CIAO_QFLE_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::QFLE_Test::QueryFilterListenEventTestConnector::CCM_Listener_ptr
+    virtual ::QFLE_Test::QueryConditionListenEventTestConnector::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -88,7 +88,7 @@ namespace CIAO_QFLE_Test_Receiver_Impl
 
   private:
     ::QFLE_Test::CCM_Receiver_Context_var context_;
-    ::QFLE_Test::QueryFilterListenEventTestConnector::Reader_var reader_;
+    ::QFLE_Test::QueryConditionListenEventTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

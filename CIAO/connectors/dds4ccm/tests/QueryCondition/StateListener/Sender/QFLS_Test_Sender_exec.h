@@ -79,7 +79,7 @@ namespace CIAO_QFLS_Test_Sender_Impl
 
   private:
     ::QFLS_Test::CCM_Sender_Context_var context_;
-    ::QFLS_Test::QueryFilterListenStateTestConnector::Updater_var updater_;
+    ::QFLS_Test::QueryConditionListenStateTestConnector::Updater_var updater_;
 
     UpdateTicker *ticker_;
 

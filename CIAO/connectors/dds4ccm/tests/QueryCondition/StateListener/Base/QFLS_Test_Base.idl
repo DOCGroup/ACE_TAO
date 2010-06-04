@@ -5,16 +5,16 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef QUERY_FILTER_LISTEN_STATE_TEST_BASE_IDL
-#define QUERY_FILTER_LISTEN_STATE_TEST_BASE_IDL
+#ifndef QUERY_CONDITION_LISTEN_STATE_TEST_BASE_IDL
+#define QUERY_CONDITION_LISTEN_STATE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/QFLS_Test_BaseSupport.h"
 
-struct QueryFilterListenStateTest {
+struct QueryConditionListenStateTest {
   string key; //@key
   long iteration;
 };
 
-typedef sequence<QueryFilterListenStateTest> QueryFilterListenStateTestSeq;
+typedef sequence<QueryConditionListenStateTest> QueryConditionListenStateTestSeq;
 
 #endif

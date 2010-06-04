@@ -26,31 +26,31 @@ namespace CIAO_QFLS_Test_Receiver_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
-  // QueryFilterListenStateTest_Listener_exec_i
+  // QueryConditionListenStateTest_Listener_exec_i
   //============================================================
-  class RECEIVER_EXEC_Export QueryFilterListenStateTest_Listener
-    : public virtual ::QFLS_Test::QueryFilterListenStateTestConnector::CCM_StateListener,
+  class RECEIVER_EXEC_Export QueryConditionListenStateTest_Listener
+    : public virtual ::QFLS_Test::QueryConditionListenStateTestConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    QueryFilterListenStateTest_Listener (
+    QueryConditionListenStateTest_Listener (
                             Atomic_ThreadId &thread_id);
-    virtual ~QueryFilterListenStateTest_Listener (void);
+    virtual ~QueryConditionListenStateTest_Listener (void);
 
     virtual void
-    on_creation (const QueryFilterListenStateTest& an_instance,
+    on_creation (const QueryConditionListenStateTest& an_instance,
                  const CCM_DDS::ReadInfo& read_info);
 
     virtual void
-    on_one_update (const QueryFilterListenStateTest& an_instance,
+    on_one_update (const QueryConditionListenStateTest& an_instance,
                    const CCM_DDS::ReadInfo& read_info);
 
     virtual void
-    on_many_updates (const QueryFilterListenStateTestSeq& an_instance,
+    on_many_updates (const QueryConditionListenStateTestSeq& an_instance,
                      const CCM_DDS::ReadInfoSeq& read_info);
 
     virtual void
-    on_deletion (const QueryFilterListenStateTest& an_instance,
+    on_deletion (const QueryConditionListenStateTest& an_instance,
                  const CCM_DDS::ReadInfo& read_info);
 
   private:
@@ -78,7 +78,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::QFLS_Test::QueryFilterListenStateTestConnector::CCM_StateListener_ptr
+    virtual ::QFLS_Test::QueryConditionListenStateTestConnector::CCM_StateListener_ptr
     get_info_state_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -96,7 +96,7 @@ namespace CIAO_QFLS_Test_Receiver_Impl
 
   private:
     ::QFLS_Test::CCM_Receiver_Context_var context_;
-    ::QFLS_Test::QueryFilterListenStateTestConnector::Reader_var reader_;
+    ::QFLS_Test::QueryConditionListenStateTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

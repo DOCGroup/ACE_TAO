@@ -65,7 +65,7 @@ namespace CIAO_QFLS_Test_Sender_Impl
           {
             char key[7];
             ACE_OS::sprintf (key, "KEY_%d", i);
-            QueryFilterListenStateTest update_key;
+            QueryConditionListenStateTest update_key;
             update_key.key = CORBA::string_dup (key);
             update_key.iteration = iter;
             this->updater_->update_one (update_key, ::DDS::HANDLE_NIL);
@@ -92,7 +92,7 @@ namespace CIAO_QFLS_Test_Sender_Impl
       {
         char key[7];
         ACE_OS::sprintf (key, "KEY_%d", i);
-        QueryFilterListenStateTest new_key;
+        QueryConditionListenStateTest new_key;
         new_key.key = CORBA::string_dup(key);
         new_key.iteration = 0;
         this->updater_->create_one (new_key);
