@@ -1,3 +1,10 @@
+Fri Jun  4 15:36:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+        
+          Fixed illegal IDL - case difference between AMI4CCM connector
+          port type and port identifier.
+
 Fri Jun  4 14:52:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_3769_Regression/Foo.idl:
