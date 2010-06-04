@@ -1,0 +1,114 @@
+// $Id$
+
+project(DDS_ReadGet_Starter_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=READER_STARTER_STUB_Export \
+              -Wb,stub_export_include=ReadGet_Starter_stub_export.h \
+              -Wb,skel_export_macro=READER_STARTER_SVNT_Export \
+              -Wb,skel_export_include=ReadGet_Starter_svnt_export.h \
+              -Wb,svnt_export_macro=READER_STARTER_SVNT_Export \
+              -Wb,svnt_export_include=ReadGet_Starter_svnt_export.h \
+              -Wb,exec_export_macro=READER_STARTER_EXEC_Export \
+              -Wb,exec_export_include=ReadGet_Starter_exec_export.h -I..
+
+  IDL_Files {
+    ReadGet_Starter.idl
+  }
+}
+
+project(DDS_ReadGet_Starter_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += DDS_ReadGet_Starter_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=READER_STARTER_LEM_STUB_Export \
+              -Wb,stub_export_include=ReadGet_Starter_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    ReadGet_StarterE.idl
+  }
+}
+
+project(DDS_ReadGet_Starter_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_ReadGet_Starter_lem_gen DDS_ReadGet_Starter_stub
+  libs  += ReadGet_Starter_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = ReadGet_Starter_lem_stub
+  dynamicflags   = READER_STARTER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReadGet_StarterEC.cpp
+  }
+
+  Header_Files {
+    ReadGet_StarterEC.h
+    ReadGet_Starter_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ReadGet_StarterEC.inl
+  }
+}
+
+project(DDS_ReadGet_Starter_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_ReadGet_Starter_idl_gen
+  libs  +=
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = ReadGet_Starter_stub
+  dynamicflags   = READER_STARTER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReadGet_StarterC.cpp
+  }
+
+  Header_Files {
+    ReadGet_StarterC.h
+    ReadGet_Starter_stub_export.h
+  }
+
+  Inline_Files {
+    ReadGet_StarterC.inl
+  }
+}
+
+
+project(DDS_ReadGet_Starter_svnt) : ciao_servant, dds4ccm_base {
+  after      +=   DDS_ReadGet_Starter_lem_stub DDS_ReadGet_Starter_stub\
+                  DDS4CCM_lem_stub DDS4CCM_skel
+  sharedname  = ReadGet_Starter_svnt
+  libs       += ReadGet_Starter_stub ReadGet_Starter_lem_stub \
+                DDS4CCM_lem_stub DDS4CCM_skel
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = READER_STARTER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReadGet_StarterS.cpp
+    ReadGet_Starter_svnt.cpp
+  }
+
+  Header_Files {
+    ReadGet_StarterS.h
+    ReadGet_Starter_svnt.h
+    ReadGet_Starter_svnt_export.h
+  }
+
+  Inline_Files {
+    ReadGet_StarterS.inl
+  }
+}
+
+
