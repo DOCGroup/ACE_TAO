@@ -27,7 +27,7 @@ module CCM_AMI
   
   module Connector_T<interface T, interface AMI4CCM_T>
   {
-    porttype AMI4CCM_Port
+    porttype AMI4CCM_Port_Type
     {
       provides AMI4CCM_T ami4ccm_provides;
       uses T ami4ccm_uses;
@@ -35,7 +35,7 @@ module CCM_AMI
     
     connector AMI4CCM_Connector : AMI4CCM_Base
     {
-      port AMI4CCM_Port ami4ccm_port;
+      port AMI4CCM_Port_Type ami4ccm_port;
     };
   };
 };
