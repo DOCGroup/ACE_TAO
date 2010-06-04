@@ -96,7 +96,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     try
       {
-        QueryFilterTest queryfiltertest_info;
+        QueryConditionTest queryfiltertest_info;
         ::CCM_DDS::ReadInfo readinfo;
         char key[100];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
@@ -121,7 +121,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::check_iter (const QueryFilterTest & sample,
+  Receiver_exec_i::check_iter (const QueryConditionTest & sample,
                                const char * test)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C ALL : ")
@@ -151,7 +151,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    QueryFilterTestSeq queryfiltertest_info_seq;
+    QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
     this->reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
@@ -173,7 +173,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
                               "ERROR: No Getter\n"));
       }
-    QueryFilterTest * qf_info = new QueryFilterTest;
+    QueryConditionTest * qf_info = new QueryConditionTest;
     ::CCM_DDS::ReadInfo readinfo;
     bool result = this->getter_->get_one (qf_info, readinfo);
     if (result)
@@ -234,7 +234,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::test_exception ()
   {
-    CCM_DDS::QueryFilter* query = 0;
+    ::CCM_DDS::QueryFilter* query = 0;
     try
       {
         query = this->reader_->filter ();
@@ -260,7 +260,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter ()
   {
-    CCM_DDS::QueryFilter * filter = 0;
+    ::CCM_DDS::QueryFilter * filter = 0;
     try
       {
         filter = this->reader_->filter ();
@@ -334,7 +334,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   {
     try
       {
-        CCM_DDS::QueryFilter filter;
+        ::CCM_DDS::QueryFilter filter;
         filter.expression = CORBA::string_dup ("na");
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
@@ -363,14 +363,12 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
   Receiver_exec_i::set_filter ()
   {
     ACE_DEBUG ((LM_DEBUG, "Set filter\n"));
-    CCM_DDS::QueryFilter filter;
+    ::CCM_DDS::QueryFilter filter;
     filter.expression = CORBA::string_dup (QUERY);
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
     this->reader_->filter (filter);
-//     this->getter_->pull_observer_filter ();
-//     this->getter_->filter (filter);
   }
 
   void

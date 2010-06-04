@@ -64,7 +64,7 @@ namespace CIAO_QFLE_Test_Sender_Impl
 
   private:
     ::QFLE_Test::CCM_Sender_Context_var context_;
-    ::QFLE_Test::QueryFilterListenEventTestConnector::Writer_var writer_;
+    ::QFLE_Test::QueryConditionListenEventTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 
@@ -72,7 +72,7 @@ namespace CIAO_QFLE_Test_Sender_Impl
     CORBA::UShort keys_;
 
     TAO_SYNCH_MUTEX mutex_;
-    typedef std::map<ACE_CString, QueryFilterListenEventTest_var> Writer_Table;
+    typedef std::map<ACE_CString, QueryConditionListenEventTest_var> Writer_Table;
     Writer_Table samples_;
 
     Writer_Table::iterator last_key_;

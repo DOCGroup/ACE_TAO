@@ -15,31 +15,31 @@
 namespace CIAO_QFLE_Test_Receiver_Impl
 {
   //============================================================
-  // QueryFilterListenEventTest_Listener_exec_i
+  // QueryConditionListenEventTest_Listener_exec_i
   //============================================================
-  QueryFilterListenEventTest_Listener::QueryFilterListenEventTest_Listener (
+  QueryConditionListenEventTest_Listener::QueryConditionListenEventTest_Listener (
                                               Atomic_ThreadId &thread_id)
     : thread_id_ (thread_id)
   {
   }
 
-  QueryFilterListenEventTest_Listener::~QueryFilterListenEventTest_Listener (void)
+  QueryConditionListenEventTest_Listener::~QueryConditionListenEventTest_Listener (void)
   {
   }
 
   void
-  QueryFilterListenEventTest_Listener::on_one_data (
-                                  const QueryFilterListenEventTest & an_instance,
+  QueryConditionListenEventTest_Listener::on_one_data (
+                                  const QueryConditionListenEventTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
   {
     this->thread_id_ = ACE_Thread::self ();
-    ACE_DEBUG ((LM_DEBUG, "QueryFilterListenEventTest_Listener::on_one_data: "
+    ACE_DEBUG ((LM_DEBUG, "QueryConditionListenEventTest_Listener::on_one_data: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));
     if (!info.instance_handle.isValid)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QueryFilterListenEventTest_Listener::on_one_data: "
+        ACE_ERROR ((LM_ERROR, "ERROR: QueryConditionListenEventTest_Listener::on_one_data: "
                             "instance handle seems to be invalid "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -48,7 +48,7 @@ namespace CIAO_QFLE_Test_Receiver_Impl
     if (info.source_timestamp.sec == 0 &&
         info.source_timestamp.nanosec == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QueryFilterListenEventTest_Listener::on_one_data: "
+        ACE_ERROR ((LM_ERROR, "ERROR: QueryConditionListenEventTest_Listener::on_one_data: "
                             "source timestamp seems to be invalid (nil) "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -57,14 +57,14 @@ namespace CIAO_QFLE_Test_Receiver_Impl
     if (an_instance.iteration <= ACE_OS::atoi (MIN_ITERATION) ||
         an_instance.iteration  > ACE_OS::atoi (MAX_ITERATION) )
       {
-        ACE_ERROR ((LM_ERROR, "QueryFilterListenEventTest_Listener::on_one_data: "
+        ACE_ERROR ((LM_ERROR, "QueryConditionListenEventTest_Listener::on_one_data: "
                               "ERROR: Unexpected iteration received.\n"));
       }
   }
 
   void
-  QueryFilterListenEventTest_Listener::on_many_data (
-                                  const QueryFilterListenEventTestSeq & /* an_instance */,
+  QueryConditionListenEventTest_Listener::on_many_data (
+                                  const QueryConditionListenEventTestSeq & /* an_instance */,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
   }
@@ -91,10 +91,10 @@ namespace CIAO_QFLE_Test_Receiver_Impl
     dlc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 
-  ::QFLE_Test::QueryFilterListenEventTestConnector::CCM_Listener_ptr
+  ::QFLE_Test::QueryConditionListenEventTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
-    return new QueryFilterListenEventTest_Listener (
+    return new QueryConditionListenEventTest_Listener (
                 this->thread_id_listener_);
   }
 

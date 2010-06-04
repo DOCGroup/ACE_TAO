@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_QueryFilterTestConnector_DDS_Event_Impl</string>
+          <string>create_QueryFilter_Test_QueryConditionTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_QueryFilterTestConnector_DDS_Event_Servant</string>
+          <string>create_QueryFilter_Test_QueryConditionTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -181,7 +181,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Library#QueryFilter_Profile</string>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
         </value>
       </value>
     </configProperty>
@@ -210,7 +210,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Library#QueryFilter_Profile</string>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
         </value>
       </value>
     </configProperty>

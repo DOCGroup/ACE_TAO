@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_QueryFilterListenStateTestConnector_DDS_State_Impl</string>
+          <string>create_QFLS_Test_QueryConditionListenStateTestConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_QueryFilterListenStateTestConnector_DDS_State_Servant</string>
+          <string>create_QFLS_Test_QueryConditionListenStateTestConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>

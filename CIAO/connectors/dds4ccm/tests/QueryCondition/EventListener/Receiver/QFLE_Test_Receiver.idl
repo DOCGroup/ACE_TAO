@@ -14,7 +14,7 @@ module QFLE_Test
 {
   component Receiver
   {
-    port QueryFilterListenEventTestConnector::DDS_Listen info_listen;
+    port QueryConditionListenEventTestConnector::DDS_Listen info_listen;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

@@ -7,8 +7,8 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_QUERY_FILTER_LISTEN_STATE_TEST_SENDER_IDL
-#define DDS_QUERY_FILTER_LISTEN_STATE_TEST_SENDER_IDL
+#ifndef DDS_QUERY_CONDITION_LISTEN_STATE_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_LISTEN_STATE_TEST_SENDER_IDL
 
 #include "Connector/QFLS_Test_Connector.idl"
 
@@ -16,7 +16,7 @@ module QFLS_Test
 {
   component Sender
   {
-    port QueryFilterListenStateTestConnector::DDS_Update info_update;
+    port QueryConditionListenStateTestConnector::DDS_Update info_update;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;

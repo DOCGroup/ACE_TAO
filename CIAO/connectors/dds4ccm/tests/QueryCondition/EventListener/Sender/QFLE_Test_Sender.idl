@@ -7,8 +7,8 @@
  * by-hand idl3 translation of sender components.
  */
 
-#ifndef DDS_QUERY_FILTER_LISTEN_EVENT_TEST_SENDER_IDL
-#define DDS_QUERY_FILTER_LISTEN_EVENT_TEST_SENDER_IDL
+#ifndef DDS_QUERY_CONDITION_LISTEN_EVENT_TEST_SENDER_IDL
+#define DDS_QUERY_CONDITION_LISTEN_EVENT_TEST_SENDER_IDL
 
 #include "Connector/QFLE_Test_Connector.idl"
 
@@ -16,7 +16,7 @@ module QFLE_Test
 {
   component Sender
   {
-    port QueryFilterListenEventTestConnector::DDS_Write info_write;
+    port QueryConditionListenEventTestConnector::DDS_Write info_write;
 
     attribute unsigned short keys;
     attribute unsigned short iterations;
