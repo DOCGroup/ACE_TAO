@@ -178,6 +178,16 @@ namespace CIAO_Foo_Impl
     virtual void
     my_bar_struct (
       const ::Bar & my_bar_struct);
+
+    virtual ::Baz *
+    my_baz_struct (void);
+    
+    // TAO_IDL - Generated from
+    // c:\middleware\ace_devo\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
+    
+    virtual void
+    my_baz_struct (
+      const ::Baz & my_baz_struct);
     //@}
     
     //@{
@@ -197,6 +207,7 @@ namespace CIAO_Foo_Impl
   
   private:
     ::CCM_Foo_Context_var context_;
+    
   };
   
   extern "C" FOO_EXEC_Export ::Components::EnterpriseComponent_ptr

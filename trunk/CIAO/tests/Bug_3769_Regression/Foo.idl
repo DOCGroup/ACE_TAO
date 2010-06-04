@@ -18,6 +18,14 @@ struct Bar
   double d;
 };
 
+typedef sequence<Bar, 5> BarSeq;
+
+struct Baz
+{
+  string name;
+  BarSeq my_bar_sequence;
+};
+
 component Foo
 {
   attribute short  my_short;
@@ -31,6 +39,7 @@ component Foo
   attribute double_sequence my_double_sequence;
 
   attribute Bar my_bar_struct;
+  attribute Baz my_baz_struct;
 };
 
 #endif /* FOO_IDL_ */
