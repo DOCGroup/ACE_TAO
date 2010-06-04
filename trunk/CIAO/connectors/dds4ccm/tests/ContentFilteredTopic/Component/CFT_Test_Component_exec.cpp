@@ -59,7 +59,7 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup ("5");
         filter.parameters[1] = CORBA::string_dup ("5");
-        this->two_reader_->query (filter);
+        this->two_reader_->filter (filter);
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -88,7 +88,7 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup ("5");
         filter.parameters[1] = CORBA::string_dup ("5");
-        this->three_reader_->query (filter);
+        this->three_reader_->filter (filter);
       }
     catch (const CCM_DDS::InternalError& ex)
       {
