@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>QueryFilter_Test_Depl_1</label>
-  <UUID>QueryFilter_Test_Depl_1</UUID>
+  <label>ReadGet_Test_Depl_1</label>
+  <UUID>ReadGet_Test_Depl_1</UUID>
 
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_Receiver_Impl</string>
+          <string>create_ReadGet_Test_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_Receiver_Servant</string>
+          <string>create_ReadGet_Test_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -58,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="QueryFilter_Test_ConnectorComponentImplementation">
-    <name>QueryFilter_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="ReadGet_Test_ConnectorComponentImplementation">
+    <name>ReadGet_Test_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="QueryFilter_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="QueryFilter_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="ReadGet_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="ReadGet_Test_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_QueryConditionTestConnector_DDS_Event_Impl</string>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_QueryConditionTestConnector_DDS_Event_Servant</string>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Test_Connector_svnt</string>
+          <string>ReadGet_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Test_Connector_exec</string>
+          <string>ReadGet_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -122,7 +122,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_Sender_Impl</string>
+          <string>create_ReadGet_Test_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QueryFilter_Test_Sender_Servant</string>
+          <string>create_ReadGet_Test_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -168,12 +168,12 @@
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
 
-  <instance xmi:id="QueryFilter_Test_ConnectorComponentInstance">
-    <name>QueryFilter_Test_ConnectorComponent</name>
+  <instance xmi:id="ReadGet_Test_ConnectorComponentInstance">
+    <name>ReadGet_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QueryFilter_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="ReadGet_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -192,17 +192,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Test</string>
+          <string>ReadGet_Test</string>
         </value>
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="QueryFilter_Test_ConnectorComponentInstance2">
-    <name>QueryFilter_Test_ConnectorComponent2</name>
+  <instance xmi:id="ReadGet_Test_ConnectorComponentInstance2">
+    <name>ReadGet_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QueryFilter_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="ReadGet_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -221,7 +221,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QueryFilter_Test</string>
+          <string>ReadGet_Test</string>
         </value>
       </value>
     </configProperty>
@@ -261,7 +261,7 @@
       <portName>pull_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -281,7 +281,7 @@
       <portName>pull_consumer_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -301,7 +301,7 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QueryFilter_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -355,23 +355,23 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="QueryFilter_Test_Connector_ExecArtifact">
-    <name>QueryFilter_Test_Connector_exec</name>
+  <artifact xmi:id="ReadGet_Test_Connector_ExecArtifact">
+    <name>ReadGet_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>QueryFilter_Test_Connector_exec</location>
+    <location>ReadGet_Test_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="QueryFilter_Test_Connector_SvntArtifact">
-    <name>QueryFilter_Test_Connector_svnt</name>
+  <artifact xmi:id="ReadGet_Test_Connector_SvntArtifact">
+    <name>ReadGet_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>QueryFilter_Test_Connector_svnt</location>
+    <location>ReadGet_Test_Connector_svnt</location>
   </artifact>
-  <artifact xmi:id="QueryFilter_Test_Connector_StubArtifact">
-    <name>QueryFilter_Test_Connector_stub</name>
+  <artifact xmi:id="ReadGet_Test_Connector_StubArtifact">
+    <name>ReadGet_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>QueryFilter_Test_Connector_stub</location>
+    <location>ReadGet_Test_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
