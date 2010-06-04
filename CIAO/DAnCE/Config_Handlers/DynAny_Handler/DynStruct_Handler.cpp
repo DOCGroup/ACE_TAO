@@ -93,7 +93,7 @@ namespace CIAO
     {
       if (!type.struct_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Struct type descriptioin required")));
+          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Struct type description required\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected struct type information, tc_kind may be incorrect\n"));
         }
       
