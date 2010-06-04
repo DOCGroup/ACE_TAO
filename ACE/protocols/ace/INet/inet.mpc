@@ -1,0 +1,31 @@
+//  -*- MPC -*-
+// $Id$
+
+project(INet) : acelib, ace_output, install {
+  sharedname   = ACE_INet
+  dynamicflags = ACE_INET_BUILD_DLL
+  Source_Files {
+    IOS_util.cpp
+    HeaderBase.cpp
+    Request.cpp
+    Response.cpp
+    RequestHandler.cpp
+    ConnectionCache.cpp
+    ClientRequestHandler.cpp
+    HTTP_Status.cpp
+    HTTP_Header.cpp
+    HTTP_Response.cpp
+    HTTP_Request.cpp
+    HTTP_IOStream.cpp
+    URLBase.cpp
+    HTTP_URL.cpp
+    HTTP_ClientRequestHandler.cpp
+  }
+}
+
+project(Simple_exec) : aceexe, inet {
+  exename = http_simple_wget
+  Source_Files {
+    HTTP_Simple_exec.cpp
+  }
+}
