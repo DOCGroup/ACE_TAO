@@ -1,0 +1,149 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p DDS_QCLS_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
+
+project(DDS_QCLS_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {
+  after += DDS_QCLS_Test_Connector_idl_gen DDS_Starter_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
+              -Wb,stub_export_include=Sender_stub_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,svnt_export_macro=SENDER_SVNT_Export \
+              -Wb,svnt_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h \
+              -I ..
+
+  IDL_Files {
+    QCLS_Test_Sender.idl
+  }
+}
+
+project(DDS_QCLS_Test_Sender_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += DDS_QCLS_Test_Sender_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=Sender_lem_stub_export.h \
+              -SS -Gxhst -I $CIAO_ROOT/connectors -I ..
+
+  IDL_Files {
+    QCLS_Test_SenderE.idl
+  }
+}
+
+project(DDS_QCLS_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_QCLS_Test_Sender_lem_gen DDS_QCLS_Test_Sender_stub \
+           DDS_QCLS_Test_Base_stub
+  libs  += DDS_QCLS_Test_Base_stub Sender_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Sender_lem_stub
+  dynamicflags   = SENDER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCLS_Test_SenderEC.cpp
+  }
+
+  Header_Files {
+    QCLS_Test_SenderEC.h
+    Sender_lem_stub_export.h
+  }
+
+  Inline_Files {
+    QCLS_Test_SenderEC.inl
+  }
+}
+
+project(DDS_QCLS_Test_Sender_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_QCLS_Test_Sender_idl_gen DDS_QCLS_Test_Base_stub \
+           DDS_QCLS_Test_Connector_stub
+  libs  += DDS_QCLS_Test_Base_stub DDS_QCLS_Test_Connector_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Sender_stub
+  dynamicflags   = SENDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCLS_Test_SenderC.cpp
+  }
+
+  Header_Files {
+    QCLS_Test_SenderC.h
+    Sender_stub_export.h
+  }
+
+  Inline_Files {
+    QCLS_Test_SenderC.inl
+  }
+}
+
+project(DDS_QCLS_Test_Sender_exec) : ciao_executor, dds4ccm_base {
+  after   += DDS_QCLS_Test_Sender_lem_stub DDS_QCLS_Test_Sender_stub \
+             DDS_QCLS_Test_Connector_lem_stub DDS_QCLS_Test_Connector_stub \
+             DDS4CCM_lem_stub
+  sharedname = Sender_exec
+  libs    += Sender_stub Sender_lem_stub DDS_QCLS_Test_Base_stub \
+             DDS_QCLS_Test_Connector_lem_stub DDS_QCLS_Test_Connector_stub \
+             DDS4CCM_lem_stub
+  libpaths += ../lib
+  includes += ..
+  libout = ../lib
+  dynamicflags   = SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCLS_Test_Sender_exec.cpp
+  }
+
+  Header_Files {
+    QCLS_Test_Sender_exec.h
+    Sender_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(DDS_QCLS_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
+  after      += DDS_QCLS_Test_Base_stub  DDS_QCLS_Test_Sender_lem_stub \
+                DDS4CCM_lem_stub DDS4CCM_skel DDS_QCLS_Test_Connector_stub \
+                DDS_QCLS_Test_Connector_svnt DDS_QCLS_Test_Connector_lem_stub
+  sharedname  = Sender_svnt
+  libs       += Sender_stub Sender_lem_stub DDS_QCLS_Test_Base_stub DDS4CCM_lem_stub \
+                DDS4CCM_skel DDS_QCLS_Test_Connector_stub DDS_QCLS_Test_Connector_svnt \
+                DDS_QCLS_Test_Connector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = SENDER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCLS_Test_SenderS.cpp
+    QCLS_Test_Sender_svnt.cpp
+  }
+
+  Header_Files {
+    QCLS_Test_SenderS.h
+    QCLS_Test_Sender_svnt.h
+    Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    QCLS_Test_SenderS.inl
+  }
+}
+

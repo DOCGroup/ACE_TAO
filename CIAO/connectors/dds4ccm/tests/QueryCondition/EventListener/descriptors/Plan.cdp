@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>QFLE_Test_Depl_1</label>
-  <UUID>QFLE_Test_Depl_1</UUID>
+  <label>QCLE_Test_Depl_1</label>
+  <UUID>QCLE_Test_Depl_1</UUID>
 
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_Receiver_Impl</string>
+          <string>create_QCLE_Test_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_Receiver_Servant</string>
+          <string>create_QCLE_Test_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -58,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="QFLE_Test_ConnectorComponentImplementation">
-    <name>QFLE_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="QCLE_Test_ConnectorComponentImplementation">
+    <name>QCLE_Test_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="QFLE_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="QFLE_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="QCLE_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="QCLE_Test_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_QueryConditionListenEventTestConnector_DDS_Event_Impl</string>
+          <string>create_QCLE_Test_QueryConditionListenEventTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_QueryConditionListenEventTestConnector_DDS_Event_Servant</string>
+          <string>create_QCLE_Test_QueryConditionListenEventTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLE_Test_Connector_svnt</string>
+          <string>QCLE_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLE_Test_Connector_exec</string>
+          <string>QCLE_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -122,7 +122,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_Sender_Impl</string>
+          <string>create_QCLE_Test_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLE_Test_Sender_Servant</string>
+          <string>create_QCLE_Test_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -189,12 +189,12 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="QFLE_Test_ConnectorComponentInstance">
-    <name>QFLE_Test_ConnectorComponent</name>
+  <instance xmi:id="QCLE_Test_ConnectorComponentInstance">
+    <name>QCLE_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QFLE_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="QCLE_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -202,17 +202,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLE_Test</string>
+          <string>QCLE_Test</string>
         </value>
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="QFLE_Test_ConnectorComponentInstance2">
-    <name>QFLE_Test_ConnectorComponent2</name>
+  <instance xmi:id="QCLE_Test_ConnectorComponentInstance2">
+    <name>QCLE_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QFLE_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="QCLE_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -220,7 +220,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLE_Test</string>
+          <string>QCLE_Test</string>
         </value>
       </value>
     </configProperty>
@@ -271,7 +271,7 @@
       <portName>push_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLE_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLE_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -291,7 +291,7 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="QFLE_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLE_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -311,7 +311,7 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLE_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLE_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -331,7 +331,7 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLE_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="QCLE_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -353,23 +353,23 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="QFLE_Test_Connector_ExecArtifact">
-    <name>QFLE_Test_Connector_exec</name>
+  <artifact xmi:id="QCLE_Test_Connector_ExecArtifact">
+    <name>QCLE_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_QFLE_Test_Connector_exec</location>
+    <location>DDS_QCLE_Test_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="QFLE_Test_Connector_SvntArtifact">
-    <name>QFLE_Test_Connector_svnt</name>
+  <artifact xmi:id="QCLE_Test_Connector_SvntArtifact">
+    <name>QCLE_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_QFLE_Test_Connector_svnt</location>
+    <location>DDS_QCLE_Test_Connector_svnt</location>
   </artifact>
-  <artifact xmi:id="QFLE_Test_Connector_StubArtifact">
-    <name>QFLE_Test_Connector_stub</name>
+  <artifact xmi:id="QCLE_Test_Connector_StubArtifact">
+    <name>QCLE_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_QFLE_Test_Connector_stub</location>
+    <location>DDS_QCLE_Test_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>

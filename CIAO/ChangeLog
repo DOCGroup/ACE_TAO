@@ -1,3 +1,86 @@
+Fri Jun  4 12:30:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Starter.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QFLE_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QFLE_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QFLE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QFLE_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QFLE_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QFLE_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QFLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QFLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QFLE_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QFLE_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QFLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QFLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/QueryFilter_Starter.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/QueryFilter_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/QueryFilter_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/QueryFilter_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/QueryFilter_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/QueryFilter_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/QueryFilter_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/QueryFilter_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/QueryFilter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/QueryFilter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QFLS_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QFLS_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QFLS_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QFLS_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QFLS_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QFLS_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QFLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QFLS_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QFLS_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QFLS_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QFLS_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QFLS_Test_Sender_exec.cpp:
+          Renamed files in order to reflect the meaning of them better.
+
 Fri Jun  4 12:10:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/QueryFilter_Test_Receiver_exec.h:

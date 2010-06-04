@@ -3,8 +3,8 @@
    xmlns:xmi="http://www.omg.org/XMI"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>QFLS_Test_Depl_1</label>
-  <UUID>QFLS_Test_Depl_1</UUID>
+  <label>QCLS_Test_Depl_1</label>
+  <UUID>QCLS_Test_Depl_1</UUID>
 
   <implementation xmi:id="ReceiverComponentImplementation">
     <name>ReceiverComponentImplementation</name>
@@ -19,7 +19,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_Receiver_Impl</string>
+          <string>create_QCLS_Test_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_Receiver_Servant</string>
+          <string>create_QCLS_Test_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -58,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="QFLS_Test_ConnectorComponentImplementation">
-    <name>QFLS_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="QCLS_Test_ConnectorComponentImplementation">
+    <name>QCLS_Test_ConnectorComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="QFLS_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="QFLS_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="QCLS_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="QCLS_Test_Connector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_QueryConditionListenStateTestConnector_DDS_State_Impl</string>
+          <string>create_QCLS_Test_QueryConditionListenStateTestConnector_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_QueryConditionListenStateTestConnector_DDS_State_Servant</string>
+          <string>create_QCLS_Test_QueryConditionListenStateTestConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLS_Test_Connector_svnt</string>
+          <string>QCLS_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLS_Test_Connector_exec</string>
+          <string>QCLS_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -122,7 +122,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_Sender_Impl</string>
+          <string>create_QCLS_Test_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -133,7 +133,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_QFLS_Test_Sender_Servant</string>
+          <string>create_QCLS_Test_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -189,12 +189,12 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="QFLS_Test_ConnectorComponentInstance">
-    <name>QFLS_Test_ConnectorComponent</name>
+  <instance xmi:id="QCLS_Test_ConnectorComponentInstance">
+    <name>QCLS_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QFLS_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="QCLS_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -202,17 +202,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLS_Test</string>
+          <string>QCLS_Test</string>
         </value>
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="QFLS_Test_ConnectorComponentInstance2">
-    <name>QFLS_Test_ConnectorComponent2</name>
+  <instance xmi:id="QCLS_Test_ConnectorComponentInstance2">
+    <name>QCLS_Test_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="QFLS_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="QCLS_Test_ConnectorComponentImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -220,7 +220,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>QFLS_Test</string>
+          <string>QCLS_Test</string>
         </value>
       </value>
     </configProperty>
@@ -271,7 +271,7 @@
       <portName>push_state_observer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLS_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLS_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -291,7 +291,7 @@
       <portName>push_state_observer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="QFLS_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLS_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -311,7 +311,7 @@
       <portName>push_state_observer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLS_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="QCLS_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
 
@@ -331,7 +331,7 @@
       <portName>observable_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="QFLS_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="QCLS_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -353,23 +353,23 @@
     <node/>
     <location>Sender_stub</location>
   </artifact>
-  <artifact xmi:id="QFLS_Test_Connector_ExecArtifact">
-    <name>QFLS_Test_Connector_exec</name>
+  <artifact xmi:id="QCLS_Test_Connector_ExecArtifact">
+    <name>QCLS_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>DDS_QFLS_Test_Connector_exec</location>
+    <location>DDS_QCLS_Test_Connector_exec</location>
   </artifact>
-  <artifact xmi:id="QFLS_Test_Connector_SvntArtifact">
-    <name>QFLS_Test_Connector_svnt</name>
+  <artifact xmi:id="QCLS_Test_Connector_SvntArtifact">
+    <name>QCLS_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>DDS_QFLS_Test_Connector_svnt</location>
+    <location>DDS_QCLS_Test_Connector_svnt</location>
   </artifact>
-  <artifact xmi:id="QFLS_Test_Connector_StubArtifact">
-    <name>QFLS_Test_Connector_stub</name>
+  <artifact xmi:id="QCLS_Test_Connector_StubArtifact">
+    <name>QCLS_Test_Connector_stub</name>
     <source/>
     <node/>
-    <location>DDS_QFLS_Test_Connector_stub</location>
+    <location>DDS_QCLS_Test_Connector_stub</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Receiver_exec</name>
