@@ -1,7 +1,17 @@
+Fri Jun  4 08:37:55 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Messaging/Messaging_Loader.cpp:
+          Fixed a problem related to bug 3755 in Messaging library.
+          Despite corresponding test in 3755_Ext worked there was a memory
+          leak during execution of orb initializer code. The leak was
+          happening because the same loader was executed twice and
+          consequently the loader was registering the same orb initializer
+          twice. Now this is fixed.
+
 Thu Jun  3 20:34:13 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Added a check for the lookup result from iteration over
           the scope decls being 0 before iterating over the scope
           'local types', which may provide a little performance

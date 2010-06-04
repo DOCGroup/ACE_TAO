@@ -34,6 +34,19 @@ TAO_Messaging_Loader::init (int,
 
   this->initialized_ = true;
 
+  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
+
+  ACE_Service_Object * const messaging_loader =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      gestalt,
+      "Messaging_Loader",
+      true);
+
+  if (messaging_loader != 0 && messaging_loader != this)
+    {
+      return messaging_loader->init (0, 0);
+    }
+
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
