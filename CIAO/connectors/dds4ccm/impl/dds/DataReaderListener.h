@@ -70,7 +70,7 @@ namespace CIAO
       ::DDS::DataReaderListener_var impl_;
 
       ::DDS::CCM_DataReader_ptr
-      get_datareader_proxy (::DDSDataReader * the_reader);
+      get_datareader_proxy (DDSDataReader * the_reader);
     };
   }
 }

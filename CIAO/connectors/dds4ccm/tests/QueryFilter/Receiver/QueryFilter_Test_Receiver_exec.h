@@ -72,6 +72,8 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
 
     // Supported operations and attributes.
     // Component attributes.
+    virtual CCM_DDS::QueryFilter* get_port_filter () { return 0; }
+    virtual void get_port_filter (const CCM_DDS::QueryFilter&) { printf ("#$@$@#$@#$!@#!@#!#@$@#$!@#~!#~!\n");}
 
     // Port operations.
     virtual ::CCM_QueryFilterStarter_ptr
@@ -107,6 +109,7 @@ namespace CIAO_QueryFilter_Test_Receiver_Impl
     ::QueryFilter_Test::CCM_Receiver_Context_var context_;
     ::QueryFilter_Test::QueryFilterTestConnector::Reader_var reader_;
     ::QueryFilter_Test::QueryFilterTestConnector::Getter_var getter_;
+    ::CCM_DDS::ContentFilterSetting_var filter_setting_;
     QueryFilterRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;

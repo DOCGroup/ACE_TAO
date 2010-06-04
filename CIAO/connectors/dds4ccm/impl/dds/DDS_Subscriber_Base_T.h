@@ -57,6 +57,7 @@ protected:
    */
   //@{
   ::DDS::DataReaderListener_var listener_;
+  ::DDS::ContentFilteredTopic_var cft_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
   ::CCM_DDS::QueryFilter filter_;

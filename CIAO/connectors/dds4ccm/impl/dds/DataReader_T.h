@@ -53,30 +53,17 @@ namespace CIAO
         ::DDS_SampleInfoSeq & sample_info,
         ::DDS_Long max_samples=DDS_LENGTH_UNLIMITED);
 
-      ::DDS_InstanceHandle_t
+      DDS_InstanceHandle_t
       lookup_instance (const typename DDS_TYPE::value_type& an_instance);
 
-      ::DDS_ReturnCode_t
+      DDS_ReturnCode_t
       return_loan (
         typename DDS_TYPE::dds_seq_type & data,
         ::DDS_SampleInfoSeq & sample_info);
 
       void
-      create_contentfilteredtopic (
-        const ::CCM_DDS::QueryFilter & filter,
-        ::DDSSubscriber * sub);
-
-      void
-      delete_datareader (
-        ::DDSSubscriber * sub);
-
-      void
       delete_datareader (
         ::DDS::Subscriber_ptr subscriber);
-
-      void
-      create_filter (
-        const ::CCM_DDS::QueryFilter & filter);
 
       ::CCM_DDS::QueryFilter *
       query (void);
@@ -86,7 +73,7 @@ namespace CIAO
 
       void
       set_filter (const ::CCM_DDS::QueryFilter & filter,
-                  ::DDSQueryCondition * qc);
+                  DDSQueryCondition * qc);
 
       // Getter related methods.
       void
@@ -102,7 +89,7 @@ namespace CIAO
       void
       create_readcondition (void);
 
-      DDSReadCondition *
+      DDSQueryCondition *
       get_querycondition (void);
 
       void
@@ -119,6 +106,12 @@ namespace CIAO
       passivate (void);
 
       void
+      create_datareader (::DDS::ContentFilteredTopic_ptr topic,
+                         ::DDS::Subscriber_ptr subscriber,
+                         const char * library_name,
+                         const char * profile_name);
+
+      void
       create_datareader (::DDS::Topic_ptr topic,
                           ::DDS::Subscriber_ptr subscriber,
                           const char * library_name,
@@ -131,17 +124,11 @@ namespace CIAO
 
       ::DDSWaitSet * ws_;
 
-      #if (DDS4CCM_USES_QUERY_CONDITION==1)
-        // Different QueryConditions since the sample mask
-        // differs for all entities.
-        ::DDSQueryCondition * qc_reader_;
-        ::DDSQueryCondition * qc_getter_;
-        ::DDSQueryCondition * qc_listener_;
-      #else
-        ::DDSContentFilteredTopic * cft_;
-        ACE_CString library_name_;
-        ACE_CString profile_name_;
-      #endif
+      // Different QueryConditions since the sample mask
+      // differs for all entities.
+      DDSQueryCondition * qc_reader_;
+      DDSQueryCondition * qc_getter_;
+      static DDSQueryCondition * qc_listener_;
 
       typename DDS_TYPE::data_reader * impl (void);
     };
