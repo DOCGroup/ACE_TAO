@@ -263,18 +263,18 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::read_one_all (
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::QueryFilter *
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (void)
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
   return this->impl ()->query ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
   const ::CCM_DDS::QueryFilter & query)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
   return this->impl ()->query (query);
 }
 

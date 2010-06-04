@@ -2,7 +2,6 @@
 
 #include "dds4ccm/impl/dds/DataReader.h"
 #include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/QueryCondition.h"
 
 #include "dds4ccm/impl/dds/ndds/SampleInfo.h"
 #include "dds4ccm/impl/dds/ndds/StringSeq.h"
@@ -10,22 +9,19 @@
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+DDSQueryCondition * CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::qc_listener_ = 0;
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (void)
   : CCM_DDS_DataReader_i (0),
     impl_ (0),
     rd_condition_ (0),
     ws_ (0),
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     qc_reader_ (0),
-    qc_getter_ (0),
-    qc_listener_ (0)
-#else
-    cft_ (0),
-    library_name_ (""),
-    profile_name_ ("")
-#endif
+    qc_getter_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::DataReader_T");
+
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -43,7 +39,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_wo_instance (
   ::DDS_SampleInfoSeq & sample_info)
 {
   ::DDS_ReturnCode_t retval = DDS_RETCODE_ERROR;
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
   if (this->qc_reader_)
     {
       retval = this->impl ()->read_w_condition (data,
@@ -53,16 +48,13 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_wo_instance (
     }
   else
     {
-#endif
       retval = this->impl ()->read (data,
                                     sample_info,
                                     DDS_LENGTH_UNLIMITED,
                                     DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
                                     DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                     DDS_ALIVE_INSTANCE_STATE);
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     }
-#endif
   if (retval != DDS_RETCODE_OK && retval != DDS_RETCODE_NO_DATA)
     {
       ::DDS_ReturnCode_t const retval = this->return_loan (data, sample_info);
@@ -119,7 +111,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_condition (
   ::DDS_SampleInfoSeq & sample_info,
   ::DDS_Long max_samples)
 {
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
   if (this->qc_getter_)
     {
       return this->impl ()->read_w_condition (data,
@@ -129,14 +120,11 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_condition (
    }
   else
     {
-#endif
       return this->impl ()->read_w_condition (data,
                                               sample_info,
                                               max_samples,
                                               this->rd_condition_);
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     }
-#endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -146,9 +134,10 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::take (
   ::DDS_SampleInfoSeq & sample_info,
   ::DDS_Long max_samples)
 {
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
   if (this->qc_listener_)
     {
+                  this,
+                  this->qc_listener_));
       return this->impl ()->take_w_condition (data,
                                               sample_info,
                                               max_samples,
@@ -156,16 +145,13 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::take (
     }
   else
     {
-#endif
       return this->impl ()->take (data,
                                   sample_info,
                                   max_samples,
                                   DDS_NOT_READ_SAMPLE_STATE,
                                   DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                   DDS_ANY_INSTANCE_STATE);
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     }
-#endif
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -186,186 +172,24 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::return_loan (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (
-  const ::CCM_DDS::QueryFilter & filter,
-  ::DDSSubscriber * sub)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic");
-
-  // To create a ContentFilteredTopic we need a DDSTopic.
-  // Since a ContentFilteredTopic is created on the DomainParticipant,
-  // we need to obtain the DomainParticipant through the
-  // Subscriber.
-  ::DDSDomainParticipant * dp = sub->get_participant ();
-  if (!dp)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
-                        "Unable to get the Participant from the DDS Subscriber\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-    }
-  // Now, get the topic.
-  ::DDSTopicDescription * td = this->impl ()->get_topicdescription ();
-  if (!td)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
-                        "Unable to get the TopicDescription from the DDS DomainParticipant\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 2);
-    }
-  ::DDSTopic * tp = ::DDSTopic::narrow (td);
-  if (!tp)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
-                        "Unable to narrow the DDS TopicDescription to a DDS Topic\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 3);
-    }
-  // Now create the ContentFilteredTopic
-  DDS_StringSeq params;
-  params <<= filter.parameters;
-
-  ACE_CString name ("DDS4CCM_CFT_");
-  name.append (ACE_TEXT (tp->get_name ()), ACE_OS::strlen (tp->get_name ()));
-  this->cft_ = dp->create_contentfilteredtopic (
-                        name.c_str (),
-                        tp,
-                        filter.expression, 
-                        params);
-  if (!this->cft_)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
-                    "Error: Unable to create ContentFilteredTopic.\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 4);
-    }
-  else
-    {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::DataReader_T::create_contentfilteredtopic - "
-                    "Successfully created a ContentFilteredTopic <%C>.\n",
-                    name.c_str ()));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_datareader (
-  ::DDSSubscriber * sub)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::delete_datareader");
-  DDS_ReturnCode_t const retval = sub->delete_datareader (this->impl ());
-  if (retval != DDS_RETCODE_OK)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::delete_datareader - "
-                                "Unable to delete original DataReader. "
-                                "Retval is %C\n",
-                                translate_retcode(retval)));
-    }
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
-void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_filter (
-  const ::CCM_DDS::QueryFilter & filter)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::create_filter");
-
-  // we need to use the DDS entities direct since we're not allowed
-  // to change the CORBA interfaces.  These are known to component
-  // the end user has created.
-
-  // To set a ContentFilteredTopic on a DataReader, the DataReader
-  // should be recreated. Since the Getter uses the same DataReader,
-  // the original DataReader should not be destroyed.
-  ::DDSSubscriber * sub = this->impl ()->get_subscriber ();
-  if (!sub)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_filter - "
-                        "Unable to get the Subscriber from the type specific DDS DataReader\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-    }
-  this->create_contentfilteredtopic (filter, sub);
-
-  // Now recreate the DataReader, using the ContentFilteredTopic.
-  // After recreation, connect the original DataReaderListener to it.
-  ::DDSDataReaderListener *drl = this->impl ()->get_listener ();
-
-  ::DDSDataReader * dr = 0;
-  if (this->library_name_.length () > 0 &&
-      this->profile_name_.length () > 0)
-    {
-      dr = sub->create_datareader_with_profile (this->cft_,
-                                                this->library_name_.c_str (),
-                                                this->profile_name_.c_str (),
-                                                drl,
-                                                this->get_mask ());
-    }
-  else
-    {
-      DDS_DataReaderQos const qos = DDS_DATAREADER_QOS_DEFAULT;
-      dr = sub->create_datareader (this->cft_,
-                                   qos,
-                                   drl,
-                                   this->get_mask ());
-    }
-  if (!dr)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_filter - "
-                    "Error: Unable to create a new DataReader.\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-    }
-  this->remove_conditions ();
-  this->delete_datareader (sub);
-  // Now we need to set the new created DataReader in our proxy classes.
-  this->set_impl (dr);
-  this->impl_ = DDS_TYPE::data_reader::narrow (dr);
-  this->set_proxy (dr);
-  this->create_readcondition ();
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 ::CCM_DDS::QueryFilter *
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (void)
 {
-  #if (DDS4CCM_USES_QUERY_CONDITION==1)
-    if (!this->qc_reader_)
-      {
-        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::query - "
-                      "Error: No QueryCondition set yet. First set a filter.\n"));
-        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-      }
-    ::CCM_DDS::QueryFilter_var filter = 0;
-    ACE_NEW_THROW_EX (filter,
-                      ::CCM_DDS::QueryFilter(),
-                      CORBA::NO_MEMORY ());
-    filter->query = this->qc_reader_->get_query_expression ();
-    ::DDS_StringSeq dds_qp;
-    this->qc_reader_->get_query_parameters (dds_qp);
-    filter->query_parameters <<= dds_qp;
-    return filter._retn ();
-  #else
-    if (!this->cft_)
-      {
-        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
-                      "Error: No ContentFilter set yet. First set a filter.\n"));
-        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-      }
-    ::CCM_DDS::QueryFilter_var filter = 0;
-    ACE_NEW_THROW_EX (filter,
-                      ::CCM_DDS::QueryFilter(),
-                      CORBA::NO_MEMORY ());
-    filter->expression = this->cft_->get_filter_expression ();
-    DDS_StringSeq params;
-    ::DDS::ReturnCode_t const retval = this->cft_->get_expression_parameters (
-                                          params);
-    filter->parameters <<= params;
-    if (retval != DDS::RETCODE_OK)
-      {
-        DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
-                                  "Error getting expression_parameters. "
-                                  "Retval is %C\n",
-                                  translate_retcode(retval)));
-        throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-      }
-    return filter._retn ();
-  #endif
+  if (!this->qc_reader_)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::query - "
+                    "Error: No QueryCondition set yet. First set a filter.\n"));
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+  ::CCM_DDS::QueryFilter_var filter = 0;
+  ACE_NEW_THROW_EX (filter,
+                    ::CCM_DDS::QueryFilter(),
+                    CORBA::NO_MEMORY ());
+  filter->expression= this->qc_reader_->get_query_expression ();
+  ::DDS_StringSeq dds_qp;
+  this->qc_reader_->get_query_parameters (dds_qp);
+  filter->parameters <<= dds_qp;
+  return filter._retn ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -375,88 +199,67 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::query");
 
-  #if (DDS4CCM_USES_QUERY_CONDITION==1)
-    if (!this->qc_reader_)
-      {
-        // filter not set. Create query conditions for both the
-        // getter and reader
-        ::DDS_StringSeq dds_qp;
-        dds_qp <<= filter.query_parameters;
-        if (this->rd_condition_)
-          { // Getter functionality
-            // First remove the existing conditions from the waitset
-            // Than create a new condition and attach it to the waitset.
-            this->remove_conditions ();
-            this->qc_getter_ = this->impl ()->create_querycondition (
-                                    DDS_NOT_READ_SAMPLE_STATE,
-                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                    DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE,
-                                    filter.query,
-                                    dds_qp);
-            this->attach_querycondition ();
-          }
-        this->qc_reader_ = this->impl ()->create_querycondition (
-                                    DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
-                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                    DDS_ALIVE_INSTANCE_STATE,
-                                    filter.query,
-                                    dds_qp);
-        if (!this->qc_reader_)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
-                                      "Error creating query condition for the reader.\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-          }
-        this->qc_listener_ = this->impl ()->create_querycondition (
-                                    DDS_NOT_READ_SAMPLE_STATE,
-                                    DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
-                                    DDS_ANY_INSTANCE_STATE,
-                                    filter.query,
-                                    dds_qp);
-        if (!this->qc_listener_)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
-                                      "Error creating query condition for the listeners.\n"));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
-          }
-      }
-    else
-      {
-        this->set_filter (filter, this->qc_reader_);
-        this->set_filter (filter, this->qc_getter_);
-      }
-  #else
-    if (!this->cft_)
-      {
-        this->create_filter (filter);
-      }
-    else
-      {
-        DDS_StringSeq params;
-        params <<= filter.parameters;
-        ::DDS::ReturnCode_t const retval = this->cft_->set_expression_parameters (
-          params);
-        if (retval != ::DDS::RETCODE_OK)
-          {
-            DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
-                                      "Error setting expression_parameters. "
-                                      "Retval is %C\n",
-                                      translate_retcode(retval)));
-            throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-          }
-      }
-  #endif
+  if (!this->qc_reader_)
+    {
+      // filter not set. Create query conditions for both the
+      // getter and reader
+      ::DDS_StringSeq dds_qp;
+      dds_qp <<= filter.parameters;
+      if (this->rd_condition_)
+        { // Getter functionality
+          // First remove the existing conditions from the waitset
+          // Than create a new condition and attach it to the waitset.
+          this->remove_conditions ();
+          this->qc_getter_ = this->impl ()->create_querycondition (
+                                  DDS_NOT_READ_SAMPLE_STATE,
+                                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                  DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE,
+                                  filter.expression,
+                                  dds_qp);
+          this->attach_querycondition ();
+        }
+      this->qc_reader_ = this->impl ()->create_querycondition (
+                                  DDS_READ_SAMPLE_STATE | DDS_NOT_READ_SAMPLE_STATE,
+                                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                  DDS_ALIVE_INSTANCE_STATE,
+                                  filter.expression,
+                                  dds_qp);
+      if (!this->qc_reader_)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
+                                    "Error creating query condition for the reader.\n"));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+        }
+      this->qc_listener_ = this->impl ()->create_querycondition (
+                                  DDS_NOT_READ_SAMPLE_STATE,
+                                  DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
+                                  DDS_ANY_INSTANCE_STATE,
+                                  filter.expression,
+                                  dds_qp);
+      if (!this->qc_listener_)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
+                                    "Error creating query condition for the listeners.\n"));
+          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+        }
+    }
+  else
+    {
+      this->set_filter (filter, this->qc_reader_);
+      this->set_filter (filter, this->qc_getter_);
+      this->set_filter (filter, this->qc_listener_);
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_filter (
   const ::CCM_DDS::QueryFilter & filter,
-  ::DDSQueryCondition * qc)
+  DDSQueryCondition * qc)
 {
-  ::DDS_StringSeq dds_qp;
-  dds_qp <<= filter.parameters;
-  ::DDS::ReturnCode_t const retval = qc->set_query_parameters (dds_qp);
+  DDS_StringSeq parameters;
+  parameters <<= filter.parameters;
+  ::DDS::ReturnCode_t const retval = qc->set_query_parameters (parameters);
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::filter - "
@@ -505,15 +308,11 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDSReadCondition *
+DDSQueryCondition *
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_querycondition");
-  #if (DDS4CCM_USES_QUERY_CONDITION==1)
-    return this->qc_getter_;
-  #else
-    return 0;
-  #endif
+  return this->qc_getter_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -587,7 +386,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::remove_conditions");
 
   DDS_ReturnCode_t retcode = DDS_RETCODE_OK;
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
   this->remove_condition (this->qc_reader_, "reader");
   this->remove_condition (this->qc_listener_, "listener");
   if (this->qc_getter_)
@@ -606,7 +404,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
     }
   else
     {
-#endif
       if (this->ws_)
         {
           retcode = this->ws_->detach_condition (this->rd_condition_);
@@ -621,9 +418,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
                               "Read condition successfully detached from waitset.\n"));
             }
         }
-#if (DDS4CCM_USES_QUERY_CONDITION==1)
     }
-#endif
   retcode = this->impl ()->delete_readcondition (this->rd_condition_);
   if (retcode != DDS_RETCODE_OK)
     {
@@ -676,6 +471,42 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::passivate ()
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
+  ::DDS::ContentFilteredTopic_ptr topic,
+  ::DDS::Subscriber_ptr subscriber,
+  const char * library_name,
+  const char * profile_name)
+{
+  ::DDS::DataReader_var reader;
+  if (library_name && profile_name)
+    {
+      reader = subscriber->create_datareader_with_profile (
+          topic,
+          library_name,
+          profile_name,
+          ::DDS::DataReaderListener::_nil (),
+          0);
+    }
+  else
+    {
+      ::DDS::DataReaderQos drqos;
+      reader = subscriber->create_datareader (
+            topic,
+            drqos,
+            ::DDS::DataReaderListener::_nil (),
+            0);
+    }
+  ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *rd =
+    dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataReader_i *> (reader.in ());
+
+  this->set_proxy (rd->get_impl ());
+
+  this->set_impl (rd->get_impl ());
+  this->impl_ = DDS_TYPE::data_reader::narrow (rd->get_impl ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char * library_name,
@@ -684,11 +515,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
   ::DDS::DataReader_var reader;
   if (library_name && profile_name)
     {
-      #if (DDS4CCM_USES_QUERY_CONDITION==0)
-        this->profile_name_ = profile_name;
-        this->library_name_ = library_name ;
-      #endif
-
       reader = subscriber->create_datareader_with_profile (
           topic,
           library_name,

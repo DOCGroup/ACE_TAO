@@ -109,7 +109,7 @@ module CCM_DDS
                                 in DDS::InstanceHandle_t instance_handle)
                         raises (NonExistent,
                                 InternalError);
-                attribute QueryFilter query
+                attribute QueryFilter filter
                         setraises (InternalError);
                 // behavior
                 // --------
