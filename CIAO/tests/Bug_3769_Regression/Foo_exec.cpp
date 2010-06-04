@@ -240,6 +240,64 @@ namespace CIAO_Foo_Impl
     if(my_bar_struct.s != 7.8)
       ACE_ERROR ((LM_ERROR, "ERROR: short value != 7.8, it is %f\n", my_bar_struct.d));
   }
+
+  ::Baz *
+  Foo_exec_i::my_baz_struct (void)
+  {
+    /* Your code here. */
+    return 0;
+  }
+  
+  void
+  Foo_exec_i::my_baz_struct (
+    const ::Baz & my_baz_struct)
+  {
+    if (my_baz_struct.my_bar_sequence.length () != 5)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_bar_sequence is not 5\n"));
+        return;
+      }
+    
+    if (ACE_OS::strcmp (my_baz_struct.name.in (),
+                        "My Baz Struct") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_baz struct has incorrect name %C\n",
+                    my_baz_struct.name.in ()));
+      }
+      
+    CORBA::Short inc_s = 0;
+    CORBA::Long inc_l = 0;
+    CORBA::Float inc_f = 0;
+    CORBA::Double inc_d = 0;
+    
+    for (CORBA::ULong i = 0;
+         i < my_baz_struct.my_bar_sequence.length ();
+         ++i)
+      {
+        if(my_baz_struct.my_bar_sequence[i].s != 3 + inc_s)
+          ACE_ERROR ((LM_ERROR, "ERROR: short value != %d, it is %d\n", 
+                      3 + inc_s,
+                      my_baz_struct.my_bar_sequence[i].s));
+        inc_s += 10;
+        if(my_baz_struct.my_bar_sequence[i].l != 4 + inc_l)
+          ACE_ERROR ((LM_ERROR, "ERROR: long value != %d, it is %d\n", 
+                      4 + inc_l,
+                      my_baz_struct.my_bar_sequence[i].l));
+        inc_l += 10;
+        if(my_baz_struct.my_bar_sequence[i].f != 5.6F + inc_f)
+          ACE_ERROR ((LM_ERROR, "ERROR: float value != %f, it is %f\n", 
+                      5.6F + inc_f,
+                      my_baz_struct.my_bar_sequence[i].f));
+        inc_f += 10.0F;
+
+        if(my_baz_struct.my_bar_sequence[i].s != 7.8 + inc_d)
+          ACE_ERROR ((LM_ERROR, "ERROR: short value != %f, it is %f\n", 
+                      7.8 + inc_d,
+                      my_baz_struct.my_bar_sequence[i].d));
+        inc_d += 10.0;
+      }
+  }
+
   
   // Operations from Components::SessionComponent.
   
