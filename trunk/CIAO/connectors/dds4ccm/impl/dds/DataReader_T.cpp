@@ -136,8 +136,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::take (
 {
   if (this->qc_listener_)
     {
-                  this,
-                  this->qc_listener_));
       return this->impl ()->take_w_condition (data,
                                               sample_info,
                                               max_samples,
