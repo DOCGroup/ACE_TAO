@@ -63,7 +63,7 @@
         <xsd:element name="value" type="Deployment:ValueType"/>
         <xsd:element name="sequence" type="Deployment:SequenceType"/>
         <xsd:element name="alias" type="Deployment:AliasType"/>
-       </xsd:choice>
+      </xsd:choice>
 
 <!--
 @@ not supported now..

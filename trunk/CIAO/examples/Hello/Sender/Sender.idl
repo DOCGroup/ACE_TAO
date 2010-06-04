@@ -27,6 +27,13 @@ module Hello
     };
     
   typedef sequence<COLOR_SELECTION> COLORS;
+  
+  struct COLOR_STRUCT
+  {
+    string color_name;
+    unsigned long color_id;
+    COLOR_SELECTION color;
+  };
 
   component Sender supports trigger
   {
@@ -41,6 +48,8 @@ module Hello
     // Testing attributes of sequence type.
     attribute COLORS the_colors;
     attribute CORBA::StringSeq str_seq;
+    
+    attribute COLOR_STRUCT color_st;
   };
 
   home SenderHome manages Sender
