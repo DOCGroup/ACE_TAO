@@ -160,6 +160,12 @@ namespace ACE
 
     URL_Base::TURLFactoryMap* URL_Base::factories_ = 0;
 
+    URL_Base::Factory::Factory ()
+      {}
+
+    URL_Base::Factory::~Factory ()
+      {}
+
     URL_INetBase::URL_INetBase (u_short port)
       : URL_Base (), port_ (port)
       {

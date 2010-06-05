@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include "INet_Export.h"
 #include <iostream>
 
 // ace_ios_init
@@ -60,7 +60,7 @@ namespace ACE
   {
     namespace IOS
       {
-        class Null
+        class ACE_INET_Export Null
           {
             public:
               static std::ostream out_stream_;
