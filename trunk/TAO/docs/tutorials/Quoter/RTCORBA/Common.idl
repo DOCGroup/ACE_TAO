@@ -54,7 +54,7 @@ module Stock
   {
     void push_StockName (in StockNames the_stocknames);
     
-    attribute Cookie cookie;
+    attribute Cookie cookie_;
   };
 
   /**

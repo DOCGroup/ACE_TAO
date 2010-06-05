@@ -138,7 +138,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_string (be_string *node)
 {
   os_ << (node->width () > 1 ? "w" : "") << "string";
 
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
 
   if (bound > 0)
     {
