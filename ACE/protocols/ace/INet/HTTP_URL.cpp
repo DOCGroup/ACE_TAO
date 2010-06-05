@@ -97,7 +97,7 @@ namespace ACE
                   ch = sis.get (); // skip ']'
                 if (ch != '/' && ch != ':' && ch != '?' && ch != eof)
                   {
-                    this-.set_host (empty_); // invalid URL, clear host field
+                    this->set_host (empty_); // invalid URL, clear host field
                     ch = eof; // stop parsing
                   }
                 else

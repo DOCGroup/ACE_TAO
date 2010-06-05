@@ -1,10 +1,15 @@
+Sat Jun 05 06:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/HTTP_URL.cpp:
+	  Fixed typo.
+
 Sat Jun 05 06:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* IOS_util.h:
+	* protocols/ace/INet/IOS_util.h:
 	  Fixed missing export declaration.
 
-	* URLBase.h:
-	* URLBase.cpp:
+	* protocols/ace/INet/URLBase.h:
+	* protocols/ace/INet/URLBase.cpp:
 	  Fixed missing virtual destructor.
 
 Fri Jun 04 18:48:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
