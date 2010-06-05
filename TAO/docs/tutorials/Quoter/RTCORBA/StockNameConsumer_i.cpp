@@ -58,17 +58,16 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
     }
 }
 
-
 ::Stock::Cookie *
-Stock_StockNameConsumer_i::cookie ()
+Stock_StockNameConsumer_i::cookie_ ()
 {
-  return this->cookie_.in ();
+  return this->cookie__.in ();
 }
 
 void
-Stock_StockNameConsumer_i::cookie (::Stock::Cookie *cookie)
+Stock_StockNameConsumer_i::cookie_ (::Stock::Cookie *cookie)
 {
-  this->cookie_ = cookie;
+  this->cookie__ = cookie;
   cookie->_add_ref ();
 }
 

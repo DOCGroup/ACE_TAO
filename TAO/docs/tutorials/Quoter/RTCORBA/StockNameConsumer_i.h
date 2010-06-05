@@ -63,14 +63,14 @@ public:
    *
    * @return The cookie attribute.
    */
-  virtual ::Stock::Cookie * cookie ();
+  virtual ::Stock::Cookie * cookie_ ();
 
   /**
    * Set the cookie attribute.
    *
    * @param cookie The value of cookie attribute that need to be set.
    */
-  virtual void cookie (::Stock::Cookie *cookie);
+  virtual void cookie_ (::Stock::Cookie *cookie);
 
 private:
   /// Context of the StockNameConsumer object.
@@ -79,7 +79,7 @@ private:
   /// Name of the stock to listen to.
   CORBA::String_var stock_name_;
   
-  Stock::Cookie_var cookie_;
+  Stock::Cookie_var cookie__;
 };
 
 #endif /*  STOCKNAMECONSUMER_I_H_ */
