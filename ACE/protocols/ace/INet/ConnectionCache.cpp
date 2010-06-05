@@ -76,13 +76,13 @@ namespace ACE
     ConnectionFactory::ConnectionFactory () {}
 
     ConnectionCacheValue::ConnectionCacheValue ()
-      : state_ (INIT),
+      : state_ (CST_INIT),
         connection_ (0)
       {
       }
 
     ConnectionCacheValue::ConnectionCacheValue (connection_type* connection)
-      : state_ (connection ? IDLE : INIT),
+      : state_ (connection ? CST_IDLE : CST_INIT),
         connection_ (connection)
       {
       }
@@ -141,9 +141,9 @@ namespace ACE
         if (this->find_connection (key, cacheval))
           {
             state = cacheval.state ();
-            if (state == ConnectionCacheValue::IDLE)
+            if (state == ConnectionCacheValue::CST_IDLE)
               {
-                cacheval.state (ConnectionCacheValue::BUSY);
+                cacheval.state (ConnectionCacheValue::CST_BUSY);
                 if (this->set_connection (key, cacheval))
                   {
                     connection = cacheval.connection ();
@@ -169,7 +169,7 @@ namespace ACE
         while (1)
           {
             bool create_connection = false;
-            ConnectionCacheValue::State state = ConnectionCacheValue::NONE;
+            ConnectionCacheValue::State state = ConnectionCacheValue::CST_NONE;
             do
               {
                 ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
@@ -182,12 +182,12 @@ namespace ACE
                     return true;
                   }
 
-                if ((state == ConnectionCacheValue::BUSY ||
-                        state == ConnectionCacheValue::INIT) && !wait)
+                if ((state == ConnectionCacheValue::CST_BUSY ||
+                        state == ConnectionCacheValue::CST_INIT) && !wait)
                   return false;
 
-                if (state == ConnectionCacheValue::CLOSED ||
-                        state == ConnectionCacheValue::NONE)
+                if (state == ConnectionCacheValue::CST_CLOSED ||
+                        state == ConnectionCacheValue::CST_NONE)
                   {
                     if (!this->set_connection (key, ConnectionCacheValue ()))
                       {
@@ -217,7 +217,7 @@ namespace ACE
                                               false));
 
                     ConnectionCacheValue cacheval (connection);
-                    cacheval.state (ConnectionCacheValue::BUSY);
+                    cacheval.state (ConnectionCacheValue::CST_BUSY);
                     return this->set_connection (key, cacheval);
                   }
               }
@@ -237,9 +237,9 @@ namespace ACE
         ConnectionCacheValue cacheval;
         if (this->find_connection (key, cacheval) &&
               cacheval.connection () == connection &&
-              cacheval.state () == ConnectionCacheValue::BUSY)
+              cacheval.state () == ConnectionCacheValue::CST_BUSY)
           {
-            cacheval.state (ConnectionCacheValue::IDLE);
+            cacheval.state (ConnectionCacheValue::CST_IDLE);
             if (this->set_connection (key, cacheval))
               {
                 // signal other threads about free connection
@@ -270,11 +270,11 @@ namespace ACE
         ConnectionCacheValue cacheval;
         if (this->find_connection (key, cacheval) &&
               cacheval.connection () == connection &&
-              cacheval.state () == ConnectionCacheValue::IDLE)
+              cacheval.state () == ConnectionCacheValue::CST_IDLE)
           {
             connection_type* conn = cacheval.connection ();
             cacheval.connection (0);
-            cacheval.state (ConnectionCacheValue::CLOSED);
+            cacheval.state (ConnectionCacheValue::CST_CLOSED);
             if (this->set_connection (key, cacheval))
               {
                 // signal other threads about closed connection
@@ -304,7 +304,7 @@ namespace ACE
 
         ConnectionCacheValue cacheval;
         return (this->find_connection (key, cacheval) &&
-                  cacheval.state () != ConnectionCacheValue::CLOSED);
+                  cacheval.state () != ConnectionCacheValue::CST_CLOSED);
       }
 
     void ConnectionCache::close_all_connections()
@@ -320,11 +320,11 @@ namespace ACE
              iter != this->cache_map_.end ();
              ++iter)
           {
-            if ((*iter).int_id_.state () == ConnectionCacheValue::CLOSED)
+            if ((*iter).int_id_.state () == ConnectionCacheValue::CST_CLOSED)
               {
                 connection_type* conn = (*iter).int_id_.connection ();
                 (*iter).int_id_.connection (0);
-                (*iter).int_id_.state (ConnectionCacheValue::CLOSED);
+                (*iter).int_id_.state (ConnectionCacheValue::CST_CLOSED);
                 delete conn;
               }
           }

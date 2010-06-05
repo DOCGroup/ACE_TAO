@@ -120,11 +120,11 @@ namespace ACE
             public:
               enum State
                 {
-                  NONE,
-                  INIT,
-                  IDLE,
-                  BUSY,
-                  CLOSED
+                  CST_NONE,
+                  CST_INIT,
+                  CST_IDLE,
+                  CST_BUSY,
+                  CST_CLOSED
                 };
 
               typedef ConnectionHolder connection_type;
