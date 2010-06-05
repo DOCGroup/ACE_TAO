@@ -1,3 +1,23 @@
+Sat Jun  5 17:25:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.idl:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.idl:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/EmitsConnectionExplicitHome.cdp:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/PublishConnectionExplicitHome.cdp:
+        * examples/BasicSP/BMDevice/BMDevice.idl:
+        * examples/BasicSP/EC/EC.idl:
+        * examples/BasicSP/descriptors/BasicSP_Homed.cdp:
+        * examples/BasicSP/descriptors/BasicSP_Unhomed.cdp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * tests/IDL_Test/Cornucopia:
+          Resolve problems with identifiers only difference in casing
+
 Sat Jun  5 14:03:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/CIAO/Components/SimpleEmitter.idl:

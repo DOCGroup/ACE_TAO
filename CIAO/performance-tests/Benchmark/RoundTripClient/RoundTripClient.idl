@@ -19,7 +19,7 @@ module Benchmark
   component RoundTripClient
   {
     uses LatencyTest latency;
-    provides Controller controller;
+    provides Controller controller_;
   };
 
   home RoundTripClientHome manages RoundTripClient

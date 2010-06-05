@@ -116,7 +116,7 @@ MyImpl::RoundTripClient_exec_i::start ()
 }
 
 ::Benchmark::CCM_Controller_ptr
-MyImpl::RoundTripClient_exec_i::get_controller ()
+MyImpl::RoundTripClient_exec_i::get_controller_ ()
 {
   return ::Benchmark::CCM_Controller::_duplicate (this);
 }

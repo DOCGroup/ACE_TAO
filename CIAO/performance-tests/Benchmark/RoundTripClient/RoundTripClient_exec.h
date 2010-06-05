@@ -50,8 +50,7 @@ namespace MyImpl
 
     virtual void ccm_remove ();
 
-    virtual ::Benchmark::CCM_Controller_ptr
-                        get_controller ();
+    virtual ::Benchmark::CCM_Controller_ptr get_controller_ ();
 
     virtual void start ();
 
