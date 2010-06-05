@@ -19,7 +19,7 @@ module BasicSP
   {
     provides ReadData data_read;
     publishes DataAvailable data_available;
-    consumes TimeOut timeout;
+    consumes TimeOut timeout_value;
   };
 
   home BMDeviceHome manages BMDevice

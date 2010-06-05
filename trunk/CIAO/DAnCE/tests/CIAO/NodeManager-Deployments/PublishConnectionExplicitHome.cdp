@@ -206,7 +206,7 @@
   <connection>
     <name>TestConnection</name>
     <internalEndpoint>
-      <portName>hello</portName>
+      <portName>hello_</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
       <instance xmi:idref="SimplePublisherComponentInstance" />

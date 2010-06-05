@@ -24,7 +24,7 @@ module BasicSP
     
   component EC supports trigger
   {
-    publishes TimeOut timeout;
+    publishes TimeOut timeout_value;
 
     /// The attribute can be configured via the home or the
     /// component property file.

@@ -428,13 +428,13 @@
   <connection>
     <name>timeout_timeoutECComponentInstanceBMDeviceComponentInstance</name>
     <internalEndpoint>
-      <portName>timeout</portName>
+      <portName>timeout_value</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
       <instance xmi:idref="ECComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>timeout</portName>
+      <portName>timeout_value</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="BMDeviceComponentInstance" />
