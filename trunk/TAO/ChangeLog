@@ -1,3 +1,8 @@
+Sat Jun  5 19:09:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/including.idl:
+          Fixed identifier
+
 Sat Jun  5 17:55:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/ami4ccm_sendc_ex_idl.cpp:

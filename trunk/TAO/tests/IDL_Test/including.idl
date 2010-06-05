@@ -96,7 +96,7 @@ union TestUn switch (long)
 
 interface MyInt
 {
-  A::MyStructA op (in A::MyStructA a);
+  A::MyStructA op (in A::MyStructA ab);
 };
 
 #endif /* IDL_TEST_INCLUDING_IDL */
