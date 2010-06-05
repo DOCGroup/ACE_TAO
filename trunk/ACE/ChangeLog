@@ -1,3 +1,9 @@
+Sat Jun 05 07:11:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/HTTP_StreamPolicy.cpp:
+	* protocols/ace/INet/HTTP_StreamPolicy.h:
+	  Fix attempt for AIX compile problem.
+
 Sat Jun 05 06:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/HTTP_URL.cpp:
