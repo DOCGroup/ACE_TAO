@@ -43,6 +43,10 @@ namespace ACE
 
               virtual bool parse (const ACE_CString& url_string);
 
+#if defined (ACE_HAS_WCHAR)
+              virtual bool parse (const ACE_WString& url_string);
+#endif
+
               virtual const ACE_CString& get_protocol () const;
 
               virtual ACE_CString get_authority () const;
