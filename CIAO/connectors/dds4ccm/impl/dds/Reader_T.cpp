@@ -265,7 +265,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 ::CCM_DDS::QueryFilter *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
   return this->impl ()->query ();
 }
 
@@ -274,7 +274,7 @@ void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::query (
   const ::CCM_DDS::QueryFilter & query)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::filter");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
   return this->impl ()->query (query);
 }
 
