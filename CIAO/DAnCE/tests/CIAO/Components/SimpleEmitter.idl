@@ -10,7 +10,7 @@ module Simple
 {
   component SimpleEmitter
   {
-    emits Hello hello_emitter;
+    emits Hello hello_;
   };
   
   home SimpleEmitterHome manages SimpleEmitter

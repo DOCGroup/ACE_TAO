@@ -56,7 +56,7 @@ namespace CIAO_Simple_SimpleEmitter_Impl
 
     ::Simple::Hello_var hello = new OBV_Simple::Hello ("Test successful, hello from SimpleEmitter_exec_i");
 
-    this->context_->push_hello_emitter (hello._retn ());
+    this->context_->push_hello_ (hello._retn ());
   }
 
   void
