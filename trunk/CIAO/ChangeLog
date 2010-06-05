@@ -1,7 +1,15 @@
+Sat Jun  5 14:03:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/CIAO/Components/SimpleEmitter.idl:
+        * DAnCE/tests/CIAO/Components/SimpleEmitter_exec.cpp:
+        * DAnCE/tests/CIAO/Components/SimplePublisher.idl:
+        * DAnCE/tests/CIAO/Components/SimplePublisher_exec.cpp:
+          Fixed identifiers which only where different in casing
+
 Fri Jun  4 15:36:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
-        
+
           Fixed illegal IDL - case difference between AMI4CCM connector
           port type and port identifier.
 

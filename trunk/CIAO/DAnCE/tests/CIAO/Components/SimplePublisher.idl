@@ -10,7 +10,7 @@ module Simple
 {
   component SimplePublisher
   {
-    publishes Hello hello;
+    publishes Hello hello_pub;
   };
   
   home SimplePublisherHome manages SimplePublisher
