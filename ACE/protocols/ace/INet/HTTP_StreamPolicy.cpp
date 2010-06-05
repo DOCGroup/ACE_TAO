@@ -60,10 +60,6 @@ namespace ACE
       }
 
     template <class STREAM_BUFFER>
-    const int ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::eof_ =
-      std::char_traits<typename ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::char_type>::eof();
-
-    template <class STREAM_BUFFER>
     ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::ChunkedTransferStreamPolicyBase ()
       : StreamPolicyBase<STREAM_BUFFER> (),
         chunk_cnt_ (0)
@@ -78,6 +74,9 @@ namespace ACE
     template <class STREAM_BUFFER>
     int ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::getc ()
       {
+        static const int eof_ =
+          std::char_traits<char_type>::eof ();
+
         char_type chbuf[1];
         if (this->read_from_stream_i (chbuf, 1) <= 0)
           return eof_;
@@ -90,6 +89,9 @@ namespace ACE
         char_type * buf,
         std::streamsize length)
       {
+        static const int eof_ =
+          std::char_traits<char_type>::eof ();
+
         char_type lf = this->chunk_.widen ('\n');
         if (this->chunk_cnt_ == 0)
         {

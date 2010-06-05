@@ -77,8 +77,6 @@ namespace ACE
             private:
               std::streamsize chunk_cnt_;
               buffer_type chunk_;
-
-              static const int eof_;
           };
 
         typedef ChunkedTransferStreamPolicyBase<StreamBuffer> ChunkedTransferStreamPolicy;
