@@ -9,6 +9,14 @@ namespace ACE
   namespace HTTP
   {
 
+#if defined (ACE_HAS_WCHAR)
+    ACE_INLINE
+    bool URL::parse (const ACE_WString& url_string)
+      {
+        return URL_Base::parse (url_string);
+      }
+#endif
+
     ACE_INLINE
     const ACE_CString& URL::get_protocol () const
       {
