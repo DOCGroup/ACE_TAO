@@ -112,6 +112,8 @@ namespace ACE
               class Factory
                 {
                   public:
+                    Factory ();
+                    virtual ~Factory ();
                     virtual const ACE_CString& protocol () = 0;
                     virtual URL_Base* create_from_string (const ACE_CString& url_string) = 0;
                 };
