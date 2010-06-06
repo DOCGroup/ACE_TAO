@@ -36,7 +36,7 @@ namespace ACE
               enum Code
                 {
                   INVALID                              = -1,
-                  NONE                                 = 0,
+                  HTTP_NONE                            = 0,
                   HTTP_CONTINUE                        = 100,
                   HTTP_SWITCHING_PROTOCOLS             = 101,
                   HTTP_OK                              = 200,

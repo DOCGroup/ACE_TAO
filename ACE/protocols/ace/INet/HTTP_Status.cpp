@@ -60,7 +60,7 @@ namespace ACE
     const ACE_CString Status::HTTP_REASON_UNKNOWN                         = "???";
 
     Status::Status()
-      : code_ (NONE)
+      : code_ (HTTP_NONE)
       {
       }
 
@@ -90,7 +90,7 @@ namespace ACE
     void Status::set_status(const ACE_CString& status)
       {
         Code istat = (Code)ACE_OS::atoi (status.c_str ());
-        if (istat == NONE || get_reason (istat) == HTTP_REASON_UNKNOWN)
+        if (istat == HTTP_NONE || get_reason (istat) == HTTP_REASON_UNKNOWN)
           {
             this->code_ = INVALID;
           }
@@ -104,7 +104,7 @@ namespace ACE
       {
         switch (status)
         {
-        case NONE:
+        case HTTP_NONE:
           return ACE::INet::HeaderBase::EMPTY;
         case HTTP_CONTINUE:
           return HTTP_REASON_CONTINUE;
