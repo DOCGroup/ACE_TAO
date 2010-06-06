@@ -1,3 +1,9 @@
+Sun Jun 06 06:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/HTTP_Request.h:
+	* protocols/ace/INet/HTTP_Response.h:
+	  Fix attempt for covariant return issue on LynxOS.
+
 Sun Jun 06 06:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/StreamHandler.h:

@@ -29,7 +29,7 @@ namespace ACE
     namespace HTTP
       {
         class ACE_INET_Export Request
-          : public Header, public ACE::INet::Request
+          : public ACE::INet::Request, public Header
           {
             public:
               /// Constructor; creates a GET / HTTP/1.0 HTTP request.
