@@ -258,8 +258,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->shutdown (1);
 
-      result =
-        task.wait ();
+      result = task.wait ();
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);
     }

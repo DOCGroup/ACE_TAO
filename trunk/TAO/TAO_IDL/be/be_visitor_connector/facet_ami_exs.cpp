@@ -382,10 +382,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       
   os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl
-      << this->iface_->local_name () << "_reply_handler *handler ="
-      << be_idt_nl
-      << "new " << this->iface_->local_name ()
-      << "_reply_handler (ami_handler);" << be_uidt_nl << be_nl
+      << this->iface_->local_name () << "_reply_handler *handler = 0;"
+      << be_nl
+      << "ACE_NEW (handler, " << be_nl
+      << "         " << this->iface_->local_name ()
+      << "_reply_handler (ami_handler));" << be_nl
       << "PortableServer::ServantBase_var owner_transfer (handler);"
       << be_nl << be_nl
       << "the_handler_var = handler->_this ();" << be_uidt_nl
