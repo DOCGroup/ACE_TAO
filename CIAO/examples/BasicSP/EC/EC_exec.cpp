@@ -223,7 +223,7 @@ MyImpl::EC_exec_i::pulse (void)
 
       BasicSP::TimeOut_var ev = new OBV_BasicSP::TimeOut ();
 
-      this->context_->push_timeout (ev.in ());
+      this->context_->push_timeout_value (ev.in ());
     }
   catch (const CORBA::Exception& ex)
     {
