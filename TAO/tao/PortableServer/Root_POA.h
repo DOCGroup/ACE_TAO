@@ -319,8 +319,7 @@ public:
    * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE
    * and NON_EXISTENT states.
    */
-  PortableInterceptor::AdapterState get_adapter_state (
-    void);
+  PortableInterceptor::AdapterState get_adapter_state (void);
 
   virtual void *thread_pool (void) const;
 
@@ -352,8 +351,7 @@ public:
   TAO_POA_Manager &tao_poa_manager ();
 
   bool is_poa_generated (CORBA::Object_ptr reference,
-                         PortableServer::ObjectId &system_id
-                        );
+                         PortableServer::ObjectId &system_id);
 
   /*
    * Validate if the servant may be activated
@@ -402,7 +400,7 @@ public:
 
   /**
    * Find the the servant with ObjectId <system_id>, and retrieve
-   * its priority.Usually used in RT CORBA with SERVER_DECLARED
+   * its priority. Usually used in RT CORBA with SERVER_DECLARED
    * priority model.
    *
    * @return -1 if servant does not exist, else 0 indicating the
@@ -614,8 +612,7 @@ protected:
   PortableInterceptor::ObjectReferenceTemplate *get_adapter_template_i (void);
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory *
-    get_obj_ref_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
 
   /// Set the object reference factory
   void set_obj_ref_factory (
@@ -633,7 +630,7 @@ protected:
       bool &wait_occurred_restart_call);
 
 public:
-    // @todo Temporarily for servant retention
+  /// @todo Temporarily for servant retention
   CORBA::Object_ptr
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id);
