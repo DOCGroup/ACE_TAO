@@ -81,7 +81,7 @@ namespace ACE
         if (this->read_from_stream_i (chbuf, 1) <= 0)
           return eof_;
         else
-          return chbuf[1];
+          return chbuf[0];
       }
 
     template <class STREAM_BUFFER>
