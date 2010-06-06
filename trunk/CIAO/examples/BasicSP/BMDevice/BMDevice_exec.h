@@ -67,7 +67,7 @@ namespace MyImpl
     get_data_read (void);
 
     virtual void
-    push_timeout (BasicSP::TimeOut *ev);
+    push_timeout_value (BasicSP::TimeOut *ev);
 
     // Operations from Components::SessionComponent
 
