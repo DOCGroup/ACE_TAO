@@ -1,3 +1,20 @@
+Sun Jun 06 06:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/StreamHandler.h:
+	* protocols/ace/INet/HTTP_URL.h:
+	* protocols/ace/INet/HTTP_Status.h:
+	* protocols/ace/INet/HTTP_IOStream.h:
+	* protocols/ace/INet/HTTP_Request.h:
+	* protocols/ace/INet/BufferedStreamBuffer.h:
+	* protocols/ace/INet/HTTP_Response.h:
+	* protocols/ace/INet/BidirStreamBuffer.h:
+	* protocols/ace/INet/Sock_IOStream.h:
+	* protocols/ace/INet/StreamInterceptor.h:
+	* protocols/ace/INet/HeaderBase.h:
+	* protocols/ace/INet/HTTP_ClientRequestHandler.h:
+	* protocols/ace/INet/HTTP_Header.h:
+	  Fixes for pragma once warnings.
+
 Sun Jun 06 06:08:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/HTTP_Status.cpp:
