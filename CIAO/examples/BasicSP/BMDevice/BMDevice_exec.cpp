@@ -47,7 +47,7 @@ MyImpl::BMDevice_exec_i::get_data_read (void)
 }
 
 void
-MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
+MyImpl::BMDevice_exec_i::push_timeout_value (BasicSP::TimeOut *)
 {
   // Notify others
   BasicSP::DataAvailable_var event =
