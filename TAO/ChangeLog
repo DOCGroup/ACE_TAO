@@ -1,3 +1,15 @@
+Sun Jun  6 18:16:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Use ACE_NEW instead of plain C++ new
+
+        * tao/PortableServer/Root_POA.h:
+          Doxygen changes
+
+        * tests/AMI/ami_test_i.cpp:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+          Layout changes
+
 Sat Jun  5 19:09:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/including.idl:
