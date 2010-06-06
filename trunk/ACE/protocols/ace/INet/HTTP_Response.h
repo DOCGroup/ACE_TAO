@@ -36,7 +36,7 @@ namespace ACE
         *
         */
         class ACE_INET_Export Response
-          : public Header, public ACE::INet::Response
+          : public ACE::INet::Response, public Header
           {
             public:
               /// Constructor
