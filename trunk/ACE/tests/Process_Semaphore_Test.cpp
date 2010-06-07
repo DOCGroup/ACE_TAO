@@ -33,8 +33,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_dirent.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/SString.h"
 
-ACE_RCSID(tests, Process_Semaphore_Test, "Process_Semaphore_Test.cpp,v 4.42 2003/12/26 21:59:35 shuston Exp")
+ACE_RCSID(tests, Process_Semaphore_Test, "$Id$")
 
 #if !defined (ACE_LACKS_FORK)
 static int iterations = 10;
@@ -189,11 +191,21 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_START_TEST (ACE_TEXT ("Process_Semaphore_Test"));
 
+      ACE_TString exe_sub_dir;
+      const ACE_TCHAR *subdir_env =
+        ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+      if (subdir_env)
+        {
+          exe_sub_dir = subdir_env;
+          exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
+        }
+
       ACE_Process_Options options;
       options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                            ACE_TEXT ("Process_Semaphore_Test")
+                            ACE_TEXT ("%sProcess_Semaphore_Test")
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" -c -i %d"),
+                            exe_sub_dir.c_str(),
                             iterations);
 
       // Spawn a child process that will contend for the
