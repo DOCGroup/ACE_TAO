@@ -1,3 +1,14 @@
+Mon Jun  7 08:54:31 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+          Fixed a memory leak. PortableGroup library doesn't need to init
+          required services as it's responsibility of ACE to do so once a
+          service is created.
+
+        * orbsvcs/tests/Miop/McastHello/svc.conf:
+          Fixed the test so that in dynamic builds required services from
+          svc.conf are loaded as needed.
+
 Mon Jun  7 01:23:51 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * tao/Remote_Invocation.cpp:
