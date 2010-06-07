@@ -1,3 +1,27 @@
+Mon Jun  7 01:23:51 UTC 2010  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/Remote_Invocation.cpp:
+
+          Fixed Bugzilla #3853.
+
+        * tests/Bug_3853_Regression/Bug_3853_Regression.mpc:
+        * tests/Bug_3853_Regression/Client_ORBInitializer.h:
+        * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/Hello.idl:
+        * tests/Bug_3853_Regression/Hello_i.h:
+        * tests/Bug_3853_Regression/Hello_i.cpp:
+        * tests/Bug_3853_Regression/client.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.h:
+        * tests/Bug_3853_Regression/client_interceptor.cpp:
+        * tests/Bug_3853_Regression/run_test.pl:
+        * tests/Bug_3853_Regression/server.cpp:
+
+          Added regression test.
+
+        * bin/tao_orb_tests.lst:
+
+          Added Bug_3853_Regression test.
+
 Sun Jun  6 18:16:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:

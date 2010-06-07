@@ -169,6 +169,10 @@ namespace TAO
     // virtual calls any more, because we have removed the default
     // implementations.
 
+    if (! this->resolver_.transport ()->is_connected()) {
+      throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+    }
+
     int const retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
