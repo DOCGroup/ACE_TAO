@@ -19,7 +19,7 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::BasicBufferedStreamBuffer (
         std::streamsize bufsz,
-        openmode mode)
+        typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
         mode_ (mode),
         interceptor_ (0)
@@ -117,13 +117,14 @@ namespace ACE
 
     template <class ACE_CHAR_T, class TR>
     void
-    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::set_mode (openmode mode)
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::set_mode (
+        typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       {
         this->mode_ = mode;
       }
 
     template <class ACE_CHAR_T, class TR>
-    typename BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::openmode
+    typename std::basic_ios<ACE_CHAR_T, TR>::openmode
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::get_mode () const
       {
         return this->mode_;
