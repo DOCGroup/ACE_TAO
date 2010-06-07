@@ -28,6 +28,8 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/SString.h"
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
@@ -277,7 +279,7 @@ worker_parent (void *arg)
   // so we need to indicate that it's the child.
   const ACE_TCHAR *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
-                       ACE_TEXT ("Signal_Test")
+                       ACE_TEXT ("%sSignal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
                        ACE_TEXT (" -c");
   l_argv[0] = const_cast <ACE_TCHAR *> (t);
@@ -287,7 +289,15 @@ worker_parent (void *arg)
   ACE_ARGV argv (l_argv);
 
   // Generate a command-line!
-  options.command_line (argv.buf ());
+  ACE_TString exe_sub_dir;
+  const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+  if (subdir_env)
+    {
+      exe_sub_dir = subdir_env;
+      exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
+    }
+
+  options.command_line (argv.buf (), exe_sub_dir.c_str ());
   ACE_Process pm;
 
   child_pid = pm.spawn (options);

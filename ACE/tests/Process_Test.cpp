@@ -24,8 +24,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Dirent.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(tests, Process_Test, "Process_Test.cpp,v 4.11 1999/09/02 04:36:30 schmidt Exp")
+ACE_RCSID(tests, Process_Test, "$Id$")
 
 // This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
 // 'self' level and link to the opened file name.
@@ -101,11 +102,20 @@ run_parent (bool inherit_files)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
 
   // Build child options
+  ACE_TString exe_sub_dir;
+  const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+  if (subdir_env)
+    {
+      exe_sub_dir = subdir_env;
+      exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
+    }
+
   ACE_Process_Options options;
   options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                        ACE_TEXT ("Process_Test")
+                        ACE_TEXT ("%sProcess_Test")
                         ACE_PLATFORM_EXE_SUFFIX
                         ACE_TEXT (" -c -h %d -f %s"),
+                        exe_sub_dir.c_str(),
                         (int)inherit_files,
                         tempfile);
   options.handle_inheritance (inherit_files); /* ! */

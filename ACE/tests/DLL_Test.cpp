@@ -21,6 +21,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
+#include "ace/SString.h"
 #include "DLL_Test.h"
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
@@ -63,9 +64,18 @@ int handle_test (ACE_DLL &dll)
 
 int basic_test (ACE_DLL &dll)
 {
-  int retval = dll.open (OBJ_PREFIX
-                         ACE_TEXT ("DLL_Test_Lib")
-                         OBJ_SUFFIX);
+
+  ACE_TString dll_file;
+  const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+  if (subdir_env)
+    {
+      dll_file = subdir_env;
+      dll_file += ACE_DIRECTORY_SEPARATOR_STR;
+    }
+
+  dll_file += OBJ_PREFIX ACE_TEXT ("DLL_Test_Lib") OBJ_SUFFIX;
+
+  int retval = dll.open (dll_file.c_str());
 
   if (retval != 0)
     {

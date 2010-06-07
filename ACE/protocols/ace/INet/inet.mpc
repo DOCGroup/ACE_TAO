@@ -21,6 +21,9 @@ project(INet) : acelib, ace_output, install {
     HTTP_URL.cpp
     HTTP_ClientRequestHandler.cpp
   }
+  specific {
+    install_dir = ace/INet
+  }
 }
 
 project(Simple_exec) : aceexe, inet {
