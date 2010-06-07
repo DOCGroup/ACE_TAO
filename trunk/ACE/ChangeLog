@@ -1,3 +1,8 @@
+Mon Jun 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/HTTP_Simple_exec.cpp:
+	  Fix for WChar compile problem.
+
 Sun Jun 06 06:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/HTTP_Request.h:
