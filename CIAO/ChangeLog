@@ -1,3 +1,42 @@
+Mon Jun  7 12:23:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/tools/Artifact_Installation:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_export.h:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.h:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation.mpc:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_export.h:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.idl:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.inl:
+	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation.idl:
+	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.cpp:
+	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.h:
+	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.cpp:
+	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.h:
+	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
+	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_export.h:
+	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
+	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
+	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.h:
+	  New DAnCE Artifact Installation framework.
+	  This implements a pluggable architecture for handling artifact installations in
+	  CCM deployment plans.
+	  Includes file:// and http:// installation handlers and a basic installation
+	  repository (cache) manager for node installations.
+
+	* DAnCE/MPC/config/dance_artifact_installation.mpb:
+	* DAnCE/MPC/config/dance_installation_repository_manager.mpb:
+	  New MPC base projects for using the artifact installation framework. 
+    
+	* CIAO_TAO_DAnCE.mwc:
+	  Added INet library which is needed by http:// installation handler.
+
 Mon Jun  7 09:28:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO-INSTALL.html:

@@ -1,0 +1,6 @@
+// $Id$
+
+project : dance, dance_deployment_stub, dance_tools {
+   after += DAnCE_Installation_Repository_Manager
+   libs += DAnCE_Installation_Repository_Manager
+}
