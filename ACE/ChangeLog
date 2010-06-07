@@ -1,3 +1,9 @@
+Mon Jun 07 08:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/BufferedStreamBuffer.h:
+	* protocols/ace/INet/BufferedStreamBuffer.cpp:
+	  Fix for VC71 template compile problem.
+
 Mon Jun 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/HTTP_Simple_exec.cpp:

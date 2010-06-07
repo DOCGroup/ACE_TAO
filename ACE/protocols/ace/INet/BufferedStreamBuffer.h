@@ -51,7 +51,8 @@ namespace ACE
               typedef typename ios_type::openmode openmode;
               typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
 
-              BasicBufferedStreamBuffer (std::streamsize bufsz, openmode mode);
+              BasicBufferedStreamBuffer (std::streamsize bufsz, 
+                                         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
 
               virtual ~BasicBufferedStreamBuffer ();
 
@@ -62,9 +63,9 @@ namespace ACE
               void set_interceptor (interceptor_type& interceptor);
 
             protected:
-              void set_mode (openmode mode);
+              void set_mode (typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
 
-              openmode get_mode () const;
+              typename std::basic_ios<ACE_CHAR_T, TR>::openmode get_mode () const;
 
               virtual int read_from_stream (char_type* buffer, std::streamsize length);
 
@@ -75,7 +76,7 @@ namespace ACE
 
               std::streamsize bufsize_;
               ACE_Auto_Ptr<char_type> buffer_;
-              openmode        mode_;
+              typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
               interceptor_type* interceptor_;
 
               BasicBufferedStreamBuffer(const BasicBufferedStreamBuffer&);
