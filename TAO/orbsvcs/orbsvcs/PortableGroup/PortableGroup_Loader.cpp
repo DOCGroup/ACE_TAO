@@ -56,14 +56,6 @@ int
 TAO_PortableGroup_Loader::Initializer (void)
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_PortableGroup_Loader);
-  TAO_PortableGroup_Loader *tmp =
-    ACE_Dynamic_Service<TAO_PortableGroup_Loader>::instance (
-      "PortableGroup_Loader");
-
-  if (tmp != 0)
-    {
-      return tmp->init (0, 0);
-    }
 
   return -1;
 }
