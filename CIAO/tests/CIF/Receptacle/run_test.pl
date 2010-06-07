@@ -14,7 +14,7 @@ $ciao_root = "$ENV{CIAO_ROOT}";
 my $target = PerlACE::TestTarget::create_target (1);
 $target->AddLibPath ('../lib');
 
-$TG = $target->CreateProcess ("client", "-s $ciao_root/bin/ciao_componentserver -d 120");
+$TG = $target->CreateProcess ("client", "-s " . PerlACE::GetArchDir("$ciao_root/bin/") . "ciao_componentserver -d 120");
 $server_status = $TG->SpawnWaitKill ($target->ProcessStartWaitInterval ());
 
 if ($server_status != 0) {
