@@ -1,3 +1,13 @@
+Mon Jun  7 16:48:20 UTC 2010  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Bug_3853_Regression/Client_ORBInitializer.h:
+        * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/client.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.h:
+        * tests/Bug_3853_Regression/client_interceptor.cpp:
+        
+          Fixed fuzz errors.
+
 Mon Jun  7 08:54:31 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
