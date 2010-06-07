@@ -315,6 +315,14 @@ sub waitforfileoutput_timed {
   return -1;
 }
 
+sub GetArchDir {
+  my $dir = shift;
+  if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+    return $dir . $PerlACE::Process::ExeSubDir;
+  }
+  return $dir;
+}
+
 # Add PWD to the load library path
 add_lib_path ('.');
 

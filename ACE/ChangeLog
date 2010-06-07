@@ -1,167 +1,196 @@
+Mon Jun  7 21:39:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * protocols/ace/INet/inet.mpc:
+
+          Added the install_dir setting so that headers are installed to
+          the correct directory.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          New function GetArchDir() for use when a test script needs to
+          know the ARCH directory for a given path.  This is only needed when
+          the test passes the full path to an executable as a command-line
+          argument to a different executable (used in CIAO).
+
+        * tests/run_test.pl
+
+          If we're using ARCH, set an environment variable ACE_EXE_SUB_DIR so
+          that the individual tests can find executables and shared libraries.
+
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Bug_2980_Regression_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/Signal_Test.cpp:
+
+          These tests need to check ACE_EXE_SUB_DIR to find executables and
+          shared libraries.
+
 Mon Jun 07 08:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/BufferedStreamBuffer.h:
-	* protocols/ace/INet/BufferedStreamBuffer.cpp:
-	  Fix for VC71 template compile problem.
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/BufferedStreamBuffer.cpp:
+          Fix for VC71 template compile problem.
 
 Mon Jun 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_Simple_exec.cpp:
-	  Fix for WChar compile problem.
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Fix for WChar compile problem.
 
 Sun Jun 06 06:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_Request.h:
-	* protocols/ace/INet/HTTP_Response.h:
-	  Fix attempt for covariant return issue on LynxOS.
+        * protocols/ace/INet/HTTP_Request.h:
+        * protocols/ace/INet/HTTP_Response.h:
+          Fix attempt for covariant return issue on LynxOS.
 
 Sun Jun 06 06:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/StreamHandler.h:
-	* protocols/ace/INet/HTTP_URL.h:
-	* protocols/ace/INet/HTTP_Status.h:
-	* protocols/ace/INet/HTTP_IOStream.h:
-	* protocols/ace/INet/HTTP_Request.h:
-	* protocols/ace/INet/BufferedStreamBuffer.h:
-	* protocols/ace/INet/HTTP_Response.h:
-	* protocols/ace/INet/BidirStreamBuffer.h:
-	* protocols/ace/INet/Sock_IOStream.h:
-	* protocols/ace/INet/StreamInterceptor.h:
-	* protocols/ace/INet/HeaderBase.h:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.h:
-	* protocols/ace/INet/HTTP_Header.h:
-	  Fixes for pragma once warnings.
+        * protocols/ace/INet/StreamHandler.h:
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_Status.h:
+        * protocols/ace/INet/HTTP_IOStream.h:
+        * protocols/ace/INet/HTTP_Request.h:
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/HTTP_Response.h:
+        * protocols/ace/INet/BidirStreamBuffer.h:
+        * protocols/ace/INet/Sock_IOStream.h:
+        * protocols/ace/INet/StreamInterceptor.h:
+        * protocols/ace/INet/HeaderBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_Header.h:
+          Fixes for pragma once warnings.
 
 Sun Jun 06 06:08:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_Status.cpp:
-	* protocols/ace/INet/HTTP_Status.h:
-	  Fix for nameclash with standard macro in VxWorks.
+        * protocols/ace/INet/HTTP_Status.cpp:
+        * protocols/ace/INet/HTTP_Status.h:
+          Fix for nameclash with standard macro in VxWorks.
 
-	* protocols/ace/INet/HTTP_StreamPolicy.cpp:
-	  Bugfix for incorrect array index.
+        * protocols/ace/INet/HTTP_StreamPolicy.cpp:
+          Bugfix for incorrect array index.
 
 Sat Jun 05 07:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/ConnectionCache.cpp:
-	* protocols/ace/INet/ConnectionCache.h:
-	  Fix for nameclash with standard macro in VxWorks.
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+          Fix for nameclash with standard macro in VxWorks.
 
 Sat Jun 05 07:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_URL.h:
-	* protocols/ace/INet/HTTP_URL.inl:
-	  Fix for HPUX compile warning.
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_URL.inl:
+          Fix for HPUX compile warning.
 
 Sat Jun 05 07:11:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_StreamPolicy.cpp:
-	* protocols/ace/INet/HTTP_StreamPolicy.h:
-	  Fix attempt for AIX compile problem.
+        * protocols/ace/INet/HTTP_StreamPolicy.cpp:
+        * protocols/ace/INet/HTTP_StreamPolicy.h:
+          Fix attempt for AIX compile problem.
 
 Sat Jun 05 06:21:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_URL.cpp:
-	  Fixed typo.
+        * protocols/ace/INet/HTTP_URL.cpp:
+          Fixed typo.
 
 Sat Jun 05 06:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/IOS_util.h:
-	  Fixed missing export declaration.
+        * protocols/ace/INet/IOS_util.h:
+          Fixed missing export declaration.
 
-	* protocols/ace/INet/URLBase.h:
-	* protocols/ace/INet/URLBase.cpp:
-	  Fixed missing virtual destructor.
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/URLBase.cpp:
+          Fixed missing virtual destructor.
 
 Fri Jun 04 18:48:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet:
-	* protocols/ace/INet/BidirStreamBuffer.cpp:
-	* protocols/ace/INet/BidirStreamBuffer.h:
-	* protocols/ace/INet/BufferedStreamBuffer.cpp:
-	* protocols/ace/INet/BufferedStreamBuffer.h:
-	* protocols/ace/INet/ClientRequestHandler.cpp:
-	* protocols/ace/INet/ClientRequestHandler.h:
-	* protocols/ace/INet/ClientRequestHandler.inl:
-	* protocols/ace/INet/ConnectionCache.cpp:
-	* protocols/ace/INet/ConnectionCache.h:
-	* protocols/ace/INet/ConnectionCache.inl:
-	* protocols/ace/INet/HeaderBase.cpp:
-	* protocols/ace/INet/HeaderBase.h:
-	* protocols/ace/INet/HeaderBase.inl:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.h:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.inl:
-	* protocols/ace/INet/HTTP_Header.cpp:
-	* protocols/ace/INet/HTTP_Header.h:
-	* protocols/ace/INet/HTTP_Header.inl:
-	* protocols/ace/INet/HTTP_IOStream.cpp:
-	* protocols/ace/INet/HTTP_IOStream.h:
-	* protocols/ace/INet/HTTP_IOStream.inl:
-	* protocols/ace/INet/HTTP_Request.cpp:
-	* protocols/ace/INet/HTTP_Request.h:
-	* protocols/ace/INet/HTTP_Request.inl:
-	* protocols/ace/INet/HTTP_Response.cpp:
-	* protocols/ace/INet/HTTP_Response.h:
-	* protocols/ace/INet/HTTP_Response.inl:
-	* protocols/ace/INet/HTTP_Session.cpp:
-	* protocols/ace/INet/HTTP_Session.h:
-	* protocols/ace/INet/HTTP_Status.cpp:
-	* protocols/ace/INet/HTTP_Status.h:
-	* protocols/ace/INet/HTTP_Status.inl:
-	* protocols/ace/INet/HTTP_StreamPolicyBase.cpp:
-	* protocols/ace/INet/HTTP_StreamPolicyBase.h:
-	* protocols/ace/INet/HTTP_StreamPolicy.cpp:
-	* protocols/ace/INet/HTTP_StreamPolicy.h:
-	* protocols/ace/INet/HTTP_URL.cpp:
-	* protocols/ace/INet/HTTP_URL.h:
-	* protocols/ace/INet/HTTP_URL.inl:
-	* protocols/ace/INet/INet_Export.h:
-	* protocols/ace/INet/IOS_util.cpp:
-	* protocols/ace/INet/IOS_util.h:
-	* protocols/ace/INet/Request.cpp:
-	* protocols/ace/INet/Request.h:
-	* protocols/ace/INet/RequestHandler.cpp:
-	* protocols/ace/INet/RequestHandler.h:
-	* protocols/ace/INet/Response.cpp:
-	* protocols/ace/INet/Response.h:
-	* protocols/ace/INet/Sock_IOStream.cpp:
-	* protocols/ace/INet/Sock_IOStream.h:
-	* protocols/ace/INet/StreamHandler.cpp:
-	* protocols/ace/INet/StreamHandler.h:
-	* protocols/ace/INet/StreamInterceptor.cpp:
-	* protocols/ace/INet/StreamInterceptor.h:
-	* protocols/ace/INet/String_IOStream.cpp:
-	* protocols/ace/INet/String_IOStream.h:
-	* protocols/ace/INet/URLBase.cpp:
-	* protocols/ace/INet/URLBase.h:
-	* protocols/ace/INet/URLBase.inl:
-	  New ACE addon library for Inet protocol clients (and possibly servers
-	  at some point) like http://, ftp:// etc.
-	  NOTE: This is work in progress!
-	  The functionality currently available is needed for the new
-	  DAnCE ArtifactInstallation framework.
+        * protocols/ace/INet:
+        * protocols/ace/INet/BidirStreamBuffer.cpp:
+        * protocols/ace/INet/BidirStreamBuffer.h:
+        * protocols/ace/INet/BufferedStreamBuffer.cpp:
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/ClientRequestHandler.cpp:
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/ClientRequestHandler.inl:
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+        * protocols/ace/INet/ConnectionCache.inl:
+        * protocols/ace/INet/HeaderBase.cpp:
+        * protocols/ace/INet/HeaderBase.h:
+        * protocols/ace/INet/HeaderBase.inl:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.inl:
+        * protocols/ace/INet/HTTP_Header.cpp:
+        * protocols/ace/INet/HTTP_Header.h:
+        * protocols/ace/INet/HTTP_Header.inl:
+        * protocols/ace/INet/HTTP_IOStream.cpp:
+        * protocols/ace/INet/HTTP_IOStream.h:
+        * protocols/ace/INet/HTTP_IOStream.inl:
+        * protocols/ace/INet/HTTP_Request.cpp:
+        * protocols/ace/INet/HTTP_Request.h:
+        * protocols/ace/INet/HTTP_Request.inl:
+        * protocols/ace/INet/HTTP_Response.cpp:
+        * protocols/ace/INet/HTTP_Response.h:
+        * protocols/ace/INet/HTTP_Response.inl:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+        * protocols/ace/INet/HTTP_Status.cpp:
+        * protocols/ace/INet/HTTP_Status.h:
+        * protocols/ace/INet/HTTP_Status.inl:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.cpp:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.h:
+        * protocols/ace/INet/HTTP_StreamPolicy.cpp:
+        * protocols/ace/INet/HTTP_StreamPolicy.h:
+        * protocols/ace/INet/HTTP_URL.cpp:
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_URL.inl:
+        * protocols/ace/INet/INet_Export.h:
+        * protocols/ace/INet/IOS_util.cpp:
+        * protocols/ace/INet/IOS_util.h:
+        * protocols/ace/INet/Request.cpp:
+        * protocols/ace/INet/Request.h:
+        * protocols/ace/INet/RequestHandler.cpp:
+        * protocols/ace/INet/RequestHandler.h:
+        * protocols/ace/INet/Response.cpp:
+        * protocols/ace/INet/Response.h:
+        * protocols/ace/INet/Sock_IOStream.cpp:
+        * protocols/ace/INet/Sock_IOStream.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/StreamHandler.h:
+        * protocols/ace/INet/StreamInterceptor.cpp:
+        * protocols/ace/INet/StreamInterceptor.h:
+        * protocols/ace/INet/String_IOStream.cpp:
+        * protocols/ace/INet/String_IOStream.h:
+        * protocols/ace/INet/URLBase.cpp:
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/URLBase.inl:
+          New ACE addon library for Inet protocol clients (and possibly servers
+          at some point) like http://, ftp:// etc.
+          NOTE: This is work in progress!
+          The functionality currently available is needed for the new
+          DAnCE ArtifactInstallation framework.
 
-	* protocols/ace/INet/HTTP_Simple_exec.cpp:
-	  Simple example program using INet.
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Simple example program using INet.
 
-	* protocols/ace/INet/inet.mpc:
-	  MPC project for library and simple example.
+        * protocols/ace/INet/inet.mpc:
+          MPC project for library and simple example.
 
-	* protocols/tests/INet:
-	* protocols/tests/INet/MT_Get:
-	* protocols/tests/INet/MT_Get/Main.cpp:
-	* protocols/tests/INet/MT_Get/test.mpc:
-	  Test for the new ACE INet library.
-	  Tests multithreaded clients.
+        * protocols/tests/INet:
+        * protocols/tests/INet/MT_Get:
+        * protocols/tests/INet/MT_Get/Main.cpp:
+        * protocols/tests/INet/MT_Get/test.mpc:
+          Test for the new ACE INet library.
+          Tests multithreaded clients.
 
-	* bin/MakeProjectCreator/config/inet.mpb:
-	  New MPC base project for INet dependent projects.
+        * bin/MakeProjectCreator/config/inet.mpb:
+          New MPC base project for INet dependent projects.
 
 Thu Jun  3 21:34:23 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:
-        
+
           Removed confusing comment.
 
 Wed Jun  2 15:27:06 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>

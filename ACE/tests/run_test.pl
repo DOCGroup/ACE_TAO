@@ -26,6 +26,13 @@ use File::Basename;
 
 $config_list = new PerlACE::ConfigList;
 
+if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+  my $subdir = $PerlACE::Process::ExeSubDir;
+  $subdir =~ s/\/$//;
+  $ENV{'ACE_EXE_SUB_DIR'} = $subdir;
+}
+
+
 ################################################################################
 
 sub check_for_more_configs ()

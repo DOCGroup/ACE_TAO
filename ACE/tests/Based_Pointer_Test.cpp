@@ -28,6 +28,7 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Based_Pointer_T.h"
+#include "ace/SString.h"
 
 ACE_RCSID (tests,
            Based_Pointer_Repository_Test,
@@ -90,16 +91,23 @@ int singleton_test (void)
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined(ACE_HAS_DYNAMIC_LINKING)
 
-    ACE_DLL dll;
+    ACE_TString dll_file;
+    const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+    if (subdir_env)
+      {
+        dll_file = subdir_env;
+        dll_file += ACE_DIRECTORY_SEPARATOR_STR;
+      }
+
+    dll_file += OBJ_PREFIX ACE_TEXT ("Based_Pointer_Test_Lib") OBJ_SUFFIX;
 
     // If DLL causes multiple instances of singleton
     // then the ACE_Cleanup object registered
     // with the ACE_Object_manager will no longer be valid,
     // at exit time if the library is unloaded. Override
     // the default close on destruct.
-    int retval = dll.open (OBJ_PREFIX
-                           ACE_TEXT ("Based_Pointer_Test_Lib")
-                           OBJ_SUFFIX,
+    ACE_DLL dll;
+    int retval = dll.open (dll_file.c_str (),
                            ACE_DEFAULT_SHLIB_MODE,
                            0);
 
