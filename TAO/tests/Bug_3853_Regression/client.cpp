@@ -17,8 +17,8 @@ const ACE_TCHAR *server1_shutdown_ior = ACE_TEXT("file://server1_shutdown.ior");
 const ACE_TCHAR *server2_shutdown_ior = ACE_TEXT("file://server2_shutdown.ior");
 
 CORBA::ORB_var orb;
-Demo::HelloWorld_var server1_shuutdownObj;
-Demo::HelloWorld_var server2_shuutdownObj;
+Demo::HelloWorld_var server1_shutdownObj;
+Demo::HelloWorld_var server2_shutdownObj;
 int test_duration = 30;
 
 class ClientTask : public ACE_Task_Base
@@ -130,9 +130,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         
     CORBA::Object_var shutdownObj = orb->string_to_object(server1_shutdown_ior);
 
-    server1_shuutdownObj = Demo::HelloWorld::_narrow(shutdownObj);
+    server1_shutdownObj = Demo::HelloWorld::_narrow(shutdownObj);
 
-    if (CORBA::is_nil(server1_shuutdownObj))
+    if (CORBA::is_nil(server1_shutdownObj))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("server1 shutdown object reference is nil\n")));
       return 1;
@@ -140,9 +140,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     shutdownObj = orb->string_to_object(server2_shutdown_ior);
 
-    server2_shuutdownObj = Demo::HelloWorld::_narrow(shutdownObj);
+    server2_shutdownObj = Demo::HelloWorld::_narrow(shutdownObj);
 
-    if (CORBA::is_nil(server2_shuutdownObj))
+    if (CORBA::is_nil(server2_shutdownObj))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("server2 shutdown object reference is nil\n")));
       return 1;
@@ -158,11 +158,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     task.wait ();
     
-    server1_shuutdownObj->shutdown ();
-    server2_shuutdownObj->shutdown ();
+    server1_shutdownObj->shutdown ();
+    server2_shutdownObj->shutdown ();
     
-    server1_shuutdownObj = Demo::HelloWorld::_nil ();
-    server2_shuutdownObj = Demo::HelloWorld::_nil ();
+    server1_shutdownObj = Demo::HelloWorld::_nil ();
+    server2_shutdownObj = Demo::HelloWorld::_nil ();
       
     orb->destroy ();
     
