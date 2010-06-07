@@ -1,3 +1,11 @@
+Mon Jun  7 22:57:08 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Unload_libACE.cpp:
+        * tests/run_test.lst:
+
+          With similar changes as the previous commit, this test can also be
+          run for ARCH builds.
+
 Mon Jun  7 21:39:54 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * protocols/ace/INet/inet.mpc:
