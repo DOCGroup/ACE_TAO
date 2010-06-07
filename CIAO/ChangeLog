@@ -1,41 +1,149 @@
+Mon Jun  7 22:36:24 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+        * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/NodeManager-Deployments/run_test_cdr.pl:
+        * DAnCE/tests/CIAO/Progressive_Deployments/run_test.pl:
+        * DAnCE/tests/LocalityManager/SpawnMultiple/run_test.pl:
+        * DAnCE/tests/LocalityManager/SpawnOne/run_test.pl:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test.pl:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test_msm.pl:
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub2.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test_default_qos.pl:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UserdataCopyCount/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Display/descriptors/run_test_without_ns.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello/descriptors/run_test_alias.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component/descriptors/run_test.pl:
+        * examples/Null_Component/descriptors/run_test_without_ns.pl:
+        * examples/Null_Component_Glfa/descriptors/run_test.pl:
+        * tests/Bug_2130_Regression/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+        * tests/Bug_3834_Regression/descriptors/run_test.pl:
+        * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
+        * tests/CIAO_ComponentServer/Activator/run_test.pl:
+        * tests/CIAO_ComponentServer/Local_Facet/run_test.pl:
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+        * tests/CIF/Navigation/run_test.pl:
+        * tests/CIF/Receptacle/run_test.pl:
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+
+          Use PerlACE::GetArchDir() to get the path to ciao_componentserver or
+          dance_locality_manager.
+
 Mon Jun  7 12:23:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/tools/Artifact_Installation:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_export.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation.mpc:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_export.h:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.idl:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.inl:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation.idl:
-	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.cpp:
-	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.cpp:
-	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_export.h:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.h:
-	  New DAnCE Artifact Installation framework.
-	  This implements a pluggable architecture for handling artifact installations in
-	  CCM deployment plans.
-	  Includes file:// and http:// installation handlers and a basic installation
-	  repository (cache) manager for node installations.
+        * DAnCE/tools/Artifact_Installation:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_export.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation.mpc:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_export.h:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.idl:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.inl:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation.idl:
+        * DAnCE/tools/Artifact_Installation/File_Installation_Handler.cpp:
+        * DAnCE/tools/Artifact_Installation/File_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/Http_Installation_Handler.cpp:
+        * DAnCE/tools/Artifact_Installation/Http_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_export.h:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.h:
+          New DAnCE Artifact Installation framework.
+          This implements a pluggable architecture for handling artifact installations in
+          CCM deployment plans.
+          Includes file:// and http:// installation handlers and a basic installation
+          repository (cache) manager for node installations.
 
-	* DAnCE/MPC/config/dance_artifact_installation.mpb:
-	* DAnCE/MPC/config/dance_installation_repository_manager.mpb:
-	  New MPC base projects for using the artifact installation framework. 
-    
-	* CIAO_TAO_DAnCE.mwc:
-	  Added INet library which is needed by http:// installation handler.
+        * DAnCE/MPC/config/dance_artifact_installation.mpb:
+        * DAnCE/MPC/config/dance_installation_repository_manager.mpb:
+          New MPC base projects for using the artifact installation framework.
+
+        * CIAO_TAO_DAnCE.mwc:
+          Added INet library which is needed by http:// installation handler.
 
 Mon Jun  7 09:28:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
