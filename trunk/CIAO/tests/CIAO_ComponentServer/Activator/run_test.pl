@@ -20,7 +20,7 @@ foreach $i (@ARGV) {
 
 my $target = PerlACE::TestTarget::create_target (1);
 
-$SV1 = $target->CreateProcess ("./client", "-s $ciao_root/bin/ciao_componentserver");
+$SV1 = $target->CreateProcess ("./client", "-s " . PerlACE::GetArchDir("$ciao_root/bin/") . "ciao_componentserver");
 
 $server_status = $SV1->SpawnWaitKill ($target->ProcessStartWaitInterval ());
 
