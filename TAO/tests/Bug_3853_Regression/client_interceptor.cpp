@@ -14,7 +14,7 @@ ACE_RCSID (Service_Context_Manipulation,
 const IOP::ServiceId service_id = 0xdeadbeef;
 
 int isRecursive = 0;
-extern Demo::HelloWorld_var server1_shuutdownObj;
+extern Demo::HelloWorld_var server1_shutdownObj;
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor ()
@@ -28,21 +28,18 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
 
 char *
 Echo_Client_Request_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Echo_Client_Request_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
 }
@@ -50,8 +47,6 @@ Echo_Client_Request_Interceptor::send_poll (
 void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var operation = ri->operation ();
   if (ACE_OS::strcmp (operation.in (), "shutdown") == 0) {
@@ -66,7 +61,7 @@ Echo_Client_Request_Interceptor::send_request (
     if (isRecursive == 3) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
                             ACE_TEXT ("shutdown server 1 now. \n"), isRecursive));
-      server1_shuutdownObj->shutdown();
+      server1_shutdownObj->shutdown();
     }
     
     CORBA::Object_var helloObj = orb->string_to_object(server2_ior);
@@ -89,7 +84,6 @@ Echo_Client_Request_Interceptor::send_request (
 void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   
@@ -98,8 +92,6 @@ Echo_Client_Request_Interceptor::receive_reply (
 void
 Echo_Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   
 }
@@ -107,8 +99,6 @@ Echo_Client_Request_Interceptor::receive_other (
 void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
 }
