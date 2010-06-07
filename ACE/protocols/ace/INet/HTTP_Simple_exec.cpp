@@ -35,22 +35,22 @@ parse_args (int argc, ACE_TCHAR *argv [])
       switch (c)
         {
         case 1:
-          url = get_opt.opt_arg ();
+          url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
         case 'H':
-          proxy_hostname = get_opt.opt_arg ();
+          proxy_hostname = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'p':
-          proxy_port = (u_short)ACE_OS::atoi (get_opt.opt_arg ());
+          proxy_port = (u_short)ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
           break;
 
         case 'u':
-          url = get_opt.opt_arg ();
+          url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'o':
-          outfile = get_opt.opt_arg ();
+          outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'h':
