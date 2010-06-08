@@ -1,3 +1,10 @@
+Tue Jun  8 06:27:30 UTC 2010  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.cpp:
+        
+          Fixed warnings.
+
 Mon Jun  7 20:57:41 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Bug_3853_Regression/Bug_3853_Regression.mpc:
