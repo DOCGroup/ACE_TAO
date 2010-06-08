@@ -21,7 +21,7 @@ project(CFT_ReadGet_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
 
 project(CFT_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
-  after += ReadGet_Test_Connector_idl_gen
+  after += CFT_ReadGet_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=QUERY_CONDITION_TEST_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=ReadGet_Test_Connector_lem_stub_export.h \
               -SS -Gxhst \
@@ -33,12 +33,13 @@ project(CFT_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(CFT_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += ReadGet_Test_Connector_lem_gen ReadGet_Test_Connector_stub ReadGet_Test_Base_stub DDS4CCM_lem_stub
-  libs  += ReadGet_Test_Base_stub ReadGet_Test_Connector_stub DDS4CCM_lem_stub
+  after += CFT_ReadGet_Test_Connector_lem_gen CFT_ReadGet_Test_Connector_stub \
+           CFT_ReadGet_Test_Base_stub DDS4CCM_lem_stub
+  libs  += CFT_ReadGet_Test_Base_stub CFT_ReadGet_Test_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = ReadGet_Test_Connector_lem_stub
+  sharedname = CFT_ReadGet_Test_Connector_lem_stub
   dynamicflags   = QUERY_CONDITION_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -59,12 +60,12 @@ project(CFT_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(CFT_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
-  after += ReadGet_Test_Connector_idl_gen ReadGet_Test_Base_stub
-  libs  += ReadGet_Test_Base_stub
+  after += CFT_ReadGet_Test_Connector_idl_gen CFT_ReadGet_Test_Base_stub
+  libs  += CFT_ReadGet_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = ReadGet_Test_Connector_stub
+  sharedname = CFT_ReadGet_Test_Connector_stub
   dynamicflags   = QUERY_CONDITION_TEST_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -85,9 +86,11 @@ project(CFT_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += ReadGet_Test_Connector_lem_stub ReadGet_Test_Connector_stub DDS4CCM_lem_stub ReadGet_Test_Base_stub
-  sharedname = ReadGet_Test_Connector_exec
-  libs += ReadGet_Test_Connector_stub ReadGet_Test_Connector_lem_stub ReadGet_Test_Base_stub DDS4CCM_lem_stub ReadGet_Test_Base_stub
+  after   += CFT_ReadGet_Test_Connector_lem_stub CFT_ReadGet_Test_Connector_stub \
+             DDS4CCM_lem_stub CFT_ReadGet_Test_Base_stub
+  sharedname = CFT_ReadGet_Test_Connector_exec
+  libs += CFT_ReadGet_Test_Connector_stub CFT_ReadGet_Test_Connector_lem_stub \
+          CFT_ReadGet_Test_Base_stub DDS4CCM_lem_stub CFT_ReadGet_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,12 +114,13 @@ project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(CFT_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += ReadGet_Test_Connector_lem_stub ReadGet_Test_Connector_exec ReadGet_Test_Connector_stub DDS4CCM_lem_stub
-  sharedname  = ReadGet_Test_Connector_svnt
-  libs       += ReadGet_Test_Connector_stub \
-                ReadGet_Test_Connector_lem_stub  \
-                ReadGet_Test_Base_stub \
-                ReadGet_Test_Connector_exec \
+  after      += CFT_ReadGet_Test_Connector_lem_stub CFT_ReadGet_Test_Connector_exec \
+                CFT_ReadGet_Test_Connector_stub DDS4CCM_lem_stub
+  sharedname  = CFT_ReadGet_Test_Connector_svnt
+  libs       += CFT_ReadGet_Test_Connector_stub \
+                CFT_ReadGet_Test_Connector_lem_stub  \
+                CFT_ReadGet_Test_Base_stub \
+                CFT_ReadGet_Test_Connector_exec \
                 DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
