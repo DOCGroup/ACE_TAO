@@ -5,6 +5,7 @@
 
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/Debug.h"
 #include "ace/Task.h"
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
@@ -20,6 +21,8 @@ CORBA::ORB_var orb;
 Demo::HelloWorld_var server1_shutdownObj;
 Demo::HelloWorld_var server2_shutdownObj;
 int test_duration = 30;
+bool reconnected = false;
+bool caught_exception = false;
 
 class ClientTask : public ACE_Task_Base
 {
@@ -54,22 +57,22 @@ public:
           const char* pMsg = " server1 say Hello"; 
           hello->sayHello(pMsg) ;
           ACE_OS::sleep(2);
+          
+          if (caught_exception) {
+            // Reconncted to server 1
+            ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) client reconnected to server 1\n")));
+            reconnected = true;
+          }
         }
-        catch (const CORBA::OBJECT_NOT_EXIST &)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("sayHello() got OBJECT_NOT_EXIST exception !!\n")));
+        catch (const CORBA::TRANSIENT &) 
+        { 
+          caught_exception = true;
+          if (TAO_debug_level > 0) {
+            ACE_DEBUG((LM_DEBUG, ACE_TEXT ("sayHello() expected TRANSIENT exceptions.\n")));
+          }
         }
-        catch (const CORBA::INV_OBJREF &)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("sayHello() got INV_OBJREF exception !!\n")));
-        }
-        catch (const CORBA::COMM_FAILURE &)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("sayHello() got COMM_FAILURE exception !!\n")));
-        }
-        catch (const CORBA::Exception &ex) 
-        {
-          ex._tao_print_exception ("sayHello()");
+        catch (...) {
+          ACE_ERROR((LM_ERROR, ACE_TEXT ("sayHello() caught unknown exception\n")));
         }
       }
     }
@@ -79,7 +82,7 @@ public:
 
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "t:");
   int c;
@@ -167,6 +170,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb->destroy ();
     
     orb = CORBA::ORB::_nil ();
+    
+    if (!reconnected) {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "Client was not able to reconnect to server 1.\n"),
+                        1);
+      return 1; 
+    }
   }
   catch (const CORBA::Exception &e) 
   {
