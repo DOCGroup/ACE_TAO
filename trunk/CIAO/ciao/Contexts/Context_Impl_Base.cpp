@@ -10,15 +10,6 @@
 
 namespace CIAO
 {
-  Context_Impl_Base::Context_Impl_Base (void)
-  {
-    // This constructor is here to keep MSVC happy and should
-    // not be used at all. This constructor should be removed
-    // in the future. Until then, we have the ACE_ASSERT
-    // below to detect a runtime call to this constructor.
-    ACE_ASSERT (0);
-  }
-
   Context_Impl_Base::Context_Impl_Base (Components::CCMHome_ptr home,
                                         Container_ptr c,
                                         const char *instance_id)
