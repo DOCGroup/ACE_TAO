@@ -129,6 +129,13 @@ sub GetConfigSettings ($)
             $self->{EXE_SUBDIR} = $PerlACE::Process::ExeSubDir;
         }
     }
+    $env_name = $env_prefix.'ARCH';
+    if (exists $ENV{$env_name}) {
+        $self->{ARCH} = $ENV{$env_name};
+    } elsif ($config_name eq 'default'
+             && grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+        $self->{ARCH} = 1;
+    }
     $env_name = $env_prefix.'PROCESS_START_WAIT_INTERVAL';
     if (exists $ENV{$env_name}) {
         $self->{PROCESS_START_WAIT_INTERVAL} = $ENV{$env_name};
@@ -267,6 +274,17 @@ sub ExeSubDir ($)
     return $self->{EXE_SUBDIR};
 }
 
+sub GetArchDir
+{
+    my $self = shift;
+    my $dir = shift;
+    if (exists $self->{ARCH}) {
+        return $dir . $self->{EXE_SUBDIR};
+    }
+    return $dir;
+}
+
+
 sub SystemLibs ($)
 {
     my $self = shift;
@@ -310,7 +328,7 @@ sub AddLibPath ($)
 
     # If we have -Config ARCH, use the -ExeSubDir setting as a sub-directory
     # of the lib path.  This is in addition to the regular LibPath.
-    if (!$noarch && grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+    if (!$noarch && defined $self->{ARCH}) {
         $self->AddLibPath($dir, 1);
         $dir .= '/' . $self->{EXE_SUBDIR};
     }

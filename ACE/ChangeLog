@@ -1,3 +1,15 @@
+Tue Jun  8 21:59:16 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+
+          Use the "EXE_SUBDIR" property of the TestTarget object (Process_Win32
+          already has this behavior).
+
+        * bin/PerlACE/TestTarget.pm:
+
+          Supporting setting the "ARCH" property on a per-TestTarget basis.
+          Added a GetArchDir() method to the TestTarget object.
+
 Tue Jun  8 14:25:56 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * protocols/ace/INet/inet.mpc:
