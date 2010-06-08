@@ -1,3 +1,14 @@
+Tue Jun  8 10:12:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/DAnCE_ArtifactInstallation.idl:
+        * DAnCE/DAnCE_Core.mpc:
+        * tools/Artifact_Installation/DAnCE_Artifact_Installation.idl:
+        * tools/Artifact_Installation/Artifact_Installation_Impl.h:
+        * tools/Artifact_Installation/Artifact_Installation.mpc:
+        * MPC/config/dance_artifact_installation.mpb:
+	  Changes to integrate Artifact Installation framework with the
+	  rest of DAnCE.
+
 Tue Jun  8 09:32:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/ptc_09-10-26 DDS4CCM v1-0 WCB.pdf:

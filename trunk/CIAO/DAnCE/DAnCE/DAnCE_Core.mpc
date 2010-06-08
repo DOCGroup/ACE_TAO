@@ -13,12 +13,12 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
     DAnCE_DeploymentInterceptors.idl
     DAnCE_Properties.idl
   }
-  
+
   IDL_Files {
     idlflags += -Gxhst -Gxhsk
     DAnCE_LocalityManager.idl
   }
-  
+
   IDL_Files {
     DAnCE_ArtifactInstallation.idl
   }
@@ -42,11 +42,9 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
   }
 }
 
-project (DAnCE_skel) : ciaolib_with_idl, dance_output, \
+project (DAnCE_skel) : ciaolib_with_idl, dance_output, dance_stub, \
          dance_applicationmanager_skel, dance_deployment_skel \
 {
-  after += DAnCE_stub
-  libs += DAnCE_stub
   dynamicflags = DANCE_SKEL_BUILD_DLL
   IDL_Files {
   }
