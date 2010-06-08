@@ -145,8 +145,8 @@ namespace ACE
         const typename buffer_type::string_type& str = this->chunk_.str ();
         return this->write_to_stream_i (str.c_str (), str.length ());
       }
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

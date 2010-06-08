@@ -120,7 +120,7 @@ namespace ACE
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
           };
 
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -110,7 +110,7 @@ namespace ACE
                                     ACE_Null_Mutex> TURLFactorySingleton;
               static const Factory& factory_;
           };
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

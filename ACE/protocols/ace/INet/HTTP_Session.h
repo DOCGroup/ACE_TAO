@@ -113,7 +113,7 @@ namespace ACE
           };
 
         typedef Session_T<ACE_NULL_SYNCH> Session;
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

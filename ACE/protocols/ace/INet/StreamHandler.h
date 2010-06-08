@@ -94,7 +94,7 @@ namespace ACE
           };
 
         typedef StreamHandler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>  SockStreamHandler;
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

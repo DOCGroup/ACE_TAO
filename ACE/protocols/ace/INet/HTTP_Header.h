@@ -85,7 +85,7 @@ namespace ACE
             private:
               ACE_CString version_;
           };
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -95,7 +95,7 @@ namespace ACE
         return this->has (AUTHORIZATION);
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

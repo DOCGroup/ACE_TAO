@@ -141,8 +141,8 @@ namespace ACE
         typedef Sock_OStreamBase<ACE_NULL_SYNCH> Sock_OStream;
         typedef Sock_IOStreamBase<ACE_NULL_SYNCH> Sock_IOStream;
 
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

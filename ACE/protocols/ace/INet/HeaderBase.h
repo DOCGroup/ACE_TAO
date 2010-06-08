@@ -134,7 +134,7 @@ namespace ACE
 
               TNVMap  header_values_;
           };
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

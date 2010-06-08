@@ -227,7 +227,7 @@ namespace ACE
         ACE_NEW_NORETURN (purl, URL (url_string));
         return purl;
       }
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

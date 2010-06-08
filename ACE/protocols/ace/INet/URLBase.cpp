@@ -173,7 +173,7 @@ namespace ACE
 
     URL_INetBase::~URL_INetBase () {}
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

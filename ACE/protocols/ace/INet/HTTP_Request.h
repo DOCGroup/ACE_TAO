@@ -126,7 +126,7 @@ namespace ACE
               ACE_CString method_;
               ACE_CString uri_;
           };
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

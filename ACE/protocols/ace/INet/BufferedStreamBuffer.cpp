@@ -167,8 +167,8 @@ namespace ACE
         }
         return -1;
       }
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

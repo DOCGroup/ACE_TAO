@@ -145,8 +145,8 @@ namespace ACE
         typedef String_OStreamBase<char> CString_OStream;
         typedef String_IStreamBase<char> CString_IStream;
 
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

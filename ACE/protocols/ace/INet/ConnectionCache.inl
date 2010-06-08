@@ -102,7 +102,7 @@ namespace ACE
         return this->cache_map_.total_size ();
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
