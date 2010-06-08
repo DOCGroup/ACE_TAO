@@ -1,0 +1,28 @@
+// $Id$
+
+#ifndef ONEREPLYH_T_IDL
+#define ONEREPLYH_T_IDL
+
+#pragma ciao lem "Base/OneReplyHE.idl"
+#pragma ciao ami4ccm interface "OneReplyH::MyFoo"
+#pragma ciao lem "Base/OneReplyHAE.idl"
+
+module OneReplyH
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+      void bar (in string in_str, in long cmd, out string answer, out long l_cmd)
+        raises (InternalError);
+    };
+};
+
+#endif
