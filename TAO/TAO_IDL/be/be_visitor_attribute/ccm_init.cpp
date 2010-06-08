@@ -58,7 +58,7 @@ int
 be_visitor_attribute_ccm_init::visit_array (
   be_array *)
 {
-  this->emit_error ("array");
+  this->emit_init_block ();
   return 0;
 }
 
