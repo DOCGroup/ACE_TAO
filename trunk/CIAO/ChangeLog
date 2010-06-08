@@ -1,3 +1,8 @@
+Tue Jun  8 13:16:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed unresolved external and wrong check for structs
+
 Tue Jun  8 12:54:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo.idl:
