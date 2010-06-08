@@ -7,6 +7,7 @@
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(NET_CLIENT,ACE_IOS_StreamHandler,"$Id$")
 
@@ -272,7 +273,7 @@ namespace ACE
               }
           }
 
-        return static_cast<int> (recv_char_count / char_size);
+        return ACE_Utils::truncate_cast<int> (recv_char_count / char_size);
       }
 
     // This method makes sure to only ever copy full char_size elements
@@ -384,7 +385,7 @@ namespace ACE
             timeout_countdown.stop ();
           }
 
-        return static_cast<int> (recv_char_count);
+        return ACE_Utils::truncate_cast<int> (recv_char_count);
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
@@ -475,7 +476,8 @@ namespace ACE
                   {
                     this->reactor ()->remove_handler (this, ACE_Event_Handler::WRITE_MASK);
                     this->send_timeout_ = true;
-                    return static_cast<int> (length - (this->msg_queue ()->message_bytes () / char_size));
+                    return ACE_Utils::truncate_cast<int>
+                        (length - (this->msg_queue ()->message_bytes () / char_size));
                   }
 
                 // Other errors? If so, stop running the loop.
@@ -508,7 +510,8 @@ namespace ACE
                     && max_wait_time == ACE_Time_Value::zero)
                   {
                     this->send_timeout_ = true;
-                    return static_cast<int> (length - (this->msg_queue ()->message_bytes () / char_size));
+                    return ACE_Utils::truncate_cast<int>
+                        (length - (this->msg_queue ()->message_bytes () / char_size));
                   }
 
                 // Otherwise, keep going...
@@ -516,9 +519,10 @@ namespace ACE
           }
 
         if (this->connected_)
-          return static_cast<int> (length); // all sent
+          return ACE_Utils::truncate_cast<int> (length); // all sent
         else
-          return static_cast<int> (length - (this->msg_queue ()->message_bytes () / char_size));
+          return ACE_Utils::truncate_cast<int>
+              (length - (this->msg_queue ()->message_bytes () / char_size));
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
