@@ -1,3 +1,8 @@
+Tue Jun  8 09:19:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+	* bin/ciao_tests.lst
+	Remove fixed_bugs flag from test OneProcess.
+
 Tue Jun  8 09:13:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
 	* connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp
