@@ -122,15 +122,7 @@ int
 be_visitor_attribute_ccm_init::visit_string (
   be_string *node)
 {
-  if (node->max_size ()->ev ()->u.ulval == 0)
-    {
-      this->emit_init_block ();
-    }
-  else
-    {
-      this->emit_error ("bounded string");
-    }
-
+  this->emit_init_block ();
   return 0;
 }
 
@@ -153,7 +145,7 @@ int
 be_visitor_attribute_ccm_init::visit_union (
   be_union *)
 {
-  this->emit_error ("union");
+  this->emit_init_block ();
   return 0;
 }
 
