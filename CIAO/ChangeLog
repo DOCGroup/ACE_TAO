@@ -1,3 +1,20 @@
+Tue Jun  8 17:22:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added StateListener and EventListener tests for
+          ContentFilteredTopic tests to the framework.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/Plan.cdp:
+          Configured filters the correct way. Still some issues to resolve
+          in the core.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Minor code changes.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/Plan.cdp:
+          Configured filters the correct way.
+
 Tue Jun  8 15:15:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/Plan.cdp:
