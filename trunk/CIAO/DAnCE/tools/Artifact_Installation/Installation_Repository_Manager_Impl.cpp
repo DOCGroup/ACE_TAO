@@ -391,4 +391,4 @@ namespace DAnCE
       return locs;
     }
 
-};
+}

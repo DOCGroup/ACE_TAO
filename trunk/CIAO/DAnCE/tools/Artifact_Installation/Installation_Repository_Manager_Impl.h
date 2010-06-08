@@ -99,7 +99,7 @@ namespace DAnCE
 
     ACE_STATIC_SVC_DECLARE (InstallationRepositoryManagerSvc_Impl)
     ACE_FACTORY_DECLARE (Installation_Repository_Manager, InstallationRepositoryManagerSvc_Impl)
-  };
+  }
 
 #include /**/ "ace/post.h"
 #endif /* DANCE_INSTALLATION_REPOSITORY_MANAGER_IMPL_H */

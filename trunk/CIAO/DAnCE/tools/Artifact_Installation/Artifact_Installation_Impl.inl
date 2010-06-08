@@ -54,4 +54,4 @@ namespace DAnCE
     {
       return this->versions_;
     }
-};
+}

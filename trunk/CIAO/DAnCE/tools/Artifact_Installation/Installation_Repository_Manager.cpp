@@ -67,4 +67,4 @@ namespace DAnCE
       DANCE_TRACE ( "InstallationRepositoryManagerSvc::fini");
       return InstallationRepositoryManager::deregister_manager_instance (this->manager_instance ());
     }
-};
+}
