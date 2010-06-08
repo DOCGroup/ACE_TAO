@@ -1,3 +1,5 @@
+// $Id$
+
 #include "dds_rtf2_dlrl.idl"
 
 module CCM_DDS {
