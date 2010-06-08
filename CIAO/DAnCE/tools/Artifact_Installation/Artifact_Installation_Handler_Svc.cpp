@@ -31,4 +31,4 @@ namespace DAnCE
       DANCE_TRACE ( "ArtifactInstallationHandlerSvc::fini");
       return ArtifactInstallation_Impl::deregister_handler (this->handler_instance ());
     }
-};
+}

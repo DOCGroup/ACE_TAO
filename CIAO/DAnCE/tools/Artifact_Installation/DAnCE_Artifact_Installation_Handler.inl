@@ -35,4 +35,4 @@ namespace DAnCE
       else
         return empty_;
     }
-};
+}

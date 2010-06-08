@@ -29,4 +29,4 @@ namespace DAnCE
         this->protocol_ += '.';
     }
 
-};
+}

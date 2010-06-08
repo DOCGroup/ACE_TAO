@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Artifact_Installation.h
+ * @file Artifact_Installation_Impl.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
@@ -137,7 +137,7 @@ namespace DAnCE
           static THandlerMap handlers_;
           static TLOCK handler_lock_;
       };
-  };
+  }
 
 #if defined (__ACE_INLINE__)
 #include "Artifact_Installation_Impl.inl"

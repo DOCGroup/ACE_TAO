@@ -511,4 +511,4 @@ namespace DAnCE
 
       return 0;
     }
-  };
+  }
