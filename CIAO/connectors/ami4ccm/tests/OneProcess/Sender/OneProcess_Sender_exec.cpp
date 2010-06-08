@@ -1,7 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-// sender, receiver and connector in one node: asynchronous callbacks.
+// sender, receiver and connector in one node: asynchronous callbacks
+// should become received synchronous.
 #include "OneProcess_Sender_exec.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -19,7 +20,6 @@ namespace CIAO_OneProcess_Sender_Impl
   MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
   {
   }
-
   //============================================================
   // Operations from ::CCM_AMI::MyFoo_callback
   //============================================================
@@ -27,18 +27,17 @@ namespace CIAO_OneProcess_Sender_Impl
   void
   MyFoo_callback_exec_i::foo (
     ::CORBA::Long ami_return_val,
-    const char * answer)
+    const char * /*answer*/)
   {
-    if (ami_return_val == 1)  
+    if (ami_return_val == 1)
       {
-        ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHROON CALLBACK, answer = <%C>\n",
-                    answer));  
-        --nr_of_sent;
+        ACE_DEBUG ((LM_DEBUG, "OK: GET ASYNCHRONOUS CALLBACK, \n"));
+        asynch = false;
       }
-    if (ami_return_val == 2)  
+    if (ami_return_val == 2)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: GET ASYNCHROON CALLBACK "
-                              "FROM SYNCHROON SENT MESSAGE\n"));  
+        ACE_ERROR ((LM_ERROR, "ERROR: GET ASYNCHRONOUS CALLBACK "
+                              "FROM SYNCHRONOUS SENT MESSAGE\n"));
       }
   }
 
@@ -46,7 +45,7 @@ namespace CIAO_OneProcess_Sender_Impl
   MyFoo_callback_exec_i::foo_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
@@ -59,28 +58,65 @@ namespace CIAO_OneProcess_Sender_Impl
 
   int asynch_foo_generator::svc ()
   {
+    ACE_OS::sleep(3);
+    ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler_var cb0 =
+                  new MyFoo_callback_exec_i ();
+    ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler_var cb1 =
+                  new MyFoo_callback_exec_i ();
+    ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler_var cb2 =
+                  new MyFoo_callback_exec_i ();
+    ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler_var cb3 =
+                  new MyFoo_callback_exec_i ();
+    ::OneProcess::CCM_AMI4CCM_MyFooReplyHandler_var cb4 =
+                  new MyFoo_callback_exec_i ();
+
     for (int i = 0; i < 5; ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "OK: SEND ASYNCHROON\n")); 
-        if (nr_of_sent.value() > 1)
-          {
-            ACE_DEBUG ((LM_DEBUG, "OK: number of asynchroon sent = %u\n",
-                        nr_of_sent.value())); 
-            asynch = true;
-          }
         if (CORBA::is_nil (my_foo_ami_))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :\tfoo_ami is NIL !\n"));  
-           return 1;
+             ACE_ERROR ((LM_ERROR, "ERROR Sender (ASYNCH) :"
+                                   "\tfoo_ami is NIL !\n"));  
+             return 1;
+          }
+        if (asynch == true)
+          {
+            //expect to have receive an answer before you come here again.
+            //if asynch == true, error because no answer received in 
+            //MyFoo_callback_exec_i::foo
+            ACE_ERROR ((LM_ERROR, "ERROR: not received synchronus answer "
+                                   "for asynchronous call\n"));
           }
         else
           {
             ++nr_of_sent;
             //Invoke Asynchronous calls to test 
-            my_foo_ami_->sendc_foo ( new MyFoo_callback_exec_i (),
-                                   "Hi", 1);
-        }
-    }
+            if (i == 0)
+              {  
+                asynch = true;
+                my_foo_ami_->sendc_foo ( cb0.in(),"Hi 1", 1);
+              }   
+            else if (i == 1)
+              {
+                asynch = true;
+                my_foo_ami_->sendc_foo ( cb1.in(),"Hi 2", 1);
+              }
+            else if (i == 2)
+              {
+                asynch = true;
+                my_foo_ami_->sendc_foo ( cb2.in(),"Hi 3", 1);
+              }
+            else if (i == 3)
+              {
+                asynch = true;
+                my_foo_ami_->sendc_foo ( cb3.in(),"Hi 4", 1);
+              }
+            else if (i == 4)
+              {
+                asynch = true;
+                my_foo_ami_->sendc_foo ( cb4.in(),"Hi 5", 1);
+              }
+          }
+      }
     return 0;
   }
 
@@ -95,18 +131,18 @@ namespace CIAO_OneProcess_Sender_Impl
 
   int synch_foo_generator::svc ()
   {
+    ACE_OS::sleep(3);
     CORBA::Boolean wait = false;
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 3; ++i)
       {
-         ACE_DEBUG ((LM_DEBUG, "OK: SEND SYNCHROON\n"));  
         //run some synch calls
          char * answer = 0;
          try
            {
              if( wait==true)
                {
-                 ACE_ERROR ((LM_ERROR, 
-                             "ERROR: NOT RECEIVED SYNCHROON answer.\n"));  
+                 ACE_ERROR ((LM_ERROR,
+                             "ERROR: NOT RECEIVED SYNCHRONOUS answer.\n"));
                }
              wait = true;
              CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
@@ -114,16 +150,17 @@ namespace CIAO_OneProcess_Sender_Impl
                                                      answer);
              if ( result == 2)
                {
-                 ACE_DEBUG ((LM_DEBUG, "OK: RECEIVED SYNCHROON answer <%C>\n",
-                                       answer));  
+                 ACE_DEBUG ((LM_DEBUG, "OK: RECEIVED SYNCHRONOUS answer <%C>\n",
+                                       answer));
                  wait = false;
                }
-            } 
+            }
           catch (const OneProcess::InternalError&)
             {
               ACE_ERROR ((LM_ERROR, "ERROR: synch_foo_generator::foo: "
-                                    "Unexpected exception.\n"));  
+                                    "Unexpected exception.\n"));
             }
+          ACE_OS::sleep(1);
       }
     return 0;
   }
@@ -184,15 +221,16 @@ namespace CIAO_OneProcess_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
-    if (asynch == false)
+    if ((asynch == true) || (nr_of_sent.value() != 5))
       {
         ACE_ERROR ((LM_ERROR, 
-                    "ERROR: All in one proces is not asynchroon!\n"));  
+                   "ERROR: All in one proces worked asynchronous, "
+                   "this was not expected!\n"));  
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, 
-                    "OK: All in one proces is asynchroon\n"));  
+                   "OK: All in one proces worked synchronous as expected\n"));  
       }
   }
 

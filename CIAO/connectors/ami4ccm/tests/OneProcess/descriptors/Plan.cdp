@@ -158,7 +158,7 @@
 
   <instance xmi:id="OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.Receiver">
     <name>OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.Receiver</name>
-    <node>Receiver</node>
+    <node>AllInOne</node>
     <source/>
     <implementation xmi:idref="OneProcess_ReceiverHomeImplementation"/>
     <configProperty>
@@ -176,7 +176,7 @@
 
   <instance xmi:id="OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.Sender">
     <name>OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.Sender</name>
-    <node>Sender</node>
+    <node>AllInOne</node>
     <source/>
     <implementation xmi:idref="OneProcess_SenderHomeImplementation"/>
     <configProperty>
@@ -194,7 +194,7 @@
 
   <instance xmi:id="OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.AMI">
     <name>OneProcess.ComponentImplementations.OneProcessImplementation.OneProcess.AMI</name>
-    <node>Sender</node>
+    <node>AllInOne</node>
     <source/>
     <implementation xmi:idref="OneProcess_AMIHomeImplementation"/>
     <configProperty>
