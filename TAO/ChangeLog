@@ -1,3 +1,10 @@
+Tue Jun  8 12:24:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+          Added support for structures as CCM attributes
+
 Tue Jun  8 10:02:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
