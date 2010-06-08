@@ -1,3 +1,12 @@
+Tue Jun  8 14:36:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Starter.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Test_Base.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender.mpc:
+          Resolved mpc issues
+
 Tue Jun  8 13:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo.idl:
