@@ -68,7 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
 #include "ast_type.h"
-
 class AST_Interface;
 
 // Representation of a forward interface declaration.
@@ -105,6 +104,14 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Is this decl a forward declared type (Yes)
+  virtual bool is_fwd (void);
+
+  // We don't actually want the forward declaration,
+  // but want to return the full definition member,
+  // whether defined yet or not.
+  virtual AST_Decl *adjust_found (bool full_def_only);
 
   static AST_Decl::NodeType const NT;
 

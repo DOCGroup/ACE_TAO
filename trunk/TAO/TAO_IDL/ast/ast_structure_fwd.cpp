@@ -89,6 +89,20 @@ AST_StructureFwd::destroy (void)
   this->AST_Type::destroy ();
 }
 
+bool
+AST_StructureFwd::is_fwd (void)
+{
+  return true; // This is a fwd declared type
+}
 
+// We don't actually want the forward declaration,
+// but want to return the full definition member,
+// whether defined yet or not.
+AST_Decl *
+AST_StructureFwd::adjust_found (bool full_def_only)
+{
+  AST_Structure *s = this->full_definition ();
+  return (full_def_only && !s->is_defined () ? 0 : s);
+}
 
 IMPL_NARROW_FROM_DECL (AST_StructureFwd)
