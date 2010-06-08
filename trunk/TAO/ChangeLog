@@ -1,3 +1,16 @@
+Tue Jun  8 20:17:40 UTC 2010  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/Bug_3853_Regression/client.cpp:
+        * tests/Bug_3853_Regression/server.cpp:
+        
+          - Removed excepted exception output and added verification
+            for reconnecting to server1.
+          - Fixed compilation errors on wchar builds.
+
+        * NEWS:
+
+          Added entry for bug #3853 fix.
+          
 Tue Jun  8 15:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:

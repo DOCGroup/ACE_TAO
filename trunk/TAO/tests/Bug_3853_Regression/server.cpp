@@ -7,8 +7,8 @@
 #include <fstream>
 #include <iostream>
 
-const ACE_TCHAR *ior_output_file = "";
-const ACE_TCHAR *shutdown_ior_output_file = "";
+const ACE_TCHAR *ior_output_file = ACE_TEXT("");
+const ACE_TCHAR *shutdown_ior_output_file = ACE_TEXT("");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
