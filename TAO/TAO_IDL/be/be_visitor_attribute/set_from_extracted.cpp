@@ -147,8 +147,7 @@ int
 be_visitor_attribute_set_from_extracted::visit_union (
   be_union *node)
 {
-  os_ << (node->size_type () == AST_Type::VARIABLE ? "" : "*")
-      << var_name_;
+  os_ << "*" << var_name_;
   return 0;
 }
 
