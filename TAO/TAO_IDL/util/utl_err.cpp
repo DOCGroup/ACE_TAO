@@ -1094,6 +1094,23 @@ UTL_Error::incompatible_type_error (AST_Expression *v)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+void
+UTL_Error::incompatible_disc_error (AST_Decl *d,
+                                    AST_Expression *e)
+{
+  idl_error_header (EIDL_LABEL_TYPE,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, " does not contain "));
+  UTL_ScopedName *sn = e->n ();
+  (sn != 0
+    ? sn->dump (*ACE_DEFAULT_LOG_STREAM)
+    : e->dump (*ACE_DEFAULT_LOG_STREAM));
+  ACE_ERROR ((LM_ERROR, "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
 // Report a situation where a constant was expected but we
 // got something else. This may occur in a union when a label
 // evaluates to a non-constant.

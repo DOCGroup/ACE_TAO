@@ -151,7 +151,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     recursion_start_ (0),
     multi_file_input_ (false),
     big_file_name_ ("PICML_IDL_file_bag"),
-    current_params_ (0)
+    current_params_ (0),
+    included_ami_receps_done_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1373,6 +1374,18 @@ IDL_GlobalData::ciao_ami_recep_names (void)
   return this->ciao_ami_recep_names_;
 }
 
+void
+IDL_GlobalData::add_included_ami_recep_names (const char *s)
+{
+  this->included_ami_recep_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::included_ami_recep_names (void)
+{
+  return this->included_ami_recep_names_;
+}
+
 ACE_Unbounded_Queue<AST_Decl *> &
 IDL_GlobalData::masking_scopes (void)
 {
@@ -1662,6 +1675,15 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (*path_tmp);
     }
 
+  for (ACE_Unbounded_Queue_Iterator<char *>iter7 (
+         this->included_ami_recep_names_);
+       iter7.done () == 0;
+       iter7.advance ())
+    {
+      iter7.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
   ACE_Hash_Map_Entry<char *, char *> *entry = 0;
 
   for (ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex> hiter (
@@ -1679,9 +1701,9 @@ IDL_GlobalData::fini (void)
 void
 IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
                                             AST_Uses *u,
-                                            const char *port_prefix)
+                                            const char *prefix)
 {
-  ACE_CString struct_name (port_prefix);
+  ACE_CString struct_name (prefix);
 
   if (!struct_name.empty ())
     {
@@ -1770,6 +1792,76 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
+}
+
+void
+IDL_GlobalData::create_implied_ami_uses_stuff (void)
+{
+  if (this->included_ami_receps_done_)
+    {
+      return;
+    }
+
+  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
+         idl_global->included_ami_recep_names ());
+       ! i.done ();
+       i.advance ())
+    {
+      char **item = 0;
+      i.next (item);
+
+      UTL_ScopedName *sn =
+        idl_global->string_to_scoped_name (*item);
+
+      AST_Decl *d =
+        idl_global->root ()->lookup_by_name (sn, true);
+            
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (sn);
+          
+          sn->destroy ();
+          delete sn;
+          sn = 0;
+          
+          continue;
+        }
+
+      sn->destroy ();
+      delete sn;
+      sn = 0;
+
+      AST_Uses *u = AST_Uses::narrow_from_decl (d);
+
+      if (u == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("idl_global::create_")
+                      ACE_TEXT ("implied_ami_uses_stuff - ")
+                      ACE_TEXT ("narrow to receptacle ")
+                      ACE_TEXT ("failed\n")));
+                      
+          continue;
+        }
+          
+      AST_Component *c =
+        AST_Component::narrow_from_scope (u->defined_in ());
+        
+      if (c == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("idl_global::create_")
+                      ACE_TEXT ("implied_ami_uses_stuff - ")
+                      ACE_TEXT ("receptacle not defined")
+                      ACE_TEXT ("in a component\n")));
+                      
+          continue;
+        }
+        
+      this->create_uses_multiple_stuff (c, u, "sendc");
+    }
+    
+  this->included_ami_receps_done_ = true;
 }
 
 int

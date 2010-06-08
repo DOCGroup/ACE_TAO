@@ -1,3 +1,12 @@
+Tue Jun  8 14:04:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        
+          Added error message for discriminator/label mismatch, and
+          used it where label list names are matched with enum values.
+
 Tue Jun  8 13:57:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
