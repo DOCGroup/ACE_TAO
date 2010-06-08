@@ -93,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReadGet_Test_Connector_svnt</string>
+          <string>CFT_ReadGet_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +104,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReadGet_Test_Connector_exec</string>
+          <string>CFT_ReadGet_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -144,7 +144,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReadGet_Test_Connector_svnt</string>
+          <string>CFT_ReadGet_Test_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -155,7 +155,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ReadGet_Test_Connector_exec</string>
+          <string>CFT_ReadGet_Test_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -515,19 +515,19 @@
     <location>Sender_stub</location>
   </artifact>
   <artifact xmi:id="ReadGet_Test_Connector_ExecArtifact">
-    <name>ReadGet_Test_Connector_exec</name>
+    <name>CFT_ReadGet_Test_Connector_exec</name>
     <source/>
     <node/>
-    <location>ReadGet_Test_Connector_exec</location>
+    <location>CFT_ReadGet_Test_Connector_exec</location>
   </artifact>
   <artifact xmi:id="ReadGet_Test_Connector_SvntArtifact">
-    <name>ReadGet_Test_Connector_svnt</name>
+    <name>CFT_ReadGet_Test_Connector_svnt</name>
     <source/>
     <node/>
-    <location>ReadGet_Test_Connector_svnt</location>
+    <location>CFT_ReadGet_Test_Connector_svnt</location>
   </artifact>
   <artifact xmi:id="ReadGet_Test_Connector_StubArtifact">
-    <name>ReadGet_Test_Connector_stub</name>
+    <name>CFT_ReadGet_Test_Connector_stub</name>
     <source/>
     <node/>
     <location>ReadGet_Test_Connector_stub</location>
