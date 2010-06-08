@@ -261,6 +261,10 @@ public:
   // Report incompatible types in constant assignment
   void incompatible_type_error (AST_Expression *d);
 
+  // Report incompatible types in discriminator vs label.
+  void incompatible_disc_error (AST_Decl *d,
+                                AST_Expression *e);
+
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union
   // label did not evaluate to a constant
