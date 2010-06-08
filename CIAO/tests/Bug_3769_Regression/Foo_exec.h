@@ -172,6 +172,14 @@ namespace CIAO_Foo_Impl
 
     virtual void my_variable_wstring (
       const ::CORBA::WChar * my_variable_wstring);
+
+    virtual ::long_array_slice *my_long_array (void);
+
+    virtual void my_long_array (const ::long_array my_long_array);
+
+    virtual ::string_array_slice *my_string_array (void);
+
+    virtual void my_string_array (const ::string_array my_string_array);
     //@}
     
     //@{

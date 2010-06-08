@@ -337,7 +337,25 @@ namespace CIAO_Foo_Impl
       const ::CORBA::WChar * /*my_variable_wstring*/)
   {
   }
- 
+
+  ::long_array_slice *Foo_exec_i::my_long_array (void)
+  {
+    return 0;
+  }
+
+  void Foo_exec_i::my_long_array (const ::long_array /*my_long_array*/)
+  {
+  }
+
+  ::string_array_slice *Foo_exec_i::my_string_array (void)
+  {
+    return 0;
+  }
+
+  void Foo_exec_i::my_string_array (const ::string_array /*my_string_array*/)
+  {
+  }
+
   // Operations from Components::SessionComponent.
  
   void
