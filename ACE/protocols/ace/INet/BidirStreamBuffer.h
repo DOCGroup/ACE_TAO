@@ -108,7 +108,7 @@ namespace ACE
               BidirStreamBuffer& operator = (const BidirStreamBuffer&);
           };
 
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

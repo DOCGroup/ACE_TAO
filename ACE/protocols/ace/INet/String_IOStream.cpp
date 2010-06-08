@@ -176,8 +176,8 @@ namespace ACE
     String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase()
       {
       }
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

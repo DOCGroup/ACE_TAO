@@ -150,7 +150,7 @@ namespace ACE
         this->second_ = t2;
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

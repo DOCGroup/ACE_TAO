@@ -32,7 +32,7 @@ namespace ACE
         this->port_ = port;
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

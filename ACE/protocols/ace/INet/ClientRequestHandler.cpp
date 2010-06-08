@@ -61,7 +61,7 @@ namespace ACE
         return this->host_ == ikey.host_ && this->port_ == ikey.port_;
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

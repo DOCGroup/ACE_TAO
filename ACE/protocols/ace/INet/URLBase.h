@@ -150,8 +150,8 @@ namespace ACE
               u_short port_;
           };
 
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -27,7 +27,7 @@ namespace ACE
         this->rdbuf ()->set_interceptor (interceptor);
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

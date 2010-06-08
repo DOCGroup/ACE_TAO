@@ -15,7 +15,7 @@ namespace ACE
 
     RequestHandler::~RequestHandler () {}
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

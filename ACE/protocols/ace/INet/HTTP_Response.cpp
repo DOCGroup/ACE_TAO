@@ -111,7 +111,7 @@ namespace ACE
         return true;
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

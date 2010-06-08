@@ -15,7 +15,7 @@ namespace ACE
 
     Request::~Request () {}
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

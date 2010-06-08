@@ -331,7 +331,7 @@ namespace ACE
         this->cache_map_.unbind_all ();
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

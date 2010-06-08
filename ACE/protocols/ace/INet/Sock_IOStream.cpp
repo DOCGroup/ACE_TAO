@@ -103,8 +103,8 @@ namespace ACE
       {
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

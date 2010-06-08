@@ -58,7 +58,7 @@ namespace ACE
                   (val == CONNECTION_KEEP_ALIVE);
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -44,8 +44,8 @@ namespace ACE
         this->streambuf_ = streambuf;
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

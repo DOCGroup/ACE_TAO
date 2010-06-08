@@ -66,8 +66,8 @@ namespace ACE
               static std::ostream out_stream_;
               static std::istream in_stream_;
           };
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
