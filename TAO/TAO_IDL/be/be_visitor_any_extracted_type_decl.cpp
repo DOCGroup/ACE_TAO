@@ -195,7 +195,7 @@ be_visitor_any_extracted_type_decl::visit_string (be_string *node)
 int
 be_visitor_any_extracted_type_decl::visit_structure (be_structure *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << "const " << node->full_name () << " * " << var_name_ << " = 0;";
   return 0;
 }
 

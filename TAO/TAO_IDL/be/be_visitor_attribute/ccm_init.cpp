@@ -138,7 +138,7 @@ int
 be_visitor_attribute_ccm_init::visit_structure (
   be_structure *)
 {
-  this->emit_error ("structure");
+  this->emit_init_block ();
   return 0;
 }
 
