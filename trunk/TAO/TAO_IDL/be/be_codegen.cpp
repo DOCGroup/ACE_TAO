@@ -3483,11 +3483,19 @@ TAO_CodeGen::gen_conn_src_includes (void)
     be_global->be_get_ciao_conn_hdr_fname (true));
 
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
-  if (be_global->ami4ccm_call_back ())
+  if (idl_global->ami_connector_seen_)
     {
       this->gen_standard_include (
         this->ciao_conn_source_,
         "connectors/ami4ccm/ami4ccm/ami4ccm.h");
+
+        this->gen_standard_include (
+        this->ciao_conn_source_,
+        "ciao/Contexts/Context_Impl_Base.h");
+
+      this->gen_standard_include (
+        this->ciao_conn_source_,
+        "ciao/Containers/Container_Base.h");
     }
 }
 
