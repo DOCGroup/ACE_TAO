@@ -225,7 +225,7 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>filter</name>
+      <name>push_consumer_filter</name>
       <value>
         <type>
           <kind>tk_struct</kind>
