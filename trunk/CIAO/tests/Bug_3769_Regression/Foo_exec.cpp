@@ -262,8 +262,8 @@ namespace CIAO_Foo_Impl
                       my_baz_struct.my_bar_sequence[i].f));
         inc_f += 10.0F;
 
-        if(my_baz_struct.my_bar_sequence[i].s != 7.8 + inc_d)
-          ACE_ERROR ((LM_ERROR, "ERROR: short value != %f, it is %f\n", 
+        if(my_baz_struct.my_bar_sequence[i].d != 7.8 + inc_d)
+          ACE_ERROR ((LM_ERROR, "ERROR: double value != %f, it is %f\n",
                       7.8 + inc_d,
                       my_baz_struct.my_bar_sequence[i].d));
         inc_d += 10.0;
