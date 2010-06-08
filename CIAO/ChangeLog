@@ -1,9 +1,14 @@
+Tue Jun  8 09:32:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/ptc_09-10-26 DDS4CCM v1-0 WCB.pdf:
+          Removed this file, old draft document
+
 Tue Jun  8 09:30:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/docs/DDSforCCM-meta.uml:
         * connectors/dds4ccm/docs/ccm_dds.idl:
         * connectors/dds4ccm/docs/ccm_dds_dlrl.idl:
-          Updated to beta 3 
+          Updated to beta 3
 
 Tue Jun  8 09:20:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
