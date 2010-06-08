@@ -91,13 +91,13 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
-    
+
     # If the target's config has a different ACE_ROOT, rebase the executable
     # from $ACE_ROOT to the target's root.
-    if (defined $self->{TARGET} && 
+    if (defined $self->{TARGET} &&
           $self->{TARGET}->ACE_ROOT() ne $ENV{"ACE_ROOT"}) {
-        $executable = PerlACE::rebase_path ($executable, 
-                                            $ENV{"ACE_ROOT"}, 
+        $executable = PerlACE::rebase_path ($executable,
+                                            $ENV{"ACE_ROOT"},
                                             $self->{TARGET}->ACE_ROOT());
     }
 
@@ -114,7 +114,12 @@ sub Executable
     my $basename = basename ($executable);
     my $dirname = dirname ($executable).'/';
 
-    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename;
+    my $subdir = $PerlACE::Process::ExeSubDir;
+    if (defined $self->{TARGET} && defined $self->{TARGET}->{EXE_SUBDIR}) {
+        $subdir = $self->{TARGET}->{EXE_SUBDIR};
+    }
+
+    $executable = $dirname . $subdir . $basename;
 
     return $executable;
 }
