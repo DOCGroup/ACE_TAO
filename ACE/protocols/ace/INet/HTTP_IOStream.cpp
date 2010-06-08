@@ -7,6 +7,8 @@
 #include "HTTP_IOStream.inl"
 #endif
 
+#include "ace/Truncate.h"
+
 ACE_RCSID(NET_CLIENT,ACE_HTTP_IOStream,"$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,7 +45,7 @@ namespace ACE
     int StreamBuffer::read_from_stream_i (char* buffer, std::streamsize length)
       {
         this->stream_.read (buffer, length);
-        return static_cast<int> (this->stream_.gcount ());
+        return ACE_Utils::truncate_cast<int> (this->stream_.gcount ());
       }
 
     int StreamBuffer::write_to_stream (const char* buffer, std::streamsize length)
@@ -57,7 +59,7 @@ namespace ACE
     int StreamBuffer::write_to_stream_i (const char* buffer, std::streamsize length)
       {
         this->stream_.write (buffer, length);
-        return this->stream_.good () ? static_cast<int> (length) : -1;
+        return this->stream_.good () ? ACE_Utils::truncate_cast<int> (length) : -1;
       }
 
     int StreamBuffer::sync ()

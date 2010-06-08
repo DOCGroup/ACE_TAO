@@ -1,3 +1,10 @@
+Tue Jun 08 08:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/StreamHandler.cpp:
+	* protocols/ace/INet/String_IOStream.cpp:
+	* protocols/ace/INet/HTTP_IOStream.cpp:
+	  Changed static_cast to ACE truncate_cast.
+
 Tue Jun 08 07:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/StreamHandler.cpp:

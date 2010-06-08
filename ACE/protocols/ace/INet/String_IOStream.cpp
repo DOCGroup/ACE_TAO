@@ -5,6 +5,7 @@
 
 #include "String_IOStream.h"
 #include "IOS_util.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(NET_CLIENT,ACE_IOS_String_IOStream,"$Id$")
 
@@ -70,7 +71,7 @@ namespace ACE
               }
             ACE_OS::memmove (buffer, &(*this->string_ref_)[this->rd_ptr_], length * sizeof (char_type));
             this->rd_ptr_ += length;
-            n = static_cast<int> (length);
+            n = ACE_Utils::truncate_cast<int> (length);
           }
         return n;
       }
@@ -82,7 +83,7 @@ namespace ACE
         if (this->string_ref_)
           {
             this->string_ref_->append (buffer, length);
-            n = static_cast<int> (length);
+            n = ACE_Utils::truncate_cast<int> (length);
           }
         return n;
       }
