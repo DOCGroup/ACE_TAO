@@ -39,7 +39,7 @@ be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl (
 int
 be_visitor_any_extracted_type_decl::visit_array (be_array *node)
 {
-  os_ << node->full_name () << "_forany & " << var_name_ << ";";
+  os_ << node->full_name () << "_forany " << var_name_ << ";";
   return 0;
 }
 
