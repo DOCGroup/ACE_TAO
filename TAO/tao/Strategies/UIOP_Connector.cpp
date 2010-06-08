@@ -86,7 +86,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
+                    "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
       return 0;
@@ -115,8 +115,8 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) UIOP failure.\n")
-                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_TEXT ("TAO (%P|%t) - UIOP failure.\n")
+                       ACE_TEXT ("TAO (%P|%t) - This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
                        ACE_TEXT ("failure.\n")));
          }
@@ -134,7 +134,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
+                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
 
   TAO_UIOP_Endpoint *uiop_endpoint =
@@ -148,7 +148,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
+                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
                 ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
@@ -248,7 +248,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) UIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) - UIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add the new connection to Cache\n")));
         }
 
