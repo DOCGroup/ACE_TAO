@@ -427,6 +427,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
                               "Didn't catch the exprected exception\n"));
       }
+
     try
       {
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters: Set parameters\n"));

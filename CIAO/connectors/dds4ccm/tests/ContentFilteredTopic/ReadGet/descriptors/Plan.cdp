@@ -277,7 +277,7 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>get_port_filter</name>
+      <name>pull_observer_filter</name>
       <value>
         <type>
           <kind>tk_struct</kind>
@@ -308,6 +308,54 @@
             <name>expression</name>
             <value>
               <string>( (iteration > %0) AND (iteration &lt; %1) )</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>2</string>
+              </element>
+              <element>
+                <string>5</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>passive_observer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>( (iteration &lt; %0) OR (iteration > %1) )</string>
             </value>
           </member>
           <member>

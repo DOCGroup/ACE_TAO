@@ -224,6 +224,54 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>push_state_observer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>( (iteration > %0) AND (iteration &lt; %1) )</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>2</string>
+              </element>
+              <element>
+                <string>5</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
