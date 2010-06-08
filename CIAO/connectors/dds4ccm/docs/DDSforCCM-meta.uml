@@ -420,7 +420,7 @@
       <ownedLiteral xmi:id="_cUYCMBw5Ed2uaZhm61RBnw" name="EventPublisher"/>
       <ownedLiteral xmi:id="_dbuEwBw5Ed2uaZhm61RBnw" name="EventConsumer"/>
       <ownedLiteral xmi:id="_eYX6QBw5Ed2uaZhm61RBnw" name="ExtendedPort"/>
-      <ownedLiteral xmi:id="_onfZoBw5Ed2uaZhm61RBnw" name="InversePort"/>
+      <ownedLiteral xmi:id="_onfZoBw5Ed2uaZhm61RBnw" name="ExtendedMirrorPort"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_Um51oBw4Ed2uaZhm61RBnw" name="Association_ComponentInterfaceDescription_Property" memberEnd="_UnBKYBw4Ed2uaZhm61RBnw _UnJtQBw4Ed2uaZhm61RBnw">
       <ownedEnd xmi:id="_UnJtQBw4Ed2uaZhm61RBnw" name="componentInterfaceDescription" type="_ERYb8Bt4Ed2uaZhm61RBnw" isUnique="false" association="_Um51oBw4Ed2uaZhm61RBnw">
