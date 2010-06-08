@@ -1,3 +1,12 @@
+Tue Jun  8 15:09:35 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.mpc:
+          Resolved mpc issues
+
 Tue Jun  8 14:36:16 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Base/ReadGet_Starter.mpc:

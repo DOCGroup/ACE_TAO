@@ -30,11 +30,11 @@ project(QC_ReadGet_Starter_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(QC_ReadGet_Starter_lem_stub) : ccm_svnt, dds4ccm_base {
   after += QC_ReadGet_Starter_lem_gen QC_ReadGet_Starter_stub
-  libs  += ReadGet_Starter_stub
+  libs  += QC_ReadGet_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = ReadGet_Starter_lem_stub
+  sharedname = QC_ReadGet_Starter_lem_stub
   dynamicflags   = READER_STARTER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -60,7 +60,7 @@ project(QC_ReadGet_Starter_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = ReadGet_Starter_stub
+  sharedname = QC_ReadGet_Starter_stub
   dynamicflags   = READER_STARTER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -82,10 +82,10 @@ project(QC_ReadGet_Starter_stub) : ccm_stub, dds4ccm_base {
 
 
 project(QC_ReadGet_Starter_svnt) : ciao_servant, dds4ccm_base {
-  after      +=   QC_ReadGet_Starter_lem_stub QC_ReadGet_Starter_stub\
-                  DDS4CCM_lem_stub DDS4CCM_skel
-  sharedname  = ReadGet_Starter_svnt
-  libs       += ReadGet_Starter_stub ReadGet_Starter_lem_stub \
+  after      += QC_ReadGet_Starter_lem_stub QC_ReadGet_Starter_stub\
+                DDS4CCM_lem_stub DDS4CCM_skel
+  sharedname  = QC_ReadGet_Starter_svnt
+  libs       += QC_ReadGet_Starter_stub QC_ReadGet_Starter_lem_stub \
                 DDS4CCM_lem_stub DDS4CCM_skel
   libpaths += ../lib
   libout = ../lib
