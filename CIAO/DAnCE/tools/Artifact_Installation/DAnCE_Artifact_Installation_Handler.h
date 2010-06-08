@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Artifact_Installation_Handler.h
+ * @file DAnCE_Artifact_Installation_Handler.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
@@ -64,7 +64,7 @@ namespace DAnCE
           const TPropertyMap& propmap_;
           std::string protocol_;
       };
-  };
+  }
 
 #if defined (__ACE_INLINE__)
 #include "DAnCE_Artifact_Installation_Handler.inl"

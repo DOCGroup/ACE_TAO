@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file Artifact_Installation_Handler.h
+ * @file Artifact_Installation_Handler_Svc.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
@@ -32,7 +32,7 @@ namespace DAnCE
 
           virtual ArtifactInstallationHandler* handler_instance () = 0;
       };
-  };
+  }
 
 #include /**/ "ace/post.h"
 #endif /* DANCE_ARTIFACT_INSTALLATION_HANDLER_SVC_H */

@@ -60,7 +60,7 @@ namespace DAnCE
 
     ACE_STATIC_SVC_DECLARE (FileInstallationHandlerSvc)
     ACE_FACTORY_DECLARE (Artifact_Installation_Handler, FileInstallationHandlerSvc)
-  };
+  }
 
 #include /**/ "ace/post.h"
 #endif /* DANCE_FILE_INSTALLATION_HANDLER_H */

@@ -85,7 +85,7 @@ namespace DAnCE
 
           virtual InstallationRepositoryManager* manager_instance () = 0;
       };
-  };
+  }
 
 #include /**/ "ace/post.h"
 #endif /* DANCE_INSTALLATION_REPOSITORY_MANAGER_H */
