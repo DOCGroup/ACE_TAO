@@ -624,6 +624,10 @@ public:
   ACE_Unbounded_Queue<char *> & ciao_ami_recep_names (void);
   // Accessor/mutator for the ciao_ami_recep_names_ member.
   
+  void add_included_ami_recep_names (const char *s);
+  ACE_Unbounded_Queue<char *> & included_ami_recep_names (void);
+  // Accessor/mutator for the included_ami_recep_names_ member.
+  
   ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
   // Accessor for the member
   
@@ -660,9 +664,13 @@ public:
 
   void create_uses_multiple_stuff (AST_Component *c,
                                    AST_Uses *u,
-                                   const char *port_prefix = "");
+                                   const char *prefix = "");
   // We must do this in the front end since the executor
   // mapping IDL will have these data types.
+  
+  void create_implied_ami_uses_stuff (void);
+  // For the executor IDL file, when a pragma ciao ami receptacle
+  // name is multiplex.
 
   int path_cmp (const char *s, const char *t);
   // Case insensitive for Windows, otherwise not.
@@ -801,8 +809,10 @@ private:
     bool is_system_;
   };
 
-  typedef ACE_Unbounded_Queue<Include_Path_Info> Unbounded_Paths_Queue;
-  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info> Unbounded_Paths_Queue_Iterator;
+  typedef ACE_Unbounded_Queue<Include_Path_Info>
+    Unbounded_Paths_Queue;
+  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
+    Unbounded_Paths_Queue_Iterator;
   Unbounded_Paths_Queue include_paths_;
   // List of -I options passed to us.
 
@@ -866,6 +876,12 @@ private:
   
   ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
   // Receptacles that get a sendc_ version added for AMI4CCM.
+  
+  ACE_Unbounded_Queue<char *> included_ami_recep_names_;
+  // We need to do something different with these...
+  
+  bool included_ami_receps_done_;
+  // ...but we need to do it only once.
   
   ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
   // Used to check for an incorrect lookup success that should
