@@ -83,7 +83,7 @@ Echo_Client_Request_Interceptor::send_request (
 
 void
 Echo_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri)
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
 
   
@@ -98,7 +98,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri)
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
 
 }
