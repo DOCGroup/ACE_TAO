@@ -1,3 +1,25 @@
+Tue Jun  8 13:56:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        * connectors/ami4ccm/tests/OneReplyH
+        * connectors/ami4ccm/tests/OneReplyH/Base
+        * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.idl
+        * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.mpc
+        * connectors/ami4ccm/tests/OneReplyH/descriptors
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/OneReplyH/Receiver
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver.idl
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver.mpc
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.h
+        * connectors/ami4ccm/tests/OneReplyH/Sender
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender.idl
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender.mpc
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h
+        AMI4CCM test with one replyhandler for more than one request.
+         
 Tue Jun  8 13:44:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ContentFilterSetting.h:

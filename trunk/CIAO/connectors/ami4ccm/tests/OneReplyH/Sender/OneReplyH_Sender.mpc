@@ -1,0 +1,135 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p OneReplyH_Base OneReplyH_Sender"
+
+project(AMI_OneReplyH_Base_Sender_idl_gen) : componentidldefaults {
+  after += Conn_OneReplyH_Base_idl_gen AMI_OneReplyH_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ONEREPLYH_T_SENDER_STUB_Export \
+              -Wb,stub_export_include=OneReplyH_Sender_stub_export.h \
+              -Wb,skel_export_macro=ONEREPLYH_T_SENDER_SVNT_Export \
+              -Wb,skel_export_include=OneReplyH_Sender_svnt_export.h \
+              -Wb,exec_export_macro=ONEREPLYH_T_SENDER_EXEC_Export \
+              -Wb,exec_export_include=OneReplyH_Sender_exec_export.h \
+              -I.. -GC
+
+  IDL_Files {
+    OneReplyH_Sender.idl
+  }
+}
+
+project(AMI_OneReplyH_Base_Sender_lem_gen) : ciaoidldefaults {
+  after += AMI_OneReplyH_Base_Sender_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ONEREPLYH_T_SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=OneReplyH_Sender_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    OneReplyH_SenderE.idl
+  }
+}
+
+project(AMI_OneReplyH_Base_Sender_lem_stub) : ccm_svnt, ami   {
+  after += AMI_OneReplyH_Base_Sender_lem_gen AMI_OneReplyH_stub Conn_OneReplyH_Base_stub
+  libs  += OneReplyH_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = OneReplyH_Sender_lem_stub
+  dynamicflags   = ONEREPLYH_T_SENDER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    OneReplyH_SenderEC.cpp
+  }
+
+  Header_Files {
+    OneReplyH_SenderEC.h
+    OneReplyH_Sender_lem_stub_export.h
+  }
+
+  Inline_Files {
+    OneReplyH_SenderEC.inl
+  }
+}
+
+project(AMI_OneReplyH_Base_Sender_stub) : ccm_stub, ami   {
+  after += AMI_OneReplyH_Base_Sender_idl_gen AMI_OneReplyH_Base_stub AMI_OneReplyH_stub Conn_OneReplyH_Base_stub
+  libs  += OneReplyH_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = OneReplyH_Sender_stub
+  dynamicflags   = ONEREPLYH_T_SENDER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    OneReplyH_SenderC.cpp
+  }
+
+  Header_Files {
+    OneReplyH_SenderC.h
+    OneReplyH_Sender_stub_export.h
+  }
+
+  Inline_Files {
+    OneReplyH_SenderC.inl
+  }
+}
+
+project(AMI_OneReplyH_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
+  after   += AMI_OneReplyH_Base_Sender_lem_stub AMI_OneReplyH_Base_Sender_stub AMI_OneReplyH_Base_exec Conn_OneReplyH_Base_stub AMI_OneReplyH_lem_stub
+  sharedname = OneReplyH_Sender_exec
+  libs += OneReplyH_Sender_stub OneReplyH_Sender_lem_stub OneReplyH_stub OneReplyH_stub OneReplyH_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = ONEREPLYH_T_SENDER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    OneReplyH_Sender_exec.cpp
+  }
+
+  Header_Files {
+    OneReplyH_Sender_exec.h
+    OneReplyH_Sender_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_OneReplyH_Base_Sender_svnt) : ciao_servant, ami {
+  after      += AMI_OneReplyH_Base_skel AMI_OneReplyH_Base_Sender_lem_stub AMI_OneReplyH_Base_Sender_stub AMI_OneReplyH_Base_exec AMI_OneReplyH_skel
+  sharedname  = OneReplyH_Sender_svnt
+  libs       += OneReplyH_Sender_stub OneReplyH_Sender_lem_stub  \
+                OneReplyH_skel \
+                OneReplyH_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = ONEREPLYH_T_SENDER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    OneReplyH_SenderS.cpp
+    OneReplyH_Sender_svnt.cpp
+  }
+
+  Header_Files {
+    OneReplyH_SenderS.h
+    OneReplyH_Sender_svnt.h
+    OneReplyH_Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    OneReplyH_SenderS.inl
+  }
+}
+
+
