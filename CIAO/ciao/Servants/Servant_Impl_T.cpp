@@ -133,7 +133,7 @@ namespace CIAO
       }
 #endif
 
-    throw CORBA::INTERNAL ();
+    throw ::CORBA::INTERNAL ();
   }
 
   // CIAO-specific operations.

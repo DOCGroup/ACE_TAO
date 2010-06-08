@@ -56,7 +56,9 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
-    Context_Impl_Base (Components::CCMHome_ptr home, Container_ptr c, const char *instance_id);
+    Context_Impl_Base (Components::CCMHome_ptr home,
+                       Container_ptr c,
+                       const char *instance_id);
 
     virtual ~Context_Impl_Base (void);
 
@@ -73,7 +75,8 @@ namespace CIAO
 #endif
 
 #if !defined (CCM_LW)
-    virtual Components::Transaction::UserTransaction_ptr get_user_transaction ();
+    virtual Components::Transaction::UserTransaction_ptr
+    get_user_transaction ();
 #endif
 
 #if !defined (CCM_LW)
@@ -94,14 +97,15 @@ namespace CIAO
     /// Accessors for the private member.
     const char *_ciao_instance_id (void) const;
     void _ciao_instance_id (const char *instance_id);
+    void NO_IMPLEMENT();
 
   protected:
     Components::CCMHome_var home_;
     Container_var container_;
 
   private:
+    /// Private constructor, not allowed to be called
     Context_Impl_Base (void);
-
     CORBA::String_var ciao_instance_id_;
   };
 }

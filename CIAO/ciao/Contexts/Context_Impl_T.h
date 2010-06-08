@@ -27,17 +27,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-namespace CORBA
-{
-  class SystemException;
-}
 
+#if !defined (CCM_LW)
 namespace SecurityLevel2
 {
   class Credentials;
 }
+#endif
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#if !defined (CCM_LW)
 namespace Components
 {
   typedef SecurityLevel2::Credentials Principal;
@@ -51,6 +51,7 @@ namespace Components
     typedef UserTransaction *UserTransaction_ptr;
   }
 }
+#endif
 
 namespace CIAO
 {
