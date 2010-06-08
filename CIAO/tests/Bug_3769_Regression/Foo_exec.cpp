@@ -209,8 +209,8 @@ namespace CIAO_Foo_Impl
     if(my_bar_struct.f != 5.6F)
       ACE_ERROR ((LM_ERROR, "ERROR: float value != 5.6, it is %f\n", my_bar_struct.f));
 
-    if(my_bar_struct.s != 7.8)
-      ACE_ERROR ((LM_ERROR, "ERROR: short value != 7.8, it is %f\n", my_bar_struct.d));
+    if(my_bar_struct.d != 7.8)
+      ACE_ERROR ((LM_ERROR, "ERROR: double value != 7.8, it is %f\n", my_bar_struct.d));
   }
 
   ::Baz *
@@ -324,7 +324,7 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void my_fixed_wstring (const ::CORBA::WChar * /*my_fixed_wstring*/)
+  void Foo_exec_i::my_fixed_wstring (const ::CORBA::WChar * /*my_fixed_wstring*/)
   {
   }
 
