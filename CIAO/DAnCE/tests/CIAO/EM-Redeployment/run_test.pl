@@ -112,7 +112,7 @@ sub run_node_daemons {
         $nodename = $nodenames[$i];
         $node_host = $tg_daemons[$i]->HostName ();
         $iiop = "iiop://$node_host:$port";
-        $node_app = PerlACE::GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
+        $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService --instance-nc corbaloc:rir:/NameService";

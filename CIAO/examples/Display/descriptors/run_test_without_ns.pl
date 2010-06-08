@@ -79,7 +79,7 @@ sub run_node_daemons {
         $port = $ports[$i];
 
         $iiop = "iiop://localhost:$port";
-        $node_app = PerlACE::GetArchDir("$CIAO_ROOT/bin/") . "ciao_componentserver";
+        $node_app = $tg_daemons[$i]->GetArchDir("$CIAO_ROOT/bin/") . "ciao_componentserver";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -t 30";
