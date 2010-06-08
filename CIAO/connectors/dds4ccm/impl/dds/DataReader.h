@@ -123,8 +123,7 @@ namespace CIAO
 
       void set_impl (DDSDataReader * dr);
 
-      ::DDS::StatusMask
-      get_mask (void);
+      ::DDS::StatusMask get_mask (void);
 
     private:
       DDSDataReader * impl_;

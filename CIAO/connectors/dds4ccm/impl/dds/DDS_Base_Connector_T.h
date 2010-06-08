@@ -39,8 +39,8 @@ public:
 protected:
   void init_default_domain (void);
 
-  DDS::DomainId_t domain_id_;
-  CORBA::String_var qos_profile_;
+  ::DDS::DomainId_t domain_id_;
+  ::CORBA::String_var qos_profile_;
   bool configuration_complete_;
   const char* library_name_;
   const char* profile_name_;
