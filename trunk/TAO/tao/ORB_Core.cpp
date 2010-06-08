@@ -3154,7 +3154,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Not overwriting alternate ")
-                    ACE_TEXT ("connection timeout hook. It is %@"),
+                    ACE_TEXT ("connection timeout hook. It is %@\n"),
                     TOCSRi->alt_connection_timeout_hook_));
       }
 

@@ -1,3 +1,10 @@
+Tue Jun  8 10:02:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+          Layout changes to debug statements
+
 Tue Jun  8 09:04:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
