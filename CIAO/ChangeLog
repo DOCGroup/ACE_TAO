@@ -1,3 +1,10 @@
+Tue Jun  8 09:30:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/docs/DDSforCCM-meta.uml:
+        * connectors/dds4ccm/docs/ccm_dds.idl:
+        * connectors/dds4ccm/docs/ccm_dds_dlrl.idl:
+          Updated to beta 3 
+
 Tue Jun  8 09:20:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ami4ccm_lem_stub.mpb:

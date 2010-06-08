@@ -1,44 +1,42 @@
-// $Id$
-
 #include "dds_rtf2_dlrl.idl"
 
 module CCM_DDS {
 
 local interface CacheOperation {
-        // Cache kind
-        // ----------
-        readonly attribute DDS::CacheUsage cache_usage;
+	// Cache kind
+	// ----------
+	readonly attribute DDS::CacheUsage cache_usage;
 
-        // Other Cache attributes
-        // ----------------------
-        readonly attribute DDS::ObjectRootSeq           objects;
-        readonly attribute boolean                      updates_enabled;
-        readonly attribute DDS::ObjectHomeSeq           homes;
-        readonly attribute DDS::CacheAccessSeq          sub_accesses;
-        readonly attribute DDS::CacheListenerSeq        listeners;
+	// Other Cache attributes
+	// ----------------------
+	readonly attribute DDS::ObjectRootSeq			objects;
+    	readonly attribute boolean					updates_enabled;
+    	readonly attribute DDS::ObjectHomeSeq		homes;
+    	readonly attribute DDS::CacheAccessSeq		sub_accesses;
+    	readonly attribute DDS::CacheListenerSeq	listeners;
 
-        // Cache update
-        // ------------
-        void DDS::refresh( )
-                raises (DDS::DCPSError);
+	// Cache update
+	// ------------	
+	void refresh( )  
+		raises (DDS::DCPSError);
 
-        // Listener management
-        // -------------------
-        void attach_listener (in DDS::CacheListener listener);
-        void detach_listener (in DDS::CacheListener listener);
+	// Listener management
+	// -------------------
+	void attach_listener (in DDS::CacheListener listener);
+	void detach_listener (in DDS::CacheListener listener);
 
-        // Updates management
-        // ------------------
-        void enable_updates ();
-        void disable_updates ();
+	// Updates management
+	// ------------------
+	void enable_updates ();
+	void disable_updates ();
 
-        // CacheAccess Management
-        // ----------------------
-        DDS::CacheAccess create_access (in DDS::CacheUsage purpose)
-                raises (DDS::PreconditionNotMet);
-        void delete_access (in DDS::CacheAccess access)
-                raises (DDS::PreconditionNotMet);
-        };
+	// CacheAccess Management
+	// ----------------------
+	DDS::CacheAccess create_access (in DDS::CacheUsage purpose)
+        	raises (DDS::PreconditionNotMet);
+	void delete_access (in DDS::CacheAccess access)
+		raises (DDS::PreconditionNotMet);
+	};
 };
-
-
+	
+	
