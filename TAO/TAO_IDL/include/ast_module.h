@@ -80,10 +80,20 @@ class AST_Template_Module_Inst;
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
-public:
-  AST_Module (UTL_ScopedName *n);
+  friend void fe_populate_global_scope (AST_Module *m);
+  friend int tao_yyparse (void);
 
+public:
+  static AST_Decl::NodeType const NT;
+
+  // Constructor.
+  AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
+
+  // Destructor.
   virtual ~AST_Module (void);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_Module);
@@ -101,7 +111,7 @@ public:
   // ix is not null.
   int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
-                        
+
   // Allows adding a valuetype at a later point.
   int be_add_valuetype (AST_ValueType *v);
 
@@ -110,25 +120,18 @@ public:
   virtual bool referenced (AST_Decl *e,
                            Identifier *id = 0);
 
-  // Add decls from previous opening of this module to the
-  // 'previous' set of this module, along with the argument's
-  // own 'previous' set.
-  void add_to_previous (AST_Module *m);
+  // Accessor to this module's previous opening.
+  AST_Module *previous_opening ();
 
   // Called to look up some declaration
   // in a previous opening of this module.
   AST_Decl *look_in_prev_mods_local (Identifier *e,
                                      bool ignore_fwd = false);
+
   // Called to look up some declaration
   // in a previous opening of this module.
   AST_Decl *look_in_prev_mods (UTL_ScopedName *e,
                                bool full_def_only = false);
-
-  // Accessor to the member.
-  ACE_Unbounded_Set<AST_Module *> &prev_mods (void);
-
-  // Cleanup function.
-  virtual void destroy (void);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -136,18 +139,17 @@ public:
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst (void) const;
   void from_inst (AST_Template_Module_Inst *node);
-  
+
   // Override that looks in previous openings.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only);
 
-public:
-  static AST_Decl::NodeType const NT;
+  // We actually want to match the LAST module found in
+  // the scope being searched not the FIRST one in the
+  // list.
+  virtual AST_Module *adjust_found (bool full_def_only);
 
 private:
-  friend void fe_populate_global_scope (AST_Module *m);
-  friend int tao_yyparse (void);
-
   // Scope Management Protocol
 
   virtual
@@ -225,19 +227,18 @@ private:
 
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
-  
-private:  
-  bool pd_has_nested_valuetype;
 
-  ACE_Unbounded_Set<AST_Module *> prev_mods_;
-  /// Container for previous openings of this module.
-  
+private: // Data
+  bool pd_has_nested_valuetype_;
+
+  AST_Module *previous_opening_;
+  /// The immediatly previous opening of this module.
+
+  AST_Module *last_in_same_parent_scope_;
+  /// Pointer to the last opening of this module in the same parent
+
   AST_Template_Module_Inst *from_inst_;
   /// Reference to the instantiation that created us, if any.
-  
-  static bool in_prev_;
-  /// Flag to prevent exponential repeats of search through
-  /// previous openings.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

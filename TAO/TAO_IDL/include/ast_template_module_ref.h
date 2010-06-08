@@ -35,6 +35,14 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // If IDL module has been created in a scope corresponding
+  // to this node. That's the one we want to match, NOT this
+  // AST_Template_Module_Ref, and it occurs in the scope right
+  // after this node, so we'll match what we're looking for on
+  // the next iteration of the search. So for this immediate
+  // adjustment we return no match.
+  virtual AST_Template_Module_Ref *adjust_found (bool full_def_only);
+
   static AST_Decl::NodeType const NT;
 
 private:
