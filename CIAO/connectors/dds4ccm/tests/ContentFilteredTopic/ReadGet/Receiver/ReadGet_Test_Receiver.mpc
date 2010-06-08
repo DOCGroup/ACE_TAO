@@ -1,6 +1,6 @@
 // $Id$
 
-project(QC_ReadGet_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
+project(CFT_ReadGet_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += ReadGet_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
@@ -17,7 +17,7 @@ project(QC_ReadGet_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   }
 }
 
-project(QC_ReadGet_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
+project(CFT_ReadGet_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   after += ReadGet_Test_Receiver_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
@@ -29,10 +29,10 @@ project(QC_ReadGet_Test_Receiver_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(QC_ReadGet_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += ReadGet_Test_Receiver_lem_gen ReadGet_Test_Receiver_stub  \
            ReadGet_Test_Connector_stub ReadGet_Test_Base_stub \
-           QC_ReadGet_Starter_stub
+           CFT_ReadGet_Starter_stub
   libs  +=  Receiver_stub ReadGet_Test_Connector_stub \
             ReadGet_Test_Base_stub ReadGet_Starter_stub
   libpaths += ../lib
@@ -58,10 +58,10 @@ project(QC_ReadGet_Test_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 }
 
-project(QC_ReadGet_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
   after += ReadGet_Test_Receiver_idl_gen  ReadGet_Test_Connector_stub \
            ReadGet_Test_Base_stub ReadGet_Test_Connector_lem_gen \
-           QC_ReadGet_Starter_stub QC_ReadGet_Starter_lem_stub
+           CFT_ReadGet_Starter_stub CFT_ReadGet_Starter_lem_stub
   libs  += ReadGet_Test_Connector_stub ReadGet_Test_Base_stub \
            ReadGet_Starter_stub
   libpaths += ../lib
@@ -87,11 +87,11 @@ project(QC_ReadGet_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(QC_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
   after   += ReadGet_Test_Receiver_lem_stub ReadGet_Test_Receiver_stub \
              ReadGet_Test_Base_stub ReadGet_Test_Connector_stub \
              ReadGet_Test_Connector_lem_stub DDS4CCM_lem_stub \
-             QC_ReadGet_Starter_lem_stub QC_ReadGet_Starter_stub
+             CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub ReadGet_Test_Base_stub \
           ReadGet_Test_Connector_stub ReadGet_Test_Connector_lem_stub \
@@ -118,12 +118,12 @@ project(QC_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(QC_ReadGet_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
   after      +=   ReadGet_Test_Receiver_lem_stub ReadGet_Test_Base_stub \
                   ReadGet_Test_Connector_stub ReadGet_Test_Connector_svnt \
                   ReadGet_Test_Receiver_exec ReadGet_Test_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel QC_ReadGet_Starter_stub \
-                  QC_ReadGet_Starter_svnt QC_ReadGet_Starter_lem_stub
+                  DDS4CCM_lem_stub DDS4CCM_skel CFT_ReadGet_Starter_stub \
+                  CFT_ReadGet_Starter_svnt CFT_ReadGet_Starter_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub ReadGet_Test_Base_stub \
                 ReadGet_Test_Connector_stub ReadGet_Test_Connector_svnt \

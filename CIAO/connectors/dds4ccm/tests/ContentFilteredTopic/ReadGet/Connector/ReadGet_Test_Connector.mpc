@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p ReadGet_Test_Base -l .. -o ../lib -u DDS ReadGet_Test_Connector"
 
-project(QC_ReadGet_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+project(CFT_ReadGet_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=QUERY_CONDITION_TEST_CONNECTOR_STUB_Export \
@@ -19,7 +19,7 @@ project(QC_ReadGet_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   }
 }
 
-project(QC_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+project(CFT_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
   after += ReadGet_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=QUERY_CONDITION_TEST_CONNECTOR_LEM_STUB_Export \
@@ -32,7 +32,7 @@ project(QC_ReadGet_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(QC_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+project(CFT_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   after += ReadGet_Test_Connector_lem_gen ReadGet_Test_Connector_stub ReadGet_Test_Base_stub DDS4CCM_lem_stub
   libs  += ReadGet_Test_Base_stub ReadGet_Test_Connector_stub DDS4CCM_lem_stub
   libpaths += ../lib
@@ -58,7 +58,7 @@ project(QC_ReadGet_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 }
 
-project(QC_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
+project(CFT_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   after += ReadGet_Test_Connector_idl_gen ReadGet_Test_Base_stub
   libs  += ReadGet_Test_Base_stub
   libpaths += ../lib
@@ -84,7 +84,7 @@ project(QC_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(QC_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
+project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += ReadGet_Test_Connector_lem_stub ReadGet_Test_Connector_stub DDS4CCM_lem_stub ReadGet_Test_Base_stub
   sharedname = ReadGet_Test_Connector_exec
   libs += ReadGet_Test_Connector_stub ReadGet_Test_Connector_lem_stub ReadGet_Test_Base_stub DDS4CCM_lem_stub ReadGet_Test_Base_stub
@@ -110,7 +110,7 @@ project(QC_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(QC_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
+project(CFT_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += ReadGet_Test_Connector_lem_stub ReadGet_Test_Connector_exec ReadGet_Test_Connector_stub DDS4CCM_lem_stub
   sharedname  = ReadGet_Test_Connector_svnt
   libs       += ReadGet_Test_Connector_stub \

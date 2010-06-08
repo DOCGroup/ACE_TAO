@@ -1,0 +1,553 @@
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>ReadGet_Test_Depl_1</label>
+  <UUID>ReadGet_Test_Depl_1</UUID>
+
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ReadGet_Test_ReceiverConnectorImplementation">
+    <name>ReadGet_Test_ReceiverConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="ReadGet_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="ReadGet_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="ReadGet_Test_SenderConnectorImplementation">
+    <name>ReadGet_Test_ReceiverConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="ReadGet_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="ReadGet_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="ReadGet_Test_SenderConnectorInstance">
+    <name>ReadGet_Test_SenderConnector</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReadGet_Test_SenderConnectorImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="ReadGet_Test_ReceiverConnectorInstance">
+    <name>ReadGet_Test_ReceiverConnector</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReadGet_Test_ReceiverConnectorImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>get_port_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>( (iteration > %0) AND (iteration &lt; %1) )</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>2</string>
+              </element>
+              <element>
+                <string>5</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="SenderComponentInstance">
+    <name>SenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+    <configProperty>
+      <name>keys</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>5</ushort>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>read_port_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>get_port_fresh_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>get_port_fresh_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_fresh_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>get_port_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>get_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>get_port_filter_config</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>get_port_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>read_port_filter_config</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_port_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_SenderConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>reader_starter</name>
+    <internalEndpoint>
+      <portName>start_reader</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>reader_start</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>restart_writer</name>
+    <internalEndpoint>
+      <portName>writer_restart</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>restart_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Sender_StubArtifact">
+    <name>Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+  <artifact xmi:id="ReadGet_Test_Connector_ExecArtifact">
+    <name>ReadGet_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>ReadGet_Test_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="ReadGet_Test_Connector_SvntArtifact">
+    <name>ReadGet_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>ReadGet_Test_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="ReadGet_Test_Connector_StubArtifact">
+    <name>ReadGet_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>ReadGet_Test_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>
