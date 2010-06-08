@@ -3,27 +3,20 @@
 
 project (DAnCE_Artifact_Installation_IDL) : taoidldefaults {
   custom_only = 1
-  idlflags     += -Wb,stub_export_macro=DAnCE_Artifact_Installation_Export \
-                  -Wb,stub_export_include=DAnCE_Artifact_Installation_export.h \
-                  -Wb,skel_export_macro=DAnCE_Artifact_Installation_Export \
-                  -Wb,skel_export_include=DAnCE_Artifact_Installation_export.h
   IDL_Files {
-    DAnCE_Artifact_Installation.idl
+    idlflags += -SS -Sci
     DAnCE_Artifact_Installation_Handler.idl
   }
 }
 
 project (DAnCE_Artifact_Installation) : dance_lib, dynamicinterface, \
-            dance_deployment_stub, dance_logger, utils {
+            dance_deployment_stub, dance_logger, dance_skel, utils {
   dynamicflags = DANCE_ARTIFACT_INSTALLATION_BUILD_DLL
   sharedname = DAnCE_Artifact_Installation
   after += DAnCE_Artifact_Installation_IDL
 
   Source_Files {
     DAnCE_Artifact_Installation_HandlerC.cpp
-    DAnCE_Artifact_Installation_HandlerS.cpp
-    DAnCE_Artifact_InstallationC.cpp
-    DAnCE_Artifact_InstallationS.cpp
     DAnCE_Artifact_Installation_Handler.cpp
     Artifact_Installation_Impl.cpp
     Artifact_Installation_Handler_Svc.cpp

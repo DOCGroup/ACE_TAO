@@ -15,7 +15,7 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Recursive_Thread_Mutex.h"
-#include "DAnCE_Artifact_InstallationS.h"
+#include "DAnCE/DAnCE_ArtifactInstallationS.h"
 #include "DAnCE_Artifact_Installation_export.h"
 #include "DAnCE_Artifact_Installation_Handler.h"
 #include <map>
