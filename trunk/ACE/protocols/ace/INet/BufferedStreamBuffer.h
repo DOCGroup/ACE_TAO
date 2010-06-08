@@ -51,7 +51,7 @@ namespace ACE
               typedef typename ios_type::openmode openmode;
               typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
 
-              BasicBufferedStreamBuffer (std::streamsize bufsz, 
+              BasicBufferedStreamBuffer (std::streamsize bufsz,
                                          typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
 
               virtual ~BasicBufferedStreamBuffer ();
@@ -85,7 +85,7 @@ namespace ACE
 
         /// char specialization
         typedef BasicBufferedStreamBuffer<char, std::char_traits<char> > BufferedStreamBuffer;
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

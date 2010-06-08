@@ -43,8 +43,8 @@ namespace ACE
               virtual const Response& response () const = 0;
           };
 
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

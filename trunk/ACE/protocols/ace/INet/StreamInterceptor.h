@@ -55,7 +55,7 @@ namespace ACE
 
         typedef StreamInterceptorBase<char> StreamInterceptor;
 
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

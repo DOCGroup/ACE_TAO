@@ -62,7 +62,7 @@ namespace ACE
         return !this->is_valid ();
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -177,7 +177,7 @@ namespace ACE
               Code  code_;
               ACE_CString reason_;
           };
-      };
+      }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -71,7 +71,7 @@ namespace ACE
           this->session ()->response_stream (*this) :
           ACE::IOS::Null::in_stream_;
       }
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

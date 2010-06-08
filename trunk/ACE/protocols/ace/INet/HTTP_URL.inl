@@ -84,7 +84,7 @@ namespace ACE
         return !this->proxy_host_.empty ();
       }
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -14,7 +14,7 @@ namespace ACE
     std::ostream Null::out_stream_ (0);
     std::istream Null::in_stream_ (0);
 
-  };
-};
+  }
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
