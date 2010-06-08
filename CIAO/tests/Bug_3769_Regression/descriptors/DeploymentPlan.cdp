@@ -273,7 +273,7 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>my_bar_struct</name>
+      <name>my_baz_struct</name>
       <value>
         <type>
           <kind>tk_struct</kind>
