@@ -118,7 +118,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_consumer_filter");
 
@@ -156,7 +157,8 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_consumer_filter");
 

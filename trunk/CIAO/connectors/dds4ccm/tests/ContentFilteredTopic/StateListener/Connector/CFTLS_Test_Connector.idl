@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file CFTLS_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CONTENTFILTEREDTOPIC_LISTEN_STATE_TEST_CONNECTOR_IDL_
+#define CONTENTFILTEREDTOPIC_LISTEN_STATE_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/CFTLS_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/CFTLS_Test_ConnectorE.idl"
+
+module CFTLS_Test
+{
+  module ::CCM_DDS::Typed < ::ContentFilteredTopicListenStateTest, ::ContentFilteredTopicListenStateTestSeq> ContentFilteredTopicListenStateTestConnector;
+};
+
+#endif /* CFTLS_Test_CONNECTOR_IDL_ */

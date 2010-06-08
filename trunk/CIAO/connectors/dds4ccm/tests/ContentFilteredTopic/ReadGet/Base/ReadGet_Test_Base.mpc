@@ -1,6 +1,6 @@
 // $Id$
 
-project(QC_ReadGet_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project(CFT_ReadGet_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = ReadGet_Test_Base_stub
   dynamicflags += QUERY_CONDITION_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib

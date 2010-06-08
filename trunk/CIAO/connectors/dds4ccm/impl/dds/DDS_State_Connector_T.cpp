@@ -91,7 +91,8 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::passive_observer_filter");
 
@@ -149,7 +150,8 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::pull_observer_filter");
 
@@ -207,7 +209,8 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (void)
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_observer_filter");
 
@@ -265,7 +268,8 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter (vo
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 void
-DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter (const ::CCM_DDS::QueryFilter & filter)
+DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter (
+  const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::push_state_observer_filter");
 
