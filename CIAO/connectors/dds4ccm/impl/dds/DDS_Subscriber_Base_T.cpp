@@ -2,6 +2,7 @@
 // $Id$
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/ContentFilteredTopic.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Subscriber_Base_T (void) :
@@ -25,15 +26,34 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
 
   this->configuration_complete_ = true;
-  
+
   try
     {
       if (!this->data_reader_.get_impl ())
         {
-          this->data_reader_.create_datareader (topic,
-                                                subscriber,
-                                                library_name,
-                                                profile_name);
+          if (ACE_OS::strlen (this->cft_setting_.filter ()->expression.in ()) > 0)
+            {
+              ::DDS::ContentFilteredTopic_var cft =
+                this->cft_setting_.create_contentfilteredtopic (topic,
+                                                                subscriber);
+              if (CORBA::is_nil (cft.in ()))
+                {
+                  DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::configuration_complete: "
+                                               "Error creating ContentFilteredTopic.\n"));
+                  throw CORBA::INTERNAL ();
+                }
+              this->data_reader_.create_datareader (cft,
+                                                    subscriber,
+                                                    library_name,
+                                                    profile_name);
+            }
+          else
+            {
+              this->data_reader_.create_datareader (topic,
+                                                    subscriber,
+                                                    library_name,
+                                                    profile_name);
+            }
           this->dds_read_.set_impl (&this->data_reader_);
           return true;
         }
@@ -133,8 +153,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config");
 
-  // TODO BETA3
-  return ::CCM_DDS::CCM_ContentFilterSetting::_nil ();
+  return &this->cft_setting_;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -143,8 +162,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter");
 
-  // TODO BETA3
-  return 0;
+  return this->cft_setting_.filter ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -153,13 +171,19 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter");
-
   if (this->configuration_complete_)
     {
       throw ::CCM_DDS::NonChangeable ();
     }
   else
     {
-      this->filter_ = filter;
+      if (ACE_OS::strlen (filter.expression.in ()) == 0)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::get_filter_config: "
+                                      "Filter expression not set. Unable to create "
+                                      "ContentFilterSetting interface.\n"));
+          throw ::CCM_DDS::InternalError ();
+        }
+      this->cft_setting_.filter (filter);
     }
 }

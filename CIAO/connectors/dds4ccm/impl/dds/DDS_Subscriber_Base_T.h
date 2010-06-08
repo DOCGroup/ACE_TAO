@@ -13,6 +13,8 @@
 #include "dds4ccm/impl/dds/Reader_T.h"
 #include "dds4ccm/impl/dds/DataReader_T.h"
 #include "dds4ccm/impl/dds/PortStatusListener_T.h"
+#include "dds4ccm/impl/dds/ContentFilterSetting.h"
+#include "dds4ccm/impl/dds/ContentFilteredTopic.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Subscriber_Base_T
@@ -57,10 +59,9 @@ protected:
    */
   //@{
   ::DDS::DataReaderListener_var listener_;
-  ::DDS::ContentFilteredTopic_var cft_;
+  ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i cft_setting_;
   ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
-  ::CCM_DDS::QueryFilter filter_;
   bool configuration_complete_;
   //@}
   typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;

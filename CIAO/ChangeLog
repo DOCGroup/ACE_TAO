@@ -1,3 +1,34 @@
+Tue Jun  8 13:44:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/dds/dds4ccm_impl.mpc:
+          Implemented DDS4LwCCM Beta 3 spec regarding contentfilteredTopics.
+          This could not be fully tested since passing structs from the deployment
+          plans to the connector didn't work yet. So all accompanying tests will
+          fail for now.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/*:
+          Added contentfilteredTopics for listeners on the Event connector.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/*:
+          Added test for the reader and getter extended ports,
+          having a different query.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/*:
+          Added contentfilteredTopics for listeners on the State connector.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender.mpc:
+          Renamed projects in order to prevent duplicate project names.
+
 Tue Jun  8 13:20:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
