@@ -9,6 +9,7 @@ typedef sequence<short>  short_sequence;
 typedef sequence<long>   long_sequence;
 typedef sequence<float>  float_sequence;
 typedef sequence<double> double_sequence;
+typedef sequence<string> string_sequence;
 
 struct Bar
 {
@@ -26,20 +27,49 @@ struct Baz
   BarSeq my_bar_sequence;
 };
 
+enum DataType
+{
+  dtEmpty,
+  dtLong,
+  dtShort
+};
+union Data switch (DataType)
+{
+  case dtLong: long longData;
+  case dtShort: short shortData;
+};
+enum DataType2
+{
+  dtString,
+  dtShortType
+};
+union Data2 switch (DataType2) // Jeff, changing DataType2 to DataType causes a segfault in TAO_IDL
+{
+  case dtString: string stringData;
+  case dtShortType: short shortData;
+};
+
 component Foo
 {
   attribute short  my_short;
   attribute long   my_long;
   attribute float  my_float;
   attribute double my_double;
+  attribute string<50> my_fixed_string;
+  attribute string my_variable_string;
+  attribute wstring<50> my_fixed_wstring;
+  attribute wstring my_variable_wstring;
 
   attribute short_sequence  my_short_sequence;
   attribute long_sequence   my_long_sequence;
   attribute float_sequence  my_float_sequence;
   attribute double_sequence my_double_sequence;
+  attribute string_sequence my_string_sequence;
 
   attribute Bar my_bar_struct;
   attribute Baz my_baz_struct;
+  attribute Data my_data_union;
+  attribute Data2 my_var_data_union;
 };
 
 #endif /* FOO_IDL_ */
