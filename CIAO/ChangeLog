@@ -1,36 +1,42 @@
+Tue Jun  8 09:20:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ami4ccm_lem_stub.mpb:
+          Because we need access to the container POA we need to link with
+          a CIAO implementation library
+
 Tue Jun  8 09:19:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-	* bin/ciao_tests.lst
-	Remove fixed_bugs flag from test OneProcess.
+        * bin/ciao_tests.lst:
+          Remove fixed_bugs flag from test OneProcess.
 
 Tue Jun  8 09:13:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-	* connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp
-	* connectors/ami4ccm/tests/OneProcess/descriptors/PlanOne.cdp
-	* connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl
-	* connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl
-	* connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp
-	Change testresult, all in one process should work synchronous.
+        * connectors/ami4ccm/tests/OneProcess/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/PlanOne.cdp:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test_one.pl:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+          Change testresult, all in one process should work synchronous.
 
 Tue Jun  8 07:51:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
-	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.inl:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
-	* DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.h:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
-	* DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
-	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.h:
-	* DAnCE/tools/Artifact_Installation/File_Installation_Handler.cpp:
-	* DAnCE/tools/Artifact_Installation/Http_Installation_Handler.cpp:
-	  Fuzz fizes and namespace semicolons removed.
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
+        * DAnCE/tools/Artifact_Installation/File_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/Http_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.inl:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
+        * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.h:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.cpp:
+        * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Handler_Svc.h:
+        * DAnCE/tools/Artifact_Installation/File_Installation_Handler.cpp:
+        * DAnCE/tools/Artifact_Installation/Http_Installation_Handler.cpp:
+          Fuzz fizes and namespace semicolons removed.
 
 Tue Jun  8 07:21:30 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
