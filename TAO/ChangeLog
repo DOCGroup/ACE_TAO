@@ -1,16 +1,27 @@
+Tue Jun  8 09:04:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+          Changed the internal code for the AMI4CCM connector
+
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+          Layout changes
+
 Tue Jun  8 06:27:30 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
         * tests/Bug_3853_Regression/client_interceptor.cpp:
-        
+
           Fixed warnings.
 
 Mon Jun  7 20:57:41 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 
         * tests/Bug_3853_Regression/Bug_3853_Regression.mpc:
-        
+
           Added avoids_minimum_corba, avoids_corba_e_compact, and
-          avoids_corba_e_micro. 
+          avoids_corba_e_micro.
 
 Mon Jun  7 16:48:20 UTC 2010  Yan Dai  <dai_y@ociweb.com>
 

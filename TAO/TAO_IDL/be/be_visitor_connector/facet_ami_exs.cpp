@@ -132,10 +132,12 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << iface_name << suffix << " ("
       << be_idt << be_idt << be_idt_nl
       << smart_scope << scope_name << "::" << iface_name
-      << "ReplyHandler_ptr callback)" << be_uidt << be_uidt_nl
+      << "ReplyHandler_ptr callback," << be_nl
+      << "::PortableServer::POA_ptr poa)" << be_uidt << be_uidt_nl
       << ": callback_ (" << be_idt << be_idt_nl
       << smart_scope << scope_name << "::" << iface_name
-      << "ReplyHandler::_duplicate (callback))"
+      << "ReplyHandler::_duplicate (callback))," << be_nl
+      << "poa_ (::PortableServer::POA::_duplicate (poa))"
 
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -330,7 +332,8 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
   os_ << be_uidt_nl << "}" << be_uidt_nl;
   
   os_ << be_nl
-      << "this->_remove_ref ();" << be_uidt_nl
+      << "::PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);" << be_nl
+      << "this->poa_->deactivate_object (oid.in ());" << be_uidt_nl
       << "}";
 
   return 0;
@@ -382,14 +385,19 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       
   os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl
+      << "::CIAO::Context_Impl_Base *ctx_base = dynamic_cast <CIAO::Context_Impl_Base *> (this->context_.in ());" << be_nl
+      << "::CIAO::Container_i *ctr = dynamic_cast <CIAO::Container_i *> (ctx_base->_ciao_the_Container ());" << be_nl
+      << "::PortableServer::POA_ptr poa = ctr->the_POA ();" << be_nl
       << this->iface_->local_name () << "_reply_handler *handler = 0;"
       << be_nl
       << "ACE_NEW (handler, " << be_nl
       << "         " << this->iface_->local_name ()
-      << "_reply_handler (ami_handler));" << be_nl
-      << "PortableServer::ServantBase_var owner_transfer (handler);"
-      << be_nl << be_nl
-      << "the_handler_var = handler->_this ();" << be_uidt_nl
+      << "_reply_handler (ami_handler, poa));" << be_nl
+      << "::PortableServer::ServantBase_var owner_transfer (handler);" << be_nl
+      << "::PortableServer::ObjectId_var oid = poa->activate_object(handler);" << be_nl
+      << "::CORBA::Object_var handler_obj = poa->id_to_reference(oid.in());" << be_nl
+      << "the_handler_var = ::" << scope->full_name () << smart_scope << "AMI_" << orig_iface_name << "Handler::_narrow(handler_obj.in());"
+      << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "receptacle_objref->" << node->local_name ()
       << " (" << be_idt_nl

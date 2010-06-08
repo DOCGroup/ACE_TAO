@@ -592,8 +592,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    purge (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge (void)
   {
     typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
     transport_set_type transports_to_be_closed;
@@ -710,8 +709,7 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    sort_set (DESCRIPTOR_SET& entries,
-              int current_size)
+    sort_set (DESCRIPTOR_SET& entries, int current_size)
   {
 #if defined (ACE_LACKS_QSORT)
     // Use insertion sort if we don't have qsort
