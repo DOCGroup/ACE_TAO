@@ -1,3 +1,9 @@
+Tue Jun  8 13:16:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        
+          Fixed warnings, local stream was hiding the inherited one.
+
 Tue Jun  8 12:49:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:

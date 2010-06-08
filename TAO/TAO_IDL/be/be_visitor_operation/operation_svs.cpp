@@ -26,7 +26,6 @@ be_visitor_operation_svs::~be_visitor_operation_svs (void)
 int
 be_visitor_operation_svs::visit_operation (be_operation *node)
 {
-  TAO_OutStream &os_ = *this->ctx_->stream ();
   this->ctx_->node (node);
 
   os_ << be_nl << be_nl;
@@ -130,8 +129,6 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
 int
 be_visitor_operation_svs::visit_argument (be_argument *node)
 {
-  TAO_OutStream &os_ = *this->ctx_->stream ();
-
   os_ << node->local_name ();
 
   return 0;
@@ -140,8 +137,6 @@ be_visitor_operation_svs::visit_argument (be_argument *node)
 int
 be_visitor_operation_svs::post_process (be_decl *bd)
 {
-  TAO_OutStream &os_ = *this->ctx_->stream ();
-
   if (this->last_node (bd))
     {
       os_ << ");" << be_uidt;
