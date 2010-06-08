@@ -1,3 +1,13 @@
+Tue Jun  8 12:54:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+          Added much more test cases
+
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Added empty accessors, cdp has to be extended and than the code
+          has to check the set values
+
 Tue Jun  8 10:12:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/DAnCE_ArtifactInstallation.idl:
@@ -6,8 +16,8 @@ Tue Jun  8 10:12:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * tools/Artifact_Installation/Artifact_Installation_Impl.h:
         * tools/Artifact_Installation/Artifact_Installation.mpc:
         * MPC/config/dance_artifact_installation.mpb:
-	  Changes to integrate Artifact Installation framework with the
-	  rest of DAnCE.
+          Changes to integrate Artifact Installation framework with the
+          rest of DAnCE.
 
 Tue Jun  8 09:32:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
