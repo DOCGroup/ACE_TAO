@@ -1,3 +1,12 @@
+Tue Jun  8 13:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Added array attributes example, just to validate compilation, no
+          runtime testing performed at all, probably config handlers need an
+          update
+
 Tue Jun  8 13:56:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
@@ -19,7 +28,7 @@ Tue Jun  8 13:56:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp
         * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h
         AMI4CCM test with one replyhandler for more than one request.
-         
+
 Tue Jun  8 13:44:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ContentFilterSetting.h:
