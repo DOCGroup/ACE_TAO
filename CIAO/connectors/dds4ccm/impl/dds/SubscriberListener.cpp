@@ -11,7 +11,7 @@
 #include "ndds/LivelinessChangedStatus.h"
 #include "ndds/RequestedIncompatibleQosStatus.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 namespace CIAO
 {

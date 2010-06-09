@@ -2,7 +2,7 @@
 #include "dds4ccm/impl/dds/Utils.h"
 
 #include "dds4ccm/impl/dds/DataReader.h"
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 #include "dds4ccm/impl/dds/DDSCallbackStatusHandler.h"
 #include "dds4ccm/impl/dds/Utils.h"
 #include "tao/ORB_Core.h"

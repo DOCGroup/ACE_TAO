@@ -3,7 +3,7 @@
 
 #include "dds4ccm/impl/dds/Topic.h"
 #include "dds4ccm/impl/dds/DDSCallbackStatusHandler.h"
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::TopicListener_T (

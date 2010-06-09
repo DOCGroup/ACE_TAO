@@ -3,7 +3,7 @@
 #include "dds4ccm/impl/dds/DataWriter.h"
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/Coherent_Changes_Guard.h"
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::Updater_T (void)
