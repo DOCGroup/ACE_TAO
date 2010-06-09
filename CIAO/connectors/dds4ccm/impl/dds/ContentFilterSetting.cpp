@@ -34,7 +34,7 @@ namespace CIAO
 
       this->filter_ = filter;
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::filter - "));
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "Expression : %C\t\n",
+      DDS4CCM_DEBUG (6, (LM_DEBUG, "Expression : %C\t\n",
                                 filter.expression.in ()));
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "Parameters :\n"));
       for (::CORBA::ULong i = 0; i < filter.parameters.length (); ++i)
@@ -49,30 +49,50 @@ namespace CIAO
       ::DDS::Topic_ptr topic,
       ::DDS::Subscriber_ptr subscriber)
     {
-      ACE_CString name ("DDS4CCM_CFT_");
-      name.append (topic->get_name (),
-                   ACE_OS::strlen (topic->get_name ()));
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic");
+      char * name = 0;
+      ACE_NEW_THROW_EX (name,
+                        char[32],
+                        CORBA::NO_MEMORY ());
+      ACE_OS::sprintf (name ,
+                       "DDS4CCM_CFT_%ld",
+                       reinterpret_cast <unsigned long> (this));
+
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
       if (CORBA::is_nil (dp.in ()))
         {
-          DDS4CCM_ERROR (1, (LM_EMERGENCY, "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
+          DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                            "Unable to get DomainParticipant.\n"));
           throw CORBA::INTERNAL ();
         }
-      this->cft_ = dp->create_contentfilteredtopic (name.c_str (),
+      this->cft_ = dp->create_contentfilteredtopic (name,
                                                     topic,
                                                     this->filter_.expression,
                                                     this->filter_.parameters);
       if (CORBA::is_nil (this->cft_.in ()))
         {
-          DDS4CCM_ERROR (1, (LM_EMERGENCY, "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
-                                            "Error creating ContentfilteredTopic.\n"));
+          DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
+                                           "Error creating ContentfilteredTopic.\n"));
           throw CORBA::INTERNAL ();
         }
-      DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
-                                   "successfully created ContentFilteredTopic\n"));
+      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
+                                   "successfully created ContentFilteredTopic <%C>\n",
+                                   name));
 
       return ::DDS::ContentFilteredTopic::_duplicate (this->cft_);
+    }
+
+    void
+    CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic (
+      ::DDS::Subscriber_ptr subscriber)
+    {
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic");
+
+      ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
+      if (! ::CORBA::is_nil (dp.in ()))
+        {
+          dp->delete_contentfilteredtopic (this->cft_.in ());
+        }
     }
 
     void

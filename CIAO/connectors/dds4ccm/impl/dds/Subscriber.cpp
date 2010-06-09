@@ -206,7 +206,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_i::create_datareader_with_profile - "
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_i::create_datareader - "
                        "Successfully created datareader.\n"));
         }
 

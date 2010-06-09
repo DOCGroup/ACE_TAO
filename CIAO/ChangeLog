@@ -1,3 +1,26 @@
+Wed Jun  9 08:04:49 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added the ContentFilteredTopic test 'ReadGet' to
+          the test framework.
+
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
+          Added delete_contentfilteredtopic method. Improved logging.
+
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+          Calling delete_contentfilteredtopic on remove.
+          Improved logging.
+
+        * connectors/dds4ccm/impl/dds/DomainParticipant.cpp:
+          Deleted unnecessary code regarding the deletion of
+          ContentFilteredTopic. This is done by the
+          delete_contentfilteredtopic method.
+
+        * connectors/dds4ccm/impl/dds/Subscriber.cpp:
+          Improved logging.
+
 Wed Jun  9 07:00:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Simple/04.html:

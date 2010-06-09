@@ -44,7 +44,8 @@ namespace CIAO
       ::DDS::ContentFilteredTopic_ptr
       create_contentfilteredtopic (::DDS::Topic_ptr topic,
                                    ::DDS::Subscriber_ptr subscriber);
-
+      void
+      delete_contentfilteredtopic (::DDS::Subscriber_ptr subscriber);
     private:
       ::CCM_DDS::QueryFilter filter_;
       ::DDS::ContentFilteredTopic_var cft_;
