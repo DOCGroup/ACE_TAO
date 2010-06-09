@@ -1212,7 +1212,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
        !i.is_done ();
        i.next ())
     {
-      AST_Decl *d = i.item ()->adjust_found (full_def_only);
+      AST_Decl *d = i.item ()->adjust_found (false, full_def_only);
       if (d)
         {
           Identifier *item_name = d->local_name ();
@@ -1396,7 +1396,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
            !i.is_done ();
            i.next ())
         {
-          if (!!(d = i.item ()->adjust_found (full_def_only))
+          if (!!(d = i.item ()->adjust_found (true, full_def_only))
               && (in_corba ||
                   ACE_OS::strcmp (d->name ()->head ()->get_string (),
                                   "CORBA"))

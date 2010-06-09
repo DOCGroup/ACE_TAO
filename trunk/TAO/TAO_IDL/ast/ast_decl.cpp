@@ -137,7 +137,9 @@ COMMON_Base::is_fwd (void)
 }
 
 COMMON_Base *
-COMMON_Base::adjust_found (bool /*full_def_only*/)
+COMMON_Base::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
 {
   return this; // Defaults to no adjustment
 }
@@ -239,7 +241,9 @@ AST_Decl::destroy (void)
 }
 
 AST_Decl *
-AST_Decl::adjust_found (bool /*full_def_only*/)
+AST_Decl::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
 {
   return this; // Defaults to no adjustment
 }
