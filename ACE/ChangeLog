@@ -1,3 +1,11 @@
+Wed Jun  9 14:45:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Adding a compatibility flag for VMS (vms_old_make) as an MPC
+          template variable.  The GNU make version on VMS is old
+          and possibly buggy.
+
 Wed Jun  9 14:44:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Based_Pointer_Test.cpp:
