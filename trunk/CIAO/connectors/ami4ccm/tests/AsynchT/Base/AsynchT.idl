@@ -1,0 +1,33 @@
+// $Id$
+
+#ifndef ASYNCHT_IDL
+#define ASYNCHT_IDL
+
+#pragma ciao lem "Base/AsynchTE.idl"
+#pragma ciao ami4ccm interface "AsynchT::MyFoo"
+#pragma ciao lem "Base/AsynchTAE.idl"
+
+module AsynchT
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, in long cmd, out string answer)
+        raises (InternalError);
+      void bar (in long cmd, out long l_cmd)
+        raises (InternalError);
+      attribute short rw_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+      readonly attribute short ro_attrib
+        raises (InternalError);
+     };
+};
+
+#endif

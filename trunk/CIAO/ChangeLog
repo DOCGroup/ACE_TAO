@@ -1,3 +1,25 @@
+Wed Jun  9 11:58:56 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        * connectors/ami4ccm/tests/AsynchT
+        * connectors/ami4ccm/tests/AsynchT/Base
+        * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.idl
+        * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.mpc
+        * connectors/ami4ccm/tests/AsynchT/descriptors
+        * connectors/ami4ccm/tests/AsynchT/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/AsynchT/Receiver
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver.idl
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver.mpc
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h
+        * connectors/ami4ccm/tests/AsynchT/Sender
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender.idl
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender.mpc
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h
+        AMI4CCM asynchronous test.
+
 Wed Jun  9 10:13:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
