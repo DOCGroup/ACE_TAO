@@ -292,10 +292,17 @@ AST_InterfaceFwd::is_fwd (void)
 // but want to return the full definition member,
 // whether defined yet or not.
 AST_Decl *
-AST_InterfaceFwd::adjust_found (bool full_def_only)
+AST_InterfaceFwd::adjust_found (
+  bool ignore_fwd,
+  bool full_def_only)
 {
-  AST_Interface *i = this->full_definition ();
-  return (full_def_only && !i->is_defined () ? 0 : i);
+  if (ignore_fwd)
+    {
+      AST_Interface *i = this->full_definition ();
+      return (full_def_only && !i->is_defined () ? 0 : i);
+    }
+
+  return this;
 }
 
 IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

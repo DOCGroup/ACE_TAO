@@ -70,7 +70,9 @@ AST_Template_Module_Ref::ast_accept (ast_visitor *visitor)
 // the next iteration of the search. So for this immediate
 // adjustment we return no match.
 AST_Template_Module_Ref *
-AST_Template_Module_Ref::adjust_found (bool /*full_def_only*/)
+AST_Template_Module_Ref::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
 {
   return 0;
 }

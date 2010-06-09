@@ -111,7 +111,7 @@ public:
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
   // whether defined yet or not.
-  virtual AST_Decl *adjust_found (bool full_def_only);
+  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   static AST_Decl::NodeType const NT;
 
