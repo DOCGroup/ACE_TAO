@@ -192,11 +192,10 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_START_TEST (ACE_TEXT ("Process_Semaphore_Test"));
 
       ACE_TString exe_sub_dir;
-      const ACE_TCHAR *subdir_env =
-        ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+      const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
       if (subdir_env)
         {
-          exe_sub_dir = subdir_env;
+          exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
           exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
         }
 
