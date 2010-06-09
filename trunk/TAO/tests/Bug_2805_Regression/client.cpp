@@ -201,6 +201,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       AMI_Test_i * servant =
         new AMI_Test_i(orb.in(), in_number, in_str, true);
+      PortableServer::ServantBase_var safe (servant);
+
       server = servant->_this();
 
       if (CORBA::is_nil (server.in ()))

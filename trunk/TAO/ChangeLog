@@ -1,3 +1,25 @@
+Wed Jun  9 15:54:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_2909_Regression/client.cpp:
+        * tests/Bug_2560_Regression/Stock_i.h:
+        * tests/Bug_2560_Regression/Stock_Factory_i.cpp:
+        * tests/Bug_2560_Regression/server.cpp:
+        * tests/Bug_2560_Regression/Stock_Factory_i.h:
+        * tests/Bug_2560_Regression/Stock_i.cpp:
+        * tests/OBV/Forward/Test_impl.cpp:
+        * tests/OBV/Truncatable/TruncatableS_impl.cpp:
+        * tests/OBV/Any/client.cpp:
+        * tests/Bug_2805_Regression/client.cpp:
+        * tests/Bug_2953_Regression/server.cpp:
+        * tests/Bug_2188_Regression/client.cpp:
+        * tests/Bug_2654_Regression/client.cpp:
+        * tests/Bug_2654_Regression/Hello.cpp:
+          Fixed memory leaks and fixed some of compile warnings.
+
+        * tests/Bug_3853_Regression/client.cpp:
+        * tests/Bug_3853_Regression/server.cpp:
+          Fixed compile errors in wchar builds.
+
 Wed Jun  9 13:45:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * TAO_IDL/ast/ast_structure_fwd.cpp:
