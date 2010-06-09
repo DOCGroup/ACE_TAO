@@ -306,10 +306,12 @@ namespace CIAO_Foo_Impl
     }
 
     if(ACE_OS::strcmp (my_string_sequence[0], "Hi") != 0)
-      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[0] != Hi, it is %C\n", my_string_sequence[0].in ()));
+      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[0] != Hi, it is %C\n",
+                  my_string_sequence[0].in ()));
 
     if(ACE_OS::strcmp (my_string_sequence[1], "World") != 0)
-      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[1] != World, it is %C\n", my_string_sequence[1].in ()));
+      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[1] != World, it is %C\n",
+                  my_string_sequence[1].in ()));
   }
 
   char * Foo_exec_i::my_fixed_string (void)
@@ -317,8 +319,11 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_fixed_string (const char * /*my_fixed_string*/)
+  void Foo_exec_i::my_fixed_string (const char * my_fixed_string)
   {
+    if(ACE_OS::strcmp (my_fixed_string, "Hi") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_fixed_string != Hi, it is %C\n",
+                  my_fixed_string));
   }
 
   char *Foo_exec_i::my_variable_string (void)
@@ -326,8 +331,11 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_variable_string (const char * /*my_variable_string*/)
+  void Foo_exec_i::my_variable_string (const char * my_variable_string)
   {
+    if(ACE_OS::strcmp (my_variable_string, "Hi") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_variable_string != Hi, it is %C\n",
+                  my_variable_string));
   }
 
   ::CORBA::WChar *Foo_exec_i::my_fixed_wstring (void)

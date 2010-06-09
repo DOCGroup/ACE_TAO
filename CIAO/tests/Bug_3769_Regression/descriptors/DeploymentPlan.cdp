@@ -104,6 +104,28 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>my_variable_string</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>my_fixed_string</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hi</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>my_double</name>
       <value>
         <type>
