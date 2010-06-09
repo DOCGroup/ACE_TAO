@@ -11,35 +11,43 @@ namespace CIAO_Hello_Sender_Impl
       const char* error_string,
       const char* func)
     {
-      printf ("Sender (%s) :\tCallback except from AMI\n", func);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("Sender (%C) :\tCallback except from AMI.\n"),
+                  func));
       if (id != 42)
-      {
-        printf ("ERROR (%s) :\tReceived unexpected ID received in except handler\n",
-              func);
-        return;
-      }
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("ERROR (%C) :\tReceived unexpected ID received")
+                      ACE_TEXT(" in except handler.\n"),
+                      func));
+          return;
+        }
       if (ACE_OS::strcmp (error_string, "Hello world") != 0)
-      {
-        printf ("ERROR (%s) :\tReceived unexpected error string received in except handler\n",
-              func);
-        return;
-      }
-      printf ("OK (%s) :\tReceived the correct except parameters.\n", func);
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("ERROR (%C) :\tReceived unexpected error string")
+                      ACE_TEXT(" received in except handler.\n"),
+                      func));
+          return;
+        }
     }
 
   void HandleException (
       ::CCM_AMI::ExceptionHolder_ptr excep_holder,
       const char* func)
     {
-      printf ("Sender (%s) :\tHandle except AMI\n", func);
+       ACE_DEBUG ((LM_DEBUG,
+                   ACE_TEXT("Sender (%C) :\tHandle except AMI\n"), func));
       try
         {
           excep_holder->raise_exception ();
         }
       catch (const Hello::InternalError& ex)
         {
-          ACE_DEBUG ((LM_DEBUG, "Sender: Caught the correct except type <%d> <%C>\n",
-                  ex.id, ex.error_string.in ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("Sender: Caught the correct except type")
+                      ACE_TEXT(" <%u> <%C>\n"),
+                      ex.id, ex.error_string.in ()));
           HandleException (ex.id, ex.error_string.in (), func);
         }
       catch (const CORBA::Exception& ex)
@@ -69,7 +77,9 @@ namespace CIAO_Hello_Sender_Impl
     ::CORBA::Long ami_return_val,
     const char * answer)
   {
-    printf ("Sender (FOO) :\tCallback from AMI : result <%d> answer <%s>\n", ami_return_val, answer);
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (FOO) :\tCallback from AMI: result <%u> ")
+                ACE_TEXT("answer <%C>\n"), ami_return_val, answer));
   }
 
   void
@@ -84,7 +94,9 @@ namespace CIAO_Hello_Sender_Impl
   MyFoo_callback_exec_i::hello (
     ::CORBA::Long answer)
   {
-    printf ("Sender (FOO) :\tCallback from AMI (HELLO) : answer <%d>\n", answer);
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (FOO) :\tCallback from AMI (HELLO) :")
+                ACE_TEXT(" answer <%u>\n"), answer));
   }
 
   void
@@ -99,7 +111,9 @@ namespace CIAO_Hello_Sender_Impl
   MyFoo_callback_exec_i::get_rw_attrib (
     ::CORBA::Short ami_return_val)
   {
-    printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB) : answer <%d>\n", ami_return_val);
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB):")
+                ACE_TEXT(" answer <%u>\n"), ami_return_val));
   }
 
   void
@@ -113,7 +127,9 @@ namespace CIAO_Hello_Sender_Impl
   void
   MyFoo_callback_exec_i::set_rw_attrib ()
   {
-    printf ("Sender (RW_ATTRIB) :\tCallback from AMI (RW_ATTRIB)\n");
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (RW_ATTRIB) :\tCallback from ")
+                ACE_TEXT("AMI (RW_ATTRIB)\n")));
   }
 
   void
@@ -128,7 +144,9 @@ namespace CIAO_Hello_Sender_Impl
   MyFoo_callback_exec_i::get_ro_attrib (
     ::CORBA::Short ami_return_val)
   {
-    printf ("Sender (RO_ATTRIB) :\tCallback from AMI (RO_ATTRIB) : answer <%d>\n", ami_return_val);
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (RO_ATTRIB) :\tCallback from AMI ")
+                ACE_TEXT("(RO_ATTRIB) : answer <%u>\n"), ami_return_val));
   }
 
   void
@@ -153,26 +171,35 @@ namespace CIAO_Hello_Sender_Impl
       {
         if (CORBA::is_nil (my_foo_ami_))
           {
-            printf ("ERROR Sender (ASYNCH) :\tfoo_ami is NIL !!!\n");
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT("ERROR Sender (ASYNCH) :")
+                        ACE_TEXT("\tfoo_ami is NIL !!!\n")));
             return 1;
           }
         else
           {
-            printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls\n");
-            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "Do something asynchronous");
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Sender (ASYNCH) :")
+                        ACE_TEXT("\tInvoke Asynchronous calls\n")));
+            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (),
+                                    "Do something asynchronous");
             my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
             my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
             my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
-            printf ("Sender (ASYNCH) :\tInvoked Asynchronous calls\n");
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (ASYNCH) :\tInvoked Asynchronous calls\n")));
           }
       }
-    printf ("Sender (ASYNCH) :\tInvoke Asynchronous calls to test except handling\n");
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (ASYNCH) :\tInvoke Asynchronous calls ")
+                ACE_TEXT("to test except handling\n")));
     my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "");
     my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 0);
-    printf ("Sender (ASYNCH) :\tInvoked Asynchronous call.\n");
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (ASYNCH) :\tInvoked Asynchronous call.\n")));
     return 0;
   }
 
@@ -191,61 +218,85 @@ namespace CIAO_Hello_Sender_Impl
     char * out_str = 0;
     for (int i = 0; i < 5; ++i)
       {
-        CORBA::Long result = my_foo_ami_->foo ("Do something synchronous", out_str);
-        printf ("Sender (SYNCH):\tInvoked synchronous call (FOO) result <%d> answer <%s>\n", result, out_str);
+        CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
+                                               out_str);
+        ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call (FOO)")
+                ACE_TEXT(" result <%u> answer <%C>\n"), result, out_str));
 
         CORBA::Long answer;
         my_foo_ami_->hello (answer);
-        printf ("Sender (SYNCH):\tInvoked synchronous call (HELLO) answer <%d>\n", answer);
+        ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
+                ACE_TEXT("(HELLO) answer <%u>\n"), answer));
 
         try 
           {
             CORBA::Short rw_attrib = my_foo_ami_->rw_attrib ();
-            printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RW_ATTRIB) answer <%d>\n", rw_attrib);
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
+                ACE_TEXT("(GET_RW_ATTRIB) answer <%u>\n"), rw_attrib));
           }
         catch (const Hello::InternalError& ex)
           {
-            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH FOO) :\tExpected Except caught :")
+                ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
           }
           
         try 
           {
             my_foo_ami_->rw_attrib (15);
-            printf ("Sender (SYNCH):\tInvoked synchronous call (SET_RW_ATTRIB) to <15>\n");
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
+                ACE_TEXT("(SET_RW_ATTRIB) to <15>\n")));
           }
         catch (const Hello::InternalError& ex)
           {
-            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH FOO) :\tExpected Except caught :")
+                ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
           }
 
         try 
           {
             CORBA::Short ro_attrib = my_foo_ami_->ro_attrib ();
-            printf ("Sender (SYNCH):\tInvoked synchronous call (GET_RO_ATTRIB) answer <%d>\n", ro_attrib);
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call ")
+                ACE_TEXT("(GET_RO_ATTRIB) answer <%u>\n"), ro_attrib));
           }
         catch (const Hello::InternalError& ex)
           {
-            printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+            ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH FOO) :\tExpected Except caught :")
+                ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
           }
       }
     try
       {
         CORBA::Long result = my_foo_ami_->foo ("", out_str);
-        printf ("Sender (SYNCH) :\tInvoked synchronous call result <%d> answer <%s>\n", result, out_str);
+        ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH) :\tInvoked synchronous call result ")
+                ACE_TEXT("<%u> answer <%C>\n"), result, out_str));
       }
     catch (const Hello::InternalError& ex)
       {
-        printf ("Sender (SYNCH FOO) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+        ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH FOO) :\tExpected Except caught : ")
+                ACE_TEXT("<%u> <%C>\n"), ex.id, ex.error_string.in ()));
       }
 
     try
       {
         my_foo_ami_->rw_attrib (0);
-        printf ("Sender (SYNCH) :\tInvoked synchronous call rw_attrib\n");
+        ACE_DEBUG ((LM_DEBUG,
+           ACE_TEXT("Sender (SYNCH) :\tInvoked synchronous call rw_attrib\n")));
       }
     catch (const Hello::InternalError& ex)
       {
-        printf ("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught : <%d> <%s>\n", ex.id, ex.error_string.in ());
+        ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Sender (SYNCH RW_ATTRIB) :\tExpected Except caught :")
+                ACE_TEXT(" <%u> <%C>\n"), ex.id, ex.error_string.in ()));
       }
     catch (const CORBA::Exception& ex)
       {
