@@ -59,6 +59,12 @@ replacement in the near term:
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 =======================================================
 
+. Added support for structs in the deployment plan
+
+. Updated DDS4CCM to the beta 3 specification
+
+. Improved AMI4CCM support
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
 
