@@ -106,7 +106,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::Object_var myhello = demoPOA->id_to_reference(oid.in());
 
         // Put the object reference as an IOR string
-        ofstream out(shutdown_ior_output_file);
+        ofstream out(ACE_TEXT_ALWAYS_CHAR (shutdown_ior_output_file));
         CORBA::String_var ior = orb->object_to_string (myhello);
         out  << ior.in();
         // save the reference into a file
@@ -127,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::Object_var myhello = demoPOA->id_to_reference(oid.in());
 
         // Put the object reference as an IOR string
-        ofstream out(ior_output_file);
+        ofstream out(ACE_TEXT_ALWAYS_CHAR (ior_output_file));
         CORBA::String_var ior = orb->object_to_string (myhello);
         out  << ior.in();
         // save the reference into a file
