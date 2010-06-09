@@ -40,6 +40,9 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_three_dim_get_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_three_dim_read_status (void);
+
     virtual void configuration_complete (void);
 
     virtual void ccm_activate (void);
@@ -48,13 +51,6 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
 
   private:
     ::CFT_Test::CCM_CFTTestComponent_Context_var context_;
-    ::CFTTwoDimensionalTestConn::Reader_var two_reader_;
-    ::CFTThreeDimensionalTestConn::Reader_var three_reader_;
-
-    bool test_two_dimensional_filter (void);
-
-    bool test_three_dimensional_filter (void);
-
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -44,89 +44,25 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Component_exec_i::get_three_dim_read_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
   void
   Component_exec_i::configuration_complete (void)
   {
   }
 
-  bool
-  Component_exec_i::test_two_dimensional_filter (void)
-  {
-    try
-      {
-        CCM_DDS::QueryFilter filter;
-        filter.expression = CORBA::string_dup (QUERY);
-        filter.parameters.length (2);
-        filter.parameters[0] = CORBA::string_dup ("5");
-        filter.parameters[1] = CORBA::string_dup ("5");
-        this->two_reader_->query (filter);
-      }
-    catch (const CCM_DDS::InternalError& ex)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_two_dimensional_filter - "
-                              "caught InternalError exception: retval <%u>\n",
-                              ex.error_code));
-        return false;
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("ERROR: Receiver_exec_i::test_two_dimensional_filter: ");
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_two_dimensional_filter - "
-                              "Exception caught\n"));
-        return false;
-      }
-    return true;
-  }
-
-  bool
-  Component_exec_i::test_three_dimensional_filter (void)
-  {
-    try
-      {
-        CCM_DDS::QueryFilter filter;
-        filter.expression = CORBA::string_dup (QUERY);
-        filter.parameters.length (2);
-        filter.parameters[0] = CORBA::string_dup ("5");
-        filter.parameters[1] = CORBA::string_dup ("5");
-        this->three_reader_->query (filter);
-      }
-    catch (const CCM_DDS::InternalError& ex)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_three_dimensional_filter - "
-                              "caught InternalError exception: retval <%u>\n",
-                              ex.error_code));
-        return false;
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("ERROR: Receiver_exec_i::test_three_dimensional_filter: ");
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_three_dimensional_filter - "
-                              "Exception caught\n"));
-        return false;
-      }
-    return true;
-  }
-
   void
   Component_exec_i::ccm_activate (void)
   {
-     this->two_reader_ = this->context_->get_connection_two_dim_get_data();
-     this->three_reader_ = this->context_->get_connection_three_dim_get_data();
-     if (this->test_two_dimensional_filter () &&
-         this->test_three_dimensional_filter ())
-      {
-        ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "
-                              "OK : Test succeeded. Two "
-                              "ContentfilteredTopics can "
-                              "be created.\n"));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "
-                              "ERROR : Test failed. Probably two "
-                              "ContentfilteredTopics "
-                              "with the same name were created.\n"));
-      }
+    // if deployment succeeds, this test succeeds
+    ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "
+                          "OK : Test succeeded. Two "
+                          "ContentfilteredTopics can "
+                          "be created.\n"));
   }
 
   void

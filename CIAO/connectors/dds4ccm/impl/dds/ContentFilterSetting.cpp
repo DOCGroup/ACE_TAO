@@ -50,13 +50,6 @@ namespace CIAO
       ::DDS::Subscriber_ptr subscriber)
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic");
-      char * name = 0;
-      ACE_NEW_THROW_EX (name,
-                        char[32],
-                        CORBA::NO_MEMORY ());
-      ACE_OS::sprintf (name ,
-                       "DDS4CCM_CFT_%ld",
-                       reinterpret_cast <unsigned long> (this));
 
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
       if (CORBA::is_nil (dp.in ()))
@@ -65,6 +58,15 @@ namespace CIAO
                                            "Unable to get DomainParticipant.\n"));
           throw CORBA::INTERNAL ();
         }
+
+      char * name = 0;
+      ACE_NEW_THROW_EX (name,
+                        char[32],
+                        CORBA::NO_MEMORY ());
+      ACE_OS::sprintf (name ,
+                       "DDS4CCM_CFT_%ld",
+                       reinterpret_cast <unsigned long> (this));
+
       this->cft_ = dp->create_contentfilteredtopic (name,
                                                     topic,
                                                     this->filter_.expression,
@@ -89,7 +91,8 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::delete_contentfilteredtopic");
 
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
-      if (! ::CORBA::is_nil (dp.in ()))
+      if (! ::CORBA::is_nil (dp.in ()) &&
+          ! ::CORBA::is_nil (this->cft_.in ()))
         {
           dp->delete_contentfilteredtopic (this->cft_.in ());
         }

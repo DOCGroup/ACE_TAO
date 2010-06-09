@@ -1,3 +1,22 @@
+Wed Jun  9 10:13:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
+          Realigned code.
+          Only delete contentfilteredtopics which are created.
+          Using this to determine the name of a contentfiltered topic.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component_exec.cpp:
+          Test passes when deployment succeeds.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.idl:
+          Extended IDL with a DDS_Read port.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/descriptors/Plan.cdp:
+          Setting two filters to test whether the names of the ContentFilteredTopics are
+          unique.
+
 Wed Jun  9 08:57:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:

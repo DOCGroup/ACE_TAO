@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CFTTwoDimensionalTestConn_DDS_Event_Impl</string>
+          <string>create_CFTTwoDimensionalTestConn_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CFTTwoDimensionalTestConn_DDS_Event_Servant</string>
+          <string>create_CFTTwoDimensionalTestConn_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -123,7 +123,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CFTThreeDimensionalTestConn_DDS_Event_Impl</string>
+          <string>create_CFTThreeDimensionalTestConn_DDS_State_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -134,7 +134,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CFTThreeDimensionalTestConn_DDS_Event_Servant</string>
+          <string>create_CFTThreeDimensionalTestConn_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -206,6 +206,102 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>pull_observer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>( (x > %0) AND (x &lt; %1) )</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>2</string>
+              </element>
+              <element>
+                <string>5</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>passive_observer_filter</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>QueryFilter</name>
+            <typeId>IDL:CCM_DDS/QueryFilter:1.0</typeId>
+            <member>
+              <name>expression</name>
+              <type>
+                <kind>tk_string</kind>
+              </type>
+            </member>
+            <member>
+              <name>parameters</name>
+              <type>
+                <kind>tk_sequence</kind>
+                <sequence>
+                  <elementType>
+                    <kind>tk_string</kind>
+                  </elementType>
+                </sequence>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>expression</name>
+            <value>
+              <string>( (x &lt; %0) OR (x > %1) )</string>
+            </value>
+          </member>
+          <member>
+            <name>parameters</name>
+            <value>
+              <element>
+                <string>2</string>
+              </element>
+              <element>
+                <string>5</string>
+              </element>
+            </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <connection>
@@ -221,7 +317,7 @@
       <instance xmi:idref="ComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>pull_consumer_data</portName>
+      <portName>pull_observer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="TwoDim_CFT_Test_ConnectorInstance" />
@@ -241,7 +337,47 @@
       <instance xmi:idref="ComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>pull_consumer_data</portName>
+      <portName>pull_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeDim_CFT_Test_ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>three_dim_read_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>three_dim_read_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ThreeDim_CFT_Test_ConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>three_dim_get_filter_confit</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>three_dim_get_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_filter_config</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="ThreeDim_CFT_Test_ConnectorInstance" />
