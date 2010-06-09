@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/dds/Updater_T.h"
 #include "dds4ccm/impl/dds/DataWriter.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::DDS_Update_T (void) :

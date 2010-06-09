@@ -9,7 +9,7 @@
 #include "dds4ccm/impl/dds/DataListenerControl_T.h"
 #include "dds4ccm/impl/dds/PortStatusListener_T.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

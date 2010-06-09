@@ -6,7 +6,7 @@
 #include "dds4ccm/impl/dds/ndds/SampleInfo.h"
 #include "dds4ccm/impl/dds/ndds/StringSeq.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 DDSQueryCondition * CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::qc_listener_ = 0;

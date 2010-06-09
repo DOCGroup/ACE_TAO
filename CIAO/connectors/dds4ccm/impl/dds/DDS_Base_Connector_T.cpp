@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 #include "dds4ccm/impl/dds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/dds/DomainParticipant.h"
 #include "ace/Tokenizer_T.h"
