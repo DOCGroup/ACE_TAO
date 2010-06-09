@@ -89,7 +89,7 @@ TAO_IDL = <%tao_idl%>
 TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%endif%>
 <%if(tao_idlflags)%>
-TAO_IDLFLAGS = <%tao_idlflags%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))
+TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
 <%endif%>
 <%if(cidlc)%>
 CIDLC = <%cidlc%>
@@ -125,7 +125,7 @@ PRJ_TYPE = library
 <%if(exename)%>
 <%if(install)%>
 COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
-INSBIN ?= $(call COLLAPSE_SLASHES,<%install%>)
+INSBIN ?= <%if(compares(vms_old_make, 1))%><%install%><%else%>$(call COLLAPSE_SLASHES,<%install%>)<%endif%>
 <%endif%>
 ifeq ($(INSBIN),.)
   ifeq ($(CURDIR),)
@@ -147,7 +147,7 @@ OUTPUT_DIRECTORY = $(if $(ARCH),$(if $(INSBIN),$(INSBIN)/$(ARCH)),$(INSBIN))
 <%else%>
 <%if(dllout || libout)%>
 COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
-INSLIB ?= $(call COLLAPSE_SLASHES,<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>)
+INSLIB ?= <%if(compares(vms_old_make, 1))%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%><%else%>$(call COLLAPSE_SLASHES,<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>)<%endif%>
 <%endif%>
 ifeq ($(INSLIB),.)
   ifeq ($(CURDIR),)
@@ -216,7 +216,7 @@ ifneq ($(OUTPUT_DIRECTORY),)
 .PHONY: create_output_directory.local
 all: create_output_directory.local
 create_output_directory.local:
-	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
+	-@$(MKDIR) "$(OUTPUT_DIRECTORY)" $(ACE_NUL_STDERR)
 endif
 
 <%if(sharedname || staticname || exename)%>
@@ -557,7 +557,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "$(call ADD_ARCH,<%dep%>)" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%else%>
@@ -567,7 +567,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "$(call ADD_ARCH,<%custom_type->dependent%>)" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
@@ -581,13 +581,13 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),$(call ADD_ARCH,<%dep%>))<%else%>$(call ADD_ARCH,<%dep%>)<%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),$(call ADD_ARCH,<%custom_type->dependent%>))<%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%><%endfor%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%><%endif%><%endfor%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
 <%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
 <%endif%>
 <%endif%>
-	$(if $(findstring ",<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>),<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>,$(call ADD_QUOTE,$(call ADD_ARCH,<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>))) <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> $@<%else%><%custom_type->input_file%><%endif%>
+	$(if $(findstring ",<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>),<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>,<%if(compares(vms_old_make, 1))%><%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%><%else%>$(call ADD_QUOTE,$(call ADD_ARCH,<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>))<%endif%>) <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> $@<%else%><%custom_type->input_file%><%endif%>
 <%if(flag_overrides(custom_type->input_file, postcommand))%>
 <%foreach(custom_type->input_file)%>
 	<%flag_overrides(custom_type->input_file, postcommand)%>
