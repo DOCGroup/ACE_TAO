@@ -120,7 +120,7 @@ be_visitor_attribute_ccm_init::visit_sequence (
 
 int
 be_visitor_attribute_ccm_init::visit_string (
-  be_string *node)
+  be_string *)
 {
   this->emit_init_block ();
   return 0;

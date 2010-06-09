@@ -127,7 +127,7 @@ be_visitor_attribute_set_from_extracted::visit_string (
 
 int
 be_visitor_attribute_set_from_extracted::visit_structure (
-  be_structure *node)
+  be_structure *)
 {
   os_ << "*" << var_name_;
   return 0;
@@ -145,7 +145,7 @@ be_visitor_attribute_set_from_extracted::visit_typedef (
 
 int
 be_visitor_attribute_set_from_extracted::visit_union (
-  be_union *node)
+  be_union *)
 {
   os_ << "*" << var_name_;
   return 0;
