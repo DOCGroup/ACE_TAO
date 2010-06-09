@@ -32,10 +32,10 @@ $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 $DANCE_ROOT=$ENV{'DANCE_ROOT'};
 
 $SV1 = $tg_deamons->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:30000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -d 1000");
+                                   "-ORBEndpoint iiop://localhost:30000 -s $DANCE_ROOT/DAnCE/bin/dance_locality_manager -d 30");
 
 $SV2 = $tg_deamons->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:40000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -d 1000");
+                                   "-ORBEndpoint iiop://localhost:40000 -s $DANCE_ROOT/bin/dance_locality_manager -d 30");
 
 $SV1->Spawn ();
 $SV2->Spawn ();
