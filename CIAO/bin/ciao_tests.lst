@@ -111,3 +111,4 @@ TAO/CIAO/DAnCE/tests/Parsing/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !COR
 TAO/CIAO/DAnCE/tests/Parsing/PlanLauncher/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
+TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
