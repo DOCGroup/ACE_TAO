@@ -82,6 +82,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     : iterations_ (10),
       keys_ (5),
       has_run_ (false),
+      run_tests_ (true),
       current_iter_value1_ (ACE_OS::atoi (ITER1_VALUE1)),
       current_iter_value2_ (ACE_OS::atoi (ITER1_VALUE2)),
       ticker_ (0)
@@ -541,6 +542,19 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     this->keys_ = keys;
   }
 
+  ::CORBA::Boolean
+  Receiver_exec_i::run_tests (void)
+  {
+    return this->run_tests_;
+  }
+
+  void
+  Receiver_exec_i::run_tests (::CORBA::Boolean run_tests)
+  {
+    this->run_tests_ = run_tests;
+  }
+
+
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_get_port_status (void)
@@ -581,44 +595,47 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->read_reader_ = this->context_->get_connection_read_port_data ();
-    this->get_reader_ = this->context_->get_connection_get_port_data ();
-    this->get_getter_ = this->context_->get_connection_get_port_fresh_data ();
-    this->get_filter_setting_ = this->context_->get_connection_get_port_filter_config ();
-    this->read_filter_setting_ = this->context_->get_connection_read_port_filter_config ();
+    if (this->run_tests_)
+      {
+        this->read_reader_ = this->context_->get_connection_read_port_data ();
+        this->get_reader_ = this->context_->get_connection_get_port_data ();
+        this->get_getter_ = this->context_->get_connection_get_port_fresh_data ();
+        this->get_filter_setting_ = this->context_->get_connection_get_port_filter_config ();
+        this->read_filter_setting_ = this->context_->get_connection_read_port_filter_config ();
 
-    if (CORBA::is_nil (this->get_filter_setting_.in ()) ||
-        CORBA::is_nil (this->read_filter_setting_.in ()) ||
-        CORBA::is_nil (this->read_reader_.in ()) ||
-        CORBA::is_nil (this->get_reader_.in ()) ||
-        CORBA::is_nil (this->get_getter_.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::ccm_activate : "
-                              "ERROR: Error while retrieving connections "
-                              "Filter settings getter <%@>\n"
-                              "Filter settings reader <%@>\n"
-                              "Reader on Reader port <%@>\n"
-                              "Reader on Getter port <%@>\n"
-                              "Getter on Getter port <%@>\n",
-                              this->get_filter_setting_.in (),
-                              this->read_filter_setting_.in (),
-                              this->read_reader_.in (),
-                              this->get_reader_.in (),
-                              this->get_getter_.in ()));
-      }
+        if (CORBA::is_nil (this->get_filter_setting_.in ()) ||
+            CORBA::is_nil (this->read_filter_setting_.in ()) ||
+            CORBA::is_nil (this->read_reader_.in ()) ||
+            CORBA::is_nil (this->get_reader_.in ()) ||
+            CORBA::is_nil (this->get_getter_.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::ccm_activate : "
+                                  "ERROR: Error while retrieving connections\n"
+                                  "Filter settings getter <%@>\n"
+                                  "Filter settings reader <%@>\n"
+                                  "Reader on Reader port <%@>\n"
+                                  "Reader on Getter port <%@>\n"
+                                  "Getter on Getter port <%@>\n",
+                                  this->get_filter_setting_.in (),
+                                  this->read_filter_setting_.in (),
+                                  this->read_reader_.in (),
+                                  this->get_reader_.in (),
+                                  this->get_getter_.in ()));
+          }
 
-    DDS::Duration_t to;
-    to.sec = 5;
-    to.nanosec = 0;
-    if (! ::CORBA::is_nil (this->get_getter_))
-      {
-        this->get_getter_->time_out (to);
+        DDS::Duration_t to;
+        to.sec = 5;
+        to.nanosec = 0;
+        if (! ::CORBA::is_nil (this->get_getter_))
+          {
+            this->get_getter_->time_out (to);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Unable to set time out.\n"));
+          }
+        this->restarter_ = this->context_->get_connection_writer_restart ();
       }
-    else
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to set time out.\n"));
-      }
-    this->restarter_ = this->context_->get_connection_writer_restart ();
 }
 
   void

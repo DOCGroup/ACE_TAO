@@ -217,6 +217,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>report_errors</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance xmi:id="ReadGet_Test_SenderConnectorInstance">

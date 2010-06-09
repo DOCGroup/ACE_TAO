@@ -71,6 +71,11 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Supported operations and attributes.
+    ::CORBA::Boolean
+    run_tests (void);
+
+    void
+    run_tests (::CORBA::Boolean run_tests);
     // Component attributes.
 
     // Port operations.
@@ -118,6 +123,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;
     bool            has_run_;
+    bool            run_tests_;
 
     int current_iter_value1_;
     int current_iter_value2_;

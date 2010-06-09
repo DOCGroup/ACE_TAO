@@ -1,3 +1,16 @@
+Wed Jun  9 13:58:53 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
+          Check on whether the contentfiltered topic is nil or whether
+          the expression has been set before setting the filter parameters.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/*:
+          Added test the check whether several deployment configuration
+          errors are handled properly.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/*:
+          Test to explicitly test errors on set_filter_parameters.
+
 Wed Jun  9 13:49:56 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp

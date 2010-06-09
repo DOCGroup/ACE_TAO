@@ -21,6 +21,8 @@ module ReadGet_Test
 
     provides ReadGetStarter reader_start;
     uses ReadGetRestarter writer_restart;
+
+    attribute boolean run_tests;
   };
 };
 

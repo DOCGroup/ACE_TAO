@@ -18,9 +18,9 @@ $ns_running = 0;
 
 $nr_daemon = 2;
 @ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+@iorbases = ( "Component.ior", "Sender.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ( "ComponentNode", "SenderNode" );
 
 # ior files other than daemon
 # ior files other than daemon
@@ -72,7 +72,7 @@ sub init_ior_files {
 
 # Delete if there are any .ior files.
 sub delete_ior_files {
-    for ($i = 0; $i < $nr_daemon;( (iteration &lt; %0) OR (iteration > %1) ) ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
     }
     $tg_naming->DeleteFile ($ior_nsbase);
@@ -218,12 +218,12 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 30 seconds to allow task to complete\n";
-sleep (30);
+print "Sleeping 10 seconds to allow task to complete\n";
+sleep (10);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -s\n";
+print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -q\n";
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                         "-k file://$ior_emfile -x $cdp_file -s");
