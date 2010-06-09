@@ -92,10 +92,10 @@ int singleton_test (void)
 #if defined(ACE_HAS_DYNAMIC_LINKING)
 
     ACE_TString dll_file;
-    const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+    const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
     if (subdir_env)
       {
-        dll_file = subdir_env;
+        dll_file = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
         dll_file += ACE_DIRECTORY_SEPARATOR_STR;
       }
 

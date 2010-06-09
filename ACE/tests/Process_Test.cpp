@@ -103,10 +103,10 @@ run_parent (bool inherit_files)
 
   // Build child options
   ACE_TString exe_sub_dir;
-  const ACE_TCHAR *subdir_env = ACE_OS::getenv (ACE_TEXT ("ACE_EXE_SUB_DIR"));
+  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
-      exe_sub_dir = subdir_env;
+      exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
       exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
     }
 
