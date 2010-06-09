@@ -117,7 +117,7 @@ public:
   // If this decl has been found, some types need to be
   // moved onto their true definitions etc. Defaults to
   // NO adjustment in AST_Decl class
-  virtual COMMON_Base *adjust_found (bool full_def_only);
+  virtual COMMON_Base *adjust_found (bool ignore_fwd, bool full_def_only);
 
 protected:
   bool is_local_;
@@ -191,7 +191,7 @@ public:
   // If this decl has been found, some types need to be
   // moved onto their true definitions etc. Defaults to
   // NO adjustment.
-  virtual AST_Decl *adjust_found (bool full_def_only);
+  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   // Data Accessors.
 

@@ -1,3 +1,22 @@
+Wed Jun  9 13:45:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_template_module_ref.h:
+        * TAO_IDL/include/ast_structure_fwd.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Corrected the mistake of the previous refactor;
+          forward declarations are not skipped in favour
+          of the full definitions during local identifer
+          searches.
+
 Wed Jun  9 05:39:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_attribute/ccm_init.cpp:
@@ -30,7 +49,7 @@ Tue Jun  8 15:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot c
         * TAO_IDL/be/be_module.cpp:
         * TAO_IDL/be/be_generator.cpp:
         * TAO_IDL/be_include/be_module.h:
-        * TAO_IDL/include/include/ast_module.h:
+        * TAO_IDL/include/ast_module.h:
         * TAO_IDL/include/ast_interface_fwd.h:
         * TAO_IDL/include/ast_component_fwd.h:
         * TAO_IDL/include/ast_decl.h:

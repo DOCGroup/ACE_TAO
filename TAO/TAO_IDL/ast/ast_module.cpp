@@ -154,7 +154,10 @@ AST_Module::dump (ACE_OSTREAM_TYPE &o)
 // We actually want to match the LAST module found in
 // the scope being searched not the FIRST one in the
 // list.
-AST_Module *AST_Module::adjust_found (bool /*full_def_only*/)
+AST_Module *
+AST_Module::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
 {
   return this->last_in_same_parent_scope_;
 }
@@ -252,7 +255,7 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
         {
           AST_Decl *d = iter.item ();
           if ((!ignore_fwd || !d->is_fwd ())
-              && !!(d = d->adjust_found (false))
+              && !!(d = d->adjust_found (ignore_fwd, false))
               && e->case_compare (d->local_name ()))
             {
               return d;
@@ -276,8 +279,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
            iter.next ())
         {
           AST_Decl *d = iter.item ();
-          if ((!full_def_only || !d->is_fwd())
-              && !!(d = d->adjust_found (false))
+          if (!!(d = d->adjust_found (full_def_only, full_def_only))
               && e->head ()->case_compare (d->local_name ()))
             {
               UTL_ScopedName *sn =
