@@ -21,6 +21,17 @@ project(INet) : acelib, ace_output, install {
     HTTP_URL.cpp
     HTTP_ClientRequestHandler.cpp
   }
+  Template_Files {
+    BidirStreamBuffer.cpp
+    BufferedStreamBuffer.cpp
+    HTTP_Session.cpp
+    HTTP_StreamPolicy.cpp
+    HTTP_StreamPolicyBase.cpp
+    Sock_IOStream.cpp
+    StreamHandler.cpp
+    StreamInterceptor.cpp
+    String_IOStream.cpp
+  }
   Header_Files {
     INet_Export.h
   }
