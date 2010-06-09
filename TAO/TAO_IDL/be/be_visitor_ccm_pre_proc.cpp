@@ -1863,7 +1863,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
 
       be_interface *iface =
         be_interface::narrow_from_decl (u->uses_type ());
-
+        
       /// The real AMI_xxx exists only in the *A.idl file, so
       /// we create a dummy as the uses type for the implied
       /// receptacle created below.
@@ -1910,11 +1910,15 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       ACE_NEW_RETURN (ami_uses,
                       be_uses (&utmp_sn,
                                ami_iface,
-                               false),
+                               u->is_multiple ()),
                       -1);
 
       s->add_to_scope (ami_uses);
       idl_global->scopes ().pop ();
+      
+      AST_Component *c =
+        AST_Component::narrow_from_scope (s);
+      idl_global->create_uses_multiple_stuff (c, ami_uses);
     }
 
   return 0;

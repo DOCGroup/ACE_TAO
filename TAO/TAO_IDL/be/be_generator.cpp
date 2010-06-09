@@ -216,6 +216,15 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 l,
                                 a),
                   0);
+  
+  /// Trigger this interation over the included pragmas when the
+  /// first local interface is seen in the main file. In an
+  /// executor IDL file (the case we want), this happens near the
+  /// top. In other files, it will do no harm.                
+  if (l && idl_global->in_main_file ())
+    {
+      idl_global->create_implied_ami_uses_stuff ();
+    }
 
   return retval;
 }

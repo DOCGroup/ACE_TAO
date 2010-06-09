@@ -1,3 +1,24 @@
+Wed Jun  9 21:53:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Changed signature of add_to_included_idl_files()
+          to take a const char*.
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Changes to support multiplex receptacles in
+          AMI4CCM.
+
 Wed Jun  9 15:54:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_2909_Regression/client.cpp:
