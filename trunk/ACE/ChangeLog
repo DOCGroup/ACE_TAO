@@ -1,3 +1,8 @@
+Wed Jun  9 18:45:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          Made layout of several debug statements consistent
+
 Wed Jun  9 15:41:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * protocols/ace/INet/inet.mpc:
