@@ -473,7 +473,7 @@ public:
   //   preprocessor parsed the file.
 
   // Just storing the pointer. No memory will be allocated.
-  virtual void add_to_included_idl_files (char* file_name);
+  virtual void add_to_included_idl_files (const char *file_name);
 
   // Get all the files.
   virtual char** included_idl_files (void);

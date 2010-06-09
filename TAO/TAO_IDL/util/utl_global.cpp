@@ -648,7 +648,7 @@ IDL_GlobalData::n_include_file_names (void)
 // IDL file.
 
 void
-IDL_GlobalData::add_to_included_idl_files (char *file_name)
+IDL_GlobalData::add_to_included_idl_files (const char *file_name)
 {
   // Let's avoid duplicates.
   for (size_t index = 0; index < this->n_included_idl_files_; ++index)
@@ -683,7 +683,8 @@ IDL_GlobalData::add_to_included_idl_files (char *file_name)
 
           for (size_t i = 0; i < n_old_allocated_idl_files; ++i)
             {
-              this->included_idl_files_ [i] = old_included_idl_files [i];
+              this->included_idl_files_ [i] =
+                old_included_idl_files [i];
             }
 
           delete [] old_included_idl_files;
@@ -747,10 +748,12 @@ IDL_GlobalData::validate_included_idl_files (void)
   // processor output here
   // @see bug TAO#711 / Bugzilla #3513 for more
   char** ordered_include_files = new char* [n_pre_preproc_includes];
+  
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       post_tmp = post_preproc_includes [i]->get_string ();
       full_path = ACE_OS::realpath (post_tmp, post_abspath);
+      
       if (full_path)
         {
           for (size_t j = 0u; j < n_pre_preproc_includes; ++j)
@@ -1714,8 +1717,14 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
   UTL_ScopedName sn (&struct_id, 0);
+  
+  // In case this call comes from the backend. We
+  // will pop the scope before returning.
+  idl_global->scopes ().push (c);
+  
   AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, 0, 0);
+
   struct_id.destroy ();
   
   /// If the field type is a param holder, we want
@@ -1792,6 +1801,9 @@ IDL_GlobalData::create_uses_multiple_stuff (AST_Component *c,
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
+  
+  // In case this call comes from the backend.
+  idl_global->scopes ().pop ();
 }
 
 void

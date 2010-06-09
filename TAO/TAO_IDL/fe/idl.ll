@@ -838,10 +838,18 @@ idl_store_pragma (char *buf)
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)
     {
+      char *tmp = idl_get_pragma_string (buf);
+
       if (idl_global->in_main_file ())
         {
-          char *tmp = idl_get_pragma_string (buf);
           idl_global->add_ciao_ami_recep_names (tmp);
+        }
+      else
+        {
+          /// This is intended for the executor IDL file,
+          /// when a pragma is seen in the main file, but
+          /// it will do no harm in other cases.
+          idl_global->add_included_ami_recep_names (tmp);
         }
     }
 }
