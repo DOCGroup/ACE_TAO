@@ -1,0 +1,18 @@
+// $Id$
+
+/**
+ * @file CFT_Exception_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CFT_EXCEPTION_TEST_CONNECTOR_IDL_
+#define CFT_EXCEPTION_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/Exception_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/Exception_Test_ConnectorE.idl"
+
+module ::CCM_DDS::Typed < ::CFTExceptionTest, ::CFTExceptionTestSeq> CFTExceptionTestConn;
+#endif /* CFT_EXCEPTION_TEST_CONNECTOR_IDL_ */

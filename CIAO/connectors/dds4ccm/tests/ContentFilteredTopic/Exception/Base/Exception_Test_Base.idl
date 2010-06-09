@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file CFT_Exception_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef CFT_EXCEPTION_TEST_BASE_IDL
+#define CFT_EXCEPTION_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/Exception_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "CFTExceptionTest"
+#pragma DCPS_DATA_KEY "CFTExceptionTest symbol"
+
+struct CFTExceptionTest {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<CFTExceptionTest> CFTExceptionTestSeq;
+
+#endif /* CFT_EXCEPTION_TEST_BASE_IDL */

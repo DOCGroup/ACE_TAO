@@ -103,17 +103,24 @@ namespace CIAO
       const ::DDS::StringSeq & parameters)
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::set_filter_parameters");
+      if (::CORBA::is_nil (this->cft_.in ()) ||
+          ACE_OS::strlen (this->filter_.expression.in ()) == 0)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
+                                       "Calling set_filter_parameters without having set a filter\n"));
+          throw CCM_DDS::InternalError ();
+        }
 
       ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
       if (retcode == DDS_RETCODE_OK)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "successfully set parameters on ContentfilteredTopic\n"));
           this->filter_.parameters = parameters;
         }
       else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "CCM_DDS_ContentFilterSetting_i::set_filter_parameters:"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "Error setting filter parameters: <%C>\n",
                                        translate_retcode (retcode)));
           throw CCM_DDS::InternalError ();
