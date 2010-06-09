@@ -163,6 +163,27 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>my_string_sequence</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <elementType>
+              <kind>tk_string</kind>
+            </elementType>
+          </sequence>
+        </type>
+        <value>
+          <element>
+            <string>Hi</string>
+          </element>
+          <element>
+            <string>World</string>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>my_float_sequence</name>
       <value>
         <type>

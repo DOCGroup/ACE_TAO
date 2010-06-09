@@ -297,8 +297,19 @@ namespace CIAO_Foo_Impl
   }
   
   void Foo_exec_i::my_string_sequence (
-      const ::string_sequence & /*my_string_sequence*/)
+      const ::string_sequence & my_string_sequence)
   {
+    if(my_string_sequence.length() != 2)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
+      return;
+    }
+
+    if(ACE_OS::strcmp (my_string_sequence[0], "Hi") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[0] != Hi, it is %C\n", my_string_sequence[0].in ()));
+
+    if(ACE_OS::strcmp (my_string_sequence[1], "World") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[1] != World, it is %C\n", my_string_sequence[1].in ()));
   }
 
   char * Foo_exec_i::my_fixed_string (void)
