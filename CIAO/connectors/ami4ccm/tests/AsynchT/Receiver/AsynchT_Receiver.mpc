@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p AsynchT_Base AsynchT_Receiver"
+
+project(AMI_AsynchT_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_AsynchT_idl_gen
+  idlflags += -Wb,stub_export_macro=ASYNCHT_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=AsynchT_Receiver_stub_export.h \
+              -Wb,skel_export_macro=ASYNCHT_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=AsynchT_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=ASYNCHT_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=AsynchT_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    AsynchT_Receiver.idl
+  }
+}
+
+project(AMI_AsynchT_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_AsynchT_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ASYNCHT_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=AsynchT_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    AsynchT_ReceiverE.idl
+  }
+}
+
+project(AMI_AsynchT_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_AsynchT_Base_Receiver_lem_gen AMI_AsynchT_Base_Receiver_stub AMI_AsynchT_stub
+  libs  += AsynchT_stub AsynchT_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AsynchT_Receiver_lem_stub
+  dynamicflags   = ASYNCHT_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchT_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    AsynchT_ReceiverEC.h
+    AsynchT_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    AsynchT_ReceiverEC.inl
+  }
+}
+
+project(AMI_AsynchT_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_AsynchT_Base_Receiver_idl_gen AMI_AsynchT_stub
+  libs  += AsynchT_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = AsynchT_Receiver_stub
+  dynamicflags   = ASYNCHT_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchT_ReceiverC.cpp
+  }
+
+  Header_Files {
+    AsynchT_ReceiverC.h
+    AsynchT_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    AsynchT_ReceiverC.inl
+  }
+}
+
+project(AMI_AsynchT_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_AsynchT_Base_Receiver_l_stub AMI_AsynchT_Base_Receiver_stub AMI_AsynchT_stub AMI_AsynchT_lem_stub
+  sharedname = AsynchT_Receiver_exec
+  libs += AsynchT_Receiver_stub AsynchT_Receiver_lem_stub AsynchT_stub AsynchT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = ASYNCHT_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchT_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    AsynchT_Receiver_exec.h
+    AsynchT_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_AsynchT_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_AsynchT_Base_skel AMI_AsynchT_Base_Receiver_l_stub AMI_AsynchT_stub AMI_AsynchT_skel AMI_AsynchT_lem_stub
+  sharedname  = AsynchT_Receiver_svnt
+  libs       += AsynchT_Receiver_stub AsynchT_Receiver_lem_stub  \
+                AsynchT_skel \
+                AsynchT_stub AsynchT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = ASYNCHT_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchT_ReceiverS.cpp
+    AsynchT_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    AsynchT_ReceiverS.h
+    AsynchT_Receiver_svnt.h
+    AsynchT_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    AsynchT_ReceiverS.inl
+  }
+}
+

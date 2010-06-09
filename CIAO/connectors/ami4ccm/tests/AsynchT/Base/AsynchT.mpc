@@ -1,0 +1,196 @@
+// $Id$
+
+project(AMI_AsynchT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ASYNCHT_STUB_Export \
+              -Wb,stub_export_include=AsynchT_stub_export.h \
+              -Wb,skel_export_macro=ASYNCHT_SKEL_Export \
+              -Wb,skel_export_include=AsynchT_skel_export.h \
+              -Wb,conn_export_macro=ASYNCHT_CONN_Export \
+              -Wb,conn_export_include=AsynchT_conn_export.h \
+              -Wb,exec_export_macro=ASYNCHT_EXEC_Export \
+              -Wb,exec_export_include=AsynchT_exec_export.h \
+              -I.. -GM -Gxhcn
+  idlflags -= -Gsv
+
+  IDL_Files {
+    AsynchT.idl
+  }
+}
+
+project(AMI_AsynchT_lem_gen) : ciaoidldefaults {
+  after += AMI_AsynchT_idl_gen AMI_AsynchT_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=ASYNCHT_LEM_STUB_Export \
+              -Wb,export_include=AsynchT_lem_stub_export.h \
+              -I.. -SS -Gxhst
+
+  IDL_Files {
+    AsynchTE.idl
+  }
+}
+
+project(AMI_AsynchT_lema_gen) : ciaoidldefaults {
+  after += AMI_AsynchT_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ASYNCHT_STUB_Export \
+              -Wb,stub_export_include=AsynchT_stub_export.h \
+              -Wb,conn_export_macro=ASYNCHT_CONN_Export \
+              -Wb,conn_export_include=AsynchT_conn_export.h \
+              -Wb,svnt_export_macro=ASYNCHT_SVNT_Export \
+              -Wb,svnt_export_include=AsynchT_svnt_export.h \
+              -Wb,skel_export_macro=ASYNCHT_SKEL_Export \
+              -Wb,skel_export_include=AsynchT_skel_export.h \
+              -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+
+  IDL_Files {
+    AsynchTA.idl
+  }
+}
+
+project(AMI_AsynchT_lemae_gen) : ciaoidldefaults {
+  after += AMI_AsynchT_lema_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=ASYNCHT_LEM_STUB_Export \
+              -Wb,stub_export_include=AsynchT_lem_stub_export.h \
+              -I.. -SS
+
+  IDL_Files {
+    AsynchTAE.idl
+  }
+}
+
+project(AMI_AsynchT_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_AsynchT_lem_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = AsynchT_stub
+  dynamicflags = ASYNCHT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchTC.cpp
+    AsynchTAC.cpp
+  }
+
+  Header_Files {
+    AsynchTC.h
+    AsynchT_stub_export.h
+}
+
+  Inline_Files {
+    AsynchTC.inl
+  }
+}
+
+project(AMI_AsynchT_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_AsynchT_lem_gen AMI_AsynchT_stub AMI_AsynchT_lemae_gen AMI_AsynchT_skel
+  libs += AsynchT_stub AsynchT_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  sharedname = AsynchT_lem_stub
+  dynamicflags = ASYNCHT_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchTEC.cpp
+    AsynchTAEC.cpp
+  }
+
+  Header_Files {
+    AsynchTEC.h
+    AsynchT_lem_stub_export.h
+}
+
+  Inline_Files {
+    AsynchTEC.inl
+  }
+}
+
+project(AMI_AsynchT_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_AsynchT_stub
+  sharedname  = AsynchT_skel
+  libs       += AsynchT_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=   ..
+
+  dynamicflags = ASYNCHT_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchTS.cpp
+    AsynchTAS.cpp
+  }
+
+  Header_Files {
+    AsynchTS.h
+   
+    AsynchT_skel_export.h
+  }
+
+  Inline_Files {
+    AsynchTS.inl
+   
+  }
+}
+
+project(AMI_AsynchT_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_AsynchT_lem_stub AsynchT_Base_AMI_stub AMI_AsynchT_skel AMI_AsynchT_lema_gen AMI_AsynchT_lemae_gen
+  sharedname = AsynchT_conn
+  libs += AsynchT_stub AsynchT_skel AsynchT_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = ASYNCHT_CONN_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchTA_conn.cpp
+  }
+
+  Header_Files {
+    AsynchTA_conn.h
+    AsynchT_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_AsynchT_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_AsynchT_lem_stub AsynchT_Base_AMI_stub AMI_AsynchT_skel AMI_AsynchT_lema_gen AMI_AsynchT_lemae_gen AMI_AsynchT_conn
+  sharedname = AsynchT_svnt
+  libs += AsynchT_stub AsynchT_skel AsynchT_lem_stub AsynchT_conn
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = ASYNCHT_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchTA_svnt.cpp
+  }
+
+  Header_Files {
+    AsynchTA_svnt.h
+    AsynchTA_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
