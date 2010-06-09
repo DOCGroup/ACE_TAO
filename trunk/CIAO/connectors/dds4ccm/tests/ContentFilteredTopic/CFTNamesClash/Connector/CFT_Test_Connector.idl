@@ -16,5 +16,4 @@
 
 module ::CCM_DDS::Typed < ::CFTTwoDimensionalTest, ::CFTTwoDimensionalTestSeq> CFTTwoDimensionalTestConn;
 module ::CCM_DDS::Typed < ::CFTThreeDimensionalTest, ::CFTThreeDimensionalTestSeq> CFTThreeDimensionalTestConn;
-
 #endif /* CONTENTFILTEREDTOPIC_TEST_CONNECTOR_IDL_ */

@@ -15,6 +15,7 @@ module CFT_Test
   {
     port CFTTwoDimensionalTestConn::DDS_Get two_dim_get;
     port CFTThreeDimensionalTestConn::DDS_Get three_dim_get;
+    port CFTThreeDimensionalTestConn::DDS_Read three_dim_read;
   };
 };
 
