@@ -23,12 +23,11 @@ namespace CIAO_UsesMulti_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::UsesMulti::AMI4CCM_One_ptr my_one_ami);
-
+    asynch_foo_generator (::UsesMulti::Sender::sendc_run_my_um_oneConnections_var);
     virtual int svc (void);
 
   private:
-    ::UsesMulti::AMI4CCM_One_var my_one_ami_;
+    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var my_one_ami_;
   };
 
   /// Worker threads for synchronous invocations
