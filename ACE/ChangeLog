@@ -1,3 +1,14 @@
+Wed Jun  9 14:44:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Based_Pointer_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/Signal_Test.cpp:
+
+          Fixes for wchar on Unix.  There is no ACE_OS::getenv(wchar_t*) on
+          Unix, it's only on Win32.
+
 Tue Jun  8 21:59:16 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:
