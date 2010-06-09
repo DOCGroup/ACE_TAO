@@ -1,3 +1,9 @@
+Wed Jun  9 15:41:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * protocols/ace/INet/inet.mpc:
+
+          The Template_Files section is needed for "make install".
+
 Wed Jun  9 14:45:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
