@@ -58,7 +58,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var poa = root_poa->create_POA ( "MyPOA", poa_manager.in(), policies );
 
     // Creation of the new POAs over, so destroy the Policy_ptr's.
-    for ( size_t  i = 0 ; i < policies.length (); ++i ) {
+    for ( CORBA::ULong i = 0 ; i < policies.length (); ++i ) {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();
     }
@@ -67,11 +67,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Quoter_Stock_i::set_default_POA ( poa.in() ) ;
 
     // Create the servant
-    Quoter_Stock_Factory_i stock_factory_i;
+    Quoter_Stock_Factory_i *stock_factory_i = 0;
+    ACE_NEW_RETURN (stock_factory_i,
+                    Quoter_Stock_Factory_i,
+                    -1);
+    PortableServer::ServantBase_var safe (stock_factory_i);
 
     // Activate it to obtain the object reference
     PortableServer::ObjectId_var id =
-      root_poa->activate_object (&stock_factory_i);
+      root_poa->activate_object (stock_factory_i);
 
     CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 

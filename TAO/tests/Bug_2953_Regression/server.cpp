@@ -137,7 +137,7 @@ RTCORBA::RTORB_ptr getRTORB(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RTORB for orb <%C>\n",
                   id));
     }
-  return RTCORBA::RTORB::_duplicate (rtorb);
+  return rtorb;
 }
 
 PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
@@ -150,10 +150,10 @@ PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RootPOA for orb <%C>\n",
                   id));
     }
-  return PortableServer::POA::_duplicate (poa);
+  return poa;
 }
 
-const char*
+char*
 addServant(
   CORBA::ORB_ptr orb,
   RTCORBA::RTORB_ptr rtorb,
@@ -252,33 +252,37 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var rootPoaA = getRootPoa(orbA.in (), orbidA);
     PortableServer::POA_var rootPoaB = getRootPoa(orbB.in (), orbidB);
 
-    rootPoaA->the_POAManager()->activate();
-    rootPoaB->the_POAManager()->activate();
+    PortableServer::POAManager_var managerA = rootPoaA->the_POAManager();
+    managerA->activate();
+    PortableServer::POAManager_var managerB = rootPoaB->the_POAManager();
+    managerB->activate();
 
     Client_Task client_taskA (orbA.in ());
     Client_Task client_taskB (orbB.in ());
 
     implA = new Test_i(orbA.in (), &client_taskA);
+    PortableServer::ServantBase_var safeA (implA);
     implB = new Test_i(orbB.in (), &client_taskB);
+    PortableServer::ServantBase_var safeB (implB);
 
-    const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
-    const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
+    CORBA::String_var iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
+    CORBA::String_var iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    if (write_iorfile(ior_a_file, iorA) == 1)
+    if (write_iorfile(ior_a_file, iorA.in ()) == 1)
       return 1;
 
-    if (write_iorfile(ior_b_file, iorB) == 1)
+    if (write_iorfile(ior_b_file, iorB.in ()) == 1)
       return 1;
 
     // colocated calls work fine
-    CORBA::Object_var objA = orbA->string_to_object(iorA);
+    CORBA::Object_var objA = orbA->string_to_object(iorA.in ());
     Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
     CORBA::String_var resA = helloA->get_string();
 
-    CORBA::Object_var objB = orbB->string_to_object(iorB);
+    CORBA::Object_var objB = orbB->string_to_object(iorB.in ());
     Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
@@ -308,6 +312,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
     shutdownORB(orbB.in (), orbidB);
+
     objB = CORBA::Object::_nil ();
     helloB = Test::Hello::_nil ();
     orbB = CORBA::ORB::_nil ();
