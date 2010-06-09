@@ -45,7 +45,7 @@ enum DataType2
   dtString,
   dtShortType
 };
-union Data2 switch (DataType2) // Jeff, changing DataType2 to DataType causes a segfault in TAO_IDL
+union Data2 switch (DataType2) 
 {
   case dtString: string stringData;
   case dtShortType: short shortData;
