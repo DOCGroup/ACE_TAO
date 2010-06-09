@@ -58,9 +58,23 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
           return true;
         }
     }
+  catch (const ::CCM_DDS::InternalError &)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                                              "Caught CCM_DDS internal exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DDS_Subscriber_Base_T::configuration_complete");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                                              "Caught internal exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Subscriber_Base_T::configuration_complete: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                                              "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
   return false;
@@ -88,7 +102,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Subscriber_Base_T::activate: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::activate: "
+                                              "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -106,7 +121,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::passivate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Subscriber_Base_T::passivate: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::passivate: "
+                                              "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -121,10 +137,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   try
     {
       this->data_reader_.delete_datareader (subscriber);
+      this->cft_setting_.delete_contentfilteredtopic (subscriber);
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Subscriber_Base_T::remove: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::remove: "
+                                              "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -179,9 +197,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::filter (
     {
       if (ACE_OS::strlen (filter.expression.in ()) == 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::get_filter_config: "
-                                      "Filter expression not set. Unable to create "
-                                      "ContentFilterSetting interface.\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_Subscriber_Base_T::get_filter_config: "
+                                       "Filter expression not set. Unable to create "
+                                       "ContentFilterSetting interface.\n"));
           throw ::CCM_DDS::InternalError ();
         }
       this->cft_setting_.filter (filter);

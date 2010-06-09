@@ -570,32 +570,6 @@ namespace CIAO
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
       if (this->remove_topic (top))
         {
-          ACE_CString name ("DDS4CCM_CFT_");
-          name.append (top->get_name (), ACE_OS::strlen (top->get_name ()));
-          ::DDS::TopicDescription_var td =
-              lookup_topicdescription (name.c_str ());
-          if (! ::CORBA::is_nil (td.in ()))
-            {
-              ::DDS::ContentFilteredTopic_var cft = ::DDS::ContentFilteredTopic::_narrow (td.in ());
-              if (! ::CORBA::is_nil (cft.in ()))
-                {
-                  ::DDS::ReturnCode_t const ret = this->delete_contentfilteredtopic (cft.in ());
-                  if (ret != ::DDS::RETCODE_OK)
-                    {
-                      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
-                                                  "Unable to delete ContentFilteredTopic. Retval is %C.\n",
-                                                  topic_name,
-                                                  translate_retcode (ret)));
-                    }
-                  else
-                    {
-                      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_i::delete_topic <%C> - "
-                                    "Successfully deleted ContentFilteredTopic <%C>\n",
-                                    topic_name,
-                                    name.c_str ()));
-                    }
-                }
-            }
           retval = this->impl ()->delete_topic (top->get_impl ());
 
           if (retval != DDS_RETCODE_OK)
@@ -725,7 +699,9 @@ namespace CIAO
       if (!ccm_dds_cft)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_i::create_contentfilteredtopic - "
-                       "RTI DDS returned a nil ContentFilteredTopic.\n"));
+                       "RTI DDS returned a nil ContentFilteredTopic for name <%C> and filter "
+                       "expression <%C>.\n",
+                       name, filter_expression));
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
 
@@ -735,7 +711,8 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "DDS_DomainParticipant_i::create_contentfilteredtopic - "
-                   "Successfully created topic with name <%C> and filter expression <%C>\n",
+                   "Successfully created contentfilteredtopic with name <%C> and "
+                   "filter expression <%C>\n",
                    name, filter_expression));
 
       return retval._retn ();

@@ -64,6 +64,7 @@ protected:
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
   bool configuration_complete_;
   //@}
+private:
   typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;
 };
 
