@@ -1,3 +1,9 @@
+Wed Jun  9 18:32:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+
+          Fixed slight mistake in previous commit. 
+
 Wed Jun  9 18:30:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
