@@ -3,7 +3,7 @@
  * @file Log_Macros.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * Macros used for logging in CIAO.
+ * Macros used for logging in DDS4CCM
  */
 
 #ifndef DDS4CCM_LOG_MACROS_H_
@@ -12,10 +12,13 @@
 // default information printed with CIAO logging messages.
 
 #include "ciao/Logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 
 #if !defined (CLINFO)
 #  define CLINFO "(%P|%t) [%M] - %T - "
 #endif
+
+extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 
 // By default tracing is turned off.
 #if !defined (DDS4CCM_NTRACE)

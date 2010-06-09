@@ -3,7 +3,7 @@
 
 #include "dds4ccm/impl/dds/DataListenerControl_T.h"
 #include "dds4ccm/impl/dds/DataReaderListener_T.h"
-#include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Listen_T (void) :

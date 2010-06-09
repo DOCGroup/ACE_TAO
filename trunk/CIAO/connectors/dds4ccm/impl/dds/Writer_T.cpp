@@ -6,8 +6,7 @@
 
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
 
-#include "dds4ccm/impl/logger/Log_Macros.h"
-
+#include "dds4ccm/impl/dds/Log_Macros.h"
 template <typename DDS_TYPE, typename CCM_TYPE >
 CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::Writer_T (void)
   : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type> (),
