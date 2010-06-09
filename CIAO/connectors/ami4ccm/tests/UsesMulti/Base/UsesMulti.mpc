@@ -11,6 +11,7 @@ project(AMI_UsesMulti_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
               -Wb,exec_export_macro=USESMULTI_EXEC_Export \
               -Wb,exec_export_include=UsesMulti_exec_export.h \
               -I.. -GM -Gxhcn
+            
   idlflags -= -Gsv
 
   IDL_Files {
@@ -42,6 +43,12 @@ project(AMI_UsesMulti_lema_gen) : ciaoidldefaults {
               -Wb,skel_export_macro=USESMULTI_SKEL_Export \
               -Wb,skel_export_include=UsesMulti_skel_export.h \
               -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+      
+  // We need the typecode for the AMI4CCM_* interface
+  // since it can be a member of the uses multiple related
+  // struct in a component, but this is hackish, there
+  // should be a cleaner way.         
+  idlflags -= -St
 
   IDL_Files {
     UsesMultiA.idl

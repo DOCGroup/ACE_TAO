@@ -43,16 +43,42 @@ namespace CIAO_UsesMulti_Sender_Impl
   // Worker thread for asynchronous invocations for One
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-    ::UsesMulti::AMI4CCM_One_ptr my_one_ami)
-  : my_one_ami_ (::UsesMulti::AMI4CCM_One::_duplicate (my_one_ami))
+    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var my_one_ami)
+   : my_one_ami_ (my_one_ami)
   {
   }
 
   int asynch_foo_generator::svc ()
   {
     //Invoke Asynchronous calls to test 
-    my_one_ami_->sendc_foo ( new One_callback_exec_i (),
-      "Hi from asynch call ONE::foo", 1);
+    for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
+      {
+        CORBA::String_var test;
+        
+        switch (i)
+          {
+            case 0:
+              test = CORBA::string_dup ("Asynchronous call een.");
+              break;
+            case 1:
+              test = CORBA::string_dup ("Asynchronous call twee");
+              break;
+            case 2:
+              test = CORBA::string_dup ("Asynchronous call drie");
+              break;
+            default:
+              break;
+          }
+
+        /// Don't we have to get hold of a POA and create an object
+        /// reference for the reply handler? Or is that handled 
+        /// under the hood in AMI4CCM? If so, we may not need to
+        /// create the reply handler servant on the heap.
+        my_one_ami_[i].objref->sendc_foo (new One_callback_exec_i (),
+                                          test.in (),
+                                          i);                                     
+      }
+      
     return 0;
   }
   //============================================================
@@ -130,12 +156,12 @@ namespace CIAO_UsesMulti_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     //Expected somehing like this with use multiple asynchroon:
-    //::UsesMulti::AMI4CCM_Sender::sendc_run_my_um_oneConnections_var asynch_foo =
-    //this->context_->get_connections_sendc_run_my_um_one();
+    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var asynch_foo =
+    this->context_->get_connections_sendc_run_my_um_one();
  
     //this isn't use multiple asynchroon
-    ::UsesMulti::AMI4CCM_One_var asynch_foo =
-      this->context_->get_connection_sendc_run_my_um_one();
+    //::UsesMulti::AMI4CCM_One_var asynch_foo =
+      //this->context_->get_connection_sendc_run_my_um_one();
      asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
      asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
