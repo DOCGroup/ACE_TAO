@@ -15,7 +15,7 @@
 #include "tao/LocalObject.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Reactor.h"
-#include "ace/Task.h"
+
 
 namespace CIAO_QCLS_Test_Receiver_Impl
 {
