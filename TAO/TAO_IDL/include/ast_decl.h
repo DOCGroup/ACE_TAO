@@ -111,14 +111,6 @@ public:
   bool is_abstract (void) const;
   void is_abstract (bool val);
 
-  // Is this decl a forward declared type (default false)
-  virtual bool is_fwd (void);
-
-  // If this decl has been found, some types need to be
-  // moved onto their true definitions etc. Defaults to
-  // NO adjustment in AST_Decl class
-  virtual COMMON_Base *adjust_found (bool ignore_fwd, bool full_def_only);
-
 protected:
   bool is_local_;
   bool is_abstract_;
@@ -192,6 +184,9 @@ public:
   // moved onto their true definitions etc. Defaults to
   // NO adjustment.
   virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+
+  // Is this decl a forward declared type (default false)
+  virtual bool is_fwd (void);
 
   // Data Accessors.
 

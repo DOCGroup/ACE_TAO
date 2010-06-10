@@ -144,6 +144,7 @@ AST_Generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, AST_Module (n, m), 0);
+          retval->prefix (const_cast<char *> (m->prefix ()));
           return retval;
         }
     }
