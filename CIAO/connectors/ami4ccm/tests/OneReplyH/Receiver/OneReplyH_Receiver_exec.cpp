@@ -43,8 +43,7 @@ namespace CIAO_OneReplyH_Receiver_Impl
       }
     else
       {
-        answer = CORBA::string_alloc(20);
-        sprintf(answer,"in_str was <%C>", in_str);
+        answer = CORBA::string_dup("hi from receiver.");
         l_cmd = cmd;
       }
   }
