@@ -150,7 +150,7 @@ foreach $file (@files) {
 
     print STDERR "Starting Naming Service\n";
 
-    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
+    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", " -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
     $NS->Spawn ();
 
     if ($tg_naming->WaitForFileTimed ($ior_nsbase,
