@@ -80,9 +80,6 @@ class AST_Template_Module_Inst;
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
-  friend void fe_populate_global_scope (AST_Module *m);
-  friend int tao_yyparse (void);
-
 public:
   static AST_Decl::NodeType const NT;
 
@@ -149,7 +146,6 @@ public:
   // list.
   virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
-private:
   // Scope Management Protocol
 
   virtual
