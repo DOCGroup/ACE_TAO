@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
   class Receiver_exec_i;
@@ -32,8 +30,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
     ~read_action_Generator ();
 
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
   private:
     Receiver_exec_i &callback_;
     int run_;
@@ -71,39 +68,31 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Supported operations and attributes.
-    ::CORBA::Boolean
-    run_tests (void);
+    ::CORBA::Boolean run_tests (void);
 
-    void
-    run_tests (::CORBA::Boolean run_tests);
+    void run_tests (::CORBA::Boolean run_tests);
     // Component attributes.
 
     // Port operations.
-    virtual ::CCM_ReadGetStarter_ptr
-    get_reader_start ();
+    virtual ::CCM_ReadGetStarter_ptr get_reader_start ();
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_get_port_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_get_port_status (void);
 
-    virtual CCM_DDS::CCM_PortStatusListener_ptr
-    get_read_port_status(void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_read_port_status(void);
 
     bool check_last ();
     void start_read (CORBA::UShort run);
     void run (CORBA::UShort run);
 
     ::CORBA::UShort iterations (void);
-
     void iterations (::CORBA::UShort iterations);
 
     ::CORBA::UShort keys (void);
-
     void keys (::CORBA::UShort keys);
 
     // Operations from Components::SessionComponent.
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context ( ::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
