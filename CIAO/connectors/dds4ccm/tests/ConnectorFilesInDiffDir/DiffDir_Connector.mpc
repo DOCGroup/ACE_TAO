@@ -109,7 +109,7 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
   after      += DiffDir_Connector_lem_stub
   sharedname  = DiffDir_Connector_svnt
-  libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub  DiffDir_stub
+  libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
   includes   += .
 
   dynamicflags = DIFFDIR_CONNECTOR_SVNT_BUILD_DLL
