@@ -294,8 +294,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter ()
   {
-//     check_filter (true);
-//     check_filter (false);
+    check_filter (true);
+    check_filter (false);
   }
 
   void
