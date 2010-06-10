@@ -1,3 +1,12 @@
+Thu Jun 10 08:29:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+          Code alignment.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Base/Exception_Test_Base.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.idl:
+          Fuzz.
+
 Thu Jun 10 08:16:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.cpp:
