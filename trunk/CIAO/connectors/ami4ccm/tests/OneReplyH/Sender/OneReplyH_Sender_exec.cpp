@@ -21,7 +21,7 @@ namespace CIAO_OneReplyH_Sender_Impl
   void HandleException (
       long id,
       long expect_id,
-      const char* error_string,
+      const char* /*error_string*/,
       const char* func)
   {
     //expected exception
@@ -82,7 +82,7 @@ namespace CIAO_OneReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::bar (
-     const char *answer, CORBA::Long l_cmd)
+     const char */*answer*/, CORBA::Long l_cmd)
   {
     if ( l_cmd == cmd_asynch_bar_ok )
       {
