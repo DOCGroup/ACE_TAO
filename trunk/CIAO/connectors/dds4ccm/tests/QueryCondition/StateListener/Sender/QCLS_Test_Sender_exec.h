@@ -15,7 +15,7 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
+
 
 namespace CIAO_QCLS_Test_Sender_Impl
 {

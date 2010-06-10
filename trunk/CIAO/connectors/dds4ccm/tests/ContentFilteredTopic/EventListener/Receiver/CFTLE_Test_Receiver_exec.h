@@ -17,7 +17,7 @@
 #include "ace/Reactor.h"
 #include "ace/Task.h"
 
-#include <map>
+
 
 namespace CIAO_CFTLE_Test_Receiver_Impl
 {
