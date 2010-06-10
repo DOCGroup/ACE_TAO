@@ -117,7 +117,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove");
   try
     {
-      DDS::ReturnCode_t const retval =
+      ::DDS::ReturnCode_t const retval =
         publisher->delete_datawriter (&this->ccm_dds_writer_);
       if (retval != DDS::RETCODE_OK)
         {
@@ -125,7 +125,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
             "DDS_Update_T::remove - "
             "Unable to delete DataWriter: <%C>\n",
             ::CIAO::DDS4CCM::translate_retcode (retval)));
-          throw CORBA::INTERNAL ();
+          throw ::CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_.set_impl (0);
       this->dds_update_.set_impl (0);
@@ -133,7 +133,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
   catch (...)
     {
       DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::remove: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
 }
 

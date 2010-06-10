@@ -1,9 +1,17 @@
+Thu Jun 10 18:37:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpc:
+          Fixed MPC file when no ndds is available
+
 Thu Jun 10 15:20:31 UTC 2010  Marijke Hengstmengelt  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.cpp
         * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp
         Solve compile warnings.
-        
+
 Thu Jun 10 15:10:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
