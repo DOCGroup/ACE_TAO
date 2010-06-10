@@ -141,9 +141,9 @@ init_ior_files ();
 
 # Invoke naming service
 
-$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
+$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", " -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
 
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 $ns_status = $NS->Spawn ();
 

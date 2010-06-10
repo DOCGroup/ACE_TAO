@@ -4,7 +4,7 @@
 
 #include "State_Connection_Test_Receiver_exec.h"
 #include "ace/Log_Msg.h"
-#include "tao/ORB_Core.h"
+
 
 namespace CIAO_State_Connection_Test_Receiver_Impl
 {

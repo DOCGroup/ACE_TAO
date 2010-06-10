@@ -1,3 +1,58 @@
+Thu Jun 10 15:10:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tests/CIAO/CommandlinePassage/run_test.pl:
+        * DAnCE/tests/LocalityManager/SpawnMultiple/run_test.pl:
+        * DAnCE/tests/LocalityManager/SpawnOne/run_test.pl:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test.pl:
+        * DAnCE/tests/Parsing/PlanLauncher/descriptors/run_test_msm.pl:
+        * connectors/ami4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/DelReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterInArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterMulti/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterOutArgs/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/InterReturn/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Getter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PortUsage/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Reader/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/run_test.pl:
+        * tests/Bug_3769_Regression/descriptors/run_test.pl:
+        * tests/IDL_Test/Double_Inherited_Component/run_test.pl:
+          Removed -m 1 option from the naming service command line.
+
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Receiver/CSL_QoSTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+          Removed unused ORB_Core.h header file.
+
 Thu Jun 10 13:33:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.h:
