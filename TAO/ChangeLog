@@ -1,3 +1,10 @@
+Thu Jun 10 11:58:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          This should fix the double forward declaration problem, and
+          the template modules look-up problem.
+
 Thu Jun 10 09:05:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * TAO_IDL/ast/ast_template_module_ref.cpp:

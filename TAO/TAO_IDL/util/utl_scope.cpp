@@ -1212,7 +1212,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
        !i.is_done ();
        i.next ())
     {
-      AST_Decl *d = i.item ()->adjust_found (false, full_def_only);
+      AST_Decl *d = i.item ()->adjust_found (true, full_def_only);
       if (d)
         {
           Identifier *item_name = d->local_name ();
@@ -1371,7 +1371,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // Before proceeding to normal lookup, check if the name
       // matches a template module parameter. If so, the return
       // value is created on the heap and is owned by the caller
-      // of this lookup. 
+      // of this lookup.
       if (e->length () == 1)
         {
           AST_Param_Holder *param_holder =
@@ -1403,8 +1403,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
-              work_another_level = (e->length () != 1);
-              if (!work_another_level)
+              if (e->length () == 1)
                 {
                   return d; // Last scope name matched
                 }
@@ -1412,9 +1411,12 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
               work = DeclAsScope (d); // The next scope to search
               if (!work)
                 {
-                  return 0; // Should never happen.
+                  // Template weirdness, actual one we want should be
+                  // found next in this search, keep going.
+                  continue;
                 }
 
+              work_another_level = true;
               idl_global->masking_scopes ().enqueue_head (d);
               e = static_cast<UTL_ScopedName *> (e->tail ());
               break;
