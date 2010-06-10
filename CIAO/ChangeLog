@@ -1,3 +1,8 @@
+Thu Jun 10 07:44:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpc:
+          Also generate RTI dds gen files in subdirectory.
+
 Thu Jun 10 07:25:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:

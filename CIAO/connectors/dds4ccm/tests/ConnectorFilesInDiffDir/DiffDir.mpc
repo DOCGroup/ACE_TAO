@@ -6,17 +6,21 @@ project (DiffDir_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
 
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=DIFFDIR_COMMON_STUB_Export \
-              -Wb,stub_export_include=DiffDir_Common_stub_export.h
+              -Wb,stub_export_include=DiffDir_Common_stub_export.h \
+              -o Connector
 
   IDL_Files {
     idlflags += -Gxhst
     DiffDir.idl
+    gendir = Connector
   }
 
   opendds_ts_flags += --export=DIFFDIR_COMMON_STUB_Export
 
   DDSGenerator_Files {
+    commandflags += -d Connector
     DiffDir.idl
+    gendir = Connector
   }
 
   Source_Files {
