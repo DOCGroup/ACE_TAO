@@ -13,7 +13,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/Task.h"
+
 #include "ace/Reactor.h"
 
 namespace CIAO_SL_Disabled_Receiver_Impl
