@@ -682,7 +682,10 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        &sn);
 
-      idl_global->scopes ().top ()->add_to_scope (added_module);
+  AST_Module *m =
+    AST_Module::narrow_from_scope (idl_global->scopes ().top ());
+  
+  m->fe_add_module (added_module);
 
   idl_global->scopes ().push (added_module);
 
@@ -735,7 +738,10 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
 
   // Add the new module to the scope containing the template
   // module instantiation.
-  idl_global->scopes ().top ()->add_to_scope (instance);
+  AST_Module *m =
+    AST_Module::narrow_from_scope (idl_global->scopes ().top ());
+    
+  m->fe_add_module (instance);
 
   // Update our scope management.
   idl_global->scopes ().push (instance);
@@ -894,7 +900,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                              node->is_local (),
                              node->is_abstract (),
                              true);
-
+                             
   AST_Interface *added_iface =
     idl_global->gen ()->create_interface (header.name (),
                                           header.inherits (),

@@ -58,67 +58,42 @@ be_util::gen_nested_namespace_end (TAO_OutStream *os, be_module *node)
 void
 be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 {
-  os << be_nl;
-
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+  AST_Decl::NodeType nt = node->node_type ();
+  
+  if (nt == AST_Decl::NT_root)
     {
-      Identifier *id = i.item ();
-      ACE_CString test (id->get_string (), 0, false);
+      os << be_nl;
+      return;
+    }
+    
+  be_util::gen_nesting_open (
+    os,
+    ScopeAsDecl (node->defined_in ()));
+   
+  if (nt == AST_Decl::NT_module)
+    {  
+      ACE_CString module_name (
+        IdentifierHelper::try_escape (node->original_local_name ()));
       
-      if (test == "" || test == "::")
-        {
-          i.next ();
-          continue;
-        }
-        
-      UTL_ScopedName tmp (id, 0);
-      AST_Decl *scope =
-        node->defined_in ()->lookup_by_name (&tmp, true);
-
-      ACE_CString module_name =
-        IdentifierHelper::try_escape (scope->original_local_name ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
       os << be_nl
          << "module " << module_name.c_str () << be_nl
          << "{" << be_idt;
-    }
+   }
 }
 
 void
 be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
 {
-  for (UTL_IdListActiveIterator i (node->name ()); ! i.is_done () ;)
+  AST_Decl *d = ScopeAsDecl (node->defined_in ());
+  AST_Decl::NodeType nt = d->node_type ();
+  
+  while (nt != AST_Decl::NT_root)
     {
-      ACE_CString module_name (i.item ()->get_string ());
-
-      if (module_name == "")
-        {
-          i.next ();
-          continue;
-        }
-
-      i.next ();
-
-      if (i.is_done ())
-        {
-          break;
-        }
-
       os << be_uidt_nl
          << "};";
+         
+      d = ScopeAsDecl (d->defined_in ());
+      nt = d->node_type ();
     }
 }
 

@@ -157,6 +157,7 @@ be_generator::create_module (UTL_Scope *s,
       // Can't just check node type here, since it could be a
       // template module or template module instantiation.
       AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
+      
       if (m && m->local_name ()->compare (n->last_component ()))
         {
           // Create this new module with referance to the
@@ -175,7 +176,7 @@ be_generator::create_module (UTL_Scope *s,
   AST_Module *prev_module = AST_Module::narrow_from_scope (s);
   if (prev_module)
     {
-      while (!!(prev_module= prev_module->previous_opening ()))
+      while (!!(prev_module = prev_module->previous_opening ()))
         {
           for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
                !iter.is_done ();
