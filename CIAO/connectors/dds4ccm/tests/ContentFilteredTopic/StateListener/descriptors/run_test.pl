@@ -111,7 +111,7 @@ sub run_node_daemons {
         $port = $ports[$i];
         $nodename = $nodenames[$i];
         $iiop = "iiop://localhost:$port";
-        $node_app = PerlACE::GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
+        $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
         $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
@@ -139,7 +139,7 @@ init_ior_files ();
 
 # Invoke naming service
 
-$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
+$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", " -ORBEndpoint iiop://localhost:60003 -o $ior_nsfile");
 
 $ns_status = $NS->Spawn ();
 
@@ -149,7 +149,7 @@ if ($ns_status != 0) {
     exit 1;
 }
 
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
+print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60003 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {

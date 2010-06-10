@@ -137,11 +137,11 @@ init_ior_files ();
 
 # Invoke naming service
 
-$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -ORBEndpoint iiop://localhost:60006 -o $ior_nsfile");
+$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", " -ORBEndpoint iiop://localhost:60006 -o $ior_nsfile");
 
 $NS->Spawn ();
 
-print STDERR "Starting Naming Service with -m 1 -ORBEndpoint iiop://localhost:60006 -o ns.ior\n";
+print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60006 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {
