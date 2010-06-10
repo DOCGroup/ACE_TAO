@@ -69,7 +69,7 @@ AST_Template_Module_Ref::ast_accept (ast_visitor *visitor)
 // after this node, so we'll match what we're looking for on
 // the next iteration of the search. So for this immediate
 // adjustment we return no match.
-AST_Template_Module_Ref *
+AST_Decl *
 AST_Template_Module_Ref::adjust_found (
   bool ignore_fwd,
   bool /*full_def_only*/)

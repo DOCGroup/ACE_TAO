@@ -147,7 +147,7 @@ public:
   // We actually want to match the LAST module found in
   // the scope being searched not the FIRST one in the
   // list.
-  virtual AST_Module *adjust_found (bool ignore_fwd, bool full_def_only);
+  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
 private:
   // Scope Management Protocol
