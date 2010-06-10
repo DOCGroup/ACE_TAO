@@ -1,3 +1,9 @@
+Thu Jun 10 09:05:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/ast/ast_template_module_ref.cpp:
+
+          Missed one of the turn off options in my last update.
+
 Wed Jun  9 21:53:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
