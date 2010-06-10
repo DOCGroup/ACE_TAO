@@ -1,3 +1,14 @@
+Thu Jun 10 17:32:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Somehow a change got reverted. No need for regeneration, this file is
+          consistent with idl.yy, which didn't get changed accordingly. The
+          values of the ival and uival members of the big parsing union are
+          now back to ACE_CDR::LongLong and ACE_CDR::ULongLong respectively,
+          and the newly added constants in TAO_ROOT/IDL_Test/constants.idl
+          are now generated correctly again.
+
 Thu Jun 10 14:35:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * include/ast_module.h:
