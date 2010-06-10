@@ -1,3 +1,28 @@
+Thu Jun 10 11:34:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QosProfile/Component/QosProfile_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.h:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h:
+          Removed unnecessary <map> includes.
+
 Thu Jun 10 09:57:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:

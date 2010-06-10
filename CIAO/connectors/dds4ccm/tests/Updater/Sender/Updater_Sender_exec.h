@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_Updater_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;

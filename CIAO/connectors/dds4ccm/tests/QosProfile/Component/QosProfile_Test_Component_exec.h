@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_QosProfile_Test_QosProfileComponent_Impl
 {
   //============================================================

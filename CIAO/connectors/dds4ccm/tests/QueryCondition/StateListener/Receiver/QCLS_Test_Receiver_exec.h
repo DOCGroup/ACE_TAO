@@ -17,8 +17,6 @@
 #include "ace/Reactor.h"
 #include "ace/Task.h"
 
-#include <map>
-
 namespace CIAO_QCLS_Test_Receiver_Impl
 {
   class Receiver_exec_i;
