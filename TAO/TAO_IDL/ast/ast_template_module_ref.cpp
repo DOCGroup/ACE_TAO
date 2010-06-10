@@ -71,10 +71,10 @@ AST_Template_Module_Ref::ast_accept (ast_visitor *visitor)
 // adjustment we return no match.
 AST_Template_Module_Ref *
 AST_Template_Module_Ref::adjust_found (
-  bool /*ignore_fwd*/,
+  bool ignore_fwd,
   bool /*full_def_only*/)
 {
-  return 0;
+  return ignore_fwd ? this : 0;
 }
 
 IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)
