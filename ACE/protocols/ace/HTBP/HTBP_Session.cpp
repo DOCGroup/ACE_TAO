@@ -180,6 +180,19 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
                   buffer, s == this->inbound_ ?
                   ACE_TEXT("inbound") : ACE_TEXT ("outbound")));
     }
+  else
+    {
+#if !defined (ACE_LACKS_TCP_NODELAY)
+      int no_delay = 1;
+      int result = s->ace_stream().set_option (ACE_IPPROTO_TCP,
+                                               TCP_NODELAY,
+                                               (void *) &no_delay,
+                                               sizeof (no_delay));
+      if (result == -1)
+        ACE_DEBUG ((LM_DEBUG, "HTBP::Session::reconnect_i, %p\n", "set_option" ));
+#endif /* ! ACE_LACKS_TCP_NODELAY */
+      
+    }
   s->register_notifier(this->reactor_);
   if (s == this->inbound_)
     s->send_ack();

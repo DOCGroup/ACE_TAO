@@ -55,6 +55,16 @@ ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
     error_buffer_ (0)
 
 {
+#if !defined (ACE_LACKS_TCP_NODELAY)
+  int no_delay = 1;
+  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+                                             TCP_NODELAY,
+                                             (void *) &no_delay,
+                                             sizeof (no_delay));
+  if (result == -1)
+    ACE_DEBUG ((LM_DEBUG, "HTBP::Channel ctor(stream), %p\n", "set_option" ));
+#endif /* ! ACE_LACKS_TCP_NODELAY */
+  
   this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
@@ -70,6 +80,16 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
     state_ (Init),
     error_buffer_ (0)
 {
+#if !defined (ACE_LACKS_TCP_NODELAY)
+  int no_delay = 1;
+  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+                                             TCP_NODELAY,
+                                             (void *) &no_delay,
+                                             sizeof (no_delay));
+  if (result == -1)
+    ACE_DEBUG ((LM_DEBUG, "HTBP::Channel(handle) ctor, %p\n", "set_option" ));
+#endif /* ! ACE_LACKS_TCP_NODELAY */
+  
   this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
