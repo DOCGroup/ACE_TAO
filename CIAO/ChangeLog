@@ -1,13 +1,18 @@
+Thu Jun 10 07:10:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Resolved test issues.
+
 Wed Jun  9 21:57:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
-        
+
           Changes to the asynch version of the worker thread class so it
           will work with multiplex receptacles.
-          
+
         * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.mpc:
-        
+
           Restored typecode generation on *A.idl, the AMI4CCM_*
           interface can a member of a struct in a component (if
           it has an asynch uses port) and this component and its

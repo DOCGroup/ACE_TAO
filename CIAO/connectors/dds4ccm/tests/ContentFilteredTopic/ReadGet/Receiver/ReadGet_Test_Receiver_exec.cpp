@@ -131,7 +131,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         sample.symbol.in (),
         sample.iteration));
     if (sample.iteration > this->current_iter_value1_ &&
-        sample.iteration < this->current_iter_value2_)
+        sample.iteration < this->current_iter_value2_ &&
+        sample.iteration > 20) //don't count the first run...
       {
         ACE_ERROR ((LM_ERROR, "ERROR: READ ALL ON READER PORT : "
                               "Didn't expect samples between "
@@ -172,6 +173,14 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all_on_reader_port (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "=================================="
+                          "==================================\n"));
+    if (::CORBA::is_nil (this->read_reader_))
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: No Reader on Reader port\n"));
+        return;
+      }
     QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
     this->read_reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
@@ -189,6 +198,14 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all_on_getter_port (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "=================================="
+                          "==================================\n"));
+    if (::CORBA::is_nil (this->get_reader_))
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: No Reader on Getter port\n"));
+        return;
+      }
     QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
     this->get_reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
@@ -206,10 +223,13 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all_on_getter_port (void)
   {
+    ACE_DEBUG ((LM_DEBUG, "=================================="
+                          "==================================\n"));
     if (::CORBA::is_nil (this->get_getter_))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
-                              "ERROR: No Getter\n"));
+                              "ERROR: No Getter on Getter port\n"));
+        return;
       }
     QueryConditionTest * qf_info = new QueryConditionTest;
     ::CCM_DDS::ReadInfo readinfo;
@@ -393,42 +413,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::test_set_query_parameters ()
   {
-    bool exception_caught = false;
-    try
-      {
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters: Test exception\n"));
-        ::DDS::StringSeq parameters;
-        parameters.length (4);
-        parameters[0] = CORBA::string_dup (ITER2_VALUE1);
-        parameters[1] = CORBA::string_dup (ITER2_VALUE2);
-        parameters[2] = CORBA::string_dup (ITER2_VALUE1);
-        parameters[3] = CORBA::string_dup (ITER2_VALUE2);
-
-        this->get_filter_setting_->set_filter_parameters (parameters);
-      }
-    catch (const CCM_DDS::InternalError& ex)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters - "
-                              "caught expected InternalError exception.\n"));
-        exception_caught = true;
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("ERROR: Receiver_exec_i::test_set_query_parameters: ");
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "Exception caught\n"));
-      }
-    catch (...)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "caught unknown exception\n"));
-      }
-    if (!exception_caught)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "Didn't catch the exprected exception\n"));
-      }
-
     try
       {
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters: Set parameters\n"));
@@ -436,7 +420,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         parameters.length (2);
         parameters[0] = CORBA::string_dup (ITER2_VALUE1);
         parameters[1] = CORBA::string_dup (ITER2_VALUE2);
-
         this->get_filter_setting_->set_filter_parameters (parameters);
         this->read_filter_setting_->set_filter_parameters (parameters);
 
