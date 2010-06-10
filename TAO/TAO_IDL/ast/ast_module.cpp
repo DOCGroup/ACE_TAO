@@ -119,10 +119,6 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   // previous_opening_ will be adjusted to be the immediatly
   // previous opening of this module. See fe_add_module ()
   // below.
-  if (previous)
-    {
-      this->prefix (const_cast<char *> (previous->prefix ()));
-    }
 }
 
 AST_Module::~AST_Module (void)
@@ -154,7 +150,7 @@ AST_Module::dump (ACE_OSTREAM_TYPE &o)
 // We actually want to match the LAST module found in
 // the scope being searched not the FIRST one in the
 // list.
-AST_Module *
+AST_Decl *
 AST_Module::adjust_found (
   bool /*ignore_fwd*/,
   bool /*full_def_only*/)

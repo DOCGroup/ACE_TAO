@@ -130,20 +130,6 @@ COMMON_Base::destroy (void)
 {
 }
 
-bool
-COMMON_Base::is_fwd (void)
-{
-  return false; // Not a fwd declared type (by default)
-}
-
-COMMON_Base *
-COMMON_Base::adjust_found (
-  bool /*ignore_fwd*/,
-  bool /*full_def_only*/)
-{
-  return this; // Defaults to no adjustment
-}
-
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)
@@ -246,6 +232,12 @@ AST_Decl::adjust_found (
   bool /*full_def_only*/)
 {
   return this; // Defaults to no adjustment
+}
+
+bool
+AST_Decl::is_fwd (void)
+{
+  return false; // Not a fwd declared type (by default)
 }
 
 // Private operations.

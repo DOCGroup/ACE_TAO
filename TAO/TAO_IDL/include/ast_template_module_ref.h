@@ -41,7 +41,7 @@ public:
   // after this node, so we'll match what we're looking for on
   // the next iteration of the search. So for this immediate
   // adjustment we return no match.
-  virtual AST_Template_Module_Ref *adjust_found (bool ignore_fwd, bool full_def_only);
+  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   static AST_Decl::NodeType const NT;
 
