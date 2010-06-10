@@ -16,9 +16,9 @@ project (DiffDir_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   }
 
   opendds_ts_flags += --export=DIFFDIR_COMMON_STUB_Export
-
+  ndds_ts_flags += -d Connector
+          
   DDSGenerator_Files {
-    ndds_ts_flags += -d Connector
     DiffDir.idl
     gendir = Connector
   }
