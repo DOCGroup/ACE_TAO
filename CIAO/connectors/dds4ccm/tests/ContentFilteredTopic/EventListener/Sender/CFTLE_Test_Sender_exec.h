@@ -4,7 +4,6 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-
 #include "CFTLE_Test_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -14,8 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
-#include <map>
 
 namespace CIAO_CFTLE_Test_Sender_Impl
 {

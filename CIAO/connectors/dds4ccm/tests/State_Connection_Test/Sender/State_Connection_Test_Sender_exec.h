@@ -4,7 +4,6 @@
 #ifndef STATE_CONNECTION_SENDER_EXEC_H_
 #define STATE_CONNECTION_SENDER_EXEC_H_
 
-
 #include "State_Connection_Test_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -14,8 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-
-#include <map>
 
 namespace CIAO_State_Connection_Test_Sender_Impl
 {

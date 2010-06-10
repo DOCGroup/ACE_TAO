@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
   class Receiver_exec_i;

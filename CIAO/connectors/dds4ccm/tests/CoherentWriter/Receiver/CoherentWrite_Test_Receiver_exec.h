@@ -14,7 +14,7 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
+
 
 namespace CIAO_CoherentWrite_Test_Receiver_Impl
 {

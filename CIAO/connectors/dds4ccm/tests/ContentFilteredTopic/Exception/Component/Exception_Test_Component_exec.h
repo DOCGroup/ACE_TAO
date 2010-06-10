@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include <map>
-
 namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl
 {
   //============================================================
