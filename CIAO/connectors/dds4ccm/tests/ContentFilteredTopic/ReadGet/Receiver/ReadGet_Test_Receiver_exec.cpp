@@ -303,30 +303,31 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     try
       {
         CORBA::Object_var cmp = this->get_getter_->_get_component ();
-        if (CORBA::is_nil (cmp.in ()))
+        if (::CORBA::is_nil (cmp.in ()))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
                                   "Unable to get component interface\n",
                                   port));
             throw ::CCM_DDS::InternalError ();
           }
-        ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_Event_var conn =
-          ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
-        if (CORBA::is_nil (conn.in ()))
+        ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State_var conn =
+          ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unable to get connector interface\n",
+                                  "Unable to narrow connector interface\n",
                                   port));
-            throw CCM_DDS::InternalError ();
+            throw ::CCM_DDS::InternalError ();
           }
 
         if (check_reader)
           {
-            filter = conn->push_consumer_filter ();
+            // todo for marcel, we need an event connecto
+            filter = conn->pull_observer_filter ();
           }
         else
           {
-            filter = conn->pull_consumer_filter ();
+            filter = conn->pull_observer_filter ();
           }
         if (!filter)
           {

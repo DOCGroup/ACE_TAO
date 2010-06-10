@@ -1,3 +1,31 @@
+Thu Jun 10 12:06:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Read_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/dds/Getter_T.h:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+        * connectors/dds4ccm/impl/dds/Reader_T.h:
+        * connectors/dds4ccm/impl/dds/Reader_T.cpp:
+        * connectors/dds4ccm/impl/dds/Updater_T.h:
+        * connectors/dds4ccm/impl/dds/Updater_T.cpp:
+        * connectors/dds4ccm/impl/dds/Writer_T.h:
+        * connectors/dds4ccm/impl/dds/Writer_T.cpp:
+          Make sure the _get_component returns the connector so that the
+          end user can retrieve the component from the facet
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Improved this test, needs some more work to use DDS_Event
+
 Thu Jun 10 11:34:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.h:

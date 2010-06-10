@@ -289,6 +289,21 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::set_impl (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+::CORBA::Object_ptr
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::_get_component (void)
+{
+  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::_set_component (
+  typename CCM_TYPE::base_type::_ptr_type component)
+{
+  this->component_ = CCM_TYPE::base_type::_duplicate (component);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED>::impl (void)
 {

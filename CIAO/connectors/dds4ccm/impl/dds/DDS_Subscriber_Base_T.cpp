@@ -18,6 +18,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::~DDS_Subscriber_Base_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 bool
 DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
+  typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char* library_name,
@@ -55,6 +56,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
                                                     profile_name);
             }
           this->dds_read_.set_impl (&this->data_reader_);
+          this->dds_read_._set_component (component);
           return true;
         }
     }

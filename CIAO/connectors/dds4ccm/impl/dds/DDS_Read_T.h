@@ -17,8 +17,6 @@ class DDS_Read_T
 public:
   DDS_Read_T (void);
   ~DDS_Read_T (void);
-
-private:
 };
 
 #include "dds4ccm/impl/dds/DDS_Read_T.cpp"
