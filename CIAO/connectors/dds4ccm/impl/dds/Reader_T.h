@@ -57,6 +57,9 @@ namespace CIAO
           ::CCM_DDS::ReadInfoSeq& infos,
           const ::DDS::InstanceHandle_t & instance_handle);
 
+        void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
+        virtual ::CORBA::Object_ptr _get_component (void);
+          
         virtual ::CCM_DDS::QueryFilter *query (void);
 
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
@@ -65,6 +68,7 @@ namespace CIAO
 
       private:
         DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
+        typename CCM_TYPE::base_type::_var_type component_;
 
         DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
 

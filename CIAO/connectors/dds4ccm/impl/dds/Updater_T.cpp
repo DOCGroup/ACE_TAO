@@ -305,3 +305,17 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
     }
 }
 
+template <typename DDS_TYPE, typename CCM_TYPE>
+::CORBA::Object_ptr
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
+{
+  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::_set_component (
+  typename CCM_TYPE::base_type::_ptr_type component)
+{
+  this->component_ = CCM_TYPE::base_type::_duplicate (component);
+}
