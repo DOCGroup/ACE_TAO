@@ -1,3 +1,57 @@
+Thu Jun 10 09:27:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_1.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_receiver.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl:
+        * connectors/dds4ccm/examples/Hello/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_pub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub2.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub3.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_sub_BE.pl:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/run_test.pl:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/InstanceHandle/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ListenOneByOne/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLDisabled/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/run_test_default_qos.pl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/Updater/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/UserdataCopyCount/descriptors/run_test.pl:
+          No multi cast on the naming service necessary. Removed -m 1 option.
+
 Thu Jun 10 08:29:59 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
