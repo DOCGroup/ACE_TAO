@@ -36,8 +36,8 @@ namespace CIAO_Hello_Sender_Impl
       ::CCM_AMI::ExceptionHolder_ptr excep_holder,
       const char* func)
     {
-       ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT("Sender (%C) :\tHandle except AMI\n"), func));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("Sender (%C) :\tHandle except AMI\n"), func));
       try
         {
           excep_holder->raise_exception ();

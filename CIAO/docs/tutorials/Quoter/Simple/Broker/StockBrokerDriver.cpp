@@ -13,7 +13,6 @@ const ACE_TCHAR *broker_ior = ACE_TEXT ("file://StockBroker.ior");
 const ACE_TCHAR *subscribe_name = 0;
 const ACE_TCHAR *unsubscribe_name = 0;
 
-
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -57,9 +56,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   try
   {
     // initialize the ORB
-    CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv);
-
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return -1;
@@ -78,7 +75,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                         "Unable to acquire 'Broker' objref\n"),
                         -1);
     }
-
 
     if (subscribe_name != 0)
     {
