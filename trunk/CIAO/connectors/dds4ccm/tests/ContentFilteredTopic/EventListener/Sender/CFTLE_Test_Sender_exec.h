@@ -14,6 +14,8 @@
 
 #include "tao/LocalObject.h"
 
+#include <map>
+
 namespace CIAO_CFTLE_Test_Sender_Impl
 {
   class Sender_exec_i;
