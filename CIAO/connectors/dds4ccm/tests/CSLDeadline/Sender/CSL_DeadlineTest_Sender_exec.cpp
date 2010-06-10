@@ -7,7 +7,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
+
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
