@@ -36,9 +36,18 @@ namespace CIAO
       virtual void write_many (
         const typename CCM_TYPE::seq_type& instances);
 
+      /**
+       * @name is_coherent_write
+       * Accessors for is_coherent_write
+       */
+      //@{
       virtual ::CORBA::Boolean is_coherent_write (void);
 
       virtual void is_coherent_write ( ::CORBA::Boolean value);
+      //@}
+
+      void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
+      virtual ::CORBA::Object_ptr _get_component (void);
 
     private:
       void write_i (const typename DDS_TYPE::value_type& datum,
@@ -46,6 +55,7 @@ namespace CIAO
                     ::CCM_DDS::DataNumber_t index);
 
       bool is_coherent_write_;
+      typename CCM_TYPE::base_type::_var_type component_;
     };
   }
 }

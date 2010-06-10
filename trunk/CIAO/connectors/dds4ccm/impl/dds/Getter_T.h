@@ -77,6 +77,7 @@ namespace CIAO
          * @name max_delivered_data
          * Accessors for max_delivered_data
          */
+        //@{
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
         virtual void max_delivered_data (
           ::CCM_DDS::DataNumber_t max_delivered_data);
@@ -87,6 +88,7 @@ namespace CIAO
          */
         void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * reader);
 
+        void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
         virtual ::CORBA::Object_ptr _get_component (void);
 
       protected:
@@ -96,6 +98,8 @@ namespace CIAO
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
         DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
+      private:
+        typename CCM_TYPE::base_type::_var_type component_;
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

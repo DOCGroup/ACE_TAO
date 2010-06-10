@@ -22,6 +22,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::~DDS_Update_T (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
+  typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
   ::DDS::Publisher_ptr publisher,
   const char* library_name,
@@ -55,6 +56,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
             dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
           this->ccm_dds_writer_.set_impl (rw->get_impl ());
           this->dds_update_.set_impl (&this->ccm_dds_writer_);
+          this->dds_update_._set_component (component);
         }
       catch (...)
         {

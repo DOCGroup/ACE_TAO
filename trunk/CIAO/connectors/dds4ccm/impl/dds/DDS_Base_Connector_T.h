@@ -21,13 +21,25 @@ public:
   DDS_Base_Connector_T (void);
   virtual ~DDS_Base_Connector_T (void);
 
+  /**
+   * @name domain_id
+   * Accessors for domain_id
+   */
+  //@{
   virtual ::DDS::DomainId_t domain_id (void);
 
   virtual void domain_id (::DDS::DomainId_t domain_id);
+  //@}
 
+  /**
+   * @name qos_profile
+   * Accessors for qos_profile
+   */
+  //@{
   virtual char *qos_profile (void);
 
   virtual void qos_profile (const char * qos_profile);
+  //@}
 
   virtual void set_session_context (::Components::SessionContext_ptr ctx);
 

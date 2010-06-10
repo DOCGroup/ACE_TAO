@@ -30,6 +30,7 @@ public:
   //@}
 
   void configuration_complete (
+    typename CCM_TYPE::base_type::_ptr_type component,
     ::DDS::Topic_ptr topic,
     ::DDS::Publisher_ptr publisher,
     const char* library_name,

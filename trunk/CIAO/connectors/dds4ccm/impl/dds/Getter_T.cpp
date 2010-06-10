@@ -40,7 +40,15 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 ::CORBA::Object_ptr
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
 {
-  return ::CORBA::Object::_nil ();
+  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
+void
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::_set_component (
+  typename CCM_TYPE::base_type::_ptr_type component)
+{
+  this->component_ = CCM_TYPE::base_type::_duplicate (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -50,8 +58,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
   ::CCM_DDS::ReadInfoSeq& infos)
 {
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions,
-                            this->time_out_))
+  if (!this->impl ()->wait (active_conditions, this->time_out_))
     {
       return false;
     }
@@ -74,9 +81,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
 
           // Take read condition
           DDS_ReturnCode_t retcode =
-            this->impl ()->read_w_condition (data,
-                                             sample_info,
-                                             max_samples);
+            this->impl ()->read_w_condition (data, sample_info, max_samples);
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {

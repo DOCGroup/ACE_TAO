@@ -17,8 +17,10 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Event_Connector_T (void) :
     TopicBaseConnector (),
     supplier_obtained_ (false),
     push_consumer_obtained_ (false),
-    pull_consumer_obtained_ (false)
-
+    pull_consumer_obtained_ (false),
+    supplier_ (),
+    push_consumer_ (),
+    pull_consumer_ ()
 {
 }
 
@@ -191,6 +193,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
                     "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
                     "Creating push consumer port.\n"));
       this->push_consumer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
@@ -209,6 +212,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
                     "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
                     "Creating supplier port.\n"));
       this->supplier_.configuration_complete(
+        this,
         this->topic_.in (),
         this->publisher_.in (),
         this->library_name_,
@@ -227,6 +231,7 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
                     "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete - "
                     "Creating pull consumer port.\n"));
       this->pull_consumer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,

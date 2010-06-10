@@ -309,6 +309,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   if (this->observable_obtained_)
     {
       this->observable_.configuration_complete (
+        this,
         this->topic_.in (),
         this->publisher_.in (),
         this->library_name_,
@@ -318,6 +319,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   if (this->push_observer_obtained_)
     {
       this->push_observer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
@@ -327,6 +329,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   if (this->push_state_observer_obtained_)
     {
       this->push_state_observer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
@@ -336,6 +339,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   if (this->pull_observer_obtained_)
     {
       this->pull_observer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,
@@ -345,6 +349,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (void)
   if (this->passive_observer_obtained_)
     {
       this->passive_observer_.configuration_complete (
+        this,
         this->topic_.in (),
         this->subscriber_.in (),
         this->library_name_,

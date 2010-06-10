@@ -50,9 +50,18 @@ namespace CIAO
 
       virtual bool is_global_scope ();
 
+      /**
+       * @name is_coherent_write
+       * Accessors for is_coherent_write
+       */
+      //@{
       virtual bool is_coherent_write ();
 
       virtual void is_coherent_write (bool value_);
+      //@}
+
+      void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
+      virtual ::CORBA::Object_ptr _get_component (void);
 
     private:
       void create_i (
@@ -77,6 +86,7 @@ namespace CIAO
 
       bool is_global_scope_;
       bool is_coherent_write_;
+      typename CCM_TYPE::base_type::_var_type component_;
     };
   }
 }
