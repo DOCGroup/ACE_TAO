@@ -2,15 +2,15 @@
 // $Id$
 
 #include "ami4ccm/ami4ccm.h"
-
 #include "tao/debug.h"
 
 ACE_RCSID (ami4ccm,
            ami4ccm,
            "$Id$")
 
-CCM_AMI::ExceptionHolder_i::ExceptionHolder_i (::Messaging::ExceptionHolder* holder)
- : holder_ (holder)
+CCM_AMI::ExceptionHolder_i::ExceptionHolder_i (
+  ::Messaging::ExceptionHolder* holder)
+    : holder_ (holder)
 {
 }
 

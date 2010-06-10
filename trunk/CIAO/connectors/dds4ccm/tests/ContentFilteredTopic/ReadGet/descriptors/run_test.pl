@@ -72,7 +72,7 @@ sub init_ior_files {
 
 # Delete if there are any .ior files.
 sub delete_ior_files {
-    for ($i = 0; $i < $nr_daemon;( (iteration &lt; %0) OR (iteration > %1) ) ++$i) {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
         $tg_daemons[$i]->DeleteFile ($iorbases[$i]);
     }
     $tg_naming->DeleteFile ($ior_nsbase);
