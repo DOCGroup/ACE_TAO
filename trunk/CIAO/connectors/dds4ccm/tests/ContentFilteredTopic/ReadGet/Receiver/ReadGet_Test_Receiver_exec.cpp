@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ReadGet_Test_Receiver_exec.h"
@@ -169,12 +168,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       }
   }
 
-
   void
   Receiver_exec_i::read_all_on_reader_port (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "=================================="
-                          "==================================\n"));
     if (::CORBA::is_nil (this->read_reader_))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
@@ -223,8 +219,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all_on_getter_port (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "=================================="
-                          "==================================\n"));
     if (::CORBA::is_nil (this->get_getter_))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
@@ -304,13 +298,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     ::CCM_DDS::QueryFilter * filter = 0;
     const char * port = "";
     check_reader ? port = "Reader" : port = "Getter";
+    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_filter <%C> - "
+                          "checking filter\n", port));
     try
       {
         CORBA::Object_var cmp = this->get_getter_->_get_component ();
         if (CORBA::is_nil (cmp.in ()))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unable to get component interface\n"));
+                                  "Unable to get component interface\n",
+                                  port));
             throw ::CCM_DDS::InternalError ();
           }
         ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_Event_var conn =
@@ -318,7 +315,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (CORBA::is_nil (conn.in ()))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unable to get connector interface\n"));
+                                  "Unable to get connector interface\n",
+                                  port));
             throw CCM_DDS::InternalError ();
           }
 
@@ -333,7 +331,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (!filter)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Filter is nil\n"));
+                                  "Filter is nil\n", port));
             return;
           }
       }

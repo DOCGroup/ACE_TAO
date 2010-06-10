@@ -37,10 +37,17 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+::CORBA::Object_ptr
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
+{
+  return ::CORBA::Object::_nil ();
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE>
 bool
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
-          typename CCM_TYPE::seq_type& instances,
-          ::CCM_DDS::ReadInfoSeq& infos)
+  typename CCM_TYPE::seq_type& instances,
+  ::CCM_DDS::ReadInfoSeq& infos)
 {
   DDSConditionSeq active_conditions;
   if (!this->impl ()->wait (active_conditions,

@@ -63,17 +63,31 @@ namespace CIAO
         virtual bool get_many (
           typename CCM_TYPE::seq_type& instances,
           ::CCM_DDS::ReadInfoSeq& infos);
+
+        /**
+         * @name time_out
+         * Accessors for time_out
+         */
+        //@{
         virtual ::DDS::Duration_t time_out (void);
         virtual void time_out (const ::DDS::Duration_t & time_out);
+        //@}
 
+        /**
+         * @name max_delivered_data
+         * Accessors for max_delivered_data
+         */
         virtual ::CCM_DDS::DataNumber_t max_delivered_data (void);
         virtual void max_delivered_data (
           ::CCM_DDS::DataNumber_t max_delivered_data);
+        //@}
 
         /**
          * Set the actual pointer to DDS Datareader
          */
         void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * reader);
+
+        virtual ::CORBA::Object_ptr _get_component (void);
 
       protected:
         DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
