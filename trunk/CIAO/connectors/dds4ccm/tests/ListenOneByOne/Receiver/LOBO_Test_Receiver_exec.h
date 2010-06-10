@@ -14,7 +14,7 @@
 
 #include "tao/LocalObject.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Reactor.h"
+
 
 
 #include <map>

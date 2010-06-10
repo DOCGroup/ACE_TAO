@@ -5,7 +5,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
+
 
 namespace CIAO_State_Connection_Test_Sender_Impl
 {

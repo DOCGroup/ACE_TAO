@@ -14,7 +14,7 @@
 
 #include "tao/LocalObject.h"
 
-#include "ace/Reactor.h"
+
 
 namespace CIAO_State_Connection_Test_Receiver_Impl
 {

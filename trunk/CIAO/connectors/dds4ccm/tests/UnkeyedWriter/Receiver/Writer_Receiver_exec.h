@@ -14,7 +14,7 @@
 
 #include "tao/LocalObject.h"
 
-#include "ace/Reactor.h"
+
 
 namespace CIAO_Writer_Receiver_Impl
 {
