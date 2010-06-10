@@ -13,6 +13,7 @@ project(DiffDir_Connector_idl_gen) : connectoridldefaults, dds4ccm {
               -o Connector
   IDL_Files {
     DiffDir_Connector.idl
+    gendir = Connector
   }
 }
 
@@ -26,6 +27,7 @@ project(DiffDir_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 
   IDL_Files {
     Connector/DiffDir_ConnectorE.idl
+    gendir = Connector
   }
 }
 

@@ -1,3 +1,8 @@
+Thu Jun 10 07:25:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.mpc:
+          Prevent making all files again when a make is performed a second time.
+
 Thu Jun 10 07:10:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
