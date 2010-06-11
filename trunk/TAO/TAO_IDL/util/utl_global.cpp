@@ -1389,6 +1389,18 @@ IDL_GlobalData::included_ami_recep_names (void)
   return this->included_ami_recep_names_;
 }
 
+void
+IDL_GlobalData::add_ciao_ami_idl_fnames (const char *s)
+{
+  this->ciao_ami_idl_fnames_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_ami_idl_fnames (void)
+{
+  return this->ciao_ami_idl_fnames_;
+}
+
 ACE_Unbounded_Queue<AST_Decl *> &
 IDL_GlobalData::masking_scopes (void)
 {
@@ -1687,6 +1699,15 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (*path_tmp);
     }
 
+  for (ACE_Unbounded_Queue_Iterator<char *>iter8 (
+         this->ciao_ami_idl_fnames_);
+       iter8.done () == 0;
+       iter8.advance ())
+    {
+      iter8.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
   ACE_Hash_Map_Entry<char *, char *> *entry = 0;
 
   for (ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex> hiter (
@@ -1855,7 +1876,12 @@ IDL_GlobalData::create_implied_ami_uses_stuff (void)
                       
           continue;
         }
-          
+      
+      if (!u->is_multiple ())
+        {
+          continue;
+        }
+        
       AST_Component *c =
         AST_Component::narrow_from_scope (u->defined_in ());
         

@@ -1916,9 +1916,20 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       s->add_to_scope (ami_uses);
       idl_global->scopes ().pop ();
       
-      AST_Component *c =
-        AST_Component::narrow_from_scope (s);
-      idl_global->create_uses_multiple_stuff (c, ami_uses);
+      if (u->is_multiple ())
+        {
+        /*
+      AST_Type *t = u->uses_type ();
+      ACE_CString fname (t->file_name ());
+      char *dummy = 0;
+      char *path = ACE_OS::realpath (fname.c_str (), dummy);
+      ACE_DEBUG ((LM_DEBUG, "utype file: %s\n", path));
+        */
+          // Grammar ensures this narrowing will never be 0.
+          AST_Component *c =
+            AST_Component::narrow_from_scope (s);
+          idl_global->create_uses_multiple_stuff (c, ami_uses);
+        }
     }
 
   return 0;
