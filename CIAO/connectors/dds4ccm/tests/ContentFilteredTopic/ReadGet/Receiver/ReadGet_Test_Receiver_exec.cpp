@@ -39,8 +39,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   int
   read_action_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
-                          "is available in DDS...\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Checking if last sample ")
+                          ACE_TEXT ("is available in DDS...\n")));
     if (this->run_ == 1 || this->callback_.check_last ())
       {
         this->callback_.run (this->run_);
@@ -98,17 +98,25 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   {
     try
       {
+        ::ReadGet_Test::QueryConditionTestConnector::Reader_var get_reader =
+          this->context_->get_connection_get_port_data ();
+        if (::CORBA::is_nil (get_reader.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_last - ")
+                                  ACE_TEXT ("Reader of DDS_Get is nil.\n")));
+            return false;
+          }
         QueryConditionTest queryfiltertest_info;
         ::CCM_DDS::ReadInfo readinfo;
         char key[100];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
         queryfiltertest_info.symbol = CORBA::string_dup (key);
-        this->get_reader_->read_one_last (
+        get_reader->read_one_last (
                 queryfiltertest_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - "
-                              "last iteration <%d> - <%d>\n",
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_last - ")
+                              ACE_TEXT ("last iteration <%d> - <%d>\n"),
                                queryfiltertest_info.iteration,
                                this->current_iter_value2_ - 1));
         return queryfiltertest_info.iteration >= this->current_iter_value2_ - 1;
@@ -133,9 +141,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         sample.iteration < this->current_iter_value2_ &&
         sample.iteration > 20) //don't count the first run...
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL ON READER PORT : "
-                              "Didn't expect samples between "
-                              "%d and %d\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL ON READER PORT : ")
+                              ACE_TEXT ("Didn't expect samples between ")
+                              ACE_TEXT ("%d and %d\n"),
                               this->current_iter_value1_,
                               this->current_iter_value2_));
       }
@@ -152,17 +160,17 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         sample.iteration));
     if (sample.iteration <= ACE_OS::atoi (ITER1_VALUE1))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL ON GETTER PORT : "
-                              "Didn't expect samples with iterations "
-                              "<= %d\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: %C ALL ON GETTER PORT : ")
+                              ACE_TEXT ("Didn't expect samples with iterations ")
+                              ACE_TEXT ("<= %d\n"),
                               test,
                               this->current_iter_value1_));
       }
     if (sample.iteration > this->current_iter_value2_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL ON GETTER PORT : "
-                              "Didn't expect samples with iterations "
-                              "> %d\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: %C ALL ON GETTER PORT : ")
+                              ACE_TEXT ("Didn't expect samples with iterations ")
+                              ACE_TEXT ("> %d\n"),
                               test,
                               this->current_iter_value2_));
       }
@@ -171,19 +179,22 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all_on_reader_port (void)
   {
-    if (::CORBA::is_nil (this->read_reader_))
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var read_reader =
+      this->context_->get_connection_read_port_data ();
+
+    if (::CORBA::is_nil (read_reader))
       {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
-                              "ERROR: No Reader on Reader port\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Receiver_exec_i::get_all - ")
+                              ACE_TEXT ("ERROR: No Reader on Reader port\n")));
         return;
       }
     QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
-    this->read_reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
+    read_reader->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
-                              "No samples available in Reader!\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all : ")
+                              ACE_TEXT ("No samples available in Reader!\n")));
       }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
       {
@@ -196,19 +207,22 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "=================================="
                           "==================================\n"));
-    if (::CORBA::is_nil (this->get_reader_))
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var get_reader =
+      this->context_->get_connection_get_port_data ();
+
+    if (::CORBA::is_nil (get_reader))
       {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
-                              "ERROR: No Reader on Getter port\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+                              ACE_TEXT ("No Reader on Getter port\n")));
         return;
       }
     QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
-    this->get_reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
+    get_reader->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
-                              "No samples available in Reader!\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR : Receiver_exec_i::read_all : ")
+                              ACE_TEXT ("No samples available in Reader!\n")));
       }
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
       {
@@ -219,28 +233,37 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all_on_getter_port (void)
   {
-    if (::CORBA::is_nil (this->get_getter_))
+    ::ReadGet_Test::QueryConditionTestConnector::Getter_var get_getter =
+      this->context_->get_connection_get_port_fresh_data ();
+
+    if (::CORBA::is_nil (get_getter))
       {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
-                              "ERROR: No Getter on Getter port\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+                              ACE_TEXT ("No Getter on Getter port\n")));
         return;
       }
+    //set time_out on getter
+    DDS::Duration_t to;
+    to.sec = 5;
+    to.nanosec = 0;
+    get_getter->time_out (to);
+
     QueryConditionTest * qf_info = new QueryConditionTest;
     ::CCM_DDS::ReadInfo readinfo;
-    bool result = this->get_getter_->get_one (qf_info, readinfo);
+    bool result = get_getter->get_one (qf_info, readinfo);
     if (result)
       {
         this->check_iter_on_getter_port (*qf_info, "GET");
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
-                              "ERROR: time out when retrieving "
-                              "first sample.\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::get_all - ")
+                              ACE_TEXT ("time out when retrieving ")
+                              ACE_TEXT ("first sample.\n")));
       }
     while (result)
       {
-        result = this->get_getter_->get_one (qf_info, readinfo);
+        result = get_getter->get_one (qf_info, readinfo);
         if (result)
           {
             this->check_iter_on_getter_port (*qf_info, "GET");
@@ -299,15 +322,26 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     ::CCM_DDS::QueryFilter * filter = 0;
     const char * port = "";
     check_reader ? port = "Reader" : port = "Getter";
-    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_filter <%C> - "
-                          "checking filter\n", port));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <%C> - ")
+                          ACE_TEXT ("checking filter\n"),
+                          port));
+
     try
       {
-        CORBA::Object_var cmp = this->get_getter_->_get_component ();
+        ::ReadGet_Test::QueryConditionTestConnector::Getter_var get_getter =
+          this->context_->get_connection_get_port_fresh_data ();
+        if (::CORBA::is_nil (get_getter.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Unable to get getter interface\n"),
+                                  port));
+            throw ::CCM_DDS::InternalError ();
+          }
+        CORBA::Object_var cmp = get_getter->_get_component ();
         if (::CORBA::is_nil (cmp.in ()))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unable to get component interface\n",
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Unable to get component interface\n"),
                                   port));
             throw ::CCM_DDS::InternalError ();
           }
@@ -315,8 +349,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State::_narrow (cmp.in ());
         if (::CORBA::is_nil (conn.in ()))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unable to narrow connector interface\n",
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Unable to narrow connector interface\n"),
                                   port));
             throw ::CCM_DDS::InternalError ();
           }
@@ -332,15 +366,15 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           }
         if (!filter)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Filter is nil\n", port));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Filter is nil\n"), port));
             return;
           }
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                              "caught InternalError exception: retval <%u>\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
                               port,
                               ex.error_code));
         return;
@@ -348,15 +382,15 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Receiver_exec_i::check_filter: ");
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                              "Exception caught\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                              ACE_TEXT ("Exception caught\n"),
                               port));
         return;
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                              "caught unknown exception\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                              ACE_TEXT ("caught unknown exception\n"),
                               port));
         return;
       }
@@ -365,18 +399,18 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     bool error = false;
     if (ACE_OS::strcmp (filter->expression, QUERY_GETTER_PORT) != 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                              "Unexpected query when retrieving filter: "
-                              "expected <%C> - received <%C>\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                              ACE_TEXT ("Unexpected query when retrieving filter: ")
+                              ACE_TEXT ("expected <%C> - received <%C>\n"),
                               port, QUERY_GETTER_PORT, filter->expression.in ()));
         error = true;
       }
     //check current parameters.
     if (filter->parameters.length () != 2)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                              "Unexpected number of parameters: "
-                              "expected <%d> - received <%d>\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                              ACE_TEXT ("Unexpected number of parameters: ")
+                              ACE_TEXT ("expected <%d> - received <%d>\n"),
                               port, 2, filter->parameters.length ()));
         error = true;
       }
@@ -385,9 +419,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         if (ACE_OS::atoi (filter->parameters[0]) != this->current_iter_value1_)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unexpected query when retrieving filter: "
-                                  "expected <%C> - received <%C>\n",
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Unexpected query when retrieving filter: ")
+                                  ACE_TEXT ("expected <%C> - received <%C>\n"),
                                   port, QUERY_GETTER_PORT, filter->expression.in ()));
             error = true;
           }
@@ -396,17 +430,17 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         if (ACE_OS::atoi (filter->parameters[1]) != this->current_iter_value2_)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter <%C> - "
-                                  "Unexpected query when retrieving filter: "
-                                  "expected <%C> - received <%C>\n",
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+                                  ACE_TEXT ("Unexpected query when retrieving filter: ")
+                                  ACE_TEXT ("expected <%C> - received <%C>\n"),
                                   port, QUERY_GETTER_PORT, filter->expression.in ()));
             error = true;
           }
       }
     if (!error)
       {
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_filter - "
-                              "Passed check_filter test.\n"));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter - ")
+                              ACE_TEXT ("Passed check_filter test.\n")));
       }
   }
 
@@ -415,36 +449,53 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   {
     try
       {
-        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters: Set parameters\n"));
+        ::CCM_DDS::ContentFilterSetting_var get_filter_setting =
+          this->context_->get_connection_get_port_filter_config ();
+        if (::CORBA::is_nil (get_filter_setting.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::test_set_query_parameters - ")
+                                  ACE_TEXT ("Filter config interface for Getter port is nil.\n")));
+            throw ::CCM_DDS::InternalError ();
+          }
+        ::CCM_DDS::ContentFilterSetting_var read_filter_setting =
+          this->context_->get_connection_read_port_filter_config ();
+        if (::CORBA::is_nil (read_filter_setting.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::test_set_query_parameters - ")
+                                  ACE_TEXT ("Filter config interface for Reader port is nil.\n")));
+            throw ::CCM_DDS::InternalError ();
+          }
+
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::test_set_query_parameters: Set parameters\n")));
         ::DDS::StringSeq parameters;
         parameters.length (2);
         parameters[0] = CORBA::string_dup (ITER2_VALUE1);
         parameters[1] = CORBA::string_dup (ITER2_VALUE2);
-        this->get_filter_setting_->set_filter_parameters (parameters);
-        this->read_filter_setting_->set_filter_parameters (parameters);
+        get_filter_setting->set_filter_parameters (parameters);
+        read_filter_setting->set_filter_parameters (parameters);
 
         this->current_iter_value1_ = ACE_OS::atoi (ITER2_VALUE1);
         this->current_iter_value2_ = ACE_OS::atoi (ITER2_VALUE2);
-        ACE_DEBUG ((LM_DEBUG, "DONE Receiver_exec_i::test_set_query_parameters\n"));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("DONE Receiver_exec_i::test_set_query_parameters\n")));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "caught InternalError exception: retval <%u>\n",
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::test_set_query_parameters - ")
+                              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
                               ex.error_code));
         return;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Receiver_exec_i::test_set_query_parameters: ");
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "Exception caught\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::test_set_query_parameters - ")
+                              ACE_TEXT ("Exception caught\n")));
         return;
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "
-                              "caught unknown exception\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::test_set_query_parameters - ")
+                              ACE_TEXT ("caught unknown exception\n")));
         return;
       }
   }
@@ -452,14 +503,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::start_read (CORBA::UShort run)
   {
-    this->ticker_ = new read_action_Generator (*this, run);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      read_action_Generator (*this, run),
+                      ::CORBA::INTERNAL ());
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
                                           ACE_Time_Value(1, 0),
                                           ACE_Time_Value(1, 0)) == -1)
       {
-        ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to schedule Timer\n")));
       }
   }
 
@@ -472,16 +525,27 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         delete this->ticker_;
         this->ticker_ = 0;
       }
+
+    ReadGetRestarter_var restarter = this->context_->get_connection_writer_restart ();
+    if (::CORBA::is_nil (restarter.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::run - ")
+                              ACE_TEXT ("Unable to start run since restarter ")
+                              ACE_TEXT ("is nil.\n")));
+        return;
+      }
+
     this->has_run_ = true;
-    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::run - "
-                          "Starting run number <%d>\n",
+
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::run - ")
+                          ACE_TEXT ("Starting run number <%d>\n"),
                           run));
     switch (run)
     {
       case 1:
         {
           check_filter ();
-          this->restarter_->restart_write ();
+          restarter->restart_write ();
         }
         break;
       case 2:
@@ -489,7 +553,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           test_all ();
           check_filter ();
           test_set_query_parameters ();
-          this->restarter_->restart_write ();
+          restarter->restart_write ();
         }
         break;
       case 3:
@@ -578,48 +642,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    if (this->run_tests_)
-      {
-        this->read_reader_ = this->context_->get_connection_read_port_data ();
-        this->get_reader_ = this->context_->get_connection_get_port_data ();
-        this->get_getter_ = this->context_->get_connection_get_port_fresh_data ();
-        this->get_filter_setting_ = this->context_->get_connection_get_port_filter_config ();
-        this->read_filter_setting_ = this->context_->get_connection_read_port_filter_config ();
-
-        if (CORBA::is_nil (this->get_filter_setting_.in ()) ||
-            CORBA::is_nil (this->read_filter_setting_.in ()) ||
-            CORBA::is_nil (this->read_reader_.in ()) ||
-            CORBA::is_nil (this->get_reader_.in ()) ||
-            CORBA::is_nil (this->get_getter_.in ()))
-          {
-            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::ccm_activate : "
-                                  "ERROR: Error while retrieving connections\n"
-                                  "Filter settings getter <%@>\n"
-                                  "Filter settings reader <%@>\n"
-                                  "Reader on Reader port <%@>\n"
-                                  "Reader on Getter port <%@>\n"
-                                  "Getter on Getter port <%@>\n",
-                                  this->get_filter_setting_.in (),
-                                  this->read_filter_setting_.in (),
-                                  this->read_reader_.in (),
-                                  this->get_reader_.in (),
-                                  this->get_getter_.in ()));
-          }
-
-        DDS::Duration_t to;
-        to.sec = 5;
-        to.nanosec = 0;
-        if (! ::CORBA::is_nil (this->get_getter_))
-          {
-            this->get_getter_->time_out (to);
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: Unable to set time out.\n"));
-          }
-        this->restarter_ = this->context_->get_connection_writer_restart ();
-      }
-}
+  }
 
   void
   Receiver_exec_i::ccm_passivate (void)
