@@ -60,7 +60,7 @@ CORBA::LocalObject::_key (void)
 {
   if (TAO_debug_level > 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Cannot get _key from a LocalObject!\n")));
+                ACE_TEXT ("TAO (%P|%t) - Cannot get _key from a LocalObject!\n")));
 
   throw ::CORBA::NO_IMPLEMENT ();
 }

@@ -1,3 +1,12 @@
+Fri Jun 11 12:59:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/typecode.mpb:
+          New base project that includes the AnyTypeCode library but just
+          enables typecodes for tao_idl
+
+        * tao/LocalObject.cpp:
+          Fixed layout of debug statement
+
 Fri Jun 11 09:50:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * TAO_IDL/ast/ast_module.cpp:
@@ -34,29 +43,29 @@ Fri Jun 11 09:37:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot c
 Thu Jun 10 22:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_module.h:
-        
+
           Made the fe_add_* methods public, so they can be called
           from the ast_visitor_tmpl_module_inst visitor.
-          
+
         * TAO_IDL/be/be_util.cpp:
-        
+
           Rewrote gen_nested_open() and gen_nested_close() so
           they don't use lookup_by_name and are more efficient.
-          
+
         * TAO_IDL/be/be_generator.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/ast/ast_visitor_tmpl_module_inst.cpp:
-        
+
           When the corresponding module is created, as well as
           when nested modules are created, changed the adding
           call to fe_add_module() rather than add_to_scope(),
           so that Simon Massey's module reopening navigation
           code is used.
-          
+
         * TAO_IDL/fe/fe_init.cpp:
-        
+
           Removed addition of IDL keywords as AST nodes at startup,
           there has been another mechanism for dealing with IDL
           keywords for some time.
@@ -64,7 +73,7 @@ Thu Jun 10 22:20:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Jun 10 17:32:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Somehow a change got reverted. No need for regeneration, this file is
           consistent with idl.yy, which didn't get changed accordingly. The
           values of the ival and uival members of the big parsing union are
