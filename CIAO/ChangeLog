@@ -1,3 +1,20 @@
+Fri Jun 11 07:43:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+          Rewritten test. Don't use a derived class to test whether connector attributes are
+          changeable or not but use _get_component instead.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector_exec.cpp:
+          Removed these files.
+
 Fri Jun 11 05:59:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpb:
