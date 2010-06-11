@@ -30,7 +30,7 @@ project(AMI4CCM_IDL_Test_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI4CCM_IDL_Test_lema_gen) : ciaoidldefaults {
+project(AMI4CCM_IDL_Test_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI4CCM_IDL_Test_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
