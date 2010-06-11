@@ -1,3 +1,14 @@
+Fri Jun 11 12:01:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
+          Fixed memory leaks
+
+        * tests/Bug_3834_Regression/descriptors/run_test_without_ns.pl:
+          A sleep of 999 seconds is really not something we want to do in
+          a test which we run as part or our test suite
+
 Fri Jun 11 11:44:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.cpp:
