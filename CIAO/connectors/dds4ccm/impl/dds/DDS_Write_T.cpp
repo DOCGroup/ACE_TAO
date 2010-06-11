@@ -143,7 +143,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_data");
 
-  return &this->writer_t_;
+  return CCM_TYPE::writer_type::_duplicate (&this->writer_t_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -152,6 +152,6 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE>::get_dds_entity");
 
-  return &this->ccm_dds_writer_;
+  return ::DDS::CCM_DataWriter::_duplicate (&this->ccm_dds_writer_);
 }
 

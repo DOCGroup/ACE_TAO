@@ -176,7 +176,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_filter_config");
 
-  return &this->cft_setting_;
+  return ::CCM_DDS::CCM_ContentFilterSetting::_duplicate (&this->cft_setting_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
