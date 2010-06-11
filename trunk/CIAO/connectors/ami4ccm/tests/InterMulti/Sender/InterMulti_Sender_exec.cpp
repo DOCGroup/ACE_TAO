@@ -30,7 +30,7 @@ namespace CIAO_InterMulti_Sender_Impl
      ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
                            " answer = <%C>\n",
                            answer));  
-     nr_of_received++;
+     ++nr_of_received;
   }
 
   void
@@ -59,7 +59,7 @@ namespace CIAO_InterMulti_Sender_Impl
      ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from TWO::bar,"
                            " answer = <%C>\n",
                            answer));  
-     nr_of_received++;
+     ++nr_of_received;
   }
 
   void
@@ -89,7 +89,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::plus,"
                           " answer = <%C>\n",
                           answer));  
-     nr_of_received++;
+     ++nr_of_received;
   }
 
   void
@@ -107,7 +107,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::foo,"
                           " answer = <%C>\n",
                           answer));  
-    nr_of_received++;
+    ++nr_of_received;
 
   }
 
@@ -124,14 +124,14 @@ namespace CIAO_InterMulti_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::bar,"
                           " answer = <%C>\n",
                           answer));  
-     nr_of_received++;
+     ++nr_of_received;
   }
 
   void
   Three_callback_exec_i::bar_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
   //============================================================
   // Worker thread for asynchronous invocations for One

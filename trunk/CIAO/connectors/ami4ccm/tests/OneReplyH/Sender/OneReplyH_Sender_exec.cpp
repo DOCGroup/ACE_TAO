@@ -62,8 +62,7 @@ namespace CIAO_OneReplyH_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::foo_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
+  MyFoo_callback_exec_i::foo_excep (::CCM_AMI::ExceptionHolder * excep_holder)
   {
     try
       {
@@ -91,8 +90,7 @@ namespace CIAO_OneReplyH_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::bar_excep (
-      ::CCM_AMI::ExceptionHolder * excep_holder)
+  MyFoo_callback_exec_i::bar_excep (::CCM_AMI::ExceptionHolder * excep_holder)
   {
     try
       {
@@ -160,13 +158,13 @@ namespace CIAO_OneReplyH_Sender_Impl
   {
     ACE_OS::sleep (3);
     //run some synch calls
-    char * out_str = 0;
+    CORBA::String_var out_str;
     CORBA::Long l_cmd = 0;
     try
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                 cmd_synch_foo_ok ,
-                                                out_str);
+                                                out_str.out ());
         if ( result == cmd_synch_foo_ok)
           {
             ++nr_of_received;

@@ -30,7 +30,7 @@ namespace CIAO_InterMulti_Receiver_Impl
       }
     else
       {
-        nr_of_received++;
+        ++nr_of_received;
       }
     answer = CORBA::string_dup ("answer foo one");
     return cmd;
@@ -59,7 +59,7 @@ namespace CIAO_InterMulti_Receiver_Impl
       }
     else
       {
-        nr_of_received++;
+        ++nr_of_received;
       }
     answer = CORBA::string_dup ("answer bar two");
   }
@@ -79,7 +79,7 @@ namespace CIAO_InterMulti_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Receiver: three_plus,"
                           " cmd = <%u>\n",
                           cmd));  
-    nr_of_received++;
+    ++nr_of_received;
     answer = CORBA::string_dup ("answer plus three");
   }
 
@@ -98,7 +98,7 @@ namespace CIAO_InterMulti_Receiver_Impl
       }
     else
       {
-        nr_of_received++;
+        ++nr_of_received;
       }
     answer = CORBA::string_dup ("answer foo three");
     return 3;
@@ -119,7 +119,7 @@ namespace CIAO_InterMulti_Receiver_Impl
       }
     else
       {
-        nr_of_received++;
+        ++nr_of_received;
       }
     answer = CORBA::string_dup ("answer bar three");
   }
