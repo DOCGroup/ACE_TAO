@@ -5,8 +5,8 @@
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
-#ifndef NONCHANGEABLE_CONNECTOR_IDL_
-#define NONCHANGEABLE_CONNECTOR_IDL_
+#ifndef NONCHANGABLE_CONNECTOR_IDL_
+#define NONCHANGABLE_CONNECTOR_IDL_
 
 #include  <Components.idl>
 #include "Base/NonChangeable_Base.idl"
@@ -14,5 +14,11 @@
 
 #pragma ciao lem "Connector/NonChangeable_ConnectorE.idl"
 
-module ::CCM_DDS::Typed < ::NonChangeableTest, ::NonChangeableTestSeq> NonChangeableTestConnector;
-#endif /* NONCHANGEABLE_CONNECTOR_IDL_ */
+module NonChangeable
+{
+  module ::CCM_DDS::Typed
+    < ::NonChangeableTest, ::NonChangeableTestSeq>
+    NonChangeableTestConnector;
+};
+
+#endif /* NonChangeable_CONNECTOR_IDL_ */

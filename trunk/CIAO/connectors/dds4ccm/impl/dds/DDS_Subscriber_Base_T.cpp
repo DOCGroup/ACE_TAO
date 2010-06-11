@@ -158,7 +158,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_data");
 
-  return &this->dds_read_;
+  return CCM_TYPE::reader_type::_duplicate (&this->dds_read_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
@@ -167,7 +167,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::get_dds_entity");
 
-  return &this->data_reader_;
+  return ::DDS::CCM_DataReader::_duplicate (&this->data_reader_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>

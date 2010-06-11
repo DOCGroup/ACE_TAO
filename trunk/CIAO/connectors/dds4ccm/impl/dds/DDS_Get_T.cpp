@@ -41,5 +41,5 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data");
 
-  return &this->dds_get_;
+  return CCM_TYPE::getter_type::_duplicate (&this->dds_get_);
 }

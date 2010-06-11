@@ -1,16 +1,16 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p NonChangeable_Base -l .. -o ../lib -u DDS NonChangeable_Connector"
+// This file is generated with "generate_component_mpc.pl -p DDS_NonChangeableBase -l .. -o ../lib -u DDS NonChangeable_Connector"
 
-project(NonChangeable_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+project(DDS_NonChangeableConnector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=NONCHANGEABLE_CONNECTOR_STUB_Export \
+  idlflags += -Wb,stub_export_macro=NONCHANGABLE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=NonChangeable_Connector_stub_export.h \
-              -Wb,skel_export_macro=NONCHANGEABLE_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_macro=NONCHANGABLE_CONNECTOR_SVNT_Export \
               -Wb,skel_export_include=NonChangeable_Connector_svnt_export.h \
-              -Wb,svnt_export_macro=NONCHANGEABLE_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_macro=NONCHANGABLE_CONNECTOR_SVNT_Export \
               -Wb,svnt_export_include=NonChangeable_Connector_svnt_export.h \
-              -Wb,conn_export_macro=NONCHANGEABLE_CONNECTOR_CONN_Export \
+              -Wb,conn_export_macro=NONCHANGABLE_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=NonChangeable_Connector_conn_export.h \
               -I ..
 
@@ -19,10 +19,10 @@ project(NonChangeable_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   }
 }
 
-project(NonChangeable_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+project(DDS_NonChangeableConnector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
-  after += NonChangeable_Connector_idl_gen
-  idlflags += -Wb,stub_export_macro=NONCHANGEABLE_CONNECTOR_LEM_STUB_Export \
+  after += DDS_NonChangeableConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=NONCHANGABLE_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=NonChangeable_Connector_lem_stub_export.h \
               -SS -Gxhst \
               -I ..
@@ -32,14 +32,14 @@ project(NonChangeable_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(NonChangeable_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += NonChangeable_Connector_lem_gen NonChangeable_Connector_stub NonChangeableBase_stub DDS4CCM_lem_stub
-  libs  += NonChangeableBase_stub NonChangeable_Connector_stub DDS4CCM_lem_stub
+project(DDS_NonChangeableConnector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += DDS_NonChangeableConnector_lem_gen DDS_NonChangeableConnector_stub DDS_NonChangeableBase_stub DDS4CCM_lem_stub
+  libs  += DDS_NonChangeableBase_stub DDS_NonChangeableConnector_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = NonChangeable_Connector_lem_stub
-  dynamicflags   = NONCHANGEABLE_CONNECTOR_LEM_STUB_BUILD_DLL
+  sharedname = DDS_NonChangeableConnector_lem_stub
+  dynamicflags   = NONCHANGABLE_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -58,14 +58,14 @@ project(NonChangeable_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 }
 
-project(NonChangeable_Connector_stub) : ccm_stub, dds4ccm_base {
-  after += NonChangeable_Connector_idl_gen NonChangeableBase_stub
-  libs  += NonChangeableBase_stub
+project(DDS_NonChangeableConnector_stub) : ccm_stub, dds4ccm_base {
+  after += DDS_NonChangeableConnector_idl_gen DDS_NonChangeableBase_stub
+  libs  += DDS_NonChangeableBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = NonChangeable_Connector_stub
-  dynamicflags   = NONCHANGEABLE_CONNECTOR_STUB_BUILD_DLL
+  sharedname = DDS_NonChangeableConnector_stub
+  dynamicflags   = NONCHANGABLE_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -84,14 +84,14 @@ project(NonChangeable_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(NonChangeable_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += NonChangeable_Connector_lem_stub NonChangeable_Connector_stub DDS4CCM_lem_stub NonChangeableBase_stub
-  sharedname = NonChangeable_Connector_exec
-  libs += NonChangeable_Connector_stub NonChangeable_Connector_lem_stub NonChangeableBase_stub DDS4CCM_lem_stub NonChangeableBase_stub
+project(DDS_NonChangeableConnector_exec) : ciao_executor, dds4ccm_impl {
+  after   += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_stub DDS4CCM_lem_stub DDS_NonChangeableBase_stub
+  sharedname = DDS_NonChangeableConnector_exec
+  libs += DDS_NonChangeableConnector_stub DDS_NonChangeableConnector_lem_stub DDS_NonChangeableBase_stub DDS4CCM_lem_stub DDS_NonChangeableBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = NONCHANGEABLE_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags   = NONCHANGABLE_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -110,18 +110,18 @@ project(NonChangeable_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(NonChangeable_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += NonChangeable_Connector_lem_stub NonChangeable_Connector_exec NonChangeable_Connector_stub DDS4CCM_lem_stub
-  sharedname  = NonChangeable_Connector_svnt
-  libs       += NonChangeable_Connector_stub \
-                NonChangeable_Connector_lem_stub  \
-                NonChangeableBase_stub \
-                NonChangeable_Connector_exec \
+project(DDS_NonChangeableConnector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_exec DDS_NonChangeableConnector_stub DDS4CCM_lem_stub
+  sharedname  = DDS_NonChangeableConnector_svnt
+  libs       += DDS_NonChangeableConnector_stub \
+                DDS_NonChangeableConnector_lem_stub  \
+                DDS_NonChangeableBase_stub \
+                DDS_NonChangeableConnector_exec \
                 DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = NONCHANGEABLE_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags = NONCHANGABLE_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }
