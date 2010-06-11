@@ -25,7 +25,7 @@ namespace CIAO
     public:
       /// Constructor
       TopicListener_T (::CCM_DDS::ConnectorStatusListener_ptr error_listener,
-                       ACE_Reactor* reactor);
+                       ::ACE_Reactor* reactor);
 
       /// Destructor
       virtual ~TopicListener_T (void);

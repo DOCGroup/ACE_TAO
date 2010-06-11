@@ -1,3 +1,15 @@
+Fri Jun 11 11:44:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/TopicListener_T.h:
+          Various layout and cleanup changes
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Added -SS as idl option
+
 Fri Jun 11 11:34:18 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:

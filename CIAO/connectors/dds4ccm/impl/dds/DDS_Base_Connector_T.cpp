@@ -206,7 +206,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_passivate (void)
       this->domain_participant_->set_listener (
         ::DDS::DomainParticipantListener::_nil (),
         0);
-      this->domainparticipantlistener_ = ::DDS::DomainParticipantListener::_nil ();
+      this->domainparticipantlistener_ =
+        ::DDS::DomainParticipantListener::_nil ();
     }
   catch (...)
     {
