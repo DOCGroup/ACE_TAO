@@ -1,3 +1,19 @@
+Fri Jun 11 09:57:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.cpp:
+          Resolved some memory issues. Also removed the caching of the ports since the context
+          already caches these.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender_exec.cpp:
+          Resolved some memory issues.
+
 Fri Jun 11 08:30:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpb:

@@ -246,6 +246,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
             this->check_iter_on_getter_port (*qf_info, "GET");
           }
       }
+    delete qf_info;
   }
 
   void
