@@ -290,9 +290,6 @@ TAO_CodeGen::start_client_header (const char *fname)
           // Make a String out of it.
           UTL_String idl_name_str = idl_name;
 
-          // Make sure this file was actually got included, not
-          // ignored by some #if defined compiler directive.
-
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
             BE_GlobalData::be_get_client_hdr (&idl_name_str,
@@ -315,47 +312,37 @@ TAO_CodeGen::start_client_header (const char *fname)
             }
         }
     }
-
-  /// If we have an AMI4CCM receptacle that is multiplex, we
-  /// need to generate an include for the receptacle interface's
-  /// *AC.h file, since the associated implied IDL struct will
-  /// contain the AMI4CCM_* interface as a member. No need to
-  /// check the results of the narrow, because we have already
-  /// iterated over this list in the CCM preprocessing
-  /// visitor, and would have bailed if such an error occurred.
+    
   for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         idl_global->ciao_ami_recep_names ());
-       ! i.done ();
+         idl_global->ciao_ami_idl_fnames ());
+       !i.done ();
        i.advance ())
     {
-      char **item = 0;
-      i.next (item);
+      char **tmp = 0;
+      i.next (tmp);
+      
+      // Make a String out of it.
+      UTL_String idl_name_str (*tmp);
 
-      UTL_ScopedName *sn =
-        idl_global->string_to_scoped_name (*item);
+      // Get the clnt header from the IDL file name.
+      const char* client_hdr =
+        BE_GlobalData::be_get_client_hdr (&idl_name_str,
+                                          true);
 
-      UTL_Scope *s =
-        idl_global->scopes ().top_non_null ();
+      idl_name_str.destroy ();
 
-      AST_Decl *d = s->lookup_by_name (sn, true);
-
-      if (d == 0)
+      // Sanity check and then print.
+      if (client_hdr != 0)
         {
-          continue;
-        }
-
-      be_uses *u = be_uses::narrow_from_decl (d);
-
-      if (u->is_multiple ())
-        {
-          be_interface *iface =
-            be_interface::narrow_from_decl (u->uses_type ());
-          ACE_CString fn (iface->file_name ());
-            
-          ACE_CString ami_hn (fn.substr (0, fn.rfind ('.')));
-          ami_hn += "AC.h";
           this->client_header_->print ("\n#include \"%s\"",
-                                       ami_hn.c_str ());
+                                       client_hdr);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\nERROR, invalid file '%C' included"),
+                             *tmp),
+                            -1);
         }
     }
 
