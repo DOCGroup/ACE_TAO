@@ -1,5 +1,5 @@
 // $Id$
 
 feature (dds4ccm_ndds) {
-  ndds_ts_flags += -d Connector
+  dds_ts_flags += -d Connector
 }
