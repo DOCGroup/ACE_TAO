@@ -30,7 +30,7 @@ project(AMI_ExceptionT_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_ExceptionT_lema_gen) : ciaoidldefaults, anytypecode {
+project(AMI_ExceptionT_lema_gen) : ciaoidldefaults, typecode {
   after += AMI_ExceptionT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=EXCEPTION_T_STUB_Export \

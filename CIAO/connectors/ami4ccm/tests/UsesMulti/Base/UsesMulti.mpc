@@ -31,7 +31,7 @@ project(AMI_UsesMulti_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_UsesMulti_lema_gen) : ciaoidldefaults, anytypecode {
+project(AMI_UsesMulti_lema_gen) : ciaoidldefaults, typecode {
   after += AMI_UsesMulti_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=USESMULTI_STUB_Export \

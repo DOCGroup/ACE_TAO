@@ -1,3 +1,22 @@
+Fri Jun 11 13:02:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.mpc:
+        * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.mpc:
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.mpc:
+        * connectors/ami4ccm/tests/IDL_Test/AMI4CCM_IDLTest.mpc:
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.mpc:
+        * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.mpc:
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.mpc:
+        * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.mpc:
+        * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.mpc:
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.mpc:
+        * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.mpc:
+        * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.mpc:
+          Use typecode as new base project when compiling the A.idl files, we
+          only need the typecodes, not the any operators, thanks to Jeff Parsons
+          to pointing this out
+
 Fri Jun 11 12:01:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
