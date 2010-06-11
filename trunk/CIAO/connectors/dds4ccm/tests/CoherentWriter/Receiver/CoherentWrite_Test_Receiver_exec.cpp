@@ -9,6 +9,8 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
+//     ::CoherentWriteTestConnector::Reader_var reader_;
+//     CoherentWriteRestarter_var restarter_;
 namespace CIAO_CoherentWrite_Test_Receiver_Impl
 {
   //============================================================
@@ -81,10 +83,12 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   {
     try
       {
+        ::CoherentWriteTestConnector::Reader_var reader =
+          this->context_->get_connection_info_out_data ();
         CoherentWriteTest coherentwrite_info;
         ::CCM_DDS::ReadInfo readinfo;
         coherentwrite_info.symbol = CORBA::string_dup ("KEY_1");
-        this->reader_->read_one_last (
+        reader->read_one_last (
                 coherentwrite_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
@@ -109,9 +113,23 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   {
     try
       {
+        ::CoherentWriteTestConnector::Reader_var reader =
+          this->context_->get_connection_info_out_data ();
+        CoherentWriteRestarter_var restarter =
+          this->context_->get_connection_writer_restart ();
+
+        if (::CORBA::is_nil (reader.in ()) ||
+            ::CORBA::is_nil (restarter.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_all - "
+                                  "Unable to read since reader or "
+                                  "restarter is nil.\n"));
+            return;
+          }
+
         CoherentWriteTestSeq coherentwrite_info_seq;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
-        this->reader_->read_all (coherentwrite_info_seq, readinfo_seq);
+        reader->read_all (coherentwrite_info_seq, readinfo_seq);
 
         for (CORBA::ULong it = 0; it < coherentwrite_info_seq.length (); ++it)
           {
@@ -133,7 +151,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
           }
         if (this->run_ < this->nr_runs () + 1)
           {
-            this->restarter_->restart_write ();
+            restarter->restart_write ();
           }
         else
           {
@@ -166,7 +184,9 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   void
   Receiver_exec_i::start_read (CORBA::UShort run)
   {
-    this->ticker_ = new read_action_Generator (*this, run);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      read_action_Generator (*this, run),
+                      ::CORBA::INTERNAL ());
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
@@ -257,9 +277,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
-    this->restarter_ = this->context_->get_connection_writer_restart ();
-}
+  }
 
   void
   Receiver_exec_i::ccm_passivate (void)

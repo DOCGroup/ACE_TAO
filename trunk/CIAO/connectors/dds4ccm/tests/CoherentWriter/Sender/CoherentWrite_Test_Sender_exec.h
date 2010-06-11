@@ -79,12 +79,12 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
 
   private:
     ::CoherentWrite_Test::CCM_Sender_Context_var context_;
-    CoherentWriteTestConnector::Writer_var writer_;
-    CoherentWriteStarter_var starter_;
 
     CORBA::UShort iterations_;
     CORBA::UShort run_;
     CORBA::ULong total_iter;
+
+    WriteHandler *wh_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
