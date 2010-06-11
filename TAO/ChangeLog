@@ -1,3 +1,12 @@
+Fri Jun 11 19:15:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_equivalent):
+        
+          Changed creation of implied IDL home equivalent interface
+          to call add_to_scope() instead of be_add_interface() since
+          the latter calls add_to_referenced() which gives us a 
+          bogus redefinition error.
+
 Fri Jun 11 17:16:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
