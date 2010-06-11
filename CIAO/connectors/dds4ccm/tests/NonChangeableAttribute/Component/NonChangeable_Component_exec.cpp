@@ -3,8 +3,17 @@
 // $Id$
 
 #include "NonChangeable_Component_exec.h"
+#include "Base/NonChangeable_BaseSupport.h"
 
-namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
+#include "dds4ccm/impl/dds/Utils.h"
+
+#define DOMAIN_ID_IN_DP 56
+#define TOPIC_NAME_IN_DP "NonChangeable"
+
+#define DW_MAX_BLOCKING_TIME_SEC 11
+#define DW_MAX_BLOCKING_TIME_NSEC 200
+
+namespace CIAO_NonChangeable_NonChangeableComponent_Impl
 {
   //============================================================
   // Component_exec_i
@@ -17,28 +26,9 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
   {
   }
 
-  ::CCM_DDS::CCM_PortStatusListener_ptr
-  Component_exec_i::get_getter_status (void)
-  {
-    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
-  }
-
-  // Operations from Components::SessionComponent.
-  void
-  Component_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
-  {
-    this->context_ =
-      ::NonChangeable_Test::CCM_NonChangeableTestComponent_Context::_narrow (ctx);
-    if ( ::CORBA::is_nil (this->context_.in ()))
-      {
-        throw ::CORBA::INTERNAL ();
-      }
-  }
-
   bool
   Component_exec_i::test_topic_name (
-    ::NonChangeableTestConnector::CCM_DDS_State_ptr conn)
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn)
   {
     try
       {
@@ -64,7 +54,7 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
 
   bool
   Component_exec_i::test_key_fields (
-    ::NonChangeableTestConnector::CCM_DDS_State_ptr conn)
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn)
   {
     try
       {
@@ -94,7 +84,7 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
 
   bool
   Component_exec_i::test_domain_id (
-    ::NonChangeableTestConnector::CCM_DDS_State_ptr conn)
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn)
   {
     try
       {
@@ -120,7 +110,7 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
 
   bool
   Component_exec_i::test_qos_profile (
-    ::NonChangeableTestConnector::CCM_DDS_State_ptr conn)
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn)
   {
     try
       {
@@ -144,6 +134,19 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
     return false;
   }
 
+  // Operations from Components::SessionComponent.
+  void
+  Component_exec_i::set_session_context (
+    ::Components::SessionContext_ptr ctx)
+  {
+    this->context_ =
+      ::NonChangeable::CCM_NonChangeableComponent_Context::_narrow (ctx);
+    if ( ::CORBA::is_nil (this->context_.in ()))
+      {
+        throw ::CORBA::INTERNAL ();
+      }
+  }
+
   void
   Component_exec_i::configuration_complete (void)
   {
@@ -152,23 +155,23 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    ::NonChangeableTestConnector::Getter_var getter =
-      this->context_->get_connection_getter_fresh_data ();
-    if (::CORBA::is_nil (getter.in ()))
+    ::NonChangeable::NonChangeableTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+    if (::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
-                              "Unable to get getter interface\n"));
+                              "Unable to get writer interface\n"));
         throw ::CORBA::INTERNAL ();
       }
-    ::CORBA::Object_var cmp = getter->_get_component ();
+    ::CORBA::Object_var cmp = writer->_get_component ();
     if (::CORBA::is_nil (cmp.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
                               "Unable to get component interface\n"));
         throw ::CORBA::INTERNAL ();
       }
-    ::NonChangeableTestConnector::CCM_DDS_State_var conn =
-      ::NonChangeableTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_var conn =
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
     if (::CORBA::is_nil (conn.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "

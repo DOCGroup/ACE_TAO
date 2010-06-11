@@ -1,14 +1,13 @@
-<!-- $Id$ -->
 <Deployment:DeploymentPlan
-                          xmlns:Deployment="http://www.omg.org/Deployment"
-                          xmlns:xmi="http://www.omg.org/XMI"
-                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>NonChangeable_Depl</label>
-  <UUID>NonChangeable_Depl</UUID>
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>NonChangeableAttribute_Depl_1</label>
+  <UUID>NonChangeableAttribute_Depl_1</UUID>
 
-  <implementation xmi:id="ComponentImplementation">
-    <name>ComponentImplementation</name>
+  <implementation xmi:id="NonChangeableComponentImplementation">
+    <name>NonChangeableComponentmplementation</name>
     <source/>
     <artifact xmi:idref="Component_ExecArtifact" />
     <artifact xmi:idref="Component_SvntArtifact" />
@@ -31,7 +30,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NonChangeable_Test_NonChangeableTestComponent_Servant</string>
+          <string>create_NonChangeable_NonChangeableComponent_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -59,11 +58,11 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="NonChangeable_ConnectorImplementation">
-    <name>NonChangeable_ConnectorImplementation</name>
+  <implementation xmi:id="NonChangeableConnectorImplementation">
+    <name>NonChangeableConnectorImplementation</name>
     <source/>
-    <artifact xmi:idref="NonChangeable_Test_Connector_ExecArtifact" />
-    <artifact xmi:idref="NonChangeable_Test_Connector_SvntArtifact" />
+    <artifact xmi:idref="NonChangeableConnector_ExecArtifact" />
+    <artifact xmi:idref="NonChangeableConnector_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>component factory</name>
@@ -72,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NonChangeableTestConnector_DDS_State_Impl</string>
+          <string>create_NonChangeable_NonChangeableTestConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -83,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_NonChangeableTestConnector_DDS_State_Servant</string>
+          <string>create_NonChangeable_NonChangeableTestConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -94,7 +93,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>NonChangeable_Connector_svnt</string>
+          <string>NonChangeableConnector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -105,26 +104,26 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>NonChangeable_Connector_exec</string>
+          <string>NonChangeableConnector_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <instance xmi:id="ComponentInstance">
-    <name>Component</name>
+  <instance xmi:id="NonChangeableComponentInstance">
+    <name>NonChangeableComponentInstance</name>
     <node>ComponentNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ComponentImplementation" />
+    <implementation xmi:idref="NonChangeableComponentImplementation" />
   </instance>
 
-  <instance xmi:id="ConnectorInstance">
-    <name>Component</name>
+  <instance xmi:id="NonChangeableConnectorInstance">
+    <name>NonChangeableConnectorInstance</name>
     <node>ComponentNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="NonChangeable_ConnectorImplementation" />
+    <implementation xmi:idref="NonChangeableConnectorImplementation" />
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -139,42 +138,42 @@
   </instance>
 
   <connection>
-    <name>getter_fresh_data</name>
+    <name>info_write_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>getter_fresh_data</portName>
+      <portName>info_write_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ComponentInstance" />
+      <instance xmi:idref="NonChangeableComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>pull_observer_fresh_data</portName>
+      <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ConnectorInstance" />
+      <instance xmi:idref="NonChangeableConnectorInstance" />
     </internalEndpoint>
   </connection>
 
-  <artifact xmi:id="NonChangeable_Test_Connector_ExecArtifact">
-    <name>NonChangeable_Connector_exec</name>
+  <artifact xmi:id="NonChangeableConnector_ExecArtifact">
+    <name>NonChangeableConnector_exec</name>
     <source/>
     <node/>
-    <location>NonChangeable_Connector_exec</location>
+    <location>DDS_NonChangeableConnector_exec</location>
   </artifact>
-  <artifact xmi:id="NonChangeable_Test_Connector_SvntArtifact">
-    <name>NonChangeable_Connector_svnt</name>
+  <artifact xmi:id="NonChangeableConnector_SvntArtifact">
+    <name>NonChangeableConnector_svnt</name>
     <source/>
     <node/>
-    <location>NonChangeable_Connector_svnt</location>
+    <location>DDS_NonChangeableConnector_svnt</location>
   </artifact>
-  <artifact xmi:id="NonChangeable_Test_Connector_StubArtifact">
-    <name>NonChangeable_Test_Connector_stub</name>
+  <artifact xmi:id="NonChangeableConnector_StubArtifact">
+    <name>NonChangeableConnector_stub</name>
     <source/>
     <node/>
-    <location>NonChangeable_Test_Connector_stub</location>
+    <location>DDS_NonChangeableConnector_stub</location>
   </artifact>
 
   <artifact xmi:id="Component_ExecArtifact">
@@ -188,5 +187,11 @@
     <source/>
     <node/>
     <location>Component_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component_StubArtifact">
+    <name>Component_stub</name>
+    <source/>
+    <node/>
+    <location>Component_stub</location>
   </artifact>
 </Deployment:DeploymentPlan>
