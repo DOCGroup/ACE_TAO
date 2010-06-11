@@ -1,3 +1,10 @@
+Fri Jun 11 05:59:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpb:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpc:
+          Resolved compile errors due to the -d options
+          for the RTI dds gen.
+
 Thu Jun 10 18:37:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
