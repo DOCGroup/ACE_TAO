@@ -214,11 +214,11 @@ namespace CIAO_InterMulti_Sender_Impl
 
   int synch_foo_generator::svc ()
   {
-    char *answer = 0;
+    CORBA::String_var answer;
     CORBA::Long result = my_one_ami_->foo (
                             "Synchronous call foo from class One",
                             1,
-                            answer);
+                            answer.out ());
     if (result != 1)
       {
         ACE_ERROR ((LM_ERROR, 
@@ -237,12 +237,12 @@ namespace CIAO_InterMulti_Sender_Impl
 
   int synch_three_generator::svc ()
   {
-    char *answer = 0;
+    ::CORBA::String_var answer;
     CORBA::Long result = my_three_ami_->foo (
                         "Synchronous call foo from class Three, "
                         " derived from class ONE",
                         3 ,
-                        answer);
+                        answer.out ());
     if (result != 3)
       {
         ACE_ERROR ((LM_ERROR, 
@@ -291,7 +291,7 @@ namespace CIAO_InterMulti_Sender_Impl
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-       ::InterMulti::AMI4CCM_Two_var asynch_two =
+    ::InterMulti::AMI4CCM_Two_var asynch_two =
       this->context_->get_connection_sendc_run_my_two();
     asynch_two_generator* asynch_two_gen =
         new asynch_two_generator (asynch_two);
