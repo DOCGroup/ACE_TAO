@@ -102,13 +102,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
   private:
     ::ReadGet_Test::CCM_Receiver_Context_var context_;
-    ::ReadGet_Test::QueryConditionTestConnector::Reader_var read_reader_;
-    ::ReadGet_Test::QueryConditionTestConnector::Reader_var get_reader_;
-    ::ReadGet_Test::QueryConditionTestConnector::Getter_var get_getter_;
-    ::CCM_DDS::ContentFilterSetting_var get_filter_setting_;
-    ::CCM_DDS::ContentFilterSetting_var read_filter_setting_;
 
-    ReadGetRestarter_var restarter_;
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;
     bool            has_run_;

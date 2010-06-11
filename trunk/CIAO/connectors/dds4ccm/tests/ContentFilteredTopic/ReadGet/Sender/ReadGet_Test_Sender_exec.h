@@ -80,8 +80,6 @@ namespace CIAO_ReadGet_Test_Sender_Impl
 
   private:
     ::ReadGet_Test::CCM_Sender_Context_var context_;
-    ::ReadGet_Test::QueryConditionTestConnector::Writer_var writer_;
-    ReadGetStarter_var starter_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
