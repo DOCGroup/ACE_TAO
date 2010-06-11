@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #ifndef CIAO_DELREPLYH_SENDER_EXEC_H_
