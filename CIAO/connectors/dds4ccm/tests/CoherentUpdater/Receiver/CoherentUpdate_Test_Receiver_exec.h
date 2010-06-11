@@ -82,6 +82,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
     get_reader_start ();
 
     bool check_last ();
+
     void start_read (CORBA::UShort run);
     void run (CORBA::UShort run);
 
@@ -104,8 +105,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
 
   private:
     ::CoherentUpdate_Test::CCM_Receiver_Context_var context_;
-    ::CoherentUpdate_Test::Reader_var reader_;
-    CoherentUpdateRestarter_var restarter_;
+
     CORBA::UShort   iterations_;
     CORBA::UShort   run_;
     CORBA::UShort   nr_runs_;
@@ -113,7 +113,8 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
 
     read_action_Generator *ticker_;
 
-    void read_all (void);
+    void read_all (
+      ::CoherentUpdate_Test::Reader_ptr reader);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

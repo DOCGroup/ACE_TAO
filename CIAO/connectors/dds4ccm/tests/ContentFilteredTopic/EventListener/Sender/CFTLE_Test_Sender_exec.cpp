@@ -33,7 +33,9 @@ namespace CIAO_CFTLE_Test_Sender_Impl
     : iterations_ (10),
       keys_ (5)
   {
-    this->ticker_ = new WriteTicker (*this);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      WriteTicker (*this),
+                      CORBA::INTERNAL ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -183,6 +185,7 @@ namespace CIAO_CFTLE_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    delete this->ticker_;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -86,6 +86,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     CORBA::UShort run_;
+    WriteHandler *wh_;
   };
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -49,7 +49,8 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (ITERATIONS),
       keys_ (5),
-      run_ (1)
+      run_ (1),
+      wh_ (0)
   {
   }
 
@@ -61,8 +62,11 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   Sender_exec_i::restart (void)
   {
     ++this->run_;
-    WriteHandler *wh = new WriteHandler (*this);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+    delete this->wh_;
+    ACE_NEW_THROW_EX (this->wh_,
+                      WriteHandler (*this),
+                      CORBA::INTERNAL ());
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
   }
 
   void
@@ -81,15 +85,15 @@ namespace CIAO_ReadGet_Test_Sender_Impl
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
           {
             char key[7];
-            QueryConditionTest *new_key = new QueryConditionTest;
+            QueryConditionTest new_key;
             ACE_OS::sprintf (key, "KEY_%d", iter_key);
-            new_key->symbol = CORBA::string_dup(key);
+            new_key.symbol = CORBA::string_dup(key);
             for (CORBA::UShort iter = ((this->run_ - 2) * this->iterations_) + 1;
                 iter < this->run_ * this->iterations_ + 1;
                 ++iter)
               {
-                new_key->iteration = iter;
-                this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
+                new_key.iteration = iter;
+                this->writer_->write_one (new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
               }
@@ -141,8 +145,10 @@ namespace CIAO_ReadGet_Test_Sender_Impl
       {
         this->writer_ = this->context_->get_connection_info_write_data ();
         this->starter_ = this->context_->get_connection_start_reader ();
-        WriteHandler *wh = new WriteHandler (*this);
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+        ACE_NEW_THROW_EX (this->wh_,
+                          WriteHandler (*this),
+                          CORBA::INTERNAL ());
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
       }
     catch (const CORBA::Exception& ex)
       {
@@ -165,6 +171,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    delete this->wh_;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
