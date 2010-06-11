@@ -24,20 +24,6 @@ namespace CIAO_DelReplyH_Sender_Impl
     --nr_callbacks;
   }
 
-  void
-  MyFoo_callback_exec_i::_add_ref (void)
-  {
-    ACE_DEBUG ((LM_DEBUG,"add_ref replyhandle\n"));
-    ::CORBA::Object::_add_ref ();
-  }
-
-  void
-  MyFoo_callback_exec_i::_remove_ref (void)
-  {
-    ACE_DEBUG ((LM_DEBUG,"remove_ref replyhandle\n"));
-    ::CORBA::Object::_remove_ref ();
-  }
-
   //============================================================
   // Operations from ::CCM_AMI::MyFoo_callback
   //============================================================
@@ -108,10 +94,10 @@ namespace CIAO_DelReplyH_Sender_Impl
     //run some synch calls
     try 
       {
-        char *answer = 0;
-        my_foo_ami_->foo("synchroon call", answer);
+        CORBA::String_var answer;
+        my_foo_ami_->foo("synchroon call", answer.out ());
         ACE_DEBUG ((LM_DEBUG, "OK: SYNCH foo returns <%C>.\n",
-                              answer));
+                              answer.in ()));
       }
     catch (const DelReplyH::InternalError& )
       {

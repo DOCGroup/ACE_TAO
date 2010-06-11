@@ -17,7 +17,7 @@
 
 namespace CIAO_DelReplyH_Sender_Impl
 {
-  
+
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
 
   /// Worker thread for asynchronous invocations
@@ -55,10 +55,6 @@ namespace CIAO_DelReplyH_Sender_Impl
     virtual void foo (::CORBA::Long ami_return_val, const char * answer);
 
     virtual void foo_excep (::CCM_AMI::ExceptionHolder_ptr excep_holder);
-
-    virtual void _add_ref (void);
-        
-    virtual void _remove_ref (void);
   };
 
   class Sender_exec_i
