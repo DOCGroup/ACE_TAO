@@ -3338,6 +3338,15 @@ idl_store_pragma (char *buf)
           idl_global->add_included_ami_recep_names (tmp);
         }
     }
+  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      if (idl_global->in_main_file ())
+        {
+          idl_global->add_ciao_ami_idl_fnames (tmp);
+        }
+    }
 }
 
 /*

@@ -628,6 +628,10 @@ public:
   ACE_Unbounded_Queue<char *> & included_ami_recep_names (void);
   // Accessor/mutator for the included_ami_recep_names_ member.
   
+  void add_ciao_ami_idl_fnames (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames (void);
+  // Accessor/mutator for the included_ami_idl_fnames_ member.
+  
   ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
   // Accessor for the member
   
@@ -882,6 +886,9 @@ private:
   
   bool included_ami_receps_done_;
   // ...but we need to do it only once.
+  
+  ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
+  // Stores directives from #pragma ciao ami4ccm idl "xxx".
   
   ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
   // Used to check for an incorrect lookup success that should
