@@ -1,3 +1,12 @@
+Fri Jun 11 17:27:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
+        
+          Added one of the newly supported pragma directives, to
+          facilitate the compilation of the multiplex receptacle's 
+          associated struct and sequence, when the receptacle is
+          designated as an AMI port.
+
 Fri Jun 11 13:37:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
