@@ -285,7 +285,7 @@ namespace CIAO_InterReturnT_Sender_Impl
     InterReturnT::TestStruct_var test_topic = 0;
     InterReturnT::TestArray_var topic_arr = 0;
     CORBA::Long l_cmd = 0;
-    char * out_str = 0;
+    CORBA::String_var out_str;
     try
       {
         CORBA::Double ret = 
@@ -303,8 +303,8 @@ namespace CIAO_InterReturnT_Sender_Impl
     try
       {
         InterReturnT::TestArray_slice *arr =  
-          my_foo_ami_->ret_array ("Send me synch array",out_str, l_cmd);
-        arr++;
+          my_foo_ami_->ret_array ("Send me synch array",out_str.out (), l_cmd);
+        ++arr;
         if ((l_cmd != 5) || (arr->x_array[2] != 102))
           {
             ACE_ERROR ((LM_ERROR, "ERROR MyFoo synchroon ret_array: "

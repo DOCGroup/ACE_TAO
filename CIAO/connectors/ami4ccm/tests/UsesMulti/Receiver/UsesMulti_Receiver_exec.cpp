@@ -30,7 +30,7 @@ namespace CIAO_UsesMulti_Receiver_Impl
       }
     else
       {
-        nr_of_received_++;
+        ++nr_of_received_;
       }
     answer = CORBA::string_dup (in_str);
    

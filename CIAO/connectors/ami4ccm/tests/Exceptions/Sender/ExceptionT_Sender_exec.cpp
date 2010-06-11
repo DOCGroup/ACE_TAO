@@ -196,11 +196,11 @@ namespace CIAO_ExceptionT_Sender_Impl
   {
     ACE_OS::sleep (3);
     //run synch calls
-    char * out_str = 0;
+    CORBA::String_var out_str;
         try
           {
             my_foo_ami_->foo ("Do something synchronous",
-                               out_str);
+                               out_str.out ());
           } 
         catch (const ExceptionT::InternalError&)
           {
