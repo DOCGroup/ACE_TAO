@@ -508,6 +508,8 @@ private:
   iter_lookup_by_name_local (AST_Decl *d,
                              UTL_ScopedName *e,
                              bool full_def_only = false);
+                             
+  AST_Decl *local_checks (AST_Decl *d, bool full_def_only);
 };
 
 // Active iterator for a UTL_Scope node

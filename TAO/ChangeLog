@@ -1,22 +1,23 @@
+Fri Jun 11 09:50:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Previous commit missed some of the file revertions.
+
 Fri Jun 11 09:37:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:
         * TAO_IDL/ast/ast_structure_fwd.cpp:
-        * TAO_IDL/ast/ast_module.cpp:
-        * TAO_IDL/ast/ast_generator.cpp:
         * TAO_IDL/ast/ast_interface_fwd.cpp:
         * TAO_IDL/ast/ast_component_fwd.cpp:
-        * TAO_IDL/ast/ast_decl.cpp:
         * TAO_IDL/ast/ast_template_module_ref.cpp:
-        * TAO_IDL/be/be_module.cpp:
         * TAO_IDL/be/be_generator.cpp:
         * TAO_IDL/be_include/be_module.h:
-        * TAO_IDL/include/ast_module.h:
-        * TAO_IDL/include/ast_interface_fwd.h:
-        * TAO_IDL/include/ast_component_fwd.h:
-        * TAO_IDL/include/ast_decl.h:
-        * TAO_IDL/include/ast_template_module_ref.h:
-        * TAO_IDL/include/ast_structure_fwd.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
 
