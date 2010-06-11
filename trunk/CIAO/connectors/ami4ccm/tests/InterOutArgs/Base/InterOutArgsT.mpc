@@ -30,7 +30,7 @@ project(AMI_InterOutArgsT_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_InterOutArgsT_lema_gen) : ciaoidldefaults, anytypecode {
+project(AMI_InterOutArgsT_lema_gen) : ciaoidldefaults, typecode {
   after += AMI_InterOutArgsT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INTEROUTARGS_T_STUB_Export \
