@@ -117,7 +117,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                   readinfo <<= sample_info[i];
                   this->listener_->on_deletion (data[i], readinfo);
                 }
-              if (sample_info[i].valid_data)
+              else if (sample_info[i].valid_data)
                 {
                   if (sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
                     {
@@ -127,9 +127,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                     }
                   else
                     {
-                      ::CCM_DDS::ReadInfo info;
-                      info <<= sample_info[i];
-                      this->listener_->on_one_update (data[i], info);
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
+                      this->listener_->on_one_update (data[i], readinfo);
                     }
                 }
             }
@@ -139,31 +139,35 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
           typedef std::vector<DDS_Long> Updates;
           Updates updates;
 
-          CORBA::ULong nr_of_updates = 0;
-
           for (::DDS_Long i = 0 ; i < sample_info.length(); i++)
             {
               if ((sample_info[i].valid_data &&
                    sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
                   sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                 {
-                  // Sample_new or sample_delete found -> first send out the
-                  // updated samples in one go
-                  typename CCM_TYPE::seq_type inst_seq (nr_of_updates);
-                  ::CCM_DDS::ReadInfoSeq infoseq (nr_of_updates);
-
-                  infoseq.length (nr_of_updates);
-                  inst_seq.length (nr_of_updates);
-                  CORBA::ULong ix = 0;
-                  for(Updates::iterator iter = updates.begin();
-                      iter != updates.end();
-                      ++iter)
+                  if (updates.size () > 0)
                     {
-                      infoseq[ix] <<= sample_info[*iter];
-                      inst_seq[ix] = data[*iter];
-                      ++ix;
+                      // Sample_new or sample_delete found -> first send out the
+                      // updated samples in one go
+                      typename CCM_TYPE::seq_type inst_seq (updates.size ());
+                      ::CCM_DDS::ReadInfoSeq infoseq (updates.size ());
+
+                      infoseq.length (updates.size ());
+                      inst_seq.length (updates.size ());
+                      CORBA::ULong ix = 0;
+                      for(Updates::iterator iter = updates.begin();
+                         iter != updates.end();
+                         ++iter)
+                       {
+                         infoseq[ix] <<= sample_info[*iter];
+                        inst_seq[ix] = data[*iter];
+                        ++ix;
+                      }
+                      this->listener_->on_many_updates (inst_seq, infoseq);
+                      
+                      // Clean up
+                      updates.clear ();
                     }
-                  this->listener_->on_many_updates (inst_seq, infoseq);
                   // Now invoke on_creation or on_deletion
                   if (sample_info[i].valid_data &&
                       sample_info[i].view_state == ::DDS_NEW_VIEW_STATE)
@@ -179,24 +183,21 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
                       readinfo <<= sample_info[i];
                       this->listener_->on_deletion (data[i], readinfo);
                     }
-                  // Clean up
-                  updates.clear ();
-                  nr_of_updates = 0;
                 }
               else if (sample_info[i].valid_data)
                 {
-                  ++nr_of_updates;
                   updates.push_back (i);
                 }
             }
+            
           // Send the latest updates.
           if (updates.size () > 0)
             {
-              typename CCM_TYPE::seq_type inst_seq (nr_of_updates);
-              ::CCM_DDS::ReadInfoSeq infoseq (nr_of_updates);
+              typename CCM_TYPE::seq_type inst_seq (updates.size ());
+              ::CCM_DDS::ReadInfoSeq infoseq (updates.size ());
 
-              infoseq.length (nr_of_updates);
-              inst_seq.length (nr_of_updates);
+              infoseq.length (updates.size ());
+              inst_seq.length (updates.size ());
               CORBA::ULong ix = 0;
               for(Updates::iterator iter = updates.begin();
                   iter != updates.end();

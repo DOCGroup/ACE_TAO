@@ -9,7 +9,7 @@ project (DDS_CCM_Example_PSAT_stub) : taoidldefaults, anytypecode, dds4ccm_ts_de
               -Wb,stub_export_include=ccm_dds_psat_stub_export.h
 
   IDL_Files {
-    idlflags += -Gxhst
+    idlflags += -Gxhst -SS
     ccm_dds_psat.idl
   }
 
@@ -35,7 +35,7 @@ project(DDS_PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,svnt_export_include=ccm_dds_psat_svnt_export.h \
               -Wb,conn_export_macro=CSL_DEADLINETEST_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=ccm_dds_psat_conn_export.h \
-              -I ..
+              -I .. -SS
 
   IDL_Files {
     ccm_dds_psat.idl

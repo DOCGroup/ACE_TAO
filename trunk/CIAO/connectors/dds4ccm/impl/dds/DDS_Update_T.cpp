@@ -85,7 +85,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::activate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::activate: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                         "DDS_Update_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -104,7 +105,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::passivate ()
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Update_T::passivate: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                         "DDS_Update_T::passivate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
 }
@@ -119,7 +121,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
     {
       ::DDS::ReturnCode_t const retval =
         publisher->delete_datawriter (&this->ccm_dds_writer_);
-      if (retval != DDS::RETCODE_OK)
+      if (retval != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
             "DDS_Update_T::remove - "
