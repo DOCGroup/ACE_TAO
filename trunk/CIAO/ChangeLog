@@ -1,3 +1,9 @@
+Fri Jun 11 08:30:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpb:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir.mpc:
+          Renamed parent.
+
 Fri Jun 11 07:43:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Component:

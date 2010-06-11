@@ -1,7 +1,7 @@
 // $Id$
 
 project (DiffDir_stub) : taoidldefaults, anytypecode, \
-                         dds4ccm_ts_default, diffdir {
+                         dds4ccm_ts_default, DiffDir {
   sharedname = DiffDir_stub
   dynamicflags += DIFFDIR_COMMON_STUB_BUILD_DLL
 
