@@ -94,15 +94,11 @@ class ast_visitor;
 
 class TAO_IDL_FE_Export COMMON_Base
 {
-protected:
+public:
   COMMON_Base (bool local = false,
                bool abstract = false);
 
   virtual ~COMMON_Base (void) {}
-
-public:
-  // A no-op, overridden in the child classes.
-  virtual void destroy (void);
 
   // Accessor needs to get overridden for a few types.
   virtual bool is_local (void);
@@ -110,6 +106,9 @@ public:
   
   bool is_abstract (void) const;
   void is_abstract (bool val);
+
+  // A no-op, overridden in the child classes.
+  virtual void destroy (void);
 
 protected:
   bool is_local_;
@@ -176,17 +175,6 @@ public:
             bool anonymous = false);
 
   virtual ~AST_Decl (void);
-
-  // Cleanup method.
-  virtual void destroy (void);
-
-  // If this decl has been found, some types need to be
-  // moved onto their true definitions etc. Defaults to
-  // NO adjustment.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
-
-  // Is this decl a forward declared type (default false)
-  virtual bool is_fwd (void);
 
   // Data Accessors.
 
@@ -276,6 +264,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Cleanup method.
+  virtual void destroy (void);
 
   // Other operations
 
