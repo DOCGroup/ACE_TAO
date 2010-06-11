@@ -5,8 +5,8 @@
 #include "CoherentUpdate_Test_Receiver_exec.h"
 
 #include "ace/OS_NS_unistd.h"
-
-
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
 namespace CIAO_CoherentUpdate_Test_Receiver_Impl
@@ -81,10 +81,18 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   {
     try
       {
+        ::CoherentUpdate_Test::Reader_var reader =
+          this->context_->get_connection_info_out_data ();
+        if (::CORBA::is_nil (reader.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_last - "
+                                  "Unable to retrieve reader from context.\n"));
+            return false;
+          }
         CoherentUpdateTest coherentwrite_info;
         ::CCM_DDS::ReadInfo readinfo;
         coherentwrite_info.symbol = CORBA::string_dup ("KEY_1");
-        this->reader_->read_one_last (
+        reader->read_one_last (
                 coherentwrite_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
@@ -105,13 +113,13 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::read_all (void)
+  Receiver_exec_i::read_all (::CoherentUpdate_Test::Reader_ptr reader)
   {
     try
       {
         CoherentUpdateTestSeq coherentwrite_info_seq;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
-        this->reader_->read_all (coherentwrite_info_seq, readinfo_seq);
+        reader->read_all (coherentwrite_info_seq, readinfo_seq);
 
         for (CORBA::ULong it = 0; it < coherentwrite_info_seq.length (); ++it)
           {
@@ -133,7 +141,17 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
           }
         if (this->run_ < this->nr_runs () + 1)
           {
-            this->restarter_->restart_update ();
+             CoherentUpdateRestarter_var restarter =
+              this->context_->get_connection_updater_restart ();
+            if (! ::CORBA::is_nil (restarter))
+              {
+                restarter->restart_update ();
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_all -"
+                                      "Unable to restart.\n"));
+              }
           }
         else
           {
@@ -166,7 +184,9 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   void
   Receiver_exec_i::start_read (CORBA::UShort run)
   {
-    this->ticker_ = new read_action_Generator (*this, run);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      read_action_Generator (*this, run),
+                      ::CORBA::INTERNAL ());
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
@@ -190,7 +210,17 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
                           "Starting run number <%d>\n",
                           run));
     this->run_ = run;
-    read_all ();
+    ::CoherentUpdate_Test::Reader_var reader =
+      this->context_->get_connection_info_out_data ();
+    if (! ::CORBA::is_nil (reader.in ()))
+      {
+        this->read_all (reader);
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::run - "
+                              "Unable to start: reader is nil.\n"));
+      }
   }
 
   ::CORBA::UShort
@@ -257,9 +287,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
-    this->restarter_ = this->context_->get_connection_updater_restart ();
-}
+  }
 
   void
   Receiver_exec_i::ccm_passivate (void)

@@ -2,8 +2,8 @@
 // $Id$
 
 #include "CoherentUpdate_Test_Sender_exec.h"
-
-
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
 #define SAMPLE_KEY_NAME "KEY_1"
@@ -49,7 +49,8 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (3),
       run_ (1),
-      total_iter (0)
+      total_iter (0),
+      wh_ (0)
   {
   }
 
@@ -61,8 +62,11 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
   Sender_exec_i::restart (void)
   {
     ++this->run_;
-    WriteHandler *wh = new WriteHandler (*this);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+    delete this->wh_;
+    ACE_NEW_THROW_EX (this->wh_,
+                      WriteHandler (*this),
+                      CORBA::INTERNAL ());
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
   }
 
   void
@@ -147,8 +151,10 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
         this->updater_->create_one (new_key);
 
         this->starter_ = this->context_->get_connection_start_reader ();
-        WriteHandler *wh = new WriteHandler (*this);
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+        ACE_NEW_THROW_EX (this->wh_,
+                          WriteHandler (*this),
+                          CORBA::INTERNAL ());
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
       }
     catch (const CORBA::Exception& ex)
       {
@@ -171,6 +177,7 @@ namespace CIAO_CoherentUpdate_Test_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    delete this->wh_;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
