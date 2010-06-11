@@ -30,7 +30,7 @@ project(AMI_NoReplyH_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_NoReplyH_lema_gen) : ciaoidldefaults {
+project(AMI_NoReplyH_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI_NoReplyH_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NOREPLYH_STUB_Export \

@@ -30,7 +30,7 @@ project(AMI_OneProcess_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_OneProcess_lema_gen) : ciaoidldefaults {
+project(AMI_OneProcess_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI_OneProcess_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ONEPROCESS_STUB_Export \
