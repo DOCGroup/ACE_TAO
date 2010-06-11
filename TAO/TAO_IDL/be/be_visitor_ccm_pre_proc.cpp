@@ -1718,7 +1718,11 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                               ScopeAsDecl (s));
   node->set_name (mangled_name);
   AST_Module *m = AST_Module::narrow_from_scope (s);
-  m->be_add_interface (retval);
+  
+  /// Calling be_add_interface() here calls add_to_referenced(),
+  /// which will give a redef error.
+  m->add_to_scope (retval);
+
   node->set_name (unmangled_name);
   return retval;
 }
