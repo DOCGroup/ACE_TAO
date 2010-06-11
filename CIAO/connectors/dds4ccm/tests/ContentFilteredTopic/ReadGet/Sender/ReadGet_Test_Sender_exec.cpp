@@ -72,14 +72,23 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    if (! ::CORBA::is_nil (this->starter_))
+    ::ReadGet_Test::QueryConditionTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+    ReadGetStarter_var starter =
+      this->context_->get_connection_start_reader ();
+
+    if (::CORBA::is_nil (starter.in ()) ||
+        ::CORBA::is_nil (writer.in ()))
       {
-        this->starter_->set_reader_properties (this->keys_, this->iterations_);
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Sender_exec_i::start - ")
+                              ACE_TEXT ("Unable to start the reader\n")));
+        return;
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
       }
+    starter->set_reader_properties (this->keys_, this->iterations_);
+
     if (this->run_ > 1)
       {
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
@@ -93,14 +102,14 @@ namespace CIAO_ReadGet_Test_Sender_Impl
                 ++iter)
               {
                 new_key.iteration = iter;
-                this->writer_->write_one (new_key, ::DDS::HANDLE_NIL);
+                writer->write_one (new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
               }
           }
         ACE_OS::sleep (1);
       }
-    this->starter_->start_read (this->run_);
+    starter->start_read (this->run_);
   }
 
   ::CORBA::UShort
@@ -143,8 +152,6 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
-        this->starter_ = this->context_->get_connection_start_reader ();
         ACE_NEW_THROW_EX (this->wh_,
                           WriteHandler (*this),
                           CORBA::INTERNAL ());

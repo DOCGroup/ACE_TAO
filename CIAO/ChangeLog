@@ -1,3 +1,15 @@
+Fri Jun 11 12:01:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+          Removed the caching of the ports since the context already caches these. Also improved
+          error handling.
+
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Removed blank line.
+
 Fri Jun 11 12:01:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
