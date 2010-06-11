@@ -8,6 +8,7 @@
 #include "Base/UsesMulti.idl"
 
 #pragma ciao ami4ccm receptacle "UsesMulti::Sender::run_my_um_one"
+#pragma ciao ami4ccm idl "Base/UsesMultiA.idl"
 
 module UsesMulti
 {
