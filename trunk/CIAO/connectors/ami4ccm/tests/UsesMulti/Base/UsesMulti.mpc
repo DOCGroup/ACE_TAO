@@ -31,7 +31,7 @@ project(AMI_UsesMulti_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_UsesMulti_lema_gen) : ciaoidldefaults {
+project(AMI_UsesMulti_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI_UsesMulti_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=USESMULTI_STUB_Export \
@@ -44,12 +44,6 @@ project(AMI_UsesMulti_lema_gen) : ciaoidldefaults {
               -Wb,skel_export_include=UsesMulti_skel_export.h \
               -I.. -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
       
-  // We need the typecode for the AMI4CCM_* interface
-  // since it can be a member of the uses multiple related
-  // struct in a component, but this is hackish, there
-  // should be a cleaner way.         
-  idlflags -= -St
-
   IDL_Files {
     UsesMultiA.idl
   }

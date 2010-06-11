@@ -30,7 +30,7 @@ project(AMI_AsynchT_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_AsynchT_lema_gen) : ciaoidldefaults {
+project(AMI_AsynchT_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI_AsynchT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ASYNCHT_STUB_Export \

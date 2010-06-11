@@ -30,7 +30,7 @@ project(AMI_OneReplyH_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_OneReplyH_lema_gen) : ciaoidldefaults {
+project(AMI_OneReplyH_lema_gen) : ciaoidldefaults, anytypecode {
   after += AMI_OneReplyH_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ONEREPLYH_T_STUB_Export \
