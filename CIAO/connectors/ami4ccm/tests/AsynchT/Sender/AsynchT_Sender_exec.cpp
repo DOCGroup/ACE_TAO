@@ -186,7 +186,7 @@ namespace CIAO_AsynchT_Sender_Impl
     for (int i = 0; i < 3; ++i)
       {
         // Run some synch calls, answer has to come before the next step.
-         char * answer = 0;
+         CORBA::String_var answer;
          try
            {
              if( wait==true)
@@ -198,11 +198,11 @@ namespace CIAO_AsynchT_Sender_Impl
              ACE_DEBUG ((LM_DEBUG, "OK: SEND SYNCHRONOUS CALL foo.\n"));
              CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                      2 ,
-                                                     answer);
+                                                     answer.out ());
              if ( result == 2)
                {
                  ACE_DEBUG ((LM_DEBUG, "OK: RECEIVED SYNCHRONOUS answer <%C>\n",
-                                       answer));
+                                       answer.in ()));
                  wait = false;
                }
              if ( wait==true)
@@ -217,7 +217,7 @@ namespace CIAO_AsynchT_Sender_Impl
              if ( l_cmd == 2)
                {
                  ACE_DEBUG ((LM_DEBUG, "OK: RECEIVED SYNCHRONOUS answer <%C>\n",
-                                       answer));
+                                       answer.in ()));
                  wait = false;
                }
             }

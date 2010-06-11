@@ -213,13 +213,13 @@ namespace CIAO_InterInArgsT_Sender_Impl
   {
     ACE_OS::sleep (3);
     //run some synch calls
-    char * out_str = 0;
+    CORBA::String_var out_str;
     try
       {
         CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                 cmd_synch_ok ,
-                                                out_str);
-        if ( result == (update_val + cmd_synch_ok))
+                                                out_str.out ());
+        if (result == (update_val + cmd_synch_ok))
           {
             ++nr_of_received;
           }

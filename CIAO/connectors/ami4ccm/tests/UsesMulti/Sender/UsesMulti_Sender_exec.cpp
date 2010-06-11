@@ -30,7 +30,7 @@ namespace CIAO_UsesMulti_Sender_Impl
      ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
                            " answer = <%C>\n",
                            answer));  
-     nr_of_received++;
+     ++nr_of_received;
   }
 
   void
@@ -94,7 +94,7 @@ namespace CIAO_UsesMulti_Sender_Impl
   {
     for(CORBA::ULong i = 0; i < my_one_ami_->length(); ++i)
       {
-        char *test = 0;
+        CORBA::String_var test;
         if ( i == 0)
           test = CORBA::string_dup("Synchronous call een.");
         if ( i == 1)
@@ -102,10 +102,10 @@ namespace CIAO_UsesMulti_Sender_Impl
         if ( i == 2)
           test = CORBA::string_dup("Synchronous call drie");
 
-        char *answer = 0;
+        CORBA::String_var answer;
         CORBA::ULong result = my_one_ami_[i].objref->foo( test,
                               i,
-                              answer);
+                              answer.out ());
         if (result != i)
           {
             ACE_ERROR ((LM_ERROR, 
@@ -113,9 +113,10 @@ namespace CIAO_UsesMulti_Sender_Impl
           }
         else
           { 
-            nr_of_received++;
+            ++nr_of_received;
             ACE_DEBUG ((LM_DEBUG, 
-                        "Sender (SYNCH) : received answer = <%C> !\n", answer));
+                        "Sender (SYNCH) : received answer = <%C> !\n",
+                        answer.in ()));
           } 
       }
     return 0;

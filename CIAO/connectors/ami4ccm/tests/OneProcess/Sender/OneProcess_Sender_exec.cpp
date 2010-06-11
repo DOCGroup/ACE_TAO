@@ -135,10 +135,10 @@ namespace CIAO_OneProcess_Sender_Impl
     CORBA::Boolean wait = false;
     for (int i = 0; i < 3; ++i)
       {
-        //run some synch calls
-         char * answer = 0;
+         //run some synch calls
          try
            {
+             CORBA::String_var answer;
              if( wait==true)
                {
                  ACE_ERROR ((LM_ERROR,
@@ -147,11 +147,11 @@ namespace CIAO_OneProcess_Sender_Impl
              wait = true;
              CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                      2 ,
-                                                     answer);
+                                                     answer.out ());
              if ( result == 2)
                {
                  ACE_DEBUG ((LM_DEBUG, "OK: RECEIVED SYNCHRONOUS answer <%C>\n",
-                                       answer));
+                                       answer.in ()));
                  wait = false;
                }
             }
