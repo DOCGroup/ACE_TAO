@@ -41,7 +41,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
                 {
                   DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::configuration_complete: "
                                                "Error creating ContentFilteredTopic.\n"));
-                  throw CORBA::INTERNAL ();
+                  throw ::CORBA::INTERNAL ();
                 }
               this->data_reader_.create_datareader (cft,
                                                     subscriber,
@@ -62,21 +62,24 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
     }
   catch (const ::CCM_DDS::InternalError &)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                                              "Caught CCM_DDS internal exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                         "Caught CCM_DDS internal exception.\n"));
       throw CORBA::INTERNAL ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("DDS_Subscriber_Base_T::configuration_complete");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                                              "Caught internal exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                         "Caught internal exception.\n"));
       throw CORBA::INTERNAL ();
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                                              "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
+                         "Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
   return false;
