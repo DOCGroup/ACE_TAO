@@ -1,3 +1,4 @@
+
 //=============================================================================
 /**
  *  @file    be_module.cpp
@@ -7,6 +8,7 @@
  *  Extension of class AST_Module that provides additional means for C++
  *  mapping of a module
  *
+ *
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
@@ -15,13 +17,15 @@
 #include "be_module.h"
 #include "be_visitor.h"
 
-be_module::be_module (UTL_ScopedName *n, AST_Module *previous)
+be_module::be_module (UTL_ScopedName *n)
   : COMMON_Base (),
-    AST_Decl (AST_Decl::NT_module, n),
+    AST_Decl (AST_Decl::NT_module,
+              n),
     UTL_Scope (AST_Decl::NT_module),
-    AST_Module (n, previous),
+    AST_Module (n),
     be_scope (AST_Decl::NT_module),
-    be_decl (AST_Decl::NT_module, n)
+    be_decl (AST_Decl::NT_module,
+             n)
 {
 }
 
