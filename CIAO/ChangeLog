@@ -1,3 +1,10 @@
+Fri Jun 11 17:50:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc:
+        
+          Removed references to Conn_UsesMulti_Base_stub, it doesn't
+          exist.
+
 Fri Jun 11 17:27:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
