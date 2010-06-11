@@ -5,8 +5,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Date_Time.h"
-
 #include "ace/Reactor.h"
+#include "tao/ORB_Core.h"
 
 namespace CIAO_QCLS_Test_Sender_Impl
 {
