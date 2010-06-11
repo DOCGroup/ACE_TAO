@@ -143,13 +143,13 @@ template <typename DDS_TYPE, typename CCM_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_data (void)
 {
-  return &this->dds_update_;
+  return CCM_TYPE::updater_type::_duplicate (&this->dds_update_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 ::DDS::CCM_DataWriter_ptr
 DDS_Update_T<DDS_TYPE, CCM_TYPE>::get_dds_entity (void)
 {
-  return &this->ccm_dds_writer_;
+  return ::DDS::CCM_DataWriter::_duplicate (&this->ccm_dds_writer_);
 }
 
