@@ -147,7 +147,15 @@ AST_Module *
 be_generator::create_module (UTL_Scope *s,
                              UTL_ScopedName *n)
 {
+  // We create this first so if we find a module with the
+  // same name from an included file, we can add its
+  // members to the new module's scope.
   AST_Module *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_module (n),
+                  0);
+
+  AST_Module *m = 0;
 
   // Check for another module of the same name in this scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
@@ -156,46 +164,56 @@ be_generator::create_module (UTL_Scope *s,
     {
       // Can't just check node type here, since it could be a
       // template module or template module instantiation.
-      AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
-      
-      if (m && m->local_name ()->compare (n->last_component ()))
+      m = AST_Module::narrow_from_decl (iter.item ());
+
+      if (m != 0)
         {
-          // Create this new module with referance to the
-          // "first" previous module found in scope.
-          ACE_NEW_RETURN (retval, be_module (n, m), 0);
-          retval->prefix (const_cast<char *> (m->prefix ()));
-          return retval;
+          // Does it have the same name as the one we're
+          // supposed to create.
+          if (m->local_name ()->compare (n->last_component ()))
+            {
+              // Get m's previous_ member, plus all it's decls,
+              // into the new modules's previous_ member.
+              retval->add_to_previous (m);
+              retval->prefix (const_cast<char *> (m->prefix ()));
+            }
         }
     }
 
-  // Since the scope didn't contain the same module name, it
-  // doesn't mean that we haven't see it before. If the scope
-  // is itself a module, and has been previously opened, any
-  // of the previous openings may contain a previous opening
+  // If this scope is itself a module, and has been previously
+  // opened, the previous opening may contain a previous opening
   // of the module we're creating.
-  AST_Module *prev_module = AST_Module::narrow_from_scope (s);
-  if (prev_module)
+  m = AST_Module::narrow_from_scope (s);
+
+  if (m != 0)
     {
-      while (!!(prev_module = prev_module->previous_opening ()))
+      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
+             m->prev_mods ());
+           !i.done ();
+           i.advance ())
         {
-          for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
-               !iter.is_done ();
-               iter.next ())
+          AST_Module **mm = 0;
+          i.next (mm);
+          
+          for (UTL_ScopeActiveIterator si (*mm, UTL_Scope::IK_decls);
+               !si.is_done ();
+               si.next ())
             {
-              AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
-              if (m && m->local_name ()->compare (n->last_component ()))
+              AST_Decl *d = si.item ();
+              
+              if (retval->local_name ()->case_compare (d->local_name ()))
                 {
-                  // Create this new module with referance to the
-                  // "first" previous module found in scope.
-                  ACE_NEW_RETURN (retval, be_module (n, m), 0);
-                  return retval;
+                  m = AST_Module::narrow_from_decl (d);
+                  
+                  if (m != 0)
+                    {
+                      retval->add_to_previous (m);
+                    }
                 }
             }
         }
     }
 
-  // There is no previous module to be found
-  ACE_NEW_RETURN (retval, be_module (n), 0);
   return retval;
 }
 
@@ -218,7 +236,7 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 l,
                                 a),
                   0);
-  
+
   /// Trigger this interation over the included pragmas when the
   /// first local interface is seen in the main file. In an
   /// executor IDL file (the case we want), this happens near the
