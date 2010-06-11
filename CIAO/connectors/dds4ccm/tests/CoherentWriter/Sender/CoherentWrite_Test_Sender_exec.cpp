@@ -47,7 +47,8 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : iterations_ (3),
       run_ (1),
-      total_iter (0)
+      total_iter (0),
+      wh_ (0)
   {
   }
 
@@ -59,21 +60,30 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
   Sender_exec_i::restart (void)
   {
     ++this->run_;
-    WriteHandler *wh = new WriteHandler (*this);
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+    delete this->wh_;
+    ACE_NEW_THROW_EX (this->wh_,
+                      WriteHandler (*this),
+                      ::CORBA::INTERNAL ());
+    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
   }
 
   void
   Sender_exec_i::start (void)
   {
-    if (! ::CORBA::is_nil (this->starter_))
-      {
-        this->starter_->set_reader_properties (this->iterations_);
-      }
-    else
+    ::CoherentWriteTestConnector::Writer_var writer =
+    this->context_->get_connection_info_write_data ();
+
+    CoherentWriteStarter_var starter =
+      this->context_->get_connection_start_reader ();
+    if (::CORBA::is_nil (starter.in ()) ||
+        ::CORBA::is_nil (writer.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to start the reader\n")));
+        return;
       }
+
+    writer->is_coherent_write (true);
+    starter->set_reader_properties (this->iterations_);
 
     ACE_DEBUG ((LM_DEBUG, "Start run <%d> with <%u> iterations\n",
                           this->run_,
@@ -88,11 +98,11 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
         new_key.iteration = ++total_iter;
         write_many_seq[i-1] = new_key;
       }
-    this->writer_->write_many (write_many_seq);
+    writer->write_many (write_many_seq);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written <%u> keys uptil now\n"),
                 total_iter));
     ACE_OS::sleep (2);
-    this->starter_->start_read (this->run_);
+    starter->start_read (this->run_);
   }
 
   ::CORBA::UShort
@@ -135,11 +145,10 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
-        this->writer_->is_coherent_write (true);
-        this->starter_ = this->context_->get_connection_start_reader ();
-        WriteHandler *wh = new WriteHandler (*this);
-        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
+        ACE_NEW_THROW_EX (this->wh_,
+                          WriteHandler (*this),
+                          ::CORBA::INTERNAL ());
+        this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
       }
     catch (const CORBA::Exception& ex)
       {

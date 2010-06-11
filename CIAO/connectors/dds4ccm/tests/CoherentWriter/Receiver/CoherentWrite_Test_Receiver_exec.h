@@ -104,8 +104,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
 
   private:
     ::CoherentWrite_Test::CCM_Receiver_Context_var context_;
-    ::CoherentWriteTestConnector::Reader_var reader_;
-    CoherentWriteRestarter_var restarter_;
+
     CORBA::UShort   iterations_;
     CORBA::UShort   run_;
     CORBA::UShort   nr_runs_;
@@ -114,6 +113,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
     read_action_Generator *ticker_;
 
     void read_all (void);
+
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
