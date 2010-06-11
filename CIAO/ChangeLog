@@ -1,3 +1,19 @@
+Fri Jun 11 13:17:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+          Using duplicate to return interfaces.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.mpc:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+          Reorganized.
+
 Fri Jun 11 13:02:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.mpc:

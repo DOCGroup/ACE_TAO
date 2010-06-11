@@ -1,6 +1,7 @@
 // $Id$
 
 /**
+ * @file NonChangeable_Component.idl
  * @author Marcel Smit <msmit@remedy.nl>
  */
 
@@ -9,11 +10,11 @@
 
 #include "Connector/NonChangeable_Connector.idl"
 
-module NonChangeable_Test
+module NonChangeable
 {
-  component NonChangeableTestComponent
+  component NonChangeableComponent
   {
-    port NonChangeableTestConnector::DDS_Get getter;
+    port NonChangeableTestConnector::DDS_Write info_write;
   };
 };
 

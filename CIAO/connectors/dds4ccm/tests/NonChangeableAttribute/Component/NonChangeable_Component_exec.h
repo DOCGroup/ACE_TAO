@@ -14,13 +14,15 @@
 
 #include "tao/LocalObject.h"
 
-namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
+#include "dds4ccm/impl/dds/DataWriter.h"
+
+namespace CIAO_NonChangeable_NonChangeableComponent_Impl
 {
   //============================================================
   // Component_exec_i
   //============================================================
   class COMPONENT_EXEC_Export Component_exec_i
-    : public virtual NonChangeableTestComponent_Exec,
+    : public virtual NonChangeableComponent_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -32,9 +34,6 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
     set_session_context (
       ::Components::SessionContext_ptr ctx);
 
-    virtual CCM_DDS::CCM_PortStatusListener_ptr
-    get_getter_status (void);
-
     virtual void configuration_complete (void);
 
     virtual void ccm_activate (void);
@@ -42,19 +41,28 @@ namespace CIAO_NonChangeable_Test_NonChangeableTestComponent_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::NonChangeable_Test::CCM_NonChangeableTestComponent_Context_var context_;
+    ::NonChangeable::CCM_NonChangeableComponent_Context_var context_;
 
-    bool test_topic_name (
-      ::NonChangeableTestConnector::CCM_DDS_State_ptr conn);
+    bool
+    test_key_fields (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
 
-    bool test_key_fields (
-      ::NonChangeableTestConnector::CCM_DDS_State_ptr conn);
+    bool
+    test_attributes (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
 
-    bool test_domain_id (
-      ::NonChangeableTestConnector::CCM_DDS_State_ptr conn);
+    bool
+    test_qos_profile (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
 
-    bool test_qos_profile (
-      ::NonChangeableTestConnector::CCM_DDS_State_ptr conn);
+    bool
+    test_topic_name (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
+
+    bool
+    test_domain_id (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
+
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
