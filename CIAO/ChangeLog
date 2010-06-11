@@ -1,3 +1,8 @@
+Fri Jun 11 18:59:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Base_Connector_T.cpp:
+          Added guards around RTI specific code
+
 Fri Jun 11 18:14:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.mpc:
