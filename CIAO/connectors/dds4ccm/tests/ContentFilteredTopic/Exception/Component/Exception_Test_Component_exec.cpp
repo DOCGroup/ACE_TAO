@@ -58,7 +58,7 @@ namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl
     catch (const ::CCM_DDS::InternalError& ex)
       {
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters - "
-                              "caught expected InternalError exception.\n"));
+                              "caught expected InternalErr exception.\n"));
         exception_caught = true;
       }
     catch (const CORBA::Exception& ex)
