@@ -81,7 +81,7 @@ namespace CIAO_OneReplyH_Sender_Impl
 
   void
   MyFoo_callback_exec_i::bar (
-     const char */*answer*/, CORBA::Long l_cmd)
+     const char * /*answer*/, CORBA::Long l_cmd)
   {
     if ( l_cmd == cmd_asynch_bar_ok )
       {
