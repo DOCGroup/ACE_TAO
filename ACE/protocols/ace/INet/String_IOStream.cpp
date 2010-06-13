@@ -7,8 +7,6 @@
 #include "IOS_util.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(NET_CLIENT,ACE_IOS_String_IOStream,"$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

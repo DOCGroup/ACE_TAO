@@ -129,8 +129,8 @@ namespace ACE
               SessionHolder* session_;
           };
 
-      };
-  };
+      }
+  }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
