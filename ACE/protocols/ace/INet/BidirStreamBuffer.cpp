@@ -7,8 +7,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(NET_CLIENT,ACE_IOS_BidirStreamBuffer,"$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

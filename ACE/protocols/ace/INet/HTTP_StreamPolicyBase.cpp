@@ -5,8 +5,6 @@
 
 #include "HTTP_StreamPolicyBase.h"
 
-ACE_RCSID(NET_CLIENT,ACE_HTTP_StreamPolicyBase,"$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

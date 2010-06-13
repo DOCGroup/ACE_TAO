@@ -1,3 +1,19 @@
+Sun Jun 13 09:48:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/BidirStreamBuffer.cpp:
+        * protocols/ace/INet/Sock_IOStream.cpp:
+        * protocols/ace/INet/HTTP_StreamPolicy.cpp:
+        * protocols/ace/INet/StreamInterceptor.cpp:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.cpp:
+        * protocols/ace/INet/String_IOStream.cpp:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/BufferedStreamBuffer.cpp:
+	  Removed ACE_RCSID lines from template sourcefiles to fix compile problems.
+
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+	  Removed closing semicolons on namespaces.
+
 Thu Jun 10 01:33:11 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/ace/HTBP/HTBP_Channel.cpp:

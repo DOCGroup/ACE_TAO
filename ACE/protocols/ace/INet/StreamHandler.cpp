@@ -9,8 +9,6 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(NET_CLIENT,ACE_IOS_StreamHandler,"$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
