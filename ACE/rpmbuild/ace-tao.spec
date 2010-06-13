@@ -5,17 +5,17 @@
 
 # Conditional build
 # Default values are
-#                    --with rnq        (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#                    --with ipv6       (IPv6 support)
-#                    --with opt        (Optimized build)
-#                    --with zlib       (Zlib compressor)
-#                    --with bzip2      (Bzip2 compressor)
-#                    --with autoconf   (Use autoconf to build)
-#                    --with fltk       (ftlk support)
-#                    --with tk         (tk support)
-#                    --with xt         (xt support)
-#                    --with fox        (fox support)
-#                    --with qt         (qt support)
+#                    --with rnq         (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+#                    --with ipv6        (IPv6 support)
+#                    --with opt         (Optimized build)
+#                    --with zlib        (Zlib compressor)
+#                    --with bzip2       (Bzip2 compressor)
+#                    --without autoconf (Use MPC to build)
+#                    --without fltk     (No ftlk support)
+#                    --without tk       (No tk support)
+#                    --without xt       (No xt support)
+#                    --without fox      (No fox support)
+#                    --without qt       (No qt support)
 
 #
 # Read: If neither macro exists, then add the default definition.
@@ -56,7 +56,13 @@
 Summary:      The ADAPTIVE Communication Environment (ACE) and The ACE ORB (TAO)
 Name:         ace-tao
 Version:      %{ACEVER}
+
+%if 0%{?opensuse_bs}
+Release:      <CI_CNT>%{?OPTTAG}%{?dist}
+%else
 Release:      1%{?OPTTAG}%{?dist}
+%endif
+
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
@@ -64,16 +70,9 @@ Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-
 Source1:      ace-tao-rpmlintrc
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-%if 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 %define _extension .gz
-%endif
-
-%if 0%{?fedora_version}
-%define _extension .gz
-%endif
-
-%if 0%{?rhel_version}
-%define _extension .gz
+BuildRequires: redhat-rpm-config elfutils
 %endif
 
 %if 0%{?suse_version}
@@ -102,13 +101,12 @@ BuildRequires:  zlib-devel
 BuildRequires:  bzip2
 %endif
 
-%if 0%{?mandriva_version}
+%if 0%{?mdkversion}
 BuildRequires: sendmail
 %endif
 
 BuildRequires:  perl
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
 %define fltk_pac ace-flreactor
@@ -127,7 +125,7 @@ BuildRequires:  tk
 %define tao_qt_pac tao-qtresource
 
 # qt3 has a name change in F9
-%if 0%{?fedora_version} > 8
+%if 0%{?fedora} > 8
 %define qtpacname qt3
 %else
 %define qtpacname qt
@@ -161,14 +159,11 @@ BuildRequires: fox16-devel
 %define tao_fl_pac tao-flresource
 %endif
 
-
 %if 0%{?suse_version}
-
 %define ace_packages ace ace-xml ace-gperf ace-kokyu
 %define tao_packages tao tao-utils tao tao-cosnaming tao-cosevent tao-cosnotification tao-costrading tao-rtevent tao-cosconcurrency
 %define all_ace_packages %{?ace_packages} %{?fltk_pac} %{?tk_pac} %{?qt_pac} %{?fox_pac} %{?xt_pac}
 %define all_tao_packages %{?tao_packages} %{?tao_fl_pac} %{?tao_qt_pac} %{?tao_xt_pac} %{?tao_tk_pac}
-
 %define debug_package_requires %{all_ace_packages} %{all_tao_packages}
 %endif
 
@@ -809,16 +804,28 @@ using the XtResource_Factory.
 %prep
 %setup -q -n ACE_wrappers
 
-%if ! %skip_make
+# ================================================================
+# build
+# ================================================================
 
-export ACE_ROOT=`pwd`
+%build
+
+export ACE_ROOT=$(pwd)
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 export DANCE_ROOT=$CIAO_ROOT/DAnCE
+export LD_LIBRARY_PATH=$ACE_ROOT/lib  
 
-# patch0 and patch1 are applied a bit later
+# Dump the g++ versions, in case the g++ version is broken we can
+# easily see this in the build log
+g++ --version
+g++ -dumpversion
 
-# don't use patch8 until we verify wether needed
+%if %skip_make
+
+cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
+
+%else
 
 %if %{?_with_autoconf:0}%{!?_with_autoconf:1}
 
@@ -946,7 +953,6 @@ EOF
 # ACE_USES_IPV4_IPV6_MIGRATION which the default.features technique
 # does not seem to set.
 
-# Read: true if _with_guilibs is defined, false if not defined.
 %if %{?_with_fox:1}%{!?_with_fox:0}
 %if 0%{?have_fox} == 1
 cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
@@ -956,66 +962,7 @@ EOF
 %endif
 
 # Need to regenerate all of the GNUMakefiles ...
-(cd $ACE_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc)
-
-%endif
-%endif
-
-# ================================================================
-# build
-# ================================================================
-
-%build
-
-export ACE_ROOT=`pwd`
-export TAO_ROOT=$ACE_ROOT/TAO
-export LD_LIBRARY_PATH=$ACE_ROOT/lib
-
-# Dump the g++ versions, in case the g++ version is broken we can
-# easily see this in the build log
-g++ --version
-g++ -dumpversion
-
-%if %skip_make
-cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
-%else
-%if %{?_with_autoconf:1}%{!?_with_autoconf:0}
-autoreconf -fi
-mkdir ../build
-cd ../build
-%if %{?_with_opt:0}%{!?_with_opt:1}
-%define my_optflags %{optflags} -O0
-%else
-%define my_optflags %{optflags}
-%endif
-
-export CXXFLAGS="%{my_optflags}"
-
-../ACE_wrappers/configure --prefix=/usr \
-%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-        --enable-ipv4-ipv6 \
-        --enable-ipv6     \
-%endif
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-        --enable-ace-reactor-notification-queue \
-%endif
-%if %{?_with_qt:1}%{!?_with_qt:0}
-        --enable-qt-reactor \
-%endif
-%if %{?_with_tk:1}%{!?_with_tk:0}
-        --enable-tk-reactor \
-%endif
-%if %{?_with_xt:1}%{!?_with_xt:0}
-        --enable-xt-reactor \
-%endif
-%if %{?_with_fl:1}%{!?_with_fl:0}
-        --enable-fl-reactor \
-%endif
-        --mandir=%{_mandir} \
-        --libdir=%{_libdir}
-
-make %{?jobs:-j%jobs}
-%else
+bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc
 
 MAKECMD="make %{?_smp_mflags}"
 
@@ -1064,6 +1011,58 @@ done
 
 $MAKECMD -C $TAO_ROOT/utils
 
+%else
+
+autoreconf -fi
+
+mkdir -p objdir && cd objdir
+
+%if %{?_with_opt:0}%{!?_with_opt:1}
+export CFLAGS="${CFLAGS:-%optflags} -O0"
+export CXXFLAGS="${CXXFLAGS:-%optflags} -O0"
+%else
+export CFLAGS="${CFLAGS:-%optflags}"
+export CXXFLAGS="${CXXFLAGS:-%optflags}"
+%endif
+
+../configure --build=%{_build} --host=%{_host} \
+        --target=%{_target_platform} \
+        --program-prefix=%{?_program_prefix} \
+        --prefix=%{_prefix} \
+        --exec-prefix=%{_exec_prefix} \
+        --bindir=%{_bindir} \
+        --sbindir=%{_sbindir} \
+        --sysconfdir=%{_sysconfdir} \
+        --datadir=%{_datadir} \
+        --includedir=%{_includedir} \
+        --libdir=%{_libdir} \
+        --libexecdir=%{_libexecdir} \
+        --localstatedir=%{_localstatedir} \
+        --sharedstatedir=%{_sharedstatedir} \
+        --mandir=%{_mandir} \
+        --infodir=%{_infodir} \
+%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
+        --enable-ipv4-ipv6 \
+        --enable-ipv6     \
+%endif
+%if %{?_with_rnq:1}%{!?_with_rnq:0}
+        --enable-ace-reactor-notification-queue \
+%endif
+%if %{?_with_qt:1}%{!?_with_qt:0}
+        --enable-qt-reactor \
+%endif
+%if %{?_with_tk:1}%{!?_with_tk:0}
+        --enable-tk-reactor \
+%endif
+%if %{?_with_xt:1}%{!?_with_xt:0}
+        --enable-xt-reactor \
+%endif
+%if %{?_with_fl:1}%{!?_with_fl:0}
+        --enable-fl-reactor \
+%endif
+
+make %{?jobs:-j%jobs}
+
 %endif
 %endif
 
@@ -1077,18 +1076,10 @@ $MAKECMD -C $TAO_ROOT/utils
 
 %install
 
-export ACE_ROOT=`pwd`
+export ACE_ROOT=$(pwd)
 export TAO_ROOT=$ACE_ROOT/TAO
-
-%if ! %skip_make
-# cat %{SOURCE2} | patch -p 1
-# cat ${ACE_ROOT}/rpmbuild/ace-tao-macros.patch | patch -p 1
-%endif
-
-rm -rf %{buildroot}
-
-# make a new build root dir
-mkdir %{buildroot}
+export CIAO_ROOT=$TAO_ROOT/CIAO
+export DANCE_ROOT=$CIAO_ROOT/DAnCE
 
 # ---------------- Runtime Components ----------------
 
@@ -1293,7 +1284,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/tao
 cp -R ${ACE_ROOT}/rpmbuild/etc/logrotate.d/* %{buildroot}%{_sysconfdir}/logrotate.d/
 cp -R ${ACE_ROOT}/rpmbuild/etc/tao/* %{buildroot}%{_sysconfdir}/tao/
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 mkdir -p %{buildroot}%{_sysconfdir}/init.d
 mkdir -p %{buildroot}%{_localstatedir}/adm
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-suse/init.d/* %{buildroot}%{_sysconfdir}/init.d/
@@ -1304,7 +1295,7 @@ cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/rc.d/init.d/* %{buildroot}%{_sysc
 cp -R ${ACE_ROOT}/rpmbuild/ace-tao-init-fedora/tao/* %{buildroot}%{_sysconfdir}/tao/
 %endif
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 pushd %{buildroot}%{_sysconfdir}/init.d
 for f in *; do
         ln -s /etc/init.d/$f %{buildroot}%{_sbindir}/rc${f}
@@ -1537,7 +1528,7 @@ exit 0
 
 %post -n ace-gperf
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %install_info --info-dir=%_infodir %_infodir/ace_gperf.info%{_extension}
 %else
 /sbin/install-info %{_infodir}/ace_gperf.info%{_extension} %{_infodir}/dir
@@ -1551,7 +1542,7 @@ exit 0
 # ---------------- ace-foxreactor ----------------
 
 %if %{?_with_fox:1}%{!?_with_fox:0}
-%if %{undefined suse_version} || 0%{?suse_version} = 1020
+%if 0%{!?suse_version} || 0%{?suse_version} == 1020
 %post -n ace-foxreactor
 /sbin/ldconfig
 %endif
@@ -1603,7 +1594,7 @@ exit 0
 # ---------------- tao-cosnaming ----------------
 
 %post -n tao-cosnaming
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-cosnaming}
 %else
 /sbin/chkconfig --add tao-cosnaming
@@ -1613,7 +1604,7 @@ exit 0
 
 %post -n tao-cosevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-cosevent}
 %else
 /sbin/chkconfig --add tao-cosevent
@@ -1623,7 +1614,7 @@ exit 0
 
 %post -n tao-cosnotification
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-cosnotification}
 %else
 /sbin/chkconfig --add tao-cosnotification
@@ -1633,7 +1624,7 @@ exit 0
 
 %post -n tao-costrading
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-costrading}
 %else
 /sbin/chkconfig --add tao-costrading
@@ -1643,7 +1634,7 @@ exit 0
 
 %post -n tao-rtevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-rtevent}
 %else
 /sbin/chkconfig --add tao-rtevent
@@ -1653,7 +1644,7 @@ exit 0
 
 %post -n tao-cosconcurrency
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{fillup_and_insserv tao-cosconcurrency}
 %else
 /sbin/chkconfig --add tao-cosconcurrency
@@ -1702,7 +1693,7 @@ fi
 # ---------------- tao-cosnaming ----------------
 
 %preun -n tao-cosnaming
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-cosnaming
 %else
 if [ $1 = 0 ]; then
@@ -1715,7 +1706,7 @@ fi
 
 %preun -n tao-cosevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-cosevent
 %else
 if [ $1 = 0 ]; then
@@ -1728,7 +1719,7 @@ fi
 
 %preun -n tao-cosnotification
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-cosnotification
 %else
 if [ $1 = 0 ]; then
@@ -1741,7 +1732,7 @@ fi
 
 %preun -n tao-costrading
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-costrading
 %else
 if [ $1 = 0 ]; then
@@ -1754,7 +1745,7 @@ fi
 
 %preun -n tao-rtevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-rtevent
 %else
 if [ $1 = 0 ]; then
@@ -1767,7 +1758,7 @@ fi
 
 %preun -n tao-cosconcurrency
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %stop_on_removal tao-cosconcurrency
 %else
 if [ $1 = 0 ]; then
@@ -1851,7 +1842,7 @@ fi
 
 %postun -n tao-cosnaming
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-cosnaming
 %insserv_cleanup
 %else
@@ -1864,7 +1855,7 @@ fi
 
 %postun -n tao-cosevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-cosevent
 %insserv_cleanup
 %else
@@ -1877,7 +1868,7 @@ fi
 
 %postun -n tao-cosnotification
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-cosnotification
 %insserv_cleanup
 %else
@@ -1890,7 +1881,7 @@ fi
 
 %postun -n tao-costrading
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-costrading
 %insserv_cleanup
 %else
@@ -1903,7 +1894,7 @@ fi
 
 %postun -n tao-rtevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-rtevent
 %insserv_cleanup
 %else
@@ -1916,7 +1907,7 @@ fi
 
 %postun -n tao-cosconcurrency
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %restart_on_update tao-cosconcurrency
 %insserv_cleanup
 %else
@@ -2368,7 +2359,7 @@ fi
 
 %{_sbindir}/tao-cosnaming
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-cosnaming
 %{_sbindir}/rctao-cosnaming
 %{_sysconfdir}/tao/tao-cosnaming
@@ -2397,7 +2388,7 @@ fi
 %dir %{_sysconfdir}/tao
 %{_sbindir}/tao-cosevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-cosevent
 %{_sbindir}/rctao-cosevent
 %{_sysconfdir}/tao/tao-cosevent
@@ -2424,7 +2415,7 @@ fi
 %{_sbindir}/tao-cosnotification
 %dir %{_sysconfdir}/tao
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-cosnotification
 %{_sbindir}/rctao-cosnotification
 %{_sysconfdir}/tao/tao-cosnotification
@@ -2452,7 +2443,7 @@ fi
 
 %{_sbindir}/tao-costrading
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-costrading
 %{_sbindir}/rctao-costrading
 %{_sysconfdir}/tao/tao-costrading
@@ -2479,7 +2470,7 @@ fi
 %dir %{_sysconfdir}/tao
 %{_sbindir}/tao-rtevent
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-rtevent
 %{_sbindir}/rctao-rtevent
 %{_sysconfdir}/tao/tao-rtevent
@@ -2506,7 +2497,7 @@ fi
 %dir %{_sysconfdir}/tao
 %{_sbindir}/tao-cosconcurrency
 
-%if %{defined suse_version}
+%if 0%{?suse_version}
 %{_sysconfdir}/init.d/tao-cosconcurrency
 %{_sbindir}/rctao-cosconcurrency
 %{_sysconfdir}/tao/tao-cosconcurrency
@@ -2660,24 +2651,3 @@ fi
 %doc TAO/README
 
 %endif
-
-# ================================================================
-# changelog
-# ================================================================
-
-%changelog
-* Thu Jul 23 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.2-0
-- New micro release
-
-* Mon Jul 13 2009 Phil Mesnier <mesnier_p@ociweb.com> - 5.7.1-0
-- New micro release
-
-* Wed Jun 24 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.7.0-0
-- New minor release
-
-* Fri Mar 13 2009 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.8-2
-- Removed specific OS checks
-
-* Fri Aug 22 2008 Johnny Willemsen <jwillemsen@remedy.nl> - 5.6.5-1
-- Initial version. Be aware that this is a subversion snapshot, almost
-  5.6.6
