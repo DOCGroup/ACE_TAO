@@ -55,7 +55,7 @@ namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl
 
         this->filter_config_->set_filter_parameters (parameters);
       }
-    catch (const ::CCM_DDS::InternalError& ex)
+    catch (const ::CCM_DDS::InternalError&)
       {
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters - "
                               "caught expected InternalErr exception.\n"));

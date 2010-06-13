@@ -1,3 +1,13 @@
+Sun Jun 13 18:02:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/Parsing/test.cpp:
+          Disable DANCE tracing by default
+
+        * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+          Fixed windows problems
+
 Sat Jun 12 09:32:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component_exec.cpp:

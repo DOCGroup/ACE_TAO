@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "UCC_Test_Component_exec.h"
@@ -242,7 +241,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     if (UCCFixedSizedStructTest_i::count_ != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Reference count for fixed sized "
-                              "samples is not nil. expected <0> - found <%d>\n",
+                              "samples is not 0. expected <0> - found <%d>\n",
                               UCCFixedSizedStructTest_i::count_));
       }
     else
@@ -253,19 +252,19 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     if (UCCVariableSizedStructTest_i::count_ != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Reference count for variable sized "
-                              "samples is not nil. expected <0> - found <%d>\n",
+                              "samples is not 0. expected <0> - found <%d>\n",
                               UCCVariableSizedStructTest_i::count_));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "Reference count for variable sized "
-                              "samples is nil\n"));
+                              "samples is 0\n"));
       }
     //check max_count_
     if (UCCFixedSizedStructTest_i::max_count_ != 1)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Maximum refence count for fixed sized "
-                              "samples is not one. expected <1> - found <%d>\n",
+                              "samples is not 1. expected <1> - found <%d>\n",
                               UCCFixedSizedStructTest_i::max_count_));
       }
     else
@@ -276,13 +275,13 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     if (UCCVariableSizedStructTest_i::max_count_ != 1)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Maximum reference count for variable sized "
-                              "samples is not one. expected <1> - found <%d>\n",
+                              "samples is not 1. expected <1> - found <%d>\n",
                               UCCVariableSizedStructTest_i::max_count_));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "Maximum reference count for variable sized "
-                              "samples is one\n"));
+                              "samples is 1\n"));
       }
   }
 

@@ -1,4 +1,5 @@
 // $Id$
+
 #include "ace/Auto_Ptr.h"
 #include "DAnCE/Deployment/Deployment_DeploymentPlanC.h"
 #include "DAnCE/Deployment/Deployment_ExecutionManagerC.h"
@@ -12,6 +13,8 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  DANCE_DISABLE_TRACE ();
+
   try
     {
       if (argc < 1)
