@@ -14,8 +14,6 @@
 #include <istream>
 #include <ostream>
 
-ACE_RCSID(NET_CLIENT,ACE_HTTP_Session,"$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
