@@ -1,0 +1,31 @@
+diff -uNrp a/ace-tao.spec b/ace-tao.spec
+--- a/ace-tao.spec	2010-06-11 13:45:09.000000000 -0400
++++ b/ace-tao.spec	2010-06-12 14:13:33.000000000 -0400
+@@ -1,7 +1,7 @@
+ # Set the version number here.
+-%define ACEVER  5.7.9
+-%define TAOVER  1.7.9
+-%define CIAOVER 0.7.9
++%define ACEVER  5.7.1
++%define TAOVER  1.7.1
++%define CIAOVER 0.7.1
+ 
+ # Conditional build
+ # Default values are
+@@ -2034,7 +2034,6 @@ fi
+ %files -n ace-gperf
+ %defattr(-,root,root,-)
+ %{_bindir}/ace_gperf
+-%{_libdir}/libACE_gperf_lib.so.%{ACEVERSO}
+ %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
+ %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
+ 
+@@ -2347,8 +2346,6 @@ fi
+ %doc TAO/PROBLEM-REPORT-FORM
+ %doc TAO/VERSION
+ %doc TAO/README
+-%doc TAO/utils/catior/README.catior
+-%doc TAO/utils/nslist/README.nslist
+ 
+ # ---------------- tao-cosnaming ----------------
+ 

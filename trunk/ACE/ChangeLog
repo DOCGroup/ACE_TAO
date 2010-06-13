@@ -1,3 +1,33 @@
+Sun Jun 13 18:14:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Integrated following changes from David Ward <dpward at mit dot edu>
+          Updates the RPM SPEC file to fix the build on several platforms,
+          and to otherwise clean it up:
+          - Depend on redhat-rpm-config to fix BuildArch under Fedora
+          - Depend on elfutils to allow build of debuginfo package under RHEL 4
+          - Replace %{?fedora_version} with %{?fedora} and %{?mandriva_version}
+            with %{?mdkversion} [1]
+          - Replace %{defined ...} with 0%{?...} and %{undefined ...}
+            with 0%{!?...} for portability [1]
+          - Move mwc (and autoconf/configure) step from %prep to %build [2]
+          - For _with_autoconf: Perform configure in $ACE_ROOT/objdir as
+            suggested by configure, to keep the build underneath $ACE_ROOT
+          - For _with_autoconf: Pass additional options to configure, to install
+            files in the correct location (i.e. /usr/lib64 rather than
+            /usr/lib in 64-bit multilib environments)
+          - Update "default values" comment at top of file to reflect the
+            actual default values.
+          - Remove leftover comments (i.e. references to _with_guilibs)
+
+          [1] http://en.opensuse.org/Build_Service/cross_distribution_package_how_to
+          [2] http://www.rpm.org/max-rpm/s1-rpm-inside-scripts.html
+
+        * rpmbuild/ace-tao.spec-bugfixonly.patch:
+        * rpmbuild/ace-tao.spec-release.patch:
+          Patch files to also ship latest major and minor release from
+          opensuse build service
+
 Sun Jun 13 09:48:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/BidirStreamBuffer.cpp:
@@ -9,10 +39,10 @@ Sun Jun 13 09:48:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * protocols/ace/INet/String_IOStream.cpp:
         * protocols/ace/INet/HTTP_Session.cpp:
         * protocols/ace/INet/BufferedStreamBuffer.cpp:
-	  Removed ACE_RCSID lines from template sourcefiles to fix compile problems.
+          Removed ACE_RCSID lines from template sourcefiles to fix compile problems.
 
         * protocols/ace/INet/HTTP_ClientRequestHandler.h:
-	  Removed closing semicolons on namespaces.
+          Removed closing semicolons on namespaces.
 
 Thu Jun 10 01:33:11 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -20,8 +50,8 @@ Thu Jun 10 01:33:11 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
         * protocols/ace/HTBP/HTBP_Session.cpp:
 
           Performance testing shows severe latency due to not using
-          TCP_NODELAY on the underlying sockets. 
-        
+          TCP_NODELAY on the underlying sockets.
+
 Wed Jun  9 18:45:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp:
