@@ -6,8 +6,7 @@
 #include "CSL_DeadlineTest_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-
-
+#include "ace/OS_NS_unistd.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -17,8 +16,9 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &deadline_missed,
-                                                                  Atomic_ThreadId &thread_id)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Atomic_Boolean &deadline_missed,
+    Atomic_ThreadId &thread_id)
     : deadline_missed_ (deadline_missed),
       thread_id_ (thread_id)
   {
@@ -120,15 +120,17 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
         try
           {
             if (! ::CORBA::is_nil (this->writer_) )
-            {
-              ACE_OS::sleep (2);
-              ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
-              this->writer_->write_one(i->second,hnd);
+              {
+                ACE_OS::sleep (2);
+                ::DDS::InstanceHandle_t const hnd =
+                  this->writer_->register_instance (i->second);
+                this->writer_->write_one(i->second,hnd);
             }
           }
         catch (const CCM_DDS::InternalError& )
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
                           i->first.c_str ()));
           }
       }
@@ -165,14 +167,12 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     if (this->deadline_missed_.value ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
-                              ACE_TEXT ("'on_offered_deadline_missed'\n")
-                    ));
+                              ACE_TEXT ("'on_offered_deadline_missed'\n")));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
-                              ACE_TEXT ("error 'on_offered_deadline_missed'\n")
-                    ));
+                              ACE_TEXT ("error 'on_offered_deadline_missed'\n")));
       }
     if (this->thread_id_listener_.value () == 0)
       {
