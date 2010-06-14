@@ -61,18 +61,16 @@ namespace DAnCE
 
     virtual void start (void);
 
-    void init_instances (void);
-    
     void prepare_instances (void);
-    
+
     void start_launch_instances (const Deployment::Properties &prop,
                                  Deployment::Connections_out providedReference);
 
     void remove_instances (void);
-    
+
   protected:
     void init(void);
-    
+
     void prepare_instance (const char *name,
                            const ::Deployment::DeploymentPlan &plan);
 
@@ -87,9 +85,9 @@ namespace DAnCE
     PROPERTY_MAP properties_;
 
     CosNaming::NamingContext_var instance_nc_;
-    
+
     DAnCE::Locality_Handler_i handler_;
-    
+
     typedef std::map <ACE_CString, ::DAnCE::LocalityManager_var>
       LOCALITY_MAP;
     LOCALITY_MAP localities_;
