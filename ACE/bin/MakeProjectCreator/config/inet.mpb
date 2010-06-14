@@ -2,6 +2,7 @@
 // $Id$
 
 project : acelib {
+  avoids   += wince
   after    += INet
   libs     += ACE_INet
   includes += $(ACE_ROOT)/protocols
