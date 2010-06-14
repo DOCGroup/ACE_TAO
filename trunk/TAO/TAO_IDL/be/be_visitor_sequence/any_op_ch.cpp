@@ -43,32 +43,56 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  ACE_CString name;
+  
+  bool alt = be_global->alt_mapping ();
+  
+  if (alt)
+    {
+      be_type *bt =
+        be_type::narrow_from_decl (node->base_type ());
+        
+      name = "std::vector<";
+      name += bt->full_name ();
+      name += ">";
+    }
+  else
+    {
+      name = node->full_name ();
+    }
+
   *os << be_global->core_versioning_begin () << be_nl;
   
   // Generate the Any <<= and >>= operators.
-  *os << macro;
-  *os << " void"
-      << " operator<<= ( ::CORBA::Any &, const ";
-  *os << node->name ();
-  *os << " &); // copying version" << be_nl;
-  *os << macro;
-  *os << " void"
-      << " operator<<= ( ::CORBA::Any &, ";
-  *os << node->name ();
-  *os << "*); // noncopying version" << be_nl;
-  *os << macro;
-  *os << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, ";
-  *os << node->name ();
-  *os << " *&); // deprecated" << be_nl;
-  *os << macro;
-  *os << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, const ";
-  *os << node->name ();
-  *os << " *&);";
+  *os << macro
+      << " void"
+      << " operator<<= ( ::CORBA::Any &, const "
+      << name.c_str ()
+      << " &); // copying version" << be_nl;
+      
+  if (!alt)
+    {    
+      *os << macro
+          << " void"
+          << " operator<<= ( ::CORBA::Any &, "
+          << name.c_str ()
+          << "*); // noncopying version" << be_nl;
+      
+      *os << macro
+          << " ::CORBA::Boolean"
+          << " operator>>= (const ::CORBA::Any &, "
+          << name.c_str ()
+          << " *&); // deprecated" << be_nl;
+        }
+      
+  *os << macro
+      << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, const "
+      << name.c_str ()
+      << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
   
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }

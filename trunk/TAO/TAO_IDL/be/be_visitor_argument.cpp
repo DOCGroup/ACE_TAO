@@ -37,8 +37,12 @@
 #include "be_home.h"
 #include "be_operation.h"
 #include "be_helper.h"
+#include "be_extern.h"
+
 #include "utl_identifier.h"
+
 #include "nr_extern.h"
+
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_argument/arglist.cpp"

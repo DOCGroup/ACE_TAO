@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FIXED_SIZE_ARGUMENT_T_H
 #define TAO_FIXED_SIZE_ARGUMENT_T_H
 
@@ -113,7 +112,6 @@ namespace TAO
     S & arg (void);
 
   private:
-
     S & x_;
   };
 

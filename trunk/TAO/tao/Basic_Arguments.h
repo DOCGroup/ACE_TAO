@@ -114,6 +114,16 @@ namespace TAO
                                 TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
+  
+  template<>
+  class TAO_Export Arg_Traits<std::string>
+    : public
+        Basic_Arg_Traits_T <
+            std::string,
+            TAO::Any_Insert_Policy_Stream <std::string>
+          >
+  {
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
