@@ -85,12 +85,6 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO
                    ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
-                   ACE_TEXT("Instructing NodeApplication to initialize instances.\n")));
-
-  this->application_->init_instances();
-  
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                   ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                    ACE_TEXT("Instructing NodeApplication to prepare locality managers.\n")));
 
   this->application_->prepare_instances ();
@@ -98,7 +92,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
   DANCE_DEBUG (9, (LM_TRACE, DLINFO
                    ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                    ACE_TEXT("Instructing NodeApplication to start launch localities.\n")));
-  
+
   this->application_->start_launch_instances (prop, providedReference);
 
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO
@@ -110,7 +104,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
 
   CORBA::Object_var as_obj = this->poa_->id_to_reference (as_id.in ());
   Deployment::Application_var app = Deployment::Application::_narrow (as_obj.in ());
-  
+
   if (CORBA::is_nil (app))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO,
@@ -137,9 +131,9 @@ NodeApplicationManager_Impl::destroyApplication (Deployment::Application_ptr app
         throw ::Deployment::StopError("NodeApplicationManager",
                                       "Wrong application passed to destroyApplication");
       }
-    
+
     this->application_->remove_instances ();
-    
+
     PortableServer::ObjectId_var id = this->poa_->reference_to_id (application);
     this->poa_->deactivate_object (id);
 

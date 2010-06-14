@@ -14,7 +14,7 @@ namespace DAnCE
                                       const FILTER &filter) const
     {
       if (filter.is_empty ()) return true;
-      
+
       return ACE_OS::strcmp (filter.c_str (),
                              this->plan_.instance[instance].node.in ()) == 0;
     }
@@ -53,5 +53,11 @@ namespace DAnCE
           sub_label += sub_plan_key;
           sub_plan.label = CORBA::string_dup (sub_label.c_str ());
         }
+    }
+
+  void Node_Splitter::finalize_sub_plan (Deployment::DeploymentPlan & /*sub_plan*/,
+                                         KEY & /*sub_plan_key*/)
+    {
+      // nothing to do
     }
 }
