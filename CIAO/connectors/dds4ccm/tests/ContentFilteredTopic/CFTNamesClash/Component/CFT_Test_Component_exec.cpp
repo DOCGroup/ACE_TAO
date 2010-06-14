@@ -4,8 +4,6 @@
 
 #include "CFT_Test_Component_exec.h"
 
-#define QUERY "( (y > %0) AND (y < %1) )"
-
 namespace CIAO_CFT_Test_CFTTestComponent_Impl
 {
   //============================================================
