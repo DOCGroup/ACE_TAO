@@ -1,19 +1,25 @@
+Mon Jun 14 10:43:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/StateListenerControl_T.cpp:
+          is_filter_interpreted is not supported with RTI DDS, throw an
+          exception in case someone wants to set it
+
 Mon Jun 14 09:30:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.h:
         * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.cpp:
         * DAnCE/tools/Artifact_Installation/DAnCE_Artifact_Installation_Handler.h:
         * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager.cpp:
-	  Fixed missing virtual destructors.
+          Fixed missing virtual destructors.
 
         * DAnCE/tools/Artifact_Installation/Installation_Repository_Manager_Impl.cpp:
-	  Fixed wchar compile problems.
+          Fixed wchar compile problems.
 
 Mon Jun 14 09:28:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
         Add AMI4CCM test UsesMulti
-        
+
         * connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.cpp
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
         Expand test for running indeed asynchronous.
