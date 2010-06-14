@@ -1,3 +1,26 @@
+Mon Jun 14 11:35:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/tools/Split_Plan/Split_Plan.mpc:
+	* DAnCE/tools/Split_Plan/Split_Plan.cpp:
+	* DAnCE/tools/Split_Plan/Node_Splitter.h:
+	* DAnCE/tools/Split_Plan/Node_Splitter.cpp:
+	* DAnCE/tools/Split_Plan/Locality_Splitter.h:
+	* DAnCE/tools/Split_Plan/Locality_Splitter.cpp:
+	* DAnCE/tools/Split_Plan/Sub_UUID_Generator.cpp:
+	  Improved locality splitting algorithm.
+          Added post splitting step to provide for finalization
+	  functionality in splitters (Locality splitter uses
+	  this to make sure a locality manager instance is always
+	  provided).
+          Other small improvements.
+
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DAnCE/NodeApplication/NodeApplication_Impl.h:
+	* DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+          Changed to make use of improved locality splitter (in
+	  particular the guarenteed availability of locality
+          manager instance).
+
 Mon Jun 14 10:51:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.pptx:

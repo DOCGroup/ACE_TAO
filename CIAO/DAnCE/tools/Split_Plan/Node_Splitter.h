@@ -33,6 +33,9 @@ namespace DAnCE
                               Deployment::DeploymentPlan &sub_plan,
                               KEY &sub_plan_key);
 
+    void    finalize_sub_plan (Deployment::DeploymentPlan &sub_plan,
+                               KEY &sub_plan_key);
+
   private:
     const Deployment::DeploymentPlan &plan_;
   };

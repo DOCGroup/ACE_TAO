@@ -35,17 +35,19 @@ namespace DAnCE
       // clear any bound sub plans
       this->sub_plans_.unbind_all ();
 
-      DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                      ACE_TEXT("Split_Plan::split_plan - ")
                       ACE_TEXT("Creating sub-plans\n")));
 
       /*
        *  Selection phase
        */
-                      
+
       // Create and prepare the necessary sub-plans
       for (CORBA::ULong i = 0; i < plan.instance.length(); ++i)
         {
-          DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                          ACE_TEXT("Split_Plan::split_plan - ")
                           ACE_TEXT("Matching instance %C\n"),
                           plan.instance[i].name.in ()));
 
@@ -64,10 +66,11 @@ namespace DAnCE
               // use UUID generator to generate UUID for sub plan
               sub_uuid_gen.generate_sub_uuid (plan, sub_plan);
 
-              DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                              ACE_TEXT("Split_Plan::split_plan - ")
                               ACE_TEXT("Initializing new sub plan %C\n"),
                               sub_plan.UUID.in ()));
-                                  
+
               // setup association sequence lengths
               sub_plan.implementation.length (0);
               sub_plan.instance.length (0);
@@ -103,17 +106,19 @@ namespace DAnCE
             }
           else
             {
-              DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                              ACE_TEXT("Split_Plan::split_plan - ")
                               ACE_TEXT("Instance %C matched to sub plan %C\n"),
                               plan.instance[i].name.in (),
                               sub_plan.UUID.in ()));
             }
 
-          DANCE_DEBUG (9, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                          ACE_TEXT("Split_Plan::split_plan - ")
                           ACE_TEXT("Preparing sub plan %C for instance %C\n"),
                           sub_plan.UUID.in (),
                           plan.instance[i].name.in ()));
-                          
+
           // Prepare the sub plan for this instance
           plan_splitter.prepare_sub_plan (i, sub_plan, sub_plan_key);
 
@@ -149,7 +154,8 @@ namespace DAnCE
           // find sub plan for instance (if any)
           if (!this->find_sub_plan (plan_splitter, i, sub_plan_key, sub_plan))
             {
-              DANCE_DEBUG (5, (LM_TRACE, ACE_TEXT("Split_Plan::split_plan - ")
+              DANCE_DEBUG (5, (LM_TRACE, DLINFO
+                              ACE_TEXT("Split_Plan::split_plan - ")
                               ACE_TEXT("Instance %C excluded from selected subplans\n"),
                               plan.instance[i].name.in ()));
               continue;
@@ -157,7 +163,7 @@ namespace DAnCE
 
           // Get the instance deployment description
           const Deployment::InstanceDeploymentDescription & my_instance = plan.instance[i];
-          
+
           // Fill in the contents of the sub plan entry.
 
           // Append the "MonolithicDeploymentDescriptions implementation"
@@ -173,7 +179,7 @@ namespace DAnCE
           // update the "ArtifactDeploymentDescriptions" <artifact> field
           // of the sub plan with the artifacts referenced by the <artifactRef>
           // sequence of the added implementation
-          
+
           // Initialize with the correct sequence length.
           CORBA::ULongSeq ulong_seq;
           ulong_seq.length (my_implementation.artifactRef.length ());
@@ -184,7 +190,7 @@ namespace DAnCE
 
           // extend <artifact> sequence to required size
           sub_plan.artifact.length (artifact_offset + impl_length);
-          
+
           for (CORBA::ULong iter = 0;
               iter < impl_length;
               iter ++)
@@ -291,7 +297,7 @@ namespace DAnCE
                                         ACE_TEXT ("Found matching locality constraint %u:%u,")
                                         ACE_TEXT (" adding to %u:%u as %u\n"),
                                         j, k, j, sub_loc_len, index_ins));
-                        // set the correct constraint type 
+                        // set the correct constraint type
                         sub_plan.localityConstraint[j].constraint = loc.constraint;
                         // add instance reference to matched contraint
                         sub_plan.localityConstraint[j].constrainedInstanceRef.length (sub_loc_len + 1);
@@ -302,6 +308,23 @@ namespace DAnCE
 
             // rebing updated sub plan
             this->sub_plans_.rebind (sub_plan_key, sub_plan);
+        }
+
+      /*
+       *  Finalization
+       */
+
+      // finalize all sub plans
+      for (TSubPlanIterator iter_plans = this->sub_plans_.begin ();
+          iter_plans != this->sub_plans_.end ();
+          ++iter_plans)
+        {
+          // get the sub plan and key for current instance
+          ::Deployment::DeploymentPlan& sub_plan = (*iter_plans).int_id_;
+          TSubPlanKey& sub_plan_key = (*iter_plans).ext_id_;
+
+          // finalize sub plan
+          plan_splitter.finalize_sub_plan (sub_plan, sub_plan_key);
         }
     }
 
