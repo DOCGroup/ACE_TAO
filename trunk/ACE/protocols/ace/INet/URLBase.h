@@ -124,9 +124,9 @@ namespace ACE
             private:
               typedef ACE_Map_Manager<ACE_CString,
                                       Factory*,
-                                      ACE_Recursive_Thread_Mutex> TURLFactoryMap;
+                                      ACE_SYNCH::RECURSIVE_MUTEX> TURLFactoryMap;
               typedef ACE_Singleton<TURLFactoryMap,
-                                    ACE_Null_Mutex> TURLFactorySingleton;
+                                    ACE_SYNCH::NULL_MUTEX> TURLFactorySingleton;
               static TURLFactoryMap* factories_;
           };
 
