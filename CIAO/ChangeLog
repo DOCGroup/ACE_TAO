@@ -1,3 +1,11 @@
+Mon Jun 14 09:07:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti/Base/UsesMulti.idl:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
+          Moved the new pragma ciao ami4ccm idl to the Base directory, that
+          way we only have to specify it once, anyone that includes the
+          UsesMulti.idl will get the additional needed UsesMultiA.idl included
+
 Mon Jun 14 08:10:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp

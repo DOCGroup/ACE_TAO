@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/UsesMultiE.idl"
 #pragma ciao ami4ccm interface "UsesMulti::One"
 #pragma ciao lem "Base/UsesMultiAE.idl"
+#pragma ciao ami4ccm idl "Base/UsesMultiA.idl"
 
 module UsesMulti
 {
