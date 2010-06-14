@@ -29,6 +29,8 @@ namespace DAnCE
                                           ACE_Null_Mutex> auto_ptr;
           typedef std::vector<std::string> TLocations;
 
+          virtual ~InstallationRepository ();
+
           virtual const std::string& plan () = 0;
 
           virtual const std::string& location () = 0;
@@ -55,6 +57,8 @@ namespace DAnCE
       {
         public:
           typedef InstallationRepository::TLocations TRepositoryIds;
+
+          virtual ~InstallationRepositoryManager ();
 
           virtual InstallationRepository::auto_ptr open_repository (const std::string& plan) = 0;
           virtual int remove_repository (const std::string& plan) = 0;

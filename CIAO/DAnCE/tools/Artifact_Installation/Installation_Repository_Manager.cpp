@@ -5,11 +5,17 @@
 
 namespace DAnCE
 {
+  InstallationRepository::~InstallationRepository ()
+    {}
+
   /*
    *  InstallationRepositoryManager
    */
 
   InstallationRepositoryManager* InstallationRepositoryManager::instance_ = 0;
+
+  InstallationRepositoryManager::~InstallationRepositoryManager ()
+    {}
 
   InstallationRepositoryManager* InstallationRepositoryManager::instance ()
     {
