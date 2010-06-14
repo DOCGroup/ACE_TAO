@@ -516,13 +516,13 @@ operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
                0);
 }
 
-ACE_INLINE void
+void
 operator <<= (CORBA::Any &any, const std::string & str)
 {
   any <<= str.c_str ();
 }
 
-ACE_INLINE void
+void
 operator <<= (CORBA::Any &any, std::string * str)
 {
   // TODO
