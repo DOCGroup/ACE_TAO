@@ -1,3 +1,8 @@
+Mon Jun 14 08:10:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti/descriptors/Plan.cdp
+        Change plan for uses multi asynchronous.
+
 Sun Jun 13 18:02:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/Parsing/test.cpp:

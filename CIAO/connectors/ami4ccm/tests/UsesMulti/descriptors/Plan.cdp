@@ -244,7 +244,7 @@
       </value>
     </configProperty>
   </instance>
-  <!--instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB">
+  <instance xmi:id="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB">
     <name>UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneB</name>
     <node>Sender</node>
     <source/>
@@ -277,7 +277,7 @@
         </value>
       </value>
     </configProperty>
-  </instance-->
+  </instance>
   
  
   <connection>
@@ -299,7 +299,7 @@
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA" />
     </internalEndpoint>
   </connection>
-  <!--connection>
+  <connection>
     <name>run_asynch_one_connectionB</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -336,7 +336,7 @@
       <kind>Facet</kind>
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
     </internalEndpoint>
-  </connection-->
+  </connection>
   
  
   <connection>
@@ -354,7 +354,7 @@
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneA" />
     </internalEndpoint>
   </connection>
-  <!--connection>
+  <connection>
     <name>do_one_connectionB</name>
     <internalEndpoint>
       <portName>do_my_one</portName>
@@ -383,7 +383,7 @@
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="UsesMulti.ComponentImplementations.UsesMultiImplementation.UsesMulti.AMIOneC" />
     </internalEndpoint>
-  </connection-->
+  </connection>
   
   
 
