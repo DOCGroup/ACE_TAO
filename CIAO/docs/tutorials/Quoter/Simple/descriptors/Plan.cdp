@@ -15,7 +15,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Stock_StockBrokerComp_Impl</string>
+          <string>create_Stock_StockBroker_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -66,7 +66,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Stock_StockDistributorComp_Impl</string>
+          <string>create_Stock_StockDistributor_Impl</string>
         </value>
       </value>
     </execParameter>

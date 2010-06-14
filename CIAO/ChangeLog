@@ -1,3 +1,22 @@
+Mon Jun 14 13:33:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added docs/tutorial/Quoter/Simple to the
+          test framework.
+
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker.mpc:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.h:
+        * docs/tutorials/Quoter/Simple/Broker/StockBroker_exec.cpp:
+          StockBrokerDriver in lib directory.
+
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor.mpc:
+        * docs/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.cpp:
+          StockDistributerDriver in lib directory.
+
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+        * docs/tutorials/Quoter/Simple/descriptors/run_test.pl:
+          Added run_test.pl en corrected errors in deployment plan.
+
 Mon Jun 14 12:51:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:

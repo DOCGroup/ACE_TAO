@@ -138,7 +138,7 @@ project (Stock_Base_StockDistributorDriver) : ccm_stub, valuetype   {
   after += Stock_Base_StockDistributor_stub
   libs  += StockDistributor_stub Stock_Base_stub
   libpaths += ../lib
-  libout = ../lib
+  exeout = ../lib
   IDL_Files {
   }
 
