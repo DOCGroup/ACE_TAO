@@ -1,3 +1,12 @@
+Mon Jun 14 14:16:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Adjusted the VMS compatibility work-around from
+          Wed Jun  9 14:45:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+          so that it excludes more GNU make constructs that the version
+          on VMS can't handle.
+
 Mon Jun 14 10:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
