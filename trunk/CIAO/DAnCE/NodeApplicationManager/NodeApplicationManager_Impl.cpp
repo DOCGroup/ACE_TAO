@@ -2,21 +2,20 @@
 
 
 #include "ace/streams.h"
-#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #include "NodeApplicationManager_Impl.h"
 #include "NodeApplication/NodeApplication_Impl.h"
 
+#include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
+
 using namespace DAnCE;
 
 NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                                           PortableServer::POA_ptr poa,
-                                                          const Deployment::DeploymentPlan& plan,
                                                           const ACE_CString& node_name,
                                                           const PROPERTY_MAP &properties)
-    : plan_ (plan),
-      orb_ (CORBA::ORB::_duplicate (orb)),
+    : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       application_ (0),
       node_name_ (node_name),
@@ -26,9 +25,8 @@ NodeApplicationManager_Impl::NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
 
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                ACE_TEXT(" NodeApplicationManager_Impl::NodeApplicationManager_Impl - ")
-               ACE_TEXT("Initializing for node '%C' and plan '%C' starting...\n"),
-               node_name.c_str(),
-               plan_.UUID.in()));
+               ACE_TEXT("Initializing for node '%C' starting...\n"),
+               node_name.c_str()));
 
   PROPERTY_MAP::const_iterator i = properties.begin ();
   while (!i.done ())
@@ -66,6 +64,25 @@ NodeApplicationManager_Impl::~NodeApplicationManager_Impl()
     }
 }
 
+void
+NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan)
+{
+  DANCE_TRACE ("NodeApplicationManager_Impl::preparePlan");
+
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                   ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                   ACE_TEXT("Performing locality split on plan %C.\n"),
+                   plan.UUID.in ()));
+
+  this->split_plan_.split_plan (plan);
+
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                   ACE_TEXT("NodeApplicationManager_impl::preparePlan - ")
+                   ACE_TEXT("Plan %C successfully split into %u localities.\n"),
+                   plan.UUID.in (),
+                   this->split_plan_.plans ().current_size ()));
+}
+
 Deployment::Application_ptr
 NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
                                           Deployment::Connections_out providedReference)
@@ -78,7 +95,6 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
   ACE_NEW_THROW_EX (this->application_,
                     NodeApplication_Impl (this->orb_.in(),
                                           this->poa_.in(),
-                                          this->plan_,
                                           this->node_name_,
                                           this->properties_),
                     CORBA::NO_MEMORY ());
@@ -87,7 +103,7 @@ NodeApplicationManager_Impl::startLaunch (const Deployment::Properties &prop,
                    ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")
                    ACE_TEXT("Instructing NodeApplication to prepare locality managers.\n")));
 
-  this->application_->prepare_instances ();
+  this->application_->prepare_instances (this->split_plan_.plans ());
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO
                    ACE_TEXT("NodeApplicationManager_impl::startLaunch - ")

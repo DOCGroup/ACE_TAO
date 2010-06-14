@@ -31,12 +31,10 @@ using namespace DAnCE::Utility;
 
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
-                                            ::Deployment::DeploymentPlan& plan,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    plan_ (plan),
     node_name_ (node_name),
     properties_ (),
     handler_ (properties,
@@ -93,26 +91,21 @@ NodeApplication_Impl::init()
 }
 
 void
-NodeApplication_Impl::prepare_instances (void)
+NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plans)
 {
   DANCE_TRACE ("NodeApplication_Impl::prepare_instances");
 
-  typedef DAnCE::Split_Plan < DAnCE::Locality_Splitter > Splitter;
-  Splitter split_plan;
-  split_plan.split_plan (this->plan_);
-
-  Splitter::TSubPlans &plans = split_plan.plans ();
-
   CORBA::ULong plan (0);
   // for each sub plan
-  for (Splitter::TSubPlanIterator i = plans.begin ();
-       i != plans.end ();
+  LocalitySplitter::TSubPlanConstIterator plans_end (plans, 1);
+  for (LocalitySplitter::TSubPlanConstIterator i (plans);
+       i != plans_end;
        ++i)
     {
-      ::Deployment::DeploymentPlan &sub_plan =
+      const ::Deployment::DeploymentPlan &sub_plan =
         (*i).int_id_;
 
-      Splitter::TSubPlanKey &sub_plan_key =
+      const LocalitySplitter::TSubPlanKey &sub_plan_key =
         (*i).ext_id_;
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
@@ -127,7 +120,7 @@ NodeApplication_Impl::prepare_instances (void)
       // instance (creating default if necessary) and identifies it in the key
 
       CORBA::ULong loc_manager_instance = sub_plan_key.locality_manager_instance ();
-      ::Deployment::InstanceDeploymentDescription &lm_idd = sub_plan.instance[loc_manager_instance];
+      const ::Deployment::InstanceDeploymentDescription &lm_idd = sub_plan.instance[loc_manager_instance];
 
       DANCE_DEBUG (4, (LM_DEBUG, DLINFO
                         ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
@@ -136,15 +129,25 @@ NodeApplication_Impl::prepare_instances (void)
                         lm_idd.name.in ()
                         ));
 
+      // TODO: MCO - this is definitely not nice; what else can we do here?
+
+      // Need to make a temp copy since we're modifying properties
+      ::Deployment::DeploymentPlan lm_plan;
+      lm_plan.instance.length (1);
+      lm_plan.implementation.length (1);
+      lm_plan.instance[0] = lm_idd;
+      lm_plan.instance[0].implementationRef = 0;
+      lm_plan.implementation[0] = sub_plan.implementation[lm_idd.implementationRef];
+
       // Need to add naming service reference to properties.
-      CORBA::ULong pos = lm_idd.configProperty.length ();
-      lm_idd.configProperty.length (pos + 1);
-      lm_idd.configProperty[pos].name = DAnCE::LOCALITY_NAMINGCONTEXT;
-      lm_idd.configProperty[pos].value <<= this->instance_nc_;
+      CORBA::ULong pos = lm_plan.instance[0].configProperty.length ();
+      lm_plan.instance[0].configProperty.length (pos + 1);
+      lm_plan.instance[0].configProperty[pos].name = DAnCE::LOCALITY_NAMINGCONTEXT;
+      lm_plan.instance[0].configProperty[pos].value <<= this->instance_nc_;
 
       CORBA::Any_var reference;
-      this->handler_.install_instance (sub_plan,
-                                       loc_manager_instance,
+      this->handler_.install_instance (lm_plan,
+                                       0,
                                        reference.out ());
 
       ::DAnCE::LocalityManager_var lm_ref;
@@ -224,13 +227,13 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
                                               Deployment::Connections_out providedReference)
 {
   DANCE_TRACE ("NodeApplication_Impl::start_launch_instances");
-  Deployment::Connections *tmp (0);
+//  Deployment::Connections *tmp (0);
 
-  ACE_NEW_THROW_EX (tmp,
-                    Deployment::Connections (this->plan_.connection.length ()),
-                    CORBA::NO_MEMORY ());
-
-  Deployment::Connections_var retval (tmp);
+//   ACE_NEW_THROW_EX (tmp,
+//                     Deployment::Connections (this->plan_.connection.length ()),
+//                     CORBA::NO_MEMORY ());
+//
+//   Deployment::Connections_var retval (tmp);
 
   for (LOCALITY_MAP::const_iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
@@ -357,7 +360,11 @@ NodeApplication_Impl::remove_instances (void)
 
           i->second->destroyApplication (0);
 
-          this->handler_.remove_instance (this->plan_,
+          ::Deployment::DeploymentPlan plan;  // TODO: MCO - this really sucks; if there is a real need
+                                              //             for the plan here we should probably get the
+                                              //             correct sub plan passed somehow like in
+                                              //             prepare_instances ()
+          this->handler_.remove_instance (plan, /* not needed at this time */
                                           0, /* not needed at this time */
                                           ref);
 
