@@ -133,7 +133,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_exec_export_hdr_file_ (false),
     gen_conn_export_hdr_file_ (false),
     gen_lem_force_all_ (false),
-    tab_size_ (2)
+    tab_size_ (2),
+    alt_mapping_ (false)
 {
 }
 
