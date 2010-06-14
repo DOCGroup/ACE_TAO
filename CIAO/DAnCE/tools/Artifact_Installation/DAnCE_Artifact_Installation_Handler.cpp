@@ -8,6 +8,9 @@
 
 namespace DAnCE
 {
+  ArtifactInstallationHandler::~ArtifactInstallationHandler ()
+    {}
+
   const std::string ArtifactInstallationProperties::PROPERTY_BASE = "edu.vanderbilt.dre.DAnCE.artifact.";
   const std::string ArtifactInstallationProperties::PROP_KEEP_INTERMEDIATES = "keep_intermediates";
   const std::string ArtifactInstallationProperties::PROP_NAME = "name";

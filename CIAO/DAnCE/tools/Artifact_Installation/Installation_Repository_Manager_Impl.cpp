@@ -273,7 +273,11 @@ namespace DAnCE
       ACE_DIRENT* dp = 0;
       while ((dp = dir.read ()) != 0)
         {
+#if defined (ACE_HAS_TCHAR_DIRENT)
           std::string entry = this->join (path, ACE_TEXT_ALWAYS_CHAR (dp->d_name));
+#else
+          std::string entry = this->join (path, dp->d_name);
+#endif
           if (this->has_artifact (entry))
             {
               locs.push_back (entry);
@@ -381,7 +385,11 @@ namespace DAnCE
       ACE_DIRENT* dp = 0;
       while ((dp = dir.read ()) != 0)
         {
+#if defined (ACE_HAS_TCHAR_DIRENT)
           std::string entry = this->join (path, ACE_TEXT_ALWAYS_CHAR (dp->d_name));
+#else
+          std::string entry = this->join (path, dp->d_name);
+#endif
           if (this->has_folder (entry))
             {
               locs.push_back (entry);
