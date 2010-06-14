@@ -34,6 +34,9 @@ public:
     const char* library_name,
     const char* profile_name);
 
+  void remove (
+    ::DDS::Subscriber_ptr subscriber);
+
 private:
   /**
    * DDS_Get

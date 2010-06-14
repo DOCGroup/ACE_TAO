@@ -36,6 +36,16 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete (
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+void
+DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
+  ::DDS::Subscriber_ptr subscriber)
+{
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
+  DDSSubscriberBase::remove (subscriber);
+  this->dds_get_._set_component (CCM_TYPE::base_type::_nil ());
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 typename CCM_TYPE::getter_type::_ptr_type
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::get_fresh_data (void)
 {
