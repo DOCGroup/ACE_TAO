@@ -33,6 +33,8 @@
 #include "Deployment/DeploymentC.h"
 #include "DAnCE/DAnCE_Utility.h"
 #include "LocalityManager/Handler/Locality_Manager_Handler_Impl.h"
+#include "Split_Plan/Locality_Splitter.h"
+#include "Split_Plan/Split_Plan.h"
 
 #include <map>
 #include <vector>
@@ -42,6 +44,8 @@ using namespace DAnCE::Utility;
 namespace DAnCE
 {
 
+  typedef DAnCE::Split_Plan < DAnCE::Locality_Splitter > LocalitySplitter;
+
   class NodeManager_Impl;
 
   class NodeApplication_Export NodeApplication_Impl :
@@ -50,7 +54,6 @@ namespace DAnCE
   public:
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
-                          ::Deployment::DeploymentPlan& plan,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
@@ -61,7 +64,7 @@ namespace DAnCE
 
     virtual void start (void);
 
-    void prepare_instances (void);
+    void prepare_instances (const LocalitySplitter::TSubPlans &plans);
 
     void start_launch_instances (const Deployment::Properties &prop,
                                  Deployment::Connections_out providedReference);
@@ -77,8 +80,6 @@ namespace DAnCE
     CORBA::ORB_var orb_;
 
     PortableServer::POA_var poa_;
-
-    ::Deployment::DeploymentPlan& plan_;
 
     ACE_CString node_name_;
 
