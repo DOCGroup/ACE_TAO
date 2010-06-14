@@ -130,6 +130,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::remove (
           throw ::CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_.set_impl (0);
+      this->dds_update_._set_component (CCM_TYPE::base_type::_nil ());
       this->dds_update_.set_impl (0);
     }
   catch (...)

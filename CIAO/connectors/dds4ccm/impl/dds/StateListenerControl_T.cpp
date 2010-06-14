@@ -26,7 +26,7 @@ CCM_DDS_StateListenerControl_T<BASE_TYPE>::is_filter_interpreted (void)
 template <typename BASE_TYPE>
 void
 CCM_DDS_StateListenerControl_T<BASE_TYPE>::is_filter_interpreted (
-  ::CORBA::Boolean is_filter_interpreted)
+  ::CORBA::Boolean /*is_filter_interpreted*/)
 {
   DDS4CCM_TRACE ("CCM_DDS_StateListenerControl_T::is_filter_interpreted");
 
