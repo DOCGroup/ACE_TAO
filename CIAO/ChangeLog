@@ -1,3 +1,13 @@
+Mon Jun 14 12:35:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/dds/StateListenerControl_T.cpp:
+          Setting the component of the ports to nil on ccm_remove.
+
 Mon Jun 14 12:36:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO_DAnCE.mwc:

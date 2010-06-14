@@ -143,6 +143,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
     {
       this->data_reader_.delete_datareader (subscriber);
       this->cft_setting_.delete_contentfilteredtopic (subscriber);
+      this->dds_read_._set_component (CCM_TYPE::base_type::_nil ());
     }
   catch (...)
     {

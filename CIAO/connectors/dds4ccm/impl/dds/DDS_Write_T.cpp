@@ -127,6 +127,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE>::remove (
           throw CORBA::INTERNAL ();
         }
       this->ccm_dds_writer_.set_impl (0);
+      this->writer_t_._set_component (CCM_TYPE::base_type::_nil ());
       this->writer_t_.set_impl (0);
     }
   catch (...)
