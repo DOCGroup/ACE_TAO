@@ -1,7 +1,12 @@
+Mon Jun 14 10:06:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Updated Xampler links, one for PS3, one for IBM Cell
+
 Mon Jun 14 09:13:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/URLBase.h:
-	  Fixed single thread compile problem.
+        * protocols/ace/INet/URLBase.h:
+          Fixed single thread compile problem.
 
 Sun Jun 13 18:14:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
