@@ -1,3 +1,9 @@
+Mon Jun 14 12:51:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Added requires to fix warnings because of no target
+
 Mon Jun 14 12:35:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDS_Get_T.h:
