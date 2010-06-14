@@ -32,9 +32,9 @@ namespace DAnCE
     public virtual POA_Deployment::NodeApplicationManager
     {
     public:
+
       NodeApplicationManager_Impl (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr poa,
-                                   const Deployment::DeploymentPlan& plan,
                                    const ACE_CString& name,
                                    const PROPERTY_MAP &properties);
 
@@ -45,13 +45,19 @@ namespace DAnCE
                    Deployment::Connections_out providedReference);
 
       virtual void destroyApplication (Deployment::Application_ptr);
+
+      void preparePlan (const Deployment::DeploymentPlan& plan);
+
     private:
-      Deployment::DeploymentPlan plan_;
+      LocalitySplitter split_plan_;
       CORBA::ORB_var orb_;
       PortableServer::POA_var poa_;
       NodeApplication_Impl* application_;
       ACE_CString node_name_;
       PROPERTY_MAP properties_;
     };
+
+  typedef PortableServer::Servant_var<NodeApplicationManager_Impl> Safe_NodeApplicationManager_Impl;
+
 }
 #endif /*NODEAPPLICATIONMANAGER_IMPL_H_*/

@@ -120,16 +120,21 @@ namespace DAnCE
     ACE_NEW_THROW_EX (manager,
                       NodeApplicationManager_Impl (this->orb_.in(),
                                                    this->poa_.in(),
-                                                   plan,
                                                    this->name_,
                                                    this->properties_),
                       CORBA::NO_MEMORY());
+    Safe_NodeApplicationManager_Impl safe_manager (manager);
+
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - invoking preparePlan on NodeApplicationManager...\n")));
+    manager->preparePlan (plan);
+
     DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - activating NodeApplicationManager...\n")));
     PortableServer::ObjectId_var id = this->poa_->activate_object (manager);
     CORBA::Object_var nam = this->poa_->id_to_reference (id.in());
 
     // There is an idea to check if plan.UUID really exists
-    this->managers_.bind (plan.UUID.in(), manager);
+    this->managers_.bind (plan.UUID.in(), safe_manager._retn ());
+
     // narrow should return a nil reference if it fails.
     DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT("NodeManager_impl::preparePlan - NodeApplicationManager for plan %C completed\n"),
                   plan.UUID.in ()));

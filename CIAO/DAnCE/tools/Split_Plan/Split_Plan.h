@@ -38,6 +38,7 @@ namespace DAnCE
                             Deployment::DeploymentPlan,
                             ACE_Null_Mutex> TSubPlans;
     typedef typename TSubPlans::iterator TSubPlanIterator;
+    typedef typename TSubPlans::const_iterator TSubPlanConstIterator;
 
     Split_Plan ();
 
