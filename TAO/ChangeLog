@@ -1,3 +1,19 @@
+Mon Jun 14 18:34:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        
+          Added member alt_mapping_ initialization in the constructor.
+
+Mon Jun 14 18:29:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        
+          Removed unused variable.
+          
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Added newline to #include generation.
+
 Mon Jun 14 15:15:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCodeAny.cpp:

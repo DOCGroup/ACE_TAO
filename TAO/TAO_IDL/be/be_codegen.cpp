@@ -257,7 +257,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       if (be_global->alt_mapping ())
         {
-          *this->client_header_ << "#include <string>"
+          *this->client_header_ << "\n#include <string>"
                                 << "\n#include <vector>\n";
         }
         

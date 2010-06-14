@@ -602,7 +602,6 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *alias = this->ctx_->alias ();
-  AST_Type *bt = node->base_type ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
