@@ -7,7 +7,11 @@
 
 namespace CIAO_UsesMulti_Sender_Impl
 {
+  // Keeps the messages received back.
   Atomic_UShort nr_of_received = 0;
+  // Keeps the messages on the go.
+  Atomic_UShort nr_of_sent = 0;
+  CORBA::Boolean asynch = false;
   //============================================================
   // Facet Executor Implementation Class: One_callback_exec_i
   //============================================================
@@ -27,10 +31,11 @@ namespace CIAO_UsesMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
+    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchroon callback from foo,"
                            " answer = <%C>\n",
-                           answer));  
+                           answer));
      ++nr_of_received;
+     --nr_of_sent;
   }
 
   void
@@ -50,35 +55,37 @@ namespace CIAO_UsesMulti_Sender_Impl
 
   int asynch_foo_generator::svc ()
   {
-    //Invoke Asynchronous calls to test 
+    //Invoke Asynchronous calls to test
     for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
       {
         CORBA::String_var test;
-        
         switch (i)
           {
             case 0:
-              test = CORBA::string_dup ("Asynchronous call een.");
+              test = CORBA::string_dup ("Asynch. call one.");
               break;
             case 1:
-              test = CORBA::string_dup ("Asynchronous call twee");
+              test = CORBA::string_dup ("Asynch. call two");
               break;
             case 2:
-              test = CORBA::string_dup ("Asynchronous call drie");
+              test = CORBA::string_dup ("Asynch. call three");
               break;
             default:
               break;
           }
-
-        /// Don't we have to get hold of a POA and create an object
-        /// reference for the reply handler? Or is that handled 
-        /// under the hood in AMI4CCM? If so, we may not need to
-        /// create the reply handler servant on the heap.
+        ++nr_of_sent;
         my_one_ami_[i].objref->sendc_foo (new One_callback_exec_i (),
                                           test.in (),
-                                          i);                                     
+                                          i); 
+        ACE_DEBUG ((LM_DEBUG, "Sender (ASYNCH) : send <%C> !\n",
+                    test.in ()));
+        //there is more than 1 message sent, without receiving callbacks,
+        //so it is asynchronous
+        if (nr_of_sent.value() > 1)
+          {
+            asynch = true;
+          }
       }
-      
     return 0;
   }
   //============================================================
@@ -95,12 +102,23 @@ namespace CIAO_UsesMulti_Sender_Impl
     for(CORBA::ULong i = 0; i < my_one_ami_->length(); ++i)
       {
         CORBA::String_var test;
-        if ( i == 0)
-          test = CORBA::string_dup("Synchronous call een.");
-        if ( i == 1)
-          test = CORBA::string_dup("Synchronous call twee");
-        if ( i == 2)
-          test = CORBA::string_dup("Synchronous call drie");
+        switch (i)
+          {
+            case 0:
+              test = CORBA::string_dup ("Synch. call 0.");
+              break;
+            case 1:
+              test = CORBA::string_dup ("Synch. call 1");
+              break;
+            case 2:
+              test = CORBA::string_dup ("Synch. call 2");
+              break;
+            default:
+              break;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,"Sender (SYNCH) : send <%C> !\n",
+                    test.in ()));
 
         CORBA::String_var answer;
         CORBA::ULong result = my_one_ami_[i].objref->foo( test,
@@ -114,10 +132,10 @@ namespace CIAO_UsesMulti_Sender_Impl
         else
           { 
             ++nr_of_received;
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Sender (SYNCH) : received answer = <%C> !\n",
                         answer.in ()));
-          } 
+          }
       }
     return 0;
   }
@@ -156,18 +174,12 @@ namespace CIAO_UsesMulti_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    //Expected somehing like this with use multiple asynchroon:
     ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var asynch_foo =
     this->context_->get_connections_sendc_run_my_um_one();
- 
-    //this isn't use multiple asynchroon
-    //::UsesMulti::AMI4CCM_One_var asynch_foo =
-      //this->context_->get_connection_sendc_run_my_um_one();
-     asynch_foo_generator* asynch_foo_gen =
+    asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
      asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    //this is 'use multiple' synchroon.
     ::UsesMulti::Sender::run_my_um_oneConnections_var synch_foo =
          this->context_->get_connections_run_my_um_one ();
     synch_foo_generator* synch_foo_gen =
@@ -183,6 +195,11 @@ namespace CIAO_UsesMulti_Sender_Impl
   void
   Sender_exec_i::ccm_remove (void)
   {
+    if (asynch == false)
+      {
+        ACE_ERROR ((LM_ERROR,
+                   "ERROR: Uses multiple test not asynchronous!\n"));
+      }
     if (nr_of_received.value() != 6)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Did not get all callbacks from "
@@ -192,8 +209,8 @@ namespace CIAO_UsesMulti_Sender_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, 
-                    "OK: All messages received back by Sender\n"));  
+        ACE_DEBUG ((LM_DEBUG,
+                    "OK: All messages received back by Sender\n"));
       }
   }
 

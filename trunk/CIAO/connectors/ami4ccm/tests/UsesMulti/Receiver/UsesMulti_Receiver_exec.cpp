@@ -19,21 +19,19 @@ namespace CIAO_UsesMulti_Receiver_Impl
   One_exec_i::foo (const char * in_str, ::CORBA::Long cmd,
                    ::CORBA::String_out answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "Receiver: one_foo, in_str = %C"
-                          " cmd = <%u>\n",
-                          in_str, cmd));  
-    if ((cmd < 0) || (cmd > 2)) 
+    ACE_OS::sleep(2);
+    if ((cmd < 0) || (cmd > 2))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver ONE::foo,"
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver foo,"
                               " origin not between 0 and 3, but <%u>\n",
-                              cmd));  
+                              cmd));
       }
     else
       {
         ++nr_of_received_;
       }
     answer = CORBA::string_dup (in_str);
-   
+
     return cmd;
   }
 
@@ -87,14 +85,14 @@ namespace CIAO_UsesMulti_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive the expected "
                               "number of correct calls.\n"
                               "Expected: 2, Received: %u.\n",
-                              nr_of_received_.value()));  
+                              nr_of_received_.value()));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
                               "number of correct calls.\n"
                               "Expected: 2, Received: %u.\n",
-                              nr_of_received_.value()));  
+                              nr_of_received_.value()));
       }
   }
 
