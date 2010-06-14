@@ -24,6 +24,8 @@ namespace DAnCE
           typedef std::map<std::string,
                            std::string> TPropertyMap;
 
+          virtual ~ArtifactInstallationHandler ();
+
           virtual const std::string& protocol_prefix (void) = 0;
 
           virtual void initialize () = 0;
