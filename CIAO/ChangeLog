@@ -1,16 +1,24 @@
+Mon Jun 14 14:50:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:
+        * connectors/ami4ccm/tests/OneReplyH/descriptors/run_test.pl:
+
+          Added the GetArchDir() call so that these tests can run in the
+          ARCH builds.
+
 Mon Jun 14 14:32:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/tools/Split_Plan/Split_Plan.h:
-	  Added const iterator typedef.
+          Added const iterator typedef.
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.h:
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-	  Some code reorganization in preparation for artifact installation
-	  integration.
-	  
+          Some code reorganization in preparation for artifact installation
+          integration.
+
 Mon Jun 14 13:33:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
