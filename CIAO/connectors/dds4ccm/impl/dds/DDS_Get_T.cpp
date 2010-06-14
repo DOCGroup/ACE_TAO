@@ -40,7 +40,7 @@ void
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
-  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::configuration_complete");
+  DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED>::remove");
   DDSSubscriberBase::remove (subscriber);
   this->dds_get_._set_component (CCM_TYPE::base_type::_nil ());
 }
