@@ -1,0 +1,145 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p GCS_Test_Base -l .. -o ../lib -u DDS GCS_Test_Connector"
+
+project(GCS_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=GET_COMPONENT_STATE_TEST_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=GCS_Test_Connector_stub_export.h \
+              -Wb,skel_export_macro=GET_COMPONENT_STATE_TEST_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=GCS_Test_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=GET_COMPONENT_STATE_TEST_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=GCS_Test_Connector_svnt_export.h \
+              -Wb,conn_export_macro=GET_COMPONENT_STATE_TEST_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=GCS_Test_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    GCS_Test_Connector.idl
+  }
+}
+
+project(GCS_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += GCS_Test_Connector_idl_gen
+  idlflags += -Wb,stub_export_macro=GET_COMPONENT_STATE_TEST_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=GCS_Test_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    GCS_Test_ConnectorE.idl
+  }
+}
+
+project(GCS_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += GCS_Test_Connector_lem_gen GCS_Test_Connector_stub GCS_Test_Base_stub DDS4CCM_lem_stub
+  libs  += GCS_Test_Base_stub GCS_Test_Connector_stub DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = GCS_Test_Connector_lem_stub
+  dynamicflags   = GET_COMPONENT_STATE_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GCS_Test_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    GCS_Test_ConnectorEC.h
+    GCS_Test_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    GCS_Test_ConnectorEC.inl
+  }
+}
+
+project(GCS_Test_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += GCS_Test_Connector_idl_gen GCS_Test_Base_stub
+  libs  += GCS_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = GCS_Test_Connector_stub
+  dynamicflags   = GET_COMPONENT_STATE_TEST_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GCS_Test_ConnectorC.cpp
+  }
+
+  Header_Files {
+    GCS_Test_ConnectorC.h
+    GCS_Test_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    GCS_Test_ConnectorC.inl
+  }
+}
+
+project(GCS_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += GCS_Test_Connector_lem_stub GCS_Test_Connector_stub DDS4CCM_lem_stub GCS_Test_Base_stub
+  sharedname = GCS_Test_Connector_exec
+  libs += GCS_Test_Connector_stub GCS_Test_Connector_lem_stub GCS_Test_Base_stub DDS4CCM_lem_stub GCS_Test_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags   = GET_COMPONENT_STATE_TEST_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GCS_Test_Connector_conn.cpp
+  }
+
+  Header_Files {
+    GCS_Test_Connector_conn.h
+    GCS_Test_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(GCS_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += GCS_Test_Connector_lem_stub GCS_Test_Connector_exec GCS_Test_Connector_stub DDS4CCM_lem_stub
+  sharedname  = GCS_Test_Connector_svnt
+  libs       += GCS_Test_Connector_stub \
+                GCS_Test_Connector_lem_stub  \
+                GCS_Test_Base_stub \
+                GCS_Test_Connector_exec \
+                DDS4CCM_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags = GET_COMPONENT_STATE_TEST_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GCS_Test_ConnectorS.cpp
+    GCS_Test_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    GCS_Test_ConnectorS.h
+    GCS_Test_Connector_svnt.h
+    GCS_Test_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    GCS_Test_ConnectorS.inl
+  }
+}
+
+
