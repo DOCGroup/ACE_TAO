@@ -301,6 +301,8 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr *);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Object_ptr);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Object_ptr *);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const std::string &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::string *);
 
 /// Typesafe extraction.
 
@@ -330,6 +332,8 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::Char *&);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+                                       std::string &);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

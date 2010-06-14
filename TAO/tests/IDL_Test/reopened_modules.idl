@@ -309,3 +309,47 @@ module A_mod
     interface Foo : A_mod::Foo {};
   };  
 };
+
+/// Similar to example at the top of this file,
+/// but with more openings and deeper nesting.
+module m1 
+{
+  module m2
+  {
+    module m3a
+    {
+      module m4a
+      {
+        const unsigned short FRED = 123;
+      };
+    };
+  };
+};
+
+module m1
+{
+  module m2
+  {
+    module m3a
+    {
+      module m4b
+      {
+        const unsigned short JIM = 240;
+      };
+    };
+  };
+};
+
+module m1
+{
+  module m2
+  {
+    module m3b
+    {
+      typedef string <::m1::m2::m3a::m4b::JIM> StringJIM;
+      typedef string <m1::m2::m3a::m4b::JIM> StringJIM_0;
+      typedef string <m2::m3a::m4b::JIM> StringJIM_1;
+      typedef string <m3a::m4b::JIM> StringJIM_2;
+    };
+  };
+};

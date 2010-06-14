@@ -132,9 +132,12 @@ int
 be_visitor_operation_rettype::visit_sequence (
   be_sequence *node)
 {
-  // We should never directly be here because anonymous
-  // sequence return types are not allowed.
-  *os << "::" << this->type_name (node) << " *";
+  *os << "::" << this->type_name (node);
+  
+  if (!be_global->alt_mapping () || !node->unbounded ())
+    {
+      *os << " *";
+    }
 
   return 0;
 }
@@ -142,13 +145,20 @@ be_visitor_operation_rettype::visit_sequence (
 int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
-  if (node->width () == (long) sizeof (char))
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  bool wide = (node->width () != (long) sizeof (char));
+  
+  if (wide)
     {
-      *os << "char *";
+      *os << "::CORBA::WChar *";
+    }
+  else if (bound == 0 && be_global->alt_mapping ())
+    {
+      *os << "std::string";
     }
   else
     {
-      *os << "::CORBA::WChar *";
+      *os << "char *";
     }
 
   return 0;

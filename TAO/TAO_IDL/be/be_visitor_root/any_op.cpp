@@ -54,6 +54,6 @@ be_visitor_root_any_op::visit_root (be_root *node)
                          ACE_TEXT ("codegen for scope failed\n")), 
                         -1);
     }
-
+    
   return 0;
 }

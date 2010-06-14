@@ -49,6 +49,7 @@ module gleep
 
 // Tests the handling of extra whitespace as well as the version setting.
 #    pragma version     gleep::floop::schmendrick    524.23
+
     local interface schmendrick {};
 
     module verklempt
@@ -58,7 +59,7 @@ module gleep
     // This will override the prefix directive for module floop at the end
     // of the file.
       typeprefix floop::verklempt "verklempt_prefix";
-    };
+    }; 
   };
 
   local interface schmegegging {};

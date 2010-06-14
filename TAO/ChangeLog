@@ -1,3 +1,304 @@
+Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Merged alt_mapping branch
+
+          Tue May 11 16:16:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+                  
+                    Added missing global double colon in generation of enum argument.
+
+          Fri May  7 19:44:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                  
+                    Added a check to generate the SArg_Trait parameter for
+                    the repo id arg to _is_a() as char* instead of std::string.
+                    We would have to regenerate ORB code for that to work,
+                    and it may be a choice later on to do that.
+                    
+                  * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                  
+                    To set the length of a sequence, changed the call to the
+                    underlying vector from capacity() to resize() - capacity()
+                    wasn't behaving as expected.
+                    
+                  * tests/Alt_Mapping/ub_struct_seq.cpp:
+                  
+                    Cosmetic changes, and other changes in parameter init
+                    and results checking to make debugging easier.
+
+          Mon May  3 22:21:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tests/Param_Test/param_testC.cpp:
+                  * tests/Param_Test/param_testS.cpp:
+                  * tests/Param_Test/param_testC.h:
+                  * tests/Param_Test/param_testS.h:
+                  * tests/Param_Test/param_testC.inl:
+                  * tests/Param_Test/param_testS.inl:
+
+                    Removed these from the repository in this
+                    branch, all hand-crafted hacks have been
+                    removed.
+
+                  * tests/Param_Test/ub_string.h:
+                  * tests/Param_Test/param_test_i.cpp:
+                  * tests/Param_Test/Param_Test.mpc:
+                  * tests/Param_Test/ub_string.cpp:
+                  * tests/Param_Test/ub_long_seq.h:
+                  * tests/Param_Test/param_test_i.h:
+                  * tests/Param_Test/README:
+                  * tests/Param_Test/ub_long_seq.cpp:
+
+                    Restored these files to head version, the
+                    STL support is now covered in its own test.
+
+                  * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+                    Fixed bug in code generation for unbounded
+                    strings, in the logic to decide when to use
+                    "std::string" and when not to.
+
+          Mon May  3 21:39:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tests/Alt_Mapping/driver.h:
+                  * tests/Alt_Mapping/options.h:
+                  * tests/Alt_Mapping/ub_string.h:
+                  * tests/Alt_Mapping/results.cpp:
+                  * tests/Alt_Mapping/alt_mapping_i.cpp:
+                  * tests/Alt_Mapping/server.cpp:
+                  * tests/Alt_Mapping/results.h:
+                  * tests/Alt_Mapping/tests.h:
+                  * tests/Alt_Mapping/alt_mapping_i.h:
+                  * tests/Alt_Mapping/README:
+                  * tests/Alt_Mapping/client.cpp:
+                  * tests/Alt_Mapping/helper.cpp:
+                  * tests/Alt_Mapping/alt_mapping.idl:
+                  * tests/Alt_Mapping/ub_struct_seq.cpp:
+                  * tests/Alt_Mapping/client.h:
+                  * tests/Alt_Mapping/helper.h:
+                  * tests/Alt_Mapping/ub_struct_seq.h:
+                  * tests/Alt_Mapping/alt_mapping.mpc:
+                  * tests/Alt_Mapping/options.cpp:
+                  * tests/Alt_Mapping/driver.cpp:
+                  * tests/Alt_Mapping/run_test.pl:
+                  * tests/Alt_Mapping/ub_string.cpp:
+
+                    New test for alternate C++ mapping support.
+                    Currently supports unbounded strings and
+                    tests unbounded sequence of simple structs.
+
+                  * TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+                  * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+                  * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                  * TAO_IDL/be/be_sequence.cpp:
+                  * tao/Vector_Argument_T.inl:
+                  * tao/AnyTypeCode/Any.cpp:
+                  * tao/PortableServer/Vector_SArgument_T.inl:
+                  * tao/PortableServer/Vector_SArgument_T.cpp:
+                  * tao/PortableServer/Vector_SArgument_T.h:
+                  * tao/Vector_Argument_T.h:
+                  * tao/Fixed_Size_Argument_T.h:
+
+                    More tweaks to fully automate the generation of
+                    correct code for the alternate C++ mapping.
+
+          Mon Apr 12 19:30:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_codegen.cpp:
+                  
+                    Added conditional include of vector argument class
+                    header file.
+                    
+                  * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  
+                    Fixed typos in generated code, and added check to
+                    skip bounded sequences for now.
+                    
+                  * tao/Vector_Argument_T.inl:
+                  * tao/Vector_Argument_T.h:
+                  * tao/Vector_Argument_T.cpp:
+                  
+                    Overhauled signatures of most methods.
+
+          Fri Apr  9 20:39:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * MPC/config/stl_mapping.mpb:
+
+                    New base project, to help with toggling the
+                    alternate C++ mapping generation for the
+                    entire middleware.
+
+                  * tao/Vector_Argument_T.inl:
+                  * tao/PortableServer/Vector_SArgument_T.inl:
+                  * tao/PortableServer/Vector_SArgument_T.cpp:
+                  * tao/PortableServer/Vector_SArgument_T.h:
+                  * tao/Vector_Argument_T.h:
+                  * tao/Vector_Argument_T.cpp:
+
+                    New argument template helper classes and
+                    traits, for the std::vector containers
+                    used for unbounded sequences.
+
+                  * tao/tao.mpc:
+
+                    Added new files to TAO build project.
+
+                  * tao/AnyTypeCode/Vector_AnyOp_T.h:
+                  * tao/Vector_CDR_T.h:
+
+                    Added 'typename' qualifier to template
+                    traits references to disambiguate them
+                    for the C++ compiler.
+
+                  * TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO_IDL/be/be_visitor_argument/argument.cpp:
+                  * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+                  * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+                    Further removal of hacks from the IDL compiler
+                    to generate the alternate C++ mapping in the
+                    general case.
+
+                  * tests/Param_Test/param_test_i.cpp:
+                  * tests/Param_Test/param_test_i.h:
+
+                    Update some of the servant methods to use
+                    the new signatures.
+
+          Mon Mar 29 20:28:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be_visitor_sequence/any_op_cs.cpp:
+                  
+                    Minor mods to codegen for STL includes and STL any
+                    operators.
+
+          Mon Mar 29 18:49:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  
+                    Cosmetic changes.
+                    
+                  * TAO_IDL/be/be_codegen.cpp:
+                  
+                    Added generation of includes for CDR and Any operator
+                    template header files.
+                    
+                  * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  
+                    Added code generation for Any insertions and extraction
+                    operators for std::vector<> types representing IDL
+                    sequences.
+                    
+                  * TAO_IDL/be/be_global.cpp:
+                  
+                    Added command line option to trigger code generation for
+                    alternate C++ mapping.
+
+          Mon Mar 29 18:46:20 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/AnyTypeCode/Any.h:
+                  * tao/AnyTypeCode/Any.cpp:
+                  
+                    Added non-copying Any insertion operator for std::string.
+                    Not yet implemented, still a no-op.
+                    
+                  * tao/tao.mpc:
+                  * tao/Vector_AnyOp_T.h:
+                  
+                    Moved this template file to the AnyTypeCode directory.
+
+          Mon Mar 29 17:13:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/Vector_CDR_T.h:
+                  
+                    Cosmetic changes.
+                    
+                  * tao/Vector_AnyOp_T.h:
+                  
+                    New file defining no-op Any insertion and extraction operators
+                    for std::vector, in various categories of element types.
+                    
+                  * tao/tao.mpc:
+                  
+                    Added above files to the MPC project.
+
+          Tue Mar  2 23:18:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tests/Param_Test/param_test_i.cpp:
+                  * tests/Param_Test/Param_Test.mpc:
+                  * tests/Param_Test/param_testC.cpp:
+                  * tests/Param_Test/param_testS.cpp:
+                  * tests/Param_Test/param_testC.h:
+                  * tests/Param_Test/param_testS.h:
+                  * tests/Param_Test/param_test_i.h:
+                  * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+                  * TAO_IDL/be/be_visitor_root/any_op.cpp:
+                  * TAO_IDL/be/be_visitor_argument.cpp:
+                  * TAO_IDL/be/be_global.cpp:
+                  * TAO_IDL/be_include/be_global.h:
+                  * tao/AnyTypeCode/Any.h:
+                  * tao/AnyTypeCode/Any.cpp:
+                  * tao/CDR.inl
+                  * tao/Array_VarOut_T.h:
+                  * tao/CDR.h:
+
+                    Progress toward generation of code for alternate mapping
+                    in the general case.
+
+                  * tao/Vector_CDR_T.h:
+
+                    New file containing template methods for (de)marshaling
+                    std::vector<T>. Includes a general case and special
+                    cases for interfaces and arrays.
+
+          Tue Feb 23 17:06:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_visitor_arg_traits.cpp:
+                  * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+                  * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+                  * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+                  * TAO_IDL/be/be_visitor_root/any_op.cpp:
+
+                    Changes to make the hand-crafted mods to the
+                    Param_Test operations test_unbounded_string()
+                    and test_long_sequence() appear in generated
+                    code.
+
+          Mon Jan 11 19:17:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/Basic_Arguments.h:
+                  * tao/PortableServer/Basic_SArguments.h:
+                  
+                    Added specializations Arg_Traits<std::string> and
+                    SArg_Traits<std::string>.
+                    
+                  * tests/Param_Test/param_testC.cpp:
+                  
+                    Removed specializations Arg_Traits<std::string>
+                    since it is now in the ORB (see above).
+                    
 Fri Jun 11 19:15:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_equivalent):

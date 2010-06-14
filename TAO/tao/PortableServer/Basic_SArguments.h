@@ -106,6 +106,13 @@ namespace TAO
   {
   };
 
+  template<>
+  class TAO_PortableServer_Export SArg_Traits<std::string>
+    : public Basic_SArg_Traits_T<
+        std::string,
+        TAO::Any_Insert_Policy_Stream <std::string> >
+  {
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
