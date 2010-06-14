@@ -602,6 +602,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *alias = this->ctx_->alias ();
+  AST_Type *bt = node->base_type ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -611,20 +612,26 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str (), false);
-
+  os->gen_ifdef_macro (alias->flat_name (),
+                       guard_suffix.c_str (),
+                       false);
+                       
+  bool use_vec = (node->unbounded () && be_global->alt_mapping ());
+  UTL_ScopedName *sn = alias->name ();
+  
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class "
-      << this->S_ << "Arg_Traits<"
-      << alias->name () << ">" << be_idt_nl
+      << "class " << this->S_ << "Arg_Traits<" << sn << ">"
+      << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << alias->name () << "," << be_nl
+      << (use_vec ? "Vector_" : "Var_Size_")
+      << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
+      << sn << "," << be_nl
       << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
+
 
   os->gen_endif ();
 

@@ -2314,6 +2314,18 @@ BE_GlobalData::gen_lem_force_all (bool val)
   this->gen_lem_force_all_ = val;
 }
 
+bool
+BE_GlobalData::alt_mapping (void) const
+{
+  return this->alt_mapping_;
+}
+
+void
+BE_GlobalData::alt_mapping (bool val)
+{
+  this->alt_mapping_ = val;
+}
+
 unsigned long
 BE_GlobalData::tab_size (void) const
 {
@@ -2756,6 +2768,12 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // CIAO servant code generation.
                 be_global->gen_ciao_svnt (true);
+              }
+            else if (av[i][3] == 't' && av[i][4] == 'l')
+              {
+                // Generate code using STL types for strings
+                // and sequences.
+                be_global->alt_mapping (true);
               }
             else
               {
@@ -3685,6 +3703,11 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gsp\t\t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gstl\t\t\tGenerate the alternate C++ mapping for")
+      ACE_TEXT (" IDL strings and sequences\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

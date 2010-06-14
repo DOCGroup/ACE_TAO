@@ -82,67 +82,72 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
 
-      *os << be_nl << "(max)" << be_uidt << be_uidt_nl
+      *os << " (max)" << be_uidt << be_uidt_nl
           << "{}";
     }
 
-  // constructor with the buffer
-  *os << be_nl << be_nl
-      << node->name () << "::" << node->local_name () << " ("
-      << be_idt << be_idt_nl;
-
-  if (node->unbounded ())
+  /// If we are using std::vector, we can't implement this
+  /// constructor.
+  if (!be_global->alt_mapping () || !node->unbounded ())
     {
-      // Unbounded seq takes this extra parameter.
-      *os << "::CORBA::ULong max," << be_nl;
-    }
+      // constructor with the buffer
+      *os << be_nl << be_nl
+          << node->name () << "::" << node->local_name () << " ("
+          << be_idt << be_idt_nl;
 
-  *os << "::CORBA::ULong length," << be_nl;
+      if (node->unbounded ())
+        {
+          // Unbounded seq takes this extra parameter.
+          *os << "::CORBA::ULong max," << be_nl;
+        }
 
-  // generate the base type for the buffer
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_sequence_buffer_type bt_visitor (&ctx);
+      *os << "::CORBA::ULong length," << be_nl;
 
-  if (bt->accept (&bt_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cs::"
-                         "visit_sequence - "
-                         "base type visit failed\n"),
-                        -1);
-    }
+      // generate the base type for the buffer
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor_sequence_buffer_type bt_visitor (&ctx);
 
-  *os << " * buffer," << be_nl
-      << "::CORBA::Boolean release)" << be_uidt << be_uidt_nl
-      << "  : " << be_idt << be_idt;
+      if (bt->accept (&bt_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cs::"
+                             "visit_sequence - "
+                             "base type visit failed\n"),
+                            -1);
+        }
 
-  // Pass it to the base constructor.
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cs::"
-                         "visit_sequence - "
-                         "codegen for base sequence class\n"),
-                        -1);
-    }
+      *os << " * buffer," << be_nl
+          << "::CORBA::Boolean release" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "  : " << be_idt << be_idt;
 
-  *os << be_nl << "(";
+      // Pass it to the base constructor.
+      if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cs::"
+                             "visit_sequence - "
+                             "codegen for base sequence class\n"),
+                            -1);
+        }
 
-  if (node->unbounded ())
-    {
-      *os << "max, ";
-    }
+      *os << be_nl << "(";
 
-  *os << "length, buffer, release)" << be_uidt << be_uidt_nl
-      << "{}";
+      if (node->unbounded ())
+        {
+          *os << "max, ";
+        }
+
+      *os << "length, buffer, release)" << be_uidt << be_uidt_nl
+          << "{}";
+  }
 
   // Copy constructor.
   *os << be_nl << be_nl
       << node->name () << "::" << node->local_name ()
-      << " (" << be_idt << be_idt_nl
+      << " (" << be_idt << be_idt << be_idt_nl
       << "const " << node->local_name ()
-      << " &seq)" << be_uidt
-      << be_uidt_nl
+      << " &seq)" << be_uidt << be_uidt_nl
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
@@ -155,7 +160,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << be_nl << "(seq)" << be_uidt << be_uidt_nl
+  *os << " (seq)" << be_uidt << be_uidt_nl
       << "{}";
 
   // Destructor.
@@ -164,6 +169,30 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << " (void)" << be_nl
       << "{}";
 
+  if (be_global->alt_mapping () && node->unbounded ())
+    {
+      *os << be_nl << be_nl
+          << "::CORBA::ULong" << be_nl
+          << node->name () << "::length (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "return this->size ();" << be_uidt_nl
+          << "}";
+          
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << node->name () << "::length ( ::CORBA::ULong length)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "this->resize (length);" << be_uidt_nl
+          << "}";
+          
+      *os << be_nl << be_nl
+          << "::CORBA::ULong" << be_nl
+          << node->name () << "::maximum (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "return this->capacity ();" << be_uidt_nl
+          << "}";
+    }
 
   if (be_global->any_support () && !node->anonymous ())
     {

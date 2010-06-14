@@ -461,11 +461,13 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
+  ACE_CDR::ULong bound = 0;
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
-      ACE_CDR::ULong bound = s->max_size ()->ev ()->u.ulval;
+      AST_String *s =
+        AST_String::narrow_from_decl (bt->unaliased_type  ());
+      bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.
@@ -504,7 +506,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (ut);
+      AST_PredefinedType *pdt =
+        AST_PredefinedType::narrow_from_decl (ut);
 
       switch (pdt->pt ())
         {
@@ -535,9 +538,29 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
       *os << "::";
     }
     
+  /// For now, keep a list of system operation or arg names
+  /// that may not be remapped. May decide later to regnerate
+  /// ORB code for alt mapping as well.  
+  ACE_CString repo_id (scope->repoID ());
+  bool sys_val = (repo_id == "IDL:repository_id:1.0");
+    
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
-  *os << bt->name ();
+  if (nt == AST_Decl::NT_string && bound == 0)
+    {
+      if (be_global->alt_mapping () && !sys_val)
+        {
+          *os << "std::string";
+        }
+      else
+        {
+          *os << "char *";
+        }
+    }
+  else
+    {
+      *os << bt->name ();
+    }
 
   if (nt == AST_Decl::NT_array)
     {

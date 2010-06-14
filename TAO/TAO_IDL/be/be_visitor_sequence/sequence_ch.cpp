@@ -100,16 +100,21 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (node->flat_name ());
 
-  if (this->ctx_->tdef () != 0)
+  /// If we are using std::vector, we won't be using _vars
+  /// and _outs. They may get redefined and reinstated later.
+  if (!be_global->alt_mapping () || !node->unbounded ())
     {
-      *os << be_nl << be_nl
-          << "class " << node->local_name () << ";";
-    }
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "class " << node->local_name () << ";";
+        }
 
-  if (this->ctx_->tdef () != 0)
-    {
-      this->gen_varout_typedefs (node,
-                                 bt);
+      if (this->ctx_->tdef () != 0)
+        {
+          this->gen_varout_typedefs (node,
+                                     bt);
+        }
     }
 
   *os << be_nl << be_nl
@@ -141,37 +146,54 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << " ( ::CORBA::ULong max);";
     }
 
-  *os << be_nl
-      << node->local_name () << " (" << be_idt;
-
-  if (node->unbounded ())
+  /// If we are using std::vector, we can't implement this
+  /// constructor.
+  if (!be_global->alt_mapping () || !node->unbounded ())
     {
       *os << be_nl
-          << "::CORBA::ULong max,";
-    }
+          << node->local_name () << " (" << be_idt;
 
+      if (node->unbounded ())
+        {
+          *os << be_nl
+              << "::CORBA::ULong max,";
+        }
+
+      *os << be_nl
+          << "::CORBA::ULong length," << be_nl;
+
+      // Generate the base type for the buffer.
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
+      be_visitor_sequence_buffer_type bt_visitor (&ctx);
+
+      if (bt->accept (&bt_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_ch::"
+                             "visit_sequence - "
+                             "buffer type visit failed\n"),
+                            -1);
+        }
+
+      *os << "* buffer, " << be_nl
+          << "::CORBA::Boolean release = false);" << be_uidt;
+  }
+  
   *os << be_nl
-      << "::CORBA::ULong length," << be_nl;
-
-  // Generate the base type for the buffer.
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
-  be_visitor_sequence_buffer_type bt_visitor (&ctx);
-
-  if (bt->accept (&bt_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "base type visit failed\n"),
-                        -1);
-    }
-
-  *os << "* buffer, " << be_nl
-      << "::CORBA::Boolean release = false);" << be_uidt_nl;
-  *os << node->local_name () << " (const " << node->local_name ()
+      << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
   *os << "virtual ~" << node->local_name () << " (void);";
+
+  if (be_global->alt_mapping () && node->unbounded ())
+    {
+      *os << be_nl << be_nl
+          << "virtual ::CORBA::ULong length (void) const;"
+          << be_nl
+          << "virtual void length ( ::CORBA::ULong);"
+          << be_nl << be_nl
+          << "virtual ::CORBA::ULong maximum (void) const;";
+    }
 
   if (be_global->any_support () && !node->anonymous ())
     {
@@ -179,13 +201,18 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "static void _tao_any_destructor (void *);";
     }
 
-  // Generate the _var_type typedef (only if we are not anonymous).
-  if (this->ctx_->tdef () != 0)
+  /// If we are using std::vector, we can't implement this
+  /// constructor.
+  if (!be_global->alt_mapping () || !node->unbounded ())
     {
-      *os << be_nl << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;"
-          << be_nl
-          << "typedef " << node->local_name () << "_out _out_type;";
+      // Generate the _var_type typedef (only if we are not anonymous).
+      if (this->ctx_->tdef () != 0)
+        {
+          *os << be_nl << be_nl
+              << "typedef " << node->local_name () << "_var _var_type;"
+              << be_nl
+              << "typedef " << node->local_name () << "_out _out_type;";
+        }
     }
 
   // TAO provides extensions for octet sequences, first find out if
@@ -211,8 +238,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   // Now generate the extension...
-  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
-      && node->unbounded ())
+  if (predef != 0
+      && predef->pt () == AST_PredefinedType::PT_octet
+      && node->unbounded ()
+      && !be_global->alt_mapping ())
     {
       *os << be_nl << be_nl
           << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl

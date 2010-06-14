@@ -50,7 +50,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          ACE_TEXT ("Bad return type\n")),
                         -1);
     }
-
+    
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype or_visitor (&ctx);

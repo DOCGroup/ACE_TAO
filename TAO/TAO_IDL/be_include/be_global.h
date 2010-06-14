@@ -788,6 +788,9 @@ public:
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
+  
+  bool alt_mapping (void) const;
+  void alt_mapping (bool val);
 
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
@@ -1129,6 +1132,9 @@ private:
 
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;
+  
+  bool alt_mapping_;
+  // Are we generating STL types?
 };
 
 #endif /* _BE_GLOBAL_H */

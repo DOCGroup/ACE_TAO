@@ -255,6 +255,12 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
+      if (be_global->alt_mapping ())
+        {
+          *this->client_header_ << "#include <string>"
+                                << "\n#include <vector>\n";
+        }
+        
       this->gen_stub_hdr_includes ();
 
       size_t const nfiles = idl_global->n_included_idl_files ();
@@ -2677,6 +2683,19 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_any_file_includes (this->client_stubs_);
     }
 
+  if (be_global->alt_mapping () && idl_global->seq_seen_)
+    {
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Vector_CDR_T.h");
+                                  
+      if (be_global->any_support ())
+        {
+          this->gen_standard_include (
+            this->client_stubs_,
+            "tao/AnyTypeCode/Vector_AnyOp_T.h");
+        }
+    }
+    
   // Includes whatever arg helper template classes that may be needed.
   this->gen_stub_arg_file_includes (this->client_stubs_);
 
@@ -2989,6 +3008,12 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
     );
 
   this->gen_cond_file_include (
+      idl_global->seq_seen_ && be_global->alt_mapping (),
+      "tao/Vector_Argument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
       idl_global->any_arg_seen_,
       "tao/AnyTypeCode/Any_Arg_Traits.h",
       stream
@@ -3067,6 +3092,12 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
   this->gen_cond_file_include (
       idl_global->var_size_arg_seen_,
       "tao/PortableServer/Var_Size_SArgument_T.h",
+      stream
+    );
+
+  this->gen_cond_file_include (
+      idl_global->seq_seen_ && be_global->alt_mapping (),
+      "tao/PortableServer/Vector_SArgument_T.h",
       stream
     );
 
