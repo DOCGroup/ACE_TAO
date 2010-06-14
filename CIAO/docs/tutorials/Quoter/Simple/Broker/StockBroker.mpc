@@ -136,7 +136,7 @@ project (Stock_Base_StockBrokerDriver) : ccm_stub, valuetype   {
   after += Stock_Base_StockBroker_stub
   libs  += StockBroker_stub Stock_Base_stub
   libpaths += ../lib
-  libout = ../lib
+  exeout = ../lib
   IDL_Files {
   }
 
