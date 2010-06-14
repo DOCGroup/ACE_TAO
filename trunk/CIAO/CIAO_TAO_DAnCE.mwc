@@ -19,6 +19,9 @@ workspace {
   ciao
   DAnCE
   tools/XML
+  connectors/ami4ccm/ami4ccm
+  connectors/dds4ccm/idl
+  connectors/dds4ccm/impl
   exclude {
     DAnCE/tests
   }
