@@ -35,6 +35,7 @@ project(OFM_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project (OneFile_Multiple_DDS_stub) : dds4ccm_ddsonly {
+  requires += dds4ccm_ndds
   after += OneFile_Connector_idl_gen
   sharedname = OneFile_Multiple_DDS_stub
 }
