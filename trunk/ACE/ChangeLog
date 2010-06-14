@@ -1,3 +1,9 @@
+Mon Jun 14 16:16:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/inet.mpc:
+	* bin/MakeProjectCreator/config/inet.mpb:
+	  Avoid WinCE.
+
 Mon Jun 14 14:16:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
