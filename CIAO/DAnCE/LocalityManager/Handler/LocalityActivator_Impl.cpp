@@ -172,7 +172,7 @@ namespace DAnCE
       DANCE_TRACE("DAnCE_LocalityActivator_i::create_locality_manager");
 
       Safe_Server_Info server (new Server_Info (config.length () + 1));
-      
+
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
                        ACE_TEXT ("Received %u config properties\n"),
@@ -207,14 +207,14 @@ namespace DAnCE
           CORBA::ULong t;
           if (val >>= t)
             {
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                                ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
                                ACE_TEXT ("Using provided non-default server timeout of %u\n"), t));
               timeout = ACE_Time_Value (t);
             }
           else
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO 
+              DANCE_ERROR (1, (LM_WARNING, DLINFO
                                ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
                                ACE_TEXT ("Failed to extract provided non-default server timeout ")
                                ACE_TEXT ("from property '%C', ")
@@ -334,6 +334,45 @@ namespace DAnCE
 
       options.avoid_zombies (0);
 
+      // check for customized PATH addition
+      if (si.cmap_->find (DANCE_LM_PATH, val) == 0)
+        {
+          path = 0;
+          val >>= path;
+          if (path)
+            {
+              ACE_CString newpath (ACE_OS::getenv ("PATH"));
+              newpath += ACE_TEXT_ALWAYS_CHAR (ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+              newpath += path;
+              options.setenv (ACE_TEXT("PATH"), ACE_TEXT_CHAR_TO_TCHAR (newpath.c_str ()));
+
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                              ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                              ACE_TEXT ("configured customized PATH environment: %C\n"),
+                              newpath.c_str ()));
+            }
+        }
+
+      // check for customized LD search path addition
+      if (si.cmap_->find (DANCE_LM_LIBPATH, val) == 0)
+        {
+          path = 0;
+          val >>= path;
+          if (path)
+            {
+              ACE_CString newpath (ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (ACE_LD_SEARCH_PATH)));
+              newpath += ACE_TEXT_ALWAYS_CHAR (ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+              newpath += path;
+              options.setenv (ACE_LD_SEARCH_PATH, ACE_TEXT_CHAR_TO_TCHAR (newpath.c_str ()));
+
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                              ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
+                              ACE_TEXT ("configured customized %s environment: %C\n"),
+                              ACE_LD_SEARCH_PATH,
+                              newpath.c_str ()));
+            }
+        }
+
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::spawn_locality_manager - ")
                        ACE_TEXT ("Spawning process, command line is %s\n"),
@@ -415,7 +454,7 @@ namespace DAnCE
                                           "timed out waiting for callback");
           }
     }
-  
+
     void
     DAnCE_LocalityActivator_i::remove_locality_manager (::DAnCE::LocalityManager_ptr server)
     {
@@ -474,18 +513,18 @@ namespace DAnCE
                        ACE_TEXT ("length %u\n"),
                        info.uuid_.c_str (),
                        info.cmap_->current_size ()));
-      
+
       if (info.cmap_->current_size () == 0) return;
 
       ACE_NEW_THROW_EX (config,
                         Deployment::Properties (info.cmap_->current_size ()),
                         CORBA::NO_MEMORY ());
-      
+
       config->length (info.cmap_->current_size ());
-      
+
       CORBA::ULong pos = 0;
       Utility::PROPERTY_MAP::iterator i = info.cmap_->begin ();
-      
+
       do {
         config[pos].name = i->ext_id_.c_str ();
         config[pos].value = i->int_id_;

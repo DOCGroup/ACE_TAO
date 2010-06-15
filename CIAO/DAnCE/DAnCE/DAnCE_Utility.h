@@ -50,6 +50,12 @@ namespace DAnCE
                         const ::Deployment::Properties &properties,
                         T &val);
 
+    template<class T>
+    void
+    update_property_value (const char *name,
+                           ::Deployment::Properties &properties,
+                           const T &val);
+
     template <typename EXCEPTION>
     void test_and_set_exception (bool &flag, EXCEPTION &exception,
                                  const char *name, const char *reason);
@@ -89,6 +95,12 @@ namespace DAnCE
     get_property_value (const char *name,
                         const ::Deployment::Properties &properties,
                         const char * &val);
+
+    template<char*>
+    DANCE_STUB_Export void
+    update_property_value (const char *name,
+                           ::Deployment::Properties &properties,
+                           const char * &val);
   }
 }
 
