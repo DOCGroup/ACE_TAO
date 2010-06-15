@@ -32,7 +32,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class In_Vector_SArgument_T : public InArgument
   {
   public:
@@ -54,7 +54,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Inout_Vector_SArgument_T : public InoutArgument
   {
   public:
@@ -79,7 +79,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Out_Vector_SArgument_T : public OutArgument
   {
   public:
@@ -103,7 +103,7 @@ namespace TAO
    *
    */
   template<typename S,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   class Ret_Vector_SArgument_T : public RetArgument
   {
   public:
@@ -129,7 +129,7 @@ namespace TAO
    *
    */
   template<typename T,
-           class Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Vector_SArg_Traits_T
   {
     typedef T                                               ret_type;
