@@ -75,7 +75,6 @@ namespace CIAO_LMBM_Test_Sender_Impl
 
   private:
     ::LMBM_Test::CCM_Sender_Context_var context_;
-    ::LMBM_Test::ListenManyByManyTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 

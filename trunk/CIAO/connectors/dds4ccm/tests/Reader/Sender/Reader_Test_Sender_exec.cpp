@@ -76,14 +76,19 @@ namespace CIAO_Reader_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
+    ::Reader_Test::ReaderTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+    ReaderStarter_var starter =
+      this->context_->get_connection_start_reader ();
+
     //start can be called more than once...
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;
-        if (! ::CORBA::is_nil (this->starter_))
+        if (! ::CORBA::is_nil (starter.in ()))
           {
-            this->starter_->set_reader_properties (this->keys_, this->iterations_);
-            this->starter_->read_no_data ();
+            starter->set_reader_properties (this->keys_, this->iterations_);
+            starter->read_no_data ();
           }
         else
           {
@@ -99,12 +104,12 @@ namespace CIAO_Reader_Test_Sender_Impl
             for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
               {
                 new_key->iteration = iter;
-                this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
+                writer->write_one (*new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
               }
           }
-        this->starter_->start_read ();
+        starter->start_read ();
       }
   }
 
@@ -160,8 +165,6 @@ namespace CIAO_Reader_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
-        this->starter_ = this->context_->get_connection_start_reader ();
         this->ccm_activated_ = true;
       }
     catch (const CORBA::Exception& ex)

@@ -70,11 +70,14 @@ namespace CIAO_Writer_Sender_Impl
       {
         try
           {
+            ::Writer::WriterTestConnector::Writer_var writer =
+              this->context_->get_connection_info_write_data ();
+
             ++this->last_key->second->iteration;
             OctetSeq_var reply_mesg = new OctetSeq (1);
             reply_mesg->length (1);
             this->last_key->second->data = *reply_mesg._retn ();
-            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -129,7 +132,10 @@ namespace CIAO_Writer_Sender_Impl
       }
     try
       {
-        this->writer_->write_many (write_many_no_excep);
+        ::Writer::WriterTestConnector::Writer_var writer =
+          this->context_->get_connection_info_write_data ();
+
+        writer->write_many (write_many_no_excep);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many_no_excep.length ()));
       }
@@ -149,13 +155,15 @@ namespace CIAO_Writer_Sender_Impl
       {
         try
           {
+            ::Writer::WriterTestConnector::Writer_var writer =
+              this->context_->get_connection_info_write_data ();
+
             ++this->last_key->second->iteration;
-            const long length = 100000;
-            OctetSeq_var reply_mesg =
-              new OctetSeq (length);
+            long const length = 100000;
+            OctetSeq_var reply_mesg = new OctetSeq (length);
             reply_mesg->length (length);
             this->last_key->second->data = *reply_mesg._retn ();
-            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: No InternalError ")
                         ACE_TEXT ("caught while writing a large amount of data.\n")));
           }
@@ -283,7 +291,6 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void

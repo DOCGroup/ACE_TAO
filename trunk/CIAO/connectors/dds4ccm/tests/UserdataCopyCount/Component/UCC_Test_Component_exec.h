@@ -78,7 +78,6 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     ::UCC_Test::CCM_UCCTestComponent_Context_var context_;
 
     //Variable sized struct
-    ::UCCVariableSizedStruct_Test::UCCVariableSizedStructTestConnector::Writer_var var_writer_;
     void create_variable_sized_samples (void);
     WriteVariableHandler *var_rh_;
 
@@ -87,7 +86,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     UCCVarSized_Table var_samples_;
 
     // Fixed sized struct
-    ::UCCFixedSizeStruct_Test::UCCFixedSizedStructTestConnector::Writer_var fixed_writer_;
+    _;
     void create_fixed_sized_samples (void);
     WriteFixedHandler *fixed_rh_;
 

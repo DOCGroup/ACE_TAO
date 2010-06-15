@@ -81,8 +81,6 @@ namespace CIAO_Reader_Test_Sender_Impl
 
   private:
     ::Reader_Test::CCM_Sender_Context_var context_;
-    ::Reader_Test::ReaderTestConnector::Writer_var writer_;
-    ReaderStarter_var starter_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
