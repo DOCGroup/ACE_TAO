@@ -1,3 +1,26 @@
+Tue Jun 15 06:44:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.h:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/GetComponent/State/Component/GCS_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.h:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/State_Connection_Test/Sender/State_Connection_Test_Sender_exec.cpp:
+          Various layout changes, memory leaks, and code cleanup
+
 Mon Jun 14 14:50:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl:

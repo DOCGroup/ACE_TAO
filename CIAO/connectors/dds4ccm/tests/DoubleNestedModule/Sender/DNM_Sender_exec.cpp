@@ -37,13 +37,13 @@ namespace CIAO_DNM_Test_Sender_Nested_Sender_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data ();
+    ::DNM_Test_Connector::Nested_Connector::DNM_TestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
 
-    ::X::Y::Z::DNM_Test_Struct * dnm =
-        new ::X::Y::Z::DNM_Test_Struct;
-    dnm->key = CORBA::string_dup ("KEY_1");
-    dnm->iter = 10;
-    this->writer_->write_one (*dnm, ::DDS::HANDLE_NIL);
+    ::X::Y::Z::DNM_Test_Struct dnm;
+    dnm.key = CORBA::string_dup ("KEY_1");
+    dnm.iter = 10;
+    writer->write_one (dnm, ::DDS::HANDLE_NIL);
   }
 
   void

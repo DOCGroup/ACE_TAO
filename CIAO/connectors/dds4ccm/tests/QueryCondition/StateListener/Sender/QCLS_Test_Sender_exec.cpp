@@ -86,8 +86,7 @@ namespace CIAO_QCLS_Test_Sender_Impl
   void
   Sender_exec_i::run ()
   {
-
-    //first create the instances for consecutive updating.
+    // First create the instances for consecutive updating.
     for (CORBA::UShort i = 1; i < this->keys () + 1; ++i)
       {
         char key[7];

@@ -15,8 +15,6 @@
 
 #include "tao/LocalObject.h"
 
-
-
 namespace CIAO_QCLS_Test_Sender_Impl
 {
   class Sender_exec_i;

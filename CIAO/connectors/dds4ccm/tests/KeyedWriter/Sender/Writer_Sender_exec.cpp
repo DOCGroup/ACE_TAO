@@ -62,7 +62,7 @@ namespace CIAO_Writer_Sender_Impl
       {
         try
           {
-            ::DDS::InstanceHandle_t hnd = this->handles_[i->first.c_str ()];
+            ::DDS::InstanceHandle_t const hnd = this->handles_[i->first.c_str ()];
             this->writer_->unregister_instance (i->second, hnd);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
@@ -182,7 +182,7 @@ namespace CIAO_Writer_Sender_Impl
 
     WriterTestSeq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
-    int iter_key = 0;
+    ::CORBA::ULong iter_key = 0;
     for (Writer_Table::iterator iter = this->ktests_.begin ();
          iter != this->ktests_.end ();
          ++iter)

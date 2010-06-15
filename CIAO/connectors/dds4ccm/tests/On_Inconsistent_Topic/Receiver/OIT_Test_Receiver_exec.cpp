@@ -99,8 +99,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::OIT_Test::CCM_Receiver_Context::_narrow (ctx);
+    this->context_ = ::OIT_Test::CCM_Receiver_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -128,14 +127,12 @@ namespace CIAO_OIT_Test_Receiver_Impl
     if (!this->inconsistent_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: did not receive the expected ")
-                              ACE_TEXT ("error 'on_inconsistent_topic'\n")
-                    ));
+                              ACE_TEXT ("error 'on_inconsistent_topic'\n")));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
-                              ACE_TEXT ("'on_inconsistent_topic'\n")
-                    ));
+                              ACE_TEXT ("'on_inconsistent_topic'\n")));
       }
     if (this->thread_id_listener_.value () == 0)
       {

@@ -40,15 +40,15 @@ namespace CIAO_State_Connection_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->updater_ =
+    ::State_Connection_Test::State_ConnectionTestConnector::Updater_var updater =
         this->context_->get_connection_info_update_data ();
-    if (! ::CORBA::is_nil (this->updater_))
+    if (! ::CORBA::is_nil (updater.in ()))
       {
         this->updater_ok_ = true;
       }
-    this->updater_dds_datawriter_ =
+    ::DDS::DataWriter_var  updater_dds_datawriter =
         this->context_->get_connection_info_update_dds_entity ();
-    if (! ::CORBA::is_nil (this->updater_dds_datawriter_))
+    if (! ::CORBA::is_nil (updater_dds_datawriter.in ()))
       {
         this->updater_dds_datawriter_ok_ = true;
       }

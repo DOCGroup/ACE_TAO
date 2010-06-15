@@ -33,15 +33,15 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ =
+    ::Event_ConnectionConnector::Writer_var writer =
         this->context_->get_connection_info_write_data ();
-    if (! ::CORBA::is_nil (this->writer_))
+    if (! ::CORBA::is_nil (writer_.in ()))
       {
         this->writer_ok_ = true;
       }
-    this->writer_dds_datawriter_ =
+    DDS::DataWriter_var writer_dds_datawriter =
         this->context_->get_connection_info_write_dds_entity ();
-    if (! ::CORBA::is_nil (this->writer_dds_datawriter_))
+    if (! ::CORBA::is_nil (this->writer_dds_datawriter_.in ()))
       {
         this->writer_dds_datawriter_ok_ = true;
       }
