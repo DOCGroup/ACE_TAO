@@ -133,7 +133,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         *os << dv.u.ulong_val;
         break;
       case AST_Expression::EV_char:
-        os->print ("%d", dv.u.char_val);
+        os->print ("'\\%o'", dv.u.char_val);
         break;
       case AST_Expression::EV_bool:
         *os << (dv.u.bool_val == 0 ? "false" : "true");

@@ -1,21 +1,33 @@
+Tue Jun 15 15:24:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Bug_3821_Regression/Bug_3821_Regression.mpc:
+          Disabled generation of skeleton files as the test only needs stubs.
+
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Changed generation of constructor for IDL unions. Now constructor
+          sets disc_ member directly without a call to _default(). The later
+          was problematic because before setting disc_ _default() called
+          _reset() which used disc_ in switch statement.
+
 Tue Jun 15 14:14:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp(type_name):
-        
+
           Restored generation of a leading double colon that was lost
           in the recent merge of the alt_mapping branch.
 
 Tue Jun 15 14:02:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any.cpp:
-        
+
           Removed id of unused parameters.
 
 Mon Jun 14 18:48:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Basic_Arguments.h:
         * tao/PortableServer/Basic_SArguments.h:
-        
+
           Updated syntax of TAO::Any_Insert_Policy_Stream template
           parameter, which had changed since the alt_mapping
           branch was created.
@@ -23,23 +35,23 @@ Mon Jun 14 18:48:29 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Jun 14 18:34:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
-        
+
           Added member alt_mapping_ initialization in the constructor.
 
 Mon Jun 14 18:29:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
-        
+
           Removed unused variable.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Added newline to #include generation.
 
 Mon Jun 14 15:15:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCodeAny.cpp:
-        
+
           Removed some ACE_INLINE macros that came with a branch merge.
 
 Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -49,27 +61,27 @@ Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           Tue May 11 16:16:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * TAO_IDL/be/be_visitor_argument/arglist.cpp:
-                  
+
                     Added missing global double colon in generation of enum argument.
 
           Fri May  7 19:44:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * TAO_IDL/be/be_visitor_operation/operation.cpp:
-                  
+
                     Added a check to generate the SArg_Trait parameter for
                     the repo id arg to _is_a() as char* instead of std::string.
                     We would have to regenerate ORB code for that to work,
                     and it may be a choice later on to do that.
-                    
+
                   * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
                   * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-                  
+
                     To set the length of a sequence, changed the call to the
                     underlying vector from capacity() to resize() - capacity()
                     wasn't behaving as expected.
-                    
+
                   * tests/Alt_Mapping/ub_struct_seq.cpp:
-                  
+
                     Cosmetic changes, and other changes in parameter init
                     and results checking to make debugging easier.
 
@@ -158,19 +170,19 @@ Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           Mon Apr 12 19:30:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * TAO_IDL/be/be_codegen.cpp:
-                  
+
                     Added conditional include of vector argument class
                     header file.
-                    
+
                   * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-                  
+
                     Fixed typos in generated code, and added check to
                     skip bounded sequences for now.
-                    
+
                   * tao/Vector_Argument_T.inl:
                   * tao/Vector_Argument_T.h:
                   * tao/Vector_Argument_T.cpp:
-                  
+
                     Overhauled signatures of most methods.
 
           Fri Apr  9 20:39:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -224,30 +236,30 @@ Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * TAO_IDL/be/be_codegen.cpp:
                   * TAO_IDL/be_visitor_sequence/any_op_cs.cpp:
-                  
+
                     Minor mods to codegen for STL includes and STL any
                     operators.
 
           Mon Mar 29 18:49:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-                  
+
                     Cosmetic changes.
-                    
+
                   * TAO_IDL/be/be_codegen.cpp:
-                  
+
                     Added generation of includes for CDR and Any operator
                     template header files.
-                    
+
                   * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
                   * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-                  
+
                     Added code generation for Any insertions and extraction
                     operators for std::vector<> types representing IDL
                     sequences.
-                    
+
                   * TAO_IDL/be/be_global.cpp:
-                  
+
                     Added command line option to trigger code generation for
                     alternate C++ mapping.
 
@@ -255,28 +267,28 @@ Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * tao/AnyTypeCode/Any.h:
                   * tao/AnyTypeCode/Any.cpp:
-                  
+
                     Added non-copying Any insertion operator for std::string.
                     Not yet implemented, still a no-op.
-                    
+
                   * tao/tao.mpc:
                   * tao/Vector_AnyOp_T.h:
-                  
+
                     Moved this template file to the AnyTypeCode directory.
 
           Mon Mar 29 17:13:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * tao/Vector_CDR_T.h:
-                  
+
                     Cosmetic changes.
-                    
+
                   * tao/Vector_AnyOp_T.h:
-                  
+
                     New file defining no-op Any insertion and extraction operators
                     for std::vector, in various categories of element types.
-                    
+
                   * tao/tao.mpc:
-                  
+
                     Added above files to the MPC project.
 
           Tue Mar  2 23:18:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -334,22 +346,22 @@ Mon Jun 14 13:45:43 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
                   * tao/Basic_Arguments.h:
                   * tao/PortableServer/Basic_SArguments.h:
-                  
+
                     Added specializations Arg_Traits<std::string> and
                     SArg_Traits<std::string>.
-                    
+
                   * tests/Param_Test/param_testC.cpp:
-                  
+
                     Removed specializations Arg_Traits<std::string>
                     since it is now in the ORB (see above).
-                    
+
 Fri Jun 11 19:15:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(create_equivalent):
-        
+
           Changed creation of implied IDL home equivalent interface
           to call add_to_scope() instead of be_add_interface() since
-          the latter calls add_to_referenced() which gives us a 
+          the latter calls add_to_referenced() which gives us a
           bogus redefinition error.
 
 Fri Jun 11 17:16:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -360,7 +372,7 @@ Fri Jun 11 17:16:00 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Implemented a new pragma for AMI4CCM 'ciao ami4ccm idl' that
           enables us to generate an include (in the component stub header
           file) that exposes the AMI4CCM_* version of a uses multiple
