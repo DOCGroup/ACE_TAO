@@ -1,9 +1,16 @@
+Tue Jun 15 09:58:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+        * connectors/dds4ccm/tests/PSAT/psat_conn.idl:
+        * connectors/dds4ccm/tests/PSAT/psat_type.idl:
+          Started to add a connector instanatiation
+
 Tue Jun 15 09:42:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/SimplexMulti/descriptors/Plan.cdp
         * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.cpp
         * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h
-        Change cdp, add more receiver instances and change therefore receiver 
+        Change cdp, add more receiver instances and change therefore receiver
         test properties.
 
 Tue Jun 15 08:13:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
