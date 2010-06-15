@@ -47,12 +47,15 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::tick ()
   {
+    ::Unkeyed_Test::UnkeyedTestConnector::Writer_var writer
+      = this->context_->get_connection_info_write_data ();
+
     if (this->last_key != this->ktests_.end ())
       {
         try
           {
             ++this->last_key->second->iteration;
-            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -92,7 +95,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   Sender_exec_i::start (void)
   {
     // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
@@ -163,7 +166,6 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void

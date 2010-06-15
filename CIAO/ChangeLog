@@ -1,3 +1,20 @@
+Tue Jun 15 12:56:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+          Cleanup, no caching in executors
+
 Tue Jun 15 12:45:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.h:
