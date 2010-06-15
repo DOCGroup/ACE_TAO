@@ -523,7 +523,7 @@ operator <<= (CORBA::Any &any, const std::string & str)
 }
 
 void
-operator <<= (CORBA::Any &any, std::string * str)
+operator <<= (CORBA::Any &, std::string *)
 {
   // TODO
 }
