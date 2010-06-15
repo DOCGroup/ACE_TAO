@@ -87,69 +87,63 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << "{" << be_idt_nl
       << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
 
+  // The default constructor must initialize the discriminator
+  // to the first case label value found in the union declaration
+  // so that, if the uninitialized union is inserted into an Any,
+  // the Any destructor's call to deep_free() will work properly.
+
+  *os << "this->disc_ = ";
+
+  UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+  be_union_branch *ub = 0;
+
+  // In case we have some bogus enum values from an enum declared
+  // in our scope.
+  while (ub == 0)
+    {
+      // Just get the union's first member.
+      AST_Decl *d = si.item ();
+
+      ub = be_union_branch::narrow_from_decl (d);
+      si.next ();
+    }
+
+  // Get the first label in its list.
+  AST_UnionLabel *ul = ub->label (0);
+
   AST_Union::DefaultValue dv;
   // This can indicate an error in the return value, but it is
   // caught elsewhere.
   (void) node->default_value (dv);
-  if ((dv.computed_ != 0) && node->default_index () == -1)
+
+  bool test = dv.computed_ == 0
+              && ul->label_kind () == AST_UnionLabel::UL_label;
+
+  if (test)
     {
-      // _default() function has been generated, use this.
-      *os << "this->_default ();";
+      ub->gen_label_value (os);
     }
   else
     {
-      // The default constructor must initialize the discriminator
-      // to the first case label value found in the union declaration
-      // so that, if the uninitialized union is inserted into an Any,
-      // the Any destructor's call to deep_free() will work properly.
+      ub->gen_default_label_value (os, node);
+    }
 
-      *os << "this->disc_ = ";
+  *os << ";";
 
-      UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-      be_union_branch *ub = 0;
-
-      // In case we have some bogus enum values from an enum declared
-      // in our scope.
-      while (ub == 0)
+  if (dv.computed_ == 0)
+    {
+      *os << be_nl;
+      be_visitor_union_branch_public_constructor_cs const_visitor (this->ctx_);
+      if (ub->accept (&const_visitor) == -1)
         {
-          // Just get the union's first member.
-          AST_Decl *d = si.item ();
-
-          ub = be_union_branch::narrow_from_decl (d);
-          si.next ();
-        }
-
-      // Get the first label in its list.
-      AST_UnionLabel *ul = ub->label (0);
-
-      bool test = dv.computed_ == 0
-                  && ul->label_kind () == AST_UnionLabel::UL_label;
-
-      if (test)
-        {
-          ub->gen_label_value (os);
-        }
-      else
-        {
-          ub->gen_default_label_value (os, node);
-        }
-
-      *os << ";";
-
-      if (dv.computed_ == 0)
-        {
-          *os << be_nl;
-          be_visitor_union_branch_public_constructor_cs const_visitor (this->ctx_);
-          if (ub->accept (&const_visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_union_cs::"
-                                 "visit union - "
-                                 "codegen for constructor failed\n"),
-                                -1);
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit union - "
+                             "codegen for constructor failed\n"),
+                            -1);
         }
     }
+
   *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
