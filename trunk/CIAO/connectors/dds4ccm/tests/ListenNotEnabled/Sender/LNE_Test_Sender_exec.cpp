@@ -54,11 +54,15 @@ namespace CIAO_LNE_Test_Sender_Impl
             write_many[key + iter - 2] = new_key;
           }
       }
+
+::LNE_Test::ListenNotEnabledTestConnector::Writer_var writer =
+          this->context_->get_connection_info_write_data ();
+
     try
       {
         ACE_Time_Value tv (1, 0);
         ACE_OS::sleep (tv);
-        this->writer_->write_many (write_many);
+        writer->write_many (write_many);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
@@ -124,7 +128,6 @@ namespace CIAO_LNE_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
         start ();
       }
     catch (const CORBA::Exception& ex)
