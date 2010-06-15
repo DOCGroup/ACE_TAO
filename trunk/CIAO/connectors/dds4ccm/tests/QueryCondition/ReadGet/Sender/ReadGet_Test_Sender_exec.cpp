@@ -81,15 +81,15 @@ namespace CIAO_ReadGet_Test_Sender_Impl
         for (CORBA::UShort iter_key = 1; iter_key < this->keys_ + 1; ++iter_key)
           {
             char key[7];
-            QueryConditionTest *new_key = new QueryConditionTest;
+            QueryConditionTest new_key;
             ACE_OS::sprintf (key, "KEY_%d", iter_key);
-            new_key->symbol = CORBA::string_dup(key);
+            new_key.symbol = CORBA::string_dup(key);
             for (CORBA::UShort iter = ((this->run_ - 2) * this->iterations_) + 1;
                 iter < this->run_ * this->iterations_ + 1;
                 ++iter)
               {
-                new_key->iteration = iter;
-                this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
+                new_key.iteration = iter;
+                this->writer_->write_one (new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
               }

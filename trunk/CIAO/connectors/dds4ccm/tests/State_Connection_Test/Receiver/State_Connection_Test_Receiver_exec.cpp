@@ -61,9 +61,7 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   }
 
   //Provides for DDS_Listen
-  ::State_Connection_Test
-    ::State_ConnectionTestConnector
-    ::CCM_Listener_ptr
+  ::State_Connection_Test::State_ConnectionTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_listen_data_listener ()
   {
     this->listen_data_listener_created_ = true;
@@ -80,9 +78,7 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   }
 
   //Provides for DDS_StateListen
-  ::State_Connection_Test
-    ::State_ConnectionTestConnector
-    ::CCM_StateListener_ptr
+  ::State_Connection_Test::State_ConnectionTestConnector::CCM_StateListener_ptr
   Receiver_exec_i::get_info_statelisten_data_listener (void)
   {
     this->statelisten_data_listener_created_ = true;

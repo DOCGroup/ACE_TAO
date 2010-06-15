@@ -94,7 +94,7 @@ namespace CIAO_QCLE_Test_Sender_Impl
     for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
       {
         char key[7];
-        QueryConditionListenEventTest *new_key = new QueryConditionListenEventTest;
+        QueryConditionListenEventTest* new_key = new QueryConditionListenEventTest;
         ACE_OS::sprintf (key, "KEY_%d", i);
         new_key->key = CORBA::string_dup(key);
         new_key->iteration = 0;

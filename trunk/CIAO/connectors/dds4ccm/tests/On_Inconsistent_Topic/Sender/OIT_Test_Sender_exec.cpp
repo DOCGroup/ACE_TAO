@@ -85,8 +85,7 @@ namespace CIAO_OIT_Test_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::OIT_Test::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::OIT_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -115,14 +114,12 @@ namespace CIAO_OIT_Test_Sender_Impl
     if (this->inconsistent_.value ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SENDER OK: Received the expected ")
-                              ACE_TEXT ("'on_inconsistent_topic'\n")
-                    ));
+                              ACE_TEXT ("'on_inconsistent_topic'\n")));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
-                              ACE_TEXT ("error 'on_inconsistent_topic'\n")
-                    ));
+                              ACE_TEXT ("error 'on_inconsistent_topic'\n")));
       }
     if (this->thread_id_listener_.value () == 0)
       {

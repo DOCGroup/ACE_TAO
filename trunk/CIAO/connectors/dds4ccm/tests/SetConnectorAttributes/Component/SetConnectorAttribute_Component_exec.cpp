@@ -66,7 +66,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
   void
   Component_exec_i::check_attributes (DDSDataWriter * dw)
   {
-    //check topic name
+    // Check topic name
     DDSTopic * tp = dw->get_topic ();
     if (!tp)
       {

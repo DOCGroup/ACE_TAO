@@ -90,8 +90,8 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     //DDS_Update -> Writer
     try
       {
-        ::GCSTestConnector::Updater_var updater_data;
-        updater_data = this->context_->get_connection_info_update_data ();
+        ::GCSTestConnector::Updater_var updater_data =
+          this->context_->get_connection_info_update_data ();
         if (! ::CORBA::is_nil (updater_data.in ()))
           {
             CORBA::Object_var cmp = updater_data->_get_component ();
@@ -135,8 +135,8 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     //DDS_Read -> Reader
     try
       {
-        ::GCSTestConnector::Reader_var reader_data;
-        reader_data = this->context_->get_connection_info_read_data ();
+        ::GCSTestConnector::Reader_var reader_data =
+          this->context_->get_connection_info_read_data ();
         if (! ::CORBA::is_nil (reader_data.in ()))
           {
             CORBA::Object_var cmp = reader_data->_get_component ();
@@ -180,8 +180,8 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     //Reader on DDS_Get
     try
       {
-        ::GCSTestConnector::Reader_var getter_data;
-        getter_data = this->context_->get_connection_info_get_data ();
+        ::GCSTestConnector::Reader_var getter_data =
+          this->context_->get_connection_info_get_data ();
         if (! ::CORBA::is_nil (getter_data.in ()))
           {
             CORBA::Object_var cmp = getter_data->_get_component ();
@@ -221,8 +221,8 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     //Getter on DDS_Get
     try
       {
-        ::GCSTestConnector::Getter_var getter_fresh_data;
-        getter_fresh_data = this->context_->get_connection_info_get_fresh_data ();
+        ::GCSTestConnector::Getter_var getter_fresh_data =
+          this->context_->get_connection_info_get_fresh_data ();
         if (! ::CORBA::is_nil (getter_fresh_data.in ()))
           {
             CORBA::Object_var cmp = getter_fresh_data->_get_component ();
@@ -266,8 +266,8 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     try
       {
         //DDS_Listen
-        ::GCSTestConnector::Reader_var listen_data;
-        listen_data = this->context_->get_connection_info_listen_data ();
+        ::GCSTestConnector::Reader_var listen_data =
+          this->context_->get_connection_info_listen_data ();
         if (! ::CORBA::is_nil (listen_data.in ()))
           {
             CORBA::Object_var cmp = listen_data->_get_component ();
@@ -306,8 +306,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
 
     try
       {
-        ::CCM_DDS::DataListenerControl_var  listen_data_control;
-        listen_data_control =
+        ::CCM_DDS::DataListenerControl_var  listen_data_control =
           this->context_->get_connection_info_listen_data_control ();
         if (! ::CORBA::is_nil (listen_data_control.in ()))
           {
@@ -352,8 +351,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
     //DDS_StateListen
     try
       {
-        ::GCSTestConnector::Reader_var statelisten_data;
-        statelisten_data =
+        ::GCSTestConnector::Reader_var statelisten_data =
           this->context_->get_connection_info_statelisten_data ();
         if (! ::CORBA::is_nil (statelisten_data.in ()))
           {
@@ -393,8 +391,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
 
     try
       {
-        ::CCM_DDS::StateListenerControl_var statelisten_data_control;
-        statelisten_data_control =
+        ::CCM_DDS::StateListenerControl_var statelisten_data_control =
           this->context_->get_connection_info_statelisten_data_control ();
         if (! ::CORBA::is_nil (statelisten_data_control.in ()))
           {
