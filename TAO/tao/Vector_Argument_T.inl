@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Vector_Argument_T<S,Insert_Policy>::In_Vector_Argument_T (S const & x)
   : x_ (x)
@@ -13,7 +13,7 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::In_Vector_Argument_T (S const & x)
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S const &
 TAO::In_Vector_Argument_T<S,Insert_Policy>::arg (void) const
@@ -22,7 +22,7 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::arg (void) const
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::In_Vector_Clonable_Argument_T (S const & x)
   : In_Vector_Argument_T<S,Insert_Policy> (x),
@@ -32,7 +32,7 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::In_Vector_Clonable_Argument
 // ==========================================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::Inout_Vector_Argument_T (S & x)
   : x_ (x)
@@ -40,7 +40,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::Inout_Vector_Argument_T (S & x)
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S &
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg (void)
@@ -51,7 +51,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg (void)
 // ==========================================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::Out_Vector_Argument_T (
     S & x
@@ -60,7 +60,7 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::Out_Vector_Argument_T (
 {}
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S &
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg (void)
@@ -71,14 +71,14 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg (void)
 // ==========================================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::Ret_Vector_Argument_T (void)
 {
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S &
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::arg (void)
@@ -87,7 +87,7 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::arg (void)
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::excp (void)
@@ -96,7 +96,7 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::excp (void)
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::retn (void)

@@ -80,6 +80,12 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WChar co
 }
 
 void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::string & value)
+{
+  (*any) <<= value.c_str ();
+}
+
+void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Long value)
 {
   (*any) <<= value;

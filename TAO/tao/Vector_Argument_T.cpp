@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_Vector_Argument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -22,19 +22,19 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::In_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argument_T (void)
 {
   if (this->is_clone_)
@@ -45,7 +45,7 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argumen
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone (void)
 {
@@ -59,7 +59,7 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone (void)
 // ===========================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr
@@ -69,7 +69,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::marshal (
 }
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -81,13 +81,13 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -95,7 +95,7 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 // ==============================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -107,13 +107,13 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -121,7 +121,7 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 // ============================================================
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -133,13 +133,13 @@ TAO::Ret_Vector_Argument_T<S,Insert_Policy>::demarshal (
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         class Insert_Policy>
+         template <typename> class Insert_Policy>
 void
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy::any_insert (any, this->x_);
+  Insert_Policy<S>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

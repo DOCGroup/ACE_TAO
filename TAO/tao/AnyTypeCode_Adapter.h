@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ANYTYPECODE_ADAPTER
 #define TAO_ANYTYPECODE_ADAPTER
 
@@ -104,6 +103,8 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar) = 0;
+  
+  virtual void insert_into_any (CORBA::Any * any, const std::string & value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy) = 0;
 
