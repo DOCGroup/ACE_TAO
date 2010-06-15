@@ -1,3 +1,26 @@
+Tue Jun 15 08:13:41 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/SimplexMulti
+        * connectors/ami4ccm/tests/SimplexMulti/Base
+        * connectors/ami4ccm/tests/SimplexMulti/Base/UsesSM.idl
+        * connectors/ami4ccm/tests/SimplexMulti/Base/UsesSM.mpc
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/SimplexMulti/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver.idl
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver.mpc
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h
+        * connectors/ami4ccm/tests/SimplexMulti/Sender
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.mpc
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h
+        * bin/ciao_tests.lst
+        AMI4CCM test uses and uses multiple side by side.
+
+
 Tue Jun 15 06:44:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DoubleNestedModule/Sender/DNM_Sender_exec.h:
