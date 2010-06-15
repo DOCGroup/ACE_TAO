@@ -22,26 +22,26 @@ namespace CIAO_UsesSM_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    One_exec_i ( Atomic_UShort &nr_of_received);
+    One_exec_i ( Atomic_UShort &nr_of_one_received);
     virtual ~One_exec_i (void);
 
     virtual ::CORBA::Long foo (const char * in_str, ::CORBA::Long cmd,
                                ::CORBA::String_out answer);
     private:
-      Atomic_UShort &nr_of_received_;
+      Atomic_UShort &nr_of_one_received_;
   };
   class Two_exec_i
     : public virtual ::UsesSM::CCM_Two,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Two_exec_i (Atomic_UShort &nr_of_received);
+    Two_exec_i (Atomic_UShort &nr_of_two_received);
     virtual ~Two_exec_i (void);
 
     virtual void bar (::CORBA::Long cmd,
                       ::CORBA::String_out answer);
     private:
-      Atomic_UShort &nr_of_received_;
+      Atomic_UShort &nr_of_two_received_;
   };
   class  Receiver_exec_i
     : public virtual Receiver_Exec,
@@ -64,7 +64,8 @@ namespace CIAO_UsesSM_Receiver_Impl
 
   private:
     ::UsesSM::CCM_Receiver_Context_var context_;
-    Atomic_UShort nr_of_received_;
+    Atomic_UShort nr_of_one_received_;
+    Atomic_UShort nr_of_two_received_;
   };
 
   extern "C" USESSM_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
