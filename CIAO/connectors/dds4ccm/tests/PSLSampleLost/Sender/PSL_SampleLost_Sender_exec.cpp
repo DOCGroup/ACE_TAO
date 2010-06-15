@@ -57,21 +57,23 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_  = this->context_->get_connection_test_topic_write_data ();
   }
 
   void
   Sender_exec_i::tick ()
   {
+    ::PSL_SampleLost::PSL_SampleLostConnector::Writer_var writer =
+      this->context_->get_connection_test_topic_write_data ();
+
     for (PSL_DLTest_Table::iterator i = this->_ktests_.begin ();
          i != this->_ktests_.end ();
          ++i)
       {
          try
           {
-            if (! ::CORBA::is_nil (this->writer_) )
+            if (! ::CORBA::is_nil (writer.in ()) )
               {
-                this->writer_->write_one(i->second,::DDS::HANDLE_NIL);
+                writer->write_one(i->second,::DDS::HANDLE_NIL);
                 i->second->x++;
               }
           }

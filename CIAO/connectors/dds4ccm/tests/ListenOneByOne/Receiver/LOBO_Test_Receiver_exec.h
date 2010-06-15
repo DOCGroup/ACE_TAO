@@ -79,15 +79,12 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     virtual ::LOBO_Test::ListenOneByOneTestConnector::CCM_Listener_ptr
     get_info_listen_data_listener (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_listen_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_info_listen_status (void);
 
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_listen_connector_status (void);
 
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
