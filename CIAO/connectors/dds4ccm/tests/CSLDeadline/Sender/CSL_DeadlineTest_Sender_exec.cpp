@@ -105,28 +105,30 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_  = this->context_->get_connection_test_topic_write_data ();
   }
 
   void
   Sender_exec_i::write (void)
   {
-    //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and
-    //in the profile the deadline is set to 1 sec.
-    for (CSL_QoSTest_Table::iterator i = this->_ktests_.begin ();
-         i != this->_ktests_.end ();
-         ++i)
+    ::CSLDeadlineConnector::Writer_var writer =
+      this->context_->get_connection_test_topic_write_data ();
+
+    if (! ::CORBA::is_nil (writer.in ()) )
       {
-        try
+        //to force an 'offered_deadline_missed'  write the topics with a pause of 2 sec in between and
+        //in the profile the deadline is set to 1 sec.
+        for (CSL_QoSTest_Table::iterator i = this->_ktests_.begin ();
+            i != this->_ktests_.end ();
+            ++i)
           {
-            if (! ::CORBA::is_nil (this->writer_) )
+            try
               {
                 ACE_OS::sleep (2);
                 ::DDS::InstanceHandle_t const hnd =
-                  this->writer_->register_instance (i->second);
-                this->writer_->write_one(i->second,hnd);
+                  writer->register_instance (i->second);
+                writer->write_one(i->second,hnd);
+              }
             }
-          }
         catch (const CCM_DDS::InternalError& )
           {
             ACE_ERROR ((LM_ERROR,

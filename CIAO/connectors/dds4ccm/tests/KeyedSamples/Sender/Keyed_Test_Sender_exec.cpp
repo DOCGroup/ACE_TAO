@@ -47,8 +47,10 @@ namespace CIAO_Keyed_Test_Sender_Impl
       {
         try
           {
+            KeyedTestConnector::Writer_var writer =
+              this->context_->get_connection_info_write_data ()
             ++this->last_key->second->iteration;
-            this->writer_->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                     this->last_key->first.c_str (),
                     this->last_key->second->iteration));
@@ -99,6 +101,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
     delete this->ticker_;
+    this->ticker_ = 0;
   }
 
   ::CORBA::ULong
@@ -152,7 +155,6 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void

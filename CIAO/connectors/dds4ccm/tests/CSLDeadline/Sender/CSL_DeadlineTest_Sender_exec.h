@@ -81,7 +81,6 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
 
   private:
     ::CSL_DeadlineTest::CCM_Sender_Context_var context_;
-    ::CSLDeadlineConnector::Writer_var writer_;
 
     Atomic_Boolean deadline_missed_;
     Atomic_ThreadId thread_id_listener_;

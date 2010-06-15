@@ -97,7 +97,6 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
 
     pulse_Generator * ticker_;
     ::PSL_DeadlineTest::CCM_Sender_Context_var context_;
-    ::PSL_DeadlineTest::PSLDeadlineConnector::Writer_var writer_;
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, TestTopic_var> PSL_DLTest_Table;

@@ -72,8 +72,6 @@ namespace CIAO_Keyed_Test_Sender_Impl
     void start (void);
     void stop (void);
 
-    KeyedTestConnector::Writer_var writer_;
-
     pulse_Generator * ticker_;
     ::Keyed_Test::CCM_Sender_Context_var context_;
     CORBA::ULong rate_;

@@ -116,20 +116,15 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     Atomic_ULong datawriters_count_;
 
     // Supported operations and attributes.
-    void
-    check_updater (void);
+    void check_updater (void);
 
-    void
-    check_getter (void);
+    void check_getter (void);
 
-    void
-    check_listener (void);
+    void check_listener (void);
 
-    void
-    check_reader (void);
+    void check_reader (void);
 
-    void
-    check_state_listen (void);
+    void check_state_listen (void);
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr
