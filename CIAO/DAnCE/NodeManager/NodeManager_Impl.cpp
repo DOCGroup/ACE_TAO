@@ -14,10 +14,12 @@ namespace DAnCE
 {
   NodeManager_Impl::NodeManager_Impl(CORBA::ORB_ptr orb,
                                      PortableServer::POA_ptr poa,
+                                     DAnCE::ArtifactInstallation_ptr installer,
                                      const char* name,
                                      const PROPERTY_MAP &properties)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
+      installer_ (DAnCE::ArtifactInstallation::_duplicate (installer)),
       name_ (name),
       properties_ (properties.current_size ())
   {
@@ -120,6 +122,7 @@ namespace DAnCE
     ACE_NEW_THROW_EX (manager,
                       NodeApplicationManager_Impl (this->orb_.in(),
                                                    this->poa_.in(),
+                                                   this->installer_. in (),
                                                    this->name_,
                                                    this->properties_),
                       CORBA::NO_MEMORY());

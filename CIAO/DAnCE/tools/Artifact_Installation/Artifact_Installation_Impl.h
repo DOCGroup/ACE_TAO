@@ -15,6 +15,7 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Synch.h"
 #include "DAnCE/DAnCE_ArtifactInstallationS.h"
 #include "DAnCE_Artifact_Installation_export.h"
 #include "DAnCE_Artifact_Installation_Handler.h"
@@ -27,6 +28,7 @@ namespace DAnCE
     class ArtifactRegistry
       {
         public:
+          typedef ACE_MT_SYNCH::MUTEX TLOCK;
           struct Version
           {
             std::string protocol_;
@@ -50,7 +52,31 @@ namespace DAnCE
           TVersions& versions ();
           const TVersions& versions () const;
 
+          ulong install_count () const;
+          void increment_install_count ();
+          void decrement_install_count ();
+
+          TLOCK& lock ();
+
+          class Guard
+            {
+              public:
+                Guard (ArtifactRegistry* ar);
+                ~Guard ();
+
+                ArtifactRegistry* operator ->(void);
+
+                ArtifactRegistry& operator *(void);
+
+                ArtifactRegistry* operator &(void);
+
+              private:
+                ArtifactRegistry* arp_;
+            };
+
         private:
+          TLOCK lock_;
+          u_long install_count_;
           TVersions  versions_;
       };
 
@@ -58,7 +84,7 @@ namespace DAnCE
       : public POA_DAnCE::ArtifactInstallation
       {
         public:
-          typedef ACE_Recursive_Thread_Mutex TLOCK;
+          typedef ACE_MT_SYNCH::MUTEX TLOCK;
           typedef ArtifactInstallationHandler::TPropertyMap TPropertyMap;
 
           ArtifactInstallation_Impl ();
@@ -84,45 +110,42 @@ namespace DAnCE
 
           // key is artifact name
           typedef std::map<std::string,
-                           ArtifactRegistry> TArtifactsMap;
+                           ArtifactRegistry*> TArtifactsMap;
           // key is plan uuid
           typedef std::map<std::string,
                            TArtifactsMap> TArtifactsRegistry;
+
+          ArtifactRegistry* allocate_artifact_registry (const std::string& plan_uuid,
+                                                        const std::string& name);
+
+          ArtifactRegistry* lock_artifact_registry (const std::string& plan_uuid,
+                                                    const std::string& name);
 
           void parse_uri (const char* plan_uuid,
                           std::string& location,
                           TProtocolStack& protstack);
 
-          void install_i (const std::string& plan_uuid,
-                          const std::string& name,
-                          TProtocolStack& protstack,
+          bool install_i (const std::string& plan_uuid,
+                          const std::string& protocol,
                           std::string& location,
                           const TPropertyMap& properties);
 
-          void register_version (const std::string& plan_uuid,
-                                 const std::string& name,
-                                 const std::string& protocol,
-                                 const std::string& location);
-
           void remove_i (const char * plan_uuid,
                          const char * artifact_name,
-                         ArtifactRegistry& artifact_reg);
+                         ArtifactRegistry* artifact_reg,
+                         bool do_delete = true);
 
           void remove_intermediates (const std::string& plan_uuid,
-                                     const std::string& artifact_name);
+                                     const std::string& artifact_name,
+                                     ArtifactRegistry& artifact_reg);
 
-          void remove_artifact_registry (const std::string& plan_uuid,
-                                         const std::string& name,
-                                         ArtifactRegistry& artifact_reg);
-
-          ArtifactRegistry& get_artifact_registry (const std::string& plan_uuid,
-                                                   const std::string& name);
+          ArtifactRegistry* remove_artifact_registry (const std::string& plan_uuid,
+                                                      const std::string& name);
 
           void remove_artifacts_map (const std::string& plan_uuid,
                                      TArtifactsMap& artifacts_map);
 
           TArtifactsRegistry artifacts_;
-          TLOCK artifact_lock_;
 
         public:
 

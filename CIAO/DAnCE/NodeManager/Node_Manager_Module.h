@@ -31,6 +31,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "DAnCE/DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_ArtifactInstallationC.h"
 
 namespace DAnCE
 {
@@ -88,6 +89,7 @@ class DAnCE_NodeManager_Module
   void register_value_factories (void);
   void create_poas (void);
   void create_nm_properties (DAnCE::Utility::PROPERTY_MAP &props);
+  void load_artifact_installation_modules (int argc, ACE_TCHAR *argv []);
 
   /// Here we store the servants.
   typedef ACE_Map_Manager < ACE_TString,
@@ -101,6 +103,8 @@ class DAnCE_NodeManager_Module
 
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var nm_poa_;
+
+  DAnCE::ArtifactInstallation_var installer_;
 };
 
 #include /**/ "ace/post.h"

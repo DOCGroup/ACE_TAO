@@ -31,10 +31,12 @@ using namespace DAnCE::Utility;
 
 NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
+                                            DAnCE::ArtifactInstallation_ptr installer,
                                             const ACE_CString& node_name,
                                             const PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
+    installer_ (DAnCE::ArtifactInstallation::_duplicate (installer)),
     node_name_ (node_name),
     properties_ (),
     handler_ (properties,
@@ -50,44 +52,11 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
       this->properties_.bind (i->key (), i->item ());
       i.advance ();
     }
-  this->init ();
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
-}
-
-void
-NodeApplication_Impl::init()
-{
-  DANCE_TRACE( "NodeApplication_Impl::init()");
-
-  /* TODO:  Lets move this stuff to the constructor, shall we?!? */
-  /* TODO:  Might be nice to use a component configurator here to load the proper versions
-     of the serveractivator.  */
-
-  const ACE_TCHAR *ior = 0;
-
-  if (get_property_value (DAnCE::INSTANCE_NC, this->properties_, ior) ||
-      get_property_value (DAnCE::DOMAIN_NC, this->properties_, ior))
-    {
-      try
-        {
-          CORBA::Object_var obj = this->orb_->string_to_object (ior);
-          this->instance_nc_ = CosNaming::NamingContext::_narrow (obj);
-        }
-      catch (const CORBA::Exception &e)
-        {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
-                        ACE_TEXT("Unable to resolve the instance naming context:%C\n"),
-                        e._info ().c_str ()));
-        }
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
-                    ACE_TEXT("Successfully resolved the instance naming context.\n")));
-    }
-  else DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::init - ")
-                     ACE_TEXT("No instance NC was provided\n")));
 }
 
 void
@@ -129,25 +98,9 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
                         lm_idd.name.in ()
                         ));
 
-      // TODO: MCO - this is definitely not nice; what else can we do here?
-
-      // Need to make a temp copy since we're modifying properties
-      ::Deployment::DeploymentPlan lm_plan;
-      lm_plan.instance.length (1);
-      lm_plan.implementation.length (1);
-      lm_plan.instance[0] = lm_idd;
-      lm_plan.instance[0].implementationRef = 0;
-      lm_plan.implementation[0] = sub_plan.implementation[lm_idd.implementationRef];
-
-      // Need to add naming service reference to properties.
-      CORBA::ULong pos = lm_plan.instance[0].configProperty.length ();
-      lm_plan.instance[0].configProperty.length (pos + 1);
-      lm_plan.instance[0].configProperty[pos].name = DAnCE::LOCALITY_NAMINGCONTEXT;
-      lm_plan.instance[0].configProperty[pos].value <<= this->instance_nc_;
-
       CORBA::Any_var reference;
-      this->handler_.install_instance (lm_plan,
-                                       0,
+      this->handler_.install_instance (sub_plan,
+                                       loc_manager_instance,
                                        reference.out ());
 
       ::DAnCE::LocalityManager_var lm_ref;

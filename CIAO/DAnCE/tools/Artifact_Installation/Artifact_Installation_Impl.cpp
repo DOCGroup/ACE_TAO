@@ -7,6 +7,8 @@
 #include "Artifact_Installation_Impl.inl"
 #endif
 
+#include "ace/Auto_Ptr.h"
+
 namespace DAnCE
   {
     /*
@@ -14,6 +16,7 @@ namespace DAnCE
      */
 
     ArtifactRegistry::ArtifactRegistry ()
+      : install_count_ (0)
     {
     }
 
@@ -82,14 +85,26 @@ namespace DAnCE
       const char * plan_uuid,
       const ::Deployment::ArtifactDeploymentDescription & artifact)
     {
-      ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
-                          throw Deployment::PlanError (
-                            plan_uuid,
-                            "ArtifactInstallation handler lock failed"));
-
       std::string name = artifact.name.in ();
+
+      // allocate (and lock) the artifact registry for the given plan
+      ArtifactRegistry::Guard ar_guard (this->allocate_artifact_registry (plan_uuid, name));
+
+      DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+                        ACE_TEXT ("installation request for plan %C, artifact %C\n"),
+                        plan_uuid, name.c_str ()));
+
+      // check to see if artifact has already been previously installed
+      if (ar_guard->install_count () > 0)
+        {
+          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+                            ACE_TEXT ("detected previously installed plan %C, artifact %C @ location %C\n"),
+                            plan_uuid, name.c_str (), ar_guard->location ().c_str ()));
+
+          // just increment install count and return
+          ar_guard->increment_install_count ();
+          return;
+        }
 
       // extract artifact properties
       ArtifactInstallationHandler::TPropertyMap properties;
@@ -118,7 +133,7 @@ namespace DAnCE
               std::string location = artifact.location[loc_n].in ();
 
               DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
-                               ACE_TEXT ("installation request for plan %C, artifact %C @ location[%u] %C\n"),
+                               ACE_TEXT ("installation attempt for plan %C, artifact %C @ location[%u] %C\n"),
                                plan_uuid, name.c_str (), loc_n, location.c_str ()));
 
               // parse protocol stack & path; URI = <protocol>:[<protocol>:[...]]//<path>
@@ -128,13 +143,58 @@ namespace DAnCE
               // if no protocols specified no further action necessary
               if (!prot_stack.empty ())
                 {
-                  // process protocol handlers
-                  this->install_i (plan_uuid,
-                                   name,
-                                   prot_stack,
-                                   location,
-                                   properties);
+                  // process protocol handlers from last to first
+                  while (!prot_stack.empty ())
+                    {
+                      std::string protocol = prot_stack.top ();
+
+                      DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+                                      ACE_TEXT ("handling protocol %C for artifact %C @ location %C from plan %C\n"),
+                                      protocol.c_str (), name.c_str (), location.c_str (), plan_uuid));
+
+                      // find protocol handler and install
+                      if (!this->install_i (plan_uuid, protocol, location, properties))
+                        {
+                          DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+                                          ACE_TEXT ("unknown protocol %C for artifact %C from plan %C\n"),
+                                          protocol.c_str (), name.c_str (), plan_uuid));
+
+                          std::string err ("unknown installation protocol ");
+                          err += protocol;
+                          throw Deployment::PlanError (plan_uuid,
+                                                       err.c_str ());
+                        }
+
+                      DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+                                      ACE_TEXT ("protocol %C installed artifact %C @ location %C from plan %C to location %C\n"),
+                                      protocol.c_str (), name.c_str (), location.c_str (), plan_uuid, location.c_str ()));
+
+                      // register installed version for later removal
+                      ar_guard->versions ().push_back (
+                          ArtifactRegistry::Version(protocol, location));
+
+                      // remove handled protocol
+                      prot_stack.pop ();
+                    }
+
+                  // check property settings and clean installation intermediates if required
+                  ArtifactInstallationProperties property_reader (properties);
+                  const std::string& propval = property_reader.get_property (
+                    ArtifactInstallationProperties::PROP_KEEP_INTERMEDIATES);
+                  if (propval != "yes" && propval != "true")
+                    {
+                      this->remove_intermediates (plan_uuid, name, *ar_guard);
+                    }
                 }
+              else
+                {
+                  // just register the artifact without protocol
+                  ar_guard->versions ().push_back (
+                      ArtifactRegistry::Version(std::string(),location));
+                }
+
+              // we successfully installed the artifact so increment the install count
+              ar_guard->increment_install_count ();
 
               DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
                                ACE_TEXT ("installed plan %C, artifact %C @ location %C\n"),
@@ -144,13 +204,13 @@ namespace DAnCE
             }
           catch (Deployment::PlanError& ex)
             {
-              DANCE_DEBUG (3, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
+              DANCE_DEBUG (2, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install - ")
                                ACE_TEXT ("installation failed for plan %C, artifact %C @ location[%u] %C : %C\n"),
                                plan_uuid, name.c_str (), loc_n, artifact.location[loc_n].in (),
                                ex.reason.in ()));
 
               // artifact installation failed for this location; clean up anything left behind
-              this->remove (plan_uuid, name.c_str ());
+              this->remove_i (plan_uuid, name.c_str (), &ar_guard, false);
 
               // if we have alternates we continue otherwise we fail finally
               if (++loc_n >= artifact.location.length ())
@@ -211,182 +271,131 @@ namespace DAnCE
         }
     }
 
-    void ArtifactInstallation_Impl::install_i (const std::string& plan_uuid,
-        const std::string& name,
-        TProtocolStack& protstack,
+    bool ArtifactInstallation_Impl::install_i (const std::string& plan_uuid,
+        const std::string& protocol,
         std::string& location,
         const TPropertyMap& properties)
     {
-      // process protocol handlers from last to first
-      while (!protstack.empty ())
+      ACE_GUARD_REACTION (TLOCK,
+                          handler_guard_,
+                          handler_lock_,
+                          throw Deployment::PlanError (
+                            plan_uuid.c_str (),
+                            "ArtifactInstallation handler lock failed"));
+
+      // find protocol handler
+      THandlerMap::iterator ith = handlers_.find (protocol);
+      if (ith != handlers_.end ())
         {
-          std::string protocol = protstack.top ();
-
-          // find protocol handler
-          THandlerMap::iterator ith = handlers_.find (protocol);
-          if (ith == handlers_.end ())
-            {
-              DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install_i - ")
-                               ACE_TEXT ("unknown protocol %C for artifact %C from plan %C\n"),
-                               protocol.c_str (), name.c_str (), plan_uuid.c_str ()));
-
-              std::string err ("unknown installation protocol ");
-              err += protocol;
-              throw Deployment::PlanError (plan_uuid.c_str (),
-                                           err.c_str ());
-            }
-
-          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install_i - ")
-                           ACE_TEXT ("handling protocol %C for artifact %C @ location %C from plan %C\n"),
-                           protocol.c_str (), name.c_str (), location.c_str (), plan_uuid.c_str ()));
-
           // activate protocol installation handler
           // after successfull installation the protocol handler will update
           // the location to the installed version
           ith->second->install (plan_uuid, location, properties);
-
-          DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::install_i - ")
-                           ACE_TEXT ("protocol %C installed artifact %C @ location %C from plan %C to location %C\n"),
-                           protocol.c_str (), name.c_str (), location.c_str (), plan_uuid.c_str (), location.c_str ()));
-
-          // register installed version for later removal
-          this->register_version (plan_uuid, name, protocol, location);
-
-          // remove handled protocol
-          protstack.pop ();
+          return true;
         }
-
-      ArtifactInstallationProperties property_reader (properties);
-      const std::string& propval = property_reader.get_property (
-        ArtifactInstallationProperties::PROP_KEEP_INTERMEDIATES);
-      if (propval != "yes" && propval != "true")
-        {
-          this->remove_intermediates (plan_uuid, name);
-        }
+      return false;
     }
 
-    void ArtifactInstallation_Impl::register_version (const std::string& plan_uuid,
-        const std::string& name,
-        const std::string& protocol,
-        const std::string& location)
+    ArtifactRegistry*
+    ArtifactInstallation_Impl::allocate_artifact_registry (const std::string& plan_uuid,
+                                                           const std::string& name)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          artifact_guard_,
-                          artifact_lock_,
+                          handler_guard_,
+                          handler_lock_,
                           throw Deployment::PlanError (
                             plan_uuid.c_str (),
-                            "ArtifactInstallation artifact lock failed"));
+                            "ArtifactInstallation handler lock failed"));
 
-      this->artifacts_[plan_uuid][name].versions ().push_back (
-          ArtifactRegistry::Version(protocol,location));
+      // get existing or create new
+      ArtifactRegistry* ar = 0;
+      TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
+      TArtifactsMap::iterator it_art = plan_map.find (name);
+      if (it_art == plan_map.end ())
+        {
+          ACE_NEW_NORETURN (ar, ArtifactRegistry ());
+          if (ar == 0)
+            {
+              throw Deployment::PlanError (
+                plan_uuid.c_str (),
+                "out of memory");
+            }
+          plan_map[name] = ar;
+        }
+      else
+        {
+          ar = it_art->second;
+        }
+
+      // lock
+      if (ar->lock ().acquire () != 0)
+        {
+          throw Deployment::PlanError (
+            plan_uuid.c_str (),
+            "ArtifactRegistry lock failed");
+        }
+      return ar;
+    }
+
+    ArtifactRegistry*
+    ArtifactInstallation_Impl::lock_artifact_registry (const std::string& plan_uuid,
+                                                       const std::string& name)
+    {
+      ACE_GUARD_REACTION (TLOCK,
+                          handler_guard_,
+                          handler_lock_,
+                          throw Deployment::PlanError (
+                            plan_uuid.c_str (),
+                            "ArtifactInstallation handler lock failed"));
+
+      // get existing
+      TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
+      TArtifactsMap::iterator it_art = plan_map.find (name);
+      if (it_art == plan_map.end ())
+        {
+          std::string err ("unknown artifact ");
+          err += name;
+          throw Deployment::PlanError (
+            plan_uuid.c_str (),
+            err.c_str ());
+        }
+      ArtifactRegistry* ar = it_art->second;
+
+      // lock
+      if (ar->lock ().acquire () != 0)
+        {
+          throw Deployment::PlanError (
+            plan_uuid.c_str (),
+            "ArtifactRegistry lock failed");
+        }
+      return ar;
     }
 
     void ArtifactInstallation_Impl::remove (
       const char * plan_uuid,
       const char * artifact_name)
     {
-      ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
-                          throw Deployment::PlanError (
-                            plan_uuid,
-                            "ArtifactInstallation handler lock failed"));
-
       DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove - ")
-                       ACE_TEXT ("removing versions for artifact %C from plan %C\n"),
-                       artifact_name, plan_uuid));
+                      ACE_TEXT ("uninstall request for artifact %C from plan %C\n"),
+                      artifact_name, plan_uuid));
 
-      ArtifactRegistry artifact_reg;
-      this->remove_artifact_registry (plan_uuid, artifact_name, artifact_reg);
+      ArtifactRegistry* ar =
+          this->remove_artifact_registry (plan_uuid, artifact_name);
 
-      this->remove_i (plan_uuid, artifact_name, artifact_reg);
-    }
+      if (ar == 0)
+        return; // nothing to do yet
 
-    void ArtifactInstallation_Impl::remove_intermediates (
-        const std::string& plan_uuid,
-        const std::string& artifact_name)
-      {
-        ACE_GUARD_REACTION (TLOCK,
-                            handler_guard_,
-                            handler_lock_,
-                            throw Deployment::PlanError (
-                              plan_uuid.c_str (),
-                              "ArtifactInstallation handler lock failed"));
-
-        DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove - ")
-                        ACE_TEXT ("removing intermediate versions for artifact %C from plan %C\n"),
-                        artifact_name.c_str (), plan_uuid.c_str ()));
-
-        ArtifactRegistry& artifact_reg = this->get_artifact_registry (plan_uuid, artifact_name);
-        ArtifactRegistry::TVersions& versions = artifact_reg.versions ();
-        while (versions.size () > 1)
-          {
-            // find protocol handler
-            THandlerMap::iterator ith = handlers_.find (versions.front ().protocol_);
-            if (ith == handlers_.end ())
-              {
-                DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
-                                ACE_TEXT ("cannot find protocol %C to remove version ")
-                                ACE_TEXT ("@ location %C for artifact %C from plan %C\n"),
-                                versions.front ().protocol_.c_str (), versions.front ().location_.c_str (),
-                                artifact_name.c_str (), plan_uuid.c_str ()));
-              }
-            else
-              {
-                DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
-                                ACE_TEXT ("removing version of protocol %C @ %C for artifact %C from plan %C\n"),
-                                versions.front ().protocol_.c_str (), versions.front ().location_.c_str (),
-                                artifact_name.c_str (), plan_uuid.c_str ()));
-
-                ith->second->remove (plan_uuid, versions.front ().location_);
-              }
-            versions.erase (versions.begin ());
-          }
-      }
-
-    void ArtifactInstallation_Impl::remove_i (const char * plan_uuid,
-        const char * artifact_name,
-        ArtifactRegistry& artifact_reg)
-    {
-      for (ArtifactRegistry::TVersions::iterator iti =
-             artifact_reg.versions ().begin ();
-           iti != artifact_reg.versions ().end ();
-           ++iti)
-        {
-          // find protocol handler
-          THandlerMap::iterator ith = handlers_.find (iti->protocol_);
-          if (ith == handlers_.end ())
-            {
-              DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
-                               ACE_TEXT ("cannot find protocol %C to remove version ")
-                               ACE_TEXT ("@ location %C for artifact %C from plan %C\n"),
-                               iti->protocol_.c_str (), iti->location_.c_str (),
-                               artifact_name, plan_uuid));
-            }
-          else
-            {
-              DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
-                               ACE_TEXT ("removing version of protocol %C @ %C for artifact %C from plan %C\n"),
-                               iti->protocol_.c_str (), iti->location_.c_str (),
-                               artifact_name, plan_uuid));
-
-              ith->second->remove (plan_uuid, iti->location_);
-            }
-        }
+      this->remove_i (plan_uuid, artifact_name, ar);
     }
 
     void ArtifactInstallation_Impl::remove_all (const char * plan_uuid)
     {
-      ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
-                          throw Deployment::PlanError (
-                            plan_uuid,
-                            "ArtifactInstallation handler lock failed"));
-
       DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_all - ")
                        ACE_TEXT ("removing versions for plan %C\n"),
                        plan_uuid));
+
+      // this method removes all installed artifacts irrespective of
+      // install count!
 
       TArtifactsMap artifacts_map;
       this->remove_artifacts_map (plan_uuid, artifacts_map);
@@ -399,45 +408,120 @@ namespace DAnCE
         }
     }
 
-    void ArtifactInstallation_Impl::remove_artifact_registry (
-      const std::string& plan_uuid,
-      const std::string& name,
-      ArtifactRegistry& artifact_reg)
+    void ArtifactInstallation_Impl::remove_intermediates (
+        const std::string& plan_uuid,
+        const std::string& artifact_name,
+        ArtifactRegistry& artifact_reg)
+      {
+        ACE_GUARD_REACTION (TLOCK,
+                            handler_guard_,
+                            handler_lock_,
+                            throw Deployment::PlanError (
+                              plan_uuid.c_str (),
+                              "ArtifactInstallation handler lock failed"));
+
+        DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_intermediates - ")
+                        ACE_TEXT ("removing intermediate versions for artifact %C from plan %C\n"),
+                        artifact_name.c_str (), plan_uuid.c_str ()));
+
+        ArtifactRegistry::TVersions& versions = artifact_reg.versions ();
+        while (versions.size () > 1)
+          {
+            // find protocol handler
+            THandlerMap::iterator ith = handlers_.find (versions.front ().protocol_);
+            if (ith == handlers_.end ())
+              {
+                DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_intermediates - ")
+                                ACE_TEXT ("cannot find protocol %C to remove version ")
+                                ACE_TEXT ("@ location %C for artifact %C from plan %C\n"),
+                                versions.front ().protocol_.c_str (), versions.front ().location_.c_str (),
+                                artifact_name.c_str (), plan_uuid.c_str ()));
+              }
+            else
+              {
+                DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_intermediates - ")
+                                ACE_TEXT ("removing version of protocol %C @ %C for artifact %C from plan %C\n"),
+                                versions.front ().protocol_.c_str (), versions.front ().location_.c_str (),
+                                artifact_name.c_str (), plan_uuid.c_str ()));
+
+                ith->second->remove (plan_uuid, versions.front ().location_);
+              }
+            versions.erase (versions.begin ());
+          }
+      }
+
+    void ArtifactInstallation_Impl::remove_i (const char * plan_uuid,
+                                              const char * artifact_name,
+                                              ArtifactRegistry* artifact_reg,
+                                              bool do_delete)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          artifact_guard_,
-                          artifact_lock_,
+                          handler_guard_,
+                          handler_lock_,
                           throw Deployment::PlanError (
-                            plan_uuid.c_str (),
-                            "ArtifactInstallation artifact lock failed"));
+                            plan_uuid,
+                            "ArtifactInstallation handler lock failed"));
 
-      TArtifactsRegistry::iterator it_reg = this->artifacts_.find (plan_uuid);
-      if (it_reg != this->artifacts_.end ())
+      ACE_Auto_Ptr<ArtifactRegistry> safe_artifact_reg (do_delete ? artifact_reg : 0);
+
+      for (ArtifactRegistry::TVersions::iterator iti =
+             artifact_reg->versions ().begin ();
+           iti != artifact_reg->versions ().end ();
+           ++iti)
         {
-          TArtifactsMap::iterator it_art = it_reg->second.find (name);
-          if (it_art != it_reg->second.end ())
+          // in case no protocol registered there is nothing to remove
+          if (!iti->protocol_.empty ())
             {
-              artifact_reg = it_art->second;
-              it_reg->second.erase (it_art);
+              // find protocol handler
+              THandlerMap::iterator ith = handlers_.find (iti->protocol_);
+              if (ith == handlers_.end ())
+                {
+                  DANCE_DEBUG (1, (LM_ERROR,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
+                                  ACE_TEXT ("cannot find protocol %C to remove version ")
+                                  ACE_TEXT ("@ location %C for artifact %C from plan %C\n"),
+                                  iti->protocol_.c_str (), iti->location_.c_str (),
+                                  artifact_name, plan_uuid));
+                }
+              else
+                {
+                  DANCE_DEBUG (9, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove_i - ")
+                                  ACE_TEXT ("removing version of protocol %C @ %C for artifact %C from plan %C\n"),
+                                  iti->protocol_.c_str (), iti->location_.c_str (),
+                                  artifact_name, plan_uuid));
+
+                  ith->second->remove (plan_uuid, iti->location_);
+                }
             }
         }
     }
 
-    ArtifactRegistry& ArtifactInstallation_Impl::get_artifact_registry (
+    ArtifactRegistry* ArtifactInstallation_Impl::remove_artifact_registry (
       const std::string& plan_uuid,
       const std::string& name)
     {
-      TArtifactsRegistry::iterator it_reg = this->artifacts_.find (plan_uuid);
-      if (it_reg != this->artifacts_.end ())
+      // lock the artifact registry for the given plan
+      ArtifactRegistry::Guard ar_guard (this->lock_artifact_registry (plan_uuid, name));
+
+      // check to see if artifact has already been previously installed
+      if (ar_guard->install_count () > 0)
         {
-          TArtifactsMap::iterator it_art = it_reg->second.find (name);
-          if (it_art != it_reg->second.end ())
+          // decrement install count
+          ar_guard->decrement_install_count ();
+          // only if we reach 0, we really remove artifacts
+          if (ar_guard->install_count () == 0)
             {
-              return it_art->second;
+              DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove - ")
+                              ACE_TEXT ("removing versions for artifact %C from plan %C\n"),
+                              name.c_str (), plan_uuid.c_str ()));
+
+              // erase the artifact registry
+              this->artifacts_[plan_uuid].erase (name);
+
+              ArtifactRegistry* ar = &ar_guard;
+              return ar;
             }
         }
-      throw Deployment::PlanError (plan_uuid.c_str (),
-                                   "corrupt artifact registry");
+      return 0;
     }
 
     void ArtifactInstallation_Impl::remove_artifacts_map (
@@ -445,11 +529,11 @@ namespace DAnCE
       TArtifactsMap& artifacts_map)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          artifact_guard_,
-                          artifact_lock_,
+                          handler_guard_,
+                          handler_lock_,
                           throw Deployment::PlanError (
                             plan_uuid.c_str (),
-                            "ArtifactInstallation artifact lock failed"));
+                            "ArtifactInstallation handler lock failed"));
 
       TArtifactsRegistry::iterator it_reg = this->artifacts_.find (plan_uuid);
       if (it_reg != this->artifacts_.end ())
@@ -463,7 +547,7 @@ namespace DAnCE
       const char * uuid,
       const char * artifact_name)
     {
-      ACE_GUARD_RETURN (TLOCK, artifact_guard_, artifact_lock_, 0);
+      ACE_GUARD_RETURN (TLOCK, guard_, handler_lock_, 0);
 
       TArtifactsRegistry::iterator it_reg = this->artifacts_.find (uuid);
       if (it_reg != this->artifacts_.end ())
@@ -471,7 +555,7 @@ namespace DAnCE
           TArtifactsMap::iterator it_art = it_reg->second.find (artifact_name);
           if (it_art != it_reg->second.end ())
             {
-              return CORBA::string_dup (it_art->second.location ().c_str ());
+              return CORBA::string_dup (it_art->second->location ().c_str ());
             }
         }
       return 0;

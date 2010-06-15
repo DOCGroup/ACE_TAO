@@ -1,3 +1,36 @@
+Tue Jun 15 22:36:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	Finishing integration of artifact installation.
+
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.cpp:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
+	* DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
+	  Fixed problems with multiple installations of single artifacts
+	  (i.e. reuse of artifacts in multiple instances).
+
+	* DAnCE/DAnCE/DAnCE_Properties.idl:
+	  Added some Locality Manager properties.
+
+	* DAnCE/DAnCE/DAnCE_Utility.tpp:
+	* DAnCE/DAnCE/DAnCE_Utility.h:
+	* DAnCE/DAnCE/DAnCE_Utility.cpp:
+	  Added update_property_value template methods.
+
+	* DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+	  Added handling of search path properties.
+
+	* DAnCE/NodeManager/NodeManager.mpc:
+	* DAnCE/NodeManager/NodeManager_Impl.cpp:
+	* DAnCE/NodeManager/NodeManager_Impl.h:
+	* DAnCE/NodeManager/Node_Manager_Module.h:
+	* DAnCE/NodeManager/Node_Manager_Module.cpp:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+	* DAnCE/NodeApplication/NodeApplication_Impl.h:
+	* DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+	  Integrated Artifact Installation.
+
 Tue Jun 15 18:55:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tutorials/Quoter/Simple/03.html:

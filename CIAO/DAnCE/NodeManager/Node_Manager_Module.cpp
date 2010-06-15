@@ -12,6 +12,11 @@
 #include "DAnCE/DAnCE/DAnCE_PropertiesC.h"
 #include "Node_Manager_Module.h"
 #include "NodeManager_Impl.h"
+#include "Artifact_Installation/Artifact_Installation_Impl.h"
+#include "Artifact_Installation/Artifact_Installation_Handler_Svc.h"
+#include "Artifact_Installation/Installation_Repository_Manager_Impl.h"
+#include "Artifact_Installation/File_Installation_Handler.h"
+#include "Artifact_Installation/Http_Installation_Handler.h"
 
 ACE_RCSID (DAnCE,
            Node_Manager_Module,
@@ -402,18 +407,6 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
             }
         }
 
-      // Make sure that we have only one Node Manager
-      if (this->options_.node_managers_.size () != 1)
-        {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                        ACE_TEXT ("For now only one node manager creation is supported.\n")));
-          return CORBA::Object::_nil ();
-        }
-
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                    ACE_TEXT ("DAnCE_NodeManager::run_main - creating NodeManager for node %C\n"),
-                    this->options_.node_managers_[0].c_str()));
-
       // Parsing Node name and node manager ior file name
       ACE_TString node_name = this->options_.node_managers_[0].c_str ();
       ACE_TString node_file;
@@ -429,6 +422,44 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                     node_name.c_str (),
                     node_file.c_str ()));
 
+      // load service modules for artifact installation service
+      load_artifact_installation_modules (argc, argv);
+
+      // Creating in process artifact installation service
+      DAnCE::ArtifactInstallation_Impl* installer;
+      ACE_NEW_RETURN (installer,
+                      DAnCE::ArtifactInstallation_Impl (),
+                      CORBA::Object::_nil ());
+      PortableServer::Servant_var<DAnCE::ArtifactInstallation_Impl> safe_installer (installer);
+
+      ACE_CString installer_oid_str = ACE_TEXT_ALWAYS_CHAR ((node_name + ACE_TEXT (".ArtifactInstaller")).c_str ());
+
+      // Registering servant in poa
+      PortableServer::ObjectId_var installer_oid =
+        PortableServer::string_to_ObjectId (installer_oid_str.c_str());
+      this->nm_poa_->activate_object_with_id (installer_oid, safe_installer._retn ());
+
+      CORBA::Object_var installer_object = this->nm_poa_->id_to_reference (installer_oid.in ());
+      this->installer_ = DAnCE::ArtifactInstallation::_narrow (installer_object.in ());
+
+      // Getting node manager ior
+      CORBA::String_var installer_ior = orb->object_to_string (installer_object.in ());
+
+      // Binding ior to IOR Table
+      adapter->bind (installer_oid_str.c_str (), installer_ior.in ());
+
+      // Make sure that we have only one Node Manager
+      if (this->options_.node_managers_.size () != 1)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                        ACE_TEXT ("For now only one node manager creation is supported.\n")));
+          return CORBA::Object::_nil ();
+        }
+
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
+                    ACE_TEXT ("DAnCE_NodeManager::run_main - creating NodeManager for node %C\n"),
+                    this->options_.node_managers_[0].c_str()));
+
       //Creating node manager servant
       DAnCE::NodeManager_Impl * nm = 0;
       if (this->nm_map_.find (node_name, nm) == -1)
@@ -442,6 +473,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
           ACE_NEW_RETURN (nm,
                           DAnCE::NodeManager_Impl (orb,
                                                    this->root_poa_.in (),
+                                                   this->installer_.in (),
                                                    ACE_TEXT_ALWAYS_CHAR (node_name.c_str()),
                                                    properties),
                           CORBA::Object::_nil ());
@@ -594,3 +626,30 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &pr
     }
 }
 
+void
+DAnCE_NodeManager_Module::load_artifact_installation_modules (int argc, ACE_TCHAR *argv [])
+{
+  DAnCE::InstallationRepositoryManagerSvc
+    * dirms = ACE_Dynamic_Service<DAnCE::InstallationRepositoryManagerSvc>::instance ("InstallationRepositoryManager");
+
+  if (dirms)
+    {
+      dirms->init (argc, argv);
+    }
+
+  DAnCE::ArtifactInstallationHandlerSvc
+    * dfihs = ACE_Dynamic_Service<DAnCE::ArtifactInstallationHandlerSvc>::instance ("FileInstallationHandler");
+
+  if (dfihs)
+    {
+      dfihs->init (argc, argv);
+    }
+
+  DAnCE::ArtifactInstallationHandlerSvc
+    * dhihs = ACE_Dynamic_Service<DAnCE::ArtifactInstallationHandlerSvc>::instance ("HttpInstallationHandler");
+
+  if (dhihs)
+    {
+      dhihs->init (argc, argv);
+    }
+}
