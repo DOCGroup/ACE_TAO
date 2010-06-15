@@ -128,12 +128,12 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
                   writer->register_instance (i->second);
                 writer->write_one(i->second,hnd);
               }
-            }
-        catch (const CCM_DDS::InternalError& )
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
-                          i->first.c_str ()));
+            catch (const CCM_DDS::InternalError& )
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Internal Error while writing topic for <%C>.\n"),
+                            i->first.c_str ()));
+              }
           }
       }
   }
