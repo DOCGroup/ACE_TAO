@@ -64,7 +64,6 @@ namespace CIAO_QCLE_Test_Sender_Impl
 
   private:
     ::QCLE_Test::CCM_Sender_Context_var context_;
-    ::QCLE_Test::QueryConditionListenEventTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 

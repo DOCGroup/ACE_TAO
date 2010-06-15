@@ -68,8 +68,6 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     void start (void);
     void stop (void);
 
-    ::Unkeyed_Test::UnkeyedTestConnector::Writer_var writer_;
-
     pulse_Generator * ticker_;
     ::Unkeyed_Test::CCM_Sender_Context_var context_;
     CORBA::UShort rate_;

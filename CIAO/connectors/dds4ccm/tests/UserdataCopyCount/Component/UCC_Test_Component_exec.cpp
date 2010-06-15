@@ -126,13 +126,16 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   void
   Component_exec_i::write_fixed (void)
   {
+    ::UCCFixedSizeStruct_Test::UCCFixedSizedStructTestConnector::Writer_var fixed_writer
+      = this->context_->get_connection_fixed_size_write_data ();
+
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->fixed_mutex_, CORBA::INTERNAL ());
     {
       for (CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "Write fixed %i\n", i));
-          this->fixed_writer_->write_one (this->fixed_samples_[i], ::DDS::HANDLE_NIL);
+          fixed_writer->write_one (this->fixed_samples_[i], ::DDS::HANDLE_NIL);
         }
     }
   }
@@ -140,6 +143,9 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   void
   Component_exec_i::write_variable (void)
   {
+    ::UCCVariableSizedStruct_Test::UCCVariableSizedStructTestConnector::Writer_var var_writer
+      = this->context_->get_connection_var_size_write_data ();
+
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
                         this->var_mutex_, CORBA::INTERNAL ());
     {
@@ -148,7 +154,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
           char key[7];
           ACE_OS::sprintf (key, "KEY_%d", i);
           ACE_DEBUG ((LM_DEBUG, "Write variable %C\n", key));
-          this->var_writer_->write_one (this->var_samples_[key], ::DDS::HANDLE_NIL);
+          var_writer->write_one (this->var_samples_[key], ::DDS::HANDLE_NIL);
         }
     }
   }
@@ -198,9 +204,6 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    this->var_writer_ = this->context_->get_connection_var_size_write_data ();
-    this->fixed_writer_ = this->context_->get_connection_fixed_size_write_data ();
-
     ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "
                           "Create samples.\n"));
     this->create_fixed_sized_samples ();
