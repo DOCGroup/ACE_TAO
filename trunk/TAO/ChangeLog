@@ -1,3 +1,9 @@
+Tue Jun 15 16:01:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        
+          Removed generation of extra leading double colon.
+
 Tue Jun 15 15:24:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Bug_3821_Regression/Bug_3821_Regression.mpc:
