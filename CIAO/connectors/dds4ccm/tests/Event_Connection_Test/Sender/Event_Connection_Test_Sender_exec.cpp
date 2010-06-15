@@ -41,7 +41,7 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
       }
     DDS::DataWriter_var writer_dds_datawriter =
         this->context_->get_connection_info_write_dds_entity ();
-    if (! ::CORBA::is_nil (this->writer_dds_datawriter_.in ()))
+    if (! ::CORBA::is_nil (writer_dds_datawriter.in ()))
       {
         this->writer_dds_datawriter_ok_ = true;
       }
