@@ -48,7 +48,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
         try
           {
             KeyedTestConnector::Writer_var writer =
-              this->context_->get_connection_info_write_data ()
+              this->context_->get_connection_info_write_data ();
             ++this->last_key->second->iteration;
             writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
