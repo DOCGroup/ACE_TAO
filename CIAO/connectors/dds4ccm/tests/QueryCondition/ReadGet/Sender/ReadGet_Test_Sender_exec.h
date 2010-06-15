@@ -64,8 +64,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
 
     virtual void keys (::CORBA::UShort keys);
 
-    virtual ::CCM_ReadGetRestarter_ptr
-    get_restart_writer (void);
+    virtual ::CCM_ReadGetRestarter_ptr get_restart_writer (void);
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 

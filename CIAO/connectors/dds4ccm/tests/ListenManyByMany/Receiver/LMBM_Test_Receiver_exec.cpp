@@ -167,7 +167,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    CORBA::ULong expected = this->keys_ * this->iterations_;
+    CORBA::ULong const expected = this->keys_ * this->iterations_;
     if (this->received_many_by_many_.value () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: MANY_BY_MANY: "

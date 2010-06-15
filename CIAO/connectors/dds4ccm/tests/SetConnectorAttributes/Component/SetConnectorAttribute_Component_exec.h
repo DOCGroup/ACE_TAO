@@ -43,17 +43,13 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
   private:
     ::SetConnectorAttribute::CCM_SetConnectorAttributeComponent_Context_var context_;
 
-    void
-    check_attributes (DDSDataWriter * dw);
+    void check_attributes (DDSDataWriter * dw);
 
-    void
-    check_profile (DDSPublisher * pub);
+    void check_profile (DDSPublisher * pub);
 
-    void
-    check_topic_name (DDSTopic * tp);
+    void check_topic_name (DDSTopic * tp);
 
-    void
-    check_domain_id (DDSPublisher * pub);
+    void check_domain_id (DDSPublisher * pub);
 
   };
 
