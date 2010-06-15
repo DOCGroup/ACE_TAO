@@ -38,7 +38,6 @@ namespace CIAO_QosProfile_Test_QosProfileComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data();
   }
 
   void

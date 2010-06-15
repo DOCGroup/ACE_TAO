@@ -63,7 +63,9 @@ namespace CIAO_Writer_Sender_Impl
         try
           {
             ::DDS::InstanceHandle_t const hnd = this->handles_[i->first.c_str ()];
-            this->writer_->unregister_instance (i->second, hnd);
+            WriterTestConnector::Writer_var writer =
+              this->context_->get_connection_info_write_data ();
+            writer->unregister_instance (i->second, hnd);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
                       i->second->iteration,
@@ -80,8 +82,11 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::register_handles()
   {
+    WriterTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+
     Writer_Table::iterator i = this->ktests_.begin ();
-    ::DDS::InstanceHandle_t hnd = this->writer_->register_instance (i->second);
+    ::DDS::InstanceHandle_t hnd = writer->register_instance (i->second);
     if (!hnd.isValid)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
@@ -95,7 +100,7 @@ namespace CIAO_Writer_Sender_Impl
     ++i;
     //test exception. In Qos, max_instances is set to 1
     //so only one instance may be registered.
-    hnd = this->writer_->register_instance (i->second);
+    hnd = writer->register_instance (i->second);
     if (hnd.isValid)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
@@ -119,6 +124,9 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::write_keyed ()
   {
+    WriterTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+
     if (this->last_key_ != this->ktests_.end ())
       {
         bool exception_caught = false;
@@ -126,7 +134,7 @@ namespace CIAO_Writer_Sender_Impl
           {
             ++this->last_key_->second->iteration;
             ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key_->first.c_str ()];
-            this->writer_->write_one (this->last_key_->second, hnd);
+            writer->write_one (this->last_key_->second, hnd);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - valid handle <%d>\n"),
                     this->last_key_->first.c_str (),
                     this->last_key_->second->iteration,
@@ -179,6 +187,8 @@ namespace CIAO_Writer_Sender_Impl
   Sender_exec_i::write_many ()
   {
     bool expected_exception_thrown = false;
+    WriterTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
 
     WriterTestSeq write_many_seq;
     write_many_seq.length (this->keys_ * this->iterations_);
@@ -200,7 +210,7 @@ namespace CIAO_Writer_Sender_Impl
       }
     try
       {
-        this->writer_->write_many (write_many_seq);
+        writer->write_many (write_many_seq);
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -316,7 +326,6 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    this->writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void

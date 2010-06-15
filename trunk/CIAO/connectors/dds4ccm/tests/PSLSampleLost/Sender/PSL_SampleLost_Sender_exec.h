@@ -67,7 +67,6 @@ namespace CIAO_PSL_SampleLost_Sender_Impl
 
     pulse_Generator * ticker_;
     ::PSL_SampleLost::CCM_Sender_Context_var context_;
-    ::PSL_SampleLost::PSL_SampleLostConnector::Writer_var writer_;
 
     TAO_SYNCH_MUTEX mutex_;
     typedef std::map<ACE_CString, TestTopic_var> PSL_DLTest_Table;

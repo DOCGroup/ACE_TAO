@@ -63,7 +63,6 @@ namespace CIAO_CFTLE_Test_Sender_Impl
 
   private:
     ::CFTLE_Test::CCM_Sender_Context_var context_;
-    ::CFTLE_Test::ContentFilteredTopicListenEventTestConnector::Writer_var writer_;
 
     WriteTicker *ticker_;
 

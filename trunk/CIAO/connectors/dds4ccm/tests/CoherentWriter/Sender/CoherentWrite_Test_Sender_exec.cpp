@@ -71,7 +71,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
   Sender_exec_i::start (void)
   {
     ::CoherentWriteTestConnector::Writer_var writer =
-    this->context_->get_connection_info_write_data ();
+      this->context_->get_connection_info_write_data ();
 
     CoherentWriteStarter_var starter =
       this->context_->get_connection_start_reader ();
@@ -89,7 +89,7 @@ namespace CIAO_CoherentWrite_Test_Sender_Impl
                           this->run_,
                           this->iterations ()));
 
-    CoherentWriteTestSeq write_many_seq;
+    CoherentWriteTestSeq write_many_seq (this->iterations_);
     write_many_seq.length (this->iterations_);
     for (int i = 1; i < this->iterations_ + 1; ++i)
       {
