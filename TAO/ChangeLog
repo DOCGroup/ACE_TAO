@@ -1,3 +1,10 @@
+Tue Jun 15 14:14:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/argument.cpp(type_name):
+        
+          Restored generation of a leading double colon that was lost
+          in the recent merge of the alt_mapping branch.
+
 Tue Jun 15 14:02:32 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any.cpp:
