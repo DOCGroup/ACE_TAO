@@ -59,13 +59,14 @@ namespace CIAO_LMBM_Test_Sender_Impl
   void
   Sender_exec_i::write_one (void)
   {
+    ::LMBM_Test::ListenManyByManyTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
     if (this->last_key_ != this->samples_.end ())
       {
         try
           {
             ++this->last_key_->second->iteration;
-            this->writer_->write_one (this->last_key_->second,
-                                      ::DDS::HANDLE_NIL);
+            writer->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
                           this->last_key_->first.c_str (),
                           this->last_key_->second->iteration));
@@ -176,7 +177,6 @@ namespace CIAO_LMBM_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
         start ();
       }
     catch (const CORBA::Exception& ex)

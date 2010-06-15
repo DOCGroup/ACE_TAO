@@ -61,7 +61,6 @@ namespace CIAO_LNE_Test_Sender_Impl
 
   private:
     ::LNE_Test::CCM_Sender_Context_var context_;
-    ::LNE_Test::ListenNotEnabledTestConnector::Writer_var writer_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
