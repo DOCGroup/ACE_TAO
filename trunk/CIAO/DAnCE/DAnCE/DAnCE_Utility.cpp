@@ -15,7 +15,7 @@ namespace DAnCE
                              const ::Deployment::Properties &prop)
     {
       DANCE_TRACE("DAnCE::Utility::build_config_values_map");
-      
+
       for (CORBA::ULong i = 0; i < prop.length (); ++i)
         {
           int const retval = map.rebind (prop[i].name.in (), prop[i].value);
@@ -71,7 +71,7 @@ namespace DAnCE
     {
       CORBA::ULong pos = dest.length ();
       dest.length (pos + src.length ());
-      
+
       for (CORBA::ULong i = 0; i < src.length (); ++i)
         {
           dest[pos].name = CORBA::string_dup (src[i].name.in ());
@@ -82,12 +82,12 @@ namespace DAnCE
 
     template<>
     bool get_property_value (const char *name,
-                             const PROPERTY_MAP &properties, 
+                             const PROPERTY_MAP &properties,
                              bool &val)
     {
       DANCE_TRACE ("DAnCE::Utility::get_property_value<bool>");
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
@@ -101,14 +101,14 @@ namespace DAnCE
             }
           else
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO 
+              DANCE_ERROR (1, (LM_WARNING, DLINFO
                                ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
                                ACE_TEXT("Failed to extract property value for %C\n"), name));
               return false;
             }
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Property value for name '%C' has no value\n"),
                        name));
@@ -118,13 +118,13 @@ namespace DAnCE
 
     template<>
     bool get_property_value (const char *name,
-                             const PROPERTY_MAP &properties, 
+                             const PROPERTY_MAP &properties,
                              const char *&val)
     {
       DANCE_TRACE ("DAnCE::Utility::get_property_value<const char *>");
       CORBA::Any any;
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
@@ -137,14 +137,14 @@ namespace DAnCE
             }
           else
             {
-              DANCE_ERROR (1, (LM_WARNING, DLINFO 
+              DANCE_ERROR (1, (LM_WARNING, DLINFO
                                ACE_TEXT("DAnCE::Utility::get_property_value<const char *> - ")
                                ACE_TEXT("Failed to extract property value for %C\n"), name));
               return false;
             }
         }
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<bool> - ")
                        ACE_TEXT("Property value for name '%C' has no value\n"), name));
 
@@ -152,13 +152,13 @@ namespace DAnCE
     }
 
     template<>
-    bool get_property_value (const char *name, 
+    bool get_property_value (const char *name,
                              const ::Deployment::Properties &properties,
                              const char * &val)
     {
       DANCE_TRACE ("DAnCE::Utility::get_property_value<const char *>");
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
                        ACE_TEXT("Finding property value for name '%C'\n"),
                        name));
@@ -167,7 +167,7 @@ namespace DAnCE
         {
           if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
             {
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO
                                ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
                                ACE_TEXT("Found property '%C'\n"), name));
               if (properties[i].value >>= CORBA::Any::to_string (val, 0))
@@ -179,7 +179,7 @@ namespace DAnCE
                 }
               else
                 {
-                  DANCE_ERROR (1, (LM_WARNING, DLINFO 
+                  DANCE_ERROR (1, (LM_WARNING, DLINFO
                                    ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
                                    ACE_TEXT("Failed to extract property value for %C\n"),
                                    name));
@@ -189,11 +189,42 @@ namespace DAnCE
         }
 
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO 
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT("DAnCE::Utility::get_property_value<T> - ")
                        ACE_TEXT("Unable to find property named %C\n"), name));
 
       return false;
+    }
+
+    template<char*>
+    void update_property_value (const char *name,
+                                ::Deployment::Properties &properties,
+                                const char* &val)
+    {
+      DANCE_TRACE ("DAnCE::Utility::update_property_value<char*>");
+
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE::Utility::update_property_value<char*> - ")
+                       ACE_TEXT("Finding property value for name '%C'\n"),
+                       name));
+
+      for (CORBA::ULong i = 0; i < properties.length (); ++i)
+        {
+          if (ACE_OS::strcmp (properties[i].name.in (), name) == 0)
+            {
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE::Utility::update_property_value<char*> - ")
+                               ACE_TEXT("Found property '%C'\n"), name));
+              properties[i].value <<= val;
+              return;
+            }
+        }
+
+
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DAnCE::Utility::update_property_value<char*> - ")
+                       ACE_TEXT("Property for name '%C' not found; adding property\n"), name));
+
+      properties.length (properties.length () + 1);
+      properties[properties.length () - 1].name = CORBA::string_dup (name);
+      properties[properties.length () - 1].value <<= val;
     }
 
     const char *

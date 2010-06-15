@@ -21,6 +21,7 @@
 #include "DAnCE/DAnCE_Utility.h"
 #include "Deployment/Deployment_NodeManagerS.h"
 #include "NodeApplicationManager/NodeApplicationManager_Impl.h"
+#include "DAnCE/DAnCE_ArtifactInstallationC.h"
 #include "ace/Map_Manager.h"
 
 namespace DAnCE
@@ -32,6 +33,7 @@ namespace DAnCE
     /// The fixed listener port is caused by the usage of CCM Object locator
     NodeManager_Impl (CORBA::ORB_ptr orb,
                       PortableServer::POA_ptr poa,
+                      DAnCE::ArtifactInstallation_ptr installer,
                       const char* name,
                       const PROPERTY_MAP &options);
 
@@ -55,6 +57,7 @@ namespace DAnCE
   private:
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
+    DAnCE::ArtifactInstallation_var installer_;
     ACE_CString name_;
     /// @todo, see if we can use a _ptr
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;

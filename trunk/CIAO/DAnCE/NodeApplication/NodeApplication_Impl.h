@@ -21,17 +21,15 @@
 
 #include "ace/Containers_T.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/ORB.h"
-#include "tao/Object.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ciao/ComponentServer/CIAO_ServerActivator_Impl.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
 
 #include "ccm/ComponentServer/CCM_ComponentServerC.h"
 #include "Deployment/Deployment_NodeApplicationS.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"
 #include "DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_ArtifactInstallationC.h"
 #include "LocalityManager/Handler/Locality_Manager_Handler_Impl.h"
 #include "Split_Plan/Locality_Splitter.h"
 #include "Split_Plan/Split_Plan.h"
@@ -54,6 +52,7 @@ namespace DAnCE
   public:
     NodeApplication_Impl (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa,
+                          DAnCE::ArtifactInstallation_ptr installer,
                           const ACE_CString& node_name,
                           const PROPERTY_MAP &properties);
 
@@ -72,8 +71,6 @@ namespace DAnCE
     void remove_instances (void);
 
   protected:
-    void init(void);
-
     void prepare_instance (const char *name,
                            const ::Deployment::DeploymentPlan &plan);
 
@@ -81,11 +78,11 @@ namespace DAnCE
 
     PortableServer::POA_var poa_;
 
+    DAnCE::ArtifactInstallation_var installer_;
+
     ACE_CString node_name_;
 
     PROPERTY_MAP properties_;
-
-    CosNaming::NamingContext_var instance_nc_;
 
     DAnCE::Locality_Handler_i handler_;
 
