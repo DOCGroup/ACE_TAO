@@ -35,7 +35,7 @@ namespace CIAO_Event_Connection_Test_Sender_Impl
   {
     ::Event_ConnectionConnector::Writer_var writer =
         this->context_->get_connection_info_write_data ();
-    if (! ::CORBA::is_nil (writer_.in ()))
+    if (! ::CORBA::is_nil (writer.in ()))
       {
         this->writer_ok_ = true;
       }
