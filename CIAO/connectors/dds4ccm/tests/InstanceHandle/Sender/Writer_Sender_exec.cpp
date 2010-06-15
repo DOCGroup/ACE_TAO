@@ -43,17 +43,21 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::unregister_handles ()
   {
+    ::WriterTestConnector::Writer_var ccm_writer =
+      this->context_->get_connection_info_write_data ();
+
     for (Writer_Table::iterator i = this->ktests_.begin ();
          i != this->ktests_.end ();
          ++i)
       {
         try
           {
-            ::DDS::InstanceHandle_t hnd = this->handles_[i->first.c_str ()];
-            this->ccm_writer_->unregister_instance (i->second, hnd);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - valid handle <%d>\n"),
-                      i->first.c_str (),
-                      hnd.isValid));
+            ::DDS::InstanceHandle_t const hnd = this->handles_[i->first.c_str ()];
+            ccm_writer->unregister_instance (i->second, hnd);
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("Unregistered <%C> - valid handle <%d>\n"),
+                        i->first.c_str (),
+                        hnd.isValid));
           }
         catch (...)
           {
@@ -66,14 +70,18 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::register_handles ()
   {
+    ::WriterTestConnector::Writer_var ccm_writer =
+      this->context_->get_connection_info_write_data ();
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
-        DDS::InstanceHandle_t hnd = this->ccm_writer_->register_instance (i->second);
+        DDS::InstanceHandle_t const hnd =
+          ccm_writer->register_instance (i->second);
         if (!hnd.isValid)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C>\n"),
-              i->first.c_str ()));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ERROR: Unable to register handle for <%C>\n"),
+                        i->first.c_str ()));
           }
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance for <%C>\n"),
                     i->second->key.in ()));
@@ -87,8 +95,7 @@ namespace CIAO_Writer_Sender_Impl
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
-        ::DDS::InstanceHandle_t ccm_hnd =
-          this->handles_[i->first.c_str ()];
+        ::DDS::InstanceHandle_t ccm_hnd = this->handles_[i->first.c_str ()];
 
         DDS_InstanceHandle_t dds_hnd =
           this->dds_writer_->lookup_instance (i->second);
@@ -131,15 +138,16 @@ namespace CIAO_Writer_Sender_Impl
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
-        ::DDS::InstanceHandle_t ccm_hnd =
-          this->handles_[i->first.c_str ()];
+        ::DDS::InstanceHandle_t ccm_hnd = this->handles_[i->first.c_str ()];
 
         Writer_Table::iterator unequal = i;
         ++unequal;
         if (unequal == this->ktests_.end ())
-          unequal = this->ktests_.begin ();
+          {
+            unequal = this->ktests_.begin ();
+          }
 
-        DDS_InstanceHandle_t dds_hnd =
+        DDS_InstanceHandle_t const dds_hnd =
           this->dds_writer_->lookup_instance (unequal->second);
         //compare
         if (dds_hnd != ccm_hnd)
@@ -223,7 +231,6 @@ namespace CIAO_Writer_Sender_Impl
       dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
     DDSDataWriter * p = ccm_dds_rd->get_impl ();
     this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);
-    this->ccm_writer_ = this->context_->get_connection_info_write_data ();
   }
 
   void
