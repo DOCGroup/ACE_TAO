@@ -1,0 +1,18 @@
+// $Id$
+
+/**
+ * @file GCE_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef GET_COMPONENT_EVENT_TEST_CONNECTOR_IDL_
+#define GET_COMPONENT_EVENT_TEST_CONNECTOR_IDL_
+
+#include  <Components.idl>
+#include "Base/GCE_Test_Base.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Connector/GCE_Test_ConnectorE.idl"
+
+module ::CCM_DDS::Typed < ::GCETest, ::GCETestSeq> GCETestConnector;
+#endif /* GET_COMPONENT_EVENT_TEST_CONNECTOR_IDL_ */

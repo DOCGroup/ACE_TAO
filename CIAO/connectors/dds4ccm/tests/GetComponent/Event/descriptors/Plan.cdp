@@ -1,0 +1,322 @@
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>GetComponentEventTest_Depl</label>
+  <UUID>GetComponentEventTest_Depl</UUID>
+
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_GetComponentEventTest_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_GCE_Test_GetComponentEventTestComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="GCE_Test_ConnectorImplementation">
+    <name>GCE_Test_ConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="GCE_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="GCE_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_GCETestConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_GCETestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GCE_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GCE_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <!-- act as sender-->
+  <instance xmi:id="ComponentInstance1">
+    <name>Sender</name>
+    <node>SenderNode</node>
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>act_as_sender</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="GCE_Test_ConnectorInstance1">
+    <name>GCE_Test_Connector1</name>
+    <node>SenderNode</node>
+    <source/>
+    <implementation xmi:idref="GCE_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GetComponentEventTopic</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- act as receiver -->
+  <instance xmi:id="ComponentInstance2">
+    <name>Receiver</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+    <configProperty>
+      <name>act_as_sender</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="GCE_Test_ConnectorInstance2">
+    <name>GCE_Test_Connector2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="GCE_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GetComponentEventTopic</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- SENDER COMPONENT CONNECTIONS -->
+  <connection>
+    <name>write_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance1" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance1" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- RECEIVER COMPONENT CONNECTIONS -->
+  <!--   DDS_Get port -->
+  <connection>
+    <name>get_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>get_fresh_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_fresh_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_fresh_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <!--   DDS_Listen port -->
+  <connection>
+    <name>listen_data_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_data_control_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance2" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="GCE_Test_ConnectorInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="GCE_Test_Connector_ExecArtifact">
+    <name>GCE_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>GCE_Test_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="GCE_Test_Connector_SvntArtifact">
+    <name>GCE_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>GCE_Test_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="GCE_Test_Connector_StubArtifact">
+    <name>GCE_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>GCE_Test_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+</Deployment:DeploymentPlan>
