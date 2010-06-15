@@ -224,7 +224,7 @@
       </value>
     </configProperty>
   </instance>
-  <!--instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverB">
+  <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverB">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverB</name>
     <node>Receiver</node>
     <source/>
@@ -240,8 +240,8 @@
         </value>
       </value>
     </configProperty>
-  </instance-->
-  <!--instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverC">
+  </instance>
+  <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverC">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverC</name>
     <node>Receiver</node>
     <source/>
@@ -257,8 +257,8 @@
         </value>
       </value>
     </configProperty>
-  </instance-->
-  <!--instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverS">
+  </instance>
+  <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverS">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverS</name>
     <node>Receiver</node>
     <source/>
@@ -274,7 +274,7 @@
         </value>
       </value>
     </configProperty>
-  </instance-->
+  </instance>
   
   <instance xmi:id="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.Sender">
     <name>UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.Sender</name>
@@ -462,7 +462,7 @@
       <portName>do_my_one</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA" />
+      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverB" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_uses</portName>
@@ -477,7 +477,7 @@
       <portName>do_my_one</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA" />
+      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverC" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_uses</portName>
@@ -493,7 +493,7 @@
       <portName>do_my_two</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA" />
+      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverS" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_uses</portName>
@@ -524,7 +524,7 @@
       <portName>do_my_one</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA" />
+      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverB" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>run_my_um_one</portName>
@@ -539,7 +539,7 @@
       <portName>do_my_one</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverA" />
+      <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.ReceiverC" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>run_my_um_one</portName>
@@ -548,9 +548,7 @@
       <instance xmi:idref="UsesSM.ComponentImplementations.UsesSMImplementation.UsesSM.Sender" />
     </internalEndpoint>
   </connection>
-  
-  
- 
+
   <artifact xmi:id="UsesSM_AMIOne_SvntArtifact">
     <name>UsesSM.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>

@@ -6,8 +6,8 @@
 
 namespace CIAO_UsesSM_Receiver_Impl
 {
-  One_exec_i::One_exec_i (Atomic_UShort &nr_of_received)
-    : nr_of_received_(nr_of_received)
+  One_exec_i::One_exec_i (Atomic_UShort &nr_of_one_received)
+    : nr_of_one_received_(nr_of_one_received)
   {
   }
 
@@ -21,12 +21,12 @@ namespace CIAO_UsesSM_Receiver_Impl
   {
     // sleep to make it possible to test asynchronous behavior. 
     ACE_OS::sleep(2);
-    ++nr_of_received_;
+    ++nr_of_one_received_;
     answer = CORBA::string_dup (in_str);
     return cmd;
   }
-  Two_exec_i::Two_exec_i (Atomic_UShort &nr_of_received)
-    : nr_of_received_(nr_of_received)
+  Two_exec_i::Two_exec_i (Atomic_UShort &nr_of_two_received)
+    : nr_of_two_received_(nr_of_two_received)
   {
   }
 
@@ -38,7 +38,7 @@ namespace CIAO_UsesSM_Receiver_Impl
   Two_exec_i::bar (::CORBA::Long /*cmd*/,
                    ::CORBA::String_out answer)
   {
-    ++nr_of_received_;
+    ++nr_of_two_received_;
     answer = CORBA::string_dup ("answer TWO::bar");
   }
 
@@ -53,12 +53,12 @@ namespace CIAO_UsesSM_Receiver_Impl
   ::UsesSM::CCM_One_ptr
   Receiver_exec_i::get_do_my_one (void)
   {
-    return new One_exec_i (nr_of_received_);
+    return new One_exec_i (nr_of_one_received_);
   }
   ::UsesSM::CCM_Two_ptr
   Receiver_exec_i::get_do_my_two (void)
   {
-    return new Two_exec_i (nr_of_received_);
+    return new Two_exec_i (nr_of_two_received_);
   }
 
   void
@@ -81,7 +81,8 @@ namespace CIAO_UsesSM_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    nr_of_received_ = 0;
+    nr_of_one_received_ = 0;
+    nr_of_two_received_ = 0;
   }
 
   void
@@ -92,18 +93,33 @@ namespace CIAO_UsesSM_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (nr_of_received_.value() != 9)
+    if (((nr_of_one_received_.value() == 2) &&
+         (nr_of_two_received_.value() == 0)) ||
+        ((nr_of_two_received_.value() == 3) &&
+         (nr_of_one_received_.value() == 0)))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive the expected "
-                              "number of correct calls.\n"
-                              "Expected: 9, Received: %u.\n",
-                              nr_of_received_.value()));
+        if (nr_of_one_received_.value() == 2)
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
+                                  "number of correct calls for foo (%u/2).\n",
+                                   nr_of_one_received_.value()));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
+                                  "number of correct calls for bar (%u/3).\n",
+                                   nr_of_two_received_.value()));
+          }
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "OK: Receiver received the expected "
-                              "number of correct calls (%u/9).\n",
-                              nr_of_received_.value()));
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver didn't receive the expected "
+                              "number of correct calls.\n"
+                              "Expected 2 calls for foo but received %u or \n"
+                              "Expected 3 calls for bar but received %u.\n",
+                              nr_of_one_received_.value(),
+                              nr_of_two_received_.value()));
+
       }
   }
 
