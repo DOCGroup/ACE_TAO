@@ -48,7 +48,7 @@ namespace CIAO_LOBO_Test_Sender_Impl
         try
           {
             ::LOBO_Test::ListenOneByOneTestConnector::Writer_var writer =
-              this->context_->get_connection_info_write_data ()
+              this->context_->get_connection_info_write_data ();
             ++this->last_key_->second->iteration;
             writer->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, "Written key <%C> - <%u>\n",
