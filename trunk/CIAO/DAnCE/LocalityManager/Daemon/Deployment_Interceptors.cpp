@@ -101,6 +101,12 @@ namespace DAnCE
       }
   }
 
+  void
+  DAnCE_StoreReferences_i::configure (const ::Deployment::Properties & )
+  {
+    
+  }
+
   // Implementation skeleton constructor
   DAnCE_ReferenceLookup_i::DAnCE_ReferenceLookup_i (void)
   {
@@ -126,5 +132,10 @@ namespace DAnCE
     // Add your implementation here
   }
 
+  void
+  DAnCE_ReferenceLookup_i::configure (const ::Deployment::Properties & )
+  {
+    
+  }
  
 }
