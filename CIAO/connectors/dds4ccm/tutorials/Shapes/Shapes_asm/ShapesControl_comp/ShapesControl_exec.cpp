@@ -38,7 +38,11 @@ namespace CIAO_Shapes_Control_comp_Impl
       resize_ (false),
       x_increasing_ (false),
       y_increasing_ (false),
-      size_increasing_ (false)
+      size_increasing_ (false),
+      current_size_ (ACE_OS::rand () % max_size_),
+      current_color_ (::Shapes::GREEN),
+      current_x_ (ACE_OS::rand () % max_x_),
+      current_y_ (ACE_OS::rand () % max_y_)
   {
     this->ticker_ = new pulse_Generator (*this);
   }
@@ -54,36 +58,48 @@ namespace CIAO_Shapes_Control_comp_Impl
   {
     if (this->x_increasing_)
       {
-//         ++square_->x;
-//         this->x_increasing_ = square_->x + 1 <= this->max_x_;
+        ++this->current_x_;
+        this->x_increasing_ = this->current_x_ + 1 <= this->max_x_;
       }
     else
       {
-//         --square_->x;
-//         this->x_increasing_ = square_->x - 1 < 0;
+        --this->current_x_;
+        this->x_increasing_ = this->current_x_ - 1 < 0;
       }
     if (this->y_increasing_)
       {
-//         ++square_->y;
-//         this->y_increasing_ = square_->y + 1 <= this->max_y_;
+        ++this->current_y_;
+        this->y_increasing_ = this->current_y_ + 1 <= this->max_y_;
       }
     else
       {
-//         --square_->y;
-//         this->y_increasing_ = square_->y - 1 < 0;
+        --this->current_y_;
+        this->y_increasing_ = this->current_y_ - 1 < 0;
       }
     if (resize_shape ())
       {
         if (this->size_increasing_)
           {
-//             ++square_->shapesize;
-//             this->size_increasing_ = square_->shapesize + 1 <= this->max_size_;
+            ++this->current_size_;
+            this->size_increasing_ = this->current_size_ + 1 <= this->max_size_;
           }
         else
           {
-//             --square_->shapesize;
-//             this->size_increasing_ = square_->shapesize - 1 < 0;
+            --this->current_size_;
+            this->size_increasing_ = this->current_size_ - 1 < 0;
           }
+      }
+    ::Shapes::Control_obj_var control =
+      this->context_->get_connection_control ();
+    if (! ::CORBA::is_nil (control))
+      {
+        control->setSize (this->current_size_);
+        control->setLocation (this->current_x_,
+                              this->current_y_);
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to control shapes\n")));
       }
   }
 
