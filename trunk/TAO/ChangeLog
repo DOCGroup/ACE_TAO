@@ -1,3 +1,11 @@
+Wed Jun 16 13:36:45 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode_Adapter.h:
+        
+          Added include of STL string header file, which is apparently
+          needed on some platforms, now that the adapter class has an
+          overloaded method taking an std::string.
+
 Wed Jun 16 09:35:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Two_Objects/Object_Factory_i.cpp:
