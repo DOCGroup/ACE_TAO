@@ -104,6 +104,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

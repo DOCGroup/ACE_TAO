@@ -89,7 +89,7 @@ public:
   void shutdown (void);
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   // The ORB
 
   Simple_Server_var server_;

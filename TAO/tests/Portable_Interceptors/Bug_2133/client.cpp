@@ -40,6 +40,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  CORBA::ORB_var orb;
+
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
@@ -55,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -82,9 +84,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR_RETURN ((LM_DEBUG,
                             "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n"),
                             1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception&)
     {
+      orb->destroy ();
+
       if (ClientRequest_Interceptor::success_flag_)
         {
           ACE_DEBUG ((LM_DEBUG, "Success - the server was unreachable and PI receive_exception was invoked.\n"));

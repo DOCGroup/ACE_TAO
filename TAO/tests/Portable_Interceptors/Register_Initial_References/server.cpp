@@ -16,18 +16,19 @@ int test_orb (CORBA::ORB_ptr orb)
   POA_TestModule::test* test = 0;
   ACE_NEW_RETURN (test,
                   test_i, 1);
+  PortableServer::ServantBase_var safe (test);
 
-  CORBA::Object_ptr object = test->_this ();
+  CORBA::Object_var object = test->_this ();
 
   orb->register_initial_reference ("ORBMyService",
-                                    object);
+                                    object.in ());
 
   bool invalid_name = false;
   try
     {
       // Registering with an empty string should give an exception
       orb->register_initial_reference ("",
-                                       object);
+                                       object.in ());
     }
   catch (const CORBA::ORB::InvalidName&)
     {
@@ -49,7 +50,7 @@ int test_orb (CORBA::ORB_ptr orb)
     {
       // Registering with an duplicate string should give an exception
       orb->register_initial_reference ("ORBMyService",
-                                        object);
+                                        object.in ());
     }
   catch (const CORBA::ORB::InvalidName&)
     {
@@ -118,6 +119,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var second_orb =
         CORBA::ORB_init (argc, argv, "SecondORB");
+
+      second_orb->destroy ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

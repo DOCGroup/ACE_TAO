@@ -34,6 +34,9 @@ Server_ORBInitializer::post_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
+  PortableInterceptor::ServerRequestInterceptor_var
+    server_interceptor = interceptor;
+
   info->add_server_request_interceptor (interceptor);
 }
 

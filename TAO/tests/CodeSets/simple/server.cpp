@@ -142,6 +142,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (my_impl,
                       SimpleImpl (orb.in ()),
                       -1);
+      PortableServer::ServantBase_var safe (my_impl);
 
       // Create CORBA object for servant and REGISTER with POA
       PortableServer::ObjectId_var id =

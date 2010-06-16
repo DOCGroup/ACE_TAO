@@ -86,6 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_THROW_EX (factory_impl,
                         Object_Factory_i (orb.in (), msglen),
                         CORBA::NO_MEMORY ());
+      PortableServer::ServantBase_var safe (factory_impl);
 
       // _this method registers the object withe the POA and returns
       // an object reference
