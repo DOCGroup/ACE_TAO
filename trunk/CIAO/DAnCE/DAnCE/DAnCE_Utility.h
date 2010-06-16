@@ -36,7 +36,10 @@ namespace DAnCE
                                      TAO_SYNCH_MUTEX> PMAP_PTR;
 
     DANCE_STUB_Export void build_property_map (PROPERTY_MAP &map,
-                             const ::Deployment::Properties &prop);
+                                               const ::Deployment::Properties &prop);
+
+    DANCE_STUB_Export void build_property_sequence (::Deployment::Properties &prop,
+                                                    const PROPERTY_MAP &map);
 
     template<class T>
     bool
