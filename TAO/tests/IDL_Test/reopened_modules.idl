@@ -346,7 +346,7 @@ module m1
   {
     module m3b
     {
-      typedef string <::m1::m2::m3a::m4b::JIM> StringJIM;
+      typedef string < ::m1::m2::m3a::m4b::JIM> StringJIM;
       typedef string <m1::m2::m3a::m4b::JIM> StringJIM_0;
       typedef string <m2::m3a::m4b::JIM> StringJIM_1;
       typedef string <m3a::m4b::JIM> StringJIM_2;
