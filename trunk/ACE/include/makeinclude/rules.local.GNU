@@ -47,10 +47,11 @@ makefile_name.local:
 	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
 	@echo
 else
+ECHO_BLANK_LINE ?= echo
 makefile_name.local:
-	@echo
+	@$(ECHO_BLANK_LINE)
 	@echo GNUmakefile: $(call PWD)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
-	@echo
+	@$(ECHO_BLANK_LINE)
 endif
 
 all.local: makefile_name.local build.objdirs build.local binout.local
@@ -94,12 +95,11 @@ OS ?=
 # Define a canned command set to create the output object directory if needed.
 ifeq ($(vxworks_ntbuild),1)
 define mk_obj_out_dir
-@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
-@echo > $(dir $@).creation_stamp
+@if not exist $(subst /,\,$(@D)) $(MKDIR) $(subst /,\,$(@D)) $(ACE_NUL_STDERR)
 endef
 else
 define mk_obj_out_dir
-@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+@-test -d $(@D) || $(MKDIR) $(@D) $(ACE_NUL_STDERR)
 endef
 endif
 
@@ -276,7 +276,7 @@ $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
 ifeq ($(vxworks_ntbuild),1)
-	@if not exist $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(RM) $@ && \
 		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
