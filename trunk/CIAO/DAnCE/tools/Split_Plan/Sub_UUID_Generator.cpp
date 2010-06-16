@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Sub_UUID_Generator.h"
-#include "ace/UUID.h"
+#include <sstream>
 
 namespace DAnCE
 {
@@ -11,15 +11,12 @@ namespace DAnCE
 
   void Unique_Sub_UUID_Generator::generate_sub_uuid (
       const Deployment::DeploymentPlan &parent_plan,
-      Deployment::DeploymentPlan &sub_plan)
+      Deployment::DeploymentPlan &sub_plan,
+      CORBA::ULong sub_plan_index)
     {
-      ACE_Utils::UUID uuid;
-      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
-      ACE_CString sub_uuid_str (parent_plan.UUID.in ());
-      sub_uuid_str += "[";
-      sub_uuid_str += uuid.to_string ()->c_str ();
-      sub_uuid_str += "]";
-      sub_plan.UUID = CORBA::string_dup (sub_uuid_str.c_str ());
+      std::ostringstream sub_uuid_str;
+      sub_uuid_str << parent_plan.UUID.in () << "_" << sub_plan_index;
+      sub_plan.UUID = CORBA::string_dup (sub_uuid_str.str ().c_str ());
     }
 
   Copy_UUID_Generator::Copy_UUID_Generator ()
@@ -28,7 +25,8 @@ namespace DAnCE
 
   void Copy_UUID_Generator::generate_sub_uuid (
       const Deployment::DeploymentPlan &parent_plan,
-      Deployment::DeploymentPlan &sub_plan)
+      Deployment::DeploymentPlan &sub_plan,
+      CORBA::ULong /*sub_plan_index*/)
     {
       sub_plan.UUID = CORBA::string_dup (parent_plan.UUID.in ());
     }
