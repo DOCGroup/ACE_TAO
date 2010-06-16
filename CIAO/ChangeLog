@@ -1,3 +1,8 @@
+Wed Jun 16 13:38:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.cpp:
+          Added error handling.
+
 Wed Jun 16 12:58:24 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/examples/Shapes/models/README:
