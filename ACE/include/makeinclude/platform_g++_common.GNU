@@ -13,7 +13,7 @@ endif
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
+CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 else
 CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
@@ -61,7 +61,7 @@ ifneq ($(DLD),)
   ifneq ($(mingw32),1)
     GNU_LD := $(shell sh -c '$(LD_FOR_VERSION_TEST) -v 2>&1 | grep -c "GNU ld"')
   else
-    GNU_LD := $(shell $(LD_FOR_VERSION_TEST) -v | grep -c 'GNU ld')
+    GNU_LD := $(if $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v)), 1, 0)
   endif # mingw32
 endif # DLD
 
