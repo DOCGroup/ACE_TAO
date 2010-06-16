@@ -29,6 +29,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Is this decl a forward declared type (Yes)
+  virtual bool is_fwd (void);
+
   static AST_Decl::NodeType const NT;
 };
 

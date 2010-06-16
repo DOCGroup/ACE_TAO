@@ -101,6 +101,15 @@ COMMON_Base::COMMON_Base (bool local,
 {
 }
 
+COMMON_Base::~COMMON_Base (void)
+{
+}
+
+void
+COMMON_Base::destroy (void)
+{
+}
+
 bool
 COMMON_Base::is_local (void)
 {
@@ -125,11 +134,6 @@ COMMON_Base::is_abstract (bool val)
   this->is_abstract_ = val;
 }
 
-void
-COMMON_Base::destroy (void)
-{
-}
-
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)
@@ -145,7 +149,7 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
     pd_name (0),
-    pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
+    pd_local_name (n ? n->last_component ()->copy () : 0),
     pd_original_local_name (0),
     full_name_ (0),
     prefix_ (0),
@@ -157,23 +161,15 @@ AST_Decl::AST_Decl (NodeType nt,
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
-  this->pd_file_name = (fn != 0 ? fn->get_string () : "");
+  this->pd_file_name = (fn ? fn->get_string () : "");
 
   this->compute_full_name (n);
 
   char *prefix = 0;
   idl_global->pragma_prefixes ().top (prefix);
+  this->prefix_ = ACE::strnew (prefix ? prefix : "");
 
-  if (prefix == 0)
-    {
-      this->prefix_ = ACE::strnew ("");
-    }
-  else
-    {
-      this->prefix_ = ACE::strnew (prefix);
-    }
-
-  if (n != 0)
+  if (n)
     {
       // The function body creates its own copy.
       this->original_local_name (n->last_component ());
@@ -186,6 +182,68 @@ AST_Decl::~AST_Decl (void)
 {
 }
 
+void
+AST_Decl::destroy (void)
+{
+  // These are not set for the root node.
+  if (this->pd_name)
+    {
+      this->pd_name->destroy ();
+      delete this->pd_name;
+      this->pd_name = 0;
+    }
+
+  if (this->pd_local_name)
+    {
+      this->pd_local_name->destroy ();
+      delete this->pd_local_name;
+      this->pd_local_name = 0;
+    }
+
+  if (this->pd_original_local_name)
+    {
+      this->pd_original_local_name->destroy ();
+      delete this->pd_original_local_name;
+      this->pd_original_local_name = 0;
+    }
+
+  if (this->last_referenced_as_)
+    {
+      this->last_referenced_as_->destroy ();
+      delete this->last_referenced_as_;
+      this->last_referenced_as_ = 0;
+    }
+
+  delete [] this->full_name_;
+  this->full_name_ = 0;
+
+  delete [] this->repoID_;
+  this->repoID_ = 0;
+
+  delete [] this->prefix_;
+  this->prefix_ = 0;
+
+  delete [] this->version_;
+  this->version_ = 0;
+
+  delete [] this->flat_name_;
+  this->flat_name_ = 0;
+}
+
+AST_Decl *
+AST_Decl::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
+{
+  return this; // Defaults to no adjustment
+}
+
+bool
+AST_Decl::is_fwd (void)
+{
+  return false; // Not a fwd declared type (by default)
+}
+
 // Private operations.
 
 // Compute our private UTL_ScopedName member.
@@ -195,54 +253,47 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   // This should happen only when we are a non-void predefined type,
   // in which case our scoped name has already been created by the
   // AST_PredefinedType constructor.
-  if (n == 0)
+  if (!n)
     {
       return;
     }
 
-  UTL_ScopedName *cn = 0;
-  AST_Decl *d = 0;
-
-  // Initialize this name to 0.
-  this->pd_name = 0;
-
   // Global scope?
-  if (this->defined_in () == 0)
+  if (!this->defined_in ())
     {
       this->pd_name = (UTL_IdList *) n->copy ();
       return;
     }
 
+  // Initialize this name to 0.
+  this->pd_name = 0;
+
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
-  d = ScopeAsDecl (this->defined_in ());
-
-  if (d != 0)
+  UTL_ScopedName *cn = 0;
+  AST_Decl *d = ScopeAsDecl (this->defined_in ());
+  if (d)
     {
       cn = d->name ();
-    }
-
-  if (cn != 0)
-    {
-      this->pd_name = (UTL_IdList *) cn->copy ();
-    }
-
-  if (this->pd_local_name != 0)
-    {
-      if (this->pd_name == 0)
+      if (cn)
         {
-          ACE_NEW (this->pd_name,
-                   UTL_ScopedName (this->pd_local_name->copy (),
-                                   0));
+          this->pd_name = (UTL_IdList *) cn->copy ();
         }
-      else
+    }
+
+  if (this->pd_local_name)
+    {
+      if (this->pd_name)
         {
           UTL_ScopedName *conc_name = 0;
           ACE_NEW (conc_name,
-                   UTL_ScopedName (this->pd_local_name->copy (),
-                                   0));
-
+                   UTL_ScopedName (this->pd_local_name->copy (), 0));
           this->pd_name->nconc (conc_name);
+        }
+      else
+        {
+          ACE_NEW (this->pd_name,
+                   UTL_ScopedName (this->pd_local_name->copy (), 0));
         }
     }
 }
@@ -256,13 +307,11 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
       return;
     }
 
-  if (this->prefix_scope_ != 0)
+  if (this->prefix_scope_)
     {
       AST_Decl *decl = ScopeAsDecl (this->prefix_scope_);
-
       bool const overridden =
         decl->has_ancestor (ScopeAsDecl (appeared_in));
-
       if (overridden)
         {
           return;
@@ -275,26 +324,18 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   this->prefix_scope_ = appeared_in;
 
   UTL_Scope *s = DeclAsScope (this);
-
-  if (s != 0)
+  if (s)
     {
-      AST_Decl *tmp = 0;
-      UTL_Scope *s_tmp = 0;
-
       for (UTL_ScopeActiveIterator i (s, UTL_Scope::IK_decls);
            !i.is_done ();
            i.next ())
         {
-          tmp = i.item ();
-          s_tmp = DeclAsScope (tmp);
-
-          if (s_tmp == 0)
+          AST_Decl *tmp = i.item ();
+          UTL_Scope *s_tmp = DeclAsScope (tmp);
+          if (s_tmp)
             {
-              continue;
+              tmp->set_prefix_with_typeprefix_r (value, appeared_in);
             }
-
-          tmp->set_prefix_with_typeprefix_r (value,
-                                             appeared_in);
         }
     }
 
@@ -302,27 +343,17 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   if (this->node_type () == AST_Decl::NT_module)
     {
       AST_Module *m = AST_Module::narrow_from_decl (this);
-
-      for (ACE_Unbounded_Set_Iterator<AST_Module *> iter (m->prev_mods ());
-           !iter.done ();
-           iter.advance ())
+      while (!!(m = m->previous_opening ()))
         {
-          AST_Module **m = 0;
-          iter.next (m);
-          
-          for (UTL_ScopeActiveIterator si (*m, UTL_Scope::IK_decls);
+          for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
                !si.is_done ();
                si.next ())
             {
               AST_Decl *d = si.item ();
-
-              if (d->node_type () == AST_Decl::NT_pre_defined)
+              if (d->node_type () != AST_Decl::NT_pre_defined)
                 {
-                  continue;
+                  d->set_prefix_with_typeprefix_r (value, appeared_in);
                 }
-
-              d->set_prefix_with_typeprefix_r (value,
-                                               appeared_in);
             }
         }
     }
@@ -336,11 +367,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
 void
 AST_Decl::compute_full_name (void)
 {
- if (this->full_name_ != 0)
-    {
-      return;
-    }
-  else
+  if (!this->full_name_)
     {
       size_t namelen = 0;
       long first = true;
@@ -363,10 +390,9 @@ AST_Decl::compute_full_name (void)
           // Print the identifier.
           name = i.item ()->get_string ();
           namelen += ACE_OS::strlen (name);
-
           if (first)
             {
-              if (ACE_OS::strcmp (name, "") != 0)
+              if (ACE_OS::strcmp (name, ""))
                 {
                   // Does not start with a "".
                   first = false;
@@ -378,10 +404,8 @@ AST_Decl::compute_full_name (void)
             }
         }
 
-      ACE_NEW (this->full_name_,
-               char[namelen + 1]);
-
-      this->full_name_[0] = '\0';
+      ACE_NEW (this->full_name_, char [namelen + 1]);
+      this->full_name_ [0] = '\0';
       first = true;
       second = false;
 
@@ -401,10 +425,9 @@ AST_Decl::compute_full_name (void)
           // Print the identifier.
           name = j.item ()->get_string ();
           ACE_OS::strcat (this->full_name_, name);
-
           if (first)
             {
-              if (ACE_OS::strcmp (name, "") != 0)
+              if (ACE_OS::strcmp (name, ""))
                 {
                   // Does not start with a "".
                   first = false;
@@ -422,7 +445,7 @@ AST_Decl::compute_full_name (void)
 void
 AST_Decl::compute_repoID (void)
 {
- if (this->repoID_ != 0)
+  if (this->repoID_)
     {
       return;
     }
@@ -436,10 +459,9 @@ AST_Decl::compute_repoID (void)
   const char *parent_prefix = 0;
 
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (prefix, "") == 0 && scope != 0)
+  while (scope && !ACE_OS::strcmp (prefix, ""))
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-
       if (parent->node_type () == AST_Decl::NT_root
           && parent->imported ())
         {
@@ -458,14 +480,14 @@ AST_Decl::compute_repoID (void)
   scope = this->defined_in ();
 
   // If our version is has not bee set, we use the parent's, if any.
-  while (version == 0 && scope != 0)
+  while (!version && scope)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       version = parent->version_;
       scope = parent->defined_in ();
     }
 
-  if (version != 0)
+  if (version)
     {
       // Version member string + ':'
       namelen += ACE_OS::strlen (version) + 1;
@@ -504,7 +526,7 @@ AST_Decl::compute_repoID (void)
 
       if (first)
         {
-          if (ACE_OS::strcmp (name, "") != 0)
+          if (ACE_OS::strcmp (name, ""))
             {
               // Does not start with a "".
               first = false;
@@ -516,20 +538,12 @@ AST_Decl::compute_repoID (void)
         }
     }
 
-  ACE_NEW (this->repoID_,
-           char[namelen + 1]);
+  ACE_NEW (this->repoID_, char [namelen + 1]);
+  ACE_OS::sprintf (this->repoID_, "IDL:");
 
-  this->repoID_[0] = '\0';
-
-  ACE_OS::sprintf (this->repoID_,
-                   "%s",
-                   "IDL:");
-
-  if (ACE_OS::strcmp (prefix, "") != 0)
+  if (ACE_OS::strcmp (prefix, ""))
     {
-      ACE_OS::strcat (this->repoID_,
-                      prefix);
-
+      ACE_OS::strcat (this->repoID_, prefix);
       ACE_OS::strcat (this->repoID_, "/");
     }
 
@@ -559,13 +573,12 @@ AST_Decl::compute_repoID (void)
         }
       else
         {
-          ACE_OS::strcat (this->repoID_,
-                          name);
+          ACE_OS::strcat (this->repoID_, name);
         }
 
       if (first)
         {
-          if (ACE_OS::strcmp (name, "") != 0)
+          if (ACE_OS::strcmp (name, ""))
             {
               // Does not start with a "".
               first = false;
@@ -577,17 +590,14 @@ AST_Decl::compute_repoID (void)
         }
     }
 
-  if (version != 0)
+  if (version)
     {
-      ACE_OS::strcat (this->repoID_,
-                      ":");
-      ACE_OS::strcat (this->repoID_,
-                      version);
+      ACE_OS::strcat (this->repoID_, ":");
+      ACE_OS::strcat (this->repoID_, version);
     }
   else
     {
-      ACE_OS::strcat (this->repoID_,
-                      ":1.0");
+      ACE_OS::strcat (this->repoID_, ":1.0");
     }
 }
 
@@ -608,11 +618,7 @@ AST_Decl::flat_name (void)
 void
 AST_Decl::compute_flat_name (void)
 {
-  if (this->flat_name_ != 0)
-    {
-      return;
-    }
-  else
+  if (!this->flat_name_)
     {
       size_t namelen = 0;
       long first = true;
@@ -642,7 +648,7 @@ AST_Decl::compute_flat_name (void)
 
           if (first)
             {
-              if (ACE_OS::strcmp (item_name, "") != 0)
+              if (ACE_OS::strcmp (item_name, ""))
                 {
                   // Does not start with a "".
                   first = false;
@@ -652,16 +658,14 @@ AST_Decl::compute_flat_name (void)
                   second = true;
                 }
             }
-            
+
           tmp->destroy ();
           delete tmp;
           tmp = 0;
         }
 
-      ACE_NEW (this->flat_name_,
-               char[namelen + 1]);
-
-      this->flat_name_[0] = '\0';
+      ACE_NEW (this->flat_name_, char [namelen + 1]);
+      this->flat_name_ [0] = '\0';
       first = true;
       second = false;
 
@@ -687,7 +691,7 @@ AST_Decl::compute_flat_name (void)
 
           if (first)
             {
-              if (ACE_OS::strcmp (item_name, "") != 0)
+              if (ACE_OS::strcmp (item_name, ""))
                 {
                   // Does not start with a "".
                   first = false;
@@ -710,78 +714,106 @@ AST_Decl::node_type_to_string (NodeType nt)
 {
   switch (nt)
     {
-      case NT_module:
-        return "module";
-      case NT_interface:
-      case NT_interface_fwd:
-        return "interface";
-      case NT_valuetype:
-      case NT_valuetype_fwd:
-      case NT_valuebox:
-        return "valuetype";
-      case NT_const:
-        return "const";
-      case NT_except:
-        return "exception";
-      case NT_attr:
-        return "attribute";
-      case NT_union:
-      case NT_union_fwd:
-        return "union";
-      case NT_struct:
-      case NT_struct_fwd:
-        return "struct";
-      case NT_enum:
-        return "enum";
-      case NT_string:
-        return "string";
-      case NT_wstring:
-        return "wstring";
-      case NT_array:
-        return "array";
-      case NT_sequence:
-        return "sequence";
-      case NT_typedef:
-        return "typedef";
-      case NT_pre_defined:
-        return "primitive";
-      case NT_native:
-        return "native";
-      case NT_factory:
-        return "factory";
-      case NT_component:
-      case NT_component_fwd:
-        return "component";
-      case NT_home:
-        return "home";
-      case NT_eventtype:
-      case NT_eventtype_fwd:
-        return "eventtype";
-      case NT_type:
-        return "typename";
-      case NT_fixed:
-        return "fixed";
-      case NT_porttype:
-        return "porttype";
-      case NT_provides:
-        return "provides";
-      case NT_uses:
-        return "uses";
-      case NT_publishes:
-        return "publishes";
-      case NT_emits:
-        return "emits";
-      case NT_consumes:
-        return "consumes";
-      // No useful output for these.
-      case NT_enum_val:
-      case NT_field:
-      case NT_union_branch:
-      case NT_op:
-      case NT_argument:
-      case NT_root:
-      default:
-        return "";
+    case NT_module:
+      return "module";
+
+    case NT_interface:
+    case NT_interface_fwd:
+      return "interface";
+
+    case NT_valuetype:
+    case NT_valuetype_fwd:
+    case NT_valuebox:
+      return "valuetype";
+
+    case NT_const:
+      return "const";
+
+    case NT_except:
+      return "exception";
+
+    case NT_attr:
+      return "attribute";
+
+    case NT_union:
+    case NT_union_fwd:
+      return "union";
+
+    case NT_struct:
+    case NT_struct_fwd:
+      return "struct";
+
+    case NT_enum:
+      return "enum";
+
+    case NT_string:
+      return "string";
+
+    case NT_wstring:
+      return "wstring";
+
+    case NT_array:
+      return "array";
+
+    case NT_sequence:
+      return "sequence";
+
+    case NT_typedef:
+      return "typedef";
+
+    case NT_pre_defined:
+      return "primitive";
+
+    case NT_native:
+      return "native";
+
+    case NT_factory:
+      return "factory";
+
+    case NT_component:
+    case NT_component_fwd:
+      return "component";
+
+    case NT_home:
+      return "home";
+
+    case NT_eventtype:
+    case NT_eventtype_fwd:
+      return "eventtype";
+
+    case NT_type:
+      return "typename";
+
+    case NT_fixed:
+      return "fixed";
+
+    case NT_porttype:
+      return "porttype";
+
+    case NT_provides:
+      return "provides";
+
+    case NT_uses:
+      return "uses";
+
+    case NT_publishes:
+      return "publishes";
+
+    case NT_emits:
+      return "emits";
+
+    case NT_consumes:
+      return "consumes";
+
+    // No useful output for these.
+    case NT_enum_val:
+    case NT_field:
+    case NT_union_branch:
+    case NT_op:
+    case NT_argument:
+    case NT_root:
+    default:
+      return "";
     }
 }
 
@@ -790,44 +822,32 @@ AST_Decl::node_type_to_string (NodeType nt)
 bool
 AST_Decl::has_ancestor (AST_Decl *s)
 {
-  if (this == s)
+  AST_Decl *work = this;
+  do
     {
-      return true;
-    }
-    
-  AST_Module *m = AST_Module::narrow_from_decl (s);
-
-  if (m != 0)
-    {
-      ACE_Unbounded_Set<AST_Module *> &prev = m->prev_mods ();
-
-      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (prev);
-           !i.done ();
-           i.advance ())
+      if (work == s)
         {
-          AST_Module **mm = 0;
-          i.next (mm);
-          
-          for (UTL_ScopeActiveIterator si (*mm, UTL_Scope::IK_decls);
-               !si.is_done ();
-               si.next ())
+          return true;
+        }
+
+      AST_Module *m = AST_Module::narrow_from_decl (s);
+      if (m)
+        {
+          while (!!(m = m->previous_opening ()))
             {
-              AST_Decl *d = si.item ();
-          
-              if (this == d)
+              if (static_cast<AST_Decl *> (m) == s)
                 {
                   return true;
                 }
             }
         }
-    }
 
-  if (this->pd_defined_in == 0)
-    {
-      return false;
-    }
+      work = work->pd_defined_in ?
+             ScopeAsDecl (work->pd_defined_in) :
+             0;
+    } while (work);
 
-  return ScopeAsDecl (this->pd_defined_in)->has_ancestor (s);
+  return false;
 }
 
 bool
@@ -836,13 +856,12 @@ AST_Decl::is_child (AST_Decl *s)
   if (this->defined_in ())
     {
       AST_Decl *d = ScopeAsDecl (this->defined_in ());
-
-      if (d == 0)
+      if (!d)
         {
           return 0;
         }
 
-      if (ACE_OS::strcmp (d->full_name (), s->full_name ()) == 0)
+      if (!ACE_OS::strcmp (d->full_name (), s->full_name ()))
         {
           return 1;
         }
@@ -858,12 +877,7 @@ AST_Decl::is_nested (void)
 
   // If we have an outermost scope and if that scope is not that of the Root,
   // then we are defined at some nesting level.
-  if (d != 0 && d->node_type () != AST_Decl::NT_root)
-    {
-      return true;
-    }
-
-  return false;
+  return (d && d->node_type () != AST_Decl::NT_root);
 }
 
 // Dump this AST_Decl to the ostream o.
@@ -887,60 +901,12 @@ AST_Decl::ast_accept (ast_visitor *visitor)
   return visitor->visit_decl (this);
 }
 
-void
-AST_Decl::destroy (void)
-{
-  // These are not set for the root node.
-  if (this->pd_name != 0)
-    {
-      this->pd_name->destroy ();
-      delete this->pd_name;
-      this->pd_name = 0;
-    }
-
-  if (this->pd_local_name != 0)
-    {
-      this->pd_local_name->destroy ();
-      delete this->pd_local_name;
-      this->pd_local_name = 0;
-    }
-
-  if (this->pd_original_local_name != 0)
-    {
-      this->pd_original_local_name->destroy ();
-      delete this->pd_original_local_name;
-      this->pd_original_local_name = 0;
-    }
-
-  if (this->last_referenced_as_ != 0)
-    {
-      this->last_referenced_as_->destroy ();
-      delete this->last_referenced_as_;
-      this->last_referenced_as_ = 0;
-    }
-
-  delete [] this->full_name_;
-  this->full_name_ = 0;
-
-  delete [] this->repoID_;
-  this->repoID_ = 0;
-
-  delete [] this->prefix_;
-  this->prefix_ = 0;
-
-  delete [] this->version_;
-  this->version_ = 0;
-
-  delete [] this->flat_name_;
-  this->flat_name_ = 0;
-}
-
 // Data accessors.
 
 const char *
 AST_Decl::full_name (void)
 {
-  if (this->full_name_ == 0)
+  if (!this->full_name_)
     {
       this->compute_full_name ();
     }
@@ -957,7 +923,7 @@ AST_Decl::repoID (void)
       this->repoID_ = ACE::strnew ("");
     }
 
-  if (this->repoID_ == 0)
+  if (!this->repoID_)
     {
       this->compute_repoID ();
     }
@@ -968,11 +934,7 @@ AST_Decl::repoID (void)
 void
 AST_Decl::repoID (char *value)
 {
-  if (this->repoID_ != 0)
-    {
-      delete [] this->repoID_;
-    }
-
+  delete [] this->repoID_;
   this->repoID_ = value;
 }
 
@@ -992,7 +954,7 @@ AST_Decl::prefix (const char *value)
 const char *
 AST_Decl::version (void)
 {
-  if (this->version_ == 0)
+  if (!this->version_)
     {
       // Calling the method will compute if necessary.
       const char *repo_id = this->repoID ();
@@ -1002,19 +964,17 @@ AST_Decl::version (void)
       const char *tail1 = 0;
       const char *tail2 = 0;
 
-      if (repo_id != 0)
+      if (repo_id)
         {
-          tail1 = ACE_OS::strchr (repo_id,
-                                  ':');
+          tail1 = ACE_OS::strchr (repo_id, ':');
         }
 
-      if (tail1 != 0)
+      if (tail1)
         {
-          tail2 = ACE_OS::strchr (tail1 + 1,
-                                  ':');
+          tail2 = ACE_OS::strchr (tail1 + 1, ':');
         }
 
-      if (! this->typeid_set_ && tail2 != 0)
+      if (!this->typeid_set_ && tail2)
         {
           this->version_ = ACE::strnew (tail2 + 1);
         }
@@ -1031,19 +991,18 @@ void
 AST_Decl::version (char *value)
 {
   // Previous #pragma version or #pragma id make this illegal.
-  if ((this->version_ == 0  || ACE_OS::strcmp (this->version_, value) == 0)
-      && ! this->typeid_set_)
+  if ((!this->version_ || !ACE_OS::strcmp (this->version_, value))
+      && !this->typeid_set_)
     {
       delete [] this->version_;
       this->version_ = value;
 
       // Repo id is now computed eagerly, so a version set must update
       // is as well.
-      if (this->repoID_ != 0)
+      if (this->repoID_)
         {
           ACE_CString tmp (this->repoID_);
           ACE_CString::size_type const pos = tmp.rfind (':');
-
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1) + value;
@@ -1088,30 +1047,29 @@ AST_Decl::set_id_with_typeid (char *value)
   // Can't call 'typeid' twice, even with the same value.
   if (this->typeid_set ())
     {
-      idl_global->err ()->error1 (UTL_Error::EIDL_TYPEID_RESET,
-                                  this);
+      idl_global->err ()->error1 (UTL_Error::EIDL_TYPEID_RESET, this);
     }
 
   // Are we a legal type for 'typeid'?
   switch (this->pd_node_type)
-  {
+    {
     case AST_Decl::NT_field:
       {
         AST_Decl::NodeType nt =
           ScopeAsDecl (this->defined_in ())->node_type ();
 
-        if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
+        if (   nt == AST_Decl::NT_valuetype
+            || nt == AST_Decl::NT_eventtype)
           {
             break;
           }
         else
           {
-            idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
-                                        this);
-
+            idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID, this);
             return;
           }
       }
+
     case AST_Decl::NT_module:
     case AST_Decl::NT_interface:
     case AST_Decl::NT_const:
@@ -1125,12 +1083,11 @@ AST_Decl::set_id_with_typeid (char *value)
     case AST_Decl::NT_home:
     case AST_Decl::NT_eventtype:
       break;
-    default:
-      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID,
-                                  this);
 
+    default:
+      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEID, this);
       return;
-  }
+    }
 
   delete [] this->repoID_;
   this->repoID_ = 0;
@@ -1144,7 +1101,7 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
   // Are we a legal type for 'typeprefix'? This is checked only at
   // the top level.
   switch (this->pd_node_type)
-  {
+    {
     case AST_Decl::NT_module:
     case AST_Decl::NT_interface:
     case AST_Decl::NT_valuetype:
@@ -1153,15 +1110,13 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
     case AST_Decl::NT_union:
     case AST_Decl::NT_except:
       break;
+
     default:
-      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEPREFIX,
-                                  this);
-
+      idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEPREFIX, this);
       return;
-  }
+    }
 
-  this->set_prefix_with_typeprefix_r (value,
-                                      DeclAsScope (this));
+  this->set_prefix_with_typeprefix_r (value, DeclAsScope (this));
 }
 
 bool
@@ -1245,12 +1200,10 @@ UTL_ScopedName *
 AST_Decl::compute_name (const char *prefix,
                         const char *suffix)
 {
-  if (prefix == 0 || suffix == 0)
+  if (!prefix || !suffix)
     {
       return 0;
     }
-
-  UTL_ScopedName *result_name = 0;
 
   // Prepare prefix_<local_name>_suffix string.
 
@@ -1270,12 +1223,12 @@ AST_Decl::compute_name (const char *prefix,
   // UTL_Scoped name for the resulting local name.
   UTL_ScopedName *result_local_name = 0;
   ACE_NEW_RETURN (result_local_name,
-                  UTL_ScopedName (result_local_id,
-                                  0),
+                  UTL_ScopedName (result_local_id, 0),
                   0);
 
   // Global scope?
-  if (this->defined_in () == 0)
+  UTL_ScopedName *result_name = 0;
+  if (!this->defined_in ())
     {
       result_name = result_local_name;
     }
@@ -1285,22 +1238,19 @@ AST_Decl::compute_name (const char *prefix,
       // smash last cdr of copy with new component.
 
       AST_Decl *d = ScopeAsDecl (this->defined_in ());
-
-      if (d != 0)
+      if (d)
         {
           UTL_ScopedName *cn = d->name ();
-
-          if (cn != 0)
+          if (cn)
             {
               result_name = (UTL_ScopedName *) cn->copy ();
-
-              if (result_name == 0)
+              if (result_name)
                 {
-                  result_name = result_local_name;
+                  result_name->nconc (result_local_name);
                 }
               else
                 {
-                  result_name->nconc (result_local_name);
+                  result_name = result_local_name;
                 }
             }
         }
@@ -1317,17 +1267,16 @@ AST_Decl::set_name (UTL_ScopedName *n)
       return;
     }
 
-  if (this->pd_name != 0)
+  if (this->pd_name)
     {
       this->pd_name->destroy ();
       delete this->pd_name;
     }
 
   this->pd_name = n;
-
-  if (n != 0)
+  if (n)
     {
-      if (this->pd_local_name != 0)
+      if (this->pd_local_name)
         {
           this->pd_local_name->destroy ();
           delete this->pd_local_name;
@@ -1336,7 +1285,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
       this->pd_local_name = n->last_component ()->copy ();
 
       // The name without _cxx_ prefix removed, if there was any.
-      if (this->pd_original_local_name != 0)
+      if (this->pd_original_local_name)
         {
           this->pd_original_local_name->destroy ();
           delete this->pd_original_local_name;
@@ -1365,7 +1314,7 @@ AST_Decl::local_name (void)
 void
 AST_Decl::local_name (Identifier *id)
 {
-  if (this->pd_local_name != 0)
+  if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
     }
@@ -1378,7 +1327,7 @@ Identifier *
 AST_Decl::compute_local_name (const char *prefix,
                               const char *suffix)
 {
-  if (prefix == 0 || suffix == 0)
+  if (!prefix || !suffix)
     {
       return 0;
     }
@@ -1410,8 +1359,7 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (),
-                      "_cxx_")
+  if (ACE_OS::strstr (local_name->get_string (), "_cxx_")
         == local_name->get_string ())
     {
       // AACE_CString class is good to do this stuff.
@@ -1453,7 +1401,7 @@ AST_Decl::last_referenced_as (void) const
 void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
-  if (this->last_referenced_as_ != 0)
+  if (this->last_referenced_as_)
     {
       this->last_referenced_as_->destroy ();
     }
@@ -1482,51 +1430,53 @@ AST_Decl::contains_wstring (void)
     {
       switch (this->node_type ())
         {
-          case AST_Decl::NT_array:
-            {
-              AST_Array *a = AST_Array::narrow_from_decl (this);
-              this->contains_wstring_ =
-                a->base_type ()->contains_wstring ();
-              break;
-            }
-          case AST_Decl::NT_except:
-          case AST_Decl::NT_struct:
-          case AST_Decl::NT_union:
-            {
-              AST_Structure *s = AST_Structure::narrow_from_decl (this);
-              this->contains_wstring_ =
-                s->contains_wstring ();
-              break;
-            }
-          case AST_Decl::NT_sequence:
-            {
-              AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
-              this->contains_wstring_ =
-                s->base_type ()->contains_wstring ();
-              break;
-            }
-          case AST_Decl::NT_attr:
-          case AST_Decl::NT_field:
-          case AST_Decl::NT_union_branch:
-            {
-              AST_Field *f = AST_Field::narrow_from_decl (this);
-              this->contains_wstring_ =
-                f->field_type ()->contains_wstring ();
-              break;
-            }
-          case AST_Decl::NT_typedef:
-            {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
-              this->contains_wstring_ =
-                td->primitive_base_type ()->contains_wstring ();
-              break;
-            }
-          case AST_Decl::NT_wstring:
-            this->contains_wstring_ = 1;
+        case AST_Decl::NT_array:
+          {
+            AST_Array *a = AST_Array::narrow_from_decl (this);
+            this->contains_wstring_ = a->base_type ()->contains_wstring ();
             break;
-          default:
-            this->contains_wstring_ = 0;
+          }
+
+        case AST_Decl::NT_except:
+        case AST_Decl::NT_struct:
+        case AST_Decl::NT_union:
+          {
+            AST_Structure *s = AST_Structure::narrow_from_decl (this);
+            this->contains_wstring_ = s->contains_wstring ();
             break;
+          }
+
+        case AST_Decl::NT_sequence:
+          {
+            AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+            this->contains_wstring_ = s->base_type ()->contains_wstring ();
+            break;
+          }
+
+        case AST_Decl::NT_attr:
+        case AST_Decl::NT_field:
+        case AST_Decl::NT_union_branch:
+          {
+            AST_Field *f = AST_Field::narrow_from_decl (this);
+            this->contains_wstring_ = f->field_type ()->contains_wstring ();
+            break;
+          }
+
+        case AST_Decl::NT_typedef:
+          {
+            AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
+            this->contains_wstring_ =
+              td->primitive_base_type ()->contains_wstring ();
+            break;
+          }
+
+        case AST_Decl::NT_wstring:
+          this->contains_wstring_ = 1;
+          break;
+
+        default:
+          this->contains_wstring_ = 0;
+          break;
         }
     }
 
@@ -1549,31 +1499,24 @@ AST_Decl::masking_checks (AST_Decl *mod)
     }
 
   AST_Module *me_mod = AST_Module::narrow_from_decl (this);
-  AST_Module *of_mod = AST_Module::narrow_from_decl (mod);
-  
-  if (me_mod != 0 && of_mod != 0)
+  if (me_mod)
     {
-      for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR i (
-             of_mod->prev_mods ());
-           !i.done ();
-           i.advance ())
+      AST_Module *po_mod = AST_Module::narrow_from_decl (mod);
+      if (po_mod)
         {
-          AST_Module **m = 0;
-          i.next (m);
-          
-          if (*m == me_mod)
+          while (!!(po_mod = po_mod->previous_opening ()))
             {
-              return true;
+              if (po_mod == me_mod)
+                {
+                  return true;
+                }
             }
         }
     }
-    
+
   return false;
 }
 
 //Narrowing methods for AST_Decl.
 
 IMPL_NARROW_FROM_DECL(AST_Decl)
-
-
-
