@@ -39,14 +39,11 @@ namespace CIAO
         const typename DDS_TYPE::value_type& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      virtual void create_many (
-        const typename CCM_TYPE::seq_type& data);
+      virtual void create_many (const typename CCM_TYPE::seq_type& data);
 
-      virtual void update_many (
-        const typename CCM_TYPE::seq_type& data);
+      virtual void update_many (const typename CCM_TYPE::seq_type& data);
 
-      virtual void delete_many (
-        const typename CCM_TYPE::seq_type& data);
+      virtual void delete_many (const typename CCM_TYPE::seq_type& data);
 
       virtual bool is_global_scope ();
 
@@ -78,11 +75,9 @@ namespace CIAO
         const ::DDS::InstanceHandle_t & instance_handle,
         ::CCM_DDS::DataNumber_t index);
 
-      void check_existent (
-        const typename CCM_TYPE::seq_type& data);
+      void check_existent (const typename CCM_TYPE::seq_type& data);
 
-      void check_already_created (
-        const typename CCM_TYPE::seq_type& data);
+      void check_already_created (const typename CCM_TYPE::seq_type& data);
 
       bool is_global_scope_;
       bool is_coherent_write_;

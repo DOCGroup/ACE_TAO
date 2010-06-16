@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Wrapper facade for NDDS.
+ * DDS State Connector implementation
  */
 #ifndef DDS_STATE_CONNECTOR_T_H_
 #define DDS_STATE_CONNECTOR_T_H_
@@ -28,11 +28,9 @@ public:
    * DDS_Update operations
    */
   //@{
-  virtual typename CCM_TYPE::updater_type::_ptr_type
-  get_observable_data (void);
+  virtual typename CCM_TYPE::updater_type::_ptr_type get_observable_data (void);
 
-  virtual ::DDS::CCM_DataWriter_ptr
-  get_observable_dds_entity (void);
+  virtual ::DDS::CCM_DataWriter_ptr get_observable_dds_entity (void);
   //@}
 
   /**
@@ -43,8 +41,7 @@ public:
   virtual typename CCM_TYPE::reader_type::_ptr_type
   get_passive_observer_data (void);
 
-  virtual ::DDS::CCM_DataReader_ptr
-  get_passive_observer_dds_entity (void);
+  virtual ::DDS::CCM_DataReader_ptr get_passive_observer_dds_entity (void);
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_passive_observer_filter_config (void);
@@ -65,8 +62,7 @@ public:
   virtual typename CCM_TYPE::getter_type::_ptr_type
   get_pull_observer_fresh_data (void);
 
-  virtual ::DDS::CCM_DataReader_ptr
-  get_pull_observer_dds_entity (void);
+  virtual ::DDS::CCM_DataReader_ptr get_pull_observer_dds_entity (void);
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_pull_observer_filter_config (void);
@@ -87,8 +83,7 @@ public:
   virtual ::CCM_DDS::CCM_DataListenerControl_ptr
   get_push_observer_data_control (void);
 
-  virtual ::DDS::CCM_DataReader_ptr
-  get_push_observer_dds_entity (void);
+  virtual ::DDS::CCM_DataReader_ptr get_push_observer_dds_entity (void);
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_push_observer_filter_config (void);
@@ -109,8 +104,7 @@ public:
   virtual ::CCM_DDS::CCM_StateListenerControl_ptr
   get_push_state_observer_data_control (void);
 
-  virtual ::DDS::CCM_DataReader_ptr
-  get_push_state_observer_dds_entity (void);
+  virtual ::DDS::CCM_DataReader_ptr get_push_state_observer_dds_entity (void);
 
   virtual ::CCM_DDS::CCM_ContentFilterSetting_ptr
   get_push_state_observer_filter_config (void);
