@@ -1,3 +1,14 @@
+Wed Jun 16 16:06:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        
+          Removed incorrect generation of port prefix as part
+          of an operation name.
+
 Wed Jun 16 13:36:45 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode_Adapter.h:
