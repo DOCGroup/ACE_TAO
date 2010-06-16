@@ -1,3 +1,4 @@
+<!-- $Id $ -->
 <Deployment:DeploymentPlan
    xmlns:Deployment="http://www.omg.org/Deployment"
    xmlns:xmi="http://www.omg.org/XMI"
@@ -19,7 +20,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shapes_Receiver_Impl</string>
+          <string>create_Shapes_Receiver_comp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -30,7 +31,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shapes_Receiver_Servant</string>
+          <string>create_Shapes_Receiver_comp_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -41,7 +42,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver_svnt</string>
+          <string>ShapesReceiver_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -52,7 +53,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver_exec</string>
+          <string>ShapesReceiver_exec</string>
         </value>
       </value>
     </execParameter>
@@ -71,7 +72,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shapes_DDS_Event_Impl</string>
+          <string>create_Shapes_ShapesConnector_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +83,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shapes_DDS_Event_Servant</string>
+          <string>create_Shapes_ShapesConnector_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -93,7 +94,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shapes_Connector_svnt</string>
+          <string>Shapes_conn_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -104,11 +105,12 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shapes_Connector_exec</string>
+          <string>Shapes_conn_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -122,7 +124,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shape_Sender_Impl</string>
+          <string>create_Shapes_Sender_comp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -133,7 +135,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Shapes_Sender_Servant</string>
+          <string>create_Shapes_Sender_comp_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -144,7 +146,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender_svnt</string>
+          <string>ShapesSender_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -155,63 +157,21 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender_exec</string>
+          <string>ShapesSender_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
+
   <instance xmi:id="ReceiverComponentInstance">
     <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="ReceiverComponentImplementation" />
-    <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>1</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>get_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>read_data</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>false</boolean>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>raw_listen</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
-        </value>
-      </value>
-    </configProperty>
   </instance>
-  <instance xmi:id="Shapes_ConnectorComponentInstance">
+
+  <instance xmi:id="Shapes_SenderConnectorInstance">
     <name>Shapes_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
@@ -229,7 +189,8 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="Shapes_ConnectorComponentInstance2">
+
+  <instance xmi:id="Shapes_ReceiverConnectorInstance">
     <name>Shapes_ConnectorComponent2</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
@@ -247,88 +208,15 @@
       </value>
     </configProperty>
   </instance>
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="SenderComponentImplementation" />
-    <configProperty>
-      <name>rate</name>
-      <value>
-        <type>
-          <kind>tk_ulong</kind>
-        </type>
-        <value>
-          <ulong>10</ulong>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>max_x</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>225</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>max_y</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>250</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>max_size</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>25</ushort>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>resize_shape</name>
-      <value>
-        <type>
-          <kind>tk_boolean</kind>
-        </type>
-        <value>
-          <boolean>true</boolean>
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
-  <connection>
-    <name>info_out_data</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_data</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_data</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
   <connection>
     <name>_listenercontrol</name>
     <deployRequirement>
@@ -345,26 +233,7 @@
       <portName>push_consumer_data_control</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
-    </internalEndpoint>
-  </connection>
-  <connection>
-    <name>_portstatuslistener</name>
-    <deployRequirement>
-      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
-      <resourceType>Local_Interface</resourceType>
-    </deployRequirement>
-    <internalEndpoint>
-      <portName>info_out_status</portName>
-      <provider>true</provider>
-      <kind>Facet</kind>
-      <instance xmi:idref="ReceiverComponentInstance" />
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>push_consumer_status</portName>
-      <provider>false</provider>
-      <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ReceiverConnectorInstance" />
     </internalEndpoint>
   </connection>
   <connection>
@@ -383,7 +252,7 @@
       <portName>push_consumer_data_listener</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance2" />
+      <instance xmi:idref="Shapes_ReceiverConnectorInstance" />
     </internalEndpoint>
   </connection>
 
@@ -403,21 +272,21 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Shapes_ConnectorComponentInstance" />
+      <instance xmi:idref="Shapes_SenderConnectorInstance" />
     </internalEndpoint>
   </connection>
 
   <artifact xmi:id="Sender_ExecArtifact">
-    <name>Sender_exec</name>
+    <name>ShapesSender_exec</name>
     <source/>
     <node/>
-    <location>Sender_exec</location>
+    <location>ShapesSender_exec</location>
   </artifact>
   <artifact xmi:id="Sender_SvntArtifact">
-    <name>Sender_svnt</name>
+    <name>ShapesSender_svnt</name>
     <source/>
     <node/>
-    <location>Sender_svnt</location>
+    <location>ShapesSender_svnt</location>
   </artifact>
   <artifact xmi:id="Sender_StubArtifact">
     <name>Sender_stub</name>
@@ -426,34 +295,28 @@
     <location>Sender_stub</location>
   </artifact>
   <artifact xmi:id="Shapes_Connector_ExecArtifact">
-    <name>Shapes_Connector_exec</name>
+    <name>Shapes_conn_exec</name>
     <source/>
     <node/>
-    <location>DDS_Shapes_Connector_exec</location>
+    <location>Shapes_conn_exec</location>
   </artifact>
   <artifact xmi:id="Shapes_Connector_SvntArtifact">
-    <name>Shapes_Connector_svnt</name>
+    <name>Shapes_conn_svnt</name>
     <source/>
     <node/>
-    <location>DDS_Shapes_Connector_svnt</location>
-  </artifact>
-  <artifact xmi:id="Shapes_Connector_StubArtifact">
-    <name>Shapes_Connector_stub</name>
-    <source/>
-    <node/>
-    <location>DDS_Shapes_Connector_stub</location>
+    <location>Shapes_conn_svnt</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
-    <name>Receiver_exec</name>
+    <name>ShapesReceiver_exec</name>
     <source/>
     <node/>
-    <location>Receiver_exec</location>
+    <location>ShapesReceiver_exec</location>
   </artifact>
   <artifact xmi:id="Receiver_SvntArtifact">
-    <name>Receiver_svnt</name>
+    <name>ShapesReceiver_svnt</name>
     <source/>
     <node/>
-    <location>Receiver_svnt</location>
+    <location>ShapesReceiver_svnt</location>
   </artifact>
   <artifact xmi:id="Receiver_StubArtifact">
     <name>Receiver_stub</name>

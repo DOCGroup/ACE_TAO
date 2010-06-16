@@ -73,7 +73,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   };
 
   extern "C" SHAPES_RECEIVER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Receiver_Impl (void);
+  create_Shapes_Receiver_comp_Impl (void);
 }
 
 #endif /* ifndef */

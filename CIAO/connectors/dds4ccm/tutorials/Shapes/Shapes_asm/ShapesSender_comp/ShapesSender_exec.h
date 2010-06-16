@@ -105,7 +105,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
   };
 
   extern "C" SHAPES_SENDER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Shape_Sender_Impl (void);
+  create_Shapes_Sender_comp_Impl (void);
 }
 
 #endif /* ifndef */

@@ -1,3 +1,15 @@
+Wed Jun 16 06:43:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.cpp:
+          Renamed names of entrypoints
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/run_test.pl:
+          Resolved errors in deployment plan.
+
 Wed Jun 16 06:25:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Models:
