@@ -3,6 +3,7 @@
 #include "ContentFilterSetting.h"
 #include "dds4ccm/impl/dds/Log_Macros.h"
 #include "dds4ccm/impl/dds/Utils.h"
+#include "ace/Auto_Ptr.h"
 
 namespace CIAO
 {
@@ -60,15 +61,19 @@ namespace CIAO
           throw CORBA::INTERNAL ();
         }
 
-      char * name = 0;
-      ACE_NEW_THROW_EX (name,
-                        char[32],
-                        CORBA::NO_MEMORY ());
-      ACE_OS::sprintf (name ,
+      ACE_Auto_Array_Ptr <char> name;
+      {
+        char *name_bootstrap = 0;
+        ACE_NEW_THROW_EX (name_bootstrap,
+                          char[32],
+                          CORBA::NO_MEMORY ());
+        name.reset(name_bootstrap);
+      }
+      ACE_OS::sprintf (name.get (),
                        "DDS4CCM_CFT_%ld",
                        reinterpret_cast <unsigned long> (this));
 
-      this->cft_ = dp->create_contentfilteredtopic (name,
+      this->cft_ = dp->create_contentfilteredtopic (name.get (),
                                                     topic,
                                                     this->filter_.expression,
                                                     this->filter_.parameters);
@@ -80,8 +85,7 @@ namespace CIAO
         }
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                    "successfully created ContentFilteredTopic <%C>\n",
-                                   name));
-
+                                   name.get ()));
       return ::DDS::ContentFilteredTopic::_duplicate (this->cft_);
     }
 
