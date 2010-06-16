@@ -151,8 +151,7 @@ namespace DAnCE
     }
 
     void
-    build_name (const char *name,
-                CosNaming::Name &nm)
+    build_name (const char *name, CosNaming::Name &nm)
     {
       DANCE_TRACE ("Name_Utilities::build_name");
 
