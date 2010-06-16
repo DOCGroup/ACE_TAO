@@ -23,6 +23,8 @@ module DAnCE
   {
     readonly attribute string instance_type;
     
+    void configure (in ::Deployment::Properties config);
+
     void install_instance (in ::Deployment::DeploymentPlan plan,
                            in unsigned long instanceRef,
                            out any instance_reference)
@@ -31,6 +33,25 @@ module DAnCE
               Deployment::InvalidProperty,
               Deployment::InvalidNodeExecParameter,
               Deployment::InvalidComponentExecParameter);
+
+    void provide_endpoint_reference (in ::Deployment::DeploymentPlan plan,
+                                     in unsigned long connectionRef,
+                                     out any endpoint_reference)
+      raises (Deployment::PlanError);
+
+    void connect_instance (in ::Deployment::DeploymentPlan plan,
+                           in unsigned long connectionRef,
+                           in any provided_reference)
+      raises (Deployment::StartError, 
+              Deployment::InvalidConnection);
+    
+    void disconnect_instance (in ::Deployment::DeploymentPlan plan,
+                              in unsigned long connectionRef)
+      raises (::Deployment::StopError);
+
+    void instance_configured (in ::Deployment::DeploymentPlan plan,
+                              in unsigned long instanceRef)
+      raises (Deployment::StartError);
 
     void activate_instance (in ::Deployment::DeploymentPlan plan,
                             in unsigned long instanceRef,
@@ -46,25 +67,6 @@ module DAnCE
                           in unsigned long instanceRef,
                           in any instance_reference)
       raises (::Deployment::StopError);
-    
-    void provide_endpoint_reference (in ::Deployment::DeploymentPlan plan,
-                                     in unsigned long connectionRef,
-                                     out any endpoint_reference)
-      raises (Deployment::PlanError);
-
-    void connect_instance (in ::Deployment::DeploymentPlan plan,
-                           in unsigned long connectionRef,
-                           in any provided_reference)
-      raises (Deployment::StartError, 
-              Deployment::InvalidConnection);
-    
-    void disconnect_instance (in ::Deployment::DeploymentPlan plan,
-                              in unsigned long connectionRef)
-      raises (::Deployment::StopError);
-    
-    void instance_configured (in ::Deployment::DeploymentPlan plan,
-                              in unsigned long instanceRef)
-      raises (Deployment::StartError);
   };
 
   interface LocalityManager :
