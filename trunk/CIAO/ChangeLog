@@ -1,3 +1,15 @@
+Wed Jun 16 05:23:27 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/dds4ccm/examples/Shapes/models:
+        * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
+        
+          Shapes PICML model that can be used to generate IDL.
+
+        * connectors/dds4ccm/models:
+        * connectors/dds4ccm/models/dds4ccm.xme:
+        
+          dds4ccm PICML library.
+
 Wed Jun 16 01:37:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ChangeLog:
@@ -5,7 +17,7 @@ Wed Jun 16 01:37:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
         * DAnCE/MPC/config/dance_deployment_scheduler.mpb:
 
-          Fuzz fix. 
+          Fuzz fix.
 
 Wed Jun 16 01:25:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
