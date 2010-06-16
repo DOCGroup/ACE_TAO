@@ -93,9 +93,30 @@ namespace CIAO_Shapes_Control_comp_Impl
       this->context_->get_connection_control ();
     if (! ::CORBA::is_nil (control))
       {
-        control->setSize (this->current_size_);
-        control->setLocation (this->current_x_,
-                              this->current_y_);
+        if (control->setSize (this->current_size_) == ::Shapes::RETURN_ERROR)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Control_exec_i::tick : ")
+                                  ACE_TEXT ("Setting shapes size\n")));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Control_exec_i::tick : ")
+                                  ACE_TEXT ("Size set to <%u>.\n"),
+                                  this->current_size_));
+          }
+        if (control->setLocation (this->current_x_,
+                                  this->current_y_) == ::Shapes::RETURN_ERROR)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Control_exec_i::tick : ")
+                                  ACE_TEXT ("Setting shapes location\n")));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Control_exec_i::tick : ")
+                                  ACE_TEXT ("Location set to <%u>, <%u>.\n"),
+                                  this->current_x_,
+                                  this->current_y_));
+          }
       }
     else
       {
@@ -115,7 +136,7 @@ namespace CIAO_Shapes_Control_comp_Impl
                 ACE_Time_Value (0, usec)) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Control_exec_i::start : ")
-                             ACE_TEXT ("Error scheduling timer")));
+                            ACE_TEXT ("Error scheduling timer\n")));
     }
   }
 
