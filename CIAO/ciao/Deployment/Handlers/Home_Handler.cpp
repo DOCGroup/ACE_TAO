@@ -370,4 +370,10 @@ namespace CIAO
     CIAO_TRACE ("Home_Handler_i::instance_configured");
     // nothing to be done
   }
+
+  void
+  Home_Handler_i::configure ( const ::Deployment::Properties&)
+  {
+    
+  }
 }

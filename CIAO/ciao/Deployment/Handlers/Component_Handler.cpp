@@ -463,6 +463,11 @@ namespace CIAO
                         
       }
     
-  }  
-
+  }
+  
+  void
+  Component_Handler_i::configure (const ::Deployment::Properties & )
+  {
+    
+  }
 }
