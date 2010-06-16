@@ -1,3 +1,4 @@
+// $Id$
 project : dance_skel, dance_logger {
    after += DAnCE_Deployment_Scheduler
    libs += DAnCE_Deployment_Scheduler
