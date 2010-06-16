@@ -14,6 +14,5 @@ workspace {
   $(CIAO_ROOT)/ciao/Logger/Logger.mpc
   $(CIAO_ROOT)/connectors/dds4ccm/idl/dds4ccm_stub.mpc
   $(CIAO_ROOT)/connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc
-  $(CIAO_ROOT)/connectors/dds4ccm/impl/logger
   $(CIAO_ROOT)/connectors/dds4ccm/impl/dds
 }
