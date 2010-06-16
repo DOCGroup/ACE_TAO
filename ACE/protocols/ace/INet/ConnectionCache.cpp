@@ -201,7 +201,12 @@ namespace ACE
                 else
                   {
                     // wait for connection to become ready/free
-                    this->condition_.wait ();
+                    if (this->condition_.wait () != 0)
+                      {
+                        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::claim_connection - ")
+                                              ACE_TEXT ("error waiting for connection condition (%p)\n")));
+                        return false;
+                      }
                   }
               }
             while (0);
