@@ -1,0 +1,16 @@
+project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance_logger {
+  dynamicflags = DEPLOYMENT_SCHEDULER_BUILD_DLL
+  
+  Source_Files {
+    Deployment_Events.cpp
+    Plugin_Manager.cpp
+    Deployment_Scheduler.cpp
+  }
+ 
+  Header_Files {
+    Plugin_Manager.h
+    Deployment_Events.h
+    Deployment_Scheduler.h
+    Deployment_Scheduler_export.h
+  }
+}
