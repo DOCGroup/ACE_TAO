@@ -14,6 +14,7 @@ module DAnCE
 {
   local interface DeploymentInterceptor
   {
+    void configure (in ::Deployment::Properties config);
   };
 
   local interface PlanPreprocessing : DeploymentInterceptor
@@ -41,7 +42,7 @@ module DAnCE
               ::Deployment::InvalidComponentExecParameter);
   };
 
-  local interface InstanceConnection
+  local interface InstanceConnection : DeploymentInterceptor
   {
     void instance_pre_connect (inout ::Deployment::DeploymentPlan plan,
                                in unsigned long connection_index,

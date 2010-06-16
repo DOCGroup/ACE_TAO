@@ -44,6 +44,22 @@ namespace DAnCE
             }
         }
     }
+    
+    void build_property_sequence (::Deployment::Properties &prop,
+                                  const PROPERTY_MAP &pmap)
+    {
+      CORBA::ULong pos = prop.length ();
+            
+      prop.length (pos + pmap.current_size ());
+      
+      for (PROPERTY_MAP::const_iterator i = pmap.begin ();
+           i != pmap.end ();
+           ++i)
+        {
+          prop[pos].name = (*i).ext_id_.c_str ();
+          prop[pos++].value = (*i).int_id_;
+        }
+    }
 
     int write_IOR (const ACE_TCHAR *pathname, const char *ior)
     {
