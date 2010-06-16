@@ -1,3 +1,10 @@
+Wed Jun 16 01:16:25 UTC 2010  William Otte  <wotte@zifnab>
+
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.inl:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_Impl.h:
+
+          Compile fix for OS X.
+
 Tue Jun 15 22:36:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	Finishing integration of artifact installation.

@@ -52,7 +52,7 @@ namespace DAnCE
           TVersions& versions ();
           const TVersions& versions () const;
 
-          ulong install_count () const;
+          u_long install_count () const;
           void increment_install_count ();
           void decrement_install_count ();
 
