@@ -4,7 +4,7 @@
 
 // #include "Shapes_defn.idl"
 
-#pragma ciao lem "Shapes_Control_objE.idl"
+#pragma ciao lem "ShapesControl_objE.idl"
 
 module Shapes
 {

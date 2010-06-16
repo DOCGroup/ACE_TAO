@@ -1,0 +1,120 @@
+// $Id$
+
+project(ShapesControl_obj_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_STUB_Export \
+              -Wb,stub_export_include=ShapesControl_obj_stub_export.h \
+              -Wb,skel_export_macro=SHAPES_CONTROL_SVNT_Export \
+              -Wb,skel_export_include=ShapesControl_obj_svnt_export.h \
+              -Wb,svnt_export_macro=SHAPES_CONTROL_SVNT_Export \
+              -Wb,svnt_export_include=ShapesControl_obj_svnt_export.h \
+              -Wb,exec_export_macro=SHAPES_CONTROL_EXEC_Export \
+              -Wb,exec_export_include=ShapesControl_exec_export.h \
+              -I ../ports \
+              -I ports \
+              -o GeneratedCode
+
+  IDL_Files {
+    ports/ShapesControl_obj.idl
+    gendir = GeneratedCode
+  }
+}
+
+project(ShapesControl_obj_lem_gen) : ciaoidldefaults {
+  after += ShapesControl_obj_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_LEM_STUB_Export \
+              -Wb,stub_export_include=ShapesControl_obj_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ../ports \
+              -I ports \
+              -o GeneratedCode
+
+  IDL_Files {
+    GeneratedCode/ShapesControl_objE.idl
+    gendir = GeneratedCode
+  }
+}
+
+project(ShapesControl_obj_lem_stub) : ccm_svnt {
+  after += ShapesControl_obj_lem_gen ShapesControl_obj_stub
+  libs  += ShapesControl_obj_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../ports/GeneratedCode
+  sharedname = ShapesControl_obj_lem_stub
+  dynamicflags   = SHAPES_CONTROL_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/ShapesControl_objEC.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/ShapesControl_objEC.h
+    GeneratedCode/ShapesControl_obj_lem_stub_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/ShapesControl_objEC.inl
+  }
+}
+
+project(ShapesControl_obj_stub) : ccm_stub {
+  after += ShapesControl_obj_idl_gen
+  libs  +=
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../ports/GeneratedCode
+  sharedname = ShapesControl_obj_stub
+  dynamicflags = SHAPES_CONTROL_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/ShapesControl_objC.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/ShapesControl_objC.h
+    GeneratedCode/ShapesControl_obj_stub_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/ShapesControl_objC.inl
+  }
+}
+
+
+project(ShapesControl_obj_svnt) : ciao_servant {
+  after      += ShapesControl_obj_lem_stub ShapesControl_obj_stub
+  sharedname  = ShapesControl_obj_svnt
+  libs       += ShapesControl_obj_stub ShapesControl_obj_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ../ports/GeneratedCode
+  dynamicflags = SHAPES_CONTROL_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/ShapesControl_objS.cpp
+    GeneratedCode/ShapesControl_obj_svnt.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/ShapesControl_objS.h
+    GeneratedCode/ShapesControl_obj_svnt.h
+    GeneratedCode/ShapesControl_obj_svnt_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/ShapesControl_objS.inl
+  }
+}
+
+
