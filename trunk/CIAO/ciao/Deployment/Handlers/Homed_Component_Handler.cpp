@@ -422,4 +422,10 @@ namespace CIAO
                         
       }    
   }
+
+  void
+  Homed_Component_Handler_i::configure (const ::Deployment::Properties&)
+  {
+    
+  }
 }

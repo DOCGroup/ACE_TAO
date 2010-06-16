@@ -202,5 +202,11 @@ namespace CIAO
     CIAO_TRACE ("Container_Handler_i::instance_configured");
     // nothing to be done
   }
+
+  void
+  Container_Handler_i::configure (const ::Deployment::Properties & )
+  {
+    
+  }
 }
 
