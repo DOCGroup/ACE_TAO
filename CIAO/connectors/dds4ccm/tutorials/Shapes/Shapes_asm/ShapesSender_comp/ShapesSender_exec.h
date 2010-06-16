@@ -5,6 +5,7 @@
 #define CIAO_SENDER_EXEC_H_
 
 #include "ShapesSender_compEC.h"
+#include "ShapesControl_objEC.h"
 
 #include /**/ "ShapesSender_exec_export.h"
 
@@ -20,19 +21,24 @@ namespace CIAO_Shapes_Sender_comp_Impl
   class Sender_exec_i;
 
   //============================================================
-  // pulse_Generator
+  // Controller_exec_i
   //============================================================
-  class pulse_Generator : public ACE_Event_Handler
+  class Controller_exec_i
+    : public virtual ::Shapes::CCM_Control_obj,
+      public virtual ::CORBA::LocalObject
   {
   public:
-    pulse_Generator (Sender_exec_i &callback);
+    Controller_exec_i (Sender_exec_i &callback);
+    virtual ~Controller_exec_i (void);
 
-    virtual ~pulse_Generator ();
+    virtual ::CORBA::Boolean
+    setSize (::CORBA::UShort size);
 
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    virtual ::CORBA::Boolean
+    setLocation (::CORBA::UShort x, ::CORBA::UShort y);
+
   private:
-    Sender_exec_i &pulse_callback_;
+    Sender_exec_i &callback_;
   };
 
   //============================================================
@@ -46,26 +52,6 @@ namespace CIAO_Shapes_Sender_comp_Impl
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
 
-    ::CORBA::ULong rate (void);
-
-    void rate (::CORBA::ULong rate);
-
-    ::CORBA::UShort max_x (void);
-
-    void max_x (::CORBA::UShort max_x);
-
-    ::CORBA::UShort max_y (void);
-
-    void max_y (::CORBA::UShort max_y);
-
-    ::CORBA::UShort max_size (void);
-
-    void max_size (::CORBA::UShort max_size);
-
-    void resize_shape (::CORBA::Boolean resize);
-
-    ::CORBA::Boolean resize_shape (void);
-
     virtual ::Shapes::CCM_Control_obj_ptr
     get_control (void);
 
@@ -77,31 +63,19 @@ namespace CIAO_Shapes_Sender_comp_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    void tick ();
+    bool
+    setSize (::CORBA::UShort size);
 
+    bool
+    setLocation (::CORBA::UShort x, ::CORBA::UShort y);
+
+    bool
+    update_square (void);
   private:
     ::Shapes::CCM_Sender_comp_Context_var context_;
-
-    ::Shapes::ShapesConnector::Writer_var writer_;
-
-    pulse_Generator * ticker_;
-
-    CORBA::ULong rate_;
-    CORBA::UShort max_x_;
-    CORBA::UShort max_y_;
-    CORBA::UShort max_size_;
-    CORBA::Boolean resize_;
-
-    bool x_increasing_;
-    bool y_increasing_;
-    bool size_increasing_;
-
-    ShapeType* square_;
-
     ::DDS::InstanceHandle_t instance_handle_;
 
-    void start (void);
-    void stop (void);
+    ShapeType square_;
   };
 
   extern "C" SHAPES_SENDER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr

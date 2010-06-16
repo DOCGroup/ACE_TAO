@@ -11,7 +11,13 @@ module Shapes
 {
   component Control_comp
   {
-    provides Shapes::Control_obj control;
+    uses Shapes::Control_obj control;
+
+    attribute unsigned long rate;
+    attribute unsigned short max_x;
+    attribute unsigned short max_y;
+    attribute unsigned short max_size;
+    attribute boolean resize_shape;
   };
 };
 
