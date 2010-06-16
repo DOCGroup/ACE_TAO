@@ -1,0 +1,37 @@
+// $Id$
+
+project(Shapes_defn_idl_gen) : taoidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_STUB_Export \
+              -Wb,stub_export_include=Shapes_defn_stub_export.h \
+              -SS -Gxhst \
+              -o GeneratedCode
+
+  IDL_Files {
+    Shapes_defn.idl
+    gendir = GeneratedCode
+  }
+}
+
+
+project(Shapes_defn_stub) : ccm_stub {
+  after += Shapes_defn_idl_gen
+  libpaths += ../lib
+  libout = ../lib
+  includes += ./GeneratedCode
+  sharedname = Shapes_defn_stub
+  dynamicflags = SHAPES_CONTROL_STUB_BUILD_DLL
+
+  Source_Files {
+    GeneratedCode/Shapes_defnC.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/Shapes_defnC.h
+    GeneratedCode/Shapes_defn_stub_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/Shapes_defnC.inl
+  }
+}

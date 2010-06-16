@@ -97,11 +97,12 @@ project(ShapesSender_stub) : ccm_stub, dds4ccm_base {
 
 project(ShapesSender_exec) : ciao_executor, dds4ccm_base {
   after   += ShapesSender_lem_stub ShapesSender_stub Shapes_conn_lem_stub \
-             Shapes_conn_stub ShapesControl_lem_stub ShapesControl_obj_lem_stub
+             Shapes_conn_stub ShapesControl_lem_stub ShapesControl_obj_lem_stub \
+             Shapes_defn_stub ShapesControl_obj_stub
   sharedname = ShapesSender_exec
   libs += ShapesSender_stub ShapesSender_lem_stub Shapes_msg_stub \
           Shapes_conn_lem_stub Shapes_conn_stub ShapesControl_lem_stub \
-          ShapesControl_obj_lem_stub
+          ShapesControl_obj_lem_stub Shapes_defn_stub ShapesControl_obj_stub
   libpaths += ../lib
   includes +=  ./GeneratedCode \
                ../ports/GeneratedCode \
