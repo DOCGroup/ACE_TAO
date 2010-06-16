@@ -15,14 +15,11 @@ namespace DAnCE
      *  ArtifactRegistry
      */
 
-    ArtifactRegistry::ArtifactRegistry ()
-      : install_count_ (0)
+    ArtifactRegistry::ArtifactRegistry (TCONDITION& condition, bool locked)
+      : condition_ (condition),
+        locked_ (locked),
+        install_count_ (0)
     {
-    }
-
-    ArtifactRegistry::ArtifactRegistry (const ArtifactRegistry& ar)
-    {
-      *this = ar;
     }
 
     ArtifactRegistry::~ArtifactRegistry ()
@@ -37,7 +34,8 @@ namespace DAnCE
     ArtifactInstallation_Impl::TLOCK ArtifactInstallation_Impl::handler_lock_;
 
     ArtifactInstallation_Impl::ArtifactInstallation_Impl ()
-        : POA_DAnCE::ArtifactInstallation ()
+      : POA_DAnCE::ArtifactInstallation (),
+        artifacts_condition_ (artifacts_lock_)
     {
     }
 
@@ -301,40 +299,55 @@ namespace DAnCE
                                                            const std::string& name)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
+                          artifacts_guard_,
+                          artifacts_lock_,
                           throw Deployment::PlanError (
                             plan_uuid.c_str (),
-                            "ArtifactInstallation handler lock failed"));
+                            "artifacts lock failed"));
 
-      // get existing or create new
-      ArtifactRegistry* ar = 0;
-      TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
-      TArtifactsMap::iterator it_art = plan_map.find (name);
-      if (it_art == plan_map.end ())
+      while (true)
         {
-          ACE_NEW_NORETURN (ar, ArtifactRegistry ());
-          if (ar == 0)
+          // get existing or create new
+          ArtifactRegistry* ar = 0;
+          TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
+          TArtifactsMap::iterator it_art = plan_map.find (name);
+          if (it_art == plan_map.end ())
             {
-              throw Deployment::PlanError (
-                plan_uuid.c_str (),
-                "out of memory");
+              ACE_NEW_NORETURN (ar, ArtifactRegistry (this->artifacts_condition_,
+                                                      true));
+              if (ar == 0)
+                {
+                  throw Deployment::PlanError (
+                    plan_uuid.c_str (),
+                    "out of memory");
+                }
+              plan_map[name] = ar;
+              return ar; // we created it locked so we're ready
             }
-          plan_map[name] = ar;
-        }
-      else
-        {
-          ar = it_art->second;
-        }
+          else
+            {
+              ar = it_art->second;
+            }
 
-      // lock
-      if (ar->lock ().acquire () != 0)
-        {
-          throw Deployment::PlanError (
-            plan_uuid.c_str (),
-            "ArtifactRegistry lock failed");
+          // lock
+          if (ar->is_locked ())
+            {
+              // registry is locked by another thread so wait
+              if (this->artifacts_condition_.wait () != 0)
+                {
+                  throw Deployment::PlanError (
+                    plan_uuid.c_str (),
+                    "artifact registry lock failed");
+                }
+            }
+          else
+            {
+              // we're free to set the lock
+              ar->set_locked ();
+              return ar;
+            }
         }
-      return ar;
+      return 0;
     }
 
     ArtifactRegistry*
@@ -342,33 +355,46 @@ namespace DAnCE
                                                        const std::string& name)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
+                          artifacts_guard_,
+                          artifacts_lock_,
                           throw Deployment::PlanError (
                             plan_uuid.c_str (),
-                            "ArtifactInstallation handler lock failed"));
+                            "artifacts lock failed"));
 
-      // get existing
-      TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
-      TArtifactsMap::iterator it_art = plan_map.find (name);
-      if (it_art == plan_map.end ())
+      while (true)
         {
-          std::string err ("unknown artifact ");
-          err += name;
-          throw Deployment::PlanError (
-            plan_uuid.c_str (),
-            err.c_str ());
-        }
-      ArtifactRegistry* ar = it_art->second;
+          // get existing
+          TArtifactsMap& plan_map = this->artifacts_[plan_uuid];
+          TArtifactsMap::iterator it_art = plan_map.find (name);
+          if (it_art == plan_map.end ())
+            {
+              std::string err ("unknown artifact ");
+              err += name;
+              throw Deployment::PlanError (
+                plan_uuid.c_str (),
+                err.c_str ());
+            }
+          ArtifactRegistry* ar = it_art->second;
 
-      // lock
-      if (ar->lock ().acquire () != 0)
-        {
-          throw Deployment::PlanError (
-            plan_uuid.c_str (),
-            "ArtifactRegistry lock failed");
+          // lock
+          if (ar->is_locked ())
+            {
+              // registry is locked by another thread so wait
+              if (this->artifacts_condition_.wait () != 0)
+                {
+                  throw Deployment::PlanError (
+                    plan_uuid.c_str (),
+                    "artifact registry lock failed");
+                }
+            }
+          else
+            {
+              // we're free to set the lock
+              ar->set_locked ();
+              return ar;
+            }
         }
-      return ar;
+      return 0;
     }
 
     void ArtifactInstallation_Impl::remove (
@@ -499,6 +525,8 @@ namespace DAnCE
       const std::string& plan_uuid,
       const std::string& name)
     {
+      ArtifactRegistry* ar = 0;
+
       // lock the artifact registry for the given plan
       ArtifactRegistry::Guard ar_guard (this->lock_artifact_registry (plan_uuid, name));
 
@@ -510,6 +538,13 @@ namespace DAnCE
           // only if we reach 0, we really remove artifacts
           if (ar_guard->install_count () == 0)
             {
+              ACE_GUARD_REACTION (TLOCK,
+                                  artifacts_guard_,
+                                  artifacts_lock_,
+                                  throw Deployment::PlanError (
+                                    plan_uuid.c_str (),
+                                    "artifacts lock failed"));
+
               DANCE_DEBUG (6, (LM_TRACE,  DLINFO ACE_TEXT("ArtifactInstallation_Impl::remove - ")
                               ACE_TEXT ("removing versions for artifact %C from plan %C\n"),
                               name.c_str (), plan_uuid.c_str ()));
@@ -517,11 +552,10 @@ namespace DAnCE
               // erase the artifact registry
               this->artifacts_[plan_uuid].erase (name);
 
-              ArtifactRegistry* ar = &ar_guard;
-              return ar;
+              ar = &ar_guard;
             }
         }
-      return 0;
+      return ar;
     }
 
     void ArtifactInstallation_Impl::remove_artifacts_map (
@@ -529,11 +563,11 @@ namespace DAnCE
       TArtifactsMap& artifacts_map)
     {
       ACE_GUARD_REACTION (TLOCK,
-                          handler_guard_,
-                          handler_lock_,
+                          artifacts_guard_,
+                          artifacts_lock_,
                           throw Deployment::PlanError (
                             plan_uuid.c_str (),
-                            "ArtifactInstallation handler lock failed"));
+                            "artifacts lock failed"));
 
       TArtifactsRegistry::iterator it_reg = this->artifacts_.find (plan_uuid);
       if (it_reg != this->artifacts_.end ())
@@ -544,12 +578,17 @@ namespace DAnCE
     }
 
     char * ArtifactInstallation_Impl::get_artifact_location (
-      const char * uuid,
+      const char * plan_uuid,
       const char * artifact_name)
     {
-      ACE_GUARD_RETURN (TLOCK, guard_, handler_lock_, 0);
+      ACE_GUARD_REACTION (TLOCK,
+                          artifacts_guard_,
+                          artifacts_lock_,
+                          throw Deployment::PlanError (
+                            plan_uuid,
+                            "artifacts lock failed"));
 
-      TArtifactsRegistry::iterator it_reg = this->artifacts_.find (uuid);
+      TArtifactsRegistry::iterator it_reg = this->artifacts_.find (plan_uuid);
       if (it_reg != this->artifacts_.end ())
         {
           TArtifactsMap::iterator it_art = it_reg->second.find (artifact_name);
