@@ -20,7 +20,8 @@ namespace DAnCE
     Copy_UUID_Generator ();
 
     void      generate_sub_uuid (const Deployment::DeploymentPlan &parent_plan,
-                                 Deployment::DeploymentPlan &sub_plan);
+                                 Deployment::DeploymentPlan &sub_plan,
+                                 CORBA::ULong sub_plan_index);
   };
 
   class DAnCE_Split_Plan_Export Unique_Sub_UUID_Generator
@@ -29,7 +30,8 @@ namespace DAnCE
     Unique_Sub_UUID_Generator ();
 
     void      generate_sub_uuid (const Deployment::DeploymentPlan &parent_plan,
-                                 Deployment::DeploymentPlan &sub_plan);
+                                 Deployment::DeploymentPlan &sub_plan,
+                                 CORBA::ULong sub_plan_index);
   };
 
 }

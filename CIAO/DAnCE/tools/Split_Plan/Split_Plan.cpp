@@ -64,7 +64,9 @@ namespace DAnCE
               // generic initialization of new sub plan
 
               // use UUID generator to generate UUID for sub plan
-              sub_uuid_gen.generate_sub_uuid (plan, sub_plan);
+              sub_uuid_gen.generate_sub_uuid (plan,
+                                              sub_plan,
+                                              this->sub_plans_.current_size ());
 
               DANCE_DEBUG (9, (LM_TRACE, DLINFO
                               ACE_TEXT("Split_Plan::split_plan - ")
