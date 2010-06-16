@@ -282,4 +282,27 @@ AST_InterfaceFwd::destroy (void)
   this->AST_Type::destroy ();
 }
 
+bool
+AST_InterfaceFwd::is_fwd (void)
+{
+  return true; // This is a fwd declared type
+}
+
+// We don't actually want the forward declaration,
+// but want to return the full definition member,
+// whether defined yet or not.
+AST_Decl *
+AST_InterfaceFwd::adjust_found (
+  bool ignore_fwd,
+  bool full_def_only)
+{
+  if (ignore_fwd)
+    {
+      AST_Interface *i = this->full_definition ();
+      return (full_def_only && !i->is_defined () ? 0 : i);
+    }
+
+  return this;
+}
+
 IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

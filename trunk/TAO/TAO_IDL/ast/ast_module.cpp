@@ -102,22 +102,38 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 
 AST_Decl::NodeType const
-AST_Module::NT = AST_Decl::NT_module;
+  AST_Module::NT = AST_Decl::NT_module;
 
-bool AST_Module::in_prev_ = false;
-
-AST_Module::AST_Module (UTL_ScopedName *n)
- : AST_Decl (AST_Decl::NT_module,
-             n),
-   UTL_Scope (AST_Decl::NT_module),
-   pd_has_nested_valuetype (0),
-   from_inst_ (0)
+AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
+  : AST_Decl (AST_Decl::NT_module, n),
+    UTL_Scope (AST_Decl::NT_module),
+    pd_has_nested_valuetype_ (0),
+    previous_opening_ (previous),
+    last_in_same_parent_scope_ (this),
+    from_inst_ (0)
 {
+  // NOTE previous passed into this constructor should be
+  // the FIRST module that is a previous opening of this same
+  // module in the scope in which it is stored. Later on if
+  // the module is validated and added to it's scope, the
+  // previous_opening_ will be adjusted to be the immediatly
+  // previous opening of this module. See fe_add_module ()
+  // below.
 }
 
 AST_Module::~AST_Module (void)
 {
 }
+
+void
+AST_Module::destroy (void)
+{
+  this->UTL_Scope::destroy ();
+  this->AST_Decl::destroy ();
+}
+
+IMPL_NARROW_FROM_DECL(AST_Module)
+IMPL_NARROW_FROM_SCOPE(AST_Module)
 
 // Dump this AST_Module node to the ostream o.
 void
@@ -131,30 +147,38 @@ AST_Module::dump (ACE_OSTREAM_TYPE &o)
   this->dump_i (o, "}");
 }
 
+// We actually want to match the LAST module found in
+// the scope being searched not the FIRST one in the
+// list.
+AST_Decl *
+AST_Module::adjust_found (
+  bool /*ignore_fwd*/,
+  bool /*full_def_only*/)
+{
+  return this->last_in_same_parent_scope_;
+}
 
 // Involved in OBV_ namespace generation.
 void
 AST_Module::set_has_nested_valuetype (void)
 {
   UTL_Scope *parent = this->defined_in ();
-
-  if (!this->pd_has_nested_valuetype && parent)
+  if (parent && !this->pd_has_nested_valuetype_)
     {
       AST_Module *pm = AST_Module::narrow_from_scope (parent);
-
-      if (pm != 0)
+      if (pm)
         {
           pm->set_has_nested_valuetype ();
         }
     }
 
-  this->pd_has_nested_valuetype = 1;
+  this->pd_has_nested_valuetype_ = 1;
 }
 
 bool
 AST_Module::has_nested_valuetype (void)
 {
-  return this->pd_has_nested_valuetype;
+  return this->pd_has_nested_valuetype_;
 }
 
 int
@@ -162,15 +186,13 @@ AST_Module::be_add_interface (AST_Interface *i,
                               AST_Interface *ix)
 {
   // Add it to scope.
-  this->add_to_scope (i,
-                      ix);
+  this->add_to_scope (i, ix);
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (i,
                            false,
                            i->local_name (),
                            ix);
-
   return 0;
 }
 
@@ -184,7 +206,6 @@ AST_Module::be_add_valuetype (AST_ValueType *v)
   this->add_to_referenced (v,
                            false,
                            v->local_name ());
-
   return 0;
 }
 
@@ -194,7 +215,6 @@ AST_Module::referenced (AST_Decl *e,
                         Identifier *id)
 {
   bool refd = this->UTL_Scope::referenced (e, id);
-
   if (refd)
     {
       return true;
@@ -202,67 +222,43 @@ AST_Module::referenced (AST_Decl *e,
 
   AST_Decl *d =
     this->look_in_prev_mods_local (e->local_name (), true);
-  
-  if (0 == d)
+  if (!d)
     {
       return false;
     }
-    
+
   AST_Type *t = AST_Type::narrow_from_decl (d);
-  return 0 == t || t->is_defined ();
+  return (!t || t->is_defined ());
 }
 
-void
-AST_Module::add_to_previous (AST_Module *m)
+AST_Module *
+AST_Module::previous_opening ()
 {
-  this->prev_mods_.insert (m);
+  return this->previous_opening_;
 }
 
 AST_Decl *
 AST_Module::look_in_prev_mods_local (Identifier *e,
                                      bool ignore_fwd)
 {
-  AST_Module **m = 0;
-  AST_Decl *d = 0;
-
-  // If there are more than two openings of this module, we want
-  // to get the last one - the one that will have the decls from
-  // all the previous openings added to previous_.
-  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR iter (
-         this->prev_mods_);
-       !iter.done ();
-       iter.advance ())
+  for (AST_Module *po = this->previous_opening_;
+       po;
+       po = po->previous_opening_)
     {
-      iter.next (m);
-      
-      for (UTL_ScopeActiveIterator i (*m, UTL_Scope::IK_decls);
-           !i.is_done ();
-           i.next ())
+      for (UTL_ScopeActiveIterator iter (po, UTL_Scope::IK_decls);
+           !iter.is_done ();
+           iter.next ())
         {
-          d = i.item ();
-
-          if (ignore_fwd)
-            {
-              AST_Decl::NodeType nt = d->node_type ();
-
-              if (nt == AST_Decl::NT_interface_fwd
-                  || nt == AST_Decl::NT_eventtype_fwd
-                  || nt == AST_Decl::NT_component_fwd
-                  || nt == AST_Decl::NT_struct_fwd
-                  || nt == AST_Decl::NT_union_fwd
-                  || nt == AST_Decl::NT_valuetype_fwd)
-                {
-                  continue;
-                }
-            }
-
-          if (e->case_compare (d->local_name ()))
+          AST_Decl *d = iter.item ();
+          if ((!ignore_fwd || !d->is_fwd ())
+              && !!(d = d->adjust_found (ignore_fwd, false))
+              && e->case_compare (d->local_name ()))
             {
               return d;
             }
         }
     }
-    
+
   return 0;
 }
 
@@ -270,77 +266,39 @@ AST_Decl *
 AST_Module::look_in_prev_mods (UTL_ScopedName *e,
                                bool full_def_only)
 {
-  AST_Module **m = 0;
-  AST_Decl *d = 0;
-
-  // If there are more than two openings of this module, we want
-  // to get the last one - the one that will have the decls from
-  // all the previous openings added to previous_.
-  for (ACE_Unbounded_Set<AST_Module *>::CONST_ITERATOR iter (
-         this->prev_mods_);
-       !iter.done ();
-       iter.advance ())
+  for (AST_Module *po = this->previous_opening_;
+       po;
+       po = po->previous_opening_)
     {
-      iter.next (m);
-      
-      for (UTL_ScopeActiveIterator i (*m, UTL_Scope::IK_decls);
-           !i.is_done ();
-           i.next ())
+      for (UTL_ScopeActiveIterator iter (po, UTL_Scope::IK_decls);
+           !iter.is_done ();
+           iter.next ())
         {
-          d = i.item ();
+          AST_Decl *const d =
+            iter.item ()->adjust_found (full_def_only, full_def_only);
 
-          if (full_def_only)
+          if (d && e->head ()->case_compare (d->local_name ()))
             {
-              AST_Decl::NodeType nt = d->node_type ();
-
-              if (nt == AST_Decl::NT_interface_fwd
-                  || nt == AST_Decl::NT_eventtype_fwd
-                  || nt == AST_Decl::NT_component_fwd
-                  || nt == AST_Decl::NT_struct_fwd
-                  || nt == AST_Decl::NT_union_fwd
-                  || nt == AST_Decl::NT_valuetype_fwd)
-                {
-                  continue;
-                }
-            }
-
-          if (e->head ()->case_compare (d->local_name ()))
-            {
-              UTL_Scope *s = DeclAsScope (d);
               UTL_ScopedName *sn =
                 static_cast<UTL_ScopedName *> (e->tail ());
-                
-              if (sn == 0)
+              if (!sn)
                 {
-                  return d;
-                }  
-              else if (s != 0)
-                {
-                  d = s->lookup_by_name_r (sn, full_def_only);
-                  
-                  if (d != 0)
-                    {
-                      return d;
-                    }
+                  return d; // Nothing left in path, found wanted name
                 }
+
+              UTL_Scope *s = DeclAsScope (d);
+              if (s)
+                {
+                  // Recurse down what is left of the path
+                  return s->lookup_by_name_r (sn, full_def_only);
+                }
+
+              // Find next match, this one didn't work out.
             }
         }
     }
-    
-  return 0;
-}
 
-ACE_Unbounded_Set<AST_Module *> &
-AST_Module::prev_mods (void)
-{
-  return this->prev_mods_;
-}
-
-void
-AST_Module::destroy (void)
-{
-  this->UTL_Scope::destroy ();
-  this->AST_Decl::destroy ();
+  return 0; // Not found.
 }
 
 int
@@ -365,16 +323,7 @@ AST_Decl *
 AST_Module::special_lookup (UTL_ScopedName *e,
                             bool full_def_only)
 {
-  AST_Decl *d = 0;
-  
-  if (!AST_Module::in_prev_)
-    {
-      AST_Module::in_prev_ = true;
-      d = this->look_in_prev_mods (e, full_def_only);
-      AST_Module::in_prev_ = false;
-    }
-    
-  return d;
+  return this->look_in_prev_mods (e, full_def_only);
 }
 
 //================================================
@@ -382,38 +331,40 @@ AST_Module::special_lookup (UTL_ScopedName *e,
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
 {
-  return
-    AST_PredefinedType::narrow_from_decl (
-      this->fe_add_decl (t));
+  return AST_PredefinedType::narrow_from_decl (
+    this->fe_add_decl (t));
 }
 
 AST_Module *
 AST_Module::fe_add_module (AST_Module *t)
 {
-  AST_Decl *d;
-  AST_Module *m = 0;
-
-  UTL_Scope *scope = t->defined_in ();
-  const char *prefix_holder = 0;
-
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (t->prefix (), "") == 0 && scope != 0)
+  if (!ACE_OS::strcmp (t->prefix (), ""))
     {
-      AST_Decl *parent = ScopeAsDecl (scope);
-      prefix_holder = parent->prefix ();
-
-      // We have reached global scope.
-      if (prefix_holder == 0)
+      UTL_Scope *scope = t->defined_in ();
+      while (scope)
         {
-          break;
-        }
+          AST_Decl *parent = ScopeAsDecl (scope);
+          const char *prefix_holder = parent->prefix ();
+          if (!prefix_holder)
+            {
+              break; // We have reached global scope.
+            }
 
-      t->prefix (const_cast<char *> (prefix_holder));
-      scope = parent->defined_in ();
+          t->prefix (const_cast<char *> (prefix_holder));
+          if (ACE_OS::strcmp (t->prefix (), ""))
+            {
+              break;
+            }
+
+          scope = parent->defined_in ();
+        }
     }
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
+  AST_Module *m = 0;
+  AST_Decl *d = this->lookup_for_add (t);
+  if (d)
     {
       if (!can_be_redefined (d))
         {
@@ -424,37 +375,61 @@ AST_Module::fe_add_module (AST_Module *t)
           return 0;
         }
 
-      m = AST_Module::narrow_from_decl (d);
-
       // has_ancestor() returns TRUE if both nodes are the same.
-      if (t != m)
+      m = AST_Module::narrow_from_decl (d);
+      if (t != m && t->has_ancestor (d))
         {
-          if (t->has_ancestor (d))
-            {
-              idl_global->err ()->redefinition_in_scope (t,
-                                                         d);
-              return 0;
-            }
+          idl_global->err ()->redefinition_in_scope (t, d);
+          return 0;
         }
 
       const char *prev_prefix = d->prefix ();
       const char *this_prefix = t->prefix ();
 
-      if (ACE_OS::strcmp (this_prefix, "") == 0)
+      if (!ACE_OS::strcmp (this_prefix, ""))
         {
           t->prefix (const_cast<char *> (prev_prefix));
         }
-      else
+      else if (!ACE_OS::strcmp (prev_prefix, ""))
         {
-          if (ACE_OS::strcmp (prev_prefix, "") == 0)
+          d->prefix (const_cast<char *> (this_prefix));
+        }
+    }
+
+  // Now we are actually adding this new module to the active
+  // scopes, ensure that the previous openings are all updated
+  // so that this new module is recorded as the current
+  // "last module" definition in our scope.
+  AST_Module *first_opening = t->previous_opening_;
+  if (first_opening)
+    {
+      // When we created the module we simply stored the first
+      // previous module we found (if any), we actually want
+      // to refer to that module's LAST opening in that same scope
+      // except this module itself (which isn't yet recorded anyway).
+      t->previous_opening_ = first_opening->last_in_same_parent_scope_;
+      if (first_opening->defined_in () == this)
+        {
+          // Since the previous openings are in our own scope,
+          // make sure that these all point to this new module.
+          for (AST_Module *pm = t->previous_opening_;
+               pm;
+               pm = pm->previous_opening_)
             {
-              d->prefix (const_cast<char *> (this_prefix));
+              pm->last_in_same_parent_scope_ = t;
+              if (pm == first_opening)
+                {
+                  // Even if there are still more previous modules,
+                  // the ones before this one are in a different
+                  // scope and do not need to be updated.
+                  break;
+                }
             }
         }
     }
 
   // If this node is not a reopened module, add it to scope and referenced.
-  if (m == 0 || t != m)
+  if (!m || t != m)
     {
       // Add it to scope.
       this->add_to_scope (t);
@@ -643,6 +618,3 @@ AST_Module::fe_add_porttype (AST_PortType *t)
     AST_PortType::narrow_from_decl (
       this->fe_add_decl (t));
 }
-
-IMPL_NARROW_FROM_DECL(AST_Module)
-IMPL_NARROW_FROM_SCOPE(AST_Module)
