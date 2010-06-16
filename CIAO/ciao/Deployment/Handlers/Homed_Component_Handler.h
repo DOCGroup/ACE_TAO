@@ -77,6 +77,10 @@ namespace CIAO
     virtual 
       void instance_configured (const ::Deployment::DeploymentPlan & plan,
                                 ::CORBA::ULong instanceRef);    
+
+    virtual
+      void configure(const Deployment::Properties&);
+
   private:
     Deployment_Common::INSTANCES instances_;    
   };
