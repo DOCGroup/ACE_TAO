@@ -57,7 +57,7 @@ namespace DAnCE
     }
 
   ACE_INLINE
-  ulong ArtifactRegistry::install_count () const
+  u_long ArtifactRegistry::install_count () const
     {
       return this->install_count_;
     }
