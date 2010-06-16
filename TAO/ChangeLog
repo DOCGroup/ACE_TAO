@@ -1,3 +1,12 @@
+Wed Jun 16 19:00:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/reopened_modules.idl:
+        
+          Added a space between a template bracket and a double
+          colon. In our automated builds, there is apparently still
+          an old-style preprocessor (on Solaris) that parses '<:' as
+          a digraph.
+
 Wed Jun 16 16:06:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
