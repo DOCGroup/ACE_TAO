@@ -4,7 +4,7 @@
 #define SHAPES_SENDER_COMP_IDL_
 
 #include "Shapes_conn.idl"
-#include "Shapes_Control_obj.idl"
+#include "ShapesControl_obj.idl"
 
 module Shapes
 {

@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef SHAPES_CONTROL_COMP_IDL_
+#define SHAPES_CONTROL_COMP_IDL_
+
+#include "ShapesControl_obj.idl"
+
+#include <Components.idl>
+
+module Shapes
+{
+  component Control_comp
+  {
+    provides Shapes::Control_obj control;
+  };
+};
+
+#endif /* SHAPES_CONTROL_COMP_IDL_ */
