@@ -1,0 +1,6 @@
+// $Id$
+
+project : dance_artifact_installation {
+  libs += DAnCE_File_Installation DAnCE_Http_Installation
+  after += DAnCE_File_Installation DAnCE_Http_Installation
+}

@@ -31,14 +31,6 @@ namespace DAnCE
     }
 
   ACE_INLINE
-  ArtifactRegistry& ArtifactRegistry::operator =(const ArtifactRegistry& ar)
-  {
-    this->versions_ = ar.versions ();
-    this->install_count_ = ar.install_count ();
-    return *this;
-  }
-
-  ACE_INLINE
   const std::string& ArtifactRegistry::location () const
     {
       return this->versions_.back ().location_;
@@ -75,9 +67,25 @@ namespace DAnCE
     }
 
   ACE_INLINE
-  ArtifactRegistry::TLOCK& ArtifactRegistry::lock ()
+  void ArtifactRegistry::set_locked ()
     {
-      return this->lock_;
+      this->locked_ = true;
+    }
+
+  ACE_INLINE
+  void ArtifactRegistry::set_unlocked ()
+    {
+      if (this->locked_)
+        {
+          this->locked_ = false;
+          this->condition_.broadcast ();
+        }
+    }
+
+  ACE_INLINE
+  bool ArtifactRegistry::is_locked () const
+    {
+      return this->locked_;
     }
 
   ACE_INLINE
@@ -91,7 +99,7 @@ namespace DAnCE
     {
       if (this->arp_)
         {
-          this->arp_->lock ().release ();
+          this->arp_->set_unlocked ();
         }
       this->arp_ = 0;
     }
