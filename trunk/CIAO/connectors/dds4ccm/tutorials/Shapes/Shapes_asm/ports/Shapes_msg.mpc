@@ -1,0 +1,29 @@
+// $Id$
+
+project (Shapes_msg_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default, Shapes {
+  sharedname = Shapes_msg_stub
+  dynamicflags += SHAPES_MSG_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=SHAPES_MSG_STUB_Export \
+              -Wb,stub_export_include=Shapes_msg_stub_export.h \
+              -o GeneratedCode
+
+  IDL_Files {
+    idlflags += -Gxhst
+    gendir = GeneratedCode
+    Shapes_msg.idl
+  }
+
+  opendds_ts_flags += --export=SHAPES_BASE_MSG_Export
+
+  DDSGenerator_Files {
+    Shapes_msg.idl
+    gendir = GeneratedCode
+  }
+
+  Source_Files {
+  }
+}
+
