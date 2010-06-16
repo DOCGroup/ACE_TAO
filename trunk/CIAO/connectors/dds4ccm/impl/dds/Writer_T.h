@@ -33,8 +33,7 @@ namespace CIAO
         const typename DDS_TYPE::value_type& an_instance,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      virtual void write_many (
-        const typename CCM_TYPE::seq_type& instances);
+      virtual void write_many (const typename CCM_TYPE::seq_type& instances);
 
       /**
        * @name is_coherent_write

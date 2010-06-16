@@ -61,15 +61,11 @@ namespace CIAO
         typename DDS_TYPE::dds_seq_type & data,
         ::DDS_SampleInfoSeq & sample_info);
 
-      void
-      delete_datareader (
-        ::DDS::Subscriber_ptr subscriber);
+      void delete_datareader (::DDS::Subscriber_ptr subscriber);
 
-      ::CCM_DDS::QueryFilter *
-      query (void);
+      ::CCM_DDS::QueryFilter *query (void);
 
-      void
-      query (const ::CCM_DDS::QueryFilter & filter);
+      void query (const ::CCM_DDS::QueryFilter & filter);
 
       void
       set_filter (const ::CCM_DDS::QueryFilter & filter,
@@ -80,30 +76,23 @@ namespace CIAO
       remove_condition (DDSQueryCondition * qc,
                         const char * type);
 
-      void
-      remove_conditions (void);
+      void remove_conditions (void);
 
-      DDSReadCondition *
-      get_readcondition (void);
+      DDSReadCondition *get_readcondition (void);
 
-      void
-      create_readcondition (void);
+      void create_readcondition (void);
 
-      DDSQueryCondition *
-      get_querycondition (void);
+      DDSQueryCondition *get_querycondition (void);
 
-      void
-      attach_querycondition (void);
+      void attach_querycondition (void);
 
       bool
       wait (DDSConditionSeq & active_conditions,
             DDS_Duration_t & time_out);
 
-      void
-      set_proxy (DDSDataReader * dr);
+      void set_proxy (DDSDataReader * dr);
 
-      void
-      passivate (void);
+      void passivate (void);
 
       void
       create_datareader (::DDS::ContentFilteredTopic_ptr topic,
