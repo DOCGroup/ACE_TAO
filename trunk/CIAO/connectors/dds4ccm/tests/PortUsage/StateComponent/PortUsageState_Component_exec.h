@@ -106,9 +106,6 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
 
   private:
     ::PortUsageState_Test::CCM_PortUsageStateComponent_Context_var context_;
-    ::PortUsageState_Test::PortUsageTestConnector::Reader_var reader_; //Listener
-    ::PortUsageState_Test::PortUsageTestConnector::Writer_var writer_; //Writer
-    ::PortUsageState_Test::PortUsageTestConnector::Getter_var getter_; //Getter
 
     PORT_USAGE_ASSIGNMENT assignment_;
 

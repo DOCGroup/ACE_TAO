@@ -97,14 +97,22 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::start_timeout_tests (void)
   {
-    this->invoker_->start_timeout_get_one ();
-    this->invoker_->start_timeout_get_many ();
+    GetInvoker_var invoker =
+      this->context_->get_connection_invoke_getter ();
+
+    invoker->start_timeout_get_one ();
+    invoker->start_timeout_get_many ();
   }
 
   void
   Sender_exec_i::write_many (void)
   {
-    GetterTestSeq write_many;
+    ::Getter_Test::GetterTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+    GetInvoker_var invoker =
+      this->context_->get_connection_invoke_getter ();
+    
+    GetterTestSeq write_many (this->keys_ * this->iterations_);
     write_many.length (this->keys_ * this->iterations_);
     for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
       {
@@ -120,10 +128,10 @@ namespace CIAO_Getter_Test_Sender_Impl
       }
     try
       {
-        this->invoker_->start_get_many (this->keys_, this->iterations_);
+        invoker->start_get_many (this->keys_, this->iterations_);
         ACE_Time_Value tv (1, 0);
         ACE_OS::sleep (tv);
-        this->writer_->write_many (write_many);
+        writer->write_many (write_many);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
       }
@@ -159,13 +167,20 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::tick (void)
   {
+    ::Getter_Test::GetterTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
+    ::Getter_Test::GetterFixedConnector::Writer_var fixed =
+      this->context_->get_connection_info_fixed_data ();
+    GetInvoker_var invoker =
+      this->context_->get_connection_invoke_getter ();
+
     if (this->last_iter_ <= this->iterations_)
       {
         GetterFixed  fixed_key;
         GetterTest *new_key = new GetterTest;
         new_key->key = CORBA::string_dup("KEY_1");
         fixed_key.key = 1;
-        this->invoker_->start_get_one (
+        invoker->start_get_one (
                         CORBA::string_dup("KEY_1"),
                         1,
                         last_iter_);
@@ -175,8 +190,8 @@ namespace CIAO_Getter_Test_Sender_Impl
         ACE_Time_Value tv (0, 50000);
         ACE_OS::sleep (tv);
 
-        this->writer_->write_one (*new_key, ::DDS::HANDLE_NIL);
-        this->fixed_->write_one (fixed_key, ::DDS::HANDLE_NIL);
+        writer->write_one (*new_key, ::DDS::HANDLE_NIL);
+        fixed->write_one (fixed_key, ::DDS::HANDLE_NIL);
         ACE_DEBUG ((LM_DEBUG, "Written keys <%C> and <%u> with <%d>\n",
                     new_key->key.in (), fixed_key.key, last_iter_));
 
@@ -241,9 +256,6 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
     try
       {
-        this->writer_ = this->context_->get_connection_info_write_data ();
-        this->fixed_ = this->context_->get_connection_info_fixed_data ();
-        this->invoker_ = this->context_->get_connection_invoke_getter ();
         this->ccm_activated_ = true;
       }
     catch (const CORBA::Exception& ex)

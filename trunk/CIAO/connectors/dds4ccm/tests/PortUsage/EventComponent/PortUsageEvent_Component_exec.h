@@ -97,9 +97,6 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
 
   private:
     ::PortUsageEvent_Test::CCM_PortUsageEventComponent_Context_var context_;
-    ::PortUsageEvent_Test::PortUsageTestConnector::Reader_var reader_; //Listener
-    ::PortUsageEvent_Test::PortUsageTestConnector::Writer_var writer_; //Writer
-    ::PortUsageEvent_Test::PortUsageTestConnector::Getter_var getter_; //Getter
 
     PORT_USAGE_ASSIGNMENT assignment_;
 
@@ -107,14 +104,11 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
     Atomic_ULong datawriters_count_;
 
     // Supported operations and attributes.
-    void
-    check_writer (void);
+    void check_writer (void);
 
-    void
-    check_getter (void);
+    void check_getter (void);
 
-    void
-    check_listener (void);
+    void check_listener (void);
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

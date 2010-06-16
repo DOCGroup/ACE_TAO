@@ -1,8 +1,19 @@
+Wed Jun 16 12:46:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PortUsage/EventComponent/PortUsageEvent_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.h:
+        * connectors/dds4ccm/tests/PortUsage/StateComponent/PortUsageState_Component_exec.cpp:
+          Cleanup, no caching in executors
+
 Wed Jun 16 12:04:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
 
-          fuzz. 
+          fuzz.
 
 Wed Jun 16 12:01:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
