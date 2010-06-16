@@ -1,3 +1,8 @@
+Wed Jun 16 09:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/ConnectionCache.cpp:
+	  Added some error logging.
+
 Mon Jun 14 16:16:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/ace/INet/inet.mpc:
