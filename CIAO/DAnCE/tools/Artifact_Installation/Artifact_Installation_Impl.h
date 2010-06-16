@@ -28,7 +28,7 @@ namespace DAnCE
     class ArtifactRegistry
       {
         public:
-          typedef ACE_MT_SYNCH::MUTEX TLOCK;
+          typedef ACE_MT_SYNCH::CONDITION TCONDITION;
           struct Version
           {
             std::string protocol_;
@@ -41,11 +41,8 @@ namespace DAnCE
           };
           typedef std::vector<Version> TVersions;
 
-          ArtifactRegistry ();
-          ArtifactRegistry (const ArtifactRegistry& ar);
+          ArtifactRegistry (TCONDITION& condition, bool locked=false);
           ~ArtifactRegistry ();
-
-          ArtifactRegistry& operator =(const ArtifactRegistry& ar);
 
           const std::string& location () const;
 
@@ -56,7 +53,9 @@ namespace DAnCE
           void increment_install_count ();
           void decrement_install_count ();
 
-          TLOCK& lock ();
+          void set_locked ();
+          void set_unlocked ();
+          bool is_locked () const;
 
           class Guard
             {
@@ -75,7 +74,8 @@ namespace DAnCE
             };
 
         private:
-          TLOCK lock_;
+          TCONDITION& condition_;
+          bool locked_;
           u_long install_count_;
           TVersions  versions_;
       };
@@ -85,6 +85,7 @@ namespace DAnCE
       {
         public:
           typedef ACE_MT_SYNCH::MUTEX TLOCK;
+          typedef ACE_MT_SYNCH::CONDITION TCONDITION;
           typedef ArtifactInstallationHandler::TPropertyMap TPropertyMap;
 
           ArtifactInstallation_Impl ();
@@ -102,7 +103,7 @@ namespace DAnCE
 
           virtual void remove_all (const char * plan_uuid);
 
-          virtual char * get_artifact_location (const char * uuid,
+          virtual char * get_artifact_location (const char * plan_uuid,
                                                 const char * artifact_name);
 
         private:
@@ -146,6 +147,8 @@ namespace DAnCE
                                      TArtifactsMap& artifacts_map);
 
           TArtifactsRegistry artifacts_;
+          TLOCK artifacts_lock_;
+          TCONDITION artifacts_condition_;
 
         public:
 
