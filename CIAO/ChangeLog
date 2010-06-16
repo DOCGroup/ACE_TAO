@@ -1,13 +1,44 @@
+Wed Jun 16 06:25:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Models:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/ShapesReceiver_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesControl.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ports:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ports/Shapes_Control_obj.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/ShapesSender_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/run_test.pl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes.mpb:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial:
+          First iteration.
+
 Wed Jun 16 05:23:27 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/examples/Shapes/models:
         * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
-        
+
           Shapes PICML model that can be used to generate IDL.
 
         * connectors/dds4ccm/models:
         * connectors/dds4ccm/models/dds4ccm.xme:
-        
+
           dds4ccm PICML library.
 
 Wed Jun 16 01:37:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
