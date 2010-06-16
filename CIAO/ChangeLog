@@ -1,3 +1,10 @@
+Wed Jun 16 14:20:13 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:
+        
+          Removed refereance to $(CIAO_ROOT)/connectors/dds4ccm/impl/logger
+          directory removed by: Wed Jun  9 18:51:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Wed Jun 16 13:49:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes.mpb:
