@@ -1,7 +1,13 @@
+Wed Jun 16 12:04:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
+
+          fuzz. 
+
 Wed Jun 16 12:01:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	  Change to prevent loss of plan information.
+          Change to prevent loss of plan information.
 
 Wed Jun 16 11:37:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
