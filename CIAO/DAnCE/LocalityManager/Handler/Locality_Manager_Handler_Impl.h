@@ -79,6 +79,9 @@ namespace DAnCE
     virtual 
       void instance_configured (const ::Deployment::DeploymentPlan &,
                                 ::CORBA::ULong) {};    
+
+    virtual
+      void configure(const Deployment::Properties&);
   private:
     static const char *instance_type_;
     DAnCE_LocalityActivator_i *activator_;

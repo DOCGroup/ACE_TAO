@@ -164,4 +164,8 @@ namespace DAnCE
     throw CORBA::NO_IMPLEMENT ();
   }
 
+  void
+  Locality_Handler_i::configure (const ::Deployment::Properties &prop )
+  {
+  }
 }
