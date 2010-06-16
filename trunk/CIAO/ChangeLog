@@ -1,3 +1,8 @@
+Wed Jun 16 13:49:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes.mpb:
+          Fuzz.
+
 Wed Jun 16 13:38:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.cpp:

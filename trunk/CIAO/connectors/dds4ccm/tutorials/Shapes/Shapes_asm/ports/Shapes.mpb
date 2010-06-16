@@ -1,4 +1,4 @@
-// $Id $
+// $Id$
 
 feature (dds4ccm_ndds) {
   dds_ts_flags += -d GeneratedCode
