@@ -1,0 +1,35 @@
+// $Id$
+
+#ifndef SHAPES_MSG_IDL_
+#define SHAPES_MSG_IDL_
+
+#pragma ndds typesupport "Shapes_msgSupport.h"
+#pragma opendds typesupport "Shapes_msgTypeSupportC.h"
+#pragma splice typesupport "Shapes_msgDscpC.h"
+
+#pragma DCPS_DATA_TYPE "ShapeType"
+#pragma DCPS_DATA_KEY "ShapeType color"
+
+struct ShapeType {
+  string color; //@key
+  long x;
+  long y;
+  long shapesize;
+};
+
+#pragma keylist ShapeType color
+
+#pragma DCPS_DATA_TYPE "Attributes"
+#pragma DCPS_DATA_KEY "Attributes shape"
+#pragma DCPS_DATA_KEY "Attributes color"
+
+struct Attributes {
+  string shape; //@key
+  string color; //@key
+  float speed;
+};
+typedef sequence<ShapeType> ShapeTypeSeq;
+
+#pragma keylist Attributes shape color
+
+#endif /* SHAPES_MSG_IDL_ */

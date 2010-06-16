@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef SHAPES_SENDER_COMP_IDL_
+#define SHAPES_SENDER_COMP_IDL_
+
+#include "Shapes_conn.idl"
+#include "Shapes_Control_obj.idl"
+
+module Shapes
+{
+  component Sender_comp
+  {
+    port ShapesConnector::DDS_Write info_write;
+
+    provides Shapes::Control_obj control;
+  };
+};
+
+#endif /* SHAPES_SENDER_COMP_IDL_ */
