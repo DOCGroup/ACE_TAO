@@ -34,12 +34,12 @@ namespace CIAO
 
       this->filter_ = filter;
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::filter - "));
-      DDS4CCM_DEBUG (6, (LM_DEBUG, "Expression : %C\t\n",
+      DDS4CCM_DEBUG (6, (LM_DEBUG, "Expression : <%C>\t\n",
                                 filter.expression.in ()));
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "Parameters :\n"));
       for (::CORBA::ULong i = 0; i < filter.parameters.length (); ++i)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "\t%C\n",
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "\t<%C>\n",
                                    filter.parameters[i].in ()));
         }
     }
@@ -54,7 +54,8 @@ namespace CIAO
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
       if (CORBA::is_nil (dp.in ()))
         {
-          DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
+          DDS4CCM_ERROR (1, (LM_EMERGENCY,
+                             CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                            "Unable to get DomainParticipant.\n"));
           throw CORBA::INTERNAL ();
         }

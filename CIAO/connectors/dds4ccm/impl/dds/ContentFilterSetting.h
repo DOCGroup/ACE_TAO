@@ -31,21 +31,17 @@ namespace CIAO
       /// Destructor
       virtual ~CCM_DDS_ContentFilterSetting_i (void);
 
-      virtual void
-      set_filter_parameters (
-        const ::DDS::StringSeq & parameters);
+      virtual void set_filter_parameters (const ::DDS::StringSeq & parameters);
 
-      ::CCM_DDS::QueryFilter *
-      filter (void);
+      ::CCM_DDS::QueryFilter *filter (void);
 
-      void
-      filter (const ::CCM_DDS::QueryFilter & filter);
+      void filter (const ::CCM_DDS::QueryFilter & filter);
 
       ::DDS::ContentFilteredTopic_ptr
       create_contentfilteredtopic (::DDS::Topic_ptr topic,
                                    ::DDS::Subscriber_ptr subscriber);
-      void
-      delete_contentfilteredtopic (::DDS::Subscriber_ptr subscriber);
+                                   
+      void delete_contentfilteredtopic (::DDS::Subscriber_ptr subscriber);
     private:
       ::CCM_DDS::QueryFilter filter_;
       ::DDS::ContentFilteredTopic_var cft_;

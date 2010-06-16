@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Wrapper facade for NDDS.
+ * DDS Event Connector implementation
  */
 #ifndef DDS_EVENT_CONNECTOR_T_H_
 #define DDS_EVENT_CONNECTOR_T_H_

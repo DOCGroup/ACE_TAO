@@ -47,26 +47,19 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t get_inconsistent_topic_status (
         ::DDS::InconsistentTopicStatus & a_status);
 
-      virtual
-        ::DDS::ReturnCode_t enable (void);
+      virtual ::DDS::ReturnCode_t enable (void);
 
-      virtual
-        ::DDS::StatusCondition_ptr get_statuscondition (void);
+      virtual ::DDS::StatusCondition_ptr get_statuscondition (void);
 
-      virtual
-        ::DDS::StatusMask get_status_changes (void);
+      virtual ::DDS::StatusMask get_status_changes (void);
 
-      virtual
-        ::DDS::InstanceHandle_t get_instance_handle (void);
+      virtual ::DDS::InstanceHandle_t get_instance_handle (void);
 
-      virtual
-        char * get_type_name (void);
+      virtual char * get_type_name (void);
 
-      virtual
-        char * get_name (void);
+      virtual char * get_name (void);
 
-      virtual
-        ::DDS::DomainParticipant_ptr get_participant (void);
+      virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
       DDSTopic * get_impl (void);
 

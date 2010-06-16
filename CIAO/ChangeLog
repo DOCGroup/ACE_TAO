@@ -1,7 +1,19 @@
+Wed Jun 16 18:42:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/Topic.h:
+        * connectors/dds4ccm/impl/dds/Updater_T.h:
+        * connectors/dds4ccm/impl/dds/Writer_T.h:
+          Layout changes
+
 Wed Jun 16 14:20:13 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:
-        
+
           Removed refereance to $(CIAO_ROOT)/connectors/dds4ccm/impl/logger
           directory removed by: Wed Jun  9 18:51:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
