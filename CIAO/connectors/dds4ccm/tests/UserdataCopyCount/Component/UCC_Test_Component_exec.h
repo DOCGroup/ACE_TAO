@@ -86,7 +86,6 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     UCCVarSized_Table var_samples_;
 
     // Fixed sized struct
-    _;
     void create_fixed_sized_samples (void);
     WriteFixedHandler *fixed_rh_;
 
