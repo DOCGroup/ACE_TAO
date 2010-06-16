@@ -119,6 +119,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     number_called, expected_interceptor_check));
           return 1;
         }
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception&)
     {

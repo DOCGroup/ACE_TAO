@@ -23,18 +23,19 @@ Server_ORBInitializer::pre_init (
   POA_TestModule::test* test = 0;
   ACE_NEW (test,
            test_i);
+  PortableServer::ServantBase_var safe (test);
 
-  CORBA::Object_ptr object = test->_this ();
+  CORBA::Object_var object = test->_this ();
 
   orbinitinfo->register_initial_reference ("MyService",
-                                           object);
+                                           object.in ());
 
   bool invalid_name = false;
   try
     {
       // Registering with an empty string should give an exception
       orbinitinfo->register_initial_reference ("",
-                                               object);
+                                               object.in ());
     }
   catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {

@@ -1,3 +1,37 @@
+Wed Jun 16 09:35:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Two_Objects/Object_Factory_i.cpp:
+        * tests/Two_Objects/server.cpp:
+        * tests/Faults/test_i.h:
+        * tests/CallbackTest/Service.cpp:
+        * tests/Portable_Interceptors/Dynamic/server.cpp:
+        * tests/Portable_Interceptors/Dynamic/client.cpp:
+        * tests/Portable_Interceptors/Bug_2510_Regression/server.cpp:
+        * tests/Portable_Interceptors/Bug_2510_Regression/client.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+        * tests/Portable_Interceptors/Bug_2133/client.cpp:
+        * tests/Portable_Interceptors/Bug_3080/client.cpp:
+        * tests/Portable_Interceptors/Register_Initial_References/server.cpp:
+        * tests/Portable_Interceptors/Register_Initial_References/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_main.cpp:
+        * tests/Portable_Interceptors/Bug_3079/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Bug_3079/client.cpp:
+        * tests/Portable_Interceptors/Bug_1559/server.cpp:
+        * tests/Portable_Interceptors/Bug_1559/client.cpp:
+        * tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp:
+        * tests/Portable_Interceptors/Bug_1559/server_interceptor.h:
+        * tests/Portable_Interceptors/Redirection/Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Redirection/client.cpp:
+        * tests/Portable_Interceptors/IORInterceptor/client.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/MT_BiDir/Sender_i.cpp:
+        * tests/MT_BiDir/Sender_i.h:
+          Fixed memory leaks local to these tests.
+
 Wed Jun 16 08:40:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * NEWS:
@@ -31,13 +65,13 @@ Tue Jun 15 17:43:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/PortableServer/Vector_SArgument_T.inl:
         * tao/PortableServer/Vector_SArgument_T.cpp:
         * tao/PortableServer/Vector_SArgument_T.h:
-        
+
           Replace old Insert_Policy template parameter with the
           new tempate template version, similar to operations
           in Vector_Argument_T.(h,inl,cpp}.
-          
+
         * tao/Vector_Argument_T.h:
-        
+
           Fixed typo in comment.
 
 Tue Jun 15 17:19:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -48,14 +82,14 @@ Tue Jun 15 17:19:46 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * AnyTypeCode_Adapter.h:
         * AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
         * AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
-        
+
           Branch merge issues related to the Any insert policy
           used by interceptors.
 
 Tue Jun 15 16:01:34 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp:
-        
+
           Removed generation of extra leading double colon.
 
 Tue Jun 15 15:24:25 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>

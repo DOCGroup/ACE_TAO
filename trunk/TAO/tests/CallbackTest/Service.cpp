@@ -62,8 +62,8 @@ Service::call_are_you_there (Test::Callback_ptr callback)
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      char* outstr;
-      CORBA::String_out out_str (outstr);
+      CORBA::String_var outstr;
+      CORBA::String_out out_str (outstr.out ());
       try
         {
           (void) callback->are_you_there (out_str);
