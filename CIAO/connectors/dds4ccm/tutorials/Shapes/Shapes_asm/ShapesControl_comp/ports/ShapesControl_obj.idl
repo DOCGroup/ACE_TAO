@@ -1,31 +1,19 @@
+// $Id$
 
 #ifndef SHAPES_CONTROL_IDL_
 #define SHAPES_CONTROL_IDL_
 
-// #include "Shapes_defn.idl"
+#include "Shapes_defn.idl"
 
 #pragma ciao lem "ShapesControl_objE.idl"
 
 module Shapes
 {
-  enum COLOR
-  {
-    WHITE,
-    RED,
-    YELLOW,
-    GREEN
-  };
-
   interface Control_obj
   {
-    boolean setSize (in unsigned short size);
-    boolean setLocation (in unsigned short x,
-                         in unsigned short y);
-/*
-      ReturnStatus changeColor (in COLOR shape_color);
-      ReturnStatus changeMaxSize (in short max_size);
-      ReturnStatus changeMinSize (in short min_size);
-*/
+    ReturnStatus setSize (in unsigned short size);
+    ReturnStatus setLocation (in unsigned short x,
+                              in unsigned short y);
   };
 };
 

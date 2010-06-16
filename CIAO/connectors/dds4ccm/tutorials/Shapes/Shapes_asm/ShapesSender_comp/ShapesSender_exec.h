@@ -31,10 +31,10 @@ namespace CIAO_Shapes_Sender_comp_Impl
     Controller_exec_i (Sender_exec_i &callback);
     virtual ~Controller_exec_i (void);
 
-    virtual ::CORBA::Boolean
+    virtual ::Shapes::ReturnStatus 
     setSize (::CORBA::UShort size);
 
-    virtual ::CORBA::Boolean
+    virtual ::Shapes::ReturnStatus 
     setLocation (::CORBA::UShort x, ::CORBA::UShort y);
 
   private:
@@ -63,19 +63,20 @@ namespace CIAO_Shapes_Sender_comp_Impl
     virtual void ccm_passivate (void);
     virtual void ccm_remove (void);
 
-    bool
+    ::Shapes::ReturnStatus
     setSize (::CORBA::UShort size);
 
-    bool
+    ::Shapes::ReturnStatus
     setLocation (::CORBA::UShort x, ::CORBA::UShort y);
 
-    bool
-    update_square (void);
   private:
     ::Shapes::CCM_Sender_comp_Context_var context_;
     ::DDS::InstanceHandle_t instance_handle_;
 
     ShapeType square_;
+
+    ::Shapes::ReturnStatus
+    update_square (void);
   };
 
   extern "C" SHAPES_SENDER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr

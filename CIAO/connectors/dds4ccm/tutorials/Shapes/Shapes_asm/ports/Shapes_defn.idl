@@ -1,0 +1,23 @@
+//$Id$
+
+#ifndef SHAPES_DEFN_IDL_
+#define SHAPES_DEFN_IDL_
+
+module Shapes
+{
+  enum COLOR
+  {
+    WHITE,
+    RED,
+    YELLOW,
+    GREEN
+  };
+
+  enum ReturnStatus
+  {
+    RETURN_OK,
+    RETURN_ERROR
+  };
+};
+
+#endif /* SHAPES_DEFN_IDL_ */

@@ -28,7 +28,6 @@ struct Attributes {
   string color; //@key
   float speed;
 };
-typedef sequence<ShapeType> ShapeTypeSeq;
 
 #pragma keylist Attributes shape color
 
