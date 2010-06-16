@@ -37,7 +37,7 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
     ::DDS::DataReader_ptr /*the_reader*/,
     const DDS::RequestedIncompatibleQosStatus & /*status*/)
   {
-  }
+  } 
 
   void ConnectorStatusListener_exec_i::on_sample_rejected (
     ::DDS::DataReader_ptr /*the_reader*/,
@@ -345,7 +345,6 @@ namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
           ACE_ERROR ((LM_ERROR, "Component_exec_i::ccm_remove - "
                                 "ERROR : Unknown assignment\n"));
           break;
-
       }
   }
 
