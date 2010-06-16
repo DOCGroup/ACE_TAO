@@ -1,3 +1,10 @@
+Wed Jun 16 12:58:24 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/dds4ccm/examples/Shapes/models/README:
+        * connectors/dds4ccm/models/README:
+
+          Added several README documents.
+
 Wed Jun 16 12:51:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_obj.mpc:
