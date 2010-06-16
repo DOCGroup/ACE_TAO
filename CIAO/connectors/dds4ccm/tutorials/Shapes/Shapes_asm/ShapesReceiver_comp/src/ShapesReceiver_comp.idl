@@ -4,15 +4,12 @@
 #define SHAPES_RECEIVER_COMP_IDL_
 
 #include "Shapes_conn.idl"
-#include "Shapes_Control_obj.idl"
 
 module Shapes
 {
   component Receiver_comp
   {
     port ShapesConnector::DDS_Listen info_out;
-
-    uses Shapes::Control_obj control;
   };
 };
 

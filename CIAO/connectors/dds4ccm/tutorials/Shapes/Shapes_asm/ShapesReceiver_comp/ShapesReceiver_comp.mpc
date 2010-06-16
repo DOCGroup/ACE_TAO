@@ -42,9 +42,8 @@ project(ShapesReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(ShapesReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += ShapesReceiver_lem_gen ShapesReceiver_stub  Shapes_conn_stub \
-           Shapes_msg_stub Shapes_Control_stub
-  libs  += ShapesReceiver_stub Shapes_conn_stub Shapes_msg_stub \
-           Shapes_Control_stub
+           Shapes_msg_stub
+  libs  += ShapesReceiver_stub Shapes_conn_stub Shapes_msg_stub
   libpaths += ../lib
   libout = ../lib
   includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
@@ -70,9 +69,8 @@ project(ShapesReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(ShapesReceiver_stub) : ccm_stub, dds4ccm_base {
   after += ShapesReceiver_idl_gen Shapes_conn_stub \
-           Shapes_msg_stub Shapes_conn_lem_gen \
-           Shapes_Control_stub Shapes_Control_lem_stub
-  libs  += Shapes_conn_stub Shapes_msg_stub Shapes_Control_stub
+           Shapes_msg_stub Shapes_conn_lem_gen
+  libs  += Shapes_conn_stub Shapes_msg_stub
   libpaths += ../lib
   libout = ../lib
   includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
@@ -99,11 +97,10 @@ project(ShapesReceiver_stub) : ccm_stub, dds4ccm_base {
 project(ShapesReceiver_exec) : ciao_executor, dds4ccm_base {
   after += ShapesReceiver_lem_stub ShapesReceiver_stub \
            Shapes_msg_stub Shapes_conn_stub Shapes_conn_lem_stub \
-           DDS4CCM_lem_stub Shapes_Control_stub Shapes_Control_lem_stub
+           DDS4CCM_lem_stub
   sharedname = ShapesReceiver_exec
   libs += ShapesReceiver_stub ShapesReceiver_lem_stub Shapes_msg_stub \
-          Shapes_conn_stub Shapes_conn_lem_stub DDS4CCM_lem_stub \
-          Shapes_Control_stub Shapes_Control_lem_stub
+          Shapes_conn_stub Shapes_conn_lem_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ./GeneratedCode ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
@@ -129,13 +126,11 @@ project(ShapesReceiver_exec) : ciao_executor, dds4ccm_base {
 project(ShapesReceiver_svnt) : ciao_servant, dds4ccm_base {
   after      += ShapesReceiver_lem_stub Shapes_msg_stub \
                 Shapes_conn_stub Shapes_conn_svnt ShapesReceiver_exec \
-                Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel \
-                Shapes_Control_stub Shapes_Control_lem_stub Shapes_Control_svnt
+                Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   sharedname  = ShapesReceiver_svnt
   libs       += ShapesReceiver_stub ShapesReceiver_lem_stub Shapes_msg_stub \
                 Shapes_conn_stub Shapes_conn_svnt ShapesReceiver_exec \
-                Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel \
-                Shapes_Control_stub Shapes_Control_lem_stub Shapes_Control_svnt
+                Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
   libpaths += ../lib
   libout = ../lib
   includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
