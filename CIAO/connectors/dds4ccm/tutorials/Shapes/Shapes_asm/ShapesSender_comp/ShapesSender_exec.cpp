@@ -20,13 +20,13 @@ namespace CIAO_Shapes_Sender_comp_Impl
   {
   }
 
-  ::CORBA::Boolean
+  ::Shapes::ReturnStatus
   Controller_exec_i::setSize (::CORBA::UShort size)
   {
     return this->callback_.setSize (size);
   }
 
-  ::CORBA::Boolean
+  ::Shapes::ReturnStatus
   Controller_exec_i::setLocation (::CORBA::UShort x,
                                   ::CORBA::UShort y)
   {
@@ -57,14 +57,14 @@ namespace CIAO_Shapes_Sender_comp_Impl
     return new Controller_exec_i (*this);
   }
 
-  bool
+  ::Shapes::ReturnStatus
   Sender_exec_i::setSize (::CORBA::UShort size)
   {
     this->square_.shapesize = size;
     return this->update_square ();
   }
 
-  bool
+  ::Shapes::ReturnStatus
   Sender_exec_i::setLocation (::CORBA::UShort x,
                               ::CORBA::UShort y)
   {
@@ -73,7 +73,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     return this->update_square ();
   }
 
-  bool
+  ::Shapes::ReturnStatus
   Sender_exec_i::update_square ()
   {
     ::Shapes::ShapesConnector::Writer_var writer =
@@ -82,7 +82,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
                               ACE_TEXT ("Unable to write: write_data is nil.\n")));
-        return false;
+        return ::Shapes::RETURN_ERROR;
       }
 
     try
@@ -106,7 +106,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
                     ACE_TEXT ("Internal Error while updating Shape_info for <%C>.\n"),
                     this->square_.color.in ()));
       }
-    return  true;
+    return ::Shapes::RETURN_OK;
   }
 
   void

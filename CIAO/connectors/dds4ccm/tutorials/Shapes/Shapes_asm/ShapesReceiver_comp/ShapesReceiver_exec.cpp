@@ -23,7 +23,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   // Operations from ::CCM_DDS::ShapeType_Listener
   void
   ShapeType_Listener_exec_i::on_many_data (
-    const ShapeTypeSeq & /* an_instance */,
+    const ::Shapes::ShapeTypeSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }

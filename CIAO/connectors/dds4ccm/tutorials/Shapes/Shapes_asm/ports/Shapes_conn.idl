@@ -11,7 +11,8 @@
 
 module Shapes
 {
-  module ::CCM_DDS::Typed < ::ShapeType, ::ShapeTypeSeq> ShapesConnector;
+  typedef sequence<ShapeType> ShapeTypeSeq;
+  module ::CCM_DDS::Typed < ::ShapeType, ShapeTypeSeq> ShapesConnector;
 };
 
 #endif /* SHAPES_CONN_IDL_ */

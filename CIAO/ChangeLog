@@ -1,3 +1,18 @@
+Wed Jun 16 12:51:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_obj.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/ShapesControl_obj.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_defn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_defn.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.idl:
+          Created a _defn.idl file for definition like return values.
+
 Wed Jun 16 12:46:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
