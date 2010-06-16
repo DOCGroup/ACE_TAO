@@ -87,7 +87,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   if (ACE_OS::strcmp (buf, request_msg) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD\n"));
-      throw PortableInterceptor::ForwardRequest (this->forward_location_);
+      throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
     }
   else if (ACE_OS::strcmp (buf, forward_msg) == 0)
     {

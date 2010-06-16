@@ -7,7 +7,7 @@ ACE_RCSID(MT_BiDir,
           "$Id$")
 
 
-Sender_i::Sender_i (int no_clients,
+Sender_i::Sender_i (CORBA::ULong no_clients,
                     ACE_Manual_Event &event)
   : event_ (event)
   , receivers_ (0)
@@ -15,10 +15,8 @@ Sender_i::Sender_i (int no_clients,
   , last_index_ (0)
   , payload_ (32768)
 {
-  this->receivers_ =
-    new Receiver *[no_clients * sizeof (Receiver_ptr)];
-  /*ACE_NEW (this->receivers_,
-    Receiver ** [no_clients * sizeof Receiver *]);*/
+  ACE_NEW (this->receivers_,
+           Receiver_var [no_clients]);
 
   // Okay to have a magic number...
   this->payload_.length (32768);
@@ -27,6 +25,10 @@ Sender_i::Sender_i (int no_clients,
     this->payload_[j] = (j % 256);
 }
 
+Sender_i::~Sender_i (void)
+{
+  delete []this->receivers_;
+}
 
 CORBA::Long
 Sender_i::receiver_object (Receiver_ptr recv)
@@ -57,8 +59,8 @@ Sender_i::send_message (void)
 {
   // NOTE:No synchronization with purpose. Synchrnozing this is
   // going to spoil the whole purpose of this test.
-  int send_to =
-    ACE_OS::rand () % this->no_clients_;
+  CORBA::ULong send_to =
+    static_cast<CORBA::ULong> (ACE_OS::rand () % this->no_clients_);
 
   this->receivers_[send_to]->receive_payload (this->payload_);
 }

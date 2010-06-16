@@ -22,10 +22,11 @@ Object_Factory_i::create_first (void)
 {
   First_i *first_impl;
 
-  // @@ Dont you want to transfer ownership to the POA?
   ACE_NEW_THROW_EX (first_impl,
                     First_i (orb_.in(), two_way_done_ ),
                     CORBA::NO_MEMORY() );
+  // Ownership is transfered to the POA.
+  PortableServer::ServantBase_var safe (first_impl);
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
@@ -54,6 +55,8 @@ Object_Factory_i::create_second (void)
                     Second_i (orb_.in(),
                               length_, two_way_done_),
                     CORBA::NO_MEMORY ());
+  // Ownership is transfered to the POA.
+  PortableServer::ServantBase_var safe (second_impl);
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
