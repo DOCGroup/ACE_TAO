@@ -1,3 +1,12 @@
+Wed Jun 16 01:37:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ChangeLog:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+        * DAnCE/MPC/config/dance_deployment_scheduler.mpb:
+
+          Fuzz fix. 
+
 Wed Jun 16 01:25:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler:
@@ -1752,7 +1761,6 @@ Fri Jun  4 11:47:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
           Renamed QueryFilter to QueryCondition in order to reflect what these tests
           are about.
 
->>>>>>> .r90410
 Fri Jun  4 11:28:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 

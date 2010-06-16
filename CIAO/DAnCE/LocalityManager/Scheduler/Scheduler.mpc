@@ -1,3 +1,4 @@
+// $Id$
 project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance_logger {
   dynamicflags = DEPLOYMENT_SCHEDULER_BUILD_DLL
   

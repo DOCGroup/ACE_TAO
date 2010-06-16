@@ -2,6 +2,8 @@
  * @file Plugin_Manager.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu
  *
+ * $Id$
+ * 
  * Singleton class to manage the lifecycle of deployment 
  * interceptors and plug-ins.
  */
