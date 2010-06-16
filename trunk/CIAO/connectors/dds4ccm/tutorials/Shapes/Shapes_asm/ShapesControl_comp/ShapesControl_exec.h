@@ -84,15 +84,20 @@ namespace CIAO_Shapes_Control_comp_Impl
 
     pulse_Generator * ticker_;
 
-    CORBA::ULong rate_;
-    CORBA::UShort max_x_;
-    CORBA::UShort max_y_;
-    CORBA::UShort max_size_;
-    CORBA::Boolean resize_;
+    ::CORBA::ULong rate_;
+    ::CORBA::UShort max_x_;
+    ::CORBA::UShort max_y_;
+    ::CORBA::UShort max_size_;
+    ::CORBA::Boolean resize_;
 
     bool x_increasing_;
     bool y_increasing_;
     bool size_increasing_;
+
+    ::CORBA::UShort current_size_;
+    ::Shapes::COLOR current_color_;
+    ::CORBA::UShort current_x_;
+    ::CORBA::UShort current_y_;
 
     void start (void);
     void stop (void);

@@ -16,11 +16,11 @@ $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
 
-$nr_daemon = 2;
-@ports = ( 60001, 60002 );
-@iorbases = ( "NodeApp1.ior", "NodeApp2.ior" );
+$nr_daemon = 3;
+@ports = ( 60001, 60002, 60004 );
+@iorbases = ( "Sender.ior", "Receiver.ior", "Controller.ior" );
 @iorfiles = 0;
-@nodenames = ( "SenderNode", "ReceiverNode" );
+@nodenames = ( "SenderNode", "ReceiverNode", "ControlNode" );
 
 # ior files other than daemon
 # ior files other than daemon

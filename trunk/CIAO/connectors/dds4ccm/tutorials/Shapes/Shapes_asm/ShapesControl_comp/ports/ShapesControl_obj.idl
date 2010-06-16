@@ -10,25 +10,22 @@ module Shapes
 {
   enum COLOR
   {
-    white,
-    red,
-    yellow
+    WHITE,
+    RED,
+    YELLOW,
+    GREEN
   };
 
   interface Control_obj
   {
-    boolean changeColor (in COLOR shape_color);
-    boolean changeMaxSize (in short max_size);
-    boolean changeMinSize (in short min_size);
+    boolean setSize (in unsigned short size);
+    boolean setLocation (in unsigned short x,
+                         in unsigned short y);
 /*
       ReturnStatus changeColor (in COLOR shape_color);
       ReturnStatus changeMaxSize (in short max_size);
       ReturnStatus changeMinSize (in short min_size);
-      attribute unsigned long rate;
-      attribute unsigned short max_x;
-      attribute unsigned short max_y;
-      attribute unsigned short max_size;
-      attribute boolean resize_shape;*/
+*/
   };
 };
 

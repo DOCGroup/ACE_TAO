@@ -1,9 +1,21 @@
+Wed Jun 16 11:35:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/ShapesControl_obj.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/ShapesControl_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/run_test.pl:
+          Implemented the shapes contoller.
+
 Wed Jun 16 10:36:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/tools/Split_Plan/Split_Plan.cpp:
         * DAnCE/tools/Split_Plan/Sub_UUID_Generator.cpp:
         * DAnCE/tools/Split_Plan/Sub_UUID_Generator.h:
-	  Changed to use a simpler way to generate unique sub plan
+          Changed to use a simpler way to generate unique sub plan
           ids which are more readable as well.
 
 Wed Jun 16 09:17:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
