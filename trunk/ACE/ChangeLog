@@ -2,11 +2,18 @@ Wed Jun 16 21:48:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
 
+          Added various assignments that are specific to -type cdt6.  Since
+          this Eclipse CDT support is not yet available in MPC, these will
+          be ignored for now.
+
         * include/makeinclude/platform_g++_common.GNU:
         * include/makeinclude/platform_gnuwin32_common.GNU:
         * include/makeinclude/platform_mingw32.GNU:
         * include/makeinclude/rules.local.GNU:
         * include/makeinclude/wrapper_macros.GNU:
+
+          Changes to support building on Windows (MinGW) without a bash shell.
+          Set SHELL=cmd in platform_macros.GNU to enable.
 
 Wed Jun 16 09:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
