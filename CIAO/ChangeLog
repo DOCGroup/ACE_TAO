@@ -1,3 +1,12 @@
+Wed Jun 16 01:20:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.h:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+
+          Updates to comply with new handler/interceptor interface.
+
 Wed Jun 16 01:18:58 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/Component_Handler.h:

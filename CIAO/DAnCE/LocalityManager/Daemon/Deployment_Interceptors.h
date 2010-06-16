@@ -42,6 +42,9 @@ namespace DAnCE
                                   ::CORBA::ULong instance_index,
                                   const ::CORBA::Any & instance_reference,
                                   const ::CORBA::Any & exception_thrown);
+
+    virtual
+      void configure(const Deployment::Properties&);
     
     CORBA::ORB_var orb_;
   private:
@@ -68,6 +71,9 @@ namespace DAnCE
       void instance_post_connect (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong connectionRef,
                                   const ::CORBA::Any & exceptionThrown);
+
+    virtual
+      void configure(const Deployment::Properties&);
   };
 }
 #endif
