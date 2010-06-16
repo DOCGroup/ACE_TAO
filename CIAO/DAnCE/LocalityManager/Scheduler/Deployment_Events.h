@@ -49,7 +49,7 @@ namespace DAnCE
     /// Return the number of still outstanding future events.
     size_t count_outstanding (void);
   private:
-    ACE_Atomic_Op < ACE_Thread_Mutex, unsigned long > outstanding_;
+    ACE_Atomic_Op < TAO_SYNCH_MUTEX, unsigned long > outstanding_;
     
     Functor &specific_handler_;
   };
