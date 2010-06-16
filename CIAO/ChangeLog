@@ -1,3 +1,22 @@
+Wed Jun 16 01:25:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.inl:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.tpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler_export.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+        * DAnCE/MPC/config/dance_deployment_scheduler.mpb:
+
+          New asynchronus deployment scheduler.  This is not currently
+          integrated with the NodeApplication and LocalityManager -
+          these updates will be committed shortly.
+
 Wed Jun 16 01:20:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.h:
