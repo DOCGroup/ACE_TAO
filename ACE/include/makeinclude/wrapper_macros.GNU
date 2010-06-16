@@ -311,7 +311,7 @@ endif # ! WIN32
 ACE_NUL_STDERR = 2>$(ACE_NUL) || true
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
-VAR             =
+VAR             ?=
 
 # User-written makefiles that are not MPC-generated often use LIB to specify
 # what to build. This is in contrast to MPC-generated files that use

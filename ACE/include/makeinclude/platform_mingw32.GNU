@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 # This file should allow to build ACE for mingw32 with mingw tools.
@@ -55,6 +56,14 @@ LDFLAGS += -Wl,--enable-auto-import
 PWD=$(subst \,/,$(shell pwd))
 
 PLATFORM_SSL_LIBS ?= -lssl32 -leay32
+
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+  CMDSEP = &
+  vxworks_ntbuild = 1
+  MKDIR_NTSYTLE = 1
+  ACE_MKDIR = mkdir
+  ECHO_BLANK_LINE = cmd /c echo.
+endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
 

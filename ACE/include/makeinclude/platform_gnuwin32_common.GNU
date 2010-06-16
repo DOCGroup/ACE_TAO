@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 ifneq ($(mingw32),1)
@@ -97,12 +98,13 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 
 # The sed below is to strip comments on the .def file,
 # to workaround to a bug in ld.
+CMDSEP ?= ;
 SHLIBBUILD = \
-  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
+  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
   $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
-  && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
+  && sed "s/;.*$$//g" < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)

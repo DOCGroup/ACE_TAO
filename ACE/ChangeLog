@@ -1,13 +1,23 @@
+Wed Jun 16 21:48:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
 Wed Jun 16 09:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/ConnectionCache.cpp:
-	  Added some error logging.
+        * protocols/ace/INet/ConnectionCache.cpp:
+          Added some error logging.
 
 Mon Jun 14 16:16:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/inet.mpc:
-	* bin/MakeProjectCreator/config/inet.mpb:
-	  Avoid WinCE.
+        * protocols/ace/INet/inet.mpc:
+        * bin/MakeProjectCreator/config/inet.mpb:
+          Avoid WinCE.
 
 Mon Jun 14 14:16:35 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
