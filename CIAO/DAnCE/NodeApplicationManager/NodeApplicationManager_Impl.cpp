@@ -165,7 +165,17 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
 
           // modify artifact descriptor location field to reflect the installed
           // artifact's location
-          sub_plan.artifact[i].location.length (1);
+          CORBA::ULong loc_last = sub_plan.artifact[i].location.length ();
+          sub_plan.artifact[i].location.length (loc_last + 1);
+          for (CORBA::ULong iloc = loc_last;
+               iloc > 0;
+               --iloc)
+            {
+              // shift all locations 1 position to the back to make room for the installed
+              // location
+              sub_plan.artifact[i].location[iloc] = sub_plan.artifact[i].location[iloc - 1];
+            }
+          // store installed location as first in list
           sub_plan.artifact[i].location[0] = location._retn ();
 
           // collect all unique paths
