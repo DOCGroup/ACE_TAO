@@ -1,3 +1,23 @@
+Thu Jun 17 09:09:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_exec.cpp:
+          Renamed executor files. Also renamed artifacts.
+
 Thu Jun 17 08:41:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp:
