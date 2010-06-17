@@ -599,6 +599,11 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &pr
   }
   {
     CORBA::Any val;
+    val <<= this->root_poa_.in ();
+    props.bind (DAnCE::ENTITY_POA, val);
+  }
+  {
+    CORBA::Any val;
     val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.cs_path_)),0);
     props.bind (DAnCE::LOCALITY_EXECUTABLE, val);
   }
