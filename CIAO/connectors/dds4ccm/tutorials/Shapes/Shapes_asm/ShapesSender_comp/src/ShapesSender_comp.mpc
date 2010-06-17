@@ -11,13 +11,12 @@ project(ShapesSender_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=ShapesSender_svnt_export.h \
               -Wb,exec_export_macro=SHAPES_SENDER_COMP_EXEC_Export \
               -Wb,exec_export_include=ShapesSender_exec_export.h \
-              -I./ports \
-              -I../ports \
-              -I../ShapesControl_comp/ports \
+              -I../../ports \
+              -I../../ShapesControl_comp/ports \
               -o GeneratedCode
 
   IDL_Files {
-    ./src/ShapesSender_comp.idl
+    ShapesSender_comp.idl
     gendir = GeneratedCode
   }
 }
@@ -28,13 +27,10 @@ project(ShapesSender_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=SHAPES_SENDER_COMP_LEM_STUB_Export \
               -Wb,stub_export_include=ShapesSender_lem_stub_export.h \
               -SS -Gxhst -I $CIAO_ROOT/connectors \
-              -I./src \
-              -I./ports \
-              -I./GeneratedCode \
-              -I../ports \
-              -I../ports/GeneratedCode \
-              -I../ShapesControl_comp/ports \
-              -I../ShapesControl_comp/GeneratedCode \
+              -I../../ports \
+              -I../../ports/GeneratedCode \
+              -I../../ShapesControl_comp/ports \
+              -I../../ShapesControl_comp/ports/GeneratedCode \
               -o GeneratedCode
 
   IDL_Files {
@@ -45,12 +41,15 @@ project(ShapesSender_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(ShapesSender_lem_stub) : ccm_svnt, dds4ccm_base {
   after += ShapesSender_lem_gen ShapesSender_stub Shapes_msg_stub
+
   libs  += Shapes_msg_stub ShapesSender_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode ../ShapesControl_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode ../../ShapesControl_comp/ports/GeneratedCode
+
   sharedname = ShapesSender_lem_stub
-  dynamicflags   = SHAPES_SENDER_COMP_LEM_STUB_BUILD_DLL
+  dynamicflags = SHAPES_SENDER_COMP_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -71,10 +70,13 @@ project(ShapesSender_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(ShapesSender_stub) : ccm_stub, dds4ccm_base {
   after += ShapesSender_idl_gen Shapes_msg_stub Shapes_conn_stub
+
   libs  += Shapes_msg_stub Shapes_conn_stub
-  includes += ../ports/GeneratedCode  ../ShapesControl_comp/GeneratedCode
-  libpaths += ../lib
-  libout = ../lib
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode ../../ShapesControl_comp/ports/GeneratedCode
+
   sharedname = ShapesSender_stub
   dynamicflags   = SHAPES_SENDER_COMP_STUB_BUILD_DLL
 
@@ -99,15 +101,17 @@ project(ShapesSender_exec) : ciao_executor, dds4ccm_base {
   after   += ShapesSender_lem_stub ShapesSender_stub Shapes_conn_lem_stub \
              Shapes_conn_stub ShapesControl_lem_stub ShapesControl_obj_lem_stub \
              Shapes_defn_stub ShapesControl_obj_stub
-  sharedname = ShapesSender_exec
+
   libs += ShapesSender_stub ShapesSender_lem_stub Shapes_msg_stub \
           Shapes_conn_lem_stub Shapes_conn_stub ShapesControl_lem_stub \
           ShapesControl_obj_lem_stub Shapes_defn_stub ShapesControl_obj_stub
-  libpaths += ../lib
-  includes +=  ./GeneratedCode \
-               ../ports/GeneratedCode \
-               ../ShapesControl_comp/GeneratedCode
-  libout = ../lib
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ./GeneratedCode ../ports/GeneratedCode ../../ports/GeneratedCode \
+              ../../ShapesControl_comp/ports/GeneratedCode
+
+  sharedname = ShapesSender_exec
   dynamicflags   = SHAPES_SENDER_COMP_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -133,17 +137,20 @@ project(ShapesSender_svnt) : ciao_servant, dds4ccm_base {
                 Shapes_conn_lem_stub ShapesControl_svnt \
                 ShapesControl_obj_stub ShapesControl_obj_svnt \
                 ShapesControl_obj_lem_stub
-  sharedname  = ShapesSender_svnt
+
   libs       += ShapesSender_stub ShapesSender_lem_stub  \
                 Shapes_msg_stub DDS4CCM_lem_stub DDS4CCM_skel \
                 Shapes_conn_stub Shapes_conn_svnt \
                 Shapes_conn_lem_stub ShapesControl_svnt \
                 ShapesControl_obj_stub ShapesControl_obj_svnt \
                 ShapesControl_obj_lem_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode \
-              ../ShapesControl_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../ports/GeneratedCode ../../ports/GeneratedCode \
+              ../../ShapesControl_comp/ports/GeneratedCode
+
+  sharedname  = ShapesSender_svnt
   dynamicflags = SHAPES_SENDER_COMP_SVNT_BUILD_DLL
 
   IDL_Files {
