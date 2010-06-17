@@ -7,7 +7,7 @@
 #include "Shapes_Sender_compEC.h"
 #include "Shapes_Control_objEC.h"
 
-#include /**/ "Shapes_Sender_exec_export.h"
+#include /**/ "Shapes_Sender_comp_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
