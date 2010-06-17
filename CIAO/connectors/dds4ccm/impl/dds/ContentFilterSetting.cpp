@@ -23,8 +23,9 @@ namespace CIAO
     CCM_DDS_ContentFilterSetting_i::filter (void)
     {
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::filter");
-
-      return &this->filter_;
+      ::CCM_DDS::QueryFilter* retval = new ::CCM_DDS::QueryFilter;
+      *retval = this->filter_;
+      return retval;
     }
 
     void

@@ -80,7 +80,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
           active_conditions[i]->get_trigger_value ();
 
           // Take read condition
-          DDS_ReturnCode_t retcode =
+          DDS_ReturnCode_t const retcode =
             this->impl ()->read_w_condition (data, sample_info, max_samples);
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
@@ -214,8 +214,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
               typename DDS_TYPE::dds_seq_type data;
 
               ::DDS::ReturnCode_t const retcode =
-                this->impl ()->read_w_condition (data,
-                                                 sample_info);
+                this->impl ()->read_w_condition (data, sample_info);
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
@@ -229,8 +228,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
-                  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
-                  if (retval != DDS_RETCODE_OK)
+                  DDS_ReturnCode_t const retval =
+                    this->impl ()->return_loan (data, sample_info);
+                  if (retval != ::DDS::RETCODE_OK)
                     {
                       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                         "CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
@@ -240,8 +240,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
 
                   throw CCM_DDS::InternalError (retcode, 1);
                 }
-              else if (data.length () == 1 &&
-                       sample_info[0].valid_data)
+              else if (data.length () == 1 && sample_info[0].valid_data)
                 {
                   info <<= sample_info[0];
                   an_instance = data[0];
@@ -253,7 +252,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one - "
                         "No valid available in DDS.\n"));
                 }
-              //return the loan of each read.
+              // Return the loan of each read.
               DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
@@ -280,8 +279,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
                     typename DDS_TYPE::value_type,
                     CORBA::NO_MEMORY ());
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions,
-                            this->time_out_))
+  if (!this->impl ()->wait (active_conditions, this->time_out_))
     {
       return false;
     }
@@ -299,7 +297,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-              DDS_ReturnCode_t retcode =
+              DDS_ReturnCode_t const retcode =
                 this->impl ()->read_w_condition (data,
                                                  sample_info);
               if (retcode == ::DDS::RETCODE_NO_DATA)
@@ -315,7 +313,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
                         "CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one - "
                         "Error while reading from DDS: <%C>\n",
                         translate_retcode (retcode)));
-                  DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+                  DDS_ReturnCode_t const retval =
+                    this->impl ()->return_loan (data, sample_info);
                   if (retval != DDS_RETCODE_OK)
                     {
                       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
@@ -325,8 +324,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
                     }
                   throw CCM_DDS::InternalError (retcode, 1);
                 }
-              else if (data.length () == 1 &&
-                       sample_info[0].valid_data)
+              else if (data.length () == 1 && sample_info[0].valid_data)
                 {
                   info <<= sample_info[0];
                   *an_instance = data[0];
