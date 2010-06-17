@@ -63,7 +63,7 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
       rhs.concrete_stubobj_->_incr_refcnt ();
     }
 
-  if (!CORBA::is_nil (rhs.equivalent_obj_))
+  if (!CORBA::is_nil (rhs.equivalent_obj_.in ()))
     {
       this->equivalent_obj_ =
         CORBA::Object::_duplicate (rhs.equivalent_obj_);
