@@ -4,11 +4,7 @@
 //Test for ConnectorStatusListener: on_offered_incompatible_qos
 
 #include "CSL_QoSTest_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-
-
-
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_CSL_QoSTest_Sender_Impl

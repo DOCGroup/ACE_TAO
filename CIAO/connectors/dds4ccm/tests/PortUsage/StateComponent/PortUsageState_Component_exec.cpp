@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "PortUsageState_Component_exec.h"
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
 namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl

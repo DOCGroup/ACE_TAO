@@ -2,7 +2,6 @@
 // $Id$
 
 #include "CFTLS_Test_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Date_Time.h"
 #include "tao/ORB_Core.h"
