@@ -1,3 +1,9 @@
+Thu Jun 17 14:48:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+          Fuzz.
+
 Thu Jun 17 14:40:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
