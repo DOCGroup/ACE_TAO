@@ -20,27 +20,6 @@ namespace CIAO_Quoter_Broker_Impl
 {
 
   class Broker_exec_i;
-  /**
-  * @class reader activity generator
-  *
-  * @brief an active object used by StockBroker to perform a periodical read action
-  *
-  */
-  class read_action_Generator : public ACE_Event_Handler
-  {
-  public:
-    read_action_Generator (Broker_exec_i &callback);
-
-    ~read_action_Generator ();
-
-    /// Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
-
-  private:
-    /// Maintains a handle that actually process the event
-    Broker_exec_i &pulse_callback_;
-  };
 
   class BROKER_EXEC_Export Stock_Info_Listener_exec_i
     : public virtual ::Quoter::CCM_Listener,
@@ -104,10 +83,7 @@ namespace CIAO_Quoter_Broker_Impl
     void read_all(void);
     void read_all_history(void);
 
-    // Operations from Components::SessionComponent.
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -119,9 +95,6 @@ namespace CIAO_Quoter_Broker_Impl
 
   private:
     ::Quoter::CCM_Broker_Context_var context_;
-    read_action_Generator * ticker_;
-    ::Quoter::Reader_var reader_;
-    ::Quoter::Getter_var getter_;
   };
 
   extern "C" BROKER_EXEC_Export ::Components::EnterpriseComponent_ptr

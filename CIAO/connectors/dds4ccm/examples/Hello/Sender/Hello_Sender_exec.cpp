@@ -53,7 +53,7 @@ namespace CIAO_Hello_Sender_Impl
       {
         // be aware that when only the sender runs, ready_to_start will never
         // be true.
-        this->ready_to_start_ = status_kind == DDS::PUBLICATION_MATCHED_STATUS;
+        this->ready_to_start_ = (status_kind == DDS::PUBLICATION_MATCHED_STATUS);
       }
   }
 
@@ -106,7 +106,8 @@ namespace CIAO_Hello_Sender_Impl
     return new ConnectorStatusListener_exec_i (this->ready_to_start_);
   }
 
-  ACE_CString Sender_exec_i::create_message (const ACE_CString &msg)
+  ACE_CString
+  Sender_exec_i::create_message (const ACE_CString &msg)
   {
     if (!this->log_time_)
       return msg;
@@ -140,6 +141,7 @@ namespace CIAO_Hello_Sender_Impl
                                   "Written sample: <%C> - <%u>\n",
                                   msg.c_str (),
                                   new_msg->iterator));
+            delete new_msg;
           }
         else
           { //we're done
@@ -152,7 +154,7 @@ namespace CIAO_Hello_Sender_Impl
   Sender_exec_i::start (void)
   {
     // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,

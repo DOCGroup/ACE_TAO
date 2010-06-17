@@ -25,7 +25,7 @@ namespace CIAO_Hello_Receiver_Impl
   {
   public:
     DDSHello_Listener_exec_i (Atomic_ULong &,
-                                  const ACE_CString &);
+                              const ACE_CString &);
     virtual ~DDSHello_Listener_exec_i (void);
 
     virtual void
@@ -80,7 +80,7 @@ namespace CIAO_Hello_Receiver_Impl
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
-      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
+    void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
                                     const DDS::InconsistentTopicStatus & status);
     virtual
     void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
@@ -125,15 +125,14 @@ namespace CIAO_Hello_Receiver_Impl
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_info_out_status (void);
+    
     virtual ::CCM_DDS::CCM_ConnectorStatusListener_ptr
     get_info_out_connector_status (void);
-
 
     // Operations from Components::SessionComponent.
 
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 

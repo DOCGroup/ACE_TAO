@@ -46,46 +46,6 @@ namespace CIAO_Quoter_Distributor_Impl
     Distributor_exec_i &pulse_callback_;
   };
 
-class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
-    : public virtual ::CCM_DDS::CCM_ConnectorStatusListener,
-      public virtual ::CORBA::LocalObject
-  {
-  public:
-    ConnectorStatusListener_exec_i (void);
-    virtual ~ConnectorStatusListener_exec_i (void);
-
-    virtual
-      void on_inconsistent_topic( ::DDS::Topic_ptr the_topic,
-                                  const DDS::InconsistentTopicStatus & status);
-    virtual
-    void on_requested_incompatible_qos( ::DDS::DataReader_ptr the_reader,
-                                      const DDS::RequestedIncompatibleQosStatus & status);
-    virtual
-    void on_sample_rejected(
-      ::DDS::DataReader_ptr the_reader,
-      const DDS::SampleRejectedStatus & status);
-
-      virtual
-      void on_offered_deadline_missed(
-        ::DDS::DataWriter_ptr the_writer,
-        const DDS::OfferedDeadlineMissedStatus & status);
-        
-    virtual
-    void on_offered_incompatible_qos(
-      ::DDS::DataWriter_ptr the_writer,
-      const DDS::OfferedIncompatibleQosStatus & status);
-      
-    virtual
-    void on_unexpected_status(
-      ::DDS::Entity_ptr the_entity,
-      ::DDS::StatusKind  status_kind);
-      
-    virtual
-    void on_publication_matched (
-      ::DDS::DataWriter_ptr the_writer,
-      const DDS::PublicationMatchedStatus & status);
-  };
-  
   class DISTRIBUTOR_EXEC_Export Distributor_exec_i
     : public virtual Distributor_Exec,
       public virtual ::CORBA::LocalObject
@@ -128,7 +88,6 @@ class DISTRIBUTOR_EXEC_Export ConnectorStatusListener_exec_i
     typedef std::map<ACE_CString, Quoter::Stock_Info_var> Stock_Table;
     Stock_Table stocks_;
     CORBA::ULong rate_;
-    ::Quoter::Writer_var writer_;
   };
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::EnterpriseComponent_ptr

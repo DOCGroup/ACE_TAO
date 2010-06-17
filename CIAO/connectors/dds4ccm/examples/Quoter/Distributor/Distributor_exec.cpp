@@ -41,67 +41,6 @@ namespace CIAO_Quoter_Distributor_Impl
     return 0;
   }
 
-
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (void)
-  {
-  }
-
-  ConnectorStatusListener_exec_i::~ConnectorStatusListener_exec_i (void)
-  {
-
-  }
-
-  // Operations from ::CCM_DDS::ConnectorStatusListener
-  void ConnectorStatusListener_exec_i::on_inconsistent_topic(
-     ::DDS::Topic_ptr /*the_topic*/,
-     const DDS::InconsistentTopicStatus & /*status*/)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_inconsistent_topic\n"));
-  }
-
-  void ConnectorStatusListener_exec_i::on_requested_incompatible_qos(
-    ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::RequestedIncompatibleQosStatus & /*status*/)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_requested_incompatible_qos\n"));
-  }
-
-  void ConnectorStatusListener_exec_i::on_sample_rejected(
-     ::DDS::DataReader_ptr /*the_reader*/,
-     const DDS::SampleRejectedStatus & /*status*/)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_sample_rejected\n"));
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_deadline_missed(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedDeadlineMissedStatus & /*status*/)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_deadline_missed\n"));
-  }
-
-  void ConnectorStatusListener_exec_i::on_offered_incompatible_qos(
-     ::DDS::DataWriter_ptr /*the_writer*/,
-     const DDS::OfferedIncompatibleQosStatus & /*status*/)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_offered_incompatible_qos\n"));
-  }
-
-  void ConnectorStatusListener_exec_i::on_unexpected_status(
-    ::DDS::Entity_ptr /*the_entity*/,
-    ::DDS::StatusKind status_kind)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ConnectorStatusListener_exec_i::on_unexpected_status: %d\n"),
-                status_kind));
-  }
-
-  void ConnectorStatusListener_exec_i::on_publication_matched ( ::DDS::DataWriter_ptr ,
-                                      const DDS::PublicationMatchedStatus &)
-  {
-    ACE_DEBUG ((LM_DEBUG, "ConnectorStatusListener_exec_i::on_publication_matched\n"));
-  }
-
   Distributor_exec_i::Distributor_exec_i (void)
     : rate_ (1)
   {
@@ -126,7 +65,7 @@ namespace CIAO_Quoter_Distributor_Impl
       {
         if (ACE_OS::rand () % 2)
           {
-            int delta = (ACE_OS::rand () % 10) - 2;
+            int const delta = (ACE_OS::rand () % 10) - 2;
 
             i->second->current += delta;
 
@@ -136,7 +75,10 @@ namespace CIAO_Quoter_Distributor_Impl
             if (i->second->current < i->second->low)
               i->second->low = i->second->current;
 
-            if (! ::CORBA::is_nil (this->writer_)) {
+            ::Quoter::Writer_var writer =
+              this->context_->get_connection_info_in_data ();
+
+            if (! ::CORBA::is_nil (writer.in ())) {
               ACE_DEBUG ((LM_DEBUG, "WRITE AND CREATE stock_info for <%C> %u:%u:%u\n",
                             i->first.c_str (),
                             i->second->low,
@@ -144,7 +86,7 @@ namespace CIAO_Quoter_Distributor_Impl
                             i->second->high));
               try
                 {
-                  this->writer_->write_one (i->second, ::DDS::HANDLE_NIL);
+                  writer->write_one (i->second, ::DDS::HANDLE_NIL);
                 }
               catch (const CCM_DDS::InternalError& )
                 {
@@ -244,7 +186,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::get_info_out_connector_status (void)
   {
     ACE_DEBUG ((LM_DEBUG, "*************** DIST out connector status************************\n"));
-    return new ConnectorStatusListener_exec_i ();
+    return ::CCM_DDS::CCM_ConnectorStatusListener::_nil ();
   }
 
   void
@@ -265,7 +207,6 @@ namespace CIAO_Quoter_Distributor_Impl
   void
   Distributor_exec_i::configuration_complete (void)
   {
-    this->writer_  = this->context_->get_connection_info_in_data ();
   }
 
   void
