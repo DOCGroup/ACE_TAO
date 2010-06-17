@@ -339,80 +339,88 @@ namespace DAnCE
                      this,
                      this->node_applications_.current_size ()));
 
-    // create completion counter
-    DA_NAM_ReplyHandlerImpl::Counter* _cp = 0;
-    ACE_NEW_THROW_EX (_cp,
-                      DA_NAM_ReplyHandlerImpl::Counter (this->node_applications_.current_size (),
-                                                        this,
-                                                        _ch_ptr),
-                      CORBA::NO_MEMORY ());
-    DA_NAM_ReplyHandlerImpl::Counter_AutoPtr _counter_ptr (_cp);
-
-    for (TApp2Mgr::iterator iter = this->node_applications_.begin();
-          iter != this->node_applications_.end();
-          ++iter)
+    if (this->node_applications_.current_size () > 0)
       {
-        ACE_CString node_id;
-        this->app_node_ids_.find ((*iter).ext_id_, node_id);
+      // create completion counter
+      DA_NAM_ReplyHandlerImpl::Counter* _cp = 0;
+      ACE_NEW_THROW_EX (_cp,
+                        DA_NAM_ReplyHandlerImpl::Counter (this->node_applications_.current_size (),
+                                                          this,
+                                                          _ch_ptr),
+                        CORBA::NO_MEMORY ());
+      DA_NAM_ReplyHandlerImpl::Counter_AutoPtr _counter_ptr (_cp);
 
-        try
-          {
-            // create and activate reply handler
-            DA_NAM_ReplyHandlerImpl* da_nam_rh_servant = 0;
-            ACE_NEW_THROW_EX (da_nam_rh_servant,
-                              DAnCE::DA_NAM_ReplyHandlerImpl (this,
-                                                              (*iter).int_id_,
-                                                              node_id.c_str (),
-                                                              _counter_ptr),
-                              CORBA::NO_MEMORY ());
+      for (TApp2Mgr::iterator iter = this->node_applications_.begin();
+            iter != this->node_applications_.end();
+            ++iter)
+        {
+          ACE_CString node_id;
+          this->app_node_ids_.find ((*iter).ext_id_, node_id);
 
-            PortableServer::ObjectId_var id = this->poa_->activate_object (da_nam_rh_servant);
+          try
+            {
+              // create and activate reply handler
+              DA_NAM_ReplyHandlerImpl* da_nam_rh_servant = 0;
+              ACE_NEW_THROW_EX (da_nam_rh_servant,
+                                DAnCE::DA_NAM_ReplyHandlerImpl (this,
+                                                                (*iter).int_id_,
+                                                                node_id.c_str (),
+                                                                _counter_ptr),
+                                CORBA::NO_MEMORY ());
 
-            CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
+              PortableServer::ObjectId_var id = this->poa_->activate_object (da_nam_rh_servant);
 
-            ::Deployment::AMI_NodeApplicationManagerHandler_var da_nam_handler =
-                ::Deployment::AMI_NodeApplicationManagerHandler::_narrow (ref.in ());
+              CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
 
-            DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                            ACE_TEXT("Plan %C DomainApplication[%@] : ")
-                            ACE_TEXT("calling destroyApplication on node application manager for node %C\n"),
-                            this->planUUID_.c_str (),
+              ::Deployment::AMI_NodeApplicationManagerHandler_var da_nam_handler =
+                  ::Deployment::AMI_NodeApplicationManagerHandler::_narrow (ref.in ());
+
+              DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                              ACE_TEXT("Plan %C DomainApplication[%@] : ")
+                              ACE_TEXT("calling destroyApplication on node application manager for node %C\n"),
+                              this->planUUID_.c_str (),
+                              this,
+                              node_id.c_str ()));
+
+              (*iter).int_id_->sendc_destroyApplication (da_nam_handler.in (),
+                                                        (*iter).ext_id_.in());
+
+              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                            ACE_TEXT("destroyApplication has been called on node application manager\n")));
+            }
+          catch (CORBA::Exception& ex)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                            ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
+                            this,
+                            node_id.c_str (),
+                            ex._info ().c_str ()));
+              // mark failure
+              _counter_ptr->increment_fail_count ();
+              // mark off node
+              _counter_ptr->decrement_exec_count ();
+              // continue for next node
+            }
+          catch (...)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                            ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                             this,
                             node_id.c_str ()));
-
-            (*iter).int_id_->sendc_destroyApplication (da_nam_handler.in (),
-                                                      (*iter).ext_id_.in());
-
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                          ACE_TEXT("destroyApplication has been called on node application manager\n")));
-          }
-        catch (CORBA::Exception& ex)
-          {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                          ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
-                          this,
-                          node_id.c_str (),
-                          ex._info ().c_str ()));
-            // mark failure
-            _counter_ptr->increment_fail_count ();
-            // mark off node
-            _counter_ptr->decrement_exec_count ();
-            // continue for next node
-          }
-        catch (...)
-          {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                          ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
-                          this,
-                          node_id.c_str ()));
-            // mark failure
-            _counter_ptr->increment_fail_count ();
-            // mark off node
-            _counter_ptr->decrement_exec_count ();
-            // continue for next node
-          }
+              // mark failure
+              _counter_ptr->increment_fail_count ();
+              // mark off node
+              _counter_ptr->decrement_exec_count ();
+              // continue for next node
+            }
+        }
+      }
+    else
+      {
+        // no node applications to clean up so finish immediately
+        _ch_ptr->handle_completion (this);
       }
 
     DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - finished\n")));
