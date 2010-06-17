@@ -4,9 +4,9 @@
 #ifndef SHAPES_RECEIVER_EXEC_H_
 #define SHAPES_RECEIVER_EXEC_H_
 
-#include "ShapesReceiver_compEC.h"
+#include "Shapes_Receiver_compEC.h"
 
-#include /**/ "ShapesReceiver_exec_export.h"
+#include /**/ "Shapes_Receiver_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
