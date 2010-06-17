@@ -150,8 +150,9 @@ namespace CIAO_QCLS_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_state_data ();
-    if (CORBA::is_nil (this->reader_.in ()))
+    ::QCLS_Test::QueryConditionListenStateTestConnector::Reader_var reader =
+      this->context_->get_connection_info_state_data ();
+    if (CORBA::is_nil (reader.in ()))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::configuration_complete - "
                               "Error get reader connection.\n"));
@@ -169,7 +170,10 @@ namespace CIAO_QCLS_Test_Receiver_Impl
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
-    this->reader_->query (filter);
+    ::QCLS_Test::QueryConditionListenStateTestConnector::Reader_var reader =
+      this->context_->get_connection_info_state_data ();
+
+    reader->query (filter);
 
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Start listening.\n"));

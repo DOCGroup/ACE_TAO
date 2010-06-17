@@ -108,7 +108,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           }
         QueryConditionTest queryfiltertest_info;
         ::CCM_DDS::ReadInfo readinfo;
-        char key[100];
+        char key[10];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
         queryfiltertest_info.symbol = CORBA::string_dup (key);
         get_reader->read_one_last (
@@ -248,9 +248,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     to.nanosec = 0;
     get_getter->time_out (to);
 
-    QueryConditionTest * qf_info = new QueryConditionTest;
+    QueryConditionTest_var qf_info;;
     ::CCM_DDS::ReadInfo readinfo;
-    bool result = get_getter->get_one (qf_info, readinfo);
+    CORBA::Boolean result = get_getter->get_one (qf_info.out (), readinfo);
     if (result)
       {
         this->check_iter_on_getter_port (*qf_info, "GET");
@@ -263,7 +263,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       }
     while (result)
       {
-        result = get_getter->get_one (qf_info, readinfo);
+        result = get_getter->get_one (qf_info.out (), readinfo);
         if (result)
           {
             this->check_iter_on_getter_port (*qf_info, "GET");

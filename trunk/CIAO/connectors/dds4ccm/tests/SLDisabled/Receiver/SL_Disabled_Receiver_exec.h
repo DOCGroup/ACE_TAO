@@ -103,7 +103,6 @@ namespace CIAO_SL_Disabled_Receiver_Impl
 
   private:
     ::SL_Disabled::CCM_Receiver_Context_var context_;
-    ::SL_Disabled::SL_DisabledConnector::Reader_var reader_;
     read_action_Generator * ticker_;
 
     CORBA::ULong rate_;

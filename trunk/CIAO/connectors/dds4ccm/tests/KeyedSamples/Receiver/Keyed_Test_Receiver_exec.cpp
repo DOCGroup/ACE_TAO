@@ -65,7 +65,10 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::read (void)
   {
-    if (::CORBA::is_nil (this->reader_.in ()))
+    ::KeyedTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
+    if (::CORBA::is_nil (reader.in ()))
       {
         return;
       }
@@ -74,11 +77,11 @@ namespace CIAO_Keyed_Test_Receiver_Impl
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
             KeyedTest keyedtest_info;
-            char key[100];
+            char key[10];
             ACE_OS::sprintf (key, "KEY_%d", i);
             keyedtest_info.key = CORBA::string_dup (key);
             ::CCM_DDS::ReadInfo readinfo;
-            this->reader_->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
+            reader->read_one_last (keyedtest_info, readinfo, ::DDS::HANDLE_NIL);
 
             ACE_Time_Value tv;
             tv <<= readinfo.source_timestamp;
@@ -113,8 +116,7 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::rate (
-    ::CORBA::ULong rate)
+  Receiver_exec_i::rate (::CORBA::ULong rate)
   {
     this->rate_ = rate;
   }
@@ -148,13 +150,13 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   ::KeyedTestConnector::CCM_Listener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return 0;
+    return ::KeyedTestConnector::CCM_Listener::_nil ();
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   void
@@ -172,7 +174,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void

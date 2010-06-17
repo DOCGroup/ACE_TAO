@@ -149,7 +149,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   private:
     ::CSL_USTest::CCM_Receiver_Context_var context_;
     ::CCM_DDS::DataListenerControl_var lc_;
-    ::CSL_US_Connector::Reader_var reader_;
 
     Pulser *pulser_;
 

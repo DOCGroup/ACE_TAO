@@ -113,16 +113,12 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     virtual ::PSL_DeadlineTest::PSLDeadlineConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_out_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_info_out_status (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_get_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_info_get_status (void);
 
     // Operations from Components::SessionComponent.
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
     virtual void ccm_activate (void);
@@ -132,7 +128,6 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   private:
     ::PSL_DeadlineTest::CCM_Receiver_Context_var context_;
-    ::PSL_DeadlineTest::PSLDeadlineConnector::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
 

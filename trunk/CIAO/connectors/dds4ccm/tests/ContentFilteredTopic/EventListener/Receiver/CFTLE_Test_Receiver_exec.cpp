@@ -141,8 +141,9 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_listen_data ();
-    if (CORBA::is_nil (this->reader_))
+    ::CFTLE_Test::ContentFilteredTopicListenEventTestConnector::Reader_var reader =
+      this->context_->get_connection_info_listen_data ();
+    if (CORBA::is_nil (reader.in ()))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::configuration_complete - "
                               "Error get reader connection.\n"));

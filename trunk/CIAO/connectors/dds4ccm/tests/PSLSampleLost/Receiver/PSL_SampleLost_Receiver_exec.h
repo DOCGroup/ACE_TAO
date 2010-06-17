@@ -139,7 +139,6 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
 
   private:
     ::PSL_SampleLost::CCM_Receiver_Context_var context_;
-    ::PSL_SampleLost::PSL_SampleLostConnector::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
     Atomic_Boolean sample_port_1_;

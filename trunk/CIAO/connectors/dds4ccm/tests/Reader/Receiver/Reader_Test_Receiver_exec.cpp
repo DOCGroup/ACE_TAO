@@ -82,16 +82,19 @@ namespace CIAO_Reader_Test_Receiver_Impl
   bool
   Receiver_exec_i::check_last ()
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
-        if (! ::CORBA::is_nil (this->reader_))
+        if (! ::CORBA::is_nil (reader.in ()))
           {
             ReaderTest readertest_info;
             ::CCM_DDS::ReadInfo readinfo;
-            char key[100];
+            char key[10];
             ACE_OS::sprintf (key, "KEY_%d", this->keys_);
             readertest_info.key = CORBA::string_dup (key);
-            this->reader_->read_one_last (
+            reader->read_one_last (
                     readertest_info,
                     readinfo,
                     ::DDS::HANDLE_NIL);
@@ -114,22 +117,22 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::read_one_last (bool test_handles)
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
             ReaderTest readertest_info;
             ::CCM_DDS::ReadInfo readinfo;
-            char key[100];
+            char key[10];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
             DDS::InstanceHandle_t hnd = test_handles
                 ? this->handles_[key]
                 : ::DDS::HANDLE_NIL;
-            this->reader_->read_one_last (
-                    readertest_info,
-                    readinfo,
-                    hnd);
+            reader->read_one_last (readertest_info, readinfo, hnd);
             if (readertest_info.iteration == this->iterations_)
               {
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE LAST: ")
@@ -174,20 +177,23 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::read_one_all (bool test_handles)
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
           {
-            ReaderTest              readertest_info;
+            ReaderTest readertest_info;
             ReaderTestSeq readertest_info_seq;
             ::CCM_DDS::ReadInfoSeq readinfo_seq;
-            char key[100];
+            char key[10];
             ACE_OS::sprintf (key, "KEY_%d", i);
             readertest_info.key = CORBA::string_dup (key);
             DDS::InstanceHandle_t hnd = test_handles
                 ? this->handles_[key]
                 : ::DDS::HANDLE_NIL;
-            this->reader_->read_one_all (
+            reader->read_one_all (
                     readertest_info,
                     readertest_info_seq,
                     readinfo_seq,
@@ -251,11 +257,14 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::read_last (void)
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         ReaderTestSeq readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
-        this->reader_->read_last (readertest_info_seq, readinfo_seq);
+        reader->read_last (readertest_info_seq, readinfo_seq);
 
         if (readertest_info_seq.length () != this->keys_)
           {
@@ -299,11 +308,14 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         ReaderTestSeq readertest_info_seq;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
-        this->reader_->read_all (readertest_info_seq, readinfo_seq);
+        reader->read_all (readertest_info_seq, readinfo_seq);
 
         CORBA::ULong const nr_samples = this->keys_ * this->iterations_;
         if (readertest_info_seq.length () != nr_samples)
@@ -393,12 +405,15 @@ namespace CIAO_Reader_Test_Receiver_Impl
   {
     // test exception handling
     bool except_caught = false;
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         ReaderTest readertest_info;
         readertest_info.key = CORBA::string_dup ("KEY_0");
         ::CCM_DDS::ReadInfo readinfo;
-        this->reader_->read_one_last (readertest_info, readinfo, ::DDS::HANDLE_NIL);
+        reader->read_one_last (readertest_info, readinfo, ::DDS::HANDLE_NIL);
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -420,6 +435,9 @@ namespace CIAO_Reader_Test_Receiver_Impl
   Receiver_exec_i::test_exception_with_handles ()
   {
     // test exception handling
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     bool except_caught = false;
     try
       {
@@ -427,7 +445,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
         readertest_info.key = CORBA::string_dup ("KEY_1");
         ::CCM_DDS::ReadInfo readinfo;
         DDS::InstanceHandle_t hnd = this->handles_["KEY_2"];
-        this->reader_->read_one_last (readertest_info, readinfo, hnd);
+        reader->read_one_last (readertest_info, readinfo, hnd);
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -450,11 +468,14 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::read_no_data ()
   {
+    ::Reader_Test::ReaderTestConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     try
       {
         ReaderTestSeq readertest_info_seq ;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
-        this->reader_->read_all (readertest_info_seq, readinfo_seq);
+        reader->read_all (readertest_info_seq, readinfo_seq);
 
         if (readertest_info_seq.length () > 0)
           {
@@ -580,7 +601,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void

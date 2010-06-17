@@ -94,14 +94,17 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   bool
   Receiver_exec_i::check_last ()
   {
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_get_port_data ();
+
     try
       {
         QueryConditionTest queryfiltertest_info;
         ::CCM_DDS::ReadInfo readinfo;
-        char key[100];
+        char key[10];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
         queryfiltertest_info.symbol = CORBA::string_dup (key);
-        this->reader_->read_one_last (
+        reader->read_one_last (
                 queryfiltertest_info,
                 readinfo,
                 ::DDS::HANDLE_NIL);
@@ -151,9 +154,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_get_port_data ();
+
     QueryConditionTestSeq queryfiltertest_info_seq;
     ::CCM_DDS::ReadInfoSeq readinfo_seq;
-    this->reader_->read_all (queryfiltertest_info_seq, readinfo_seq);
+    reader->read_all (queryfiltertest_info_seq, readinfo_seq);
     if (queryfiltertest_info_seq.length () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
@@ -168,17 +174,20 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::get_all (void)
   {
-    if (::CORBA::is_nil (this->getter_))
+    ::ReadGet_Test::QueryConditionTestConnector::Getter_var getter =
+      this->context_->get_connection_get_port_fresh_data ();
+
+    if (::CORBA::is_nil (getter.in ()))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
                               "ERROR: No Getter\n"));
       }
-    QueryConditionTest * qf_info = new QueryConditionTest;
+    QueryConditionTest_var qf_info;
     ::CCM_DDS::ReadInfo readinfo;
-    bool result = this->getter_->get_one (qf_info, readinfo);
+    CORBA::Boolean result = getter->get_one (qf_info.out (), readinfo);
     if (result)
       {
-        this->check_iter (*qf_info, "GET");
+        this->check_iter (qf_info.in (), "GET");
       }
     else
       {
@@ -188,10 +197,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       }
     while (result)
       {
-        result = this->getter_->get_one (qf_info, readinfo);
+        result = getter->get_one (qf_info.out (), readinfo);
         if (result)
           {
-            this->check_iter (*qf_info, "GET");
+            this->check_iter (qf_info.in (), "GET");
           }
       }
   }
@@ -234,10 +243,13 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::test_exception ()
   {
-    ::CCM_DDS::QueryFilter* query = 0;
+    ::CCM_DDS::QueryFilter_var query;
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_get_port_data ();
+
     try
       {
-        query = this->reader_->query ();
+        query = reader->query ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -260,10 +272,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter ()
   {
-    ::CCM_DDS::QueryFilter * filter = 0;
+    ::CCM_DDS::QueryFilter_var filter;
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_get_port_data ();
     try
       {
-        filter = this->reader_->query ();
+        filter = reader->query ();
       }
     catch (const CCM_DDS::InternalError& ex)
       {
@@ -334,12 +348,15 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   {
     try
       {
+        ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+          this->context_->get_connection_get_port_data ();
+
         ::CCM_DDS::QueryFilter filter;
         filter.expression = CORBA::string_dup ("na");
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
         filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
-        this->reader_->query (filter);
+        reader->query (filter);
         this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
         this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
       }
@@ -363,12 +380,15 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   Receiver_exec_i::set_filter ()
   {
     ACE_DEBUG ((LM_DEBUG, "Set filter\n"));
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_get_port_data ();
+
     ::CCM_DDS::QueryFilter filter;
     filter.expression = CORBA::string_dup (QUERY);
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-    this->reader_->query (filter);
+    reader->query (filter);
   }
 
   void
@@ -482,16 +502,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->reader_ = this->context_->get_connection_get_port_data ();
-    this->getter_ = this->context_->get_connection_get_port_fresh_data ();
     this->context_->get_connection_get_port_fresh_data ();
 
+    ::ReadGet_Test::QueryConditionTestConnector::Getter_var getter =
+      this->context_->get_connection_get_port_fresh_data ();
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
-    if (! ::CORBA::is_nil (this->getter_))
+    if (! ::CORBA::is_nil (getter))
       {
-        this->getter_->time_out (to);
+        getter->time_out (to);
       }
     else
       {

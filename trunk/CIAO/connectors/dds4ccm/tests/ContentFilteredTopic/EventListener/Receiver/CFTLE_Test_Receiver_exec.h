@@ -88,7 +88,6 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
 
   private:
     ::CFTLE_Test::CCM_Receiver_Context_var context_;
-    ::CFTLE_Test::ContentFilteredTopicListenEventTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

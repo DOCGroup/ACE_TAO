@@ -88,7 +88,6 @@ namespace CIAO_QCLE_Test_Receiver_Impl
 
   private:
     ::QCLE_Test::CCM_Receiver_Context_var context_;
-    ::QCLE_Test::QueryConditionListenEventTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 
