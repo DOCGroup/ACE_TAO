@@ -328,6 +328,49 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 }
 
 
+// Loading and unloading the ACE logger service should not smash singletons.
+void
+testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
+{
+  static const ACE_TCHAR *load_logger =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("dynamic Logger Service_Object * ")
+    ACE_TEXT ("  ACE:_make_ACE_Logging_Strategy() \"\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Logger\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_ACE_Logging_Strategy\" ")
+    ACE_TEXT ("    path=\"ACE\" params=\"\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  static const ACE_TCHAR *unload_logger =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("remove Logger")
+#else
+    ACE_TEXT ("<remove id=\"Logger\" />");
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  ACE_Reactor *r1 = ACE_Reactor::instance();
+
+  int error_count = 0;
+  if ((error_count = ACE_Service_Config::process_directive (load_logger)) != 0)
+    {
+      ++error;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Load ACE Logger should have returned 0; ")
+                  ACE_TEXT ("returned %d instead\n"),
+                  error_count));
+    }
+  ACE_Service_Config::process_directive (unload_logger);
+
+  ACE_Reactor *r2 = ACE_Reactor::instance ();
+  if (r1 != r2)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
+}
+
+
 // @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
@@ -665,6 +708,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   testFailedServiceInit (argc, argv);
   testLoadingServiceConfFile (argc, argv);
   testLoadingServiceConfFileAndProcessNo (argc, argv);
+  testUnloadingACELoggingStrategy (argc, argv);
   testLimits (argc, argv);
   testrepository (argc, argv);
 #if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)

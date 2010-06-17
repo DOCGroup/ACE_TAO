@@ -1,3 +1,11 @@
+Thu Jun 17 19:01:32 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Test.cpp: Added a new test case,
+          testUnloadingACELoggingStrategy. It loads then unloads the
+          ACE logging strategy. This causes ACE to run down itself,
+          smashing singletons in the process. This test case goes with
+          Bugzilla #3856.
+
 Wed Jun 16 21:48:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
