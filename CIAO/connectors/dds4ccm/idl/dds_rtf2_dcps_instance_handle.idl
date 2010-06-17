@@ -5,7 +5,7 @@
 
 #if (CIAO_DDS4CCM_NDDS==1)
 
-#include "dds_rtf2_dcps_i_handle.idl"
+#include "connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl"
 
 module DDS {
     native HANDLE_NIL;
