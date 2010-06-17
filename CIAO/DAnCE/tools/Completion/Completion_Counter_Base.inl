@@ -41,11 +41,12 @@ namespace DAnCE
 
     template <class ACE_LOCK>
     ACE_INLINE void
-    Completion_Counter_Base<ACE_LOCK>::increment_fail_count ()
+    Completion_Counter_Base<ACE_LOCK>::increment_fail_count (const char* error)
       {
         ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
         ++this->fail_count_;
+        this->errors_.push_back (error);
       }
 
     template <class ACE_LOCK>
@@ -73,6 +74,14 @@ namespace DAnCE
         ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, false);
 
         return (this->exec_count_ == 0);
+      }
+
+    template <class ACE_LOCK>
+    ACE_INLINE
+    const typename Completion_Counter_Base<ACE_LOCK>::errors_type&
+    Completion_Counter_Base<ACE_LOCK>::errors () const
+      {
+        return this->errors_;
       }
 
     template <class ACE_LOCK>

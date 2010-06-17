@@ -213,7 +213,9 @@ ExecutionManager_Impl::destroyManager (::Deployment::AMH_ExecutionManagerRespons
       }
     DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
                   ACE_TEXT("corresponding DomainApplicationManager cannot be found\n")));
-    CORBA::Exception* local_ex = new ::Deployment::StopError();
+    CORBA::Exception* local_ex =
+        new ::Deployment::StopError("ExecutionManager_Impl::destroyManager",
+                                    "corresponding DomainApplicationManager cannot be found");
     ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
     _tao_rh->destroyManager_excep (&amh_exholder);
   }
