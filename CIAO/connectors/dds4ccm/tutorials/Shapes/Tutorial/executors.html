@@ -23,6 +23,75 @@
     be done.
   </p>
 
+  <h2>Controller</h2>
+  <p>
+    In a command shell windows, navigate to the &quot;src&quot; directory of the
+    component directory of the Controller (Shapes_asm/Shapes_Control_comp/src).
+    After that, invoke the TAO IDL compiler by running the following command:
+  </p>
+  <p>
+    <code>
+        tao_idl -I../ports -I../ports/GeneratedCode
+        -I../../ports -I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT%
+        -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gex
+        Shapes_Control_comp.idl
+    </code>
+    <br/><br/>
+    This will generate the executor file with &quot;
+    Shapes_Control_comp_exec.cpp&quot; as name. Once generated, the user should
+    implement the business logic for the controller.<br/><br/>
+
+    The generated code can be found
+    <a href="./Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp">here</a>.<br/>
+    The implemented executor can be found
+    <a href="../Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp">
+    here</a><br/>
+    <br/>
+  </p>
+
+  <h2>Sender</h2>
+  <p>
+    Navigate to the Shapes_asm/Shapes_Sender_comp/src and invoke the TAO IDL
+    compiler by running the following command:
+  </p>
+  <p>
+    <code>
+        tao_idl -I../ports -I../../Shapes_Control_comp/ports
+        -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
+        -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
+        -DCIAO_DDS4CCM_NDDS -Gex Shapes_Sender_comp.idl
+    </code>
+    <br/><br/>
+    The generated code can be found
+    <a href="./Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp">here</a>.<br/>
+    The implemented executor can be found
+    <a href="../Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp">
+    here</a><br/>
+    <br/>
+  </p>
+
+  <h2>Receiver</h2>
+  <p>
+    Navigate to the Shapes_asm/Shapes_Receiver_comp/src and invoke the TAO IDL
+    compiler by running the following command:
+  </p>
+  <p>
+    <code>
+        tao_idl -I../ports -I../../Shapes_Control_comp/ports
+        -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
+        -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
+        -DCIAO_DDS4CCM_NDDS -Gex Shapes_Receiver_comp.idl
+    </code>
+    <br/><br/>
+    The generated code can be found
+    <a href="./Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp">here</a>.<br/>
+    The implemented executor can be found
+    <a href="../Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp">
+    here</a><br/>
+    <br/>
+  </p>
+
+
   <hr />
   <table width="100%" border="0">
     <tr>
