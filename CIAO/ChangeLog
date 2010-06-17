@@ -1,3 +1,32 @@
+Thu Jun 17 08:06:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/ShapesControl_obj.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/ShapesControl_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/ShapesControl_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/ShapesControl_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ports:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/ShapesReceiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/ShapesReceiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/ShapesSender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/ShapesSender_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_defn.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ShapesControl_obj.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ShapesReceiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ShapesSender_exec.cpp:
+          Reorganized the mpc files. Also created a consistent format of the mpc-files regarding
+          the attributes like sharedname/includes.
+
 Thu Jun 17 07:58:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ContentFilterSetting.cpp:

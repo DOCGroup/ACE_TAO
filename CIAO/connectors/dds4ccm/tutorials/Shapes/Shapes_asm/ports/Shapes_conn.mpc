@@ -36,10 +36,13 @@ project(Shapes_conn_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project(Shapes_conn_lem_stub) : ccm_svnt, dds4ccm_base {
   after += Shapes_conn_lem_gen Shapes_conn_stub Shapes_msg_stub DDS4CCM_lem_stub
+
   libs  += Shapes_msg_stub Shapes_conn_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
+
   includes += .
+
   sharedname = Shapes_conn_lem_stub
   dynamicflags   = SHAPES_CONNECTOR_LEM_STUB_BUILD_DLL
 
@@ -62,10 +65,13 @@ project(Shapes_conn_lem_stub) : ccm_svnt, dds4ccm_base {
 
 project(Shapes_conn_stub) : ccm_stub, dds4ccm_base {
   after += Shapes_conn_idl_gen Shapes_msg_stub
+
   libs  += Shapes_msg_stub
   libpaths += ../lib
   libout = ../lib
+
   includes += .
+
   sharedname = Shapes_conn_stub
   dynamicflags   = SHAPES_CONNECTOR_STUB_BUILD_DLL
 
@@ -88,11 +94,14 @@ project(Shapes_conn_stub) : ccm_stub, dds4ccm_base {
 
 project(Shapes_conn_exec) : ciao_executor, dds4ccm_impl {
   after   += Shapes_conn_lem_stub Shapes_conn_stub DDS4CCM_lem_stub
-  sharedname = Shapes_conn_exec
+
   libs += Shapes_conn_stub Shapes_conn_lem_stub Shapes_msg_stub DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
+
   includes += .
+
+  sharedname = Shapes_conn_exec
   dynamicflags   = SHAPES_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
@@ -113,16 +122,16 @@ project(Shapes_conn_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(Shapes_conn_svnt) : ciao_servant, dds4ccm_impl {
-  after      += Shapes_conn_lem_stub Shapes_conn_exec Shapes_conn_stub DDS4CCM_lem_stub
-  sharedname  = Shapes_conn_svnt
-  libs       += Shapes_conn_stub \
-                Shapes_conn_lem_stub  \
-                Shapes_msg_stub \
-                Shapes_conn_exec \
-                DDS4CCM_lem_stub
+  after += Shapes_conn_lem_stub Shapes_conn_exec Shapes_conn_stub DDS4CCM_lem_stub
+
+  libs += Shapes_conn_stub Shapes_conn_lem_stub Shapes_msg_stub Shapes_conn_exec \
+          DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
+
   includes += .
+
+  sharedname  = Shapes_conn_svnt
   dynamicflags = SHAPES_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {

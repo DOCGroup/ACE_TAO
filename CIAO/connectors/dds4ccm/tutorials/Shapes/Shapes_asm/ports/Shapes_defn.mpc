@@ -16,9 +16,12 @@ project(Shapes_defn_idl_gen) : taoidldefaults {
 
 project(Shapes_defn_stub) : ccm_stub {
   after += Shapes_defn_idl_gen
+
   libpaths += ../lib
   libout = ../lib
+
   includes += ./GeneratedCode
+
   sharedname = Shapes_defn_stub
   dynamicflags = SHAPES_CONTROL_STUB_BUILD_DLL
 

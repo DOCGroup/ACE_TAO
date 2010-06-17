@@ -1,14 +1,15 @@
 // $Id$
 
 project (Shapes_msg_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default, Shapes {
-  sharedname = Shapes_msg_stub
-  dynamicflags += SHAPES_MSG_STUB_BUILD_DLL
-  libout = ../lib
-
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=SHAPES_MSG_STUB_Export \
               -Wb,stub_export_include=Shapes_msg_stub_export.h \
               -o GeneratedCode
+
+  libout = ../lib
+
+  sharedname = Shapes_msg_stub
+  dynamicflags += SHAPES_MSG_STUB_BUILD_DLL
 
   IDL_Files {
     idlflags += -Gxhst
