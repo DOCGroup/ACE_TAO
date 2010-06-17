@@ -40,12 +40,14 @@ namespace CIAO_Hello_Receiver_Impl
     ++this->received_;
     ACE_CString rec (an_instance.hello.in ());
     ACE_Date_Time now;
-    int sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
+    int const sec_rec = ACE_OS::atoi (rec.substr (0, 2).c_str() );
     if (sec_rec > 0)
       {
         int usec_rec = ACE_OS::atoi (rec.substr (3, 6).c_str ());
         if (sec_rec != now.second ())
-          usec_rec += 10000000;
+          {
+            usec_rec += 10000000;
+          }
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<%C> received <%C> - <%d>. difference <%d>\n"),
                     this->name_.c_str (),
                     an_instance.hello.in (),
@@ -59,12 +61,6 @@ namespace CIAO_Hello_Receiver_Impl
       an_instance.hello.in (),
       an_instance.iterator));
     }
-/*
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("DDSHello_Listener: ")
-            ACE_TEXT ("received hello for <%C> - iterator <%d>\n"),
-            an_instance.hello.in (),
-            an_instance.iterator));
-*/
   }
   //============================================================
   // Facet Executor Implementation Class: PortStatusListener_exec_i
@@ -234,8 +230,7 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Hello::CCM_Receiver_Context::_narrow (ctx);
+    this->context_ = ::Hello::CCM_Receiver_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -251,11 +246,13 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
+      this->context_->get_connection_info_out_data_control ();
 
     if (::CORBA::is_nil (lc.in ()))
       {
-        ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+        ACE_ERROR ((LM_INFO,
+                    ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
+                    
         throw CORBA::INTERNAL ();
       }
     lc->mode ( ::CCM_DDS::ONE_BY_ONE);
@@ -269,7 +266,8 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    ACE_DEBUG ((LM_INFO, "Receiver_exec_i summary: received <%u> - expected <%d> - lost <%u>\n",
+    ACE_DEBUG ((LM_INFO,
+                "Receiver_exec_i summary: received <%u> - expected <%d> - lost <%u>\n",
                 this->received_.value (),
                 this->expected_,
                 this->lost_.value ()));

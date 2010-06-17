@@ -1,3 +1,14 @@
+Thu Jun 17 08:43:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+          Cleanup and some simplifications
+
 Thu Jun 17 08:33:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
