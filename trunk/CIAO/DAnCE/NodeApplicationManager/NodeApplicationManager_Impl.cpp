@@ -249,16 +249,16 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
         }
 #endif
       // Need to add naming service reference to config properties.
-      DAnCE::Utility::update_property_value<CosNaming::NamingContext_var> (
+      DAnCE::Utility::update_property_value<CosNaming::NamingContext_ptr> (
             DAnCE::LOCALITY_NAMINGCONTEXT,
             lm_idd.configProperty,
-            this->instance_nc_);
+            this->instance_nc_. in ());
 
       // pass installer reference as an execParameter property
-      DAnCE::Utility::update_property_value<DAnCE::ArtifactInstallation_var> (
+      DAnCE::Utility::update_property_value<DAnCE::ArtifactInstallation_ptr> (
             DAnCE::DANCE_LM_INSTALLER,
             lm_mdd.execParameter,
-            this->installer_);
+            this->installer_.in ());
     }
 
   // cleanup installer resources

@@ -38,7 +38,8 @@ namespace
         app_ior_ (0),
         output_ (false),
         output_prefix_ (0),
-        mode_ (LAUNCH)
+        mode_ (LAUNCH),
+        force_ (false)
     {}
 
     const ACE_TCHAR *em_ior_;
@@ -51,6 +52,7 @@ namespace
     bool output_;
     const ACE_TCHAR *output_prefix_;
     MODE mode_;
+    bool force_;
   };
 }
 
@@ -91,7 +93,9 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("Launch the plan (Requires CDR/XML plan)\n")
 
               ACE_TEXT ("\t-s|--stop-plan\t\t\tStop the plan ")
-              ACE_TEXT ("(Requires Plan, UUID, or APP/AM references")
+              ACE_TEXT ("(Requires Plan, UUID, or APP/AM references\n")
+
+              ACE_TEXT ("\t-f|--force\t\t\tDo not stop teardown on errors")
 
               ACE_TEXT ("\nOther Options\n")
               ACE_TEXT ("\t-o|--output[prefix]\t\tOutput IOR files ")
@@ -115,7 +119,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   ACE_Get_Opt get_opt(argc, argv,
-                      ACE_TEXT ("k:n:c:x:u:m:a:lso::h"));
+                      ACE_TEXT ("k:n:c:x:u:m:a:lsfo::h"));
   get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
@@ -125,6 +129,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("app-ior"), 'a', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("launch-plan"), 'l', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("stop-plan"), 's', ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("force"), 'f', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
 
@@ -214,6 +219,13 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::parse_args - ")
                            ACE_TEXT ("Tearing down nominated plan\n")));
+          break;
+
+        case 'f':
+          options.force_ = true;
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
+                           ACE_TEXT ("Not stopping teardown on errors\n")));
           break;
 
         case 'o':
@@ -389,18 +401,19 @@ int teardown_plan (const Options &opts,
 {
   DANCE_TRACE ("Plan_Launcher::teardown_plan");
 
+  int rc = 0;
   try
     {
+      CORBA::Object_var am;
+      CORBA::Object_var app;
       if (opts.am_ior_ && opts.app_ior_)
         {
           DANCE_DEBUG (3, (LM_DEBUG, DLINFO
                            ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                            ACE_TEXT ("Tearing down plan with explicitly ")
                            ACE_TEXT ("nominated App and AM IORs.\n")));
-          CORBA::Object_var am (orb->string_to_object (opts.am_ior_));
-          CORBA::Object_var app (orb->string_to_object (opts.app_ior_));
-
-          pl_base->teardown_application (am, app);
+          am = orb->string_to_object (opts.am_ior_);
+          app = orb->string_to_object (opts.app_ior_);
         }
       else
         {
@@ -424,7 +437,6 @@ int teardown_plan (const Options &opts,
               return 1;
             }
 
-          CORBA::Object_var am, app;
           if (em_launcher->lookup_by_uuid (uuid.c_str (),
                                            am.out (),
                                            app.out ()))
@@ -433,7 +445,6 @@ int teardown_plan (const Options &opts,
                                ACE_TEXT ("Plan_Launcher::teardown_plan - ")
                                ACE_TEXT ("Tearing down plan with UUID %C\n"),
                                uuid.c_str ()));
-              pl_base->teardown_application (am, app);
             }
           else
             {
@@ -443,6 +454,35 @@ int teardown_plan (const Options &opts,
               return 1;
             }
         }
+
+      try
+        {
+          pl_base->teardown_application (am, app);
+        }
+      catch (const DAnCE::Deployment_Failure &ex)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                    ACE_TEXT ("Application Teardown failed, exception: %C\n"),
+                    ex.ex_.c_str ()));
+          rc = 1;
+        }
+      catch (const CORBA::Exception &ex)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                      ACE_TEXT ("Application Teardown failed, caught CORBA exception %C\n"),
+                      ex._info ().c_str ()));
+          rc = 1;
+        }
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                      ACE_TEXT ("Application Teardown failed, ")
+                      ACE_TEXT ("caught unknown C++ exception\n")));
+          rc = 1;
+        }
+
+      if (rc == 0 || opts.force_)
+        pl_base->destroy_app_manager (am);
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
@@ -466,7 +506,7 @@ int teardown_plan (const Options &opts,
       return 1;
     }
 
-  return 0;
+  return rc;
 }
 
 struct ORB_Destroyer
