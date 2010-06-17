@@ -1,9 +1,15 @@
+Thu Jun 17 19:18:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_nodeapplication.mpb:
+
+          Link in the scheduler to the NodeApplication.
+
 Thu Jun 17 19:16:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.h:
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
 
-          Store a reference in the POA in the property map. 
+          Store a reference in the POA in the property map.
 
 Thu Jun 17 19:15:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
