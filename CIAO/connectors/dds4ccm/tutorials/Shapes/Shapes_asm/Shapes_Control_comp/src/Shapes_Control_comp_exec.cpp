@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "Shapes_Control_exec.h"
+#include "Shapes_Control_comp_exec.h"
 #include "ace/Guard_T.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"

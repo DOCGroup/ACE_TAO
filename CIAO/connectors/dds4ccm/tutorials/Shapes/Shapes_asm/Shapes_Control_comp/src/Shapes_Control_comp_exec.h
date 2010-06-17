@@ -6,7 +6,7 @@
 
 #include "Shapes_Control_compEC.h"
 
-#include /**/ "Shapes_Control_exec_export.h"
+#include /**/ "Shapes_Control_comp_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

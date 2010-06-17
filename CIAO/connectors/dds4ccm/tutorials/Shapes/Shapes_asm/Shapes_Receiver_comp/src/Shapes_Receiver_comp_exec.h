@@ -6,7 +6,7 @@
 
 #include "Shapes_Receiver_compEC.h"
 
-#include /**/ "Shapes_Receiver_exec_export.h"
+#include /**/ "Shapes_Receiver_comp_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
