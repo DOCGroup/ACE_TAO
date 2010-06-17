@@ -1,3 +1,14 @@
+Thu Jun 17 11:27:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_defn.idl:
+          Removed COLOR enum since it isn't used.
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/images:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/images/system.png:
+          Starter.
+
 Thu Jun 17 11:22:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLQoS/Sender/CSL_QoSTest_Sender_exec.cpp:
