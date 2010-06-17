@@ -1,13 +1,24 @@
+Thu Jun 17 19:15:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+          
+          Added property to indentify the entity POA. 
+
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/DAnCE/DAnCE_Utility.tpp:
+
+          Added a utility method to extract exceptions from an Any. 
+
 Thu Jun 17 15:34:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/tools/Completion/Completion_Counter_Base.inl:
         * DAnCE/tools/Completion/Completion_Counter_Base.h:
-	  Added error collection.
+          Added error collection.
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
         * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
-	  Fixed error propagation.
+          Fixed error propagation.
 
 Thu Jun 17 14:48:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
