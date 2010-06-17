@@ -1,3 +1,16 @@
+Thu Jun 17 08:15:26 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/scripts/run_test.pl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/run_test.pl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/descriptors/run_test.pl:
+          Reorganized descriptors directory.
+
 Thu Jun 17 08:06:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/ShapesControl_obj.mpc:
