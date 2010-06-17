@@ -1,13 +1,21 @@
+Thu Jun 17 13:05:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/executors.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/images/images.png:
+          Added header and footer.
+
 Thu Jun 17 12:57:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	  Clean up.
+          Clean up.
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
         * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
-	  Fixed plan teardown; added missing destroy of managers in process.
-	  Added -f|--force argument to plan launcher.
+          Fixed plan teardown; added missing destroy of managers in process.
+          Added -f|--force argument to plan launcher.
 
 Thu Jun 17 12:56:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
