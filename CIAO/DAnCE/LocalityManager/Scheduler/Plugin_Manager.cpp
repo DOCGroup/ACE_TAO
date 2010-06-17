@@ -124,8 +124,8 @@ namespace DAnCE
                          artifact,
                          entrypoint,
                          ex._info ().c_str ()));
-        throw ::Deployment::StartError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                        ex._info ().c_str ());
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+				       ex._info ().c_str ());
       }
     catch (...)
       {
@@ -134,8 +134,8 @@ namespace DAnCE
                          ACE_TEXT ("Unknown C++ exception while configuring plugin from <%s>:<%s>\n"),
                          artifact,
                          entrypoint));
-        throw ::Deployment::StartError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                        "Unknown C++ exception during handler configuration\n");
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+				       "Unknown C++ exception during handler configuration\n");
       }
   }
   
@@ -263,7 +263,7 @@ namespace DAnCE
                          artifact,
                          entrypoint,
                          ex._info ().c_str ()));
-        throw ::Deployment::StartError (ACE_TEXT_ALWAYS_CHAR (artifact),
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
                                         ex._info ().c_str ());
       }
     catch (...)
@@ -273,7 +273,7 @@ namespace DAnCE
                          ACE_TEXT ("Unknown C++ exception while configuring plugin from <%s>:<%s>\n"),
                          artifact,
                          entrypoint));
-        throw ::Deployment::StartError (ACE_TEXT_ALWAYS_CHAR (artifact),
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
                                         "Unknown C++ exception during handler configuration\n");
       }
   }

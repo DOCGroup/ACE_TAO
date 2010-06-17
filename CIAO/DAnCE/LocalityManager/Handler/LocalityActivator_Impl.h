@@ -112,7 +112,7 @@ namespace DAnCE
     /// multiple threaded. Internally it waits on a conditional variable
     /// that could be modified by the callback servant which runs in
     /// another thread
-    void multi_threaded_wait_for_callback (const Server_Info &si,
+    void multi_threaded_wait_for_callback (Server_Info &si,
                                            ACE_Time_Value &timeout);
 
     void create_properties (const Server_Info &info,
@@ -124,7 +124,10 @@ namespace DAnCE
         : cmap_ (new DAnCE::Utility::PROPERTY_MAP (cmap_size_hint)),
           ref_ (DAnCE::LocalityManager::_nil ()),
           pid_ (ACE_INVALID_PID),
-          activated_ (false) {}
+          activated_ (false),
+          mutex_ (),
+          condition_ (mutex_)
+      {}
 
       typedef ACE_Refcounted_Auto_Ptr <DAnCE::Utility::PROPERTY_MAP,
                                        ACE_Null_Mutex> PROPERTY_MAP_PTR;
@@ -134,6 +137,8 @@ namespace DAnCE
       DAnCE::LocalityManager_var ref_;
       pid_t pid_;
       bool activated_;
+      TAO_SYNCH_MUTEX mutex_;
+      ACE_Condition<TAO_SYNCH_MUTEX> condition_;
     };
 
     typedef ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> Safe_Server_Info;
@@ -151,6 +156,8 @@ namespace DAnCE
 
     /// Default args to pass to all componentservers.
     ACE_CString default_args_;
+
+    TAO_SYNCH_MUTEX container_mutex_;
 
     SERVER_INFOS server_infos_;
 

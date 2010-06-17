@@ -16,6 +16,7 @@
 #include "DAnCE/DAnCE_Utility.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_LocalityManagerC.h"
+#include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "Split_Plan/Locality_Splitter.h"
 #include "Split_Plan/Split_Plan.h"
 
@@ -33,30 +34,36 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa,
                                             DAnCE::ArtifactInstallation_ptr installer,
                                             const ACE_CString& node_name,
-                                            const PROPERTY_MAP &properties)
+                                            const DAnCE::Utility::PROPERTY_MAP &properties)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     installer_ (DAnCE::ArtifactInstallation::_duplicate (installer)),
     node_name_ (node_name),
-    properties_ (),
-    handler_ (properties,
-              orb,
-              poa)
+    scheduler_ ()
 {
   DANCE_TRACE ("NodeApplication_Impl::NodeApplication_Impl");
-  PROPERTY_MAP::const_iterator i = properties.begin ();
-  while (!i.done ())
-    {
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
-                    ACE_TEXT("Binding value for property '%C'\n"), i->key ().c_str ()));
-      this->properties_.bind (i->key (), i->item ());
-      i.advance ();
-    }
+
+  ::Deployment::Properties prop;
+  ::DAnCE::Utility::build_property_sequence (prop, properties);
+  PLUGIN_MANAGER::instance ()->set_configuration (prop);
+  PLUGIN_MANAGER::instance ()->register_installation_handler ("DAnCE_Locality_Handler",
+                                                              "create_Locality_Handler");
+  
+  DANCE_DEBUG (8, (LM_INFO, DLINFO 
+                   ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
+                   ACE_TEXT("Plugin loaded\n")));
+
+  // Spawn thread pool
+  // @Todo:  We can probably move this up into the NodeManager and
+  // share the thread pool among several node applications.
+  this->scheduler_.activate (THR_DETACHED,
+                             10);
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
+  this->scheduler_.terminate_scheduler ();
 }
 
 void
@@ -65,6 +72,8 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
   DANCE_TRACE ("NodeApplication_Impl::prepare_instances");
 
   CORBA::ULong plan (0);
+  std::list < Event_Future > prepared_instances;
+
   // for each sub plan
   LocalitySplitter::TSubPlanConstIterator plans_end (plans, 1);
   for (LocalitySplitter::TSubPlanConstIterator i (plans);
@@ -80,7 +89,7 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
                        ACE_TEXT ("Considering sub-plan %u:%C with %u instances\n"),
-                       plan++,
+                       plan,
                        sub_plan.UUID.in (),
                        sub_plan.instance.length ()
                        ));
@@ -89,50 +98,86 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
       // instance (creating default if necessary) and identifies it in the key
 
       CORBA::ULong loc_manager_instance = sub_plan_key.locality_manager_instance ();
-      const ::Deployment::InstanceDeploymentDescription &lm_idd = sub_plan.instance[loc_manager_instance];
-
+      const ::Deployment::InstanceDeploymentDescription &lm_idd
+        = sub_plan.instance[loc_manager_instance];
+      
+      
       DANCE_DEBUG (4, (LM_DEBUG, DLINFO
-                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
-                        ACE_TEXT ("Found Locality Manager instance %u:%C, deploying\n"),
-                        loc_manager_instance,
-                        lm_idd.name.in ()
-                        ));
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT ("Found Locality Manager instance %u:%C, deploying\n"),
+                       loc_manager_instance,
+                       lm_idd.name.in ()
+                       ));
+      
+      this->sub_plans_ [ lm_idd.name.in () ] = SUB_PLAN (loc_manager_instance,
+                                                         sub_plan);
 
       CORBA::Any_var reference;
-      this->handler_.install_instance (sub_plan,
-                                       loc_manager_instance,
-                                       reference.out ());
 
-      ::DAnCE::LocalityManager_var lm_ref;
-      if (reference.in ()  >>= lm_ref)
+      Install_Instance *event (0);
+      Event_Future result;
+      
+      ACE_NEW_THROW_EX (event,
+                        Install_Instance (sub_plan,
+                                          loc_manager_instance,
+                                          DAnCE::DANCE_LOCALITYMANAGER,
+                                          result
+                                          ),
+                        CORBA::NO_MEMORY ());
+      
+      prepared_instances.push_back (result);
+      this->scheduler_.schedule_event (event);
+      ++plan;
+    }
+  
+  plan = 0;
+  for (std::list < Event_Future >::iterator i = prepared_instances.begin ();
+       i != prepared_instances.end ();
+       ++i)
+    {
+      Event_Result event;
+      if (i->get (event,
+                  0 /*need to wait based on spawn delay*/) != 0)        
         {
-          this->localities_[lm_idd.name.in ()] = lm_ref._retn ();
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
+                           ACE_TEXT("Failed to get future value for current instance\n")));
+          continue;
+        }
+      
+      ::DAnCE::LocalityManager_var lm_ref;
+      if (event.contents_.in ().impl () &&
+          (event.contents_.in ()  >>= lm_ref) &&
+          !CORBA::is_nil (lm_ref.in ()))
+        {
+          this->localities_[event.id_] = ::DAnCE::LocalityManager::_duplicate (lm_ref);
           DANCE_DEBUG (4, (LM_INFO, DLINFO
-                            ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
-                            ACE_TEXT("Successfully started Locality %C\n"),
-                            lm_idd.name.in ()));
+                           ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
+                           ACE_TEXT("Successfully started Locality %C\n"),
+                           event.id_.c_str ()));
         }
       else
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
-                            ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
-                            ACE_TEXT("Unable to resolve LocalityManager object reference\n")));
-          throw ::Deployment::StartError (lm_idd.name.in (),
+                           ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
+                           ACE_TEXT("Unable to resolve LocalityManager object reference\n")));
+          throw ::Deployment::StartError (event.id_.c_str (),
                                           "Unable to resolve LocalityManager object ref\n");
         }
 
       DANCE_DEBUG (4, (LM_DEBUG, DLINFO
-                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
-                        ACE_TEXT ("Invoking preparePlan on locality %C\n"),
-                        lm_idd.name.in ()));
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT ("Invoking preparePlan on locality %C\n"),
+                       event.id_.c_str ()));
 
-      this->prepare_instance (lm_idd.name.in (),
-                              sub_plan);
+
+      this->prepare_instance (event.id_.c_str (),
+                              (this->sub_plans_[event.id_].second));
 
       DANCE_DEBUG (9, (LM_DEBUG, DLINFO
-                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
-                        ACE_TEXT ("Successfully executed preparePlan on locality %C\n"),
-                        lm_idd.name.in ()));
+                       ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT ("Successfully executed preparePlan on locality %C\n"),
+                       event.id_.c_str ()));
     }
 }
 
@@ -147,7 +192,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
   try
     {
       app = this->localities_[name]->preparePlan (plan,
-                                                 0);
+                                                  0);
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
                        ACE_TEXT ("Locality <%C> successfully prepared.\n"),
@@ -180,13 +225,13 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
                                               Deployment::Connections_out providedReference)
 {
   DANCE_TRACE ("NodeApplication_Impl::start_launch_instances");
-//  Deployment::Connections *tmp (0);
+  //  Deployment::Connections *tmp (0);
 
-//   ACE_NEW_THROW_EX (tmp,
-//                     Deployment::Connections (this->plan_.connection.length ()),
-//                     CORBA::NO_MEMORY ());
-//
-//   Deployment::Connections_var retval (tmp);
+  //   ACE_NEW_THROW_EX (tmp,
+  //                     Deployment::Connections (this->plan_.connection.length ()),
+  //                     CORBA::NO_MEMORY ());
+  //
+  //   Deployment::Connections_var retval (tmp);
 
   for (LOCALITY_MAP::const_iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
@@ -297,8 +342,9 @@ NodeApplication_Impl::remove_instances (void)
   ::Deployment::StopError final_exception;
   bool flag (false);
 
+  std::list < Event_Future > removed_instances;
 
-    for (LOCALITY_MAP::iterator i = this->localities_.begin ();
+  for (LOCALITY_MAP::iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
     {
       DANCE_DEBUG (4, (LM_INFO, DLINFO
@@ -309,17 +355,93 @@ NodeApplication_Impl::remove_instances (void)
       try
         {
           CORBA::Any ref;
-          ref <<= DAnCE::LocalityManager::_duplicate (i->second);
+          ref <<= ::DAnCE::LocalityManager::_duplicate (i->second);
 
           i->second->destroyApplication (0);
+          
+          Remove_Instance *event (0);
+          Event_Future result;
+          
+          PLAN_MAP::iterator sub_plan;
+          
+          if ((sub_plan = this->sub_plans_.find (i->first)) !=
+              this->sub_plans_.end ())
+            {
+              ACE_NEW (event,
+                       Remove_Instance (sub_plan->second.second,
+                                        sub_plan->second.first,
+                                        ref,
+                                        DANCE_LOCALITYMANAGER,
+                                        result));
+              
+              removed_instances.push_back (result);
+              this->scheduler_.schedule_event (event);
+            }
+          else
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                               ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                               ACE_TEXT ("Unable to find sub plan for instance <%C>\n"),
+                               i->first.c_str ()));
+            }
+        }
+      catch (::Deployment::StopError &ex)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                           ACE_TEXT ("Caught StopError final_exception %C, %C\n"),
+                           ex.name.in (),
+                           ex.reason.in ()));
+          Utility::test_and_set_exception (flag,
+                                           final_exception,
+                                           ex.name.in (),
+                                           ex.reason.in ());
 
-          ::Deployment::DeploymentPlan plan;  // TODO: MCO - this really sucks; if there is a real need
-                                              //             for the plan here we should probably get the
-                                              //             correct sub plan passed somehow like in
-                                              //             prepare_instances ()
-          this->handler_.remove_instance (plan, /* not needed at this time */
-                                          0, /* not needed at this time */
-                                          ref);
+        }
+      catch (CORBA::Exception &ex)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                           ACE_TEXT ("Caught CORBA Final_Exception %C\n"),
+                           ex._info ().c_str ()));
+          Utility::test_and_set_exception (flag,
+                                           final_exception,
+                                           "Unknown CORBA Final_Exception",
+                                           ex._info ().c_str ());
+        }      
+    }
+  
+  for (std::list < Event_Future >::iterator i = removed_instances.begin ();
+       i != removed_instances.end ();
+       ++i)
+    {
+      try
+        {
+          Event_Result event;
+          
+          if (i->get (event,
+                      0 /* need to wait based on spawn delay */) != 0)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                               ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                               ACE_TEXT ("Failed to get future value for current instance\n")));
+              continue;
+            }
+          
+          using DAnCE::Utility::extract_and_throw_exception;
+
+          if (event.exception_ &&
+              !(extract_and_throw_exception< ::Deployment::StopError > (event.contents_.in ())))
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                               ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
+                               ACE_TEXT ("Unexpected exception thrown during removal of ")
+                               ACE_TEXT ("instance <%C>\n"),
+                               event.id_.c_str ()));
+              
+              throw ::Deployment::StopError (event.id_.c_str (),
+                                             "Unknown exception thrown from remove_instance\n");
+            }
 
         }
       catch (::Deployment::StopError &ex)
@@ -330,9 +452,9 @@ NodeApplication_Impl::remove_instances (void)
                            ex.name.in (),
                            ex.reason.in ()));
           Utility::test_and_set_exception (flag,
-                                             final_exception,
-                                             ex.name.in (),
-                                             ex.reason.in ());
+                                           final_exception,
+                                           ex.name.in (),
+                                           ex.reason.in ());
 
         }
       catch (CORBA::Exception &ex)
@@ -342,14 +464,12 @@ NodeApplication_Impl::remove_instances (void)
                            ACE_TEXT ("Caught CORBA Final_Exception %C\n"),
                            ex._info ().c_str ()));
           Utility::test_and_set_exception (flag,
-                                             final_exception,
-                                             "Unknown CORBA Final_Exception",
-                                             ex._info ().c_str ());
+                                           final_exception,
+                                           "Unknown CORBA Final_Exception",
+                                           ex._info ().c_str ());
         }
-
-      //this->localities_.erase (i);
+            
     }
-
-    if (flag)
-      throw final_exception;
+  if (flag)
+    throw final_exception;
 }

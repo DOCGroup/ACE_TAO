@@ -14,11 +14,14 @@
 
 namespace DAnCE
 {
-  class Deployment_Scheduler : public ACE_Task_Base
+  class Deployment_Scheduler_Export Deployment_Scheduler : 
+    public ACE_Task_Base
   {
   public:
     /// Schedule an event for execution
     int schedule_event (Deployment_Event *event);
+    
+    void terminate_scheduler (void);
 
   protected:
     /// Scheduler event loop
