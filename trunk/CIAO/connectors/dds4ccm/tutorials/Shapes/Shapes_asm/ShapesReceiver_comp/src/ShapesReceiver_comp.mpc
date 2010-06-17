@@ -11,12 +11,11 @@ project(ShapesReceiver_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,svnt_export_include=ShapesReceiver_svnt_export.h \
               -Wb,exec_export_macro=SHAPES_RECEIVER_COMP_EXEC_Export \
               -Wb,exec_export_include=ShapesReceiver_exec_export.h \
-              -I ../ShapesSender_comp/ports \
-              -I ../ports \
+              -I../../ports \
               -o GeneratedCode
 
   IDL_Files {
-    src/ShapesReceiver_comp.idl
+    ShapesReceiver_comp.idl
     gendir = GeneratedCode
   }
 }
@@ -27,11 +26,8 @@ project(ShapesReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
   idlflags += -Wb,stub_export_macro=SHAPES_RECEIVER_COMP_LEM_STUB_Export \
               -Wb,stub_export_include=ShapesReceiver_lem_stub_export.h \
               -SS -Gxhst \
-              -I ../ShapesSender_comp/ports \
-              -I../ports/GeneratedCode \
-              -I../ShapesSender_comp/GeneratedCode \
-              -I src \
-              -I ../ports \
+              -I../../ports \
+              -I../../ports/GeneratedCode \
               -o GeneratedCode
 
   IDL_Files {
@@ -43,10 +39,13 @@ project(ShapesReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
 project(ShapesReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after += ShapesReceiver_lem_gen ShapesReceiver_stub  Shapes_conn_stub \
            Shapes_msg_stub
+
   libs  += ShapesReceiver_stub Shapes_conn_stub Shapes_msg_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode
+
   sharedname = ShapesReceiver_lem_stub
   dynamicflags   = SHAPES_RECEIVER_COMP_LEM_STUB_BUILD_DLL
 
@@ -70,10 +69,13 @@ project(ShapesReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
 project(ShapesReceiver_stub) : ccm_stub, dds4ccm_base {
   after += ShapesReceiver_idl_gen Shapes_conn_stub \
            Shapes_msg_stub Shapes_conn_lem_gen
+
   libs  += Shapes_conn_stub Shapes_msg_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode
+
   sharedname = ShapesReceiver_stub
   dynamicflags   = SHAPES_RECEIVER_COMP_STUB_BUILD_DLL
 
@@ -98,12 +100,15 @@ project(ShapesReceiver_exec) : ciao_executor, dds4ccm_base {
   after += ShapesReceiver_lem_stub ShapesReceiver_stub \
            Shapes_msg_stub Shapes_conn_stub Shapes_conn_lem_stub \
            DDS4CCM_lem_stub
-  sharedname = ShapesReceiver_exec
+
   libs += ShapesReceiver_stub ShapesReceiver_lem_stub Shapes_msg_stub \
           Shapes_conn_stub Shapes_conn_lem_stub DDS4CCM_lem_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ./GeneratedCode ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ./GeneratedCode ../ports/GeneratedCode ../../ports/GeneratedCode
+
+  sharedname = ShapesReceiver_exec
   dynamicflags   = SHAPES_RECEIVER_COMP_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -127,13 +132,16 @@ project(ShapesReceiver_svnt) : ciao_servant, dds4ccm_base {
   after      += ShapesReceiver_lem_stub Shapes_msg_stub \
                 Shapes_conn_stub Shapes_conn_svnt ShapesReceiver_exec \
                 Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
-  sharedname  = ShapesReceiver_svnt
+
   libs       += ShapesReceiver_stub ShapesReceiver_lem_stub Shapes_msg_stub \
                 Shapes_conn_stub Shapes_conn_svnt ShapesReceiver_exec \
                 Shapes_conn_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode ../ShapesSender_comp/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../ports/GeneratedCode ../../ports/GeneratedCode
+
+  sharedname  = ShapesReceiver_svnt
   dynamicflags = SHAPES_RECEIVER_COMP_SVNT_BUILD_DLL
 
   IDL_Files {

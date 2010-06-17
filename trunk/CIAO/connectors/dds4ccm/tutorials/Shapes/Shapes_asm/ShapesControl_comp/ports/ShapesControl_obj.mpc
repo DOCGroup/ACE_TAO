@@ -10,12 +10,11 @@ project(ShapesControl_obj_idl_gen) : componentidldefaults {
               -Wb,svnt_export_include=ShapesControl_obj_svnt_export.h \
               -Wb,exec_export_macro=SHAPES_CONTROL_EXEC_Export \
               -Wb,exec_export_include=ShapesControl_obj_exec_export.h \
-              -I ../ports \
-              -I ports \
+              -I../../ports \
               -o GeneratedCode
 
   IDL_Files {
-    ports/ShapesControl_obj.idl
+    ShapesControl_obj.idl
     gendir = GeneratedCode
   }
 }
@@ -26,8 +25,7 @@ project(ShapesControl_obj_lem_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_LEM_STUB_Export \
               -Wb,stub_export_include=ShapesControl_obj_lem_stub_export.h \
               -SS -Gxhst \
-              -I ../ports \
-              -I ports \
+              -I../../ports \
               -o GeneratedCode
 
   IDL_Files {
@@ -38,10 +36,13 @@ project(ShapesControl_obj_lem_gen) : ciaoidldefaults {
 
 project(ShapesControl_obj_lem_stub) : ccm_svnt {
   after += ShapesControl_obj_lem_gen ShapesControl_obj_stub
+
   libs  += ShapesControl_obj_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode
+
   sharedname = ShapesControl_obj_lem_stub
   dynamicflags   = SHAPES_CONTROL_LEM_STUB_BUILD_DLL
 
@@ -64,10 +65,13 @@ project(ShapesControl_obj_lem_stub) : ccm_svnt {
 
 project(ShapesControl_obj_stub) : ccm_stub {
   after += ShapesControl_obj_idl_gen Shapes_defn_idl_gen Shapes_defn_stub
+
   libs  += Shapes_defn_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode
+
   sharedname = ShapesControl_obj_stub
   dynamicflags = SHAPES_CONTROL_STUB_BUILD_DLL
 
@@ -92,12 +96,15 @@ project(ShapesControl_obj_stub) : ccm_stub {
 project(ShapesControl_obj_svnt) : ciao_servant {
   after      += ShapesControl_obj_lem_stub ShapesControl_obj_stub \
                 Shapes_defn_idl_gen Shapes_defn_stub
-  sharedname  = ShapesControl_obj_svnt
+
   libs       += ShapesControl_obj_stub ShapesControl_obj_lem_stub \
                 Shapes_defn_stub
-  libpaths += ../lib
-  libout = ../lib
-  includes += ../ports/GeneratedCode
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode
+
+  sharedname  = ShapesControl_obj_svnt
   dynamicflags = SHAPES_CONTROL_SVNT_BUILD_DLL
 
   IDL_Files {
