@@ -154,7 +154,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_DDS::CCM_ConnectorStatusListener_ptr
@@ -186,13 +186,14 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-    this->context_->get_connection_info_out_data_control ();
+      this->context_->get_connection_info_out_data_control ();
 
     if (::CORBA::is_nil (lc.in ()))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
         throw CORBA::INTERNAL ();
       }
+      
     lc->mode (::CCM_DDS::ONE_BY_ONE);
   }
 

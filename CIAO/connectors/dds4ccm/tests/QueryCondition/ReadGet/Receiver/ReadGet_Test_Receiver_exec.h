@@ -103,8 +103,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
   private:
     ::ReadGet_Test::CCM_Receiver_Context_var context_;
-    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader_;
-    ::ReadGet_Test::QueryConditionTestConnector::Getter_var getter_;
 
     ReadGetRestarter_var restarter_;
     CORBA::UShort   iterations_;

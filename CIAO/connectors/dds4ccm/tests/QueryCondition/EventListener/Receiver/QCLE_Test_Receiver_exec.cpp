@@ -143,8 +143,9 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_listen_data ();
-    if (CORBA::is_nil (this->reader_))
+    ::QCLE_Test::QueryConditionListenEventTestConnector::Reader_var reader =
+      this->context_->get_connection_info_listen_data ();
+    if (CORBA::is_nil (reader.in ()))
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::configuration_complete - "
                               "Error get reader connection.\n"));
@@ -154,15 +155,19 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Set filter.\n"));
+                          
     CCM_DDS::QueryFilter filter;
     filter.expression = CORBA::string_dup (QUERY);
     filter.parameters.length (2);
     filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
     filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
-    this->reader_->query (filter);
+
+    ::QCLE_Test::QueryConditionListenEventTestConnector::Reader_var reader =
+      this->context_->get_connection_info_listen_data ();
+
+    reader->query (filter);
 
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Start listening.\n"));

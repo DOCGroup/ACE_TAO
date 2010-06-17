@@ -94,7 +94,6 @@ namespace CIAO_QCLS_Test_Receiver_Impl
 
   private:
     ::QCLS_Test::CCM_Receiver_Context_var context_;
-    ::QCLS_Test::QueryConditionListenStateTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

@@ -82,7 +82,6 @@ namespace CIAO_Keyed_Test_Receiver_Impl
 
   private:
     ::Keyed_Test::CCM_Receiver_Context_var context_;
-    ::KeyedTestConnector::Reader_var reader_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;

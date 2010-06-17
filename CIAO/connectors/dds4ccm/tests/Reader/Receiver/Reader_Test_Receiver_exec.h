@@ -94,9 +94,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
     void keys (::CORBA::UShort keys);
 
     // Operations from Components::SessionComponent.
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -106,7 +104,6 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
   private:
     ::Reader_Test::CCM_Receiver_Context_var context_;
-    ::Reader_Test::ReaderTestConnector::Reader_var reader_;
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
     CORBA::Boolean has_run_;

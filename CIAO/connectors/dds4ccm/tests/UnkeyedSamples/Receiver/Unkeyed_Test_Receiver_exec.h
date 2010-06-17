@@ -103,8 +103,6 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
 
   private:
     ::Unkeyed_Test::CCM_Receiver_Context_var context_;
-    ::Unkeyed_Test::UnkeyedTestConnector::Reader_var reader_;
-    ::Unkeyed_Test::UnkeyedTestConnector::Getter_var getter_;
 
     CORBA::UShort iterations_;
     Atomic_ULong received_;

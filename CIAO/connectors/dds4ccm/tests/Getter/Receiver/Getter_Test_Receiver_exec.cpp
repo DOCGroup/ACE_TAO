@@ -112,10 +112,10 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   CORBA::Long fixed_key,
                                   CORBA::Long iteration)
   {
-    GetOneHandler* rh = new  GetOneHandler (*this,
-                                            CORBA::string_dup (key),
-                                            fixed_key,
-                                            iteration);
+    GetOneHandler* rh = new GetOneHandler (*this,
+                                           CORBA::string_dup (key),
+                                           fixed_key,
+                                           iteration);
     this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (rh);
   }
 
@@ -140,22 +140,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
     // pass when at least one sample is returned.
     // Also, max_delivered_data cannot be tested since only
     // one sample is returned.
+    ::Getter_Test::GetterTestConnector::Getter_var getter =
+      this->context_->get_connection_info_get_fresh_data ();
+
     DDS::Duration_t to;
     to.sec = 10;
     to.nanosec = 0;
-    this->getter_->time_out (to);
-    this->getter_->max_delivered_data (40);
+    getter->time_out (to);
+    getter->max_delivered_data (40);
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
                           "Start getting data from DDS: "
                           "#keys <%d> - #iterations <%d> with timeout: "
                           "sec <%d> - nanosec <%u>\n",
                           keys, iterations,
-                          this->getter_->time_out ().sec,
-                          this->getter_->time_out ().nanosec));
+                          getter->time_out ().sec,
+                          getter->time_out ().nanosec));
 
     GetterTestSeq gettertest_seq;
     ::CCM_DDS::ReadInfoSeq readinfo;
-    bool const result = this->getter_->get_many (gettertest_seq, readinfo);
+    bool const result = getter->get_many (gettertest_seq, readinfo);
     if (result)
       {
         if (gettertest_seq.length () == 0)
@@ -183,22 +186,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
   void
   Receiver_exec_i::get_one_fixed (CORBA::Long fixed_key, CORBA::Long iteration)
   {
+    ::Getter_Test::GetterFixedConnector::Getter_var fixed =
+      this->context_->get_connection_info_fixed_fresh_data ();
+
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
-    this->fixed_->time_out (to);
+    fixed->time_out (to);
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_fixed: "
                           "Start getting data from DDS: "
                           "key <%u> - iteration <%d> "
                           " with timeout: "
                           "sec <%u> - nanosec <%u>\n",
                           fixed_key, iteration,
-                          this->getter_->time_out ().sec,
-                          this->getter_->time_out ().nanosec));
+                          fixed->time_out ().sec,
+                          fixed->time_out ().nanosec));
     GetterFixed gettertest_info;
     ::CCM_DDS::ReadInfo readinfo;
     ACE_Time_Value tv = ACE_OS::gettimeofday ();
-    bool result = this->fixed_->get_one (gettertest_info, readinfo);
+    CORBA::Boolean const result = fixed->get_one (gettertest_info, readinfo);
     if (result)
       {
         ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
@@ -260,22 +266,25 @@ namespace CIAO_Getter_Test_Receiver_Impl
   void
   Receiver_exec_i::get_one_variable (const char * key, CORBA::Long iteration)
   {
+    ::Getter_Test::GetterTestConnector::Getter_var getter =
+      this->context_->get_connection_info_get_fresh_data ();
+
     DDS::Duration_t to;
     to.sec = 5;
     to.nanosec = 0;
-    this->getter_->time_out (to);
+    getter->time_out (to);
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_one_variable: "
                           "Start getting data from DDS: "
                           "key <%C> - iteration <%d> "
                           " with timeout: "
                           "sec <%d> - nanosec <%u>\n",
                           key, iteration,
-                          this->getter_->time_out ().sec,
-                          this->getter_->time_out ().nanosec));
-    GetterTest *gettertest_info = new GetterTest;
+                          getter->time_out ().sec,
+                          getter->time_out ().nanosec));
+    GetterTest_var gettertest_info;
     ::CCM_DDS::ReadInfo readinfo;
     ACE_Time_Value tv = ACE_OS::gettimeofday ();
-    bool result = this->getter_->get_one (gettertest_info, readinfo);
+    CORBA::Boolean const result = getter->get_one (gettertest_info.out (), readinfo);
     if (result)
       {
         ACE_Time_Value dur = ACE_OS::gettimeofday () - tv;
@@ -348,18 +357,21 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
     try
       {
+        ::Getter_Test::GetterFixedConnector::Getter_var fixed =
+          this->context_->get_connection_info_fixed_fresh_data ();
+
         DDS::Duration_t to;
         to.sec = 1;
         to.nanosec = 0;
-        this->fixed_->time_out (to);
+        fixed->time_out (to);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::timeout_get_one_fixed: "
                               "Start getting data from DDS: timeout: "
                               "sec <%d> - nanosec <%u>\n",
-                              this->fixed_->time_out ().sec,
-                              this->fixed_->time_out ().nanosec));
+                              fixed->time_out ().sec,
+                              fixed->time_out ().nanosec));
         GetterFixed gettertest_info;
         ::CCM_DDS::ReadInfo readinfo;
-        bool result = this->fixed_->get_one (gettertest_info, readinfo);
+        CORBA::Boolean const result = fixed->get_one (gettertest_info, readinfo);
         if (result)
           {
             ACE_ERROR ((LM_ERROR, "ERROR FIXED: TIMEOUT GET ONE: "
@@ -390,18 +402,21 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
     try
       {
+        ::Getter_Test::GetterTestConnector::Getter_var getter =
+          this->context_->get_connection_info_get_fresh_data ();
+
         DDS::Duration_t to;
         to.sec = 1;
         to.nanosec = 0;
-        this->getter_->time_out (to);
+        getter->time_out (to);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::timeout_get_one_variable: "
                               "Start getting data from DDS: timeout: "
                               "sec <%d> - nanosec <%u>\n",
-                              this->getter_->time_out ().sec,
-                              this->getter_->time_out ().nanosec));
-        GetterTest *gettertest_info = new GetterTest;
+                              getter->time_out ().sec,
+                              getter->time_out ().nanosec));
+        GetterTest_var gettertest_info;;
         ::CCM_DDS::ReadInfo readinfo;
-        bool result = this->getter_->get_one (gettertest_info, readinfo);
+        CORBA::Boolean result = getter->get_one (gettertest_info.out (), readinfo);
         if (result)
           {
             ACE_ERROR ((LM_ERROR, "ERROR VARIABLE: TIMEOUT GET ONE: "
@@ -439,18 +454,21 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
     try
       {
+        ::Getter_Test::GetterTestConnector::Getter_var getter =
+          this->context_->get_connection_info_get_fresh_data ();
+
         DDS::Duration_t to;
         to.sec = 1;
         to.nanosec = 0;
-        this->getter_->time_out (to);
+        getter->time_out (to);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::timeout_get_many: "
                               "Start getting data from DDS: timeout: "
                               "sec <%d> - nanosec <%u>\n",
-                              this->getter_->time_out ().sec,
-                              this->getter_->time_out ().nanosec));
+                              getter->time_out ().sec,
+                              getter->time_out ().nanosec));
         GetterTestSeq gettertest_seq;
         ::CCM_DDS::ReadInfoSeq readinfo;
-        bool const result = this->getter_->get_many (gettertest_seq, readinfo);
+        CORBA::Boolean const result = getter->get_many (gettertest_seq, readinfo);
         if (result)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: TIMEOUT GET MANY: "
@@ -515,8 +533,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->getter_ = this->context_->get_connection_info_get_fresh_data ();
-    this->fixed_ = this->context_->get_connection_info_fixed_fresh_data ();
   }
 
   void

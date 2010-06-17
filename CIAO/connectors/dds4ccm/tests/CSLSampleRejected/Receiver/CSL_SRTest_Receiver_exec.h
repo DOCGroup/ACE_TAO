@@ -152,7 +152,6 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
 
   private:
     ::CSL_SRTest::CCM_Receiver_Context_var context_;
-    ::CSL_SR_Connector::Reader_var reader_;
 
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
