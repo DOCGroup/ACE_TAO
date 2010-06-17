@@ -37,7 +37,7 @@ public:
   {
     NO_TEST,
     TEST_UB_STRING,
-    TEST_UB_STRUCT_SEQUENCE,
+    TEST_UB_STRUCT_SEQUENCE
   };
 
   enum INVOKE_TYPE
