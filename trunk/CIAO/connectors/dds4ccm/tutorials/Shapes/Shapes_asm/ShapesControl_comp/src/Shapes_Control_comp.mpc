@@ -1,0 +1,167 @@
+// $Id$
+
+project(Shapes_Control_idl_gen) : componentidldefaults {
+  after += Shapes_Control_obj_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_COMP_STUB_Export \
+              -Wb,stub_export_include=Shapes_Control_stub_export.h \
+              -Wb,skel_export_macro=SHAPES_CONTROL_COMP_SVNT_Export \
+              -Wb,skel_export_include=Shapes_Control_svnt_export.h \
+              -Wb,svnt_export_macro=SHAPES_CONTROL_COMP_SVNT_Export \
+              -Wb,svnt_export_include=Shapes_Control_svnt_export.h \
+              -Wb,exec_export_macro=SHAPES_CONTROL_COMP_EXEC_Export \
+              -Wb,exec_export_include=Shapes_Control_exec_export.h \
+              -I../ports \
+              -I../../ports \
+              -o GeneratedCode
+
+  IDL_Files {
+    Shapes_Control_comp.idl
+    gendir = GeneratedCode
+  }
+}
+
+project(Shapes_Control_lem_gen) : ciaoidldefaults {
+  after += Shapes_Control_idl_gen Shapes_Control_obj_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_COMP_LEM_STUB_Export \
+              -Wb,stub_export_include=Shapes_Control_lem_stub_export.h \
+              -SS -Gxhst \
+              -I../ports \
+              -I../ports/GeneratedCode \
+              -I../../ports \
+              -o GeneratedCode
+
+  IDL_Files {
+    GeneratedCode/Shapes_Control_compE.idl
+    gendir = GeneratedCode
+  }
+}
+
+project(Shapes_Control_lem_stub) : ccm_svnt {
+  after += Shapes_Control_lem_gen Shapes_Control_stub Shapes_msg_stub \
+           Shapes_Control_obj_stub
+
+  libs  += Shapes_msg_stub Shapes_Control_stub Shapes_Control_obj_stub
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode ../ports/GeneratedCode
+
+  sharedname = Shapes_Control_lem_stub
+  dynamicflags   = SHAPES_CONTROL_COMP_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/Shapes_Control_compEC.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/Shapes_Control_compEC.h
+    GeneratedCode/Shapes_Control_lem_stub_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/Shapes_Control_compEC.inl
+  }
+}
+
+project(Shapes_Control_stub) : ccm_stub {
+  after += Shapes_Control_idl_gen Shapes_msg_stub \
+           Shapes_Control_obj_stub Shapes_Control_obj_lem_stub
+
+  libs  += Shapes_msg_stub Shapes_Control_obj_stub
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../../ports/GeneratedCode ../ports/GeneratedCode
+
+  sharedname = Shapes_Control_stub
+  dynamicflags   = SHAPES_CONTROL_COMP_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/Shapes_Control_compC.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/Shapes_Control_compC.h
+    GeneratedCode/Shapes_Control_stub_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/Shapes_Control_compC.inl
+  }
+}
+
+project(Shapes_Control_exec) : ciao_executor {
+  after   += Shapes_Control_lem_stub Shapes_Control_stub \
+             Shapes_Control_obj_lem_stub
+
+  libs += Shapes_Control_stub Shapes_Control_lem_stub Shapes_msg_stub \
+          Shapes_Control_obj_lem_stub Shapes_Control_obj_stub
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ./GeneratedCode ../ports/GeneratedCode ../../ports/GeneratedCode
+
+  sharedname = Shapes_Control_exec
+  dynamicflags   = SHAPES_CONTROL_COMP_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_Control_exec.cpp
+  }
+
+  Header_Files {
+    Shapes_Control_exec.h
+    Shapes_Control_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Shapes_Control_svnt) : ciao_servant {
+  after      += Shapes_msg_stub  Shapes_Control_lem_stub \
+                Shapes_Control_stub Shapes_Control_obj_svnt \
+                Shapes_Control_obj_lem_stub
+
+  libs       += Shapes_Control_stub Shapes_Control_lem_stub  \
+                Shapes_msg_stub \
+                Shapes_Control_obj_stub Shapes_Control_obj_svnt \
+                Shapes_Control_obj_lem_stub
+  libpaths += ../../lib
+  libout = ../../lib
+
+  includes += ../ports/GeneratedCode ../../ports/GeneratedCode
+
+  sharedname  = Shapes_Control_svnt
+  dynamicflags = SHAPES_CONTROL_COMP_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GeneratedCode/Shapes_Control_compS.cpp
+    GeneratedCode/Shapes_Control_comp_svnt.cpp
+  }
+
+  Header_Files {
+    GeneratedCode/Shapes_Control_compS.h
+    GeneratedCode/Shapes_Control_comp_svnt.h
+    GeneratedCode/Shapes_Control_svnt_export.h
+  }
+
+  Inline_Files {
+    GeneratedCode/Shapes_Control_compS.inl
+  }
+}
+

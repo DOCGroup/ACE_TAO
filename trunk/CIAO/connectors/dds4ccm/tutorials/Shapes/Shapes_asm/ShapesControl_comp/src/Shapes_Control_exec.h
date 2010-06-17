@@ -4,9 +4,9 @@
 #ifndef CIAO_CONTROL_EXEC_H_
 #define CIAO_CONTROL_EXEC_H_
 
-#include "ShapesControl_compEC.h"
+#include "Shapes_Control_compEC.h"
 
-#include /**/ "ShapesControl_exec_export.h"
+#include /**/ "Shapes_Control_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
