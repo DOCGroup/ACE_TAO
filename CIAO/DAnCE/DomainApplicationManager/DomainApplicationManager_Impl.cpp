@@ -513,8 +513,8 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
         }
       else
         {
-          // nothing to destroy, complete
-          _ch_ptr->handle_completion (this);
+          // no applications to destroy so finish immediately
+          this->finishDestroyManager (_ch_ptr);
         }
     }
   catch (Deployment::StopError &e)
