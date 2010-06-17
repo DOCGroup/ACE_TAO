@@ -2,7 +2,8 @@
 // $Id$
 
 project : dance, dance_nodeapplication_skel, dance_logger, \
-        dynamicinterface, iortable, naming, dance_locality_handler {
+        dynamicinterface, iortable, naming, dance_locality_handler, \
+	dance_deployment_scheduler {
   after += DAnCE_NodeApplication
   libs  += DAnCE_NodeApplication
 }
