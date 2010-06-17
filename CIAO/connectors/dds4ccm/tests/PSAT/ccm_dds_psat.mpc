@@ -2,7 +2,7 @@
 
 project (DDS_CCM_Example_PSAT_type_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
   sharedname = psat_type_stub
-  dynamicflags += PSAT_TYPE_STUB_STUB_BUILD_DLL
+  dynamicflags += PSAT_TYPE_STUB_BUILD_DLL
   libout = lib
 
   idlflags += -SS -Sci \
