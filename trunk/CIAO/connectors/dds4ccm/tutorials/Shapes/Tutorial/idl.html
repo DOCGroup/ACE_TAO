@@ -20,33 +20,33 @@
     The following IDL files can be found in Shapes_asm/ports:
     <ul>
       <li><a href="../Shapes_asm/ports/Shapes_defn.idl">Shapes_defn.idl<a><br/>
-          <code>module Shapes<br/>
-                {<br/>
-                &nbsp;&nbsp;enum ReturnStatus<br/>
-                &nbsp;&nbsp;{<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;RETURN_OK,<br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;RETURN_ERROR<br/>
-                &nbsp;&nbsp;};<br/>};
+          <code><b>module</b> Shapes<br/>
+            {<br/>
+            &nbsp;&nbsp;<b>enum</b> ReturnStatus<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;RETURN_OK,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;RETURN_ERROR<br/>
+            &nbsp;&nbsp;};<br/>};
           </code>
       </li>
       <li><a href="../Shapes_asm/ports/Shapes_conn.idl">Shapes_conn.idl<a><br/>
-          <code>module Shapes<br/>
-                {<br/>
-                &nbsp;&nbsp;typedef sequence<ShapeType> ShapeTypeSeq;<br/>
-                &nbsp;&nbsp;module ::CCM_DDS::Typed < ::ShapeType, ShapeTypeSeq>
-                  ShapesConnector;<br/>
-                };<br/>
+          <code><b>module</b> Shapes<br/>
+            {<br/>
+            &nbsp;&nbsp;<b>typedef</b> <b>sequence</b><ShapeType> ShapeTypeSeq;<br/>
+            &nbsp;&nbsp;<b>module</b> ::CCM_DDS::Typed < ::ShapeType, ShapeTypeSeq>
+            ShapesConnector;<br/>
+            };<br/>
           </code>
           This IDL contains the declaration of the DDS4CCM connector. The used
           module is typed.
       </li>
       <li><a href="../Shapes_asm/ports/Shapes_msg.idl">Shapes_msg.idl<a><br/>
-          <code>struct ShapeType {<br/>
-                &nbsp;&nbsp;string color; //@key<br/>
-                &nbsp;&nbsp;long x;<br/>
-                &nbsp;&nbsp;long y;<br/>
-                &nbsp;&nbsp;long shapesize;<br/>
-                };<br/>
+          <code><b>struct</b> ShapeType {<br/>
+            &nbsp;&nbsp;<font color="red">string</font> color; <font color="grey">//@key</font><br/>
+            &nbsp;&nbsp;<font color="red">long</font> x;<br/>
+            &nbsp;&nbsp;<font color="red">long</font> y;<br/>
+            &nbsp;&nbsp;<font color="red">long</font> shapesize;<br/>
+            };<br/>
           </code>
           The ShapeType struct is the the data structure that is send from the
           sender to the receiver through DDS.<br/>
@@ -66,40 +66,40 @@
     The interface declaration is in
     <a href="../Shapes_asm/Shapes_Control_comp/ports/Shapes_Control_obj.idl">
       Shapes_asm/Shapes_Control_comp/ports/Shapes_Control_obj.idl<a><br/>
-    The IDL looks like this:<br/>
+    The IDL looks like this:
   </p>
   <p>
-    <code>module Shapes<br/>
-          {<br/>
-          &nbsp;&nbsp;interface Control_obj<br/>
-          &nbsp;&nbsp;{<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;ReturnStatus setSize (in unsigned short size);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;ReturnStatus setLocation (in unsigned short x,<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in unsigned short y);<br/>
-          &nbsp;&nbsp;};<br/>
-          };<br/>
-    </code>
+    <br/><code><b>module</b> Shapes<br/>
+    {<br/>
+    &nbsp;&nbsp;<b>interface</b> Control_obj<br/>
+    &nbsp;&nbsp;{<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;ReturnStatus setSize (<b>in unsigned</b> <font color="red">short</font> size);<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;ReturnStatus setLocation (<b>in unsigned</b> <font color="red">short</font> x,<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>in unsigned</b> <font color="red">short</font> y);<br/>
+    &nbsp;&nbsp;};<br/>
+    };<br/>
+    </code><br/>
     The controller component periodically calls the setSize and setLocation methods
     on the sender component.
   </p>
   <p>
-    The component IDL file itself is located in 
+    The component IDL file itself is located in
     <a href="../Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.idl">
       Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.idl<a><br/>
     and looks like this:
   </p>
   <p>
-    <code>module Shapes<br/>
-          {<br/>
-          &nbsp;&nbsp;component Control_comp<br/>
-          &nbsp;&nbsp;{<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;uses Shapes::Control_obj control;<br/><br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned long rate;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_x;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_y;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_size;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;attribute boolean resize_shape;<br/>
-          &nbsp;&nbsp;};<br/>};<br/>
+    <br/><code><b>module</b> Shapes<br/>
+    {<br/>
+    &nbsp;&nbsp;<b>component</b> Control_comp<br/>
+    &nbsp;&nbsp;{<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>uses</b> Shapes::Control_obj control;<br/><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>attribute unsigned</b> <font color="red">long</font> rate;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>attribute unsigned</b> <font color="red">short</font> max_x;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>attribute unsigned</b> <font color="red">short</font> max_y;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>attribute unsigned</b> <font color="red">short</font> max_size;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>attribute</b><font color="red">boolean</font> resize_shape;<br/>
+    &nbsp;&nbsp;};<br/>};<br/>
     </code>
   </p>
   <p>
@@ -125,20 +125,34 @@
     </ul>
     The attributes are set by the deployment plan and cannot be changed throughout
     the lifecycle of the controller component.
+  </p>
 
   <h2>Sender IDL file</h2>
-    The component IDL file itself is located in 
+  <p>
+    The moment the controller invokes setSize or setLocation, the sender translates
+    the received size and location into the ShapeType struct. After that, it'll
+    present the updated struct to DDS, by calling write_one on the DDS_Write port.
+    The IDL file of the Sender component looks like this:<br/>
+    <br/><code><b>module</b> Shapes<br/>
+    {<br/>
+    &nbsp;&nbsp;<b>component</b> Sender_comp<br/>
+    &nbsp;&nbsp;{<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapesConnector::DDS_Write info_write;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>provides</b> Shapes::Control_obj control;<br/>
+    &nbsp;&nbsp;};<br/>};
+    </code><br/><br/>
+    The IDL file is located in
     <a href="../Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl">
       Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl<a><br/>
-    and looks like this:
-  <p>
-    <code>module Shapes<br/>
-          {<br/>
-          &nbsp;&nbsp;component Sender_comp<br/>
-          &nbsp;&nbsp;{<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;port ShapesConnector::DDS_Write info_write;<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;provides Shapes::Control_obj control;<br/>
-          &nbsp;&nbsp;};<br/>};
-    </code>
   </p>
+  <p>
+    The Sender uses the DDS_Write port of the DDS4CCM connector. This means that
+    the Sender is able to write data to DDS.<br/>
+    The Sender provides the Control_obj interface to the Controller component. This
+    means that the sender component implements the Control_obj interface so that the
+    controller is able to invoke the provided methods.
+  </p>
+
+  <h2>Receiver IDL file</h2>
+  <p>
 </body>
