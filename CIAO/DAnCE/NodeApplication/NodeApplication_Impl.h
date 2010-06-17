@@ -29,8 +29,9 @@
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "Deployment/DeploymentC.h"
 #include "DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_LocalityManagerC.h"
+#include "LocalityManager/Scheduler/Deployment_Scheduler.h"
 #include "DAnCE/DAnCE_ArtifactInstallationC.h"
-#include "LocalityManager/Handler/Locality_Manager_Handler_Impl.h"
 #include "Split_Plan/Locality_Splitter.h"
 #include "Split_Plan/Split_Plan.h"
 
@@ -45,7 +46,7 @@ namespace DAnCE
   typedef DAnCE::Split_Plan < DAnCE::Locality_Splitter > LocalitySplitter;
 
   class NodeManager_Impl;
-
+  
   class NodeApplication_Export NodeApplication_Impl :
     public virtual POA_Deployment::NodeApplication
   {
@@ -70,6 +71,13 @@ namespace DAnCE
 
     void remove_instances (void);
 
+    typedef std::map <std::string, ::DAnCE::LocalityManager_var>
+      LOCALITY_MAP;
+    
+    
+    typedef std::pair <CORBA::ULong, ::Deployment::DeploymentPlan> SUB_PLAN;
+    typedef std::map <std::string, SUB_PLAN> PLAN_MAP;
+
   protected:
     void prepare_instance (const char *name,
                            const ::Deployment::DeploymentPlan &plan);
@@ -82,14 +90,11 @@ namespace DAnCE
 
     ACE_CString node_name_;
 
-    PROPERTY_MAP properties_;
-
-    DAnCE::Locality_Handler_i handler_;
-
-    typedef std::map <ACE_CString, ::DAnCE::LocalityManager_var>
-      LOCALITY_MAP;
     LOCALITY_MAP localities_;
+    
+    DAnCE::Deployment_Scheduler scheduler_;
 
+    PLAN_MAP sub_plans_;
   };
 }
 #endif /*NODEAPPLICATION_IMPL_H_*/

@@ -46,18 +46,24 @@ namespace DAnCE
 
       Server_Info *info = 0;
 
-      for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
-           !i.done (); ++i)
-        {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                           ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Comparing %C with %C\n"),
-                           (*i)->uuid_.c_str (), server_UUID));
-          if ((*i)->uuid_ == server_UUID)
-            {
-              info = (*i).get ();
-            }
-        }
+      {
+        ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
+                             guard,
+                             this->container_mutex_,
+                             CORBA::NO_RESOURCES ());
+        for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
+             !i.done (); ++i)
+          {
+            DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                             ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
+                             ACE_TEXT ("Comparing %C with %C\n"),
+                             (*i)->uuid_.c_str (), server_UUID));
+            if ((*i)->uuid_ == server_UUID)
+              {
+                info = (*i).get ();
+              }
+          }
+      }
 
       if (!info)
         {
@@ -72,7 +78,8 @@ namespace DAnCE
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Received callback from LocalityManager %C, which has already been configured.\n"),
+                           ACE_TEXT ("Received callback from LocalityManager %C, ")
+                           ACE_TEXT ("which has already been configured.\n"),
                        server_UUID));
           throw ::CORBA::BAD_INV_ORDER ();
         }
@@ -81,7 +88,8 @@ namespace DAnCE
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
-                           ACE_TEXT ("Received callback from LocalityManager %C, which has already called back.\n"),
+                           ACE_TEXT ("Received callback from LocalityManager %C, ")
+                           ACE_TEXT ("which has already called back.\n"),
                        server_UUID));
           throw ::CORBA::BAD_INV_ORDER ();
         }
@@ -116,14 +124,20 @@ namespace DAnCE
         {
           Server_Info *info = 0;
 
-          for (SERVER_INFOS::ITERATOR j (this->server_infos_);
-               !j.done (); ++j)
-            {
-              if ((*j)->uuid_ == server_UUID)
-                {
-                  info = (*j).get ();
-                }
-            }
+          {
+            ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
+                                 guard,
+                                 this->container_mutex_,
+                                 CORBA::NO_RESOURCES ());
+            for (SERVER_INFOS::ITERATOR j (this->server_infos_);
+                 !j.done (); ++j)
+              {
+                if ((*j)->uuid_ == server_UUID)
+                  {
+                    info = (*j).get ();
+                  }
+              }
+          }
 
           if (!info)
             {
@@ -153,8 +167,13 @@ namespace DAnCE
                            server_UUID));
               throw ::CORBA::BAD_INV_ORDER ();
             }
-
+          
+          ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                              guard,
+                              info->mutex_,
+                              CORBA::NO_RESOURCES ());
           info->activated_ = true;
+          info->condition_.signal ();
         }
       catch (...)
         {
@@ -187,7 +206,13 @@ namespace DAnCE
                        ACE_TEXT ("LocalityManager arguments: %C\n"),
                    cmd_options.c_str ()));
 
-      server_infos_.insert_tail (server);
+      {
+        ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
+                             guard,
+                             this->container_mutex_,
+                             CORBA::NO_RESOURCES ());
+        server_infos_.insert_tail (server);
+      }
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
@@ -411,8 +436,25 @@ namespace DAnCE
       // for thread-pool concurrency model.
       while (true)
         {
-          this->orb_->perform_work (timeout);
+          if (!si.activated_)
+            {
+              ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
+                                   guard,
+                                   this->mutex_,
+                                   CORBA::NO_RESOURCES ());
+              // The next guy to acquire the mutex may have already
+              // been activated by the previous leader's perform_work,
+              // so let's check to make sure that only non-activated
+              // folks are hanging on perform_work.
+              if (!si.activated_)
+                this->orb_->perform_work (timeout);
+            }
 
+          if (si.activated_)
+            {
+              break;
+            }
+          
           if (timeout == ACE_Time_Value::zero)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -422,17 +464,12 @@ namespace DAnCE
               throw ::Deployment::StartError ("locality_manager",
                                               "Timed out waiting for LocalityManager");
             }
-
-          if (si.activated_)
-            {
-              break;
-            }
         }
     }
 
     void
     DAnCE_LocalityActivator_i::
-    multi_threaded_wait_for_callback (const Server_Info &si,
+      multi_threaded_wait_for_callback (Server_Info &si,
                                       ACE_Time_Value &timeout)
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback");
@@ -440,11 +477,11 @@ namespace DAnCE
       // Wait for a conditional variable
       ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
                            guard,
-                           this->mutex_,
+                           si.mutex_,
                            CORBA::NO_RESOURCES ());
 
       while (! si.activated_ )
-        if (this->condition_.wait (&timeout) == -1)
+        if (si.condition_.wait (/*&timeout*/) == -1)
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
@@ -462,14 +499,20 @@ namespace DAnCE
 
       Server_Info *info = 0;
 
-      for (SERVER_INFOS::ITERATOR i (this->server_infos_);
-           !i.done (); ++i)
-        {
-          if ((*i)->ref_->_is_equivalent (server))
-            {
-              info = (*i).get ();
-            }
-        }
+      {
+        ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
+                             guard,
+                             this->container_mutex_,
+                             CORBA::NO_RESOURCES ());
+        for (SERVER_INFOS::ITERATOR i (this->server_infos_);
+             !i.done (); ++i)
+          {
+            if ((*i)->ref_->_is_equivalent (server))
+              {
+                info = (*i).get ();
+              }
+          }
+      }
 
       if (!info)
         {

@@ -15,10 +15,11 @@
 #include "ace/Method_Request.h"
 #include "ace/Future.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
+#include "LocalityManager/Scheduler/Deployment_Scheduler_export.h"
 
 namespace DAnCE
 {
-  struct Event_Result
+  struct Deployment_Scheduler_Export Event_Result
   {
     std::string id_;
     bool exception_;
@@ -32,7 +33,7 @@ namespace DAnCE
    * @brief Future observer that invokes a parameterized functor on the future
    */
   template <typename Functor>
-  class Event_Handler
+  class Deployment_Scheduler_Export Event_Handler
     : ACE_Future_Observer< Event_Result >
   {
   public:
@@ -54,7 +55,7 @@ namespace DAnCE
     Functor &specific_handler_;
   };
 
-  class Deployment_Event : 
+  class Deployment_Scheduler_Export Deployment_Event : 
     public virtual ACE_Method_Request
   {
   public:
@@ -68,7 +69,7 @@ namespace DAnCE
     std::string instance_type_;
   };
       
-  class Install_Instance :
+  class Deployment_Scheduler_Export Install_Instance :
     public virtual Deployment_Event
   {
   public:
@@ -86,7 +87,7 @@ namespace DAnCE
     ::CORBA::ULong instanceRef_;
   };
  
-  class Connect_Instance :
+  class Deployment_Scheduler_Export Connect_Instance :
     public virtual Deployment_Event
   {
   public:
@@ -106,7 +107,7 @@ namespace DAnCE
     ::CORBA::Any provided_ref_;
   };
 
-  class Remove_Instance :
+  class Deployment_Scheduler_Export Remove_Instance :
     public virtual Deployment_Event
   {
   public:

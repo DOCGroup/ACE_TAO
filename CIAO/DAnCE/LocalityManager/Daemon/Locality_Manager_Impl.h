@@ -90,7 +90,7 @@ namespace DAnCE
     };
 
     typedef std::map <std::string, 
-      Handler> HANDLER_TABLE;
+                      Handler> HANDLER_TABLE;
     
     HANDLER_TABLE instance_handlers_;
     

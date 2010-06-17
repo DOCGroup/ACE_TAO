@@ -75,7 +75,7 @@ namespace DAnCE
         if (CORBA::is_nil (handler))
           {
             throw ::Deployment::StartError (name,
-                                            "Unable to load appropriate instance handler");
+                                           "Unable to load appropriate instance handler");
           }
               
         ::CORBA::Any_var instance_ref;
@@ -234,7 +234,7 @@ namespace DAnCE
             if (CORBA::is_nil (handler))
               {
                 throw ::Deployment::StartError (name,
-                                                "Unable to load appropriate instance handler");
+                                               "Unable to load appropriate instance handler");
               }
             
             DANCE_DEBUG (10, (LM_TRACE, DLINFO
@@ -345,8 +345,8 @@ namespace DAnCE
   Remove_Instance::call (void)
   {
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Install_Instance::call - ")
-                      ACE_TEXT ("Entering Install_Instance\n")));
+                      ACE_TEXT ("Remove_Instance::call - ")
+                      ACE_TEXT ("Entering Remove_Instance\n")));
     
     const char *name = this->plan_.instance[this->instanceRef_].name.in ();
     
@@ -369,7 +369,7 @@ namespace DAnCE
         
         if (CORBA::is_nil (handler))
           {
-            throw ::Deployment::StartError (name,
+            throw ::Deployment::StopError (name,
                                             "Unable to load appropriate instance handler");
           }
               
@@ -389,7 +389,7 @@ namespace DAnCE
       {
         DANCE_ERROR (3, (LM_ERROR, DLINFO
                          ACE_TEXT ("Remove_Instance::call - ")
-                         ACE_TEXT ("Caught C++ exception while removeing instance ")
+                         ACE_TEXT ("Caught CORBA exception while removeing instance ")
                          ACE_TEXT ("%u:<%C>\n"),
                          this->instanceRef_,
                          name));
