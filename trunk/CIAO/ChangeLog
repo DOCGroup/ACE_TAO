@@ -1,3 +1,64 @@
+Thu Jun 17 08:41:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/Shapes_Control_obj.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/ports/Shapes_Control_obj.mpc:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/Shapes_Control_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/Shapes_Control_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/Shapes_Control_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesControl_comp/src/Shapes_Control_exec.cpp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/ports:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/Shapes_Receiver_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesReceiver_comp/src/Shapes_Receiver_exec.cpp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/ports:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/Shapes_Sender_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/Shapes_Sender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ShapesSender_comp/src/Shapes_Sender_exec.cpp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/ports/ShapesControl_obj.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/ports/ShapesControl_obj.mpc:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/ShapesControl_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/ShapesControl_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/ShapesControl_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/ShapesControl_exec.cpp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/ShapesReceiver_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/ShapesReceiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/ShapesReceiver_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/ShapesReceiver_exec.cpp:
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/ShapesSender_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/ShapesSender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/ShapesSender_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/ShapesSender_exec.cpp:
+          Renamed directories (underscore between Shapes and Sender/Control/Receiver).
+
 Thu Jun 17 08:43:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.h:
