@@ -4,10 +4,10 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-#include "ShapesSender_compEC.h"
-#include "ShapesControl_objEC.h"
+#include "Shapes_Sender_compEC.h"
+#include "Shapes_Control_objEC.h"
 
-#include /**/ "ShapesSender_exec_export.h"
+#include /**/ "Shapes_Sender_exec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

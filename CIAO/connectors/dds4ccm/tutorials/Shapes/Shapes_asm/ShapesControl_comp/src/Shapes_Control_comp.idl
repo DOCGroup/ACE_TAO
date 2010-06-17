@@ -3,7 +3,7 @@
 #ifndef SHAPES_CONTROL_COMP_IDL_
 #define SHAPES_CONTROL_COMP_IDL_
 
-#include "ShapesControl_obj.idl"
+#include "Shapes_Control_obj.idl"
 
 #include <Components.idl>
 

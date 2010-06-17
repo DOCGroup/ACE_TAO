@@ -42,7 +42,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesReceiver_svnt</string>
+          <string>Shapes_Receiver_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -53,7 +53,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesReceiver_exec</string>
+          <string>Shapes_Receiver_exec</string>
         </value>
       </value>
     </execParameter>
@@ -94,7 +94,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesControl_svnt</string>
+          <string>Shapes_Control_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -105,7 +105,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesControl_exec</string>
+          <string>Shapes_Control_exec</string>
         </value>
       </value>
     </execParameter>
@@ -198,7 +198,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesSender_svnt</string>
+          <string>Shapes_Sender_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -209,7 +209,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>ShapesSender_exec</string>
+          <string>Shapes_Sender_exec</string>
         </value>
       </value>
     </execParameter>
@@ -408,16 +408,16 @@
   </connection>
 
   <artifact xmi:id="Sender_ExecArtifact">
-    <name>ShapesSender_exec</name>
+    <name>Shapes_Sender_exec</name>
     <source/>
     <node/>
-    <location>ShapesSender_exec</location>
+    <location>Shapes_Sender_exec</location>
   </artifact>
   <artifact xmi:id="Sender_SvntArtifact">
-    <name>ShapesSender_svnt</name>
+    <name>Shapes_Sender_svnt</name>
     <source/>
     <node/>
-    <location>ShapesSender_svnt</location>
+    <location>Shapes_Sender_svnt</location>
   </artifact>
   <artifact xmi:id="Sender_StubArtifact">
     <name>Sender_stub</name>
@@ -438,16 +438,16 @@
     <location>Shapes_conn_svnt</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
-    <name>ShapesReceiver_exec</name>
+    <name>Shapes_Receiver_exec</name>
     <source/>
     <node/>
-    <location>ShapesReceiver_exec</location>
+    <location>Shapes_Receiver_exec</location>
   </artifact>
   <artifact xmi:id="Receiver_SvntArtifact">
-    <name>ShapesReceiver_svnt</name>
+    <name>Shapes_Receiver_svnt</name>
     <source/>
     <node/>
-    <location>ShapesReceiver_svnt</location>
+    <location>Shapes_Receiver_svnt</location>
   </artifact>
   <artifact xmi:id="Receiver_StubArtifact">
     <name>Receiver_stub</name>
@@ -456,16 +456,16 @@
     <location>Receiver_stub</location>
   </artifact>
   <artifact xmi:id="Control_ExecArtifact">
-    <name>ShapesControl_exec</name>
+    <name>Shapes_Control_exec</name>
     <source/>
     <node/>
-    <location>ShapesControl_exec</location>
+    <location>Shapes_Control_exec</location>
   </artifact>
   <artifact xmi:id="Control_SvntArtifact">
-    <name>ShapesControl_svnt</name>
+    <name>Shapes_Control_svnt</name>
     <source/>
     <node/>
-    <location>ShapesControl_svnt</location>
+    <location>Shapes_Control_svnt</location>
   </artifact>
   <artifact xmi:id="Control_StubArtifact">
     <name>Control_stub</name>

@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "ShapesReceiver_exec.h"
+#include "Shapes_Receiver_exec.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
