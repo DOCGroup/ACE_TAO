@@ -38,6 +38,9 @@ module DAnCE
   /// Indicates the naming context used for instance objects.
   const string INSTANCE_NC = "edu.vanderbilt.dre.DAnCE.InstanceNC";
 
+  /// Indicates the POA in use for this entity.
+  const string ENTITY_POA = "edu.dre.vanderbilt.DAnCE.POA";
+
   const string LOCALITY_TIMEOUT = "edu.vanderbilt.dre.DAnCE.LocalityTimeout";
   const string LOCALITY_UUID = "edu.vanderbilt.dre.DAnCE.LocalityUUID";
   const string LOCALITY_ARGUMENTS = "edu.vanderbilt.dre.DAnCE.LocalityArguments";

@@ -116,6 +116,17 @@ namespace DAnCE
           exception.reason = reason;
         }
     }
+    
+    template <typename EXCEPTION>
+    bool extract_and_throw_exception (const CORBA::Any &excep)
+    {
+      EXCEPTION *ex_holder;
+      
+      if ((excep >>= ex_holder))
+        throw *(ex_holder);
+      
+      return false;
+    }
   }
 }
 
