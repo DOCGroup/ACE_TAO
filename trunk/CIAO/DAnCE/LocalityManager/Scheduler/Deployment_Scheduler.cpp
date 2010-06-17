@@ -20,6 +20,12 @@ namespace DAnCE
     return retval;
   }
   
+  void
+  Deployment_Scheduler::terminate_scheduler (void)
+  {
+    this->event_queue_.queue ()->close ();
+  }
+
   int
   Deployment_Scheduler::svc (void)
   {
@@ -36,10 +42,10 @@ namespace DAnCE
           }
         else
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Deployment_Scheduler::svc - ")
-                             ACE_TEXT ("Failed to retrieve deployment event from queue")));
+            break;
           }
       }
+    
+    return 0;
   }
 }

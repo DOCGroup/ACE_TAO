@@ -1,3 +1,33 @@
+Thu Jun 17 19:22:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        
+          Layout change. 
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        
+          Bugfixes in the callback code to accomodate non-orb managed threadpools.
+
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+
+          Changed how internal Activator is configured. 
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+          Linking fixes and minor changes in exception handling.
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Integration of Deployment Scheduler to NodeApplication.
+
 Thu Jun 17 19:18:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_nodeapplication.mpb:

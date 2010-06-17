@@ -4,10 +4,16 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1560
 
+#include "tao/ORB_Core.h"
 #include "Locality_Manager_Handler_Impl.h"
 #include "LocalityActivator_Impl.h"
 
 #include "DAnCE/DAnCE_PropertiesC.h"
+
+#ifdef GEN_OSTREAM_OPS
+#include <iostream>
+#include <sstream>
+#endif /* GEN_OSTREAM_OPS */
 
 namespace DAnCE
 {
@@ -17,50 +23,8 @@ namespace DAnCE
 
   // Implementation skeleton constructor
   Locality_Handler_i::
-  Locality_Handler_i (const Utility::PROPERTY_MAP &prop,
-                      CORBA::ORB_ptr orb,
-                      PortableServer::POA_ptr poa)
-    : activator_ (0),
-      properties_ (prop)
+  Locality_Handler_i (void)
   {
-    CORBA::ULong spawn = 0;
-    const char *cs_path = 0;
-    const char *cs_args = 0;
-    CORBA::Boolean multithread = false;
-
-    Utility::get_property_value (DAnCE::LOCALITY_EXECUTABLE,
-                                 this->properties_, cs_path);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Component server path: %C\n"), cs_path));
-    Utility::get_property_value (DAnCE::LOCALITY_ARGUMENTS,
-                                 this->properties_, cs_args);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Component server arguments: %C\n"), cs_args));
-    Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
-                                 this->properties_, spawn);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Spawn delay: %u\n"), spawn));
-    Utility::get_property_value (DAnCE::LOCALITY_MULTITHREAD,
-                                 this->properties_, multithread);
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Threading: %C\n"),
-                     multithread ? "Multi" : "Single"));
-
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
-                     ACE_TEXT("Spawning Locality handler\n")));
-
-    ACE_NEW_THROW_EX (this->activator_,
-                      DAnCE_LocalityActivator_i (spawn,
-                                                 cs_path,
-                                                 cs_args,
-                                                 multithread,
-                                                 orb,
-                                                 poa),
-                      CORBA::NO_MEMORY ());
-
-    PortableServer::ServantBase_var safe_servant (this->activator_);
-
-    poa->activate_object (this->activator_);
   }
 
   // Implementation skeleton destructor
@@ -79,6 +43,19 @@ namespace DAnCE
                                         ::CORBA::ULong instanceRef,
                                         ::CORBA::Any_out instance_reference)
   {
+#ifdef GEN_OSTREAM_OPS
+    {
+      std::ostringstream plan_stream;
+      plan_stream << plan << std::endl;
+
+      DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                        ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                        ACE_TEXT ("Deploying instance %u of plan %C\n"),
+                        instanceRef,
+                        plan_stream.str ().c_str ()));
+    }
+#endif /* GEN_OSTREAM_OPS */
+    
     if (plan.instance.length () <= instanceRef)
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -89,11 +66,28 @@ namespace DAnCE
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
       }
-
+    
     const ::Deployment::InstanceDeploymentDescription &idd =
       plan.instance[instanceRef];
+    
+    if (plan.implementation.length () <= idd.implementationRef)
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                         ACE_TEXT ("Invalid implementation reference %u provided ")
+                         ACE_TEXT ("to install_instance\n"),
+                         idd.implementationRef));
+        throw ::Deployment::PlanError (plan.UUID.in (),
+                                       "Invalid Implementation reference");
+      }
+    
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
+
+    DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                      ACE_TEXT ("Locality_Handler_i::install_instance - ")
+                      ACE_TEXT ("Starting installation of instance <%C>\n"),
+                      idd.name.in ()));
 
     CORBA::ULong allprops_len =
       idd.configProperty.length () + mdd.execParameter.length () + 1;
@@ -167,5 +161,66 @@ namespace DAnCE
   void
   Locality_Handler_i::configure (const ::Deployment::Properties &prop )
   {
+    ::DAnCE::Utility::PROPERTY_MAP pmap (prop.length ());
+    
+    ::DAnCE::Utility::build_property_map (pmap,
+                                          prop);
+
+    CORBA::ULong spawn = 0;
+    const char *cs_path = 0;
+    const char *cs_args = 0;
+    CORBA::Boolean multithread = false;
+    PortableServer::POA_var poa;
+
+    Utility::get_property_value (DAnCE::LOCALITY_EXECUTABLE,
+                                 pmap, cs_path);
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Component server path: %C\n"), cs_path));
+    Utility::get_property_value (DAnCE::LOCALITY_ARGUMENTS,
+                                 pmap, cs_args);
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Component server arguments: %C\n"), cs_args));
+    Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
+                                 pmap, spawn);
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Spawn delay: %u\n"), spawn));
+    Utility::get_property_value (DAnCE::LOCALITY_MULTITHREAD,
+                                 pmap, multithread);
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Threading: %C\n"),
+                     multithread ? "Multi" : "Single"));
+
+    Utility::get_property_value (DAnCE::ENTITY_POA,
+                                 pmap, poa);
+
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Threading: %C\n"),
+                     multithread ? "Multi" : "Single"));
+
+    CORBA::ORB_var orb = TAO_ORB_Core_instance ()->orb ();
+
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("Locality_Handler_i - ")
+                     ACE_TEXT("Spawning Locality handler\n")));
+    
+    ACE_NEW_THROW_EX (this->activator_,
+                      DAnCE_LocalityActivator_i (spawn,
+                                                 cs_path,
+                                                 cs_args,
+                                                 false,
+                                                 orb,
+                                                 poa),
+                      CORBA::NO_MEMORY ());
+
+    PortableServer::ServantBase_var safe_servant (this->activator_);
+
+    poa->activate_object (this->activator_);
+  }
+}
+
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr create_Locality_Handler (void)
+  {
+    return new DAnCE::Locality_Handler_i ();
   }
 }

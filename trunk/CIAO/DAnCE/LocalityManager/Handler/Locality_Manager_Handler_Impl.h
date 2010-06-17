@@ -13,8 +13,6 @@
 
 #include "DAnCE/DAnCE_LocalityManagerS.h"
 #include "DAnCE/DAnCE_Utility.h"
-#include "Split_Plan/Locality_Splitter.h"
-#include "Split_Plan/Split_Plan.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,9 +31,7 @@ namespace DAnCE
   {
   public:
     // Constructor 
-    Locality_Handler_i (const Utility::PROPERTY_MAP &props,
-                        CORBA::ORB_ptr orb,
-                        PortableServer::POA_ptr poa);
+    Locality_Handler_i (void);
   
     // Destructor 
     virtual ~Locality_Handler_i (void);
@@ -82,11 +78,17 @@ namespace DAnCE
 
     virtual
       void configure(const Deployment::Properties&);
+
   private:
     static const char *instance_type_;
     DAnCE_LocalityActivator_i *activator_;
-    const Utility::PROPERTY_MAP &properties_;
-    
   };
 }
+
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr 
+  DAnCE_Locality_Handler_Export create_Locality_Handler (void);
+}
+
 #endif
