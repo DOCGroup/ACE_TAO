@@ -10,48 +10,30 @@
 
 namespace CIAO_Quoter_Broker_Impl
 {
-
-  read_action_Generator::read_action_Generator (Broker_exec_i &callback)
-    : pulse_callback_ (callback)
-  {
-  }
-
-  read_action_Generator::~read_action_Generator ()
-  {
-  }
-
-  int
-  read_action_Generator::handle_timeout (const ACE_Time_Value &,
-                                         const void *)
-  {
-    // Notify the subscribers
-    //    this->pulse_callback_.read_one();
-    //    this->pulse_callback_.read_one_history();
-    //    this->pulse_callback_.read_all();
-    //    this->pulse_callback_.read_all_history();
-    return 0;
-  }
-
   void
   Broker_exec_i::read_one (void)
   {
     ACE_DEBUG ((LM_DEBUG, "read_one\n"));
+
     ::Quoter::Stock_Info  stock_info;
     stock_info.symbol= "IBM";
     ::CCM_DDS::ReadInfo readinfo;
 
     try
       {
-        this->reader_->read_one_last (stock_info, readinfo, ::DDS::HANDLE_NIL);
-        time_t tim = readinfo.source_timestamp.sec;
-        ACE_DEBUG ((LM_DEBUG, "Read_Info. -> date = %C\n", ctime (&tim)));
+        ::Quoter::Reader_var reader =
+          this->context_->get_connection_info_out_data();
+
+        reader->read_one_last (stock_info, readinfo, ::DDS::HANDLE_NIL);
+        time_t const tim = readinfo.source_timestamp.sec;
+        ACE_DEBUG ((LM_DEBUG, "Read_Info. -> date = %C\n", ACE_OS::ctime (&tim)));
         ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: received a stock_info for <%C> at %u:%u:%u\n",
             stock_info.symbol.in (),
             stock_info.low,
             stock_info.current,
             stock_info.high));
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
         ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One: no stock_info received\n"));
       }
@@ -62,22 +44,28 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all\n"));
 
+    ::Quoter::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     ::Quoter::Stock_InfoSeq stock_infos;
     ::CCM_DDS::ReadInfoSeq readinfoseq;
-    this->reader_->read_all(stock_infos, readinfoseq);
+    reader->read_all(stock_infos, readinfoseq);
     if(readinfoseq.length()!= 0)
       {
         for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
           {
-            time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n",ACE_OS::ctime (&tim)));
+            time_t const tim = readinfoseq[i].source_timestamp.sec;
+            ACE_DEBUG ((LM_DEBUG,
+                        "Read_Info.source_timestamp -> date = %C\n",
+                        ACE_OS::ctime (&tim)));
           }
       }
     if(stock_infos.length()!= 0)
       {
         for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
           {
-            ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
+            ACE_DEBUG ((LM_DEBUG,
+                        "Stock_Info_Read_All: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
                 stock_infos[i].symbol.in (),
                 stock_infos[i].low,
@@ -91,20 +79,25 @@ namespace CIAO_Quoter_Broker_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "read_all_history\n"));
 
+    ::Quoter::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
     ::Quoter::Stock_InfoSeq stock_infos;
     ::CCM_DDS::ReadInfoSeq readinfoseq;
-    this->reader_->read_all(stock_infos, readinfoseq);
-    if(readinfoseq.length()!= 0)
+    reader->read_all(stock_infos, readinfoseq);
+    if (readinfoseq.length()!= 0)
       {
-        for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
+        for (CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
           {
-            time_t tim = readinfoseq[i].source_timestamp.sec;
-            ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ACE_OS::ctime (&tim)));
+            time_t const tim = readinfoseq[i].source_timestamp.sec;
+            ACE_DEBUG ((LM_DEBUG,
+                        "Read_Info.source_timestamp -> date = %C\n",
+                        ACE_OS::ctime (&tim)));
           }
       }
-    if(stock_infos.length()!= 0)
+    if (stock_infos.length() != 0)
       {
-        for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
+        for (CORBA::ULong i = 0; i < stock_infos.length(); i ++)
           {
             ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_All_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                 i,
@@ -127,20 +120,26 @@ namespace CIAO_Quoter_Broker_Impl
     ::CCM_DDS::ReadInfoSeq readinfoseq;
     try
       {
-        this->reader_->read_one_all(stock_info,stock_infos, readinfoseq, ::DDS::HANDLE_NIL);
-        if(readinfoseq.length()!= 0)
+        ::Quoter::Reader_var reader =
+          this->context_->get_connection_info_out_data();
+
+        reader->read_one_all(stock_info,stock_infos, readinfoseq, ::DDS::HANDLE_NIL);
+        if (readinfoseq.length()!= 0)
           {
-            for(CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
+            for (CORBA::ULong i = 0; i < readinfoseq.length(); i ++)
               {
-                time_t tim = readinfoseq[i].source_timestamp.sec;
-                ACE_DEBUG ((LM_DEBUG, "Read_Info.source_timestamp -> date = %C\n", ctime (&tim)));
+                time_t const tim = readinfoseq[i].source_timestamp.sec;
+                ACE_DEBUG ((LM_DEBUG,
+                            "Read_Info.source_timestamp -> date = %C\n",
+                            ACE_OS::ctime (&tim)));
               }
           }
         if(stock_infos.length()!= 0)
           {
-            for(CORBA::ULong i = 0; i < stock_infos.length(); i ++)
+            for (CORBA::ULong i = 0; i < stock_infos.length(); i ++)
               {
-                ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
+                ACE_DEBUG ((LM_DEBUG,
+                            "Stock_Info_Read_One_History: Number %d : received a stock_info for <%C> at %u:%u:%u\n",
                     i,
                     stock_infos[i].symbol.in (),
                     stock_infos[i].low,
@@ -149,7 +148,7 @@ namespace CIAO_Quoter_Broker_Impl
               }
           }
       }
-    catch(CCM_DDS::NonExistent& )
+    catch (const CCM_DDS::NonExistent& )
       {
          ACE_DEBUG ((LM_DEBUG, "Stock_Info_Read_One_History: no stock_info's received\n"));
       }
@@ -224,7 +223,6 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::Broker_exec_i (void)
   {
     ACE_OS::srand (static_cast <u_int> (ACE_OS::time ()));
-    this->ticker_ = new read_action_Generator (*this);
   }
 
   Broker_exec_i::~Broker_exec_i (void)
@@ -273,30 +271,18 @@ namespace CIAO_Quoter_Broker_Impl
   Broker_exec_i::configuration_complete (void)
   {
     ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::configuration_complete\n"));
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void
   Broker_exec_i::start (void)
   {
     ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::start\n"));
-    // calculate the interval time
-    if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
-                this->ticker_,
-                0,
-                ACE_Time_Value (0, 2000),
-                ACE_Time_Value (0, 2000)) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::start : error scheduling timer\n"));
-    }
   }
 
   void
   Broker_exec_i::stop (void)
   {
-    this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ">>> Broker_exec_i::stop\n"));
-    delete this->ticker_;
   }
 
   void
