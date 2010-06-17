@@ -155,4 +155,19 @@
 
   <h2>Receiver IDL file</h2>
   <p>
+    The receiver is &quot;listening&quot; to DDS. Once the shape has been
+    updated by the sender, DDS will invoke a callback method on the DDS4CCM connector
+    which in turn calls the receiver component and will pass the updated data to
+    the receiver.<br/>
+    The receiver should provide the DDS4CCM connector with an interface which the
+    DDS4CCM connector should invoke the moment he gets a callback from DDS.
+    To establish this, the receiver component IDL should look like this:<br/>
+    <br/>
+    <code><b>module</b> Shapes<br/>
+      {<br/>
+      &nbsp;&nbsp;component Receiver_comp<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapesConnector::DDS_Listen info_out;<br/>
+      &nbsp;&nbsp;};<br/>};<br/>
+  </p>
 </body>
