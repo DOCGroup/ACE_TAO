@@ -12,6 +12,10 @@
     combination with a CCM component.<br/>
   </p>
 
+  <p>
+    TODO: <b><i>short explanation of the DDS4CCM connector.</i></b>
+  </p>
+
   <h2>System</h2>
   <p>
     The system consists of three components:
@@ -20,8 +24,19 @@
       <li>A receiver component</li>
       <li>A controller component</li>
     </ul>
-    Both the sender and receiver using a DDS4CCM connector. The controller runs a
-    timer and periodically sends updates regarding location and size to the sender.
+    In this tutorial RTI DDS is used to transfer data from the sender to the receiver.
+    Therefor both the sender and receiver are using a DDS4CCM connector.<br/>
+    The data consists of a struct with the following members:
+    <ul>
+      <li>color : represents the color of the shape.</li>
+      <li>x : represents the location on the x-axis.</li>
+      <li>y : represents the location on the y-axis</li>
+      <li>shapesize : represents the size of the shape.</li>
+    </ul>
+    The controller controls the location and size of the registered shape.<br/>
+    The only thing the sender does is registering a shape with DDS and transferring
+    the data received from the controller to DDS.<br/>
+    The receiver listens to DDS and receives the updates regarding the shapes data.
   </p>
   <img width="60%" height="40%" src="./images/system.png" />
   <p><i><b>to-be-replaced</b></i></p>
