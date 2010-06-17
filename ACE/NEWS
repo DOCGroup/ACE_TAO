@@ -1,6 +1,18 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 ====================================================
 
+. There are two new ACE_Time_Value methods for getting and setting millisecond
+  values to/from ACE_UINT64 values:
+
+      ACE_UINT64 ACE_Time_Value::get_msec () const
+      void ACE_Time_Value::set_msec (const ACE_UINT64 &ms)
+
+  The former is a replacement for the existing msec(ACE_UINT64&) methods that
+  are "getter" methods whose signatures look confusingly like "setters". See
+  Bugzilla #3336 for the history behind this change.
+
+  The latter is for consistency and clarity.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.8 and ACE-5.7.9
 ====================================================
 

@@ -133,6 +133,12 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("msec test failed: %Q should be 42555\n"),
                 ms));
+  ms = 0;
+  ms = msec_test.get_msec ();
+  if (ms != 42555)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("get_msec test failed: %Q should be 42555\n"),
+                ms));
   ACE_Time_Value const msec_test2 (42, 555000);
   ms = 0;
   msec_test2.msec (ms);
@@ -140,6 +146,19 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
                 ms));
+
+  // Test setting from ACE_UINT64
+  ms = 42555;
+  ACE_Time_Value msec_test3;
+  msec_test3.set_msec (ms);
+  if (msec_test3.sec () != 42)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("set_msec test failed: %d secs should be 42\n"),
+                msec_test3.sec ()));
+  if (msec_test3.usec () != 555000)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
+                msec_test3.usec ()));
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
   std::ostringstream ost;
