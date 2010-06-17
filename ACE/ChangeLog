@@ -1,3 +1,11 @@
+Thu Jun 17 19:47:58 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp: Add _get_dll_unload_policy() function that
+          returns ACE_DLL_UNLOAD_POLICY_LAZY; this prevents the DLL_Manager
+          from running down ACE framework components just from unloading
+          a service contained in ACE itself.
+          Proposed fix for Bugzilla #3856.
+
 Thu Jun 17 19:01:32 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/Service_Config_Test.cpp: Added a new test case,
