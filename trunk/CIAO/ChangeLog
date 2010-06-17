@@ -1,3 +1,14 @@
+Thu Jun 17 15:34:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/tools/Completion/Completion_Counter_Base.inl:
+        * DAnCE/tools/Completion/Completion_Counter_Base.h:
+	  Added error collection.
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp:
+	  Fixed error propagation.
+
 Thu Jun 17 14:48:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:

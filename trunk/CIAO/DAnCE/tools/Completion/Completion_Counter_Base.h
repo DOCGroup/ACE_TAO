@@ -17,6 +17,8 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Null_Mutex.h"
+#include <string>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,17 +32,21 @@ namespace DAnCE
     {
     public:
       typedef ACE_LOCK lock_type;
+      typedef std::vector<std::string> errors_type;
+
       Completion_Counter_Base (unsigned int exec_count,
                                unsigned int fail_count);
       virtual ~Completion_Counter_Base ();
 
       void  decrement_exec_count ();
-      void  increment_fail_count ();
+      void  increment_fail_count (const char* error);
 
       unsigned int exec_count ();
       unsigned int fail_count ();
 
       bool all_completed ();
+
+      const errors_type& errors () const;
 
     protected:
       unsigned int exec_count_i ();
@@ -53,6 +59,7 @@ namespace DAnCE
       mutable ACE_LOCK lock_;
       unsigned int exec_count_;
       unsigned int fail_count_;
+      errors_type errors_;
     };
 
   } /* DAnCE */
