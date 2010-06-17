@@ -1340,10 +1340,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                 }
             }
         }
+
+      this->add_to_referenced (d, false, name);
     }
 
   masks.reset ();
-  this->add_to_referenced (d, false, name);
   return d;
 }
 
