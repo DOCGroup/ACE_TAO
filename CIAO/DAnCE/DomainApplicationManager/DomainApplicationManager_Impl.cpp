@@ -5,6 +5,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "Split_Plan/Split_Plan.h"
 #include "Split_Plan/Node_Splitter.h"
+#include <sstream>
 
 using namespace DAnCE;
 
@@ -97,8 +98,9 @@ DomainApplicationManager_Impl::startLaunch (
     }
   catch (...)
     {
-      CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
-      ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (unknown_ex);
+      CORBA::Exception* start_ex = new Deployment::StartError (this->getPlanUUID (),
+                                                               "unknown exception");
+      ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (start_ex);
       _tao_rh->startLaunch_excep (&amh_exholder);
     }
 }
@@ -205,7 +207,8 @@ DomainApplicationManager_Impl::destroyApplication (
                   ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                   ACE_TEXT("Propagating StopError for CORBA exception caught here: %C\n"),
                   ex._info ().c_str ()));
-      CORBA::Exception* local_ex = new Deployment::StopError();
+      CORBA::Exception* local_ex = new Deployment::StopError(this->getPlanUUID (),
+                                                             ex._info ().c_str ());
       ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (local_ex);
       _tao_rh->destroyApplication_excep (&amh_exholder);
     }
@@ -214,7 +217,8 @@ DomainApplicationManager_Impl::destroyApplication (
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                   ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
                   ACE_TEXT("Propagating StopError for unknown exception caught here\n")));
-      CORBA::Exception* stop_ex = new Deployment::StopError();
+      CORBA::Exception* stop_ex = new Deployment::StopError(this->getPlanUUID (),
+                                                            "unknown exception");
       ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (stop_ex);
       _tao_rh->destroyApplication_excep (&amh_exholder);
     }
@@ -222,7 +226,8 @@ DomainApplicationManager_Impl::destroyApplication (
   DANCE_ERROR (1, (LM_ERROR, DLINFO
               ACE_TEXT("DomainApplicationManager_impl::destroyApplication - ")
               ACE_TEXT("Provided application reference unknown\n")));
-  CORBA::Exception* stop_ex = new Deployment::StopError();
+  CORBA::Exception* stop_ex = new Deployment::StopError(this->getPlanUUID (),
+                                                        "domain application reference unknown");
   ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (stop_ex);
   _tao_rh->destroyApplication_excep (&amh_exholder);
 }
@@ -395,8 +400,12 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                             ACE_TEXT("Caught a CORBA exception handling node %C : %C\n"),
                             (*iter_plans).ext_id_.c_str(),
                             ex._info ().c_str ()));
+              std::ostringstream err;
+              err << (*iter_plans).ext_id_.c_str()
+                  << " - CORBA exception starting preparePlan : "
+                  << ex._info ().c_str ();
               // mark failure
-              _counter_ptr->increment_fail_count ();
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
               // mark off node
               _counter_ptr->decrement_exec_count ();
               // continue for next node
@@ -407,8 +416,11 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                             ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
                             ACE_TEXT("Caught unknown exception handling node %C\n"),
                             (*iter_plans).ext_id_.c_str()));
+              std::ostringstream err;
+              err << (*iter_plans).ext_id_.c_str()
+                  << " - unknown exception starting preparePlan";
               // mark failure
-              _counter_ptr->increment_fail_count ();
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
               // mark off node
               _counter_ptr->decrement_exec_count ();
               // continue for next node
@@ -490,8 +502,11 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                                 ACE_TEXT("Caught a CORBA exception for DomainApplication[%@]: %C\n"),
                                 p,
                                 ex._info ().c_str ()));
+                  std::ostringstream err;
+                  err << "CORBA exception starting destroyManager : "
+                      << ex._info ().c_str ();
                   // mark failure
-                  dmch->increment_fail_count ();
+                  dmch->increment_fail_count (err.str ().c_str ());
                   // mark off app
                   dmch->decrement_exec_count ();
                   // continue
@@ -503,7 +518,7 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                                 ACE_TEXT("Caught unknown exception for DomainApplication[%@].\n"),
                                 p));
                   // mark failure
-                  dmch->increment_fail_count ();
+                  dmch->increment_fail_count ("unknown exception starting destroyManager");
                   // mark off app
                   dmch->decrement_exec_count ();
                   // continue
@@ -604,8 +619,12 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
                               ACE_TEXT("Caught a CORBA exception attempting to call destroyManager on node %C: %C\n"),
                               node_id.c_str (),
                               ex._info ().c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - CORBA exception starting destroyManager : "
+                    << ex._info ().c_str ();
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark of node
                 _counter_ptr->decrement_exec_count ();
                 // continue to next node
@@ -616,8 +635,11 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
                               ACE_TEXT("DomainApplicationManager_Impl::finishDestroyManager - ")
                               ACE_TEXT("Caught unknown exception attempting to call destroyManager on node %C\n"),
                               node_id.c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - unknown exception starting destroyManager";
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark of node
                 _counter_ptr->decrement_exec_count ();
                 // continue to next node
@@ -683,7 +705,17 @@ DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure ()
               this->fail_count (),
               this->dam_servant_->getPlanUUID ()));
 
-  this->em_ch_ptr_->handle_exception (new ::Deployment::StartError());
+  std::ostringstream err;
+  err << this->fail_count () << " errors preparing plan:\n";
+  for (DAM_NM_ReplyHandlerImpl::Counter::errors_type::const_iterator it = this->errors ().begin ();
+        it != this->errors ().end ();
+        ++it)
+    {
+      err << "\t" << *it << "\n";
+    }
+  this->em_ch_ptr_->handle_exception (
+      new ::Deployment::StartError(this->dam_servant_->getPlanUUID (),
+                                   err.str ().c_str ()));
 }
 
 DAM_NM_ReplyHandlerImpl::DAM_NM_ReplyHandlerImpl (
@@ -731,9 +763,13 @@ void DAM_NM_ReplyHandlerImpl::preparePlan (
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan - ")
                     ACE_TEXT("PreparePlan failed for node %C, returning a nil ")
                     ACE_TEXT("NodeApplicationManager pointer.\n"),
-                    this->node_id_.c_str()));
+                    this->node_id_.c_str ()));
+      std::ostringstream err;
+      err << "preparePlan failed for node "
+          << this->node_id_.c_str ()
+          << ", returned nil";
       // add failure
-      this->counter_->increment_fail_count ();
+      this->counter_->increment_fail_count (err.str ().c_str ());
     }
   else
     {
@@ -766,16 +802,19 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
                 ACE_TEXT("Finished preparePlan on node %C\n"),
                 this->node_id_.c_str()));
 
+  std::ostringstream err;
+  err << this->node_id_.c_str () << " - preparePlan raised ";
   try
     {
       excep_holder->raise_exception ();
     }
-  catch (Deployment::StartError &)
+  catch (Deployment::StartError &ex)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                     ACE_TEXT("StartError exception caught for node %C.\n"),
                     this->node_id_.c_str()));
+      err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
     }
   catch (CORBA::Exception &ex)
     {
@@ -784,6 +823,7 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
                     ACE_TEXT("Caught a CORBA exception for node %C: %C\n"),
                     this->node_id_.c_str(),
                     ex._info ().c_str ()));
+      err << "CORBA exception : " << ex._info ().c_str ();
     }
   catch (...)
     {
@@ -791,10 +831,11 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::preparePlan_excep - ")
                     ACE_TEXT("Caught unknown exception for node %C.\n"),
                     this->node_id_.c_str()));
+      err << "unknown exception";
     }
 
   // add failure
-  this->counter_->increment_fail_count ();
+  this->counter_->increment_fail_count (err.str ().c_str ());
 
   // mark off node
   this->counter_->decrement_exec_count ();
@@ -829,15 +870,18 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
                    this->dam_servant_->getPlanUUID (),
                    this->node_id_.c_str ()));
 
+  std::ostringstream err;
+  err << this->node_id_.c_str () << " - destroyApplication raised ";
   try
     {
       excep_holder->raise_exception ();
     }
-  catch (Deployment::StopError &)
+  catch (Deployment::StopError &ex)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("StopError exception caught.\n")));
+      err << "StopError : " << ex.name.in () << "." << ex.reason.in ();
     }
   catch (CORBA::Exception &ex)
     {
@@ -845,16 +889,18 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("Caught a CORBA exception: %C\n"),
                     ex._info ().c_str ()));
+      err << "CORBA exception : " << ex._info ().c_str ();
     }
   catch (...)
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DAM_NM_ReplyHandlerImpl::destroyApplication_excep - ")
                     ACE_TEXT("Caught unknown exception.\n")));
+      err << "unknown exception";
     }
 
   // add failure
-  this->counter_->increment_fail_count ();
+  this->counter_->increment_fail_count (err.str ().c_str ());
 
   // mark off node
   this->counter_->decrement_exec_count ();
@@ -968,10 +1014,14 @@ DomainApplicationManager_Impl::DestroyManagerCompletionHandler::handle_exception
                 local_ex->_info ().c_str (),
                 this->dam_servant_->getPlanUUID ()));
 
+  std::ostringstream err;
+  err << "CORBA exception for destroyApplication : "
+      << local_ex->_info ().c_str ();
+
   delete local_ex; // clean up
 
   // add failure
-  this->increment_fail_count ();
+  this->increment_fail_count (err.str ().c_str ());
 
   // mark of application
   this->decrement_exec_count ();
@@ -992,7 +1042,17 @@ DomainApplicationManager_Impl::DestroyManagerCompletionHandler::on_all_completed
               ACE_TEXT("%u errors destroying domain applications\n"),
               this->fail_count_i ()));
 
-  this->dam_ch_->handle_exception (new ::Deployment::StopError());
+  std::ostringstream err;
+  err << this->fail_count () << " errors destroying domain applications:\n";
+  for (DomainApplicationManager_Impl::DestroyManagerCompletionHandler::errors_type::const_iterator it = this->errors ().begin ();
+        it != this->errors ().end ();
+        ++it)
+    {
+      err << "\t" << *it << "\n";
+    }
+  this->dam_ch_->handle_exception (
+      new ::Deployment::StopError(this->dam_servant_->getPlanUUID (),
+                                  err.str ().c_str ()));
 }
 
 DomainApplicationManager_Impl::DestroyApplicationCompletionHandler::DestroyApplicationCompletionHandler (

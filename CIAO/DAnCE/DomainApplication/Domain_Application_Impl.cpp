@@ -2,6 +2,7 @@
 
 #include "Domain_Application_Impl.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include <sstream>
 
 namespace DAnCE
 {
@@ -94,8 +95,12 @@ namespace DAnCE
                               this,
                               node_id.c_str (),
                               ex._info ().c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - CORBA exception starting finishLaunch : "
+                    << ex._info ().c_str ();
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark off node
                 _counter_ptr->decrement_exec_count ();
                 // continue for next node
@@ -107,8 +112,11 @@ namespace DAnCE
                               ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                               this,
                               node_id.c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - unknown exception starting finishLaunch";
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark off node
                 _counter_ptr->decrement_exec_count ();
                 // continue for next node
@@ -126,7 +134,9 @@ namespace DAnCE
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
                     ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
-        CORBA::Exception* start_ex = new Deployment::StartError();
+        CORBA::Exception* start_ex =
+            new Deployment::StartError(this->planUUID_.c_str (),
+                                       "unknown exception in finishLaunch");
         ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (start_ex);
         _tao_rh->finishLaunch_excep (&amh_exholder);
       }
@@ -197,8 +207,12 @@ namespace DAnCE
                               this,
                               node_id.c_str (),
                               ex._info ().c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - CORBA exception starting : "
+                    << ex._info ().c_str ();
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark off node
                 _counter_ptr->decrement_exec_count ();
                 // continue for next node
@@ -210,8 +224,11 @@ namespace DAnCE
                               ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                               this,
                               node_id.c_str ()));
+                std::ostringstream err;
+                err << node_id.c_str ()
+                    << " - unknown exception starting";
                 // mark failure
-                _counter_ptr->increment_fail_count ();
+                _counter_ptr->increment_fail_count (err.str ().c_str ());
                 // mark off node
                 _counter_ptr->decrement_exec_count ();
                 // continue for next node
@@ -229,7 +246,9 @@ namespace DAnCE
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                     ACE_TEXT("DomainApplication_Impl::start - ")
                     ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
-        CORBA::Exception* start_ex = new Deployment::StartError();
+        CORBA::Exception* start_ex =
+            new Deployment::StartError(this->planUUID_.c_str (),
+                                       "unknown exception in start");
         ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (start_ex);
         _tao_rh->start_excep (&amh_exholder);
       }
@@ -305,8 +324,12 @@ namespace DAnCE
                           this,
                           node_id.c_str (),
                           ex._info ().c_str ()));
+            std::ostringstream err;
+            err << node_id.c_str ()
+                << " - CORBA exception starting startLaunch : "
+                << ex._info ().c_str ();
             // mark failure
-            _counter_ptr->increment_fail_count ();
+            _counter_ptr->increment_fail_count (err.str ().c_str ());
             // mark off node
             _counter_ptr->decrement_exec_count ();
             // continue for next node
@@ -318,8 +341,11 @@ namespace DAnCE
                           ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                           this,
                           node_id.c_str ()));
+            std::ostringstream err;
+            err << node_id.c_str ()
+                << " - unknown exception starting startLaunch";
             // mark failure
-            _counter_ptr->increment_fail_count ();
+            _counter_ptr->increment_fail_count (err.str ().c_str ());
             // mark off node
             _counter_ptr->decrement_exec_count ();
             // continue for next node
@@ -396,8 +422,12 @@ namespace DAnCE
                             this,
                             node_id.c_str (),
                             ex._info ().c_str ()));
+              std::ostringstream err;
+              err << this->planUUID_.c_str ()
+                  << " - CORBA exception starting destroyApplication on node "
+                  << node_id.c_str () << " : " << ex._info ().c_str ();
               // mark failure
-              _counter_ptr->increment_fail_count ();
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
               // mark off node
               _counter_ptr->decrement_exec_count ();
               // continue for next node
@@ -409,8 +439,12 @@ namespace DAnCE
                             ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                             this,
                             node_id.c_str ()));
+              std::ostringstream err;
+              err << this->planUUID_.c_str ()
+                  << " - unknown exception starting destroyApplication on node "
+                  << node_id.c_str ();
               // mark failure
-              _counter_ptr->increment_fail_count ();
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
               // mark off node
               _counter_ptr->decrement_exec_count ();
               // continue for next node
@@ -470,7 +504,17 @@ namespace DAnCE
                   this->da_servant_.in (),
                   this->fail_count ()));
 
-      this->dam_ch_ptr_->handle_exception (new Deployment::StartError());
+      std::ostringstream err;
+      err << this->fail_count () << " errors from nodemanagers:\n";
+      for (DA_NAM_ReplyHandlerImpl::Counter::errors_type::const_iterator it = this->errors ().begin ();
+           it != this->errors ().end ();
+           ++it)
+        {
+          err << "\t" << *it << "\n";
+        }
+      this->dam_ch_ptr_->handle_exception (
+          new Deployment::StartError(this->da_servant_->getPlanUUID (),
+                                     err.str ().c_str ()));
     }
 
   DA_NAM_ReplyHandlerImpl::DA_NAM_ReplyHandlerImpl (
@@ -501,7 +545,9 @@ namespace DAnCE
                         this->da_servant_.in (),
                         this->node_id_.c_str ()));
 
-          this->counter_->increment_fail_count ();
+          std::ostringstream err;
+          err << this->node_id_.c_str () << " - startLaunch returned nil";
+          this->counter_->increment_fail_count (err.str ().c_str ());
         }
       else
         {
@@ -542,11 +588,13 @@ namespace DAnCE
     {
       DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep called\n")));
 
+      std::ostringstream err;
+      err << this->node_id_.c_str () << " - startLaunch raised ";
       try
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &)
+      catch (Deployment::StartError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep - ")
@@ -554,6 +602,7 @@ namespace DAnCE
                         this->da_servant_->getPlanUUID (),
                         this->da_servant_.in (),
                         this->node_id_.c_str ()));
+          err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
@@ -564,6 +613,7 @@ namespace DAnCE
                         this->da_servant_.in (),
                         this->node_id_.c_str (),
                         ex._info ().c_str ()));
+          err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
@@ -573,10 +623,11 @@ namespace DAnCE
                         this->da_servant_->getPlanUUID (),
                         this->da_servant_.in (),
                         this->node_id_.c_str ()));
+          err << "unknown exception";
         }
 
       // add failure
-      this->counter_->increment_fail_count ();
+      this->counter_->increment_fail_count (err.str ().c_str ());
 
       // mark off node
       this->counter_->decrement_exec_count ();
@@ -611,11 +662,13 @@ namespace DAnCE
     {
       DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep called\n")));
 
+      std::ostringstream err;
+      err << this->node_id_.c_str () << " - destroyApplication raised ";
       try
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StopError &)
+      catch (Deployment::StopError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep - ")
@@ -623,6 +676,7 @@ namespace DAnCE
                         this->da_servant_->planUUID_.c_str (),
                         this->da_servant_.in (),
                         this->node_id_.c_str ()));
+          err << "StopError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
@@ -633,6 +687,7 @@ namespace DAnCE
                         this->da_servant_.in (),
                         this->node_id_.c_str (),
                         ex._info ().c_str ()));
+          err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
@@ -642,10 +697,11 @@ namespace DAnCE
                         this->da_servant_->planUUID_.c_str (),
                         this->da_servant_.in (),
                         this->node_id_.c_str ()));
+          err << "unknown exception";
         }
 
       // add failure
-      this->counter_->increment_fail_count ();
+      this->counter_->increment_fail_count (err.str ().c_str ());
 
       // mark off application
       this->counter_->decrement_exec_count ();
@@ -687,7 +743,17 @@ namespace DAnCE
                   this->da_servant_.in (),
                   this->fail_count ()));
 
-      CORBA::Exception* start_ex = new Deployment::StartError();
+      std::ostringstream err;
+      err << this->fail_count () << " errors from node applications:\n";
+      for (DA_NA_ReplyHandlerImpl::Counter::errors_type::const_iterator it = this->errors ().begin ();
+           it != this->errors ().end ();
+           ++it)
+        {
+          err << "\t" << *it << "\n";
+        }
+      CORBA::Exception* start_ex =
+          new Deployment::StartError(this->da_servant_->getPlanUUID (),
+                                     err.str ().c_str ());
       ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (start_ex);
       this->da_rh_->finishLaunch_excep (&amh_exholder);
     }
@@ -723,11 +789,13 @@ namespace DAnCE
     {
       DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep called\n")));
 
+      std::ostringstream err;
+      err << this->node_id_.c_str () << " - finishLaunch raised ";
       try
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &)
+      catch (Deployment::StartError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                           ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
@@ -735,6 +803,7 @@ namespace DAnCE
                           this->da_servant_->planUUID_.c_str (),
                           this->da_servant_.in (),
                           this->node_id_.c_str ()));
+          err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
@@ -745,6 +814,7 @@ namespace DAnCE
                           this->da_servant_.in (),
                           this->node_id_.c_str (),
                           ex._info ().c_str ()));
+          err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
@@ -754,10 +824,11 @@ namespace DAnCE
                           this->da_servant_->planUUID_.c_str (),
                           this->da_servant_.in (),
                           this->node_id_.c_str ()));
+          err << "unknown exception";
         }
 
       // add failure
-      this->counter_->increment_fail_count ();
+      this->counter_->increment_fail_count (err.str ().c_str ());
 
       // mark off node
       this->counter_->decrement_exec_count ();
@@ -788,11 +859,13 @@ namespace DAnCE
     {
       DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep called\n")));
 
+      std::ostringstream err;
+      err << this->node_id_.c_str () << " - start raised ";
       try
         {
           excep_holder->raise_exception ();
         }
-      catch (Deployment::StartError &)
+      catch (Deployment::StartError &ex)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                           ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
@@ -800,6 +873,7 @@ namespace DAnCE
                           this->da_servant_->planUUID_.c_str (),
                           this->da_servant_.in (),
                           this->node_id_.c_str ()));
+          err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
@@ -810,6 +884,7 @@ namespace DAnCE
                           this->da_servant_.in (),
                           this->node_id_.c_str (),
                           ex._info ().c_str ()));
+          err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
@@ -819,10 +894,11 @@ namespace DAnCE
                           this->da_servant_->planUUID_.c_str (),
                           this->da_servant_.in (),
                           this->node_id_.c_str ()));
+          err << "unknown exception";
         }
 
       // add failure
-      this->counter_->increment_fail_count ();
+      this->counter_->increment_fail_count (err.str ().c_str ());
 
       // mark off node
       this->counter_->decrement_exec_count ();
