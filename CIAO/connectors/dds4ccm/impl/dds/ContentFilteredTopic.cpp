@@ -39,7 +39,7 @@ namespace CIAO
         this->impl ()->get_expression_parameters (parameters);
       expression_parameters <<= parameters;
 #else
-      ::DDS::ReturnCode_t retval =
+      ::DDS::ReturnCode_t const retval =
         this->impl ()->get_expression_parameters (expression_parameters);
 #endif
       return retval;
