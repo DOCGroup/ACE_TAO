@@ -6,7 +6,6 @@
 // Writer writes every sec 2 instances.
 
 #include "PSL_DeadlineTest_Sender_exec.h"
-#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

@@ -6,7 +6,6 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-#include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
 namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
@@ -276,7 +275,6 @@ namespace CIAO_PortUsageEvent_Test_PortUsageEventComponent_Impl
           ACE_ERROR ((LM_ERROR, "Component_exec_i::ccm_remove - "
                                 "ERROR : Unknown assignment\n"));
           break;
-
       }
   }
 
