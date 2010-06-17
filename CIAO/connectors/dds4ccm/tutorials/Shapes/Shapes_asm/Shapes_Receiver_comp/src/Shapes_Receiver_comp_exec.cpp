@@ -10,26 +10,26 @@
 namespace CIAO_Shapes_Receiver_comp_Impl
 {
   //============================================================
-  // ShapeType_Listener_exec_i
+  // info_out_data_listener_exec_i
   //============================================================
-  ShapeType_Listener_exec_i::ShapeType_Listener_exec_i (void)
+  info_out_data_listener_exec_i::info_out_data_listener_exec_i (void)
   {
   }
 
-  ShapeType_Listener_exec_i::~ShapeType_Listener_exec_i (void)
+  info_out_data_listener_exec_i::~info_out_data_listener_exec_i (void)
   {
   }
 
   // Operations from ::CCM_DDS::ShapeType_Listener
   void
-  ShapeType_Listener_exec_i::on_many_data (
+  info_out_data_listener_exec_i::on_many_data (
     const ::Shapes::ShapeTypeSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
 
   void
-  ShapeType_Listener_exec_i::on_one_data (
+  info_out_data_listener_exec_i::on_one_data (
     const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
@@ -42,13 +42,13 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   }
 
   //============================================================
-  // Receiver_exec_i
+  // Receiver_comp_exec_i
   //============================================================
-  Receiver_exec_i::Receiver_exec_i (void)
+  Receiver_comp_exec_i::Receiver_comp_exec_i (void)
   {
   }
 
-  Receiver_exec_i::~Receiver_exec_i (void)
+  Receiver_comp_exec_i::~Receiver_comp_exec_i (void)
   {
   }
 
@@ -58,20 +58,33 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
   // Port operations.
   ::Shapes::ShapesConnector::CCM_Listener_ptr
-  Receiver_exec_i::get_info_out_data_listener (void)
+  Receiver_comp_exec_i::get_info_out_data_listener (void)
   {
-    return new ShapeType_Listener_exec_i ();
+    if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
+      {
+        info_out_data_listener_exec_i *tmp = 0;
+        ACE_NEW_RETURN (
+          tmp,
+          info_out_data_listener_exec_i (),
+          ::Shapes::ShapesConnector::CCM_Listener::_nil ());
+
+        this->ciao_info_out_data_listener_ = tmp;
+      }
+
+    return
+      ::Shapes::ShapesConnector::CCM_Listener::_duplicate (
+        this->ciao_info_out_data_listener_.in ());
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
-  Receiver_exec_i::get_info_out_status (void)
+  Receiver_comp_exec_i::get_info_out_status (void)
   {
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   // Operations from Components::SessionComponent.
   void
-  Receiver_exec_i::set_session_context (
+  Receiver_comp_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
@@ -83,12 +96,12 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   }
 
   void
-  Receiver_exec_i::configuration_complete (void)
+  Receiver_comp_exec_i::configuration_complete (void)
   {
   }
 
   void
-  Receiver_exec_i::ccm_activate (void)
+  Receiver_comp_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
     this->context_->get_connection_info_out_data_control ();
@@ -103,12 +116,12 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   }
 
   void
-  Receiver_exec_i::ccm_passivate (void)
+  Receiver_comp_exec_i::ccm_passivate (void)
   {
   }
 
   void
-  Receiver_exec_i::ccm_remove (void)
+  Receiver_comp_exec_i::ccm_remove (void)
   {
   }
 
@@ -120,7 +133,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
     ACE_NEW_NORETURN (
       retval,
-      Receiver_exec_i);
+      Receiver_comp_exec_i);
 
     return retval;
   }

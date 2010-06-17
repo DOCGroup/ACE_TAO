@@ -17,7 +17,7 @@
 
 namespace CIAO_Shapes_Control_comp_Impl
 {
-  class Control_exec_i;
+  class Control_comp_exec_i;
 
   //============================================================
   // pulse_Generator
@@ -25,26 +25,26 @@ namespace CIAO_Shapes_Control_comp_Impl
   class pulse_Generator : public ACE_Event_Handler
   {
   public:
-    pulse_Generator (Control_exec_i &callback);
+    pulse_Generator (Control_comp_exec_i &callback);
 
     virtual ~pulse_Generator ();
 
     virtual int handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg);
   private:
-    Control_exec_i &pulse_callback_;
+    Control_comp_exec_i &pulse_callback_;
   };
 
   //============================================================
-  // Control_exec_i
+  // Control_comp_exec_i
   //============================================================
-  class Control_exec_i
+  class SHAPES_CONTROL_COMP_EXEC_Export Control_comp_exec_i
     : public virtual Control_comp_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Control_exec_i (void);
-    virtual ~Control_exec_i (void);
+    Control_comp_exec_i (void);
+    virtual ~Control_comp_exec_i (void);
 
     ::CORBA::ULong rate (void);
 
@@ -95,7 +95,6 @@ namespace CIAO_Shapes_Control_comp_Impl
     bool size_increasing_;
 
     ::CORBA::UShort current_size_;
-    ::Shapes::COLOR current_color_;
     ::CORBA::UShort current_x_;
     ::CORBA::UShort current_y_;
 

@@ -18,15 +18,15 @@
 namespace CIAO_Shapes_Receiver_comp_Impl
 {
   //============================================================
-  // ShapeType_Listener_exec_i
+  // info_out_data_listener_exec_i
   //============================================================
-  class SHAPES_RECEIVER_COMP_EXEC_Export ShapeType_Listener_exec_i
+  class SHAPES_RECEIVER_COMP_EXEC_Export info_out_data_listener_exec_i
     : public virtual ::Shapes::ShapesConnector::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    ShapeType_Listener_exec_i (void);
-    virtual ~ShapeType_Listener_exec_i (void);
+    info_out_data_listener_exec_i ();
+    virtual ~info_out_data_listener_exec_i (void);
 
     virtual void
     on_one_data (
@@ -38,13 +38,13 @@ namespace CIAO_Shapes_Receiver_comp_Impl
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 
-  class SHAPES_RECEIVER_COMP_EXEC_Export Receiver_exec_i
+  class SHAPES_RECEIVER_COMP_EXEC_Export Receiver_comp_exec_i
     : public virtual Receiver_comp_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Receiver_exec_i (void);
-    virtual ~Receiver_exec_i (void);
+    Receiver_comp_exec_i (void);
+    virtual ~Receiver_comp_exec_i (void);
 
     // Supported operations and attributes.
 
@@ -70,6 +70,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
   private:
     ::Shapes::CCM_Receiver_comp_Context_var context_;
+    ::Shapes::ShapesConnector::CCM_Listener_var ciao_info_out_data_listener_;
   };
 
   extern "C" SHAPES_RECEIVER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
