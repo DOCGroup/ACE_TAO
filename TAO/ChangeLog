@@ -1,3 +1,14 @@
+Thu Jun 17 13:55:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        
+          Fixes to correct the logic of inserting the port name,
+          if any, into operation names, especially operations
+          that stem from attributes declared in a porttype.
+
 Thu Jun 17 10:56:40 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/Valuetype/AbstractBase.cpp:
