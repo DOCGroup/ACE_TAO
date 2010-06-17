@@ -1,3 +1,9 @@
+Thu Jun 17 15:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          only add_to_referenced if not searching at global scope.
+
 Thu Jun 17 13:55:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
