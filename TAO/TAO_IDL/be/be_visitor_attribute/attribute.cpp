@@ -68,15 +68,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
           return 0;
         }
     }
+    
+  ACE_CString op_name (this->ctx_->port_prefix ());
+  op_name += node->local_name ()->get_string ();
+  Identifier op_id (op_name.c_str ());
+  UTL_ScopedName op_sn (&op_id, 0);
 
   // first the "get" operation
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
-                       node->name (),
+                       &op_sn,
                        node->is_local (),
                        node->is_abstract ());
 
-  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
   get_op.set_defined_in (node->defined_in ());
 
   UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
@@ -237,13 +241,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                                          node->name ());
 
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  
   // Create the operation.
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
-                       node->name (),
+                       &op_sn,
                        node->is_local (),
                        node->is_abstract ());
-  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.set_defined_in (node->defined_in ());
   set_op.be_add_argument (arg);
 
