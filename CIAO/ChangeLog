@@ -1,3 +1,8 @@
+Thu Jun 17 11:43:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+          Extended and corrected some minor errors.
+
 Thu Jun 17 11:27:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_defn.idl:

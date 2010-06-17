@@ -85,8 +85,60 @@
   <p>
     The component IDL file itself is located in 
     <a href="../Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.idl">
-      Shapes_asm/Shapes_Control_comp/ports/Shapes_Control_comp.idl<a><br/>
+      Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.idl<a><br/>
     and looks like this:
   </p>
+  <p>
+    <code>module Shapes<br/>
+          {<br/>
+          &nbsp;&nbsp;component Control_comp<br/>
+          &nbsp;&nbsp;{<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;uses Shapes::Control_obj control;<br/><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned long rate;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_x;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_y;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;attribute unsigned short max_size;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;attribute boolean resize_shape;<br/>
+          &nbsp;&nbsp;};<br/>};<br/>
+    </code>
+  </p>
+  <p>
+    The controller uses the Control_obj interface.
+  </p>
+  <p>
+    The following attributes are used:
+    <ul>
+      <li>rate&nbsp;&nbsp;: Controls the rate in which the controller component
+          sends update to the sender.
+      </li>
+      <li>Since the shapes moves about in a rectangle shaped window, one should
+        set the boundaries of this rectangle:
+        <ul>
+          <li>max_x&nbsp;&nbsp;: Sets the width of the rectangle shaped window.</li>
+          <li>max_y&nbsp;&nbsp;: Sets the height of the rectangle shaped window.</li>
+        </ul>
+      </li>
+      <li>max_size&nbsp;&nbsp;: Set the maximum size of the registered shape.
+      </li>
+      <li>resize_shape&nbsp;&nbsp;: Indicates wether the shape is resizeable.
+      </li>
+    </ul>
+    The attributes are set by the deployment plan and cannot be changed throughout
+    the lifecycle of the controller component.
 
+  <h2>Sender IDL file</h2>
+    The component IDL file itself is located in 
+    <a href="../Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl">
+      Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl<a><br/>
+    and looks like this:
+  <p>
+    <code>module Shapes<br/>
+          {<br/>
+          &nbsp;&nbsp;component Sender_comp<br/>
+          &nbsp;&nbsp;{<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;port ShapesConnector::DDS_Write info_write;<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;provides Shapes::Control_obj control;<br/>
+          &nbsp;&nbsp;};<br/>};
+    </code>
+  </p>
 </body>
