@@ -60,8 +60,7 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
      << scope_->original_local_name ()->get_string ()
      << "_Servant";
 
-  os_ << "::" << this->ctx_->port_prefix ().c_str ()
-     << node->local_name ();
+  os_ << "::" << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -99,8 +98,7 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
       os_ << "return ";
     }
 
-  os_ << "this->executor_->" << this->ctx_->port_prefix ().c_str ()
-      << node->local_name () << " (";
+  os_ << "this->executor_->" << node->local_name () << " (";
 
   if (node->argument_count () == 0)
     {
