@@ -82,6 +82,7 @@ class DAnCE_NodeManager_Module
     const ACE_TCHAR * server_args_;
     const ACE_TCHAR * domain_nc_;
     const ACE_TCHAR * instance_nc_;
+    unsigned int threads_;
 
     SOptions();
   };
