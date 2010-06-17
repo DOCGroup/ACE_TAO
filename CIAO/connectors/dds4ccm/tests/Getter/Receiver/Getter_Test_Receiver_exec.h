@@ -97,15 +97,11 @@ namespace CIAO_Getter_Test_Receiver_Impl
     virtual ::Getter_Test::GetterTestConnector::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_get_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_info_get_status (void);
 
-    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
-    get_info_fixed_status (void);
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr get_info_fixed_status (void);
 
-    virtual ::CCM_GetInvoker_ptr
-    get_getter_invoke ();
-
+    virtual ::CCM_GetInvoker_ptr get_getter_invoke ();
 
     void start_get_one (const char * key,
                         CORBA::Long fixed_key,
@@ -116,11 +112,9 @@ namespace CIAO_Getter_Test_Receiver_Impl
                   CORBA::Long fixed_key,
                   CORBA::Long iteration);
 
-    void start_get_many (CORBA::Short keys,
-                         CORBA::Long iterations);
+    void start_get_many (CORBA::Short keys, CORBA::Long iterations);
 
-    void get_many (CORBA::Short keys,
-                         CORBA::Long iterations);
+    void get_many (CORBA::Short keys, CORBA::Long iterations);
 
     virtual void
     set_session_context (
@@ -134,16 +128,12 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
   private:
     ::Getter_Test::CCM_Receiver_Context_var context_;
-    ::Getter_Test::GetterTestConnector::Getter_var getter_;
-    ::Getter_Test::GetterFixedConnector::Getter_var fixed_;
 
     void timeout_get_one_fixed ();
     void timeout_get_one_variable ();
 
-    void get_one_fixed (CORBA::Long fixed_key,
-                        CORBA::Long iteration);
-    void get_one_variable (const char * key,
-                           CORBA::Long iteration);
+    void get_one_fixed (CORBA::Long fixed_key, CORBA::Long iteration);
+    void get_one_variable (const char * key, CORBA::Long iteration);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -66,7 +66,7 @@ namespace CIAO_Writer_Receiver_Impl
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_info_out_status (void)
   {
-    return 0;
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   void

@@ -119,7 +119,6 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
 
   private:
     ::SL_ManyByMany::CCM_Receiver_Context_var context_;
-    ::SL_ManyByMany::SLManyByManyConnector::Reader_var reader_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
     Atomic_Boolean no_operation_;

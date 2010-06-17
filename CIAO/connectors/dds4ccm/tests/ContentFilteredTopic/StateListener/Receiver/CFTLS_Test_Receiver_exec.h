@@ -94,7 +94,6 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
 
   private:
     ::CFTLS_Test::CCM_Receiver_Context_var context_;
-    ::CFTLS_Test::ContentFilteredTopicListenStateTestConnector::Reader_var reader_;
 
     Atomic_ThreadId thread_id_listener_;
 

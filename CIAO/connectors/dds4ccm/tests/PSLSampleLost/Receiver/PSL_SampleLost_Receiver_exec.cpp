@@ -148,7 +148,10 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    if (::CORBA::is_nil (this->reader_.in ()))
+    ::PSL_SampleLost::PSL_SampleLostConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data();
+
+    if (::CORBA::is_nil (reader.in ()))
       {
         return;
       }
@@ -156,7 +159,7 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     ::CCM_DDS::ReadInfoSeq readinfoseq;
     try
       {
-        this->reader_->read_all(TestTopic_infos, readinfoseq);
+        reader->read_all(TestTopic_infos, readinfoseq);
         for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
             ACE_Time_Value tv;
@@ -234,7 +237,6 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data();
   }
 
   void

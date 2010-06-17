@@ -99,15 +99,18 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   void
   Receiver_exec_i::read_all (void)
   {
-    if (::CORBA::is_nil (this->reader_.in ()))
+    ::SL_Disabled::SL_DisabledConnector::Reader_var reader =
+      this->context_->get_connection_info_out_data ();
+
+    if (::CORBA::is_nil (reader.in ()))
       {
         return;
       }
-    TestTopicSeq TestTopic_infos;
-    ::CCM_DDS::ReadInfoSeq readinfoseq;
     try
       {
-        this->reader_->read_all(TestTopic_infos, readinfoseq);
+        TestTopicSeq TestTopic_infos;
+        ::CCM_DDS::ReadInfoSeq readinfoseq;
+        reader->read_all(TestTopic_infos, readinfoseq);
         for (CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
             this->updater_data_ = true;
@@ -162,7 +165,6 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    this->reader_ = this->context_->get_connection_info_out_data ();
   }
 
   void
@@ -178,8 +180,9 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       }
 
     lc->mode (::CCM_DDS::NOT_ENABLED);
-    // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    
+    // Calculate the interval time
+    long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                                           this->ticker_,
                                           0,
@@ -203,15 +206,17 @@ namespace CIAO_SL_Disabled_Receiver_Impl
     if (!this->no_operation_.value ()|| !this->updater_data_.value())
       {
 
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Received an unexpected ")
-                               ACE_TEXT (" operation. StateListener or Updater doesn't work in Receiver")
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: Received an unexpected ")
+                     ACE_TEXT (" operation. StateListener or Updater doesn't work in Receiver")
                     ));
       }
 
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Haven't received an  unexpected ")
-                              ACE_TEXT (" oparation from StateListener in Receiver")
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("OK : Haven't received an  unexpected ")
+                    ACE_TEXT (" oparation from StateListener in Receiver")
                    ));
       }
   }
