@@ -1,13 +1,18 @@
+Thu Jun 17 10:56:40 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Valuetype/AbstractBase.cpp:
+          Added in() to explicitly obtain Object_ptr in is_nil() call.
+
 Thu Jun 17 08:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * tests/Alt_Mapping/options.h:
-        
+
           Removed trailing , at end of enum.
 
 Wed Jun 16 19:00:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/reopened_modules.idl:
-        
+
           Added a space between a template bracket and a double
           colon. In our automated builds, there is apparently still
           an old-style preprocessor (on Solaris) that parses '<:' as
@@ -16,18 +21,18 @@ Wed Jun 16 19:00:40 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Jun 16 16:06:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-        
+
           Removed incorrect generation of port prefix as part
           of an operation name.
 
 Wed Jun 16 13:36:45 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode_Adapter.h:
-        
+
           Added include of STL string header file, which is apparently
           needed on some platforms, now that the adapter class has an
           overloaded method taking an std::string.
