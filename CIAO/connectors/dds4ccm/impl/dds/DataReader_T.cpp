@@ -15,7 +15,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (void)
     rd_condition_ (0),
     ws_ (0),
     qc_reader_ (0),
-    qc_getter_ (0)
+    qc_getter_ (0),
+    qc_listener_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::DataReader_T");
 
@@ -435,16 +436,16 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_proxy (
-  DDSDataReader * dr)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_proxy (DDSDataReader * dr)
 {
-  //pass this proxy on to the listener
+  // Pass this proxy on to the listener
   DDS_DataReaderQos qos;
   dr->get_qos (qos);
   char * value = 0;
   ACE_NEW_THROW_EX (value,
                     char[15],
                     CORBA::NO_MEMORY ());
+  ACE_Auto_Basic_Array_Ptr<char> cleanup_value (value);
   ACE_OS::sprintf (value ,
                    "%ld",
                    reinterpret_cast <unsigned long> (this));
@@ -454,7 +455,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_proxy (
                                             value,
                                             DDS_BOOLEAN_FALSE);
   dr->set_qos (qos);
-  delete[] value;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>

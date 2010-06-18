@@ -280,19 +280,17 @@ namespace CIAO
         }
       catch (const xercesc::XMLException &e)
         {
-          char* message =
-            XMLString::transcode (e.getMessage());
+          char* message = XMLString::transcode (e.getMessage());
           ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
 
-          char* name =
-            XMLString::transcode (e.getType());
+          char* name = XMLString::transcode (e.getType());
           ACE_Auto_Basic_Array_Ptr<char> cleanup_name (name);
 
           ACE_ERROR ((LM_ERROR, "Caught exception while serializing DOM to file.\n"
-                      "Name: %s\n"
-                      "Message: %s\n"
-                      "SrcFile: %s\n"
-                      "SrcLine: %d\n",
+                      "Name: %C\n"
+                      "Message: %C\n"
+                      "SrcFile: %C\n"
+                      "SrcLine: %C\n",
                       name,
                       message,
                       e.getSrcFile (),
