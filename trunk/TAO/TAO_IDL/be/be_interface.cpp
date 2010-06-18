@@ -116,7 +116,8 @@ be_interface::be_interface (UTL_ScopedName *n,
     local_coll_name_ (0),
     relative_skel_name_ (0),
     cached_type_ (-1),
-    has_rw_attributes_ (false)
+    has_rw_attributes_ (false),
+    dds_connector_traits_done_ (false)
 {
   AST_Decl::NodeType nt = this->node_type ();
 
@@ -2905,6 +2906,18 @@ be_interface::enqueue_base_home_r (AST_Home *node)
     {
       (void) this->insert_non_dup (supports[j]);
     }
+}
+
+bool
+be_interface::dds_connector_traits_done (void) const
+{
+  return this->dds_connector_traits_done_;
+}
+
+void
+be_interface::dds_connector_traits_done (bool val)
+{
+  this->dds_connector_traits_done_ = val;
 }
 
 // =================================================================

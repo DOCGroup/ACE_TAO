@@ -279,8 +279,6 @@ IDL_GlobalData::reset_flag_seen (void)
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
   dds_connector_seen_ = false;
-  dds_event_connector_seen_ = false;
-  dds_state_connector_seen_ = false;
   ami_connector_seen_ = false;
 
   need_skeleton_includes_ = false;
@@ -1401,6 +1399,18 @@ IDL_GlobalData::ciao_ami_idl_fnames (void)
   return this->ciao_ami_idl_fnames_;
 }
 
+void
+IDL_GlobalData::add_dds4ccm_impl_fnames (const char *s)
+{
+  this->dds4ccm_impl_fnames_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::dds4ccm_impl_fnames (void)
+{
+  return this->dds4ccm_impl_fnames_;
+}
+
 ACE_Unbounded_Queue<AST_Decl *> &
 IDL_GlobalData::masking_scopes (void)
 {
@@ -1705,6 +1715,15 @@ IDL_GlobalData::fini (void)
        iter8.advance ())
     {
       iter8.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>iter9 (
+         this->dds4ccm_impl_fnames_);
+       iter9.done () == 0;
+       iter9.advance ())
+    {
+      iter9.next (path_tmp);
       ACE::strdelete (*path_tmp);
     }
 

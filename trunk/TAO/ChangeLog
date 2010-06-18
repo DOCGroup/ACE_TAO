@@ -1,3 +1,36 @@
+Fri Jun 18 18:07:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_connector.cpp:
+
+          Added new pragma to specify the file to include
+          containing the DDS connector impl template class.
+          Also replaced existing logic for generating this
+          include with code that uses the list created by
+          this new pragma. The generated connector implementation
+          will be an instantiation of this template class.
+
+        * TAO_IDL/be/be_visitor_connector.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_connector/connector_dds_exh.h:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+
+          Changed the generated DDS and connector traits from
+          a template instantiation typedef to a struct
+          declaration.
+          
+          These two changes enable users to plug in their own
+          DDS connector implementation by writing the required
+          template class, and adding a pragma to the connector
+          IDL file directing the IDL compiler to generate an
+          include of the file containing thus template class.
+
 Fri Jun 18 13:57:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/tao_idl_fe.mpb:

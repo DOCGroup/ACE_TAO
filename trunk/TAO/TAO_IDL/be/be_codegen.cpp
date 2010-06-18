@@ -75,7 +75,8 @@ TAO_CodeGen::upcase (const char *str)
     {
       if (ACE_OS::ace_isalpha (str[i]))
         {
-          upcase_str[i] = static_cast<char> (ACE_OS::ace_toupper (str[i]));
+          upcase_str[i] =
+            static_cast<char> (ACE_OS::ace_toupper (str[i]));
         }
       else
         {
@@ -85,6 +86,34 @@ TAO_CodeGen::upcase (const char *str)
     }
 
   return upcase_str;
+}
+
+// Change the string to all lower case.
+const char *
+TAO_CodeGen::downcase (const char *str)
+{
+  static char downcase_str [NAMEBUFSIZE];
+
+  ACE_OS::memset (downcase_str,
+                  '\0',
+                  NAMEBUFSIZE);
+
+  // Convert letters in str to upper case.
+  for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
+    {
+      if (ACE_OS::ace_isalpha (str[i]))
+        {
+          downcase_str[i] =
+            static_cast<char> (ACE_OS::ace_tolower (str[i]));
+        }
+      else
+        {
+          // Copy it as it is.
+          downcase_str[i] = str[i];
+        }
+    }
+
+  return downcase_str;
 }
 
 // Set the client header stream.
@@ -3442,20 +3471,6 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             break;
         }
 
-      if (idl_global->dds_event_connector_seen_)
-        {
-          this->gen_standard_include (
-            this->ciao_conn_header_,
-            "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h");
-        }
-
-     if (idl_global->dds_state_connector_seen_)
-        {
-          this->gen_standard_include (
-            this->ciao_conn_header_,
-            "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h");
-        }
-
       /// The default, and we have to set the reference to
       /// something.
       ACE_Unbounded_Queue<char *> &ts_files =
@@ -3495,13 +3510,25 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
         }
     }
 
+  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR iiter (
+         idl_global->dds4ccm_impl_fnames ());
+       !iiter.done ();
+       iiter.advance ())
+    {
+      iiter.next (path_tmp);
+      
+      this->gen_standard_include (
+        this->ciao_conn_header_,
+        *path_tmp);
+    }
+
   if (idl_global->ami_connector_seen_)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
         "tao/LocalObject.h");
     }
-
+    
   for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
     {
       if (j == 0)
