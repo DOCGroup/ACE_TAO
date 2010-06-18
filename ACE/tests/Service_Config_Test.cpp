@@ -354,8 +354,14 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   ACE_Reactor *r1 = ACE_Reactor::instance();
 
-  int error_count = 0;
-  if ((error_count = ACE_Service_Config::process_directive (load_logger)) != 0)
+  // Ensure no errors are logged while searching for a valid ACE lib name;
+  // these skew the scoreboard results.
+  u_long mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
+  ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
+  ACE_DEBUG ((LM_DEBUG, "Was %x, now %x\n", mask, mask & ~LM_ERROR));
+  int error_count = ACE_Service_Config::process_directive (load_logger);
+  ACE_LOG_MSG->priority_mask (mask);
+  if (error_count != 0)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,

@@ -1,3 +1,9 @@
+Fri Jun 18 20:32:54 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Test.cpp: Disable error logging around the
+          load of ACE_Logging_Strategy else there are errors logged while
+          hunting for the proper name form, confusing the scoreboard output.
+
 Fri Jun 18 19:58:55 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp:
