@@ -24,7 +24,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 
-#include "ciao/ComponentServer/CIAO_Base_stub_export.h"
+#include "ciao/Base/CIAO_Base_stub_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA

@@ -2,7 +2,7 @@
 
 #include "Component_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/ComponentServer/CIAO_PropertiesC.h"
+#include "ciao/Base/CIAO_PropertiesC.h"
 #include "ciao/Containers/Container_BaseC.h"
 #include "ccm/CCM_ObjectC.h"
 #include "CIAO_State.h"
