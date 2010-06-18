@@ -1,3 +1,8 @@
+Fri Jun 18 18:28:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          No need to generate an include of DDS4CCM_Traits.h anymore
+
 Fri Jun 18 18:07:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
@@ -24,7 +29,7 @@ Fri Jun 18 18:07:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           Changed the generated DDS and connector traits from
           a template instantiation typedef to a struct
           declaration.
-          
+
           These two changes enable users to plug in their own
           DDS connector implementation by writing the required
           template class, and adding a pragma to the connector
