@@ -50,8 +50,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (0 != helper.validate_dom (inp_file))
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s - invalid xml\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: %s - invalid xml\n"),
                   inp_file));
       return 1;
     }
