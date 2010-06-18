@@ -1,3 +1,14 @@
+Fri Jun 18 11:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Having talked this though with Jeff Parsons, we now have the
+          correct version of the call to add_to_referenced() at the end
+          of the lookup_by_name () function. Basically we always add to
+          the actual scope that the name was found in, and the name is
+          always the first real identifer in the ScopedName (not the
+          global scope empty identifier, if given).
+
 Thu Jun 17 15:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * TAO_IDL/util/utl_scope.cpp:
