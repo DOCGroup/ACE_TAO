@@ -1,3 +1,19 @@
+Fri Jun 18 06:43:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/02_idl.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/03_executors.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/04_dds4ccm.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/05_coding.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/coding.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/compilation.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/dds4ccm.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/executors.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+          Numbered html files.
+
 Fri Jun 18 06:39:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/coding.html:
