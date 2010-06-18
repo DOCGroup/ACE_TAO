@@ -1,3 +1,9 @@
+Fri Jun 18 20:29:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_base.mpb:
+
+          Missing from a previous commit.
+
 Fri Jun 18 19:40:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/XML/XercesString.cpp:
