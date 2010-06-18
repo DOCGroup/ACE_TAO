@@ -1,0 +1,51 @@
+<implementation xmi:id="ControlComponentImplementation">
+  <name>ControlComponentImplementation</name>
+  <source/>
+  <artifact xmi:idref="Control_ExecArtifact" />
+  <artifact xmi:idref="Control_SvntArtifact" />
+  <execParameter>
+    <!-- entrypoint as exec parameter (see 10.6.1) -->
+    <name>component factory</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Shapes_Control_comp_Impl</string>
+      </value>
+    </value>
+  </execParameter>
+  <execParameter>
+    <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Shapes_Control_comp_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+  <execParameter>
+    <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Shapes_Control_comp_svnt</string>
+      </value>
+    </value>
+  </execParameter>
+  <execParameter>
+    <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Shapes_Control_comp_exec</string>
+      </value>
+    </value>
+  </execParameter>
+</implementation>

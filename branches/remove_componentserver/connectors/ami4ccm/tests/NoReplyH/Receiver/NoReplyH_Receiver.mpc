@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p NoReplyH_Base NoReplyH_Receiver"
+
+project(AMI_NoReplyH_Base_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_NoReplyH_idl_gen
+  idlflags += -Wb,stub_export_macro=NOREPLYH_RECEIVER_STUB_Export \
+              -Wb,stub_export_include=NoReplyH_Receiver_stub_export.h \
+              -Wb,skel_export_macro=NOREPLYH_RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=NoReplyH_Receiver_svnt_export.h \
+              -Wb,exec_export_macro=NOREPLYH_RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=NoReplyH_Receiver_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    NoReplyH_Receiver.idl
+  }
+}
+
+project(AMI_NoReplyH_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += AMI_NoReplyH_Base_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=NOREPLYH_RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=NoReplyH_Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    NoReplyH_ReceiverE.idl
+  }
+}
+
+project(AMI_NoReplyH_Base_Receiver_l_stub) : ccm_svnt, messaging {
+  after += AMI_NoReplyH_Base_Receiver_lem_gen AMI_NoReplyH_Base_Receiver_stub AMI_NoReplyH_stub
+  libs  += NoReplyH_stub NoReplyH_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = NoReplyH_Receiver_lem_stub
+  dynamicflags   = NOREPLYH_RECEIVER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    NoReplyH_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    NoReplyH_ReceiverEC.h
+    NoReplyH_Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    NoReplyH_ReceiverEC.inl
+  }
+}
+
+project(AMI_NoReplyH_Base_Receiver_stub) : ccm_stub, messaging {
+  after += AMI_NoReplyH_Base_Receiver_idl_gen AMI_NoReplyH_stub
+  libs  += NoReplyH_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = NoReplyH_Receiver_stub
+  dynamicflags   = NOREPLYH_RECEIVER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    NoReplyH_ReceiverC.cpp
+  }
+
+  Header_Files {
+    NoReplyH_ReceiverC.h
+    NoReplyH_Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    NoReplyH_ReceiverC.inl
+  }
+}
+
+project(AMI_NoReplyH_Base_Receiver_exec) : ciao_executor, messaging {
+  after   += AMI_NoReplyH_Base_Receiver_l_stub AMI_NoReplyH_Base_Receiver_stub AMI_NoReplyH_stub AMI_NoReplyH_lem_stub
+  sharedname = NoReplyH_Receiver_exec
+  libs += NoReplyH_Receiver_stub NoReplyH_Receiver_lem_stub NoReplyH_stub NoReplyH_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags   = NOREPLYH_RECEIVER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    NoReplyH_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    NoReplyH_Receiver_exec.h
+    NoReplyH_Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_NoReplyH_Base_Receiver_svnt) : ciao_servant, messaging {
+  after      += AMI_NoReplyH_Base_skel AMI_NoReplyH_Base_Receiver_l_stub AMI_NoReplyH_stub AMI_NoReplyH_skel AMI_NoReplyH_lem_stub
+  sharedname  = NoReplyH_Receiver_svnt
+  libs       += NoReplyH_Receiver_stub NoReplyH_Receiver_lem_stub  \
+                NoReplyH_skel \
+                NoReplyH_stub NoReplyH_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = NOREPLYH_RECEIVER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    NoReplyH_ReceiverS.cpp
+    NoReplyH_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    NoReplyH_ReceiverS.h
+    NoReplyH_Receiver_svnt.h
+    NoReplyH_Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    NoReplyH_ReceiverS.inl
+  }
+}
+

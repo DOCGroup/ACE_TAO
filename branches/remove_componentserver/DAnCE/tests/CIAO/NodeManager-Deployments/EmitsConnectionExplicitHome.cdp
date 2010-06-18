@@ -1,0 +1,249 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>SimpleComponent_Home</label>
+  <UUID>SimpleComponent_Home</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Home implementation -->
+  <implementation xmi:id="SimpleEmitterHomeImplementation">
+    <name>SimpleEmitterHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleEmitter_ExecArtifact" />
+    <artifact xmi:idref="SimpleEmitter_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleEmitterHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleEmitterHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleEmitter_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleEmitter_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleEmitterComponentImplementation">
+    <name>SimpleEmitterComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleEmitter_ExecArtifact" />
+    <artifact xmi:idref="SimpleEmitter_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleConsumerHomeImplementation">
+    <name>SimpleConsumerHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleConsumer_ExecArtifact" />
+    <artifact xmi:idref="SimpleConsumer_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleConsumerHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleConsumerHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleConsumer_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleConsumer_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleConsumerComponentImplementation">
+    <name>SimpleConsumerComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleConsumer_ExecArtifact" />
+    <artifact xmi:idref="SimpleConsumer_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="SimpleEmitterHomeInstance">
+    <name>SimpleEmitterHome</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleEmitterHomeImplementation" />
+  </instance>
+
+  <instance xmi:id="SimpleEmitterComponentInstance">
+    <name>SimpleEmitterComponent</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleEmitterComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleEmitterHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SimpleConsumerHomeInstance">
+    <name>SimpleConsumerHome</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleConsumerHomeImplementation" />
+  </instance>
+
+  <instance xmi:id="SimpleConsumerComponentInstance">
+    <name>SimpleConsumerComponent</name>
+    <node>Node</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleConsumerComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleConsumerHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  <connection>
+    <name>TestConnection</name>
+    <internalEndpoint>
+      <portName>hello_</portName>
+      <provider>false</provider>
+      <kind>EventEmitter</kind>
+      <instance xmi:idref="SimpleEmitterComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>hello_</portName>
+      <provider>true</provider>
+      <kind>EventConsumer</kind>
+      <instance xmi:idref="SimpleConsumerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="SimpleEmitter_ExecArtifact">
+    <name>SimpleEmitter_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleEmitter_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleEmitter_SvntArtifact">
+    <name>SimpleEmitter_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleEmitter_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="SimpleConsumer_ExecArtifact">
+    <name>SimpleConsumer_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleConsumer_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleConsumer_SvntArtifact">
+    <name>SimpleConsumer_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleConsumer_svnt</location>
+  </artifact>
+
+  </Deployment:DeploymentPlan>

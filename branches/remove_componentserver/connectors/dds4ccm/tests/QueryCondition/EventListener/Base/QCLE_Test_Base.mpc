@@ -1,0 +1,26 @@
+// $Id$
+
+project (DDS_QCLE_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  sharedname = DDS_QCLE_Test_Base_stub
+  dynamicflags += QUERY_CONDITION_LISTEN_EVENT_TEST_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=QUERY_CONDITION_LISTEN_EVENT_TEST_BASE_STUB_Export \
+              -Wb,stub_export_include=QCLE_Test_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    QCLE_Test_Base.idl
+  }
+
+  opendds_ts_flags += --export=QUERY_CONDITION_LISTEN_EVENT_TEST_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    QCLE_Test_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+

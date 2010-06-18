@@ -1,0 +1,13 @@
+// $Id$
+
+#ifndef DEPLOYMENT_INVALIDCONNECTION_IDL
+#define DEPLOYMENT_INVALIDCONNECTION_IDL
+
+module Deployment {
+  exception InvalidConnection {
+    string name;
+    string reason;
+  };
+};
+
+#endif

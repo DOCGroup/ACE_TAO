@@ -1,0 +1,66 @@
+<artifact xmi:id="Sender_ExecArtifact">
+  <name>Shapes_Sender_comp_exec</name>
+  <source/>
+  <node/>
+  <location>Shapes_Sender_comp_exec</location>
+</artifact>
+<artifact xmi:id="Sender_SvntArtifact">
+  <name>Shapes_Sender_comp_svnt</name>
+  <source/>
+  <node/>
+  <location>Shapes_Sender_comp_svnt</location>
+</artifact>
+<artifact xmi:id="Sender_StubArtifact">
+  <name>Sender_stub</name>
+  <source/>
+  <node/>
+  <location>Sender_stub</location>
+</artifact>
+<artifact xmi:id="Shapes_Connector_ExecArtifact">
+  <name>Shapes_conn_exec</name>
+  <source/>
+  <node/>
+  <location>Shapes_conn_exec</location>
+</artifact>
+<artifact xmi:id="Shapes_Connector_SvntArtifact">
+  <name>Shapes_conn_svnt</name>
+  <source/>
+  <node/>
+  <location>Shapes_conn_svnt</location>
+</artifact>
+<artifact xmi:id="Receiver_ExecArtifact">
+  <name>Shapes_Receiver_comp_exec</name>
+  <source/>
+  <node/>
+  <location>Shapes_Receiver_comp_exec</location>
+</artifact>
+<artifact xmi:id="Receiver_SvntArtifact">
+  <name>Shapes_Receiver_comp_svnt</name>
+  <source/>
+  <node/>
+  <location>Shapes_Receiver_comp_svnt</location>
+</artifact>
+<artifact xmi:id="Receiver_StubArtifact">
+  <name>Receiver_stub</name>
+  <source/>
+  <node/>
+  <location>Receiver_stub</location>
+</artifact>
+<artifact xmi:id="Control_ExecArtifact">
+  <name>Shapes_Control_comp_exec</name>
+  <source/>
+  <node/>
+  <location>Shapes_Control_comp_exec</location>
+</artifact>
+<artifact xmi:id="Control_SvntArtifact">
+  <name>Shapes_Control_comp_svnt</name>
+  <source/>
+  <node/>
+  <location>Shapes_Control_comp_svnt</location>
+</artifact>
+<artifact xmi:id="Control_StubArtifact">
+  <name>Control_stub</name>
+  <source/>
+  <node/>
+  <location>Control_stub</location>
+</artifact>

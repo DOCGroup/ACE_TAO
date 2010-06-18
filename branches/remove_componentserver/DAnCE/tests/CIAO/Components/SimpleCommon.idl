@@ -1,0 +1,28 @@
+// $Id$
+
+#ifndef SIMPLE_COMMON_IDL
+#define SIMPLE_COMMON_IDL
+
+#include "Components.idl"
+
+#pragma ciao lem "SimpleCommonE.idl"
+
+module Simple
+{
+  interface Trigger
+  {
+    void hello (in string hello);
+  };
+
+  local interface LocalTrigger
+  {
+    void hello (in string hello);
+  };
+
+  eventtype Hello
+  {
+    public string hello_;
+  };
+};
+
+#endif /*SIMPLE_COMMON_IDL*/
