@@ -4,7 +4,10 @@
 #include <algorithm>
 
 #include "XercesString.h"
+#include "xercesc/util/PlatformUtils.hpp"
+
 using xercesc::XMLString;
+using xercesc::XMLPlatformUtils;
 
 namespace CIAO
 {
@@ -64,7 +67,11 @@ namespace CIAO
     {
       int iTailLen = XMLString::stringLen(tail);
       int iWorkLen = XMLString::stringLen(_wstr);
-      XMLCh *result = new XMLCh[ iWorkLen + iTailLen + 1 ];
+      
+      XMLSize_t bytes = (iWorkLen + iTailLen + 1) * sizeof (XMLCh);
+      void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
+      XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+
       bool bOK = result != 0;
       if (bOK)
         {
@@ -85,7 +92,10 @@ namespace CIAO
       bool bOK = head <= tail && head >= begin() && tail <= end();
       if (bOK)
         {
-          XMLCh *result = new XMLCh[ size() - (tail - head) + 1 ];
+          XMLSize_t bytes = (size() - (tail - head) + 1 ) * sizeof (XMLCh);
+          void *tmp = XMLPlatformUtils::fgMemoryManager->allocate (bytes);
+          XMLCh *result = reinterpret_cast<XMLCh *> (tmp);
+
           XMLCh *target = result;
           bOK = target != 0;
           if (bOK)
