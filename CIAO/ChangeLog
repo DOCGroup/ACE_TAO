@@ -1,7 +1,85 @@
+Fri Jun 18 18:18:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * MPC/config/ciao_deployment_handlers.mpb:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Containers/Session/Session_Container.mpc:
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+
+          Fallout from removal of CIAO component server.
+
+        * ciao/ComponentServer/CIAO_Base.mpc:
+        * ciao/ComponentServer/Client_init.h:
+        * ciao/ComponentServer/Server_init.h:
+
+          Restructured into the CIAO_Base library.  Directory will be
+          renamed in a future commit.
+
+        * tests/CIF/Common/CIF_Common.mpc:
+        * tests/CIF/Navigation/Navigation.mpc:
+        * tests/CIF/Receptacle/Receptacle.mpc:
+
+          Disabled until they can be re-implemented without the CIAO
+          compoenent server.
+
+        * MPC/config/ciao_componentserver_stub.mpb:
+        * MPC/config/ciao_componentserver_svnt.mpb:
+        * MPC/config/ciao_cs_client.mpb:
+        * ciao/ComponentServer/CIAO_CS_Client.idl:
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer.idl:
+        * ciao/ComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Impl.cpp:
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.h:
+        * ciao/ComponentServer/CIAO_ComponentServer_Task.cpp:
+        * ciao/ComponentServer/CIAO_Container_Impl.h:
+        * ciao/ComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/ComponentServer/CIAO_RTComponentServer.cpp:
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.h:
+        * ciao/ComponentServer/CIAO_RTComponentServer_Task.cpp:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/ComponentServer/CIAO_ServerActivator_Impl.cpp:
+
+          Removed the CIAO component server.
+
+        * tests/CIAO_ComponentServer:
+        * tests/CIAO_ComponentServer/Activator:
+        * tests/CIAO_ComponentServer/Activator/Activator.mpc:
+        * tests/CIAO_ComponentServer/Activator/client.cpp:
+        * tests/CIAO_ComponentServer/Activator/run_test.pl:
+        * tests/CIAO_ComponentServer/Basic:
+        * tests/CIAO_ComponentServer/Basic/Basic.mpc:
+        * tests/CIAO_ComponentServer/Basic/client.cpp:
+        * tests/CIAO_ComponentServer/Basic/run_test.pl:
+        * tests/CIAO_ComponentServer/Local_Facet:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.idl:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet.mpc:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet_exec.h:
+        * tests/CIAO_ComponentServer/Local_Facet/Local_Facet_exec.cpp:
+        * tests/CIAO_ComponentServer/Local_Facet/client.cpp:
+        * tests/CIAO_ComponentServer/Local_Facet/run_test.pl:
+        * tests/CIAO_ComponentServer/SimpleComponent:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.idl:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent.mpc:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.h:
+        * tests/CIAO_ComponentServer/SimpleComponent/SimpleComponent_exec.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/client.cpp:
+        * tests/CIAO_ComponentServer/SimpleComponent/run_test.pl:
+
+          Removed testing of CIAO component server.  These features are already tested
+          in other places for the new infrastructure.
+
 Fri Jun 18 17:47:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	  Fixed incorrectly place #endif.
+          Fixed incorrectly place #endif.
 
 Fri Jun 18 17:40:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

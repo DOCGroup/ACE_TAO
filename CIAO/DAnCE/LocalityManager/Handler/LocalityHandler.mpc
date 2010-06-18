@@ -6,4 +6,8 @@ project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance
      LocalityActivator_Impl.cpp
      Locality_Manager_Handler_Impl.cpp
    }
+
+  specific {
+    install_dir = DAnCE/LocalityManager/Handler
+  }
 }

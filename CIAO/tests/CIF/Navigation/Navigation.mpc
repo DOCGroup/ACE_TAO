@@ -1,7 +1,7 @@
 // $Id$
 
 project(Navigation_idl_gen) : componentidldefaults {
-
+  requires += dummy_label
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NAVIGATION_STUB_Export \
               -Wb,stub_export_include=Navigation_stub_export.h \
@@ -16,7 +16,7 @@ project(Navigation_idl_gen) : componentidldefaults {
 }
 
 project(Navigation_lem_gen) : ciaoidldefaults {
-
+  requires += dummy_label
   after += Navigation_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NAVIGATION_LEM_STUB_Export \
@@ -29,7 +29,7 @@ project(Navigation_lem_gen) : ciaoidldefaults {
 }
 
 project(Navigation_lem_stub) : ccm_svnt   {
-
+  requires += dummy_label
   after += Navigation_lem_gen Navigation_stub
   libs  += Navigation_stub
   libpaths += ../lib
@@ -56,7 +56,7 @@ project(Navigation_lem_stub) : ccm_svnt   {
 }
 
 project(Navigation_stub) : ccm_stub   {
-
+  requires += dummy_label
   after += Navigation_idl_gen
   libs  +=
   libpaths += ../lib
@@ -84,7 +84,7 @@ project(Navigation_stub) : ccm_stub   {
 }
 
 project(Navigation_exec) : ciao_executor   {
-
+  requires += dummy_label
   after   += Navigation_lem_stub Navigation_stub
   sharedname = Navigation_exec
   libs += Navigation_stub Navigation_lem_stub
@@ -112,7 +112,7 @@ project(Navigation_exec) : ciao_executor   {
 
 
 project(Navigation_svnt) : ciao_servant   {
-
+  requires += dummy_label
   after      += Navigation_lem_stub
   sharedname  = Navigation_svnt
   libs       += Navigation_stub Navigation_lem_stub
@@ -141,12 +141,12 @@ project(Navigation_svnt) : ciao_servant   {
   }
 }
 
-project (Navigation_client_test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
+project (Navigation_client_test) : ccm_configvalue, ciao_logger {
   after += Navigation_stub Navigation_svnt CIF_Common
   libpaths += ../lib
   libs += Navigation_stub CIF_Common
   includes += ..
-
+  requires += dummy_label
   IDL_Files {
   }
 

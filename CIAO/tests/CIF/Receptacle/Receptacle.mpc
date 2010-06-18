@@ -1,7 +1,7 @@
 // $Id$
 
 project(Receptacle_idl_gen) : componentidldefaults {
-
+  requires += dummy_label
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEPTACLE_STUB_Export \
               -Wb,stub_export_include=Receptacle_stub_export.h \
@@ -16,7 +16,7 @@ project(Receptacle_idl_gen) : componentidldefaults {
 }
 
 project(Receptacle_lem_gen) : ciaoidldefaults {
-
+  requires += dummy_label
   after += Receptacle_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=RECEPTACLE_LEM_STUB_Export \
@@ -29,7 +29,7 @@ project(Receptacle_lem_gen) : ciaoidldefaults {
 }
 
 project(Receptacle_lem_stub) : ccm_svnt   {
-
+  requires += dummy_label
   after += Receptacle_lem_gen Receptacle_stub
   libs  += Receptacle_stub
   libpaths += ../lib
@@ -56,7 +56,7 @@ project(Receptacle_lem_stub) : ccm_svnt   {
 }
 
 project(Receptacle_stub) : ccm_stub   {
-
+  requires += dummy_label
   after += Receptacle_idl_gen
   libs  +=
   libpaths += ../lib
@@ -84,7 +84,7 @@ project(Receptacle_stub) : ccm_stub   {
 }
 
 project(Receptacle_exec) : ciao_executor   {
-
+  requires += dummy_label
   after   += Receptacle_lem_stub Receptacle_stub
   sharedname = Receptacle_exec
   libs += Receptacle_stub Receptacle_lem_stub
@@ -112,7 +112,7 @@ project(Receptacle_exec) : ciao_executor   {
 
 
 project(Receptacle_svnt) : ciao_servant   {
-
+  requires += dummy_label
   after      += Receptacle_lem_stub
   sharedname  = Receptacle_svnt
   libs       += Receptacle_stub Receptacle_lem_stub
@@ -141,12 +141,12 @@ project(Receptacle_svnt) : ciao_servant   {
   }
 }
 
-project (Receptacle_client_test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
+project (Receptacle_client_test) : ccm_configvalue, ciao_logger {
   after += Receptacle_stub Receptacle_svnt CIF_Common
   libpaths += ../lib
   libs += Receptacle_stub CIF_Common
   includes += ..
-
+  requires += dummy_label
   IDL_Files {
   }
 

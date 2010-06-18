@@ -24,7 +24,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ccm/CCM_StandardConfiguratorC.h"
 
-#include "ciao/ComponentServer/CIAO_ComponentServer_stub_export.h"
+#include "ciao/ComponentServer/CIAO_Base_stub_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
@@ -43,7 +43,7 @@ namespace CIAO
    * should be call right after ORB initialization but we should try
    * to register these stuff automatically.
    */
-  CIAO_COMPONENTSERVER_STUB_Export int Client_init (CORBA::ORB_ptr o);
+  CIAO_BASE_STUB_Export int Client_init (CORBA::ORB_ptr o);
 
   namespace Utility
   {
@@ -53,10 +53,10 @@ namespace CIAO
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CONFIGVALUE_MAP;
 
-    CIAO_COMPONENTSERVER_STUB_Export void build_config_values_map (CONFIGVALUE_MAP &map,
+    CIAO_BASE_STUB_Export void build_config_values_map (CONFIGVALUE_MAP &map,
                                                      const ::Components::ConfigValues &config);
 
-    CIAO_COMPONENTSERVER_STUB_Export void build_config_values_sequence (::Components::ConfigValues &config,
+    CIAO_BASE_STUB_Export void build_config_values_sequence (::Components::ConfigValues &config,
                                                           const CONFIGVALUE_MAP &map);
   }
 }
