@@ -3,7 +3,7 @@
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Containers/Session/Session_Container.h"
-#include "ciao/ComponentServer/Server_init.h"
+#include "ciao/Base/Server_init.h"
 
 #include "CIAO_State.h"
 
