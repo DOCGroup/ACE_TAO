@@ -1,3 +1,14 @@
+Fri Jun 18 11:40:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/artifacts.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/connections.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/implementation.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/instance.cdp:
+          Update.
+
 Fri Jun 18 11:41:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.h:
