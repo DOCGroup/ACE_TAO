@@ -1347,7 +1347,7 @@ public:
 
   /**
    * Name of the factory object used to adapt function calls on
-   * the valuetype-related interfaces.
+           * the valuetype-related interfaces.
    * The default value is "Valuetype_Adapter_Factory". If the
    * Valuetype library is linked, the corresponding accessor
    * function valuetype_adapter_factory_name() will be called to set

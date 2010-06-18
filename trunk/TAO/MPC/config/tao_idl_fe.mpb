@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: acelib, conv_lib, fe_mcpp {
+project: acelib, conv_lib {
   includes    += $(TAO_ROOT)/TAO_IDL/fe $(TAO_ROOT)/TAO_IDL/include
   after       += TAO_IDL_FE
   libs        += TAO_IDL_FE
