@@ -246,8 +246,9 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
           DAnCE::Utility::update_property_value (DAnCE::DANCE_LM_LIBPATH,
                                                  lm_mdd.execParameter,
                                                  new_path.c_str ());
-        }
 #endif
+        }
+
       // Need to add naming service reference to config properties.
       DAnCE::Utility::update_property_value<CosNaming::NamingContext_ptr> (
             DAnCE::LOCALITY_NAMINGCONTEXT,
