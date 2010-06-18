@@ -1,3 +1,10 @@
+Fri Jun 18 13:56:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+
+          Remove mcpp.
+
 Fri Jun 18 13:43:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/Sender/Sender.idl:
