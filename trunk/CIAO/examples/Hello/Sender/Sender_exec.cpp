@@ -61,14 +61,12 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
 
   Sender_exec_i::Sender_exec_i (void)
-    : message_(CORBA::string_dup ("Default Message")),
-      color_ (::Hello::empty)
+    : message_(CORBA::string_dup ("Default Message"))
   {
   }
 
   Sender_exec_i::Sender_exec_i (const char* local_message)
-    : message_(CORBA::string_dup (local_message)),
-      color_ (::Hello::empty)
+    : message_(CORBA::string_dup (local_message))
   {
   }
 
@@ -86,67 +84,6 @@ namespace CIAO_Hello_Sender_Impl
     event->data ("ACE/TAO/CIAO");
     ACE_DEBUG ((LM_EMERGENCY, "Sender initiates the process.\n"));
     this->context_->push_click_out (event.in ());
-
-    ACE_DEBUG ((LM_EMERGENCY, "My current color is:"));
-
-    switch (this->color_)
-      {
-      case ::Hello::empty:
-        ACE_DEBUG ((LM_EMERGENCY, "ERROR: Enum attribute initialization failed.\n"));
-        break;
-
-      case ::Hello::white:
-        ACE_DEBUG ((LM_EMERGENCY, "white\n"));
-        break;
-
-      case ::Hello::red:
-        ACE_DEBUG ((LM_EMERGENCY, "red\n"));
-        break;
-
-      case ::Hello::yellow:
-        ACE_DEBUG ((LM_EMERGENCY, "yellow\n"));
-        break;
-
-      default:
-        ACE_DEBUG ((LM_EMERGENCY, "Unknown color!\n"));
-
-      }
-
-    // check color sequence
-    ACE_DEBUG ((LM_DEBUG, "Checking color sequence\n"));
-    if (this->colors_.length () == 3)
-      {
-        if ((this->colors_[0] != ::Hello::white) &&
-            (this->colors_[1] != ::Hello::red) &&
-            (this->colors_[2] != ::Hello::yellow))
-          {
-            ACE_ERROR ((LM_EMERGENCY, "error: Unexpected color in color sequence\n"));
-          }
-      }
-    else
-      ACE_ERROR ((LM_EMERGENCY, "error: color sequence is wrong length!\n"));
-
-    ACE_DEBUG ((LM_DEBUG, "Checking string sequence\n"));
-    if (this->strings_.length () == 3)
-      {
-        if ((ACE_OS::strcmp ("Hello", this->strings_[0]) != 0) &&
-            (ACE_OS::strcmp ("World", this->strings_[1]) != 0) &&
-            (ACE_OS::strcmp ("!", this->strings_[2]) != 0))
-          {
-            ACE_ERROR ((LM_EMERGENCY, "error: string in sequence\n"));
-          }
-      }
-    else
-      ACE_ERROR ((LM_EMERGENCY, "error: string sequence is wrong length!\n"));
-
-    ACE_DEBUG ((LM_DEBUG, "Checking color struct\n"));
-    if ((ACE_OS::strcmp ("Yellow!", this->color_struct_.color_name) != 0) &&
-        this->color_struct_.color_id != 42 &&
-        this->color_struct_.color != Hello::yellow)
-      {
-        ACE_ERROR ((LM_EMERGENCY, "error: members of the color struct are wrong\n"));
-      }
-
   }
 
   // Component attributes and port operations.
@@ -173,69 +110,6 @@ namespace CIAO_Hello_Sender_Impl
   {
     /* Your code here. */
     message_ = CORBA::string_dup (local_message);
-  }
-
-  ::Hello::COLOR_SELECTION
-  Sender_exec_i::color (void)
-  {
-    /* Your code here. */
-    return this->color_;
-  }
-
-  void
-  Sender_exec_i::color (
-    ::Hello::COLOR_SELECTION color)
-  {
-    /* Your code here. */
-    this->color_ = color;
-  }
-
-  ::Hello::COLORS *
-  Sender_exec_i::the_colors (void)
-  {
-    /* Your code here. */
-    return 0;
-  }
-
-  void
-  Sender_exec_i::the_colors (
-    const ::Hello::COLORS & the_colors)
-  {
-    this->colors_.length (the_colors.length ());
-    for (CORBA::ULong i = 0; i < the_colors.length (); ++i)
-      {
-        this->colors_[i] = the_colors[i];
-      }
-  }
-
-  ::CORBA::StringSeq *
-  Sender_exec_i::str_seq (void)
-  {
-    return 0;
-  }
-
-  void
-  Sender_exec_i::str_seq (
-    const ::CORBA::StringSeq & strings)
-  {
-    this->strings_.length (strings.length ());
-    for (CORBA::ULong i = 0; i < strings.length (); ++i)
-      {
-        this->strings_[i] = strings[i];
-      }
-  }
-
-  ::Hello::COLOR_STRUCT *
-  Sender_exec_i::color_st (void)
-  {
-    return 0;
-  }
-
-  void
-  Sender_exec_i::color_st (
-    const ::Hello::COLOR_STRUCT &col_struct)
-  {
-    this->color_struct_ = col_struct;
   }
 
   // Operations from Components::SessionComponent.

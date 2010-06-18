@@ -111,57 +111,6 @@ namespace CIAO_Hello_Sender_Impl
     local_message (
       const char * local_message);
     
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
-    virtual ::Hello::COLOR_SELECTION
-    color (void);
-    
-    // TAO_IDL - Generated from
-    // c:\middleware\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:42
-    
-    virtual void
-    color (
-      ::Hello::COLOR_SELECTION color);
-    //@}
-    
-    // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
-    
-    virtual ::Hello::COLORS *
-    the_colors (void);
-    
-    // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
-    
-    virtual void
-    color_st (
-      const ::Hello::COLOR_STRUCT & the_colors);
-    
-    virtual ::Hello::COLOR_STRUCT *
-    color_st (void);
-    
-    // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
-    
-    virtual void
-    the_colors (
-      const ::Hello::COLORS & the_colors);
-    
-    // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
-    
-    virtual ::CORBA::StringSeq *
-    str_seq (void);
-    
-    // TAO_IDL - Generated from
-    // w:\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:36
-    
-    virtual void
-    str_seq (
-      const ::CORBA::StringSeq & str_seq);
-    //@}
-    
     //@{
     /** Operations from Components::SessionComponent. */
     
@@ -181,10 +130,6 @@ namespace CIAO_Hello_Sender_Impl
     ::Hello::CCM_Sender_Context_var context_;
     CORBA::String_var message_;
     CORBA::Boolean log_time_;
-    ::Hello::COLOR_SELECTION color_;
-    ::Hello::COLORS colors_;
-    ::Hello::COLOR_STRUCT color_struct_;
-    ::CORBA::StringSeq strings_;
     friend class ReadMessage_exec_i;
   };
   
