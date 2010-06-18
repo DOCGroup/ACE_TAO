@@ -9,9 +9,6 @@
 #include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
-DDSQueryCondition * CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::qc_listener_ = 0;
-
-template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (void)
   : CCM_DDS_DataReader_i (0),
     impl_ (0),
@@ -179,7 +176,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (void)
                     "Error: No QueryCondition set yet. First set a filter.\n"));
       throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
-  ::CCM_DDS::QueryFilter_var filter = 0;
+  ::CCM_DDS::QueryFilter_var filter;
   ACE_NEW_THROW_EX (filter,
                     ::CCM_DDS::QueryFilter(),
                     CORBA::NO_MEMORY ());
@@ -325,7 +322,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::attach_querycondition (void)
                         DDSWaitSet (),
                         CORBA::NO_MEMORY ());
     }
-  DDS_ReturnCode_t const retcode = this->ws_->attach_condition (this->get_querycondition ());
+  DDS_ReturnCode_t const retcode =
+    this->ws_->attach_condition (this->get_querycondition ());
   if (retcode != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::DataReader_T::create_querycondition - "
@@ -346,7 +344,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::wait (
      this->ws_->wait (active_conditions, time_out);
    if (retcode == ::DDS::RETCODE_TIMEOUT)
      {
-       DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("Getter: No data available after timeout.\n")));
+       DDS4CCM_DEBUG (6,
+                      (LM_DEBUG,
+                      ACE_TEXT ("Getter: No data available after timeout.\n")));
        return false;
      }
    return true;
