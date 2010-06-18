@@ -30,7 +30,7 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, ciao_xml_utils,
   }
 }
 
-project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, ciao_xml_utils, tao_idl_mcpp, xerces, tao_idl_fe {
+project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, ciao_xml_utils, xerces, tao_idl_fe {
   after          += CIAO_IDL3_TO_XMI_BE
   exename         = tao_idl3_to_xmi
   libs           += CIAO_IDL3_TO_XMI_BE
@@ -56,6 +56,7 @@ project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, ciao_xml_utils, ta
 
   Source_Files {
     $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
+    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
     $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
   }
 
