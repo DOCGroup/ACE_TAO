@@ -73,8 +73,7 @@ namespace CIAO
 
       // Getter related methods.
       void
-      remove_condition (DDSQueryCondition * qc,
-                        const char * type);
+      remove_condition (DDSQueryCondition * qc, const char * type);
 
       void remove_conditions (void);
 
@@ -87,8 +86,7 @@ namespace CIAO
       void attach_querycondition (void);
 
       bool
-      wait (DDSConditionSeq & active_conditions,
-            DDS_Duration_t & time_out);
+      wait (DDSConditionSeq & active_conditions, DDS_Duration_t & time_out);
 
       void set_proxy (DDSDataReader * dr);
 
@@ -117,7 +115,7 @@ namespace CIAO
       // differs for all entities.
       DDSQueryCondition * qc_reader_;
       DDSQueryCondition * qc_getter_;
-      static DDSQueryCondition * qc_listener_;
+      DDSQueryCondition * qc_listener_;
 
       typename DDS_TYPE::data_reader * impl (void);
     };

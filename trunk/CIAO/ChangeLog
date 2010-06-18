@@ -1,3 +1,9 @@
+Fri Jun 18 11:41:47 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+          Removed static
+
 Fri Jun 18 11:19:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
