@@ -81,7 +81,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
 
   typename DDS_TYPE::dds_seq_type data;
   DDS_SampleInfoSeq sample_info;
-  ::DDS::ReturnCode_t const result = reader->take (data, sample_info);
+  ::DDS::ReturnCode_t const result =
+    reader->take (data, sample_info, DDS_LENGTH_UNLIMITED);
 
   if (result == DDS_RETCODE_NO_DATA)
     {

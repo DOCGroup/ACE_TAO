@@ -1,3 +1,12 @@
+Fri Jun 18 12:04:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/dds/DataReader_T.h:
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+          Code cleanup
+
 Fri Jun 18 12:03:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Deployment_Event.cpp:

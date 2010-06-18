@@ -462,8 +462,7 @@ void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::passivate ()
 {
   this->remove_conditions ();
-  this->set_listener (::DDS::DataReaderListener::_nil (),
-                      0);
+  this->set_listener (::DDS::DataReaderListener::_nil (), 0);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -543,8 +542,8 @@ void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_datareader (
   ::DDS::Subscriber_ptr subscriber)
 {
-  ::DDS::ReturnCode_t retval = subscriber->delete_datareader (this);
-  if (retval != DDS::RETCODE_OK)
+  ::DDS::ReturnCode_t const retval = subscriber->delete_datareader (this);
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
         "DataReader_T::delete_datareader - "

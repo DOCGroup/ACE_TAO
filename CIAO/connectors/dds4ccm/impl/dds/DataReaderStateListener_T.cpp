@@ -73,16 +73,17 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
-                                             "Failed to retrieve pointer to proxy from "
-                                             "DDSDataReader.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR,
+                         CLINFO ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
+                         "Failed to retrieve pointer to proxy from "
+                         "DDSDataReader.\n")));
       return;
     }
 
   try
     {
       typename DDS_TYPE::dds_seq_type data;
-      DDS_SampleInfoSeq sample_info;
+      ::DDS_SampleInfoSeq sample_info;
       ::DDS_Long max_samples = 0;
 
       this->control_->mode () == ::CCM_DDS::ONE_BY_ONE

@@ -195,8 +195,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
   ::CCM_DDS::ReadInfo_out info)
 {
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions,
-                            this->time_out_))
+  if (!this->impl ()->wait (active_conditions, this->time_out_))
     {
       return false;
     }
@@ -214,7 +213,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
               typename DDS_TYPE::dds_seq_type data;
 
               ::DDS::ReturnCode_t const retcode =
-                this->impl ()->read_w_condition (data, sample_info);
+                this->impl ()->read_w_condition (data, sample_info, 1);
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
@@ -253,7 +252,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
                         "No valid available in DDS.\n"));
                 }
               // Return the loan of each read.
-              DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+              DDS_ReturnCode_t const retval =
+                this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
                   DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
@@ -298,8 +298,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
               DDS_ReturnCode_t const retcode =
-                this->impl ()->read_w_condition (data,
-                                                 sample_info);
+                this->impl ()->read_w_condition (data, sample_info, 1);
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
