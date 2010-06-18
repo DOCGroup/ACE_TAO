@@ -13,6 +13,8 @@
 #ifndef CCM_DDS_PSAT_IDL
 #define CCM_DDS_PSAT_IDL
 
+ #pragma dds4ccm impl "DDS_PSAT_Connector_T.h"
+
 /// @todo DETAILED DESIGN - Put more info on how fields are initialized before
 ///       use. Also put any "restricted" or "for internal use" ranges of values.
 
