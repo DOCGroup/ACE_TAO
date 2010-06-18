@@ -150,7 +150,7 @@ ACE_Time_Value::msec (void) const
 ACE_INLINE ACE_UINT64
 ACE_Time_Value::get_msec () const
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::msec");
+  // ACE_OS_TRACE ("ACE_Time_Value::get_msec");
   ACE_UINT64 ms = ACE_Utils::truncate_cast<ACE_UINT64> (this->tv_.tv_sec);
   ms *= 1000;
   ms += (this->tv_.tv_usec / 1000);
@@ -175,7 +175,7 @@ ACE_Time_Value::msec (ACE_UINT64 &ms) /*const*/
 ACE_INLINE void
 ACE_Time_Value::set_msec (const ACE_UINT64 &ms)
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::msec");
+  // ACE_OS_TRACE ("ACE_Time_Value::set_msec");
   // Convert millisecond units to seconds;
   ACE_UINT64 secs = ms / 1000;
   this->tv_.tv_sec = static_cast<long> (secs);
