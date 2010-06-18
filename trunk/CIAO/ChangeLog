@@ -1,3 +1,12 @@
+Fri Jun 18 12:13:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+          Set domain_id to 0 because the RTI shapes demo only listens
+          on Domain 0.
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+          Update.
+
 Fri Jun 18 12:13:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/Getter_T.cpp:
