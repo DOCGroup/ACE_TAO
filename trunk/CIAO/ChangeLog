@@ -1,3 +1,9 @@
+Fri Jun 18 12:03:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.cpp:
+
+          Compile fix for non-inline builds.
+
 Fri Jun 18 11:40:01 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
