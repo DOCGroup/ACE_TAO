@@ -1,3 +1,7 @@
+Fri Jun 18 11:13:40 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Time_Value.inl: Fixed fuzz errors.
+
 Thu Jun 17 21:59:34 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Time_Value.{h inl}: Added explicit set_ and get_ methods for
