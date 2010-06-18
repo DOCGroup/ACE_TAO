@@ -1,3 +1,10 @@
+Fri Jun 18 19:58:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Logging_Strategy.cpp: Moved the _get_dll_unload_policy()
+          function from DLL_Manager.cpp to Logging_Strategy.cpp where it's
+          more clear why it's there.
+
 Fri Jun 18 11:13:40 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Time_Value.inl: Fixed fuzz errors.
