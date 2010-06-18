@@ -1,3 +1,12 @@
+Fri Jun 18 18:32:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        
+          Added 2 pragma directives, both of a new type added to
+          the IDL compiler, directing it to generate an include
+          for the DDS connector impl template class. These added
+          directives are for the DDS_State and DDS_Event connectors.
+
 Fri Jun 18 18:18:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
