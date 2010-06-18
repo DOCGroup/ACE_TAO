@@ -618,7 +618,7 @@ AST_Decl::flat_name (void)
 void
 AST_Decl::compute_flat_name (void)
 {
-  if (!this->flat_name_)
+  if (this->flat_name_ == 0)
     {
       size_t namelen = 0;
       long first = true;
@@ -648,7 +648,7 @@ AST_Decl::compute_flat_name (void)
 
           if (first)
             {
-              if (ACE_OS::strcmp (item_name, ""))
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
                   // Does not start with a "".
                   first = false;
@@ -1274,6 +1274,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
     }
 
   this->pd_name = n;
+  
   if (n)
     {
       if (this->pd_local_name)
