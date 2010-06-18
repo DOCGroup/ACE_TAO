@@ -20,6 +20,15 @@ namespace DAnCE
 
     template <class ACE_LOCK>
     ACE_INLINE void
+    Completion_Counter_Base<ACE_LOCK>::increment_exec_count ()
+      {
+        ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+
+        ++this->exec_count_;
+      }
+
+    template <class ACE_LOCK>
+    ACE_INLINE void
     Completion_Counter_Base<ACE_LOCK>::decrement_exec_count ()
       {
         ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
@@ -30,10 +39,12 @@ namespace DAnCE
           {
             if (this->fail_count_ > 0)
             {
+              ace_mon.release ();
               this->on_all_completed_with_failure ();
             }
           else
             {
+              ace_mon.release ();
               this->on_all_completed ();
             }
           }

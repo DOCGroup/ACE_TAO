@@ -9,15 +9,12 @@
 #include "DAnCE/DAnCE_Utility.h"
 #include "Plugin_Manager.h"
 
+#if !defined (__ACE_INLINE__)
+#include "LocalityManager/Scheduler/Deployment_Events.inl"
+#endif
+
 namespace DAnCE
 {
-  Deployment_Event::Deployment_Event (Event_Future holder,
-                                      const char *inst_type)
-    : holder_ (holder),
-      instance_type_ (inst_type)
-  {
-  }
-
   Install_Instance::Install_Instance (const ::Deployment::DeploymentPlan & plan,
                                       ::CORBA::ULong instanceRef,
                                       const char *inst_type,
@@ -141,10 +138,7 @@ namespace DAnCE
                                          instance_excep.in ());
           }
         
-        Event_Result result;
-        result.id_ = name;
-        result.exception_ = false;
-        result.contents_ = instance_ref._retn ();
+        Event_Result result (name, false, instance_ref._retn ());
         
         DANCE_DEBUG (10, (LM_TRACE, DLINFO
                           ACE_TEXT ("Install_Instance::call - ")
@@ -161,9 +155,8 @@ namespace DAnCE
                          this->instanceRef_,
                          name));
         
-        Event_Result result;
-        result.id_ = name;
-        result.exception_ = true;
+        Event_Result result (name, true);
+
         CORBA::Any *tmp = 0;
         ACE_NEW_NORETURN (tmp,
                           CORBA::Any);
@@ -290,10 +283,8 @@ namespace DAnCE
                                          instance_excep.in ());
           }
         
-        Event_Result result;
-        result.id_ = name;
-        result.exception_ = false;
-        
+        Event_Result result (name, false);
+
         this->holder_.set (result);
       }
     catch (CORBA::Exception &ex)
@@ -304,9 +295,8 @@ namespace DAnCE
                          name,
                          ex._info ().c_str ()));
         
-        Event_Result result;
-        result.id_ = name;
-        result.exception_ = true;
+        Event_Result result (name, true);
+
         CORBA::Any *tmp = 0;
         ACE_NEW_NORETURN (tmp,
                           CORBA::Any);
@@ -396,9 +386,8 @@ namespace DAnCE
         
         ::Deployment::StopError ex_tmp (name,
                                         ex._info ().c_str ());
-        Event_Result result;
-        result.id_ = name;
-        result.exception_ = true;
+        Event_Result result (name, true);
+
         CORBA::Any *tmp = 0;
         ACE_NEW_NORETURN (tmp,
                           CORBA::Any);
@@ -413,9 +402,8 @@ namespace DAnCE
         return -1;
       }
     
-    Event_Result result;
-    result.id_ = name;
-    result.exception_ = false;
+    Event_Result result (name, false);
+
     this->holder_.set (result);
     
     return 0;
