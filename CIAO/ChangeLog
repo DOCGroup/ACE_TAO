@@ -1,3 +1,13 @@
+Fri Jun 18 06:39:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/coding.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/compilation.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/dds4ccm.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/executors.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/idl.html:
+          Outline of this tutorial.
+
 Fri Jun 18 03:30:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Deployment_Event.inl:
