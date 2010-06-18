@@ -69,20 +69,33 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         }
     }
     
+  UTL_Scope *s = node->defined_in ();
+  AST_Decl *d = ScopeAsDecl (s);  
   ACE_CString op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
-  Identifier op_id (op_name.c_str ());
-  UTL_ScopedName op_sn (&op_id, 0);
+  Identifier *op_id = 0;
+  ACE_NEW_RETURN (op_id,
+                  Identifier (op_name.c_str ()),
+                  -1);
+                 
+  UTL_ScopedName *op_ln = 0;
+  ACE_NEW_RETURN (op_ln,
+                  UTL_ScopedName (op_id, 0),
+                  -1);
+        
+  UTL_ScopedName *op_sn =
+    static_cast<UTL_ScopedName *> (d->name ()->copy ());                
+  op_sn->nconc (op_ln);
 
   // first the "get" operation
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
-                       &op_sn,
+                       0,
                        node->is_local (),
                        node->is_abstract ());
 
-  get_op.set_defined_in (node->defined_in ());
-
+  get_op.set_defined_in (s);
+  get_op.set_name (op_sn);
   UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
 
   if (0 != get_exceptions)
@@ -215,11 +228,10 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  get_op.destroy ();
-
   // Do nothing for readonly attributes.
   if (node->readonly ())
     {
+      get_op.destroy ();
       return 0;
     }
 
@@ -245,10 +257,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Create the operation.
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
-                       &op_sn,
+                       0,
                        node->is_local (),
                        node->is_abstract ());
   set_op.set_defined_in (node->defined_in ());
+  set_op.set_name (static_cast<UTL_ScopedName *> (op_sn->copy ()));
   set_op.be_add_argument (arg);
 
   UTL_ExceptList *set_exceptions = node->get_set_exceptions ();
@@ -381,12 +394,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   if (status == 0)
     {
+      get_op.destroy ();
       set_op.destroy ();
       rt.destroy ();
       return 0;
     }
   else if (status == -1)
     {
+      get_op.destroy ();
       set_op.destroy ();
       rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -396,6 +411,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
+  get_op.destroy ();
   set_op.destroy ();
   rt.destroy ();
   return 0;
