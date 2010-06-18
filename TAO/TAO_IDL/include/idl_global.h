@@ -357,8 +357,6 @@ public:
   bool wchar_seq_seen_;
   bool wstring_seq_seen_;
   bool dds_connector_seen_;
-  bool dds_event_connector_seen_;
-  bool dds_state_connector_seen_;
   bool ami_connector_seen_;
 
   // flag to force generation of skeleton includes (see bug #2419).
@@ -632,6 +630,10 @@ public:
   ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames (void);
   // Accessor/mutator for the included_ami_idl_fnames_ member.
   
+  void add_dds4ccm_impl_fnames (const char *s);
+  ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames (void);
+  // Accessor mutator for the dds4ccm_impl_fnames_ member.
+  
   ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
   // Accessor for the member
   
@@ -889,6 +891,9 @@ private:
   
   ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
   // Stores directives from #pragma ciao ami4ccm idl "xxx".
+  
+  ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
+  // Stores directives from #pragma dds4ccm impl "xxx".
   
   ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
   // Used to check for an incorrect lookup success that should

@@ -3347,6 +3347,12 @@ idl_store_pragma (char *buf)
           idl_global->add_ciao_ami_idl_fnames (tmp);
         }
     }
+  else if (ACE_OS::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+
+      idl_global->add_dds4ccm_impl_fnames (tmp);
+    }
 }
 
 /*

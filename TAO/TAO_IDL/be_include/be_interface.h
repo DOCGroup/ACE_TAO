@@ -336,6 +336,10 @@ public:
   bool is_ami4ccm_rh (void) const;
   void is_ami4ccm_rh (bool val);
   
+  /// Accessors for the member.
+  bool dds_connector_traits_done (void) const;
+  void dds_connector_traits_done (bool val);
+  
 protected:
   /**
    * CDreate a new string made by the concatenation
@@ -475,7 +479,12 @@ protected:
   /// Current cached collocated name.
   int cached_type_;
 
+  /// Used to suppress generation of some CCM servant methods/
   bool has_rw_attributes_;
+  
+  /// Flags to ensure that DDS connector impl traits members
+  /// are generated only once per port interface.
+  bool dds_connector_traits_done_;
 };
 
 /**

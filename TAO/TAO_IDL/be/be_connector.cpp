@@ -103,14 +103,12 @@ be_connector::check_ancestors (void)
         {
           this->dds_connector_ = true;
           idl_global->dds_connector_seen_ = true;
-          idl_global->dds_event_connector_seen_ = true;
           break;
         }
       else if (ACE_OS::strcmp (base_lname, "DDS_State") == 0)
         {
           this->dds_connector_ = true;
           idl_global->dds_connector_seen_ = true;
-          idl_global->dds_state_connector_seen_ = true;
           break;
         }
       else if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_Base") == 0)
