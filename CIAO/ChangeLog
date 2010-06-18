@@ -1,3 +1,15 @@
+Fri Jun 18 13:43:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * examples/Hello/descriptors/PlanLocality_SameProcess.cdp:
+
+          Removed un-needed complex types from this example.
+
 Fri Jun 18 12:13:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
