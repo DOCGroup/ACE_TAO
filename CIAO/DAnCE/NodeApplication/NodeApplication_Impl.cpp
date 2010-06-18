@@ -17,6 +17,7 @@
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_LocalityManagerC.h"
 #include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
+#include "DAnCE/LocalityManager/Scheduler/Deployment_Completion.h"
 #include "Split_Plan/Locality_Splitter.h"
 #include "Split_Plan/Split_Plan.h"
 
@@ -39,9 +40,13 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
     poa_ (PortableServer::POA::_duplicate (poa)),
     installer_ (DAnCE::ArtifactInstallation::_duplicate (installer)),
     node_name_ (node_name),
-    scheduler_ ()
+    scheduler_ (),
+    spawn_delay_ (30)
 {
   DANCE_TRACE ("NodeApplication_Impl::NodeApplication_Impl");
+
+  Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
+                               properties, this->spawn_delay_);
 
   ::Deployment::Properties prop;
   ::DAnCE::Utility::build_property_sequence (prop, properties);
@@ -73,6 +78,7 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
 
   CORBA::ULong plan (0);
   std::list < Event_Future > prepared_instances;
+  Deployment_Completion completion;
 
   // for each sub plan
   LocalitySplitter::TSubPlanConstIterator plans_end (plans, 1);
@@ -116,7 +122,8 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
 
       Install_Instance *event (0);
       Event_Future result;
-      
+      completion.accept (result);
+
       ACE_NEW_THROW_EX (event,
                         Install_Instance (sub_plan,
                                           loc_manager_instance,
@@ -125,19 +132,30 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
                                           ),
                         CORBA::NO_MEMORY ());
       
+      
       prepared_instances.push_back (result);
       this->scheduler_.schedule_event (event);
       ++plan;
     }
   
+  ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
+  
+  if (completion.wait_on_completion (&tv))
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
+                       ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
+                       ACE_TEXT("Timed out while waiting on completion of scheduler\n")));
+    }
+  
+  tv = ACE_Time_Value::zero;
+
   plan = 0;
   for (std::list < Event_Future >::iterator i = prepared_instances.begin ();
        i != prepared_instances.end ();
        ++i)
     {
       Event_Result event;
-      if (i->get (event,
-                  0 /*need to wait based on spawn delay*/) != 0)        
+      if (i->get (event, &tv) != 0)        
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
@@ -344,6 +362,8 @@ NodeApplication_Impl::remove_instances (void)
 
   std::list < Event_Future > removed_instances;
 
+  Deployment_Completion completion;
+
   for (LOCALITY_MAP::iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
     {
@@ -351,7 +371,7 @@ NodeApplication_Impl::remove_instances (void)
                        ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
                        ACE_TEXT ("Removing locality <%C>\n"),
                        i->first.c_str ()));
-
+      
       try
         {
           CORBA::Any ref;
@@ -375,6 +395,8 @@ NodeApplication_Impl::remove_instances (void)
                                         result));
               
               removed_instances.push_back (result);
+              completion.accept (result);
+
               this->scheduler_.schedule_event (event);
             }
           else
@@ -411,6 +433,17 @@ NodeApplication_Impl::remove_instances (void)
         }      
     }
   
+  ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
+  
+  if (completion.wait_on_completion (&tv))
+    {
+      DANCE_ERROR (1, (LM_ERROR, DLINFO
+                       ACE_TEXT("NodeApplication_Impl::remove_instances - ")
+                       ACE_TEXT("Timed out while waiting on completion of scheduler\n")));
+    }
+  
+  tv = ACE_Time_Value::zero;
+
   for (std::list < Event_Future >::iterator i = removed_instances.begin ();
        i != removed_instances.end ();
        ++i)
@@ -420,7 +453,7 @@ NodeApplication_Impl::remove_instances (void)
           Event_Result event;
           
           if (i->get (event,
-                      0 /* need to wait based on spawn delay */) != 0)
+                      &tv) != 0)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
                                ACE_TEXT ("NodeApplication_Impl::remove_instances - ")

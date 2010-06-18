@@ -95,6 +95,8 @@ namespace DAnCE
     DAnCE::Deployment_Scheduler scheduler_;
 
     PLAN_MAP sub_plans_;
+    
+    CORBA::ULong spawn_delay_;
   };
 }
 #endif /*NODEAPPLICATION_IMPL_H_*/

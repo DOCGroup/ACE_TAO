@@ -16,45 +16,10 @@
 #include "ace/Future.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "LocalityManager/Scheduler/Deployment_Scheduler_export.h"
+#include "LocalityManager/Scheduler/Deployment_Event.h"
 
 namespace DAnCE
 {
-  struct Deployment_Scheduler_Export Event_Result
-  {
-    std::string id_;
-    bool exception_;
-    CORBA::Any_var contents_;
-  };
-    
-  typedef ACE_Future< Event_Result > Event_Future;
-  
-  /**
-   * @class Event_Handler
-   * @brief Future observer that invokes a parameterized functor on the future
-   */
-  template <typename Functor>
-  class Deployment_Scheduler_Export Event_Handler
-    : ACE_Future_Observer< Event_Result >
-  {
-  public:
-    Event_Handler (Functor &specific_handler);
-    
-    virtual ~Event_Handler (void);
-
-    virtual void update (const Event_Result &future);
-    
-    /// Indicate to the observer that there is an additional future
-    /// it is waiting on
-    void add_outstanding (void);
-    
-    /// Return the number of still outstanding future events.
-    size_t count_outstanding (void);
-  private:
-    ACE_Atomic_Op < TAO_SYNCH_MUTEX, unsigned long > outstanding_;
-    
-    Functor &specific_handler_;
-  };
-
   class Deployment_Scheduler_Export Deployment_Event : 
     public virtual ACE_Method_Request
   {
@@ -129,7 +94,7 @@ namespace DAnCE
 }
 
 #if defined (__ACE_INLINE__)
-#include "LocalityManager/Scheduler/Deployment_Events.h"
+#include "LocalityManager/Scheduler/Deployment_Events.inl"
 #endif
 
 #include /**/ "ace/post.h"

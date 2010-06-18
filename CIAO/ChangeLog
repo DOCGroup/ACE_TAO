@@ -1,18 +1,50 @@
+Fri Jun 18 03:25:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.inl:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.inl:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.cpp:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+
+          Improved mechanism to wait on completion of deployment
+          events based on the completion counter.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Updated to use new completion system.
+
+        * DAnCE/tools/Completion/Completion_Counter_Base.h:
+        * DAnCE/tools/Completion/Completion_Counter_Base.inl:
+
+          Added new method so subclasses can increment expected
+          events.  Also resolved possible deadlock condition
+          by releasing locks before making outbound calls
+          on user code.
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.tpp:
+
+          Removed this file.
+
 Thu Jun 17 19:22:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
-        
-          Layout change. 
+
+          Layout change.
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
-        
+
           Bugfixes in the callback code to accomodate non-orb managed threadpools.
 
         * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
         * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
 
-          Changed how internal Activator is configured. 
+          Changed how internal Activator is configured.
 
         * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
         * DAnCE/LocalityManager/Scheduler/Deployment_Events.cpp:
