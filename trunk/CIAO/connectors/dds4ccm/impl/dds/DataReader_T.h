@@ -46,12 +46,12 @@ namespace CIAO
       DDS_ReturnCode_t read_w_condition (
         typename DDS_TYPE::dds_seq_type & data,
         ::DDS_SampleInfoSeq & sample_info,
-        ::DDS_Long max_samples=1);
+        ::DDS_Long max_samples);
 
       DDS_ReturnCode_t take (
         typename DDS_TYPE::dds_seq_type & data,
         ::DDS_SampleInfoSeq & sample_info,
-        ::DDS_Long max_samples=DDS_LENGTH_UNLIMITED);
+        ::DDS_Long max_samples);
 
       DDS_InstanceHandle_t
       lookup_instance (const typename DDS_TYPE::value_type& an_instance);
@@ -72,8 +72,7 @@ namespace CIAO
                   DDSQueryCondition * qc);
 
       // Getter related methods.
-      void
-      remove_condition (DDSQueryCondition * qc, const char * type);
+      void remove_condition (DDSQueryCondition * qc, const char * type);
 
       void remove_conditions (void);
 
