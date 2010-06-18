@@ -119,7 +119,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
                     "CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::Getter_Base_T::get_many - "
                     "Error while reading from DDS: <%C>\n",
                     translate_retcode (retcode)));
-              DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+              DDS_ReturnCode_t const retval =
+                this->impl ()->return_loan (data, sample_info);
               if (retval != DDS_RETCODE_OK)
                 {
                   DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
@@ -130,7 +131,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
               throw CCM_DDS::InternalError (retcode, 1);
             }
 
-          DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
+          DDS_ReturnCode_t const retval =
+            this->impl ()->return_loan (data, sample_info);
           if (retval != DDS_RETCODE_OK)
             {
               DDS4CCM_ERROR (1, (LM_ERROR, CLINFO

@@ -1,3 +1,8 @@
+Fri Jun 18 12:13:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/Getter_T.cpp:
+          Layout changes
+
 Fri Jun 18 12:04:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReaderListener_T.cpp:
