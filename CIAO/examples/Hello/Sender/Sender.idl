@@ -18,38 +18,12 @@ module Hello
     void start ();
   };
 
-  enum COLOR_SELECTION
-    {
-      empty,
-      white,
-      red,
-      yellow
-    };
-    
-  typedef sequence<COLOR_SELECTION> COLORS;
-  
-  struct COLOR_STRUCT
-  {
-    string color_name;
-    unsigned long color_id;
-    COLOR_SELECTION color;
-  };
-
   component Sender supports trigger
   {
     provides ReadMessage push_message;
     publishes TimeOut click_out;
 
     attribute string local_message;
-    
-    // A test attribute to test setting attributes through XML
-    attribute COLOR_SELECTION color;
-    
-    // Testing attributes of sequence type.
-    attribute COLORS the_colors;
-    attribute CORBA::StringSeq str_seq;
-    
-    attribute COLOR_STRUCT color_st;
   };
 
   home SenderHome manages Sender
