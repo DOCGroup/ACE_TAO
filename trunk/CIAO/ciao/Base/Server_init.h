@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/ComponentServer/CIAO_Base_stub_export.h"
+#include "ciao/Base/CIAO_Base_stub_export.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
