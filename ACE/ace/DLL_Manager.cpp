@@ -14,17 +14,9 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
 
-#include "ace/ACE_export.h"
-
 ACE_RCSID (ace,
            DLL_Manager,
            "DLL_Manager.cpp,v 4.23 2003/11/05 23:30:46 shuston Exp")
-
-extern "C" ACE_Export int
-_get_dll_unload_policy()
-{
-  return ACE_DLL_UNLOAD_POLICY_LAZY;
-}
 
 /******************************************************************/
 
