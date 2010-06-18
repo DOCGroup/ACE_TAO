@@ -125,7 +125,7 @@ namespace DAnCE
                          entrypoint,
                          ex._info ().c_str ()));
         throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-				       ex._info ().c_str ());
+                                       ex._info ().c_str ());
       }
     catch (...)
       {
@@ -135,7 +135,7 @@ namespace DAnCE
                          artifact,
                          entrypoint));
         throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-				       "Unknown C++ exception during handler configuration\n");
+                                       "Unknown C++ exception during handler configuration\n");
       }
   }
   
