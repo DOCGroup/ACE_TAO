@@ -1,0 +1,74 @@
+<connection>
+  <name>_listenercontrol</name>
+  <deployRequirement>
+    <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+    <resourceType>Local_Interface</resourceType>
+  </deployRequirement>
+  <internalEndpoint>
+    <portName>info_out_data_control</portName>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+    <instance xmi:idref="ReceiverComponentInstance" />
+  </internalEndpoint>
+  <internalEndpoint>
+    <portName>push_consumer_data_control</portName>
+    <provider>true</provider>
+    <kind>Facet</kind>
+    <instance xmi:idref="Shapes_ReceiverConnectorInstance" />
+  </internalEndpoint>
+</connection>
+<connection>
+  <name>_listener</name>
+  <deployRequirement>
+    <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+    <resourceType>Local_Interface</resourceType>
+  </deployRequirement>
+  <internalEndpoint>
+    <portName>info_out_data_listener</portName>
+    <provider>true</provider>
+    <kind>Facet</kind>
+    <instance xmi:idref="ReceiverComponentInstance" />
+  </internalEndpoint>
+  <internalEndpoint>
+    <portName>push_consumer_data_listener</portName>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+    <instance xmi:idref="Shapes_ReceiverConnectorInstance" />
+  </internalEndpoint>
+</connection>
+
+<connection>
+  <name>writer_connection</name>
+  <deployRequirement>
+    <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+    <resourceType>Local_Interface</resourceType>
+  </deployRequirement>
+  <internalEndpoint>
+    <portName>info_write_data</portName>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+    <instance xmi:idref="SenderComponentInstance" />
+  </internalEndpoint>
+  <internalEndpoint>
+    <portName>supplier_data</portName>
+    <provider>true</provider>
+    <kind>Facet</kind>
+    <instance xmi:idref="Shapes_SenderConnectorInstance" />
+  </internalEndpoint>
+</connection>
+
+<connection>
+  <name>control_connection</name>
+  <internalEndpoint>
+    <portName>control</portName>
+    <provider>false</provider>
+    <kind>SimplexReceptacle</kind>
+    <instance xmi:idref="ControlComponentInstance" />
+  </internalEndpoint>
+  <internalEndpoint>
+    <portName>control</portName>
+    <provider>true</provider>
+    <kind>Facet</kind>
+    <instance xmi:idref="SenderComponentInstance" />
+  </internalEndpoint>
+</connection>
