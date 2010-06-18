@@ -141,7 +141,7 @@ project(Receptacle_svnt) : ciao_servant   {
   }
 }
 
-project (Receptacle_client_test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client, ciao_logger {
+project (Receptacle_client_test) : ccm_configvalue, ciao_logger {
   after += Receptacle_stub Receptacle_svnt CIF_Common
   libpaths += ../lib
   libs += Receptacle_stub CIF_Common
