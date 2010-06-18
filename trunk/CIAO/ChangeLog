@@ -1,3 +1,8 @@
+Fri Jun 18 17:47:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	  Fixed incorrectly place #endif.
+
 Fri Jun 18 17:40:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
