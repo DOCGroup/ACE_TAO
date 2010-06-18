@@ -1,3 +1,12 @@
+Fri Jun 18 17:40:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DataReader_T.cpp:
+          Initialise pointer to 0
+
+        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+        * tools/XML/XML_Helper.tpp:
+          Layout changes
+
 Fri Jun 18 13:56:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
