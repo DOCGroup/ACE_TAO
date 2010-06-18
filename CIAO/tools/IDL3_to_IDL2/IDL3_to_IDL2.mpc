@@ -35,7 +35,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install_lib, ciao_output, tao_idl_fe {
   }
 }
 
-project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, tao_idl_mcpp, tao_idl_fe {
+project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, tao_idl_fe {
   after          += TAO_IDL3_TO_IDL2_BE
   exename         = tao_idl3_to_idl2
   libs           += TAO_IDL3_TO_IDL2_BE
@@ -59,6 +59,7 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, install, ciao_output, tao_idl_mcpp, tao_
 
   Source_Files {
     $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
+    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
     $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
   }
 
