@@ -3,6 +3,7 @@
 #include "ace/Logging_Strategy.h"
 #include "ace/Service_Config.h"
 #include "ace/ACE.h"
+#include "ace/ACE_export.h"
 #include "ace/Get_Opt.h"
 
 // FUZZ: disable check_for_streams_include
@@ -564,3 +565,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Logging_Strategy.
 
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)
+
+// _get_dll_unload_policy() prevents ACE from being unloaded and having its
+// framework components run down if/when the Logging Strategy is unloaded.
+extern "C" ACE_Export int
+_get_dll_unload_policy()
+{
+  return ACE_DLL_UNLOAD_POLICY_LAZY;
+}

@@ -1,3 +1,11 @@
+Fri Jun 18 19:58:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Logging_Strategy.cpp: Add _get_dll_unload_policy() function that
+          returns ACE_DLL_UNLOAD_POLICY_LAZY; this prevents the DLL_Manager
+          from running down ACE framework components just from unloading
+          a service contained in ACE itself.
+          Fix for Bugzilla #3856.
+
 Fri Apr 23 09:38:35 EDT 2010  Steve Huston  <shuston@riverace.com>
 
 	* ACE version 5.7a released.
