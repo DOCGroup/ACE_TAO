@@ -1,7 +1,7 @@
-// -*- MPC -*-
+// -*- MPC -*-cr
 // $Id$
 
-project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_mcpp_local, tao_idl_fe {
+project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, tao_idl_fe {
   exename      = tao_idl
   libs        += TAO_IDL_BE
   exeout       = $(ACE_ROOT)/bin
@@ -42,6 +42,7 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, crosscompile, mcpp, tao_idl_
 
   Source_Files {
     driver/drv_args.cpp
+    driver/drv_preproc.cpp
     tao_idl.cpp
   }
 

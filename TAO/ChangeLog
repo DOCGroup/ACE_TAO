@@ -1,3 +1,44 @@
+Fri Jun 18 13:57:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/tao_idl_fe.mpb:
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_fe.mpc:
+        * tao/ORB_Core.h:
+        * MPC/config/fe_mcpp.mpb:
+        * MPC/config/mcpp.mpb:
+        * MPC/config/tao_idl_mcpp.mpb:
+        * TAO_IDL/contrib:
+        * TAO_IDL/contrib/mcpp:
+        * TAO_IDL/contrib/mcpp/LICENSE:
+        * TAO_IDL/contrib/mcpp/Makefile.am:
+        * TAO_IDL/contrib/mcpp/cc1.cpp:
+        * TAO_IDL/contrib/mcpp/configed.H:
+        * TAO_IDL/contrib/mcpp/directive.cpp:
+        * TAO_IDL/contrib/mcpp/eval.cpp:
+        * TAO_IDL/contrib/mcpp/expand.cpp:
+        * TAO_IDL/contrib/mcpp/internal.H:
+        * TAO_IDL/contrib/mcpp/lib.cpp:
+        * TAO_IDL/contrib/mcpp/main.cpp:
+        * TAO_IDL/contrib/mcpp/main_libmcpp.c:
+        * TAO_IDL/contrib/mcpp/mbchar.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp.mpc:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.h:
+        * TAO_IDL/contrib/mcpp/mcpp_lib.cpp:
+        * TAO_IDL/contrib/mcpp/mcpp_lib_export.h:
+        * TAO_IDL/contrib/mcpp/mcpp_out.h:
+        * TAO_IDL/contrib/mcpp/noconfig.H:
+        * TAO_IDL/contrib/mcpp/preproc.cpp:
+        * TAO_IDL/contrib/mcpp/support.cpp:
+        * TAO_IDL/contrib/mcpp/system.H:
+        * TAO_IDL/contrib/mcpp/system.cpp:
+        * TAO_IDL/contrib/mcpp/testmain.c:
+        * TAO_IDL/contrib/mcpp/testmain.cpp:
+        * TAO_IDL/driver/drv_mcpp_preproc.cpp:
+        * TAO_IDL/fe/mcpp_tao_yyinput.h:
+        * TAO_IDL/tao_idl_mcpp_local.mpb:
+
+          Removed support for MCPP.
+
 Fri Jun 18 11:20:00 UTC 2010  Simon Massey  <simon dot massey at prismtech dot com>
 
         * TAO_IDL/util/utl_scope.cpp:
@@ -21,7 +62,7 @@ Thu Jun 17 13:55:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_svs.cpp:
         * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-        
+
           Fixes to correct the logic of inserting the port name,
           if any, into operation names, especially operations
           that stem from attributes declared in a porttype.
