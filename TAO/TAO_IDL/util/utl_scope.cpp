@@ -1285,15 +1285,19 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   UTL_Scope *work = this;
-  Identifier *const name = e->head ();
 
   // If name starts with "::" or "" start lookup in global scope,
   // if we're not there already, short_circuiting the
   // scope-expanding iteration below.
+  Identifier *name = e->head ();
   const bool global_scope_name = work->is_global_name (name);
   if (global_scope_name)
     {
+      // Remove the preceeding "::" or "" from the scopename
       e = static_cast<UTL_ScopedName *> (e->tail ());
+      name = e->head ();
+
+      // Move directly to the root scope
       work = idl_global->root ();
     }
 
@@ -1340,10 +1344,9 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                 }
             }
         }
-
-      this->add_to_referenced (d, false, name);
     }
 
+  work->add_to_referenced (d, false, name); // Doesn't add if !d
   masks.reset ();
   return d;
 }
