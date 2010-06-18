@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/ComponentServer/CIAO_ComponentServer_stub_export.h"
+#include "ciao/ComponentServer/CIAO_Base_stub_export.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
@@ -42,14 +42,14 @@ namespace CIAO
    * should be call right after ORB initialization but we should try
    * to register these stuff automatically.
    */
-  CIAO_COMPONENTSERVER_STUB_Export int Server_init (CORBA::ORB_ptr o);
+  CIAO_BASE_STUB_Export int Server_init (CORBA::ORB_ptr o);
 
   namespace Utility
   {
     /// Write a string (usually a stringified IOR) to a file
     /// designated by the @c pathname.  The file named will always get
     /// overwritten.
-    CIAO_COMPONENTSERVER_STUB_Export int write_IOR (const ACE_TCHAR *pathname,
+    CIAO_BASE_STUB_Export int write_IOR (const ACE_TCHAR *pathname,
                                               const char *IOR);
   }
 }

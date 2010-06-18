@@ -24,4 +24,8 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
     Deployment_Scheduler_export.h
     Deployment_Completion.h
   }
+
+  specific {
+    install_dir = DAnCE/LocalityManager/Scheduler
+  }
 }

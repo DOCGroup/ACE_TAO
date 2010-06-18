@@ -545,10 +545,6 @@ void
 DAnCE_NodeManager_Module::register_value_factories (void)
 {
   DANCE_TRACE("DAnCE_Node_Manager_Module::register_value_factories (void)");
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                ACE_TEXT ("Registering Cookie value factory.\n")));
-  CORBA::ValueFactory_var vf = new Components::Cookie_init();
-  vf = this->orb_->register_value_factory ("IDL:omg.org/Components/Cookie:1.0", vf.in());
 }
 
 void

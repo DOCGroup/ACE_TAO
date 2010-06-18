@@ -16,15 +16,23 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
      Locality_Manager_Impl.h
      Locality_Manager_Impl_Export.h
    }
+   
+   specific {
+     install_dir = DAnCE/LocalityManager/Daemon
+   }
 }
 
 project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
-        dance_locality_manager, dance_logger, ciao_logger, ciao_componentserver_stub {
+        dance_locality_manager, dance_logger, ciao_logger, ciao_deployment_handlers {
   exename = dance_locality_manager
   libs += CIAO_Deployment_Handlers
   after += CIAO_Deployment_Handlers
   Source_Files {
      Locality_Manager_Task.cpp
      Locality_Manager.cpp
+  }
+
+  specific {
+    install_dir = DAnCE/LocalityManager/Daemon
   }
 }
