@@ -1,0 +1,59 @@
+// $Id$
+
+project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=CIAO_BASE_STUB_Export \
+                  -Wb,stub_export_include=CIAO_Base_stub_export.h \
+                  -SS -Sci
+  custom_only=1
+
+  IDL_Files {
+    CIAO_Properties.idl
+    idlflags += -Gxhst
+  }
+
+  IDL_Files {
+    CIAO_FailureReasons.idl
+  }
+}
+
+project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
+				     ciao_logger, ciao_lib, \
+				     ccm_cookie, ccm_configvalue {
+  dynamicflags = CIAO_BASE_STUB_BUILD_DLL
+  after += CIAO_Base_IDL
+
+  IDL_Files {
+  }
+  Source_Files {
+    CIAO_PropertiesC.cpp
+    CIAO_FailureReasonsC.cpp
+    Server_init.cpp
+    Client_init.cpp
+  }
+  Header_Files {
+    CIAO_FailureReasonsC.h
+    CIAO_PropertiesC.h
+    Server_init.h
+    Client_init.h
+    CIAO_Properties_stub_export.h
+  }
+
+  specific {
+    install_dir = ciao
+  }
+  InstallData_Files {
+    gendir = .
+    ../../COPYING
+    ../../NEWS
+    ../../PROBLEM-REPORT-FORM
+    ../../VERSION
+    ../../docs
+    ../../MPC
+  }
+  verbatim(gnuace, postinstall) {
+" cp ../../rules.ciao.GNU $(INSTALL_PREFIX)/share/ciao"
+" perl -i -pe's!\\$$[{(]CIAO_ROOT[})]!$(INSTALL_PREFIX)/include!g;' -e'if (/ifndef TAO_IDL3_TO_IDL2\\b/) {print qq!TAO_IDL3_TO_IDL2=$(INSTALL_PREFIX)/share/ciao/bin/tao_idl3_to_idl2\\nTAO_IDL3_TO_IDL2DEP=\\$$(TAO_IDL3_TO_IDL2)\\$$(EXEEXT)\\n!}' $(INSTALL_PREFIX)/share/ciao/rules.ciao.GNU"
+" echo export CIAO_ROOT=$(INSTALL_PREFIX)/share/ciao> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+" echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/DAnCE>> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+  }
+}
