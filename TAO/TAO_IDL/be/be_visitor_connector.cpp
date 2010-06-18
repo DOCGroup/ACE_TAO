@@ -23,6 +23,7 @@
 
 #include "be_connector.h"
 #include "be_provides.h"
+#include "be_uses.h"
 #include "be_operation.h"
 #include "be_argument.h"
 
