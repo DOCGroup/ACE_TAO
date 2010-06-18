@@ -3454,22 +3454,8 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 
   if (idl_global->dds_connector_seen_)
     {
-      BE_GlobalData::DDS_IMPL the_dds_impl =
+      BE_GlobalData::DDS_IMPL const the_dds_impl =
         be_global->dds_impl ();
-
-      switch (the_dds_impl)
-        {
-          case BE_GlobalData::NDDS:
-            this->gen_standard_include (
-              this->ciao_conn_header_,
-              "connectors/dds4ccm/impl/dds/DDS4CCM_Traits.h");
-
-            break;
-          case BE_GlobalData::OPENSPLICE:
-          case BE_GlobalData::NONE:
-          case BE_GlobalData::OPENDDS:
-            break;
-        }
 
       /// The default, and we have to set the reference to
       /// something.
