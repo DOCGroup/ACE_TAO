@@ -1,0 +1,63 @@
+<!--//$Id$  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>DDS4CCM Tutorial Shapes - Compilation and deployment</title>
+</head>
+
+<body>
+  <table width="100%" border="0">
+    <tr>
+      <td align="left"><a href="./coding.html">Previous<a></td>
+      <td align="center"><img width="4%" height="5%" src="./images/images.png"/></td>
+      <td align="right"></td>
+    </tr>
+  </table>
+  <hr />
+
+  <h1>Compilation and deployment<h2>
+
+  <h2>Compilation</h2>
+  <p>
+    Once all the code has been written, compilation of the code would be the next
+    step.<br/>
+    MPC is used in order to create the Makefiles and projects files. All MPC files
+    that are needed for this tutorial are in the same directory as the accompanying
+    IDL and executor files.<br/>
+
+    In order to make the GNU make files or the Visual Studio project files,
+    the following steps should be performed :
+    <ul>
+      <li>Start a command shell and navigate to : <br/>
+          <code>%CIAO_ROOT%/connectors/dds4ccm/tutorials/Shapes/Shapes_asm</code>
+      </li>
+      <li>Run<br/>
+        <ul>
+          <li><code>perl %ACE_ROOT%/bin/mwc.pl -type vc9</code> to create Visual
+              Studio 2008 project files.
+          </li>
+          <li><code>perl %ACE_ROOT%/bin/mwc.pl -type gnuace</code> to create
+              the GNU make files.
+          </li>
+        </ul>
+        <li>Now compile the code like you're used to.
+        </li>
+      </li>
+    </ul>
+  </p>
+  <p>
+    If all went well, all libraries are in the Shapes_asm/lib directory.
+  </p>
+  <h2>Deployment</h2>
+  <p>
+  </p>
+
+  <hr />
+  <table width="100%" border="0">
+    <tr>
+      <td align="left"><a href="./coding.html">Previous<a></td>
+      <td align="center"><img width="4%" height="5%" src="./images/images.png"/></td>
+      <td align="right"></td>
+    </tr>
+  </table>
+</body>
