@@ -71,7 +71,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Perf_Keyed_Test_Perf_Keyed_Test_Connector_Impl</string>
+          <string>create_CCM_DDS_PerfKeyedTest_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -82,7 +82,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Perf_Keyed_Test_Perf_Keyed_Test_Connector_Servant</string>
+          <string>create_CCM_DDS_PerfKeyedTest_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -165,8 +165,8 @@
       <instance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
-  
+
+
   <connection>
     <name>info_listen_data_control</name>
     <deployRequirement>
@@ -206,7 +206,7 @@
       <instance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
-  
+
 
   <artifact xmi:id="Perf_Keyed_Test_Connector_ExecArtifact">
     <name>Perf_Keyed_Test_Connector_exec</name>
