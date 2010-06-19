@@ -1,3 +1,5 @@
+// $Id$
+
 project : ccm_cookie, ccm_configvalue {
   after += CIAO_Base_stub
   libs += CIAO_Base_stub
