@@ -114,7 +114,7 @@ namespace CIAO
       // differs for all entities.
       DDSQueryCondition * qc_reader_;
       DDSQueryCondition * qc_getter_;
-      DDSQueryCondition * qc_listener_;
+      static DDSQueryCondition * qc_listener_;
 
       typename DDS_TYPE::data_reader * impl (void);
     };
