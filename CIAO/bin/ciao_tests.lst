@@ -42,10 +42,6 @@ TAO/CIAO/DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl: !STATIC !MIN
 TAO/CIAO/DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test_cdr.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE
 TAO/CIAO/DAnCE/tests/CIAO/CommandlinePassage/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/DAnCE/tests/Bug_3832_Regression/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/CIAO_ComponentServer/Activator/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/CIAO_ComponentServer/Basic/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/CIAO_ComponentServer/SimpleComponent/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
-TAO/CIAO/tests/CIAO_ComponentServer/Local_Facet/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tests/Exceptions/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tests/NoReplyH/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
