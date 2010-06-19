@@ -19,9 +19,6 @@
 module LatencyTT_Test
 {
   module ::CCM_DDS::Typed < ::LatencyTTTest, ::LatencyTTTestSeq> LatencyTTTestConn;
-  connector LatencyTT_Test_Connector : LatencyTTTestConn::DDS_Event
-  {
-  };
 };
 
 #endif /* LatencyTT_Test_CONNECTOR_IDL_ */
