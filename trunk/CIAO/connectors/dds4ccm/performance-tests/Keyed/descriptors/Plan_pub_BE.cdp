@@ -6,7 +6,7 @@
   <label>Perf_Keyed_Test_Depl_1</label>
   <UUID>Perf_Keyed_Test_Depl_1</UUID>
 
-  
+
   <implementation xmi:id="Perf_Keyed_Test_ConnectorComponentImplementation">
     <name>Perf_Keyed_Test_ConnectorComponentImplementation</name>
     <source/>
@@ -20,7 +20,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Perf_Keyed_Test_Perf_Keyed_Test_Connector_Impl</string>
+          <string>create_CCM_DDS_PerfKeyedTest_DDS_Event_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -31,7 +31,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Perf_Keyed_Test_Perf_Keyed_Test_Connector_Servant</string>
+          <string>create_CCM_DDS_PerfKeyedTest_DDS_Event_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -223,8 +223,8 @@
     </configProperty>
   </instance>
 
-  
-  
+
+
   <connection>
     <name>info_listen_data_pub</name>
     <deployRequirement>
@@ -263,7 +263,7 @@
       <instance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
 
   <connection>
     <name>writer_connection</name>
@@ -284,7 +284,7 @@
       <instance xmi:idref="Perf_Keyed_Test_ConnectorComponentInstance" />
     </internalEndpoint>
   </connection>
-  
+
   <connection>
     <name>connector_status_sender</name>
     <deployRequirement>
