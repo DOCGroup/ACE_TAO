@@ -21,11 +21,4 @@ module CCM_DDS
   module ::CCM_DDS::Typed < ::PerfKeyedTest, ::PerfKeyedTestSeq> PerfKeyedTest;
 };
 
-module Perf_Keyed_Test
-{
-  connector Perf_Keyed_Test_Connector : ::CCM_DDS::PerfKeyedTest::DDS_Event
-  {
-  };
-};
-
 #endif /* Perf_Keyed_Test_CONNECTOR_IDL_ */
