@@ -9,14 +9,16 @@
 #include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
+DDSQueryCondition * CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::qc_listener_ = 0;
+ 
+template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (void)
   : CCM_DDS_DataReader_i (0),
     impl_ (0),
     rd_condition_ (0),
     ws_ (0),
     qc_reader_ (0),
-    qc_getter_ (0),
-    qc_listener_ (0)
+    qc_getter_ (0)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::DataReader_T");
 
