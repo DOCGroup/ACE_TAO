@@ -19,9 +19,6 @@
 module Throughput
 {
   module ::CCM_DDS::Typed < ::ThroughputTest, ::ThroughputTestSeq> ThroughputTestConn;
-  connector Throughput_Connector : ThroughputTestConn::DDS_Event
-  {
-  };
 };
 
 #endif /* Throughput_CONNECTOR_IDL_ */

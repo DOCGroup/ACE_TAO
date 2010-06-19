@@ -19,9 +19,6 @@
 module Throughput
 {
   module ::CCM_DDS::Typed < ::ThroughputCommand, ::ThroughputCommandSeq> ThroughputCommandConn;
-  connector Throughput_Sec_Connector : ThroughputCommandConn::DDS_Event
-  {
-  };
 };
 
 #endif /* Throughput_Sec_CONNECTOR_IDL_ */
