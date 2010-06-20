@@ -377,3 +377,12 @@ namespace CIAO
     
   }
 }
+
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr 
+  CIAO_Locality_Handler_Export create_Home_Handler (void)
+  {
+    return new CIAO::Home_Handler_i ();
+  }
+}

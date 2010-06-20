@@ -18,6 +18,8 @@
 #include "DAnCE/DAnCE_LocalityManagerC.h"
 #include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "DAnCE/LocalityManager/Scheduler/Deployment_Completion.h"
+#include "LocalityManager/Scheduler/Events/Install.h"
+#include "LocalityManager/Scheduler/Events/Remove.h"
 #include "Split_Plan/Locality_Splitter.h"
 #include "Split_Plan/Split_Plan.h"
 
@@ -118,14 +120,12 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
       this->sub_plans_ [ lm_idd.name.in () ] = SUB_PLAN (loc_manager_instance,
                                                          sub_plan);
 
-      CORBA::Any_var reference;
-
       Install_Instance *event (0);
       Event_Future result;
       completion.accept (result);
 
       ACE_NEW_THROW_EX (event,
-                        Install_Instance (sub_plan,
+                        Install_Instance (this->sub_plans_ [ lm_idd.name.in () ].second,
                                           loc_manager_instance,
                                           DAnCE::DANCE_LOCALITYMANAGER,
                                           result
@@ -140,7 +140,7 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
   
   ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
   
-  if (completion.wait_on_completion (&tv))
+  if (!completion.wait_on_completion (&tv))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT("NodeApplication_Impl::prepare_instances - ")

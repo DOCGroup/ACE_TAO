@@ -6,10 +6,16 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
   
   Source_Files {
     Deployment_Event.cpp
-    Deployment_Events.cpp
     Plugin_Manager.cpp
     Deployment_Scheduler.cpp
     Deployment_Completion.cpp
+    Events/Install.cpp
+    Events/Remove.cpp
+    Events/Connect.cpp
+    Events/Endpoint.cpp
+    Events/Start.cpp
+    Events/Passivate.cpp
+    Events/Configured.cpp
   }
  
   Inline_Files {
@@ -19,10 +25,13 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
   Header_Files {
     Plugin_Manager.h
     Deployment_Event.h
-    Deployment_Events.h
     Deployment_Scheduler.h
     Deployment_Scheduler_export.h
     Deployment_Completion.h
+    Events/Install.h
+    Events/Remove.h
+    Events/Connect.h
+    Events/Endpoint.h
   }
 
   specific {

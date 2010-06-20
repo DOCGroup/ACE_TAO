@@ -34,9 +34,7 @@ namespace CIAO
   {
   public:
     // Constructor 
-    Container_Handler_i (const DAnCE::Utility::PROPERTY_MAP &props,
-                         CORBA::ORB_ptr orb,
-                         PortableServer::POA_ptr poa);
+    Container_Handler_i (void);
   
     // Destructor 
     virtual ~Container_Handler_i (void);
@@ -88,4 +86,11 @@ namespace CIAO
     PortableServer::POA_var poa_;
   };
 }
+
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr 
+  CIAO_Locality_Handler_Export create_Container_Handler (void);
+}
+
 #endif

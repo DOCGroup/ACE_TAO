@@ -470,7 +470,7 @@ namespace DAnCE
     void
     DAnCE_LocalityActivator_i::
       multi_threaded_wait_for_callback (Server_Info &si,
-                                      ACE_Time_Value &timeout)
+                                        ACE_Time_Value &timeout)
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback");
 
@@ -481,7 +481,7 @@ namespace DAnCE
                            CORBA::NO_RESOURCES ());
 
       while (! si.activated_ )
-        if (si.condition_.wait (/*&timeout*/) == -1)
+        if (si.condition_.wait (&timeout) == -1)
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")

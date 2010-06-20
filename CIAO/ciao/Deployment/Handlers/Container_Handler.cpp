@@ -1,31 +1,19 @@
 // $Id$
 
 #include "Container_Handler.h"
+#include "tao/ORB_Core.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Containers/Session/Session_Container.h"
 #include "ciao/Base/Server_init.h"
-
+#include "DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_PropertiesC.h"
 #include "CIAO_State.h"
 
 namespace CIAO
 {
-  Container_Handler_i::Container_Handler_i (const DAnCE::Utility::PROPERTY_MAP &,
-                                            CORBA::ORB_ptr orb,
-                                            PortableServer::POA_ptr poa)
-    : orb_ (CORBA::ORB::_duplicate (orb)),
-      poa_ (PortableServer::POA::_duplicate (poa))
-            
+  Container_Handler_i::Container_Handler_i (void)
   {
     CIAO_TRACE ("Container_Handler_i::Container_Handler_i");
-    CIAO::Server_init (orb_);
-    
-    // For the time being, we are going to go ahead and construct a container.
-    ::Deployment::DeploymentPlan plan;
-    plan.instance.length (1);
-    plan.instance[0].name = "";
-    
-    ::CORBA::Any_var any;
-    this->install_instance (plan, 0, any.out ());
   }
   
   // Destructor 
@@ -204,9 +192,54 @@ namespace CIAO
   }
 
   void
-  Container_Handler_i::configure (const ::Deployment::Properties & )
+  Container_Handler_i::configure (const ::Deployment::Properties &props )
   {
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    ACE_TEXT ("Container_Handler_i::configure - ")
+                    ACE_TEXT ("Received %u properties for configuration\n"),
+                    props.length ()));
+
+    DAnCE::Utility::get_property_value (DAnCE::ENTITY_POA,
+                                        props,
+                                        this->poa_);
     
+    if (CORBA::is_nil (this->poa_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("Container_Handler_i::configure -")
+                        ACE_TEXT ("Unable to locate POA.\n")));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate POA");
+      }
+    
+    this->orb_ = TAO_ORB_Core_instance ()->orb ();
+    
+    if (CORBA::is_nil (this->orb_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("Container_Handler_i::configure -")
+                        ACE_TEXT ("Unable to locate ORB.\n")));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate ORB");
+      }
+    
+    CIAO::Server_init (orb_);
+    
+    // For the time being, we are going to go ahead and construct a container.
+    ::Deployment::DeploymentPlan plan;
+    plan.instance.length (1);
+    plan.instance[0].name = "";
+    
+    ::CORBA::Any_var any;
+    this->install_instance (plan, 0, any.out ());
   }
 }
 
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr 
+  CIAO_Locality_Handler_Export create_Container_Handler (void)
+  {
+    return new CIAO::Container_Handler_i ();
+  }
+}

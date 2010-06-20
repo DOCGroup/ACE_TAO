@@ -1,20 +1,99 @@
+Sun Jun 20 17:48:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+
+          Layout changes.
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+        Scheduler integration
+
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Event.inl:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.h:
+        * DAnCE/LocalityManager/Scheduler/Events:
+        * DAnCE/LocalityManager/Scheduler/Events/Configured.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Configured.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Connect.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Connect.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Endpoint.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Endpoint.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Install.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Install.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Passivate.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Passivate.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Remove.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Remove.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Start.h:
+        * DAnCE/LocalityManager/Scheduler/Events/Start.cpp:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+
+          Re-factored event scheduler events.
+
+        * DAnCE/MPC/config/dance_completion_counter.mpb:
+        * DAnCE/MPC/config/dance_deployment_scheduler.mpb:
+
+          Linking fixes/MPC optimization.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Bugfixes.
+
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Added factory methods, re-arranged configuration logic.
+
+        * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
+        * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors_export.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.h:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Moved initial deployment interceptors into CIAO.
+
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.h:
+        * DAnCE/LocalityManager/Daemon/Deployment_Interceptors.cpp:
+        * DAnCE/LocalityManager/Daemon/Name_Utilities.h:
+        * DAnCE/LocalityManager/Daemon/Name_Utilities.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.inl:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Events.cpp:
+
+          Removed these files.
+
 Sun Jun 20 13:10:16 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/ami4ccm/models:
         * connectors/ami4ccm/models/ami4ccm.xme:
 
           PICML model for the ami4ccm backend.
-          
+
         * connectors/dds4ccm/models/dds4ccm.xme:
-        
-          Update of dds4ccm PICML model after updating the PICML metamodel to 
+
+          Update of dds4ccm PICML model after updating the PICML metamodel to
           completely support IDL statements it was currently lacking, such as
           'native' and array struct members.
 
         * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
-        
+
           Regenerated Shapes example.
-          
+
 Fri Jun 18 20:29:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_base.mpb:

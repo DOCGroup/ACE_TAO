@@ -28,8 +28,7 @@ module DAnCE
     void install_instance (in ::Deployment::DeploymentPlan plan,
                            in unsigned long instanceRef,
                            out any instance_reference)
-      raises (Deployment::ResourceNotAvailable,
-              Deployment::StartError,
+      raises (Deployment::StartError,
               Deployment::InvalidProperty,
               Deployment::InvalidNodeExecParameter,
               Deployment::InvalidComponentExecParameter);
@@ -37,7 +36,8 @@ module DAnCE
     void provide_endpoint_reference (in ::Deployment::DeploymentPlan plan,
                                      in unsigned long connectionRef,
                                      out any endpoint_reference)
-      raises (Deployment::PlanError);
+      raises (Deployment::StartError,
+              Deployment::InvalidProperty);
 
     void connect_instance (in ::Deployment::DeploymentPlan plan,
                            in unsigned long connectionRef,
@@ -59,8 +59,8 @@ module DAnCE
       raises (Deployment::StartError);
 
     void passivate_instance (in ::Deployment::DeploymentPlan plan,
-                          in unsigned long instanceRef,
-                          in any instance_reference)
+                             in unsigned long instanceRef,
+                             in any instance_reference)
       raises (Deployment::StopError);
 
     void remove_instance (in ::Deployment::DeploymentPlan plan,

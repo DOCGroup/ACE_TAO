@@ -37,6 +37,8 @@ namespace DAnCE
 
     /// Waits for completion of all events, with a timeout
     bool wait_on_completion (ACE_Time_Value *tv);
+    
+    void completed_events (Event_List &event_list);
 
   protected:
     virtual void on_all_completed ();
@@ -46,6 +48,8 @@ namespace DAnCE
   private:
     TAO_SYNCH_MUTEX mutex_;
     ACE_Condition< TAO_SYNCH_MUTEX > condition_;
+    
+    Event_List completed_events_;
   };
 
 }

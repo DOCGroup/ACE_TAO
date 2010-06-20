@@ -23,6 +23,8 @@
 
 
 #include "LocalityManager/Daemon/Locality_Manager_Impl_Export.h"
+#include "LocalityManager/Scheduler/Deployment_Scheduler.h"
+
 #include <map>
 #include <vector>
 #include <list>
@@ -73,24 +75,18 @@ namespace DAnCE
       void destroyApplication (::Deployment::Application_ptr app);
     
   private:
+    void install_instances (const ::Deployment::Properties &prop);
+    
+    void collect_references (::Deployment::Connections_out &providedReference);
+    
     ACE_TString uuid_;
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
     
     typedef std::list< CORBA::ULong > INSTANCE_LIST;
 
-    struct Handler
-    {
-      Handler (void) {};
-      Handler (::DAnCE::InstanceDeploymentHandler_ptr h)
-        : handler_ (h) {};
-
-      ::DAnCE::InstanceDeploymentHandler_var handler_;
-      INSTANCE_LIST instances_;
-    };
-
     typedef std::map <std::string, 
-                      Handler> HANDLER_TABLE;
+                      INSTANCE_LIST> HANDLER_TABLE;
     
     HANDLER_TABLE instance_handlers_;
     
@@ -98,15 +94,17 @@ namespace DAnCE
     
     HANDLER_ORDER handler_order_;
     
-    typedef std::map < CORBA::ULong, CORBA::Any_var > REFERENCE_MAP;
+    typedef std::map < std::string, CORBA::Any_var > REFERENCE_MAP;
     
     REFERENCE_MAP instance_references_;
       
     ::Deployment::DeploymentPlan plan_;
     
-    ::DAnCE::InstanceInstallation_var ii_interceptor_;
-    
     ::Deployment::Properties_var props_;
+    
+    DAnCE::Deployment_Scheduler scheduler_;
+    
+    CORBA::ULong spawn_delay_;
   };
 
 }

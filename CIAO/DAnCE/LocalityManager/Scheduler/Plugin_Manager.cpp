@@ -22,7 +22,7 @@ namespace DAnCE
     this->config_ = config;
   }
 
-  const char *
+  char *
   Plugin_Manager::register_installation_handler (const ACE_TCHAR *artifact,
                                                  const ACE_TCHAR *entrypoint)
   {
@@ -114,7 +114,7 @@ namespace DAnCE
                          ACE_TEXT ("Successfully created installation handler for instance type <%C>\n"),
                          instance_type.in ()));
         
-        return instance_type.in ();
+        return instance_type._retn ();
       }
     catch (const CORBA::Exception &ex)
       {

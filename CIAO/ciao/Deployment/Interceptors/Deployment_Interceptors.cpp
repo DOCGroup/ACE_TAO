@@ -1,49 +1,42 @@
 // $Id$
 
 #include "Deployment_Interceptors.h"
-#include "Logger/Log_Macros.h"
+#include "tao/ORB_Core.h"
 #include "Name_Utilities.h"
+#include "Deployment/Deployment_StartErrorC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_Utility.h"
+#include "ciao/Logger/Log_Macros.h"
 
-namespace DAnCE
+namespace CIAO
 {
   // Implementation skeleton constructor
-  DAnCE_StoreReferences_i::DAnCE_StoreReferences_i (CORBA::ORB_ptr orb,
-                                                    const ::Deployment::Properties *prop_ptr)
-    : orb_ (CORBA::ORB::_duplicate (orb))
-      
+  CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
-    if (prop_ptr)
+    this->orb_ = TAO_ORB_Core_instance ()->orb ();
+    
+    if (CORBA::is_nil (this->orb_))
       {
-        const ::Deployment::Properties &props = *prop_ptr;
-
-        for (CORBA::ULong i = 0; i < props.length (); ++i)
-          {
-            if (ACE_OS::strcmp (props[i].name.in (),
-                                DAnCE::LOCALITY_NAMINGCONTEXT) == 0)
-              {
-                CORBA::Object_var obj;
-                props[i].value >>= CORBA::Any::to_object (obj);
-                
-                ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
-              }
-          }
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("Container_Handler_i::configure -")
+                        ACE_TEXT ("Unable to locate ORB.\n")));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate ORB");
       }
   }
 
   // Implementation skeleton destructor
-  DAnCE_StoreReferences_i::~DAnCE_StoreReferences_i (void)
+  CIAO_StoreReferences_i::~CIAO_StoreReferences_i (void)
   {
   }
 
-  void DAnCE_StoreReferences_i::instance_pre_install (::Deployment::DeploymentPlan &,
+  void CIAO_StoreReferences_i::instance_pre_install (::Deployment::DeploymentPlan &,
                                                       ::CORBA::ULong)
   {
     // no-op
   }
 
-  void DAnCE_StoreReferences_i::instance_post_install (const ::Deployment::DeploymentPlan &plan,
+  void CIAO_StoreReferences_i::instance_post_install (const ::Deployment::DeploymentPlan &plan,
                                                        ::CORBA::ULong instance_index,
                                                        const ::CORBA::Any &instance_reference,
                                                        const ::CORBA::Any &)
@@ -52,7 +45,7 @@ namespace DAnCE
       plan.instance[instance_index];
     
     DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-                     ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                     ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
                      ACE_TEXT ("Interceptor post install for instance %C\n"),
                      plan.instance[instance_index].name.in ()));
     
@@ -68,7 +61,7 @@ namespace DAnCE
             if (!(instance_reference >>= CORBA::Any::to_object (obj)))
               {
                 DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                 ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                                 ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
                                  ACE_TEXT ("Unable to extract instance reference from Any\n")));
               }
             
@@ -76,7 +69,7 @@ namespace DAnCE
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
             DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-                             ACE_TEXT ("DAnCE_StoreReferences_i::instance_post_install - ")
+                             ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
                              ACE_TEXT ("Registering name %C for instance %C\n"),
                              name,
                              plan.instance[instance_index].name.in ()));
@@ -102,30 +95,40 @@ namespace DAnCE
   }
 
   void
-  DAnCE_StoreReferences_i::configure (const ::Deployment::Properties & )
+  CIAO_StoreReferences_i::configure (const ::Deployment::Properties &props )
   {
-    
+    for (CORBA::ULong i = 0; i < props.length (); ++i)
+      {
+        if (ACE_OS::strcmp (props[i].name.in (),
+                            DAnCE::LOCALITY_NAMINGCONTEXT) == 0)
+          {
+            CORBA::Object_var obj;
+            props[i].value >>= CORBA::Any::to_object (obj);
+                
+            ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
+          }
+      }
   }
 
   // Implementation skeleton constructor
-  DAnCE_ReferenceLookup_i::DAnCE_ReferenceLookup_i (void)
+  CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
   }
 
   // Implementation skeleton destructor
-  DAnCE_ReferenceLookup_i::~DAnCE_ReferenceLookup_i (void)
+  CIAO_ReferenceLookup_i::~CIAO_ReferenceLookup_i (void)
   {
   }
 
   void 
-  DAnCE_ReferenceLookup_i::instance_pre_connect (::Deployment::DeploymentPlan &,
+  CIAO_ReferenceLookup_i::instance_pre_connect (::Deployment::DeploymentPlan &,
                                                  ::CORBA::ULong,
                                                  ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
-  void DAnCE_ReferenceLookup_i::instance_post_connect (const ::Deployment::DeploymentPlan &,
+  void CIAO_ReferenceLookup_i::instance_post_connect (const ::Deployment::DeploymentPlan &,
                                                        ::CORBA::ULong,
                                                        const ::CORBA::Any &)
   {
@@ -133,9 +136,18 @@ namespace DAnCE
   }
 
   void
-  DAnCE_ReferenceLookup_i::configure (const ::Deployment::Properties & )
+  CIAO_ReferenceLookup_i::configure (const ::Deployment::Properties & )
   {
     
   }
  
+}
+
+extern "C"
+{
+  ::DAnCE::DeploymentInterceptor_ptr 
+  CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void)
+  {
+    return new CIAO::CIAO_StoreReferences_i ();
+  }
 }
