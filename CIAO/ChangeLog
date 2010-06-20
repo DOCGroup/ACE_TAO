@@ -1,3 +1,9 @@
+Sun Jun 20 21:28:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Warning fix.
+
 Sun Jun 20 21:25:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
