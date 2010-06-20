@@ -1,6 +1,6 @@
 // $Id$
 project (CIAO_Deployment_Handlers) : dance_stub, ciao_base, ciao_lib, ciao_output, \
-        ciao_session_container, ciao_logger {
+        ciao_session_container, ciao_logger, dance_logger {
   dynamicflags = CIAO_LOCALITY_HANDLER_BUILD_DLL
 
   Source_Files {
