@@ -11,7 +11,7 @@
 
 #include "orbsvcs/CosNamingC.h"
 
-namespace DAnCE
+namespace CIAO
 {
   namespace Name_Utilities
   {

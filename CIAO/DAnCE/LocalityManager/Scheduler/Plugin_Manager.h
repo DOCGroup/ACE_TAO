@@ -38,8 +38,8 @@ namespace DAnCE
     void set_configuration (const Deployment::Properties &config);
 
     /// Registers a new installation handler.
-    const char * register_installation_handler (const ACE_TCHAR *artifact,
-                                                const ACE_TCHAR *entrypoint);
+    char * register_installation_handler (const ACE_TCHAR *artifact,
+                                          const ACE_TCHAR *entrypoint);
     
     /// Registers a new deployment interceptor
     void register_interceptor (const ACE_TCHAR *artifact,

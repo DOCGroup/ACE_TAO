@@ -1,0 +1,15 @@
+// $Id$
+project (CIAO_Deployment_Interceptors) : ciao_base, ciao_lib, ciao_output, \
+        naming, ciao_logger, dance_stub {
+  dynamicflags = CIAO_DEPLOOYMENT_INTERCEPTORS_BUILD_DLL
+
+  Source_Files {
+    Deployment_Interceptors.cpp
+    Name_Utilities.cpp
+  }
+
+  Header_Files {
+    Deployment_Interceptors.h
+    Name_Utilities.h
+  }
+}

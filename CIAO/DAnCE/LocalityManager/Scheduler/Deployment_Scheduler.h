@@ -10,7 +10,7 @@
 
 #include "ace/Task.h"
 #include "ace/Activation_Queue.h"
-#include "LocalityManager/Scheduler/Deployment_Events.h"
+#include "LocalityManager/Scheduler/Deployment_Event.h"
 
 namespace DAnCE
 {

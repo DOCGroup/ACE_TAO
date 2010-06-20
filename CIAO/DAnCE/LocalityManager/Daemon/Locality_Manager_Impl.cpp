@@ -7,17 +7,19 @@
 #include "Locality_Manager_Impl.h"
 #include "Logger/Log_Macros.h"
 
+#include "DAnCE/DAnCE_Utility.h"
+#include "DAnCE/DAnCE_PropertiesC.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
+#include "LocalityManager/Scheduler/Deployment_Completion.h"
+#include "LocalityManager/Scheduler/Events/Install.h"
+#include "LocalityManager/Scheduler/Events/Connect.h"
+#include "LocalityManager/Scheduler/Events/Endpoint.h"
+#include "LocalityManager/Scheduler/Events/Start.h"
+#include "LocalityManager/Scheduler/Events/Configured.h"
+#include "LocalityManager/Scheduler/Events/Remove.h"
+#include "LocalityManager/Scheduler/Events/Passivate.h"
 
-/*
- * CIAO Instance handlers
- * @TODO:  Needs to be replaced by dynamic provisioning system.
- */
-#include "ciao/Deployment/Handlers/Container_Handler.h"
-#include "ciao/Deployment/Handlers/Component_Handler.h"
-#include "ciao/Deployment/Handlers/Home_Handler.h"
-#include "ciao/Deployment/Handlers/Homed_Component_Handler.h"
-#include "Deployment_Interceptors.h"
-//
+using DAnCE::Utility::extract_and_throw_exception;        
 
 namespace DAnCE
 {
@@ -27,15 +29,20 @@ namespace DAnCE
                                         PortableServer::POA_ptr poa)
     : uuid_ (uuid),
       orb_ (CORBA::ORB::_duplicate  (orb)),
-      poa_ (PortableServer::POA::_duplicate (poa))
+      poa_ (PortableServer::POA::_duplicate (poa)),
+      spawn_delay_ (30)
   {
     DANCE_TRACE ("LocalityManager_i::LocalityManager_i");
+    this->scheduler_.activate (THR_DETACHED,
+                               1);
   }
 
   // Implementation skeleton destructor
   LocalityManager_i::~LocalityManager_i (void)
   {
     DANCE_TRACE ("LocalityManager_i::~LocalityManager_i");
+    
+    this->scheduler_.terminate_scheduler ();
   }
   
   void
@@ -47,48 +54,90 @@ namespace DAnCE
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Received %u properties from init\n"),
                      props->length ()));
+    
+    if (props)
+      {
+        this->props_ = props;
+        
+        DAnCE::Utility::update_property_value (ENTITY_POA,
+                                               *this->props_,
+                                               this->poa_);
 
-    this->props_ = props;
-    
-    // Initialize the CIAO instance handlers
-    ::DAnCE::InstanceDeploymentHandler_ptr tmp;
-    
-    DAnCE::Utility::PROPERTY_MAP tmp_props;
-    
-    ACE_NEW_THROW_EX (tmp,
-                      CIAO::Container_Handler_i (tmp_props,
-                                                 this->orb_,
-                                                 this->poa_),
-                      CORBA::NO_MEMORY ());
+        PLUGIN_MANAGER::instance ()->set_configuration (*props);
+      }
 
-    this->instance_handlers_[tmp->instance_type ()] = Handler (tmp);
-    this->handler_order_.push_back (tmp->instance_type ());
+    std::string type =
+      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
+                                                                  "create_Container_Handler");
     
-    ACE_NEW_THROW_EX (tmp,
-                      CIAO::Home_Handler_i,
-                      CORBA::NO_MEMORY ());
+    if (type.c_str ())
+      {
+        this->handler_order_.push_back (type.c_str ());
+        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+      }
+    
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                     ACE_TEXT ("LocalityManager_i::init - ")
+                     ACE_TEXT ("Registered handler for <%C>\n"),
+                     type.c_str ()));
 
-    this->instance_handlers_[tmp->instance_type ()] = Handler (tmp);
-    this->handler_order_.push_back (tmp->instance_type ());
+    type =
+      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
+                                                                  "create_Home_Handler");
+    if (type.c_str ())
+      {
+        this->handler_order_.push_back (type.c_str ());
+        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+      }
+    
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                     ACE_TEXT ("LocalityManager_i::init - ")
+                     ACE_TEXT ("Registered handler for <%C>\n"),
+                     type.c_str ()));
 
-    ACE_NEW_THROW_EX (tmp,
-                      CIAO::Component_Handler_i (),
-                      CORBA::NO_MEMORY ());
+    type =
+      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
+                                                                  "create_Homed_Component_Handler");
+    if (type.c_str ())
+      {
+        this->handler_order_.push_back (type.c_str ());
+        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+      }
+    
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                     ACE_TEXT ("LocalityManager_i::init - ")
+                     ACE_TEXT ("Registered handler for <%C>\n"),
+                     type.c_str ()));
 
-    this->instance_handlers_[tmp->instance_type ()] = Handler (tmp);                                     
-    this->handler_order_.push_back (tmp->instance_type ());
+    type =
+      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
+                                                                  "create_Component_Handler");
+    if (type.c_str ())
+      {
+        this->handler_order_.push_back (type.c_str ());
+        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+      }
     
-    ACE_NEW_THROW_EX (tmp,
-                      CIAO::Homed_Component_Handler_i (),
-                      CORBA::NO_MEMORY ());
+    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                     ACE_TEXT ("LocalityManager_i::init - ")
+                     ACE_TEXT ("Registered handler for <%C>\n"),
+                     type.c_str ()));
+
+    PLUGIN_MANAGER::instance ()->register_interceptor ("CIAO_Deployment_Interceptors",
+                                                       "create_CIAO_StoreReferences");
     
-    this->instance_handlers_[tmp->instance_type ()] = Handler (tmp);
-    this->handler_order_.push_back (tmp->instance_type ());
-    
-    ACE_NEW_THROW_EX (this->ii_interceptor_,
-                      DAnCE_StoreReferences_i (this->orb_.in (),
-                                               props),
-                      CORBA::NO_MEMORY ());
+    if (this->props_)
+      {
+        if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
+                                                *this->props_,
+                                                this->spawn_delay_))
+          {
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                             ACE_TEXT ("LocalityManager_i::configure - ")
+                             ACE_TEXT ("Using provided spawn delay %u\n"),
+                             this->spawn_delay_));
+          }
+      }
   }
 
   ::Deployment::Properties *
@@ -116,20 +165,34 @@ namespace DAnCE
         const char  *instance_type = 
           Utility::get_instance_type (plan.implementation[implRef].execParameter);
         
-        instance_handlers_[instance_type].instances_.push_back (i);
+        instance_handlers_[instance_type].push_back (i);
       }
     
     return this->_this ();
-    // Add your implementation here
   }
 
   ::Deployment::Application_ptr
-  LocalityManager_i::startLaunch (const ::Deployment::Properties &,
+  LocalityManager_i::startLaunch (const ::Deployment::Properties &prop,
                                   ::Deployment::Connections_out providedReference)
   {
     DANCE_TRACE ("LocalityManager_i::startLaunch");
     
+    this->install_instances (prop);
+
+    this->collect_references (providedReference);
+
+    return this->_this ();
+  }
+  
+  void
+  LocalityManager_i::install_instances (const ::Deployment::Properties &prop)
+  {
+    DANCE_TRACE ("LocalityManager_i::install_instances");
     
+    CORBA::ULong dispatched (0);
+    
+    Deployment_Completion completion;
+
     for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
@@ -139,9 +202,7 @@ namespace DAnCE
                          ACE_TEXT ("Starting installation of %C type instances\n"),
                          i->c_str ()));
 
-        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[*i].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[*i];
 
         for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
              j != inst_list.end ();
@@ -152,36 +213,93 @@ namespace DAnCE
                              ACE_TEXT ("Starting installation of instance %C\n"),
                              this->plan_.instance[*j].name.in ()));
                              
-                             
-            this->ii_interceptor_->instance_pre_install (this->plan_,
-                                                         *j);
-
-            CORBA::Any_var reference;
-            handler->install_instance (this->plan_,
-                                       *j,
-                                       reference.out ());
+            Install_Instance *event (0);
+            Event_Future result;
+            completion.accept (result);
             
-            CORBA::Any exception;
-
-            this->ii_interceptor_->instance_post_install (this->plan_,
-                                                          *j,
-                                                          reference.in (),
-                                                          exception);
-            this->instance_references_[*j] = reference._retn ();
+            ACE_NEW_THROW_EX (event,
+                              Install_Instance (this->plan_,
+                                                *j,
+                                                i->c_str (),
+                                                result),
+                              CORBA::NO_MEMORY ());
             
-
-            // @@ todo: post-interceptor
+            this->scheduler_.schedule_event (event);
+            ++dispatched;
           }
       }
-
-    ::Deployment::Connections *conn_cmp;
     
-    ACE_NEW_THROW_EX (conn_cmp,
-                      ::Deployment::Connections (this->plan_.connection.length ()),
-                      CORBA::NO_MEMORY ());
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
     
-    CORBA::ULong pos (0);
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
 
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError > 
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidProperty > 
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidNodeExecParameter > 
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidComponentExecParameter > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception");
+          }
+        
+        DANCE_DEBUG (5, (LM_INFO, DLINFO
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Instance <%C> successfully deployed\n"),
+                         event.id_.c_str ()));
+        
+        this->instance_references_[event.id_] = event.contents_;
+      }    
+  }
+  
+  void
+  LocalityManager_i::collect_references (::Deployment::Connections_out &providedReference)
+  {
+    DANCE_TRACE ("LocalityManager_i::collect_references");
+    
+    CORBA::ULong dispatched (0);
+    Deployment_Completion completion;    
+    
     for (CORBA::ULong i = 0;
          i < this->plan_.connection.length ();
          ++i)
@@ -202,29 +320,90 @@ namespace DAnCE
                 const char  *inst_type = 
                   Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
                 
-                CORBA::Any_var ref;
-
-                this->instance_handlers_[inst_type].handler_->
-                  provide_endpoint_reference (this->plan_,
-                                              i,
-                                              ref.out ());
                 
-                CORBA::Object_var obj_ref;
-
-                ref >>= CORBA::Any::to_object (obj_ref);
-                conn_cmp->length (pos + 1);
-                (*conn_cmp)[pos].name = conn.name.in ();
-                (*conn_cmp)[pos].endpoint.length (1);
-                (*conn_cmp)[pos].endpoint[0] = obj_ref;                
-                ++pos;
+                Endpoint_Reference *event (0);
+                Event_Future result;
+                completion.accept (result);
+                
+                ACE_NEW_THROW_EX (event,
+                                  Endpoint_Reference (this->plan_,
+                                                      i,
+                                                      inst_type,
+                                                      result),
+                                  CORBA::NO_MEMORY ());
+                
+                this->scheduler_.schedule_event (event);
+                ++dispatched;
               }
           }
       }
-         
+    
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
+    
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+    
+    ::Deployment::Connections *conn_cmp;
+    ACE_NEW_THROW_EX (conn_cmp,
+                      ::Deployment::Connections (this->plan_.connection.length ()),
+                      CORBA::NO_MEMORY ());
+    
+    CORBA::ULong pos (0);
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError > 
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidProperty > 
+              (event.contents_.in ())))
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception");
+          }
+            
+        CORBA::Object_var obj_ref;
+        
+        event.contents_ >>= CORBA::Any::to_object (obj_ref);
+        conn_cmp->length (pos + 1);
+        (*conn_cmp)[pos].name = event.id_.c_str ();
+        (*conn_cmp)[pos].endpoint.length (1);
+        (*conn_cmp)[pos].endpoint[0] = obj_ref;                
+        ++pos;
+      }
     
     providedReference = conn_cmp;
-
-    return this->_this ();
   }
 
   void
@@ -237,6 +416,8 @@ namespace DAnCE
     typedef std::map < std::string, CORBA::ULong > ConnMap;
     ConnMap conns;
     
+    Deployment_Completion completion;
+
     DANCE_DEBUG (6, (LM_TRACE, DLINFO 
                      ACE_TEXT ("LocalityManager_i::finishLaunch - ")
                      ACE_TEXT ("Starting finsihLaunch, received %u references, ")
@@ -250,6 +431,8 @@ namespace DAnCE
         conns[this->plan_.connection[i].name.in ()] = i;
       }
     
+    CORBA::ULong dispatched;
+
     for (CORBA::ULong i = 0; i < providedReference.length (); ++i)
       {
         const char * name = providedReference[i].name.in ();
@@ -300,31 +483,147 @@ namespace DAnCE
         
         const char  *inst_type = 
           Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
+
+        Connect_Instance *event (0);
+        Event_Future result;
+        completion.accept (result);
         
-        // @@ placeholder for pre_connect interceptor
-        this->instance_handlers_[inst_type].handler_->
-          connect_instance (this->plan_,
-                            conn_ref->second,
-                            reference);
-        // @@ placeholder for post_connect interceptor
+        ACE_NEW_THROW_EX (event,
+                          Connect_Instance (this->plan_,
+                                            conn_ref->second,
+                                            reference,
+                                            inst_type,
+                                            result),
+                          CORBA::NO_MEMORY ());
+        
+        this->scheduler_.schedule_event (event);
+        ++dispatched;        
       }
 
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
     
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+    
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError > 
+              (event.contents_.in ()) ||
+              extract_and_throw_exception < Deployment::InvalidConnection > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception");
+          }
+      }
+    
+    dispatched = 0;
+
     for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
       {
-        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[*i].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[*i];
         
-        for (INSTANCE_LIST::const_iterator i = inst_list.begin ();
-             i != inst_list.end ();
-             ++i)
+        for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
+             j != inst_list.end ();
+             ++j)
           {
-            CORBA::Any_var reference;
-            handler->instance_configured (this->plan_,
-                                          *i);
+            Instance_Configured *event (0);
+            Event_Future result;
+            completion.accept (result);
+            
+            ACE_NEW_THROW_EX (event,
+                              Instance_Configured (this->plan_,
+                                                   *j,
+                                                   i->c_str (),
+                                                   result),
+                              CORBA::NO_MEMORY ());
+            
+            this->scheduler_.schedule_event (event);
+            ++dispatched;                    
+          }
+      }
+    
+    tv = ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_);
+    
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+    
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::finishLaunch - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception from instance_configured");
           }
       }
 
@@ -336,70 +635,274 @@ namespace DAnCE
   LocalityManager_i::start (void)
   {
     DANCE_TRACE ("LocalityManager_i::start");
-    
+
+    Deployment_Completion completion;
+    CORBA::ULong dispatched (0);
+
     for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
       {
-        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[*i].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[*i].instances_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[*i];
         
-        for (INSTANCE_LIST::const_iterator i = inst_list.begin ();
-             i != inst_list.end ();
-             ++i)
+        for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
+             j != inst_list.end ();
+             ++j)
           {
-            CORBA::Any_var reference;
-            handler->activate_instance (this->plan_,
-                                        *i,
-                                        reference.in ());
+            Start_Instance *event (0);
+            Event_Future result;
+            completion.accept (result);
+            
+            const char *name = this->plan_.instance[*j].name.in ();
+
+            ACE_NEW_THROW_EX (event,
+                              Start_Instance (this->plan_,
+                                              *j,
+                                              this->instance_references_[name].in (),
+                                              i->c_str (),
+                                              result),
+                              CORBA::NO_MEMORY ());
+            
+            this->scheduler_.schedule_event (event);
+            ++dispatched;
           }
       }
+    
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
+    
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::start - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::start - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::start - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StartError > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::start - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StartError (event.id_.c_str (),
+                                            "Unknown exception");
+          }
+        
+        DANCE_DEBUG (5, (LM_INFO, DLINFO
+                         ACE_TEXT ("LocalityManager_i::start - ")
+                         ACE_TEXT ("Instance <%C> successfully activated\n"),
+                         event.id_.c_str ()));
+      }    
   }
 
   void 
   LocalityManager_i::destroyApplication (::Deployment::Application_ptr)
   {
     DANCE_TRACE ("LocalityManager_i::destroyApplication");
-    
+
+    Deployment_Completion completion;
+    CORBA::ULong dispatched (0);
+   
     for (size_t i = this->handler_order_.size ();
          i > 0;
          --i)
       {
-        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[this->handler_order_[i-1]].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]].instances_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]];
         
         for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
              j != inst_list.end ();
              ++j)
           {
-            CORBA::Any_var reference;
-            handler->passivate_instance (this->plan_,
-                                         *j,
-                                         reference.in ());
+            Passivate_Instance *event (0);
+            Event_Future result;
+            completion.accept (result);
+            
+            const char *name = this->plan_.instance[*j].name.in ();
+
+            ACE_NEW_THROW_EX (event,
+                              Passivate_Instance (this->plan_,
+                                                  *j,
+                                                  this->instance_references_[name].in (),
+                                                  this->handler_order_[i-1].c_str (),
+                                                  result),
+                              CORBA::NO_MEMORY ());
+            
+            this->scheduler_.schedule_event (event);
+            ++dispatched;
           }
       }
+
+    ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
     
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    Event_List completed_events;
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+    
+    dispatched = 0;
+
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StopError > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StopError (event.id_.c_str (),
+                                           "Unknown exception");
+          }
+        
+        DANCE_DEBUG (5, (LM_INFO, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Instance <%C> successfully passivated\n"),
+                         event.id_.c_str ()));
+      }    
+
     for (size_t i = this->handler_order_.size ();
          i > 0;
          --i)
       {
-        ::DAnCE::InstanceDeploymentHandler_ptr handler = 
-          this->instance_handlers_[this->handler_order_[i-1]].handler_;
-        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]].instances_;
+        INSTANCE_LIST &inst_list = this->instance_handlers_[this->handler_order_[i-1]];
         
         for (INSTANCE_LIST::const_iterator j = inst_list.begin ();
              j != inst_list.end ();
              ++j)
           {
-            CORBA::Any_var reference;
-            handler->remove_instance (this->plan_,
-                                      *j,
-                                      reference.in ());
+            Remove_Instance *event (0);
+            Event_Future result;
+            completion.accept (result);
+            
+            const char *name = this->plan_.instance[*j].name.in ();
+            
+            REFERENCE_MAP::iterator ref = this->instance_references_.find (name);
+
+            ACE_NEW_THROW_EX (event,
+                              Remove_Instance (this->plan_,
+                                               *j,
+                                               ref->second.in (),
+                                               this->handler_order_[i-1].c_str (),
+                                               result),
+                              CORBA::NO_MEMORY ());
+            
+            this->instance_references_.erase (ref);
+
+            this->scheduler_.schedule_event (event);
+            ++dispatched;
           }
       }
-    // Add your implementation here
+
+    tv = ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_);
+    
+    if (!completion.wait_on_completion (&tv))
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Timed out while waiting on completion of scheduler\n")));
+      }
+    
+    tv = ACE_Time_Value::zero;
+    
+    completion.completed_events (completed_events);
+    
+    if (completed_events.size () != dispatched)
+      {
+        DANCE_ERROR (2, (LM_WARNING, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Received only %u completed events, expected %u\n"),
+                         dispatched,
+                         completed_events.size ()));
+      }
+    
+    dispatched = 0;
+
+    for (Event_List::iterator i = completed_events.begin ();
+         i != completed_events.end ();
+         ++i)
+      {
+        Event_Result event;
+        if (i->get (event, &tv) != 0)
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                             ACE_TEXT ("Failed to get future value for current instance\n")));
+            continue;
+          }
+        
+        if (event.exception_ &&
+            !(extract_and_throw_exception < Deployment::StopError > 
+              (event.contents_.in ()))
+            )
+          {
+            DANCE_ERROR (1, (LM_ERROR, DLINFO
+                             ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+            throw ::Deployment::StopError (event.id_.c_str (),
+                                           "Unknown exception");
+          }
+        
+        DANCE_DEBUG (5, (LM_INFO, DLINFO
+                         ACE_TEXT ("LocalityManager_i::destroyApplication - ")
+                         ACE_TEXT ("Instance <%C> successfully removed\n"),
+                         event.id_.c_str ()));
+      }    
   }
 
 

@@ -24,8 +24,9 @@ namespace DAnCE
   }
 
   void 
-  Deployment_Completion::update (const Event_Future &future)
+  Deployment_Completion::update (const Event_Future &evt)
   {
+    this->completed_events_.push_back (evt);
     this->decrement_exec_count ();
   }
     
@@ -56,6 +57,17 @@ namespace DAnCE
     return true;
   }
   
+  void
+  Deployment_Completion::completed_events (Event_List &event_list)
+  {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->mutex_, CORBA::NO_RESOURCES ());
+    
+    event_list.swap (this->completed_events_);
+    this->completed_events_.clear ();
+  }
+
   void
   Deployment_Completion::on_all_completed ()
   {
