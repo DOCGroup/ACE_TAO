@@ -73,7 +73,7 @@ Service::call_are_you_there (Test::Callback_ptr callback)
           exception_count++;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %C\n", outstr));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %C\n", outstr.in ()));
     }
   return exception_count;
 }
