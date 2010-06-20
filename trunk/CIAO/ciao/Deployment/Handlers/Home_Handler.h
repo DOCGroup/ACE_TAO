@@ -84,4 +84,11 @@ namespace CIAO
     Deployment_Common::INSTANCES instances_;
   };
 }
+
+extern "C"
+{
+  ::DAnCE::InstanceDeploymentHandler_ptr 
+  CIAO_Locality_Handler_Export create_Home_Handler (void);
+}
+
 #endif

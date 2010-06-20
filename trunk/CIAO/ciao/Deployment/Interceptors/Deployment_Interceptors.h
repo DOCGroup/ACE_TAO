@@ -17,21 +17,21 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "CIAO_Deployment_Interceptors_export.h"
 
-namespace DAnCE
+namespace CIAO
 {
-  class DAnCE_StoreReferences_i
+  class CIAO_Deployment_Interceptors_Export CIAO_StoreReferences_i
     : public virtual DAnCE::InstanceInstallation,
       public virtual ::CORBA::LocalObject
   {
   public:
     // Constructor 
     
-    DAnCE_StoreReferences_i (CORBA::ORB_ptr orb,
-                             const ::Deployment::Properties *props);
+    CIAO_StoreReferences_i (void);
   
     // Destructor 
-    virtual ~DAnCE_StoreReferences_i (void);
+    virtual ~CIAO_StoreReferences_i (void);
   
     virtual
       void instance_pre_install (::Deployment::DeploymentPlan & plan,
@@ -51,16 +51,16 @@ namespace DAnCE
     CosNaming::NamingContext_var ctx_;
   };
 
-  class DAnCE_ReferenceLookup_i
+  class CIAO_ReferenceLookup_i
     : public virtual DAnCE::InstanceConnection,
       public virtual ::CORBA::LocalObject
   {
   public:
     // Constructor 
-    DAnCE_ReferenceLookup_i (void);
+    CIAO_ReferenceLookup_i (void);
   
     // Destructor 
-    virtual ~DAnCE_ReferenceLookup_i (void);
+    virtual ~CIAO_ReferenceLookup_i (void);
   
     virtual
       void instance_pre_connect (::Deployment::DeploymentPlan & plan,
@@ -76,4 +76,11 @@ namespace DAnCE
       void configure(const Deployment::Properties&);
   };
 }
+
+extern "C"
+{
+  ::DAnCE::DeploymentInterceptor_ptr 
+  CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void);
+}
+
 #endif

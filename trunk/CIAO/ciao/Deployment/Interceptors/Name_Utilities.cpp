@@ -7,7 +7,7 @@
 #include "ace/Tokenizer_T.h"
 #include "Logger/Log_Macros.h"
 
-namespace DAnCE
+namespace CIAO
 {
   namespace Name_Utilities {
     bool

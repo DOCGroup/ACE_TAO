@@ -10,8 +10,11 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Future.h"
+#include "ace/Method_Request.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "LocalityManager/Scheduler/Deployment_Scheduler_export.h"
+
+#include <list>
 
 namespace DAnCE
 {
@@ -32,6 +35,22 @@ namespace DAnCE
   };
     
   typedef ACE_Future< Event_Result > Event_Future;
+  
+  typedef std::list <Event_Future> Event_List;
+  
+  class Deployment_Scheduler_Export Deployment_Event : 
+    public virtual ACE_Method_Request
+  {
+  public:
+    Deployment_Event (Event_Future holder,
+                      const char *instance_type);
+    
+    Event_Future get_future (void);
+    
+  protected:
+    Event_Future holder_;
+    std::string instance_type_;
+  };  
 }
 
 #if defined (__ACE_INLINE__)
