@@ -185,7 +185,7 @@ namespace DAnCE
   }
   
   void
-  LocalityManager_i::install_instances (const ::Deployment::Properties &prop)
+  LocalityManager_i::install_instances (const ::Deployment::Properties &)
   {
     DANCE_TRACE ("LocalityManager_i::install_instances");
     
