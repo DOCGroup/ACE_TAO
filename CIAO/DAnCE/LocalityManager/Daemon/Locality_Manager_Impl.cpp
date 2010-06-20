@@ -431,7 +431,7 @@ namespace DAnCE
         conns[this->plan_.connection[i].name.in ()] = i;
       }
     
-    CORBA::ULong dispatched;
+    CORBA::ULong dispatched (0);
 
     for (CORBA::ULong i = 0; i < providedReference.length (); ++i)
       {

@@ -1,3 +1,11 @@
+Sun Jun 20 21:25:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
+
+          Compile fixes.
+
 Sun Jun 20 17:48:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
