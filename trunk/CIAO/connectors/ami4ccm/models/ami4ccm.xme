@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+<project cdate="Sun Jun 20 9:01:36 2010" mdate="Sun Jun 20 9:01:37 2010" metaguid="{94FCA7F1-9017-4BFD-B557-F738FC54B103}" metaname="PICML">
+
+  <name>ami4ccm</name>
+
+  <comment></comment>
+
+  <author></author>
+
+  <folder childrelidcntr="0x4" id="id-006a-00000000" kind="RootFolder" relid="0x0">
+    <name>ami4ccm</name>
+    <folder childrelidcntr="0x2" id="id-006a-00000001" kind="InterfaceDefinitions" relid="0x0">
+      <name>InterfaceDefinitions</name>
+      <model childrelidcntr="0x1" id="id-0065-00000000" kind="File" relid="0x0" role="File">
+        <name>ami4ccm</name>
+        <attribute kind="Path">
+          <value>connectors/ami4ccm/ami4ccm</value>
+        </attribute>
+        <model childrelidcntr="0x5" id="id-0065-00000002" kind="Package" relid="0x0" role="Package">
+          <name>CCM_AMI</name>
+          <atom id="id-0066-00000012" kind="NativeValue" relid="0x0" role="NativeValue">
+            <name>UserExceptionBase</name>
+          </atom>
+          <model childrelidcntr="0x1" id="id-0065-00000003" kind="Object" relid="0x1" role="Object">
+            <name>ExceptionHolder</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+            <model childrelidcntr="0x0" id="id-0065-00000004" kind="TwowayOperation" relid="0x0" role="TwowayOperation">
+              <name>raise_exception</name>
+              <regnode name="PartRegs">
+                <value/>
+                <regnode name="InterfaceDefinition">
+                  <value/>
+                  <regnode name="Position">
+                    <value>60,60</value>
+                  </regnode>
+                </regnode>
+              </regnode>
+            </model>
+          </model>
+          <model childrelidcntr="0x0" id="id-0065-00000005" kind="Object" relid="0x2" role="Object">
+            <name>ReplyHandler</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+          </model>
+          <model childrelidcntr="0x0" id="id-0065-00000006" kind="ConnectorObject" relid="0x3" role="ConnectorObject">
+            <name>AMI4CCM_Base</name>
+          </model>
+          <model childrelidcntr="0x4" id="id-0065-00000007" kind="Package" relid="0x4" role="Package">
+            <name>Connector_T</name>
+            <atom id="id-0066-00000013" kind="TypeParameter" relid="0x0" role="TypeParameter">
+              <name>T</name>
+              <regnode name="PartRegs">
+                <value/>
+                <regnode name="TemplateParameters">
+                  <value/>
+                  <regnode name="Position">
+                    <value>60,60</value>
+                  </regnode>
+                </regnode>
+              </regnode>
+              <attribute kind="Type">
+                <value>Object</value>
+              </attribute>
+            </atom>
+            <atom id="id-0066-00000014" kind="TypeParameter" relid="0x1" role="TypeParameter">
+              <name>AMI4CCM_T</name>
+              <regnode name="PartRegs">
+                <value/>
+                <regnode name="TemplateParameters">
+                  <value/>
+                  <regnode name="Position">
+                    <value>160,60</value>
+                  </regnode>
+                </regnode>
+              </regnode>
+              <attribute kind="Type">
+                <value>Object</value>
+              </attribute>
+            </atom>
+            <model childrelidcntr="0x1" id="id-0065-00000008" kind="PortType" relid="0x2" role="PortType">
+              <name>AMI4CCM_Port_Type</name>
+              <reference id="id-0067-00000000" kind="ProvidedRequestPort" referred="id-0066-00000014" relid="0x0" role="ProvidedRequestPort">
+                <name>ami4ccm_provides</name>
+                <regnode name="PartRegs">
+                  <value/>
+                  <regnode name="InterfaceDefinition">
+                    <value/>
+                    <regnode name="Position">
+                      <value>60,60</value>
+                    </regnode>
+                  </regnode>
+                </regnode>
+              </reference>
+              <reference id="id-0067-00000001" kind="RequiredRequestPort" referred="id-0066-00000013" relid="0x0" role="RequiredRequestPort">
+                <name>ami4ccm_uses</name>
+                <regnode name="PartRegs">
+                  <value/>
+                  <regnode name="InterfaceDefinition">
+                    <value/>
+                    <regnode name="Position">
+                      <value>60,160</value>
+                    </regnode>
+                  </regnode>
+                </regnode>
+                <attribute kind="multiple_connections">
+                  <value>True</value>
+                </attribute>
+              </reference>
+            </model>
+            <model childrelidcntr="0x1" id="id-0065-00000009" kind="ConnectorObject" relid="0x3" role="ConnectorObject">
+              <name>AMI4CCM_Connector</name>
+              <reference id="id-0067-00000002" kind="ExtendedPort" referred="id-0065-00000008" relid="0x0" role="ExtendedPort">
+                <name>ami4ccm_port</name>
+              </reference>
+              <reference id="id-0067-00000003" kind="ConnectorInherits" referred="id-0065-00000006" relid="0x0" role="ConnectorInherits">
+                <name>ConnectorInherits</name>
+              </reference>
+            </model>
+          </model>
+        </model>
+      </model>
+      <model childrelidcntr="0x2" id="id-0065-00000001" kind="File" relid="0x1" role="File">
+        <name>ami4ccmE</name>
+        <attribute kind="Path">
+          <value>connectors/ami4ccm/ami4ccm</value>
+        </attribute>
+        <model childrelidcntr="0x4" id="id-0065-0000000a" kind="Package" relid="0x0" role="Package">
+          <name>CCM_AMI</name>
+          <model childrelidcntr="0x1" id="id-0065-0000000b" kind="Object" relid="0x0" role="Object">
+            <name>CCM_ExceptionHolder</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+            <reference id="id-0067-00000004" kind="Inherits" referred="id-0065-00000003" relid="0x0" role="Inherits">
+              <name>Inherits</name>
+            </reference>
+          </model>
+          <model childrelidcntr="0x1" id="id-0065-0000000c" kind="Object" relid="0x1" role="Object">
+            <name>CCM_ReplyHandler</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+            <reference id="id-0067-00000005" kind="Inherits" referred="id-0065-00000005" relid="0x0" role="Inherits">
+              <name>Inherits</name>
+            </reference>
+          </model>
+          <model childrelidcntr="0x0" id="id-0065-0000000d" kind="Object" relid="0x2" role="Object">
+            <name>CCM_AMI4CCM_Base</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+          </model>
+          <model childrelidcntr="0x0" id="id-0065-0000000e" kind="Object" relid="0x3" role="Object">
+            <name>CCM_AMI4CCM_Base_Context</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+          </model>
+        </model>
+        <model childrelidcntr="0x1" id="id-0065-0000000f" kind="Package" relid="0x1" role="Package">
+          <name>CIAO_CCM_AMI_AMI4CCM_Base_Impl</name>
+          <reference id="id-0067-00000006" kind="Alias" referred="id-0065-0000000e" relid="0x0" role="Alias">
+            <name>AMI4CCM_Base_Exec_Context</name>
+          </reference>
+          <model childrelidcntr="0x1" id="id-0065-00000010" kind="Object" relid="0x0" role="Object">
+            <name>AMI4CCM_Base_Exec</name>
+            <attribute kind="InterfaceSemantics">
+              <value>local</value>
+            </attribute>
+            <reference id="id-0067-00000007" kind="Inherits" referred="id-0065-0000000d" relid="0x0" role="Inherits">
+              <name>Inherits</name>
+            </reference>
+          </model>
+        </model>
+      </model>
+    </folder>
+    <folder childrelidcntr="0x0" id="id-006a-00000002" kind="ImplementationArtifacts" relid="0x1">
+      <name>ImplementationArtifacts</name>
+    </folder>
+    <folder childrelidcntr="0x0" id="id-006a-00000003" kind="ComponentImplementations" relid="0x2">
+      <name>ComponentImplementations</name>
+    </folder>
+    <folder childrelidcntr="0x12" id="id-006a-00000004" kind="PredefinedTypes" relid="0x3">
+      <name>PredefinedTypes</name>
+      <atom id="id-0066-00000000" kind="Boolean" relid="0x0" role="Boolean">
+        <name>Boolean</name>
+      </atom>
+      <atom id="id-0066-00000001" kind="Byte" relid="0x1" role="Byte">
+        <name>Byte</name>
+      </atom>
+      <atom id="id-0066-00000002" kind="Char" relid="0x2" role="Char">
+        <name>Char</name>
+      </atom>
+      <atom id="id-0066-00000003" kind="WideChar" relid="0x3" role="WideChar">
+        <name>WideChar</name>
+      </atom>
+      <atom id="id-0066-00000004" kind="ShortInteger" relid="0x4" role="ShortInteger">
+        <name>ShortInteger</name>
+      </atom>
+      <atom id="id-0066-00000005" kind="LongInteger" relid="0x5" role="LongInteger">
+        <name>LongInteger</name>
+      </atom>
+      <atom id="id-0066-00000006" kind="LongLongInteger" relid="0x6" role="LongLongInteger">
+        <name>LongLongInteger</name>
+      </atom>
+      <atom id="id-0066-00000007" kind="UnsignedShortInteger" relid="0x7" role="UnsignedShortInteger">
+        <name>UnsignedShortInteger</name>
+      </atom>
+      <atom id="id-0066-00000008" kind="UnsignedLongInteger" relid="0x8" role="UnsignedLongInteger">
+        <name>UnsignedLongInteger</name>
+      </atom>
+      <atom id="id-0066-00000009" kind="UnsignedLongLongInteger" relid="0x9" role="UnsignedLongLongInteger">
+        <name>UnsignedLongLongInteger</name>
+      </atom>
+      <atom id="id-0066-0000000a" kind="FloatNumber" relid="0xa" role="FloatNumber">
+        <name>FloatNumber</name>
+      </atom>
+      <atom id="id-0066-0000000b" kind="DoubleNumber" relid="0xb" role="DoubleNumber">
+        <name>DoubleNumber</name>
+      </atom>
+      <atom id="id-0066-0000000c" kind="LongDoubleNumber" relid="0xc" role="LongDoubleNumber">
+        <name>LongDoubleNumber</name>
+      </atom>
+      <atom id="id-0066-0000000d" kind="GenericObject" relid="0xd" role="GenericObject">
+        <name>GenericObject</name>
+      </atom>
+      <atom id="id-0066-0000000e" kind="GenericValue" relid="0xe" role="GenericValue">
+        <name>GenericValue</name>
+      </atom>
+      <atom id="id-0066-0000000f" kind="GenericValueObject" relid="0xf" role="GenericValueObject">
+        <name>GenericValueObject</name>
+      </atom>
+      <atom id="id-0066-00000010" kind="String" relid="0x10" role="String">
+        <name>String</name>
+      </atom>
+      <atom id="id-0066-00000011" kind="WideString" relid="0x11" role="WideString">
+        <name>WideString</name>
+      </atom>
+    </folder>
+  </folder>
+
+</project>
