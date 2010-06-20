@@ -1,3 +1,20 @@
+Sun Jun 20 13:10:16 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/ami4ccm/models:
+        * connectors/ami4ccm/models/ami4ccm.xme:
+
+          PICML model for the ami4ccm backend.
+          
+        * connectors/dds4ccm/models/dds4ccm.xme:
+        
+          Update of dds4ccm PICML model after updating the PICML metamodel to 
+          completely support IDL statements it was currently lacking, such as
+          'native' and array struct members.
+
+        * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
+        
+          Regenerated Shapes example.
+          
 Fri Jun 18 20:29:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_base.mpb:
