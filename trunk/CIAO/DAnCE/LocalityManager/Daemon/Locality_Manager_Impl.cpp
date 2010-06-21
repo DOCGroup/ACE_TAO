@@ -33,8 +33,7 @@ namespace DAnCE
       spawn_delay_ (30)
   {
     DANCE_TRACE ("LocalityManager_i::LocalityManager_i");
-    this->scheduler_.activate (THR_DETACHED,
-                               1);
+    this->scheduler_.activate_scheduler (0);
   }
 
   // Implementation skeleton destructor
@@ -193,7 +192,7 @@ namespace DAnCE
 
     CORBA::ULong dispatched (0);
 
-    Deployment_Completion completion;
+    Deployment_Completion completion (this->scheduler_);
 
     for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
@@ -300,7 +299,7 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::collect_references");
 
     CORBA::ULong dispatched (0);
-    Deployment_Completion completion;
+    Deployment_Completion completion (this->scheduler_);
 
     for (CORBA::ULong i = 0;
          i < this->plan_.connection.length ();
@@ -418,7 +417,7 @@ namespace DAnCE
     typedef std::map < std::string, CORBA::ULong > ConnMap;
     ConnMap conns;
 
-    Deployment_Completion completion;
+    Deployment_Completion completion (this->scheduler_);
 
     DANCE_DEBUG (6, (LM_TRACE, DLINFO
                      ACE_TEXT ("LocalityManager_i::finishLaunch - ")
@@ -638,7 +637,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::start");
 
-    Deployment_Completion completion;
+    Deployment_Completion completion (this->scheduler_);
     CORBA::ULong dispatched (0);
 
     for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
@@ -730,7 +729,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::destroyApplication");
 
-    Deployment_Completion completion;
+    Deployment_Completion completion (this->scheduler_);
     CORBA::ULong dispatched (0);
 
     for (size_t i = this->handler_order_.size ();

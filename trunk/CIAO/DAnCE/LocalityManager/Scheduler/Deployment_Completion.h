@@ -16,6 +16,7 @@
 #include "ace/Future.h"
 #include "Completion/Completion_Counter_Base.h"
 #include "LocalityManager/Scheduler/Deployment_Event.h"
+#include "LocalityManager/Scheduler/Deployment_Scheduler.h"
 
 namespace DAnCE
 {
@@ -27,7 +28,7 @@ namespace DAnCE
       public virtual Completion_Counter_Base< TAO_SYNCH_MUTEX >
   {
   public:
-    Deployment_Completion (void);
+    Deployment_Completion (Deployment_Scheduler &sched);
 
     virtual ~Deployment_Completion (void);
 
@@ -44,8 +45,12 @@ namespace DAnCE
     virtual void on_all_completed ();
 
     virtual void on_all_completed_with_failure ();
+    
+    bool single_threaded_wait_on_completion (ACE_Time_Value *tv);
 
   private:
+    Deployment_Scheduler &sched_;
+
     TAO_SYNCH_MUTEX mutex_;
     ACE_Condition< TAO_SYNCH_MUTEX > condition_;
     
