@@ -162,7 +162,7 @@ namespace TAO
     typedef T                                           ret_type;
     typedef T const &                                   in_type;
     typedef T &                                         inout_type;
-    typedef typename T &                                out_type;
+    typedef T &                                         out_type;
 
     typedef In_Vector_Argument_T<T, Insert_Policy>    in_arg_val;
     typedef In_Vector_Clonable_Argument_T<T, Insert_Policy>

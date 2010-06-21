@@ -91,7 +91,8 @@ namespace TAO
         return false;
       }
       
-    for (std::vector<T::_ptr_type>::const_iterator i = source.begin ();
+    for (std::vector<typename T::_ptr_type>::const_iterator i =
+           source.begin ();
          i != source.end ();
          ++i)
       {
@@ -146,9 +147,9 @@ namespace TAO
     TAO_OutputCDR &strm,
     const std::vector<typename T_forany::_slice_type *> &source)
   {
-    typedef TAO_FixedArray_Var_T <T_forany::_array_type,
-                                  T_forany::_slice_type,
-                                  T_forany::_tag_type> var_type;
+    typedef TAO_FixedArray_Var_T <typename T_forany::_array_type,
+                                  typename T_forany::_slice_type,
+                                  typename T_forany::_tag_type> var_type;
     ::CORBA::ULong const length = source.size ();
     
     if (! (strm << length))
@@ -156,7 +157,8 @@ namespace TAO
         return false;
       }
       
-    for (std::vector<T_forany::_slice_type *> i = source.begin ();
+    for (std::vector<typename T_forany::_slice_type *> i =
+           source.begin ();
          i != source.end ();
          ++i)
       {
@@ -192,7 +194,7 @@ namespace TAO
         return false;
       }
       
-    std::vector<T_forany::_slice_type *> tmp_vec;
+    std::vector<typename T_forany::_slice_type *> tmp_vec;
     tmp_vec.reserve (new_length);
     
     for ( ::CORBA::ULong i = 0; i < new_length; ++i)
