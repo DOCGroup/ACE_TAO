@@ -5,8 +5,9 @@
 
 namespace DAnCE
 {
-  Deployment_Completion::Deployment_Completion (void)
+  Deployment_Completion::Deployment_Completion (Deployment_Scheduler &sched)
     : Completion_Counter_Base< TAO_SYNCH_MUTEX > (0, 0),
+      sched_ (sched),
       mutex_ (),
       condition_ (this->mutex_)
   {
@@ -33,6 +34,9 @@ namespace DAnCE
   bool
   Deployment_Completion::wait_on_completion (ACE_Time_Value *tv)
   {
+    if (!this->sched_.multithreaded ())
+      return this->single_threaded_wait_on_completion (tv);
+        
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
                       this->mutex_, false);
@@ -78,6 +82,15 @@ namespace DAnCE
   Deployment_Completion::on_all_completed_with_failure ()
   {
     this->condition_.broadcast ();
+  }
+  
+  bool
+  Deployment_Completion::single_threaded_wait_on_completion (ACE_Time_Value *tv)
+  {
+    while (this->sched_.work_pending ())
+      this->sched_.perform_work ();
+    
+    return true;
   }
 }
 
