@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ClientRequestHandler.h"
+#include "ace/INet/ClientRequestHandler.h"
 #include "ace/Functor_String.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ClientRequestHandler.inl"
+#include "ace/INet/ClientRequestHandler.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_INet_ClientRequestHandler,"$Id$")

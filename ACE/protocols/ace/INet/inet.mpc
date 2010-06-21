@@ -4,6 +4,7 @@
 project(INet) : acelib, ace_output, install {
   sharedname   = ACE_INet
   dynamicflags = ACE_INET_BUILD_DLL
+  includes += $(ACE_ROOT)/protocols
   avoids += wince
   Source_Files {
     IOS_util.cpp

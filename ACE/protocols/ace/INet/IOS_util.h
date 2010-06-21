@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 #include <iostream>
 
 // ace_ios_init

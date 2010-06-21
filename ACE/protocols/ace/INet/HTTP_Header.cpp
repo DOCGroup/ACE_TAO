@@ -1,11 +1,11 @@
 // $Id$
 
-#include "HTTP_Header.h"
+#include "ace/INet/HTTP_Header.h"
 #include "ace/OS_NS_stdlib.h"
 #include <string>
 
 #if !defined (__ACE_INLINE__)
-#include "HTTP_Header.inl"
+#include "ace/INet/HTTP_Header.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_HTTP_Header,"$Id$")

@@ -3,10 +3,10 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/String_Base.h"
-#include "HTTP_Response.h"
+#include "ace/INet/HTTP_Response.h"
 
 #if !defined (__ACE_INLINE__)
-#include "HTTP_Response.inl"
+#include "ace/INet/HTTP_Response.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_HTTP_Response,"$Id$")

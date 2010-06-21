@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 #include <iosfwd>
 #include <ios>
 
@@ -61,7 +61,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "StreamInterceptor.cpp"
+#include "ace/INet/StreamInterceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

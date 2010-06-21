@@ -1,10 +1,10 @@
 // $Id$
 
-#include "HTTP_IOStream.h"
-#include "IOS_util.h"
+#include "ace/INet/HTTP_IOStream.h"
+#include "ace/INet/IOS_util.h"
 
 #if !defined (__ACE_INLINE__)
-#include "HTTP_IOStream.inl"
+#include "ace/INet/HTTP_IOStream.inl"
 #endif
 
 #include "ace/Truncate.h"

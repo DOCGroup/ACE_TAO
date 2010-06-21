@@ -11,8 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
-#include "HeaderBase.h"
+#include "ace/INet/INet_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +27,6 @@ namespace ACE
         *
         */
         class ACE_INET_Export Response
-          : public virtual HeaderBase
           {
             public:
               Response ();

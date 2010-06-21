@@ -3,7 +3,7 @@
 #ifndef ACE_IOS_STREAM_HANDLER_CPP
 #define ACE_IOS_STREAM_HANDLER_CPP
 
-#include "StreamHandler.h"
+#include "ace/INet/StreamHandler.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
@@ -107,7 +107,7 @@ namespace ACE
                             ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - receive failed\n")));
               }
             this->connected_ = false;
-            return this->reactive() ? -1 : 0;
+            return this->using_reactor () ? -1 : 0;
           }
         return 0;
       }
@@ -150,7 +150,7 @@ namespace ACE
                             ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - "),
                             ACE_TEXT ("send failed\n")));
                 this->connected_ = false;
-                return this->reactive() ? -1 : 0;
+                return this->using_reactor () ? -1 : 0;
               }
           }
         return (this->msg_queue ()->is_empty ()) ? -1 : 0;
@@ -169,7 +169,7 @@ namespace ACE
         size_t char_length = length * char_size;
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
         int result = 0;
-        if (this->reactive ())
+        if (this->using_reactor ())
           {
             ACE_thread_t tid;
             this->reactor ()->owner (&tid);
@@ -387,12 +387,6 @@ namespace ACE
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::reactive () const
-      {
-        return this->sync_opt_[ACE_Synch_Options::USE_REACTOR];
-      }
-
-    template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::use_timeout () const
       {
         return this->sync_opt_[ACE_Synch_Options::USE_TIMEOUT];
@@ -428,7 +422,7 @@ namespace ACE
 
         // check if we're allowed to control the reactor if reactive
         bool reactor_thread = false;
-        if (this->reactive ())
+        if (this->using_reactor ())
           {
             ACE_thread_t tid;
             this->reactor ()->owner (&tid);
@@ -436,7 +430,7 @@ namespace ACE
               ACE_OS::thr_equal (ACE_Thread::self (), tid) ? true : false;
           }
 
-        if (this->reactive () && reactor_thread)
+        if (this->using_reactor () && reactor_thread)
           {
             if (this->reactor ()->register_handler(this,
                                                    ACE_Event_Handler::WRITE_MASK) != 0)
@@ -524,15 +518,15 @@ namespace ACE
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::is_connected ()
+    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::is_connected () const
       {
         return this->connected_;
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::using_reactor ()
+    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::using_reactor () const
       {
-        return this->reactive ();
+        return this->sync_opt_[ACE_Synch_Options::USE_REACTOR];
       }
 
   }
