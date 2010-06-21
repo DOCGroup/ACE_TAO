@@ -1,3 +1,9 @@
+Mon Jun 21 13:20:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+	  Close plugin manager singleton in Locality Manager destructor.
+	  Fixes pure virtual method exceptions.
+
 Mon Jun 21 11:16:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
