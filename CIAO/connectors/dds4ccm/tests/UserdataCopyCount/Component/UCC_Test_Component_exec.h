@@ -18,6 +18,54 @@
 
 namespace CIAO_UCC_Test_UCCTestComponent_Impl
 {
+  struct UCCVariableSizedStructTest_i : UCCVariableSizedStructTest
+  {
+    static size_t count_;
+    static size_t max_count_;
+
+    UCCVariableSizedStructTest_i ()
+      {
+        ++count_;
+        if (count_ > max_count_)
+          {
+            max_count_ = count_;
+          }
+      }
+
+    ~UCCVariableSizedStructTest_i ()
+      {
+        --count_;
+      }
+  private:
+    UCCVariableSizedStructTest_i (const UCCVariableSizedStructTest_i &);
+    UCCVariableSizedStructTest_i operator = (const UCCVariableSizedStructTest_i &);
+
+  };
+
+  struct UCCFixedSizedStructTest_i : UCCFixedSizedStructTest
+  {
+    static size_t count_;
+    static size_t max_count_;
+
+    UCCFixedSizedStructTest_i ()
+      {
+        ++count_;
+        if (count_ > max_count_)
+          {
+            max_count_ = count_;
+          }
+      }
+
+    ~UCCFixedSizedStructTest_i ()
+      {
+        --count_;
+      }
+  private:
+    UCCFixedSizedStructTest_i (const UCCFixedSizedStructTest_i &);
+    UCCFixedSizedStructTest_i operator = (const UCCFixedSizedStructTest_i &);
+
+  };
+
   class Component_exec_i;
 
   //============================================================
@@ -60,9 +108,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     virtual ~Component_exec_i (void);
 
     // Operations from Components::SessionComponent.
-    virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void configuration_complete (void);
 
@@ -77,20 +123,20 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   private:
     ::UCC_Test::CCM_UCCTestComponent_Context_var context_;
 
-    //Variable sized struct
+    /// Variable sized struct
     void create_variable_sized_samples (void);
     WriteVariableHandler *var_rh_;
 
     TAO_SYNCH_MUTEX var_mutex_;
-    typedef std::map< ACE_CString, UCCVariableSizedStructTest_var > UCCVarSized_Table;
+    typedef std::map< ::CORBA::UShort, UCCVariableSizedStructTest_i* > UCCVarSized_Table;
     UCCVarSized_Table var_samples_;
 
-    // Fixed sized struct
+    /// Fixed sized struct
     void create_fixed_sized_samples (void);
     WriteFixedHandler *fixed_rh_;
 
     TAO_SYNCH_MUTEX fixed_mutex_;
-    typedef std::map< ::CORBA::UShort, UCCFixedSizedStructTest_var > UCCFixedSized_Table;
+    typedef std::map< ::CORBA::UShort, UCCFixedSizedStructTest_i* > UCCFixedSized_Table;
     UCCFixedSized_Table fixed_samples_;
   };
 
