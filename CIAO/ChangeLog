@@ -1,3 +1,13 @@
+Mon Jun 21 08:46:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/ami4ccm/ami4ccm.h:
+        * connectors/ami4ccm/ami4ccm/ami4ccm.idl:
+          Added some more documentation
+
+        * connectors/ami4ccm/docs/AMI4CCM-explanation.odt:
+        * connectors/ami4ccm/docs/AMI4CCM-spec.odt:
+          Some initial updates
+
 Mon Jun 21 07:45:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:

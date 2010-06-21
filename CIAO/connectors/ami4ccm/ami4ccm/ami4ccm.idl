@@ -11,6 +11,7 @@ module CCM_AMI
 {
   native UserExceptionBase;
 
+  /// Exception holder to rethrow the original exception
   local interface ExceptionHolder
   {
     void raise_exception() raises (UserExceptionBase);
@@ -21,10 +22,16 @@ module CCM_AMI
   {
   };
 
+  /// Base class for all AMI4CCM connectors
   connector AMI4CCM_Base
   {
   };
-  
+
+  /**
+   * Templated Connector module for AMI4CC. Expects
+   * two template arguments, the original interface and
+   * its AMI4CCM counterpart
+   */
   module Connector_T<interface T, interface AMI4CCM_T>
   {
     porttype AMI4CCM_Port_Type
