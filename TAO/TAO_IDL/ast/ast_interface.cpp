@@ -124,7 +124,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_n_inherits_flat (nih_flat),
     home_equiv_ (false),
     fwd_decl_ (0),
-    has_mixed_parentage_ (-1)
+    has_mixed_parentage_ (-1),
+    ami_handler_ (0)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -1085,6 +1086,18 @@ AST_Interface::special_lookup (UTL_ScopedName *e,
     }
     
   return 0;
+}
+
+AST_Interface *
+AST_Interface::ami_handler (void) const
+{
+  return this->ami_handler_;
+}
+
+void
+AST_Interface::ami_handler (AST_Interface *handler)
+{
+  this->ami_handler_ = handler;
 }
 
 void

@@ -149,6 +149,10 @@ public:
   
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only);
+       
+  /// Accessors for the member.                                  
+  AST_Interface *ami_handler (void) const;
+  void ami_handler (AST_Interface *handler);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -208,6 +212,9 @@ protected:
 
   /// Do we have both abstract and concrete parents?
   int has_mixed_parentage_;
+  
+  /// Store here foro quick retrieval without an AST lookup.
+  AST_Interface *ami_handler_;
 
 protected:
   // Scope Management Protocol.

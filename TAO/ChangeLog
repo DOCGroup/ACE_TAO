@@ -1,3 +1,25 @@
+Mon Jun 21 14:28:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+        
+          Added member and accessor functions to store and retrieve
+          the associated AMI reply handler, if any.
+          
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Used the storage described above to fetch the reply
+          handler to add as a parameter in the assoiated sendc_*
+          operation.
+          
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        
+          Changed a boolean lookup_by_name() arg from 'true' to
+          'false', overlooked when default parameters were removed
+          from this operation. Thanks to Simon Massey
+          <simon dot massey at prismtech dot com> for pointing
+          out the oversight.
+
 Mon Jun 21 08:12:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/RTCORBA/Broker.cpp:

@@ -302,6 +302,9 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   reply_handler->set_name (reply_handler_name);
   reply_handler->set_defined_in (s);
+  
+  /// Store here for convenient retrieval later.
+  node->ami_handler (reply_handler);
 
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
@@ -411,9 +414,9 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   // Create the new name
   // Prepend "sendc_" to the name of the operation
   ACE_CString original_op_name (
-                  node->name ()->last_component ()->get_string ()
-                );
-  ACE_CString new_op_name = ACE_CString ("sendc_") + original_op_name;
+    node->name ()->last_component ()->get_string ());
+  ACE_CString new_op_name =
+    ACE_CString ("sendc_") + original_op_name;
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
@@ -439,37 +442,31 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Look up the field type.
   UTL_Scope *s = node->defined_in ();
-  be_decl *parent = be_scope::narrow_from_scope (s)->decl ();
+  be_interface *parent = be_interface::narrow_from_scope (s);
 
   // Add the pre- and suffix
   ACE_CString handler_local_name;
 
-  this->generate_name (handler_local_name,
-                       "AMI_",
-                       parent->name ()->last_component ()->get_string (),
-                       "Handler");
+  this->generate_name (
+    handler_local_name,
+    "AMI_",
+    parent->name ()->last_component ()->get_string (),
+    "Handler");
 
-  UTL_ScopedName *field_name =
-    static_cast<UTL_ScopedName *> (parent->name ()->copy ());
-  field_name->last_component ()->replace_string (
-                                     handler_local_name.c_str ()
-                                   );
+  AST_Interface *handler = parent->ami_handler ();
 
-  AST_Decl *d = s->lookup_by_name (field_name, true);
-  field_name->destroy ();
-  delete field_name;
-  field_name = 0;
-
-  if (0 == d)
+  if (0 == handler)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "create_sendc_operation - "
-                         "lookup of reply handler failed\n"),
+                         ACE_TEXT ("be_visitor_ami_pre_proc::")
+                         ACE_TEXT ("create_sendc_operation - ")
+                         ACE_TEXT ("null reply ")
+                         ACE_TEXT ("handler found\n")),
                         0);
     }
 
-  be_interface *field_type = be_interface::narrow_from_decl (d);
+  be_interface *field_type =
+    be_interface::narrow_from_decl (handler);
   
   ACE_NEW_RETURN (id,
                   Identifier ("ami_handler"),

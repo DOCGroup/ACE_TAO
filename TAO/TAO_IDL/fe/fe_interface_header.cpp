@@ -302,7 +302,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         {
           // If the lookup now succeeds, without the full_def_only
           // constraint, it's an error.
-          d = s->lookup_by_name (item, true);
+          d = s->lookup_by_name (item, false);
 
           if (0 != d)
             {
