@@ -135,7 +135,7 @@ namespace TAO
     typedef T                                               ret_type;
     typedef const T &                                       in_type;
     typedef T &                                             inout_type;
-    typedef typename T &                                    out_type;
+    typedef T &                                             out_type;
 
     typedef In_Vector_SArgument_T<T,Insert_Policy>        in_arg_val;
     typedef Inout_Vector_SArgument_T<T,Insert_Policy>     inout_arg_val;

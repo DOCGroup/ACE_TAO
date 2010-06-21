@@ -1,3 +1,12 @@
+Mon Jun 21 15:20:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Vector_SArgument_T.h:
+        * tao/Vector_Argument_T.h:
+        * tao/Vector_CDR_T.h:
+        
+          Added some needed 'typename' qualifiers and removed some
+          unneeded ones.
+
 Mon Jun 21 14:28:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_interface.h:
