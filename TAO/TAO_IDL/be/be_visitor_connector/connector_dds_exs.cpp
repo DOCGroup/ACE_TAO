@@ -47,7 +47,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
       << ": " << this->base_tname_ << "_Connector_T";
 
   AST_Decl **datatype = 0;
-  int status = this->t_args_->get (datatype, 0UL);
+  int const status = this->t_args_->get (datatype, 0UL);
 
   if (status != 0)
     {

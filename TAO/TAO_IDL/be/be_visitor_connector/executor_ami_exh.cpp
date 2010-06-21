@@ -58,10 +58,9 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
     }
 
   os_ << be_nl << be_nl
-      << "virtual void" << be_nl
-      << "set_session_context (" << be_idt_nl
+      << "virtual void set_session_context (" 
       << "::Components::SessionContext_ptr ctx);"
-      << be_uidt_nl << be_nl
+      << be_nl << be_nl
       << "virtual void configuration_complete (void);"
       << be_nl << be_nl
       << "virtual void ccm_activate (void);" << be_nl
