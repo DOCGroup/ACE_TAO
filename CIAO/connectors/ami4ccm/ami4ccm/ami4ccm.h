@@ -30,6 +30,7 @@ namespace CCM_AMI
   public:
       ExceptionHolder_i (::Messaging::ExceptionHolder* holder);
 
+      /// Rethrow the original exception
       virtual void raise_exception (void);
 
   private:
