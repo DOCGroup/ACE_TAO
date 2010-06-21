@@ -1,3 +1,17 @@
+Mon Jun 21 18:45:27 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+          Layout and const changes
+
+        * examples/ior_corbaloc/run_test.pl:
+          Use -debug
+
 Mon Jun 21 17:38:35 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * tao/Vector_CDR_T.h:

@@ -111,9 +111,8 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "/** Operations from Components::SessionComponent. */";
 
   os_ << be_nl << be_nl
-      << "virtual void" << be_nl
-      << "set_session_context (" << be_idt_nl
-      << "::Components::SessionContext_ptr ctx);" << be_uidt;
+      << "virtual void set_session_context ("
+      << "::Components::SessionContext_ptr ctx);";
 
   os_ << be_nl << be_nl
       << "virtual void configuration_complete (void);";

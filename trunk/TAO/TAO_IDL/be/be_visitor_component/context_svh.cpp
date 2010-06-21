@@ -162,17 +162,16 @@ be_visitor_context_svh::visit_uses (be_uses *node)
       << "virtual "
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
-      << "connect_" << port_name << " (" << be_idt_nl
+      << "connect_" << port_name << " (" 
       << "::" << obj_name << "_ptr);"
-      << be_uidt_nl << be_nl;
+      << be_nl << be_nl;
 
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
 
   if (is_multiple)
     {
-      os_ << be_idt_nl
-          << "::Components::Cookie * ck);" << be_uidt;
+      os_ << "::Components::Cookie * ck);";
     }
   else
     {
