@@ -1,3 +1,9 @@
+Mon Jun 21 10:59:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
+          New file with some more test components, mpc is following when
+          this fails compiles without problems with tao_idl
+
 Mon Jun 21 08:46:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/ami4ccm/ami4ccm.h:
