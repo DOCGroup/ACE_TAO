@@ -1,0 +1,36 @@
+// $Id$
+
+#ifndef HELLO_SENDER_IDL
+#define HELLO_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Hello.idl"
+
+#pragma ciao ami4ccm receptacle "Hello::Sender::run_my_foo"
+#pragma ciao ami4ccm receptacle "Hello::Sender::run_my_derived"
+#pragma ciao ami4ccm receptacle "Hello::Sender::run_mybar"
+#pragma ciao ami4ccm receptacle "Hello::Sender::run_three"
+
+#pragma ciao ami4ccm receptacle "Hello::Sender::m_run_my_foo"
+#pragma ciao ami4ccm receptacle "Hello::Sender::m_run_my_derived"
+#pragma ciao ami4ccm receptacle "Hello::Sender::m_run_mybar"
+#pragma ciao ami4ccm receptacle "Hello::Sender::m_run_three"
+
+module Hello
+{
+  component Sender
+  {
+    uses MyFoo run_my_foo;
+    uses MyDerived run_my_derived;
+    uses MyBar run_mybar;
+    uses Bar::Three run_three;
+
+    uses multiple MyFoo m_run_my_foo;
+    uses multiple MyDerived m_run_my_derived;
+    uses multiple MyBar m_run_mybar;
+    uses multiple Bar::Three m_run_three;
+  };
+};
+
+#endif
