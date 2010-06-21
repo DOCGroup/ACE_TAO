@@ -29,8 +29,8 @@ namespace CIAO_QCLE_Test_Receiver_Impl
 
   void
   QueryConditionListenEventTest_Listener::on_one_data (
-                                  const QueryConditionListenEventTest & an_instance,
-                                  const ::CCM_DDS::ReadInfo & info)
+    const QueryConditionListenEventTest & an_instance,
+    const ::CCM_DDS::ReadInfo & info)
   {
     this->thread_id_ = ACE_Thread::self ();
     ACE_DEBUG ((LM_DEBUG, "QueryConditionListenEventTest_Listener::on_one_data: "

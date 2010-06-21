@@ -187,12 +187,12 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
       {
         char key[7];
-        UCCVariableSizedStructTest_i new_key;
+        UCCVariableSizedStructTest_i* new_key = new UCCVariableSizedStructTest_i;
         ACE_OS::sprintf (key, "KEY_%d", i);
-        new_key.symbol = CORBA::string_dup (key);
-        new_key.x = i;
-        new_key.y = new_key.x;
-        this->var_samples_[key] = &new_key;
+        new_key->symbol = CORBA::string_dup (key);
+        new_key->x = i;
+        new_key->y = new_key->x;
+        this->var_samples_[key] = new_key;
       }
   }
 
@@ -240,6 +240,9 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   void
   Component_exec_i::ccm_remove (void)
   {
+    this->var_samples_.clear ();
+    this->fixed_samples_.clear ();
+    
     //check count_
     if (UCCFixedSizedStructTest_i::count_ != 0)
       {
@@ -250,7 +253,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     else
       {
         ACE_DEBUG ((LM_DEBUG, "Reference count for variable sized "
-                              "samples is nil\n"));
+                              "samples is 0\n"));
       }
     if (UCCVariableSizedStructTest_i::count_ != 0)
       {

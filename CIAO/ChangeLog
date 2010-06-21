@@ -1,8 +1,19 @@
+Mon Jun 21 14:09:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+          Use correct data type to interate through a CORBA sequence
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+          Layout changes
+
 Mon Jun 21 13:20:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
-	  Close plugin manager singleton in Locality Manager destructor.
-	  Fixes pure virtual method exceptions.
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Close plugin manager singleton in Locality Manager destructor.
+          Fixes pure virtual method exceptions.
 
 Mon Jun 21 11:16:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -13,7 +24,7 @@ Mon Jun 21 11:16:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
           Commented out the uses multiple ports for the moment
 
         * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
-          Added this file 
+          Added this file
 
         * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl:
           Added some more test idl but this is commented out, uncovered an issue
