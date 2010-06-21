@@ -1,3 +1,35 @@
+Mon Jun 21 11:03:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts/run_test.pl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/Doc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/Ports
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/Ports/Hello_Receiver_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Doc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Ports
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Ports/Hello.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Ports/Hello_obj.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Ports/Hello_defn.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/Doc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/Ports
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/Ports/Hello_Sender_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h
+        First base tutorial.  
+
 Mon Jun 21 10:59:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
