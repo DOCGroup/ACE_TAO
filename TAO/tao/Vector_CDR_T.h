@@ -29,11 +29,12 @@ namespace TAO
         return false;
       }
 
-    for (std::vector<T>::const_iterator i = source.begin ();
-         i != source.end ();
-         ++i)
+    for (typename std::vector<T>::const_iterator iter =
+           source.begin ();
+         iter != source.end ();
+         ++iter)
       {
-        if (! (strm << *i))
+        if (! (strm << *iter))
           {
             return false;
           }
@@ -91,7 +92,7 @@ namespace TAO
         return false;
       }
 
-    for (std::vector<typename T::_ptr_type>::const_iterator i =
+    for (typename std::vector<typename T::_ptr_type>::const_iterator i =
            source.begin ();
          i != source.end ();
          ++i)
