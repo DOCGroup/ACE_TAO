@@ -1,8 +1,24 @@
+Mon Jun 21 07:45:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_SharedMem.cdp:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/Plan_UDPv4.cdp:
+          Updated because of changes to generated entry points
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+        * connectors/dds4ccm/tests/Derived/Derived.idl:
+        * connectors/dds4ccm/tests/Derived/Derived.mpc:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
+          New test to validate code generation when an end user derives their
+          own connector from one of the standard defined connectors. This is
+          a reproducer for Jeff, the _conn.h/cpp file lack some traits and
+          generate the wrong template
+
 Mon Jun 21 05:03:16 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/examples/Shapes/models/Shapes-complete.xme:
         * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
-        
+
           Updated version of Shapes example.
 
 Sun Jun 20 21:28:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>

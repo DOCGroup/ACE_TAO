@@ -1,0 +1,24 @@
+// $Id$
+
+project (Derived_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+  sharedname = Derived_stub
+  dynamicflags += NOMODULE_COMMON_STUB_BUILD_DLL
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=NOMODULE_COMMON_STUB_Export \
+              -Wb,stub_export_include=Derived_Common_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    Derived.idl
+  }
+
+  opendds_ts_flags += --export=NOMODULE_COMMON_STUB_Export
+
+  DDSGenerator_Files {
+    Derived.idl
+  }
+
+  Source_Files {
+  }
+}
