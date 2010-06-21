@@ -90,7 +90,7 @@ Stock_StockBroker_i::shutdown (void)
   // Unsubscribe
   ACE_DEBUG ((LM_DEBUG, "Shutdown unsubscribing notifiers\n"));
   this->distributor_->unsubscribe_notifier
-    (this->consumer_->cookie ());
+    (this->consumer_->cookie_ ());
   
   ACE_DEBUG ((LM_DEBUG, "Shutdown deactivating object\n"));
   ::Stock::StockBroker_var broker = this->_this ();
