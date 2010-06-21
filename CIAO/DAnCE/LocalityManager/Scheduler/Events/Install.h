@@ -1,7 +1,7 @@
 /**
- * @file Insall.h
+ * @file Install.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * $Id$
  *
  */
@@ -26,7 +26,7 @@ namespace DAnCE
                       ::CORBA::ULong instanceRef,
                       const char *instance_type,
                       Event_Future holder);
-    
+
     virtual ~Install_Instance (void);
 
     virtual int call (void);
