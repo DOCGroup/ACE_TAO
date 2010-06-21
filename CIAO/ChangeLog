@@ -1,3 +1,15 @@
+Mon Jun 21 18:21:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl:
+          Corrected some mistakes and commented out the correct idl
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
+          Reverted some changes that should have go to another test
+
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+          Layout changes
+
 Mon Jun 21 14:57:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
