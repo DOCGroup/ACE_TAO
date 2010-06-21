@@ -136,8 +136,7 @@ namespace CIAO_QCLS_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+  Receiver_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::QCLS_Test::CCM_Receiver_Context::_narrow (ctx);
