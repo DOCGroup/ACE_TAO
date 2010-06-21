@@ -17,7 +17,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Refcounted_Auto_Ptr.h"
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 #include <iosfwd>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -64,7 +64,7 @@ namespace ACE
         /**
         * @class ACE_INet_URL_Base
         *
-        * @brief Base class for URL/URI addresses conforming to RFC2396.
+        * @brief Base class for URL/URI addresses conforming to RFC3986.
         *
         */
         class ACE_INET_Export URL_Base
@@ -73,17 +73,25 @@ namespace ACE
               URL_Base ();
               virtual ~URL_Base ();
 
-              virtual bool parse (const ACE_CString& url_string) = 0;
+              virtual bool parse (const ACE_CString& url_string);
 
-              virtual const ACE_CString& get_protocol () const = 0;
+              void set_path (const ACE_CString& path);
 
-              virtual ACE_CString get_authority () const = 0;
+              virtual void set_query (const ACE_CString& query);
 
-              virtual const ACE_CString& get_user_info () const = 0;
+              virtual void set_fragment (const ACE_CString& fragment);
 
-              virtual const ACE_CString& get_path () const = 0;
+              virtual const ACE_CString& get_scheme () const = 0;
 
-              virtual const ACE_CString& get_query () const = 0;
+              const ACE_CString& get_protocol () const;
+
+              virtual ACE_CString get_authority () const;
+
+              const ACE_CString& get_path () const;
+
+              virtual const ACE_CString& get_query () const;
+
+              virtual const ACE_CString& get_fragment () const;
 
               virtual URLStream open () const;
 
@@ -101,12 +109,21 @@ namespace ACE
               static URL_Base* create_from_wstring (const ACE_WString& url_string);
 #endif
 
+              virtual bool validate ();
+
             protected:
               static const ACE_CString empty_;
 
-              bool strip_protocol (ACE_CString& url_string);
+              bool strip_scheme (ACE_CString& url_string);
+
+              virtual int parse_authority (std::istream& is);
+
+              virtual bool has_authority ();
 
               virtual ClientRequestHandler* create_default_request_handler () const = 0;
+
+            private:
+              ACE_CString path_;
 
             public:
               class Factory
@@ -137,17 +154,53 @@ namespace ACE
               URL_INetBase(u_short port);
               virtual ~URL_INetBase ();
 
-              virtual void set_host (const ACE_CString& host);
+              void set_host (const ACE_CString& host);
 
-              virtual void set_port (u_short port);
+              void set_port (u_short port);
 
               const ACE_CString& get_host () const;
 
               u_short get_port () const;
 
+              virtual u_short default_port () const = 0;
+
+              virtual ACE_CString get_authority () const;
+
+              virtual bool validate ();
+
+            protected:
+              virtual int parse_authority (std::istream& is);
+
+              virtual bool has_authority ();
+
+              int parse_authority_i (std::istream& is,
+                                     std::ostream& os,
+                                     int lastch);
+
             private:
               ACE_CString host_;
               u_short port_;
+          };
+
+
+        class ACE_INET_Export URL_INetAuthBase
+          : public URL_INetBase
+          {
+            public:
+              URL_INetAuthBase(u_short port);
+              virtual ~URL_INetAuthBase ();
+
+              const ACE_CString& get_user_info () const;
+
+              void set_user_info (const ACE_CString& userinfo);
+
+              virtual ACE_CString get_authority () const;
+
+            protected:
+              virtual int parse_authority (std::istream& is);
+
+            private:
+              ACE_CString userinfo_;
           };
 
       }
@@ -156,7 +209,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "URLBase.inl"
+#include "ace/INet/URLBase.inl"
 #endif
 
 #include /**/ "ace/post.h"

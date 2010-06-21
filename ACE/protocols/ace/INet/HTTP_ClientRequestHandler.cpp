@@ -1,9 +1,9 @@
 // $Id$
 
-#include "HTTP_ClientRequestHandler.h"
+#include "ace/INet/HTTP_ClientRequestHandler.h"
 
 #if !defined (__ACE_INLINE__)
-#include "HTTP_ClientRequestHandler.inl"
+#include "ace/INet/HTTP_ClientRequestHandler.inl"
 #endif
 
 #include "ace/Auto_Ptr.h"

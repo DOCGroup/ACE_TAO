@@ -16,7 +16,7 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -224,7 +224,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ConnectionCache.inl"
+#include "ace/INet/ConnectionCache.inl"
 #endif
 
 #include /**/ "ace/post.h"

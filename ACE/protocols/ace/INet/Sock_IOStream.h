@@ -17,8 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "BidirStreamBuffer.h"
-#include "StreamHandler.h"
+#include "ace/INet/BidirStreamBuffer.h"
+#include "ace/INet/StreamHandler.h"
 #include <istream>
 #include <ostream>
 
@@ -147,7 +147,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Sock_IOStream.cpp"
+#include "ace/INet/Sock_IOStream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -3,8 +3,8 @@
 #ifndef ACE_IOS_SOCK_IOSTREAM_CPP
 #define ACE_IOS_SOCK_IOSTREAM_CPP
 
-#include "Sock_IOStream.h"
-#include "IOS_util.h"
+#include "ace/INet/Sock_IOStream.h"
+#include "ace/INet/IOS_util.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

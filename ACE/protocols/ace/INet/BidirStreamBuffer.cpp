@@ -3,7 +3,7 @@
 #ifndef ACE_IOS_BIDIR_STREAM_BUFFER_CPP
 #define ACE_IOS_BIDIR_STREAM_BUFFER_CPP
 
-#include "BidirStreamBuffer.h"
+#include "ace/INet/BidirStreamBuffer.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 

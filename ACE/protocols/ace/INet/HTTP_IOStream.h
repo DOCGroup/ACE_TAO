@@ -17,9 +17,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "INet_Export.h"
-#include "BufferedStreamBuffer.h"
-#include "HTTP_StreamPolicyBase.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/BufferedStreamBuffer.h"
+#include "ace/INet/HTTP_StreamPolicyBase.h"
 #include <ostream>
 #include <istream>
 
@@ -126,7 +126,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_IOStream.inl"
+#include "ace/INet/HTTP_IOStream.inl"
 #endif
 
 #include /**/ "ace/post.h"

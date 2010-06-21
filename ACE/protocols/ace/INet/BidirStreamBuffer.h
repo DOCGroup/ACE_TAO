@@ -34,12 +34,19 @@ namespace ACE
         * @brief Encapsulates bidirectional streambuffer attached
         * to a StreamHandler implementation.
         *
+        * Implements a C++ standard bidirectional streambuffer using
+        * a streamed connection handler as data source/destination.
+        * Used as a base for implementing C++ standard streams capable
+        * of performing C++ standard formatted input and output on
+        * any streamed connection that can be represented by a stream
+        * handler.
         */
         template <class ACE_CHAR_T, class STREAM_HANDLER, class TR = std::char_traits<ACE_CHAR_T> >
         class BasicBidirStreamBuffer
           : public std::basic_streambuf<ACE_CHAR_T, TR>
           {
             public:
+              // useful traits
               typedef std::basic_streambuf<ACE_CHAR_T, TR> base_type;
               typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
               typedef ACE_CHAR_T char_type;
@@ -49,8 +56,10 @@ namespace ACE
               typedef typename base_type::off_type off_type;
               typedef typename ios_type::openmode openmode;
 
+              /// Constructor
               BasicBidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
 
+              /// Destructor
               virtual ~BasicBidirStreamBuffer ();
 
               virtual int_type overflow (int_type c);
@@ -114,7 +123,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "BidirStreamBuffer.cpp"
+#include "ace/INet/BidirStreamBuffer.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

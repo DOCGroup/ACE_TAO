@@ -14,12 +14,12 @@
 #include "ace/SString.h"
 #include "ace/Countdown_Time.h"
 #include "ace/SOCK_Connector.h"
-#include "INet_Export.h"
-#include "HTTP_Request.h"
-#include "HTTP_Response.h"
-#include "StreamHandler.h"
-#include "Sock_IOStream.h"
-#include "HTTP_IOStream.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/HTTP_Request.h"
+#include "ace/INet/HTTP_Response.h"
+#include "ace/INet/StreamHandler.h"
+#include "ace/INet/Sock_IOStream.h"
+#include "ace/INet/HTTP_IOStream.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +28,7 @@ namespace ACE
     namespace HTTP
       {
         /**
-        * @class ACE_HTTP_Connection
+        * @class ACE_HTTP_Session
         *
         * @brief Encapsulates HTTP session.
         *
@@ -119,7 +119,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTTP_Session.cpp"
+#include "ace/INet/HTTP_Session.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

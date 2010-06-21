@@ -1,6 +1,6 @@
 // $Id$
 
-#include "IOS_util.h"
+#include "ace/INet/IOS_util.h"
 
 ACE_RCSID(NET_CLIENT,ACE_IOS_util,"$Id$")
 

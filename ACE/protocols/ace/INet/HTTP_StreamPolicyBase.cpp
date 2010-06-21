@@ -3,7 +3,7 @@
 #ifndef ACE_HTTP_STREAM_POLICY_BASE_CPP
 #define ACE_HTTP_STREAM_POLICY_BASE_CPP
 
-#include "HTTP_StreamPolicyBase.h"
+#include "ace/INet/HTTP_StreamPolicyBase.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

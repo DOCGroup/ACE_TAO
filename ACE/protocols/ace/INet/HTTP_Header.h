@@ -17,8 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "INet_Export.h"
-#include "HeaderBase.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/HeaderBase.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +33,7 @@ namespace ACE
         *
         */
         class ACE_INET_Export Header
-          : public virtual ACE::INet::HeaderBase
+          : public ACE::INet::HeaderBase
           {
             public:
               /// Constructor
@@ -91,7 +91,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_Header.inl"
+#include "ace/INet/HTTP_Header.inl"
 #endif
 
 #include /**/ "ace/post.h"

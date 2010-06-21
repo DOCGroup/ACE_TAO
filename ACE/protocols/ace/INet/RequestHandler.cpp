@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RequestHandler.h"
+#include "ace/INet/RequestHandler.h"
 
 ACE_RCSID(NET_CLIENT,ACE_INet_RequestHandler,"$Id$")
 

@@ -11,9 +11,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
-#include "Request.h"
-#include "Response.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/Request.h"
+#include "ace/INet/Response.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

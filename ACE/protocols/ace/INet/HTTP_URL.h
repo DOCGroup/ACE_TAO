@@ -17,8 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "INet_Export.h"
-#include "URLBase.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/URLBase.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +33,7 @@ namespace ACE
         *
         */
         class ACE_INET_Export URL
-          : public ACE::INet::URL_INetBase
+          : public ACE::INet::URL_INetAuthBase
           {
             public:
               URL ();
@@ -43,29 +43,17 @@ namespace ACE
 
               URL& operator =(const URL& url);
 
-              virtual bool parse (const ACE_CString& url_string);
-
-#if defined (ACE_HAS_WCHAR)
-              virtual bool parse (const ACE_WString& url_string);
-#endif
-
-              virtual const ACE_CString& get_protocol () const;
-
-              virtual ACE_CString get_authority () const;
-
-              virtual const ACE_CString& get_user_info () const;
-
-              virtual const ACE_CString& get_path () const;
+              virtual const ACE_CString& get_scheme () const;
 
               virtual const ACE_CString& get_query () const;
 
+              virtual const ACE_CString& get_fragment () const;
+
               ACE_CString get_request_uri () const;
 
-              void set_user_info (const ACE_CString& userinfo);
+              virtual void set_query (const ACE_CString& query);
 
-              void set_path (const ACE_CString& path);
-
-              void set_query (const ACE_CString& query);
+              virtual void set_fragment (const ACE_CString& fargment);
 
               void set_proxy (const ACE_CString& proxy_host, u_short proxy_port = HTTP_PROXY_PORT);
 
@@ -76,6 +64,8 @@ namespace ACE
               bool has_proxy () const;
 
               virtual ACE_CString to_string () const;
+
+              virtual u_short default_port () const;
 
               static const ACE_CString PROTOCOL;
 
@@ -89,9 +79,8 @@ namespace ACE
               virtual ACE::INet::ClientRequestHandler* create_default_request_handler () const;
 
             private:
-              ACE_CString userinfo_;
-              ACE_CString path_;
               ACE_CString query_;
+              ACE_CString fragment_;
               ACE_CString proxy_host_;
               u_short proxy_port_;
 
@@ -116,7 +105,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_URL.inl"
+#include "ace/INet/HTTP_URL.inl"
 #endif
 
 #include /**/ "ace/post.h"

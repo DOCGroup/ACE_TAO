@@ -11,8 +11,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
-#include "BufferedStreamBuffer.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/BufferedStreamBuffer.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTTP_StreamPolicyBase.cpp"
+#include "ace/INet/HTTP_StreamPolicyBase.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

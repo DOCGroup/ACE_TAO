@@ -3,8 +3,8 @@
 #ifndef ACE_IOS_STRING_IOSTREAM_CPP
 #define ACE_IOS_STRING_IOSTREAM_CPP
 
-#include "String_IOStream.h"
-#include "IOS_util.h"
+#include "ace/INet/String_IOStream.h"
+#include "ace/INet/IOS_util.h"
 #include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -33,6 +33,41 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::~String_StreamBufferBase ()
       {
+      }
+
+    template <class ACE_CHAR_T, class TR>
+    typename String_StreamBufferBase<ACE_CHAR_T, TR>::pos_type
+    String_StreamBufferBase<ACE_CHAR_T, TR>::seekoff (
+        off_type off,
+        seekdir way,
+        openmode which)
+      {
+
+        if (which != this->get_mode () || which == std::ios::out)
+          return pos_type (-1);
+
+        size_type spos = 0;
+        if (way == std::ios::cur)
+          spos = this->rd_ptr_;
+        else if (way == std::ios::end)
+          spos = this->string_ref_->length ();
+        spos += off;
+        if (spos < this->string_ref_->length ())
+          this->rd_ptr_ = spos;
+        else
+          this->rd_ptr_ = this->string_ref_->length ();
+
+        this->setg (this->eback (), this->eback (), this->eback ());
+        return pos_type (this->rd_ptr_);
+      }
+
+    template <class ACE_CHAR_T, class TR>
+    typename String_StreamBufferBase<ACE_CHAR_T, TR>::pos_type
+    String_StreamBufferBase<ACE_CHAR_T, TR>::seekpos (
+        pos_type pos,
+        openmode which)
+      {
+        return this->seekoff (pos_type (pos), std::ios::beg, which);
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -174,6 +209,15 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase()
       {
+      }
+
+    template <class ACE_CHAR_T, class TR>
+    String_IStreamBase<ACE_CHAR_T, TR>&
+    String_IStreamBase<ACE_CHAR_T, TR>::rewind ()
+      {
+        this->rdbuf ()->pubseekpos (0, std::ios::in);
+        this->clear ();
+        return *this;
       }
   }
 }

@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Auto_Ptr.h"
-#include "StreamInterceptor.h"
+#include "ace/INet/StreamInterceptor.h"
 #include <streambuf>
 #include <iosfwd>
 #include <ios>
@@ -48,6 +48,7 @@ namespace ACE
               typedef typename base_type::int_type int_type;
               typedef typename base_type::pos_type pos_type;
               typedef typename base_type::off_type off_type;
+              typedef typename ios_type::seekdir seekdir;
               typedef typename ios_type::openmode openmode;
               typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
 
@@ -91,7 +92,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "BufferedStreamBuffer.cpp"
+#include "ace/INet/BufferedStreamBuffer.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
