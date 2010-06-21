@@ -3,6 +3,11 @@
 #include "Deployment_Scheduler.h"
 #include "Logger/Log_Macros.h"
 
+
+#if !defined (__ACE_INLINE__)
+#include "LocalityManager/Scheduler/Deployment_Scheduler.inl"
+#endif
+
 namespace DAnCE
 {
   int

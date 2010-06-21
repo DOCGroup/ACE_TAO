@@ -1,3 +1,16 @@
+Mon Jun 21 23:15:11 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.h:
+        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Updated scheduler to borrow the ORB thread in the event that it is
+          launched with a thread pool of size zero.  This is used in the Locality
+          Manager to ensure that the thread switch tests pass in dds4ccm.
+
 Mon Jun 21 18:21:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl:

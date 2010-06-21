@@ -18,18 +18,34 @@ namespace DAnCE
     public ACE_Task_Base
   {
   public:
+    Deployment_Scheduler (void);
+
     /// Schedule an event for execution
     int schedule_event (Deployment_Event *event);
     
+    void activate_scheduler (size_t threads);
+
     void terminate_scheduler (void);
+
+    bool multithreaded (void);
+
+    bool work_pending (void);
+    
+    void perform_work (void);
 
   protected:
     /// Scheduler event loop
     virtual int svc (void);
     
   private:
+    bool multithread_;
+
     ACE_Activation_Queue event_queue_;
   };
 }
+
+#if defined (__ACE_INLINE__)
+#include "LocalityManager/Scheduler/Deployment_Scheduler.inl"
+#endif
 
 #endif

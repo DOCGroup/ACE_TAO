@@ -63,14 +63,14 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   // Spawn thread pool
   // @Todo:  We can probably move this up into the NodeManager and
   // share the thread pool among several node applications.
-  this->scheduler_.activate (THR_DETACHED,
-                             10);
+  this->scheduler_.activate_scheduler (10);
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
   this->scheduler_.terminate_scheduler ();
+  PLUGIN_MANAGER::close ();
 }
 
 void
@@ -80,7 +80,7 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
 
   CORBA::ULong plan (0);
   std::list < Event_Future > prepared_instances;
-  Deployment_Completion completion;
+  Deployment_Completion completion (this->scheduler_);
 
   // for each sub plan
   LocalitySplitter::TSubPlanConstIterator plans_end (plans, 1);
@@ -362,7 +362,7 @@ NodeApplication_Impl::remove_instances (void)
 
   std::list < Event_Future > removed_instances;
 
-  Deployment_Completion completion;
+  Deployment_Completion completion (this->scheduler_);
 
   for (LOCALITY_MAP::iterator i = this->localities_.begin ();
        i != this->localities_.end (); ++i)
