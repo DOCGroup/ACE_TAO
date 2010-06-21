@@ -4,11 +4,15 @@
 #define HELLO_IDL
 
 #pragma ciao lem "HelloE.idl"
+#pragma ciao lem "HelloAE.idl"
 #pragma ciao ami4ccm interface "Hello::MyFoo"
 #pragma ciao ami4ccm interface "Hello::MyDerived"
 #pragma ciao ami4ccm interface "Hello::MyBar"
 #pragma ciao ami4ccm interface "Foo::MyFoo"
 #pragma ciao ami4ccm interface "Foo::MyBar"
+#pragma ciao ami4ccm interface "Bar::One"
+#pragma ciao ami4ccm interface "Bar::Two"
+#pragma ciao ami4ccm interface "Bar::Three"
 
 module Hello
 {

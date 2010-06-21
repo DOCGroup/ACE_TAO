@@ -1,3 +1,18 @@
+Mon Jun 21 11:16:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello.idl:
+          Enabled ami4ccm some more interfaces
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
+          Commented out the uses multiple ports for the moment
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
+          Added this file 
+
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl:
+          Added some more test idl but this is commented out, uncovered an issue
+          in tao_idl
+
 Mon Jun 21 11:03:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello
@@ -28,7 +43,7 @@ Mon Jun 21 11:03:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.mpc
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h
-        First base tutorial.  
+        First base tutorial.
 
 Mon Jun 21 10:59:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

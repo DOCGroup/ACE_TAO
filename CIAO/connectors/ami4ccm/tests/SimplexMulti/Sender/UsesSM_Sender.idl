@@ -9,15 +9,18 @@
 
 #pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_um_one"
 #pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_two"
-
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::m_run_my_um_one"
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::m_run_my_two"
 
 module UsesSM
 {
   component Sender
   {
     /// For synchronous invocation
-    uses multiple One run_my_um_one;
+    uses One run_my_um_one;
+    //uses multiple One m_run_my_um_one;
     uses Two run_my_two;
+    //uses multiple Two m_run_my_two;
   };
 };
 
