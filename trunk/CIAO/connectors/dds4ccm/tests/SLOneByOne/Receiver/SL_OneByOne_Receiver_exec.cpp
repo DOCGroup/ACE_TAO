@@ -57,10 +57,10 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   {
     if (info.instance_status != CCM_DDS::INSTANCE_UPDATED)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
-                              ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
-                              ACE_TEXT ("  with operation 'on_one_update' from StateListener in Receiver\n")
-                    ));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: did not receive the expected info.status ")
+                    ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
+                    ACE_TEXT ("  with operation 'on_one_update' from StateListener in Receiver\n")));
 
       }
 
@@ -88,10 +88,10 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   {
     if (info.instance_status != CCM_DDS::INSTANCE_DELETED)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.status ")
-                              ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED' ")
-                              ACE_TEXT ("with operation 'on_deletion' from StateListener in Receiver\n")
-                    ));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: did not receive the expected info.status ")
+                    ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED' ")
+                    ACE_TEXT ("with operation 'on_deletion' from StateListener in Receiver\n")));
 
       }
     if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_DELETED)
@@ -183,38 +183,38 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     if (this->on_many_updates_.value ())
       {
          no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Received unexpected ")
-                               ACE_TEXT ("operation 'on_many_updates' from StateListener in Receiver\n")
-                    ));
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: Received unexpected ")
+                     ACE_TEXT ("operation 'on_many_updates' from StateListener in Receiver\n")));
       }
 
     if (!this->on_creation_.value ())
       {
          no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")
-                    ));
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: didn't receive the expected ")
+                     ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")));
       }
     if (!this->on_one_update_.value  ())
       {
          no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
-                    ));
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: didn't receive the expected ")
+                     ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")));
       }
     if (!this->on_deletion_.value ())
       {
          no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")
-                    ));
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: didn't receive the expected ")
+                     ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")));
       }
 
     if (no_error)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: Have received the expected ")
-                               ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")
-                   ));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("OK: Have received the expected ")
+                    ACE_TEXT (" operations for ONE_BY_ONE from StateListener in Receiver\n")));
       }
 
     if (this->thread_id_listener_.value () == 0)
