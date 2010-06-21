@@ -1,9 +1,15 @@
+Mon Jun 21 17:01:16 UTC 2010  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * tao/Vector_CDR_T.h:
+
+          More mintor template syntax changes to make gcc happy.
+
 Mon Jun 21 15:20:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Vector_SArgument_T.h:
         * tao/Vector_Argument_T.h:
         * tao/Vector_CDR_T.h:
-        
+
           Added some needed 'typename' qualifiers and removed some
           unneeded ones.
 
@@ -11,18 +17,18 @@ Mon Jun 21 14:28:44 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_interface.h:
         * TAO_IDL/ast/ast_interface.cpp:
-        
+
           Added member and accessor functions to store and retrieve
           the associated AMI reply handler, if any.
-          
+
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           Used the storage described above to fetch the reply
           handler to add as a parameter in the assoiated sendc_*
           operation.
-          
+
         * TAO_IDL/fe/fe_interface_header.cpp:
-        
+
           Changed a boolean lookup_by_name() arg from 'true' to
           'false', overlooked when default parameters were removed
           from this operation. Thanks to Simon Massey
