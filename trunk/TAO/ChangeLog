@@ -1,12 +1,18 @@
+Mon Jun 21 08:12:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp:
+          Fixed compile error
+
 Fri Jun 18 20:13:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-        
+
           Fixed bug in initialization of scoped name for operations
           created on the fly for attributes.
-          
+
         * TAO_IDL/ast/ast_decl.cpp:
-        
+
           Cosmetic changes.
 
 Fri Jun 18 18:28:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
