@@ -52,7 +52,7 @@ namespace CIAO_Writer_Receiver_Impl
     const WriterTestSeq & an_instance,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
-    for (unsigned int i = 0; i < an_instance.length (); ++i)
+    for (CORBA::ULong i = 0; i < an_instance.length (); ++i)
       {
         ACE_DEBUG ((LM_ERROR, ACE_TEXT ("WriterTest_Listener::on_many_data ")
                 ACE_TEXT ("received writer info for <%C> at %u\n"),
