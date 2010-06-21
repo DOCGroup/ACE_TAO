@@ -2,10 +2,10 @@
 
 #include "ace/String_Base.h"
 #include "ace/OS_NS_ctype.h"
-#include "HTTP_Request.h"
+#include "ace/INet/HTTP_Request.h"
 
 #if !defined (__ACE_INLINE__)
-#include "HTTP_Request.inl"
+#include "ace/INet/HTTP_Request.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_HTTP_Request,"$Id$")

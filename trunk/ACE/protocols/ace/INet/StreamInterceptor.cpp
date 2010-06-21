@@ -3,7 +3,7 @@
 #ifndef ACE_IOS_STREAM_INTERCEPTOR_CPP
 #define ACE_IOS_STREAM_INTERCEPTOR_CPP
 
-#include "StreamInterceptor.h"
+#include "ace/INet/StreamInterceptor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

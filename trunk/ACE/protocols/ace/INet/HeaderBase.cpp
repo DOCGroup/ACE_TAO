@@ -1,10 +1,10 @@
 // $Id$
 
-#include "HeaderBase.h"
+#include "ace/INet/HeaderBase.h"
 #include "ace/OS_NS_stdlib.h"
 
 #if !defined (__ACE_INLINE__)
-#include "HeaderBase.inl"
+#include "ace/INet/HeaderBase.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_INet_HeaderBase,"$Id$")

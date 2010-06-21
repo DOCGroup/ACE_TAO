@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ConnectionCache.h"
+#include "ace/INet/ConnectionCache.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ConnectionCache.inl"
+#include "ace/INet/ConnectionCache.inl"
 #endif
 
 ACE_RCSID(NET_CLIENT,ACE_INet_ConnectionCache,"$Id$")

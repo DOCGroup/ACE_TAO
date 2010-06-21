@@ -11,9 +11,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
-#include "BufferedStreamBuffer.h"
-#include "ace/String_Base.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/BufferedStreamBuffer.h"
+#include "ace/SString.h"
 #include <istream>
 #include <ostream>
 
@@ -39,6 +39,9 @@ namespace ACE
               typedef typename super::openmode openmode;
               typedef ACE_String_Base<ACE_CHAR_T> string_type;
               typedef typename string_type::size_type size_type;
+              typedef typename super::pos_type pos_type;
+              typedef typename super::off_type off_type;
+              typedef typename super::seekdir seekdir;
 
               String_StreamBufferBase (openmode mode);
               String_StreamBufferBase (string_type& string, openmode mode);
@@ -54,6 +57,13 @@ namespace ACE
               virtual int read_from_stream (char_type* buffer, std::streamsize length);
 
               virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+
+              virtual pos_type seekoff (off_type off,
+                                        seekdir way,
+                                        openmode which);
+
+              virtual pos_type seekpos (pos_type pos,
+                                        openmode which);
 
             private:
               enum
@@ -134,10 +144,13 @@ namespace ACE
             public:
               typedef String_IOSBase<ACE_CHAR_T, TR> ios_base;
               typedef typename ios_base::string_type string_type;
+              typedef typename ios_base::buffer_type::pos_type pos_type;
 
               explicit String_IStreamBase();
               explicit String_IStreamBase(string_type& string);
               ~String_IStreamBase();
+
+              String_IStreamBase& rewind ();
           };
 
         typedef String_StreamBufferBase<char> CString_StreamBuffer;
@@ -151,7 +164,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "String_IOStream.cpp"
+#include "ace/INet/String_IOStream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -3,7 +3,7 @@
 #ifndef ACE_BUFFERED_STREAM_BUFFER_CPP
 #define ACE_BUFFERED_STREAM_BUFFER_CPP
 
-#include "BufferedStreamBuffer.h"
+#include "ace/INet/BufferedStreamBuffer.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 

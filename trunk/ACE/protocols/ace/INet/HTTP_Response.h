@@ -18,10 +18,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Array.h"
-#include "INet_Export.h"
-#include "Response.h"
-#include "HTTP_Header.h"
-#include "HTTP_Status.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/Response.h"
+#include "ace/INet/HTTP_Header.h"
+#include "ace/INet/HTTP_Status.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,7 +94,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_Response.inl"
+#include "ace/INet/HTTP_Response.inl"
 #endif
 
 #include /**/ "ace/post.h"

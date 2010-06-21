@@ -15,10 +15,10 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Thread_Mutex.h"
-#include "INet_Export.h"
-#include "URLBase.h"
-#include "RequestHandler.h"
-#include "ConnectionCache.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/URLBase.h"
+#include "ace/INet/RequestHandler.h"
+#include "ace/INet/ConnectionCache.h"
 #include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -105,7 +105,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ClientRequestHandler.inl"
+#include "ace/INet/ClientRequestHandler.inl"
 #endif
 
 #include /**/ "ace/post.h"

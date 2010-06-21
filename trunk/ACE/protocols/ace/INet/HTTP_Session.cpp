@@ -3,10 +3,10 @@
 #ifndef ACE_HTTP_SESSION_CPP
 #define ACE_HTTP_SESSION_CPP
 
-#include "HTTP_Session.h"
-#include "HTTP_StreamPolicy.h"
-#include "String_IOStream.h"
-#include "IOS_util.h"
+#include "ace/INet/HTTP_Session.h"
+#include "ace/INet/HTTP_StreamPolicy.h"
+#include "ace/INet/String_IOStream.h"
+#include "ace/INet/IOS_util.h"
 #include "ace/INET_Addr.h"
 #include "ace/Event_Handler.h"
 #include "ace/Connector.h"

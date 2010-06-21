@@ -19,14 +19,14 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
-#include "INet_Export.h"
-#include "IOS_util.h"
-#include "StreamInterceptor.h"
-#include "ClientRequestHandler.h"
-#include "HTTP_Request.h"
-#include "HTTP_Response.h"
-#include "HTTP_Session.h"
-#include "HTTP_URL.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/IOS_util.h"
+#include "ace/INet/StreamInterceptor.h"
+#include "ace/INet/ClientRequestHandler.h"
+#include "ace/INet/HTTP_Request.h"
+#include "ace/INet/HTTP_Response.h"
+#include "ace/INet/HTTP_Session.h"
+#include "ace/INet/HTTP_URL.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -135,7 +135,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_ClientRequestHandler.inl"
+#include "ace/INet/HTTP_ClientRequestHandler.inl"
 #endif
 
 #include /**/ "ace/post.h"

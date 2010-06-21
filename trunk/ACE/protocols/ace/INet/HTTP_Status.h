@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -183,7 +183,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HTTP_Status.inl"
+#include "ace/INet/HTTP_Status.inl"
 #endif
 
 #include /**/ "ace/post.h"

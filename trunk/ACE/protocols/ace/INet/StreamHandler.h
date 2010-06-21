@@ -30,12 +30,17 @@ namespace ACE
         *
         * @brief Encapsulates streamed connection.
         *
+        * This class provides the connection point for the
+        * ACE Acceptor and Connector based patterns and the
+        * ACE Reactor framework to C++ standard streams
+        * based classes.
         */
         template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
         class StreamHandler
           : public ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE>
           {
             public:
+              // useful traits
               typedef StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE> this_type;
               typedef ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE> base_type;
               typedef ACE_Message_Queue<ACE_SYNCH_USE> mq_type;
@@ -46,6 +51,7 @@ namespace ACE
                              mq_type *mq = 0,
                              ACE_Reactor *reactor = ACE_Reactor::instance ());
 
+              /// Destructor
               virtual ~StreamHandler ();
 
               /// Activate the connection
@@ -54,17 +60,25 @@ namespace ACE
               /// Close the connection
               virtual int close (u_long flags = 0);
 
+              /// Called to handle incoming data when using StreamHandler in
+              /// reactive mode
               virtual int handle_input (ACE_HANDLE);
 
+              /// Called to handle outgoing data when using StreamHandler in
+              /// reactive mode
               virtual int handle_output (ACE_HANDLE);
 
+              /// Called by streambuffer to read/receive new data from peer
               int read_from_stream (void * buf, size_t length, u_short char_size);
 
+              /// Called by streambuffer to send new data to peer
               int write_to_stream (const void * buf, size_t length, u_short char_size);
 
-              bool is_connected ();
+              /// Returns true as long as the connection to peer is active
+              bool is_connected () const;
 
-              bool using_reactor ();
+              /// Returns true if StreamHandler has been configured for reactive mode
+              bool using_reactor () const;
 
             private:
               enum
@@ -72,19 +86,26 @@ namespace ACE
                   MAX_INPUT_SIZE = 4096
                 };
 
+              /// Attempts to receive data from peer and queue it.
+              /// Called either from handle_input in reactive mode or
+              /// directly from read_from_stream when non-reactive.
               int handle_output_i (ACE_Time_Value* timeout = 0);
 
+              /// Attempts to send queued data to peer.
+              /// Called either from handle_output in reactive mode
+              /// or directly from write_to_stream when non-reactive.
               int handle_input_i (ACE_Time_Value* timeout = 0);
 
+              /// processes queued input
               int process_input (char* buf,
                                  size_t& char_length,
                                  u_short char_size,
                                  ACE_Time_Value* timeout);
 
-              bool reactive () const;
-
+              /// Returns true if a timeout is to be used on IO operations.
               bool use_timeout () const;
 
+              /// Returns true is the queued data contains at least char_size bytes.
               bool char_in_queue (u_short char_size);
 
               bool connected_;
@@ -100,7 +121,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "StreamHandler.cpp"
+#include "ace/INet/StreamHandler.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

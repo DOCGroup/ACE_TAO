@@ -11,10 +11,10 @@
 
 #include /**/ "ace/pre.h"
 
-#include "INet_Export.h"
-#include "HTTP_StreamPolicyBase.h"
-#include "HTTP_IOStream.h"
-#include "String_IOStream.h"
+#include "ace/INet/INet_Export.h"
+#include "ace/INet/HTTP_StreamPolicyBase.h"
+#include "ace/INet/HTTP_IOStream.h"
+#include "ace/INet/String_IOStream.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,7 +87,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTTP_StreamPolicy.cpp"
+#include "ace/INet/HTTP_StreamPolicy.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

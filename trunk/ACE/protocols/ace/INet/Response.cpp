@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Response.h"
+#include "ace/INet/Response.h"
 
 ACE_RCSID(NET_CLIENT,ACE_INet_Response,"$Id$")
 

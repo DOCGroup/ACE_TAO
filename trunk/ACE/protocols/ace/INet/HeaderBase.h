@@ -21,7 +21,7 @@
 #include "ace/Containers_T.h"
 #include "ace/Array.h"
 #include "ace/OS_NS_ctype.h"
-#include "INet_Export.h"
+#include "ace/INet/INet_Export.h"
 #include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -140,7 +140,7 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "HeaderBase.inl"
+#include "ace/INet/HeaderBase.inl"
 #endif
 
 #include /**/ "ace/post.h"

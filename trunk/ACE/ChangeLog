@@ -1,3 +1,63 @@
+Mon Jun 21 09:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/BidirStreamBuffer.cpp:
+	* protocols/ace/INet/BidirStreamBuffer.h:
+	* protocols/ace/INet/BufferedStreamBuffer.cpp:
+	* protocols/ace/INet/BufferedStreamBuffer.h:
+	* protocols/ace/INet/ClientRequestHandler.cpp:
+	* protocols/ace/INet/ClientRequestHandler.h:
+	* protocols/ace/INet/ConnectionCache.cpp:
+	* protocols/ace/INet/ConnectionCache.h:
+	* protocols/ace/INet/HeaderBase.cpp:
+	* protocols/ace/INet/HeaderBase.h:
+	* protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+	* protocols/ace/INet/HTTP_ClientRequestHandler.h:
+	* protocols/ace/INet/HTTP_Header.cpp:
+	* protocols/ace/INet/HTTP_Header.h:
+	* protocols/ace/INet/HTTP_IOStream.cpp:
+	* protocols/ace/INet/HTTP_IOStream.h:
+	* protocols/ace/INet/HTTP_Request.cpp:
+	* protocols/ace/INet/HTTP_Request.h:
+	* protocols/ace/INet/HTTP_Response.cpp:
+	* protocols/ace/INet/HTTP_Response.h:
+	* protocols/ace/INet/HTTP_Session.cpp:
+	* protocols/ace/INet/HTTP_Session.h:
+	* protocols/ace/INet/HTTP_Status.cpp:
+	* protocols/ace/INet/HTTP_Status.h:
+	* protocols/ace/INet/HTTP_StreamPolicyBase.cpp:
+	* protocols/ace/INet/HTTP_StreamPolicyBase.h:
+	* protocols/ace/INet/HTTP_StreamPolicy.cpp:
+	* protocols/ace/INet/HTTP_StreamPolicy.h:
+	* protocols/ace/INet/HTTP_URL.cpp:
+	* protocols/ace/INet/HTTP_URL.h:
+	* protocols/ace/INet/HTTP_URL.inl:
+	* protocols/ace/INet/IOS_util.cpp:
+	* protocols/ace/INet/IOS_util.h:
+	* protocols/ace/INet/Request.cpp:
+	* protocols/ace/INet/Request.h:
+	* protocols/ace/INet/RequestHandler.cpp:
+	* protocols/ace/INet/RequestHandler.h:
+	* protocols/ace/INet/Response.cpp:
+	* protocols/ace/INet/Response.h:
+	* protocols/ace/INet/Sock_IOStream.cpp:
+	* protocols/ace/INet/Sock_IOStream.h:
+	* protocols/ace/INet/StreamHandler.cpp:
+	* protocols/ace/INet/StreamHandler.h:
+	* protocols/ace/INet/StreamInterceptor.cpp:
+	* protocols/ace/INet/StreamInterceptor.h:
+	* protocols/ace/INet/String_IOStream.cpp:
+	* protocols/ace/INet/String_IOStream.h:
+	* protocols/ace/INet/URLBase.cpp:
+	* protocols/ace/INet/URLBase.h:
+	* protocols/ace/INet/URLBase.inl:
+          Some clean up and reorganization to prepare for
+          new additions.
+	  Standardized include statements.
+	  Added some (it's a start!) documentation.
+
+	* protocols/ace/INet/inet.mpc:
+	  Added ACE_ROOT/protocols to includes.
+
 Fri Jun 18 20:32:54 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * tests/Service_Config_Test.cpp: Disable error logging around the
