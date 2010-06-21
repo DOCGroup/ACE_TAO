@@ -1,0 +1,24 @@
+// $Id$
+
+#ifndef NOMODULE_CONNECTOR_IDL
+#define NOMODULE_CONNECTOR_IDL
+
+#include <Components.idl>
+#include "Derived.idl"
+#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#pragma ciao lem "Derived_ConnectorE.idl"
+
+#pragma dds4ccm impl "DDS_Derived_Connector_T.h"
+
+module ::CCM_DDS::Typed < ::DerivedType, ::DerivedTypeSeq> DerivedTypeConnector;
+
+connector MyEvent : DerivedTypeConnector::DDS_Event
+{
+};
+
+connector MyState : DerivedTypeConnector::DDS_State
+{
+};
+
+#endif
