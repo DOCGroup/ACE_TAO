@@ -1,0 +1,19 @@
+//==============================================================================
+/// @file Helllo_defn.idl
+//==============================================================================
+
+#ifndef HELLO_DEFN_IDL
+#define HELLO_DEFN_IDL
+
+module Hello
+{
+   // Type declarations
+
+   exception InternalError
+     {
+       long id;
+       string error_string;
+     };
+};
+
+#endif
