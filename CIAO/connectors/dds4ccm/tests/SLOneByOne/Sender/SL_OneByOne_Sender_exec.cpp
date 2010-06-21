@@ -60,13 +60,15 @@ namespace CIAO_SL_OneByOne_Sender_Impl
       }
     catch (const CCM_DDS::AlreadyCreated &)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Unexpected exception: AlreadyCreated with test updater create_one <%C>.\n"),
                       i.key.in()));
         result = false;
       }
     catch (const CCM_DDS::InternalError& )
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                       i.key.in()));
         result = false;
       }

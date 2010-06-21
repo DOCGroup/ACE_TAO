@@ -9,6 +9,8 @@
 
 #pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_um_one"
 #pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_two"
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::s_run_my_um_one"
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::m_run_my_two"
 
 module UsesSM
 {
@@ -17,6 +19,8 @@ module UsesSM
     /// For synchronous invocation
     uses multiple One run_my_um_one;
     uses Two run_my_two;
+//    uses One s_run_my_um_one;
+//    uses multiple Two m_run_my_two;
   };
 };
 
