@@ -1,6 +1,6 @@
 // $Id$
 
-project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+project(AMI_Hello_Tuto_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
@@ -19,8 +19,8 @@ project(AMI_Hello_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
   }
 }
 
-project(AMI_Hello_lem_gen) : ciaoidldefaults {
-  after += AMI_Hello_idl_gen AMI_Hello_lema_gen
+project(AMI_Hello_Tuto_lem_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_idl_gen AMI_Hello_Tuto_lema_gen
   custom_only = 1
   idlflags += -Wb,export_macro=HELLO_LEM_STUB_Export \
               -Wb,export_include=Hello_lem_stub_export.h \
@@ -33,8 +33,8 @@ project(AMI_Hello_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_Hello_lema_gen) : ciaoidldefaults {
-  after += AMI_Hello_idl_gen
+project(AMI_Hello_Tuto_lema_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_STUB_Export \
               -Wb,stub_export_include=Hello_stub_export.h \
@@ -53,8 +53,8 @@ project(AMI_Hello_lema_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_Hello_lemae_gen) : ciaoidldefaults {
-  after += AMI_Hello_lema_gen
+project(AMI_Hello_Tuto_lemae_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_lema_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_lem_stub_export.h \
@@ -67,8 +67,8 @@ project(AMI_Hello_lemae_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_Hello_stub) : ccm_stub, ami, ami4ccm_stub {
-  after += AMI_Hello_lem_gen
+project(AMI_Hello_Tuto_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_Hello_Tuto_lem_gen
   libs  +=
   libout = ../lib
   libpaths += ../lib
@@ -95,8 +95,8 @@ project(AMI_Hello_stub) : ccm_stub, ami, ami4ccm_stub {
   }
 }
 
-project(AMI_Hello_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
-  after += AMI_Hello_lem_gen AMI_Hello_stub AMI_Hello_lemae_gen AMI_Hello_skel
+project(AMI_Hello_Tuto_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_Hello_Tuto_lem_gen AMI_Hello_Tuto_stub AMI_Hello_Tuto_lemae_gen AMI_Hello_Tuto_skel
   libs += Hello_stub Hello_skel
   libout = ../lib
   libpaths += ../lib
@@ -123,8 +123,8 @@ project(AMI_Hello_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
   }
 }
 
-project(AMI_Hello_skel) : ciao_executor, ami, ami4ccm_servant {
-  after      += AMI_Hello_stub
+project(AMI_Hello_Tuto_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_Hello_Tuto_stub
   sharedname  = Hello_skel
   libs       += Hello_stub
   libout = ../lib
@@ -151,8 +151,8 @@ project(AMI_Hello_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 }
 
-project(AMI_Hello_conn) : ciao_executor, ami, ami4ccm_lem_stub {
-  after   += AMI_Hello_lem_stub Hello_Base_AMI_stub AMI_Hello_skel AMI_Hello_lema_gen AMI_Hello_lemae_gen
+project(AMI_Hello_Tuto_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_Hello_Tuto_lem_stub Hello_Base_AMI_stub AMI_Hello_Tuto_skel AMI_Hello_Tuto_lema_gen AMI_Hello_Tuto_lemae_gen
   sharedname = Hello_conn
   libs += Hello_stub Hello_skel Hello_lem_stub
   libpaths += ../lib
@@ -175,8 +175,8 @@ project(AMI_Hello_conn) : ciao_executor, ami, ami4ccm_lem_stub {
   }
 }
 
-project(AMI_Hello_svnt) : ciao_servant, ami, ami4ccm_servant {
-  after   += AMI_Hello_lem_stub Hello_Base_AMI_stub AMI_Hello_skel AMI_Hello_lema_gen AMI_Hello_lemae_gen AMI_Hello_conn
+project(AMI_Hello_Tuto_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_Hello_Tuto_lem_stub Hello_Base_AMI_stub AMI_Hello_Tuto_skel AMI_Hello_Tuto_lema_gen AMI_Hello_Tuto_lemae_gen AMI_Hello_Tuto_conn
   sharedname = Hello_svnt
   libs += Hello_stub Hello_skel Hello_lem_stub Hello_conn
   libpaths += ../lib

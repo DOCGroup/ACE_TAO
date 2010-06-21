@@ -1,8 +1,8 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Sender"
+// This file is generated with "generate_component_mpc.pl -p Hello_Tuto Hello_Sender"
 
-project(AMI_Hello_Base_Hello_Sender_idl_gen) : componentidldefaults {
-  after += Conn_Hello_Base_idl_gen AMI_Hello_idl_gen
+project(AMI_Hello_Tuto_Hello_Sender_idl_gen) : componentidldefaults {
+  after += Conn_Hello_Tuto_idl_gen AMI_Hello_Tuto_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_stub_export.h \
@@ -21,8 +21,8 @@ project(AMI_Hello_Base_Hello_Sender_idl_gen) : componentidldefaults {
   }
 }
 
-project(AMI_Hello_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
-  after += AMI_Hello_Base_Hello_Sender_idl_gen
+project(AMI_Hello_Tuto_Hello_Sender_lem_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_Hello_Sender_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_lem_stub_export.h \
@@ -38,8 +38,8 @@ project(AMI_Hello_Base_Hello_Sender_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(AMI_Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
-  after += AMI_Hello_Base_Hello_Sender_lem_gen AMI_Hello_stub Conn_Hello_Base_stub
+project(AMI_Hello_Tuto_Hello_Sender_lem_stub) : ccm_svnt, ami   {
+  after += AMI_Hello_Tuto_Hello_Sender_lem_gen AMI_Hello_Tuto_stub Conn_Hello_Tuto_stub
   libs  += Hello_stub
   libpaths += ../../lib
   libout = ../../lib
@@ -63,8 +63,8 @@ project(AMI_Hello_Base_Hello_Sender_lem_stub) : ccm_svnt, ami   {
   }
 }
 
-project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
-  after += AMI_Hello_Base_Hello_Sender_idl_gen AMI_Hello_Base_stub AMI_Hello_stub Conn_Hello_Base_stub
+project(AMI_Hello_Tuto_Hello_Sender_stub) : ccm_stub, ami   {
+  after += AMI_Hello_Tuto_Hello_Sender_idl_gen AMI_Hello_Tuto_stub AMI_Hello_Tuto_stub Conn_Hello_Tuto_stub
   libs  += Hello_stub
   libpaths += ../../lib
   libout = ../../lib
@@ -89,8 +89,8 @@ project(AMI_Hello_Base_Hello_Sender_stub) : ccm_stub, ami   {
   }
 }
 
-project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
-  after   += AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_Hello_Sender_stub AMI_Hello_Base_exec Conn_Hello_Base_stub AMI_Hello_lem_stub
+project(AMI_Hello_Tuto_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
+  after   += AMI_Hello_Tuto_Hello_Sender_lem_stub AMI_Hello_Tuto_Hello_Sender_stub AMI_Hello_Tuto_exec Conn_Hello_Tuto_stub AMI_Hello_Tuto_lem_stub
   sharedname = Hello_Sender_exec
   libs += Hello_Sender_stub Hello_Sender_lem_stub Hello_stub Hello_stub Hello_lem_stub
   libpaths += ../../lib
@@ -115,8 +115,8 @@ project(AMI_Hello_Base_Hello_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
   }
 }
 
-project(AMI_Hello_Base_Hello_Sender_svnt) : ciao_servant, ami {
-  after      += AMI_Hello_Base_skel AMI_Hello_Base_Hello_Sender_lem_stub AMI_Hello_Base_Hello_Sender_stub AMI_Hello_Base_exec AMI_Hello_skel
+project(AMI_Hello_Tuto_Hello_Sender_svnt) : ciao_servant, ami {
+  after      += AMI_Hello_Tuto_skel AMI_Hello_Tuto_Hello_Sender_lem_stub AMI_Hello_Tuto_Hello_Sender_stub AMI_Hello_Tuto_exec AMI_Hello_Tuto_skel
   sharedname  = Hello_Sender_svnt
   libs       += Hello_Sender_stub Hello_Sender_lem_stub  \
                 Hello_skel \
