@@ -101,7 +101,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
   /// We depend on the DDS datatype being the first template
   /// argument for now, this may change.
   AST_Decl **datatype = 0;
-  int status = this->t_args_->get (datatype, 0UL);
+  int const status = this->t_args_->get (datatype, 0UL);
 
   if (status != 0)
     {

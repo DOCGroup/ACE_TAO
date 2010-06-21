@@ -219,7 +219,7 @@ print STDERR "\n======= Running corbaname: tests\n";
 foreach $o ( @corbaname_tests) {
     print STDERR "\n$test_number:  $o\n";
 
-    $CLs[1]->Arguments ("$o $corbaname_tests[$i]");
+    $CLs[1]->Arguments ("$o $corbaname_tests[$i] -ORBdebuglevel $debug_level ");
 
     $client_status =
         $CLs[1]->SpawnWaitKill ($clients[1]->ProcessStartWaitInterval() + 45);

@@ -202,9 +202,8 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
     }
     
   os_ << be_nl << be_nl
-      << "void" << be_nl
-      << "set_session_context (" << be_idt_nl
-      << "::Components::SessionContext_ptr ctx);" << be_uidt;
+      << "virtual void set_session_context (" 
+      << "::Components::SessionContext_ptr ctx);";
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
