@@ -1,3 +1,13 @@
+Mon Jun 21 14:57:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.idl:
+          Readded some commented out IDL that doesn't work yet
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Ports/Hello.mpc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.mpc:
+          Made MPC project names unique
+
 Mon Jun 21 14:37:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.h:

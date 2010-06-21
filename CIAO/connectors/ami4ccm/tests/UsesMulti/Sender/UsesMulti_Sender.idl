@@ -1,20 +1,26 @@
 // $Id$
 
-#ifndef USESMULTI_SENDER_IDL
-#define USESMULTI_SENDER_IDL
+#ifndef USESSM_SENDER_IDL
+#define USESSM_SENDER_IDL
 
 #include <Components.idl>
 
-#include "Base/UsesMulti.idl"
+#include "Base/UsesSM.idl"
 
-#pragma ciao ami4ccm receptacle "UsesMulti::Sender::run_my_um_one"
+#pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_um_one"
+#pragma ciao ami4ccm receptacle "UsesSM::Sender::run_my_two"
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::m_run_my_um_one"
+//#pragma ciao ami4ccm receptacle "UsesSM::Sender::m_run_my_two"
 
-module UsesMulti
+module UsesSM
 {
   component Sender
   {
     /// For synchronous invocation
-    uses multiple One run_my_um_one;
+    //uses One run_my_um_one;
+    uses multiple One m_run_my_um_one;
+    uses Two run_my_two;
+    //uses multiple Two m_run_my_two;
   };
 };
 
