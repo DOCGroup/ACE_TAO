@@ -7,62 +7,13 @@
 
 #define NR_OF_KEYS 10
 
-struct UCCVariableSizedStructTest_i : UCCVariableSizedStructTest
-{
-  static size_t count_;
-  static size_t max_count_;
-
-  UCCVariableSizedStructTest_i ()
-    {
-      ++count_;
-      if (count_ > max_count_)
-        {
-          max_count_ = count_;
-        }
-    }
-
-  ~UCCVariableSizedStructTest_i ()
-    {
-      --count_;
-    }
-private:
-  UCCVariableSizedStructTest_i (const UCCVariableSizedStructTest_i &);
-  UCCVariableSizedStructTest_i operator = (const UCCVariableSizedStructTest_i &);
-
-};
-
-struct UCCFixedSizedStructTest_i : UCCFixedSizedStructTest
-{
-  static size_t count_;
-  static size_t max_count_;
-
-  UCCFixedSizedStructTest_i ()
-    {
-      ++count_;
-      if (count_ > max_count_)
-        {
-          max_count_ = count_;
-        }
-    }
-
-  ~UCCFixedSizedStructTest_i ()
-    {
-      --count_;
-    }
-private:
-  UCCFixedSizedStructTest_i (const UCCFixedSizedStructTest_i &);
-  UCCFixedSizedStructTest_i operator = (const UCCFixedSizedStructTest_i &);
-
-};
-
-size_t UCCVariableSizedStructTest_i::count_ = 0;
-size_t UCCVariableSizedStructTest_i::max_count_ = 0;
-size_t UCCFixedSizedStructTest_i::count_ = 0;
-size_t UCCFixedSizedStructTest_i::max_count_ = 0;
-
-
 namespace CIAO_UCC_Test_UCCTestComponent_Impl
 {
+  size_t UCCVariableSizedStructTest_i::count_ = 0;
+  size_t UCCVariableSizedStructTest_i::max_count_ = 0;
+  size_t UCCFixedSizedStructTest_i::count_ = 0;
+  size_t UCCFixedSizedStructTest_i::max_count_ = 0;
+
   //============================================================
   // WriteVariableHandler
   //============================================================
@@ -135,7 +86,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
       for (CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
         {
           ACE_DEBUG ((LM_DEBUG, "Write fixed %i\n", i));
-          fixed_writer->write_one (this->fixed_samples_[i], ::DDS::HANDLE_NIL);
+          fixed_writer->write_one (*(this->fixed_samples_[i]), ::DDS::HANDLE_NIL);
         }
     }
   }
@@ -151,10 +102,8 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
     {
       for (CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
         {
-          char key[7];
-          ACE_OS::sprintf (key, "KEY_%d", i);
-          ACE_DEBUG ((LM_DEBUG, "Write variable %C\n", key));
-          var_writer->write_one (this->var_samples_[key], ::DDS::HANDLE_NIL);
+          ACE_DEBUG ((LM_DEBUG, "Write variable %C\n", this->var_samples_[i]->symbol.in ()));
+          var_writer->write_one (*(this->var_samples_[i]), ::DDS::HANDLE_NIL);
         }
     }
   }
@@ -168,10 +117,10 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
                           "Create fixed sized samples.\n"));
     for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
       {
-        UCCFixedSizedStructTest_i new_key;
-        new_key.x = i;
-        new_key.y = new_key.x;
-        new_key.z = 2*i;
+        UCCFixedSizedStructTest_i* new_key = new UCCFixedSizedStructTest_i;
+        new_key->x = i;
+        new_key->y = new_key->x;
+        new_key->z = 2*i;
 
         this->fixed_samples_[i] = new_key;
       }
@@ -186,13 +135,13 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
                       "Create variable sized samples\n"));
     for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
       {
-        char key[7];
         UCCVariableSizedStructTest_i* new_key = new UCCVariableSizedStructTest_i;
+        char key[7];
         ACE_OS::sprintf (key, "KEY_%d", i);
         new_key->symbol = CORBA::string_dup (key);
         new_key->x = i;
         new_key->y = new_key->x;
-        this->var_samples_[key] = new_key;
+        this->var_samples_[i] = new_key;
       }
   }
 
@@ -240,10 +189,22 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
   void
   Component_exec_i::ccm_remove (void)
   {
+    for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
+      {
+        UCCVariableSizedStructTest_i* stype =this->var_samples_[i];
+        delete stype;
+      }
+
+    for (::CORBA::UShort i = 1; i < NR_OF_KEYS + 1; ++i)
+      {
+        UCCFixedSizedStructTest_i* stype =this->fixed_samples_[i];
+        delete stype;
+      }
+
     this->var_samples_.clear ();
     this->fixed_samples_.clear ();
     
-    //check count_
+    // Check count_
     if (UCCFixedSizedStructTest_i::count_ != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Reference count for fixed sized "
@@ -252,7 +213,7 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Reference count for variable sized "
+        ACE_DEBUG ((LM_DEBUG, "Reference count for fixed sized "
                               "samples is 0\n"));
       }
     if (UCCVariableSizedStructTest_i::count_ != 0)
@@ -266,28 +227,30 @@ namespace CIAO_UCC_Test_UCCTestComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Reference count for variable sized "
                               "samples is 0\n"));
       }
-    //check max_count_
-    if (UCCFixedSizedStructTest_i::max_count_ != 1)
+      
+    // Check max_count_, for each sample we allocated an instance so we
+    // expect a count of 10
+    if (UCCFixedSizedStructTest_i::max_count_ != 10)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Maximum refence count for fixed sized "
-                              "samples is not 1. expected <1> - found <%d>\n",
+                              "samples is not ok, expected <10> - found <%d>\n",
                               UCCFixedSizedStructTest_i::max_count_));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "Maximum reference count for variable sized "
-                              "samples is one\n"));
+        ACE_DEBUG ((LM_DEBUG, "Maximum reference count for fixed sized "
+                              "samples is 10\n"));
       }
-    if (UCCVariableSizedStructTest_i::max_count_ != 1)
+    if (UCCVariableSizedStructTest_i::max_count_ != 10)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Maximum reference count for variable sized "
-                              "samples is not 1. expected <1> - found <%d>\n",
+                              "samples is not ok, expected <10> - found <%d>\n",
                               UCCVariableSizedStructTest_i::max_count_));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "Maximum reference count for variable sized "
-                              "samples is 1\n"));
+                              "samples is 10\n"));
       }
   }
 
