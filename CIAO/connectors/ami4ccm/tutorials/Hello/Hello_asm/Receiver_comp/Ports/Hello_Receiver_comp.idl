@@ -1,0 +1,16 @@
+#ifndef HELLO_RECEIVER_IDL
+#define HELLO_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Hello_obj.idl"
+
+module Hello
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif
