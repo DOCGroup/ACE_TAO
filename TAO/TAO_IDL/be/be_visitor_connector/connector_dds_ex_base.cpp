@@ -58,17 +58,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
       << "_Impl" << be_nl
       << "{" << be_idt;
 
-  ACE_CString lname = node->local_name ();  
-
-  if (lname == "DDS_Event" || lname == "DDS_State")
-    {
-      this->base_tname_ = node->local_name ();  
-    }
-  else
-    {
-      this->base_tname_ =
-        node->base_connector ()->local_name ()->get_string ();
-    }
+  this->base_tname_ = node->local_name ();  
     
   return true;
 }
