@@ -97,28 +97,14 @@ be_connector::check_ancestors (void)
   while (base != 0)
     {
       const char *base_fname = base->full_name ();
-      const char *base_lname = base->local_name ()->get_string ();
       
-      if (ACE_OS::strcmp (base_lname, "DDS_Event") == 0)
-        {
-          this->dds_connector_ = true;
-          idl_global->dds_connector_seen_ = true;
-          break;
-        }
-      else if (ACE_OS::strcmp (base_lname, "DDS_State") == 0)
-        {
-          this->dds_connector_ = true;
-          idl_global->dds_connector_seen_ = true;
-          break;
-        }
-      else if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_Base") == 0)
+      if (ACE_OS::strcmp (base_fname, "CCM_DDS::DDS_TopicBase") == 0)
         {
           this->dds_connector_ = true;
           idl_global->dds_connector_seen_ = true;
           break;
         }
       else if (ACE_OS::strcmp (base_fname, "CCM_AMI::AMI4CCM_Base") == 0)
- 
         {
           this->ami_connector_ = true;
           idl_global->ami_connector_seen_ = true;

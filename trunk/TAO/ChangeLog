@@ -1,3 +1,10 @@
+Tue Jun 22 19:17:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_connector.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        
+          Fixed template module argument lookup bug.
+
 Tue Jun 22 15:18:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
