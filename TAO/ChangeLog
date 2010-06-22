@@ -1,15 +1,21 @@
+Tue Jun 22 13:13:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Alt_Mapping/driver.h:
+        * tests/Alt_Mapping/ub_string.h:
+          Fixed casing of includes
+
 Tue Jun 22 12:35:37 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_interface.h:
         * TAO_IDL/ast/ast_interface.cpp:
-        
+
           Added new member and accessors to store and retrieve the
           ami4ccm receptacle implied IDL interface, if any, insuring
           that the AMI4CCM_* interface is created at most once per
           interface uses type.
-          
+
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Uses the new member and accessors above when creating
           the dummy AMI4CCM_* interface (non-code-generating)
           to be used in the main IDL file (while the real AMI4CCM_*
