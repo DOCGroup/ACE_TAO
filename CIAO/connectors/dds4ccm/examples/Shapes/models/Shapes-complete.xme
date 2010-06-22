@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project SYSTEM "mga.dtd">
 
-<project guid="{C06D0428-892C-491D-A509-079BE9F802E0}" cdate="Mon Jun 21 00:53:22 2010" mdate="Mon Jun 21 00:53:22 2010" version="" metaguid="{DE73FCDF-2F13-4435-AEBF-356CAAF1F554}" metaversion="" metaname="PICML">
+<project guid="{2548C30D-8A4D-4907-81BA-2E5B54A24902}" cdate="Mon Jun 21 00:53:22 2010" mdate="Mon Jun 21 00:53:22 2010" version="" metaguid="{965B9F0C-B89C-4991-BE08-9A70B232C2D4}" metaversion="" metaname="PICML">
 	<name>Shapes</name>
 	<comment></comment>
 	<author></author>
@@ -25,6 +25,15 @@
 				</attribute>
 				<model id="id-0065-00000165" kind="Aggregate" role="Aggregate" guid="{2c677724-9ced-405b-bc67-15def1bc1e5e}" relid="0x0" childrelidcntr="0x3">
 					<name>ShapeType</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>55,13</value>
+							</regnode>
+						</regnode>
+					</regnode>
 					<attribute kind="PostPreprocessorDirectives" status="meta">
 						<value></value>
 					</attribute>
@@ -96,6 +105,15 @@
 				</model>
 				<model id="id-0065-00000166" kind="Aggregate" role="Aggregate" guid="{0e77c5f0-0aba-4f5b-aa7e-2bb4033f3014}" relid="0x1" childrelidcntr="0x4">
 					<name>Attributes</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>13,13</value>
+							</regnode>
+						</regnode>
+					</regnode>
 					<attribute kind="PostPreprocessorDirectives" status="meta">
 						<value></value>
 					</attribute>
@@ -160,6 +178,15 @@
 				</model>
 				<reference id="id-0067-00000128" kind="Collection" role="Collection" guid="{580e0b9d-134b-4096-96de-fa65dc681c48}" relid="0x2" referred="id-0065-00000165">
 					<name>ShapeTypeSeq</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>55,55</value>
+							</regnode>
+						</regnode>
+					</regnode>
 					<attribute kind="PostPreprocessorDirectives" status="meta">
 						<value></value>
 					</attribute>
@@ -193,7 +220,16 @@
 				</attribute>
 				<model id="id-0065-00000168" kind="TemplatePackageInstance" role="TemplatePackageInstance" guid="{9e99a607-a98a-437a-b209-327ec241449b}" relid="0x0" childrelidcntr="0x1">
 					<name>Shapes</name>
-					<reference id="id-0067-00000129" kind="PackageType" role="PackageType" guid="{0d831506-6efa-41bb-9fe2-838e12e9ffdd}" relid="0x0">
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>14,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-00000129" kind="PackageType" role="PackageType" guid="{0d831506-6efa-41bb-9fe2-838e12e9ffdd}" relid="0x0" referred="id-0065-000002c2">
 						<name>PackageType</name>
 						<regnode name="PartRegs" isopaque="yes">
 							<value></value>
@@ -245,7 +281,7 @@
 				<attribute kind="PrefixTag" status="meta">
 					<value></value>
 				</attribute>
-				<model id="id-0065-0000016a" kind="Package" role="Package" guid="{34217b02-3360-4f2a-abed-449cb2c7076b}" relid="0x0" childrelidcntr="0x1">
+				<model id="id-0065-0000016a" kind="Package" role="Package" guid="{34217b02-3360-4f2a-abed-449cb2c7076b}" relid="0x0" childrelidcntr="0x2">
 					<name>Shapes</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -493,6 +529,15 @@
 					</attribute>
 					<model id="id-0065-00000172" kind="Component" role="Component" guid="{d328a900-ed31-4710-b05c-5276f519cf70}" relid="0x0" childrelidcntr="0x6">
 						<name>Sender</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>13,11</value>
+								</regnode>
+							</regnode>
+						</regnode>
 						<attribute kind="PostPreprocessorDirectives" status="meta">
 							<value></value>
 						</attribute>
@@ -515,6 +560,12 @@
 							<name>rate</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>97,13</value>
+									</regnode>
+								</regnode>
 								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
@@ -545,6 +596,12 @@
 							<name>max_x</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>13,13</value>
+									</regnode>
+								</regnode>
 								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
@@ -575,6 +632,12 @@
 							<name>max_y</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>55,55</value>
+									</regnode>
+								</regnode>
 								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
@@ -605,6 +668,12 @@
 							<name>max_size</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>55,13</value>
+									</regnode>
+								</regnode>
 								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
@@ -635,6 +704,12 @@
 							<name>resize_shape</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>13,55</value>
+									</regnode>
+								</regnode>
 								<regnode name="InterfaceDefinition" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
@@ -671,10 +746,25 @@
 										<value>104,160</value>
 									</regnode>
 								</regnode>
+								<regnode name="TemplatePackageType" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>97,97</value>
+									</regnode>
+								</regnode>
 							</regnode>
 						</reference>
 						<reference id="id-0067-00000130" kind="TemplatePackageInstanceRef" role="TemplatePackageInstanceRef" guid="{035280d6-cc89-4f8b-95c3-cae9c8be9ba4}" relid="0x5" referred="id-0065-00000168">
 							<name></name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="TemplatePackageType" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+							</regnode>
 						</reference>
 						<connection id="id-0068-00000006" kind="TemplatePackageInstanceDecl" role="TemplatePackageInstanceDecl" guid="{67366c1e-36ef-4972-9ad9-0d2a796087c9}" relid="0x5">
 							<name></name>
