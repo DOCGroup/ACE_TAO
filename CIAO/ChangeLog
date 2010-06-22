@@ -1,7 +1,12 @@
+Tue Jun 22 12:57:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.idl:
+          Enabled some more test idl
+
 Tue Jun 22 12:49:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.idl:
-        
+
           Uncommented the IDL that was causing the redefition errors,
           problem has been fixed.
 
