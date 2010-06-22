@@ -147,7 +147,7 @@ namespace ACE
               typedef typename ios_base::buffer_type::pos_type pos_type;
 
               explicit String_IStreamBase();
-              explicit String_IStreamBase(string_type& string);
+              explicit String_IStreamBase(const string_type& string);
               ~String_IStreamBase();
 
               String_IStreamBase& rewind ();
