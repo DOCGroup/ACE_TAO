@@ -76,7 +76,6 @@ namespace CIAO_Getter_Test_Sender_Impl
       }
   }
 
-
   //============================================================
   // Sender_exec_i
   //============================================================
@@ -143,7 +142,6 @@ namespace CIAO_Getter_Test_Sender_Impl
       }
   }
 
-
   void
   Sender_exec_i::start (void)
   {
@@ -171,7 +169,7 @@ namespace CIAO_Getter_Test_Sender_Impl
       this->context_->get_connection_info_write_data ();
     ::Getter_Test::GetterFixedConnector::Writer_var fixed =
       this->context_->get_connection_info_fixed_data ();
-    GetInvoker_var invoker =
+    ::GetInvoker_var invoker =
       this->context_->get_connection_invoke_getter ();
 
     if (this->last_iter_ <= this->iterations_)
@@ -237,8 +235,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Getter_Test::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::Getter_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {

@@ -101,8 +101,7 @@ namespace CIAO_Quoter_Distributor_Impl
   }
 
   void
-  Distributor_exec_i::add_stock (
-    const char * stock)
+  Distributor_exec_i::add_stock (const char * stock)
   {
     ACE_DEBUG ((LM_DEBUG, "Distributor_exec_i::add_stock - Adding stock: %C\n", stock));
 
@@ -146,7 +145,7 @@ namespace CIAO_Quoter_Distributor_Impl
   Distributor_exec_i::start (void)
   {
     // calculate the interval time
-    long usec = 1000000 / this->rate_;
+    long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,

@@ -19,8 +19,7 @@ namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl
 
   // Operations from Components::SessionComponent.
   void
-  Component_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+  Component_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ =
       ::CFT_Exception_Test::CCM_CFTTestComponent_Context::_narrow (ctx);

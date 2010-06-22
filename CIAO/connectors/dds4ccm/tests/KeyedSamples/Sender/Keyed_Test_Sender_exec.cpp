@@ -64,7 +64,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
       }
     else
       {
-        //onto the next iteration
+        // Onto the next iteration
         this->last_key = this->ktests_.begin ();
         while (this->last_key != this->ktests_.end ())
           {
@@ -143,8 +143,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Keyed_Test::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::Keyed_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {

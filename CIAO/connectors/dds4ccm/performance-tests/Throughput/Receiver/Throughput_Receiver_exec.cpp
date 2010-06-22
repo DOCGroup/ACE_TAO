@@ -201,11 +201,9 @@ namespace CIAO_Throughput_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+  Receiver_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Throughput::CCM_Receiver_Context::_narrow (ctx);
+    this->context_ = ::Throughput::CCM_Receiver_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
