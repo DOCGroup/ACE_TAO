@@ -27,17 +27,17 @@ namespace CIAO_InterMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
-                           " answer = <%C>\n",
-                           answer));  
-     ++nr_of_received;
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
+                          " answer = <%C>\n",
+                          answer));
+    ++nr_of_received;
   }
 
   void
   One_callback_exec_i::foo_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
   //============================================================
   // Facet Executor Implementation Class: Two_callback_exec_i
@@ -56,17 +56,17 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Two_callback_exec_i::bar (const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from TWO::bar,"
-                           " answer = <%C>\n",
-                           answer));  
-     ++nr_of_received;
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from TWO::bar,"
+                          " answer = <%C>\n",
+                          answer));
+    ++nr_of_received;
   }
 
   void
   Two_callback_exec_i::bar_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
    //============================================================
   // Facet Executor Implementation Class: Three_callback_exec_i
@@ -96,7 +96,7 @@ namespace CIAO_InterMulti_Sender_Impl
   Three_callback_exec_i::plus_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
 
   void
@@ -108,14 +108,13 @@ namespace CIAO_InterMulti_Sender_Impl
                           " answer = <%C>\n",
                           answer));  
     ++nr_of_received;
-
   }
 
   void
   Three_callback_exec_i::foo_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
-        excep_holder->raise_exception ();
+    excep_holder->raise_exception ();
   }
 
   void
@@ -124,7 +123,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::bar,"
                           " answer = <%C>\n",
                           answer));  
-     ++nr_of_received;
+    ++nr_of_received;
   }
 
   void
@@ -161,7 +160,7 @@ namespace CIAO_InterMulti_Sender_Impl
 
   int asynch_two_generator::svc ()
   {
-    if (CORBA::is_nil (my_two_ami_))
+    if (CORBA::is_nil (my_two_ami_.in ()))
       {
         ACE_ERROR ((LM_ERROR, 
                    "ERROR Sender (ASYNCH) :my_two_ami_ is NIL !\n"));  
