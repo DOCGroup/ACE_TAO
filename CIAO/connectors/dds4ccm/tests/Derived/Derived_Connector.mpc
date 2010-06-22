@@ -91,6 +91,7 @@ project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
   }
 
   Header_Files {
+    DDS_Derived_Connector_T.h
     Derived_Connector_conn.h
     Derived_Connector_conn_export.h
   }
