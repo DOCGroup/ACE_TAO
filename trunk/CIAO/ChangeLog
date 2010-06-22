@@ -1,3 +1,25 @@
+Tue Jun 22 19:00:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
+
+          New file, hand-written template connector implementation.
+
+        * connectors/dds4ccm/tests/PSAT/psat_conn.idl:
+        * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+
+          Renamed psat_conn.idl as PSAT_Connector.idl, since all
+          dependent filenames in the MPC file were based on
+          that name.
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+
+          Modified projects to reflect the new IDL file name
+          above.
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+
+          Removed comments to make the file more readable.
+
 Tue Jun 22 18:31:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
