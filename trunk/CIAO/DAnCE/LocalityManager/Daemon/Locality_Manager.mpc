@@ -1,19 +1,19 @@
 // $Id$
 
 project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
-        dance_skel, dance_logger, dance_deployment_scheduler {
-   
+        dance_skel, dance_logger, dance_deployment_scheduler, dance_deployment_scheduler {
+
    dynamicflags = LOCALITY_MANAGER_IMPL_BUILD_DLL
 
    Source_Files {
      Locality_Manager_Impl.cpp
    }
-   
+
    Header_Files {
      Locality_Manager_Impl.h
      Locality_Manager_Impl_Export.h
    }
-   
+
    specific {
      install_dir = DAnCE/LocalityManager/Daemon
    }
