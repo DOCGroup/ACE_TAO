@@ -1,3 +1,11 @@
+Tue Jun 22 15:18:57 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
+        
+          Changed generation of connector impl base class name to
+          always use the IDL connector name with '_Connector_T'
+          appended.
+
 Tue Jun 22 14:04:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp(gen_connector_traits):
