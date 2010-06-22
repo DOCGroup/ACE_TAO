@@ -3,7 +3,7 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * $Id$
- * Active-object based scheduler for deployment events. 
+ * Active-object based scheduler for deployment events.
  */
 #ifndef DEPLOYMENT_SCHEDULER_H
 #define DEPLOYMENT_SCHEDULER_H
@@ -14,15 +14,16 @@
 
 namespace DAnCE
 {
-  class Deployment_Scheduler_Export Deployment_Scheduler : 
+  class Deployment_Scheduler_Export Deployment_Scheduler :
     public ACE_Task_Base
   {
   public:
     Deployment_Scheduler (void);
+    virtual ~Deployment_Scheduler (void);
 
     /// Schedule an event for execution
     int schedule_event (Deployment_Event *event);
-    
+
     void activate_scheduler (size_t threads);
 
     void terminate_scheduler (void);
@@ -30,13 +31,13 @@ namespace DAnCE
     bool multithreaded (void);
 
     bool work_pending (void);
-    
+
     void perform_work (void);
 
   protected:
     /// Scheduler event loop
     virtual int svc (void);
-    
+
   private:
     bool multithread_;
 
