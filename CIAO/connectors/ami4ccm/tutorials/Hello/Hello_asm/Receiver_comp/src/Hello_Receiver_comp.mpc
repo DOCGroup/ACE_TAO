@@ -1,3 +1,4 @@
+// $Id$
 
 project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
