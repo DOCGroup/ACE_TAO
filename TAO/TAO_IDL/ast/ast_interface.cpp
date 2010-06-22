@@ -125,7 +125,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     home_equiv_ (false),
     fwd_decl_ (0),
     has_mixed_parentage_ (-1),
-    ami_handler_ (0)
+    ami_handler_ (0),
+    ami4ccm_uses_ (0)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -1098,6 +1099,18 @@ void
 AST_Interface::ami_handler (AST_Interface *handler)
 {
   this->ami_handler_ = handler;
+}
+
+AST_Interface *
+AST_Interface::ami4ccm_uses (void) const
+{
+  return this->ami4ccm_uses_;
+}
+
+void
+AST_Interface::ami4ccm_uses (AST_Interface *implied)
+{
+  this->ami4ccm_uses_ = implied;
 }
 
 void
