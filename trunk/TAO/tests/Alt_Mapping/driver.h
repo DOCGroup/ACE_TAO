@@ -21,7 +21,7 @@
 #define DRIVER_H
 
 #include "options.h"
-#include "Alt_MappingC.h"
+#include "alt_mappingC.h"
 
 class Driver
 {
