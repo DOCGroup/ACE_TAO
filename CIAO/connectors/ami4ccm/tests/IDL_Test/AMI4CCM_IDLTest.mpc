@@ -19,7 +19,7 @@ project(AMI4CCM_IDL_Test_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
 }
 
 project(AMI4CCM_IDL_Test_lem_gen) : ciaoidldefaults {
-  after += AMI4CCM_IDL_Test_idl_gen
+  after += AMI4CCM_IDL_Test_idl_gen AMI4CCM_IDL_Test_lema_gen
   custom_only = 1
   idlflags += -Wb,export_macro=HELLO_LEM_STUB_Export \
               -Wb,export_include=Hello_lem_stub_export.h \
