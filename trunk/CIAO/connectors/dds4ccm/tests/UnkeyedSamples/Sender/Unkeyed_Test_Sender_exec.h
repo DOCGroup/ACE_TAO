@@ -4,7 +4,6 @@
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 
-
 #include "Unkeyed_Test_SenderEC.h"
 
 #include /**/ "Sender_exec_export.h"
@@ -25,10 +24,12 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
     public ACE_Event_Handler
   {
   public:
+    /// Constructor
     pulse_Generator (Sender_exec_i &callback);
+
     /// Handle the timeout.
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+    
   private:
     /// Maintains a handle that actually process the event
     Sender_exec_i &pulse_callback_;

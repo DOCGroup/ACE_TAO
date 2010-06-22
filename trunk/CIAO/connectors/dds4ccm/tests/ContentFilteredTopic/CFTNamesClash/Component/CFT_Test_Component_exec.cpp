@@ -19,11 +19,9 @@ namespace CIAO_CFT_Test_CFTTestComponent_Impl
 
   // Operations from Components::SessionComponent.
   void
-  Component_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+  Component_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::CFT_Test::CCM_CFTTestComponent_Context::_narrow (ctx);
+    this->context_ = ::CFT_Test::CCM_CFTTestComponent_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
