@@ -7,13 +7,13 @@
 #include "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-class MyEvent_T
+class MyEvent_Connector_T
   : public virtual DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>
 {
 };
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-class MyState_T
+class MyState_Connector_T
   : public virtual DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>
 {
 };
