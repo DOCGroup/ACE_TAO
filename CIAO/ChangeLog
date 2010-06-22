@@ -1,3 +1,19 @@
+Tue Jun 22 15:33:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
+        
+          Added user connection impl template file to the exec project.
+
+Tue Jun 22 15:21:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector.h:
+        
+          Changed the names of the derived connector impl template
+          classes to be the IDL connector name with '_Connector_T'
+          appended, so the IDL compiler can have a rule to use in
+          the general case for generating the name of the connector
+          impl base class.
+
 Tue Jun 22 14:06:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
