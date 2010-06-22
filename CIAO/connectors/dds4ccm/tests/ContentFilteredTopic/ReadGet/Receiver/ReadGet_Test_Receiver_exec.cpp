@@ -622,11 +622,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
 
   // Operations from Components::SessionComponent.
   void
-  Receiver_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx)
+  Receiver_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::ReadGet_Test::CCM_Receiver_Context::_narrow (ctx);
+    this->context_ = ::ReadGet_Test::CCM_Receiver_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();

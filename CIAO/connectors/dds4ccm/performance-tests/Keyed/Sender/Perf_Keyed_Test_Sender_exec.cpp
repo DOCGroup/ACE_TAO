@@ -484,8 +484,7 @@ Sender_exec_i::record_time (unsigned long long nanotime)
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Perf_Keyed_Test::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::Perf_Keyed_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {

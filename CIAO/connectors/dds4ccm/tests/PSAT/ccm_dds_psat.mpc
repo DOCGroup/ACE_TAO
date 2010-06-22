@@ -151,8 +151,8 @@ project(PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
 }
 
 project(PSAT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
-  requires += dummy_label
   custom_only = 1
+  requires += dummy_label
   after += PSAT_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=PSAT_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=PSAT_Connector_lem_stub_export.h \
@@ -160,7 +160,7 @@ project(PSAT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
               -I ..
 
   IDL_Files {
-    PSAT_ConnectorE.idl
+    psat_connE.idl
   }
 }
 
@@ -178,16 +178,16 @@ project(PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 
   Source_Files {
-    PSAT_ConnectorEC.cpp
+    psat_connEC.cpp
   }
 
   Header_Files {
-    PSAT_ConnectorEC.h
-    PSAT_Connector_lem_stub_export.h
+    psat_connEC.h
+    psat_conn_lem_stub_export.h
   }
 
   Inline_Files {
-    PSAT_ConnectorEC.inl
+    psat_connEC.inl
   }
 }
 
@@ -205,16 +205,16 @@ project(DDS_PSAT_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 
   Source_Files {
-    PSAT_ConnectorC.cpp
+    psat_connC.cpp
   }
 
   Header_Files {
-    PSAT_ConnectorC.h
-    PSAT_Connector_stub_export.h
+    psat_connC.h
+    psat_conn_stub_export.h
   }
 
   Inline_Files {
-    PSAT_ConnectorC.inl
+    psat_connC.inl
   }
 }
 
@@ -232,12 +232,12 @@ project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl {
   }
 
   Source_Files {
-    PSAT_Connector_conn.cpp
+    psat_conn_conn.cpp
   }
 
   Header_Files {
-    PSAT_Connector_conn.h
-    PSAT_Connector_conn_export.h
+    psat_conn_conn.h
+    psat_conn_conn_export.h
   }
 
   Inline_Files {
@@ -263,18 +263,18 @@ project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Source_Files {
-    PSAT_ConnectorS.cpp
-    PSAT_Connector_svnt.cpp
+    psat_connS.cpp
+    psat_conn_svnt.cpp
   }
 
   Header_Files {
-    PSAT_ConnectorS.h
-    PSAT_Connector_svnt.h
-    PSAT_Connector_svnt_export.h
+    psat_connS.h
+    psat_conn_svnt.h
+    psat_conn_svnt_export.h
   }
 
   Inline_Files {
-    PSAT_ConnectorS.inl
+    psat_connS.inl
   }
 }
 

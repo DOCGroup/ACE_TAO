@@ -149,7 +149,7 @@ namespace CIAO_Writer_Sender_Impl
 
         DDS_InstanceHandle_t const dds_hnd =
           this->dds_writer_->lookup_instance (unequal->second);
-        //compare
+        // Compare
         if (dds_hnd != ccm_hnd)
           {
             ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::test_equality - "
@@ -213,8 +213,7 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::Writer::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::Writer::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
@@ -225,9 +224,9 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
-    DDS::DataWriter_var dds_dw =
+    ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd =
+    ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd =
       dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
     DDSDataWriter * p = ccm_dds_rd->get_impl ();
     this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);

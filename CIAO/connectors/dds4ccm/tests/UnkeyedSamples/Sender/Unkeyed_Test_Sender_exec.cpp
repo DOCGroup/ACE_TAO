@@ -74,7 +74,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
       }
     else
       {
-        //onto the next iteration
+        // onto the next iteration
         this->last_key = this->ktests_.begin ();
         while (this->last_key != this->ktests_.end ())
           {
@@ -94,7 +94,7 @@ namespace CIAO_Unkeyed_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    // calculate the interval time
+    // Calculate the interval time
     long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,

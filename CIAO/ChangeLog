@@ -1,13 +1,39 @@
+Tue Jun 22 18:31:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Component/CFT_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Sender/Event_Connection_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+          Various cleanup, layout, const changes
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Corrected filenames
+
 Tue Jun 22 15:33:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
-        
+
           Added user connection impl template file to the exec project.
 
 Tue Jun 22 15:21:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector.h:
-        
+
           Changed the names of the derived connector impl template
           classes to be the IDL connector name with '_Connector_T'
           appended, so the IDL compiler can have a rule to use in
@@ -17,7 +43,7 @@ Tue Jun 22 15:21:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Jun 22 14:06:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
-        
+
           Removed dummy_label on connector impl build.
 
 Tue Jun 22 12:57:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

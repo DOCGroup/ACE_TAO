@@ -469,8 +469,7 @@ namespace CIAO_LatencyTT_Test_Sender_Impl
   void
   Sender_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
-    this->context_ =
-      ::LatencyTT_Test::CCM_Sender_Context::_narrow (ctx);
+    this->context_ = ::LatencyTT_Test::CCM_Sender_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
