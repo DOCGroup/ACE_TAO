@@ -1,21 +1,34 @@
+Tue Jun 22 11:32:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Added missing empty Source_Files section
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Added dummy_label back for the connector until Jeff has addressed
+          an issue in tao_idl
+
+        * tests/Bug_3832_Regression/run_test.pl:
+          use dance_locality_manager
+
 Tue Jun 22 09:17:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
-	 Fixed unused argument warning.
+         Fixed unused argument warning.
 
        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.inl:
-	 Added missing file.
+         Added missing file.
 
        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
        * DAnCE/LocalityManager/Scheduler/Deployment_Scheduler.h:
-	 Added missing destructor.
-	 Added missing constructor implementation.
+         Added missing destructor.
+         Added missing constructor implementation.
 
        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
-	 Added missing baseproject.
+         Added missing baseproject.
 
        * DAnCE/MPC/config/dance_locality_handler.mpb:
-	 Added missing baseproject.
+         Added missing baseproject.
 
 Tue Jun 22 08:35:13 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
@@ -29,7 +42,7 @@ Tue Jun 22 08:35:13 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 Tue Jun 22 00:57:13 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/examples/Shapes/models/Shapes-complete.xme:
-        
+
           Update to latest model.
 
 Mon Jun 21 23:15:11 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
