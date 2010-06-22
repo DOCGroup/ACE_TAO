@@ -106,7 +106,6 @@ namespace CIAO_Hello_Sender_Impl
 
   private:
     ::Hello::CCM_Sender_Context_var context_;
-    MyFoo_callback_exec_i* global_foo_callback_;
   };
 
   extern "C" HELLO_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

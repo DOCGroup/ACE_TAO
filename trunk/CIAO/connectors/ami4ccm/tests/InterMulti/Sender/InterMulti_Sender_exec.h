@@ -142,9 +142,6 @@ namespace CIAO_InterMulti_Sender_Impl
 
   private:
     ::InterMulti::CCM_Sender_Context_var context_;
-    One_callback_exec_i* global_foo_callback_;
-    Two_callback_exec_i* global_two_callback_;
-    Three_callback_exec_i* global_three_callback_;
   };
 
   extern "C" INTERMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

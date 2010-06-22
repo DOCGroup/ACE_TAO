@@ -106,7 +106,6 @@ namespace CIAO_NoReplyH_Sender_Impl
 
   private:
     ::NoReplyH::CCM_Sender_Context_var context_;
-    MyFoo_callback_exec_i* global_foo_callback_;
   };
 
   extern "C" NOREPLYH_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
