@@ -1,3 +1,35 @@
+Tue Jun 22 11:49:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.h:
+        * connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h:
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.h:
+        * connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h:
+        * connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+          Removed not used member
+
 Tue Jun 22 11:32:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:

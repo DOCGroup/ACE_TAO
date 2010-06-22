@@ -73,7 +73,6 @@ namespace CIAO_UsesMulti_Sender_Impl
 
   private:
     ::UsesMulti::CCM_Sender_Context_var context_;
-    One_callback_exec_i* global_foo_callback_;
    };
 
   extern "C" USESMULTI_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -74,7 +74,6 @@ namespace CIAO_OneProcess_Sender_Impl
 
   private:
     ::OneProcess::CCM_Sender_Context_var context_;
-    MyFoo_callback_exec_i* global_foo_callback_;
   };
 
   extern "C" ONEPROCESS_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

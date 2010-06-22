@@ -90,7 +90,6 @@ namespace CIAO_InterOutArgsT_Sender_Impl
 
   private:
     ::InterOutArgsT::CCM_Sender_Context_var context_;
-    MyFoo_callback_exec_i* global_foo_callback_;
   };
 
   extern "C" INTEROUTARGS_T_SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
