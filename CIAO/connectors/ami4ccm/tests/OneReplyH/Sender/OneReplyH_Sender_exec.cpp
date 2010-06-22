@@ -215,7 +215,6 @@ namespace CIAO_OneReplyH_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-  : global_foo_callback_ (0)
   {
   }
 
