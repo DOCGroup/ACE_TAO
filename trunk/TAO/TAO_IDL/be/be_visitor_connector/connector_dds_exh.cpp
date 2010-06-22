@@ -223,7 +223,7 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
       << comp_scope->name () << "::CCM_"
       << this->node_->local_name () << "_Context context_type;";
       
-  if (this->visit_scope (this->node_) == -1)
+  if (this->visit_component_scope (this->node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_dds_exh::")
