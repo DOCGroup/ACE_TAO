@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file psat_conn.idl
+ * @file PSAT_Connector.idl
  */
 
 #ifndef PSAT_CONNECTOR_USER_IDL
@@ -11,7 +11,7 @@
 #include "psat_type.idl"
 #include "ccm_dds_psat.idl"
 
-#pragma ciao lem "psat_connE.idl"
+#pragma ciao lem "PSAT_ConnectorE.idl"
 
 module ::CCM_DDS_PSAT::Typed_PSAT < ::TestTopic, ::TestTopicSeq> CSLDeadlineConnector;
 
