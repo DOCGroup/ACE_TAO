@@ -45,7 +45,7 @@ namespace CIAO_ExceptionT_Sender_Impl
         }
       catch (const ExceptionT::InternalError& ex)
         {
-           HandleException (ex.id, ex.error_string.in (), ex.test.in(), func);
+          HandleException (ex.id, ex.error_string.in (), ex.test.in(), func);
         }
       catch (const CORBA::Exception& ex)
         {
