@@ -77,7 +77,6 @@ project(Derived_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
-  requires += dummy_label
   after   += Derived_Connector_lem_stub Derived_Connector_stub
   sharedname = Derived_Connector_exec
   libs += Derived_Connector_stub Derived_Connector_lem_stub Derived_stub
