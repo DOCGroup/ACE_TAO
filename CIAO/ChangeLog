@@ -5,7 +5,7 @@ Tue Jun 22 08:35:13 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/Ports/Hello_Receiver_comp.idl
        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc
        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/Ports/Hello_Sender_comp.idl
-       Add $Id$ strings.
+       Add Id strings.
 
 Tue Jun 22 00:57:13 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
