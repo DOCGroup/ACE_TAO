@@ -36,6 +36,9 @@ project (OneFile_Single_DDS_stub) : dds4ccm_ddsonly {
   requires += dds4ccm_ndds
   after += OneFile_Connector_idl_gen
   sharedname = OneFile_Single_DDS_stub
+
+  Source_Files {
+  }
 }
 
 project(OneFile_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {

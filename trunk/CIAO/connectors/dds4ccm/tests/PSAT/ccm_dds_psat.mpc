@@ -133,6 +133,7 @@ project(DDS_CCM_PSAT_Test_stub) : ccm_stub, dds4ccm_base {
 
 project(PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
+  requires += dummy_label
   custom_only = 1
   idlflags += -Wb,stub_export_macro=PSAT_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=PSAT_Connector_stub_export.h \

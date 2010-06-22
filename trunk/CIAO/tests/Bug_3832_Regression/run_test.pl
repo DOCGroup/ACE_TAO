@@ -23,7 +23,9 @@ $server->DeleteFile($TestCaseC_i);
 $ENV {'CIAO_LOG_LEVEL'} = 10;
 $ENV {'CIAO_LOG_FILE'} = 'test.log';
 
-$SV = $server->CreateProcess ("../../bin/ciao_componentserver", "");
+my $node_app = $server->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
+
+$SV = $server->CreateProcess ("$node_app");
 
 $SV->Spawn ();
 
