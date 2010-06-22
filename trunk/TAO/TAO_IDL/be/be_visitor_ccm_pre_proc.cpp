@@ -1870,33 +1870,42 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
         
       /// The real AMI_xxx exists only in the *A.idl file, so
       /// we create a dummy as the uses type for the implied
-      /// receptacle created below.
+      /// receptacle created below, but only if it hasn't
+      /// already been created for this uses type.
 
-      ACE_CString iname ("AMI4CCM_");
- 
-      iname += iface->local_name ();
-      Identifier itmp_id (iname.c_str ());
-      UTL_ScopedName itmp_sn (&itmp_id, 0);
+      be_interface *ami_iface =
+        be_interface::narrow_from_decl (iface->ami4ccm_uses ());
 
-      s = iface->defined_in ();
-      idl_global->scopes ().push (s);
-      be_interface *ami_iface = 0;
-      ACE_NEW_RETURN (ami_iface,
-                      be_interface (&itmp_sn,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    true,
-                                    false),
-                       -1);
+      if (ami_iface == 0)
+        {
+          ACE_CString iname ("AMI4CCM_");
+     
+          iname += iface->local_name ();
+          Identifier itmp_id (iname.c_str ());
+          UTL_ScopedName itmp_sn (&itmp_id, 0);
 
-      /// Make it imported so it doesn't trigger
-      /// any unwanted code generation.
-      ami_iface->set_imported (true);
-      s->add_to_scope (ami_iface);
-      idl_global->scopes ().pop ();
+          s = iface->defined_in ();
+          idl_global->scopes ().push (s);
+          ACE_NEW_RETURN (ami_iface,
+                          be_interface (&itmp_sn,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        true,
+                                        false),
+                           -1);
 
+          idl_global->scopes ().pop ();
+
+          /// Make it imported so it doesn't trigger
+          /// any unwanted code generation.
+          ami_iface->set_imported (true);
+          
+          s->add_to_scope (ami_iface);
+          iface->ami4ccm_uses (ami_iface);
+        }
+        
       /// Now create the receptacle, passing in
       /// the local interface created above as the
       /// uses type. We don't generate anything
