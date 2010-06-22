@@ -1,3 +1,9 @@
+Tue Jun 22 00:57:13 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/dds4ccm/examples/Shapes/models/Shapes-complete.xme:
+        
+          Update to latest model.
+
 Mon Jun 21 23:15:11 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
