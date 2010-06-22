@@ -84,6 +84,7 @@ namespace ACE
         return this->userinfo_;
       }
 
+    ACE_INLINE
     void URL_INetAuthBase::set_user_info (const ACE_CString& userinfo)
       {
         this->userinfo_ = userinfo;
