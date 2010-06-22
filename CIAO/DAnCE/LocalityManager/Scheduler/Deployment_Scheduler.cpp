@@ -10,6 +10,15 @@
 
 namespace DAnCE
 {
+  Deployment_Scheduler::Deployment_Scheduler (void)
+    : multithread_ (false)
+    {
+    }
+
+  Deployment_Scheduler::~Deployment_Scheduler (void)
+    {
+    }
+
   int
   Deployment_Scheduler::schedule_event (Deployment_Event *event)
   {
@@ -21,10 +30,10 @@ namespace DAnCE
                          ACE_TEXT ("Deployment_Scheduler::schedule_event - ")
                          ACE_TEXT ("Error: Unable to schedule event for execution\n")));
       }
-    
+
     return retval;
   }
-  
+
   void
   Deployment_Scheduler::terminate_scheduler (void)
   {
@@ -37,7 +46,7 @@ namespace DAnCE
     for ( ; ; )
       {
         auto_ptr < ACE_Method_Request > de (this->event_queue_.dequeue ());
-        
+
         if (de.get ())
           {
             DANCE_DEBUG (10, (LM_TRACE, DLINFO
@@ -50,7 +59,7 @@ namespace DAnCE
             break;
           }
       }
-    
+
     return 0;
   }
 }
