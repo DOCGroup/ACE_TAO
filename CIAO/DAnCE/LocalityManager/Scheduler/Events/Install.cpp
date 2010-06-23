@@ -92,8 +92,9 @@ namespace DAnCE
           {
             DANCE_ERROR (3, (LM_ERROR, DLINFO
                              ACE_TEXT ("Install_Instance::call - ")
-                             ACE_TEXT ("Caught CORBA exception while installing instance ")
+                             ACE_TEXT ("Caught CORBA exception <%C> while installing instance ")
                              ACE_TEXT ("%u:<%C>\n"),
+                             ex._info ().c_str (),
                              this->instanceRef_,
                              name));
             CORBA::Any *tmp = 0;
@@ -147,8 +148,9 @@ namespace DAnCE
       {
         DANCE_ERROR (3, (LM_ERROR, DLINFO
                          ACE_TEXT ("Install_Instance::call - ")
-                         ACE_TEXT ("CORBA Exception propagated from interceptors for instance ")
+                         ACE_TEXT ("CORBA Exception <%C> propagated from interceptors for instance ")
                          ACE_TEXT ("%u:<%C>\n"),
+                         ex._info ().c_str (),
                          this->instanceRef_,
                          name));
         

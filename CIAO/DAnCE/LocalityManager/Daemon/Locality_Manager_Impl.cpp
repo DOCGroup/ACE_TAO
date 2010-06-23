@@ -1,9 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:1579
-
 #include "Locality_Manager_Impl.h"
 #include "Logger/Log_Macros.h"
 
@@ -362,7 +359,7 @@ namespace DAnCE
                          completed_events.size ()));
       }
 
-    ::Deployment::Connections *conn_cmp;
+    ::Deployment::Connections *conn_cmp = 0;
     ACE_NEW_THROW_EX (conn_cmp,
                       ::Deployment::Connections (this->plan_.connection.length ()),
                       CORBA::NO_MEMORY ());
