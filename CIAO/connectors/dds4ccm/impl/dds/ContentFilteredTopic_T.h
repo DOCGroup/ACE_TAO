@@ -9,7 +9,7 @@
 #ifndef CIAO_NDDS_CONTENFILTEREDTOPIC_H
 #define CIAO_NDDS_CONTENFILTEREDTOPIC_H
 
-#include "DomainParticipant.h"
+#include "DomainParticipant_T.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
@@ -24,18 +24,18 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_ContentFilteredTopic_i :
+    class CCM_DDS_ContentFilteredTopic_T :
       public virtual ::DDS::CCM_ContentFilteredTopic,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
-    typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
     public:
       /// Constructor
-      CCM_DDS_ContentFilteredTopic_i (DDSContentFilteredTopic * dw);
+      CCM_DDS_ContentFilteredTopic_T (DDSContentFilteredTopic * dw);
 
       /// Destructor
-      virtual ~CCM_DDS_ContentFilteredTopic_i (void);
+      virtual ~CCM_DDS_ContentFilteredTopic_T (void);
 
       virtual char * get_filter_expression (void);
 
@@ -71,6 +71,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/ContentFilteredTopic.cpp"
+#include "dds4ccm/impl/dds/ContentFilteredTopic_T.cpp"
 
 #endif /* CIAO_NDDS_CONTENFILTEREDTOPIC_H */

@@ -137,8 +137,8 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     //check the settings on the connector
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_dw =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
+    CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_dw =
+      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dds_dw.in ());
     if (!ccm_dds_dw)
       {
         ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "

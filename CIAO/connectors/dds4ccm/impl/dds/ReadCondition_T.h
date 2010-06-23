@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_QUERYCONDITION_H
-#define DDS4CCM_QUERYCONDITION_H
+#ifndef DDS4CCM_READCONDITION_H
+#define DDS4CCM_READCONDITION_H
 
 #include "tao/LocalObject.h"
 
@@ -23,7 +23,7 @@
 #endif
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
-typedef ::DDS::QueryCondition DDSQueryCondition;
+typedef ::DDS::ReadCondition DDSReadCondition;
 #endif
 
 #include "tao/LocalObject.h"
@@ -36,18 +36,18 @@ namespace CIAO
     class DataReader_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_QueryCondition_i :
-      public virtual ::DDS::CCM_QueryCondition,
+    class CCM_DDS_ReadCondition_T :
+      public virtual ::DDS::CCM_ReadCondition,
       public virtual ::CORBA::LocalObject
     {
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
 
     public:
       /// Constructor
-      CCM_DDS_QueryCondition_i (DDSQueryCondition * qc);
+      CCM_DDS_ReadCondition_T (DDSReadCondition * rc);
 
       /// Destructor
-      virtual ~CCM_DDS_QueryCondition_i (void);
+      virtual ~CCM_DDS_ReadCondition_T (void);
 
       virtual ::CORBA::Boolean get_trigger_value (void);
 
@@ -59,26 +59,18 @@ namespace CIAO
 
       virtual ::DDS::DataReader_ptr get_datareader (void);
 
-      virtual char *get_query_expression (void);
+      DDSReadCondition * get_impl (void);
 
-      virtual ::DDS::ReturnCode_t
-      get_query_parameters (::DDS::StringSeq & query_parameters);
-
-      virtual ::DDS::ReturnCode_t
-      set_query_parameters (const ::DDS::StringSeq & query_parameters);
-
-      DDSQueryCondition * get_impl (void);
-
-      void set_impl (DDSQueryCondition * qc);
+      void set_impl (DDSReadCondition * rc);
 
     private:
-      DDSQueryCondition * impl_;
+      DDSReadCondition *impl_;
 
-      DDSQueryCondition * impl ();
+      DDSReadCondition * impl (void);
     };
   }
 }
 
-#include "dds4ccm/impl/dds/QueryCondition.cpp"
+#include "dds4ccm/impl/dds/ReadCondition_T.cpp"
 
-#endif /* DDS4CCM_QUERYCONDITION_H */
+#endif /* DDS4CCM_READCONDITION_H */

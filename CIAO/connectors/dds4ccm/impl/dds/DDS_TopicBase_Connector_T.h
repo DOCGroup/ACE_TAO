@@ -10,8 +10,8 @@
 
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds/DDS_Base_Connector_T.h"
-#include "dds4ccm/impl/dds/DomainParticipant.h"
-#include "dds4ccm/impl/dds/TopicListener_T.h"
+#include "dds4ccm/impl/dds/DomainParticipant_T.h"
+#include "dds4ccm/impl/dds/DDSTopicListener_T.h"
 #include "dds4ccm/impl/dds/PublisherListener_T.h"
 #include "dds4ccm/impl/dds/SubscriberListener_T.h"
 

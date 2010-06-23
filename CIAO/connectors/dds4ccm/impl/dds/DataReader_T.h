@@ -26,26 +26,29 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_ReadCondition_i;
+    class CCM_DDS_ReadCondition_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_QueryCondition_i;
+    class CCM_DDS_QueryCondition_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_ContentFilteredTopic_i;
+    class CCM_DDS_ContentFilteredTopic_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DataReaderListener_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReader_T
       : public virtual ::DDS::CCM_DataReader,
         public virtual ::CORBA::LocalObject
     {
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataReaderListener_i<DDS_TYPE, CCM_TYPE>
+    typedef ::CIAO::DDS4CCM::CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>
       DataReaderListener_type;
-    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
-    typedef CCM_DDS_ReadCondition_i<DDS_TYPE, CCM_TYPE> ReadCondition_type;
-    typedef CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE> QueryCondition_type;
-    typedef CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
-    typedef CCM_DDS_Subscriber_i<DDS_TYPE, CCM_TYPE> Subscriber_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE> ReadCondition_type;
+    typedef CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE> QueryCondition_type;
+    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
+    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> Subscriber_type;
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
     public:
       /// Constructor

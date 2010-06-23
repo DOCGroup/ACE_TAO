@@ -68,8 +68,8 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw1 =
           this->context_->get_connection_write1_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd1 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw1.in ());
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd1 =
+           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw1.in ());
         DDSDataWriter * dds_dw1 = ccm_dds_rd1->get_impl ();
         DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
         this->dds_dp1_ = dds_p1->get_participant ();
@@ -87,8 +87,8 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw2 =
           this->context_->get_connection_write2_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd2 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw2.in ());
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd2 =
+           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw2.in ());
         DDSDataWriter * dds_dw2 = ccm_dds_rd2->get_impl ();
         DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
         this->dds_dp2_ = dds_p2->get_participant ();
@@ -105,8 +105,8 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw3 =
           this->context_->get_connection_write3_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd3 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw3.in ());
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd3 =
+           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw3.in ());
         DDSDataWriter * dds_dw3 = ccm_dds_rd3->get_impl ();
         DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
         this->dds_dp3_ = dds_p3->get_participant ();
@@ -123,8 +123,8 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
       {
         DDS::DataWriter_var dw4 =
           this->context_->get_connection_write4_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd4 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dw4.in ());
+        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd4 =
+           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw4.in ());
         DDSDataWriter * dds_dw4 = ccm_dds_rd4->get_impl ();
         DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
         this->dds_dp4_ = dds_p4->get_participant ();

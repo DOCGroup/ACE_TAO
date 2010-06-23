@@ -226,8 +226,8 @@ namespace CIAO_Writer_Sender_Impl
   {
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i *ccm_dds_rd =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_i *> (dds_dw.in ());
+    ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd =
+      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dds_dw.in ());
     DDSDataWriter * p = ccm_dds_rd->get_impl ();
     this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);
   }

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ContentFilteredTopic.h"
-#include "Topic.h"
+#include "ContentFilteredTopic_T.h"
+#include "Topic_T.h"
 
 #include "ndds/StringSeq.h"
 
@@ -13,30 +13,30 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_ContentFilteredTopic_i (
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_ContentFilteredTopic_T (
       DDSContentFilteredTopic * dw) : impl_ (dw)
     {
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_ContentFilteredTopic_i (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_ContentFilteredTopic_T (void)
     {
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_filter_expression (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_filter_expression (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_filter_expression");
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_filter_expression");
       return CORBA::string_dup (this->impl ()->get_filter_expression ());
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_expression_parameters (
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_expression_parameters (
       ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_expression_parameters");
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_expression_parameters");
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
       ::DDS::ReturnCode_t retval =
@@ -51,10 +51,10 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::set_expression_parameters (
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::set_expression_parameters (
       const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::set_expression_parameters");
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::set_expression_parameters");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_StringSeq parameters;
@@ -67,9 +67,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::Topic_ptr
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_related_topic (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_related_topic (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_related_topic");
+      DDS4CCM_TRACE ("CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_related_topic");
 
       ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -89,7 +89,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_type_name (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_type_name (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
@@ -100,7 +100,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_name (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_name (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
@@ -111,7 +111,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DomainParticipant_ptr
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_participant (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -130,21 +130,21 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     DDSContentFilteredTopic *
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::get_impl (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::set_impl (DDSContentFilteredTopic * dw)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::set_impl (DDSContentFilteredTopic * dw)
     {
       this->impl_ = dw;
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     DDSContentFilteredTopic *
-    CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE>::impl (void)
+    CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE>::impl (void)
     {
       if (!this->impl_)
         {

@@ -7,10 +7,11 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS_SUBSCRIBERLISTENER_T_H_
-#define DDS_SUBSCRIBERLISTENER_T_H_
+#ifndef SUBSCRIBERLISTENER_T_H_
+#define SUBSCRIBERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+#include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
 #include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

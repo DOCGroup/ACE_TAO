@@ -10,7 +10,7 @@
 #ifndef CIAO_NDDS_TOPIC_H
 #define CIAO_NDDS_TOPIC_H
 
-#include "DomainParticipant.h"
+#include "DomainParticipant_T.h"
 
 #include "dds4ccm/impl/dds/dds4ccm_dds_impl_export.h"
 #include "tao/LocalObject.h"
@@ -24,22 +24,22 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DomainParticipant_i;
+    class CCM_DDS_DomainParticipant_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_Topic_i :
+    class CCM_DDS_Topic_T :
       public virtual ::DDS::CCM_Topic,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE> TopicListener_type;
-    typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+    typedef CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener_type;
+    typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor
-      CCM_DDS_Topic_i (DDSTopic* topic);
+      CCM_DDS_Topic_T (DDSTopic* topic);
 
       /// Destructor
-      virtual ~CCM_DDS_Topic_i (void);
+      virtual ~CCM_DDS_Topic_T (void);
 
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::TopicQos & qos);
 
@@ -80,6 +80,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/Topic.cpp"
+#include "dds4ccm/impl/dds/Topic_T.cpp"
 
 #endif

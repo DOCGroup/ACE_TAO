@@ -1,7 +1,7 @@
 // $Id$
 
 #include "StatusCondition.h"
-#include "Subscriber.h"
+#include "Subscriber_T.h"
 
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 

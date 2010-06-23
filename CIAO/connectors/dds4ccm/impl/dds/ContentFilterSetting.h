@@ -13,7 +13,7 @@
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/idl/dds4ccm_BaseEC.h"
-#include "dds4ccm/impl/dds/ContentFilteredTopic.h"
+#include "dds4ccm/impl/dds/ContentFilteredTopic_T.h"
 #include "tao/LocalObject.h"
 
 namespace CIAO
