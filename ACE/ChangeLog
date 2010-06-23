@@ -1,3 +1,10 @@
+Wed Jun 23 03:21:01 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb (project):
+
+          Added a clause to turn off certain macros and libraries in cdt6
+          project generation when threads are not used.
+
 Tue Jun 22 07:47:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/String_IOStream.cpp:
