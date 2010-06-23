@@ -242,7 +242,7 @@ project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  requires += dummy_label
+//  requires += dummy_label
   after      += PSAT_Connector_lem_stub DDS_PSAT_Connector_exec DDS_PSAT_Connector_stub DDS4CCM_lem_stub
   sharedname  = DDS_PSAT_Connector_svnt
   libs       += DDS_PSAT_Connector_stub \
