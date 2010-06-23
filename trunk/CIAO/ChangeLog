@@ -1,3 +1,23 @@
+Wed Jun 23 16:56:33 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:
+        
+          Added missing MPC file DDS4CCM_skel.mpc.
+          
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+        
+          Uncommented connector attributes that were causing
+          build problems.
+          
+        * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+        
+          Added include of dds4ccm_Connector.idl, so we can
+          process ccm_dds_psat.idl as stub-only.
+          
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+        
+          Overhaul to fix numerous build problems.
+
 Wed Jun 23 13:52:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
