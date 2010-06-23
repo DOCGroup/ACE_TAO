@@ -3,7 +3,6 @@
 #include "Deployment_Scheduler.h"
 #include "Logger/Log_Macros.h"
 
-
 #if !defined (__ACE_INLINE__)
 #include "LocalityManager/Scheduler/Deployment_Scheduler.inl"
 #endif
@@ -62,4 +61,17 @@ namespace DAnCE
 
     return 0;
   }
+
+  void Deployment_Scheduler::perform_work (void)
+    {
+      auto_ptr < ACE_Method_Request > de (this->event_queue_.dequeue ());
+
+      if (de.get ())
+        {
+          DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                            ACE_TEXT ("Deployment_Scheduler::perform_work - ")
+                            ACE_TEXT ("Invoking a deployment event\n")));
+          de->call ();
+        }
+    }
 }
