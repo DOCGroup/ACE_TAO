@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -p InterReturnT_Base InterReturnT_Sender"
 
 project(AMI_InterReturnT_Base_Sender_idl_gen) : componentidldefaults {
-  after += Conn_InterReturnT_Base_idl_gen AMI_InterReturnT_idl_gen
+  after += AMI_InterReturnT_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=INTERRETURN_T_SENDER_STUB_Export \
               -Wb,stub_export_include=InterReturnT_Sender_stub_export.h \
