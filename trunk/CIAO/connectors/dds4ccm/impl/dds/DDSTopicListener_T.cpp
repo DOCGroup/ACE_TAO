@@ -1,7 +1,7 @@
 // $Id$
 
-#include "TopicListener.h"
-#include "Topic.h"
+#include "DDSTopicListener_T.h"
+#include "Topic_T.h"
 
 #include "ndds/InconsistentTopicStatus.h"
 
@@ -14,20 +14,20 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_TopicListener_i (
+    CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_TopicListener_T (
         ::DDS::TopicListener_ptr p)
       : impl_ (::DDS::TopicListener::_duplicate (p))
     {
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_TopicListener_i (void)
+    CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_TopicListener_T (void)
     {
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
+    CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
       ::DDSTopic* the_topic,
       const ::DDS_InconsistentTopicStatus & status)
     {
@@ -45,7 +45,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::TopicListener_ptr
-    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::get_topiclistener (void)
+    CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE>::get_topiclistener (void)
     {
       return ::DDS::TopicListener::_duplicate (this->impl_.in ());
     }

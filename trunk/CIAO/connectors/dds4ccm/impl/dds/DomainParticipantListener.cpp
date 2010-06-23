@@ -1,7 +1,7 @@
 // $Id$
 
-#include "DomainParticipantListener.h"
-#include "DomainParticipant.h"
+#include "DomainParticipantListener_T.h"
+#include "DomainParticipant_T.h"
 
 #include "ndds/SampleLostStatus.h"
 #include "ndds/SubscriptionMatchedStatus.h"

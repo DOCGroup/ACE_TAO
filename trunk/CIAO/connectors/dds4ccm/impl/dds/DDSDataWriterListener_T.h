@@ -36,16 +36,16 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DataWriterListener_i :
+    class CCM_DDS_DataWriterListener_T :
       public virtual ::DDSDataWriterListener
     {
-    typedef CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> DataWriter_type;
+    typedef CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> DataWriter_type;
     public:
       /// Constructor
-      CCM_DDS_DataWriterListener_i (::DDS::DataWriterListener_ptr p);
+      CCM_DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_DataWriterListener_i (void);
+      virtual ~CCM_DDS_DataWriterListener_T (void);
 
       virtual void on_offered_deadline_missed (
         ::DDSDataWriter *the_writer,
@@ -73,6 +73,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/DataWriterListener.cpp"
+#include "dds4ccm/impl/dds/DDSDataWriterListener_T.cpp"
 
 #endif

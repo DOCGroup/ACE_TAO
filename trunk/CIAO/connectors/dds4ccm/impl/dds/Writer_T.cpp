@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/dds/DataWriter.h"
+#include "dds4ccm/impl/dds/DataWriter_T.h"
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/Coherent_Changes_Guard.h"
 

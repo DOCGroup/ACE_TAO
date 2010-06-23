@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Publisher.h"
-#include "PublisherListener.h"
-#include "Topic.h"
-#include "DataWriter.h"
+#include "Publisher_T.h"
+#include "PublisherListener_T.h"
+#include "Topic_T.h"
+#include "DataWriter_T.h"
 #include "StatusCondition.h"
 #include "Utils.h"
-#include "DataWriterListener.h"
+#include "DDSDataWriterListener_T.h"
 
 #include "ndds/InstanceHandle_t.h"
 #include "ndds/Duration_t.h"
@@ -23,26 +23,26 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_Publisher_i (DDSPublisher * dw)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_Publisher_T (DDSPublisher * dw)
       : impl_ (dw)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_Publisher_i");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_Publisher_T");
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_Publisher_i (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_Publisher_T (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_Publisher_i");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_Publisher_T");
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::create_datawriter (::DDS::Topic_ptr a_topic,
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::create_datawriter (::DDS::Topic_ptr a_topic,
                                         const ::DDS::DataWriterQos & qos,
                                         ::DDS::DataWriterListener_ptr a_listener,
                                         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::create_datawriter");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::create_datawriter");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
@@ -51,7 +51,7 @@ namespace CIAO
 
       if (!topic)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::create_datawriter - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::create_datawriter - "
                        "Error: Unable to cast provided topic to its servant.\n"));
           throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
@@ -72,7 +72,7 @@ namespace CIAO
 
       if (!ccm_dds_dw)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::create_datawriter - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
@@ -97,19 +97,19 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::create_datawriter_with_profile (::DDS::Topic_ptr a_topic,
                                         const char* library_name,
                                         const char *profile_name,
                                         ::DDS::DataWriterListener_ptr a_listener,
                                         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::create_datawriter");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::create_datawriter");
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
 
       if (!topic)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::create_datawriter_with_profile - "
                         "Error: Unable to cast provided topic to its servant.\n"));
           throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
@@ -131,7 +131,7 @@ namespace CIAO
 
       if (!ccm_dds_dw)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::create_datawriter_with_profile - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
@@ -139,7 +139,7 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::create_datareader_with_profile - "
                         "Successfully created datawriter with profile <%C#%C>.\n",
                         library_name,
@@ -158,22 +158,22 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::delete_datawriter (::DDS::DataWriter_ptr a_datawriter)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::delete_datawriter");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::delete_datawriter");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DataWriter_type *top = dynamic_cast< DataWriter_type * > (a_datawriter);
 
       if (top == 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::delete_datawriter - "
                         "Unable to cast provided object reference to servant.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_Publisher_i"
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_Publisher_T"
                     "<DDS_TYPE, CCM_TYPE>::delete_datawriter - "
                     "Successfully casted provided object reference to servant.\n"));
 
@@ -181,14 +181,14 @@ namespace CIAO
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::delete_datawriter - "
                         "Error: RTI delete_datawriter returned non-ok error code %C\n",
                         translate_retcode (retval)));
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE>::delete_datawriter - "
                         "Provided datawriter successfully deleted\n"));
         }
@@ -201,7 +201,7 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DataWriter_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::lookup_datawriter (const char * impl_name)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::lookup_datawriter (const char * impl_name)
     {
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -220,16 +220,16 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::delete_contained_entities (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::delete_contained_entities (void)
     {
       return this->impl ()->delete_contained_entities ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_qos (const ::DDS::PublisherQos & qos)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_qos (const ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_qos");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
@@ -241,9 +241,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_qos (::DDS::PublisherQos & qos)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_qos (::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_qos");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
@@ -258,10 +258,10 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_listener (::DDS::PublisherListener_ptr a_listener,
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_listener (::DDS::PublisherListener_ptr a_listener,
                                    ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_listener");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_listener");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       PublisherListener_type * ccm_dds_impl_list  = 0;
@@ -279,9 +279,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::PublisherListener_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_listener (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_listener");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_listener");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSPublisherListener *ccm_dds_pub_list = this->impl ()->get_listener ();
@@ -289,7 +289,7 @@ namespace CIAO
         dynamic_cast <PublisherListener_type *> (ccm_dds_pub_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Publisher_i"
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Publisher_T"
                                     "<DDS_TYPE, CCM_TYPE>::get_listener - "
                                     "DDS returned a NIL listener.\n"));
           return ::DDS::PublisherListener::_nil ();
@@ -302,35 +302,35 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::suspend_publications (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::suspend_publications (void)
     {
       return this->impl ()->suspend_publications ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::resume_publications (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::resume_publications (void)
     {
       return this->impl ()->resume_publications ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::begin_coherent_changes (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::begin_coherent_changes (void)
     {
       return this->impl ()->begin_coherent_changes ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::end_coherent_changes (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::end_coherent_changes (void)
     {
       return this->impl ()->end_coherent_changes ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::wait_for_acknowledgments (
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::wait_for_acknowledgments (
       const ::DDS::Duration_t & max_wait)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -344,9 +344,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DomainParticipant_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_participant (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_participant (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_participant");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_participant");
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
@@ -364,9 +364,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_default_datawriter_qos");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_default_datawriter_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
@@ -378,9 +378,9 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_default_datawriter_qos");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_default_datawriter_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
@@ -394,10 +394,10 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
                                               const ::DDS::TopicQos & a_impl_qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::copy_from_topic_qos");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::copy_from_topic_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
@@ -415,14 +415,14 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::enable (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::enable (void)
     {
       return this->impl ()->enable ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusCondition_ptr
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -441,14 +441,14 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusMask
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_status_changes (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_status_changes (void)
     {
       return this->impl ()->get_status_changes ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::InstanceHandle_t
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_instance_handle (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_instance_handle (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
@@ -462,21 +462,21 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     DDSPublisher *
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::get_impl (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::set_impl (DDSPublisher * dw)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::set_impl (DDSPublisher * dw)
     {
       this->impl_ = dw;
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     DDSPublisher *
-    CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE>::impl (void)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE>::impl (void)
     {
       if (!this->impl_)
         {

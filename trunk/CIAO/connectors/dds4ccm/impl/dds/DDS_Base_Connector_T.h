@@ -10,7 +10,7 @@
 #include "ace/Copy_Disabled.h"
 #include "tao/LocalObject.h"
 #include "dds4ccm/impl/dds/DomainParticipantListener_T.h"
-#include "dds4ccm/impl/dds/DomainParticipantFactory.h"
+#include "dds4ccm/impl/dds/DomainParticipantFactory_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 class DDS_Base_Connector_T
@@ -19,7 +19,7 @@ class DDS_Base_Connector_T
     private virtual ACE_Copy_Disabled
 {
 typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE> DomainParticipantListener;
-typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_i<DDS_TYPE, CCM_TYPE> DomainParticipantFactory;
+typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE> DomainParticipantFactory;
 
 public:
   DDS_Base_Connector_T (void);

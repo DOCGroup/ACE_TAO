@@ -36,16 +36,16 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DataReaderListener_i :
+    class CCM_DDS_DataReaderListener_T :
       public virtual ::DDSDataReaderListener
     {
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
     public:
       /// Constructor
-      CCM_DDS_DataReaderListener_i (::DDS::DataReaderListener_ptr p);
+      CCM_DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_DataReaderListener_i (void);
+      virtual ~CCM_DDS_DataReaderListener_T (void);
 
       virtual void on_requested_deadline_missed(::DDSDataReader* reader,
         const ::DDS_RequestedDeadlineMissedStatus& status);
@@ -77,6 +77,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/DataReaderListener.cpp"
+#include "dds4ccm/impl/dds/DDSDataReaderListener_T.cpp"
 
 #endif

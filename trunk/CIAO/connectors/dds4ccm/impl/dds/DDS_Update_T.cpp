@@ -4,7 +4,7 @@
 #include "dds4ccm/impl/dds/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/dds/DataWriterListener_T.h"
 #include "dds4ccm/impl/dds/Updater_T.h"
-#include "dds4ccm/impl/dds/DataWriter.h"
+#include "dds4ccm/impl/dds/DataWriter_T.h"
 
 #include "dds4ccm/impl/dds/Log_Macros.h"
 
@@ -52,8 +52,8 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                   ::DDS::DataWriterListener::_nil (),
                   0);
             }
-          ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE>  *rw =
-            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> *> (dwv_tmp.in ());
+          ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>  *rw =
+            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> *> (dwv_tmp.in ());
           this->ccm_dds_writer_.set_impl (rw->get_impl ());
           //TODO
           this->dds_update_.set_impl (&this->ccm_dds_writer_);
