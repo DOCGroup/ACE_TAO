@@ -131,7 +131,7 @@ project(DDS_PSAT_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl {
+project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
   after   += PSAT_Connector_lem_stub DDS_PSAT_Connector_stub DDS4CCM_lem_stub
   sharedname = DDS_PSAT_Connector_exec
   libs += DDS_PSAT_Connector_stub PSAT_Connector_lem_stub DDS_CCM_Example_PSAT_stub DDS4CCM_lem_stub
@@ -158,8 +158,7 @@ project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl {
-//  requires += dummy_label
+project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
   after      += PSAT_Connector_lem_stub DDS_PSAT_Connector_exec DDS_PSAT_Connector_stub DDS4CCM_lem_stub
   sharedname  = DDS_PSAT_Connector_svnt
   libs       += DDS_PSAT_Connector_stub \
