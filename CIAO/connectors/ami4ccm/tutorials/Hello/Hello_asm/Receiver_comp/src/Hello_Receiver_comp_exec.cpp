@@ -51,7 +51,7 @@ namespace CIAO_Hello_Receiver_Impl
   void
   MyFoo_exec_i::rw_attrib (::CORBA::Short /*new_value*/)
   {
-    /* Your code here. */
+    /* Your code here.*/
   }
 
   CORBA::Short

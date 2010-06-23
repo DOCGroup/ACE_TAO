@@ -9,13 +9,11 @@
 
 module Hello
 {
-   // Type declarations
-
-   exception InternalError
-     {
-       long id;
-       string error_string;
-     };
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
 };
 
 #endif
