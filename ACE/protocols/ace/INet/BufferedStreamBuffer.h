@@ -72,6 +72,8 @@ namespace ACE
 
               virtual int write_to_stream (const char_type* buffer, std::streamsize length);
 
+              void reset_buffers ();
+
             private:
               int flush_buffer ();
 

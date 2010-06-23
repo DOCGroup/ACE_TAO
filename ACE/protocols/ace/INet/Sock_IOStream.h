@@ -19,6 +19,7 @@
 
 #include "ace/INet/BidirStreamBuffer.h"
 #include "ace/INet/StreamHandler.h"
+#include "ace/INet/StreamInterceptor.h"
 #include <istream>
 #include <ostream>
 
@@ -91,10 +92,13 @@ namespace ACE
             public:
               typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
               typedef typename ios_base::stream_type stream_type;
+              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit Sock_OStreamBase(stream_type* stream);
 
               ~Sock_OStreamBase();
+
+              void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
         /**
@@ -110,10 +114,13 @@ namespace ACE
             public:
               typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
               typedef typename ios_base::stream_type stream_type;
+              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit Sock_IStreamBase(stream_type* stream);
 
               ~Sock_IStreamBase();
+
+              void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
         /**
@@ -129,10 +136,13 @@ namespace ACE
             public:
               typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
               typedef typename ios_base::stream_type stream_type;
+              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit Sock_IOStreamBase(stream_type* stream);
 
               ~Sock_IOStreamBase();
+
+              void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
         typedef Sock_StreamBufferBase<ACE_NULL_SYNCH> Sock_StreamBuffer;

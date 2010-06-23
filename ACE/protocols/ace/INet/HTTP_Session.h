@@ -49,9 +49,9 @@ namespace ACE
 
               void set_keep_alive (bool f);
 
-              bool keep_alive ();
+              bool keep_alive () const;
 
-              bool is_connected ();
+              bool is_connected () const;
 
               void set_host (const ACE_CString& host, u_short port);
 

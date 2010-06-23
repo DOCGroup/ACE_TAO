@@ -145,6 +145,17 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
+    void
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::reset_buffers()
+      {
+        this->setg (this->buffer_.get () + 4,
+                    this->buffer_.get () + 4,
+                    this->buffer_.get () + 4);
+        this->setp (this->buffer_.get (),
+                    this->buffer_.get () + (this->bufsize_ - 1));
+      }
+
+    template <class ACE_CHAR_T, class TR>
     int
     BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::flush_buffer ()
       {

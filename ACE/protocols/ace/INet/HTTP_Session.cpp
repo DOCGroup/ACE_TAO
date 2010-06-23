@@ -55,13 +55,13 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    bool Session_T<ACE_SYNCH_USE>::keep_alive ()
+    bool Session_T<ACE_SYNCH_USE>::keep_alive () const
       {
         return this->keep_alive_;
       }
 
     template <ACE_SYNCH_DECL>
-    bool Session_T<ACE_SYNCH_USE>::is_connected ()
+    bool Session_T<ACE_SYNCH_USE>::is_connected () const
       {
         return this->connection_ && this->connection_->is_connected ();
       }
