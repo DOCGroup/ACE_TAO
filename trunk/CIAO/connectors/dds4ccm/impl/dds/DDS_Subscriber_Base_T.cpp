@@ -5,8 +5,9 @@
 #include "dds4ccm/impl/dds/ContentFilteredTopic.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
-DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Subscriber_Base_T (void) :
-  configuration_complete_ (false)
+DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED>::DDS_Subscriber_Base_T (void)
+  : data_reader_ (0),
+    configuration_complete_ (false)
 {
 }
 

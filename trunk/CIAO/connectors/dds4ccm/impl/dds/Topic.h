@@ -23,10 +23,17 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_Topic_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipant_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Topic_i :
       public virtual ::DDS::CCM_Topic,
       public virtual ::CORBA::LocalObject
     {
+    typedef CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE> TopicListener_type;
+    typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+
     public:
       /// Constructor
       CCM_DDS_Topic_i (DDSTopic* topic);
@@ -72,5 +79,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/Topic.cpp"
 
 #endif

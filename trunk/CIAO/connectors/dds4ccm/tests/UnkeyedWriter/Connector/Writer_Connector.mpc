@@ -33,8 +33,10 @@ project(DDS_UnkeyedWriterConnector_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(DDS_UnkeyedWriterConnector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_UnkeyedWriterConnector_lem_gen DDS_UnkeyedWriterConnector_stub DDS_UnkeyedWriterBase_stub DDS4CCM_lem_stub
-  libs  += DDS_UnkeyedWriterBase_stub DDS_UnkeyedWriterConnector_stub DDS4CCM_lem_stub
+  after += DDS_UnkeyedWriterConnector_lem_gen DDS_UnkeyedWriterConnector_stub \
+           DDS_UnkeyedWriterBase_stub DDS4CCM_lem_stub
+  libs  += DDS_UnkeyedWriterBase_stub DDS_UnkeyedWriterConnector_stub \
+           DDS4CCM_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +87,11 @@ project(DDS_UnkeyedWriterConnector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_UnkeyedWriterConnector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub DDS4CCM_lem_stub DDS_UnkeyedWriterBase_stub
+  after   += DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_stub \
+             DDS4CCM_lem_stub DDS_UnkeyedWriterBase_stub
   sharedname = DDS_UnkeyedWriterConnector_exec
-  libs += DDS_UnkeyedWriterConnector_stub DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterBase_stub DDS4CCM_lem_stub DDS_UnkeyedWriterBase_stub
+  libs += DDS_UnkeyedWriterConnector_stub DDS_UnkeyedWriterConnector_lem_stub \
+          DDS_UnkeyedWriterBase_stub DDS4CCM_lem_stub DDS_UnkeyedWriterBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,7 +115,8 @@ project(DDS_UnkeyedWriterConnector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_UnkeyedWriterConnector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_exec DDS_UnkeyedWriterConnector_stub DDS4CCM_lem_stub
+  after      += DDS_UnkeyedWriterConnector_lem_stub DDS_UnkeyedWriterConnector_exec \
+                DDS_UnkeyedWriterConnector_stub DDS4CCM_lem_stub
   sharedname  = DDS_UnkeyedWriterConnector_svnt
   libs       += DDS_UnkeyedWriterConnector_stub \
                 DDS_UnkeyedWriterConnector_lem_stub  \
