@@ -23,7 +23,8 @@ namespace CIAO
     
     try
       {
-        // For the time being, we are going to go ahead and delete the default container
+        // For the time being, we are going to go ahead and delete
+        // the default container
         ::Deployment::DeploymentPlan plan;
         plan.instance.length (1);
         plan.instance[0].name = "";
@@ -36,14 +37,12 @@ namespace CIAO
       }
   }
     
-    
   char * 
   Container_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Container_Handler_i::instance_type");
     return CORBA::string_dup ("edu.dre.vanderbilt.dre.DAnCE.CCM.Container");
   }
-  
     
   void
   Container_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
@@ -155,7 +154,6 @@ namespace CIAO
                     "Container with Id <%C> removed.\n",
                     name));
   }
-  
     
   void
   Container_Handler_i::connect_instance (const ::Deployment::DeploymentPlan &,

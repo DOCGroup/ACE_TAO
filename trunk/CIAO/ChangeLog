@@ -1,3 +1,12 @@
+Wed Jun 23 11:09:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Layout, const, and initialise pointers with 0 changes
+
 Wed Jun 23 10:23:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp
