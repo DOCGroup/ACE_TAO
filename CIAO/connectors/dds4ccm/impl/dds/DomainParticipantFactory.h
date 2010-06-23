@@ -27,22 +27,26 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class CCM_DDS_DomainParticipant_i;
 
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipantFactory_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipantFactory_i :
       public virtual ::DDS::CCM_DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
-    friend class ACE_Singleton<CCM_DDS_DomainParticipantFactory_i, TAO_SYNCH_MUTEX>;
 
-    private:
+    public:
+      typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+      typedef CCM_DDS_DomainParticipantFactory_i<DDS_TYPE, CCM_TYPE> DomainParticipantFactory_type;
+      friend class ACE_Singleton<DomainParticipantFactory_type, TAO_SYNCH_MUTEX>;
+
       // Construtor
       CCM_DDS_DomainParticipantFactory_i (void);
 
       /// Destructor
       virtual ~CCM_DDS_DomainParticipantFactory_i (void);
 
-    public:
 #if (CIAO_DDS4CCM_OPENDDS==1)
       virtual ::DDS::DomainParticipantFactory_ptr get_instance (void);
 #endif
@@ -87,26 +91,22 @@ namespace CIAO
 #endif
 
     private:
-      bool remove_participant (CCM_DDS_DomainParticipant_i * part);
+      bool remove_participant (DomainParticipant_type * part);
 
       TAO_SYNCH_MUTEX dps_mutex_;
-      typedef std::map<ACE_CString, CCM_DDS_DomainParticipant_i *> DomainParticipants;
+      typedef std::map <ACE_CString, DomainParticipant_type *> DomainParticipants;
+      typedef typename DomainParticipants::iterator DomainParticipants_iterator;
       DomainParticipants dps_;
-    private:
-      ACE_UNIMPLEMENTED_FUNC (void operator= (const CCM_DDS_DomainParticipantFactory_i &))
-      ACE_UNIMPLEMENTED_FUNC (CCM_DDS_DomainParticipantFactory_i (const CCM_DDS_DomainParticipantFactory_i &))
+#if (CIAO_DDS4CCM_NDDS==1)
+      TAO_SYNCH_MUTEX dps_dds_mutex_;
+      typedef std::map <ACE_CString, DomainParticipant_type *> DDSDomainParticipants;
+      typedef typename DDSDomainParticipants::iterator DDSDomainParticipants_iterator;
+      DDSDomainParticipants dps_dds_;
+#endif
     };
-
-    typedef ACE_Singleton<CCM_DDS_DomainParticipantFactory_i,
-              TAO_SYNCH_MUTEX> Domain_Participant_Factory;
   }
 }
 
-#define DPFACTORY ::CIAO::DDS4CCM::Domain_Participant_Factory::instance ()
-
-/// Declare a process wide singleton
-DDS4CCM_DDS_IMPL_SINGLETON_DECLARE (ACE_Singleton,
-                                      ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_i,
-                                      TAO_SYNCH_MUTEX)
+#include "dds4ccm/impl/dds/DomainParticipantFactory.cpp"
 
 #endif

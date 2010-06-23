@@ -144,8 +144,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_topic (void)
     {
       try
         {
-          CIAO::DDS4CCM::CCM_DDS_DomainParticipant_i *part =
-            dynamic_cast< CIAO::DDS4CCM::CCM_DDS_DomainParticipant_i * > (
+          ::CIAO::DDS4CCM::CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> *part =
+            dynamic_cast< CIAO::DDS4CCM::CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> * > (
               this->domain_participant_.in ());
           DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
             part->get_impl (), DDS_TYPE::type_support::get_type_name ());

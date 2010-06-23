@@ -32,10 +32,16 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_QueryCondition_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class DataReader_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_QueryCondition_i :
       public virtual ::DDS::CCM_QueryCondition,
       public virtual ::CORBA::LocalObject
     {
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
+
     public:
       /// Constructor
       CCM_DDS_QueryCondition_i (DDSQueryCondition * qc);
@@ -72,5 +78,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/QueryCondition.cpp"
 
 #endif /* DDS4CCM_QUERYCONDITION_H */

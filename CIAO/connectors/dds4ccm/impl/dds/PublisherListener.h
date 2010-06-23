@@ -38,9 +38,14 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_PublisherListener_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DataWriter_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_PublisherListener_i :
       public virtual ::DDSPublisherListener
     {
+    typedef CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> DataWriter_type;
     public:
       /// Constructor
       CCM_DDS_PublisherListener_i (::DDS::PublisherListener_ptr p);
@@ -89,5 +94,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/PublisherListener.cpp"
 
 #endif

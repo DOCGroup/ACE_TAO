@@ -52,9 +52,10 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE>::configuration_complete (
                   ::DDS::DataWriterListener::_nil (),
                   0);
             }
-          ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *rw =
-            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i  *> (dwv_tmp.in ());
+          ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE>  *rw =
+            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> *> (dwv_tmp.in ());
           this->ccm_dds_writer_.set_impl (rw->get_impl ());
+          //TODO
           this->dds_update_.set_impl (&this->ccm_dds_writer_);
           this->dds_update_._set_component (component);
         }

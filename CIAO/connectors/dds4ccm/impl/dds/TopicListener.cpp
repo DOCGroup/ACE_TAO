@@ -13,23 +13,27 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_TopicListener_i::CCM_DDS_TopicListener_i (::DDS::TopicListener_ptr p)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_TopicListener_i (
+        ::DDS::TopicListener_ptr p)
       : impl_ (::DDS::TopicListener::_duplicate (p))
     {
     }
 
-    CCM_DDS_TopicListener_i::~CCM_DDS_TopicListener_i (void)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_TopicListener_i (void)
     {
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_TopicListener_i::on_inconsistent_topic (
+    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
       ::DDSTopic* the_topic,
       const ::DDS_InconsistentTopicStatus & status)
     {
       ::DDS::Topic_var dds_topic = ::DDS::Topic::_nil ();
       ACE_NEW (dds_topic,
-               CCM_DDS_Topic_i (the_topic));
+               Topic_type (the_topic));
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::InconsistentTopicStatus ddsstatus;
       ddsstatus <<= status;
@@ -39,8 +43,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::TopicListener_ptr
-    CCM_DDS_TopicListener_i::get_topiclistener (void)
+    CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE>::get_topiclistener (void)
     {
       return ::DDS::TopicListener::_duplicate (this->impl_.in ());
     }

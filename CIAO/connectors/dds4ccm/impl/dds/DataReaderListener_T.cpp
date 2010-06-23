@@ -1,7 +1,6 @@
 // $Id$
 #include "dds4ccm/impl/dds/Utils.h"
 
-#include "dds4ccm/impl/dds/DataReader.h"
 #include "dds4ccm/impl/dds/Log_Macros.h"
 #include "ace/Reactor.h"
 
@@ -36,7 +35,6 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DD
     {
       return;
     }
-
   if (this->reactor_)
     {
       drh* rh = 0;
@@ -68,7 +66,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
     }
 
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
-    reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
+    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
 
   if (!reader)
     {

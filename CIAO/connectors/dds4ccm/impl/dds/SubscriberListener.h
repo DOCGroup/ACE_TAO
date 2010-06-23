@@ -36,9 +36,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_SubscriberListener_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class DataReader_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_SubscriberListener_i :
       public virtual ::DDSSubscriberListener
     {
+    typedef CCM_DDS_Subscriber_i<DDS_TYPE, CCM_TYPE> Subscriber_type;
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
     public:
       /// Constructor
       CCM_DDS_SubscriberListener_i ( ::DDS::SubscriberListener_ptr s);
@@ -93,6 +99,8 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/SubscriberListener.cpp"
 
 #endif
 

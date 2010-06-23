@@ -113,11 +113,11 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
         }
       if (this->library_name_ && this->profile_name_)
         {
-          DPFACTORY->set_default_participant_qos_with_profile (
+          this->dp_factory_.set_default_participant_qos_with_profile (
               this->library_name_,
               this->profile_name_);
           this->domain_participant_ =
-            DPFACTORY->create_participant_with_profile (
+            this->dp_factory_.create_participant_with_profile (
                 this->domain_id_,
                 this->library_name_,
                 this->profile_name_,
@@ -128,7 +128,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::init_default_domain (void)
         {
           ::DDS::DomainParticipantQos qos;
           this->domain_participant_ =
-            DPFACTORY->create_participant (
+            this->dp_factory_.create_participant (
               this->domain_id_,
               qos,
               ::DDS::DomainParticipantListener::_nil (),
@@ -225,7 +225,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE>::ccm_remove");
 
-  ::DDS::ReturnCode_t const retcode = DPFACTORY->delete_participant (
+  ::DDS::ReturnCode_t const retcode = this->dp_factory_.delete_participant (
                                   this->domain_participant_.in ());
   if (retcode != ::DDS::RETCODE_OK)
     {

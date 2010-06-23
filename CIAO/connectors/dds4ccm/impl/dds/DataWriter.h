@@ -31,10 +31,18 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DataWriter_i
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DataWriterListener_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DataWriter_i
       : public virtual ::DDS::CCM_DataWriter,
         public virtual ::CORBA::LocalObject
     {
+    typedef CCM_DDS_DataWriterListener_i<DDS_TYPE, CCM_TYPE> DataWriterListener_type;
+    typedef CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE> Publisher_type;
+    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
+
     public:
       /// Constructor
       CCM_DDS_DataWriter_i (DDSDataWriter * dw);
@@ -99,5 +107,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/DataWriter.cpp"
 
 #endif

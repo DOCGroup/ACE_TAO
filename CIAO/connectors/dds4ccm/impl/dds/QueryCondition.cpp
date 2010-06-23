@@ -2,7 +2,6 @@
 
 #include "QueryCondition.h"
 #include "Subscriber.h"
-#include "DataReader.h"
 
 #include "ndds/StringSeq.h"
 
@@ -14,49 +13,56 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_QueryCondition_i::CCM_DDS_QueryCondition_i (DDSQueryCondition * qc)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_QueryCondition_i (DDSQueryCondition * qc)
       : impl_ (qc)
     {
     }
 
-    CCM_DDS_QueryCondition_i::~CCM_DDS_QueryCondition_i (void)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_QueryCondition_i (void)
     {
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::CORBA::Boolean
-    CCM_DDS_QueryCondition_i::get_trigger_value (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_trigger_value (void)
     {
       return this->impl ()->get_trigger_value ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::SampleStateMask
-    CCM_DDS_QueryCondition_i::get_sample_state_mask (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_sample_state_mask (void)
     {
       return this->impl ()->get_sample_state_mask ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ViewStateMask
-    CCM_DDS_QueryCondition_i::get_view_state_mask (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_view_state_mask (void)
     {
       return this->impl ()->get_view_state_mask ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::InstanceStateMask
-    CCM_DDS_QueryCondition_i::get_instance_state_mask (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_instance_state_mask (void)
     {
       return this->impl ()->get_instance_state_mask ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DataReader_ptr
-    CCM_DDS_QueryCondition_i::get_datareader (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_datareader (void)
     {
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::DDSDataReader* reader = this->impl ()->get_datareader ();
+      DDSDataReader* reader = this->impl ()->get_datareader ();
       if (reader)
         {
           ACE_NEW_THROW_EX (dds_reader,
-                            CCM_DDS_DataReader_i (reader),
+                            DataReader_type (reader),
                             CORBA::NO_MEMORY ());
         }
 #else
@@ -64,15 +70,16 @@ namespace CIAO
       if (! ::CORBA::is_nil (reader.in ()))
         {
           ACE_NEW_THROW_EX (dds_reader,
-                            CCM_DDS_DataReader_i (reader.in ()),
+                            DataReader_type (reader.in ()),
                             CORBA::NO_MEMORY ());
         }
 #endif
       return dds_reader._retn ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_QueryCondition_i::get_query_expression (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_query_expression (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       return ::CORBA::string_dup (this->impl ()->get_query_expression ());
@@ -81,8 +88,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_QueryCondition_i::get_query_parameters (
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_query_parameters (
       ::DDS::StringSeq & query_parameters)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -96,8 +104,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_QueryCondition_i::set_query_parameters (
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::set_query_parameters (
       const ::DDS::StringSeq & query_parameters)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -109,20 +118,23 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     DDSQueryCondition *
-    CCM_DDS_QueryCondition_i::get_impl (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_QueryCondition_i::set_impl (DDSQueryCondition * dw)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::set_impl (DDSQueryCondition * dw)
     {
       this->impl_ = dw;
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     DDSQueryCondition *
-    CCM_DDS_QueryCondition_i::impl (void)
+    CCM_DDS_QueryCondition_i<DDS_TYPE, CCM_TYPE>::impl (void)
     {
       if (!this->impl_)
         {

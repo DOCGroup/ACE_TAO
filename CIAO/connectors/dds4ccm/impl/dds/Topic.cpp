@@ -16,17 +16,20 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_Topic_i::CCM_DDS_Topic_i (DDSTopic* topic)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_Topic_i (DDSTopic* topic)
       : impl_ (topic)
     {
     }
 
-    CCM_DDS_Topic_i::~CCM_DDS_Topic_i (void)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_Topic_i (void)
     {
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Topic_i::set_qos (const ::DDS::TopicQos &qos)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::set_qos (const ::DDS::TopicQos &qos)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
@@ -37,8 +40,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Topic_i::get_qos (::DDS::TopicQos &qos)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_qos (::DDS::TopicQos &qos)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ddsqos;
@@ -50,19 +54,20 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Topic_i::set_listener (
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::set_listener (
       ::DDS::TopicListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Topic_i::set_listener");
+      DDS4CCM_TRACE ("CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::set_listener");
 
 #if (CIAO_DDS4CCM_NDDS==1)
-      CCM_DDS_TopicListener_i *ccm_dds_impl_list = 0;
+      TopicListener_type *ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            CCM_DDS_TopicListener_i (a_listener),
+                            TopicListener_type (a_listener),
                             CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
@@ -71,18 +76,19 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::TopicListener_ptr
-    CCM_DDS_Topic_i::get_listener (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Topic_i::get_listener");
+      DDS4CCM_TRACE ("CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_listener");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSTopicListener *ccm_dds_topic_list = this->impl ()->get_listener ();
-      CCM_DDS_TopicListener_i *list_proxy =
-        dynamic_cast <CCM_DDS_TopicListener_i *> (ccm_dds_topic_list);
+      TopicListener_type * list_proxy =
+        dynamic_cast <TopicListener_type *> (ccm_dds_topic_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Topic_i::get_listener - "
+          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_listener - "
                                     "DDS returned a NIL listener.\n"));
           return ::DDS::TopicListener::_nil ();
         }
@@ -92,8 +98,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Topic_i::get_inconsistent_topic_status (
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_inconsistent_topic_status (
       ::DDS::InconsistentTopicStatus & a_status)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -107,14 +114,16 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Topic_i::enable (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::enable (void)
     {
       return this->impl ()->enable ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusCondition_ptr
-    CCM_DDS_Topic_i::get_statuscondition (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -131,14 +140,16 @@ namespace CIAO
       return retval._retn ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::StatusMask
-    CCM_DDS_Topic_i::get_status_changes (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_status_changes (void)
     {
       return this->impl ()->get_status_changes ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::InstanceHandle_t
-    CCM_DDS_Topic_i::get_instance_handle (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_instance_handle (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle =
@@ -151,8 +162,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_Topic_i::get_type_name (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_type_name (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_type_name ());
@@ -161,8 +173,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     char *
-    CCM_DDS_Topic_i::get_name (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_name (void)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       return CORBA::string_dup (this->impl ()->get_name ());
@@ -171,16 +184,17 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DomainParticipant_ptr
-    CCM_DDS_Topic_i::get_participant (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
-      DDSDomainParticipant* p = this->impl ()->get_participant ();
+      DDSDomainParticipant * p = this->impl ()->get_participant ();
       if (p)
         {
           ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_DomainParticipant_i (p),
+                            DomainParticipant_type (p),
                             CORBA::NO_MEMORY ());
         }
 #else
@@ -188,27 +202,30 @@ namespace CIAO
       if (! ::CORBA::is_nil (p.in ()))
         {
           ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_DomainParticipant_i (p.in ()),
+                            DomainParticipant_type (p.in ()),
                             CORBA::NO_MEMORY ());
         }
 #endif
       return retval._retn ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     DDSTopic *
-    CCM_DDS_Topic_i::get_impl (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_Topic_i::set_impl (DDSTopic * topic)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::set_impl (DDSTopic * topic)
     {
       this->impl_ = topic;
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     DDSTopic *
-    CCM_DDS_Topic_i::impl (void)
+    CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE>::impl (void)
     {
       if (!this->impl_)
         {
