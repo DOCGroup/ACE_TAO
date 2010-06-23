@@ -84,9 +84,9 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
 {
   try
     {
-      this->ret_.swap (objref->test_struct_sequence (this->in_,
+      this->ret_ = objref->test_struct_sequence (this->in_,
                                                  this->inout_,
-                                                 this->out_));
+                                                 this->out_);
 
       return 0;
     }
