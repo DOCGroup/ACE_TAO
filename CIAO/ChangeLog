@@ -1,3 +1,9 @@
+Wed Jun 23 07:05:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Removed -SS flag that caused an include of ccm_ddsS.h to not be
+          there
+
 Wed Jun 23 06:59:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
@@ -5,7 +11,7 @@ Wed Jun 23 06:59:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
           Enabled a few more projects and fixed some dependencies
- 
+
         * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.mpc:
           This works now with rti 4.5b rev 01
 
