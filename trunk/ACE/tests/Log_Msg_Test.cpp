@@ -244,6 +244,7 @@ test_log_msg_features (const ACE_TCHAR *program)
       size_t const index = i++;
       big[index] = alphabet[i % j];
     }
+  big[ACE_Log_Record::MAXLOGMSGLEN] = ACE_TEXT ('\0');
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
 
   // Exercise many different combinations of OSTREAM.
