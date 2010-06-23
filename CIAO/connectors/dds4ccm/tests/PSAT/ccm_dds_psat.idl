@@ -5,9 +5,9 @@
 
 #pragma dds4ccm impl "DDS_PSAT_Connector_T.h"
 
-//#if defined (__TAO_IDL)
+#if defined (__TAO_IDL)
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
-//#endif
+#endif
 
 /**
  * @namespace CCM_DDS_PSAT
