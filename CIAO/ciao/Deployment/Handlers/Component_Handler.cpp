@@ -39,7 +39,7 @@ namespace CIAO
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
     
-    DAnCE::Utility::PROPERTY_MAP *pmap;
+    DAnCE::Utility::PROPERTY_MAP *pmap = 0;
     
     ACE_NEW_THROW_EX (pmap,
                       DAnCE::Utility::PROPERTY_MAP (idd.configProperty.length () +
@@ -60,7 +60,7 @@ namespace CIAO
     
     using namespace CIAO::Deployment;
     CORBA::Any val;
-    const char *tmp;
+    const char *tmp = 0;
 
     if (pmap->find (SVNT_ENTRYPT, val) == 0)
         {
@@ -177,7 +177,7 @@ namespace CIAO
           container->set_attributes (comp_ref.in (),
                                      attr_config);
         }
-      catch (::CORBA::Exception &ex)
+      catch (const ::CORBA::Exception &ex)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
                           "Component_Handler_i::install_instance - "
@@ -210,7 +210,7 @@ namespace CIAO
                                                     cont_id,
                                                     comp_ref.in ());
 
-      CORBA::Any *retval;
+      CORBA::Any *retval = 0;
       ACE_NEW_THROW_EX (retval,
                         CORBA::Any (),
                         CORBA::NO_MEMORY ());
@@ -241,7 +241,7 @@ namespace CIAO
       {
         cont->activate_component (comp.in ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::activate_instance - "
@@ -284,7 +284,7 @@ namespace CIAO
       {
         cont->passivate_component (comp.in ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::passivate_instance - "
@@ -344,7 +344,7 @@ namespace CIAO
       else
         {
           CIAO_ERROR (4, (LM_INFO, CLINFO
-                          "Component_Handler_i::install_instance - "
+                          "Component_Handler_i::remove_instance - "
                           "No container provided, using default container for instance <%C>\n",
                           name));
           cont_id = "";
@@ -369,7 +369,7 @@ namespace CIAO
         {
           container->uninstall_component (ref);
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
                           "Component_Handler_i::remove_instance - "
@@ -444,7 +444,7 @@ namespace CIAO
       {
         ref->configuration_complete ();
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::instance_configured - "

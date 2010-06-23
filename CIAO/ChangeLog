@@ -1,3 +1,9 @@
+Wed Jun 23 10:22:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+          Catch exceptions as const, initialise pointers to 0 and fixed
+          an incorrect log line
+
 Wed Jun 23 08:58:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/ContentFilteredTopic.h:
