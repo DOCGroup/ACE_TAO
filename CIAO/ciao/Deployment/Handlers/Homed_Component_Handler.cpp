@@ -21,14 +21,12 @@ namespace CIAO
     CIAO_TRACE ("Homed_Component_Handler_i::~Homed_Component_Handler_i");
   }
     
-    
   char * 
   Homed_Component_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Homed_Component_Handler_i::instance_type");
     return CORBA::string_dup ("edu.vanderbilt.dre.CCM.HomedComponent");
   }
-  
     
   void
   Homed_Component_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
@@ -64,7 +62,7 @@ namespace CIAO
     
     using namespace CIAO::Deployment;
     CORBA::Any val;
-    const char *tmp;
+    const char *tmp = 0;
 
     if (pmap->find (COMPONENT_HOME, val) == 0)
         {
@@ -157,7 +155,7 @@ namespace CIAO
                                                   cont_id,
                                                   ref.in ());
     
-    CORBA::Any *any;
+    CORBA::Any *any = 0;
     ACE_NEW_THROW_EX (any,
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
@@ -166,7 +164,6 @@ namespace CIAO
     
     instance_reference = any;
   }
-  
 
   void
   Homed_Component_Handler_i::activate_instance (const ::Deployment::DeploymentPlan &plan,
