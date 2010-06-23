@@ -1312,6 +1312,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           d = outer->lookup_by_name_r (e, full_def_only);
           if (d)
             {
+              work = outer;
               break; // Ok found it, stop searching.
             }
         }
