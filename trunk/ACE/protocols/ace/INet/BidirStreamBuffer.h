@@ -18,6 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Auto_Ptr.h"
+#include "ace/INet/StreamInterceptor.h"
 #include <streambuf>
 #include <iosfwd>
 #include <ios>
@@ -55,6 +56,7 @@ namespace ACE
               typedef typename base_type::pos_type pos_type;
               typedef typename base_type::off_type off_type;
               typedef typename ios_type::openmode openmode;
+              typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
 
               /// Constructor
               BasicBidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
@@ -69,6 +71,8 @@ namespace ACE
               const STREAM_HANDLER& stream () const;
 
               void close_stream ();
+
+              void set_interceptor (interceptor_type& interceptor);
 
             protected:
               void set_mode (openmode mode);
@@ -89,6 +93,7 @@ namespace ACE
               ACE_Auto_Ptr<char_type> write_buffer_;
               openmode        mode_;
               STREAM_HANDLER *stream_;
+              interceptor_type* interceptor_;
 
               BasicBidirStreamBuffer(const BasicBidirStreamBuffer&);
               BasicBidirStreamBuffer& operator = (const BasicBidirStreamBuffer&);

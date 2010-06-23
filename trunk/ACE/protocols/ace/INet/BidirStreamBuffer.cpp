@@ -21,7 +21,8 @@ namespace ACE
         openmode mode)
       : bufsize_ (bufsz),
         mode_ (mode),
-        stream_ (sh)
+        stream_ (sh),
+        interceptor_ (0)
       {
         this->stream_->add_reference ();
 
@@ -73,9 +74,22 @@ namespace ACE
                          this->gptr () - putback,
                          putback * sizeof (char_type));
 
+        if (this->interceptor_)
+          this->interceptor_->before_read (this->bufsize_ - 4);
+
         int n = this->read_from_stream (this->read_buffer_.get () + 4,
                                         this->bufsize_ - 4);
-        if (n <= 0) return char_traits::eof ();
+
+        if (this->interceptor_)
+          this->interceptor_->after_read (this->read_buffer_.get () + 4, n);
+
+        if (n <= 0)
+          {
+            if (this->interceptor_)
+              this->interceptor_->on_eof ();
+
+            return char_traits::eof ();
+          }
 
         this->setg (this->read_buffer_.get () + (4 - putback),
                     this->read_buffer_.get () + 4,
@@ -113,6 +127,13 @@ namespace ACE
             this->stream_->remove_reference ();
             this->stream_ = 0;
           }
+      }
+
+    template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
+    void
+    BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::set_interceptor (interceptor_type& interceptor)
+      {
+        this->interceptor_ = &interceptor;
       }
 
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
@@ -159,7 +180,16 @@ namespace ACE
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::flush_buffer ()
       {
         int n = int (this->pptr () - this->pbase ());
-        if (this->write_to_stream (this->pbase (), n) == n)
+
+        if (this->interceptor_)
+          this->interceptor_->before_write (this->pbase (), n);
+
+        int n_out = this->write_to_stream (this->pbase (), n);
+
+        if (this->interceptor_)
+          this->interceptor_->after_write (n_out);
+
+        if (n_out == n)
         {
           this->pbump (-n);
           return n;

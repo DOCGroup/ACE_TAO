@@ -6,6 +6,7 @@ project(INet) : acelib, ace_output, install {
   dynamicflags = ACE_INET_BUILD_DLL
   includes += $(ACE_ROOT)/protocols
   avoids += wince
+  avoids += old_stdstream
   Source_Files {
     IOS_util.cpp
     HeaderBase.cpp
