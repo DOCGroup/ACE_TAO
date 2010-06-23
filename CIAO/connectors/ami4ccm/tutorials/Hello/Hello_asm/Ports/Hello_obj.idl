@@ -7,7 +7,7 @@
 #ifndef HELLO_OBJ_IDL
 #define HELLO_OBJ_IDL
 
-//#include "Hello_defn.idl"
+#include "Hello_defn.idl"
 
 #pragma ciao lem "Hello_objE.idl"
 #pragma ciao ami4ccm interface "Hello::MyFoo"
@@ -15,12 +15,6 @@
 
 module Hello
 {
-  exception InternalError
-    {
-      long id;
-      string error_string;
-    };
-
   // Sender/Receiver interface
   interface MyFoo
     {
