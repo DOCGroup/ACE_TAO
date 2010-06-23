@@ -19,14 +19,12 @@ namespace CIAO
     CIAO_TRACE ("Home_Handler_i::~Home_Handler_i");
   }
     
-    
   char * 
   Home_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Home_Handler_i::instance_type");
     return CORBA::string_dup ("edu.dre.vanderbilt.dre.CCM.Home");
   }
-  
     
   void
   Home_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
@@ -38,7 +36,7 @@ namespace CIAO
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
     
-    DAnCE::Utility::PROPERTY_MAP *pmap;
+    DAnCE::Utility::PROPERTY_MAP *pmap = 0;
     
     ACE_NEW_THROW_EX (pmap,
                       DAnCE::Utility::PROPERTY_MAP (idd.configProperty.length () +
@@ -48,7 +46,6 @@ namespace CIAO
     Deployment_Common::Instance_Info info;
     info.name = idd.name.in ();
     info.pmap.reset (pmap);
-                      
 
     DAnCE::Utility::build_property_map (*pmap,
                                         mdd.execParameter);
@@ -59,7 +56,7 @@ namespace CIAO
     
     using namespace CIAO::Deployment;
     CORBA::Any val;
-    const char *tmp;
+    const char *tmp = 0;
     
     if ((pmap->find (SVNT_ENTRYPT, val)) == 0)
       {
@@ -174,8 +171,7 @@ namespace CIAO
         Deployment_Common::create_attribute_configuration (idd.configProperty,
                                                            attr_config);
         
-        container->set_attributes (home_ref.in (),
-                                   attr_config);
+        container->set_attributes (home_ref.in (), attr_config);
       }
     catch (::CORBA::Exception &ex)
       {
@@ -208,7 +204,7 @@ namespace CIAO
 
     DEPLOYMENT_STATE::instance ()->add_home (idd.name.in (), cont_id, home_ref.in ());
 
-    CORBA::Any *retval;
+    CORBA::Any *retval = 0;
     ACE_NEW_THROW_EX (retval,
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
@@ -263,7 +259,7 @@ namespace CIAO
                     name));
     
     CORBA::Any val;
-    const char *cont_id;
+    const char *cont_id = 0;
     
     if (instance->second.pmap->find (Deployment::CONTAINER_ID, val) == 0)
       {
@@ -281,7 +277,8 @@ namespace CIAO
         cont_id = "";
       }
 
-    ::CIAO::Container_var container = DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
+    ::CIAO::Container_var container =
+      DEPLOYMENT_STATE::instance ()->fetch_container (cont_id);
       
     if (CORBA::is_nil (container))
       {

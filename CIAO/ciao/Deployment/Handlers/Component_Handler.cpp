@@ -20,14 +20,12 @@ namespace CIAO
     CIAO_TRACE ("Component_Handler_i::~Component_Handler_i");
   }
     
-    
   char * 
   Component_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Component_Handler_i::instance_type");
     return CORBA::string_dup ("edu.dre.vanderbilt.dre.CCM.Component");
   }
-  
     
   void
   Component_Handler_i::install_instance (const ::Deployment::DeploymentPlan &plan,
@@ -419,7 +417,6 @@ namespace CIAO
                                                                         connectionRef,
                                                                         provided_reference);
   }
-  
     
   void
   Component_Handler_i::disconnect_instance (const ::Deployment::DeploymentPlan & plan,

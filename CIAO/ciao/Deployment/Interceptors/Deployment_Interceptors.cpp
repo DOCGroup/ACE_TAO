@@ -65,7 +65,7 @@ namespace CIAO
                                  ACE_TEXT ("Unable to extract instance reference from Any\n")));
               }
             
-            const char * name;
+            const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
             DANCE_DEBUG (9, (LM_TRACE, DLINFO 
@@ -84,7 +84,7 @@ namespace CIAO
             CORBA::Object_var obj;
             instance_reference >>= CORBA::Any::to_object (obj);
 
-            const char * name;
+            const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
             ACE_CString ior = this->orb_->object_to_string (obj.in ());
@@ -138,10 +138,8 @@ namespace CIAO
   void
   CIAO_ReferenceLookup_i::configure (const ::Deployment::Properties & )
   {
-    
   }
- 
-}
+ }
 
 extern "C"
 {
