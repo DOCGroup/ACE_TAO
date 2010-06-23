@@ -1,3 +1,8 @@
+Wed Jun 23 08:42:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3832_Regression/run_test.pl:
+          Set DANCE_ROOT to get locality manager
+
 Wed Jun 23 07:10:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
