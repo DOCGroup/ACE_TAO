@@ -1,4 +1,3 @@
-
 # $Id$
 
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
@@ -6,6 +5,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      if 0;
 
 # -*- perl -*-
+
+$DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
