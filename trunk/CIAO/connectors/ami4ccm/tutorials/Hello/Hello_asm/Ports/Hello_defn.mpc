@@ -1,6 +1,6 @@
 // $Id$
 
-project(Hello_defn_idl_gen) : taoidldefaults, typecode {
+project(AMI_Hello_Tuto_defn_idl_gen) : taoidldefaults, typecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_DEFN_STUB_Export \
               -Wb,stub_export_include=Hello_defn_stub_export.h \
@@ -13,8 +13,8 @@ project(Hello_defn_idl_gen) : taoidldefaults, typecode {
   }
 }
 
-project(Hello_defn_stub) : ccm_stub, ami, ami4ccm_stub {
-  after += Hello_defn_idl_gen
+project(AMI_Hello_Tuto_defn_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_Hello_Tuto_defn_idl_gen
   libpaths += ../lib
   libout = ../lib
   includes += ../GeneratedCode

@@ -224,7 +224,6 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>ami4ccm_port_ami4ccm_provides</portName>
-      <!--portName>The_Port_sendc_run</portName-->
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
@@ -240,7 +239,6 @@
       <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
     </internalEndpoint>
     <internalEndpoint>
-      <!-->portName>The_Port_run</portName-->
       <portName>ami4ccm_port_ami4ccm_uses</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
