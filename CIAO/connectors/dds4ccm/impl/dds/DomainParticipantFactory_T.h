@@ -28,24 +28,24 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DomainParticipant_i;
+    class CCM_DDS_DomainParticipant_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DomainParticipantFactory_i :
+    class CCM_DDS_DomainParticipantFactory_T :
       public virtual ::DDS::CCM_DomainParticipantFactory,
       public virtual ::CORBA::LocalObject
     {
 
     public:
-      typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
-      typedef CCM_DDS_DomainParticipantFactory_i<DDS_TYPE, CCM_TYPE> DomainParticipantFactory_type;
+      typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+      typedef CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE> DomainParticipantFactory_type;
       friend class ACE_Singleton<DomainParticipantFactory_type, TAO_SYNCH_MUTEX>;
 
       // Construtor
-      CCM_DDS_DomainParticipantFactory_i (void);
+      CCM_DDS_DomainParticipantFactory_T (void);
 
       /// Destructor
-      virtual ~CCM_DDS_DomainParticipantFactory_i (void);
+      virtual ~CCM_DDS_DomainParticipantFactory_T (void);
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
       virtual ::DDS::DomainParticipantFactory_ptr get_instance (void);
@@ -107,6 +107,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/DomainParticipantFactory.cpp"
+#include "dds4ccm/impl/dds/DomainParticipantFactory_T.cpp"
 
 #endif

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "dds4ccm/impl/dds/DataWriter.h"
+#include "dds4ccm/impl/dds/DataWriter_T.h"
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
 #include "dds4ccm/impl/dds/Log_Macros.h"
@@ -55,7 +55,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregiste
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
-  CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> *writer)
+  CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> *writer)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 

@@ -37,42 +37,42 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DataReaderListener_i;
+    class CCM_DDS_DataReaderListener_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     class DataReader_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_Topic_i;
+    class CCM_DDS_Topic_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_ContentFilteredTopic_i;
+    class CCM_DDS_ContentFilteredTopic_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_SubscriberListener_i;
+    class CCM_DDS_SubscriberListener_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_DomainParticipant_i;
+    class CCM_DDS_DomainParticipant_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_Subscriber_i :
+    class CCM_DDS_Subscriber_T :
       public virtual ::DDS::CCM_Subscriber,
       public virtual ::CORBA::LocalObject
     {
 
-    typedef CCM_DDS_DataReaderListener_i<DDS_TYPE, CCM_TYPE> DataReaderListener_type;
-    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
-    typedef CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
+    typedef CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> DataReaderListener_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
-    typedef CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
-    typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
+    typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor
-      CCM_DDS_Subscriber_i (DDSSubscriber * sub);
+      CCM_DDS_Subscriber_T (DDSSubscriber * sub);
 
       /// Destructor
-      virtual ~CCM_DDS_Subscriber_i (void);
+      virtual ~CCM_DDS_Subscriber_T (void);
 
       virtual ::DDS::ReturnCode_t enable (void);
 
@@ -201,6 +201,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/Subscriber.cpp"
+#include "dds4ccm/impl/dds/Subscriber_T.cpp"
 
 #endif

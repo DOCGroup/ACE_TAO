@@ -36,7 +36,7 @@ namespace CIAO
     class CCM_DDS_DomainParticipant;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_TopicDescription_i :
+    class CCM_DDS_TopicDescription_T :
       public virtual ::DDS::CCM_TopicDescription,
       public virtual ::CORBA::LocalObject
     {
@@ -44,10 +44,10 @@ namespace CIAO
 
     public:
       /// Constructor
-      CCM_DDS_TopicDescription_i (DDSTopicDescription * rc);
+      CCM_DDS_TopicDescription_T (DDSTopicDescription * rc);
 
       /// Destructor
-      virtual ~CCM_DDS_TopicDescription_i (void);
+      virtual ~CCM_DDS_TopicDescription_T (void);
 
       virtual char * get_type_name (void);
 
@@ -67,6 +67,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/TopicDescription.cpp"
+#include "dds4ccm/impl/dds/TopicDescription_T.cpp"
 
 #endif /* CIAO_DDS4CCM_TOPICDESCRIPTION_H */

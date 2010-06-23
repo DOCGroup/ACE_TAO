@@ -40,17 +40,17 @@ namespace CIAO
     class DataReader_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
-    class CCM_DDS_SubscriberListener_i :
+    class CCM_DDS_SubscriberListener_T :
       public virtual ::DDSSubscriberListener
     {
-    typedef CCM_DDS_Subscriber_i<DDS_TYPE, CCM_TYPE> Subscriber_type;
+    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> Subscriber_type;
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
     public:
       /// Constructor
-      CCM_DDS_SubscriberListener_i ( ::DDS::SubscriberListener_ptr s);
+      CCM_DDS_SubscriberListener_T ( ::DDS::SubscriberListener_ptr s);
 
       /// Destructor
-      virtual ~CCM_DDS_SubscriberListener_i (void);
+      virtual ~CCM_DDS_SubscriberListener_T (void);
 
       virtual void
       on_requested_deadline_missed (
@@ -100,7 +100,7 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/dds/SubscriberListener.cpp"
+#include "dds4ccm/impl/dds/DDSSubscriberListener_T.cpp"
 
 #endif
 

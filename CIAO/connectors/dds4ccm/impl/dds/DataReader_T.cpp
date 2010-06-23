@@ -1,13 +1,13 @@
 // $Id$
 
-#include "DataReaderListener.h"
+#include "DDSDataReaderListener_T.h"
 #include "StatusCondition.h"
-#include "ReadCondition.h"
-#include "QueryCondition.h"
-#include "Subscriber.h"
-#include "TopicDescription.h"
-#include "Topic.h"
-#include "ContentFilteredTopic.h"
+#include "ReadCondition_T.h"
+#include "QueryCondition_T.h"
+#include "Subscriber_T.h"
+#include "TopicDescription_T.h"
+#include "Topic_T.h"
+#include "ContentFilteredTopic_T.h"
 
 #include "ndds/SampleLostStatus.h"
 #include "ndds/SubscriptionMatchedStatus.h"
@@ -715,8 +715,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_readcondition (
   ::DDS::ReadCondition_ptr a_condition)
 {
 #if (CIAO_DDS4CCM_NDDS==1)
-  CCM_DDS_ReadCondition_i<DDS_TYPE, CCM_TYPE> *rc =
-    dynamic_cast< CCM_DDS_ReadCondition_i<DDS_TYPE, CCM_TYPE> *> (a_condition);
+  CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE> *rc =
+    dynamic_cast< CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE> *> (a_condition);
   if (!rc)
     {
       return ::DDS::RETCODE_BAD_PARAMETER;
@@ -794,8 +794,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_listener (void)
 
 #if (CIAO_DDS4CCM_NDDS==1)
   DDSDataReaderListener *drl = this->impl ()->get_listener ();
-  CCM_DDS_DataReaderListener_i<DDS_TYPE, CCM_TYPE> *ccm_dds_drl =
-    dynamic_cast <CCM_DDS_DataReaderListener_i<DDS_TYPE, CCM_TYPE> *> (drl);
+  CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> *ccm_dds_drl =
+    dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> *> (drl);
   if (!ccm_dds_drl)
     {
       DDS4CCM_DEBUG (6, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_listener - "
@@ -836,7 +836,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_topicdescription (void)
 #else
   ::DDS::TopicDescription_var td = this->impl ()->get_topicdescription ();
   ACE_NEW_THROW_EX (dds_td,
-                    CCM_DDS_TopicDescription_i (td.in ()),
+                    CCM_DDS_TopicDescription_T (td.in ()),
                     CORBA::NO_MEMORY ());
 #endif
   return dds_td._retn ();
@@ -854,7 +854,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_subscriber (void)
                     CORBA::NO_MEMORY ());
 #else
   ::DDSSubscriber_var subscriber = this->impl ()->get_subscriber ();
-  dds_td = new CCM_DDS_Subscriber_i<DDS_TYPE, CCM_TYPE> (subscriber.in ());
+  dds_td = new CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> (subscriber.in ());
   ACE_NEW_THROW_EX (dds_td,
                     Subscriber_type (subscriber.in ()),
                     CORBA::NO_MEMORY ());

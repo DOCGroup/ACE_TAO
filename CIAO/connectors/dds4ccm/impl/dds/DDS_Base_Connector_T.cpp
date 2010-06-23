@@ -2,8 +2,7 @@
 // $Id$
 
 #include "dds4ccm/impl/dds/Log_Macros.h"
-#include "dds4ccm/impl/dds/DomainParticipantFactory.h"
-#include "dds4ccm/impl/dds/DomainParticipant.h"
+#include "dds4ccm/impl/dds/DomainParticipant_T.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/Env_Value_T.h"
 

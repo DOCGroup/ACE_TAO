@@ -14,7 +14,7 @@
 #include "dds4ccm/impl/dds/DataReader_T.h"
 #include "dds4ccm/impl/dds/PortStatusListener_T.h"
 #include "dds4ccm/impl/dds/ContentFilterSetting.h"
-#include "dds4ccm/impl/dds/ContentFilteredTopic.h"
+#include "dds4ccm/impl/dds/ContentFilteredTopic_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_Subscriber_Base_T
