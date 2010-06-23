@@ -37,7 +37,6 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED>::activate (
                               reactor),
                             CORBA::NO_MEMORY ());
         }
-
       this->data_reader_.set_listener (
         this->listener_.in (),
         DataReaderListener::get_mask (status));

@@ -33,12 +33,45 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
+    //Forward declarations
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class CCM_DDS_Topic_i;
 
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipant_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_SubscriberListener_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Publisher_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Subscriber_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_TopicListener_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Topic_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_ContentFilteredTopic_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_PublisherListener_i;
+
+    //Class declaration
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipant_i :
       public virtual ::DDS::CCM_DomainParticipant,
       public virtual ::CORBA::LocalObject
     {
+    typedef CCM_DDS_Subscriber_i<DDS_TYPE, CCM_TYPE> Subscriber_type;
+    typedef CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
+    typedef CCM_DDS_Publisher_i<DDS_TYPE, CCM_TYPE> Publisher_type;
+    typedef CCM_DDS_PublisherListener_i<DDS_TYPE, CCM_TYPE> PublisherListener_type;
+    typedef CCM_DDS_TopicListener_i<DDS_TYPE, CCM_TYPE> TopicListener_type;
+    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
+
     public:
       /// Constructor
       CCM_DDS_DomainParticipant_i (DDSDomainParticipant * dp);
@@ -208,13 +241,16 @@ namespace CIAO
       DDSDomainParticipant * impl (void);
 
     private:
-      bool remove_topic (CCM_DDS_Topic_i * topic);
+      bool remove_topic (Topic_type * topic);
 
       TAO_SYNCH_MUTEX tps_mutex_;
-      typedef std::map<ACE_CString, CCM_DDS_Topic_i *> Topics;
+      typedef std::map<ACE_CString, Topic_type *> Topics;
+      typedef typename Topics::iterator Topics_iterator;
       Topics tps_;
     };
   }
 }
+
+#include "dds4ccm/impl/dds/DomainParticipant.cpp"
 
 #endif

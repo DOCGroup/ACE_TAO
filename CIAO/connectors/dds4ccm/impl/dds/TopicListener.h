@@ -29,9 +29,11 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_TopicListener_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_TopicListener_i :
       public virtual ::DDSTopicListener
     {
+    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
     public:
       /// Constructor
       CCM_DDS_TopicListener_i (::DDS::TopicListener_ptr p);
@@ -49,5 +51,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/TopicListener.cpp"
 
 #endif /* DDS4CCM_TOPICLISTENER_H */

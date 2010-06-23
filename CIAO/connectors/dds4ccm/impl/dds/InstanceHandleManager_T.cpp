@@ -55,7 +55,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::unregiste
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
 void
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE>::set_impl (
-  CCM_DDS_DataWriter_i *writer)
+  CCM_DDS_DataWriter_i<DDS_TYPE, CCM_TYPE> *writer)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_impl");
 

@@ -36,10 +36,37 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_Subscriber_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DataReaderListener_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class DataReader_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Topic_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_ContentFilteredTopic_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_SubscriberListener_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipant_i;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_Subscriber_i :
       public virtual ::DDS::CCM_Subscriber,
       public virtual ::CORBA::LocalObject
     {
+
+    typedef CCM_DDS_DataReaderListener_i<DDS_TYPE, CCM_TYPE> DataReaderListener_type;
+    typedef CCM_DDS_Topic_i<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_ContentFilteredTopic_i<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
+    typedef CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
+    typedef CCM_DDS_DomainParticipant_i<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+
     public:
       /// Constructor
       CCM_DDS_Subscriber_i (DDSSubscriber * sub);
@@ -173,5 +200,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/Subscriber.cpp"
 
 #endif

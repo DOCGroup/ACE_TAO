@@ -2,7 +2,6 @@
 
 #include "SubscriberListener.h"
 #include "Subscriber.h"
-#include "DataReader.h"
 
 #include "ndds/SampleLostStatus.h"
 #include "ndds/SubscriptionMatchedStatus.h"
@@ -17,38 +16,42 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    CCM_DDS_SubscriberListener_i::CCM_DDS_SubscriberListener_i (::DDS::SubscriberListener_ptr p)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_SubscriberListener_i (::DDS::SubscriberListener_ptr p)
       : impl_ ( ::DDS::SubscriberListener::_duplicate (p))
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::CCM_DDS_SubscriberListener_i");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::CCM_DDS_SubscriberListener_i");
     }
 
-    CCM_DDS_SubscriberListener_i::~CCM_DDS_SubscriberListener_i (void)
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_SubscriberListener_i (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::~CCM_DDS_SubscriberListener_i");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::~CCM_DDS_SubscriberListener_i");
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_data_on_readers (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_data_on_readers (
         ::DDSSubscriber* the_subscriber)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_data_on_readers");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_data_on_readers");
 
       ::DDS::Subscriber_var sub = ::DDS::Subscriber::_nil ();
       ACE_NEW (sub,
-               CCM_DDS_Subscriber_i (the_subscriber));
+               Subscriber_type (the_subscriber));
       this->impl_->on_data_on_readers (sub.in ());
       the_subscriber->notify_datareaders ();
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::CCM_DataReader_ptr
-    CCM_DDS_SubscriberListener_i::get_datareader_proxy (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::get_datareader_proxy (
       ::DDSDataReader * the_reader)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::get_datareader_proxy");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::get_datareader_proxy");
       ::DDS::CCM_DataReader_var dds_reader = ::DDS::CCM_DataReader::_nil ();
       ACE_NEW_NORETURN (dds_reader,
-                        CCM_DDS_DataReader_i (the_reader));
+                        DataReader_type (the_reader));
       return dds_reader._retn ();
 /*
       // Retrieve the pointer to the proxy from the QoS
@@ -59,7 +62,7 @@ namespace CIAO
                                                     "CCM_DataReaderProxy");
       if (!prop)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i::get_datareader_proxy -"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
                                               "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::CCM_DataReader::_nil ();
         }
@@ -70,7 +73,7 @@ namespace CIAO
           
       if (::CORBA::is_nil (reader))
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i::get_datareader_proxy -"
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
                                               "Unable to retrieve reader from PropertyQosProfile\n"));
         }
 
@@ -78,12 +81,13 @@ namespace CIAO
 */
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_requested_deadline_missed (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
       ::DDSDataReader* the_reader,
       const ::DDS_RequestedDeadlineMissedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_requested_deadline_missed");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
@@ -98,12 +102,13 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_requested_incompatible_qos (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
       ::DDSDataReader* the_reader,
       const ::DDS_RequestedIncompatibleQosStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_requested_incompatible_qos");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
@@ -118,12 +123,13 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_sample_rejected (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
       ::DDSDataReader* the_reader,
       const ::DDS_SampleRejectedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_sample_rejected");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_sample_rejected");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleRejectedStatus ddsstatus;
@@ -138,12 +144,13 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_liveliness_changed (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_liveliness_changed (
       ::DDSDataReader* the_reader,
       const ::DDS_LivelinessChangedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_liveliness_changed");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_liveliness_changed");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessChangedStatus ddsstatus;
@@ -158,22 +165,24 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_data_available (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_data_available (
       ::DDSDataReader* the_reader)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_data_available");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_data_available");
 
       this->impl_->on_data_available (
         this->get_datareader_proxy (the_reader));
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_subscription_matched (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_subscription_matched (
       ::DDSDataReader* the_reader,
       const ::DDS_SubscriptionMatchedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_subscription_matched");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_subscription_matched");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SubscriptionMatchedStatus ddsstatus;
@@ -188,12 +197,13 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     void
-    CCM_DDS_SubscriberListener_i::on_sample_lost (
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_sample_lost (
       ::DDSDataReader* the_reader,
       const ::DDS_SampleLostStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i::on_sample_lost");
+      DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::on_sample_lost");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleLostStatus ddsstatus;
@@ -208,8 +218,9 @@ namespace CIAO
 #endif
     }
 
+    template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::SubscriberListener_ptr
-    CCM_DDS_SubscriberListener_i::get_subscriber_listener (void)
+    CCM_DDS_SubscriberListener_i<DDS_TYPE, CCM_TYPE>::get_subscriber_listener (void)
     {
       return ::DDS::SubscriberListener::_duplicate (this->impl_.in ());
     }

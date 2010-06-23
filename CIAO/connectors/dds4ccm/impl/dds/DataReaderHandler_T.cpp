@@ -1,7 +1,6 @@
 // $Id$
 
 #include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/DataReader.h"
 #include "dds4ccm/impl/dds/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE>

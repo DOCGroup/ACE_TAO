@@ -1,5 +1,4 @@
 // $Id$
-#include "dds4ccm/impl/dds/DataReader.h"
 #include "dds4ccm/impl/dds/Utils.h"
 
 #include "dds4ccm/impl/dds/ndds/Duration_t.h"

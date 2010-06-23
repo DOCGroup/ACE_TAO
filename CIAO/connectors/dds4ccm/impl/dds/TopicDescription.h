@@ -32,10 +32,16 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_TopicDescription_i :
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipant;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_TopicDescription_i :
       public virtual ::DDS::CCM_TopicDescription,
       public virtual ::CORBA::LocalObject
     {
+    typedef CCM_DDS_DomainParticipant<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+
     public:
       /// Constructor
       CCM_DDS_TopicDescription_i (DDSTopicDescription * rc);
@@ -60,5 +66,7 @@ namespace CIAO
     };
   }
 }
+
+#include "dds4ccm/impl/dds/TopicDescription.cpp"
 
 #endif /* CIAO_DDS4CCM_TOPICDESCRIPTION_H */
