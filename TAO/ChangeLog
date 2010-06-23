@@ -1,3 +1,9 @@
+Wed Jun 23 14:48:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component.cpp(visit_mirror_port):
+        
+          Fixed bug in reset of port prefix after traversing a mirror port.
+
 Tue Jun 22 19:17:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_connector.cpp:
