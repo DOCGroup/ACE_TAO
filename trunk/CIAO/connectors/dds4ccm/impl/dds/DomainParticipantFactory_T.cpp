@@ -49,11 +49,11 @@ namespace CIAO
                    "Creating domain participant for domain <%d>\n",
                    domain_id));
 
-      CCM_DDS_DomainPublisherListener_i *ccm_dds_dpl = 0;
+      CCM_DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
-                            CCM_DDS_DomainPublisherListener_i (a_listener),
+                            CCM_DDS_DomainParticipantListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
 
@@ -133,11 +133,11 @@ namespace CIAO
                     "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
                     "Creating domain participant: profile <%C#%C> - domain <%d>\n",
                     library_name, profile_name, domain_id));
-      CCM_DDS_DomainPublisherListener_i *ccm_dds_dpl = 0;
+      CCM_DDS_DomainParticipantListener_i *ccm_dds_dpl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
-                            CCM_DDS_DomainPublisherListener_is (a_listener),
+                            CCM_DDS_DomainParticipantListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
 
