@@ -28,15 +28,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainPublisherListener_i :
+    class DDS4CCM_DDS_IMPL_Export CCM_DDS_DomainParticipantListener_i :
       public virtual ::DDSDomainParticipantListener
     {
     public:
       /// Constructor
-      CCM_DDS_DomainPublisherListener_i (::DDS::DomainParticipantListener_ptr p);
+      CCM_DDS_DomainParticipantListener_i (::DDS::DomainParticipantListener_ptr p);
 
       /// Destructor
-      virtual ~CCM_DDS_DomainPublisherListener_i (void);
+      virtual ~CCM_DDS_DomainParticipantListener_i (void);
 
       ::DDS::DomainParticipantListener_ptr get_domainparticipantlistener (void);
 

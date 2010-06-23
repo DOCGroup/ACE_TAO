@@ -1,3 +1,12 @@
+Wed Jun 23 11:48:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/dds/DomainParticipantListener.cpp:
+        * connectors/dds4ccm/impl/dds/DomainParticipant_T.cpp:
+          Renamed CCM_DDS_DomainPublisherListener to
+          CCM_DDS_DomainParticipantListener.
+
 Wed Jun 23 11:43:00 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DomainParticipantFactory_T.cpp:
