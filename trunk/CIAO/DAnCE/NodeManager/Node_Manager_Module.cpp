@@ -417,11 +417,6 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
           node_name = node_name.substring (0, npos);
         }
 
-      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                    ACE_TEXT ("Creating node named '%s' and outputting ior to file '%s'\n"),
-                    node_name.c_str (),
-                    node_file.c_str ()));
-
       // load service modules for artifact installation service
       load_artifact_installation_modules (argc, argv);
 

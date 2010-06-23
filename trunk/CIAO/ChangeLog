@@ -1,3 +1,14 @@
+Wed Jun 23 12:08:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Initialise pointer with 0
+    
+        * DAnCE/LocalityManager/Scheduler/Events/Install.cpp:
+          When we get a CORBA exception, also log the _info from that exception
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+          Removed debug line that seems to be a left over
+
 Wed Jun 23 11:48:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DomainParticipantFactory_T.cpp:
