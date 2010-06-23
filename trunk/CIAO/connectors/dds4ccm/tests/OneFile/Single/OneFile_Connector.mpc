@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -b dds4ccm_base OneFile_Connector"
 
 project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                     dds4ccm, anytypecode, dds4ccm_ts_default {
+                                     dds4ccm, typecode, dds4ccm_ts_default {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ONEFILE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OneFile_Connector_stub_export.h \
@@ -32,15 +32,6 @@ project(OneFile_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project (OneFile_Single_DDS_stub) : dds4ccm_ddsonly {
-  requires += dds4ccm_ndds
-  after += OneFile_Connector_idl_gen
-  sharedname = OneFile_Single_DDS_stub
-
-  Source_Files {
-  }
-}
-
 project(OneFile_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   after    += OneFile_Connector_lem_gen OneFile_Connector_stub
   libs     += OneFile_Connector_stub
@@ -65,16 +56,19 @@ project(OneFile_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   }
 }
 
-project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base {
+project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
   after    += OneFile_Connector_idl_gen
   sharedname = OneFile_Connector_stub
-  dynamicflags = ONEFILE_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += ONEFILE_CONNECTOR_STUB_BUILD_DLL 
 
   IDL_Files {
   }
 
   Source_Files {
     OneFile_ConnectorC.cpp
+    OneFile_Connector.cxx    
+    OneFile_ConnectorSupport.cxx
+    OneFile_ConnectorPlugin.cxx
   }
 
   Header_Files {
@@ -88,9 +82,9 @@ project(OneFile_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(OneFile_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
-  after    += OneFile_Connector_lem_stub OneFile_Connector_stub OneFile_Single_DDS_stub
+  after    += OneFile_Connector_lem_stub OneFile_Connector_stub 
   sharedname = OneFile_Connector_exec
-  libs     += OneFile_Connector_stub OneFile_Connector_lem_stub OneFile_Single_DDS_stub
+  libs     += OneFile_Connector_stub OneFile_Connector_lem_stub 
 
   dynamicflags = ONEFILE_CONNECTOR_CONN_BUILD_DLL
 
@@ -111,7 +105,7 @@ project(OneFile_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 }
 
 
-project(OneFile_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
+project(OneFile_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
   after      += OneFile_Connector_lem_stub
   sharedname  = OneFile_Connector_svnt
   libs       += OneFile_Connector_stub OneFile_Connector_lem_stub
