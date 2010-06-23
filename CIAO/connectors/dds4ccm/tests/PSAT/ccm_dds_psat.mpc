@@ -59,7 +59,7 @@ project(DDS_PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,svnt_export_include=ccm_dds_psat_svnt_export.h \
               -Wb,conn_export_macro=PSAT_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=ccm_dds_psat_conn_export.h \
-              -I .. -SS
+              -I ..
 
   IDL_Files {
     ccm_dds_psat.idl
