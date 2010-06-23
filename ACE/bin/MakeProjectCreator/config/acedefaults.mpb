@@ -51,5 +51,8 @@ feature(!ace_inline) {
 feature(!threads) {
   specific(cdt6) {
     macros += ACE_MT_SAFE=0
+    // and without threads we must remove support for AIO.
+    macros -= ACE_HAS_AIO_CALLS
+    platform_libs -= rt
   }
 }
