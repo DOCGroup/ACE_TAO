@@ -232,16 +232,14 @@ module CCM_DDS_PSAT
          mirrorport DDS_PSAT_Write       supplier;
          mirrorport DDS_PSAT_Listen      consumer;
 
-// @todo Jeff, enabling these attributes causes the generate skeletons not
-// to compile
-        // attribute  SharedMemoryConfig   shared_memory_config
-        //       setraises(CCM_DDS::NonChangeable);
+         attribute  SharedMemoryConfig   shared_memory_config
+               setraises(CCM_DDS::NonChangeable);
 
-        // attribute  BufferPoolConfig     attach_buffer_config
-        //       setraises(CCM_DDS::NonChangeable);
+         attribute  BufferPoolConfig     attach_buffer_config
+               setraises(CCM_DDS::NonChangeable);
 
-        // attribute  TransportConfig      transports_config
-        //       setraises(CCM_DDS::NonChangeable);
+         attribute  TransportConfig      transports_config
+               setraises(CCM_DDS::NonChangeable);
       };
    };
 };
