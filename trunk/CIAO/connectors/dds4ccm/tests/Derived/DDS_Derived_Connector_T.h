@@ -18,4 +18,10 @@ class MyState_Connector_T
 {
 };
 
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+class MyOwn_Connector_T
+  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, FIXED>
+{
+};
+
 #endif
