@@ -1,3 +1,9 @@
+Wed Jun 23 13:42:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Removed projects, ccm_dds_psat.idl shouldn't be used to generate
+          a connector, it only contains the templated module
+
 Wed Jun 23 13:22:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
