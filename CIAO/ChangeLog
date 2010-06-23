@@ -1,3 +1,9 @@
+Wed Jun 23 13:22:12 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+          Added another commented out connector, seems to fail with TAO_IDL
+
 Wed Jun 23 13:09:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/descriptors/Plan.cdp
@@ -32,7 +38,7 @@ Wed Jun 23 12:08:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
           Initialise pointer with 0
-    
+
         * DAnCE/LocalityManager/Scheduler/Events/Install.cpp:
           When we get a CORBA exception, also log the _info from that exception
 
