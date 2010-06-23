@@ -1,3 +1,14 @@
+Wed Jun 23 07:10:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+          Commented the attributes in the psat connector for the moment, they
+          are the last part not working yet, this way we can already build
+          psat on all build system, Jeff will sort out the attribute issue
+          later today
+
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
+          Removed last dummy_label
+
 Wed Jun 23 07:05:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
