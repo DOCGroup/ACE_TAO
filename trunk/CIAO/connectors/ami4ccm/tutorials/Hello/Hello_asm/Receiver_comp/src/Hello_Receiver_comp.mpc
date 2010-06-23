@@ -18,6 +18,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
 
   IDL_Files {
     ../Ports/Hello_Receiver_comp.idl
+    gendir=../../GeneratedCode
     }
 }
 
@@ -35,6 +36,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_lem_gen) : ciaoidldefaults {
 
   IDL_Files {
     ../../GeneratedCode/Hello_Receiver_compE.idl
+    gendir=../../GeneratedCode
   }
 }
 
@@ -91,7 +93,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_stub) : ccm_stub, messaging {
 project(AMI_Hello_Tuto_Hello_Receiver_exec) : ciao_executor, messaging {
   after   += AMI_Hello_Tuto_Hello_Receiver_l_stub AMI_Hello_Tuto_Hello_Receiver_stub AMI_Hello_Tuto_stub AMI_Hello_Tuto_lem_stub
   sharedname = Hello_Receiver_exec
-  libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_lem_stub
+  libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_lem_stub Hello_defn_stub
   libpaths += ../../lib
   libout = ../../lib
   dynamicflags   = HELLO_RECEIVER_EXEC_BUILD_DLL
