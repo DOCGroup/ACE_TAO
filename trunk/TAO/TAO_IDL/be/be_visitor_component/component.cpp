@@ -360,7 +360,7 @@ be_visitor_component::visit_mirror_port (be_mirror_port *node)
                         -1);
     }
     
-  this->ctx_->port_prefix () == "";
+  this->ctx_->port_prefix () = "";
   
   return 0;
 }
