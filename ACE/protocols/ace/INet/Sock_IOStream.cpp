@@ -80,6 +80,13 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
+    void Sock_OStreamBase<ACE_SYNCH_USE>::set_interceptor (
+          typename buffer_type::interceptor_type& interceptor)
+      {
+        this->rdbuf ()->set_interceptor (interceptor);
+      }
+
+    template <ACE_SYNCH_DECL>
     Sock_IStreamBase<ACE_SYNCH_USE>::Sock_IStreamBase(stream_type* stream)
       : Sock_IOSBase<ACE_SYNCH_USE> (stream), std::istream (Sock_IOSBase<ACE_SYNCH_USE>::rdbuf ())
       {
@@ -91,6 +98,13 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
+    void Sock_IStreamBase<ACE_SYNCH_USE>::set_interceptor (
+          typename buffer_type::interceptor_type& interceptor)
+      {
+        this->rdbuf ()->set_interceptor (interceptor);
+      }
+
+    template <ACE_SYNCH_DECL>
     Sock_IOStreamBase<ACE_SYNCH_USE>::Sock_IOStreamBase(stream_type* stream)
       : Sock_IOSBase<ACE_SYNCH_USE> (stream), std::iostream (Sock_IOSBase<ACE_SYNCH_USE>::rdbuf ())
       {
@@ -99,6 +113,13 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     Sock_IOStreamBase<ACE_SYNCH_USE>::~Sock_IOStreamBase ()
       {
+      }
+
+    template <ACE_SYNCH_DECL>
+    void Sock_IOStreamBase<ACE_SYNCH_USE>::set_interceptor (
+          typename buffer_type::interceptor_type& interceptor)
+      {
+        this->rdbuf ()->set_interceptor (interceptor);
       }
 
   }
