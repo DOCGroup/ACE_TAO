@@ -855,11 +855,11 @@ namespace CIAO
                 ::DDS::StatusMask mask)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
-      CCM_DDS_DomainPublisherListener_i * ccm_dds_impl_list = 0;
+      CCM_DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            CCM_DDS_DomainPublisherListener_i (a_listener),
+                            CCM_DDS_DomainParticipantListener_i (a_listener),
                             CORBA::NO_MEMORY ());
         }
       return this->impl_->set_listener (ccm_dds_impl_list, mask);
@@ -876,8 +876,8 @@ namespace CIAO
 
 #if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
-      CCM_DDS_DomainPublisherListener_i * list_proxy =
-        dynamic_cast <CCM_DDS_DomainPublisherListener_i *> (ccm_dds_dp_list);
+      CCM_DDS_DomainParticipantListener_i * list_proxy =
+        dynamic_cast <CCM_DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
         {
           DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_listener - "
