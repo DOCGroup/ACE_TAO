@@ -33,7 +33,7 @@ project (XSC_XML_Generation) : install, xscdefaults {
 
 project (XSC_XML_Handlers) : install, acelib, xerces, dance_lib, ciao_xml_utils {
   sharedname    += XSC_XML_Handlers
-  dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
+  dynamicflags += XSC_XML_HANDLERS_BUILD_DLL
   macros += XML_USE_PTHREADS
   includes += $(DANCE_ROOT)/Config_Handlers
   after += XSC_XML_Generation
@@ -69,7 +69,7 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
            XSC_Config_Handlers_Common
 
   sharedname = XSC_Config_Handlers
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  dynamicflags += CONFIG_HANDLERS_BUILD_DLL
   libs += CIAO_XML_Utils \
           XSC_XML_Handlers \
           XSC_DynAny_Handler \
@@ -108,7 +108,7 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
 project (XSC_Config_Handlers_Common) : install, dance_deployment_stub, dance_config_handlers_base, ciao_lib, dance {
   after += XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers_Common
-  dynamicflags = CONFIG_HANDLERS_COMMON_BUILD_DLL
+  dynamicflags += CONFIG_HANDLERS_COMMON_BUILD_DLL
 
   libs += XSC_DynAny_Handler
 

@@ -1,6 +1,6 @@
 //$Id$
 project(CIAO_Context_Impl) : install, ccm_svnt, ciao_container_base, portableserver, ciao_output {
-   dynamicflags = CONTEXT_IMPL_BUILD_DLL
+   dynamicflags += CONTEXT_IMPL_BUILD_DLL
    Source_Files {
      Context_Impl_Base.cpp
      Context_Impl_T.cpp

@@ -23,7 +23,7 @@ project(Shapes_defn_stub) : ccm_stub {
   includes += ./GeneratedCode
 
   sharedname = Shapes_defn_stub
-  dynamicflags = SHAPES_CONTROL_STUB_BUILD_DLL
+  dynamicflags += SHAPES_CONTROL_STUB_BUILD_DLL
 
   Source_Files {
     GeneratedCode/Shapes_defnC.cpp

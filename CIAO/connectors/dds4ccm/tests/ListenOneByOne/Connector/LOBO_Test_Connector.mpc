@@ -39,7 +39,7 @@ project(DDS_LOBO_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_LOBO_Test_Connector_lem_stub
-  dynamicflags   = LISTEN_ONE_BY_ONE_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += LISTEN_ONE_BY_ONE_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(DDS_LOBO_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_LOBO_Test_Connector_stub
-  dynamicflags   = LISTEN_ONE_BY_ONE_TEST_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += LISTEN_ONE_BY_ONE_TEST_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -91,7 +91,7 @@ project(DDS_LOBO_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = LISTEN_ONE_BY_ONE_TEST_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += LISTEN_ONE_BY_ONE_TEST_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -121,7 +121,7 @@ project(DDS_LOBO_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = LISTEN_ONE_BY_ONE_TEST_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += LISTEN_ONE_BY_ONE_TEST_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

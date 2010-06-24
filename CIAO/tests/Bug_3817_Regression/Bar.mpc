@@ -34,7 +34,7 @@ project(Bar_lem_stub) : ccm_svnt   {
   
   
   sharedname = Bar_lem_stub
-  dynamicflags   = BAR_LEM_STUB_BUILD_DLL
+  dynamicflags += BAR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -59,7 +59,7 @@ project(Bar_stub) : ccm_stub   {
   
   
   sharedname = Bar_stub
-  dynamicflags   = BAR_STUB_BUILD_DLL
+  dynamicflags += BAR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -84,7 +84,7 @@ project(Bar_exec) : ciao_executor   {
   libs += Bar_stub Bar_lem_stub 
   
   
-  dynamicflags   = BAR_EXEC_BUILD_DLL
+  dynamicflags += BAR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -109,7 +109,7 @@ project(Bar_svnt) : ciao_servant   {
   libs       += Bar_stub Bar_lem_stub  
   
   
-  dynamicflags = BAR_SVNT_BUILD_DLL
+  dynamicflags += BAR_SVNT_BUILD_DLL
   
   IDL_Files {
   }

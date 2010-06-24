@@ -5,7 +5,7 @@ project(ICBasic_stub): ccm_stub {
 
   sharedname = ICBasic_stub
   idlflags += -Wb,stub_export_macro=ICBASIC_STUB_Export -Wb,stub_export_include=ICBasic_stub_export.h -Wb,skel_export_macro=ICBASIC_SVNT_Export -Wb,skel_export_include=ICBasic_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = ICBASIC_STUB_BUILD_DLL
+  dynamicflags += ICBASIC_STUB_BUILD_DLL
 
   IDL_Files {
     ICBasic.idl

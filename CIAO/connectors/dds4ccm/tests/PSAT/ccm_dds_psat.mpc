@@ -117,7 +117,7 @@ project(PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = lib
   includes += ..
   sharedname = PSAT_Connector_lem_stub
-  dynamicflags   = PSAT_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += PSAT_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -143,7 +143,7 @@ project(DDS_PSAT_Connector_stub) : ccm_stub, dds4ccm_base {
   libout = lib
   includes += ..
   sharedname = DDS_PSAT_Connector_stub
-  dynamicflags   = PSAT_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += PSAT_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -176,7 +176,7 @@ project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub
   libpaths += lib
   libout = lib
   includes += ..
-  dynamicflags   = PSAT_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += PSAT_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -210,7 +210,7 @@ project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub 
   libpaths += lib
   libout = lib
   includes += ..
-  dynamicflags = PSAT_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += PSAT_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

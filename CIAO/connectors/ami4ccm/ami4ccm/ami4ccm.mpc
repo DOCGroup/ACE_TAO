@@ -38,7 +38,7 @@ project (AMI4CCM_lem_gen) : install, ciaoidldefaults {
 project(AMI4CCM_stub) : install, ciao_lib, messaging, ccm_stub {
   after += AMI4CCM_idl_gen
   sharedname = AMI4CCM_stub
-  dynamicflags = AMI4CCM_STUB_BUILD_DLL
+  dynamicflags += AMI4CCM_STUB_BUILD_DLL
   includes += $(CIAO_ROOT)/connectors/ami4ccm
 
   Source_Files {

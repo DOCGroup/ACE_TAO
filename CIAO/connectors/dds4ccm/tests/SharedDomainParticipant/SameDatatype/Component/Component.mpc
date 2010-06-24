@@ -38,7 +38,7 @@ project(DDS_SharedDPComponent_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Component_lem_stub
-  dynamicflags   = COMPONENT_LEM_STUB_BUILD_DLL
+  dynamicflags += COMPONENT_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(DDS_SharedDPComponent_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   sharedname = Component_stub
-  dynamicflags   = COMPONENT_STUB_BUILD_DLL
+  dynamicflags += COMPONENT_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -95,7 +95,7 @@ project(DDS_SharedDPComponent_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl 
   libpaths += ../lib
   includes += ..
   libout = ../lib
-  dynamicflags   = COMPONENT_EXEC_BUILD_DLL
+  dynamicflags += COMPONENT_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -126,7 +126,7 @@ project(DDS_SharedDPComponent_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = COMPONENT_SVNT_BUILD_DLL
+  dynamicflags += COMPONENT_SVNT_BUILD_DLL
 
   IDL_Files {
   }

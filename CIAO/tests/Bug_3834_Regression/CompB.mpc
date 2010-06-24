@@ -37,7 +37,7 @@ project(Moo_CompB_stub) : ccm_stub   {
   
   
   sharedname = CompB_stub
-  dynamicflags   = COMPB_STUB_BUILD_DLL
+  dynamicflags += COMPB_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -62,7 +62,7 @@ project(Moo_CompB_exec) : ciao_executor   {
   libs += CompB_stub Moo_stub
   
   
-  dynamicflags   = COMPB_EXEC_BUILD_DLL
+  dynamicflags += COMPB_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(Moo_CompB_svnt) : ciao_servant   {
                 Moo_stub
   
   
-  dynamicflags = COMPB_SVNT_BUILD_DLL
+  dynamicflags += COMPB_SVNT_BUILD_DLL
   
   IDL_Files {
   }

@@ -3,7 +3,7 @@
 
 project(DAnCE_Logger): install, dance_lib, taolib, acelib {
   sharedname   = DAnCE_Logger
-  dynamicflags = DANCE_LOGGER_BUILD_DLL
+  dynamicflags += DANCE_LOGGER_BUILD_DLL
 
   Source_Files {
     Logger_Service.cpp

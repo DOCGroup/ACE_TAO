@@ -5,7 +5,7 @@ project(Facets_stub): ccm_stub {
 
   sharedname = Facets_stub
   idlflags += -Wb,stub_export_macro=FACETS_STUB_Export -Wb,stub_export_include=Facets_stub_export.h -Wb,skel_export_macro=FACETS_SVNT_Export -Wb,skel_export_include=Facets_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = FACETS_STUB_BUILD_DLL
+  dynamicflags += FACETS_STUB_BUILD_DLL
 
   IDL_Files {
     Facets.idl

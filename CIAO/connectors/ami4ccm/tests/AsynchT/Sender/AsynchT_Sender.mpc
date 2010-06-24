@@ -35,7 +35,7 @@ project(AMI_AsynchT_Base_Sender_lem_stub) : ccm_svnt, ami   {
   libpaths += ../lib
   libout = ../lib
   sharedname = AsynchT_Sender_lem_stub
-  dynamicflags   = ASYNCHT_SENDER_LEM_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_SENDER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_AsynchT_Base_Sender_stub) : ccm_stub, ami   {
   libpaths += ../lib
   libout = ../lib
   sharedname = AsynchT_Sender_stub
-  dynamicflags   = ASYNCHT_SENDER_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_SENDER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_AsynchT_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
   libs += AsynchT_Sender_stub AsynchT_Sender_lem_stub AsynchT_stub AsynchT_stub AsynchT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = ASYNCHT_SENDER_EXEC_BUILD_DLL
+  dynamicflags += ASYNCHT_SENDER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_AsynchT_Base_Sender_svnt) : ciao_servant, ami {
                 AsynchT_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ASYNCHT_SENDER_SVNT_BUILD_DLL
+  dynamicflags += ASYNCHT_SENDER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

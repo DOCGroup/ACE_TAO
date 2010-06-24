@@ -35,7 +35,7 @@ project(AMI_ExceptionT_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = ExceptionT_Receiver_lem_stub
-  dynamicflags   = EXCEPTION_T_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += EXCEPTION_T_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_ExceptionT_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = ExceptionT_Receiver_stub
-  dynamicflags   = EXCEPTION_T_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += EXCEPTION_T_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_ExceptionT_Base_Receiver_exec) : ciao_executor, messaging {
   libs += ExceptionT_Receiver_stub ExceptionT_Receiver_lem_stub ExceptionT_stub ExceptionT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = EXCEPTION_T_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += EXCEPTION_T_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_ExceptionT_Base_Receiver_svnt) : ciao_servant, messaging {
                 ExceptionT_stub ExceptionT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = EXCEPTION_T_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += EXCEPTION_T_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

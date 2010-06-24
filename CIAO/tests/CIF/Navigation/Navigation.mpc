@@ -36,7 +36,7 @@ project(Navigation_lem_stub) : ccm_svnt   {
   libout = ../lib
 
   sharedname = Navigation_lem_stub
-  dynamicflags = NAVIGATION_LEM_STUB_BUILD_DLL
+  dynamicflags += NAVIGATION_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -64,7 +64,7 @@ project(Navigation_stub) : ccm_stub   {
 
 
   sharedname = Navigation_stub
-  dynamicflags = NAVIGATION_STUB_BUILD_DLL
+  dynamicflags += NAVIGATION_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -92,7 +92,7 @@ project(Navigation_exec) : ciao_executor   {
   libout = ../lib
 
 
-  dynamicflags = NAVIGATION_EXEC_BUILD_DLL
+  dynamicflags += NAVIGATION_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -120,7 +120,7 @@ project(Navigation_svnt) : ciao_servant   {
   libout = ../lib
 
 
-  dynamicflags = NAVIGATION_SVNT_BUILD_DLL
+  dynamicflags += NAVIGATION_SVNT_BUILD_DLL
 
   IDL_Files {
   }

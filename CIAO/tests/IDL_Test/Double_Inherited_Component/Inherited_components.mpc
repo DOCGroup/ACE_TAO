@@ -32,7 +32,7 @@ project(Inherited_Components_lem_stub) : ccm_svnt {
   after += Inherited_Components_lem_gen Inherited_Components_stub
   libs  += ComponentC_stub
   sharedname = ComponentC_lem_stub
-  dynamicflags   = INHERITED_COMPONENTS_EXEC_BUILD_DLL
+  dynamicflags += INHERITED_COMPONENTS_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -55,7 +55,7 @@ project(Inherited_Components_stub) : ccm_stub {
   after += Inherited_Components_idl_gen
   libs  +=
   sharedname = ComponentC_stub
-  dynamicflags   = INHERITED_COMPONENTS_STUB_BUILD_DLL
+  dynamicflags += INHERITED_COMPONENTS_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -78,7 +78,7 @@ project(Inherited_Components_exec) : ciao_executor {
   after   += Inherited_Components_lem_stub Inherited_Components_stub
   sharedname = ComponentC_exec
   libs += ComponentC_stub ComponentC_lem_stub
-  dynamicflags   = INHERITED_COMPONENTS_EXEC_BUILD_DLL
+  dynamicflags += INHERITED_COMPONENTS_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -101,7 +101,7 @@ project(Inherited_Components_svnt) : ciao_servant {
   after      += Inherited_Components_lem_stub
   sharedname  = ComponentC_svnt
   libs       += ComponentC_stub ComponentC_lem_stub
-  dynamicflags = INHERITED_COMPONENTS_SVNT_BUILD_DLL
+  dynamicflags += INHERITED_COMPONENTS_SVNT_BUILD_DLL
 
   IDL_Files {
   }

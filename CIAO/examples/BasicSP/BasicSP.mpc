@@ -30,7 +30,7 @@ project(BasicSP_lem_gen) : ciaoidldefaults {
 project(BasicSP_stub): ccm_stub {
   after += BasicSP_lem_gen
   sharedname = BasicSP_stub
-  dynamicflags = BASICSP_STUB_BUILD_DLL
+  dynamicflags += BASICSP_STUB_BUILD_DLL
   includes += $(CIAO_ROOT)/examples/BasicSP
   libout = lib
   libpaths += lib
@@ -52,7 +52,7 @@ project(BasicSP_svnt) : ciao_servant {
   sharedname = BasicSP_svnt
   libs    += BasicSP_exec BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
-  dynamicflags = BASICSP_SVNT_BUILD_DLL
+  dynamicflags += BASICSP_SVNT_BUILD_DLL
   libout = lib
   libpaths += lib
 
@@ -77,7 +77,7 @@ project(BasicSP_exec) : ciao_executor {
   after += BasicSP_stub BasicSP_lem_gen
   sharedname = BasicSP_exec
   libs += BasicSP_stub
-  dynamicflags = BASICSP_EXEC_BUILD_DLL
+  dynamicflags += BASICSP_EXEC_BUILD_DLL
   includes += $(CIAO_ROOT)/examples/BasicSP
   libout = lib
   libpaths += lib

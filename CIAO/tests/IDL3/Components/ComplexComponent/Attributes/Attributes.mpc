@@ -5,7 +5,7 @@ project(Attributes_stub): ccm_stub {
 
   sharedname = Attributes_stub
   idlflags += -Wb,stub_export_macro=ATTRIBUTES_STUB_Export -Wb,stub_export_include=Attributes_stub_export.h -Wb,skel_export_macro=ATTRIBUTES_SVNT_Export -Wb,skel_export_include=Attributes_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = ATTRIBUTES_STUB_BUILD_DLL
+  dynamicflags += ATTRIBUTES_STUB_BUILD_DLL
 
   IDL_Files {
     Attributes.idl

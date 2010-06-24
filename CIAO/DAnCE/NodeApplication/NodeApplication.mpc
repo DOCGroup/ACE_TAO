@@ -6,7 +6,7 @@ project(DAnCE_NodeApplication): install, dance_lib, \
                           dance_logger, iortable, naming, dance_locality_handler, \
                           gen_ostream, avoids_ace_for_tao, dance_applicationmanager_stub {
   sharedname   = DAnCE_NodeApplication
-  dynamicflags = NODEAPPLICATION_BUILD_DLL
+  dynamicflags += NODEAPPLICATION_BUILD_DLL
 
   Source_Files {
     NodeApplication_Impl.cpp

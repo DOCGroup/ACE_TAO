@@ -2,7 +2,7 @@
 
 project (Package_Config_Handlers) : install, acelib, dance_deployment_stub, dance_config_handlers_base, dance, typecodefactory, dance_output  {
   sharedname = Package_Config_Handlers
-  dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
+  dynamicflags += PACKAGING_HANDLERS_BUILD_DLL
 
   includes += $(CIAO_ROOT)/ciao
   libpaths += $(CIAO_ROOT)/bin

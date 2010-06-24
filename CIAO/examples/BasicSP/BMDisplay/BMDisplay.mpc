@@ -39,7 +39,7 @@ project(BMDisplay_stub): ccm_stub {
 
   libs += BasicSP_stub
 
-  dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
+  dynamicflags += BMDISPLAY_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -67,7 +67,7 @@ project(BMDisplay_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags   = BMDISPLAY_EXEC_BUILD_DLL
+  dynamicflags += BMDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -95,7 +95,7 @@ project(BMDisplay_svnt) : ciao_servant {
 
   libs    += BMDisplay_stub BMDisplay_exec
   libs    += BasicSP_stub BasicSP_svnt
-  dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
+  dynamicflags += BMDISPLAY_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
 

@@ -5,7 +5,7 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, taolib, ciao_output, ccm
   after += DDS4CCM_lem_stub
   libs += DDS4CCM_lem_stub
 
-  dynamicflags = DDS4CCM_DDS_IMPL_BUILD_DLL
+  dynamicflags += DDS4CCM_DDS_IMPL_BUILD_DLL
   macros += BUILDING_DDS_LIB
   Header_Files {
     *.h

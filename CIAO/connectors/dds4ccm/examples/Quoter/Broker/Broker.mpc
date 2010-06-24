@@ -37,7 +37,7 @@ project(DDS_Broker_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Broker_lem_stub
-  dynamicflags   = BROKER_LEM_STUB_BUILD_DLL
+  dynamicflags += BROKER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -63,7 +63,7 @@ project(DDS_Broker_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Broker_stub
-  dynamicflags   = BROKER_STUB_BUILD_DLL
+  dynamicflags += BROKER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -89,7 +89,7 @@ project(DDS_Broker_exec) : ciao_executor, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = BROKER_EXEC_BUILD_DLL
+  dynamicflags += BROKER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -115,7 +115,7 @@ project(DDS_Broker_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = BROKER_SVNT_BUILD_DLL
+  dynamicflags += BROKER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

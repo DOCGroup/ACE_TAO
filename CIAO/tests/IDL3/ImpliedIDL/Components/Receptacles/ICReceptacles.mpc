@@ -5,7 +5,7 @@ project(ICReceptacles_stub): ccm_stub {
 
   sharedname = ICReceptacles_stub
   idlflags += -Wb,stub_export_macro=ICRECEPTACLES_STUB_Export -Wb,stub_export_include=ICReceptacles_stub_export.h -Wb,skel_export_macro=ICRECEPTACLES_SVNT_Export -Wb,skel_export_include=ICReceptacles_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = ICRECEPTACLES_STUB_BUILD_DLL
+  dynamicflags += ICRECEPTACLES_STUB_BUILD_DLL
 
   IDL_Files {
     ICReceptacles.idl

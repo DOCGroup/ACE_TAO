@@ -33,7 +33,7 @@ project(Minimum_Base_Sender_stub) : ccm_stub {
   libpaths += ../Minimum_Base
 
   sharedname = Sender_stub
-  dynamicflags   = SENDER_STUB_BUILD_DLL
+  dynamicflags += SENDER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -58,7 +58,7 @@ project(Minimum_Base_Sender_exec) : ciao_executor {
   libs += Sender_stub Minimum_Base_stub
   libpaths += ../Minimum_Base
 
-  dynamicflags   = SENDER_EXEC_BUILD_DLL
+  dynamicflags += SENDER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -89,7 +89,7 @@ project(Minimum_Base_Sender_svnt) : ciao_servant {
                 Minimum_Base_stub
   libpaths += ../Minimum_Base
 
-  dynamicflags = SENDER_SVNT_BUILD_DLL
+  dynamicflags += SENDER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

@@ -2,7 +2,7 @@
 project (DAnCE_Convert_Plan) : dance_lib, dance_output, \
         dance_deployment_stub, dance_config_handlers {
 
-  dynamicflags = DANCE_CONVERT_PLAN_BUILD_DLL
+  dynamicflags += DANCE_CONVERT_PLAN_BUILD_DLL
   includes += $(DANCE_ROOT)/tools
   
   Source_Files {

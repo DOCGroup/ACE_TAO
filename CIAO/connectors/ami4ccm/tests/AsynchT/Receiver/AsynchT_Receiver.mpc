@@ -35,7 +35,7 @@ project(AMI_AsynchT_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = AsynchT_Receiver_lem_stub
-  dynamicflags   = ASYNCHT_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_AsynchT_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = AsynchT_Receiver_stub
-  dynamicflags   = ASYNCHT_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_AsynchT_Base_Receiver_exec) : ciao_executor, messaging {
   libs += AsynchT_Receiver_stub AsynchT_Receiver_lem_stub AsynchT_stub AsynchT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = ASYNCHT_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += ASYNCHT_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_AsynchT_Base_Receiver_svnt) : ciao_servant, messaging {
                 AsynchT_stub AsynchT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ASYNCHT_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += ASYNCHT_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

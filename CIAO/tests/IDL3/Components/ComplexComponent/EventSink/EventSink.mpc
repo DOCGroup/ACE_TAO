@@ -5,7 +5,7 @@ project(EventSink_stub): ccm_stub {
 
   sharedname = EventSink_stub
   idlflags += -Wb,stub_export_macro=EVENTSINK_STUB_Export -Wb,stub_export_include=EventSink_stub_export.h -Wb,skel_export_macro=EVENTSINK_SVNT_Export -Wb,skel_export_include=EventSink_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = EVENTSINK_STUB_BUILD_DLL
+  dynamicflags += EVENTSINK_STUB_BUILD_DLL
 
   IDL_Files {
     EventSink.idl

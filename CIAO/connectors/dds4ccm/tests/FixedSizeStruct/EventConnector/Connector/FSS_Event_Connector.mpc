@@ -38,7 +38,7 @@ project(DDS_FSS_Event_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_FSS_Event_Connector_lem_stub
-  dynamicflags   = FIXED_SIZE_STRUCT_EVENT_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += FIXED_SIZE_STRUCT_EVENT_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -64,7 +64,7 @@ project(DDS_FSS_Event_Connector_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_FSS_Event_Connector_stub
-  dynamicflags   = FIXED_SIZE_STRUCT_EVENT_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += FIXED_SIZE_STRUCT_EVENT_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(DDS_FSS_Event_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = FIXED_SIZE_STRUCT_EVENT_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += FIXED_SIZE_STRUCT_EVENT_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -120,7 +120,7 @@ project(DDS_FSS_Event_Connector_svnt) : ciao_servant, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = FIXED_SIZE_STRUCT_EVENT_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += FIXED_SIZE_STRUCT_EVENT_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

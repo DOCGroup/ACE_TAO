@@ -5,7 +5,7 @@ project(Finder_stub): ccm_stub {
 
   sharedname = Finder_stub
   idlflags += -Wb,stub_export_macro=FINDER_STUB_Export -Wb,stub_export_include=Finder_stub_export.h -Wb,skel_export_macro=FINDER_SVNT_Export -Wb,skel_export_include=Finder_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = FINDER_STUB_BUILD_DLL
+  dynamicflags += FINDER_STUB_BUILD_DLL
 
   IDL_Files {
     Finder.idl

@@ -5,7 +5,7 @@ project(Inheritance_stub): ccm_stub {
 
   sharedname = Inheritance_stub
   idlflags += -Wb,stub_export_macro=INHERITANCE_STUB_Export -Wb,stub_export_include=Inheritance_stub_export.h -Wb,skel_export_macro=INHERITANCE_SVNT_Export -Wb,skel_export_include=Inheritance_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = INHERITANCE_STUB_BUILD_DLL
+  dynamicflags += INHERITANCE_STUB_BUILD_DLL
 
   IDL_Files {
     Inheritance.idl

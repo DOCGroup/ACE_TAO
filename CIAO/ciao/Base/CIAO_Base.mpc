@@ -19,7 +19,7 @@ project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
 project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
 				     ciao_logger, ciao_lib, \
 				     ccm_cookie, ccm_configvalue {
-  dynamicflags = CIAO_BASE_STUB_BUILD_DLL
+  dynamicflags += CIAO_BASE_STUB_BUILD_DLL
   after += CIAO_Base_IDL
 
   IDL_Files {

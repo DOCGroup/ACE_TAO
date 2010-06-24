@@ -39,7 +39,7 @@ project(DDS_Hello_Receiver_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Receiver_lem_stub
-  dynamicflags   = HELLO_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -66,7 +66,7 @@ project(DDS_Hello_Receiver_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Receiver_stub
-  dynamicflags   = HELLO_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(DDS_Hello_Receiver_exec) : ciao_executor, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = HELLO_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -120,7 +120,7 @@ project(DDS_Hello_Receiver_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = HELLO_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

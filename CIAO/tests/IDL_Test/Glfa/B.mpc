@@ -34,7 +34,7 @@ project(Glfa_B_lem_stub) : ccm_svnt   {
 
 
   sharedname = B_lem_stub
-  dynamicflags   = B_LEM_STUB_BUILD_DLL
+  dynamicflags += B_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -59,7 +59,7 @@ project(Glfa_B_stub) : ccm_stub   {
 
 
   sharedname = B_stub
-  dynamicflags   = B_STUB_BUILD_DLL
+  dynamicflags += B_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -84,7 +84,7 @@ project(Glfa_B_exec) : ciao_executor   {
   libs += B_stub B_lem_stub A_stub
 
 
-  dynamicflags   = B_EXEC_BUILD_DLL
+  dynamicflags += B_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -109,7 +109,7 @@ project(Glfa_B_svnt) : ciao_servant   {
   libs       += B_stub B_lem_stub A_stub A_skel
 
 
-  dynamicflags = B_SVNT_BUILD_DLL
+  dynamicflags += B_SVNT_BUILD_DLL
 
   IDL_Files {
   }

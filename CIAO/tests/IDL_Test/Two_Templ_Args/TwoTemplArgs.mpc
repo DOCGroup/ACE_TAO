@@ -33,7 +33,7 @@ project(TwoTemplArgs_stub) : ccm_stub {
   after += TwoTemplArgs_idl_gen
 
   sharedname = TwoTemplArgs_stub
-  dynamicflags   = TWOTEMPLARGS_STUB_BUILD_DLL
+  dynamicflags += TWOTEMPLARGS_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(TwoTemplArgs_exec) : ciao_executor {
   sharedname = TwoTemplArgs_exec
   libs += TwoTemplArgs_stub
 
-  dynamicflags   = TWOTEMPLARGS_EXEC_BUILD_DLL
+  dynamicflags += TWOTEMPLARGS_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -84,7 +84,7 @@ project(TwoTemplArgs_svnt) : ciao_servant {
   libs       += TwoTemplArgs_exec \
                 TwoTemplArgs_stub
 
-  dynamicflags = TWOTEMPLARGS_SVNT_BUILD_DLL
+  dynamicflags += TWOTEMPLARGS_SVNT_BUILD_DLL
 
   IDL_Files {
   }

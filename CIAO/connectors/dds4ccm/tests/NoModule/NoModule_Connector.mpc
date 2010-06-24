@@ -33,7 +33,7 @@ project(NoModule_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
 
 
   sharedname = NoModule_Connector_lem_stub
-  dynamicflags   = NOMODULE_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -58,7 +58,7 @@ project(NoModule_Connector_stub) : ccm_stub, dds4ccm_base {
 
 
   sharedname = NoModule_Connector_stub
-  dynamicflags   = NOMODULE_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -82,7 +82,7 @@ project(NoModule_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub
   sharedname = NoModule_Connector_exec
   libs += NoModule_Connector_stub NoModule_Connector_lem_stub NoModule_stub
 
-  dynamicflags   = NOMODULE_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -107,7 +107,7 @@ project(NoModule_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub 
   libs       += NoModule_Connector_stub NoModule_Connector_lem_stub  NoModule_stub
 
 
-  dynamicflags = NOMODULE_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

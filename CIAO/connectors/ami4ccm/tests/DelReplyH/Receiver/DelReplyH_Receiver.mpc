@@ -35,7 +35,7 @@ project(AMI_DelReplyH_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = DelReplyH_Receiver_lem_stub
-  dynamicflags   = DELREPLYH_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += DELREPLYH_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_DelReplyH_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = DelReplyH_Receiver_stub
-  dynamicflags   = DELREPLYH_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += DELREPLYH_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_DelReplyH_Base_Receiver_exec) : ciao_executor, messaging {
   libs += DelReplyH_Receiver_stub DelReplyH_Receiver_lem_stub DelReplyH_stub DelReplyH_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = DELREPLYH_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += DELREPLYH_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_DelReplyH_Base_Receiver_svnt) : ciao_servant, messaging {
                 DelReplyH_stub DelReplyH_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = DELREPLYH_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += DELREPLYH_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }
