@@ -70,16 +70,14 @@ be_visitor_connector_dds_ex_base::process_template_args (
   AST_Module *m =
     AST_Module::narrow_from_scope (node->defined_in ());
     
+  /// We assume the connector comes from the instantiation
+  /// of a template module, and the regular module it's
+  /// defined in (at some level) will have a reference to it.
   while (this->t_inst_ == 0 && m != 0)
     {
       this->t_inst_ = m->from_inst ();
       m = AST_Module::narrow_from_scope (m->defined_in ());
     }
-
-  /// If the connector comes from the instantiation of a
-  /// template module, then the regular module it's
-  /// defined in will have a reference to it.
-//  this->t_inst_ = m->from_inst ();
 
   if (this->t_inst_ == 0)
     {

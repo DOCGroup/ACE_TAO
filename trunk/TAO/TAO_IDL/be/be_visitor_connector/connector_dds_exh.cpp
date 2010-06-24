@@ -245,10 +245,12 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
   if (!iface->dds_connector_traits_done ())
     {  
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
+      bool global = (scope->node_type () == AST_Decl::NT_root);
+      const char *smart_scope = (global ? "" : "::");
       const char *lname = iface->local_name ();
       
       os_ << be_nl
-          << "typedef ::" << scope->name () << "::"
+          << "typedef ::" << scope->name () << smart_scope
           << (for_facet ? "CCM_" : "") << lname
           << " " << tao_cg->downcase (lname) << "_type;";
           
