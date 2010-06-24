@@ -184,6 +184,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             throw CORBA::INTERNAL ();
           }
 
+        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw4.in ());
         if (typed_ccm_dw)
           {

@@ -137,7 +137,7 @@ project(PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(DDS_PSAT_Connector_stub) : ccm_stub, dds4ccm_base {
-  after += PSAT_Connector_idl_gen DDS_CCM_Example_PSAT_stub
+  after += PSAT_Connector_idl_gen DDS_CCM_Example_PSAT_stub DDS_CCM_Example_PSAT_type_stub
   libs  += DDS_CCM_Example_PSAT_stub
   libpaths += lib
   libout = lib
