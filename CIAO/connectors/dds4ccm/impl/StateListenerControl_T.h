@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef DDS4CCM_STATELISTENERCONTROLI_H_
-#define DDS4CCM_STATELISTENERCONTROLI_H_
+#ifndef STATELISTENERCONTROL_T_H_
+#define STATELISTENERCONTROL_T_H_
 
 #include "dds4ccm/impl/DataListenerControl_T.h"
 #include "dds4ccm/idl/dds4ccm_StateListenerControlEC.h"
@@ -34,5 +34,5 @@ private:
 
 #include "dds4ccm/impl/StateListenerControl_T.cpp"
 
-#endif /* DDS4CCM_STATELISTENERCONTROLI_H_  */
+#endif /* STATELISTENERCONTROL_T_H_ */
 

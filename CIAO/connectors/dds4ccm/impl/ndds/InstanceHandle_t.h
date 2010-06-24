@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_INSTANCEHANDLE_T_H
-#define DDS4CCM_INSTANCEHANDLE_T_H
+#ifndef DDS4CCM_INSTANCEHANDLE_T_H_
+#define DDS4CCM_INSTANCEHANDLE_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -89,4 +89,4 @@ operator!= (const ::DDS::InstanceHandle_t & ccm_instancehandle, const DDS_Instan
 }
 #endif
 
-#endif /* DDS4CCM_INSTANCEHANDLE_T_H */
+#endif /* DDS4CCM_INSTANCEHANDLE_T_H_ */

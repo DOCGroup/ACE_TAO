@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_QUERYCONDITION_H
-#define DDS4CCM_QUERYCONDITION_H
+#ifndef QUERYCONDITION_T_H_
+#define QUERYCONDITION_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -81,4 +81,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/QueryCondition_T.cpp"
 
-#endif /* DDS4CCM_QUERYCONDITION_H */
+#endif /* QUERYCONDITION_T_H_ */

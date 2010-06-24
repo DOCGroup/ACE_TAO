@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_PUBLISHERLISTENER_H
-#define DDS4CCM_PUBLISHERLISTENER_H
+#ifndef DDSPUBLISHERLISTENER_T_H_
+#define DDSPUBLISHERLISTENER_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -97,4 +97,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DDSPublisherListener_T.cpp"
 
-#endif
+#endif /* DDSPUBLISHERLISTENER_T_H_ */

@@ -71,4 +71,4 @@ private:
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.cpp"
 
-#endif /* DDS_READ_T_H_ */
+#endif /* DDS_SUBSCRIBER_BASE_T_H_ */

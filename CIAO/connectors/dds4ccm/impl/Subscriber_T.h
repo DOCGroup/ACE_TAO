@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_SUBSCRIBER_H
-#define DDS4CCM_SUBSCRIBER_H
+#ifndef SUBSCRIBER_T_H_
+#define SUBSCRIBER_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -203,4 +203,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/Subscriber_T.cpp"
 
-#endif
+#endif /* SUBSCRIBER_T_H_ */

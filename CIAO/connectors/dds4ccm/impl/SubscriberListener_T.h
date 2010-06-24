@@ -85,4 +85,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/SubscriberListener_T.cpp"
 
-#endif /* DDS_SUBSCRIBERLISTENER_T_H_ */
+#endif /* SUBSCRIBERLISTENER_T_H_ */

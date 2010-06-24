@@ -1,6 +1,3 @@
-
-
-
 /**
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Johnny Willemsen <jwillemsen@remedy.nl>
@@ -10,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_NDDS_PARTICIPANT_H
-#define CIAO_NDDS_PARTICIPANT_H
+#ifndef DOMAINPARTICIPANT_T_H_
+#define DOMAINPARTICIPANT_T_H_
 
 #include "tao/LocalObject.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
@@ -256,4 +253,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DomainParticipant_T.cpp"
 
-#endif
+#endif /* DOMAINPARTICIPANT_T_H_ */
