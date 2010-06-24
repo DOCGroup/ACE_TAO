@@ -4,6 +4,7 @@
 
 #include "SetConnectorAttribute_Component_exec.h"
 #include "Base/SetConnectorAttribute_BaseSupport.h"
+#include "Connector/SetConnectorAttribute_Connector_conn.h"
 
 #include "dds4ccm/impl/dds/Utils.h"
 
@@ -137,11 +138,16 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     //check the settings on the connector
     DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_dw =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dds_dw.in ());
+
+    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+      CIAO_SetConnectorAttribute_SetConnectorAttributeTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits,
+      CIAO_SetConnectorAttribute_SetConnectorAttributeTestConnector_DDS_Event_Impl::SetConnectorAttributeTest_DDS_Traits>
+        DataWriter_type;
+
+    DataWriter_type * ccm_dds_dw = dynamic_cast < DataWriter_type * > (dds_dw.in ());
     if (!ccm_dds_dw)
       {
-        ACE_DEBUG ((LM_DEBUG, "Component_exec_i::ccm_activate - "
+        ACE_DEBUG ((LM_DEBUG, "ERROR: Component_exec_i::ccm_activate - "
                               "Unable to cast\n"));
         return;
       }
@@ -152,7 +158,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "Component_exec_i::ccm_activate - "
+        ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
                               "Unable to retrieve DDSDataWriter.\n"));
       }
   }
