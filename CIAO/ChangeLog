@@ -1,3 +1,12 @@
+Thu Jun 24 18:57:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed typo in debug messages
+
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_sub.cdp:
+          Fixed invalid entry points
+
 Tue Jun 24 18:159:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp
