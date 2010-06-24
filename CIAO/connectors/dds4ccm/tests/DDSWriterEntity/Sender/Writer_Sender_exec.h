@@ -15,7 +15,7 @@
 
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/dds/DataWriter.h"
+#include "dds4ccm/impl/dds/DataWriter_T.h"
 
 #include <map>
 

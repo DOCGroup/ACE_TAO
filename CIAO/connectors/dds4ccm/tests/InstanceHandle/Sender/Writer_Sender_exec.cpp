@@ -6,8 +6,11 @@
 #include "ace/Reactor.h"
 
 #include "Base/Writer_BaseSupport.h"
+#include "Connector/Writer_Connector_conn.h"
 #include "dds4ccm/impl/dds/Utils.h"
 #include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
+
+#include "dds4ccm/impl/dds/DataWriter_T.h"
 
 #include "ace/Log_Msg.h"
 
@@ -226,10 +229,30 @@ namespace CIAO_Writer_Sender_Impl
   {
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
-    ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd =
-      dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dds_dw.in ());
-    DDSDataWriter * p = ccm_dds_rd->get_impl ();
-    this->dds_writer_ = dynamic_cast <WriterTestDataWriter *> (p);
+
+    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+        CIAO_WriterTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits,
+        CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits> DataWriter_type;
+
+    DataWriter_type * typed_ccm_dw = dynamic_cast < DataWriter_type * > (dds_dw.in ());
+    if (typed_ccm_dw)
+      {
+        DDSDataWriter * p = dynamic_cast < DDSDataWriter * > (typed_ccm_dw->get_impl ());
+        this->dds_writer_ = dynamic_cast < WriterTestDataWriter * > (p);
+        if (!this->dds_writer_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
+                        "Error casting the typed CCM DataWriter to a typed "
+                        "DDS DataWriter.\n"));
+            throw CORBA::INTERNAL ();
+          }
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
+                    "Error casting DataWriter_var to typed DataWriter\n"));
+        throw CORBA::INTERNAL ();
+      }
   }
 
   void

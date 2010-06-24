@@ -184,7 +184,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
-                            DataReaderListener_type (a_listener),
+                            DataReaderListener_type (a_listener, 0),
                             CORBA::NO_MEMORY ());
         }
 
@@ -251,7 +251,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
-                            DataReaderListener_type (a_listener),
+                            DataReaderListener_type (a_listener, 0),
                             CORBA::NO_MEMORY ());
         }
 

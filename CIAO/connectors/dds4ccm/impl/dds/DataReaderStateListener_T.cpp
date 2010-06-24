@@ -68,7 +68,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_
     }
 
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
-    reinterpret_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
+    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
 
   if (!reader)
     {
