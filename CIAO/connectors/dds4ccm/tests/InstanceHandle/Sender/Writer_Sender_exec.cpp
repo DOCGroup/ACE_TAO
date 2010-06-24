@@ -230,11 +230,8 @@ namespace CIAO_Writer_Sender_Impl
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
-    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
-        CIAO_WriterTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits,
-        CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits> DataWriter_type;
-
-    DataWriter_type * typed_ccm_dw = reinterpret_cast < DataWriter_type * > (dds_dw.in ());
+    typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
+    DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (typed_ccm_dw)
       {
         this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_impl ());

@@ -1,3 +1,11 @@
+Thu Jun 24 14:04:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Use new way to get access to DDS entity
+
 Thu Jun 24 13:58:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataWriter.h:
@@ -6,7 +14,7 @@ Thu Jun 24 13:58:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * connectors/dds4ccm/impl/DataWriter_T.cpp:
         * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
           Added new DataWriter class that just stores the pointer to the
-          underlying DDS entity 
+          underlying DDS entity
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc:
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
