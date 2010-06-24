@@ -25,14 +25,12 @@ interface fooB
 
 connector MyEvent : DerivedTypeConnector::DDS_Event
 {
-// Jeff, enable these
-//  provides fooA my_foo;
+  provides fooA my_foo;
 };
 
 connector MyState : DerivedTypeConnector::DDS_State
 {
-// Jeff, enable these
-//  provides fooB my_foo;
+  provides fooB my_foo;
 };
 
 #endif
