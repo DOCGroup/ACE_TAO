@@ -13,21 +13,26 @@
 
 module ::CCM_DDS::Typed < ::DerivedType, ::DerivedTypeSeq> DerivedTypeConnector;
 
-interface foo
+interface fooA
+{
+  void send (in long value);
+};
+
+interface fooB
 {
   void send (in long value);
 };
 
 connector MyEvent : DerivedTypeConnector::DDS_Event
 {
+// Jeff, enable these
+//  provides fooA my_foo;
 };
 
 connector MyState : DerivedTypeConnector::DDS_State
 {
+// Jeff, enable these
+//  provides fooB my_foo;
 };
-
-// connector MyOwn : CCM_DDS::DDS_TopicBase
-// {
-// };
 
 #endif

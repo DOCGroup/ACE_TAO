@@ -1,3 +1,18 @@
+Thu Jun 24 07:13:02 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          RTI DDS needs the TAO_IDL typecodes, so use typecode as base project
+
+        * connectors/dds4ccm/tests/Derived/DDS_Derived_Connector_T.h:
+          Extended templates
+
+        * connectors/dds4ccm/tests/Derived/Derived.mpc:
+          Cleanup
+
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
+          Added some more test IDL
+
 Thu Jun 24 07:08:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds/DDSDataReaderListener_T.h:
