@@ -294,7 +294,7 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
   Sender_exec_i::start (void)
   {
     long sec = 3L;
-    long usec = 0L;
+    long const usec = 0L;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
