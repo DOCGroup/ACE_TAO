@@ -42,7 +42,8 @@ namespace CIAO
     typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
     public:
       /// Constructor
-      CCM_DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p);
+      CCM_DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p,
+                                    DataReader_type *typed_dr);
 
       /// Destructor
       virtual ~CCM_DDS_DataReaderListener_T (void);
@@ -70,9 +71,7 @@ namespace CIAO
       ::DDS::DataReaderListener_ptr get_datareaderlistener (void);
     private:
       ::DDS::DataReaderListener_var impl_;
-
-      ::DDS::CCM_DataReader_ptr
-      get_datareader_proxy (DDSDataReader * the_reader);
+      DataReader_type *typed_dr_;
     };
   }
 }

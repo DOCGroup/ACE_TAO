@@ -39,6 +39,12 @@ namespace CIAO
     class CCM_DDS_DataWriterListener_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_PublisherListener_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
+    class CCM_DDS_DomainParticipant_T;
+
+    template <typename DDS_TYPE, typename CCM_TYPE>
     class CCM_DDS_Publisher_T :
       public virtual ::DDS::CCM_Publisher,
       public virtual ::CORBA::LocalObject
