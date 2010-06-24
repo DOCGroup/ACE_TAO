@@ -492,18 +492,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
             ::DDS::DataReaderListener::_nil (),
             0);
     }
-
-  DataReader_type *dds_dr = dynamic_cast < DataReader_type * > (reader.in ());
-  if (dds_dr)
-    {
-      this->impl_ = dds_dr->get_impl ();
-    }
-  else
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
-                    "Failed to cast DDS::DataReader to DataReader_T\n"));
-      throw CCM_DDS::InternalError ();
-    }
+  this->set_impl(reader.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -536,17 +525,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
             ::DDS::DataReaderListener::_nil (),
             0);
     }
-  DataReader_type *dds_dr = dynamic_cast < DataReader_type * > (reader.in ());
-  if (dds_dr)
-    {
-      this->impl_ = dds_dr->get_impl ();
-    }
-  else
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
-                    "Failed to cast DDS::DataReader to DataReader_T\n"));
-      throw CCM_DDS::InternalError ();
-    }
+
+  this->set_impl (reader.in ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE>
@@ -776,7 +756,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_listener (
   if (! ::CORBA::is_nil (a_listener))
     {
       ACE_NEW_THROW_EX (ccm_dds_drl,
-                        DataReaderListener_type (a_listener),
+                        DataReaderListener_type (
+                          a_listener,
+                          this),
                         CORBA::NO_MEMORY ());
     }
   this->lst_mask_ = mask;
@@ -1022,8 +1004,24 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
 template <typename DDS_TYPE, typename CCM_TYPE>
 void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_impl (
-  typename DDS_TYPE::data_reader * dr)
+  ::DDS::DataReader_ptr dr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::set_impl");
-  this->impl_ = dr;
+
+  DataReader_type * dds_dr = dynamic_cast < DataReader_type * > (dr);
+  if (dds_dr)
+    {
+      this->impl_ = dds_dr->get_impl ();
+      if (!this->impl_)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+                      "Failed to cast DDS::DataReader to DataReader_T\n"));
+        }
+    }
+  else
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+                    "Failed to cast DDS::DataReader to DataReader_T\n"));
+      throw CCM_DDS::InternalError ();
+    }
 }

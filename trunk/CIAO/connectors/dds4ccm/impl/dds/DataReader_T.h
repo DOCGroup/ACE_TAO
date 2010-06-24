@@ -203,7 +203,7 @@ namespace CIAO
 
       typename DDS_TYPE::data_reader * get_impl (void);
 
-      void set_impl (typename DDS_TYPE::data_reader * dr);
+      void set_impl (::DDS::DataReader_ptr dr);
 
       ::DDS::StatusMask get_mask (void);
 

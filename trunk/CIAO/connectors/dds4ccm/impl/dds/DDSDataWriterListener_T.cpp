@@ -38,8 +38,9 @@ namespace CIAO
                                                     "CCM_DataWriterProxy");
       if (!prop)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataWriterListener_T"
+                            "<DDS_TYPE, CCM_TYPE>::get_datawriter_proxy -"
+                            "Unable to retrieve proxy from PropertyQosProfile\n"));
           return ::DDS::CCM_DataWriter::_nil ();
         }
 
@@ -49,8 +50,9 @@ namespace CIAO
 
       if (!writer)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                                              "Unable to get writer from PropertyQosProfile\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DataWriterListener_T"
+                            "<DDS_TYPE, CCM_TYPE>::get_datawriter_proxy -"
+                            "Unable to get writer from PropertyQosProfile\n"));
         }
 
       return writer;

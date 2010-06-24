@@ -14,8 +14,6 @@
 
 #include "tao/LocalObject.h"
 
-#include "dds4ccm/impl/dds/DataWriter.h"
-
 namespace CIAO_NonChangeable_NonChangeableComponent_Impl
 {
   //============================================================

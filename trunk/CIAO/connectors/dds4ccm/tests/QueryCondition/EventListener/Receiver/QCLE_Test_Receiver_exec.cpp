@@ -157,7 +157,7 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Set filter.\n"));
-                          
+
     CCM_DDS::QueryFilter filter;
     filter.expression = CORBA::string_dup (QUERY);
     filter.parameters.length (2);

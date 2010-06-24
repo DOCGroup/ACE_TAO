@@ -19,26 +19,17 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DataReaderListener_T (::DDS::DataReaderListener_ptr p)
-      : impl_ (::DDS::DataReaderListener::_duplicate (p))
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DataReaderListener_T (
+          ::DDS::DataReaderListener_ptr p,
+          DataReader_type *typed_dr)
+      : impl_ (::DDS::DataReaderListener::_duplicate (p)),
+        typed_dr_ (typed_dr)
     {
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_DataReaderListener_T (void)
     {
-    }
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    ::DDS::CCM_DataReader_ptr
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy (
-      DDSDataReader * the_reader)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy");
-      DataReader_type * dds_reader = 0;
-      ACE_NEW_NORETURN (dds_reader,
-                        DataReader_type (the_reader));
-      return dds_reader;
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -52,11 +43,11 @@ namespace CIAO
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_deadline_missed (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_requested_deadline_missed (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
@@ -72,11 +63,11 @@ namespace CIAO
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_incompatible_qos (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_requested_incompatible_qos (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
@@ -92,11 +83,11 @@ namespace CIAO
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_rejected (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_sample_rejected (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
@@ -112,11 +103,11 @@ namespace CIAO
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_liveliness_changed (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_liveliness_changed (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
@@ -128,10 +119,10 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available");
 #if (CIAO_DDS4CCM_NDDS==1)
       this->impl_->on_data_available (
-        this->get_datareader_proxy (the_reader));
+        this->typed_dr_);
 #else
       this->impl_->on_data_available (
-        this->get_datareader_proxy (the_reader));
+        this->typed_dr_);
 #endif
     }
 
@@ -146,11 +137,11 @@ namespace CIAO
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_subscription_matched (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_subscription_matched (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
@@ -166,11 +157,11 @@ namespace CIAO
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_lost (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         ddsstatus);
 #else
       this->impl_->on_sample_lost (
-        this->get_datareader_proxy (the_reader),
+        this->typed_dr_,
         status);
 #endif
     }
