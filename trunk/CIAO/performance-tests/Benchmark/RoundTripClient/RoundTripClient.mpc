@@ -35,7 +35,7 @@ project(Benchmark_RoundTripClient_stub) : ccm_stub {
   libs  += Benchmark_stub
   libpaths += ..
   sharedname = RoundTripClient_stub
-  dynamicflags   = ROUNDTRIPCLIENT_STUB_BUILD_DLL
+  dynamicflags += ROUNDTRIPCLIENT_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -59,7 +59,7 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
   sharedname = RoundTripClient_exec
   libs += RoundTripClient_stub Benchmark_stub
   libpaths += ..
-  dynamicflags   = ROUNDTRIPCLIENT_EXEC_BUILD_DLL
+  dynamicflags += ROUNDTRIPCLIENT_EXEC_BUILD_DLL
   includes += ..
 
   IDL_Files {
@@ -93,7 +93,7 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
                 Benchmark_skel \
                 Benchmark_stub
   libpaths += ..
-  dynamicflags = ROUNDTRIPCLIENT_SVNT_BUILD_DLL
+  dynamicflags += ROUNDTRIPCLIENT_SVNT_BUILD_DLL
   includes += ..
 
   IDL_Files {

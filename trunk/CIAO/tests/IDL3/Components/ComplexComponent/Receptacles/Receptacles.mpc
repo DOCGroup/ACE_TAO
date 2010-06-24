@@ -9,7 +9,7 @@ project(Receptacles_stub): ccm_stub {
               -Wb,skel_export_macro=RECEPTACLES_SVNT_Export \
               -Wb,skel_export_include=Receptacles_svnt_export.h -Gxhst -Gxhsk
 
-  dynamicflags   = RECEPTACLES_STUB_BUILD_DLL
+  dynamicflags += RECEPTACLES_STUB_BUILD_DLL
 
   IDL_Files {
     Receptacles.idl

@@ -35,7 +35,7 @@ project(AMI_OneProcess_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = OneProcess_Receiver_lem_stub
-  dynamicflags   = ONEPROCESS_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += ONEPROCESS_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_OneProcess_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = OneProcess_Receiver_stub
-  dynamicflags   = ONEPROCESS_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += ONEPROCESS_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_OneProcess_Base_Receiver_exec) : ciao_executor, messaging {
   libs += OneProcess_Receiver_stub OneProcess_Receiver_lem_stub OneProcess_stub OneProcess_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = ONEPROCESS_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += ONEPROCESS_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_OneProcess_Base_Receiver_svnt) : ciao_servant, messaging {
                 OneProcess_stub OneProcess_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ONEPROCESS_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += ONEPROCESS_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

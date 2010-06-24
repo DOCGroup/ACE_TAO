@@ -5,7 +5,7 @@ project(HomeAttributes_stub): ccm_stub {
 
   sharedname = HomeAttributes_stub
   idlflags += -Wb,stub_export_macro=HOMEATTRIBUTES_STUB_Export -Wb,stub_export_include=HomeAttributes_stub_export.h -Wb,skel_export_macro=HOMEATTRIBUTES_SVNT_Export -Wb,skel_export_include=HomeAttributes_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = HOMEATTRIBUTES_STUB_BUILD_DLL
+  dynamicflags += HOMEATTRIBUTES_STUB_BUILD_DLL
 
   IDL_Files {
     HomeAttributes.idl

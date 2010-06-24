@@ -33,7 +33,7 @@ project(IC_Bar_stub) : ccm_stub {
   libs  +=
 
   sharedname = IC_Bar_stub
-  dynamicflags = IC_BAR_STUB_BUILD_DLL
+  dynamicflags += IC_BAR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(IC_Bar_exec) : ciao_executor {
   after     += IC_Bar_lem_gen IC_Bar_stub
   libs      += IC_Bar_stub
 
-  dynamicflags   = IC_BAR_EXEC_BUILD_DLL
+  dynamicflags += IC_BAR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -81,7 +81,7 @@ project(IC_Bar_svnt) : ciao_servant {
   after      += IC_Bar_exec IC_Foo_exec IC_Bar_stub IC_Foo_svnt IC_Foo_stub
   libs       += IC_Bar_exec IC_Foo_exec IC_Bar_stub IC_Foo_svnt IC_Foo_stub
 
-  dynamicflags = IC_BAR_SVNT_BUILD_DLL
+  dynamicflags += IC_BAR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

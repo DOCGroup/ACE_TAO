@@ -3,7 +3,7 @@
 
 project(CIAO_Logger): install, ciao_lib, taolib, acelib {
   sharedname   = CIAO_Logger
-  dynamicflags = CIAO_LOGGER_BUILD_DLL
+  dynamicflags += CIAO_LOGGER_BUILD_DLL
 
   Source_Files {
     Logger_Service.cpp

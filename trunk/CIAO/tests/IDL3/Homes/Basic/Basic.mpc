@@ -5,7 +5,7 @@ project(IDL3_Basic_stub): ccm_stub {
 
   sharedname = Homes_Basic_stub
   idlflags += -Wb,stub_export_macro=BASIC_STUB_Export -Wb,stub_export_include=Basic_stub_export.h -Wb,skel_export_macro=BASIC_SVNT_Export -Wb,skel_export_include=Basic_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = BASIC_STUB_BUILD_DLL
+  dynamicflags += BASIC_STUB_BUILD_DLL
 
   IDL_Files {
     Basic.idl

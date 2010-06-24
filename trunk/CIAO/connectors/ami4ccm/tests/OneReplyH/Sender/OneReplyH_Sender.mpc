@@ -35,7 +35,7 @@ project(AMI_OneReplyH_Base_Sender_lem_stub) : ccm_svnt, ami   {
   libpaths += ../lib
   libout = ../lib
   sharedname = OneReplyH_Sender_lem_stub
-  dynamicflags   = ONEREPLYH_T_SENDER_LEM_STUB_BUILD_DLL
+  dynamicflags += ONEREPLYH_T_SENDER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_OneReplyH_Base_Sender_stub) : ccm_stub, ami   {
   libpaths += ../lib
   libout = ../lib
   sharedname = OneReplyH_Sender_stub
-  dynamicflags   = ONEREPLYH_T_SENDER_STUB_BUILD_DLL
+  dynamicflags += ONEREPLYH_T_SENDER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_OneReplyH_Base_Sender_exec) : ciao_executor, ami, ami4ccm_stub {
   libs += OneReplyH_Sender_stub OneReplyH_Sender_lem_stub OneReplyH_stub OneReplyH_stub OneReplyH_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = ONEREPLYH_T_SENDER_EXEC_BUILD_DLL
+  dynamicflags += ONEREPLYH_T_SENDER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_OneReplyH_Base_Sender_svnt) : ciao_servant, ami {
                 OneReplyH_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ONEREPLYH_T_SENDER_SVNT_BUILD_DLL
+  dynamicflags += ONEREPLYH_T_SENDER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

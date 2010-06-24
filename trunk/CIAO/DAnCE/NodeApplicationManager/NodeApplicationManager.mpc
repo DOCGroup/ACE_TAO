@@ -5,7 +5,7 @@ project (DAnCE_NodeApplicationManager) : install, dance_lib, naming, \
         dance_nodeapplicationmanager_skel,dynamicinterface, \
         dance_nodeapplication, dance_stub, avoids_ace_for_tao {
   sharedname   = DAnCE_NodeApplicationManager
-  dynamicflags = NODEAPPLICATIONMANAGER_BUILD_DLL
+  dynamicflags += NODEAPPLICATIONMANAGER_BUILD_DLL
 
   Source_Files {
     NodeApplicationManager_Impl.cpp

@@ -33,7 +33,7 @@ project(SimpleLocalProvider_stub) : ccm_stub {
   libs  += SimpleCommon_stub
 
   sharedname = SimpleLocalProvider_stub
-  dynamicflags   = SIMPLEPROVIDER_STUB_BUILD_DLL
+  dynamicflags += SIMPLEPROVIDER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(SimpleLocalProvider_exec) : ciao_executor {
   sharedname = SimpleLocalProvider_exec
   libs += SimpleLocalProvider_stub SimpleCommon_stub
 
-  dynamicflags   = SIMPLEPROVIDER_EXEC_BUILD_DLL
+  dynamicflags += SIMPLEPROVIDER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -87,7 +87,7 @@ project(SimpleLocalProvider_svnt) : ciao_servant {
                 SimpleCommon_skel \
                 SimpleCommon_stub
 
-  dynamicflags = SIMPLEPROVIDER_SVNT_BUILD_DLL
+  dynamicflags += SIMPLEPROVIDER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

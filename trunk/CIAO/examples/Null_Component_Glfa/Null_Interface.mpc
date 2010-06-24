@@ -20,7 +20,7 @@ project(Null_Interface_Glfa_stub) : ccm_stub {
   libs  +=
 
   sharedname = Null_Interface_stub
-  dynamicflags   = NULL_INTERFACE_STUB_BUILD_DLL
+  dynamicflags += NULL_INTERFACE_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -46,7 +46,7 @@ project(Null_Interface_Glfa_skel) : ciao_executor {
   libs       += Null_Interface_stub
 
 
-  dynamicflags = NULL_INTERFACE_SKEL_BUILD_DLL
+  dynamicflags += NULL_INTERFACE_SKEL_BUILD_DLL
 
   IDL_Files {
   }

@@ -35,7 +35,7 @@ project(AMI_InterMulti_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = InterMulti_Receiver_lem_stub
-  dynamicflags   = INTERMULTI_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += INTERMULTI_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_InterMulti_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = InterMulti_Receiver_stub
-  dynamicflags   = INTERMULTI_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += INTERMULTI_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_InterMulti_Base_Receiver_exec) : ciao_executor, messaging {
   libs += InterMulti_Receiver_stub InterMulti_Receiver_lem_stub InterMulti_stub InterMulti_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = INTERMULTI_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += INTERMULTI_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_InterMulti_Base_Receiver_svnt) : ciao_servant, messaging {
                 InterMulti_stub InterMulti_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = INTERMULTI_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += INTERMULTI_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

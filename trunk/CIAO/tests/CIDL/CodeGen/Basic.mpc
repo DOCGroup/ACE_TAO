@@ -31,7 +31,7 @@ project(Basic_stub) : ccm_stub {
   libs  +=
 
   sharedname = Basic_stub
-  dynamicflags   = BASIC_STUB_BUILD_DLL
+  dynamicflags += BASIC_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -58,7 +58,7 @@ project(Basic_skel) : ciao_executor {
   libs       += Basic_stub
 
 
-  dynamicflags = BASIC_SKEL_BUILD_DLL
+  dynamicflags += BASIC_SKEL_BUILD_DLL
 
   IDL_Files {
   }

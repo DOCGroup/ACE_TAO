@@ -3,7 +3,7 @@
 
 project(TAO_IDL3_TO_IDL2_BE) : acelib, install_lib, ciao_output, tao_idl_fe {
   sharedname   = TAO_IDL3_TO_IDL2_BE
-  dynamicflags = TAO_IDL3_TO_IDL2_BE_BUILD_DLL
+  dynamicflags += TAO_IDL3_TO_IDL2_BE_BUILD_DLL
 
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)

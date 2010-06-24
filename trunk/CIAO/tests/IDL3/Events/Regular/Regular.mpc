@@ -8,7 +8,7 @@ project(Regular_stub): ccm_stub {
               -Wb,stub_export_include=Regular_stub_export.h \
               -Wb,skel_export_macro=REGULAR_SVNT_Export \
               -Wb,skel_export_include=Regular_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = REGULAR_STUB_BUILD_DLL
+  dynamicflags += REGULAR_STUB_BUILD_DLL
 
   IDL_Files {
     Regular.idl

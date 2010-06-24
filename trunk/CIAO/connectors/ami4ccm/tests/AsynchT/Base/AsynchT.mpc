@@ -68,7 +68,7 @@ project(AMI_AsynchT_stub) : ccm_stub, ami, ami4ccm_stub {
   includes +=   ..
 
   sharedname = AsynchT_stub
-  dynamicflags = ASYNCHT_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -96,7 +96,7 @@ project(AMI_AsynchT_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
   includes +=   ..
 
   sharedname = AsynchT_lem_stub
-  dynamicflags = ASYNCHT_LEM_STUB_BUILD_DLL
+  dynamicflags += ASYNCHT_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -124,7 +124,7 @@ project(AMI_AsynchT_skel) : ciao_executor, ami, ami4ccm_servant {
   libpaths += ../lib
   includes +=   ..
 
-  dynamicflags = ASYNCHT_SKEL_BUILD_DLL
+  dynamicflags += ASYNCHT_SKEL_BUILD_DLL
 
   IDL_Files {
   }
@@ -152,7 +152,7 @@ project(AMI_AsynchT_conn) : ciao_executor, ami, ami4ccm_lem_stub {
   libs += AsynchT_stub AsynchT_skel AsynchT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ASYNCHT_CONN_BUILD_DLL
+  dynamicflags += ASYNCHT_CONN_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -176,7 +176,7 @@ project(AMI_AsynchT_svnt) : ciao_servant, ami, ami4ccm_servant {
   libs += AsynchT_stub AsynchT_skel AsynchT_lem_stub AsynchT_conn
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = ASYNCHT_SVNT_BUILD_DLL
+  dynamicflags += ASYNCHT_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

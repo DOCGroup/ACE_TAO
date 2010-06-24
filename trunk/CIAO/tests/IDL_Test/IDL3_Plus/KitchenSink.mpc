@@ -33,7 +33,7 @@ project(KitchenSink_stub) : ccm_stub {
   after += KitchenSink_idl_gen
 
   sharedname = KitchenSink_stub
-  dynamicflags   = KITCHENSINK_STUB_BUILD_DLL
+  dynamicflags += KITCHENSINK_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(KitchenSink_exec) : ciao_executor {
   sharedname = KitchenSink_exec
   libs += KitchenSink_stub
 
-  dynamicflags   = KITCHENSINK_EXEC_BUILD_DLL
+  dynamicflags += KITCHENSINK_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -84,7 +84,7 @@ project(KitchenSink_svnt) : ciao_servant {
   libs       += KitchenSink_exec \
                 KitchenSink_stub
 
-  dynamicflags = KITCHENSINK_SVNT_BUILD_DLL
+  dynamicflags += KITCHENSINK_SVNT_BUILD_DLL
 
   IDL_Files {
   }

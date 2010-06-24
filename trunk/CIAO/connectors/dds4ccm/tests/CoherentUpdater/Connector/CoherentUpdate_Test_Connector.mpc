@@ -39,7 +39,7 @@ project(CoherentUpdate_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = CoherentUpdate_Connector_lem_stub
-  dynamicflags   = COHERENT_UPDATE_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += COHERENT_UPDATE_TEST_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(CoherentUpdate_Connector_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = CoherentUpdate_Connector_stub
-  dynamicflags   = COHERENT_UPDATE_TEST_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += COHERENT_UPDATE_TEST_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(CoherentUpdate_Connector_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = COHERENT_UPDATE_TEST_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += COHERENT_UPDATE_TEST_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -124,7 +124,7 @@ project(CoherentUpdate_Connector_svnt) : ciao_servant, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = COHERENT_UPDATE_TEST_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += COHERENT_UPDATE_TEST_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

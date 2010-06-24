@@ -30,7 +30,7 @@ project(CCM_ComponentServer_IDL) : install, ciaoidldefaults, anytypecode {
 }
 
 project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, messaging, ccm_stub, anytypecode, ciao_lib  {
-  dynamicflags = DANCE_COMPONENTSERVER_STUB_BUILD_DLL
+  dynamicflags += DANCE_COMPONENTSERVER_STUB_BUILD_DLL
   after += CCM_ComponentServer_IDL
 
   Header_Files {
@@ -60,7 +60,7 @@ project(CCM_ComponentServer_stub) : install, ciaolib_with_idl, ciao_output, mess
 }
 
 project(CCM_ComponentServer_svnt) : install, ciaolib_with_idl, ciao_output, messaging, ccm_componentserver_stub,  anytypecode, ciao_lib  {
-  dynamicflags = DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
+  dynamicflags += DANCE_COMPONENTSERVER_SVNT_BUILD_DLL
 
   Header_Files {
     DAnCE_ComponentServer_svnt_export.h

@@ -32,7 +32,7 @@ project(Derived_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
 
 
   sharedname = Derived_Connector_lem_stub
-  dynamicflags   = NOMODULE_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(Derived_Connector_stub) : ccm_stub, dds4ccm_base {
 
 
   sharedname = Derived_Connector_stub
-  dynamicflags   = NOMODULE_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -81,7 +81,7 @@ project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
   sharedname = Derived_Connector_exec
   libs += Derived_Connector_stub Derived_Connector_lem_stub Derived_stub
 
-  dynamicflags   = NOMODULE_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -107,7 +107,7 @@ project(Derived_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
   libs       += Derived_Connector_stub Derived_Connector_lem_stub  Derived_stub
 
 
-  dynamicflags = NOMODULE_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += NOMODULE_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

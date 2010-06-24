@@ -36,7 +36,7 @@ project(Null_Component_stub) : ccm_stub {
   libs  += Null_Interface_stub
 
   sharedname = Null_Component_stub
-  dynamicflags   = NULL_COMPONENT_STUB_BUILD_DLL
+  dynamicflags += NULL_COMPONENT_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(Null_Component_exec) : ciao_executor {
   sharedname = Null_Component_exec
   libs += Null_Component_stub Null_Interface_stub
 
-  dynamicflags   = NULL_COMPONENT_EXEC_BUILD_DLL
+  dynamicflags += NULL_COMPONENT_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(Null_Component_svnt) : ciao_servant {
                 Null_Interface_skel \
                 Null_Interface_stub
 
-  dynamicflags = NULL_COMPONENT_SVNT_BUILD_DLL
+  dynamicflags += NULL_COMPONENT_SVNT_BUILD_DLL
 
   IDL_Files {
   }

@@ -5,7 +5,7 @@ project(EventSource_stub): ccm_stub {
 
   sharedname = EventSource_stub
   idlflags += -Wb,stub_export_macro=EVENTSOURCE_STUB_Export -Wb,stub_export_include=EventSource_stub_export.h -Wb,skel_export_macro=EVENTSOURCE_SVNT_Export -Wb,skel_export_include=EventSource_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = EVENTSOURCE_STUB_BUILD_DLL
+  dynamicflags += EVENTSOURCE_STUB_BUILD_DLL
 
   IDL_Files {
     EventSource.idl

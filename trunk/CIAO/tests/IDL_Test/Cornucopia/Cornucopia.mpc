@@ -33,7 +33,7 @@ project(Cornucopia_stub) : ccm_stub {
   after += Cornucopia_idl_gen
 
   sharedname = Cornucopia_stub
-  dynamicflags   = CORNUCOPIA_STUB_BUILD_DLL
+  dynamicflags += CORNUCOPIA_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(Cornucopia_exec) : ciao_executor {
   sharedname = Cornucopia_exec
   libs += Cornucopia_stub
 
-  dynamicflags   = CORNUCOPIA_EXEC_BUILD_DLL
+  dynamicflags += CORNUCOPIA_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -83,7 +83,7 @@ project(Cornucopia_skel) : ccm_svnt {
   sharedname = Cornucopia_skel
   libs += Cornucopia_stub
 
-  dynamicflags = CORNUCOPIA_SKEL_BUILD_DLL
+  dynamicflags += CORNUCOPIA_SKEL_BUILD_DLL
 
   IDL_Files {
   }
@@ -109,7 +109,7 @@ project(Cornucopia_svnt) : ciao_servant {
                 Cornucopia_skel \
                 Cornucopia_stub
 
-  dynamicflags = CORNUCOPIA_SVNT_BUILD_DLL
+  dynamicflags += CORNUCOPIA_SVNT_BUILD_DLL
 
   IDL_Files {
   }

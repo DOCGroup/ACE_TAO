@@ -9,7 +9,7 @@ project(SimpleComponent_stub_idl3): ccm_stub {
               -Wb,skel_export_macro=SIMPLECOMPONENT_SVNT_Export \
               -Wb,skel_export_include=SimpleComponent_svnt_export.h -Gxhst -Gxhsk
 
-  dynamicflags   = SIMPLECOMPONENT_STUB_BUILD_DLL
+  dynamicflags += SIMPLECOMPONENT_STUB_BUILD_DLL
 
   IDL_Files {
     SimpleComponent.idl

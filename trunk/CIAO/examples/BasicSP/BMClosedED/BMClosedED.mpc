@@ -35,7 +35,7 @@ project(BMClosedED_stub): ccm_stub {
   sharedname = BMClosedED_stub
   includes += ..
   libs += BasicSP_stub
-  dynamicflags   = BMCLOSEDED_STUB_BUILD_DLL
+  dynamicflags += BMCLOSEDED_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -61,7 +61,7 @@ project(BMClosedED_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
+  dynamicflags += BMCLOSEDED_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(BMClosedED_svnt) : ciao_servant {
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
+  dynamicflags += BMCLOSEDED_SVNT_BUILD_DLL
 
   IDL_Files {
   }

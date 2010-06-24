@@ -38,7 +38,7 @@ project(Basic_CodeGen_stub) : ccm_stub {
   libs  += Basic_stub
 
   sharedname = CodeGen_stub
-  dynamicflags   = CODEGEN_STUB_BUILD_DLL
+  dynamicflags += CODEGEN_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -62,7 +62,7 @@ project(Basic_CodeGen_exec) : ciao_executor {
   sharedname = CodeGen_exec
   libs += CodeGen_stub Basic_stub
 
-  dynamicflags   = CODEGEN_EXEC_BUILD_DLL
+  dynamicflags += CODEGEN_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -92,7 +92,7 @@ project(Basic_CodeGen_svnt) : ciao_servant {
                 Basic_skel \
                 Basic_stub
 
-  dynamicflags = CODEGEN_SVNT_BUILD_DLL
+  dynamicflags += CODEGEN_SVNT_BUILD_DLL
 
   IDL_Files {
   }

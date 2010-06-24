@@ -35,7 +35,7 @@ project(Stock_Base_StockDistributor_lem_stub) : ccm_svnt   {
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_lem_stub
-  dynamicflags   = STOCKDISTRIBUTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += STOCKDISTRIBUTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(Stock_Base_StockDistributor_stub) : ccm_stub   {
   libpaths += ../lib
   libout = ../lib
   sharedname = StockDistributor_stub
-  dynamicflags   = STOCKDISTRIBUTOR_STUB_BUILD_DLL
+  dynamicflags += STOCKDISTRIBUTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(Stock_Base_StockDistributor_exec) : ciao_executor   {
   libs += StockDistributor_stub StockDistributor_lem_stub Stock_Base_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = STOCKDISTRIBUTOR_EXEC_BUILD_DLL
+  dynamicflags += STOCKDISTRIBUTOR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -112,7 +112,7 @@ project(Stock_Base_StockDistributor_svnt) : ciao_servant   {
                 Stock_Base_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = STOCKDISTRIBUTOR_SVNT_BUILD_DLL
+  dynamicflags += STOCKDISTRIBUTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

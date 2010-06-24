@@ -34,7 +34,7 @@ project(Display_RateGen_stub) : ccm_stub {
   libs  += Display_Base_stub
 
   sharedname = RateGen_stub
-  dynamicflags   = RATEGEN_STUB_BUILD_DLL
+  dynamicflags += RATEGEN_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(Display_RateGen_exec) : ciao_executor {
   sharedname = RateGen_exec
   libs += RateGen_stub Display_Base_stub
 
-  dynamicflags   = RATEGEN_EXEC_BUILD_DLL
+  dynamicflags += RATEGEN_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -91,7 +91,7 @@ project(Display_RateGen_svnt) : ciao_servant {
                 Display_Base_skel \
                 Display_Base_stub
 
-  dynamicflags = RATEGEN_SVNT_BUILD_DLL
+  dynamicflags += RATEGEN_SVNT_BUILD_DLL
 
   IDL_Files {
   }

@@ -33,7 +33,7 @@ project(Reused_Facet_Interface_Basic_stub) : ccm_stub {
   libs  +=
 
   sharedname = Basic_stub
-  dynamicflags   = BASIC_STUB_BUILD_DLL
+  dynamicflags += BASIC_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(Reused_Facet_Interface_Basic_skel) : ciao_executor {
   libs       += Basic_stub
 
 
-  dynamicflags = BASIC_SKEL_BUILD_DLL
+  dynamicflags += BASIC_SKEL_BUILD_DLL
 
   IDL_Files {
   }

@@ -5,7 +5,7 @@ project(Factory_stub): ccm_stub {
 
   sharedname = Factory_stub
   idlflags += -Wb,stub_export_macro=FACTORY_STUB_Export -Wb,stub_export_include=Factory_stub_export.h -Wb,skel_export_macro=FACTORY_SVNT_Export -Wb,skel_export_include=Factory_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = FACTORY_STUB_BUILD_DLL
+  dynamicflags += FACTORY_STUB_BUILD_DLL
 
   IDL_Files {
     Factory.idl

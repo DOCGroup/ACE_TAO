@@ -35,7 +35,7 @@ project(DDS_Coh_Update_ReaderStarter_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Reader_Starter_lem_stub
-  dynamicflags   = READER_STARTER_LEM_STUB_BUILD_DLL
+  dynamicflags += READER_STARTER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -61,7 +61,7 @@ project(DDS_Coh_Update_ReaderStarter_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Reader_Starter_stub
-  dynamicflags   = READER_STARTER_STUB_BUILD_DLL
+  dynamicflags += READER_STARTER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(DDS_Coh_Update_ReaderStarter_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = READER_STARTER_SVNT_BUILD_DLL
+  dynamicflags += READER_STARTER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

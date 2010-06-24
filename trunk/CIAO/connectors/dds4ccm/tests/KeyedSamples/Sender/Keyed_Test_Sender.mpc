@@ -38,7 +38,7 @@ project(DDS_Keyed_Test_Sender_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Sender_lem_stub
-  dynamicflags   = SENDER_LEM_STUB_BUILD_DLL
+  dynamicflags += SENDER_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -64,7 +64,7 @@ project(DDS_Keyed_Test_Sender_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   sharedname = Sender_stub
-  dynamicflags   = SENDER_STUB_BUILD_DLL
+  dynamicflags += SENDER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(DDS_Keyed_Test_Sender_exec) : ciao_executor, dds4ccm_base {
   libpaths += ../lib
   includes += ..
   libout = ../lib
-  dynamicflags   = SENDER_EXEC_BUILD_DLL
+  dynamicflags += SENDER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -117,7 +117,7 @@ project(DDS_Keyed_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = SENDER_SVNT_BUILD_DLL
+  dynamicflags += SENDER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

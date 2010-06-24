@@ -32,7 +32,7 @@ project(CCM_lem_stub_idl) : install, ciaolib_with_idl, valuetype {
 project(CCM_lem_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_client {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
-  dynamicflags = CCM_LEM_STUB_BUILD_DLL
+  dynamicflags += CCM_LEM_STUB_BUILD_DLL
   after += CCM_stub CCM_lem_stub_idl CCM_svnt_idl
   libs  += CCM_stub
   IDL_Files {

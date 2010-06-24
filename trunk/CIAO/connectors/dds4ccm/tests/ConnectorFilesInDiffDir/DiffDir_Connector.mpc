@@ -37,7 +37,7 @@ project(DiffDir_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   includes += .
 
   sharedname = DiffDir_Connector_lem_stub
-  dynamicflags = DIFFDIR_CONNECTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += DIFFDIR_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -62,7 +62,7 @@ project(DiffDir_Connector_stub) : ccm_stub, dds4ccm_base {
   includes += .
 
   sharedname = DiffDir_Connector_stub
-  dynamicflags = DIFFDIR_CONNECTOR_STUB_BUILD_DLL
+  dynamicflags += DIFFDIR_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -87,7 +87,7 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
   libs     += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
   includes += .
 
-  dynamicflags = DIFFDIR_CONNECTOR_CONN_BUILD_DLL
+  dynamicflags += DIFFDIR_CONNECTOR_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -112,7 +112,7 @@ project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  
   libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
   includes   += .
 
-  dynamicflags = DIFFDIR_CONNECTOR_SVNT_BUILD_DLL
+  dynamicflags += DIFFDIR_CONNECTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

@@ -11,7 +11,7 @@ project (DAnCE_Artifact_Installation_IDL) : taoidldefaults {
 
 project (DAnCE_Artifact_Installation) : dance_lib, dynamicinterface, \
             dance_deployment_stub, dance_logger, dance_skel, utils {
-  dynamicflags = DANCE_ARTIFACT_INSTALLATION_BUILD_DLL
+  dynamicflags += DANCE_ARTIFACT_INSTALLATION_BUILD_DLL
   sharedname = DAnCE_Artifact_Installation
   after += DAnCE_Artifact_Installation_IDL
 
@@ -30,7 +30,7 @@ project (DAnCE_Artifact_Installation) : dance_lib, dynamicinterface, \
 
 project (DAnCE_Installation_Repository_Manager) : dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils {
-  dynamicflags = INSTALLATION_REPOSITORY_MANAGER_BUILD_DLL
+  dynamicflags += INSTALLATION_REPOSITORY_MANAGER_BUILD_DLL
   sharedname = DAnCE_Installation_Repository_Manager
 
   Source_Files {
@@ -44,7 +44,7 @@ project (DAnCE_Installation_Repository_Manager) : dance_lib, dynamicinterface, d
 
 project (DAnCE_File_Installation) : dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils {
-  dynamicflags = ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
+  dynamicflags += ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
   sharedname = DAnCE_File_Installation
 
   Source_Files {
@@ -58,7 +58,7 @@ project (DAnCE_File_Installation) : dance_lib, dynamicinterface, dance_artifact_
 
 project (DAnCE_Http_Installation) : dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils, inet {
-  dynamicflags = ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
+  dynamicflags += ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
   sharedname = DAnCE_Http_Installation
 
   Source_Files {

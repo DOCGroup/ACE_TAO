@@ -38,7 +38,7 @@ project(DDS_SharedDP_Connector3_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_Connector3_lem_stub
-  dynamicflags   = SHAREDDP_CONNECTOR3_LEM_STUB_BUILD_DLL
+  dynamicflags += SHAREDDP_CONNECTOR3_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -64,7 +64,7 @@ project(DDS_SharedDP_Connector3_stub) : ccm_stub, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = DDS_Connector3_stub
-  dynamicflags   = SHAREDDP_CONNECTOR3_STUB_BUILD_DLL
+  dynamicflags += SHAREDDP_CONNECTOR3_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(DDS_SharedDP_Connector3_exec) : ciao_executor, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags   = SHAREDDP_CONNECTOR3_CONN_BUILD_DLL
+  dynamicflags += SHAREDDP_CONNECTOR3_CONN_BUILD_DLL
 
   IDL_Files {
   }
@@ -120,7 +120,7 @@ project(DDS_SharedDP_Connector3_svnt) : ciao_servant, dds4ccm_impl {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = SHAREDDP_CONNECTOR3_SVNT_BUILD_DLL
+  dynamicflags += SHAREDDP_CONNECTOR3_SVNT_BUILD_DLL
 
   IDL_Files {
   }

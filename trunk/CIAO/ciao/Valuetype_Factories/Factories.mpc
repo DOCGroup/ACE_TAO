@@ -1,6 +1,6 @@
 //$Id$
 project(CCM_Cookie_Factory) : install, ccm_stub, ciao_lib {
-   dynamicflags = COOKIE_FACTORY_BUILD_DLL
+   dynamicflags += COOKIE_FACTORY_BUILD_DLL
    Source_Files {
      Cookies.cpp
    }
@@ -17,7 +17,7 @@ project(CCM_Cookie_Factory) : install, ccm_stub, ciao_lib {
 }
 
 project(CCM_ConfigValue_Factory) : install, ccm_stub, ciao_lib {
-   dynamicflags = CONFIGVALUE_FACTORY_BUILD_DLL
+   dynamicflags += CONFIGVALUE_FACTORY_BUILD_DLL
    Source_Files {
      ConfigValue.cpp
    }

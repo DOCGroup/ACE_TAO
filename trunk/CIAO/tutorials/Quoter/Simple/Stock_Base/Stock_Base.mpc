@@ -33,7 +33,7 @@ project(Stock_Base_stub) : ccm_stub   {
   libpaths += ../lib
   libout = ../lib
   sharedname = Stock_Base_stub
-  dynamicflags   = STOCK_BASE_STUB_BUILD_DLL STOCK_BASE_EXEC_BUILD_DLL
+  dynamicflags += STOCK_BASE_STUB_BUILD_DLL STOCK_BASE_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -61,7 +61,7 @@ project(Stock_Base_skel) : ciao_executor   {
 
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = STOCK_BASE_SKEL_BUILD_DLL
+  dynamicflags += STOCK_BASE_SKEL_BUILD_DLL
 
   IDL_Files {
   }

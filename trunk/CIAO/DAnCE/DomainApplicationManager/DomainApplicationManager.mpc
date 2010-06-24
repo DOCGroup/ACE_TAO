@@ -6,7 +6,7 @@ project : install, dance_lib, dance_output, dance_domainapplicationmanager_skel,
       dance_nodemanager_skel, naming, \
       dance_split_plan, dance_tools  {
   sharedname   = DAnCE_DomainApplicationManager
-  dynamicflags = DOMAINAPPLICATIONMANAGER_BUILD_DLL
+  dynamicflags += DOMAINAPPLICATIONMANAGER_BUILD_DLL
 
   Source_Files {
     DomainApplicationManager_Impl.cpp
