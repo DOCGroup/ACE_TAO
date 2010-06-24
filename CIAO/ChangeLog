@@ -1,3 +1,11 @@
+Thu Jun 24 12:43:55 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Changed code to get to the underlying dds entities
+
 Thu Jun 24 12:34:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
