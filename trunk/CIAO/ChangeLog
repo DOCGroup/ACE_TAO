@@ -1,3 +1,23 @@
+Thu Jun 24 14:29:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * LocalityManager/Handler/LocalityActivator_Impl.h:
+	  Fixed detection of spawn failures or premature process exits.
+
+        * DAnCE/DAnCE_Utility.cpp:
+        * DAnCE/DAnCE_Utility.h:
+        * DAnCE/DAnCE_Utility.tpp:
+	  Added utility methods for handling exception to/from Any conversion.
+
+        * LocalityManager/Scheduler/Events/Install.cpp:
+	  Added default exception handling behaviour in case no post_install 
+	  interceptors have been registered.
+	  Fixed exception reporting and propagation.
+
+        * NodeApplication/NodeApplication_Impl.cpp:
+	  Added correct exception detection and handling to locality manager
+	  install handling.
+
 Thu Jun 24 14:04:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:

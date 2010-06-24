@@ -5,6 +5,7 @@
 #include "ace/UUID.h"
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
+#include "tao/ORB_Core.h"
 
 namespace DAnCE
 {
@@ -25,6 +26,11 @@ namespace DAnCE
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::DAnCE_LocalityActivator_i");
       ACE_Utils::UUID_GENERATOR::instance ()->init ();
+
+      // initialize the process manager with the ORBs reactor
+      // so the exit handlers get triggered when needed
+      this->process_manager_.open (ACE_Process_Manager::DEFAULT_SIZE,
+                                   this->orb_->orb_core ()->reactor ());
     }
 
     DAnCE_LocalityActivator_i::~DAnCE_LocalityActivator_i(void)
@@ -167,7 +173,7 @@ namespace DAnCE
                            server_UUID));
               throw ::CORBA::BAD_INV_ORDER ();
             }
-          
+
           ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
                               guard,
                               info->mutex_,
@@ -220,8 +226,8 @@ namespace DAnCE
                        server->uuid_.c_str ()));
 
       // Now we need to get a copy of the one that was inserted...
-      pid_t const pid = this->spawn_locality_manager (*server, cmd_options);
-      ACE_UNUSED_ARG (pid);
+      pid_t const pid = this->spawn_locality_manager (new Server_Child_Handler (server),
+                                                      cmd_options);
 
       ACE_Time_Value timeout (this->spawn_delay_);
 
@@ -249,9 +255,11 @@ namespace DAnCE
         }
 
       if (this->multithreaded_)
-        this->multi_threaded_wait_for_callback (*server, timeout/*, pid*/);
+        this->multi_threaded_wait_for_callback (*server, timeout);
       else
-        this->single_threaded_wait_for_callback (*server, timeout/*, pid*/);
+        this->single_threaded_wait_for_callback (*server, timeout);
+
+      server->pid_ = pid; // register pid of successfully started lm process
 
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
@@ -317,10 +325,12 @@ namespace DAnCE
     }
 
     pid_t
-    DAnCE_LocalityActivator_i::spawn_locality_manager (const Server_Info &si,
+    DAnCE_LocalityActivator_i::spawn_locality_manager (Server_Child_Handler* exit_handler,
                                                     const ACE_CString &cmd_line)
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::spawn_locality_manager");
+
+      const Server_Info &si = exit_handler->server_info ();
 
       // Get my object reference
       CORBA::Object_var obj = this->poa_->servant_to_reference (this);
@@ -404,10 +414,13 @@ namespace DAnCE
                    options.command_line_buf ()));
 
       pid_t const pid = this->process_manager_.spawn (options,
-                                                      &this->child_handler_);
+                                                      exit_handler);
 
       if (pid == ACE_INVALID_PID)
         {
+          // clean up as in this case the handler did not get registered
+          delete exit_handler;
+
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT ("Failed to spawn a LocalityManager process\n")));
           throw Deployment::StartError ("locality_manager",
@@ -436,7 +449,7 @@ namespace DAnCE
       // for thread-pool concurrency model.
       while (true)
         {
-          if (!si.activated_)
+          if (!si.terminated_ && !si.activated_)
             {
               ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
                                    guard,
@@ -446,15 +459,27 @@ namespace DAnCE
               // been activated by the previous leader's perform_work,
               // so let's check to make sure that only non-activated
               // folks are hanging on perform_work.
-              if (!si.activated_)
-                this->orb_->perform_work (timeout);
+              if (!si.terminated_ && !si.activated_)
+                {
+                  this->orb_->perform_work (timeout);
+                }
+            }
+
+          if (si.terminated_)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                               ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
+                               ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
+                               si.uuid_.c_str ()));
+              throw ::Deployment::StartError ("locality_manager",
+                                              "Failed to startup LocalityManager");
             }
 
           if (si.activated_)
             {
               break;
             }
-          
+
           if (timeout == ACE_Time_Value::zero)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
@@ -481,15 +506,27 @@ namespace DAnCE
                            CORBA::NO_RESOURCES ());
 
       while (! si.activated_ )
-        if (si.condition_.wait (&timeout) == -1)
-          {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
-                             ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
-                             si.uuid_.c_str ()));
-            throw Deployment::StartError ("locality_manager",
-                                          "timed out waiting for callback");
-          }
+        {
+          if (si.condition_.wait (&timeout) == -1)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                              ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
+                              ACE_TEXT ("Timed out while waiting for LocalityManager %C to call back.\n"),
+                              si.uuid_.c_str ()));
+              throw Deployment::StartError ("locality_manager",
+                                            "timed out waiting for callback");
+            }
+
+          if (si.terminated_)
+            {
+              DANCE_ERROR (1, (LM_ERROR, DLINFO
+                               ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
+                               ACE_TEXT ("Startup failed for LocalityManager %C; process exited before activation.\n"),
+                               si.uuid_.c_str ()));
+              throw ::Deployment::StartError ("locality_manager",
+                                              "Failed to startup LocalityManager");
+            }
+        }
     }
 
     void
@@ -574,6 +611,47 @@ namespace DAnCE
         ++pos;
       } while (i.advance () != 0);
     }
+
+    DAnCE_LocalityActivator_i::Server_Child_Handler::Server_Child_Handler (
+        const Safe_Server_Info&  si)
+      : server_info_ (si)
+      {}
+
+    DAnCE_LocalityActivator_i::Server_Child_Handler::~Server_Child_Handler ()
+    {
+    }
+
+    int DAnCE_LocalityActivator_i::Server_Child_Handler::handle_close (
+        ACE_HANDLE, ACE_Reactor_Mask)
+    {
+      DANCE_DEBUG (9, (LM_DEBUG, DLINFO
+                       ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_close\n")));
+
+      delete this;  // clean us up
+      return 0;
+    }
+
+    int DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit (
+        ACE_Process *proc)
+    {
+      DANCE_DEBUG (1, (LM_INFO, DLINFO
+                       ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit")
+                       ACE_TEXT (" - Locality Manager UUID %C, pid=%d: %d\n"),
+                       this->server_info_->uuid_.c_str (),
+                       int (proc->getpid ()),
+                       int (proc->exit_code ()) ));
+
+      // this method is guarenteed to be called synchronously
+      // so we can safely call anything we like
+
+      // flag this process as exited
+      this->server_info_->terminated_ = true;
+      // signal possibly waiting startup thread
+      this->server_info_->condition_.signal ();
+
+      return 0;
+    }
+
 }
 
 
