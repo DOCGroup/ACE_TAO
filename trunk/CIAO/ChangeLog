@@ -1,3 +1,9 @@
+Thu Jun 24 12:13:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Resolved compile errors.
+
 Thu Jun 24 11:42:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ccm_dds.idl:
