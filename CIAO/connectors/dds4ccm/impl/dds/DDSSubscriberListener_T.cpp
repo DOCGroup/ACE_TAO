@@ -53,32 +53,6 @@ namespace CIAO
       ACE_NEW_NORETURN (dds_reader,
                         DataReader_type (the_reader));
       return dds_reader._retn ();
-/*
-      // Retrieve the pointer to the proxy from the QoS
-      ::DDS_DataReaderQos qos;
-      the_reader->get_qos (qos);
-      DDS_Property_t * prop =
-        DDSPropertyQosPolicyHelper::lookup_property (qos.property,
-                                                    "CCM_DataReaderProxy");
-      if (!prop)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                                              "Unable to retrieve proxy from PropertyQosProfile\n"));
-          return ::DDS::CCM_DataReader::_nil ();
-        }
-
-      ::DDS::CCM_DataReader_ptr reader =
-        reinterpret_cast < ::DDS::CCM_DataReader_ptr >
-          (ACE_OS::atol (prop->value));
-          
-      if (::CORBA::is_nil (reader))
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                                              "Unable to retrieve reader from PropertyQosProfile\n"));
-        }
-
-      return reader;
-*/
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
