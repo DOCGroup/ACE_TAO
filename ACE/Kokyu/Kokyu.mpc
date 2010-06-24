@@ -3,7 +3,7 @@
 
 project(Kokyu) : acelib, ace_output, install {
   sharedname  = Kokyu
-  dynamicflags = KOKYU_BUILD_DLL
+  dynamicflags += KOKYU_BUILD_DLL
 
   Source_Files {
     Dispatcher_Impl.cpp

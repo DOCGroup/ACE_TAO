@@ -1,3 +1,8 @@
+Thu Jun 24 08:52:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.mpc:
+          Use dynamicflags += instead of dynamicflags =
+
 Thu Jun 24 02:07:18 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Gestalt.inl (open): Allow the command line options to
@@ -11,24 +16,24 @@ Wed Jun 23 14:17:26 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
 Wed Jun 23 10:24:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* bin/MakeProjectCreator/config/global.features:
-	  Added default setting (0) for new feature 'old_stdstream'.
-	  Defines that platform has 'old' std C++ stream classes not
-	  compatible with f.i. the INet lib.
+        * bin/MakeProjectCreator/config/global.features:
+          Added default setting (0) for new feature 'old_stdstream'.
+          Defines that platform has 'old' std C++ stream classes not
+          compatible with f.i. the INet lib.
 
-	* protocols/ace/INet/inet.mpc:
-	  Added avoids for old_stdstream.
+        * protocols/ace/INet/inet.mpc:
+          Added avoids for old_stdstream.
 
-	* protocols/ace/INet/BidirStreamBuffer.cpp:
-	* protocols/ace/INet/BidirStreamBuffer.h:
-	* protocols/ace/INet/BufferedStreamBuffer.cpp:
-	* protocols/ace/INet/BufferedStreamBuffer.h:
-	* protocols/ace/INet/HTTP_Session.cpp:
-	* protocols/ace/INet/HTTP_Session.h:
-	* protocols/ace/INet/Sock_IOStream.cpp:
-	* protocols/ace/INet/Sock_IOStream.h:
-	* protocols/ace/INet/StreamInterceptor.h:
-	  Tweaking, clean up and small corrections.
+        * protocols/ace/INet/BidirStreamBuffer.cpp:
+        * protocols/ace/INet/BidirStreamBuffer.h:
+        * protocols/ace/INet/BufferedStreamBuffer.cpp:
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+        * protocols/ace/INet/Sock_IOStream.cpp:
+        * protocols/ace/INet/Sock_IOStream.h:
+        * protocols/ace/INet/StreamInterceptor.h:
+          Tweaking, clean up and small corrections.
 
 Wed Jun 23 03:21:01 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
 
