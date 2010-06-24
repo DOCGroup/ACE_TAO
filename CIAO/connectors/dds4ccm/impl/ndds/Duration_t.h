@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DURATION_T_H
-#define DDS4CCM_DURATION_T_H
+#ifndef DDS4CCM_DURATION_T_H_
+#define DDS4CCM_DURATION_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -33,5 +33,5 @@ operator<<= (::DDS_Duration_t &ddsduration, const ::DDS::Duration_t & duration)
 
 #endif
 
-#endif /* DDS4CCM_DURATION_T_H */
+#endif /* DDS4CCM_DURATION_T_H_ */
 

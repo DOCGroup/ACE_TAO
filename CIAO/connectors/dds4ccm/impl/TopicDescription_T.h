@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_DDS4CCM_TOPICDESCRIPTION_H
-#define CIAO_DDS4CCM_TOPICDESCRIPTION_H
+#ifndef TOPICDESCRIPTION_T_H_
+#define TOPICDESCRIPTION_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -69,4 +69,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/TopicDescription_T.cpp"
 
-#endif /* CIAO_DDS4CCM_TOPICDESCRIPTION_H */
+#endif /* TOPICDESCRIPTION_T_H_ */

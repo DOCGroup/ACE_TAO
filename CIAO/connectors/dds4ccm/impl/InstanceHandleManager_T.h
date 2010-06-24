@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef INSTANCE_HANDLEMANGER_T_H
-#define INSTANCE_HANDLEMANGER_T_H
+#ifndef INSTANCEHANDLEMANGER_T_H_
+#define INSTANCEHANDLEMANGER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -48,4 +48,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/InstanceHandleManager_T.cpp"
 
-#endif /* INSTANCE_HANDLEMANGER_T_H */
+#endif /* INSTANCEHANDLEMANGER_T_H_ */

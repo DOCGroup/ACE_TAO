@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS_RTI_PARTICIPANTFACTORY_H
-#define DDS_RTI_PARTICIPANTFACTORY_H
+#ifndef DOMAINPARTICIPANTFACTORY_T_H_
+#define DOMAINPARTICIPANTFACTORY_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
@@ -109,4 +109,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DomainParticipantFactory_T.cpp"
 
-#endif
+#endif /* DOMAINPARTICIPANTFACTORY_T_H_ */

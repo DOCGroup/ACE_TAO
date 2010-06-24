@@ -5,6 +5,8 @@
  *
  * Wrapper facade for NDDS.
  */
+#ifndef TOPICLISTENER_T_H_
+#define TOPICLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -45,3 +47,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/TopicListener_T.cpp"
+
+#endif /* TOPICLISTENER_T_H_ */

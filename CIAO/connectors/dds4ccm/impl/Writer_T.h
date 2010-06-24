@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef WRITER_T_H
-#define WRITER_T_H
+#ifndef WRITER_T_H_
+#define WRITER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -61,4 +61,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/Writer_T.cpp"
 
-#endif /* WRITER_T_H */
+#endif /* WRITER_T_H_ */

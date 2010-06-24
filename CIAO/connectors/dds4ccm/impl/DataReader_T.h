@@ -7,8 +7,8 @@
  * and, Listen port
  *
  */
-#ifndef DDS_DATAREADER_T_H
-#define DDS_DATAREADER_T_H
+#ifndef DATAREADER_T_H_
+#define DATAREADER_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -229,4 +229,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DataReader_T.cpp"
 
-#endif /* DDS_DATAREADER_T_H */
+#endif /* DATAREADER_T_H_ */

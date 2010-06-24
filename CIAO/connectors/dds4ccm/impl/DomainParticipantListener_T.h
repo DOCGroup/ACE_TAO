@@ -6,6 +6,9 @@
  *
  * Wrapper facade for NDDS.
  */
+#ifndef DOMAINPARTICIPANTLISTENER_T_H_
+#define DOMAINPARTICIPANTLISTENER_T_H_
+
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/idl/dds4ccm_ConnectorStatusListenerC.h"
@@ -115,3 +118,5 @@ namespace CIAO
 }
 
 #include "dds4ccm/impl/DomainParticipantListener_T.cpp"
+
+#endif /* DOMAINPARTICIPANTLISTENER_T_H_ */

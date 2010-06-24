@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_TOPICLISTENER_H
-#define DDS4CCM_TOPICLISTENER_H
+#ifndef DDSTOPICLISTENER_T_H_
+#define DDSTOPICLISTENER_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -54,4 +54,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DDSTopicListener_T.cpp"
 
-#endif /* DDS4CCM_TOPICLISTENER_H */
+#endif /* TOPICLISTENER_T_H_ */

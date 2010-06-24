@@ -3,8 +3,8 @@
  *
  * $Id$
  */
-#ifndef DDS_BASE_CONNECTOR_T_H
-#define DDS_BASE_CONNECTOR_T_H
+#ifndef DDS_BASE_CONNECTOR_T_H_
+#define DDS_BASE_CONNECTOR_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -69,4 +69,4 @@ protected:
 
 #include "dds4ccm/impl/DDS_Base_Connector_T.cpp"
 
-#endif /* CONNECTOR_T_H_ */
+#endif /* DDS_BASE_CONNECTOR_T_H_ */

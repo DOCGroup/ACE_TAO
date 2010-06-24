@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef DDS4CCM_STRINGSEQ_T_H
-#define DDS4CCM_STRINGSEQ_T_H
+#ifndef DDS4CCM_STRINGSEQ_T_H_
+#define DDS4CCM_STRINGSEQ_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -42,4 +42,4 @@ operator<<= (::DDS_StringSeq & dds_string_seq, const ::DDS::StringSeq & string_s
 }
 #endif
 
-#endif /* DDS4CCM_STRINGSEQ_T_H */
+#endif /* DDS4CCM_STRINGSEQ_T_H_ */

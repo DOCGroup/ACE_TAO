@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef CIAO_NDDS_CONTENFILTEREDTOPIC_H
-#define CIAO_NDDS_CONTENFILTEREDTOPIC_H
+#ifndef CONTENFILTEREDTOPIC_T_H_
+#define CONTENFILTEREDTOPIC_T_H_
 
 #include "DomainParticipant_T.h"
 
@@ -73,4 +73,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/ContentFilteredTopic_T.cpp"
 
-#endif /* CIAO_NDDS_CONTENFILTEREDTOPIC_H */
+#endif /* CONTENFILTEREDTOPIC_T_H_ */
