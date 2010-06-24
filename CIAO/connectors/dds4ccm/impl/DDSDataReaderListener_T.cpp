@@ -39,17 +39,11 @@ namespace CIAO
       const ::DDS_RequestedDeadlineMissedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_deadline_missed (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_requested_deadline_missed (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -59,17 +53,11 @@ namespace CIAO
       const ::DDS_RequestedIncompatibleQosStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_incompatible_qos (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_requested_incompatible_qos (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -79,17 +67,11 @@ namespace CIAO
       const ::DDS_SampleRejectedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_rejected (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_sample_rejected (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -99,17 +81,11 @@ namespace CIAO
       const ::DDS_LivelinessChangedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_liveliness_changed (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_liveliness_changed (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -117,15 +93,10 @@ namespace CIAO
     CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDSDataReader *)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available");
-#if (CIAO_DDS4CCM_NDDS==1)
       this->impl_->on_data_available (
         this->typed_dr_);
-#else
-      this->impl_->on_data_available (
-        this->typed_dr_);
-#endif
     }
-
+        
     template <typename DDS_TYPE, typename CCM_TYPE>
     void
     CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched (
@@ -133,17 +104,11 @@ namespace CIAO
       const ::DDS_SubscriptionMatchedStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_subscription_matched (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_subscription_matched (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
@@ -153,17 +118,11 @@ namespace CIAO
       const ::DDS_SampleLostStatus & status)
     {
       DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_lost (
         this->typed_dr_,
         ddsstatus);
-#else
-      this->impl_->on_sample_lost (
-        this->typed_dr_,
-        status);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>
