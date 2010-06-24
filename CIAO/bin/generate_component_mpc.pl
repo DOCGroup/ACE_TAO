@@ -133,7 +133,7 @@ project('."$unique_prefix"."$com_name".'_lem_stub) : ccm_svnt ' . "$base_projs" 
   $lib_paths"."
   $lib_out".'
   sharedname = '."$com_name".'_lem_stub
-  dynamicflags   = '."$UCOM_NAME".'_LEM_STUB_BUILD_DLL
+  dynamicflags += '."$UCOM_NAME".'_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -161,7 +161,7 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor ' . "$base_projs"
   libs += '."$com_name".'_stub '."$com_name".'_lem_stub '."$stub_depend
   $lib_paths"."
   $lib_out".'
-  dynamicflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
+  dynamicflags += '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -252,7 +252,7 @@ project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base ". "$base_projs" .
   $lib_paths"."
   $lib_out".'
   sharedname = '."$com_name".'_stub
-  dynamicflags   = '."$UCOM_NAME".'_STUB_BUILD_DLL
+  dynamicflags += '."$UCOM_NAME".'_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -278,7 +278,7 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base ". "$base
   libs       += '."$svr_libs $svr_plibs
   $lib_paths"."
   $lib_out".'
-  dynamicflags = '."$UCOM_NAME"."$USVR_SUFFIX".'_BUILD_DLL
+  dynamicflags += '."$UCOM_NAME"."$USVR_SUFFIX".'_BUILD_DLL
   '.'
   IDL_Files {
   }
