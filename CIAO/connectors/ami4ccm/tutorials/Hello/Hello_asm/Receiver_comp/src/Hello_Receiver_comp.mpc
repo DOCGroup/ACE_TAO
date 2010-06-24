@@ -10,14 +10,14 @@ project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=HELLO_RECEIVER_EXEC_Export \
               -Wb,exec_export_include=Hello_Receiver_exec_export.h \
               -Glem \
-              -I../Ports \
-              -I../../Ports \
+              -I../ports \
+              -I../../ports \
               -I../../GeneratedCode \
               -o ../../GeneratedCode
 
 
   IDL_Files {
-    ../Ports/Hello_Receiver_comp.idl
+    ../ports/Hello_Receiver_comp.idl
     gendir=../../GeneratedCode
     }
 }
@@ -28,8 +28,8 @@ project(AMI_Hello_Tuto_Hello_Receiver_lem_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Receiver_lem_stub_export.h \
               -SS -Gxhst \
-              -I../Ports \
-              -I../../Ports \
+              -I../ports \
+              -I../../ports \
               -I../../GeneratedCode\
               -o ../../GeneratedCode
 

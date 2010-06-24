@@ -9,14 +9,14 @@ project(AMI_Hello_Tuto_Hello_Sender_idl_gen) : componentidldefaults {
               -Wb,skel_export_include=Hello_Sender_svnt_export.h \
               -Wb,exec_export_macro=HELLO_SENDER_EXEC_Export \
               -Wb,exec_export_include=Hello_Sender_exec_export.h \
-              -I../Ports \
-              -I../../Ports \
+              -I../ports \
+              -I../../ports \
               -I../../GeneratedCode \
               -o ../../GeneratedCode \
               -GC
 
   IDL_Files {
-    ../Ports/Hello_Sender_comp.idl
+    ../ports/Hello_Sender_comp.idl
     gendir=../../GeneratedCode
   }
 }
@@ -27,8 +27,8 @@ project(AMI_Hello_Tuto_Hello_Sender_lem_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=HELLO_SENDER_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Sender_lem_stub_export.h \
               -SS -Gxhst\ 
-              -I../Ports \
-              -I../../Ports \
+              -I../ports \
+              -I../../ports \
               -I../../GeneratedCode\
               -o ../../GeneratedCode
 
