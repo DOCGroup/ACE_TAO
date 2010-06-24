@@ -6,8 +6,8 @@
   <implementation xmi:id="Hello_ReceiverHomeImplementation">
     <name>Hello_ReceiverHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact"/>
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact"/>
+    <artifact xmi:idref="Hello_Receiver_comp_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Receiver_comp_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -15,7 +15,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Receiver_Impl</string>
+          <string>create_Hello_AMI_Receiver_comp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -26,7 +26,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
+          <string>Receiver_comp_exec</string>
         </value>
       </value>
     </execParameter>
@@ -37,7 +37,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Receiver_Servant</string>
+          <string>create_Hello_Receiver_comp_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -57,8 +57,8 @@
   <implementation xmi:id="Hello_SenderHomeImplementation">
     <name>Hello_SenderHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact"/>
-    <artifact xmi:idref="Hello_Sender_SvntArtifact"/>
+    <artifact xmi:idref="Hello_Sender_comp_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Sender_comp_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -66,7 +66,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI_Sender_Impl</string>
+          <string>create_Hello_AMI_Sender_comp_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -88,7 +88,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Sender_Servant</string>
+          <string>create_Hello_Sender_comp_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -108,8 +108,8 @@
   <implementation xmi:id="Hello_AMIHomeImplementation">
     <name>Hello_AMIHomeImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_AMI_ExecArtifact"/>
-    <artifact xmi:idref="Hello_AMI_SvntArtifact"/>
+    <artifact xmi:idref="Hello_MyFoo_obj_AMI_ExecArtifact"/>
+    <artifact xmi:idref="Hello_MyFoo_obj_AMI_SvntArtifact"/>
     <execParameter>
       <name>component factory</name>
       <value>
@@ -117,7 +117,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI4CCM_MyFoo_Connector_Impl</string>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -139,7 +139,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -262,11 +262,11 @@
     </internalEndpoint>
   </connection>
 
-  <artifact xmi:id="Hello_AMI_SvntArtifact">
+  <artifact xmi:id="Hello_MyFoo_obj_AMI_SvntArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
     <source/>
     <node/>
-    <location>Hello_svnt</location>
+    <location>Hello_MyFoo_obj_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -274,17 +274,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI4CCM_MyFoo_Connector_AMI4CCM_Connector_Servant</string>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_AMI4CCM_Connector_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="Hello_AMI_ExecArtifact">
+  <artifact xmi:id="Hello_MyFoo_obj_AMI_ExecArtifact">
     <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
     <source/>
     <node/>
-    <location>Hello_conn</location>
+    <location>Hello_MyFoo_obj_conn</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -292,17 +292,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_AMI4CCM_MyFoo_Connector_Impl</string>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="Hello_Receiver_SvntArtifact">
+  <artifact xmi:id="Hello_Receiver_comp_SvntArtifact">
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_svnt</location>
+    <location>Hello_Receiver_comp_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -316,11 +316,11 @@
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="Hello_Receiver_ExecArtifact">
-    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+  <artifact xmi:id="Hello_Receiver_comp_ExecArtifact">
+    <name>Receiver_comp_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_exec</location>
+    <location>Hello_Receiver_comp_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -334,11 +334,11 @@
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="Hello_Sender_SvntArtifact">
+  <artifact xmi:id="Hello_Sender_comp_SvntArtifact">
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_svnt</location>
+    <location>Hello_Sender_comp_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -352,11 +352,11 @@
     </execParameter>
   </artifact>
 
-  <artifact xmi:id="Hello_Sender_ExecArtifact">
+  <artifact xmi:id="Hello_Sender_comp_ExecArtifact">
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_exec</location>
+    <location>Hello_Sender_comp_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>

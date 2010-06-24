@@ -5,14 +5,14 @@
 
 #include <Components.idl>
 
-#include "Hello_obj.idl"
+#include "Hello_MyFoo_obj.idl"
 
 module Hello
 {
-  component Receiver
+  component Receiver_comp
   {
     /// Provides
-    provides MyFoo do_my_foo;
+    provides MyFoo_obj do_my_foo;
   };
 };
 #endif

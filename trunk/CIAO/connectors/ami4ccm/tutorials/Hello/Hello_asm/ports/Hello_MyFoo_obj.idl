@@ -1,22 +1,24 @@
 // $Id$
 
 //==============================================================================
-/// @file Hello_obj.idl
+/// @file Hello_MyFoo_obj.idl
 //==============================================================================
 
-#ifndef HELLO_OBJ_IDL
-#define HELLO_OBJ_IDL
+#ifndef HELLO_MYFOO_OBJ_IDL
+#define HELLO_MYFOO_OBJ_IDL
 
-#include "Hello_defn.idl"
+#include "Hello_Common_defn.idl"
 
-#pragma ciao lem "Hello_objE.idl"
-#pragma ciao ami4ccm interface "Hello::MyFoo"
-#pragma ciao lem "Hello_objAE.idl"
+#pragma ciao lem "Hello_MyFoo_objE.idl"
+#pragma ciao ami4ccm interface "Hello::MyFoo_obj"
+#pragma ciao lem "Hello_MyFoo_objAE.idl"
+//needed for 'uses multiple', not used in this example 
+#pragma ciao ami4ccm idl "Hello_MyFoo_objA.idl"
 
 module Hello
 {
   // Sender/Receiver interface
-  interface MyFoo
+  interface MyFoo_obj
     {
       long foo (in string in_str, out string answer)
         raises (InternalError);
@@ -33,4 +35,3 @@ module Hello
 };
 
 #endif
-

@@ -1,11 +1,11 @@
 // $Id$
 
 //==============================================================================
-/// @file Hello_defn.idl
+/// @file Hello_Common_defn.idl
 //==============================================================================
 
-#ifndef HELLO_DEFN_IDL
-#define HELLO_DEFN_IDL
+#ifndef HELLO_COMMON_DEFN_IDL
+#define HELLO_COMMON_DEFN_IDL
 
 module Hello
 {

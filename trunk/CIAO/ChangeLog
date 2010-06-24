@@ -1,3 +1,26 @@
+Tue Jun 24 18:159:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/descriptors/Plan.cdp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_Common_defn.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_Common_defn.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_defn.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_defn.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_MyFoo_obj.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_MyFoo_obj.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_obj.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/ports/Hello_Receiver_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/ports/Hello_Sender_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.idl
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.mpc
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h
+        Changes in dir structure and naming.
+
 Thu Jun 24 18:07:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc:
