@@ -7,10 +7,10 @@
 
 #include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
-#include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/ndds/InstanceHandle_t.h"
+#include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 
-#include "dds4ccm/impl/dds/DataWriter_T.h"
+#include "dds4ccm/impl/DataWriter_T.h"
 
 #include "ace/Log_Msg.h"
 

@@ -3,7 +3,7 @@
 #ifndef DDS_PSAT_CONNECTOR_T
 #define DDS_PSAT_CONNECTOR_T
 
-#include "connectors/dds4ccm/impl/dds/DDS_TopicBase_Connector_T.h"
+#include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class DDS_PSAT_Event_Connector_T

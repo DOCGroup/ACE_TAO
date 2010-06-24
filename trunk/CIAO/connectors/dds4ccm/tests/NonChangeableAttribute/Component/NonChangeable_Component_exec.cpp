@@ -5,7 +5,7 @@
 #include "NonChangeable_Component_exec.h"
 #include "Base/NonChangeable_BaseSupport.h"
 
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 #define DOMAIN_ID_IN_DP 56
 #define TOPIC_NAME_IN_DP "NonChangeable"

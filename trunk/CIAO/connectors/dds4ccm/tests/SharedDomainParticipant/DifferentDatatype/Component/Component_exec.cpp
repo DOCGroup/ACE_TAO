@@ -6,7 +6,7 @@
 
 #include "Base/BaseSupport.h"
 
-#include "dds4ccm/impl/dds/DataWriter.h"
+#include "dds4ccm/impl/DataWriter.h"
 
 namespace CIAO_SharedDP_SharedDPComponent_Impl
 {

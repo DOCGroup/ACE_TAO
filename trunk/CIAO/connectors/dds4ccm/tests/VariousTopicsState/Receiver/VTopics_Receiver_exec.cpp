@@ -5,7 +5,7 @@
 //Test for different topic types , with DDS_STATE connector, look for 'SUBSCRIPTION_MATCHED_STATUS
 
 #include "VTopics_Receiver_exec.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 
 namespace CIAO_VTopics_Receiver_Impl

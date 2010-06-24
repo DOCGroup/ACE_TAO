@@ -4,7 +4,7 @@
 
 //Test different topic types, with DDS_STATE connector, look for 'PUBLICATION_MATCHED_STATUS
 #include "VTopics_Sender_exec.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_VTopics_Sender_Impl
 {

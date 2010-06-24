@@ -5,7 +5,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ndds/ndds_cpp.h"
-#include "dds4ccm/impl/dds/ndds/OctetSeq.h"
+#include "dds4ccm/impl/ndds/OctetSeq.h"
 
 class OctetSequence
 {
