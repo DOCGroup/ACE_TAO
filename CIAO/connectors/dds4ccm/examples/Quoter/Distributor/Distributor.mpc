@@ -38,7 +38,7 @@ project(DDS_Distributor_lem_stub) : ccm_svnt, dds4ccm_base {
   libout = ../lib
   includes += ..
   sharedname = Distributor_lem_stub
-  dynamicflags   = DISTRIBUTOR_LEM_STUB_BUILD_DLL
+  dynamicflags += DISTRIBUTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -64,7 +64,7 @@ project(DDS_Distributor_stub) : ccm_stub, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   sharedname = Distributor_stub
-  dynamicflags   = DISTRIBUTOR_STUB_BUILD_DLL
+  dynamicflags += DISTRIBUTOR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -90,7 +90,7 @@ project(DDS_Distributor_exec) : ciao_executor, dds4ccm_base {
   libpaths += ../lib
   includes += ..
   libout = ../lib
-  dynamicflags   = DISTRIBUTOR_EXEC_BUILD_DLL
+  dynamicflags += DISTRIBUTOR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -117,7 +117,7 @@ project(DDS_Distributor_svnt) : ciao_servant, dds4ccm_base {
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  dynamicflags = DISTRIBUTOR_SVNT_BUILD_DLL
+  dynamicflags += DISTRIBUTOR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

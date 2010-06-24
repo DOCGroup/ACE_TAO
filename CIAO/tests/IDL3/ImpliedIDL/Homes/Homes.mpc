@@ -5,7 +5,7 @@ project(Homes_stub): ccm_stub {
 
   sharedname = Homes_stub
   idlflags += -Wb,stub_export_macro=HOMES_STUB_Export -Wb,stub_export_include=Homes_stub_export.h -Wb,skel_export_macro=HOMES_SVNT_Export -Wb,skel_export_include=Homes_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = HOMES_STUB_BUILD_DLL
+  dynamicflags += HOMES_STUB_BUILD_DLL
 
   IDL_Files {
     Homes.idl

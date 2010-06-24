@@ -32,7 +32,7 @@ project(SimpleCommon_stub) : ccm_stub {
   libs  +=
 
   sharedname = SimpleCommon_stub
-  dynamicflags   = SIMPLECOMMON_STUB_BUILD_DLL
+  dynamicflags += SIMPLECOMMON_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(SimpleCommon_skel) : ccm_svnt {
   sharedname  = SimpleCommon_skel
   libs       += SimpleCommon_stub
 
-  dynamicflags = SIMPLECOMMON_SKEL_BUILD_DLL
+  dynamicflags += SIMPLECOMMON_SKEL_BUILD_DLL
 
   IDL_Files {
   }

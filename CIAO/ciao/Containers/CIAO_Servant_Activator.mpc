@@ -15,7 +15,7 @@ project(CIAO_Servant_Activator_stub_idl) : install, ciaoidldefaults {
 
 project(CIAO_Servant_Activator_stub) : install, ciao_lib, portableserver, ciao_port_activator_stub, avoids_minimum_corba, ciao_logger {
   after += CIAO_Servant_Activator_stub_idl
-  dynamicflags = CIAO_SERVANT_ACTIVATOR_BUILD_DLL
+  dynamicflags += CIAO_SERVANT_ACTIVATOR_BUILD_DLL
 
   IDL_Files {
   }

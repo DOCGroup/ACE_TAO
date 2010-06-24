@@ -32,7 +32,7 @@ project(PIDLInclude_lem_stub) : ccm_svnt   {
   libs  +=  PIDLInclude_stub
 
   sharedname = PIDLInclude_lem_stub
-  dynamicflags   = PIDLINCLUDE_LEM_STUB_BUILD_DLL
+  dynamicflags += PIDLINCLUDE_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(PIDLInclude_stub) : ccm_stub   {
 
 
   sharedname = PIDLInclude_stub
-  dynamicflags   = PIDLINCLUDE_STUB_BUILD_DLL
+  dynamicflags += PIDLINCLUDE_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -82,7 +82,7 @@ project(PIDLInclude_exec) : ciao_executor   {
   libs += PIDLInclude_stub PIDLInclude_lem_stub
 
 
-  dynamicflags   = PIDLINCLUDE_EXEC_BUILD_DLL
+  dynamicflags += PIDLINCLUDE_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -107,7 +107,7 @@ project(PIDLInclude_svnt) : ciao_servant   {
   libs       += PIDLInclude_stub PIDLInclude_lem_stub
 
 
-  dynamicflags = PIDLINCLUDE_SVNT_BUILD_DLL
+  dynamicflags += PIDLINCLUDE_SVNT_BUILD_DLL
 
   IDL_Files {
   }

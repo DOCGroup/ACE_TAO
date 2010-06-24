@@ -65,7 +65,7 @@ project(Messenger_stub) : ccm_stub {
   after += Messenger_idl_gen Messenger_messenger_idl_gen Messenger_lem_gen
 
   sharedname = Messenger_stub
-  dynamicflags   = MESSENGER_STUB_BUILD_DLL
+  dynamicflags += MESSENGER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -101,7 +101,7 @@ project(Messenger_exec) : ciao_executor {
   sharedname = Messenger_exec
   libs += Messenger_stub
 
-  dynamicflags   = MESSENGER_EXEC_BUILD_DLL
+  dynamicflags += MESSENGER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -138,7 +138,7 @@ project(Messenger_svnt) : ciao_servant {
   libs       += Messenger_exec \
                 Messenger_stub
 
-  dynamicflags = MESSENGER_SVNT_BUILD_DLL
+  dynamicflags += MESSENGER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

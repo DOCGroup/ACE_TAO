@@ -35,7 +35,7 @@ project(Protocols_Receiver_stub) : ccm_stub {
   libpaths += ../common
 
   sharedname = Protocols_Receiver_stub
-  dynamicflags   = RECEIVER_STUB_BUILD_DLL
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -61,7 +61,7 @@ project(Protocols_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
           Protocols_stub
   libpaths += ../common
 
-  dynamicflags   = RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -92,7 +92,7 @@ project(Protocols_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
                 Protocols_stub
   libpaths += ../common
 
-  dynamicflags = RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
 
   IDL_Files {
   }

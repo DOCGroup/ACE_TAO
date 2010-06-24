@@ -32,7 +32,7 @@ project(Keyword_Clash_stub) : ccm_stub {
   avoids += mfc
   after += Keyword_Clash_idl_gen
   sharedname = Keyword_Clash_stub
-  dynamicflags = KEYWORD_CLASH_STUB_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(Keyword_Clash_exec) : ciao_executor {
   sharedname = Keyword_Clash_exec
   libs += Keyword_Clash_stub
 
-  dynamicflags = KEYWORD_CLASH_EXEC_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(Keyword_Clash_svnt) : ciao_servant {
   libs       += Keyword_Clash_exec \
                 Keyword_Clash_stub
 
-  dynamicflags = KEYWORD_CLASH_SVNT_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_SVNT_BUILD_DLL
 
   IDL_Files {
   }

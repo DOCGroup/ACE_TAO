@@ -39,7 +39,7 @@ project(IhC_Foo_IhC_Bar_lem_stub) : ccm_svnt   {
            IhC_Bar_stub
 
   sharedname = IhC_Bar_lem_stub
-  dynamicflags   = IHC_BAR_LEM_STUB_BUILD_DLL
+  dynamicflags += IHC_BAR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -63,7 +63,7 @@ project(IhC_Foo_IhC_Bar_stub) : ccm_stub   {
   libs  += IhC_Foo_stub 
 
   sharedname = IhC_Bar_stub
-  dynamicflags   = IHC_BAR_STUB_BUILD_DLL
+  dynamicflags += IHC_BAR_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(IhC_Foo_IhC_Bar_exec) : ciao_executor   {
           IhC_Foo_lem_stub \
           IhC_Foo_exec
 
-  dynamicflags = IHC_BAR_EXEC_BUILD_DLL
+  dynamicflags += IHC_BAR_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -121,7 +121,7 @@ project(IhC_Foo_IhC_Bar_svnt) : ciao_servant   {
                 IhC_Foo_lem_stub \
                 IhC_Foo_svnt
 
-  dynamicflags = IHC_BAR_SVNT_BUILD_DLL
+  dynamicflags += IHC_BAR_SVNT_BUILD_DLL
 
   IDL_Files {
   }

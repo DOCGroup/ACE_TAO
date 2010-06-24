@@ -35,7 +35,7 @@ project(TSEC_CheckPoint_stub): ccm_stub, event {
   libpaths += ../interfaces
   libs     += ENW_stub
   sharedname = TSEC_CheckPoint_stub
-  dynamicflags   = TSEC_CHECKPOINT_STUB_BUILD_DLL
+  dynamicflags += TSEC_CHECKPOINT_STUB_BUILD_DLL
   requires += dummy_label
   IDL_Files {
   }
@@ -62,7 +62,7 @@ project(TSEC_CheckPoint_svnt) : ciao_servant, event {
   libs     += TSEC_CheckPoint_stub TSEC_CheckPoint_exec
   libs     += ENW_stub ENW_skel
   requires += dummy_label
-  dynamicflags = TSEC_CHECKPOINT_SVNT_BUILD_DLL
+  dynamicflags += TSEC_CHECKPOINT_SVNT_BUILD_DLL
   requires += dummy_label
   IDL_Files {
   }
@@ -89,7 +89,7 @@ project(TSEC_CheckPoint_exec) : ciao_executor, event, ccm_svnt, ciao_session_con
   idlflags  += -SS -St \
                -Wb,export_macro=TSEC_CHECKPOINT_EXEC_Export \
                -Wb,export_include=TSEC_CheckPoint_exec_export.h
-  dynamicflags = TSEC_CHECKPOINT_EXEC_BUILD_DLL
+  dynamicflags += TSEC_CHECKPOINT_EXEC_BUILD_DLL
 
   IDL_Files {
     TSEC_CheckPointEI.idl

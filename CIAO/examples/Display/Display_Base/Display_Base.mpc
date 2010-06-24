@@ -30,7 +30,7 @@ project(Display_Base_stub) : ccm_stub {
   libpaths += ../lib
 
   sharedname = Display_Base_stub
-  dynamicflags   = DISPLAY_BASE_STUB_BUILD_DLL
+  dynamicflags += DISPLAY_BASE_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -57,7 +57,7 @@ project(Display_Base_skel) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags = DISPLAY_BASE_SKEL_BUILD_DLL
+  dynamicflags += DISPLAY_BASE_SKEL_BUILD_DLL
 
   IDL_Files {
   }

@@ -38,7 +38,7 @@ project(BMDevice_stub): ccm_stub {
 
   libs += BasicSP_stub
 
-  dynamicflags   = BMDEVICE_STUB_BUILD_DLL
+  dynamicflags += BMDEVICE_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(BMDevice_exec) : ciao_executor {
 
   includes += ..
 
-  dynamicflags   = BMDEVICE_EXEC_BUILD_DLL
+  dynamicflags += BMDEVICE_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(BMDevice_svnt) : ciao_servant {
 
   libs    += BMDevice_stub BMDevice_exec BasicSP_exec
   libs    += BasicSP_stub BasicSP_svnt
-  dynamicflags = BMDEVICE_SVNT_BUILD_DLL
+  dynamicflags += BMDEVICE_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
 

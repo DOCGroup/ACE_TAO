@@ -5,7 +5,7 @@ project(Abstract_stub): ccm_stub {
 
   sharedname = Abstract_stub
   idlflags += -Wb,stub_export_macro=ABSTRACT_STUB_Export -Wb,stub_export_include=Abstract_stub_export.h -Wb,skel_export_macro=ABSTRACT_SVNT_Export -Wb,skel_export_include=Abstract_svnt_export.h -Gxhst -Gxhsk
-  dynamicflags   = ABSTRACT_STUB_BUILD_DLL
+  dynamicflags += ABSTRACT_STUB_BUILD_DLL
 
   IDL_Files {
     Abstract.idl

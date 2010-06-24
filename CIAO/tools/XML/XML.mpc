@@ -2,7 +2,7 @@
 
 project (CIAO_XML_Utils) : install, acelib, xerces, ciao_lib {
   sharedname   += CIAO_XML_Utils
-  dynamicflags  = CIAO_XML_UTILS_BUILD_DLL
+  dynamicflags += CIAO_XML_UTILS_BUILD_DLL
   includes      += ..
 
   specific {

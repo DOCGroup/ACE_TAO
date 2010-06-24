@@ -16,7 +16,7 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support {
              Display_NavDisplayGUI_exec_moc
   sharedname = NavDisplayGUI_exec
   libs += NavDisplay_stub Display_Base_stub
-  dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
+  dynamicflags += NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
   includes  += ../NavDisplay
   libout = ../lib
   libpaths += ../lib
@@ -62,7 +62,7 @@ project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support {
                 NavDisplay_stub \
                 Display_Base_skel \
                 Display_Base_stub
-  dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
+  dynamicflags += NAVDISPLAY_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
 

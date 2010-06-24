@@ -1,7 +1,7 @@
 // $Id$
 
 project (DAnCE_Split_Plan_Impl) : dance_lib, dance_stub, dance_deployment_stub, dance_output, dance_logger {
-  dynamicflags = DANCE_SPLIT_PLAN_BUILD_DLL
+  dynamicflags += DANCE_SPLIT_PLAN_BUILD_DLL
   includes += $(DANCE_ROOT)/tools
   Source_Files {
     Node_Splitter.cpp

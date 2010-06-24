@@ -19,7 +19,7 @@ project(Glfa_A_stub) : ccm_stub   {
   libs  +=
 
   sharedname = A_stub
-  dynamicflags   = A_STUB_BUILD_DLL
+  dynamicflags += A_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -46,7 +46,7 @@ project(Glfa_A_skel) : ciao_executor   {
 
 
 
-  dynamicflags = A_SKEL_BUILD_DLL
+  dynamicflags += A_SKEL_BUILD_DLL
 
   IDL_Files {
   }

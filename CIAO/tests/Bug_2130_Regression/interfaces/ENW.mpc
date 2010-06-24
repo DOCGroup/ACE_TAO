@@ -7,7 +7,7 @@ project(ENW_stub): ccm_stub, event {
               -Wb,stub_export_include=ENW_stub_export.h \
               -Wb,skel_export_macro=ENW_SKEL_Export \
               -Wb,skel_export_include=ENW_skel_export.h -Gxhst -Gxhsk
-  dynamicflags = ENW_STUB_BUILD_DLL
+  dynamicflags += ENW_STUB_BUILD_DLL
 
   IDL_Files {
     ENW.idl
@@ -28,7 +28,7 @@ project(ENW_skel) : ciao_servant, event {
               -Wb,skel_export_macro=ENW_SKEL_Export \
               -Wb,skel_export_include=ENW_skel_export.h
 
-  dynamicflags = ENW_SKEL_BUILD_DLL
+  dynamicflags += ENW_SKEL_BUILD_DLL
 
   IDL_Files {
     ENW.idl

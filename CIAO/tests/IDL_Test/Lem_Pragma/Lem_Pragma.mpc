@@ -39,7 +39,7 @@ project(Lem_Pragma_lem_gen) : ciaoidldefaults {
 project(Lem_Pragma_stub) : ccm_stub {
   after += Lem_Pragma_idl_gen
   sharedname = Lem_Pragma_stub
-  dynamicflags = KEYWORD_CLASH_STUB_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -69,7 +69,7 @@ project(Lem_Pragma_exec) : ciao_executor {
   sharedname = Lem_Pragma_exec
   libs += Lem_Pragma_stub
 
-  dynamicflags = KEYWORD_CLASH_EXEC_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -102,7 +102,7 @@ project(Lem_Pragma_svnt) : ciao_servant {
   libs       += Lem_Pragma_exec \
                 Lem_Pragma_stub
 
-  dynamicflags = KEYWORD_CLASH_SVNT_BUILD_DLL
+  dynamicflags += KEYWORD_CLASH_SVNT_BUILD_DLL
 
   IDL_Files {
   }

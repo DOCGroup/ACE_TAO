@@ -46,7 +46,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../../lib
   libout = ../../lib
   sharedname = Hello_Receiver_lem_stub
-  dynamicflags   = HELLO_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_LEM_STUB_BUILD_DLL
   includes += .. ../.. ../../GeneratedCode
   IDL_Files {
   }
@@ -71,7 +71,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../../lib
   libout = ../../lib
   sharedname = Hello_Receiver_stub
-  dynamicflags   = HELLO_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_STUB_BUILD_DLL
   includes += ..  ../../GeneratedCode
   IDL_Files {
   }
@@ -96,7 +96,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_exec) : ciao_executor, messaging {
   libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_lem_stub Hello_defn_stub
   libpaths += ../../lib
   libout = ../../lib
-  dynamicflags   = HELLO_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_EXEC_BUILD_DLL
   includes += .. ../..  ../../GeneratedCode ./GeneratedCode
   IDL_Files {
   }
@@ -122,7 +122,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_svnt) : ciao_servant, messaging {
                 Hello_stub Hello_lem_stub
   libpaths += ../../lib
   libout = ../../lib
-  dynamicflags = HELLO_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += HELLO_RECEIVER_SVNT_BUILD_DLL
   includes += ..   ../.. ../../GeneratedCode ./GeneratedCode
   IDL_Files {
   }

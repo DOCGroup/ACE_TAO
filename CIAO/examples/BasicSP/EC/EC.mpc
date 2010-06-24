@@ -39,7 +39,7 @@ project(EC_stub): ccm_stub {
 
   libs += BasicSP_stub
 
-  dynamicflags   = EC_STUB_BUILD_DLL
+  dynamicflags += EC_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -65,7 +65,7 @@ project(EC_exec) : ciao_executor {
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags   = EC_EXEC_BUILD_DLL
+  dynamicflags += EC_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -93,7 +93,7 @@ project(EC_svnt) : ciao_servant {
 
   libs    += EC_stub EC_exec
   libs    += BasicSP_stub BasicSP_svnt
-  dynamicflags = EC_SVNT_BUILD_DLL
+  dynamicflags += EC_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
 

@@ -35,7 +35,7 @@ project(AMI_OutArgsT_Base_Receiver_l_stub) : ccm_svnt, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = InterOutArgsT_Receiver_lem_stub
-  dynamicflags   = INTEROUTARGS_T_RECEIVER_LEM_STUB_BUILD_DLL
+  dynamicflags += INTEROUTARGS_T_RECEIVER_LEM_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -60,7 +60,7 @@ project(AMI_InterOutArgsT_Base_Receiver_stub) : ccm_stub, messaging {
   libpaths += ../lib
   libout = ../lib
   sharedname = InterOutArgsT_Receiver_stub
-  dynamicflags   = INTEROUTARGS_T_RECEIVER_STUB_BUILD_DLL
+  dynamicflags += INTEROUTARGS_T_RECEIVER_STUB_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -85,7 +85,7 @@ project(AMI_InterOutArgsT_Base_Receiver_exec) : ciao_executor, messaging {
   libs += InterOutArgsT_Receiver_stub InterOutArgsT_Receiver_lem_stub InterOutArgsT_stub InterOutArgsT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags   = INTEROUTARGS_T_RECEIVER_EXEC_BUILD_DLL
+  dynamicflags += INTEROUTARGS_T_RECEIVER_EXEC_BUILD_DLL
   includes += ..
   IDL_Files {
   }
@@ -111,7 +111,7 @@ project(AMI_InterOutArgsT_Base_Receiver_svnt) : ciao_servant, messaging {
                 InterOutArgsT_stub InterOutArgsT_lem_stub
   libpaths += ../lib
   libout = ../lib
-  dynamicflags = INTEROUTARGS_T_RECEIVER_SVNT_BUILD_DLL
+  dynamicflags += INTEROUTARGS_T_RECEIVER_SVNT_BUILD_DLL
   includes += ..
   IDL_Files {
   }

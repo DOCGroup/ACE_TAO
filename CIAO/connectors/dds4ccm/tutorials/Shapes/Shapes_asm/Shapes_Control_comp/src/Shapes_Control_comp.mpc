@@ -47,7 +47,7 @@ project(Shapes_Control_comp_lem_stub) : ccm_svnt {
   includes += ../../ports/GeneratedCode ../ports/GeneratedCode
 
   sharedname = Shapes_Control_comp_lem_stub
-  dynamicflags   = SHAPES_CONTROL_COMP_LEM_STUB_BUILD_DLL
+  dynamicflags += SHAPES_CONTROL_COMP_LEM_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -77,7 +77,7 @@ project(Shapes_Control_comp_stub) : ccm_stub {
   includes += ../../ports/GeneratedCode ../ports/GeneratedCode
 
   sharedname = Shapes_Control_comp_stub
-  dynamicflags   = SHAPES_CONTROL_COMP_STUB_BUILD_DLL
+  dynamicflags += SHAPES_CONTROL_COMP_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -108,7 +108,7 @@ project(Shapes_Control_comp_exec) : ciao_executor {
   includes += ./GeneratedCode ../ports/GeneratedCode ../../ports/GeneratedCode
 
   sharedname = Shapes_Control_comp_exec
-  dynamicflags   = SHAPES_CONTROL_COMP_EXEC_BUILD_DLL
+  dynamicflags += SHAPES_CONTROL_COMP_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -142,7 +142,7 @@ project(Shapes_Control_comp_svnt) : ciao_servant {
   includes += ../ports/GeneratedCode ../../ports/GeneratedCode
 
   sharedname  = Shapes_Control_comp_svnt
-  dynamicflags = SHAPES_CONTROL_COMP_SVNT_BUILD_DLL
+  dynamicflags += SHAPES_CONTROL_COMP_SVNT_BUILD_DLL
 
   IDL_Files {
   }

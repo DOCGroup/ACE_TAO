@@ -37,7 +37,7 @@ project(CCM_svnt) : install, orbsvcslib, orbsvcs_output \
                            , avoids_corba_e_compact \
                            , avoids_corba_e_micro \
 {
-  dynamicflags = CCM_SVNT_BUILD_DLL
+  dynamicflags += CCM_SVNT_BUILD_DLL
   after += CCM_svnt_idl
   IDL_Files {
   }

@@ -20,7 +20,7 @@ project(Moo_stub) : ccm_stub   {
   
   
   sharedname = Moo_stub
-  dynamicflags   = MOO_STUB_BUILD_DLL
+  dynamicflags += MOO_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -47,7 +47,7 @@ project(Moo_skel) : ciao_executor   {
  
   
   
-  dynamicflags = MOO_SKEL_BUILD_DLL
+  dynamicflags += MOO_SKEL_BUILD_DLL
   
   IDL_Files {
   }
