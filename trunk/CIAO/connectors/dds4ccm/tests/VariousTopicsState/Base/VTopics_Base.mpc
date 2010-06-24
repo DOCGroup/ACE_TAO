@@ -1,7 +1,7 @@
 // $Id$
 
-project (DDS_VTopics_Base_stub) : taoidldefaults, anytypecode, \
-                                  dds4ccm_ts_default,valuetype {
+project (DDS_VTopics_Base_stub) : taoidldefaults, \
+                                  dds4ccm_ts_default, valuetype {
   sharedname = DDS_VTopics_Base_stub
   dynamicflags += VTOPICS_BASE_STUB_BUILD_DLL
   libout = ../lib

@@ -1,6 +1,6 @@
 // $Id$
 
-project (GCE_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project (GCE_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = GCE_Test_Base_stub
   dynamicflags += GET_COMPONENT_EVENT_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
