@@ -3,7 +3,7 @@
 
 project(ACE_gperf) : acelib, install_lib, crosscompile, ace_output {
   sharedname   = ACE_gperf_lib
-  dynamicflags = ACE_GPERF_BUILD_DLL
+  dynamicflags += ACE_GPERF_BUILD_DLL
   Source_Files {
     Options.cpp
     Iterator.cpp

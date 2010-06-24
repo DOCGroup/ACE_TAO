@@ -10,7 +10,7 @@
 project(*AC_CLD) : acelib, ssl, threads {
   avoids += uses_wchar
   sharedname = AC_CLD
-  dynamicflags = AC_CLD_BUILD_DLL
+  dynamicflags += AC_CLD_BUILD_DLL
   specific(gnuace) {
     after += *CLD
   }
@@ -22,7 +22,7 @@ project(*AC_CLD) : acelib, ssl, threads {
 
 project(*AIO_CLD) : acelib, ssl {
   sharedname = AIO_CLD
-  dynamicflags = AIO_CLD_BUILD_DLL
+  dynamicflags += AIO_CLD_BUILD_DLL
   Source_Files {
     AIO_Client_Logging_Daemon.cpp
   }
@@ -31,7 +31,7 @@ project(*AIO_CLD) : acelib, ssl {
 project(*CLD) : acelib, avoids_ace_for_tao {
   avoids += uses_wchar
   sharedname = CLD
-  dynamicflags = CLD_BUILD_DLL
+  dynamicflags += CLD_BUILD_DLL
   Source_Files {
     Client_Logging_Daemon.cpp
     Logging_Acceptor.cpp
@@ -86,7 +86,7 @@ project(*Select_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
 project(*SLD) : acelib, avoids_ace_for_tao {
   avoids += uses_wchar
   sharedname = SLD
-  dynamicflags = SLD_BUILD_DLL
+  dynamicflags += SLD_BUILD_DLL
   specific(gnuace) {
     after += *CLD
   }
@@ -101,7 +101,7 @@ project(*SLD) : acelib, avoids_ace_for_tao {
 project(*SLDex) : acelib, avoids_ace_for_tao {
   avoids += uses_wchar
   sharedname = SLDex
-  dynamicflags = SLDEX_BUILD_DLL
+  dynamicflags += SLDEX_BUILD_DLL
   specific(gnuace) {
     after += *CLD
   }
@@ -141,7 +141,7 @@ project(*TP_Reactor_Log_Server) : aceexe, avoids_ace_for_tao {
 project(*TPCLS) : acelib, ssl {
   avoids += uses_wchar
   sharedname = TPCLS
-  dynamicflags = TPCLS_BUILD_DLL
+  dynamicflags += TPCLS_BUILD_DLL
   specific(gnuace) {
     after += *CLD
   }
@@ -154,7 +154,7 @@ project(*TPCLS) : acelib, ssl {
 project(*TPLS) : acelib, avoids_ace_for_tao {
   avoids += uses_wchar
   sharedname = TPLS
-  dynamicflags = TPLS_BUILD_DLL
+  dynamicflags += TPLS_BUILD_DLL
   specific(gnuace) {
     after += *CLD
   }
