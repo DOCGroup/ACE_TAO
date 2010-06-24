@@ -6,6 +6,12 @@
 #include "DAnCE_Utility.h"
 #include "ace/OS_NS_stdio.h"
 #include "DAnCE_PropertiesC.h"
+#include "Deployment/Deployment_PlanErrorC.h"
+#include "Deployment/Deployment_StartErrorC.h"
+#include "Deployment/Deployment_StopErrorC.h"
+#include "tao/SystemException.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
 
 namespace DAnCE
 {
@@ -44,14 +50,14 @@ namespace DAnCE
             }
         }
     }
-    
+
     void build_property_sequence (::Deployment::Properties &prop,
                                   const PROPERTY_MAP &pmap)
     {
       CORBA::ULong pos = prop.length ();
-            
+
       prop.length (pos + pmap.current_size ());
-      
+
       for (PROPERTY_MAP::const_iterator i = pmap.begin ();
            i != pmap.end ();
            ++i)
@@ -299,6 +305,62 @@ namespace DAnCE
                        ACE_TEXT("Unable to determine instance type, instance will be ignored.\n")));
       return 0;
     }
+
+    bool
+    throw_exception_from_any (const CORBA::Any &excep)
+    {
+      CORBA::TypeCode_ptr tc = excep._tao_get_typecode ();
+      std::string ex_id = tc->id ();
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                        ACE_TEXT("DAnCE::Utility::throw_exception_from_any - ")
+                        ACE_TEXT("Found typecode %C\n"), ex_id.c_str ()));
+      if (ex_id == Deployment::_tc_PlanError->id ())
+        {
+          extract_and_throw_exception<Deployment::PlanError> (excep);
+        }
+      else if (ex_id == Deployment::_tc_StartError->id ())
+        {
+          extract_and_throw_exception<Deployment::StartError> (excep);
+        }
+      else if (ex_id == Deployment::_tc_StopError->id ())
+        {
+          extract_and_throw_exception<Deployment::StopError> (excep);
+        }
+      else if (ex_id.find ("IDL:omg.org/CORBA/") == 0)
+        {
+          CORBA::SystemException* sysex = TAO::create_system_exception (ex_id.c_str ());
+          if (sysex)
+            {
+              TAO_OutputCDR cdr_out;
+              cdr_out << excep;
+              TAO_InputCDR cdr_in(cdr_out);
+              sysex->_tao_decode (cdr_in);
+              sysex->_raise ();
+            }
+        }
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                        ACE_TEXT("DAnCE::Utility::throw_exception_from_any - ")
+                        ACE_TEXT("Exception with typecode %C unknown\n"), ex_id.c_str ()));
+      throw CORBA::UNKNOWN ();
+    }
+
+    CORBA::Any*
+    create_any_from_user_exception (const CORBA::UserException& ex)
+    {
+      CORBA::Any ex_any;
+      ex_any <<= ex;
+      TAO_OutputCDR cdr_out;
+      cdr_out << ex_any;
+      TAO_InputCDR cdr_in (cdr_out);
+
+      CORBA::Any *tmp = 0;
+      ACE_NEW_THROW_EX (tmp,
+                        CORBA::Any,
+                        CORBA::NO_MEMORY ());
+      cdr_in >> *tmp;
+      return tmp;
+    }
+
   } /* namespace Utility */
 }
 #endif /*DAnCE_Utility_CPP*/

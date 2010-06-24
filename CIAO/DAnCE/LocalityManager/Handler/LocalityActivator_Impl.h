@@ -28,29 +28,6 @@
 namespace DAnCE
 {
   /**
-   * @brief The signal handler class for the SIGCHLD handling to avoid
-   * zombies
-   */
-  class Child_Handler : public virtual ACE_Event_Handler
-  {
-  public:
-    virtual int handle_signal (int,
-                               siginfo_t *,
-                               ucontext_t *)
-    {
-      // @@ Note that this code is not portable to all OS platforms
-      // since it uses print statements within signal handler context.
-      ACE_exitcode status;
-      // makes a claal to the underlying os system call
-      // -1 to wait for any child process
-      // and WNOHANG so that it retuurns immediately
-      ACE_OS::waitpid (-1 ,&status, WNOHANG, 0);
-
-      return 0;
-    }
-  };
-
-  /**
    * @author William R. Otte <wotte@dre.vanderbilt.edu>
    * @brief Default server activator for CIAO component servers.
    *
@@ -84,7 +61,7 @@ namespace DAnCE
 
     ::DAnCE::LocalityManager_ptr
         create_locality_manager (const ::Deployment::Properties & config);
-      
+
     void remove_locality_manager (
                                   ::DAnCE::LocalityManager_ptr server);
 
@@ -92,6 +69,7 @@ namespace DAnCE
 
   private:
     struct Server_Info;
+    class Server_Child_Handler;
 
     /// Builds command line options based on configuration information.
     /// May modify the uuid of the component server.
@@ -99,7 +77,7 @@ namespace DAnCE
 
     /// Spawns the component server process, but does not wait for it
     /// to call back.
-    pid_t spawn_locality_manager (const Server_Info &si,
+    pid_t spawn_locality_manager (Server_Child_Handler* exit_handler,
                                   const ACE_CString &cmd_line);
 
     /// This method is only applicable when our program is configured as
@@ -125,6 +103,7 @@ namespace DAnCE
           ref_ (DAnCE::LocalityManager::_nil ()),
           pid_ (ACE_INVALID_PID),
           activated_ (false),
+          terminated_ (false),
           mutex_ (),
           condition_ (mutex_)
       {}
@@ -137,6 +116,7 @@ namespace DAnCE
       DAnCE::LocalityManager_var ref_;
       pid_t pid_;
       bool activated_;
+      bool terminated_;
       TAO_SYNCH_MUTEX mutex_;
       ACE_Condition<TAO_SYNCH_MUTEX> condition_;
     };
@@ -154,6 +134,28 @@ namespace DAnCE
     // Presumably, there won't be too many component servers per node application
     typedef ACE_Unbounded_Set_Ex <Safe_Server_Info, _server_info> SERVER_INFOS;
 
+    /**
+    * @brief The exit handler class for the locality manager child process
+    * to detect and report process exit
+    */
+    class Server_Child_Handler : public virtual ACE_Event_Handler
+    {
+    public:
+      Server_Child_Handler (const Safe_Server_Info&  si);
+      virtual ~Server_Child_Handler ();
+
+      virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+
+      virtual int handle_exit (ACE_Process *proc);
+
+      const Server_Info& server_info () const
+      {
+        return *this->server_info_;
+      }
+    private:
+      Safe_Server_Info server_info_;
+    };
+
     /// Default args to pass to all componentservers.
     ACE_CString default_args_;
 
@@ -162,8 +164,6 @@ namespace DAnCE
     SERVER_INFOS server_infos_;
 
     ACE_Process_Manager process_manager_;
-
-    Child_Handler child_handler_;
 
     CORBA::ULong spawn_delay_;
 

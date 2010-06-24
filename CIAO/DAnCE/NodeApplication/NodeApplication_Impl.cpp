@@ -55,8 +55,8 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   PLUGIN_MANAGER::instance ()->set_configuration (prop);
   PLUGIN_MANAGER::instance ()->register_installation_handler ("DAnCE_Locality_Handler",
                                                               "create_Locality_Handler");
-  
-  DANCE_DEBUG (8, (LM_INFO, DLINFO 
+
+  DANCE_DEBUG (8, (LM_INFO, DLINFO
                    ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
                    ACE_TEXT("Plugin loaded\n")));
 
@@ -108,15 +108,15 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
       CORBA::ULong loc_manager_instance = sub_plan_key.locality_manager_instance ();
       const ::Deployment::InstanceDeploymentDescription &lm_idd
         = sub_plan.instance[loc_manager_instance];
-      
-      
+
+
       DANCE_DEBUG (4, (LM_DEBUG, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instances - ")
                        ACE_TEXT ("Found Locality Manager instance %u:%C, deploying\n"),
                        loc_manager_instance,
                        lm_idd.name.in ()
                        ));
-      
+
       this->sub_plans_ [ lm_idd.name.in () ] = SUB_PLAN (loc_manager_instance,
                                                          sub_plan);
 
@@ -131,22 +131,22 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
                                           result
                                           ),
                         CORBA::NO_MEMORY ());
-      
-      
+
+
       prepared_instances.push_back (result);
       this->scheduler_.schedule_event (event);
       ++plan;
     }
-  
+
   ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
-  
+
   if (!completion.wait_on_completion (&tv))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
                        ACE_TEXT("Timed out while waiting on completion of scheduler\n")));
     }
-  
+
   tv = ACE_Time_Value::zero;
 
   plan = 0;
@@ -155,16 +155,22 @@ NodeApplication_Impl::prepare_instances (const LocalitySplitter::TSubPlans& plan
        ++i)
     {
       Event_Result event;
-      if (i->get (event, &tv) != 0)        
+      if (i->get (event, &tv) != 0)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT("NodeApplication_Impl::prepare_instances - ")
                            ACE_TEXT("Failed to get future value for current instance\n")));
           continue;
         }
-      
+
+      if (event.exception_)
+        {
+          DAnCE::Utility::throw_exception_from_any (event.contents_.in ());
+        }
+
       ::DAnCE::LocalityManager_var lm_ref;
-      if (event.contents_.in ().impl () &&
+      if (event.contents_.ptr () &&
+          event.contents_.in ().impl () &&
           (event.contents_.in ()  >>= lm_ref) &&
           !CORBA::is_nil (lm_ref.in ()))
         {
@@ -371,19 +377,19 @@ NodeApplication_Impl::remove_instances (void)
                        ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
                        ACE_TEXT ("Removing locality <%C>\n"),
                        i->first.c_str ()));
-      
+
       try
         {
           CORBA::Any ref;
           ref <<= ::DAnCE::LocalityManager::_duplicate (i->second);
 
           i->second->destroyApplication (0);
-          
+
           Remove_Instance *event (0);
           Event_Future result;
-          
+
           PLAN_MAP::iterator sub_plan;
-          
+
           if ((sub_plan = this->sub_plans_.find (i->first)) !=
               this->sub_plans_.end ())
             {
@@ -393,7 +399,7 @@ NodeApplication_Impl::remove_instances (void)
                                         ref,
                                         DANCE_LOCALITYMANAGER,
                                         result));
-              
+
               removed_instances.push_back (result);
               completion.accept (result);
 
@@ -430,18 +436,18 @@ NodeApplication_Impl::remove_instances (void)
                                            final_exception,
                                            "Unknown CORBA Final_Exception",
                                            ex._info ().c_str ());
-        }      
+        }
     }
-  
+
   ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
-  
+
   if (completion.wait_on_completion (&tv))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT("NodeApplication_Impl::remove_instances - ")
                        ACE_TEXT("Timed out while waiting on completion of scheduler\n")));
     }
-  
+
   tv = ACE_Time_Value::zero;
 
   for (std::list < Event_Future >::iterator i = removed_instances.begin ();
@@ -451,7 +457,7 @@ NodeApplication_Impl::remove_instances (void)
       try
         {
           Event_Result event;
-          
+
           if (i->get (event,
                       &tv) != 0)
             {
@@ -460,7 +466,7 @@ NodeApplication_Impl::remove_instances (void)
                                ACE_TEXT ("Failed to get future value for current instance\n")));
               continue;
             }
-          
+
           using DAnCE::Utility::extract_and_throw_exception;
 
           if (event.exception_ &&
@@ -471,7 +477,7 @@ NodeApplication_Impl::remove_instances (void)
                                ACE_TEXT ("Unexpected exception thrown during removal of ")
                                ACE_TEXT ("instance <%C>\n"),
                                event.id_.c_str ()));
-              
+
               throw ::Deployment::StopError (event.id_.c_str (),
                                              "Unknown exception thrown from remove_instance\n");
             }
@@ -501,7 +507,7 @@ NodeApplication_Impl::remove_instances (void)
                                            "Unknown CORBA Final_Exception",
                                            ex._info ().c_str ());
         }
-            
+
     }
   if (flag)
     throw final_exception;

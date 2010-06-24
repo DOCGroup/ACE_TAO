@@ -75,11 +75,20 @@ namespace DAnCE
     /// overwritten.
     DANCE_STUB_Export int write_IOR (const ACE_TCHAR *pathname,
                                      const char *IOR);
-    
+
     /// Attempt to extract the any into EXCEPTION type and
     /// throw.  Returns 'false' if extraction fails.
     template <typename EXCEPTION>
     bool extract_and_throw_exception (const CORBA::Any &excep);
+
+    DANCE_STUB_Export bool
+    throw_exception_from_any (const CORBA::Any &excep);
+
+    template <typename EXCEPTION>
+    CORBA::Any* create_any_from_exception (const EXCEPTION& ex);
+
+    DANCE_STUB_Export CORBA::Any*
+    create_any_from_user_exception (const CORBA::UserException& ex);
   }
 }
 
