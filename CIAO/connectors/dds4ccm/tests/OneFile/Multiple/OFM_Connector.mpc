@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl -b dds4ccm_base OFM_Connector"
 
 project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                 dds4ccm, anytypecode, dds4ccm_ts_default {
+                                 dds4ccm, dds4ccm_ts_default {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=OFM_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OFM_Connector_stub_export.h \

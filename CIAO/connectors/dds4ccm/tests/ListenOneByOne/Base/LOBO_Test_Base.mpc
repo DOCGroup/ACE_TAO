@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS_LOBO_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project (DDS_LOBO_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = DDS_LOBO_Test_Base_stub
   dynamicflags += LISTEN_ONE_BY_ONE_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib

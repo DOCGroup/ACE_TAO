@@ -1,6 +1,6 @@
 // $Id$
 
-project(*latency_receiver_plain) : nddslib, acelib, taolib, anytypecode {
+project(*latency_receiver_plain) : nddslib, acelib, taolib, typecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_receiver
   libpaths += ../lib

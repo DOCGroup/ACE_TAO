@@ -1,6 +1,6 @@
 // $Id$
 
-project (OIT_Test_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project (OIT_Test_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = OIT_Test_Base_stub
   dynamicflags += ON_INCONSISTENT_TOPIC_TEST_BASE_STUB_BUILD_DLL
   libout = ../lib
