@@ -80,7 +80,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
 
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
+        DataWriter_type * typed_ccm_dw = reinterpret_cast <DataWriter_type *> (dw1.in ());
         if (typed_ccm_dw)
           {
             DDSDataWriter * dds_dw1 = typed_ccm_dw->get_impl ();
@@ -118,7 +118,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
 
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
+        DataWriter_type * typed_ccm_dw = reinterpret_cast <DataWriter_type *> (dw2.in ());
         if (typed_ccm_dw)
           {
             DDSDataWriter * dds_dw2 = typed_ccm_dw->get_impl ();
@@ -156,7 +156,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
 
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
+        DataWriter_type * typed_ccm_dw = reinterpret_cast <DataWriter_type *> (dw3.in ());
         if (typed_ccm_dw)
           {
             DDSDataWriter * dds_dw3 = typed_ccm_dw->get_impl ();
@@ -193,7 +193,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
             CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
 
-        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw4.in ());
+        DataWriter_type * typed_ccm_dw = reinterpret_cast <DataWriter_type *> (dw4.in ());
         if (typed_ccm_dw)
           {
             DDSDataWriter * dds_dw4 = typed_ccm_dw->get_impl ();

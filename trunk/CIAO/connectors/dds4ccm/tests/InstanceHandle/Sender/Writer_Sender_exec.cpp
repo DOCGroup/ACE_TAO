@@ -234,11 +234,10 @@ namespace CIAO_Writer_Sender_Impl
         CIAO_WriterTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits,
         CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits> DataWriter_type;
 
-    DataWriter_type * typed_ccm_dw = dynamic_cast < DataWriter_type * > (dds_dw.in ());
+    DataWriter_type * typed_ccm_dw = reinterpret_cast < DataWriter_type * > (dds_dw.in ());
     if (typed_ccm_dw)
       {
-        DDSDataWriter * p = dynamic_cast < DDSDataWriter * > (typed_ccm_dw->get_impl ());
-        this->dds_writer_ = dynamic_cast < WriterTestDataWriter * > (p);
+        this->dds_writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_impl ());
         if (!this->dds_writer_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
