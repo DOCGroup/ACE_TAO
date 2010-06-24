@@ -5,16 +5,16 @@
 
 #include <Components.idl>
 
-#include "Hello_obj.idl"
+#include "Hello_MyFoo_obj.idl"
 
-#pragma ciao ami4ccm receptacle "Hello::Sender::run_my_foo"
+#pragma ciao ami4ccm receptacle "Hello::Sender_comp::run_my_foo"
 
 module Hello
 {
-  component Sender
+  component Sender_comp
   {
     /// For synchronous invocation
-    uses MyFoo run_my_foo;
+    uses MyFoo_obj run_my_foo;
   };
 };
 

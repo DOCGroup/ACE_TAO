@@ -4,37 +4,37 @@
 #include "Hello_Sender_comp_exec.h"
 #include "ace/OS_NS_unistd.h"
 
-namespace CIAO_Hello_Sender_Impl
+namespace CIAO_Hello_Sender_comp_Impl
 {
   //============================================================
   // Facet Executor Implementation Class: MyFoo_callback_exec_i
   //============================================================
-  MyFoo_callback_exec_i::MyFoo_callback_exec_i (void)
+  MyFoo_obj_callback_exec_i::MyFoo_obj_callback_exec_i (void)
   {
   }
 
-  MyFoo_callback_exec_i::~MyFoo_callback_exec_i (void)
+  MyFoo_obj_callback_exec_i::~MyFoo_obj_callback_exec_i (void)
   {
   }
 
   //============================================================
-  // Operations from ::CCM_AMI::MyFoo_callback
+  // Operations from ::CCM_AMI::MyFoo_obj_callback
   //============================================================
   // Foo methods
   void
-  MyFoo_callback_exec_i::foo (
+  MyFoo_obj_callback_exec_i::foo (
     ::CORBA::Long ami_return_val,
     const char * answer)
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender:\tMyFoo AMI Callback from foo:")
-                ACE_TEXT("result <%u> answer <%u>\n"),
+                ACE_TEXT("result <%u> answer <%C>\n"),
                 ami_return_val, answer));
   }
 
   void
-  MyFoo_callback_exec_i::foo_excep (
+  MyFoo_obj_callback_exec_i::foo_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -53,7 +53,7 @@ namespace CIAO_Hello_Sender_Impl
 
   // Hello methods
   void
-  MyFoo_callback_exec_i::hello (
+  MyFoo_obj_callback_exec_i::hello (
       ::CORBA::Long answer)
   {
     /* Your code here. */
@@ -63,7 +63,7 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::hello_excep (
+  MyFoo_obj_callback_exec_i::hello_excep (
       ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -74,7 +74,7 @@ namespace CIAO_Hello_Sender_Impl
     catch (const Hello::InternalError& ex)
       {
         ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Sender:\tMyFoo Excveption AMI Callback from hello: ")
+                ACE_TEXT("Sender:\tMyFoo Exception AMI Callback from hello:\n")
                 ACE_TEXT(" id <%u> error_string <%C>\n"),
                 ex.id, ex.error_string.in ()));
       }
@@ -82,7 +82,7 @@ namespace CIAO_Hello_Sender_Impl
 
   // GET rw_attrib meyhods
   void
-  MyFoo_callback_exec_i::get_rw_attrib (
+  MyFoo_obj_callback_exec_i::get_rw_attrib (
     ::CORBA::Short ami_return_val)
   {
     /* Your code here. */
@@ -92,7 +92,7 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::get_rw_attrib_excep (
+  MyFoo_obj_callback_exec_i::get_rw_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -101,7 +101,7 @@ namespace CIAO_Hello_Sender_Impl
 
   //SET rw_attrib methods
   void
-  MyFoo_callback_exec_i::set_rw_attrib ()
+  MyFoo_obj_callback_exec_i::set_rw_attrib ()
   {
     /* Your code here. */
     ACE_DEBUG ((LM_DEBUG,
@@ -110,7 +110,7 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::set_rw_attrib_excep (
+  MyFoo_obj_callback_exec_i::set_rw_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */
@@ -119,7 +119,7 @@ namespace CIAO_Hello_Sender_Impl
 
   //ro_attrib Reply Handler
   void
-  MyFoo_callback_exec_i::get_ro_attrib (
+  MyFoo_obj_callback_exec_i::get_ro_attrib (
     ::CORBA::Short ami_return_val)
   {
     /* Your code here. */
@@ -129,7 +129,7 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  MyFoo_callback_exec_i::get_ro_attrib_excep (
+  MyFoo_obj_callback_exec_i::get_ro_attrib_excep (
     ::CCM_AMI::ExceptionHolder * excep_holder)
   {
     /* Your code here. */   
@@ -140,8 +140,8 @@ namespace CIAO_Hello_Sender_Impl
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-                           ::Hello::AMI4CCM_MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::Hello::AMI4CCM_MyFoo::_duplicate (my_foo_ami))
+                           ::Hello::AMI4CCM_MyFoo_obj_ptr my_foo_ami)
+  : my_foo_ami_ (::Hello::AMI4CCM_MyFoo_obj::_duplicate (my_foo_ami))
   {
   }
 
@@ -163,12 +163,12 @@ namespace CIAO_Hello_Sender_Impl
           }
         else
           {
-            my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (),
+            my_foo_ami_->sendc_foo (new MyFoo_obj_callback_exec_i (),
                                     "Do something asynchronous");
-            my_foo_ami_->sendc_hello (new MyFoo_callback_exec_i ());
-            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_callback_exec_i ());
-            my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 15);
-            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_callback_exec_i ());
+            my_foo_ami_->sendc_hello (new MyFoo_obj_callback_exec_i ());
+            my_foo_ami_->sendc_get_rw_attrib(new MyFoo_obj_callback_exec_i ());
+            my_foo_ami_->sendc_set_rw_attrib(new MyFoo_obj_callback_exec_i (), 15);
+            my_foo_ami_->sendc_get_ro_attrib(new MyFoo_obj_callback_exec_i ());
             ACE_DEBUG ((LM_DEBUG,
                ACE_TEXT("Sender (ASYNCH) :\tInvoked 5 Asynchronous calls\n")));
           }
@@ -176,8 +176,8 @@ namespace CIAO_Hello_Sender_Impl
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (ASYNCH) :\tInvoke Asynchronous calls ")
                 ACE_TEXT("to test except handling\n")));
-    my_foo_ami_->sendc_foo (new MyFoo_callback_exec_i (), "");
-    my_foo_ami_->sendc_set_rw_attrib(new MyFoo_callback_exec_i (), 0);
+    my_foo_ami_->sendc_foo (new MyFoo_obj_callback_exec_i (), "");
+    my_foo_ami_->sendc_set_rw_attrib(new MyFoo_obj_callback_exec_i (), 0);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Sender (ASYNCH) :\tInvoked 2 Asynchronous call.\n")));
     return 0;
@@ -186,8 +186,8 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Worker thread for synchronous invocations for MyFoo
   //============================================================
-  synch_foo_generator::synch_foo_generator (::Hello::MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::Hello::MyFoo::_duplicate (my_foo_ami))
+  synch_foo_generator::synch_foo_generator (::Hello::MyFoo_obj_ptr my_foo_ami)
+  : my_foo_ami_ (::Hello::MyFoo_obj::_duplicate (my_foo_ami))
   {
   }
 
@@ -196,7 +196,7 @@ namespace CIAO_Hello_Sender_Impl
     ACE_OS::sleep (2);
     // run synch calls
     CORBA::String_var out_str;
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 2; ++i)
       {
         try
           {
@@ -205,7 +205,7 @@ namespace CIAO_Hello_Sender_Impl
             CORBA::Long result = my_foo_ami_->foo ("Do something synchronous",
                                                    out_str.out());
             ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call (foo)")
+                    ACE_TEXT("Sender (SYNCH):\tInvoked synchronous call (foo)\n")
                     ACE_TEXT(" result <%u> answer <%C>\n"), 
                              result, out_str.in()));
 
@@ -253,13 +253,13 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Sender_exec_i
+  // Component Executor Implementation Class: Sender_comp_exec_i
   //============================================================
-  Sender_exec_i::Sender_exec_i (void)
+  Sender_comp_exec_i::Sender_comp_exec_i (void)
   {
   }
 
-  Sender_exec_i::~Sender_exec_i (void)
+  Sender_comp_exec_i::~Sender_comp_exec_i (void)
   {
   }
 
@@ -269,11 +269,11 @@ namespace CIAO_Hello_Sender_Impl
   // Operations from Components::SessionComponent.
 
   void
-  Sender_exec_i::set_session_context (
+  Sender_comp_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      ::Hello::CCM_Sender_Context::_narrow (ctx);
+      ::Hello::CCM_Sender_comp_Context::_narrow (ctx);
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -281,20 +281,20 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  Sender_exec_i::configuration_complete (void)
+  Sender_comp_exec_i::configuration_complete (void)
   {
   }
 
   void
-  Sender_exec_i::ccm_activate (void)
+  Sender_comp_exec_i::ccm_activate (void)
   {
-    ::Hello::AMI4CCM_MyFoo_var asynch_foo =
+    ::Hello::AMI4CCM_MyFoo_obj_var asynch_foo =
       this->context_->get_connection_sendc_run_my_foo();
     asynch_foo_generator* asynch_foo_gen =
         new asynch_foo_generator (asynch_foo);
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    ::Hello::MyFoo_var synch_foo =
+    ::Hello::MyFoo_obj_var synch_foo =
         this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
       new synch_foo_generator (synch_foo);
@@ -302,27 +302,26 @@ namespace CIAO_Hello_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_passivate (void)
+  Sender_comp_exec_i::ccm_passivate (void)
   {
   }
 
   void
-  Sender_exec_i::ccm_remove (void)
+  Sender_comp_exec_i::ccm_remove (void)
   {
   }
 
   extern "C"  ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Sender_Impl (void)
+  create_Hello_AMI_Sender_comp_Impl (void)
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_RETURN (
       retval,
-      Sender_exec_i,
+      Sender_comp_exec_i,
       ::Components::EnterpriseComponent::_nil ());
 
     return retval;
   }
 }
-

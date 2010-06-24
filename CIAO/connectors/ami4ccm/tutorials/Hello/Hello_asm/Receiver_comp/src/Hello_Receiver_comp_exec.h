@@ -11,17 +11,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "Hello_Receiver_exec_export.h"
+#include "Hello_Receiver_comp_exec_export.h"
 
-namespace CIAO_Hello_Receiver_Impl
+namespace CIAO_Hello_Receiver_comp_Impl
 {
-  class MyFoo_exec_i
-    : public virtual ::Hello::CCM_MyFoo,
+  class MyFoo_obj_exec_i
+    : public virtual ::Hello::CCM_MyFoo_obj,
       public virtual ::CORBA::LocalObject
   {
   public:
-    MyFoo_exec_i (void);
-    virtual ~MyFoo_exec_i (void);
+    MyFoo_obj_exec_i (void);
+    virtual ~MyFoo_obj_exec_i (void);
 
     virtual ::CORBA::Long foo (const char * in_str, ::CORBA::String_out answer);
 
@@ -34,15 +34,15 @@ namespace CIAO_Hello_Receiver_Impl
     virtual CORBA::Short ro_attrib ();
   };
 
-  class  Receiver_exec_i
-    : public virtual Receiver_Exec,
+  class  Receiver_comp_exec_i
+    : public virtual Receiver_comp_Exec,
       public virtual ::CORBA::LocalObject
   {
   public:
-    Receiver_exec_i (void);
-    virtual ~Receiver_exec_i (void);
+    Receiver_comp_exec_i (void);
+    virtual ~Receiver_comp_exec_i (void);
 
-    virtual ::Hello::CCM_MyFoo_ptr get_do_my_foo (void);
+    virtual ::Hello::CCM_MyFoo_obj_ptr get_do_my_foo (void);
 
     virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
@@ -53,10 +53,10 @@ namespace CIAO_Hello_Receiver_Impl
     virtual void ccm_remove (void);
 
   private:
-    ::Hello::CCM_Receiver_Context_var context_;
+    ::Hello::CCM_Receiver_comp_Context_var context_;
   };
 
-  extern "C" HELLO_RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_Hello_AMI_Receiver_Impl (void);
+  extern "C" HELLO_RECEIVER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Hello_AMI_Receiver_comp_Impl (void);
 }
 #endif /* ifndef */

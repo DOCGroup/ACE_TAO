@@ -1,0 +1,207 @@
+// $Id$
+
+project(AMI_Hello_Tuto_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
+  after += AMI_Hello_Tuto_defn_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=HELLO_MYFOO_OBJ_STUB_Export \
+              -Wb,stub_export_include=Hello_MyFoo_obj_stub_export.h \
+              -Wb,skel_export_macro=HELLO_MYFOO_OBJ_SKEL_Export \
+              -Wb,skel_export_include=Hello_MyFoo_obj_skel_export.h \
+              -Wb,conn_export_macro=HELLO_MYFOO_OBJ_CONN_Export \
+              -Wb,conn_export_include=Hello_MyFoo_obj_conn_export.h \
+              -Wb,exec_export_macro=HELLO_MYFOO_OBJ_EXEC_Export \
+              -Wb,exec_export_include=Hello_MyFoo_obj_exec_export.h \
+               -o ../GeneratedCode\
+              -GM -Gxhcn
+  idlflags -= -Gsv
+
+  IDL_Files {
+    Hello_MyFoo_obj.idl
+    gendir=../GeneratedCode
+  }
+}
+
+project(AMI_Hello_Tuto_lem_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_idl_gen AMI_Hello_Tuto_lema_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=HELLO_MYFOO_OBJ_LEM_STUB_Export \
+              -Wb,export_include=Hello_MyFoo_obj_lem_stub_export.h \
+              -I ../GeneratedCode\ 
+              -o ../GeneratedCode\
+              -SS -Gxhst
+
+  IDL_Files {
+    ../GeneratedCode/Hello_MyFoo_objE.idl
+    gendir=../GeneratedCode
+  }
+}
+
+project(AMI_Hello_Tuto_lema_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=HELLO_MYFOO_OBJ_STUB_Export \
+              -Wb,stub_export_include=Hello_MyFoo_obj_stub_export.h \
+              -Wb,conn_export_macro=HELLO_MYFOO_OBJ_CONN_Export \
+              -Wb,conn_export_include=Hello_MyFoo_obj_conn_export.h \
+              -Wb,svnt_export_macro=HELLO_MYFOO_OBJ_SVNT_Export \
+              -Wb,svnt_export_include=Hello_MyFoo_obj_svnt_export.h \
+              -Wb,skel_export_macro=HELLO_MYFOO_OBJ_SKEL_Export \
+              -Wb,skel_export_include=Hello_MyFoo_obj_skel_export.h \
+              -I ../GeneratedCode\
+              -o ../GeneratedCode\
+              -Gsv -Gcn -Glem -GC -Gxhst -Gxhsv
+
+  IDL_Files {
+    ../GeneratedCode/Hello_MyFoo_objA.idl
+    gendir=../GeneratedCode
+  }
+}
+
+project(AMI_Hello_Tuto_lemae_gen) : ciaoidldefaults {
+  after += AMI_Hello_Tuto_lema_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=HELLO_MYFOO_OBJ_LEM_STUB_Export \
+              -Wb,stub_export_include=Hello_MyFoo_obj_lem_stub_export.h \
+              -I ../GeneratedCode\
+              -o ../GeneratedCode\
+              -SS
+
+  IDL_Files {
+    ../GeneratedCode/Hello_MyFoo_objAE.idl
+   gendir=../GeneratedCode
+  }
+}
+
+project(AMI_Hello_Tuto_stub) : ccm_stub, ami, ami4ccm_stub {
+  after += AMI_Hello_Tuto_lem_gen AMI_Hello_Tuto_defn_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes += . ../GeneratedCode
+
+  sharedname = Hello_MyFoo_obj_stub
+  dynamicflags = HELLO_MYFOO_OBJ_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ../GeneratedCode/Hello_MyFoo_objC.cpp
+    ../GeneratedCode/Hello_MyFoo_objAC.cpp
+  }
+
+  Header_Files {
+    ../GeneratedCode/Hello_MyFoo_objC.h
+    ../GeneratedCode/Hello_MyFoo_stub_export.h
+}
+
+  Inline_Files {
+    ../GeneratedCode/Hello_MyFoo_objC.inl
+  }
+}
+
+project(AMI_Hello_Tuto_lem_stub) : ccm_executor, ami, ami4ccm_lem_stub {
+  after += AMI_Hello_Tuto_lem_gen AMI_Hello_Tuto_stub AMI_Hello_Tuto_lemae_gen AMI_Hello_Tuto_skel
+  libs += Hello_MyFoo_obj_stub Hello_MyFoo_obj_skel
+  libout = ../lib
+  libpaths += ../lib
+  includes += . ../GeneratedCode
+
+  sharedname = Hello_MyFoo_obj_lem_stub
+  dynamicflags = HELLO_MYFOO_OBJ_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ../GeneratedCode/Hello_MyFoo_objEC.cpp
+    ../GeneratedCode/Hello_MyFoo_objAEC.cpp
+  }
+
+  Header_Files {
+    ../Hello_MyFoo_objEC.h
+    ../Hello_MyFoo_obj_lem_stub_export.h
+}
+
+  Inline_Files {
+    ../GeneratedCode/Hello_MyFoo_objEC.inl
+  }
+}
+
+project(AMI_Hello_Tuto_skel) : ciao_executor, ami, ami4ccm_servant {
+  after      += AMI_Hello_Tuto_stub AMI_Hello_Tuto_defn_stub
+  sharedname  = Hello_MyFoo_obj_skel
+  libs       += Hello_MyFoo_obj_stub Hello_common_defn_stub
+  libout = ../lib
+  libpaths += ../lib
+  includes +=  . ../GeneratedCode
+
+  dynamicflags = HELLO_MYFOO_OBJ_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ../GeneratedCode/Hello_MyFoo_objS.cpp
+    ../GeneratedCode/Hello_MyFoo_objAS.cpp
+  }
+
+  Header_Files {
+    ../GeneratedCode/Hello_MyFoo_objS.h
+    ../GeneratedCode/Hello_MyFoo_obj_skel_export.h
+  }
+
+  Inline_Files {
+    ../GeneratedCode/Hello_MyFoo_objS.inl
+  }
+}
+
+project(AMI_Hello_Tuto_conn) : ciao_executor, ami, ami4ccm_lem_stub {
+  after   += AMI_Hello_Tuto_lem_stub AMI_Hello_Tuto_skel AMI_Hello_Tuto_lema_gen AMI_Hello_Tuto_lemae_gen
+  sharedname = Hello_MyFoo_obj_conn
+  libs += Hello_MyFoo_obj_stub Hello_MyFoo_obj_skel Hello_MyFoo_obj_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = HELLO_MYFOO_OBJ_CONN_BUILD_DLL
+  includes += . ../GeneratedCode
+  IDL_Files {
+  }
+
+  Source_Files {
+    ../GeneratedCode/Hello_MyFoo_objA_conn.cpp
+  }
+
+  Header_Files {
+    ../GeneratedCode/Hello_MyFoo_objA_conn.h
+    ../GeneratedCode/Hello_MyFoo_obj_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_Hello_Tuto_svnt) : ciao_servant, ami, ami4ccm_servant {
+  after   += AMI_Hello_Tuto_lem_stub AMI_Hello_Tuto_skel AMI_Hello_Tuto_lema_gen AMI_Hello_Tuto_lemae_gen\
+             AMI_Hello_Tuto_conn AMI_Hello_Tuto_defn_stub
+  sharedname = Hello_MyFoo_obj_svnt
+  libs += Hello_MyFoo_obj_stub Hello_MyFoo_obj_skel Hello_MyFoo_obj_lem_stub\
+          Hello_MyFoo_obj_conn Hello_common_defn_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags = HELLO_MYFOO_OBJ_SVNT_BUILD_DLL
+  includes += . ../GeneratedCode
+  IDL_Files {
+  }
+
+  Source_Files {
+    ../GeneratedCode/Hello_MyFoo_objA_svnt.cpp
+  }
+
+  Header_Files {
+    ../GeneratedCode/Hello_MyFoo_objA_svnt.h
+    ../GeneratedCode/Hello_MyFoo_objA_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+

@@ -3,21 +3,20 @@
 project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
   after += AMI_Hello_Tuto_idl_gen
-  idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_STUB_Export \
-              -Wb,stub_export_include=Hello_Receiver_stub_export.h \
-              -Wb,skel_export_macro=HELLO_RECEIVER_SVNT_Export \
-              -Wb,skel_export_include=Hello_Receiver_svnt_export.h \
-              -Wb,exec_export_macro=HELLO_RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Hello_Receiver_exec_export.h \
+  idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_COMP_STUB_Export \
+              -Wb,stub_export_include=Hello_Receiver_comp_stub_export.h \
+              -Wb,skel_export_macro=HELLO_RECEIVER_COMP_SVNT_Export \
+              -Wb,skel_export_include=Hello_Receiver_comp_svnt_export.h \
+              -Wb,exec_export_macro=HELLO_RECEIVER_COMP_EXEC_Export \
+              -Wb,exec_export_include=Hello_Receiver_comp_exec_export.h \
               -Glem \
-              -I../ports \
               -I../../ports \
               -I../../GeneratedCode \
               -o ../../GeneratedCode
 
 
   IDL_Files {
-    ../ports/Hello_Receiver_comp.idl
+    Hello_Receiver_comp.idl
     gendir=../../GeneratedCode
     }
 }
@@ -25,10 +24,9 @@ project(AMI_Hello_Tuto_Hello_Receiver_idl_gen) : componentidldefaults {
 project(AMI_Hello_Tuto_Hello_Receiver_lem_gen) : ciaoidldefaults {
   after += AMI_Hello_Tuto_Hello_Receiver_idl_gen
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_LEM_STUB_Export \
-              -Wb,stub_export_include=Hello_Receiver_lem_stub_export.h \
+  idlflags += -Wb,stub_export_macro=HELLO_RECEIVER_COMP_LEM_STUB_Export \
+              -Wb,stub_export_include=Hello_Receiver_comp_lem_stub_export.h \
               -SS -Gxhst \
-              -I../ports \
               -I../../ports \
               -I../../GeneratedCode\
               -o ../../GeneratedCode
@@ -41,13 +39,14 @@ project(AMI_Hello_Tuto_Hello_Receiver_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_Hello_Tuto_Hello_Receiver_l_stub) : ccm_svnt, messaging {
-  after += AMI_Hello_Tuto_Hello_Receiver_lem_gen AMI_Hello_Tuto_Hello_Receiver_stub AMI_Hello_Tuto_stub
-  libs  += Hello_stub Hello_Receiver_stub
+  after += AMI_Hello_Tuto_Hello_Receiver_lem_gen\
+           AMI_Hello_Tuto_Hello_Receiver_stub AMI_Hello_Tuto_stub
+  libs  += Hello_MyFoo_obj_stub Hello_Receiver_comp_stub
   libpaths += ../../lib
   libout = ../../lib
-  sharedname = Hello_Receiver_lem_stub
-  dynamicflags += HELLO_RECEIVER_LEM_STUB_BUILD_DLL
-  includes += .. ../.. ../../GeneratedCode
+  sharedname = Hello_Receiver_comp_lem_stub
+  dynamicflags += HELLO_RECEIVER_COMP_LEM_STUB_BUILD_DLL
+  includes += ../.. ../../GeneratedCode
   IDL_Files {
   }
 
@@ -57,7 +56,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_l_stub) : ccm_svnt, messaging {
 
   Header_Files {
      ../../GeneratedCode/Hello_Receiver_compEC.h
-     ../../GeneratedCode/Hello_Receiver_lem_stub_export.h
+     ../../GeneratedCode/Hello_Receiver_comp_lem_stub_export.h
   }
 
   Inline_Files {
@@ -67,12 +66,13 @@ project(AMI_Hello_Tuto_Hello_Receiver_l_stub) : ccm_svnt, messaging {
 
 project(AMI_Hello_Tuto_Hello_Receiver_stub) : ccm_stub, messaging {
   after += AMI_Hello_Tuto_Hello_Receiver_idl_gen AMI_Hello_Tuto_stub
-  libs  += Hello_stub
+  libs  += Hello_MyFoo_obj_stub
   libpaths += ../../lib
   libout = ../../lib
-  sharedname = Hello_Receiver_stub
-  dynamicflags += HELLO_RECEIVER_STUB_BUILD_DLL
-  includes += ..  ../../GeneratedCode
+  sharedname = Hello_Receiver_comp_stub
+  dynamicflags += HELLO_RECEIVER_COMP_STUB_BUILD_DLL
+  includes += ../../GeneratedCode
+
   IDL_Files {
   }
 
@@ -82,7 +82,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_stub) : ccm_stub, messaging {
 
   Header_Files {
      ../../GeneratedCode/Hello_Receiver_compC.h
-     ../../GeneratedCode/Hello_Receiver_stub_export.h
+     ../../GeneratedCode/Hello_Receiver_comp_stub_export.h
   }
 
   Inline_Files {
@@ -91,13 +91,18 @@ project(AMI_Hello_Tuto_Hello_Receiver_stub) : ccm_stub, messaging {
 }
 
 project(AMI_Hello_Tuto_Hello_Receiver_exec) : ciao_executor, messaging {
-  after   += AMI_Hello_Tuto_Hello_Receiver_l_stub AMI_Hello_Tuto_Hello_Receiver_stub AMI_Hello_Tuto_stub AMI_Hello_Tuto_lem_stub
-  sharedname = Hello_Receiver_exec
-  libs += Hello_Receiver_stub Hello_Receiver_lem_stub Hello_stub Hello_lem_stub Hello_defn_stub
+  after   += AMI_Hello_Tuto_Hello_Receiver_l_stub\
+             AMI_Hello_Tuto_Hello_Receiver_stub\
+             AMI_Hello_Tuto_stub AMI_Hello_Tuto_lem_stub
+  sharedname = Hello_Receiver_comp_exec
+  libs += Hello_Receiver_comp_stub Hello_Receiver_comp_lem_stub\
+          Hello_MyFoo_obj_stub\
+          Hello_MyFoo_obj_lem_stub Hello_common_defn_stub
   libpaths += ../../lib
   libout = ../../lib
-  dynamicflags += HELLO_RECEIVER_EXEC_BUILD_DLL
-  includes += .. ../..  ../../GeneratedCode ./GeneratedCode
+  dynamicflags += HELLO_RECEIVER_COMP_EXEC_BUILD_DLL
+  includes += ../../GeneratedCode 
+
   IDL_Files {
   }
 
@@ -107,7 +112,7 @@ project(AMI_Hello_Tuto_Hello_Receiver_exec) : ciao_executor, messaging {
 
   Header_Files {
      Hello_Receiver_comp_exec.h
-     ../../GeneratedCode/Hello_Receiver_exec_export.h
+     ../../GeneratedCode/Hello_Receiver_comp_exec_export.h
   }
 
   Inline_Files {
@@ -115,15 +120,18 @@ project(AMI_Hello_Tuto_Hello_Receiver_exec) : ciao_executor, messaging {
 }
 
 project(AMI_Hello_Tuto_Hello_Receiver_svnt) : ciao_servant, messaging {
-  after      += AMI_Hello_Tuto_skel AMI_Hello_Tuto_Hello_Receiver_l_stub AMI_Hello_Tuto_stub AMI_Hello_Tuto_skel AMI_Hello_Tuto_lem_stub
-  sharedname  = Hello_Receiver_svnt
-  libs       += Hello_Receiver_stub Hello_Receiver_lem_stub  \
-                Hello_skel \
-                Hello_stub Hello_lem_stub
+  after      += AMI_Hello_Tuto_skel AMI_Hello_Tuto_Hello_Receiver_l_stub\
+                AMI_Hello_Tuto_stub\
+                AMI_Hello_Tuto_skel AMI_Hello_Tuto_lem_stub
+  sharedname  = Hello_Receiver_comp_svnt
+  libs       += Hello_Receiver_comp_stub Hello_Receiver_comp_lem_stub\
+                Hello_MyFoo_obj_skel\
+                Hello_MyFoo_obj_stub Hello_MyFoo_obj_lem_stub
   libpaths += ../../lib
   libout = ../../lib
-  dynamicflags += HELLO_RECEIVER_SVNT_BUILD_DLL
-  includes += ..   ../.. ../../GeneratedCode ./GeneratedCode
+  dynamicflags += HELLO_RECEIVER_COMP_SVNT_BUILD_DLL
+  includes += ../.. ../../GeneratedCode
+
   IDL_Files {
   }
 
@@ -135,11 +143,10 @@ project(AMI_Hello_Tuto_Hello_Receiver_svnt) : ciao_servant, messaging {
   Header_Files {
      ../../GeneratedCode/Hello_Receiver_compS.h
      ../../GeneratedCode/Hello_Receiver_comp_svnt.h
-     ../../GeneratedCode/Hello_Receiver_svnt_export.h
+     ../../GeneratedCode/Hello_Receiver_comp_svnt_export.h
   }
 
   Inline_Files {
      ../../GeneratedCode/Hello_Receiver_compS.inl
   }
 }
-
