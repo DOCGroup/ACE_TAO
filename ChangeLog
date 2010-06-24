@@ -1,3 +1,9 @@
+Thu Jun 24 02:07:18 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Gestalt.inl (open): Allow the command line options to
+          override the passed ignore_static_svcs argument. Restores correct
+          operation, fixing Bugzilla #3865.
+
 Fri Jun 18 19:58:55 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Logging_Strategy.cpp: Add _get_dll_unload_policy() function that
