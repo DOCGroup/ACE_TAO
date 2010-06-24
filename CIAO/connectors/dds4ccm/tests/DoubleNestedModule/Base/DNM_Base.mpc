@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS_DNM_Base_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project (DDS_DNM_Base_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = DDS_DNM_Base_stub
   dynamicflags += DOUBLE_NESTED_MODULE_BASE_STUB_BUILD_DLL
   libout = ../lib

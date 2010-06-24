@@ -1,6 +1,6 @@
 // $Id$
 
-project (DDS_DDSInstanceHandleBase_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default {
+project (DDS_DDSInstanceHandleBase_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = DDS_DDSInstanceHandleBase_stub
   dynamicflags += WRITER_BASE_STUB_BUILD_DLL
   libout = ../lib
