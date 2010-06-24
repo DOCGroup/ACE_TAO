@@ -5,7 +5,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ndds/ndds_cpp.h"
-#include "dds4ccm/impl/dds/ndds/HistoryQosPolicy.h"
+#include "dds4ccm/impl/ndds/HistoryQosPolicy.h"
 
 class HistoryPolicyTest
 {

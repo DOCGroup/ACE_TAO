@@ -5,7 +5,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_PortUsageState_Test_PortUsageStateComponent_Impl
 {

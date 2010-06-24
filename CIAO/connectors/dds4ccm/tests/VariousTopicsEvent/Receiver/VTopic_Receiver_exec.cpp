@@ -6,7 +6,7 @@
 
 #include "VTopic_Receiver_exec.h"
 #include "ace/Log_Msg.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_VTopic_Receiver_Impl
 {

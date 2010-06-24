@@ -10,8 +10,8 @@
 #include "connectors/dds4ccm/idl/dds4ccm_ConnectorStatusListener.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_Connector.idl"
 
-#pragma dds4ccm impl "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h" 
-#pragma dds4ccm impl "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h" 
+#pragma dds4ccm impl "connectors/dds4ccm/impl/DDS_Event_Connector_T.h" 
+#pragma dds4ccm impl "connectors/dds4ccm/impl/DDS_State_Connector_T.h" 
 
 module CCM_DDS
 {
