@@ -1,3 +1,9 @@
+Thu Jun 24 18:07:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp.mpc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp.mpc:
+          Fixed casing after rename from Ports to ports
+
 Thu Jun 24 18:03:39 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.mpc:
