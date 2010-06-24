@@ -55,7 +55,7 @@ project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
 project(PI) : taolib, tao_output, codecfactory, install, taoidldefaults {
   after       += *idl
   sharedname   = TAO_PI
-  dynamicflags = TAO_PI_BUILD_DLL
+  dynamicflags += TAO_PI_BUILD_DLL
 
   Source_Files {
     PI

@@ -17,7 +17,7 @@ project(*idl) : tao_versioning_idl_defaults {
 project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
   after       += *idl
   sharedname   = TAO_IFR_Client
-  dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
+  dynamicflags += TAO_IFR_CLIENT_BUILD_DLL
 
   Source_Files {
     IFR_Client

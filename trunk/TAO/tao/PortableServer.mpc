@@ -68,7 +68,7 @@ project(*idl) : tao_versioning_idl_defaults, install, pidl_install {
 project(PortableServer) : taolib, tao_output, install, anytypecode, taoidldefaults, valuetype_out_indirection {
   after       += *idl
   sharedname   = TAO_PortableServer
-  dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
+  dynamicflags += TAO_PORTABLESERVER_BUILD_DLL
 
   Source_Files {
     PortableServer

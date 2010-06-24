@@ -14,7 +14,7 @@ project(*idl) : tao_versioning_idl_defaults {
 project(CSD_Framework) : taolib, tao_output, portableserver, install, pi, avoids_corba_e_micro, taoidldefaults {
   after       += *idl
   sharedname   = TAO_CSD_Framework
-  dynamicflags = TAO_CSD_FW_BUILD_DLL
+  dynamicflags += TAO_CSD_FW_BUILD_DLL
   includes    += $(TAO_ROOT)/tao
 
   Source_Files {

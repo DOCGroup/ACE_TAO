@@ -4,7 +4,7 @@
 project(RTSched) : orbsvcslib, orbsvcs_output, install, naming, portableserver, svc_utils, tao_versioning_idl_defaults {
   sharedname   = TAO_RTSched
   idlflags    += -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h
-  dynamicflags = TAO_RTSCHED_BUILD_DLL
+  dynamicflags += TAO_RTSCHED_BUILD_DLL
   tagchecks   += Sched
 
   IDL_Files {

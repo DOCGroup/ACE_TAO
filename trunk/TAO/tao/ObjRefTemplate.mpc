@@ -34,7 +34,7 @@ project(*idl) : tao_versioning_idl_defaults, install {
 project(ObjRefTemplate) : valuetype, portableserver, install, tao_output, taoidldefaults {
   after       += *idl
   sharedname   = TAO_ObjRefTemplate
-  dynamicflags = TAO_ORT_BUILD_DLL
+  dynamicflags += TAO_ORT_BUILD_DLL
 
   Source_Files {
     ObjRefTemplate

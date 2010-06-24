@@ -1,7 +1,7 @@
 //$Id$
 project(DynamicInterface) : taolib, tao_output, install, messaging, minimum_corba {
   sharedname   = TAO_DynamicInterface
-  dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
+  dynamicflags += TAO_DYNAMICINTERFACE_BUILD_DLL
 
   Source_Files {
     DynamicInterface
