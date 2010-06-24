@@ -11,7 +11,7 @@ project(ACE_Qt4Reactor_moc) : acedefaults, ace_qt4 {
 project(ACE_Qt4Reactor) : acedefaults, install, acelib, ace_output, ace_qt4 {
   after       += ACE_Qt4Reactor_moc
   sharedname   = ACE_QtReactor
-  dynamicflags = ACE_QTREACTOR_BUILD_DLL
+  dynamicflags += ACE_QTREACTOR_BUILD_DLL
 
   MOC_Files {
   }

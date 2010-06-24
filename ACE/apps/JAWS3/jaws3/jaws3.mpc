@@ -3,7 +3,7 @@
 
 project(JAWS3) : ace_output, acelib {
     sharedname = JAWS3
-    dynamicflags = JAWS_BUILD_DLL
+    dynamicflags += JAWS_BUILD_DLL
     avoids += uses_wchar
     avoids += ace_for_tao
 

@@ -3,7 +3,7 @@
 
 project(*HA Status) : acelib, avoids_ace_for_tao {
   sharedname   = HA_Status
-  dynamicflags = HASTATUS_BUILD_DLL
+  dynamicflags += HASTATUS_BUILD_DLL
   Source_Files {
     HA_Status_Dynamic.cpp
   }

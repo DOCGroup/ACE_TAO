@@ -3,7 +3,7 @@
 
 project(JAWS) : install, ace_output, acelib {
   sharedname   = JAWS
-  dynamicflags = ACE_BUILD_SVC_DLL
+  dynamicflags += ACE_BUILD_SVC_DLL
   requires    += ace_filecache
   avoids      += uses_wchar
   avoids      += ace_for_tao
