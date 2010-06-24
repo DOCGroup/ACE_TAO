@@ -5,8 +5,8 @@
  *
  * Wrapper facade for NDDS.
  */
-#ifndef DDS_UPDATE_T_H
-#define DDS_UPDATE_T_H
+#ifndef DDS_UPDATE_T_H_
+#define DDS_UPDATE_T_H_
 
 #include "dds4ccm/impl/Updater_T.h"
 
@@ -48,4 +48,4 @@ private:
 
 #include "dds4ccm/impl/DDS_Update_T.cpp"
 
-#endif /* DDS_UPDATE_T_H */
+#endif /* DDS_UPDATE_T_H_ */

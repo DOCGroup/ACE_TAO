@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAWRITER_T_H
-#define DDS4CCM_DATAWRITER_T_H
+#ifndef DATAWRITER_T_H_
+#define DATAWRITER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
@@ -103,4 +103,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DataWriter_T.cpp"
 
-#endif
+#endif /* DATAWRITER_T_H_ */

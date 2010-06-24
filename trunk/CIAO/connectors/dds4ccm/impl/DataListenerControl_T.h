@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-#ifndef DDS4CCM_DATALISTENERCONTROLI_H_
-#define DDS4CCM_DATALISTENERCONTROLI_H_
+#ifndef DATALISTENERCONTROL_T_H_
+#define DATALISTENERCONTROL_T_H_
 
 #include "dds4ccm/idl/dds4ccm_DataListenerControlEC.h"
 #include "tao/LocalObject.h"
@@ -44,5 +44,5 @@ protected:
 
 #include "dds4ccm/impl/DataListenerControl_T.cpp"
 
-#endif /* DDS4CCM_DATALISTENERCONTROLI_H_  */
+#endif /* DATALISTENERCONTROL_T_H_ */
 

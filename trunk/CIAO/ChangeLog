@@ -1,22 +1,67 @@
+Thu Jun 24 15:12:13 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/PortStatusListener_T.h:
+        * connectors/dds4ccm/impl/PublisherListener_T.h:
+        * connectors/dds4ccm/impl/Publisher_T.h:
+        * connectors/dds4ccm/impl/QueryCondition_T.h:
+        * connectors/dds4ccm/impl/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/StateListenerControl_T.h:
+        * connectors/dds4ccm/impl/SubscriberListener_T.h:
+        * connectors/dds4ccm/impl/Subscriber_T.h:
+        * connectors/dds4ccm/impl/TopicDescription_T.h:
+        * connectors/dds4ccm/impl/TopicListener_T.h:
+        * connectors/dds4ccm/impl/Updater_T.h:
+        * connectors/dds4ccm/impl/Writer_T.h:
+        * connectors/dds4ccm/impl/ndds/BuiltinTopicKey_t.h:
+        * connectors/dds4ccm/impl/ndds/Duration_t.h:
+        * connectors/dds4ccm/impl/ndds/InstanceHandle_t.h:
+        * connectors/dds4ccm/impl/ndds/StringSeq.h:
+        * connectors/dds4ccm/impl/ndds/Time_t.h:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/run_test.pl:
+          Consistently added/renamed header guard.
+
 Thu Jun 24 14:29:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * LocalityManager/Handler/LocalityActivator_Impl.cpp:
         * LocalityManager/Handler/LocalityActivator_Impl.h:
-	  Fixed detection of spawn failures or premature process exits.
+          Fixed detection of spawn failures or premature process exits.
 
         * DAnCE/DAnCE_Utility.cpp:
         * DAnCE/DAnCE_Utility.h:
         * DAnCE/DAnCE_Utility.tpp:
-	  Added utility methods for handling exception to/from Any conversion.
+          Added utility methods for handling exception to/from Any conversion.
 
         * LocalityManager/Scheduler/Events/Install.cpp:
-	  Added default exception handling behaviour in case no post_install 
-	  interceptors have been registered.
-	  Fixed exception reporting and propagation.
+          Added default exception handling behaviour in case no post_install
+          interceptors have been registered.
+          Fixed exception reporting and propagation.
 
         * NodeApplication/NodeApplication_Impl.cpp:
-	  Added correct exception detection and handling to locality manager
-	  install handling.
+          Added correct exception detection and handling to locality manager
+          install handling.
 
 Thu Jun 24 14:04:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -5,8 +5,8 @@
  *
  * Wrapper facade for NDDS.
  */
-#ifndef DDS_TOPIC_BASE_CONNECTOR_H
-#define DDS_TOPIC_BASE_CONNECTOR_H
+#ifndef DDS_TOPICBASE_CONNECTOR_H
+#define DDS_TOPICBASE_CONNECTOR_H
 
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/DDS_Base_Connector_T.h"
@@ -72,4 +72,4 @@ protected:
 
 #include "dds4ccm/impl/DDS_TopicBase_Connector_T.cpp"
 
-#endif /* DDS_TOPIC_BASE_CONNECTOR_H */
+#endif /* DDS_TOPICBASE_CONNECTOR_H */

@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef BUILTINTOPICKEY_T_H
-#define BUILTINTOPICKEY_T_H
+#ifndef BUILTINTOPICKEY_T_H_
+#define BUILTINTOPICKEY_T_H_
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -25,4 +25,4 @@ operator<<= (::DDS_BuiltinTopicKey_t &ddsbuiltintopickey, const ::DDS::BuiltinTo
 
 #endif
 
-#endif /* BUILTINTOPICKEY_T_H */
+#endif /* BUILTINTOPICKEY_T_H_ */

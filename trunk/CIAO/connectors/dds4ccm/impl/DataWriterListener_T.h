@@ -6,8 +6,8 @@
  *
  * Wrapper facade for NDDS.
  */
-#ifndef DDS_DATAWRITERLISTENER_T
-#define DDS_DATAWRITERLISTENER_T
+#ifndef DATAWRITERLISTENER_T_H_
+#define DATAWRITERLISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
@@ -69,4 +69,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DataWriterListener_T.cpp"
 
-#endif /* DDS_DATAWRITERLISTENER_T */
+#endif /* DATAWRITERLISTENER_T_H_ */

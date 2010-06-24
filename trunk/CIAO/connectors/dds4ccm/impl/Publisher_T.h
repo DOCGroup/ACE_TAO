@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_PUBLISHER_H
-#define DDS4CCM_PUBLISHER_H
+#ifndef PUBLISHER_T_H_
+#define PUBLISHER_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -152,4 +152,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/Publisher_T.cpp"
 
-#endif
+#endif /* PUBLISHER_T_H_ */

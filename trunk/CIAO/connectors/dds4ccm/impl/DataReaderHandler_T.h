@@ -8,8 +8,8 @@
  * received data from DDS.
  */
 
-#ifndef DDS4CCM_DATAREADERHANDLER_T_H
-#define DDS4CCM_DATAREADERHANDLER_T_H
+#ifndef DATAREADERHANDLER_T_H_
+#define DATAREADERHANDLER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Event_Handler.h"
@@ -60,4 +60,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DataReaderHandler_T.cpp"
 
-#endif
+#endif /* DATAREADERHANDLER_T_H_ */

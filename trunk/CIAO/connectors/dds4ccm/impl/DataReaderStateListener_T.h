@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAREADERSTATELISTENER_T_H
-#define DDS4CCM_DATAREADERSTATELISTENER_T_H
+#ifndef DATAREADERSTATELISTENER_T_H_
+#define DATAREADERSTATELISTENER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
@@ -50,4 +50,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DataReaderStateListener_T.cpp"
 
-#endif /* DDS4CCM_DATAREADERSTATELISTENER_T_H */
+#endif /* DATAREADERSTATELISTENER_T_H_ */

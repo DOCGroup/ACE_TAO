@@ -6,8 +6,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAREADERLISTENER_H
-#define DDS4CCM_DATAREADERLISTENER_H
+#ifndef DDSDATAREADERLISTENER_T_H_
+#define DDSDATAREADERLISTENER_T_H_
 
 #include "tao/LocalObject.h"
 
@@ -78,4 +78,4 @@ namespace CIAO
 
 #include "dds4ccm/impl/DDSDataReaderListener_T.cpp"
 
-#endif
+#endif /* DDSDATAREADERLISTENER_T_H_ */
