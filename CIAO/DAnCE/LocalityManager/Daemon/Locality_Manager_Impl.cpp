@@ -276,7 +276,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::startLaunch - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StartError (event.id_.c_str (),
                                             "Unknown exception");
           }
@@ -386,7 +386,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::startLaunch - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StartError (event.id_.c_str (),
                                             "Unknown exception");
           }
@@ -543,7 +543,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::finishLaunch - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StartError (event.id_.c_str (),
                                             "Unknown exception");
           }
@@ -619,7 +619,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::finishLaunch - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StartError (event.id_.c_str (),
                                             "Unknown exception from instance_configured");
           }
@@ -709,7 +709,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::start - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StartError (event.id_.c_str (),
                                             "Unknown exception");
           }
@@ -803,7 +803,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::destroyApplication - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StopError (event.id_.c_str (),
                                            "Unknown exception");
           }
@@ -891,7 +891,7 @@ namespace DAnCE
           {
             DANCE_ERROR (1, (LM_ERROR, DLINFO
                              ACE_TEXT ("LocalityManager_i::destroyApplication - ")
-                             ACE_TEXT ("Error: Unnown exception propagated\n")));
+                             ACE_TEXT ("Error: Unknown exception propagated\n")));
             throw ::Deployment::StopError (event.id_.c_str (),
                                            "Unknown exception");
           }
