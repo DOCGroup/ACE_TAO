@@ -27,7 +27,8 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE>
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (DDSDataReader * dr)
-  : rd_condition_ (0),
+  : impl_ (0),
+    rd_condition_ (0),
     ws_ (0),
     qc_reader_ (0),
     qc_getter_ (0),
