@@ -1,5 +1,4 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -b dds4ccm_base OFM_Connector"
 
 project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
                                  dds4ccm, dds4ccm_ts_default {
@@ -11,7 +10,6 @@ project(OFM_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
               -Wb,conn_export_macro=OFM_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OFM_Connector_conn_export.h \
               -Gxhex -Gxhsk -Gxhst
-  dynamicflags -= NDDS_USER_DLL_EXPORT
 
   IDL_Files {
     OFM_Connector.idl
@@ -67,7 +65,7 @@ project(OFM_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub  {
   }
 }
 
-project(OFM_Connector_stub) : ccm_stub, dds4ccm_base {
+project(OFM_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
   after    += OFM_Connector_idl_gen
   sharedname = OFM_Connector_stub
   dynamicflags = OFM_CONNECTOR_STUB_BUILD_DLL
@@ -77,6 +75,9 @@ project(OFM_Connector_stub) : ccm_stub, dds4ccm_base {
 
   Source_Files {
     OFM_ConnectorC.cpp
+    OFM_Connector.cxx
+    OFM_ConnectorSupport.cxx
+    OFM_ConnectorPlugin.cxx
   }
 
   Header_Files {
@@ -102,7 +103,6 @@ project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
 
   Source_Files {
     OFM_Connector_conn.cpp
-    *.cxx
   }
 
   Header_Files {

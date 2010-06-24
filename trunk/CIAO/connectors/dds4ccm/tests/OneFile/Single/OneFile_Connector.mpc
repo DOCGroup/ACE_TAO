@@ -1,8 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -b dds4ccm_base OneFile_Connector"
 
 project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
-                                     dds4ccm, typecode, dds4ccm_ts_default {
+                                     dds4ccm, dds4ccm_ts_default {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ONEFILE_CONNECTOR_STUB_Export \
               -Wb,stub_export_include=OneFile_Connector_stub_export.h \
@@ -11,7 +10,8 @@ project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
               -Wb,conn_export_macro=ONEFILE_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=OneFile_Connector_conn_export.h \
               -Gxhex -Gxhsk -Gxhst
-  IDL_Files {
+
+IDL_Files {
     OneFile_Connector.idl
   }
 
