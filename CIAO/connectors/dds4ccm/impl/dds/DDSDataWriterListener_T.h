@@ -42,7 +42,8 @@ namespace CIAO
     typedef CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> DataWriter_type;
     public:
       /// Constructor
-      CCM_DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p);
+      CCM_DDS_DataWriterListener_T (::DDS::DataWriterListener_ptr p,
+                                    DataWriter_type * typed_dw);
 
       /// Destructor
       virtual ~CCM_DDS_DataWriterListener_T (void);
@@ -66,9 +67,8 @@ namespace CIAO
       ::DDS::DataWriterListener_ptr get_datawriterlistener (void);
     private:
       ::DDS::DataWriterListener_var impl_;
+      DataWriter_type * typed_dw_;
 
-      ::DDS::CCM_DataWriter_ptr
-      get_datawriter_proxy (::DDSDataWriter * the_writer);
     };
   }
 }

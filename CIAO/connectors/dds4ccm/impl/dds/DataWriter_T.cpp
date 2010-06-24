@@ -65,14 +65,16 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::set_listener (::DDS::DataWriterListener_ptr a_listener,
-                                        ::DDS::StatusMask mask)
+    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::set_listener (
+      ::DDS::DataWriterListener_ptr a_listener,
+      ::DDS::StatusMask mask)
     {
       DataWriterListener_type * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            DataWriterListener_type (a_listener),
+                            DataWriterListener_type (a_listener,
+                                                     this),
                             CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
@@ -318,25 +320,6 @@ namespace CIAO
     CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::set_impl (DDSDataWriter * dw)
     {
       //set a pointer to this class for the listener to use.
-      if (dw)
-        {
-          ::DDS_DataWriterQos qos;
-          dw->get_qos (qos);
-          char * value = 0;
-          ACE_NEW_THROW_EX (value,
-                            char[15],
-                            CORBA::NO_MEMORY ());
-          ACE_OS::sprintf (value ,
-                          "%ld",
-                          reinterpret_cast <unsigned long> (this));
-
-          DDSPropertyQosPolicyHelper::add_property (qos.property,
-                                                    "CCM_DataWriterProxy",
-                                                    value,
-                                                    DDS_BOOLEAN_FALSE);
-          dw->set_qos (qos);
-          delete[] value;
-        }
       this->impl_ = dw;
     }
 
