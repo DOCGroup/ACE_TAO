@@ -112,10 +112,9 @@ namespace CIAO
       CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE> *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ccm_dds_pl = new CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE> (a_listener);
-//           ACE_NEW_THROW_EX (ccm_dds_pl,
-//                             CCM_DDS_PublisherListener_T (a_listener),
-//                             CORBA::NO_MEMORY ());
+          ACE_NEW_THROW_EX (ccm_dds_pl,
+                            PublisherListener_type (a_listener),
+                            CORBA::NO_MEMORY ());
         }
 
       DDSPublisher * ccm_dds_pub =
