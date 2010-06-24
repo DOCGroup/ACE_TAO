@@ -9,6 +9,7 @@
 #include "ace/Log_Msg.h"
 
 #include "Base/BaseSupport.h"
+#include "Connector/Connector_conn.h"
 
 #include "dds4ccm/impl/DataWriter_T.h"
 
@@ -66,17 +67,36 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
   {
     try
       {
-        DDS::DataWriter_var dw1 =
+        ::DDS::DataWriter_var dw1 =
           this->context_->get_connection_write1_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd1 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw1.in ());
-        DDSDataWriter * dds_dw1 = ccm_dds_rd1->get_impl ();
-        DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
-        this->dds_dp1_ = dds_p1->get_participant ();
 
-        DDSTopicDescription * td1 =
-          this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
-        this->dds_tp1_ = DDSTopic::narrow (td1);
+        if (::CORBA::is_nil (dw1.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Datawriter 1 connection is NIL.\n"));
+            throw CORBA::INTERNAL ();
+          }
+        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
+
+        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
+        if (typed_ccm_dw)
+          {
+            DDSDataWriter * dds_dw1 = typed_ccm_dw->get_impl ();
+            DDSPublisher * dds_p1 = dds_dw1->get_publisher ();
+            this->dds_dp1_ = dds_p1->get_participant ();
+
+            DDSTopicDescription * td1 =
+              this->dds_dp1_->lookup_topicdescription (tp_name_conn_1_);
+            this->dds_tp1_ = DDSTopic::narrow (td1);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Error casting DataWriter 1 to typed DataWriter 1\n"));
+            throw CORBA::INTERNAL ();
+          }
       }
     catch (...)
       {
@@ -85,56 +105,115 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
 
     try
       {
-        DDS::DataWriter_var dw2 =
+        ::DDS::DataWriter_var dw2 =
           this->context_->get_connection_write2_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd2 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw2.in ());
-        DDSDataWriter * dds_dw2 = ccm_dds_rd2->get_impl ();
-        DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-        this->dds_dp2_ = dds_p2->get_participant ();
-        DDSTopicDescription * td2 =
-          this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
-        this->dds_tp2_ = DDSTopic::narrow (td2);
+
+        if (::CORBA::is_nil (dw2.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Datawriter 2 connection is NIL.\n"));
+            throw CORBA::INTERNAL ();
+          }
+        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
+
+        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw2.in ());
+        if (typed_ccm_dw)
+          {
+            DDSDataWriter * dds_dw2 = typed_ccm_dw->get_impl ();
+            DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
+            this->dds_dp1_ = dds_p2->get_participant ();
+
+            DDSTopicDescription * td2 =
+              this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
+            this->dds_tp2_ = DDSTopic::narrow (td2);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Error casting DataWriter 2 to typed DataWriter 2\n"));
+            throw CORBA::INTERNAL ();
+          }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer2\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
       }
 
     try
       {
-        DDS::DataWriter_var dw3 =
+        ::DDS::DataWriter_var dw3 =
           this->context_->get_connection_write3_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd3 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw3.in ());
-        DDSDataWriter * dds_dw3 = ccm_dds_rd3->get_impl ();
-        DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-        this->dds_dp3_ = dds_p3->get_participant ();
-        DDSTopicDescription * td3 =
-          this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
-        this->dds_tp3_ = DDSTopic::narrow (td3);
+
+        if (::CORBA::is_nil (dw3.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Datawriter 3 connection is NIL.\n"));
+            throw CORBA::INTERNAL ();
+          }
+        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
+
+        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw3.in ());
+        if (typed_ccm_dw)
+          {
+            DDSDataWriter * dds_dw3 = typed_ccm_dw->get_impl ();
+            DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
+            this->dds_dp1_ = dds_p3->get_participant ();
+
+            DDSTopicDescription * td3 =
+              this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
+            this->dds_tp3_ = DDSTopic::narrow (td3);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Error casting DataWriter 3 to typed DataWriter 3\n"));
+            throw CORBA::INTERNAL ();
+          }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer3\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
       }
-
     try
       {
-        DDS::DataWriter_var dw4 =
+        ::DDS::DataWriter_var dw4 =
           this->context_->get_connection_write4_dds_entity ();
-        CIAO::DDS4CCM::CCM_DDS_DataWriter_T *ccm_dds_rd4 =
-           dynamic_cast <CIAO::DDS4CCM::CCM_DDS_DataWriter_T *> (dw4.in ());
-        DDSDataWriter * dds_dw4 = ccm_dds_rd4->get_impl ();
-        DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
-        this->dds_dp4_ = dds_p4->get_participant ();
-        DDSTopicDescription * td4 =
-          this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
-        this->dds_tp4_ = DDSTopic::narrow (td4);
+
+        if (::CORBA::is_nil (dw4.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Datawriter 4 connection is NIL.\n"));
+            throw CORBA::INTERNAL ();
+          }
+        typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::SharedDPTest_DDS_Traits,
+            CIAO_SharedDP_SharedDPTestConnector_DDS_Event_Impl::DDS_DDS_Event_Traits> DataWriter_type;
+
+        DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw4.in ());
+        if (typed_ccm_dw)
+          {
+            DDSDataWriter * dds_dw4 = typed_ccm_dw->get_impl ();
+            DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
+            this->dds_dp1_ = dds_p4->get_participant ();
+
+            DDSTopicDescription * td4 =
+              this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);
+            this->dds_tp4_ = DDSTopic::narrow (td4);
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
+                        "Error casting DataWriter 4 to typed DataWriter 4\n"));
+            throw CORBA::INTERNAL ();
+          }
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer3\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: Unable to create dds_entity for writer1\n"));
       }
   }
 
