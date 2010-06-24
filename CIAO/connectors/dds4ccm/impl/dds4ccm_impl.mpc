@@ -17,6 +17,7 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, taolib, ciao_output, ccm
   }
 
   Source_Files {
+    DataWriter.cpp
     Coherent_Changes_Guard.cpp
     DomainParticipantListener.cpp
     ContentFilterSetting.cpp

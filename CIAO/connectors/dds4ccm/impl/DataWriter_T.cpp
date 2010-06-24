@@ -24,12 +24,7 @@ namespace CIAO
   {
     template <typename DDS_TYPE, typename CCM_TYPE>
     CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DataWriter_T (DDSDataWriter * dw)
-      : impl_ (dw)
-    {
-    }
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_DataWriter_T (void)
+      : CCM_DDS_DataWriter_Base (dw)
     {
     }
 
@@ -306,32 +301,6 @@ namespace CIAO
 #else
       return this->impl ()->get_instance_handle ();
 #endif
-    }
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    DDSDataWriter *
-    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::get_impl (void)
-    {
-      return this->impl_;
-    }
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    void
-    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::set_impl (DDSDataWriter * dw)
-    {
-      //set a pointer to this class for the listener to use.
-      this->impl_ = dw;
-    }
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    DDSDataWriter *
-    CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE>::impl (void)
-    {
-      if (!this->impl_)
-        {
-          throw ::CORBA::BAD_INV_ORDER ();
-        }
-      return this->impl_;
     }
   }
 }
