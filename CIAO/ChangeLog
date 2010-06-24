@@ -1,3 +1,12 @@
+Thu Jun 24 08:22:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.mpc:
+          Further cleanup to get this working on windows
+
+        * MPC/config/dds4ccm_ddsonly.mpb:
+          Removed this file.
+
 Thu Jun 24 08:03:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.mpc:

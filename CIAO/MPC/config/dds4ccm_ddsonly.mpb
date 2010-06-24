@@ -1,7 +1,0 @@
-// $Id$
-
-feature (dds4ccm_ndds) : dds4ccm, ccm_svnt, nddslib {
-  Source_Files {
-    *.cxx
-  }
-}

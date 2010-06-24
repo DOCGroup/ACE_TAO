@@ -11,7 +11,7 @@ project(OneFile_Connector_idl_gen) : connectoridldefaults, taoidldefaults, \
               -Wb,conn_export_include=OneFile_Connector_conn_export.h \
               -Gxhex -Gxhsk -Gxhst
 
-IDL_Files {
+  IDL_Files {
     OneFile_Connector.idl
   }
 
