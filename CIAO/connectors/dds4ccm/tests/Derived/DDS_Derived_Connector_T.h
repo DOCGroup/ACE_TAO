@@ -3,8 +3,8 @@
 #if !defined DERIVED_CONNECTOR_T
 #define DERIVED_CONNECTOR_T
 
-#include "connectors/dds4ccm/impl/dds/DDS_Event_Connector_T.h"
-#include "connectors/dds4ccm/impl/dds/DDS_State_Connector_T.h"
+#include "connectors/dds4ccm/impl/DDS_Event_Connector_T.h"
+#include "connectors/dds4ccm/impl/DDS_State_Connector_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
 class MyEvent_Connector_T

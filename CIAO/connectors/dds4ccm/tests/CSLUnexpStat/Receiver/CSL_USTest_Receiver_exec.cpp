@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_time.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 

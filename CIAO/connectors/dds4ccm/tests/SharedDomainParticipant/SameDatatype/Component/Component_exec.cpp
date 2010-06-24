@@ -10,7 +10,7 @@
 
 #include "Base/BaseSupport.h"
 
-#include "dds4ccm/impl/dds/DataWriter_T.h"
+#include "dds4ccm/impl/DataWriter_T.h"
 
 const char * tp_name_conn_1_ = "SharedDP";
 const char * tp_name_conn_2_ = "SharedDP";

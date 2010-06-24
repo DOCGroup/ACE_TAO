@@ -8,7 +8,7 @@
 
 #include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_Writer_Sender_Impl
 {

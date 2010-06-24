@@ -6,7 +6,7 @@
 #include "Base/SetConnectorAttribute_BaseSupport.h"
 #include "Connector/SetConnectorAttribute_Connector_conn.h"
 
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 #define DOMAIN_ID_IN_DP 56
 #define TOPIC_NAME_IN_DP "SetConnectorAttribute"

@@ -7,8 +7,8 @@
 #include "ace/Log_Msg.h"
 
 #include "ace/OS_NS_time.h"
-#include "dds4ccm/impl/dds/Utils.h"
-#include "dds4ccm/impl/dds/TimeUtilities.h"
+#include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/TimeUtilities.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 

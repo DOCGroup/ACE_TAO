@@ -5,7 +5,7 @@
 //Test different topic types, with DDS_EVENT connectors,  look for 'PUBLICATION_MATCHED_STATUS
 #include "VTopic_Sender_exec.h"
 #include "ace/Log_Msg.h"
-#include "dds4ccm/impl/dds/Utils.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_VTopic_Sender_Impl
 {
