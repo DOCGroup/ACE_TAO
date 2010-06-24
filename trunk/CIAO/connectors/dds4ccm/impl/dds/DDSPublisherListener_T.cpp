@@ -37,32 +37,10 @@ namespace CIAO
     CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_datawriter_proxy (::DDSDataWriter * the_writer)
     {
       DDS4CCM_TRACE ("CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_datawriter_proxy");
-      //Retrieve the pointer to the proxy from the QoS
-      ::DDS_DataWriterQos qos;
-      the_writer->get_qos (qos);
-      DDS_Property_t * prop =
-        DDSPropertyQosPolicyHelper::lookup_property (qos.property,
-                                                    "CCM_DataWriterProxy");
-      if (!prop)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        "CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                        "Unable to retrieve proxy from PropertyQosProfile\n"));
-          return ::DDS::CCM_DataWriter::_nil ();
-        }
-
-      DataWriter_type* writer =
-        reinterpret_cast <DataWriter_type *>
-          (ACE_OS::atol (prop->value));
-
-      if (!writer)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        "CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_datareader_proxy -"
-                        "Unable to retrieve writer from PropertyQosProfile\n"));
-        }
-
-      return writer;
+      ::DDS::CCM_DataWriter_var dds_writer = ::DDS::CCM_DataWriter::_nil ();
+      ACE_NEW_NORETURN (dds_writer,
+                        DataWriter_type (the_writer));
+      return dds_writer._retn ();
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE>

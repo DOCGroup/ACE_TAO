@@ -60,7 +60,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
-                            DataWriterListener_type (a_listener),
+                            DataWriterListener_type (a_listener, 0),
                             CORBA::NO_MEMORY ());
         }
       DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
@@ -119,7 +119,7 @@ namespace CIAO
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
-                            DataWriterListener_type (a_listener),
+                            DataWriterListener_type (a_listener, 0),
                             CORBA::NO_MEMORY ());
         }
       DDSDataWriter *ccm_dds_dw = this->impl ()->create_datawriter_with_profile (
