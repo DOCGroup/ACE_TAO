@@ -144,7 +144,7 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
       CIAO_SetConnectorAttribute_SetConnectorAttributeTestConnector_DDS_Event_Impl::SetConnectorAttributeTest_DDS_Traits>
         DataWriter_type;
 
-    DataWriter_type * ccm_dds_dw = dynamic_cast < DataWriter_type * > (dds_dw.in ());
+    DataWriter_type * ccm_dds_dw = reinterpret_cast < DataWriter_type * > (dds_dw.in ());
     if (!ccm_dds_dw)
       {
         ACE_DEBUG ((LM_DEBUG, "ERROR: Component_exec_i::ccm_activate - "
