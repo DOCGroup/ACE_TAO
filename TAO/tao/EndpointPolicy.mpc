@@ -16,7 +16,7 @@ project(*core_idl) : tao_versioning_idl_defaults {
 project(EndpointPolicy) : taolib, tao_output, install, portableserver, pi, taoidldefaults, tao_no_iiop, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after       += *core_idl
   sharedname   = TAO_EndpointPolicy
-  dynamicflags = TAO_ENDPOINTPOLICY_BUILD_DLL
+  dynamicflags += TAO_ENDPOINTPOLICY_BUILD_DLL
 
   Source_Files {
     EndpointPolicy

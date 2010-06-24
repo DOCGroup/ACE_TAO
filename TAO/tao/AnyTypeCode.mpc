@@ -25,7 +25,7 @@ project(*idl) : tao_versioning_idl_defaults, gen_ostream, install {
 project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldefaults, nolink_codecfactory, gen_ostream {
   after += *idl
   sharedname   = TAO_AnyTypeCode
-  dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
+  dynamicflags += TAO_ANYTYPECODE_BUILD_DLL
 
   Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
     AnyTypeCode/Alias_TypeCode_Static.cpp

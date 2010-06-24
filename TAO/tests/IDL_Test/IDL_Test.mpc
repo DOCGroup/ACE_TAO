@@ -76,7 +76,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
 
 project(*DLL): taoidldefaults, taolib, messaging {
   after += *IDL
-  dynamicflags = TAO_IDL_TEST_STUB_BUILD_DLL
+  dynamicflags += TAO_IDL_TEST_STUB_BUILD_DLL
   sharedname = IDL_Test_DLL
 
   IDL_Files {
@@ -294,7 +294,7 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     override no_strict_aliasing = 1
   }
 
-  dynamicflags = NDDS_USER_DLL_EXPORT
+  dynamicflags += NDDS_USER_DLL_EXPORT
 
   IDL_Files {
   }

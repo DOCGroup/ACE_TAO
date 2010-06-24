@@ -17,7 +17,7 @@ project(*core_idl) : tao_versioning_idl_defaults {
 project(Strategies) : taolib, tao_output, install, pi, anytypecode, core_strategies, taoidldefaults {
   after       += *core_idl
   sharedname   = TAO_Strategies
-  dynamicflags = TAO_STRATEGIES_BUILD_DLL
+  dynamicflags += TAO_STRATEGIES_BUILD_DLL
 
   Source_Files {
     Strategies

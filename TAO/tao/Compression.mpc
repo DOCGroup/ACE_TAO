@@ -25,7 +25,7 @@ project(*idl) : tao_versioning_idl_defaults, install {
 project(Compression) : taolib, tao_output, install, taoidldefaults, anytypecode {
   after       += *idl
   sharedname   = TAO_Compression
-  dynamicflags = TAO_COMPRESSION_BUILD_DLL
+  dynamicflags += TAO_COMPRESSION_BUILD_DLL
 
   Source_Files {
     Compression
