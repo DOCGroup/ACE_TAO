@@ -65,7 +65,7 @@ project(*idl) : tao_versioning_idl_defaults {
 project(Messaging) : taolib, tao_output, install, portableserver, pi, valuetype, taoidldefaults {
   after       += *idl
   sharedname   = TAO_Messaging
-  dynamicflags = TAO_MESSAGING_BUILD_DLL
+  dynamicflags += TAO_MESSAGING_BUILD_DLL
 
   Source_Files {
     Messaging

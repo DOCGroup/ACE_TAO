@@ -85,7 +85,7 @@ project(TAO_IDL_GEN) {
 
 project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
   sharedname   = TAO_IDL_FE
-  dynamicflags = TAO_IDL_FE_BUILD_DLL
+  dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)
 
   specific (automake) {
