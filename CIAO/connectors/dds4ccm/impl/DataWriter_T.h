@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DATAWRITER_H
-#define DDS4CCM_DATAWRITER_H
+#ifndef DDS4CCM_DATAWRITER_T_H
+#define DDS4CCM_DATAWRITER_T_H
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
@@ -17,6 +17,7 @@
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/DataWriter.h"
 #include "tao/LocalObject.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -42,20 +43,15 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     class CCM_DDS_DataWriter_T
-      : public virtual ::DDS::CCM_DataWriter,
-        public virtual ::CORBA::LocalObject
+      : public virtual CCM_DDS_DataWriter_Base
     {
     typedef CCM_DDS_DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener_type;
     typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE> Publisher_type;
     typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
 
     public:
-      /// Constructor
-      CCM_DDS_DataWriter_T (DDSDataWriter * dw);
-
-      /// Destructor
-      virtual ~CCM_DDS_DataWriter_T (void);
-
+      explicit CCM_DDS_DataWriter_T (DDSDataWriter * dw);
+      
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 
       virtual ::DDS::ReturnCode_t get_qos (::DDS::DataWriterQos & qos);
@@ -101,15 +97,6 @@ namespace CIAO
       virtual ::DDS::StatusMask get_status_changes (void);
 
       virtual DDS_INSTANCE_HANDLE_T_RETN get_instance_handle (void);
-
-      DDSDataWriter * get_impl (void);
-
-      void set_impl (DDSDataWriter * dw);
-
-    private:
-      DDSDataWriter * impl_;
-
-      DDSDataWriter * impl (void);
     };
   }
 }

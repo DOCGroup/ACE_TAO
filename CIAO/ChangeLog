@@ -1,3 +1,21 @@
+Thu Jun 24 13:58:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataWriter.h:
+        * connectors/dds4ccm/impl/DataWriter.cpp:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Added new DataWriter class that just stores the pointer to the
+          underlying DDS entity 
+
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
+          Use the new base which is not templated which is much easier for
+          the user
+
+        * connectors/dds4ccm/impl/dds:
+          Removed this directory
+
 Thu Jun 24 13:00:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.mpc:
