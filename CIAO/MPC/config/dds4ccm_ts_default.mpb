@@ -52,7 +52,7 @@ feature(!dds4ccm_splice) {
   }
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) : typecode {
   Define_Custom(DDSGenerator) {
     keyword dds_ts_flags
   }

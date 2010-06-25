@@ -1,7 +1,13 @@
+Fri Jun 25 14:15:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_ts_default.mpb:
+          If no dds vendor has been enabled, than we have to use typecode
+          as base project
+
 Fri Jun 25 14:06:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated for next release.
 
 Fri Jun 25 13:53:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
