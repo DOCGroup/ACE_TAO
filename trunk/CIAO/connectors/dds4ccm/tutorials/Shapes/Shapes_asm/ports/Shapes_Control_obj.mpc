@@ -10,7 +10,6 @@ project(Shapes_Control_obj_idl_gen) : componentidldefaults {
               -Wb,svnt_export_include=Shapes_Control_obj_svnt_export.h \
               -Wb,exec_export_macro=SHAPES_CONTROL_EXEC_Export \
               -Wb,exec_export_include=Shapes_Control_obj_exec_export.h \
-              -I../../ports \
               -o GeneratedCode
 
   IDL_Files {
@@ -25,7 +24,7 @@ project(Shapes_Control_obj_lem_gen) : ciaoidldefaults {
   idlflags += -Wb,stub_export_macro=SHAPES_CONTROL_LEM_STUB_Export \
               -Wb,stub_export_include=Shapes_Control_obj_lem_stub_export.h \
               -SS -Gxhst \
-              -I../../ports \
+              -I ./GeneratedCode \
               -o GeneratedCode
 
   IDL_Files {
@@ -38,10 +37,10 @@ project(Shapes_Control_obj_lem_stub) : ccm_svnt {
   after += Shapes_Control_obj_lem_gen Shapes_Control_obj_stub
 
   libs  += Shapes_Control_obj_stub
-  libpaths += ../../lib
-  libout = ../../lib
+  libpaths += ../lib
+  libout = ../lib
 
-  includes += ../../ports/GeneratedCode
+  includes += ./GeneratedCode
 
   sharedname = Shapes_Control_obj_lem_stub
   dynamicflags += SHAPES_CONTROL_LEM_STUB_BUILD_DLL
@@ -67,10 +66,10 @@ project(Shapes_Control_obj_stub) : ccm_stub {
   after += Shapes_Control_obj_idl_gen Shapes_defn_idl_gen Shapes_defn_stub
 
   libs  += Shapes_defn_stub
-  libpaths += ../../lib
-  libout = ../../lib
+  libpaths += ../lib
+  libout = ../lib
 
-  includes += ../../ports/GeneratedCode
+  includes += ./GeneratedCode
 
   sharedname = Shapes_Control_obj_stub
   dynamicflags += SHAPES_CONTROL_STUB_BUILD_DLL
@@ -99,10 +98,10 @@ project(Shapes_Control_obj_svnt) : ciao_servant {
 
   libs       += Shapes_Control_obj_stub Shapes_Control_obj_lem_stub \
                 Shapes_defn_stub
-  libpaths += ../../lib
-  libout = ../../lib
+  libpaths += ../lib
+  libout = ../lib
 
-  includes += ../../ports/GeneratedCode
+  includes += ./GeneratedCode
 
   sharedname  = Shapes_Control_obj_svnt
   dynamicflags += SHAPES_CONTROL_SVNT_BUILD_DLL
