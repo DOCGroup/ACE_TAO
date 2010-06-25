@@ -1,3 +1,18 @@
+Fri Jun 25 15:08:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Added boolean default parameter 'for_add' to
+          lookup_by_name(). The results of the lookup is not added
+          to the scope's referenced list if 'for_add' is false.
+          Its default value is 'true'.
+          
+        * TAO_IDL/ast/ast_visitor_reifying.cpp(check_and_store):
+        
+          Passed the new parameter described above as 'false' to
+          avoid the call to add_to_referenced().
+
 Fri Jun 25 14:07:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:

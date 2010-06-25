@@ -604,7 +604,8 @@ ast_visitor_reifying::check_and_store (AST_Decl *node)
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
           tmpl_tail,
-          true);
+          true,
+          false);
 
       this->reified_node_ = d;
 
