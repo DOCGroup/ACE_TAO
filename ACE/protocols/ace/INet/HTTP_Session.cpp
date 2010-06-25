@@ -42,6 +42,32 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
+    Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout,
+                                         bool keep_alive,
+                                         const ACE_Time_Value* alive_timeout)
+      : port_ (HTTP_PORT),
+        reactive_ (false),
+        connection_ (0),
+        sock_stream_ (0),
+        in_stream_ (0),
+        out_stream_ (0),
+        http_timeout_ (timeout),
+        keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
+        reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
+        reconnect_countdown_ (&reconnect_timer_),
+        keep_alive_ (keep_alive),
+        needs_reconnect_ (false),
+        cannot_reconnect_ (false),
+        expects_response_body_ (false)
+      {
+        ACE_TRACE ("ACE_HTTP_Session - ctor");
+        if (keep_alive && alive_timeout)
+          {
+            this->keep_alive_timeout_ = *alive_timeout;
+          }
+      }
+
+    template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::~Session_T ()
       {
         ACE_TRACE ("ACE_HTTP_Session - dtor");
