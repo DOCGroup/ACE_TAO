@@ -89,7 +89,7 @@ div.Section1 {
   <p><b><span style='COLOR:black'>Importing IDL to PICML</span></b><span style='COLOR:black'><br>
     <br>
     &nbsp;&nbsp; To quick start our Stock Quoter modeling process in GME, CoSMIC
-    introduces <em>idl_to_picml</em> , which is an executable program that imports
+    introduces <tt>idl_to_picml</tt> , which is an executable program that imports
     the IDL files you just created into PICML.</span></p>
   <ol start="1" type="1">
     <li style='COLOR:black;'> Make sure <code> <span style='FONT-SIZE:10pt'>%COSMIC_ROOT%\bin</span></code> is included in
@@ -101,30 +101,32 @@ div.Section1 {
       2003\Vc7\bin
     <li style='COLOR:black;'> In the same command prompt, change directory to <code> <span style='FONT-SIZE:10pt'>Quoter\Simple</span></code>, and type the
       following command:<br>
-      &nbsp;&nbsp; &gt; <kbd> <span style='FONT-SIZE:10pt'> idl_to_picml -I%CIAO_ROOT% -x Quoter -r .&nbsp;</span></kbd><br>
-      <em>idl_to_picml</em> will parse your IDL files and generated a <code> <span style='FONT-SIZE:10pt'>Quoter.xme</span></code> file in the <code>
+      &nbsp;&nbsp; &gt; <kbd> <span style='FONT-SIZE:10pt'> idl_to_picml -x Quoter -r .&nbsp;</span></kbd><br>
+      <tt>idl_to_picml</tt> will parse your IDL files and generated a <code> <span style='FONT-SIZE:10pt'>Quoter.xme</span></code> file in the <code>
       <span style='FONT-SIZE:10pt'>Quoter</span></code> directory. Note that if
       -x option is not used, the default xme file name will be <code> <span style='FONT-SIZE:10pt'>PICML_default_xme_file.xme.</span></code><br>
       <span style='COLOR:black;'>When this command is run a second time, be sure to delete all E.idl files first!</span><br>
       <br>
-    <LI style="COLOR: black;    "> Start GME, select <strong>File-&gt;Import xml..</strong>, and choose the xme
+    <LI style="COLOR: black;    "> Start GME, select <strong>File | Import xml...</strong>, and choose the xme
       file just generated. You should be able to see an imported PICML model similar
       to the one shown in Figure 2. </LI>
   </ol>
-  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1027" src="images/fig2.jpg"><br>
+  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
+    <img border="0" id="_x0000_i1027" src="images/fig2.jpg" width="80%"><br>
     <br>
     Figure 2</span></p>
-  <p><span style='COLOR:black'>&nbsp; In the Browser of the generated model, the <em>PredefinedTypes</em> folder contains a bunch of atomic datatype elements that will be referenced by
+  <p><span style='COLOR:black'>&nbsp; In the Browser of the generated model, the 
+    <tt>PredefinedTypes</tt> 
+    folder contains a bunch of atomic datatype elements that will be referenced by
     other modeling parts later. You don't have to worry about them for now. The
-    models in <em>InterfaceDefinitions</em> folder are the PICML representations
-    of the IDL files you just imported. Double-click to open <em>StockBroker</em>, it
-    will show you a white, document-like entity which represents a
-    &lt;&lt;FileRef&gt;&gt; instance and a yellow box-shaped entity representing a
-    &lt;&lt;Package&gt;&gt; instance. Their equivalent representations in IDL files
-    are "#include" and "module" respectively. Figure 3 gives
-    you a clear view of GME representation of all the 3 idl files created. We will
-    cover the other folders in the next section.</span></p>
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="1" id="_x0000_i1028" src="images/fig3.jpg"><br>
+    models in <tt>InterfaceDefinitions</tt> folder are the PICML representations
+    of the IDL files you just imported. Double-click to open <tt>StockBroker</tt>, it
+    will show you a yellow box-shaped entity representing a &lt;&lt;Package&gt;&gt; 
+    instance. Its equivalent representation in IDL is &quot;module&quot;. Figure 3 
+    gives you a clear view of GME representation of all the 3 IDL files created. 
+    We will cover the other folders in the next section.</span></p>
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'>
+  <img border="1" id="_x0000_i1028" src="images/fig3.jpg"><br>
     <br>
     Figure 3</span></p>
   <p style='MARGIN-BOTTOM:12pt'><span style='COLOR:black'>Now
@@ -135,18 +137,21 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-  <h3>Building Stock Quoter system in PICML<span style='COLOR:black'> </span></h3>
+    
+  <h3>Building Stock Quoter System in PICML<span style='COLOR:black'> </span></h3>
+  
   <p><span style='COLOR:black'>This section describes modeling the Quoter
     application using PICML. If you have trouble producing a functioning model from
-    this tutorial, please see the, <a href="Model/Quoter.xme">pre-built Quoter model</a> which is provided for your reference. This model contains all
+    this tutorial, please see the, <a href="Model/Quoter.xme">pre-built Quoter model</a>
+     which is provided for your reference. This model contains all
     elements created as part of this tutorial.</span></p>
-  <p><strong><span style='COLOR:black'>Note:</span></strong><span style='COLOR:black'> To import an XML file in GME, select <em>File-&gt;Import
-    XML..</em> from GME and choose your XML model</span></p>
+  <p><strong><span style='COLOR:black'>Note:</span></strong><span style='COLOR:black'> 
+    To import an XML file in GME, select <b>File | Import XML...</b> from GME and choose your XML model</span></p>
   <p><span style='COLOR:black'>The PICML paradigm is designed for the <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-08">OMG
     Deployment &amp; Configuration (D&amp;C) specification (ptc/2003-07-08)</a>, so the modeling process
     is straightforward if you are familiar with the specification. Please see the <a href="../../../docs/releasenotes/dance.html">DAnCE
     project</a> for more
-    information.&nbsp;For those who hate specification (including me, :-)), an <a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/DAnCE.pdf">overview
+    information.&nbsp;For those who hate specifications (including me, :-)), an <a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/DAnCE.pdf">overview
     of D&amp;C</a> and as well as a <a href="../../../docs/OMG-CCM-Tutorial.pptx">tutorial of D&amp;C
     and CCM</a> can help to reduce the learning curve. In addition, it is
     also helpful to read through documentation which originally came from the TAO's Developer's Guide 1.4a (CIAO
@@ -156,9 +161,12 @@ div.Section1 {
   <ul type="disc">
     <li style='COLOR:black;'> <a href="#1">ImplementationArtifacts</a>
     <li style='COLOR:black;'> <a href="#2">ComponentImplementations</a>
-    <li style='COLOR:black;'> <a href="#3">ComponentPackages</a>
+    
+    <!-- disabled part of tutorial -->
+    <!-- li style='COLOR:black;'> <a href="#3">ComponentPackages</a>
     <li style='COLOR:black;'> <a href="#4">PackageConfiguration</a>
-    <li style='COLOR:black;'> <a href="#5">TopLevelPackage</a>
+    <li style='COLOR:black;'> <a href="#5">TopLevelPackage</a -->
+    
     <li style='COLOR:black;'> <a href="#6">Targets</a>
     <li style='COLOR:black;'> <a href="#7">DeploymentPlan</a></li>
   </ul>
@@ -166,24 +174,29 @@ div.Section1 {
     <hr size="2" width="100%" align="center">
     </span></div>
   <p><span style='COLOR:black'>The complete PICML Quoter model consists of
-    modeling elements distributed across various folders. If you used <em>idl_to_picml</em> to generate the initial model, you will see that it has created all these
+    modeling elements distributed across various folders. If you used <tt>idl_to_picml</tt>
+    to generate the initial model, you will see that it has created all these
     folders and some of the tedious boilerplate modeling for us. The rest of the
     section will explain the purpose of each folder as well as the modeling
     entities contained in these folders. We will also show how to model some of the
     folders that have to be done by hand.</span></p>
+    
   <p><b><span style='BACKGROUND:silver;COLOR:red;FONT-VARIANT:small-caps;'>Important:</span></b><span style='BACKGROUND:silver;COLOR:black;'> The interpreters that generate deployment
     artifacts expect very strict constraints in the model. When you finish your
     model, and any time you wish to generate anything, it is a good idea to check
-    constraints by clicking on <em>File-&gt;Check-&gt;Check All</em> in GME. This
+    constraints by clicking on <b>Tools | Constraints | Check All</b> in GME. This
     will help you find many logic errors in your model.</span><span style='COLOR:black'> </span></p>
+    
   <h3><span style='COLOR:black'>ImplementationArtifacts</span></h3>
   <p><span style='COLOR:black'>This folder contains implementation artifacts
-    associated with components. <em>idl_to_picml</em> has created these artifacts
-    for us, with their dependency relationships correctly captured. In order to match the current DAnCE specification, both execPoints
-    should be removed. Figure 4 shows the Implementation Artifacts for <em>StockBroker</em>.</span>
+    associated with components. <tt>idl_to_picml</tt> has created these artifacts
+    for us to ensure the are named correctly when associated with their 
+    target implementation. Figure 4 shows the Implementation Artifacts for 
+    the <tt>StockBroker</tt> implementation.</span>
   </p>
 
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1031" src="images/fig4.jpg"><br>
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'>
+    <span style='COLOR:black'><img border="0" id="_x0000_i1031" width="70%" src="images/fig4.jpg"><br>
     Figure 4.</span></p>
   <div align="center" style='TEXT-ALIGN:center'><a name="1"></a><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
@@ -191,72 +204,21 @@ div.Section1 {
   <h3><span style='COLOR:black'>ComponentImplementation<a name="2"></a></span></h3>
   <p><span style='COLOR:black'>This folder contains models that describe the implementations
     of component interfaces. In the Quoter example, we will have two monolithic
-    component implementations - named <em>StockDistributorImplementation</em> and <em>StockBrokerImplementation</em> - and an assembly component implementation named <em>StockQuoter</em>, which is
-    an assembly of <em>StockDistributorImplementation</em> and <em>StockBrokerImplementaion</em>. <em>idl_to_picml</em> has created the monolithic component implementations for
-    us, as shown in figure 5 for example, but we have to change this model in order to meet the DAnCE specification.</span></p>
-  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1033" src="images/fig5.jpg"><br>
+    component implementations - named <tt>Stock_StockDistributorImpl</tt> and 
+    <tt>Stock_StockBrokerImpl</tt> - and an assembly component implementation 
+    named <tt>StockQuoter</tt>, which is an assembly of 
+    <tt>Stock_StockDistributorImpl</tt> and <tt>Stock_StockBrokerImpl</tt>. 
+    <tt>idl_to_picml</tt> has created the monolithic component implementations 
+    for us, as shown in Figure 5.</span></p>
+    
+  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
+    <img border="0" id="_x0000_i1033" src="images/fig5.jpg" width="70%"><br>
     Figure 5</span>
   </p>
 
-  <p><span style='COLOR:black'>First thing we need to do is delete the following attributes.
-    <ul>
-      <li>StockBroker_stubRef</li>
-      <li>StockBroker_svntRef</li>
-      <li>StockBroker_execRef</li>
-      <li>ComponentIOR</li>
-    </ul>
-    After that we need to create a reference to the artifacts.
-    <ol>
-      <li>Drag a &lt;&lt;ComponentImplementationArtifact&gt;&gt; and a
-        &lt;&lt;ComponentServantArtifact&gt;&gt; from the Part browser to the modeling window.
-      </li>
-      <li>These two parts need to be linked to the StockBroker_exec and StockBroker_svnt artifacts in
-        <code><span style='FONT-SIZE:10pt'>Quoter/ImplementationArtifacts/StockBrokerArtifacts</span></code>.
-        This can be established by expanding the tree view and drag StockBroker_exec to the
-        &lt;&lt;ComponentImplementationArtifact&gt;&gt; and StockBroker_svnt to
-        &lt;&lt;ComponentServantArtifact&gt;&gt; on the window. On succes,
-        the &lt;&lt;ComponentImplementationArtifact&gt;&gt; icon should change into a
-        &lt;&lt;ImplementationArtifactReference&gt;&gt; icon.
-      </li>
-      <li>Now we should define which entry point is used. Since this tutorial is about unhomed components and the
-        in the IDL we used homed component, we should create an entry point in code in order to support unhomed component.
-        This can be done by:
-        <ol>
-          <li>Opening StockBroker_exec.h and add an entry point in the extern "C" section. This function should return
-           a <code>::Components::EnterpriseComponent_ptr</code> instead of a <code>::Components::HomeExecutorBase_ptr</code>. See
-            <a href="Broker/StockBroker_exec.h">StockBroker_exec.h</a> for more details.
-          </li>
-          <li>Opening StockBroker_exec.cpp and implement the extern "C" function. See
-            <a href="Broker/StockBroker_exec.cpp">StockBroker_exec.cpp</a> for more details.
-          </li>
-          <li>Now we should turn back to the model to configure this entry point. This should be done
-            by selecting the <em>ComponentImplemtationArtifact</em> and specify this new extern "C" function
-            (<code>create_Stock_StockBrokerComp_Impl</code>) in the attribute window.<br>
-          </li>
-        </ol>
-        The same has to be done for the <em>ComponentServantArtifact</em>. Mind that the entry point in code should be
-        implemented in the right namespace (<code>CIAO_Stock_StockBroker_Impl</code>). In this case the function is called
-        "create_Stock_StockBroker_Servant". See <a href="Broker/StockBroker_svnt.h">StockBroker_exec.h</a> and
-        <a href="Broker/StockBroker_svnt.cpp">StockBroker_exec.cpp</a> for more details.
-      </li>
-      <li>Connect <em>ComponentServantArtifact</em> and <em>ComponentImplementationArtifact</em> to
-        <em>StockBrokerMonolithicImpl</em>. To connect two items, one should switch to connect mode by clicking
-        <img border="0" width="16" height="16" id="_x0000_i1035" src="Icons/AddConnMode.gif" />. First click
-        <em>StockBrokerMonolithicImpl</em> and then <em>ComponentServantArtifact</em>.
-      </li>
-    </ol>
-    Don't forget to perform the previous steps for StockDistributor!<br/>
-    The result of these actions is shown in figure 5a.</span>
-  </p>
-  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1033" src="images/fig5a.jpg"><br>
-    <br/>
-    Figure 5a</span>
-  </p>
-
-
-    We also need to specify the connections between a <em>StockDistributorImplementation</em> and a <em>StockBrokerImplementaion</em> in
-    order to construct a Quoter system. Therefore we need to create the mentioned
-    StockQuoter component assemby</span></p>
+  <p><span style='COLOR:black'>We also need to specify the connections between a <tt>Stock_StockDistributorImpl</tt> 
+    and a <tt>Stock_StockBrokerImpl</tt> in order to construct a Quoter system. We 
+    therefore we need to create the mentioned StockQuoter component assemby.</span></p>
 
   <p><span style='COLOR:black'>Assembly components provide a boundary for the composition
     of monolithic components and even other assemblies. Assembly components do not
@@ -267,34 +229,34 @@ div.Section1 {
     is not necessary to model a </span><code><span style='FONT-SIZE:10pt;
     COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
     Instead, <em>instances</em> of other components are placed within the assembly
-    and connected. Let's try to assemble the <em>StockQuoter</em>.</span></p>
+    and connected. Let's try to assemble the <tt>StockQuoter</tt>.</span></p>
+    
   <ol start="1" type="1">
     <li style='COLOR:black;'> Right click the <em>ComponentImplementations</em> folder, choose <strong>Insert
       Model-&gt;ComponentImplementationContainer</strong>, rename it as
-      "StockQuoterImplementation" in the Attribute Panel. Double click to open it.
-    </li>
+      "StockQuoterImplementation" in the Attribute Panel. Double click to open it.</li>
+      
     <li style='COLOR:black;'> From the Part Browser, drag a &lt;&lt;ComponentAssembly&gt;&gt; to the modeling
-      window, name it "StockQuoter". Double click to open it.
-    </li>
-    <li style='COLOR:black;'> Now we will create two instances for interfaces <em>StockBroker</em> and <em>StockDistributor</em>.
-      To do that, expand the folder <em> <span style="FONT-SIZE:10pt;
-     FONT-FAMILY:'Courier New'">InterfaceDefinitions</span></em>, then expand the
-     <em><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">InterfaceDefinitions/StockBroker</span></em>, then
-     <em><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">InterfaceDefinitions/StockBroker/Stock</span></em> until the interface definition of <em>StockBroker</em> shows.
-      While expanding the tree, always keep the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window open.
-      Then press the ALT key and drag <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Broker/Stock/StockBroker</span></code>
-      in the browser to the "StockQuoter" &lt;&lt;ComponentAssembly&gt;&gt; window'
-      Repeat the same steps for <code> <span style='FONT-SIZE:10pt'>Quoter/InterfaceDefinitions/Distributor/Stock/StockDistributor</span></code>,
-      and you will see two instances of component interfaces have been created as
-      shown in Figure 6 (the black line in the figure only indicates .mapping)
-      </li>
-  </ol>
-  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1034" src="images/fig6.jpg"><br>
-    <br>
+      window, name it "StockQuoter". Double click to open it.</li>
+      
+    <li style='COLOR:black;'> Now we will create two instances for interfaces <tt>StockBroker</tt> 
+    and <tt>StockDistributor</tt>. To do that, first add a &lt;&lt;ComponentInstance&gt;&gt; element
+    to the model and name it &quot;StockBroker&quot;. Open the newly added model and select the
+    <tt>ComponentImplementationAspect</tt> aspect. Finally, press and hold SHIFT + CTRL while
+    dragging <tt><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">
+    ComponentImplementations/Stock_StockBrokerImpl/Stock_StockBrokerImpl</span></tt>
+    into the open model. Figure 6 shows the element that will be referenced as
+    a result of this operation.</li>
+    
+  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1034" width="70%" src="images/fig6.jpg"><br>
     Figure 6</span></p>
-  <ol start="4" type="1">
-    <li style='COLOR:black;'> Create an &lt;&lt;PublishConnector&gt;&gt; by dragging it from the "Part browser" onto the "StockQuoter" window.
-    </li>
+  
+    <li style='COLOR:black;'>Repeat the same process for the <tt>StockDistributor</tt>
+    component instance. Figure 6a show the model of the both the <tt>StockBroker</tt>
+    and <tt>StockDistributor</tt> component instances.</li>
+  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="Img1" width="70%" src="images/fig6a.jpg"><br>
+    Figure 6a</span></p>
+
     <li style='COLOR:black;'> Now assemble the components together according to <a href="images/fig1.jpg">Figure
       1</a> (make sure you change to connect mode <img border="0" width="16" height="16" id="_x0000_i1035" src="Icons/AddConnMode.gif" />)
       and the resulting assembly model should look like Figure 7. Note that to create connections between StockDistributor.notify_out and StockBroker.notify_in,
@@ -306,33 +268,36 @@ div.Section1 {
       one for StockBroker and one for StockDistributor. The following steps should be taken in order
       to configure both properties correct:
       <ol>
-        <li>Double click on one of them. An empty window appears and the part browser only has one part, called "DataType". Drag this part onto the empty window.
+        <li>Double click on one of them. An empty window appears and the part browser only has one 
+        part, called &quot;DataType&quot;. Drag this part onto the empty window.
         </li>
         <li>In the tree window, browse to <code> <span style='FONT-SIZE:10pt'>Quoter/PredefinedTypes</span></code>
         </li>
-        <li>Drag tree item "String" onto the "DataType" item.
+        <li>Drag tree item &quot;String&quot; onto the &quot;DataType&quot; item.
         </li>
         <li>Go back to the previous window and repeat these steps for the other &lt;&lt;Property&gt;&gt;.
         </li>
       </ol>
       Now it's time to configure the name and value of both &lt;&lt;Property&gt;&gt; items.
       <ul>
-        <li>The name of each &lt;&lt;Property&gt;&gt; should be "edu.vanderbilt.dre.DAnCE.InstanceIOR"
+        <li>The name of each &lt;&lt;Property&gt;&gt; should be &quot;ComponentIOR&quot;
         </li>
-        <li>One of the values should be "StockBroker.ior"; the other one should be "StockDistributor.ior"
+        <li>One of the values should be &quot;StockBroker.ior&quot; and the other 
+        should be &quot;StockDistributor.ior&quot;
         </li>
       </ul>
     </li>
   </ol>
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
-    <img border="0" id="_x0000_i1036" src="images/fig7.jpg" />
+    <img border="0" id="_x0000_i1036" src="images/fig7.jpg" width="70%" />
     <br><br>
     Figure 7</span></p>
 
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-  <h3><a name="3"></a><span style='COLOR:black'>ComponentPackage</span></h3>
+    
+  <!-- h3><a name="3"></a><span style='COLOR:black'>ComponentPackage</span></h3>
   <p><span style='COLOR:black'>This folder contains deployable component packages. Every instance in an assembly should have a corresponding
     monolithic implementation and packaged in a ComponentPackage. To create a package for <em>StockBroker</em>.instance</span></p>
   <ol start="1" type="1">
@@ -393,24 +358,9 @@ div.Section1 {
   </ol>
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
-    </span></div>
-  <h3><a name="4"></a><span style='COLOR:black'>InterfaceDefinitions</span></h3>
-  <p><span style='COLOR:black'>
-    <ol>
-      <li>Nagivate to <code><span style='FONT-SIZE:10pt'>
-        Quoter/InterfaceDefinitions/StockBroker/Stock</span></code> and double click it.
-      </li>
-      <li>Switch to connect mode and connect <em>StockBrokerHome</em> and
-        <em>StockBroker</em> with each other.
-      </li>
-    </ol></span>
-    Do the same for Distributor.
-  </p>
-
-  <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
-    <hr size="2" width="100%" align="center">
-    </span></div>
-  <h3><a name="4"></a><span style='COLOR:black'>PackageConfiguration</span></h3>
+    </span></div -->
+    
+  <!-- h3><a name="4"></a><span style='COLOR:black'>PackageConfiguration</span></h3>
   <p><span style='COLOR:black'>This folder contains just one
     model capturing specific configuration of Component packages.</span></p>
   <ol start="1" type="1">
@@ -442,7 +392,8 @@ div.Section1 {
   </ol>
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
-    </span></div>
+    </span></div-->
+    
   <h3><a name="6"></a><span style='COLOR:black'>Targets</span></h3>
   <p><span style='COLOR:black'>This folder contains
     domain-specific models capturing information about the target environment in
@@ -460,7 +411,8 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-  <h3><a name="7"></a><span style='COLOR:black'>DeploymentPlan</span></h3>
+    
+  <h3><a name="7"></a><span style='COLOR:black'>Deployment Plan</span></h3>
   <p><span style='COLOR:black'>This folder contains a plan model
     that captures information about the assignment of component to nodes.</span></p>
   <ol start="1" type="1">
@@ -473,40 +425,41 @@ div.Section1 {
           <code><span style='FONT-SIZE:10pt'>Quoter/Targets/Domain/Distributor</span></code> respectively.<br/>
           A &lt;&lt;CollationGroup&gt;&gt;, named "DefaultGroup", is added automatically when adding a &lt;&lt;NodeReference&gt;&gt;.
         </li>
-        <li style='COLOR:black;'> Two &lt;&lt;ComponentRef&gt;&gt; named "StockBroker" and "StockDistributor"
+        <li style='COLOR:black;'> Two &lt;&lt;ComponentInstanceRef&gt;&gt; named "StockBroker" and "StockDistributor"
           respectively, refering to <code> <span style='FONT-SIZE:10pt'>Quoter/ComponentImplementations/StockQuoterImplementation/StockQuoter/StockBroker</span></code>
           and <code><span style='FONT-SIZE:10pt'>Quoter/ComponentImplementations/StockQuoterImplementation/StockQuoter/StockDistributor</span></code> respectively.<br/>
-          Note that the &lt;&lt;ComponentRef&gt;&gt; in DeploymentPlan is not referring to the interface, but rather the actual instance of the implementation.
         </li>
       </ul>
     <p>The model should look like this:</p>
   </ol>
-  <p align="center" style='MARGIN-BOTTOM:12pt;MARGIN-LEFT:0.5in;TEXT-ALIGN:center;'><span style='COLOR:black'><img border="0" id="_x0000_i1044" src="images/fig10.jpg"><br>
+  <p align="center" style='MARGIN-BOTTOM:12pt;MARGIN-LEFT:0.5in;TEXT-ALIGN:center;'>
+  <span style='COLOR:black'><img border="0" id="_x0000_i1044" src="images/fig10.jpg" width="70%"><br>
     <br>
     Figure 10.</span></p>
   <ol start="4" type="1">
-    <li style='MARGIN-BOTTOM:12pt;COLOR:black;'> Now we need to associate &lt;&lt;ComponentRef&gt;&gt; StockBroker to the
-      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt; Node_Broker, and &lt;&lt;ComponentRef&gt;&gt; StockDistributor to the
+    <li style='MARGIN-BOTTOM:12pt;COLOR:black;'> Now we need to associate &lt;&lt;ComponentInstanceRef&gt;&gt; StockBroker to the
+      &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt; Node_Broker, and &lt;&lt;ComponentInstanceRef&gt;&gt; StockDistributor to the
       &lt;&lt;CollocationGroup&gt;&gt; running on the &lt;&lt;NodeReference&gt;&gt; Node_Distributor. To do that, switch the Edit Mode Bar to Set Mode
       (<img border="0" width="16" height="16" id="_x0000_i1045" src="Icons/SetMode.gif">), and move the cursor to the &lt;&lt;CollocationGroup&gt;&gt; running on
       &lt;&lt;NodeReference&gt;&gt; Node_Distributor, right-click on it. You will find the cursor is changed to set mode cursor, and only the &lt;&lt;CollocationGroup&gt;&gt;
       you clicked in is highlighted, as shown in Figure 11.
     </li>
   </ol>
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1046" src="images/fig11.jpg">
-    <!-- 01.html,v 1.3 2006/02/10 14:34:35 mxiong Exp -->
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'>
+  <img border="0" id="_x0000_i1046" src="images/fig11.jpg" width="70%">
     <br><br>
     Figure 11</span>
   </p>
-  <p><span style='COLOR:black'>Now move your cursor to &lt;&lt;ComponentRef&gt;&gt;&nbsp; StockDistributor, and left-click it, so that
+  <p><span style='COLOR:black'>Now move your cursor to &lt;&lt;ComponentInstanceRef&gt;&gt;&nbsp; StockDistributor, and left-click it, so that
     it looks like Figure 12.</span>
   </p>
-  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1047" src="images/fig12.jpg"> &nbsp;<br>
+  <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'>
+  <img border="0" id="_x0000_i1047" src="images/fig12.jpg" width="70%"> &nbsp;<br>
     <br>
     Figure 12</span>
   </p>
   <p style='MARGIN-BOTTOM:12pt'><span style='COLOR:black'>This operation associates <em>StockDistributor</em> component to the
-    &lt;&lt;CollocationGroup&gt;&gt; running on <em>Distributor</em> node. To do the same with Broker, just right-click on the associate
+    &lt;&lt;CollocationGroup&gt;&gt; running on <tt>Distributor</tt> node. To do the same with Broker, just right-click on the associate
     &lt;&lt;CollocationGroup&gt;&gt;, and left-click on StockBroker &lt;&lt;CollocationGroup&gt;&gt; which is then highlighted.</span>
   </p>
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
