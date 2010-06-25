@@ -1,3 +1,8 @@
+Fri Jun 24 16:24:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* bin/MakeProjectCreator/config/inet.mpb:
+	  Added missing avoids.
+
 Thu Jun 24 08:52:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * *.mpc:
