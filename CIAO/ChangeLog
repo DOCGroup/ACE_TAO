@@ -1,3 +1,12 @@
+Fri Jun 25 13:46:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.idl:
+          Renamed ShapeType to ShapeType_msg to indicate a DDS message.
+
 Fri Jun 25 13:41:21 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:

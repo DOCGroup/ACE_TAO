@@ -10,7 +10,7 @@
 #pragma DCPS_DATA_TYPE "ShapeType"
 #pragma DCPS_DATA_KEY "ShapeType color"
 
-struct ShapeType {
+struct ShapeType_msg {
   string color; //@key
   long x;
   long y;
@@ -23,7 +23,7 @@ struct ShapeType {
 #pragma DCPS_DATA_KEY "Attributes shape"
 #pragma DCPS_DATA_KEY "Attributes color"
 
-struct Attributes {
+struct Attributes_msg {
   string shape; //@key
   string color; //@key
   float speed;
