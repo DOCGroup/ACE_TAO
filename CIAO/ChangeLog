@@ -1,3 +1,9 @@
+Fri Jun 25 13:27:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Extended the release notes for 0.8.0, ACE_FOR_TAO MPC configuration
+          is dropped for CIAO
+
 Fri Jun 25 13:02:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial
@@ -28,7 +34,7 @@ Fri Jun 25 13:02:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tutorials/Hello/Tutorial/images/images.png
         * connectors/ami4ccm/tutorials/Hello/Tutorial/images/system.png
         Tutorial documents and associated code, pictures, cdp.
-        
+
 Fri Jun 25 12:57:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
