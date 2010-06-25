@@ -13,6 +13,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 
   The latter is for consistency and clarity.
 
+. Ended daily maintenance for RHEL51
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.8 and ACE-5.7.9
 ====================================================
 
