@@ -124,7 +124,7 @@ document</a>.</p><p>
   <tr>
     <th>DOC Group</th>
     <td>Windows 2000, XP (MSVC++ 7.1, and 8);
-        many versions of Linux/Intel (many compilers), Linux/IA64 (GCC).
+        many versions of Linux/Intel (many compilers).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
         <a href="http://doc.ece.uci.edu/">UCI</a> and
@@ -153,11 +153,11 @@ document</a>.</p><p>
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
-        TAO service offerings. We support AIX,  
+        TAO service offerings. We support AIX,
         CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, Embarcadero C++ Builder 2010,
         CBuilderX 1.0, Windows CE, MinGW, Microsoft Visual C++ 7.1/8/9, GCC,
         Cygwin, VxWorks 5.5.x - 6.x (kernel and rtp), OpenVMS 8.2-1 &            8.3 on Alpha and IA64,
-        BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris, 
+        BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
         Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS 4.0/4.2,
         HPUX 11i v1/v2 32/64 bit on PA-RISC, and
         HPUX 11i v2/v3 on IA64. The Intel C++ compiler is supported on
@@ -1043,7 +1043,7 @@ setup selects by default:
        <blockquote><code></code><pre>       % export PATH=//c/cygwin/bin:$PATH
        </pre></blockquote>
 
-       or 
+       or
 
        <blockquote><code></code><pre>       % export PATH=/cygdrive/c/cygwin/bin:$PATH
        </pre></blockquote>
@@ -2488,26 +2488,26 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
 
 </p></li><li><strong>iPhone/iPod Touch/iPad</strong><p>
 
-        </p><p>ACE builds and runs on the iPhone/iPod Touch/iPad Hardware 
+        </p><p>ACE builds and runs on the iPhone/iPod Touch/iPad Hardware
         and Simulator. Keep in mind that ACE/TAO needs to be built
         statically since Apple does not allow third party dynamic libraries
         to be deployed on the hardware. The following are needed to build ACE:</p>
 
         <p>1. The iPhone SDK.</p>
         <p>2. When creating $ACE_ROOT/ace/config.h, include
-        config-macosx-iphone-hardware.h if you want to deploy on the 
+        config-macosx-iphone-hardware.h if you want to deploy on the
         hardware, include config-macosx-iphone-simulator.h if you want
         to deploy on the simulator. Even though those includes are named
         after the iPhone, the includes work for iPhone/iPod Touch, and iPad.</p>
         <p>3. You need to define two environment variables. The first is
         IPHONE_TARGET. Set IPHONE_TARGET to SIMULATOR if you want to deploy
         on SIMULATOR. Set IPHONE_TARGET to HARDWARE if you want to deploy on
-        the hardware device.</p> 
+        the hardware device.</p>
         <p>4. When creating $ACE_ROOT/include/makeinclude/platform_macros.GNU,
         include 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_iphone.GNU'
         in the file.</p>
-        
-       
+
+
 
 </li></ul>
 
