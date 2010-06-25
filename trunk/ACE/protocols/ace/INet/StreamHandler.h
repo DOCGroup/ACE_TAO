@@ -94,7 +94,7 @@ namespace ACE
               /// Attempts to send queued data to peer.
               /// Called either from handle_output in reactive mode
               /// or directly from write_to_stream when non-reactive.
-              int handle_input_i (ACE_Time_Value* timeout = 0);
+              int handle_input_i (size_t rdlen, ACE_Time_Value* timeout = 0);
 
               /// processes queued input
               int process_input (char* buf,
