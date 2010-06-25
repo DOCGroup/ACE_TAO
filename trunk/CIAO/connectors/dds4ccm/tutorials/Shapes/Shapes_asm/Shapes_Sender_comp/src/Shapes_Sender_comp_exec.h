@@ -73,7 +73,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
     ::Shapes::CCM_Sender_comp_Context_var context_;
     ::DDS::InstanceHandle_t instance_handle_;
 
-    ShapeType square_;
+    ShapeType_msg square_;
 
     ::Shapes::ReturnStatus
     update_square (void);
