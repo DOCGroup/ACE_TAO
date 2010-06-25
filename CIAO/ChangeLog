@@ -1,3 +1,24 @@
+Fri Jun 25 01:47:39 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * tutorials/Quoter/Simple/03.html:
+        * tutorials/Quoter/Simple/Model/Quoter.xme:
+        * tutorials/Quoter/Simple/images/fig10.jpg:
+        * tutorials/Quoter/Simple/images/fig11.jpg:
+        * tutorials/Quoter/Simple/images/fig12.jpg:
+        * tutorials/Quoter/Simple/images/fig2.jpg:
+        * tutorials/Quoter/Simple/images/fig3.jpg:
+        * tutorials/Quoter/Simple/images/fig4.jpg:
+        * tutorials/Quoter/Simple/images/fig5.jpg:
+        * tutorials/Quoter/Simple/images/fig6.jpg:
+        * tutorials/Quoter/Simple/images/fig6a.jpg:
+        * tutorials/Quoter/Simple/images/fig7.jpg:
+        
+          Updated CoSMIC portion of StockQuoter tutorial.
+
+        * tutorials/Quoter/Simple/images/fig5a.jpg:
+
+          Removed this file.
+
 Thu Jun 24 19:01:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSDataReaderListener_T.cpp:
