@@ -26,7 +26,7 @@ project(Shapes_Control_lem_gen) : ciaoidldefaults {
               -Wb,stub_export_include=Shapes_Control_comp_lem_stub_export.h \
               -SS -Gxhst \
               -I../ports \
-              -I../ports/GeneratedCode \
+              -I../../ports/GeneratedCode \
               -I../../ports \
               -o GeneratedCode
 
