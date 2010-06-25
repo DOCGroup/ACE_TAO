@@ -1,13 +1,13 @@
 // $Id$
 
-#ifndef SHAPES_CONN_IDL_
-#define SHAPES_CONN_IDL_
+#ifndef SHAPES_SHAPETYPE_CONN_IDL_
+#define SHAPES_SHAPETYPE_CONN_IDL_
 
 #include  <Components.idl>
 #include "Shapes_msg.idl"
 #include "connectors/dds4ccm/idl/ccm_dds.idl"
 
-#pragma ciao lem "Shapes_connE.idl"
+#pragma ciao lem "Shapes_ShapeType_connE.idl"
 
 module Shapes
 {
@@ -15,6 +15,6 @@ module Shapes
   module ::CCM_DDS::Typed < ::ShapeType_msg, ShapeType_msgSeq> ShapesConnector;
 };
 
-#endif /* SHAPES_CONN_IDL_ */
+#endif /* SHAPES_SHAPETYPE_CONN_IDL_ */
 
 

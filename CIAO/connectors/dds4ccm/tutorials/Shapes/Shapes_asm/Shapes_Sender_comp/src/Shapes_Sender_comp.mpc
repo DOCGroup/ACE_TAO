@@ -1,7 +1,7 @@
 // $Id$
 
 project(Shapes_Sender_idl_gen) : componentidldefaults, dds4ccm {
-  after += Shapes_conn_idl_gen
+  after += Shapes_ShapeType_conn_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SHAPES_SENDER_COMP_STUB_Export \
               -Wb,stub_export_include=Shapes_Sender_comp_stub_export.h \
@@ -64,9 +64,9 @@ project(Shapes_Sender_comp_lem_stub) : ccm_svnt, dds4ccm_base {
 }
 
 project(Shapes_Sender_comp_stub) : ccm_stub, dds4ccm_base {
-  after += Shapes_Sender_idl_gen Shapes_msg_stub Shapes_conn_stub
+  after += Shapes_Sender_idl_gen Shapes_msg_stub Shapes_ShapeType_conn_stub
 
-  libs  += Shapes_msg_stub Shapes_conn_stub
+  libs  += Shapes_msg_stub Shapes_ShapeType_conn_stub
   libpaths += ../../lib
   libout = ../../lib
 
@@ -93,12 +93,12 @@ project(Shapes_Sender_comp_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(Shapes_Sender_comp_exec) : ciao_executor, dds4ccm_base {
-  after   += Shapes_Sender_comp_lem_stub Shapes_Sender_comp_stub Shapes_conn_lem_stub \
-             Shapes_conn_stub Shapes_Control_comp_lem_stub Shapes_Control_obj_lem_stub \
+  after   += Shapes_Sender_comp_lem_stub Shapes_Sender_comp_stub Shapes_ShapeType_conn_lem_stub \
+             Shapes_ShapeType_conn_stub Shapes_Control_comp_lem_stub Shapes_Control_obj_lem_stub \
              Shapes_defn_stub Shapes_Control_obj_stub
 
   libs += Shapes_Sender_comp_stub Shapes_Sender_comp_lem_stub Shapes_msg_stub \
-          Shapes_conn_lem_stub Shapes_conn_stub Shapes_Control_comp_lem_stub \
+          Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_conn_stub Shapes_Control_comp_lem_stub \
           Shapes_Control_obj_lem_stub Shapes_defn_stub Shapes_Control_obj_stub
   libpaths += ../../lib
   libout = ../../lib
@@ -127,15 +127,15 @@ project(Shapes_Sender_comp_exec) : ciao_executor, dds4ccm_base {
 
 project(Shapes_Sender_comp_svnt) : ciao_servant, dds4ccm_base {
   after      += Shapes_msg_stub  Shapes_Sender_comp_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel Shapes_conn_stub Shapes_conn_svnt \
-                Shapes_conn_lem_stub Shapes_Control_comp_svnt \
+                DDS4CCM_skel Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt \
+                Shapes_ShapeType_conn_lem_stub Shapes_Control_comp_svnt \
                 Shapes_Control_obj_stub Shapes_Control_obj_svnt \
                 Shapes_Control_obj_lem_stub
 
   libs       += Shapes_Sender_comp_stub Shapes_Sender_comp_lem_stub  \
                 Shapes_msg_stub DDS4CCM_lem_stub DDS4CCM_skel \
-                Shapes_conn_stub Shapes_conn_svnt \
-                Shapes_conn_lem_stub Shapes_Control_comp_svnt \
+                Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt \
+                Shapes_ShapeType_conn_lem_stub Shapes_Control_comp_svnt \
                 Shapes_Control_obj_stub Shapes_Control_obj_svnt \
                 Shapes_Control_obj_lem_stub
   libpaths += ../../lib
