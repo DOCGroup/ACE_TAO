@@ -1,3 +1,10 @@
+Fri Jun 25 03:02:36 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * tutorials/Quoter/Simple/Model/Quoter.xme:
+
+          Updated artifact location to be consistent with the
+          current state of the CIAO tutorial.
+          
 Fri Jun 25 01:47:39 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tutorials/Quoter/Simple/03.html:
@@ -12,7 +19,7 @@ Fri Jun 25 01:47:39 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
         * tutorials/Quoter/Simple/images/fig6.jpg:
         * tutorials/Quoter/Simple/images/fig6a.jpg:
         * tutorials/Quoter/Simple/images/fig7.jpg:
-        
+
           Updated CoSMIC portion of StockQuoter tutorial.
 
         * tutorials/Quoter/Simple/images/fig5a.jpg:
