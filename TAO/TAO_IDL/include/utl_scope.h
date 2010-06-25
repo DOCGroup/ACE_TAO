@@ -179,7 +179,8 @@ public:
 
   // Name Lookup Mechanism
   AST_Decl *lookup_by_name (UTL_ScopedName *,
-                            bool full_def_only = false);
+                            bool full_def_only = false,
+                            bool for_add = true);
                             
   AST_Decl *lookup_by_name_r (UTL_ScopedName *,
                               bool full_def_only);

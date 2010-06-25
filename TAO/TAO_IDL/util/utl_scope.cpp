@@ -1276,7 +1276,8 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
 AST_Decl *
 UTL_Scope::lookup_by_name (UTL_ScopedName *e,
-                           bool full_def_only)
+                           bool full_def_only,
+                           bool for_add)
 {
   // Empty name? Exit immediately.
   if (!e)
@@ -1291,6 +1292,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // scope-expanding iteration below.
   Identifier *name = e->head ();
   const bool global_scope_name = work->is_global_name (name);
+  
   if (global_scope_name)
     {
       // Remove the preceeding "::" or "" from the scopename
@@ -1302,6 +1304,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
     }
 
   AST_Decl *d = work->lookup_by_name_r (e, full_def_only);
+  
   if (!d)
     {
       // If all else fails, look though each outer scope.
@@ -1310,6 +1313,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
            outer = ScopeAsDecl (outer)->defined_in ())
         {
           d = outer->lookup_by_name_r (e, full_def_only);
+          
           if (d)
             {
               work = outer;
@@ -1318,7 +1322,9 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
     }
 
-  ACE_Unbounded_Queue<AST_Decl *> &masks = idl_global->masking_scopes ();
+  ACE_Unbounded_Queue<AST_Decl *> &masks =
+    idl_global->masking_scopes ();
+    
   if (d && !global_scope_name)
     {
       ACE_Unbounded_Queue<AST_Decl *>::CONST_ITERATOR i (masks);
@@ -1336,6 +1342,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
               i.next (item);
               const char *const item_name_str =
                 (*item)->local_name ()->get_string ();
+                
               if (!ACE_OS::strcmp (item_name_str, name_str)
                   && !(*item)->masking_checks (outer_decl))
                 {
@@ -1347,7 +1354,12 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         }
     }
 
-  work->add_to_referenced (d, false, name); // Doesn't add if !d
+  if (for_add)
+    {
+      /// Doesn't add if d == 0.
+      work->add_to_referenced (d, false, name);
+    }
+    
   masks.reset ();
   return d;
 }
@@ -1358,6 +1370,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
 {
   bool work_another_level;
   UTL_Scope *work = this;
+  
   do
     {
       // Will catch Object, TypeCode, TCKind, ValueBase and
@@ -1365,6 +1378,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
+      
       if (d)
         {
           return d;
@@ -1387,7 +1401,9 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           // so we return the created placeholder. If there's no
           // match, 0 is returned, and we proceed with the regular
           // lookup.
-          AST_Param_Holder *param_holder = UTL_Scope::match_param (e);
+          AST_Param_Holder *param_holder =
+            UTL_Scope::match_param (e);
+            
           if (param_holder)
             {
               return param_holder;
@@ -1395,7 +1411,9 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
         }
 
       work_another_level = false; // Until we find something.
-      bool in_corba = !ACE_OS::strcmp (e->head ()->get_string (), "CORBA");
+      bool in_corba =
+        (ACE_OS::strcmp (e->head ()->get_string (), "CORBA") == 0);
+        
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
            i.next ())
@@ -1417,6 +1435,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                 }
 
               UTL_Scope *next = DeclAsScope (d); // The next scope to search
+              
               if (next)
                 {
                   work = next;
@@ -1442,6 +1461,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
            i.next ())
         {
           AST_Decl *d = i.item ();
+          
           if (d->local_name ()->case_compare (e->head ()))
             {
               return d;
