@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="Hello_ReceiverHomeImplementation">
+    <name>Hello_ReceiverHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Hello_Receiver_comp_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Receiver_comp_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_Receiver_comp_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_comp_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Receiver_comp_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Hello_SenderHomeImplementation">
+    <name>Hello_SenderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Hello_Sender_comp_ExecArtifact"/>
+    <artifact xmi:idref="Hello_Sender_comp_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_Sender_comp_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_Sender_comp_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Hello_AMIHomeImplementation">
+    <name>Hello_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Hello_MyFoo_obj_AMI_ExecArtifact"/>
+    <artifact xmi:idref="Hello_MyFoo_obj_AMI_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="Hello_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Sender">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Sender</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.AMI">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.AMI</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="Hello_AMIHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>run_asynch_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>do_foo_connection</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_foo_connection</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Hello_MyFoo_obj_AMI_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>Hello_MyFoo_obj_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Hello_MyFoo_obj_AMI_ExecArtifact">
+    <name>Hello.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>Hello_MyFoo_obj_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI4CCM_MyFoo_obj_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Hello_Receiver_comp_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Hello_Receiver_comp_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Hello_Receiver_comp_ExecArtifact">
+    <name>Receiver_comp_exec</name>
+    <source/>
+    <node/>
+    <location>Hello_Receiver_comp_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Hello_Sender_comp_SvntArtifact">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Hello_Sender_comp_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Hello_Sender_comp_ExecArtifact">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Hello_Sender_comp_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_AMI_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:DeploymentPlan>

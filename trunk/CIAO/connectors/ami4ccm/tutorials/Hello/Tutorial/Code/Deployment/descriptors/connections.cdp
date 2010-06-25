@@ -1,0 +1,52 @@
+<connection>
+    <name>run_asynch_foo_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>do_foo_connection</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_foo_connection</name>
+    <internalEndpoint>
+      <portName>do_my_foo</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_foo</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" />
+    </internalEndpoint>
+  </connection>
+
