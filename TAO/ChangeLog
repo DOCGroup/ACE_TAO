@@ -1,36 +1,46 @@
+Fri Jun 25 16:03:56 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Portable_Interceptors/Register_Initial_References/Server_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/client.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.h:
+        * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/server.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.cpp:
+          Fixed compile warnings and unnecessary whitespaces.
+
 Fri Jun 25 15:08:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Added boolean default parameter 'for_add' to
           lookup_by_name(). The results of the lookup is not added
           to the scope's referenced list if 'for_add' is false.
           Its default value is 'true'.
-          
+
         * TAO_IDL/ast/ast_visitor_reifying.cpp(check_and_store):
-        
+
           Passed the new parameter described above as 'false' to
           avoid the call to add_to_referenced().
 
 Fri Jun 25 14:07:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated for next release.
 
 Thu Jun 24 15:56:36 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
-        
+
           Changes to generated code layout.
-          
+
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
-        
+
           Fixed leading double colon generation problem.
-          
+
         * TAO_IDL/be/be_visitor_connector/connector_dds_ex_base.cpp:
-        
+
           Removed unused code and moved comment.
 
 Thu Jun 24 08:52:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
