@@ -19,6 +19,6 @@
 
 #pragma ciao lem "PSAT_ConnectorE.idl"
 
-module ::CCM_DDS_PSAT::Typed_PSAT < ::TestTopic, ::TestTopicSeq> CSLDeadlineConnector;
+module ::CCM_DDS_PSAT::Typed_PSAT < ::TestTopic, ::TestTopicSeq> TestTopicMod;
 
 #endif /* PSAT_CONNECTOR_USER_IDL */
