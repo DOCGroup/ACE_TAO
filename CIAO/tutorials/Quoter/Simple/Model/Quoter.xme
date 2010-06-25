@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project SYSTEM "mga.dtd">
 
-<project guid="{836A12EA-4F85-4840-AF13-BB8D2B4FA644}" cdate="Thu Jun 24 20:35:23 2010" mdate="Thu Jun 24 20:35:23 2010" version="" metaguid="{5F77330E-CA80-484B-A55B-C3FE09972987}" metaversion="" metaname="PICML">
+<project guid="{3B3C7E6C-9B48-4F45-B0DB-07D6B9B1E566}" cdate="Thu Jun 24 20:35:23 2010" mdate="Thu Jun 24 20:35:23 2010" version="" metaguid="{5F77330E-CA80-484B-A55B-C3FE09972987}" metaversion="" metaname="PICML">
 	<name>Quoter</name>
 	<comment></comment>
 	<author></author>
@@ -732,7 +732,7 @@
 						<value></value>
 					</attribute>
 					<attribute kind="location">
-						<value>Stock_StockBroker_svnt</value>
+						<value>StockBroker_svnt</value>
 					</attribute>
 					<attribute kind="operatingSystem" status="meta">
 						<value></value>
@@ -765,7 +765,7 @@
 						<value></value>
 					</attribute>
 					<attribute kind="location">
-						<value>Stock_StockBroker_exec</value>
+						<value>StockBroker_exec</value>
 					</attribute>
 					<attribute kind="operatingSystem" status="meta">
 						<value></value>
@@ -801,7 +801,7 @@
 						<value></value>
 					</attribute>
 					<attribute kind="location">
-						<value>Stock_StockDistributor_svnt</value>
+						<value>StockDistributor_svnt</value>
 					</attribute>
 					<attribute kind="operatingSystem" status="meta">
 						<value></value>
@@ -834,7 +834,7 @@
 						<value></value>
 					</attribute>
 					<attribute kind="location">
-						<value>Stock_StockDistributor_exec</value>
+						<value>StockDistributor_exec</value>
 					</attribute>
 					<attribute kind="operatingSystem" status="meta">
 						<value></value>
@@ -1350,6 +1350,12 @@
 					<name>Node_Broker</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
+						<regnode name="DeploymentProperties" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>333,53</value>
+							</regnode>
+						</regnode>
 						<regnode name="NodeMapping" status="undefined">
 							<value></value>
 							<regnode name="Position" isopaque="yes">
@@ -1362,6 +1368,12 @@
 					<name>Node_Distributor</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
+						<regnode name="DeploymentProperties" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>53,95</value>
+							</regnode>
+						</regnode>
 						<regnode name="NodeMapping" status="undefined">
 							<value></value>
 							<regnode name="Position" isopaque="yes">
@@ -1404,7 +1416,7 @@
 					<connpoint role="dst" target="id-0067-00000025"/>
 					<connpoint role="src" target="id-0069-00000002"/>
 				</connection>
-				<set id="id-0069-00000001" kind="CollocationGroup" role="CollocationGroup" guid="{dad0afb5-00b8-42c1-bd3c-cc50865bc4ae}" relid="0x3">
+				<set id="id-0069-00000001" kind="CollocationGroup" role="CollocationGroup" guid="{dad0afb5-00b8-42c1-bd3c-cc50865bc4ae}" relid="0x3" members="id-0067-00000026">
 					<name>DefaultGroup</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
