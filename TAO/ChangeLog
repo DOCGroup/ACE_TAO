@@ -1,3 +1,16 @@
+Fri Jun 25 19:05:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        
+          With the 'ciao ami4ccm idl "xxx"' pragma, changed the logic
+          to add the "xxx" filename to the list, not in the main IDL
+          file as before, but in every other IDL file instead. This
+          approach still brings in the AMI4CCM_* interface declaration
+          where it is needed to reference in the uses multiple
+          *Connection struct, but it avoids a circular include of
+          xxxC.h and xxxAC.h that led to compile problems.
+
 Fri Jun 25 16:03:56 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Portable_Interceptors/Register_Initial_References/Server_ORBInitializer.cpp:
