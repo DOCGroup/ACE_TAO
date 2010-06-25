@@ -255,11 +255,13 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::DomainParticipant_ptr
-    CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::lookup_participant (::DDS::DomainId_t domain_id)
+    CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::lookup_participant (
+      ::DDS::DomainId_t domain_id)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
 #if (CIAO_DDS4CCM_NDDS==1)
-      ::DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
+      ::DDSDomainParticipant* dp = DDSDomainParticipantFactory::get_instance ()
+        ->lookup_participant (domain_id);
        ACE_NEW_THROW_EX (retval,
                          DomainParticipant_type (dp),
                          CORBA::NO_MEMORY ());
@@ -278,13 +280,16 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::set_default_participant_qos (
       const ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::set_default_participant_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::"
+        "set_default_participant_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (ccm_dds_qos);
+      return DDSDomainParticipantFactory::get_instance ()->
+        set_default_participant_qos (ccm_dds_qos);
 #else
-      return DDSDomainParticipantFactory::get_instance ()->set_default_participant_qos (qos);
+      return DDSDomainParticipantFactory::get_instance ()->
+        set_default_participant_qos (qos);
 #endif
     }
 
@@ -293,15 +298,18 @@ namespace CIAO
     CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::get_default_participant_qos (
       ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::get_default_participant_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::"
+        "get_default_participant_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
-        DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (ccm_dds_qos);
+        DDSDomainParticipantFactory::get_instance ()->
+          get_default_participant_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
 #else
-      return DDSDomainParticipantFactory::get_instance ()->get_default_participant_qos (qos);
+      return DDSDomainParticipantFactory::get_instance ()->
+        get_default_participant_qos (qos);
 #endif
     }
 
@@ -357,7 +365,14 @@ namespace CIAO
     ::DDS::DomainParticipantFactory_ptr
     CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::get_instance (void)
     {
-      return 0;
+      ::DDS::DomainParticipantFactory_var retval =
+        ::DDS::DomainParticipantFactory::_nil ();
+
+      ACE_NEW_THROW_EX (retval,
+        CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>,
+        CORBA::NO_MEMORY ());
+
+      return retval._retn ();
     }
 #endif
   }
