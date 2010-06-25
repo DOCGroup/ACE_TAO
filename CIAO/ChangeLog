@@ -1,10 +1,15 @@
+Fri Jun 25 08:43:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
+          Use traits for return types
+
 Fri Jun 25 03:02:36 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tutorials/Quoter/Simple/Model/Quoter.xme:
 
           Updated artifact location to be consistent with the
           current state of the CIAO tutorial.
-          
+
 Fri Jun 25 01:47:39 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tutorials/Quoter/Simple/03.html:

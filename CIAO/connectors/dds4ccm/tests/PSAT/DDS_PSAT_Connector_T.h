@@ -10,45 +10,45 @@ class DDS_PSAT_Event_Connector_T
   : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
 {
   virtual
-  ::CSLDeadlineConnector::CCM_PSAT_Writer_ptr
+  typename CCM_TYPE::psat_writer_type::_ptr_type
   get_supplier_data (void)
   {
-    return ::CSLDeadlineConnector::CCM_PSAT_Writer::_nil ();
+    return CCM_TYPE::psat_writer_type::_nil ();
   }
     
   virtual
-  ::DDS::CCM_DataWriter_ptr
+  typename CCM_TYPE::datawriter_type::_ptr_type
   get_supplier_dds_entity (void)
   {
-    return ::DDS::CCM_DataWriter::_nil ();
+    return CCM_TYPE::datawriter_type::_nil ();
   }
     
   virtual
-  ::CSLDeadlineConnector::DDS_Typed::CCM_Reader_ptr
+  typename CCM_TYPE::reader_type::_ptr_type
   get_consumer_data (void)
   {
-    return ::CSLDeadlineConnector::DDS_Typed::CCM_Reader::_nil ();
+    return CCM_TYPE::reader_type::_nil ();
   }
     
   virtual
-  ::CCM_DDS::CCM_DataListenerControl_ptr
+  typename CCM_TYPE::datalistenercontrol_type::_ptr_type
   get_consumer_data_control (void)
   {
-    return ::CCM_DDS::CCM_DataListenerControl::_nil ();
+    return CCM_TYPE::datalistenercontrol_type::_nil ();
   }
     
   virtual
-  ::DDS::CCM_DataReader_ptr
+  typename CCM_TYPE::datareader_type::_ptr_type
   get_consumer_dds_entity (void)
   {
-    return ::DDS::CCM_DataReader::_nil ();
+    return CCM_TYPE::datareader_type::_nil ();
   }
     
   virtual
-  ::CSLDeadlineConnector::CCM_PSAT_BufferControl_ptr
+  typename CCM_TYPE::psat_buffercontrol_type::_ptr_type
   get_consumer_buffer_control (void)
   {
-    return ::CSLDeadlineConnector::CCM_PSAT_BufferControl::_nil ();
+    return CCM_TYPE::psat_buffercontrol_type::_nil ();
   }
     
   virtual
