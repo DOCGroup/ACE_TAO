@@ -3342,7 +3342,12 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
 
-      if (idl_global->in_main_file ())
+      /// These pragmas are found in the file where the interface
+      /// that has a AMI4CCM_* counterpart in the *A.idl file
+      /// is declared. We add the filename to the list in all
+      /// IDL files *except* the one where it is found, to
+      /// eliminate a circular include of xxxC.h and xxxAC.h.
+      if (!idl_global->in_main_file ())
         {
           idl_global->add_ciao_ami_idl_fnames (tmp);
         }
