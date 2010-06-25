@@ -1,3 +1,8 @@
+Fri Jun 25 09:13:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+          Use a better name for the instantiated templated module
+
 Fri Jun 25 08:43:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/DDS_PSAT_Connector_T.h:
