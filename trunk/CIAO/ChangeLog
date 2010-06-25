@@ -1,3 +1,8 @@
+Fri Jun 25 09:40:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:
+          Updated because of directory renames
+
 Fri Jun 25 09:13:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
