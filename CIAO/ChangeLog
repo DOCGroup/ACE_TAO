@@ -1,3 +1,34 @@
+Fri Jun 25 12:42:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Created a singleton DDSDomainParticipant and
+          DDSTopic manager. This manager manages the reuse
+          of DomainParticipants and Topics.
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/DDSSubscriberListener_T.h:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/Publisher_T.h:
+        * connectors/dds4ccm/impl/QueryCondition_T.h:
+        * connectors/dds4ccm/impl/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/Subscriber_T.h:
+        * connectors/dds4ccm/impl/TopicDescription_T.h:
+        * connectors/dds4ccm/impl/Topic_T.h:
+          Removed unnecessary header files.
+
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+          Resolved runtime errors.
+
 Fri Jun 25 09:40:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/NDDS_DDS4CCM_CIAO.mwc:

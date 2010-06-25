@@ -7,8 +7,8 @@
  * Wrapper facade for NDDS.
  */
 
-#ifndef DDS4CCM_DOMAINPARTICIPANTLISTENER_H
-#define DDS4CCM_DOMAINPARTICIPANTLISTENER_H
+#ifndef DOMAINPARTICIPANTLISTENER_H_
+#define DOMAINPARTICIPANTLISTENER_H_
 
 #include "tao/LocalObject.h"
 
@@ -109,4 +109,4 @@ namespace CIAO
   }
 }
 
-#endif
+#endif /* DOMAINPARTICIPANTLISTENER_H_ */
