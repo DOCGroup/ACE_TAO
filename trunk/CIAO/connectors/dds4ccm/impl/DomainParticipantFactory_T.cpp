@@ -13,6 +13,11 @@
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "DomainParticipantManager.h"
+#endif
+
+
 #if (CIAO_DDS4CCM_OPENDDS==1)
   typedef  ::DDS::DomainParticipantFactory DDSDomainParticipantFactory;
 #endif
@@ -59,54 +64,55 @@ namespace CIAO
 
       ACE_CString qos_profile = "default";
 
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                      this->dps_mutex_, CORBA::INTERNAL ());
-      {
-        DomainParticipant_type *ccm_dds_dp = this->dps_[qos_profile];
+      DDSDomainParticipant *dds_dp =
+        DPMANAGER->get_participant (qos_profile.c_str ());
 
-        if (!ccm_dds_dp)
-          {
-            DDSDomainParticipant *part = DDSDomainParticipantFactory::get_instance ()->
-              create_participant (domain_id,
-                                  DDS_PARTICIPANT_QOS_DEFAULT,
-                                  ccm_dds_dpl,
-                                  mask);
+      if (!dds_dp)
+        {
+          dds_dp = DDSDomainParticipantFactory::get_instance ()->
+                      create_participant (domain_id,
+                                          DDS_PARTICIPANT_QOS_DEFAULT,
+                                          ccm_dds_dpl,
+                                          mask);
 
-            if (!part)
-              {
-                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                            "<DDS_TYPE, CCM_TYPE>::create_participant - "
-                            "Error: Unable to create DomainParticipant for domain <%d>\n",
-                            domain_id));
-                throw CCM_DDS::InternalError (1, 0);
-              }
+          if (!dds_dp)
+            {
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
+                          "<DDS_TYPE, CCM_TYPE>::create_participant - "
+                          "Error: Unable to create DomainParticipant for domain <%d>\n",
+                          domain_id));
+              throw CCM_DDS::InternalError (1, 0);
+            }
 
-            ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-            ACE_NEW_THROW_EX (retval,
-                              DomainParticipant_type (part),
-                              CORBA::NO_MEMORY ());
-            part->enable ();
-            ccm_dds_dp =
-              dynamic_cast < DomainParticipant_type *>
-              (retval.in ());
+          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ACE_NEW_THROW_EX (retval,
+                            DomainParticipant_type (dds_dp),
+                            CORBA::NO_MEMORY ());
+          dds_dp->enable ();
 
-            ccm_dds_dp->set_impl (part);
+          DomainParticipant_type *typed_dp =
+            dynamic_cast < DomainParticipant_type *>
+            (retval.in ());
 
-            this->dps_[qos_profile] = ccm_dds_dp;
+          typed_dp->set_impl (dds_dp);
 
-            return retval._retn ();
-          }
-        else
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                        "<DDS_TYPE, CCM_TYPE>::create_participant - "
-                        "Re-using participant for QOS profile <%C> and domain <%d>.\n",
-                        qos_profile.c_str (),
-                        domain_id));
-            return ::DDS::DomainParticipant::_duplicate (ccm_dds_dp);
-          }
-      }
+          DPMANAGER->add_participant (qos_profile.c_str (), dds_dp);
 
+          return retval._retn ();
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
+                      "<DDS_TYPE, CCM_TYPE>::create_participant - "
+                      "Re-using participant for QOS profile <%C> and domain <%d>.\n",
+                      qos_profile.c_str (),
+                      domain_id));
+          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ACE_NEW_THROW_EX (retval,
+                            DomainParticipant_type (dds_dp),
+                            CORBA::NO_MEMORY ());
+          return retval._retn ();
+        }
 #else
       return DDSDomainParticipantFactory::get_instance ()->
         create_participant (domain_id,
@@ -145,95 +151,61 @@ namespace CIAO
       qos_profile += "#";
       qos_profile += profile_name;
 
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                      this->dps_mutex_, CORBA::INTERNAL ());
-      {
-        DomainParticipant_type *ccm_dds_dp =
-          this->dps_[qos_profile];
 
-        if (!ccm_dds_dp)
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                          "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
-                          "Creating participant: profile <%C> - domain <%d>\n",
-                          qos_profile.c_str (),
-                          domain_id));
-            DDSDomainParticipant * part = DDSDomainParticipantFactory::get_instance ()->
-                    create_participant_with_profile (domain_id,
-                                      library_name,
-                                      profile_name,
-                                      ccm_dds_dpl,
-                                      mask);
-            if (!part)
-              {
-                DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                              "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
-                              "Error: Unable to create DomainParticipant\n"));
-                throw CCM_DDS::InternalError (1, 0);
-              }
-            ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-            ACE_NEW_THROW_EX (retval,
-                              DomainParticipant_type (part),
-                              CORBA::NO_MEMORY ());
+      DDSDomainParticipant *dds_dp =
+        DPMANAGER->get_participant (qos_profile.c_str ());
 
-            part->enable ();
-
-            ccm_dds_dp =
-              dynamic_cast < DomainParticipant_type *>
-              (retval.in ());
-            ccm_dds_dp->set_impl (part);
-            this->dps_[qos_profile] = ccm_dds_dp;
-            return retval._retn ();
-          }
-        else
-          {
-            DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
+      if (!dds_dp)
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
                         "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
-                        "Re-using participant for QOS profile <%C> and domain <%d>.\n",
+                        "Creating participant: profile <%C> - domain <%d>\n",
                         qos_profile.c_str (),
                         domain_id));
-            return ::DDS::DomainParticipant::_duplicate (ccm_dds_dp);
-          }
-      }
-    }
-#endif
-
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    bool
-    CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::remove_participant (
-      DomainParticipant_type * part)
-    {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE>::remove_participant");
-
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
-                      this->dps_mutex_, CORBA::INTERNAL ());
-
-      if (part->_refcount_value () == 1)
-        {
-          typename DomainParticipants::iterator pos;
-          for (pos = this->dps_.begin(); pos != this->dps_.end(); ++pos)
+          dds_dp = DDSDomainParticipantFactory::get_instance ()->
+                            create_participant_with_profile (domain_id,
+                                                             library_name,
+                                                             profile_name,
+                                                             ccm_dds_dpl,
+                                                             mask);
+          if (!dds_dp)
             {
-              if (pos->second == part)
-                {
-                  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                            "<DDS_TYPE, CCM_TYPE>::remove_participant - "
-                            "Removing participant for %C from list.\n",
-                            pos->first.c_str ()));
-                  this->dps_.erase (pos->first);
-                  break;
-                }
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
+                            "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
+                            "Error: Unable to create DomainParticipant\n"));
+              throw CCM_DDS::InternalError (1, 0);
             }
+          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ACE_NEW_THROW_EX (retval,
+                            DomainParticipant_type (dds_dp),
+                            CORBA::NO_MEMORY ());
+
+          dds_dp->enable ();
+
+          DomainParticipant_type * typed_dp =
+            dynamic_cast < DomainParticipant_type *>
+            (retval.in ());
+
+          typed_dp->set_impl (dds_dp);
+          DPMANAGER->add_participant (qos_profile.c_str (), dds_dp);
+          return retval._retn ();
         }
       else
         {
-          DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipantFactory_T"
-                    "<DDS_TYPE, CCM_TYPE>::remove_participant - "
-                    "Don't delete participant since it's still used - ref_count <%d>\n",
-                    part->_refcount_value ()));
-          return false;
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_DomainParticipantFactory_T"
+                      "<DDS_TYPE, CCM_TYPE>::create_participant_with_profile - "
+                      "Re-using participant for QOS profile <%C> and domain <%d>.\n",
+                      qos_profile.c_str (),
+                      domain_id));
+          ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
+          ACE_NEW_THROW_EX (retval,
+                            DomainParticipant_type (dds_dp),
+                            CORBA::NO_MEMORY ());
+          return retval._retn ();
         }
-      return true;
     }
+#endif
+
 
     template <typename DDS_TYPE, typename CCM_TYPE>
     ::DDS::ReturnCode_t
@@ -258,7 +230,7 @@ namespace CIAO
                     "Successfully casted provided object reference to servant type.\n"));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
-      if (this->remove_participant (part))
+      if (DPMANAGER->remove_participant (part->get_impl ()))
         {
           retval = DDSDomainParticipantFactory::get_instance ()->
               delete_participant (part->get_impl ());

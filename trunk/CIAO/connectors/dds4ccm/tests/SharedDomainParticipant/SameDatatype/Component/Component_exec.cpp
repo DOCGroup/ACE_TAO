@@ -76,7 +76,6 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
                         "Datawriter 1 connection is NIL.\n"));
             throw CORBA::INTERNAL ();
           }
-
         typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
         if (typed_ccm_dw)
@@ -119,7 +118,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             DDSDataWriter * dds_dw2 = typed_ccm_dw->get_impl ();
             DDSPublisher * dds_p2 = dds_dw2->get_publisher ();
-            this->dds_dp1_ = dds_p2->get_participant ();
+            this->dds_dp2_ = dds_p2->get_participant ();
 
             DDSTopicDescription * td2 =
               this->dds_dp2_->lookup_topicdescription (tp_name_conn_2_);
@@ -155,7 +154,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             DDSDataWriter * dds_dw3 = typed_ccm_dw->get_impl ();
             DDSPublisher * dds_p3 = dds_dw3->get_publisher ();
-            this->dds_dp1_ = dds_p3->get_participant ();
+            this->dds_dp3_ = dds_p3->get_participant ();
 
             DDSTopicDescription * td3 =
               this->dds_dp3_->lookup_topicdescription (tp_name_conn_3_);
@@ -190,7 +189,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             DDSDataWriter * dds_dw4 = typed_ccm_dw->get_impl ();
             DDSPublisher * dds_p4 = dds_dw4->get_publisher ();
-            this->dds_dp1_ = dds_p4->get_participant ();
+            this->dds_dp4_ = dds_p4->get_participant ();
 
             DDSTopicDescription * td4 =
               this->dds_dp4_->lookup_topicdescription (tp_name_conn_4_);

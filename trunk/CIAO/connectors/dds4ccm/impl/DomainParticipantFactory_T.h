@@ -14,12 +14,9 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "tao/LocalObject.h"
-
-#include "ace/Singleton.h"
 
 #include <map>
 
@@ -88,20 +85,6 @@ namespace CIAO
       virtual ::DDS::ReturnCode_t set_default_participant_qos_with_profile(
                                                         const char * library_name,
                                                         const char * profile_name);
-#endif
-
-    private:
-      bool remove_participant (DomainParticipant_type * part);
-
-      TAO_SYNCH_MUTEX dps_mutex_;
-      typedef std::map <ACE_CString, DomainParticipant_type *> DomainParticipants;
-      typedef typename DomainParticipants::iterator DomainParticipants_iterator;
-      DomainParticipants dps_;
-#if (CIAO_DDS4CCM_NDDS==1)
-      TAO_SYNCH_MUTEX dps_dds_mutex_;
-      typedef std::map <ACE_CString, DomainParticipant_type *> DDSDomainParticipants;
-      typedef typename DDSDomainParticipants::iterator DDSDomainParticipants_iterator;
-      DDSDomainParticipants dps_dds_;
 #endif
     };
   }

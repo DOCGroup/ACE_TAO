@@ -24,5 +24,6 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, taolib, ciao_output, ccm
     StatusCondition.cpp
     Utils.cpp
     DDSCallbackStatusHandler.cpp
+    DomainParticipantManager.cpp
   }
 }

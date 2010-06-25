@@ -14,10 +14,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-
-#include <map>
 
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
@@ -239,14 +236,6 @@ namespace CIAO
       DDSDomainParticipant *impl_;
 
       DDSDomainParticipant * impl (void);
-
-    private:
-      bool remove_topic (Topic_type * topic);
-
-      TAO_SYNCH_MUTEX tps_mutex_;
-      typedef std::map<ACE_CString, Topic_type *> Topics;
-      typedef typename Topics::iterator Topics_iterator;
-      Topics tps_;
     };
   }
 }
