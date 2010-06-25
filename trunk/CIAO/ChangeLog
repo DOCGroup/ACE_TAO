@@ -1,7 +1,12 @@
+Fri Jun 25 12:57:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+          Implemented get_instance + code alignment.
+
 Fri Jun 25 12:54:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/Parsing/run_test.pl:
-          Improved this script to give more feedback 
+          Improved this script to give more feedback
 
 Fri Jun 25 12:42:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
