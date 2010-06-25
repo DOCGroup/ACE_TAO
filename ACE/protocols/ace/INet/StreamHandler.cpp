@@ -62,17 +62,13 @@ namespace ACE
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::handle_input (ACE_HANDLE)
       {
-        if (this->use_timeout ())
-          {
-            ACE_Time_Value to = this->sync_opt_.timeout ();
-            return this->handle_input_i (&to);
-          }
-        else
-          return this->handle_input_i (0);
+        // always read non-blocking however much there is
+        ACE_Time_Value to = ACE_Time_Value::zero;
+        return this->handle_input_i (MAX_INPUT_SIZE, &to);
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::handle_input_i (ACE_Time_Value* timeout)
+    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::handle_input_i (size_t rdlen, ACE_Time_Value* timeout)
       {
         ACE_TRACE ("ACE_IOS_StreamHandler::handle_input_i");
 
@@ -80,7 +76,13 @@ namespace ACE
         ssize_t recv_cnt;
         size_t bytes_in = 0;
 
-        recv_cnt = this->peer ().recv_n (buffer, sizeof(buffer), timeout, &bytes_in);
+        // blocking (with or without timeout) or non-blocking?
+        bool no_wait = timeout && (*timeout == ACE_Time_Value::zero);
+
+        recv_cnt = this->peer ().recv_n (buffer,
+                                         rdlen <= sizeof(buffer) ? rdlen : sizeof(buffer),
+                                         timeout,
+                                         &bytes_in);
 
         if (bytes_in > 0)
           {
@@ -91,20 +93,22 @@ namespace ACE
             if (this->putq (mb, &nowait) == -1)
               {
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - discarding input data, "),
-                            ACE_TEXT ("enqueue failed\n")));
+                            ACE_TEXT ("(%P|%t) ACE_IOS_StreamHandler - discarding input data, "),
+                            ACE_TEXT ("enqueue failed (%d)\n"),
+                            ACE_OS::last_error ()));
                 mb->release ();
                 this->connected_ = false;
                 return -1;
               }
           }
 
-        if (recv_cnt <= 0)
+        if (recv_cnt == 0 || (recv_cnt < 0 && !no_wait))
           {
             if (recv_cnt < 0)
               {
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - receive failed\n")));
+                            ACE_TEXT ("(%P|%t) ACE_IOS_StreamHandler - receive failed (%d)\n"),
+                            ACE_OS::last_error ()));
               }
             this->connected_ = false;
             return this->using_reactor () ? -1 : 0;
@@ -235,12 +239,20 @@ namespace ACE
           }
         else
           {
+            // non-reactive
+            // the first read we will try to read as much as possible
+            // non-blocking
+            // if that does not result in any data  the next read will be
+            // blocking for 1 char_size data
+            size_t rdlen = MAX_INPUT_SIZE;
+            ACE_Time_Value timeout = ACE_Time_Value::zero;
+            ACE_Time_Value* to = &timeout;
             while ((this->connected_ || this->char_in_queue (char_size)) && char_length > 0)
               {
                 if (!this->char_in_queue (char_size))
                   {
-                    result = this->handle_input_i (this->use_timeout () ?
-                                                        &max_wait_time : 0);
+                    // nothing in queue, so see if there is anything newly arrived
+                    result = this->handle_input_i (rdlen, to);
                   }
 
                 if (result == -1)
@@ -259,6 +271,8 @@ namespace ACE
 
                 if (recv_char_count > 0)
                   {
+                    // if we got any char_size data (either newly read
+                    // or remainder from queue) we quit
                     break;
                   }
 
@@ -267,6 +281,14 @@ namespace ACE
                   {
                     this->receive_timeout_ = true;
                     return -1;
+                  }
+
+                if (this->connected_ && char_length >0)
+                  {
+                    // nothing has been read the first time round
+                    // now start blocking read 1 char_size data at a time
+                    rdlen = char_size;
+                    to = this->use_timeout () ? &max_wait_time : 0;
                   }
               }
           }

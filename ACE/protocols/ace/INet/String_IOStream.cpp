@@ -138,6 +138,7 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_IOSBase<ACE_CHAR_T, TR>::~String_IOSBase ()
       {
+        this->close ();
       }
 
     template <class ACE_CHAR_T, class TR>

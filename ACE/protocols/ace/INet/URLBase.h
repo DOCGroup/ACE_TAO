@@ -147,6 +147,13 @@ namespace ACE
               static TURLFactoryMap* factories_;
           };
 
+        /**
+        * @class ACE_INet_URL_INetBase
+        *
+        * @brief Base class for internet protocol based URL/URI
+        *        addresses supporting host(name) and port specification.
+        *
+        */
         class ACE_INET_Export URL_INetBase
           : public URL_Base
           {
@@ -183,6 +190,16 @@ namespace ACE
           };
 
 
+        /**
+        * @class ACE_INet_URL_INetAuthBase
+        *
+        * @brief Base class for internet protocol based URL/URI
+        *        addresses supporting authentication information.
+        *
+        * This implementation does *not* support the specification
+        * of passwords in user_info field of the URL (deprecated as
+        * of RFC3986).
+        */
         class ACE_INET_Export URL_INetAuthBase
           : public URL_INetBase
           {
