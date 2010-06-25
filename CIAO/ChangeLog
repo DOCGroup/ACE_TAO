@@ -1,3 +1,18 @@
+Fri Jun 25 13:53:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Deployment/artifacts.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_conn.mpc:
+          Renamed Shapes_conn.idl to Shapes_ShapeType_conn to indicate which datatype
+          the connector provided.
+
 Fri Jun 25 13:46:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:

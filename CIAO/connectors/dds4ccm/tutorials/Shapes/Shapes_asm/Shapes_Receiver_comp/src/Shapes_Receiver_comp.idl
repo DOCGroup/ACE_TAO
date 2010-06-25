@@ -3,7 +3,7 @@
 #ifndef SHAPES_RECEIVER_COMP_IDL_
 #define SHAPES_RECEIVER_COMP_IDL_
 
-#include "Shapes_conn.idl"
+#include "Shapes_ShapeType_conn.idl"
 
 module Shapes
 {

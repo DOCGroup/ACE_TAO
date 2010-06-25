@@ -146,7 +146,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shapes_conn_svnt</string>
+          <string>Shapes_ShapeType_conn_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -157,7 +157,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Shapes_conn_exec</string>
+          <string>Shapes_ShapeType_conn_exec</string>
         </value>
       </value>
     </execParameter>
@@ -448,16 +448,16 @@
     <location>Sender_stub</location>
   </artifact>
   <artifact xmi:id="Shapes_Connector_ExecArtifact">
-    <name>Shapes_conn_exec</name>
+    <name>Shapes_ShapeType_conn_exec</name>
     <source/>
     <node/>
-    <location>Shapes_conn_exec</location>
+    <location>Shapes_ShapeType_conn_exec</location>
   </artifact>
   <artifact xmi:id="Shapes_Connector_SvntArtifact">
-    <name>Shapes_conn_svnt</name>
+    <name>Shapes_ShapeType_conn_svnt</name>
     <source/>
     <node/>
-    <location>Shapes_conn_svnt</location>
+    <location>Shapes_ShapeType_conn_svnt</location>
   </artifact>
   <artifact xmi:id="Receiver_ExecArtifact">
     <name>Shapes_Receiver_comp_exec</name>
