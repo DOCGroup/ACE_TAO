@@ -7,7 +7,7 @@
 ACE_RCSID (Service_Context_Manipulation, Client_ORBInitializer, "$Id$")
 
 Client_ORBInitializer::Client_ORBInitializer ()
-{ 
+{
 
 }
 
@@ -34,4 +34,3 @@ Client_ORBInitializer::post_init (
 
   info->add_client_request_interceptor (client_interceptor.in ());
 }
-
