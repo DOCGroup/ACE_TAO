@@ -1,3 +1,34 @@
+Fri Jun 25 13:02:45 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/05_compilation.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/artifacts.cdp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/connections.cdp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/implementation.cdp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/instance.cdp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/Deployment/descriptors/Plan.cdp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.h
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/images
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/images/images.png
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/images/system.png
+        Tutorial documents and associated code, pictures, cdp.
+        
 Fri Jun 25 12:57:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
