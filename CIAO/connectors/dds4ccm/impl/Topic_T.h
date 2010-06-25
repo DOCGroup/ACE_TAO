@@ -12,7 +12,6 @@
 
 #include "DomainParticipant_T.h"
 
-#include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "tao/LocalObject.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
