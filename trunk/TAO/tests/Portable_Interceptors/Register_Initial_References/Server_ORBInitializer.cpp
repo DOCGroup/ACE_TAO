@@ -54,7 +54,7 @@ Server_ORBInitializer::pre_init (
     {
       // Registering with an duplicate string should give an exception
       orbinitinfo->register_initial_reference ("MyService",
-                                               object);
+                                               object.in ());
     }
   catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {

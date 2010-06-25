@@ -45,7 +45,7 @@ public:
   virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
-  
+
 private:
   const char *myname_;
 };

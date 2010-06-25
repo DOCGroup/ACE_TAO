@@ -43,10 +43,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  try 
+  try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-    
+
     if (parse_args (argc, argv) != 0)
       return 1;
 
@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Policies for the firstPOA to be created.
     CORBA::PolicyList policies (5);
-    policies.length (5); 
+    policies.length (5);
     // Lifespan policy
     policies[0] =
       rootPOA->create_lifespan_policy (PortableServer::PERSISTENT );
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     policies[4] =
       rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL  );
 
-    PortableServer::POA_var demoPOA 
+    PortableServer::POA_var demoPOA
       = rootPOA->create_POA ("HelloWorldServer",
                               poa_manager.in (),
                               policies
@@ -91,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy ();
     }
-    
+
     // Create object for shutdown commanded by client.
     {
         // create the object
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         // Put the object reference as an IOR string
         ofstream out(ACE_TEXT_ALWAYS_CHAR (shutdown_ior_output_file));
-        CORBA::String_var ior = orb->object_to_string (myhello);
+        CORBA::String_var ior = orb->object_to_string (myhello.in ());
         out  << ior.in();
         // save the reference into a file
         out.close();
@@ -128,13 +128,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         // Put the object reference as an IOR string
         ofstream out(ACE_TEXT_ALWAYS_CHAR (ior_output_file));
-        CORBA::String_var ior = orb->object_to_string (myhello);
+        CORBA::String_var ior = orb->object_to_string (myhello.in ());
         out  << ior.in();
         // save the reference into a file
         out.close();
     }
 
-    
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     poa_manager->activate ();
@@ -147,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rootPOA->destroy (1, 1);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &e) 
+  catch (const CORBA::Exception &e)
   {
     std::cerr << "Unexpected exception: " << e << std::endl;
     return 1;
