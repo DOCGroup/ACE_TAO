@@ -12,12 +12,6 @@ $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
-#Redirect the screen output to the null device.
-open (OLDOUT, ">&STDOUT");
-open (STDOUT, ">" . File::Spec->devnull());
-open (OLDERR, ">&STDERR");
-open (STDERR, ">&STDOUT");
-
 #  Processes
 $APP = 0;
 
@@ -39,9 +33,24 @@ foreach $file (@files) {
 
     # Invoke the test application -.
     print "Invoking test application\n";
+
+open (OLDOUT, ">&STDOUT");
+open (STDOUT, ">" . File::Spec->devnull());
+open (OLDERR, ">&STDERR");
+open (STDERR, ">&STDOUT");
+
     $APP = $tg->CreateProcess ("./Parsing", "$file");
-    $status = $status +
-              $APP->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+    $retval = $APP->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+    $status = $status + $retval;
+              
+open (STDOUT, ">&OLDOUT");
+open (STDERR, ">&OLDERR");
+
+  if ($retval != 0) {
+    print STDERR "ERROR: Parsing returned $retval for file\n";
+    $status = 1;
+  }
+
     sleep (1);
 }
 
