@@ -18,8 +18,8 @@ namespace CIAO
     if (CORBA::is_nil (this->orb_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("Container_Handler_i::configure -")
-                        ACE_TEXT ("Unable to locate ORB.\n")));
+                        "Container_Handler_i::configure -"
+                        "Unable to locate ORB.\n"));
         throw ::Deployment::StartError ("CIAO Container Handler",
                                         "Unable to locate ORB");
       }
