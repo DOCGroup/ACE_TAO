@@ -222,38 +222,11 @@ namespace DAnCE
       {
         plugin->configure (this->config_);
         
-        ::DAnCE::InstanceInstallation_var install;
-        if (!CORBA::is_nil (install = ::DAnCE::InstanceInstallation::_narrow (plugin)))
-          {
-            DANCE_DEBUG (6, (LM_INFO, DLINFO
-                             ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                             ACE_TEXT ("Successfully created installation interceptor\n")));
-
-            this->inst_interceptors_.push_back (install._retn ());
-            return;
-          }
+        DANCE_DEBUG (6, (LM_INFO, DLINFO
+                         ACE_TEXT ("Plugin_Manager::register_interceptor - ")
+                         ACE_TEXT ("Successfully created deployment interceptor\n")));
         
-        
-        ::DAnCE::InstanceConnection_var conn;
-        if (!CORBA::is_nil (install = ::DAnCE::InstanceInstallation::_narrow (plugin)))
-          {
-            DANCE_DEBUG (6, (LM_INFO, DLINFO
-                             ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                             ACE_TEXT ("Successfully created connection interceptor\n")));
-          }
-        this->conn_interceptors_.push_back (conn._retn ());
-        return;
-    
-        ::DAnCE::PlanPreprocessing_var pp;
-        if (!CORBA::is_nil (install = ::DAnCE::InstanceInstallation::_narrow (plugin)))
-          {
-            DANCE_DEBUG (6, (LM_INFO, DLINFO
-                             ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                             ACE_TEXT ("Successfully created preprocessing interceptor\n")));
-        
-            this->pp_interceptors_.push_back (pp._retn ());
-            return;
-          }
+        this->interceptors_.push_back (plugin._retn ());
       }
     catch (const CORBA::Exception &ex)
       {
@@ -302,23 +275,9 @@ namespace DAnCE
   }
   
   const 
-  Plugin_Manager::INST_INTERCEPTORS & 
-  Plugin_Manager::fetch_installation_interceptors (void)
+  Plugin_Manager::INTERCEPTORS & 
+  Plugin_Manager::fetch_interceptors (void)
   {
-    return this->inst_interceptors_;
-  }
-      
-  const 
-  Plugin_Manager::CONN_INTERCEPTORS &
-  Plugin_Manager::fetch_connection_interceptors (void)
-  {
-    return this->conn_interceptors_;
-  }
-  
-  const 
-  Plugin_Manager::PP_INTERCEPTORS &
-  Plugin_Manager::fetch_pp_interceptors (void)
-  {
-    return this->pp_interceptors_;
+    return this->interceptors_;
   }
 }
