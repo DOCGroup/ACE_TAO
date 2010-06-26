@@ -124,6 +124,9 @@ namespace DAnCE
     PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
                                                        ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
 
+    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
+                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+
     if (this->props_)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,

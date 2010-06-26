@@ -1,52 +1,35 @@
-// -*- C++ -*-
 // $Id$
-
 /**
- * @file DAnCE_DeploymentInterceptors_Base_Impl.h
+ * @file Standard_Error.h
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * Base, no-op interceptor.  
- **/
+ * Interceptors which implement a sandard (first failure) error handling mechanism.
+ */
 
-// TAO_IDL - Generated from 
-// be/be_codegen.cpp:1571
+#ifndef DEPLOYMENT_INTERCEPTORS_H
+#define DEPLOYMENT_INTERCEPTORS_H
 
-#ifndef DANCE_DEPLOYMENTINTERCEPTORSI_DHYD9F_H_
-#define DANCE_DEPLOYMENTINTERCEPTORSI_DHYD9F_H_
+#include "DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h"
 
-#include "DAnCE/DAnCE_DeploymentInterceptorsC.h"
-#include "DAnCE/DAnCE_stub_export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "DAnCE_Error_Interceptors_export.h"
 
 namespace DAnCE
 {
-  /**
-   * @class DAnCE_DeploymentInterceptor_Base
-   * @brief Base, no-op interceptor implementation. 
-   */
-  class DANCE_STUB_Export DeploymentInterceptor_Base
-    : public virtual DAnCE::DeploymentInterceptor,
-      public virtual ::CORBA::LocalObject
+  class DAnCE_Error_Interceptors_Export Standard_Error
+    : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
     // Constructor 
-    DeploymentInterceptor_Base (void);
+    
+    Standard_Error (void);
   
     // Destructor 
-    virtual ~DeploymentInterceptor_Base (void);
-  
-    virtual
-      void configure (const ::Deployment::Properties & config);
-  
-    virtual
-      void preprocess_plan (::Deployment::DeploymentPlan & plan);
-  
-    virtual
-      void instance_pre_install (::Deployment::DeploymentPlan & plan,
-                                 ::CORBA::ULong instanceRef);
+    virtual ~Standard_Error (void);
   
     virtual
       void instance_post_install (const ::Deployment::DeploymentPlan & plan,
@@ -55,20 +38,10 @@ namespace DAnCE
                                   const ::CORBA::Any & exception_thrown);
 
     virtual
-      void post_endpoint_reference (const ::Deployment::DeploymentPlan & plan,
-                                    ::CORBA::ULong connectionRef,
-                                    const ::CORBA::Any & endpoint_reference,
-                                    const ::CORBA::Any & exception_thrown);
-    
-    virtual
-      void instance_pre_connect (::Deployment::DeploymentPlan & plan,
-                                 ::CORBA::ULong connection_index,
-                                 ::CORBA::Any & provided_reference);
-  
-    virtual
       void instance_post_connect (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong connectionRef,
                                   const ::CORBA::Any & exceptionThrown);
+
 
     virtual
       void instance_post_configured (const ::Deployment::DeploymentPlan & plan,
@@ -89,8 +62,17 @@ namespace DAnCE
       void instance_post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
                                  const ::CORBA::Any & exception_thrown);
+    virtual
+      void configure(const Deployment::Properties&);
+    
+  private:
   };
 }
 
+extern "C"
+{
+  ::DAnCE::DeploymentInterceptor_ptr 
+  DAnCE_Error_Interceptors_Export create_DAnCE_Standard_Error (void);
+}
 
-#endif /* DANCE_DEPLOYMENTINTERCEPTORSI_H_  */
+#endif
