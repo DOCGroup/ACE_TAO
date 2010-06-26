@@ -14,6 +14,8 @@
 #pragma ciao ami4ccm interface "Bar::Two"
 #pragma ciao ami4ccm interface "Bar::Three"
 
+#pragma ciao ami4ccm idl "HelloA.idl"
+
 module Hello
 {
   enum test_enum
