@@ -604,7 +604,8 @@ namespace CIAO
     const char *recep_cont = 
       DEPLOYMENT_STATE::instance ()->instance_to_container (receptacle_id);
     
-    if (ACE_OS::strcmp (facet_cont, recep_cont) != 0)
+    if (facet_cont && recep_cont &&
+        ACE_OS::strcmp (facet_cont, recep_cont) != 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_local_port - "

@@ -235,6 +235,26 @@ namespace CIAO
     Components::CCMObject_var comp =
       DEPLOYMENT_STATE::instance ()->fetch_component (name);
     
+    if (CORBA::is_nil (cont))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Object reference for container of instance <%C> is nil!\n",
+                        plan.instance[instanceRef].name.in ()));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        "Unable to activate due to nil container reference");
+      }
+    
+    if (CORBA::is_nil (comp))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Object reference for instance <%C> is nil!\n",
+                        plan.instance[instanceRef].name.in ()));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        "Unable to activate due to nil reference");
+      }
+
     try
       {
         cont->activate_component (comp.in ());
@@ -277,6 +297,26 @@ namespace CIAO
     
     Components::CCMObject_var comp =
       DEPLOYMENT_STATE::instance ()->fetch_component (name);
+
+    if (CORBA::is_nil (cont))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Object reference for container of instance <%C> is nil!\n",
+                        plan.instance[instanceRef].name.in ()));
+        throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
+                                        "Unable to activate due to nil container reference");
+      }
+    
+    if (CORBA::is_nil (comp))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Object reference for instance <%C> is nil!\n",
+                        plan.instance[instanceRef].name.in ()));
+        throw ::Deployment::StopError (plan.instance[instanceRef].name.in (),
+                                        "Unable to activate due to nil reference");
+      }
     
     try
       {
@@ -436,6 +476,16 @@ namespace CIAO
     
     Components::CCMObject_var ref = 
       DEPLOYMENT_STATE::instance ()->fetch_component (plan.instance[instanceRef].name.in ());
+    
+    if (CORBA::is_nil (ref))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Component_Handler_i::instance_configured - "
+                        "Object reference for instance <%C> is nil!\n",
+                        plan.instance[instanceRef].name.in ()));
+        throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
+                                        "Unable to configure due to nil reference");
+      }
     
     try
       {

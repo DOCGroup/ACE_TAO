@@ -1,15 +1,23 @@
+Sat Jun 26 20:46:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Events/Endpoint.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+
+          Error reporting improvements.
+
 Sat Jun 26 18:46:01 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h:
-        
-          Layout changes. 
+
+          Layout changes.
 
         * DAnCE/DAnCE/DAnCE_Utility.cpp:
 
           Expanded supported exceptions in throw_exception_from_any.
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
-        
+
           Install standard error interceptor.
 
         * DAnCE/LocalityManager/Interceptors:
