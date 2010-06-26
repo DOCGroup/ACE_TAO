@@ -1,3 +1,12 @@
+Sat Jun 26 17:48:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Unicode fixes.
+
 Sat Jun 26 13:34:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
@@ -10,14 +19,14 @@ Sat Jun 26 13:34:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 Sat Jun 26 05:34:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
-        
+
           Collapsed all interceptors into a single interface in preparation
           for the best-effort interceptor.
-        
-        * DAnCE/DAnCE/DAnCE_Core.mpc:        
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h:
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
-        
+
           Provided a default interceptor implementation with no-op
           methods.  All other interceptors should derive from this.
 
@@ -52,7 +61,7 @@ Sat Jun 26 05:34:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/LocalityManager/Scheduler/Events/Start.cpp:
 
           Re-factored the the deployment events to use a common
-          implementation specialized using the template method pattern. 
+          implementation specialized using the template method pattern.
           This expands the error handling improvements from
           Thu Jun 24 14:29:10 UTC 2010  Martin Corino  <mcorino@remedy.nl> to
           all deployment events.
