@@ -48,20 +48,10 @@ namespace DAnCE
     ::DAnCE::InstanceDeploymentHandler_ptr 
         fetch_installation_handler (const char *instance_type);
     
-    typedef std::list < ::DAnCE::InstanceInstallation_var > 
-      INST_INTERCEPTORS;
+    typedef std::list < ::DAnCE::DeploymentInterceptor_var > 
+      INTERCEPTORS;
     
-    const INST_INTERCEPTORS & fetch_installation_interceptors (void);
-      
-    typedef std::list < ::DAnCE::InstanceConnection_var > 
-      CONN_INTERCEPTORS;
-    
-    const CONN_INTERCEPTORS & fetch_connection_interceptors (void);
-
-    typedef std::list < ::DAnCE::PlanPreprocessing_var > 
-      PP_INTERCEPTORS;
-    
-    const PP_INTERCEPTORS & fetch_pp_interceptors (void);
+    const INTERCEPTORS & fetch_interceptors (void);
 
   private:
     ::Deployment::Properties config_;
@@ -71,11 +61,7 @@ namespace DAnCE
     
     HANDLER_MAP handler_map_;
 
-    INST_INTERCEPTORS inst_interceptors_;
-
-    CONN_INTERCEPTORS conn_interceptors_;
-
-    PP_INTERCEPTORS pp_interceptors_;
+    INTERCEPTORS interceptors_;
   };
 
   typedef ACE_Singleton <Plugin_Manager,

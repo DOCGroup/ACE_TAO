@@ -17,7 +17,12 @@ namespace DAnCE
                                       const ::CORBA::Any &provided_ref,
                                       const char *inst_type,
                                       Event_Future holder)
-    : Deployment_Event (holder, inst_type),
+    : Deployment_Event (holder, 
+                        plan.connection[connectionRef].name.in (),
+                        inst_type),
+      Action_Base (holder, 
+                   plan.connection[connectionRef].name.in (),
+                   inst_type),
       plan_ (plan),
       connectionRef_ (connectionRef),
       provided_ref_ (provided_ref)
@@ -28,128 +33,64 @@ namespace DAnCE
   {
   }
 
-  
-  int
-  Connect_Instance::call (void)
+
+  void
+  Connect_Instance::invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &i)
   {
-    const char *name = this->plan_.connection[this->connectionRef_].name.in ();
+    DANCE_TRACE ("Connect_Instance::invoke_pre_interceptor");
+    
+    (*i)->instance_pre_connect (this->plan_,
+                                this->connectionRef_,
+                                this->provided_ref_);
+  }
+  
+    
+  void
+  Connect_Instance::invoke (::DAnCE::InstanceDeploymentHandler_ptr handler)
+  {
+    DANCE_TRACE ("Connect_Instance::invoke");
     
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Connect_Instance::call - ")
-                      ACE_TEXT ("Entering Connect_Instance for connection %C\n"),
-                      name));
-    try
-      {
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Connect_Instance::call - ")
-                          ACE_TEXT ("Invoking pre-conneciton interceptors\n")));
-        
-        const Plugin_Manager::CONN_INTERCEPTORS &conn_int = 
-          PLUGIN_MANAGER::instance ()->fetch_connection_interceptors ();
-
-        for (Plugin_Manager::CONN_INTERCEPTORS::const_iterator i = conn_int.begin ();
-             i != conn_int.end (); 
-             ++i)
-          {
-            (*i)->instance_pre_connect (this->plan_,
-                                        this->connectionRef_,
-                                        this->provided_ref_);
-          }
-        
-        ::CORBA::Any_var instance_excep;
-                
-        try
-          {
-            ::DAnCE::InstanceDeploymentHandler_var handler = 
-              PLUGIN_MANAGER::instance ()->fetch_installation_handler (this->instance_type_.c_str ());
-            
-            if (CORBA::is_nil (handler))
-              {
-                throw ::Deployment::StartError (name,
-                                               "Unable to load appropriate instance handler");
-              }
-            
-            DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                              ACE_TEXT ("Connect_Instance::call - ")
-                              ACE_TEXT ("Invoking connect_instance on handler\n")));
-            
-            handler->connect_instance (this->plan_,
-                                       this->connectionRef_,
-                                       this->provided_ref_);
-            
-            DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                              ACE_TEXT ("Connect_Instance::call - ")
-                              ACE_TEXT ("connect_instance successfull completed\n")));
-          }
-        catch (CORBA::Exception &ex_tmp)
-          {
-            DANCE_ERROR (3, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Connect_Instance::call - ")
-                             ACE_TEXT ("CORBA Exception propagated from connect_instance\n")));
-            
-            CORBA::Any *tmp = 0;
-            ACE_NEW_THROW_EX (tmp,
-                              CORBA::Any,
-                              CORBA::NO_MEMORY ());
-            instance_excep = tmp;
-            *tmp <<= ex_tmp;
-          }
-        catch (...)
-          {
-            DANCE_ERROR (3, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Connect_Instance::call - ")
-                             ACE_TEXT ("C++ Exception propagated from connect_instance\n")));
-            
-            ::Deployment::InvalidConnection ex_tmp (name,
-                                                    "Unknown C++ exception\n");
-            CORBA::Any *tmp = 0;
-            ACE_NEW_THROW_EX (tmp,
-                              CORBA::Any,
-                              CORBA::NO_MEMORY ());
-            instance_excep = tmp;
-            *tmp <<= ex_tmp;
-          }
-        
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Install_Instance::call - ")
-                          ACE_TEXT ("Invoking post-install interceptors\n")));
-        for (Plugin_Manager::CONN_INTERCEPTORS::const_iterator i = conn_int.begin ();
-             i != conn_int.end ();
-             ++i)
-          {
-            (*i)->instance_post_connect (this->plan_,
-                                         this->connectionRef_,
-                                         instance_excep.in ());
-          }
-        
-        Event_Result result (name, false);
-
-        this->holder_.set (result);
-      }
-    catch (CORBA::Exception &ex)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Connect_Instance::call - ")
-                         ACE_TEXT ("Exception propagated out of interceptors for connection <%C>: %C\n"),
-                         name,
-                         ex._info ().c_str ()));
-        
-        Event_Result result (name, true);
-
-        CORBA::Any *tmp = 0;
-        ACE_NEW_NORETURN (tmp,
-                          CORBA::Any);
-        
-        if (tmp)
-          {
-            result.contents_ = tmp;
-            *tmp <<= ex;
-          }
-
-        this->holder_.set (result);
-        return -1;
-      }
+                      ACE_TEXT ("Connect_Instance::invoke - ")
+                      ACE_TEXT ("Invoking connect_instance on handler\n")));
     
-    return 0;
+    handler->connect_instance (this->plan_,
+                               this->connectionRef_,
+                               this->provided_ref_);
+    
+    DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                      ACE_TEXT ("Connect_Instance::invoke - ")
+                      ACE_TEXT ("connect_instance successfull completed\n")));
+  }
+  
+  
+  void
+  Connect_Instance::invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &i)
+  {
+    DANCE_TRACE ("Connect_Instance::invoke_post_interceptor");
+    
+    (*i)->instance_post_connect (this->plan_,
+                                 this->connectionRef_,
+                                 this->instance_excep_.in ());
+  }
+  
+  
+  void
+  Connect_Instance::create_unexpected_exception (const std::string &name,
+                                                 const std::string &reason)
+  {
+    DANCE_TRACE ("Connect_Instance::create_unexpected_exception");
+    
+    ::Deployment::InvalidConnection ex_tmp (name.c_str (),
+                                            reason.c_str ());
+    this->instance_excep_ =
+      DAnCE::Utility::create_any_from_exception (ex_tmp);
+  }
+  
+  void
+  Connect_Instance::create_valid_result (Event_Result &)
+  {
+    DANCE_TRACE ("Connect_Instance::create_valid_result");
+    // no-op
   }
 }

@@ -16,7 +16,12 @@ namespace DAnCE
                                           ::CORBA::ULong connectionRef,
                                           const char *inst_type,
                                           Event_Future holder)
-    : Deployment_Event (holder,  inst_type),
+    : Deployment_Event (holder,  
+                        plan.connection[connectionRef].name.in (),
+                        inst_type),
+      Action_Base (holder,  
+                   plan.connection[connectionRef].name.in (),
+                   inst_type),
       plan_ (plan),
       connectionRef_ (connectionRef)
   {
@@ -26,76 +31,62 @@ namespace DAnCE
   {
   }
   
-  int
-  Endpoint_Reference::call (void)
+  void
+  Endpoint_Reference::invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &)
   {
-    const char *name = this->plan_.connection[this->connectionRef_].name.in ();
+    DANCE_TRACE ("Endpoint_Reference::invoke_pre_interceptor");
+
+    // no-op
+  }
+  
+    
+  void
+  Endpoint_Reference::invoke (::DAnCE::InstanceDeploymentHandler_ptr handler)
+  {
+    DANCE_TRACE ("Endpoint_Reference::invoke");
     
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Endpoint_Reference::call - ")
-                      ACE_TEXT ("Entering Endpoint_Reference for connection <%C>\n"),
-                      name));;
-
-    try
-      {
-        if (this->instance_type_.c_str () == 0)
-          {
-            throw ::Deployment::StartError (name, 
-                                           "Invalid instance type\n");
-          }
-
-        ::DAnCE::InstanceDeploymentHandler_var handler = 
-            PLUGIN_MANAGER::instance ()->fetch_installation_handler (this->instance_type_.c_str ());
-        
-        if (CORBA::is_nil (handler))
-          {
-            throw ::Deployment::StartError (name,
-                                           "Unable to load appropriate instance handler");
-          }
-              
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Endpoint_Reference::call - ")
-                          ACE_TEXT ("Invoking activate_instance on handler for type <%C>\n"),
-                          this->instance_type_.c_str ()));
-        CORBA::Any_var ref;
-        handler->provide_endpoint_reference (this->plan_,
-                                             this->connectionRef_,
-                                             ref.out ());
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Endpoint_Reference::call - ")
-                          ACE_TEXT ("endpoint_reference completed for <%C>\n"),
-                          name));
-        
-        Event_Result result (name, false, ref._retn ());
-        this->holder_.set (result);
-      }
-    catch (CORBA::Exception &ex)
-      {
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Endpoint_Reference::call - ")
-                         ACE_TEXT ("Caught CORBA exception while getting endpoint ")
-                         ACE_TEXT ("%u:<%C>\n"),
-                         this->connectionRef_,
-                         name));
-        
-        ::Deployment::InvalidConnection ex_tmp (name,
-                                                ex._info ().c_str ());
-        Event_Result result (name, true);
-
-        CORBA::Any *tmp = 0;
-        ACE_NEW_NORETURN (tmp,
-                          CORBA::Any);
-        
-        if (tmp)
-          {
-            result.contents_ = tmp;
-            *tmp <<= ex;
-          }
-
-        this->holder_.set (result);
-        return -1;
-      }
+                      ACE_TEXT ("Endpoint_Reference::invoke - ")
+                      ACE_TEXT ("Invoking provide_endpoint_reference on handler\n")));
     
-    return 0;
+    handler->provide_endpoint_reference (this->plan_,
+                                         this->connectionRef_,
+                                         this->ref_.out ());
+    DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                      ACE_TEXT ("Endpoint_Reference::invoke - ")
+                      ACE_TEXT ("provide_endpoint_reference successfull completed\n")));
+  }
+  
+  
+  void
+  Endpoint_Reference::invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &i)
+  {
+    DANCE_TRACE ("Endpoint_Reference::invoke_post_interceptor");
+    
+    (*i)->post_endpoint_reference (this->plan_,
+                                   this->connectionRef_,
+                                   this->ref_.in (),
+                                   this->instance_excep_.in ());
+  }
+  
+  
+  void
+  Endpoint_Reference::create_unexpected_exception (const std::string &name,
+                                                 const std::string &reason)
+  {
+    DANCE_TRACE ("Endpoint_Reference::create_unexpected_exception");
+    
+    ::Deployment::InvalidConnection ex_tmp (name.c_str (),
+                                            reason.c_str ());
+    this->instance_excep_ =
+      DAnCE::Utility::create_any_from_exception (ex_tmp);
+  }
+  
+  void
+  Endpoint_Reference::create_valid_result (Event_Result &result)
+  {
+    DANCE_TRACE ("Endpoint_Reference::create_valid_result");
+    result.contents_ = this->ref_._retn ();
+    // no-op
   }
 }
