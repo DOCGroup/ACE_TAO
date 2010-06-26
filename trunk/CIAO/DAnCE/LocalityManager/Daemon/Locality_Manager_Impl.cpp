@@ -65,8 +65,8 @@ namespace DAnCE
       }
 
     std::string type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
-                                                                  "create_Container_Handler");
+      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Container_Handler"));
 
     if (type.c_str ())
       {
@@ -80,8 +80,8 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
-                                                                  "create_Home_Handler");
+      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Home_Handler"));
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -94,8 +94,8 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
-                                                                  "create_Homed_Component_Handler");
+      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Homed_Component_Handler"));
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -108,8 +108,8 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler ("CIAO_Deployment_Handlers",
-                                                                  "create_Component_Handler");
+      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Component_Handler"));
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -121,8 +121,8 @@ namespace DAnCE
                      ACE_TEXT ("Registered handler for <%C>\n"),
                      type.c_str ()));
 
-    PLUGIN_MANAGER::instance ()->register_interceptor ("CIAO_Deployment_Interceptors",
-                                                       "create_CIAO_StoreReferences");
+    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
+                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
 
     if (this->props_)
       {

@@ -193,8 +193,8 @@ namespace CIAO
   Container_Handler_i::configure (const ::Deployment::Properties &props )
   {
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("Container_Handler_i::configure - ")
-                    ACE_TEXT ("Received %u properties for configuration\n"),
+                    "Container_Handler_i::configure - "
+                    "Received %u properties for configuration\n",
                     props.length ()));
 
     DAnCE::Utility::get_property_value (DAnCE::ENTITY_POA,
@@ -204,8 +204,8 @@ namespace CIAO
     if (CORBA::is_nil (this->poa_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("Container_Handler_i::configure -")
-                        ACE_TEXT ("Unable to locate POA.\n")));
+                        "Container_Handler_i::configure -"
+                        "Unable to locate POA.\n"));
         throw ::Deployment::StartError ("CIAO Container Handler",
                                         "Unable to locate POA");
       }
@@ -215,8 +215,8 @@ namespace CIAO
     if (CORBA::is_nil (this->orb_))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("Container_Handler_i::configure -")
-                        ACE_TEXT ("Unable to locate ORB.\n")));
+                        "Container_Handler_i::configure -"
+                        "Unable to locate ORB.\n"));
         throw ::Deployment::StartError ("CIAO Container Handler",
                                         "Unable to locate ORB");
       }
