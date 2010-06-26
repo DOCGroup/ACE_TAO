@@ -1,0 +1,12 @@
+// $id$
+project (DAnCE_Error_Interceptors) : dance_skel, dance_lib, dance_output, dance_logger {
+   dynamicflags = DANCE_ERROR_INTERCEPTORS_BUILD_DLL
+
+   Source_Files {
+     Standard_Error.cpp
+   }
+
+   Header_Files {
+     Standard_Error.h  
+   }
+}

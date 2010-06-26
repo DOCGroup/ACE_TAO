@@ -9,6 +9,9 @@
 #include "Deployment/Deployment_PlanErrorC.h"
 #include "Deployment/Deployment_StartErrorC.h"
 #include "Deployment/Deployment_StopErrorC.h"
+#include "Deployment/Deployment_InvalidConnectionC.h"
+#include "Deployment/Deployment_InvalidNodeExecParameterC.h"
+#include "Deployment/Deployment_InvalidPropertyC.h"
 #include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
@@ -326,6 +329,40 @@ namespace DAnCE
         {
           extract_and_throw_exception<Deployment::StopError> (excep);
         }
+      else if (ex_id == Deployment::_tc_InvalidConnection->id ())
+        {
+          extract_and_throw_exception<Deployment::InvalidConnection> (excep);
+        }
+      else if (ex_id == Deployment::_tc_InvalidNodeExecParameter->id ())
+        {
+          extract_and_throw_exception<Deployment::InvalidNodeExecParameter> (excep);
+        }
+      else if (ex_id == Deployment::_tc_InvalidProperty->id ())
+        {
+          extract_and_throw_exception<Deployment::InvalidProperty> (excep);
+        }
+      /* We don't need these, yet. 
+      else if (ex_id == Deployment::_tc_NameExists->id ())
+        {
+          extract_and_throw_exception<Deployment::NameExists> (excep);
+        }
+      else if (ex_id == Deployment::_tc_PackageError->id ())
+        {
+          extract_and_throw_exception<Deployment::PackageError> (excep);
+        }
+      else if (ex_id == Deployment::_tc_NoSuchName->id ())
+        {
+          extract_and_throw_exception<Deployment::NoSuchName> (excep);
+        }
+      else if (ex_id == Deployment::_tc_ResourceCommitmentFailure->id ())
+        {
+          extract_and_throw_exception<Deployment::ResourceCommitmentFailure> (excep);
+        }
+      else if (ex_id == Deployment::_tc_ResourceNotAvailable->id ())
+        {
+          extract_and_throw_exception<Deployment::ResourceNotAvailable> (excep);
+        }
+      */
       else if (ex_id.find ("IDL:omg.org/CORBA/") == 0)
         {
           CORBA::SystemException* sysex = TAO::create_system_exception (ex_id.c_str ());
