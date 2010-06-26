@@ -43,12 +43,14 @@ namespace DAnCE
   {
   public:
     Deployment_Event (Event_Future holder,
+                      const char *name,
                       const char *instance_type);
     
     Event_Future get_future (void);
     
   protected:
     Event_Future holder_;
+    std::string name_;
     std::string instance_type_;
   };  
 }

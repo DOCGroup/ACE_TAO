@@ -31,8 +31,10 @@ namespace DAnCE
 
   ACE_INLINE
   Deployment_Event::Deployment_Event (Event_Future holder,
+                                      const char *name,
                                       const char *inst_type)
     : holder_ (holder),
+      name_ (name),
       instance_type_ (inst_type)
   {
   }

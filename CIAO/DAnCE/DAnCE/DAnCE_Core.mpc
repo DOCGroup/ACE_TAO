@@ -39,6 +39,7 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
     DAnCE_LocalityManagerC.cpp
     DAnCE_ArtifactInstallationC.cpp
     DAnCE_Utility.cpp
+    DAnCE_DeploymentInterceptors_Base_Impl.cpp
   }
 }
 

@@ -392,8 +392,17 @@ namespace DAnCE
           }
 
         CORBA::Object_var obj_ref;
-
-        event.contents_ >>= CORBA::Any::to_object (obj_ref);
+        
+        if (event.contents_.ptr () != 0)
+          event.contents_ >>= CORBA::Any::to_object (obj_ref);
+        else
+          {
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                             ACE_TEXT ("LocalityManager_i::startLaunch - ")
+                             ACE_TEXT ("No reference returned for connection <%C>\n"),
+                             event.id_.c_str ()));
+          }
+        
         conn_cmp->length (pos + 1);
         (*conn_cmp)[pos].name = event.id_.c_str ();
         (*conn_cmp)[pos].endpoint.length (1);

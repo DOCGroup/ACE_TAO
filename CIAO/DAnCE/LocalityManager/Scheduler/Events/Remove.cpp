@@ -17,7 +17,12 @@ namespace DAnCE
                                     const CORBA::Any &reference,
                                     const char *inst_type,
                                     Event_Future holder)
-    : Deployment_Event (holder,  inst_type),
+    : Deployment_Event (holder,  
+                        plan.instance[instanceRef].name.in (),
+                        inst_type),
+      Action_Base (holder,  
+                   plan.instance[instanceRef].name.in (),
+                   inst_type),
       plan_ (plan),
       instanceRef_ (instanceRef),
       reference_ (reference)
@@ -28,81 +33,60 @@ namespace DAnCE
   {
   }
   
-  int
-  Remove_Instance::call (void)
+  void
+  Remove_Instance::invoke_pre_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &)
   {
+    DANCE_TRACE ("Remove_Instance::invoke_pre_interceptor");
+    
+    //no-op
+  }
+  
+    
+  void
+  Remove_Instance::invoke (::DAnCE::InstanceDeploymentHandler_ptr handler)
+  {
+    DANCE_TRACE ("Remove_Instance::invoke");
+    
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Remove_Instance::call - ")
-                      ACE_TEXT ("Entering Remove_Instance\n")));
+                      ACE_TEXT ("Remove_Instance::invoke - ")
+                      ACE_TEXT ("Invoking remove_instance on handler for type <%C>\n"),
+                      this->instance_type_.c_str ()));
+    handler->remove_instance (this->plan_,
+                              this->instanceRef_,
+                              this->reference_);
+    DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                      ACE_TEXT ("Remove_Instance::invoke - ")
+                      ACE_TEXT ("remove_instance completed\n")));
+  }
+  
+  
+  void
+  Remove_Instance::invoke_post_interceptor (Plugin_Manager::INTERCEPTORS::const_iterator &i)
+  {
+    DANCE_TRACE ("Remove_Instance::invoke_post_interceptor");
     
-    const char *name = this->plan_.instance[this->instanceRef_].name.in ();
+    (*i)->instance_post_remove (this->plan_,
+                                this->instanceRef_,
+                                this->instance_excep_.in ());
+  }
+  
+  
+  void
+  Remove_Instance::create_unexpected_exception (const std::string &name,
+                                                 const std::string &reason)
+  {
+    DANCE_TRACE ("Remove_Instance::create_unexpected_exception");
     
-    try
-      {
-        ::Deployment::MonolithicDeploymentDescription &mdd = 
-          this->plan_.implementation[this->plan_.instance[this->instanceRef_].implementationRef];
-
-        const char *inst_type = 
-          DAnCE::Utility::get_instance_type (mdd.execParameter);
-        
-        if (inst_type == 0)
-          {
-            throw ::Deployment::StopError (name, 
-                                           "Invalid instance type\n");
-          }
-
-        ::DAnCE::InstanceDeploymentHandler_var handler = 
-            PLUGIN_MANAGER::instance ()->fetch_installation_handler (inst_type);
-        
-        if (CORBA::is_nil (handler))
-          {
-            throw ::Deployment::StopError (name,
-                                            "Unable to load appropriate instance handler");
-          }
-              
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Remove_Instance::call - ")
-                          ACE_TEXT ("Invoking remove_instance on handler for type <%C>\n"),
-                          inst_type));
-        handler->remove_instance (this->plan_,
-                                  this->instanceRef_,
-                                  this->reference_);
-        DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                          ACE_TEXT ("Remove_Instance::call - ")
-                          ACE_TEXT ("remove_instance completed\n")));
-        
-      }
-    catch (CORBA::Exception &ex)
-      {
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Remove_Instance::call - ")
-                         ACE_TEXT ("Caught CORBA exception while removeing instance ")
-                         ACE_TEXT ("%u:<%C>\n"),
-                         this->instanceRef_,
-                         name));
-        
-        ::Deployment::StopError ex_tmp (name,
-                                        ex._info ().c_str ());
-        Event_Result result (name, true);
-
-        CORBA::Any *tmp = 0;
-        ACE_NEW_NORETURN (tmp,
-                          CORBA::Any);
-        
-        if (tmp)
-          {
-            result.contents_ = tmp;
-            *tmp <<= ex;
-          }
-
-        this->holder_.set (result);
-        return -1;
-      }
-    
-    Event_Result result (name, false);
-
-    this->holder_.set (result);
-    
-    return 0;
+    ::Deployment::StopError ex_tmp (name.c_str (),
+                                    reason.c_str ());
+    this->instance_excep_ =
+      DAnCE::Utility::create_any_from_exception (ex_tmp);
+  }
+  
+  void
+  Remove_Instance::create_valid_result (Event_Result &)
+  {
+    DANCE_TRACE ("Remove_Instance::create_valid_result");
+    // no-op
   }
 }

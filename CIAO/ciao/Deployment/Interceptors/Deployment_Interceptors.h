@@ -9,7 +9,7 @@
 #ifndef DEPLOYMENT_INTERCEPTORS_H
 #define DEPLOYMENT_INTERCEPTORS_H
 
-#include "DAnCE/DAnCE_DeploymentInterceptorsC.h"
+#include "DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h"
 #include "orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,8 +22,7 @@
 namespace CIAO
 {
   class CIAO_Deployment_Interceptors_Export CIAO_StoreReferences_i
-    : public virtual DAnCE::InstanceInstallation,
-      public virtual ::CORBA::LocalObject
+    : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
     // Constructor 
@@ -52,8 +51,7 @@ namespace CIAO
   };
 
   class CIAO_ReferenceLookup_i
-    : public virtual DAnCE::InstanceConnection,
-      public virtual ::CORBA::LocalObject
+    : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
     // Constructor 
