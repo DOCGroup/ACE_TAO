@@ -76,8 +76,8 @@ namespace DAnCE
   {
     DANCE_TRACE ("Endpoint_Reference::create_unexpected_exception");
     
-    ::Deployment::InvalidConnection ex_tmp (name.c_str (),
-                                            reason.c_str ());
+    ::Deployment::StartError ex_tmp (name.c_str (),
+                                     reason.c_str ());
     this->instance_excep_ =
       DAnCE::Utility::create_any_from_exception (ex_tmp);
   }
