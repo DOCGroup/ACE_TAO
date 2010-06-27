@@ -30,7 +30,8 @@ project (DDS_CCM_Example_PSAT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts
               -Wb,stub_export_include=ccm_dds_psat_stub_export.h \
               -Wb,skel_export_macro=CCM_DDS_PSAT_SKEL_Export \
               -Wb,skel_export_include=ccm_dds_psat_skel_export.h \
-              -SS -Gxhst -Gxhsk
+              -SS -Gxhst -Gxhsk \
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 
   IDL_Files {
     ccm_dds_psat.idl
