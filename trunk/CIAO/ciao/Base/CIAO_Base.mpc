@@ -51,9 +51,9 @@ project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
     ../../MPC
   }
   verbatim(gnuace, postinstall) {
-" cp ../../rules.ciao.GNU $(INSTALL_PREFIX)/share/ciao"
-" perl -i -pe's!\\$$[{(]CIAO_ROOT[})]!$(INSTALL_PREFIX)/include!g;' -e'if (/ifndef TAO_IDL3_TO_IDL2\\b/) {print qq!TAO_IDL3_TO_IDL2=$(INSTALL_PREFIX)/share/ciao/bin/tao_idl3_to_idl2\\nTAO_IDL3_TO_IDL2DEP=\\$$(TAO_IDL3_TO_IDL2)\\$$(EXEEXT)\\n!}' $(INSTALL_PREFIX)/share/ciao/rules.ciao.GNU"
-" echo export CIAO_ROOT=$(INSTALL_PREFIX)/share/ciao> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
-" echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/DAnCE>> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+"	cp ../../rules.ciao.GNU $(INSTALL_PREFIX)/share/ciao"
+"	perl -i -pe's!\\$$[{(]CIAO_ROOT[})]!$(INSTALL_PREFIX)/include!g;' -e'if (/ifndef TAO_IDL3_TO_IDL2\\b/) {print qq!TAO_IDL3_TO_IDL2=$(INSTALL_PREFIX)/share/ciao/bin/tao_idl3_to_idl2\\nTAO_IDL3_TO_IDL2_DEP=\\$$(TAO_IDL3_TO_IDL2)\\$$(EXEEXT)\\n!}' $(INSTALL_PREFIX)/share/ciao/rules.ciao.GNU"
+"	echo export CIAO_ROOT=$(INSTALL_PREFIX)/share/ciao> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
+"	echo export DANCE_ROOT=$(INSTALL_PREFIX)/share/DAnCE>> $(INSTALL_PREFIX)/share/ciao/ciao-devel.sh"
   }
 }

@@ -1,3 +1,9 @@
+Mon Jun 28 13:15:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Base.mpc:
+
+          Re-add tabs to the verbatim section to fix install target.
+
 Mon Jun 28 13:08:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Events/Action_Base.cpp:
