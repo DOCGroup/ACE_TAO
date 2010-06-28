@@ -1,3 +1,4 @@
+
 // $Id$
 
 /**
@@ -8,9 +9,9 @@
 #ifndef ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_
 #define ON_INCONSISTENT_TOPIC_TEST_SENDER_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
 #include "Base/OIT_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "SenderConnector/OIT_Sender_ConnectorE.idl"
 

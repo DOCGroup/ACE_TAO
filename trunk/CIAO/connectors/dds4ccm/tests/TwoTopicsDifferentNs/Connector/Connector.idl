@@ -8,11 +8,11 @@
 #ifndef CONNECTOR_IDL_
 #define CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
 #include "Hello/HelloGoodbye.idl"
 #include "Goodbye/HelloGoodbye.idl"
 
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/ConnectorE.idl"
 #pragma ndds typesupport "Hello/HelloGoodbyeSupport.h"

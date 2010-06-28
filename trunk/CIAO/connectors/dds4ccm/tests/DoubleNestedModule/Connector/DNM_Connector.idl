@@ -8,9 +8,10 @@
 #ifndef DOUBLE_NESTED_MODULE_CONNECTOR_IDL_
 #define DOUBLE_NESTED_MODULE_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/DNM_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/DNM_ConnectorE.idl"
 #pragma ndds typesupport "Base/DNM_BaseSupport.h"

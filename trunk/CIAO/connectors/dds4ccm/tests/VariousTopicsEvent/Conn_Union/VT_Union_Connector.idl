@@ -8,9 +8,10 @@
 #ifndef VT_UNION_CONNECTOR_IDL_
 #define VT_UNION_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/VTopic_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Conn_Union/VT_Union_ConnectorE.idl"
 

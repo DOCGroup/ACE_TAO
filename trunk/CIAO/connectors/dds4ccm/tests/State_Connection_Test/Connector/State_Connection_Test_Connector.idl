@@ -8,9 +8,10 @@
 #ifndef KEYED_TEST_CONNECTOR_IDL_
 #define KEYED_TEST_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/State_Connection_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/State_Connection_Test_ConnectorE.idl"
 

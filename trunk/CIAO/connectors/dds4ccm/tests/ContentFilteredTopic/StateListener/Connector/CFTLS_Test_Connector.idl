@@ -8,9 +8,10 @@
 #ifndef CONTENTFILTEREDTOPIC_LISTEN_STATE_TEST_CONNECTOR_IDL_
 #define CONTENTFILTEREDTOPIC_LISTEN_STATE_TEST_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/CFTLS_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/CFTLS_Test_ConnectorE.idl"
 

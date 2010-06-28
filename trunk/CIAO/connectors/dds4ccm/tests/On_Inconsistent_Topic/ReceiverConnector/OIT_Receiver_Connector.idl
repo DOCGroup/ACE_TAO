@@ -8,9 +8,10 @@
 #ifndef ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_
 #define ON_INCONSISTENT_TOPIC_TEST_RECEIVER_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/OIT_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "ReceiverConnector/OIT_Receiver_ConnectorE.idl"
 
