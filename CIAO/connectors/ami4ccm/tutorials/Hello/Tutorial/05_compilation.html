@@ -20,300 +20,203 @@
 	-->
 	</STYLE>
 </HEAD>
-<BODY LANG="nl-NL" DIR="LTR">
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+<BODY LANG="nl-NL" DIR="ltr">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="PAGE-BREAK-BEFORE: always">
 	<TR>
 		<TD>
-			<P ALIGN=LEFT><A HREF="04_ami4ccm.html">Previous</A></P>
-		</TD>
+			<P ALIGN=left><A href="04_ami4ccm.html">Previous</A></P></TD>
 		<TD>
-			<P ALIGN=CENTER><IMG SRC="images/images.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=4% HEIGHT=5% BORDER=0></P>
-		</TD>
-		<TD></TD>
-	</TR>
-</TABLE>
+			<P ALIGN=center><IMG border=0 name=graphics1 align=bottom src="images/images.png" width="4%" height="5%" ></P></TD>
+		<TD></TD></TR></TABLE>
 <HR>
 <H1>Compilation and deployment</H1>
-<H2 CLASS="western" STYLE="page-break-after: avoid">Compilation</H2>
-<P STYLE="margin-bottom: 0cm">Once all the code has been written,
-compilation of the code would be the next step. MPC is used in order
-to create the Makefiles and projects files. All MPC files that are
-needed for this tutorial are in the same directory as the
-accompanying IDL or executor files. In order to make the GNU make
-files or the Visual Studio project files, the following steps should
-be performed : 
-</P>
+<H2 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid">Compilation</H2>
+<P STYLE="MARGIN-BOTTOM: 0cm">Once all the code has been 
+written, compilation of the code would be the next step. MPC is used in order to 
+create the Makefiles and projects files. All MPC files that are needed for this 
+tutorial are in the same directory as the accompanying IDL or executor files. In 
+order to make the GNU make files or the Visual Studio project files, the 
+following steps should be performed : </P>
 <UL>
 	<UL>
-		<LI><P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Start a command
-		shell and navigate to :
-		</FONT><CODE CLASS="western"><FONT SIZE=3>%CIAO_ROOT%/connectors/ami4ccm/tutorials/Hello/Hello_asm</FONT></CODE>
-				</P>
-		<LI><P STYLE="margin-bottom: 0cm">Run 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm"><CODE CLASS="western"><FONT SIZE=3>perl
-		%ACE_ROOT%/bin/mwc.pl -type vc9</FONT></CODE> <FONT SIZE=3>to
-		create Visual Studio 2008 project files. </FONT>
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm"><CODE CLASS="western"><FONT SIZE=3>perl
-		%ACE_ROOT%/bin/mwc.pl -type gnuace</FONT></CODE> <FONT SIZE=3>to
-		create the GNU make files. </FONT>
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">Now compile the code like you're
-		used to. 
-		</P>
-	</UL>
-</UL>
-<P STYLE="margin-bottom: 0cm">If all went well, all libraries are in
-the Hello_asm/lib directory. 
-</P>
-<H2 CLASS="western" STYLE="page-break-after: avoid">Deployment</H2>
-<P STYLE="margin-bottom: 0cm">Once all binaries are compiled, they're
-ready to be deployed. In this tutorial we are using DAnCE to deploy
-our system. DAnCE starts a system in two phases : 
-</P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm"><FONT SIZE=3>Start a command shell and navigate to : </FONT><CODE CLASS="western"><FONT SIZE=3>%CIAO_ROOT%/connectors/ami4ccm/tutorials/Hello/Hello_asm</FONT></CODE> 
+    </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Run </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT SIZE=3>perl 
+    %ACE_ROOT%/bin/mwc.pl -type vc9</FONT></CODE> <FONT SIZE=3>to create Visual Studio 2008 project files. </FONT></P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT SIZE=3>perl 
+    %ACE_ROOT%/bin/mwc.pl -type gnuace</FONT></CODE> <FONT SIZE=3>to create the GNU make files. </FONT></P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Now compile the code like 
+    you're used to. </P></LI></UL></UL>
+<P STYLE="MARGIN-BOTTOM: 0cm">If all went well, all 
+libraries are in the Hello_asm/lib directory. </P>
+<H2 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid">Deployment</H2>
+<P STYLE="MARGIN-BOTTOM: 0cm">Once all binaries are 
+compiled, they're ready to be deployed. In this tutorial we are using DAnCE to 
+deploy our system. DAnCE starts a system in two phases : </P>
 <OL>
 	<OL>
-		<LI><P STYLE="margin-bottom: 0cm">configuration_complete 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">ccm_activate 
-		</P>
-	</OL>
-</OL>
-<P STYLE="margin-bottom: 0cm">DAnCE shuts down a system again in two
-phases : 
-</P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">configuration_complete 
+    </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">ccm_activate 
+</P></LI></OL></OL>
+<P STYLE="MARGIN-BOTTOM: 0cm">DAnCE shuts down a system 
+again in two phases : </P>
 <OL>
 	<OL>
-		<LI><P STYLE="margin-bottom: 0cm">passivate 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">ccm_remove 
-		</P>
-	</OL>
-</OL>
-<P STYLE="margin-bottom: 0cm">Each component should have these four
-methods implemented. The business logic implemented in each step
-depends on you implementation. There're several processes taking care
-of the total deployment process. See the DAnCE documentation for more
-information about which processes there are and what their
-responsibilities are. DAnCE will start and shutdown a system with the
-aid of a deployment plan. A deployment plan describes which artifacts
-must run on which nodes and which components are connected to
-eachother via which interface (more on this later). All connections
-between components are made before 'configuration_complete' is
-called. 
-</P>
-<P STYLE="margin-bottom: 0cm"><BR>
-</P>
-<P STYLE="margin-bottom: 0cm">The deployment plan will be generated
-by the modelling tools but we take a brief look at the most important
-items of a deployment plan. A deployment plan is a XML based file
-which is devided into the following (main) sections: 
-</P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">passivate </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">ccm_remove 
+</P></LI></OL></OL>
+<P STYLE="MARGIN-BOTTOM: 0cm">Each component should have 
+these four methods implemented. The business logic implemented in each step 
+depends on you implementation. There're several processes taking care of the 
+total deployment process. See the DAnCE documentation for more information about 
+which processes there are and what their responsibilities are. DAnCE will start 
+and shutdown a system with the aid of a deployment plan. A deployment plan 
+describes which artifacts must run on which nodes and which components are 
+connected to eachother via which interface (more on this later). All connections 
+between components are made before 'configuration_complete' is called. </P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><BR></P>
+<P STYLE="MARGIN-BOTTOM: 0cm">The deployment plan will be 
+generated by the modelling tools but we take a brief look at the most important 
+items of a deployment plan. A deployment plan is a XML based file which is 
+devided into the following (main) sections: </P>
 <UL>
 	<UL>
-		<LI><P STYLE="margin-bottom: 0cm">Implementations 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">Entry points 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">Instances 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">Connections 
-		</P>
-		<LI><P STYLE="margin-bottom: 0cm">Artifacts 
-		</P>
-	</UL>
-</UL>
-<P STYLE="margin-bottom: 0cm"><I><B>All deployment code fragments
-mentioned in the rest of this tutorial are *NO* exports of any
-modelling tool.</B> </I>
-</P>
-<H3 CLASS="western" STYLE="page-break-after: avoid">Implementations
-and Entry Points</H3>
-<P STYLE="margin-bottom: 0cm">This defines which executor and servant
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Implementations </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Entry points </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Instances </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Connections </P>
+		<LI><P STYLE="MARGIN-BOTTOM: 0cm">Artifacts </P></LI></UL></UL>
+<P STYLE="MARGIN-BOTTOM: 0cm"><I><B>All deployment code fragments mentioned in the rest of this 
+tutorial are *NO* exports of any modelling tool.</B> </I></P>
+<H3 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid">Implementations and Entry Points</H3>
+<P STYLE="MARGIN-BOTTOM: 0cm">This defines which executor and servant
 artifacts (binaries) should be used. Implementations also defines
 which entry points in the binaries should be used. In this example
 there are neeede 3 implementation sections, for the Sender Receiver
-and AMI connector. <A HREF="Code/Deployment/descriptors/implementation.cdp">This</A>
-file shows the implementation section of the AMI connector. Beware
-that artifacts and entry points are exact otherwise deployment will
-fail.</P>
-<H3 CLASS="western" STYLE="page-break-after: avoid">Instances</H3>
-<P STYLE="margin-bottom: 0cm">Instances define which artifacts run on
+and AMI connector. <A href="Code/Deployment/descriptors/implementation.cdp">This</A> file 
+shows the implementation section of the AMI connector. Beware that artifacts and 
+entry points are exact otherwise deployment will fail.</P>
+<H3 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid">Instances</H3>
+<P STYLE="MARGIN-BOTTOM: 0cm">Instances define which artifacts run on
 which node. Every fysical artifact in the system results in one
 instance. The &lt;node&gt; section refers to the fysical node on
 which this instance will be deployed. An instance always refers to an
 implementation. It's possible that more than one instance refers to
 the same implementation. The instance section also provide the
-initial values of all attributes defined on the component. <A HREF="Code/Deployment/descriptors/instance.cdp">This</A>
+initial values of all attributes defined on the component. <A href="Code/Deployment/descriptors/instance.cdp">This</A>
 file shows the instance section of the Sender, Receiver and AMI
-connector. <U><B>The instance of the AMI connector uses the same node
-as the Sender! </B></U>
-</P>
-<H3 CLASS="western" STYLE="page-break-after: avoid">Connections</H3>
-<P STYLE="margin-bottom: 0cm">A connection section defines which
-components are connected together. The connection is 'local' since a
-connector and a component are always running in the same process. Now
-that we have got all the data we need to know to make a connection
-for the asynchronous methods between the Sender and AMI connector (1)
-and between the AMI connector and the receiver (2)</P>
-<H4 CLASS="western">(1) 
-</H4>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;connection&gt;<FONT COLOR="#00e000">//unique
-name of the connection</FONT> &lt;name&gt;run_asynch_foo_connection&lt;/name&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;deployRequirement&gt;&lt;name&gt;edu.dre.vanderbilt.DAnCE.ConnectionType&lt;/name&gt;&lt;resourceType&gt;Local_Interface&lt;/resourceType&gt;&lt;/deployRequirement&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//First
-endpoint (the Sender component)</FONT>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName is defined as &ldquo;sendc_&rdquo; + name of port defined in
-Hello_Sender_comp.idl</FONT> </FONT>
-</P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;portName&gt;sendc_run_my_foo&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;provider&gt;false&lt;/provider&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//The
-reference to the sender instance.</FONT> &lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.Sender&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">/Second
-endpoint (the AMI connector component)</FONT>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName alsways the same
-</FONT>&lt;portName&gt;ami4ccm_port_ami4ccm_provides&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;provider&gt;true&lt;/provider&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;kind&gt;Facet&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//The
-reference to the connector instance.</FONT>&lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.AMI&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/connection&gt;</FONT></P>
-<H4 CLASS="western">(2) 
-</H4>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;connection&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//unique
-name of the connection</FONT>&lt;name&gt;do_foo_connection&lt;/name&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//First
-endpoint (the Receiver component)</FONT>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName is defined as name of port defined in
-Hello_Receiver_comp.idl</FONT> &lt;portName&gt;do_my_foo&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;provider&gt;true&lt;/provider&gt;&lt;kind&gt;Facet&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.Receiver&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//Second
-endpoint (the AMI component)</FONT>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName alsways the same
-</FONT>&lt;portName&gt;ami4ccm_port_ami4ccm_uses&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;provider&gt;false&lt;/provider&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.AMI&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;&lt;/connection&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><BR>
-</P>
-<P STYLE="margin-bottom: 0cm">For the synchronous methods we need a
-connection between the Sender and the receiver. (3)</P>
-<H4 CLASS="western">(3)</H4>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;connection&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;name&gt;synch_foo_connection&lt;/name&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName is defined as name of port defined in
-Hello_Receiver_comp.idl</FONT> &lt;portName&gt;do_my_foo&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-The receiver provides this port</FONT> &lt;provider&gt;true&lt;/provider&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;kind&gt;Facet&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.Receiver&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;internalEndpoint&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-PortName is defined as name of port defined in
-Hello_Sender_comp.idl</FONT>&lt;portName&gt;run_my_foo&lt;/portName&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2><FONT COLOR="#00e000">//
-The sender uses this port</FONT> &lt;provider&gt;false&lt;/provider&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;instance
-xmi:idref=&quot;Hello.ComponentImplementations.HelloImplementation.Hello.Sender&quot;
-/&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>&lt;/internalEndpoint&gt;&lt;/connection&gt;</FONT></P>
-<P STYLE="margin-bottom: 0cm"><BR>
-</P>
-<P STYLE="margin-bottom: 0cm">Take a look at <A HREF="Code/Deployment/descriptors/connections.cdp">this</A>
-file to see which connection should be made by DAnCE in order to run
-the Hello tutorial properly. 
-</P>
-<P STYLE="margin-bottom: 0cm">When the deployment tools (in this case
-DAnCE) deploys this system, it'll connect all defined connectors
-before the system is started (i.e. before configuration_complete is
-called on a component). 
-</P>
+connector. <U><B>The instance of the AMI connector 
+uses the same node as the Sender! </B></U></P>
+<H3 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid">Connections</H3>
+<P STYLE="MARGIN-BOTTOM: 0cm">A connection section defines 
+which components are connected together. The connection is 'local' since a 
+connector and a component are always running in the same process. Now that we 
+have got all the data we need to know to make a connection for the asynchronous 
+methods between the Sender and AMI connector (1) and between the AMI connector 
+and the receiver (2). For the synchronous methods we need a connection between 
+the Sender and the receiver. (3)</P>
+<H4 CLASS="western">(1) </H4>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT SIZE=2>&lt;connection&gt;<FONT >//unique name 
+of the connection</FONT>&nbsp;<BR>&nbsp;&nbsp;&lt;name&gt;run_asynch_foo_connection&lt;/name&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;deployRequirement&gt;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;edu.dre.vanderbilt.DAnCE.ConnectionType&lt;/name&gt;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&lt;resourceType&gt;Local_Interface&lt;/resourceType&gt;<BR>&nbsp;&nbsp;&lt;/deployRequirement&gt;<BR></FONT>
+<FONT SIZE=2>&nbsp;&nbsp;&lt;internalEndpoint&gt;<FONT COLOR="#008000">//First endpoint 
+(the Sender component)<BR></FONT><FONT SIZE=2><FONT COLOR="#008000">// PortName is defined as “sendc_” + name of 
+port defined in Hello_Sender_comp.idl</FONT>&nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;portName&gt;sendc_run_my_foo&lt;/portName&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;false&lt;/provider&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;<BR></FONT><FONT SIZE=2><FONT >&nbsp;&nbsp;&nbsp;</FONT>&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" 
+/&gt;&nbsp;<FONT COLOR="#008000">//The reference to the sender 
+instance.&nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR></FONT>
+<FONT SIZE=2><FONT >&nbsp;&nbsp;&lt;</FONT>internalEndpoint&gt;<FONT COLOR="#008000">//Second 
+endpoint (the AMI connector component);<BR></FONT><FONT SIZE=2><FONT >&nbsp;&nbsp;&nbsp;&nbsp;</FONT>&lt;portName&gt;ami4ccm_port_ami4ccm_provides&lt;/portName&gt;
+<FONT COLOR="#008000">//PortName alsways the same&nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;true&lt;/provider&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;Facet&lt;/kind&gt;<BR></FONT><FONT SIZE=2><FONT COLOR="#008000"><FONT 
+color=#000000>&nbsp;&nbsp;&nbsp;&nbsp;</FONT></FONT>&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" 
+/&gt;&nbsp;<FONT color=#008000>//The reference to the connector 
+instance&lt; 
+/FONT&gt; 
+<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR></FONT><FONT SIZE=2>&lt;/connection&gt;</FONT></P>
+<H4 CLASS="western">(2) </H4>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT SIZE=2>&lt;connection&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;name&gt;do_foo_connection&lt;/name&gt;<FONT 
+color=#008000>//unique name of the connection</FONT><BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;internalEndpoint&gt;<FONT 
+color=#008000>//First endpoint (the Receiver component)</FONT><BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;portName&gt;do_my_foo&lt;/portName&gt;<FONT 
+color=#008000>// PortName is defined as name of port 
+defined in Hello_Receiver_comp.idl</FONT> 
+&nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;true&lt;/provider&gt;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;Facet&lt;/kind&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" 
+/&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;internalEndpoint&gt;<FONT 
+color=#008000>//Second endpoint (the AMI component)</FONT><BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;portName&gt;ami4ccm_port_ami4ccm_uses&lt;/portName&gt;<FONT 
+color=#008000>// PortName alsways the same&nbsp;</FONT><BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;false&lt;/provider&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.AMI" 
+/&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR>&lt;/connection&gt;</FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><STRONG>(3)</STRONG></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT SIZE=2>&lt;connection&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;name&gt;synch_foo_connection&lt;/name&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;internalEndpoint&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;portName&gt;do_my_foo&lt;/portName&gt; 
+<FONT color=#008000>// PortName is defined as name of port 
+defined in Hello_Receiver_comp.idl</FONT> 
+<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;true&lt;/provider&gt; 
+<FONT color=#008000>// The receiver provides this 
+port</FONT> &nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;Facet&lt;/kind&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver" 
+/&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR>&nbsp;&nbsp;</FONT><FONT SIZE=2>&lt;internalEndpoint&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;portName&gt;run_my_foo&lt;/portName&gt; 
+<FONT color=#008000>// PortName is defined as name of port 
+defined in Hello_Sender_comp.idl</FONT><BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;provider&gt;false&lt;/provider&gt; 
+<FONT color=#008000>// The sender uses this port</FONT> 
+&nbsp;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;kind&gt;SimplexReceptacle&lt;/kind&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&nbsp;&nbsp;&lt;instance 
+xmi:idref="Hello.ComponentImplementations.HelloImplementation.Hello.Sender" 
+/&gt;<BR></FONT><FONT SIZE=2>&nbsp;&nbsp;&lt;/internalEndpoint&gt;<BR>&lt;/connection&gt;</FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><BR></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT size=3>Take a look at </FONT> <A href="Code/Deployment/descriptors/connections.cdp"><FONT 
+size=3>this</FONT></A><FONT size=3> file to 
+see which connection should be made by DAnCE in order to run the Hello tutorial 
+properly. </FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT size=3>When the deployment tools (in this case DAnCE) deploys this 
+system, it'll connect all defined connectors before the system is started (i.e. 
+before configuration_complete is called on a component). </FONT></P>
 <H3 CLASS="western">Coding connections</H3>
-<P STYLE="margin-bottom: 0cm">Every component has got a context. The
-context is set by DAnCE and is the 'gateway' to all other component
-your component is connected to. The context caches all these
-connections so that the user doesn't need to cache those in his/her
-component. 
-</P>
-<P STYLE="margin-bottom: 0cm"><SPAN STYLE="text-decoration: none"><B>Sender:
-</B></SPAN>The following code retrieves the connection to the AMI
-connector interface from the context. 
-</P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT SIZE=2>::Hello::AMI4CCM_MyFoo_obj_var
-asynch_foo = </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>this</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>-&gt;context_-&gt;get_connection_sendc_run_my_foo();</FONT></FONT></P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm">The following code
-retrieves the connection to the Receiver interface from the context.</P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT COLOR="#000000"><FONT SIZE=2>::Hello::MyFoo_obj_var
-synch_foo = </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>this</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>-&gt;context_-&gt;get_connection_run_my_foo
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT size=3>Every component has got a context. The context is set by 
+DAnCE and is the 'gateway' to all other component your component is connected 
+to. The context caches all these connections so that the user doesn't need to 
+cache those in his/her component. </FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT size=3><SPAN STYLE="TEXT-DECORATION: none"><B>Sender: </B></SPAN>The following code retrieves the 
+connection to the AMI connector interface from the context: </FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT SIZE=2>::Hello::AMI4CCM_MyFoo_obj_var asynch_foo = </FONT><FONT COLOR="#0000ff"><FONT SIZE=2>this</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>-&gt;context_-&gt;get_connection_sendc_run_my_foo();</FONT></FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT 
+size=3>The following code retrieves the connection to the Receiver 
+interface from the context:</FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT COLOR="#000000"><FONT SIZE=2>::Hello::MyFoo_obj_var 
+synch_foo = </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>this</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>-&gt;context_-&gt;get_connection_run_my_foo 
 ();</FONT></FONT></P>
-<P STYLE="margin-bottom: 0cm"><BR>
-</P>
-<P STYLE="margin-bottom: 0cm"><SPAN STYLE="text-decoration: none"><B>Receiver:
-</B></SPAN>The Receiver provide one facet for the AMI connector and
-for the sender. 
-</P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><CODE CLASS="western"><FONT SIZE=2>::Hello::CCM_MyFoo_obj_ptr</FONT></CODE></P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT SIZE=2>Receiver_exec_i::get_do_my_foo
-(</FONT><FONT COLOR="#0000ff"><FONT SIZE=2>void</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>)</FONT></FONT></P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT COLOR="#000000"><FONT SIZE=2>{</FONT></FONT></P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT SIZE=2>return</FONT></FONT><FONT COLOR="#000000">
-</FONT><FONT COLOR="#0000ff"><FONT SIZE=2>new</FONT></FONT><FONT COLOR="#000000">
-</FONT><FONT COLOR="#000000"><FONT SIZE=2>MyFoo_exec_i ();</FONT></FONT></P>
-<P STYLE="margin-left: 2cm; margin-bottom: 0cm"><FONT COLOR="#000000"><FONT SIZE=2>}</FONT></FONT></P>
-<H3 CLASS="western" STYLE="page-break-after: avoid"><CODE CLASS="western">Artifacts</CODE></H3>
-<P STYLE="margin-bottom: 0cm"><CODE CLASS="western"><FONT FACE="Times New Roman, serif">Artifacts
-sections contains the names of the binaries. See <A HREF="Code/Deployment/descriptors/artifacts.cdp">this</A>
-files for an overview of all artifacts in the Hello tutorial. </FONT></CODE>
-</P>
-<H3 CLASS="western" STYLE="page-break-after: avoid"><CODE CLASS="western">Complete
-plan</CODE></H3>
-<P STYLE="margin-bottom: 0cm"><CODE CLASS="western"><FONT FACE="Times New Roman, serif"><A HREF="Code/Deployment/descriptors/Plan.cdp">This</A>
-file shows the complete deployment plan. </FONT></CODE>
-</P>
-<P STYLE="margin-bottom: 0cm"><BR>
-</P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><FONT size=3><SPAN STYLE="TEXT-DECORATION: none"><B>Receiver: </B></SPAN>The Receiver provide one facet for the 
+AMI connector and for the sender. </FONT></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT SIZE=2 face="Times New Roman">::Hello::CCM_MyFoo_obj_ptr<BR></FONT></CODE>
+<FONT SIZE=2>Receiver_exec_i::get_do_my_foo (</FONT><FONT COLOR="#0000ff"><FONT SIZE=2>void</FONT></FONT>
+<FONT COLOR="#000000"><FONT SIZE=2>)<BR></FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>{<BR></FONT></FONT>
+<FONT COLOR="#0000ff"><FONT SIZE=2>&nbsp;&nbsp;return</FONT></FONT>
+<FONT COLOR="#000000"></FONT><FONT COLOR="#0000ff">
+<FONT SIZE=2>new</FONT></FONT><FONT COLOR="#000000"> </FONT>
+<FONT COLOR="#000000"><FONT SIZE=2>MyFoo_exec_i ();<BR></FONT></FONT>
+<FONT COLOR="#000000"><FONT SIZE=2>}</FONT></FONT></P>
+<H3 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid"><CODE CLASS="western"><FONT 
+face="Times New Roman">Artifacts</FONT></CODE></H3>
+<P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT >   <FONT size=3 
+face="Times New Roman">Artifacts sections contains the 
+names of the binaries. See </FONT>
+        <A href="Code/Deployment/descriptors/artifacts.cdp"><FONT size=3 
+face="Times New Roman">this</FONT></A><FONT size=3 face="Times New Roman"> files for an overview of all 
+artifacts in the Hello tutorial. </FONT></FONT></CODE></P>
+<H3 CLASS="western" STYLE="PAGE-BREAK-AFTER: avoid"><CODE CLASS="western"><FONT face="Times New Roman">Complete plan</FONT></CODE></H3>
+<P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT ><A href="Code/Deployment/descriptors/Plan.cdp"><FONT size=3 
+face="Times New Roman">This</FONT></A><FONT size=3 face="Times New Roman"> file shows the complete deployment 
+plan. </FONT></FONT></CODE></P>
+<P STYLE="MARGIN-BOTTOM: 0cm"><BR></P>
 <HR>
-<P><BR><BR>
-</P>
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=2>
+<P><BR><BR></P>
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=2 CELLSPACING=2>
 	<TR>
 		<TD>
-			<P ALIGN=LEFT><A HREF="04_ami4ccm.html">Previous</A></P>
-		</TD>
+			<P ALIGN=left><A href="04_ami4ccm.html">Previous</A></P></TD>
 		<TD>
-			<P ALIGN=CENTER><IMG SRC="images/images.png" NAME="graphics2" ALIGN=BOTTOM WIDTH=4% HEIGHT=5% BORDER=0></P>
-		</TD>
-		<TD></TD>
-	</TR>
-</TABLE>
-<H2 CLASS="western"><BR><BR>
-</H2>
+			<P ALIGN=center><IMG border=0 name=graphics2 align=bottom src="images/images.png" width="4%" height="5%" ></P></TD>
+		<TD></TD></TR></TABLE>
+<H2 CLASS="western"><BR><BR></H2></FONT></FONT></FONT></FONT></FONT>
 </BODY>
 </HTML>

@@ -16,74 +16,64 @@
 	-->
 	</STYLE>
 </HEAD>
-<BODY LANG="nl-NL" DIR="LTR">
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+<BODY LANG="nl-NL" DIR="ltr">
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="PAGE-BREAK-BEFORE: always">
 	<TR>
 		<TD>
-			<P ALIGN=LEFT><A HREF="02_idl.html">Previous</A></P>
-		</TD>
+			<P ALIGN=left><A href="02_idl.html">Previous</A></P></TD>
 		<TD>
-			<P ALIGN=CENTER><IMG SRC="images/images.png" NAME="graphics1" ALIGN=BOTTOM WIDTH=4% HEIGHT=5% BORDER=0></P>
-		</TD>
+			<P ALIGN=center><IMG border=0 name=graphics1 align=bottom src="images/images.png" width="4%" height="5%" ></P></TD>
 		<TD>
-			<P ALIGN=RIGHT><A HREF="04_ami4ccm.html">Next</A></P>
-		</TD>
-	</TR>
-</TABLE>
+			<P ALIGN=right><A href="04_ami4ccm.html">Next</A></P></TD></TR></TABLE>
 <HR>
 <H1>Executors</H1>
-<P>Once the IDL files are created, the business logic for the
-components should be implemented. Since components can be complex, we
-can use the IDL compiler to create empty executor files. This part of
-the tutorial explains how this can be done. 
-</P>
+<P>Once the IDL files are created, the business logic for 
+the components should be implemented. Since components can be complex, we can 
+use the IDL compiler to create empty executor files. This part of the tutorial 
+explains how this can be done. </P>
 <H2 CLASS="western">Sender</H2>
-<P>In a command shell windows, navigate to the
-Hello_asm/Sender_comp/src and invoke the TAO IDL compiler by running
-the following command: 
-</P>
-<P><CODE CLASS="western">tao_idl -I../../ports -I../../GeneratedCode
--I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm
--I%CIAO_ROOT%/ciao -Gex Hello_Senmder_comp.idl </CODE><CODE CLASS="western"><FONT FACE="Times New Roman, serif">An
-example of the </FONT></CODE>generated code can be found <A HREF="Code/GeneratedExec/Hello_Sender_comp_exec.cpp">here</A>.
-<CODE CLASS="western"><FONT FACE="Times New Roman, serif">An example
-of t</FONT></CODE>he implemented executor can be found   <A HREF="Code/ImplementedExec/Hello_Sender_comp_exec.cpp">here</A>
- .</P>
-<P>Be aware that running this command, will overwrite the already
-implemented exec code in the Hello_asm/Sender_comp  directory.    A
-copy of the implemented executor can be found   <A HREF="Code/ImplementedExec/Hello_Sender_comp_exec.cpp">here</A>
- .</P>
-<H2 CLASS="western">Receiver</H2>
-<P>Navigate to the Hello_asm/Receiver_comp/src and invoke the TAO IDL
-compiler by running the following command: 
-</P>
-<P><CODE CLASS="western">tao_idl -I../../ports -I../../GeneratedCode
--I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm
--I%CIAO_ROOT%/ciao -Gex Hello_Receiver_comp.idl </CODE><CODE CLASS="western"><FONT FACE="Times New Roman, serif">An
-example of the </FONT></CODE> generated code can be found <A HREF="Code/GeneratedExec/Hello_Receiver_comp_exec.cpp">here</A>.
-<CODE CLASS="western"><FONT FACE="Times New Roman, serif">An example
-of  the </FONT></CODE>implemented executor can be found <A HREF="Code/ImplementedExec/Hello_Receiver_comp_exec.cpp">here</A>
- .</P>
-<P>Be aware that running this command, will overwrite the already
-implemented exec code in the Hello_asm/Receiver_comp  directory.   A
-copy of the implemented executor can be found  <A HREF="Code/ImplementedExec/Hello_Receiver_comp_exec.cpp">here</A>
- .</P>
-<P><BR><BR>
-</P>
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=2>
+<P>In a command shell windows, navigate to the 
+Hello_asm/Sender_comp/src and invoke the TAO IDL compiler by running the 
+following command: </P>
+<P><CODE CLASS="western"><FONT SIZE=3>tao_idl 
+-I../../ports -I../../GeneratedCode -I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT% 
+-I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gex Hello_Senmder_comp.idl</CODE></P>
+<FONT face="Times New Roman>An example of the </FONT></CODE>generated code can be found <A href=" 
+Hello_Sender_comp_exec.cpp? GeneratedExec Code></A><FONT 
+face="Times New Roman"><FONT face="Times New Roman">An 
+example of the implemented executor can be found </FONT><A 
+href="Code/ImplementedExec/Hello_Sender_comp_exec.cpp"><FONT 
+face="Times New Roman">here</FONT></A><FONT face="Times New Roman"> 
+.<BR></FONT><FONT face="Times New Roman">Be aware that running this command, 
+will overwrite the already implemented exec code in the Hello_asm/Sender_comp 
+directory. A copy of the implemented executor can be found </FONT><A 
+href="Code/ImplementedExec/Hello_Sender_comp_exec.cpp"><FONT 
+face="Times New Roman">here</FONT></A><FONT face="Times New Roman"> .</FONT></P>
+<H2 class=western>Receiver</H2>
+<P>Navigate to the Hello_asm/Receiver_comp/src and invoke the TAO IDL compiler 
+by running the following command: </P>
+<P><CODE class=western>tao_idl -I../../ports -I../../GeneratedCode -I%TAO_ROOT% 
+-I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gex 
+Hello_Receiver_comp.idl.<BR></CODE></p>
+<FONT face="Times New Roman">An example of the generated code can be found </FONT><A 
+href="Code/GeneratedExec/Hello_Receiver_comp_exec.cpp"><FONT 
+face="Times New Roman">here</FONT></A><FONT face="Times New Roman">. <CODE 
+class=western>An example of the </CODE>implemented executor can be found 
+</FONT><A href="Code/ImplementedExec/Hello_Receiver_comp_exec.cpp"><FONT 
+face="Times New Roman">here</FONT></A><FONT face="Times New Roman"> 
+.<BR></FONT><FONT face="Times New Roman">Be aware that running this command, 
+will overwrite the already implemented exec code in the Hello_asm/Receiver_comp 
+directory. A copy of the implemented executor can be found </FONT><A 
+href="Code/ImplementedExec/Hello_Receiver_comp_exec.cpp"><FONT 
+face="Times New Roman">here</FONT></A><FONT face="Times New Roman"> .</FONT></P>
+<P><BR><BR></P><TABLE BORDER=0 CELLPADDING =2 CELLSPACING   =2 width    ="100%" >
 	<TR>
 		<TD>
-			<P ALIGN=LEFT><A HREF="02_idl.html">Previous</A></P>
-		</TD>
+			<P ALIGN=left><A href="02_idl.html">Previous</A></P></TD>
 		<TD>
-			<P ALIGN=CENTER><IMG SRC="images/images.png" NAME="graphics2" ALIGN=BOTTOM WIDTH=4% HEIGHT=5% BORDER=0></P>
-		</TD>
+			<P ALIGN=center><IMG border=0 name=graphics2 align=bottom src="images/images.png" width="4%" height="5%" ></P></TD>
 		<TD>
-			<P ALIGN=RIGHT><A HREF="04_ami4ccm.html">Next</A></P>
-		</TD>
-	</TR>
-</TABLE>
-<P><BR><BR>
-</P>
+			<P ALIGN=right><A href="04_ami4ccm.html">Next</A></P></TD></TR></TABLE>
+<P><BR><BR></P></FONT></CODE>
 </BODY>
 </HTML>
