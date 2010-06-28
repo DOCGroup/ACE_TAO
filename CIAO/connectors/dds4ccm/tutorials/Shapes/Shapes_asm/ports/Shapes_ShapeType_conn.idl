@@ -12,7 +12,7 @@
 module Shapes
 {
   typedef sequence<ShapeType_msg> ShapeType_msgSeq;
-  module ::CCM_DDS::Typed < ::ShapeType_msg, ShapeType_msgSeq> ShapesConnector;
+  module ::CCM_DDS::Typed < ::ShapeType_msg, ShapeType_msgSeq> ShapeType_conn;
 };
 
 #endif /* SHAPES_SHAPETYPE_CONN_IDL_ */

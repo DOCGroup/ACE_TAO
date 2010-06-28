@@ -10,7 +10,7 @@ module Shapes
 {
   component Sender_comp
   {
-    port ShapesConnector::DDS_Write info_write;
+    port ShapeType_conn::DDS_Write info_write;
 
     provides Shapes::Control_obj control;
   };

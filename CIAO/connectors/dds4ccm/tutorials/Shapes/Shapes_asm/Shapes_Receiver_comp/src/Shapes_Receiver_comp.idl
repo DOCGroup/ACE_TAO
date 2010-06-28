@@ -9,7 +9,7 @@ module Shapes
 {
   component Receiver_comp
   {
-    port ShapesConnector::DDS_Listen info_out;
+    port ShapeType_conn::DDS_Listen info_out;
   };
 };
 

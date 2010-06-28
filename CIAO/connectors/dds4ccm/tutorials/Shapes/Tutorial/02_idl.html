@@ -43,7 +43,7 @@
             {<br/>
             &nbsp;&nbsp;<b>typedef</b> <b>sequence</b><ShapeType> ShapeTypeSeq;<br/>
             &nbsp;&nbsp;<b>module</b> ::CCM_DDS::Typed < ::ShapeType, ShapeTypeSeq>
-            ShapesConnector;<br/>
+            ShapeType_conn;<br/>
             };<br/>
           </code>
           This IDL contains the declaration of the DDS4CCM connector. The used
@@ -146,7 +146,7 @@
     {<br/>
     &nbsp;&nbsp;<b>component</b> Sender_comp<br/>
     &nbsp;&nbsp;{<br/>
-    &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapesConnector::DDS_Write info_write;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapeType_conn::DDS_Write info_write;<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;<b>provides</b> Shapes::Control_obj control;<br/>
     &nbsp;&nbsp;};<br/>};
     </code><br/><br/>
@@ -176,7 +176,7 @@
       {<br/>
       &nbsp;&nbsp;component Receiver_comp<br/>
       &nbsp;&nbsp;{<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapesConnector::DDS_Listen info_out;<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>port</b> ShapeType_conn::DDS_Listen info_out;<br/>
       &nbsp;&nbsp;};<br/>};<br/>
     </code>
   </p>
