@@ -1,18 +1,26 @@
+Mon Jun 28 19:15:54 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/MPC.cfg:
+
+          Modified the 'dynamic_types' setting to not complain if the
+          TAO_ROOT environment variable isn't set during processing.  Users
+          of only ACE may be confused by the MPC resulting message.
+
 Mon Jun 28 14:07:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* NEWS:
-	  Update.
+        * NEWS:
+          Update.
 
 Mon Jun 28 13:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/INet_Log.h:
-	  Allow tracing to be enabled in debug builds.
+        * protocols/ace/INet/INet_Log.h:
+          Allow tracing to be enabled in debug builds.
 
 Mon Jun 28 12:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/StreamHandler.h:
         * protocols/ace/INet/StreamHandler.cpp:
-	  Fixed problem with reactive write.
+          Fixed problem with reactive write.
 
 Mon Jun 28 12:19:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -22,10 +30,10 @@ Mon Jun 28 12:19:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Jun 28 11:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/FTP_Response.h:
-	  Added missing include.
+          Added missing include.
 
         * protocols/ace/INet/FTP_Session.cpp:
-	  Fixed truncate warning.
+          Fixed truncate warning.
 
 Mon Jun 28 10:37:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
