@@ -1,8 +1,17 @@
+Mon Jun 28 09:17:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exs.cpp:
+          Generate the needed vendor value
+
+        * tao/AnyTypeCode/ExceptionA.cpp:
+          Layout changes
+
 Fri Jun 25 19:05:03 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/idl.ll:
-        
+
           With the 'ciao ami4ccm idl "xxx"' pragma, changed the logic
           to add the "xxx" filename to the list, not in the main IDL
           file as before, but in every other IDL file instead. This
