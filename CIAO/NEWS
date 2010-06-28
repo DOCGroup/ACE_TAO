@@ -58,6 +58,7 @@ replacement in the near term:
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 =======================================================
+
 . Generalized DDS4CCM connector support to allow user-defined
   DDS4CCM connectors
   
@@ -67,6 +68,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
   - explicit support for ContentFilterTopics
   - porttype may contain attributes
   - all sequence are now inout instead of out
+  - DDS vendors can deliver their own partial template specialization to
+    handle differences between vendors
 
 . Completed AMI4CCM support
 
