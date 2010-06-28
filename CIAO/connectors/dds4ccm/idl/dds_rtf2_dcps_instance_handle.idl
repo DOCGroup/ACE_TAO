@@ -3,14 +3,12 @@
 #ifndef DDS_RFT2_DCPS_INSTANCE_HANDLE_IDL
 #define DDS_RFT2_DCPS_INSTANCE_HANDLE_IDL
 
-#if (CIAO_DDS4CCM_NDDS==1)
-
 #include "connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl"
 
+#if (CIAO_DDS4CCM_NDDS==1)
 module DDS {
     native HANDLE_NIL;
 };
-
 #endif
 
 #endif

@@ -1,6 +1,14 @@
+Mon Jun 28 09:35:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_instance_handle.idl:
+          Small changes to let the PSAT connector compile when no dds vendor
+          is enabled
+
 Mon Jun 28 09:06:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
         Wrong lib path.
 
 Mon Jun 28 08:42:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>

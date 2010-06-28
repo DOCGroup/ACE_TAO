@@ -10,11 +10,11 @@
 #endif
 
 #if (CIAO_DDS4CCM_NDDS==1)
-
-#define DOMAINID_TYPE_NATIVE    long
-#define HANDLE_TYPE_NATIVE      long
-#define HANDLE_NIL_NATIVE       0
-#define BUILTIN_TOPIC_KEY_TYPE_NATIVE     long
+# define DOMAINID_TYPE_NATIVE    long
+# define HANDLE_TYPE_NATIVE      long
+# define HANDLE_NIL_NATIVE       0
+# define BUILTIN_TOPIC_KEY_TYPE_NATIVE     long
+#endif
 
 #define TheParticipantFactory
 #define PARTICIPANT_QOS_DEFAULT
@@ -1269,7 +1269,5 @@ module DDS {
 
     typedef sequence<SampleInfo> SampleInfoSeq;
 };
-
-#endif
 
 #endif
