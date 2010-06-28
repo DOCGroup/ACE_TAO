@@ -222,7 +222,6 @@ namespace CIAO
             {
               //save to remove from list
               this->dps_.erase (iter);
-              delete iter->second;
             }
           else
             {
