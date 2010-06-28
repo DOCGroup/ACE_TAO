@@ -11,6 +11,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Connector.h"
 #include "ace/String_Base.h"
+#include "ace/Truncate.h"
 #include <istream>
 #include <ostream>
 
@@ -255,7 +256,7 @@ namespace ACE
 
         if (this->is_connected ())
           {
-            this->sock_stream_->put (INTERRUPT);
+            this->sock_stream_->put (ACE_Utils::truncate_cast<char> (int (INTERRUPT)));
             this->sock_stream_->sync ();
             return this->sock_stream_->good ();
           }

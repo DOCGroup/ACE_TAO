@@ -15,6 +15,7 @@
 #include "ace/INet/Response.h"
 #include "ace/SString.h"
 #include "ace/Array.h"
+#include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
