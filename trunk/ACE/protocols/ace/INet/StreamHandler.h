@@ -18,6 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Svc_Handler.h"
+#include "ace/Reactor_Notification_Strategy.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -112,6 +113,24 @@ namespace ACE
               ACE_Synch_Options sync_opt_;
               bool send_timeout_;
               bool receive_timeout_;
+              ACE_Reactor_Notification_Strategy notification_strategy_;
+
+              class NotificationStrategyGuard
+                {
+                  public:
+                    NotificationStrategyGuard (this_type& queue_owner,
+                                               ACE_Reactor_Notification_Strategy* ns)
+                      : queue_owner_ (queue_owner)
+                      {
+                        this->queue_owner_.msg_queue ()->notification_strategy (ns);
+                      }
+                    ~NotificationStrategyGuard ()
+                      {
+                        this->queue_owner_.msg_queue ()->notification_strategy (0);
+                      }
+                  private:
+                    this_type& queue_owner_;
+                };
           };
 
         typedef StreamHandler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>  SockStreamHandler;

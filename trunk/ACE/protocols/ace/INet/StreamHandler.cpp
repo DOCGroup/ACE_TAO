@@ -25,7 +25,10 @@ namespace ACE
       : ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE> (thr_mgr, mq, reactor),
         connected_ (false),
         send_timeout_ (false),
-        receive_timeout_ (false)
+        receive_timeout_ (false),
+        notification_strategy_ (reactor,
+                                this,
+                                ACE_Event_Handler::WRITE_MASK)
       {
         INET_TRACE ("ACE_IOS_StreamHandler - ctor");
 
@@ -432,6 +435,21 @@ namespace ACE
       {
         INET_TRACE ("ACE_IOS_StreamHandler::write_to_stream");
 
+        // check if we're allowed to control the reactor if reactive
+        bool use_reactor = this->using_reactor ();
+        if (use_reactor)
+          {
+            ACE_thread_t tid;
+            this->reactor ()->owner (&tid);
+            use_reactor =
+              ACE_OS::thr_equal (ACE_Thread::self (), tid) ? true : false;
+          }
+
+        // set notification strategy if reactive
+        NotificationStrategyGuard ns_guard__(*this,
+                                             use_reactor ?
+                                                &this->notification_strategy_ : 0);
+
         size_t datasz = length * char_size;
         ACE_Message_Block *mb = 0;
         ACE_NEW_RETURN (mb, ACE_Message_Block (datasz), -1);
@@ -450,17 +468,7 @@ namespace ACE
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
         int result = 0;
 
-        // check if we're allowed to control the reactor if reactive
-        bool reactor_thread = false;
-        if (this->using_reactor ())
-          {
-            ACE_thread_t tid;
-            this->reactor ()->owner (&tid);
-            reactor_thread =
-              ACE_OS::thr_equal (ACE_Thread::self (), tid) ? true : false;
-          }
-
-        if (this->using_reactor () && reactor_thread)
+        if (use_reactor)
           {
             if (this->reactor ()->register_handler(this,
                                                    ACE_Event_Handler::WRITE_MASK) != 0)

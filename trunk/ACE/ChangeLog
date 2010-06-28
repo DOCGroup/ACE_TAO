@@ -1,3 +1,9 @@
+Mon Jun 28 12:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/StreamHandler.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+	  Fixed problem with reactive write.
+
 Mon Jun 28 12:19:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/index.shtml:
@@ -6,10 +12,10 @@ Mon Jun 28 12:19:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Jun 28 11:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/FTP_Response.h:
-     Added missing include.
+	  Added missing include.
 
         * protocols/ace/INet/FTP_Session.cpp:
-     Fixed truncate warning.
+	  Fixed truncate warning.
 
 Mon Jun 28 10:37:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
