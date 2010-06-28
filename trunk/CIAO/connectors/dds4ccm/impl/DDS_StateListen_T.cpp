@@ -11,13 +11,48 @@
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_StateListen_T (void) :
   data_control_ (new CCM_DDS_StateListenerControl_T
-    < ::CCM_DDS::CCM_StateListenerControl> ())
+    < ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE> ())
 {
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~DDS_StateListen_T (void)
 {
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+bool
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
+  typename CCM_TYPE::base_type::_ptr_type component,
+  ::DDS::Topic_ptr topic,
+  ::DDS::Subscriber_ptr subscriber,
+  const char* library_name,
+  const char* profile_name)
+{
+  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
+
+  if (DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
+            component,
+            topic,
+            subscriber,
+            library_name,
+            profile_name))
+    {
+      StateListenerControl *dds_slc = dynamic_cast < StateListenerControl * >
+        (this->data_control_.in ());
+      if (dds_slc)
+        {
+          dds_slc->_set_component (component);
+          return true;
+        }
+      else
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_StateListen_T::configuration_complete - "
+                            "Unable to cast Data control.\n"));
+          return false;
+        }
+    }
+  return false;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -50,6 +85,27 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
       DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_StateListen_T::activate: Caught unexpected exception.\n"));
       throw CORBA::INTERNAL ();
     }
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
+void
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
+  ::DDS::Subscriber_ptr subscriber)
+{
+  DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
+
+  StateListenerControl *dds_slc = dynamic_cast < StateListenerControl * >
+    (this->data_control_.in ());
+  if (dds_slc)
+    {
+      dds_slc->_set_component (CCM_TYPE::base_type::_nil ());
+    }
+  else
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_StateListen_T::remove - "
+                        "Unable to cast StateListenerControl.\n"));
+    }
+  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (subscriber);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

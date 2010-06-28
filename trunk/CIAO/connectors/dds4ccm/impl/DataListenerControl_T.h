@@ -12,7 +12,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template <typename BASE_TYPE>
+template <typename BASE_TYPE, typename CCM_TYPE>
 class CCM_DDS_DataListenerControl_T
   : public virtual BASE_TYPE,
     public virtual ::CORBA::LocalObject,
@@ -37,9 +37,16 @@ public:
   /// Get the max_delivered_data
   virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
 
+  /// Set the component
+  void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
+  virtual ::CORBA::Object_ptr _get_component (void);
+
 protected:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> max_delivered_data_;
+
+private:
+  typename CCM_TYPE::base_type::_var_type component_;
 };
 
 #include "dds4ccm/impl/DataListenerControl_T.cpp"
