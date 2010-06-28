@@ -4,8 +4,9 @@
 #define LARGE_CONNECTOR_IDL
 
 #include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Common/Common.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/Large_ConnectorE.idl"
 

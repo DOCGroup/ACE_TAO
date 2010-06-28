@@ -8,9 +8,10 @@
 #ifndef SHARED_DP_CONNECTOR1_IDL_
 #define SHARED_DP_CONNECTOR1_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector1/Connector1E.idl"
 

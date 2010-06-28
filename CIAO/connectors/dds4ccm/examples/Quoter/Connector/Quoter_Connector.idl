@@ -9,8 +9,9 @@
 #define QUOTER_CONNECTOR_IDL_
 
 #include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/Quoter_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/Quoter_ConnectorE.idl"
 

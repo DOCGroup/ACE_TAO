@@ -8,9 +8,10 @@
 #ifndef LISTEN_ONE_BY_ONE_TEST_CONNECTOR_IDL_
 #define LISTEN_ONE_BY_ONE_TEST_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/LOBO_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/LOBO_Test_ConnectorE.idl"
 

@@ -8,9 +8,10 @@
 #ifndef LISTEN_MANY_BY_MANY_TEST_CONNECTOR_IDL_
 #define LISTEN_MANY_BY_MANY_TEST_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/LMBM_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/LMBM_Test_ConnectorE.idl"
 

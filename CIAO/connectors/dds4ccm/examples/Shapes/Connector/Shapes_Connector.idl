@@ -8,9 +8,10 @@
 #ifndef SHAPES_CONNECTOR_IDL_
 #define SHAPES_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/Shapes_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/Shapes_ConnectorE.idl"
 

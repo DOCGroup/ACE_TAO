@@ -8,9 +8,10 @@
 #ifndef VTS_VALUE_TYPE_CONNECTOR_IDL_
 #define VTS_VALUE_TYPE_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/VTopics_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Conn_Valuetype/VTS_Valuetype_ConnectorE.idl"
 

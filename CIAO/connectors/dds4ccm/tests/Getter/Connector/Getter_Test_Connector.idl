@@ -8,9 +8,10 @@
 #ifndef GETTER_TEST_CONNECTOR_IDL_
 #define GETTER_TEST_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
 #include "Base/Getter_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#include <ccm_dds.idl>
 
 #pragma ciao lem "Connector/Getter_Test_ConnectorE.idl"
 

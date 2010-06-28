@@ -8,9 +8,10 @@
 #ifndef SL_DISABLED_CONNECTOR_IDL_
 #define SL_DISABLED_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/SL_Disabled_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/SL_Disabled_ConnectorE.idl"
 

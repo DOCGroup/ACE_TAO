@@ -3,7 +3,7 @@
 #ifndef CCM_DDS_BASE_IDL
 #define CCM_DDS_BASE_IDL
 
-#include  <Components.idl>
+#include <Components.idl>
 #include "connectors/dds4ccm/idl/dds4ccm_DataListenerControl.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_StateListenerControl.idl"
 #include "connectors/dds4ccm/idl/dds4ccm_PortStatusListener.idl"
