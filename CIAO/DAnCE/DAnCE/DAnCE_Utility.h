@@ -89,6 +89,14 @@ namespace DAnCE
 
     DANCE_STUB_Export CORBA::Any*
     create_any_from_user_exception (const CORBA::UserException& ex);
+    
+    template <typename EXCEPTION>
+    bool stringify_exception (const CORBA::Any &excep,
+                              std::string &result);
+
+    DANCE_STUB_Export bool
+    stringify_exception_from_any (const CORBA::Any &excep,
+                                  std::string &result);
   }
 }
 

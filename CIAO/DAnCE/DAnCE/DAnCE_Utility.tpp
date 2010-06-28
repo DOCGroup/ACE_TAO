@@ -4,6 +4,8 @@
 
 #include "DAnCE/DAnCE_Utility.h"
 
+#include <sstream>
+
 namespace DAnCE
 {
   namespace Utility
@@ -125,6 +127,26 @@ namespace DAnCE
       if ((excep >>= ex_holder))
         ex_holder->_raise ();
 
+      return false;
+    }
+
+    template <typename EXCEPTION>
+    bool stringify_exception (const CORBA::Any &excep,
+                              std::string &result)
+    {
+      const EXCEPTION *ex_holder = 0;
+
+      if ((excep >>= ex_holder))
+        {
+          std::ostringstream excep_stream;
+          
+          excep_stream << " Name: " << ex_holder->name.in () 
+                       << " Reason: " << ex_holder->reason.in ();
+          
+          result += excep_stream.str ();
+          return true;
+        }
+      
       return false;
     }
 
