@@ -1,3 +1,8 @@
+Mon Jun 28 09:06:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc
+        Wrong lib path.
+
 Mon Jun 28 08:42:34 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.h:
