@@ -71,11 +71,9 @@ project (DAnCE_Http_Installation) : dance_lib, dynamicinterface, dance_artifact_
 }
 
 project (DAnCE_Artifact_Installation_Exec) : dance_exe, dance_output, dance_artifact_installation, \
-        dance_installation_repository_manager, \
+        dance_installation_handlers, dance_installation_repository_manager, \
         avoids_ace_for_tao, dance_convert_plan, dance_logger {
   exename = dance_artifact_installation
-  libs += DAnCE_File_Installation DAnCE_Http_Installation
-  after += DAnCE_File_Installation DAnCE_Http_Installation
 
   Source_Files {
     Artifact_Installation_exec.cpp
