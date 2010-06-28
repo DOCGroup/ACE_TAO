@@ -63,6 +63,7 @@ namespace DAnCE
     typedef ACE_Map_Manager<ACE_CString, NodeApplicationManager_Impl*, ACE_Null_Mutex > TManagers;
     TManagers managers_;
     PROPERTY_MAP properties_;
+    DAnCE::Deployment_Scheduler scheduler_;
   };
 }
 

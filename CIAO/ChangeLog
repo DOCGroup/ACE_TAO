@@ -1,3 +1,12 @@
+Mon Jun 28 19:53:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Moved plugin/interceptor registration into the NodeManager, so it is
+          only done once.
+
 Mon Jun 28 13:43:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
