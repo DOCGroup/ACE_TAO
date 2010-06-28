@@ -9,7 +9,6 @@
 #ifndef CCM_DDS_CONTENTFILTERSETTING_H
 #define CCM_DDS_CONTENTFILTERSETTING_H
 
-#include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/idl/dds4ccm_BaseEC.h"
 #include "dds4ccm/impl/ContentFilteredTopic_T.h"
@@ -39,7 +38,7 @@ namespace CIAO
       ::DDS::ContentFilteredTopic_ptr
       create_contentfilteredtopic (::DDS::Topic_ptr topic,
                                    ::DDS::Subscriber_ptr subscriber);
-                                   
+
       void delete_contentfilteredtopic (::DDS::Subscriber_ptr subscriber);
     private:
       ::CCM_DDS::QueryFilter filter_;
