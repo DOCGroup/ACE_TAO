@@ -54,23 +54,17 @@ namespace CIAO_Event_Connection_Test_Receiver_Impl
 
   private:
     ::Event_Connection_Test::CCM_Receiver_Context_var context_;
-    //DDS_Get
-    ::Event_ConnectionConnector::Getter_var getter_getter_;
-    ::DDS::DataReader_var getter_dds_data_reader_;
-    ::Event_ConnectionConnector::Reader_var getter_reader_;
 
     bool getter_ok_;
-    bool getter_dds_data_reader_ok_;
     bool getter_reader_ok_;
+    bool getter_dds_data_reader_ok_;
+    bool getter_filter_config_ok_;
 
     //DDS_Listen
-    ::CCM_DDS::DataListenerControl_var listen_data_control_;
-    ::Event_ConnectionConnector::Reader_var listen_reader_;
-    ::DDS::DataReader_var listen_dds_data_reader_;
-
     bool listen_data_control_ok_;
     bool listen_reader_ok_;
     bool listen_dds_data_reader_ok_;
+    bool listen_filter_config_ok_;
 
     //Provide checks
     bool listen_port_status_created_;

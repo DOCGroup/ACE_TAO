@@ -1,3 +1,16 @@
+Mon Jun 28 09:34:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Receiver/Event_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Event_Connection_Test/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/State_Connection_Test/Receiver/State_Connection_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/State_Connection_Test/descriptors/Plan.cdp:
+          Added filter_config to these tests.
+
+        * tutorials/Quoter/Simple/descriptors/run_test.pl:
+          Resolved script error.
+
 Mon Jun 28 09:35:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:

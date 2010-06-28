@@ -67,48 +67,29 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
 
   private:
     ::State_Connection_Test::CCM_Receiver_Context_var context_;
-    //DDS_Read
-    ::State_Connection_Test::State_ConnectionTestConnector
-      ::Reader_var        reader_data_;
-    ::DDS::DataReader_var reader_dds_entity_;
-
-    //DDS_Get
-    ::State_Connection_Test::State_ConnectionTestConnector
-      ::Reader_var        getter_data_;
-    ::State_Connection_Test::State_ConnectionTestConnector
-      ::Getter_var        getter_fresh_data_;
-    ::DDS::DataReader_var getter_dds_entity_;
-
-    //DDS_Listen
-    ::State_Connection_Test::State_ConnectionTestConnector
-      ::Reader_var                      listen_data_;
-    ::CCM_DDS::DataListenerControl_var  listen_data_control_;
-    ::DDS::DataReader_var               listen_dds_entity_;
-
-    //DDS_StateListen
-    ::State_Connection_Test::State_ConnectionTestConnector
-      ::Reader_var                      statelisten_data_;
-    ::CCM_DDS::StateListenerControl_var statelisten_data_control_;
-    ::DDS::DataReader_var               statelisten_dds_entity_;
 
     //DDS_Read
     bool reader_data_ok_;
     bool reader_dds_entity_ok_;
+    bool reader_filter_config_ok_;
 
     //DDS_Get
     bool getter_data_ok_;
     bool getter_fresh_data_ok_;
     bool getter_dds_entity_ok_;
+    bool getter_filter_config_ok_;
 
     //DDS_Listen
     bool listen_data_ok_;
     bool listen_data_control_ok_;
     bool listen_dds_entity_ok_;
+    bool listen_filter_config_ok_;
 
     //DDS_StateListen
     bool statelisten_data_ok_;
     bool statelisten_data_control_ok_;
     bool statelisten_dds_entity_ok_;
+    bool statelisten_filter_config_ok_;
 
     //Provides for DDS_Read
     bool reader_port_status_created_;
