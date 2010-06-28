@@ -1,3 +1,17 @@
+Mon Jun 28 12:13:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.cpp:
+        * connectors/dds4ccm/impl/StateListenerControl_T.h:
+        * connectors/dds4ccm/impl/StateListenerControl_T.cpp:
+          Added _get_component method to the listener controllers.
+
 Mon Jun 28 09:44:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports/Hello_MyFoo_obj.mpc
