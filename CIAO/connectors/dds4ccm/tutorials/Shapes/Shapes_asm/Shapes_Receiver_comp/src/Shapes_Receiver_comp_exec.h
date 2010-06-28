@@ -21,7 +21,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   // info_out_data_listener_exec_i
   //============================================================
   class SHAPES_RECEIVER_COMP_EXEC_Export info_out_data_listener_exec_i
-    : public virtual ::Shapes::ShapesConnector::CCM_Listener,
+    : public virtual ::Shapes::ShapeType_conn::CCM_Listener,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -51,7 +51,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
     // Component attributes.
 
     // Port operations.
-    virtual ::Shapes::ShapesConnector::CCM_Listener_ptr
+    virtual ::Shapes::ShapeType_conn::CCM_Listener_ptr
     get_info_out_data_listener (void);
 
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -70,7 +70,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
   private:
     ::Shapes::CCM_Receiver_comp_Context_var context_;
-    ::Shapes::ShapesConnector::CCM_Listener_var ciao_info_out_data_listener_;
+    ::Shapes::ShapeType_conn::CCM_Listener_var ciao_info_out_data_listener_;
   };
 
   extern "C" SHAPES_RECEIVER_COMP_EXEC_Export ::Components::EnterpriseComponent_ptr

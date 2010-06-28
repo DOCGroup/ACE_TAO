@@ -76,7 +76,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
   ::Shapes::ReturnStatus
   Sender_exec_i::update_square ()
   {
-    ::Shapes::ShapesConnector::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
@@ -129,7 +129,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::Shapes::ShapesConnector::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
@@ -163,7 +163,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
   void
   Sender_exec_i::ccm_passivate (void)
   {
-    ::Shapes::ShapesConnector::Writer_var writer =
+    ::Shapes::ShapeType_conn::Writer_var writer =
       this->context_->get_connection_info_write_data ();
     if (::CORBA::is_nil (writer.in ()))
       {
