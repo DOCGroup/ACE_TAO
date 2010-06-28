@@ -3,6 +3,7 @@
 #ifndef ACE_HTTP_SESSION_CPP
 #define ACE_HTTP_SESSION_CPP
 
+#include "ace/INet/INet_Log.h"
 #include "ace/INet/HTTP_Session.h"
 #include "ace/INet/HTTP_StreamPolicy.h"
 #include "ace/INet/String_IOStream.h"
@@ -38,7 +39,7 @@ namespace ACE
         cannot_reconnect_ (false),
         expects_response_body_ (false)
       {
-        ACE_TRACE ("ACE_HTTP_Session - ctor");
+        INET_TRACE ("ACE_HTTP_Session - ctor");
       }
 
     template <ACE_SYNCH_DECL>
@@ -60,7 +61,7 @@ namespace ACE
         cannot_reconnect_ (false),
         expects_response_body_ (false)
       {
-        ACE_TRACE ("ACE_HTTP_Session - ctor");
+        INET_TRACE ("ACE_HTTP_Session - ctor");
         if (keep_alive && alive_timeout)
           {
             this->keep_alive_timeout_ = *alive_timeout;
@@ -70,7 +71,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::~Session_T ()
       {
-        ACE_TRACE ("ACE_HTTP_Session - dtor");
+        INET_TRACE ("ACE_HTTP_Session - dtor");
         this->close ();
       }
 
@@ -135,7 +136,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     bool Session_T<ACE_SYNCH_USE>::connect (bool use_reactor)
       {
-        ACE_TRACE ("ACE_HTTP_Session::connect");
+        INET_TRACE ("ACE_HTTP_Session::connect");
 
         typedef ACE_Connector<connection_type, ACE_SOCK_CONNECTOR> connector_type;
 
@@ -155,9 +156,10 @@ namespace ACE
                                               this->host_.c_str ()),
                                ACE_Synch_Options (0,this->http_timeout_)) == -1)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) (%d) ACE_HTTP_Session::connect - ")
-                                  ACE_TEXT ("failed to connect; host=%C, port=%d"),
-                                  ACE_OS::last_error (), this->host_.c_str (), this->port_));
+            INET_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT ("(%d) ACE_HTTP_Session::connect - ")
+                            ACE_TEXT ("failed to connect; host=%C, port=%d"),
+                            ACE_OS::last_error (), this->host_.c_str (), this->port_));
             // as the connection was dynamically allocated
             // the connector causes it to be destroyed after
             // the connection failure
@@ -191,7 +193,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     bool Session_T<ACE_SYNCH_USE>::connect (connection_type* connection)
       {
-        ACE_TRACE ("ACE_HTTP_Session::connect(connection)");
+        INET_TRACE ("ACE_HTTP_Session::connect(connection)");
 
         this->close ();
 
@@ -211,9 +213,10 @@ namespace ACE
                                    ACE_INET_Addr (this->host_.c_str (),
                                                   this->port_)) == -1)
               {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) (%d) ACE_HTTP_Session::connect(connection) - ")
-                                      ACE_TEXT ("failed to connect; host=%C, port=%d"),
-                                      ACE_OS::last_error (), this->host_.c_str (), this->port_));
+                INET_ERROR (1, (LM_ERROR, DLINFO
+                                ACE_TEXT ("(%d) ACE_HTTP_Session::connect(connection) - ")
+                                ACE_TEXT ("failed to connect; host=%C, port=%d"),
+                                ACE_OS::last_error (), this->host_.c_str (), this->port_));
                 return false;
               }
           }
@@ -241,7 +244,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     std::ostream& Session_T<ACE_SYNCH_USE>::send_request (Request& request)
       {
-        ACE_TRACE ("ACE_HTTP_Session::send_request");
+        INET_TRACE ("ACE_HTTP_Session::send_request");
 
         if (this->in_stream_)
           {
@@ -267,9 +270,10 @@ namespace ACE
             if (this->cannot_reconnect_ || !this->connect(this->reactive_))
               {
                 if (!this->cannot_reconnect_)
-                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) (%d) HTTP_Session::send_request - ")
-                                        ACE_TEXT ("reconnect failed\n"),
-                                        ACE_OS::last_error ()));
+                  INET_ERROR (1, (LM_ERROR, DLINFO
+                                  ACE_TEXT ("(%d) HTTP_Session::send_request - ")
+                                  ACE_TEXT ("reconnect failed\n"),
+                                  ACE_OS::last_error ()));
                 return ACE::IOS::Null::out_stream_;
               }
           }
@@ -358,12 +362,13 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     std::istream& Session_T<ACE_SYNCH_USE>::receive_response (Response& response)
       {
-        ACE_TRACE ("ACE_HTTP_Session::receive_response");
+        INET_TRACE ("ACE_HTTP_Session::receive_response");
 
         if (this->in_stream_)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) HTTP_Session::receive_response - ")
-                                  ACE_TEXT ("invalid invocation without send_request\n")));
+            INET_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT ("HTTP_Session::receive_response - ")
+                            ACE_TEXT ("invalid invocation without send_request\n")));
             // receive_response called second time without
             // new send_request in between
             return ACE::IOS::Null::in_stream_;
@@ -382,9 +387,10 @@ namespace ACE
           response.clear ();
           if (!response.read (*this->sock_stream_))
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) (%d) HTTP_Session::receive_response - ")
-                                    ACE_TEXT ("failed to read response\n"),
-                                    ACE_OS::last_error ()));
+              INET_ERROR (1, (LM_ERROR, DLINFO
+                              ACE_TEXT ("(%d) HTTP_Session::receive_response - ")
+                              ACE_TEXT ("failed to read response\n"),
+                              ACE_OS::last_error ()));
               return ACE::IOS::Null::in_stream_;
             }
         }
@@ -454,7 +460,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     void Session_T<ACE_SYNCH_USE>::close ()
       {
-        ACE_TRACE ("ACE_HTTP_Session::close");
+        INET_TRACE ("ACE_HTTP_Session::close");
 
         if (this->connection_)
           {

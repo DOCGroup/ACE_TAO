@@ -18,6 +18,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/INet/INet_Export.h"
+#include "ace/INet/AuthenticationBase.h"
 #include <iosfwd>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -218,6 +219,24 @@ namespace ACE
 
             private:
               ACE_CString userinfo_;
+
+            public:
+              static bool add_authenticator (const ACE_CString& auth_id, AuthenticatorBase* authenticator);
+
+              static bool has_authenticator (const ACE_CString& auth_id);
+
+              static AuthenticatorBase* remove_authenticator (const ACE_CString& auth_id);
+
+              static bool authenticate (AuthenticationBase& authentication);
+
+            private:
+              typedef ACE_Refcounted_Auto_Ptr<AuthenticatorBase,
+                                              ACE_SYNCH::NULL_MUTEX> authenticator_ptr;
+              typedef ACE_Map_Manager<ACE_CString,
+                                      authenticator_ptr,
+                                      ACE_SYNCH::RECURSIVE_MUTEX>  authenticator_map;
+
+              static authenticator_map authenticators_;
           };
 
       }

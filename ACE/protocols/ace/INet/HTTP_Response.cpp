@@ -9,6 +9,8 @@
 #include "ace/INet/HTTP_Response.inl"
 #endif
 
+#include "ace/INet/INet_Log.h"
+
 ACE_RCSID(NET_CLIENT,ACE_HTTP_Response,"$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -98,6 +100,13 @@ namespace ACE
           ch = str.get (); // get lf
         if (ch != '\n')
           return false; // HTTP reason string too long
+
+        INET_DEBUG (6, (LM_DEBUG, DLINFO
+                        ACE_TEXT ("ACE_INet_HTTP: <-- %C %C %C\n"),
+                        version.c_str (),
+                        status.c_str (),
+                        reason.c_str()));
+
         // get header lines
         if (!Header::read (str))
           return false;

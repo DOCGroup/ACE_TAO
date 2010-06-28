@@ -67,30 +67,6 @@ class My_HTTP_RequestHandler
     virtual ~My_HTTP_RequestHandler () {}
 
   protected:
-    virtual void handle_response (const ACE::HTTP::URL& /*url*/, const ACE::HTTP::Response& response)
-      {
-        std::cout << "Received response "
-                  << (int)response.get_status ().get_status ()
-                  << " "
-                  << response.get_status ().get_reason ().c_str ()
-                  << std::endl;
-        if (response.get_status ().is_ok ())
-          {
-            std::cout << "Length: ";
-            if (response.get_content_length () != ACE::HTTP::Response::UNKNOWN_CONTENT_LENGTH)
-              std::cout << response.get_content_length () << " [";
-            else
-              std::cout << "(unknown) [";
-            if (response.get_content_type () != ACE::HTTP::Response::UNKNOWN_CONTENT_TYPE)
-              std::cout << response.get_content_type ().c_str ();
-            else
-              std::cout << "(unknown)";
-            std::cout  << "]" << std::endl;
-            this->in_length_ = response.get_content_length ();
-            this->read_length_ = 0;
-          }
-      }
-
     virtual void handle_request_error (const ACE::HTTP::URL& url)
       {
         std::cout << "ERROR" << std::endl;
@@ -105,6 +81,10 @@ class My_HTTP_RequestHandler
 
     virtual void after_read (const char_type* /*buffer*/, int length_read)
       {
+        if (this->read_length_ == 0)
+          {
+            this->in_length_ = this->response ().get_content_length ();
+          }
         this->read_length_ += length_read;
         std::cout << "\r [" << this->read_length_ << '/';
         if (this->in_length_ != ACE::HTTP::Response::UNKNOWN_CONTENT_LENGTH)
@@ -120,6 +100,7 @@ class My_HTTP_RequestHandler
       {
         ACE::HTTP::ClientRequestHandler::on_eof ();
         std::cout << std::endl;
+        this->read_length_ = 0;
       }
 
   private:
@@ -177,6 +158,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       ACE::INet::URLStream urlin = http_url.open (my_rh);
       if (urlin)
         {
+          std::cout << "Received response "
+                    << (int)my_rh.response ().get_status ().get_status ()
+                    << " "
+                    << my_rh.response ().get_status ().get_reason ().c_str ()
+                    << std::endl;
+          if (my_rh.response ().get_status ().is_ok ())
+            {
+              std::cout << "Length: ";
+              if (my_rh.response ().get_content_length () != ACE::HTTP::Response::UNKNOWN_CONTENT_LENGTH)
+                std::cout << my_rh.response ().get_content_length () << " [";
+              else
+                std::cout << "(unknown) [";
+              if (my_rh.response ().get_content_type () != ACE::HTTP::Response::UNKNOWN_CONTENT_TYPE)
+                std::cout << my_rh.response ().get_content_type ().c_str ();
+              else
+                std::cout << "(unknown)";
+              std::cout  << "]" << std::endl;
+            }
+
           std::cout << "Saving to: ";
           if (!outfile.empty ())
             std::cout << '\'' << outfile.c_str () << '\'' << std::endl;
