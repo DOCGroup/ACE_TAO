@@ -1,3 +1,9 @@
+Mon Jun 28 13:34:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+
+          Fix for wchar compile error.
+
 Mon Jun 28 13:31:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/MPC/config/dance_split_plan.mpb:
