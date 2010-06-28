@@ -1,3 +1,11 @@
+Mon Jun 28 08:37:18 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Resolved minor valgrind issue.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+          Optimized script in order to reveal the real errors better.
+
 Mon Jun 28 02:24:44 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Utility.h:
@@ -7,7 +15,7 @@ Mon Jun 28 02:24:44 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/LocalityManager/Interceptors/Best_Effort.cpp:
         * DAnCE/LocalityManager/Interceptors/Error_Interceptors.mpc:
 
-          Added best effort interceptors.  
+          Added best effort interceptors.
 
 Sat Jun 26 20:46:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

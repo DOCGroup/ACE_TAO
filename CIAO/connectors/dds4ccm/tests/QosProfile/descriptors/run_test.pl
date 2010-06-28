@@ -201,15 +201,16 @@ print "Invoking executor - launch the application -\n";
 
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-ORBLogFile test.log -x $cdp_file -k file://$ior_emfile");
+                        "-x $cdp_file -k file://$ior_emfile");
 $pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
 
 if ($pl_status != 0) {
     print STDERR "OK: dance_plan_launcher returned an error status ($pl_status)\n";
     kill_open_processes ();
-    unlink "test.log";
     exit 0;
 }
+
+$status=$pl_status;
 
 for ($i = 0; $i < $nr_daemon; ++$i) {
     if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
@@ -221,23 +222,6 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
 }
 
 print "ERROR : dance_plan_launcher didn't return with an error.\n";
-
-# Invoke executor - stop the application -.
-print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -s\n";
-
-$E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-k file://$ior_emfile -x $cdp_file -s");
-$pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
-
-if ($pl_status != 0) {
-    print STDERR "ERROR: dance_plan_launcher returned $pl_status\n";
-    kill_open_processes ();
-    exit 1;
-}
-
-print "Executor returned.\n";
-print "Shutting down rest of the processes.\n";
 
 delete_ior_files ();
 kill_open_processes ();
