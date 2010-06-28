@@ -15,6 +15,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 
 . Ended daily maintenance for RHEL51
 
+. Added ACE INet addon library for Inet protocol clients (and possibly servers
+  at some point) like http://, ftp:// etc. NOTE: This is work in progress!
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.8 and ACE-5.7.9
 ====================================================
 
