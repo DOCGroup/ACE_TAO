@@ -1,3 +1,11 @@
+Mon Jun 28 13:43:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/05_compilation.html
+        Layout changes.
+
 Mon Jun 28 13:32:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
