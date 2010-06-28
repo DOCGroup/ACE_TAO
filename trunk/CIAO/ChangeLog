@@ -1,3 +1,8 @@
+Mon Jun 28 12:59:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.idl:
+          Removed Shape_Attributes since we do not use this struct in this tutorial.
+
 Mon Jun 28 12:53:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:

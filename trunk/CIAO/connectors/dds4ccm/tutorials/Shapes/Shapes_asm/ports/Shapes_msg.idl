@@ -19,16 +19,4 @@ struct ShapeType_msg {
 
 #pragma keylist ShapeType color
 
-#pragma DCPS_DATA_TYPE "Attributes"
-#pragma DCPS_DATA_KEY "Attributes shape"
-#pragma DCPS_DATA_KEY "Attributes color"
-
-struct Attributes_msg {
-  string shape; //@key
-  string color; //@key
-  float speed;
-};
-
-#pragma keylist Attributes shape color
-
 #endif /* SHAPES_MSG_IDL_ */
