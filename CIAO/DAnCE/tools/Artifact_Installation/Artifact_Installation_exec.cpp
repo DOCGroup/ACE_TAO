@@ -15,7 +15,7 @@
 #include "Http_Installation_Handler.h"
 
 bool cdr_encoded_ = false;
-const char *input_filename = 0;
+const ACE_TCHAR *input_filename = 0;
 
 void
 usage (void)
