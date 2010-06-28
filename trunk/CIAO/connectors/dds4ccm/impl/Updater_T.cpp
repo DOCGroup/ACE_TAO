@@ -5,48 +5,48 @@
 #include "dds4ccm/impl/Coherent_Changes_Guard.h"
 #include "dds4ccm/impl/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::Updater_T (void)
-  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type> (),
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::Updater_T (void)
+  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type, VENDOR_TYPE> (),
     is_global_scope_ (false),
     is_coherent_write_ (false)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::Updater_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::~Updater_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Updater_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::~Updater_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_global_scope ()
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::is_global_scope ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_global_scope");
   return this->is_global_scope_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write ()
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::is_coherent_write ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
   return this->is_coherent_write_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (bool value)
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::is_coherent_write (bool value)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::is_coherent_write");
   this->is_coherent_write_ = value;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
   const typename DDS_TYPE::value_type & an_instance,
   ::CCM_DDS::DataNumber_t index)
 {
@@ -70,9 +70,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_i (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_one (
   const typename DDS_TYPE::value_type & an_instance)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_one");
@@ -85,9 +85,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_one (
   this->create_i (an_instance, 0);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_i (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle,
   ::CCM_DDS::DataNumber_t index)
@@ -106,9 +106,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_i (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
@@ -138,9 +138,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_one (
   this->update_i (an_instance, instance_handle, 0);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle,
   ::CCM_DDS::DataNumber_t index)
@@ -168,9 +168,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_i (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
@@ -200,9 +200,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_one (
   this->delete_i (an_instance, instance_handle, 0);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_many (
   const typename CCM_TYPE::seq_type& data)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::create_many");
@@ -219,9 +219,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::create_many (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::check_existent (
   const typename CCM_TYPE::seq_type& data)
 {
   ::CCM_DDS::NonExistent exception;
@@ -243,9 +243,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_existent (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::check_already_created (
   const typename CCM_TYPE::seq_type& data)
 {
   ::CCM_DDS::AlreadyCreated exception;
@@ -267,9 +267,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::check_already_created (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_many (
   const typename CCM_TYPE::seq_type& data)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_many");
@@ -286,9 +286,9 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::update_many (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_many (
   const typename CCM_TYPE::seq_type& data)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_many");
@@ -305,16 +305,16 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::delete_many (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Object_ptr
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
 {
   return CCM_TYPE::base_type::_duplicate (this->component_.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE>::_set_component (
+CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
   typename CCM_TYPE::base_type::_ptr_type component)
 {
   this->component_ = CCM_TYPE::base_type::_duplicate (component);

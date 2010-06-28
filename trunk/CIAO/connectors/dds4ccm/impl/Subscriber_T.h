@@ -35,36 +35,36 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DataReaderListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReader_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_SubscriberListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DomainParticipant_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Subscriber_T :
       public virtual ::DDS::CCM_Subscriber,
       public virtual ::CORBA::LocalObject
     {
 
-    typedef CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> DataReaderListener_type;
-    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
-    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
-    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
-    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
-    typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+    typedef CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataReaderListener_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Topic_type;
+    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataReader_type;
+    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> SubscriberListener_type;
+    typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor

@@ -31,22 +31,22 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DataWriterListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Publisher_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DataWriter_T
       : public virtual CCM_DDS_DataWriter_Base
     {
-    typedef CCM_DDS_DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener_type;
-    typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE> Publisher_type;
-    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
+    typedef CCM_DDS_DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataWriterListener_type;
+    typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Publisher_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Topic_type;
 
     public:
       explicit CCM_DDS_DataWriter_T (DDSDataWriter * dw);

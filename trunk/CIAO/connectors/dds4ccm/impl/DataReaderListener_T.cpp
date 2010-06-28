@@ -4,28 +4,28 @@
 #include "dds4ccm/impl/Log_Macros.h"
 #include "ace/Reactor.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::DataReaderListener_T (
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderListener_T (
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
   ::CCM_DDS::DataListenerControl_ptr control,
   ACE_Reactor* reactor)
-  : PortStatusListener_T <DDS_TYPE, CCM_TYPE> (port_status_listener, reactor) ,
+  : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
     control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::DataReaderListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~DataReaderListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReaderListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::~DataReaderListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available (::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
@@ -52,9 +52,9 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (::DD
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
@@ -65,8 +65,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
       return;
     }
 
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> * reader =
-    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *> (rdr);
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader =
+    dynamic_cast < ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (rdr);
 
   if (!reader)
     {
@@ -152,9 +152,9 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available_i (::
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   ::CCM_DDS::PortStatusListener_ptr listener)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::get_mask");

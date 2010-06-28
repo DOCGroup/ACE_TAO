@@ -31,15 +31,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReader_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_ReadCondition_T :
       public virtual ::DDS::CCM_ReadCondition,
       public virtual ::CORBA::LocalObject
     {
-    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataReader_type;
 
     public:
       /// Constructor

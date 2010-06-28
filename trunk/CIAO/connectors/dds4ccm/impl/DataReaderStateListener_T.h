@@ -17,9 +17,9 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReaderStateListener_T :
-      public PortStatusListener_T <DDS_TYPE, CCM_TYPE>
+      public PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     {
     public:
       /// Constructor
@@ -43,7 +43,7 @@ namespace CIAO
       typename CCM_TYPE::statelistener_type::_var_type listener_;
       ::CCM_DDS::StateListenerControl_var control_;
 
-      typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE> drsh;
+      typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> drsh;
     };
   }
 }

@@ -22,7 +22,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class SubscriberListener_T :
       public ::DDS::CCM_SubscriberListener,
       private ACE_Copy_Disabled

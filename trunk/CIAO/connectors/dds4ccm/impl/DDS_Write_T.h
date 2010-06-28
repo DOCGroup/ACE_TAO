@@ -12,7 +12,7 @@
 #include "dds4ccm/impl/DataWriterListener_T.h"
 #include "dds4ccm/impl/Writer_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Write_T
 {
 public:
@@ -48,11 +48,11 @@ private:
    */
   //@{
   ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE> writer_t_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> ccm_dds_writer_;
+  ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> writer_t_;
+  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ccm_dds_writer_;
   //@}
 
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE> DataWriterListener;
+  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataWriterListener;
 };
 
 #include "dds4ccm/impl/DDS_Write_T.cpp"

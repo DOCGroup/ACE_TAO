@@ -34,23 +34,23 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DomainParticipant_T (
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::CCM_DDS_DomainParticipant_T (
       DDSDomainParticipant * dp) : impl_ (dp)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DomainParticipant_T");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::CCM_DDS_DomainParticipant_T");
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_DomainParticipant_T (void)
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~CCM_DDS_DomainParticipant_T (void)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_DomainParticipant_T");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~CCM_DDS_DomainParticipant_T");
     }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Publisher_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher_with_profile (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher_with_profile (
       const char* library_name,
       const char *profile_name,
       ::DDS::PublisherListener_ptr a_listener,
@@ -58,9 +58,9 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher_with_profile - "
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher_with_profile - "
                    "Creating Publisher\n"));
-      CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE> *ccm_dds_pl = 0;
+      CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
@@ -75,7 +75,7 @@ namespace CIAO
 
       if (!ccm_dds_pub)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher_with_profile - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher_with_profile - "
                        "Error: Unable to create Publisher\n"));
           delete ccm_dds_pl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -87,7 +87,7 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
 
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher_with_profile - "
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher_with_profile - "
                    "Successfully created a DDSPublisher\n"));
 
       ccm_dds_pub->enable ();
@@ -95,22 +95,21 @@ namespace CIAO
     }
 #endif
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Publisher_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher (
       const ::DDS::PublisherQos & qos,
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
-#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_publisher - "
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher - "
                    "Creating Publisher\n"));
 
       DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
 
-      CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE> *ccm_dds_pl = 0;
+      CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *ccm_dds_pl = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_pl,
@@ -126,7 +125,7 @@ namespace CIAO
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T"
-                       "<DDS_TYPE, CCM_TYPE>::create_publisher - "
+                       "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher - "
                        "Error: Unable to create Publisher\n"));
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
@@ -137,19 +136,16 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T"
-                   "<DDS_TYPE, CCM_TYPE>::create_publisher - "
+                   "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_publisher - "
                    "Successfully created a DDSPublisher\n"));
 
       ccm_dds_pub->enable ();
       return retval._retn ();
-#else
-      return this->impl ()->create_publisher (qos, a_listener, mask);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_publisher (::DDS::Publisher_ptr p)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher (::DDS::Publisher_ptr p)
     {
       Publisher_type *ccm_dds_pub =
         dynamic_cast < Publisher_type * > (p);
@@ -157,13 +153,13 @@ namespace CIAO
       if (!ccm_dds_pub)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T"
-                       "<DDS_TYPE, CCM_TYPE>::delete_publisher - "
+                       "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                        "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T"
-                   "<DDS_TYPE, CCM_TYPE>::delete_publisher - "
+                   "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                    "Successfully casted provided object reference to "
                    "CCM_DDS_Publisher_T\n"));
 
@@ -172,14 +168,14 @@ namespace CIAO
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T"
-                       "<DDS_TYPE, CCM_TYPE>::delete_publisher - "
+                       "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                        "Error: RTI delete_publisher returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
       else
         {
           DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T"
-                        "<DDS_TYPE, CCM_TYPE>::delete_publisher - "
+                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                         "Provided publisher successfully deleted\n"));
         }
 
@@ -187,9 +183,9 @@ namespace CIAO
     }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Subscriber_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_subscriber_with_profile (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber_with_profile (
       const char* library_name,
       const char *profile_name,
       ::DDS::SubscriberListener_ptr a_listener,
@@ -198,7 +194,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
 
       DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T"
-                   "<DDS_TYPE, CCM_TYPE>::create_subscriber_with_profile - "
+                   "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber_with_profile - "
                    "Creating Subscriber\n"));
 
       SubscriberListener_type *ccm_dds_sl = 0;
@@ -218,7 +214,7 @@ namespace CIAO
       if (!ccm_dds_sub)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T"
-                        "<DDS_TYPE, CCM_TYPE>::create_subscriber_with_profile - "
+                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber_with_profile - "
                        "Error: Unable to create Subscriber\n"));
           delete ccm_dds_sl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -230,7 +226,7 @@ namespace CIAO
                         CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T"
-                    "<DDS_TYPE, CCM_TYPE>::create_subscriber_with_profile - "
+                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber_with_profile - "
                     "Successfully created a DDSSubscriber\n"));
 
       ccm_dds_sub->enable ();
@@ -238,18 +234,17 @@ namespace CIAO
     }
 #endif
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Subscriber_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_subscriber (const ::DDS::SubscriberQos & qos,
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber (const ::DDS::SubscriberQos & qos,
                                                 ::DDS::SubscriberListener_ptr a_listener,
                                                 ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_subscriber - "
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber - "
                    "Creating Subscriber\n"));
 
       SubscriberListener_type *ccm_dds_sl = 0;
@@ -268,7 +263,7 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_subscriber - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber - "
                        "Error: Unable to create Subscriber\n"));
           delete ccm_dds_sl;
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -279,59 +274,51 @@ namespace CIAO
                         Subscriber_type (ccm_dds_sub),
                         CORBA::NO_MEMORY ());
 
-      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_subscriber - "
+      DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_subscriber - "
                    "Successfully created a DDSSubscriber\n"));
 
       ccm_dds_sub->enable ();
       return retval._retn ();
-#else
-      return this->impl ()->create_subscriber (qos, a_listener, mask);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_subscriber (::DDS::Subscriber_ptr s)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_subscriber (::DDS::Subscriber_ptr s)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       Subscriber_type *ccm_dds_sub = dynamic_cast < Subscriber_type * > (s);
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_subscriber - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_subscriber - "
                        "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_subscriber - "
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_subscriber - "
                    "Successfully casted provided object reference to Subscriber_type\n"));
 
       DDS_ReturnCode_t const retval = this->impl ()->delete_subscriber (ccm_dds_sub->get_impl ());
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_subscriber - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_subscriber - "
                        "Error: RTI delete_subscriber returned non-ok error code %C\n",
                        translate_retcode (retval)));
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_subscriber - "
+          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_subscriber - "
                         "Provided subscriber successfully deleted\n"));
         }
 
       return retval;
-#else
-      return this->impl ()->delete_subscriber (s);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Subscriber_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_builtin_subscriber (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_builtin_subscriber (void)
     {
       ::DDS::Subscriber_var retval = ::DDS::Subscriber::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSSubscriber* sub = this->impl ()->get_builtin_subscriber ();
       if (sub)
         {
@@ -339,21 +326,12 @@ namespace CIAO
                             Subscriber_type (sub),
                             CORBA::NO_MEMORY ());
         }
-#else
-      ::DDS::Subscriber_var sub = this->impl ()->get_builtin_subscriber ();
-      if (! ::CORBA::is_nil (sub.in ()))
-        {
-          ACE_NEW_THROW_EX (retval,
-                            Subscriber_type (sub.in ()),
-                            CORBA::NO_MEMORY ());
-        }
-#endif
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Topic_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_topic (const char * impl_name,
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_topic (const char * impl_name,
                                            const char * type_name,
                                            const ::DDS::TopicQos & qos,
                                            ::DDS::TopicListener_ptr a_listener,
@@ -361,7 +339,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
       if (impl_name == 0)
@@ -446,19 +423,12 @@ namespace CIAO
 
           return retval._retn ();
         }
-#else
-      return this->impl ()->create_topic (impl_name,
-                                                      type_name,
-                                                      qos,
-                                                      a_listener,
-                                                      mask);
-#endif
     }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Topic_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_topic_with_profile (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_topic_with_profile (
         const char *impl_name,
         const char *type_name,
         const char *library_name,
@@ -552,9 +522,9 @@ namespace CIAO
     }
 #endif
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_topic (::DDS::Topic_ptr a_topic)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic (::DDS::Topic_ptr a_topic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
       const char * topic_name = a_topic->get_name ();
@@ -564,13 +534,13 @@ namespace CIAO
 
       if (!tp)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_topic <%C> - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic <%C> - "
                        "Unable to cast provided object reference to servant.\n",
                        topic_name));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_topic <%C> - "
+      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic <%C> - "
                    "Successfully casted provided object reference to servant.\n",
                    topic_name));
 
@@ -581,14 +551,14 @@ namespace CIAO
 
           if (retval != DDS_RETCODE_OK)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_topic <%C> - "
+              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic <%C> - "
                           "Error: RTI delete_topic returned non-ok error code %C\n",
                           topic_name,
                           translate_retcode (retval)));
             }
           else
             {
-              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_topic <%C> - "
+              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic <%C> - "
                             "Provided topic successfully deleted\n",
                             topic_name));
             }
@@ -596,13 +566,12 @@ namespace CIAO
       return retval;
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::Topic_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::find_topic (const char * impl_name,
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::find_topic (const char * impl_name,
                                          const ::DDS::Duration_t & timeout)
     {
       ::DDS::Topic_var retval = ::DDS::Topic::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_Duration_t ddstimeout;
       ddstimeout <<= timeout;
       ::DDSTopic* topic = this->impl ()->find_topic (impl_name, ddstimeout);
@@ -612,29 +581,19 @@ namespace CIAO
                           Topic_type (topic),
                           ::DDS::Topic::_nil ());
         }
-#else
-      ::DDS::Topic_var topic = this->impl ()->find_topic (impl_name, timeout);
-      if (! ::CORBA::is_nil (topic.in ())
-        {
-          ACE_NEW_RETURN (retval,
-                          ‘Topic_type (topic.in ()),
-                          ::DDS::Topic::_nil ());
-        }
-#endif
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::TopicDescription_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::lookup_topicdescription (const char * name)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_topicdescription (const char * name)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::lookup_topicdescription");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_topicdescription");
 
       DDS4CCM_DEBUG (7, (LM_DEBUG, CLINFO "Looking up topic: name <%C>\n",
                                    name));
 
       ::DDS::TopicDescription_var retval = ::DDS::TopicDescription::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDSTopicDescription* topic = this->impl ()->lookup_topicdescription (name);
       if (topic)
         {
@@ -658,21 +617,12 @@ namespace CIAO
                 }
             }
         }
-#else
-      ::DDSTopicDescription_var topic = this->impl ()->lookup_topicdescription (name);
-      if (!CORBA::is_ni (topic.in ()))
-        {
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_TopicDescription_T (topic.in ()),
-                            CORBA::NO_MEMORY ());
-        }
-#endif
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ContentFilteredTopic_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic (const char * name,
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_contentfilteredtopic (const char * name,
                                                           ::DDS::Topic_ptr related_topic,
                                                           const char * filter_expression,
                                                           const ::DDS::StringSeq & expression_parameters)
@@ -683,7 +633,7 @@ namespace CIAO
       Topic_type *top = dynamic_cast< Topic_type *> (related_topic);
       if (!top)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_contentfilteredtopic - "
                        "Unable to cast provided topic.\n"));
           throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
@@ -708,7 +658,7 @@ namespace CIAO
       delete [] parameterlist;
       if (!ccm_dds_cft)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_contentfilteredtopic - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_contentfilteredtopic - "
                        "RTI DDS returned a nil ContentFilteredTopic for name <%C> and filter "
                        "expression <%C>.\n",
                        name, filter_expression));
@@ -735,29 +685,25 @@ namespace CIAO
 #endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_contentfilteredtopic (::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
-#if (CIAO_DDS4CCM_NDDS==1)
       ContentFilteredTopic_type *ccm_dds_cft =
           dynamic_cast < ContentFilteredTopic_type *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_contentfilteredtopic - "
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_contentfilteredtopic - "
                        "Unable to cast provided ContentFilteredTopic.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
       return this->impl ()->delete_contentfilteredtopic (ccm_dds_cft->get_impl ());
-#else
-      return this->impl ()->delete_contentfilteredtopic (a_contentfilteredtopic);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::MultiTopic_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::create_multitopic (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_multitopic (
       const char * name,
       const char * type_name,
       const char * subscription_expression,
@@ -779,9 +725,9 @@ namespace CIAO
 #endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_multitopic (::DDS::MultiTopic_ptr a_multitopic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -793,17 +739,17 @@ namespace CIAO
 #endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::delete_contained_entities (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_contained_entities (void)
     {
       return this->impl ()->delete_contained_entities ();
 
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_qos (const ::DDS::DomainParticipantQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos (const ::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -815,28 +761,23 @@ namespace CIAO
 #endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_qos (::DDS::DomainParticipantQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos (::DDS::DomainParticipantQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->get_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_listener (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (
                 ::DDS::DomainParticipantListener_ptr a_listener,
                 ::DDS::StatusMask mask)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       CCM_DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -845,210 +786,158 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
       return this->impl_->set_listener (ccm_dds_impl_list, mask);
-#else
-      return this->impl_->set_listener (a_listener, mask);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::DomainParticipantListener_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_listener (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener (void)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_listener");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
       CCM_DDS_DomainParticipantListener_i * list_proxy =
         dynamic_cast <CCM_DDS_DomainParticipantListener_i *> (ccm_dds_dp_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_listener - "
+          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
                                     "DDS returned a NIL listener.\n"));
           return ::DDS::DomainParticipantListener::_nil ();
         }
       return list_proxy->get_domainparticipantlistener ();
-#else
-      return this->impl ()->get_listener ();
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::ignore_participant (DDS_INSTANCE_HANDLE_T_IN handle)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ignore_participant (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_participant (ccm_dds_handle);
-#else
-      return this->impl ()->ignore_participant (handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::ignore_topic (DDS_INSTANCE_HANDLE_T_IN handle)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ignore_topic (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_topic (ccm_dds_handle);
-#else
-      return this->impl ()->ignore_topic (handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::ignore_publication (DDS_INSTANCE_HANDLE_T_IN handle)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ignore_publication (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_publication (ccm_dds_handle);
-#else
-      return this->impl ()->ignore_publication (handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::ignore_subscription (DDS_INSTANCE_HANDLE_T_IN handle)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ignore_subscription (DDS_INSTANCE_HANDLE_T_IN handle)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= handle;
       return this->impl ()->ignore_subscription (ccm_dds_handle);
-#else
-      return this->impl ()->ignore_subscription (handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::DomainId_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_domain_id (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_domain_id (void)
     {
       return this->impl ()->get_domain_id ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::assert_liveliness (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::assert_liveliness (void)
     {
       return this->impl ()->assert_liveliness ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_publisher_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_publisher_qos (ccm_dds_qos);
-#else
-      return this->impl()->set_default_publisher_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_default_publisher_qos (::DDS::PublisherQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_publisher_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_default_publisher_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->get_default_publisher_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_subscriber_qos (const ::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_subscriber_qos (ccm_dds_qos);
-#else
-      return this->impl()->set_default_subscriber_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_subscriber_qos (::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_subscriber_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->get_default_subscriber_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_default_topic_qos (const ::DDS::TopicQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_topic_qos (const ::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_topic_qos (ccm_dds_qos);
-#else
-      return this->impl()->set_default_topic_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_default_topic_qos (::DDS::TopicQos & qos)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_topic_qos (::DDS::TopicQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_TopicQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_topic_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->get_default_topic_qos (qos);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_discovered_participants (::DDS::InstanceHandleSeq & impl_handles)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_discovered_participants (rtiseq);
       impl_handles <<= rtiseq;
       return retval;
-#else
-      return this->impl ()->get_discovered_participants (impl_handles);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_discovered_participant_data (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_discovered_participant_data (
       ::DDS::ParticipantBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
-#if (CIAO_DDS4CCM_NDDS==1)
       DDS_ParticipantBuiltinTopicData dds_part_data;
       dds_part_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;
@@ -1058,15 +947,11 @@ namespace CIAO
                                                         dds_hnd);
       impl_data <<= dds_part_data;
       return retcode;
-#else
-      return this->impl ()->get_discovered_topic_data (impl_data,
-                                                       impl_handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_discovered_topics (::DDS::InstanceHandleSeq & impl_handles)
     {
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandleSeq rtiseq;
@@ -1078,14 +963,13 @@ namespace CIAO
 #endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_discovered_topic_data (
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_discovered_topic_data (
       ::DDS::TopicBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
-#if (CIAO_DDS4CCM_NDDS==1)
       DDS_TopicBuiltinTopicData dds_tp_data;
       dds_tp_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;
@@ -1095,52 +979,39 @@ namespace CIAO
                                                   dds_hnd);
       impl_data <<= dds_tp_data;
       return retcode;
-#else
-      return this->impl ()->get_discovered_topic_data (impl_data,
-                                                       impl_handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::CORBA::Boolean
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::contains_entity (DDS_INSTANCE_HANDLE_T_IN a_handle)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::contains_entity (DDS_INSTANCE_HANDLE_T_IN a_handle)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t ccm_dds_handle;
       ccm_dds_handle <<= a_handle;
       return this->impl ()->contains_entity (ccm_dds_handle);
-#else
-      return this->impl ()->contains_entity (a_handle);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_current_time (::DDS::Time_t & current_time)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_current_time (::DDS::Time_t & current_time)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       DDS_Time_t ccm_dds_time;
       ::DDS::ReturnCode_t const retval = this->impl ()->get_current_time (ccm_dds_time);
       current_time <<= ccm_dds_time;
       return retval;
-#else
-      return this->impl ()->get_current_time (current_time);
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::enable (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::enable (void)
     {
       return this->impl ()->enable ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::StatusCondition_ptr
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       if (sc)
         {
@@ -1148,56 +1019,43 @@ namespace CIAO
                             CCM_DDS_StatusCondition_i (sc),
                             CORBA::NO_MEMORY ());
         }
-#else
-      ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      if (! ::CORBA::is_nil (sc.in ()))
-        {
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_StatusCondition_i (sc.in ()),
-                            CORBA::NO_MEMORY ());
-        }
-#endif
       return retval._retn ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::StatusMask
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_status_changes (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_status_changes (void)
     {
       return this->impl ()->get_status_changes ();
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     DDS_INSTANCE_HANDLE_T_RETN
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_instance_handle (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_handle (void)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
-#else
-      return this->impl ()->get_instance_handle ();
-#endif
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     DDSDomainParticipant *
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::get_impl (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl (void)
     {
       return this->impl_;
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::set_impl (DDSDomainParticipant * dp)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (DDSDomainParticipant * dp)
     {
       this->impl_ = dp;
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     DDSDomainParticipant *
-    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE>::impl (void)
+    CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
     {
       if (!this->impl_)
         {

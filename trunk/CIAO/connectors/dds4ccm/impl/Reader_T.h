@@ -25,7 +25,7 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
           public virtual ::CORBA::LocalObject,
@@ -64,13 +64,13 @@ namespace CIAO
 
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * dr);
+        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * dr);
 
       private:
-        DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
+        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader_;
         typename CCM_TYPE::base_type::_var_type component_;
 
-        DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
+        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * impl (void);
 
         DDS_InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,

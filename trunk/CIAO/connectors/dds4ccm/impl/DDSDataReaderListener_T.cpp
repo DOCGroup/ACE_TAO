@@ -18,8 +18,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::CCM_DDS_DataReaderListener_T (
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::CCM_DDS_DataReaderListener_T (
           ::DDS::DataReaderListener_ptr p,
           DataReader_type *typed_dr)
       : impl_ (::DDS::DataReaderListener::_duplicate (p)),
@@ -27,18 +27,18 @@ namespace CIAO
     {
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::~CCM_DDS_DataReaderListener_T (void)
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~CCM_DDS_DataReaderListener_T (void)
     {
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_deadline_missed (
       ::DDSDataReader* ,
       const ::DDS_RequestedDeadlineMissedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_deadline_missed");
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_deadline_missed (
@@ -46,13 +46,13 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_incompatible_qos (
       ::DDSDataReader* ,
       const ::DDS_RequestedIncompatibleQosStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_incompatible_qos");
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_requested_incompatible_qos (
@@ -60,13 +60,13 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_rejected (
       ::DDSDataReader* ,
       const ::DDS_SampleRejectedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_rejected");
       ::DDS::SampleRejectedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_rejected (
@@ -74,13 +74,13 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_changed (
       ::DDSDataReader* ,
       const ::DDS_LivelinessChangedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_changed");
       ::DDS::LivelinessChangedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_liveliness_changed (
@@ -88,22 +88,22 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available(::DDSDataReader *)
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available(::DDSDataReader *)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_data_available");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available");
       this->impl_->on_data_available (
         this->typed_dr_);
     }
         
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_subscription_matched (
       ::DDSDataReader* ,
       const ::DDS_SubscriptionMatchedStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_subscription_matched");
       ::DDS::SubscriptionMatchedStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_subscription_matched (
@@ -111,13 +111,13 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     void
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_lost (
       ::DDSDataReader* ,
       const ::DDS_SampleLostStatus & status)
     {
-      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost");
+      DDS4CCM_TRACE ("CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_lost");
       ::DDS::SampleLostStatus ddsstatus;
       ddsstatus <<= status;
       this->impl_->on_sample_lost (
@@ -125,9 +125,9 @@ namespace CIAO
         ddsstatus);
     }
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::DataReaderListener_ptr
-    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE>::get_datareaderlistener (void)
+    CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_datareaderlistener (void)
     {
       return ::DDS::DataReaderListener::_duplicate (this->impl_.in ());
     }

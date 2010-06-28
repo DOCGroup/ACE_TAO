@@ -25,8 +25,8 @@
 #include "dds4ccm/impl/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (DDSDataReader * dr)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReader_T (DDSDataReader * dr)
   : impl_ (0),
     rd_condition_ (0),
     ws_ (0),
@@ -42,17 +42,17 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::DataReader_T (DDSDataReader * d
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::~DataReader_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReader_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::~DataReader_T");
   delete this->ws_;
   this->ws_ = 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_wo_instance (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_wo_instance (
   typename DDS_TYPE::dds_seq_type & data,
   ::DDS_SampleInfoSeq & sample_info)
 {
@@ -89,9 +89,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_wo_instance (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_instance (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
   typename DDS_TYPE::dds_seq_type & data,
   const ::DDS_InstanceHandle_t & lookup_hnd,
   DDS_SampleInfoSeq & sample_info)
@@ -122,9 +122,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_instance (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_condition (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_condition (
   typename DDS_TYPE::dds_seq_type & data,
   ::DDS_SampleInfoSeq & sample_info,
   ::DDS_Long max_samples)
@@ -145,9 +145,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::read_w_condition (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::take (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::take (
   typename DDS_TYPE::dds_seq_type & data,
   ::DDS_SampleInfoSeq & sample_info,
   ::DDS_Long max_samples)
@@ -172,26 +172,26 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::take (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS_InstanceHandle_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::lookup_instance (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_instance (
   const typename DDS_TYPE::value_type& an_instance)
 {
   return this->impl ()->lookup_instance (an_instance);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS_ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::return_loan (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::return_loan (
   typename DDS_TYPE::dds_seq_type & data,
   ::DDS_SampleInfoSeq & sample_info)
 {
   return this->impl ()->return_loan (data, sample_info);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CCM_DDS::QueryFilter *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
 {
   if (!this->qc_reader_)
     {
@@ -210,9 +210,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (void)
   return filter._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
   const ::CCM_DDS::QueryFilter & filter)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::query");
@@ -269,9 +269,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::query (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_filter (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_filter (
   const ::CCM_DDS::QueryFilter & filter,
   DDSQueryCondition * qc)
 {
@@ -288,9 +288,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_filter (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDSReadCondition *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_readcondition (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_readcondition");
   if (!this->rd_condition_)
@@ -303,9 +303,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_readcondition (void)
   return this->rd_condition_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_readcondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::create_readcondition");
   if (!this->ws_)
@@ -325,17 +325,17 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDSQueryCondition *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_querycondition (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_querycondition");
   return this->qc_getter_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::attach_querycondition (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_querycondition (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::attach_querycondition");
 
@@ -357,9 +357,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::attach_querycondition (void)
                                       "Query condition created and attached to Waitset.\n"));
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::wait (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
   DDSConditionSeq & active_conditions,
   DDS_Duration_t & time_out)
 {
@@ -375,9 +375,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::wait (
    return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_condition (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condition (
   DDSQueryCondition * qc,
   const char * type)
 {
@@ -400,9 +400,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_condition (
 }
 
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_conditions ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::remove_conditions");
 
@@ -456,17 +456,17 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::remove_conditions ()
   this->ws_ = 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::passivate ()
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   this->remove_conditions ();
   this->set_listener (::DDS::DataReaderListener::_nil (), 0);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader (
   ::DDS::ContentFilteredTopic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char * library_name,
@@ -496,9 +496,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
   this->set_impl(reader.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader (
   ::DDS::Topic_ptr topic,
   ::DDS::Subscriber_ptr subscriber,
   const char * library_name,
@@ -530,9 +530,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_datareader (
   this->set_impl (reader.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_datareader (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader (
   ::DDS::Subscriber_ptr subscriber)
 {
   ::DDS::ReturnCode_t const retval = subscriber->delete_datareader (this);
@@ -547,9 +547,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_datareader (
   this->impl_ = 0;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 typename DDS_TYPE::data_reader *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::impl (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->impl_)
     {
@@ -561,19 +561,18 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::impl (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::enable (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::enable (void)
 {
   return this->impl ()->enable ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusCondition_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
 {
   ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
   DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
   if (sc)
     {
@@ -581,49 +580,35 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_statuscondition (void)
                         CCM_DDS_StatusCondition_i (sc),
                         CORBA::NO_MEMORY ());
     }
-#else
-  ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-  if (! ::CORBA::is_nil (sc.in ()))
-    {
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
-    }
-#endif
   return retval._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_status_changes (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_status_changes (void)
 {
   return this->impl ()->get_status_changes ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_INSTANCE_HANDLE_T_RETN
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_instance_handle (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_handle (void)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_InstanceHandle_t const rtihandle =
     this->impl ()->get_instance_handle ();
   ::DDS::InstanceHandle_t handle;
   handle <<= rtihandle;
   return handle;
-#else
-  return this->impl ()->get_instance_handle ();
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReadCondition_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_readcondition (
   ::DDS::SampleStateMask sample_states,
   ::DDS::ViewStateMask view_states,
   ::DDS::InstanceStateMask instance_states)
 {
   ::DDS::ReadCondition_var retval = ::DDS::ReadCondition::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
   DDSReadCondition* rc =
     this->impl ()->create_readcondition (sample_states, view_states, instance_states);
   if (rc)
@@ -632,23 +617,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_readcondition (
                         ReadCondition_type (rc),
                         CORBA::NO_MEMORY ());
     }
-#else
-  ::DDS::ReadCondition_var rc =
-    this->impl ()->create_readcondition (sample_states, view_states, instance_states);
-  if (! ::CORBA::is_nil (rc.in ()))
-    {
-      retval = new CCM_DDS_StatusCondition_i<DDS_TYPE, CCM_TYPE> (sc.in ());
-      ACE_NEW_THROW_EX (retval,
-                        ReadCondition_type (sc.in ()),
-                        CORBA::NO_MEMORY ());
-    }
-#endif
   return retval._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::QueryCondition_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_querycondition (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_querycondition (
   ::DDS::SampleStateMask sample_states,
   ::DDS::ViewStateMask view_states,
   ::DDS::InstanceStateMask instance_states,
@@ -656,7 +630,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_querycondition (
   const ::DDS::StringSeq & query_parameters)
 {
   ::DDS::QueryCondition_var retval = ::DDS::QueryCondition::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_StringSeq parameters;
   parameters <<= query_parameters;
   DDSQueryCondition* qc = this->impl ()->create_querycondition (
@@ -672,87 +645,59 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::create_querycondition (
                         QueryCondition_type (qc),
                         CORBA::NO_MEMORY ());
     }
-#else
-  ::DDS::QueryCondition_var qc = this->impl ()->create_querycondition (
-                                sample_states,
-                                view_states,
-                                instance_states,
-                                query_expression,
-                                query_parameters);
-
-  if (! ::CORBA::is_nil (qc.in ()))
-    {
-      ACE_NEW_THROW_EX (retval,
-                        QueryCondition_type (qc.in ()),
-                        CORBA::NO_MEMORY ());
-    }
-#endif
   return retval._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_readcondition (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_readcondition (
   ::DDS::ReadCondition_ptr a_condition)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
-  CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE> *rc =
-    dynamic_cast< CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE> *> (a_condition);
+  CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *rc =
+    dynamic_cast< CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (a_condition);
   if (!rc)
     {
       return ::DDS::RETCODE_BAD_PARAMETER;
     }
   return this->impl ()->delete_readcondition (rc->get_impl ());
-#else
-  return this->impl ()->delete_readcondition (a_condition);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::delete_contained_entities (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_contained_entities (void)
 {
   return this->impl ()->delete_contained_entities ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_qos (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos (
   const ::DDS::DataReaderQos &qos)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_DataReaderQos ddsqos;
   ddsqos <<= qos;
   return this->impl ()->set_qos (ddsqos);
-#else
-  return this->impl ()->set_qos (qos);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_qos (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos (
   ::DDS::DataReaderQos &qos)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_DataReaderQos ddsqos;
   ::DDS_ReturnCode_t const retval = this->impl ()->get_qos (ddsqos);
   qos <<= ddsqos;
   return retval;
-#else
-  return this->impl ()->get_qos (qos);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_listener (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (
   ::DDS::DataReaderListener_ptr a_listener,
   ::DDS::StatusMask mask)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_listener");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener");
 
-#if (CIAO_DDS4CCM_NDDS==1)
   DataReaderListener_type * ccm_dds_drl = 0;
   if (! ::CORBA::is_nil (a_listener))
     {
@@ -764,39 +709,31 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_listener (
     }
   this->lst_mask_ = mask;
   return this->impl ()->set_listener (ccm_dds_drl, mask);
-#else
-  return this->impl ()->set_listener (a_listener, mask);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::DataReaderListener_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_listener (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_listener");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener");
 
-#if (CIAO_DDS4CCM_NDDS==1)
   DDSDataReaderListener *drl = this->impl ()->get_listener ();
-  CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> *ccm_dds_drl =
-    dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE> *> (drl);
+  CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *ccm_dds_drl =
+    dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (drl);
   if (!ccm_dds_drl)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_listener - "
+      DDS4CCM_DEBUG (6, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
                                 "DDS returned a NIL listener.\n"));
       return ::DDS::DataReaderListener::_nil ();
     }
   return ccm_dds_drl->get_datareaderlistener ();
-#else
-  return this->impl ()->get_listener ();
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::TopicDescription_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_topicdescription (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topicdescription (void)
 {
   ::DDS::TopicDescription_var dds_td = ::DDS::TopicDescription::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
   ::DDSTopic * tp = ::DDSTopic::narrow (td);
   if (tp)
@@ -816,163 +753,116 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_topicdescription (void)
                             CORBA::NO_MEMORY ());
         }
     }
-#else
-  ::DDS::TopicDescription_var td = this->impl ()->get_topicdescription ();
-  ACE_NEW_THROW_EX (dds_td,
-                    CCM_DDS_TopicDescription_T (td.in ()),
-                    CORBA::NO_MEMORY ());
-#endif
   return dds_td._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::Subscriber_ptr
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_subscriber (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_subscriber (void)
 {
   ::DDS::Subscriber_var dds_td = ::DDS::Subscriber::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDSSubscriber* subscriber = this->impl ()->get_subscriber ();
   ACE_NEW_THROW_EX (dds_td,
                     Subscriber_type (subscriber),
                     CORBA::NO_MEMORY ());
-#else
-  ::DDSSubscriber_var subscriber = this->impl ()->get_subscriber ();
-  dds_td = new CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> (subscriber.in ());
-  ACE_NEW_THROW_EX (dds_td,
-                    Subscriber_type (subscriber.in ()),
-                    CORBA::NO_MEMORY ());
-#endif
   return dds_td._retn ();
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_sample_rejected_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_sample_rejected_status (
   ::DDS::SampleRejectedStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_SampleRejectedStatus ddsstatus;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_rejected_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_sample_rejected_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_liveliness_changed_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_liveliness_changed_status (
   ::DDS::LivelinessChangedStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_LivelinessChangedStatus ddsstatus;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_liveliness_changed_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_liveliness_changed_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_requested_deadline_missed_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_requested_deadline_missed_status (
   ::DDS::RequestedDeadlineMissedStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_RequestedDeadlineMissedStatus ddsstatus;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_requested_deadline_missed_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_requested_deadline_missed_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_requested_incompatible_qos_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_requested_incompatible_qos_status (
   ::DDS::RequestedIncompatibleQosStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_RequestedIncompatibleQosStatus ddsstatus;
   ::DDS::ReturnCode_t const retval =
     this->impl ()->get_requested_incompatible_qos_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_requested_incompatible_qos_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_subscription_matched_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_subscription_matched_status (
   ::DDS::SubscriptionMatchedStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_SubscriptionMatchedStatus ddsstatus;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_subscription_matched_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_subscription_matched_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_sample_lost_status (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_sample_lost_status (
   ::DDS::SampleLostStatus & status)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   DDS_SampleLostStatus ddsstatus;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_sample_lost_status (ddsstatus);
   status <<= ddsstatus;
   return retval;
-#else
-  return this->impl ()->get_sample_lost_status (status);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::wait_for_historical_data (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait_for_historical_data (
   const ::DDS::Duration_t & max_wait)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_Duration_t rtiduration;
   rtiduration <<= max_wait;
   return this->impl ()->wait_for_historical_data (rtiduration);
-#else
-  return this->impl ()->wait_for_historical_data (max_wait);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_matched_publications (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_matched_publications (
   ::DDS::InstanceHandleSeq & publication_handles)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_matched_publications");
-#if (CIAO_DDS4CCM_NDDS==1)
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_matched_publications");
   ::DDS_InstanceHandleSeq rtiseq;
   ::DDS::ReturnCode_t const retval = this->impl ()->get_matched_publications (rtiseq);
   publication_handles <<= rtiseq;
   return retval;
-#else
-  return this->impl ()->get_matched_publications (publication_handles);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_matched_publication_data (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_matched_publication_data (
   ::DDS::PublicationBuiltinTopicData & publication_data,
   DDS_INSTANCE_HANDLE_T_IN publication_handle)
 {
-#if (CIAO_DDS4CCM_NDDS==1)
   ::DDS_PublicationBuiltinTopicData ccm_dds_pub_data;
   ::DDS_InstanceHandle_t ccm_dds_pub_handle;
 
@@ -983,28 +873,25 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_matched_publication_data (
                                               ccm_dds_pub_handle);
   publication_data <<= ccm_dds_pub_data;
   return retcode;
-#else
-  return this->impl ()->get_matched_publication_data (publication_data, publication_handle);
-#endif
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 typename DDS_TYPE::data_reader *
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_impl (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl (void)
 {
   return this->impl_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (void)
 {
   return this->lst_mask_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE>::set_impl (
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
   ::DDS::DataReader_ptr dr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::set_impl");
