@@ -18,9 +18,9 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class Writer_T :
-      public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type>
+      public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type, VENDOR_TYPE>
     {
     public:
       /// Constructor

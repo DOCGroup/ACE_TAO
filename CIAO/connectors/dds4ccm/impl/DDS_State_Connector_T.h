@@ -15,9 +15,9 @@
 #include "dds4ccm/impl/DDS_Update_T.h"
 #include "dds4ccm/impl/DDS_Read_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_State_Connector_T
-  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE>
+  : public virtual DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
 {
 public:
   DDS_State_Connector_T (void);
@@ -132,38 +132,38 @@ private:
    * DDS_Update observable
    */
   //@{
-  DDS_Update_T <DDS_TYPE, CCM_TYPE> observable_;
+  DDS_Update_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> observable_;
   //@}
 
   /**
    * DDS_Read passive_observer
    */
   //@{
-  DDS_Read_T <DDS_TYPE, CCM_TYPE, FIXED> passive_observer_;
+  DDS_Read_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> passive_observer_;
   //@}
 
   /**
    * DDS_Get pull_observer
    */
   //@{
-  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED> pull_observer_;
+  DDS_Get_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> pull_observer_;
   //@}
 
   /**
    * DDS_Listen push_observer
    */
   //@{
-  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED> push_observer_;
+  DDS_Listen_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> push_observer_;
   //@}
 
   /**
    * DDS_StateListen push_state_observer
    */
   //@{
-  DDS_StateListen_T <DDS_TYPE, CCM_TYPE, FIXED> push_state_observer_;
+  DDS_StateListen_T <DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> push_state_observer_;
   //@}
 
-typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE> TopicBaseConnector;
+typedef DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicBaseConnector;
 };
 
 #include "dds4ccm/impl/DDS_State_Connector_T.cpp"

@@ -31,43 +31,43 @@ namespace CIAO
   namespace DDS4CCM
   {
     //Forward declarations
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_SubscriberListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Publisher_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Subscriber_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_TopicListener_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_Topic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_ContentFilteredTopic_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_PublisherListener_T;
 
     //Class declaration
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DomainParticipant_T :
       public virtual ::DDS::CCM_DomainParticipant,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> Subscriber_type;
-    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE> SubscriberListener_type;
-    typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE> Publisher_type;
-    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE> PublisherListener_type;
-    typedef CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE> TopicListener_type;
-    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE> Topic_type;
-    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE> ContentFilteredTopic_type;
+    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Subscriber_type;
+    typedef CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> SubscriberListener_type;
+    typedef CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Publisher_type;
+    typedef CCM_DDS_PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> PublisherListener_type;
+    typedef CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> TopicListener_type;
+    typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Topic_type;
+    typedef CCM_DDS_ContentFilteredTopic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ContentFilteredTopic_type;
 
     public:
       /// Constructor

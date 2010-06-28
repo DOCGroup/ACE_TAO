@@ -5,8 +5,8 @@
 #include "dds4ccm/impl/DDSCallbackStatusHandler.h"
 #include "dds4ccm/impl/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::TopicListener_T (
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::TopicListener_T (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
   ACE_Reactor* reactor) :
     error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
@@ -15,15 +15,15 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::TopicListener_T (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::TopicListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::~TopicListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~TopicListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::~TopicListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
+CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent_topic (
   ::DDS::Topic_ptr the_topic,
   const ::DDS::InconsistentTopicStatus & status)
 {
@@ -59,9 +59,9 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::on_inconsistent_topic (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");

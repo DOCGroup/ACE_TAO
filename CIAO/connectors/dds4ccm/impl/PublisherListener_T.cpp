@@ -7,8 +7,8 @@
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "tao/ORB_Core.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::PublisherListener_T (
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::PublisherListener_T (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener,
   ACE_Reactor* reactor)
       : error_listener_ (::CCM_DDS::ConnectorStatusListener::_duplicate (error_listener)),
@@ -17,15 +17,15 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::PublisherListener_T (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::PublisherListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::~PublisherListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~PublisherListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PublisherListener_T::~PublisherListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpected_status (
   ::DDS::Entity_ptr entity,
   ::DDS::StatusKind status_kind)
 {
@@ -67,9 +67,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_unexpected_status (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_missed (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_deadline_missed (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::OfferedDeadlineMissedStatus & status)
 {
@@ -118,9 +118,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_miss
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_qos (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::OfferedIncompatibleQosStatus & status)
 {
@@ -175,9 +175,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_lost (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::LivelinessLostStatus & status)
 {
@@ -191,9 +191,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
   this->on_unexpected_status (the_Writer, ::DDS::LIVELINESS_LOST_STATUS);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_publication_matched (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::PublicationMatchedStatus & status)
 {
@@ -213,9 +213,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
 }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_writer_cache_changed (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_reliable_writer_cache_changed (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::ReliableWriterCacheChangedStatus & status)
 {
@@ -247,9 +247,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_writer_cache
   this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_reliable_reader_activity_changed (
   ::DDS::DataWriter_ptr the_Writer,
   const ::DDS::ReliableReaderActivityChangedStatus & status)
 {
@@ -269,9 +269,9 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activ
 }
 #endif
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
   if (! ::CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)

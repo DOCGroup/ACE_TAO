@@ -17,4 +17,9 @@
 #  define CIAO_DDS4CCM_CONTEXT_SWITCH 1
 #endif /* CIAO_DDS4CCM_CONTEXT_SWITCH */
 
+enum DDS4CCM_Vendor
+{
+  DDS4CCM_NDDS
+};
+
 #endif /* DDS4CCM_CONF_H_ */
