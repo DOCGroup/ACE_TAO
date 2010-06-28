@@ -1,83 +1,88 @@
+Mon Jun 28 12:19:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          No MPC440 xampler build exists
+
 Mon Jun 28 11:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/FTP_Response.h:
+        * protocols/ace/INet/FTP_Response.h:
      Added missing include.
 
-	* protocols/ace/INet/FTP_Session.cpp:
+        * protocols/ace/INet/FTP_Session.cpp:
      Fixed truncate warning.
 
 Mon Jun 28 10:37:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/FTP_Request.h:
-	* protocols/ace/INet/FTP_Response.h:
-	  Added missing inline includes.
+        * protocols/ace/INet/FTP_Request.h:
+        * protocols/ace/INet/FTP_Response.h:
+          Added missing inline includes.
 
 Mon Jun 28 09:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/AuthenticationBase.cpp:
-	* protocols/ace/INet/AuthenticationBase.h:
-	* protocols/ace/INet/AuthenticationBase.inl:
-	* protocols/ace/INet/FTP_ClientRequestHandler.cpp:
-	* protocols/ace/INet/FTP_ClientRequestHandler.h:
-	* protocols/ace/INet/FTP_ClientRequestHandler.inl:
-	* protocols/ace/INet/FTP_IOStream.cpp:
-	* protocols/ace/INet/FTP_IOStream.h:
-	* protocols/ace/INet/FTP_IOStream.inl:
-	* protocols/ace/INet/FTP_Request.cpp:
-	* protocols/ace/INet/FTP_Request.h:
-	* protocols/ace/INet/FTP_Request.inl:
-	* protocols/ace/INet/FTP_Response.cpp:
-	* protocols/ace/INet/FTP_Response.h:
-	* protocols/ace/INet/FTP_Response.inl:
-	* protocols/ace/INet/FTP_Session.cpp:
-	* protocols/ace/INet/FTP_Session.h:
-	* protocols/ace/INet/FTP_Simple_exec.cpp:
-	* protocols/ace/INet/FTP_URL.cpp:
-	* protocols/ace/INet/FTP_URL.h:
-	* protocols/ace/INet/FTP_URL.inl:
-	* protocols/ace/INet/INet_Log.cpp:
-	* protocols/ace/INet/INet_Log.h:
-	* protocols/ace/INet/ConnectionCache.cpp:
-	* protocols/ace/INet/HeaderBase.cpp:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
-	* protocols/ace/INet/HTTP_ClientRequestHandler.h:
-	* protocols/ace/INet/HTTP_Request.cpp:
-	* protocols/ace/INet/HTTP_Response.cpp:
-	* protocols/ace/INet/HTTP_Session.cpp:
-	* protocols/ace/INet/HTTP_Simple_exec.cpp:
-	* protocols/ace/INet/StreamHandler.cpp:
-	* protocols/ace/INet/URLBase.cpp:
-	* protocols/ace/INet/URLBase.h:
-	* protocols/ace/INet/inet.mpc:
-	  Added library specific logging and logging macros. Use INET_LOG_LEVEL
-	  environment variable to control.
-	  Added FTP URL and protocol (clientside) support.
-	  Added basic authentication handling (currently only used with FTP).
-	  Some minor cleanup and fixes.
+        * protocols/ace/INet/AuthenticationBase.cpp:
+        * protocols/ace/INet/AuthenticationBase.h:
+        * protocols/ace/INet/AuthenticationBase.inl:
+        * protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/FTP_ClientRequestHandler.h:
+        * protocols/ace/INet/FTP_ClientRequestHandler.inl:
+        * protocols/ace/INet/FTP_IOStream.cpp:
+        * protocols/ace/INet/FTP_IOStream.h:
+        * protocols/ace/INet/FTP_IOStream.inl:
+        * protocols/ace/INet/FTP_Request.cpp:
+        * protocols/ace/INet/FTP_Request.h:
+        * protocols/ace/INet/FTP_Request.inl:
+        * protocols/ace/INet/FTP_Response.cpp:
+        * protocols/ace/INet/FTP_Response.h:
+        * protocols/ace/INet/FTP_Response.inl:
+        * protocols/ace/INet/FTP_Session.cpp:
+        * protocols/ace/INet/FTP_Session.h:
+        * protocols/ace/INet/FTP_Simple_exec.cpp:
+        * protocols/ace/INet/FTP_URL.cpp:
+        * protocols/ace/INet/FTP_URL.h:
+        * protocols/ace/INet/FTP_URL.inl:
+        * protocols/ace/INet/INet_Log.cpp:
+        * protocols/ace/INet/INet_Log.h:
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/HeaderBase.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_Request.cpp:
+        * protocols/ace/INet/HTTP_Response.cpp:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/URLBase.cpp:
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/inet.mpc:
+          Added library specific logging and logging macros. Use INET_LOG_LEVEL
+          environment variable to control.
+          Added FTP URL and protocol (clientside) support.
+          Added basic authentication handling (currently only used with FTP).
+          Some minor cleanup and fixes.
 
 Fri Jun 24 19:10:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/HTTP_Simple_exec.cpp:
-	  Small fixes, clean up.
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Small fixes, clean up.
 
-	* protocols/ace/INet/HTTP_Session.cpp:
-	* protocols/ace/INet/HTTP_Session.h:
-	  Added ctor.
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+          Added ctor.
 
-	* protocols/ace/INet/StreamHandler.cpp:
-	* protocols/ace/INet/StreamHandler.h:
-	  Fixed blocking problem.
-    
-	* protocols/ace/INet/String_IOStream.cpp:
-	  Flush data on dtor.
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/StreamHandler.h:
+          Fixed blocking problem.
 
-	* protocols/ace/INet/URLBase.h:
-	  Added clearification.
+        * protocols/ace/INet/String_IOStream.cpp:
+          Flush data on dtor.
+
+        * protocols/ace/INet/URLBase.h:
+          Added clearification.
 
 Fri Jun 24 16:24:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* bin/MakeProjectCreator/config/inet.mpb:
-	  Added missing avoids.
+        * bin/MakeProjectCreator/config/inet.mpb:
+          Added missing avoids.
 
 Thu Jun 24 08:52:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -127,10 +132,10 @@ Tue Jun 22 07:47:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/String_IOStream.cpp:
         * protocols/ace/INet/String_IOStream.h:
-	  Const change:
+          Const change:
 
         * protocols/ace/INet/URLBase.inl:
-	  Fixed missing ACE_INLINE.
+          Fixed missing ACE_INLINE.
 
 Mon Jun 21 13:29:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
