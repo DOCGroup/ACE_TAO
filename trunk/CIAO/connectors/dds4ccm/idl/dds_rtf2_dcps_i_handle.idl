@@ -5,18 +5,21 @@
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds_rtf2_dcps_i_handleE.idl"
 
+module DDS {
 #if (CIAO_DDS4CCM_NDDS==1)
 
-module DDS {
     struct NativeInstanceHandle_t {
         octet value[16];
         unsigned long length;
         unsigned long isValid;
     };
     typedef NativeInstanceHandle_t InstanceHandle_t;
+#else
+    typedef long InstanceHandle_t;
+#endif
+
     typedef sequence<InstanceHandle_t> InstanceHandleSeq;
 };
 
 #endif
 
-#endif
