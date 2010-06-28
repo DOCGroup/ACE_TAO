@@ -1,3 +1,8 @@
+Mon Jun 28 13:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/INet_Log.h:
+	  Allow tracing to be enabled in debug builds.
+
 Mon Jun 28 12:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/StreamHandler.h:
