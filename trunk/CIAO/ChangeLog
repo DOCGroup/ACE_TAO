@@ -1,8 +1,16 @@
+Mon Jun 28 13:28:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+        * DAnCE/MPC/config/dance_stub.mpb:
+
+          Fix for static link problems.
+
 Mon Jun 28 13:24:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/MPC/config/dance_installation_handlers.mpb:
         * DAnCE/tools/Artifact_Installation/Artifact_Installation.mpc:
-	  Fix for static link errors related to INet lib.
+          Fix for static link errors related to INet lib.
 
 Mon Jun 28 13:10:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
