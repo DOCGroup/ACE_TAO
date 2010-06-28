@@ -50,7 +50,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   {
   }
   
-  // Operations from ::Shapes::ShapesConnector::Listener
+  // Operations from ::Shapes::ShapeType_conn::Listener
   
   void
   info_out_data_listener_exec_i::on_one_data (
@@ -118,7 +118,7 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   
   // Component attributes and port operations.
   
-  ::Shapes::ShapesConnector::CCM_Listener_ptr
+  ::Shapes::ShapeType_conn::CCM_Listener_ptr
   Receiver_comp_exec_i::get_info_out_data_listener (void)
   {
     if ( ::CORBA::is_nil (this->ciao_info_out_data_listener_.in ()))
@@ -128,13 +128,13 @@ namespace CIAO_Shapes_Receiver_comp_Impl
           tmp,
           info_out_data_listener_exec_i (
             this->ciao_context_.in ()),
-          ::Shapes::ShapesConnector::CCM_Listener::_nil ());
+          ::Shapes::ShapeType_conn::CCM_Listener::_nil ());
         
         this->ciao_info_out_data_listener_ = tmp;
       }
     
     return
-      ::Shapes::ShapesConnector::CCM_Listener::_duplicate (
+      ::Shapes::ShapeType_conn::CCM_Listener::_duplicate (
         this->ciao_info_out_data_listener_.in ());
   }
   

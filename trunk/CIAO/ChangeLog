@@ -1,3 +1,17 @@
+Mon Jun 28 12:53:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/02_idl.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+          Renamed ShapesCOnnector to ShapeType_conn
+
 Mon Jun 28 12:13:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
