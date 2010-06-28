@@ -31,15 +31,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_DomainParticipant;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_TopicDescription_T :
       public virtual ::DDS::CCM_TopicDescription,
       public virtual ::CORBA::LocalObject
     {
-    typedef CCM_DDS_DomainParticipant<DDS_TYPE, CCM_TYPE> DomainParticipant_type;
+    typedef CCM_DDS_DomainParticipant<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DomainParticipant_type;
 
     public:
       /// Constructor

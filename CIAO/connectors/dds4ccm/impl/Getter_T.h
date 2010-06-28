@@ -40,7 +40,7 @@ namespace CIAO
       *               All methods return a boolean as result indicating whether actual data
       *               are provided (TRUE) or if the time-out occurred (FALSE).
       */
-      template <typename DDS_TYPE, typename CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
       class Getter_Base_T :
          public virtual CCM_TYPE::getter_type,
          public virtual ::CORBA::LocalObject,
@@ -86,32 +86,32 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE> * reader);
+        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader);
 
         void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
         virtual ::CORBA::Object_ptr _get_component (void);
 
       protected:
-        DataReader_T<DDS_TYPE, CCM_TYPE> * reader_;
+        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader_;
 
         ::DDS_Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
-        DataReader_T<DDS_TYPE, CCM_TYPE> * impl (void);
+        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * impl (void);
       private:
         typename CCM_TYPE::base_type::_var_type component_;
       };
 
-      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+      template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
       class Getter_T;
 
       /**
       * @brief Implementation of the Getter port for variable sized data types.
       *
       */
-      template <typename DDS_TYPE, typename CCM_TYPE>
-      class Getter_T <DDS_TYPE, CCM_TYPE, false> :
-        public Getter_Base_T <DDS_TYPE, CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      class Getter_T <DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE> :
+        public Getter_Base_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
       {
       public:
         /**
@@ -129,9 +129,9 @@ namespace CIAO
       * @brief Implementation of the Getter port for fixed sized data types.
       *
       */
-      template <typename DDS_TYPE, typename CCM_TYPE>
-      class Getter_T <DDS_TYPE, CCM_TYPE, true> :
-        public Getter_Base_T <DDS_TYPE, CCM_TYPE>
+      template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+      class Getter_T <DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE> :
+        public Getter_Base_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
       {
       public:
         /**

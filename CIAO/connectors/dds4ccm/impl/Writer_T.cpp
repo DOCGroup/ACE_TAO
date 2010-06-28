@@ -7,23 +7,23 @@
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 
 #include "dds4ccm/impl/Log_Macros.h"
-template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::Writer_T (void)
-  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type> (),
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::Writer_T (void)
+  : InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type, VENDOR_TYPE> (),
     is_coherent_write_ (false)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::Writer_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::~Writer_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Writer_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::~Writer_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_i (
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
   const typename DDS_TYPE::value_type& datum,
   const ::DDS::InstanceHandle_t& instance_handle,
   ::CCM_DDS::DataNumber_t index)
@@ -43,9 +43,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_i (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_one (
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_one (
   const typename DDS_TYPE::value_type & an_instance,
   const ::DDS::InstanceHandle_t & instance_handle)
 {
@@ -57,9 +57,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_one (
                "Write successful\n"));
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
   const typename CCM_TYPE::seq_type& instances)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_many");
@@ -81,31 +81,31 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::write_many (
                "Write successful\n"));
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Boolean
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (void)
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::is_coherent_write (void)
 {
   return this->is_coherent_write_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE >
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::is_coherent_write (
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::is_coherent_write (
   ::CORBA::Boolean value)
 {
   this->is_coherent_write_ = value;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Object_ptr
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
 {
   return CCM_TYPE::base_type::_duplicate (this->component_.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE>::_set_component (
+CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
   typename CCM_TYPE::base_type::_ptr_type component)
 {
   this->component_ = CCM_TYPE::base_type::_duplicate (component);

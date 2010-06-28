@@ -16,7 +16,7 @@
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ContentFilteredTopic_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED>
+template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Subscriber_Base_T
 {
 public:
@@ -61,12 +61,12 @@ protected:
   //@{
   ::DDS::DataReaderListener_var listener_;
   ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i cft_setting_;
-  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED> dds_read_;
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> data_reader_;
+  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> dds_read_;
+  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> data_reader_;
   bool configuration_complete_;
   //@}
 private:
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE> PortStatusListener;
+  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> PortStatusListener;
 };
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.cpp"

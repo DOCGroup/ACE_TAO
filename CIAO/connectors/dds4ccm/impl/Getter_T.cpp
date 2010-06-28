@@ -6,8 +6,8 @@
 
 #include "dds4ccm/impl/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::Getter_Base_T (void)
   : reader_ (0),
     time_out_ (),
     max_delivered_data_ (0)
@@ -15,15 +15,15 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::Getter_Base_T (void)
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::Getter_Base_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::~Getter_Base_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Getter_Base_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::~Getter_Base_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE> *
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->reader_)
     {
@@ -35,24 +35,24 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::impl (void)
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Object_ptr
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::_get_component (void)
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
 {
   return CCM_TYPE::base_type::_duplicate (this->component_.in ());
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::_set_component (
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
   typename CCM_TYPE::base_type::_ptr_type component)
 {
   this->component_ = CCM_TYPE::base_type::_duplicate (component);
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many (
   typename CCM_TYPE::seq_type& instances,
   ::CCM_DDS::ReadInfoSeq& infos)
 {
@@ -144,9 +144,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::get_many (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::Duration_t
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (void)
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::time_out (void)
 {
   ::DDS::Duration_t timeout;
   timeout <<= this->time_out_;
@@ -154,33 +154,33 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (void)
   return timeout;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::time_out (
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::time_out (
   const ::DDS::Duration_t & time_out)
 {
   this->time_out_ <<= time_out;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CCM_DDS::DataNumber_t
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (void)
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::max_delivered_data (void)
 {
   return this->max_delivered_data_;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::max_delivered_data (
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::max_delivered_data (
   ::CCM_DDS::DataNumber_t max_delivered_data)
 {
   this->max_delivered_data_ = max_delivered_data;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
-  DataReader_T<DDS_TYPE, CCM_TYPE> * dr)
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
+  DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * dr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::set_impl");
 
@@ -189,9 +189,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE>::set_impl (
 }
 
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
+CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one (
   typename DDS_TYPE::value_type::_out_type an_instance,
   ::CCM_DDS::ReadInfo_out info)
 {
@@ -269,9 +269,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true>::get_one (
   return true;
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 bool
-CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false>::get_one (
+CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_one (
   typename DDS_TYPE::value_type::_out_type an_instance,
   ::CCM_DDS::ReadInfo_out info)
 {

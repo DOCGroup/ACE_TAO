@@ -5,8 +5,8 @@
 #include "dds4ccm/impl/DataReaderHandler_T.h"
 #include "tao/ORB_Core.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::PortStatusListener_T (
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ACE_Reactor* reactor)
       : port_status_listener_ (::CCM_DDS::PortStatusListener::_duplicate (port_status_listener)),
@@ -15,15 +15,15 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::PortStatusListener_T (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::PortStatusListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::~PortStatusListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~PortStatusListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::~PortStatusListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_missed (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_deadline_missed (
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::RequestedDeadlineMissedStatus & status)
 {
@@ -73,9 +73,9 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_deadline_m
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_lost (
   ::DDS::DataReader_ptr the_reader,
   const ::DDS::SampleLostStatus & status)
 {
@@ -125,48 +125,48 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_lost (
     }
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_requested_incompatible_qos (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_incompatible_qos (
   ::DDS::DataReader_ptr ,
   const ::DDS::RequestedIncompatibleQosStatus & )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_sample_rejected (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_rejected (
   ::DDS::DataReader_ptr ,
   const ::DDS::SampleRejectedStatus & )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_changed (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_changed (
   ::DDS::DataReader_ptr ,
   const ::DDS::LivelinessChangedStatus & )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_data_available (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available (
   ::DDS::DataReader_ptr )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::on_subscription_matched (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_subscription_matched (
   ::DDS::DataReader_ptr ,
   const ::DDS::SubscriptionMatchedStatus & )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE>::get_mask (
+CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   ::CCM_DDS::PortStatusListener_ptr psl)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::get_mask");

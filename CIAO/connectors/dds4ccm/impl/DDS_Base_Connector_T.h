@@ -12,14 +12,14 @@
 #include "dds4ccm/impl/DomainParticipantListener_T.h"
 #include "dds4ccm/impl/DomainParticipantFactory_T.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Base_Connector_T
   : public virtual CCM_TYPE::base_type,
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE> DomainParticipantListener;
-typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE> DomainParticipantFactory;
+typedef ::CIAO::DDS4CCM::DomainParticipantListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DomainParticipantListener;
+typedef ::CIAO::DDS4CCM::CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DomainParticipantFactory;
 
 public:
   DDS_Base_Connector_T (void);

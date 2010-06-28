@@ -4,71 +4,71 @@
 #include "dds4ccm/impl/DataWriter_T.h"
 #include "dds4ccm/impl/Log_Macros.h"
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::DataWriterListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataWriterListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::DataWriterListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::~DataWriterListener_T (void)
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataWriterListener_T (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::~DataWriterListener_T");
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_deadline_missed (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_deadline_missed (
   ::DDS::DataWriter_ptr ,
   const ::DDS::OfferedDeadlineMissedStatus &)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_offered_incompatible_qos (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_incompatible_qos (
   ::DDS::DataWriter_ptr ,
   const ::DDS::OfferedIncompatibleQosStatus &)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_liveliness_lost (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_lost (
   ::DDS::DataWriter_ptr ,
   const ::DDS::LivelinessLostStatus &)
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_publication_matched (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_publication_matched (
   ::DDS::DataWriter_ptr ,
   const ::DDS::PublicationMatchedStatus &)
 {
 }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_writer_cache_changed (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_reliable_writer_cache_changed (
   ::DDS::DataWriter_ptr ,
   const ::DDS::ReliableWriterCacheChangedStatus & )
 {
 }
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::on_reliable_reader_activity_changed (
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_reliable_reader_activity_changed (
   ::DDS::DataWriter_ptr ,
   const ::DDS::ReliableReaderActivityChangedStatus &)
 {
 }
 #endif
 
-template <typename DDS_TYPE, typename CCM_TYPE>
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::StatusMask
-CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE>::get_mask (void)
+CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataWriterListener_T::get_mask");
   return 0;

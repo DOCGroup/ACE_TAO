@@ -35,15 +35,15 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class DataReader_T;
 
-    template <typename DDS_TYPE, typename CCM_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class CCM_DDS_SubscriberListener_T :
       public virtual ::DDSSubscriberListener
     {
-    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE> Subscriber_type;
-    typedef DataReader_T<DDS_TYPE, CCM_TYPE> DataReader_type;
+    typedef CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Subscriber_type;
+    typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataReader_type;
     public:
       /// Constructor
       CCM_DDS_SubscriberListener_T ( ::DDS::SubscriberListener_ptr s);

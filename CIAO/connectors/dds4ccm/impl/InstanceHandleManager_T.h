@@ -16,7 +16,7 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE>
+    template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class InstanceHandleManager_T :
       public virtual BASE_TYPE,
       public virtual ::CORBA::LocalObject,
@@ -36,7 +36,7 @@ namespace CIAO
         const typename DDS_TYPE::value_type & datum,
         const ::DDS::InstanceHandle_t & instance_handle);
 
-      void set_impl (CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE> *writer);
+      void set_impl (CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *writer);
 
       typename DDS_TYPE::data_writer * impl (void);
 
