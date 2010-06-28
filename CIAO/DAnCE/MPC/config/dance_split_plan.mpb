@@ -1,6 +1,6 @@
 // $Id$
 
-project : dance, dance_deployment_stub, dance_tools {
+project : dance, dance_stub, dance_deployment_stub, dance_tools {
    after += DAnCE_Split_Plan_Impl
    libs += DAnCE_Split_Plan_Impl
    includes += $DANCE_ROOT/tools
