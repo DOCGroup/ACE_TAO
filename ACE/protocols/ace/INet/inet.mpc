@@ -9,6 +9,7 @@ project(INet) : acelib, ace_output, install {
   avoids += old_stdstream
   Source_Files {
     IOS_util.cpp
+    INet_Log.cpp
     HeaderBase.cpp
     Request.cpp
     Response.cpp
@@ -21,8 +22,14 @@ project(INet) : acelib, ace_output, install {
     HTTP_Request.cpp
     HTTP_IOStream.cpp
     URLBase.cpp
+    AuthenticationBase.cpp
     HTTP_URL.cpp
     HTTP_ClientRequestHandler.cpp
+    FTP_Request.cpp
+    FTP_Response.cpp
+    FTP_IOStream.cpp
+    FTP_URL.cpp
+    FTP_ClientRequestHandler.cpp
   }
   Template_Files {
     BidirStreamBuffer.cpp
@@ -34,6 +41,7 @@ project(INet) : acelib, ace_output, install {
     StreamHandler.cpp
     StreamInterceptor.cpp
     String_IOStream.cpp
+    FTP_Session.cpp
   }
   Header_Files {
     INet_Export.h
@@ -43,9 +51,16 @@ project(INet) : acelib, ace_output, install {
   }
 }
 
-project(Simple_exec) : aceexe, inet {
+project(HTTP_Simple_exec) : aceexe, inet {
   exename = http_simple_wget
   Source_Files {
     HTTP_Simple_exec.cpp
+  }
+}
+
+project(FTP_Simple_exec) : aceexe, inet {
+  exename = ftp_simple_wget
+  Source_Files {
+    FTP_Simple_exec.cpp
   }
 }

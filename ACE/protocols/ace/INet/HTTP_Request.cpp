@@ -8,6 +8,8 @@
 #include "ace/INet/HTTP_Request.inl"
 #endif
 
+#include "ace/INet/INet_Log.h"
+
 ACE_RCSID(NET_CLIENT,ACE_HTTP_Request,"$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -107,6 +109,13 @@ namespace ACE
     void Request::write(std::ostream& str) const
       {
         str << this->method_.c_str () << " " << this->uri_.c_str () << " " << this->get_version ().c_str () << "\r\n";
+
+        INET_DEBUG (6, (LM_DEBUG, DLINFO
+                        ACE_TEXT ("ACE_INet_HTTP: --> %C %C %C\n"),
+                        this->method_.c_str (),
+                        this->uri_.c_str (),
+                        this->get_version ().c_str ()));
+
         Header::write (str);
         str << "\r\n";
       }

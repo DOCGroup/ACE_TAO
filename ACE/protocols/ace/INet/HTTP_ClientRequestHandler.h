@@ -37,8 +37,10 @@ namespace ACE
         /**
         * @class ACE_HTTP_ClientRequestHandler
         *
-        * @brief
+        * @brief This class implements clientside request handling
+        *   for HTTP URLs.
         *
+        * The class supports the HTTP protocol as specified in RFC 2616.
         */
         class ACE_INET_Export ClientRequestHandler
           : public ACE::INet::ClientINetRequestHandler,
@@ -110,10 +112,6 @@ namespace ACE
                                                   u_short port);
 
               virtual void initialize_request (const URL& url, Request& request);
-
-              virtual bool send_request (std::ostream& request_stream);
-
-              virtual void handle_response (const URL& url, const Response& response);
 
               virtual void handle_request_error (const URL& url);
 

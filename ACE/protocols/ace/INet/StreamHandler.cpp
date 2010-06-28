@@ -3,6 +3,7 @@
 #ifndef ACE_IOS_STREAM_HANDLER_CPP
 #define ACE_IOS_STREAM_HANDLER_CPP
 
+#include "ace/INet/INet_Log.h"
 #include "ace/INet/StreamHandler.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_errno.h"
@@ -26,7 +27,7 @@ namespace ACE
         send_timeout_ (false),
         receive_timeout_ (false)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler - ctor");
+        INET_TRACE ("ACE_IOS_StreamHandler - ctor");
 
         unsigned long opt = synch_options[ACE_Synch_Options::USE_REACTOR] ?
                               ACE_Synch_Options::USE_REACTOR : 0;
@@ -40,7 +41,7 @@ namespace ACE
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::~StreamHandler ()
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler - dtor");
+        INET_TRACE ("ACE_IOS_StreamHandler - dtor");
 
         this->connected_ = false;
       }
@@ -70,7 +71,7 @@ namespace ACE
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::handle_input_i (size_t rdlen, ACE_Time_Value* timeout)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler::handle_input_i");
+        INET_TRACE ("ACE_IOS_StreamHandler::handle_input_i");
 
         char buffer[MAX_INPUT_SIZE];
         ssize_t recv_cnt;
@@ -86,14 +87,17 @@ namespace ACE
 
         if (bytes_in > 0)
           {
+            INET_HEX_DUMP (11, (LM_DEBUG, buffer, bytes_in, DLINFO
+                                ACE_TEXT ("ACE_IOS_StreamHandler::handle_input_i <--")));
+
             ACE_Message_Block *mb = 0;
             ACE_NEW_RETURN (mb, ACE_Message_Block (bytes_in), -1);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
             if (this->putq (mb, &nowait) == -1)
               {
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) ACE_IOS_StreamHandler - discarding input data, "),
+                INET_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, "),
                             ACE_TEXT ("enqueue failed (%d)\n"),
                             ACE_OS::last_error ()));
                 mb->release ();
@@ -106,8 +110,8 @@ namespace ACE
           {
             if (recv_cnt < 0)
               {
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) ACE_IOS_StreamHandler - receive failed (%d)\n"),
+                INET_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT ("ACE_IOS_StreamHandler - receive failed (%d)\n"),
                             ACE_OS::last_error ()));
               }
             this->connected_ = false;
@@ -131,7 +135,7 @@ namespace ACE
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::handle_output_i (ACE_Time_Value* timeout)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
+        INET_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
 
         ACE_Message_Block *mb = 0;
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
@@ -142,6 +146,9 @@ namespace ACE
               this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, &bytes_out);
             if (bytes_out > 0)
               {
+                INET_HEX_DUMP (11, (LM_DEBUG, mb->rd_ptr (), bytes_out, DLINFO
+                                    ACE_TEXT ("ACE_IOS_StreamHandler::handle_output_i -->")));
+
                 mb->rd_ptr (static_cast<size_t> (bytes_out));
                 if (mb->length () > 0)
                     this->ungetq (mb);
@@ -166,7 +173,7 @@ namespace ACE
         size_t length,
         u_short char_size)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler::read_from_stream");
+        INET_TRACE ("ACE_IOS_StreamHandler::read_from_stream");
 
         size_t recv_char_count = 0;
         char* wptr = (char*)buf;
@@ -304,7 +311,7 @@ namespace ACE
         u_short char_size,
         ACE_Time_Value* timeout)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler::process_input");
+        INET_TRACE ("ACE_IOS_StreamHandler::process_input");
 
         ACE_Time_Value wait (ACE_OS::gettimeofday ());
         // keep track of how much time we use here
@@ -423,7 +430,7 @@ namespace ACE
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::write_to_stream (const void * buf, size_t length, u_short char_size)
       {
-        ACE_TRACE ("ACE_IOS_StreamHandler::write_to_stream");
+        INET_TRACE ("ACE_IOS_StreamHandler::write_to_stream");
 
         size_t datasz = length * char_size;
         ACE_Message_Block *mb = 0;
@@ -432,9 +439,10 @@ namespace ACE
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         if (this->putq (mb, &nowait) == -1)
           {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - discarding output data, "),
-                        ACE_TEXT ("enqueue failed\n")));
+            INET_ERROR (1, (LM_ERROR, DLINFO
+                        ACE_TEXT ("(%d) ACE_IOS_StreamHandler - discarding output data, "),
+                        ACE_TEXT ("enqueue failed\n"),
+                        ACE_OS::last_error ()));
             mb->release ();
             return 0;
           }
@@ -470,9 +478,9 @@ namespace ACE
 
                 if (result == -1)
                   {
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) ACE_IOS_StreamHandler::write_to_stream - ")
-                                ACE_TEXT ("handle_events failed (%d)\n"),
+                    INET_ERROR (1, (LM_ERROR, DLINFO
+                                ACE_TEXT ("(%d) ACE_IOS_StreamHandler::write_to_stream - ")
+                                ACE_TEXT ("handle_events failed\n"),
                                 ACE_OS::last_error ()));
                   }
 
