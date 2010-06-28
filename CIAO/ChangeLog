@@ -1,3 +1,9 @@
+Mon Jun 28 13:08:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Events/Action_Base.cpp:
+
+          Fixed a bug which would swallow all exceptions from events.
+
 Mon Jun 28 12:59:23 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_msg.idl:

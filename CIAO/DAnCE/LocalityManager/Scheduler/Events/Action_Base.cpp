@@ -56,8 +56,6 @@ namespace DAnCE
                                                "Unable to load appropriate instance handler");
           }
 
-        ::CORBA::Any_var instance_excep;
-
         try
           {
             this->invoke (handler.in ());
@@ -69,7 +67,7 @@ namespace DAnCE
                              ACE_TEXT ("Caught CORBA UserException while processing instance ")
                              ACE_TEXT ("<%C>\n"),
                              this->name_.c_str ()));
-            instance_excep = DAnCE::Utility::create_any_from_user_exception (ex);
+            this->instance_excep_ = DAnCE::Utility::create_any_from_user_exception (ex);
           }
         catch (CORBA::SystemException &ex)
           {
@@ -78,7 +76,7 @@ namespace DAnCE
                              ACE_TEXT ("Caught CORBA SystemException while processing instance ")
                              ACE_TEXT ("<%C>\n"),
                              this->name_.c_str ()));
-            instance_excep = DAnCE::Utility::create_any_from_exception (ex);
+            this->instance_excep_ = DAnCE::Utility::create_any_from_exception (ex);
           }
         catch (...)
           {
@@ -92,12 +90,12 @@ namespace DAnCE
                                                "Caught unknown C++ exception from install");
           }
 
-        Event_Result result (this->name_, instance_excep.ptr () != 0);
+        Event_Result result (this->name_, this->instance_excep_.ptr () != 0);
         if (!interceptors.empty ())
           {
             DANCE_DEBUG (10, (LM_TRACE, DLINFO
                               ACE_TEXT ("Action_Base::call - ")
-                              ACE_TEXT ("Invoking post-install interceptors\n")));
+                              ACE_TEXT ("Invoking post-action interceptors\n")));
             for (Plugin_Manager::INTERCEPTORS::const_iterator i = interceptors.begin ();
                 i != interceptors.end ();
                 ++i)
@@ -114,7 +112,7 @@ namespace DAnCE
                               ACE_TEXT ("Action_Base::call - ")
                               ACE_TEXT ("No post-install interceptors; directly propagating result\n")));
             if (result.exception_)
-              result.contents_ = instance_excep._retn ();
+              result.contents_ = this->instance_excep_._retn ();
             else
               this->create_valid_result (result);
           }
