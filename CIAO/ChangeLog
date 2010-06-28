@@ -1,3 +1,89 @@
+Mon Jun 28 13:32:27 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * connectors/dds4ccm/examples/Hello/Connector/Hello_Connector.idl:
+        * connectors/dds4ccm/examples/Large_Deployment/Connector/Large_Connector.idl:
+        * connectors/dds4ccm/examples/Quoter/Connector/Quoter_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/idl/ccm_dds.idl:
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Keyed/Connector/Perf_Keyed_Test_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Latency/Connector/LatencyTT_Test_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Connector/Throughput_Connector.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/SecConnector/Throughput_Sec_Connector.idl:
+        * connectors/dds4ccm/tests/CSLDeadline/Connector/CSL_DeadlineTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Connector/CSL_QoSTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Connector/CSL_SRTest_Connector.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Connector/CSL_USTest_Connector.idl:
+        * connectors/dds4ccm/tests/CoherentUpdater/Connector/CoherentUpdate_Test_Connector.idl:
+        * connectors/dds4ccm/tests/CoherentWriter/Connector/CoherentWrite_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ConnectorFilesInDiffDir/DiffDir_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/CFTNamesClash/Connector/CFT_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Connector/CFTLE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Connector/Exception_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Connector/ReadGet_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Connector/CFTLS_Test_Connector.idl:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+        * connectors/dds4ccm/tests/DoubleNestedModule/Connector/DNM_Connector.idl:
+        * connectors/dds4ccm/tests/Event_Connection_Test/Connector/Event_Connection_Test_Connector.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Connector/FSS_Event_Connector.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Connector/FSS_State_Connector.idl:
+        * connectors/dds4ccm/tests/GetComponent/Event/Connector/GCE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/GetComponent/State/Connector/GCS_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Getter/Connector/Getter_Test_Connector.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/KeyedSamples/Connector/Keyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/KeyedWriter/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/ListenManyByMany/Connector/LMBM_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Connector/LNE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Connector/LOBO_Test_Connector.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule_Connector.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Connector/NonChangeable_Connector.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/ReceiverConnector/OIT_Receiver_Connector.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/SenderConnector/OIT_Sender_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Connector.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Connector.idl:
+        * connectors/dds4ccm/tests/PSAT/ccm_dds_psat.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Connector/PSL_DeadlineTest_Connector.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Connector/PSL_SampleLost_Connector.idl:
+        * connectors/dds4ccm/tests/PortUsage/EventConnector/PortUsageEvent_Connector.idl:
+        * connectors/dds4ccm/tests/PortUsage/StateConnector/PortUsageState_Connector.idl:
+        * connectors/dds4ccm/tests/QosProfile/Connector/QosProfile_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Connector/QCLE_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Connector/ReadGet_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Connector/QCLS_Test_Connector.idl:
+        * connectors/dds4ccm/tests/Reader/Connector/Reader_Test_Connector.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Connector/SL_Disabled_Connector.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Connector/SL_ManyByMany_Connector.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Connector/SL_OneByOne_Connector.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Connector/SetConnectorAttribute_Connector.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector1/Connector1.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector2/Connector2.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Connector3/Connector3.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Connector/State_Connection_Test_Connector.idl:
+        * connectors/dds4ccm/tests/TwoTopics/Connector/TwoTopics_Connector.idl:
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Connector/Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Connector/Unkeyed_Test_Connector.idl:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Connector/Writer_Connector.idl:
+        * connectors/dds4ccm/tests/Updater/Connector/Updater_Connector.idl:
+        * connectors/dds4ccm/tests/UserdataCopyCount/Connector/UCC_Test_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Array/VT_Array_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Seq/VT_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_String/VT_String_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Connector/VTopic_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Array/VTS_Array_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Seq/VTS_Seq_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_String/VTS_String_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Connector/VTopics_Connector.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+          ccm_dds.idl has become a system file.
+
 Mon Jun 28 13:34:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
@@ -7,7 +93,7 @@ Mon Jun 28 13:34:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 Mon Jun 28 13:31:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/MPC/config/dance_split_plan.mpb:
-	  Fix for static link problems.
+          Fix for static link problems.
 
 Mon Jun 28 13:28:09 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

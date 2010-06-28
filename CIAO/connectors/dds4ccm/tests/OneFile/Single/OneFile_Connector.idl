@@ -9,7 +9,8 @@
 #define ONEFILE_CONNECTOR_IDL_
 
 #if defined __TAO_IDL
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
+
+#include <ccm_dds.idl>
 #endif
 
 #pragma ndds typesupport "OneFile_ConnectorSupport.h"

@@ -8,9 +8,10 @@
 #ifndef PSL_SampleLost_CONNECTOR_IDL_
 #define PSL_SampleLost_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/PSL_SampleLost_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/PSL_SampleLost_ConnectorE.idl"
 

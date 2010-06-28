@@ -8,9 +8,10 @@
 #ifndef FIXED_SIZE_STRUCT_EVENT_CONNECTOR_IDL_
 #define FIXED_SIZE_STRUCT_EVENT_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/FSS_Event_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/FSS_Event_ConnectorE.idl"
 #pragma ndds typesupport "Base/FSS_Event_BaseSupport.h"

@@ -8,9 +8,9 @@
 #ifndef SL_MANYBYMANY_CONNECTOR_IDL_
 #define SL_MANYBYMANY_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
 #include "Base/SL_ManyByMany_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/SL_ManyByMany_ConnectorE.idl"
 

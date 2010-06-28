@@ -8,9 +8,10 @@
 #ifndef FIXED_SIZE_STRUCT_STATE_CONNECTOR_IDL_
 #define FIXED_SIZE_STRUCT_STATE_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/FSS_State_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/FSS_State_ConnectorE.idl"
 #pragma ndds typesupport "Base/FSS_State_BaseSupport.h"

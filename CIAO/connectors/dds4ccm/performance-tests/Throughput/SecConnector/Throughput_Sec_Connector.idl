@@ -10,9 +10,10 @@
 #ifndef THROUGHPUT_SEC_CONNECTOR_IDL_
 #define THROUGHPUT_SEC_CONNECTOR_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/Throughput_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "SecConnector/Throughput_Sec_ConnectorE.idl"
 

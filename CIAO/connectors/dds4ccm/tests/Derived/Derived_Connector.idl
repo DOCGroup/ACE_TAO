@@ -4,8 +4,9 @@
 #define NOMODULE_CONNECTOR_IDL
 
 #include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Derived.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Derived_ConnectorE.idl"
 

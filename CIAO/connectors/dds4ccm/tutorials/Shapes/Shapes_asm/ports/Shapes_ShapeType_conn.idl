@@ -3,9 +3,10 @@
 #ifndef SHAPES_SHAPETYPE_CONN_IDL_
 #define SHAPES_SHAPETYPE_CONN_IDL_
 
-#include  <Components.idl>
+#include <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Shapes_msg.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 

@@ -11,8 +11,9 @@
 #define LATENCYTT_TEST_CONNECTOR_IDL_
 
 #include  <Components.idl>
+#include <ccm_dds.idl>
+
 #include "Base/LatencyTT_Test_Base.idl"
-#include "connectors/dds4ccm/idl/ccm_dds.idl"
 
 #pragma ciao lem "Connector/LatencyTT_Test_ConnectorE.idl"
 
