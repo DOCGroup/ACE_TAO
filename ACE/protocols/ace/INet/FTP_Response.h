@@ -124,5 +124,9 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (__ACE_INLINE__)
+#include "ace/INet/FTP_Response.inl"
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_FTP_RESPONSE_H */
