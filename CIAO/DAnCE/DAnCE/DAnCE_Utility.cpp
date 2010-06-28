@@ -397,7 +397,106 @@ namespace DAnCE
       cdr_in >> *tmp;
       return tmp;
     }
-
+    
+    DANCE_STUB_Export bool
+    stringify_exception_from_any (const CORBA::Any &excep,
+                                  std::string &result)
+    {
+      CORBA::TypeCode_ptr tc = excep._tao_get_typecode ();
+      std::string ex_id = tc->id ();
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                        ACE_TEXT("DAnCE::Utility::throw_exception_from_any - ")
+                        ACE_TEXT("Found typecode %C\n"), ex_id.c_str ()));
+      bool flag (false);
+      
+      if (ex_id == Deployment::_tc_PlanError->id ())
+        {
+          result += "PlanError exception -";
+          flag = stringify_exception<Deployment::PlanError> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_StartError->id ())
+        {
+          result += "StartError exception -";
+          flag = stringify_exception<Deployment::StartError> (excep,
+                                                              result);
+        }
+      else if (ex_id == Deployment::_tc_StopError->id ())
+        {
+          result += "StopError exception -";
+          flag = stringify_exception<Deployment::StopError> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_InvalidConnection->id ())
+        {
+          result += "InvalidConnection exception -";
+          flag = stringify_exception<Deployment::InvalidConnection> (excep,
+                                                                     result);
+        }
+      else if (ex_id == Deployment::_tc_InvalidNodeExecParameter->id ())
+        {
+          result += "InvalidNodeExecParameter exception -";
+          flag = stringify_exception<Deployment::InvalidNodeExecParameter> (excep,
+                                                                            result);
+            }
+      else if (ex_id == Deployment::_tc_InvalidProperty->id ())
+        {
+          result += "InvalidProperty exception -";
+          flag = stringify_exception<Deployment::InvalidProperty> (excep,
+                                                                   result);
+        }
+      /* We don't need these, yet. 
+      else if (ex_id == Deployment::_tc_NameExists->id ())
+        {
+          stringify_exception<Deployment::NameExists> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_PackageError->id ())
+        {
+          stringify_exception<Deployment::PackageError> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_NoSuchName->id ())
+        {
+          stringify_exception<Deployment::NoSuchName> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_ResourceCommitmentFailure->id ())
+        {
+          stringify_exception<Deployment::ResourceCommitmentFailure> (excep,
+                                                             result);
+        }
+      else if (ex_id == Deployment::_tc_ResourceNotAvailable->id ())
+        {
+          stringify_exception<Deployment::ResourceNotAvailable> (excep,
+                                                             result);
+        }
+      */
+      else if (ex_id.find ("IDL:omg.org/CORBA/") == 0)
+        {
+          CORBA::SystemException* sysex = TAO::create_system_exception (ex_id.c_str ());
+          if (sysex)
+            {
+              TAO_OutputCDR cdr_out;
+              cdr_out << excep;
+              TAO_InputCDR cdr_in(cdr_out);
+              sysex->_tao_decode (cdr_in);
+              
+              result += "CORBA System Exception: ";
+              result += sysex->_info ().c_str ();
+              flag = true;
+            }
+        }
+      
+      if (!flag)
+        {
+          result += "Unable to decode exception meta-data for ID ";
+          result += ex_id;
+        }
+      
+      return flag;
+    }
+    
   } /* namespace Utility */
 }
 #endif /*DAnCE_Utility_CPP*/
