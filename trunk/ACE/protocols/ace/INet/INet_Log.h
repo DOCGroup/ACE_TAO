@@ -28,9 +28,13 @@ namespace ACE
     };
   }
 
-// By default tracing is turned off.
+// By default tracing is turned on in debugmode, off otherwise
 #if !defined (INET_NTRACE)
-#  define INET_NTRACE 1
+# if defined (NDEBUG)
+#   define INET_NTRACE 1
+# else
+#   define INET_NTRACE 0
+# endif
 #endif /* INET_NTRACE */
 
 #if (INET_NTRACE == 1)
