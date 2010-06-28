@@ -310,6 +310,25 @@
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
     </internalEndpoint>
   </connection>
+  <connection>
+    <name>get_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_filter_config</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
   <!--   DDS_Get mirrorport -->
   <connection>
     <name>get_status_mirrorport</name>
@@ -365,6 +384,25 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>passive_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>read_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_read_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_filter_config</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
@@ -444,6 +482,25 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>listen_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_listen_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_observer_filter_config</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
@@ -542,6 +599,25 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_state_observer_dds_entity</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>statelisten_filter_config_port</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_statelisten_filter_config</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_state_observer_filter_config</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="State_Connection_Test_ConnectorComponentInstance2" />

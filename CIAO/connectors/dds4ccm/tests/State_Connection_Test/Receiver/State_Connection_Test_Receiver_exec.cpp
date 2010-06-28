@@ -16,18 +16,22 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
     : //DDS_Read
       reader_data_ok_ (false),
       reader_dds_entity_ok_ (false),
+      reader_filter_config_ok_ (false),
       //DDS_Get
       getter_data_ok_ (false),
       getter_fresh_data_ok_ (false),
       getter_dds_entity_ok_ (false),
+      getter_filter_config_ok_ (false),
       //DDS_Listen
       listen_data_ok_ (false),
       listen_data_control_ok_ (false),
       listen_dds_entity_ok_ (false),
+      listen_filter_config_ok_ (false),
       //DDS_StateListen
       statelisten_data_ok_ (false),
       statelisten_data_control_ok_ (false),
       statelisten_dds_entity_ok_ (false),
+      statelisten_filter_config_ok_ (false),
       //Provides for DDS_Read
       reader_port_status_created_ (false),
       //Provides for DDS_Get
@@ -111,46 +115,58 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
   Receiver_exec_i::configuration_complete (void)
   {
     //DDS_Read
-    this->reader_data_ =
+    ::State_Connection_Test::State_ConnectionTestConnector::Reader_var reader_data =
       this->context_->get_connection_info_read_data ();
-    this->reader_data_ok_ = ! ::CORBA::is_nil (this->reader_data_);
+    this->reader_data_ok_ = ! ::CORBA::is_nil (reader_data);
 
-    this->reader_dds_entity_ =
+    ::DDS::DataReader_var reader_dds_entity =
       this->context_->get_connection_info_read_dds_entity ();
-    this->reader_dds_entity_ok_ = ! ::CORBA::is_nil (this->reader_dds_entity_);
+    this->reader_dds_entity_ok_ = ! ::CORBA::is_nil (reader_dds_entity);
+    ::CCM_DDS::ContentFilterSetting_var reader_filter_config =
+      this->context_->get_connection_info_read_filter_config ();
+    this->reader_filter_config_ok_ = ! ::CORBA::is_nil (reader_filter_config);
 
     //DDS_Get
-    this->getter_data_ =
+    ::State_Connection_Test::State_ConnectionTestConnector::Reader_var getter_data =
       this->context_->get_connection_info_get_data ();
-    this->getter_data_ok_ = ! ::CORBA::is_nil (this->getter_data_);
-    this->getter_fresh_data_ =
+    this->getter_data_ok_ = ! ::CORBA::is_nil (getter_data);
+    ::State_Connection_Test::State_ConnectionTestConnector::Getter_var getter_fresh_data =
       this->context_->get_connection_info_get_fresh_data ();
-    this->getter_fresh_data_ok_ = ! ::CORBA::is_nil (this->getter_fresh_data_);
-    this->getter_dds_entity_ =
+    this->getter_fresh_data_ok_ = ! ::CORBA::is_nil (getter_fresh_data);
+    ::DDS::DataReader_var getter_dds_entity =
       this->context_->get_connection_info_get_dds_entity ();
-    this->getter_dds_entity_ok_ = ! ::CORBA::is_nil (this->getter_dds_entity_);
+    this->getter_dds_entity_ok_ = ! ::CORBA::is_nil (getter_dds_entity);
+    ::CCM_DDS::ContentFilterSetting_var getter_filter_config =
+      this->context_->get_connection_info_get_filter_config ();
+    this->getter_filter_config_ok_ = ! ::CORBA::is_nil (getter_filter_config);
 
     //DDS_Listen
-    this->listen_data_ =
+    ::State_Connection_Test::State_ConnectionTestConnector::Reader_var listen_data =
       this->context_->get_connection_info_listen_data ();
-    this->listen_data_ok_ = ! ::CORBA::is_nil (this->listen_data_);
-    this->listen_data_control_ =
+    this->listen_data_ok_ = ! ::CORBA::is_nil (listen_data);
+    ::CCM_DDS::DataListenerControl_var  listen_data_control =
       this->context_->get_connection_info_listen_data_control ();
-    this->listen_data_control_ok_ = ! ::CORBA::is_nil (this->listen_data_control_);
-    this->listen_dds_entity_ =
+    this->listen_data_control_ok_ = ! ::CORBA::is_nil (listen_data_control);
+    ::DDS::DataReader_var listen_dds_entity =
       this->context_->get_connection_info_listen_dds_entity ();
-    this->listen_dds_entity_ok_ = ! ::CORBA::is_nil (this->listen_dds_entity_);
+    this->listen_dds_entity_ok_ = ! ::CORBA::is_nil (listen_dds_entity);
+    ::CCM_DDS::ContentFilterSetting_var listen_filter_config =
+      this->context_->get_connection_info_listen_filter_config ();
+    this->listen_filter_config_ok_ = ! ::CORBA::is_nil (listen_filter_config);
 
     //DDS_StateListen
-    this->statelisten_data_ =
+    ::State_Connection_Test::State_ConnectionTestConnector::Reader_var statelisten_data =
       this->context_->get_connection_info_statelisten_data ();
-    this->statelisten_data_ok_ = ! ::CORBA::is_nil (this->statelisten_data_);
-    this->statelisten_data_control_ =
+    this->statelisten_data_ok_ = ! ::CORBA::is_nil (statelisten_data);
+    ::CCM_DDS::StateListenerControl_var statelisten_data_control =
       this->context_->get_connection_info_statelisten_data_control ();
-    this->statelisten_data_control_ok_ = ! ::CORBA::is_nil (this->statelisten_data_control_);
-    this->statelisten_dds_entity_ =
+    this->statelisten_data_control_ok_ = ! ::CORBA::is_nil (statelisten_data_control);
+    ::DDS::DataReader_var statelisten_dds_entity =
       this->context_->get_connection_info_statelisten_dds_entity ();
-    this->statelisten_dds_entity_ok_ = ! ::CORBA::is_nil (this->statelisten_dds_entity_);
+    this->statelisten_dds_entity_ok_ = ! ::CORBA::is_nil (statelisten_dds_entity);
+    ::CCM_DDS::ContentFilterSetting_var statelisten_filter_config =
+      this->context_->get_connection_info_statelisten_filter_config ();
+    this->statelisten_filter_config_ok_ = ! ::CORBA::is_nil (statelisten_filter_config);
   }
 
   void
@@ -183,6 +199,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Read passed\n")));
       }
+    if (!this->reader_filter_config_ok_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get filter config of DDS_Read failed\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get filter config of DDS_Read passed\n")));
+      }
     //DDS_Get
     if (!this->getter_data_ok_)
       {
@@ -209,6 +233,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Get passed\n")));
       }
+    if (!this->getter_filter_config_ok_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get filter config of DDS_Get failed\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get filter config of DDS_Get passed\n")));
+      }
     //DDS_Listen
     if (!this->listen_data_ok_)
       {
@@ -234,6 +266,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_Listen passed\n")));
       }
+    if (!this->listen_filter_config_ok_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get filter config of DDS_Listen failed\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get filter config of DDS_Listen passed\n")));
+      }
     //DDS_StateListen
     if (!this->statelisten_data_ok_)
       {
@@ -258,6 +298,14 @@ namespace CIAO_State_Connection_Test_Receiver_Impl
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get DDS reader of DDS_StateListen passed\n")));
+      }
+    if (!this->statelisten_filter_config_ok_)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver : get filter config of DDS_StateListen failed\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver : Get filter config of DDS_StateListen passed\n")));
       }
     //Provides for DDS_Read
     if (!this->reader_port_status_created_)

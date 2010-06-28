@@ -12,7 +12,7 @@ $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
-$TUTORIAL_BIN_ROOT = "$ENV{'CIAO_ROOT'}". "/docs/tutorials/Quoter/Simple/lib";
+$TUTORIAL_BIN_ROOT = "$ENV{'CIAO_ROOT'}". "/tutorials/Quoter/Simple/lib";
 
 $daemons_running = 0;
 $em_running = 0;
