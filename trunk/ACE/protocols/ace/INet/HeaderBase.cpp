@@ -7,6 +7,8 @@
 #include "ace/INet/HeaderBase.inl"
 #endif
 
+#include "ace/INet/INet_Log.h"
+
 ACE_RCSID(NET_CLIENT,ACE_INet_HeaderBase,"$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -52,6 +54,11 @@ namespace ACE
         for (it.first (); !it.done () ;it.advance ())
         {
           str << (*it).first ().c_str () << ": " << (*it).second ().c_str () << "\r\n";
+
+          INET_DEBUG (9, (LM_DEBUG, DLINFO
+                          ACE_TEXT ("ACE_INet_HTTP: +-> %C: %C\n"),
+                          (*it).first ().c_str (),
+                          (*it).second ().c_str ()));
         }
       }
 
@@ -105,6 +112,11 @@ namespace ACE
             }
 
             this->add (name, value);
+
+            INET_DEBUG (9, (LM_DEBUG, DLINFO
+                            ACE_TEXT ("ACE_INet_HTTP: <-+ %C: %C\n"),
+                            name.c_str (),
+                            value.c_str ()));
           }
         return true;
       }

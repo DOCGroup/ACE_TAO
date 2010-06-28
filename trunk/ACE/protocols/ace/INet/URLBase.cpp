@@ -341,6 +341,8 @@ namespace ACE
         return sos.str ();
       }
 
+    URL_INetAuthBase::authenticator_map URL_INetAuthBase::authenticators_;
+
     URL_INetAuthBase::URL_INetAuthBase (u_short port)
       : URL_INetBase (port)
       {
@@ -389,6 +391,60 @@ namespace ACE
           }
 
         return ch;
+      }
+
+    bool URL_INetAuthBase::add_authenticator (const ACE_CString& auth_id,
+                                             AuthenticatorBase* authenticator)
+      {
+        if (URL_INetAuthBase::authenticators_.find (auth_id) == -1)
+          {
+            return URL_INetAuthBase::authenticators_.bind (auth_id,
+                                                           authenticator_ptr (authenticator)) == 0;
+          }
+        return false;
+      }
+
+    bool URL_INetAuthBase::has_authenticator (const ACE_CString& auth_id)
+      {
+        return (URL_INetAuthBase::authenticators_.find (auth_id) == 0);
+      }
+
+    AuthenticatorBase* URL_INetAuthBase::remove_authenticator (const ACE_CString& auth_id)
+      {
+        authenticator_ptr auth;
+        if (URL_INetAuthBase::authenticators_.unbind (auth_id, auth) == 0)
+          {
+            auth.release ();
+          }
+        return 0;
+      }
+
+    bool URL_INetAuthBase::authenticate (AuthenticationBase& authentication)
+      {
+        ACE_GUARD_RETURN (ACE_SYNCH::RECURSIVE_MUTEX,
+                          _guard,
+                          URL_INetAuthBase::authenticators_.mutex (),
+                          false);
+
+        authenticator_map::iterator it = URL_INetAuthBase::authenticators_.begin ();
+        for (; it != URL_INetAuthBase::authenticators_.end ();
+             ++it)
+          {
+            authenticator_ptr auth_ptr = (*it).int_id_;
+
+            // release lock before calling user code
+            if (URL_INetAuthBase::authenticators_.mutex ().release () != 0)
+              return false;
+
+            if (auth_ptr->authenticate (authentication))
+              return true;
+
+            // re-acquire lock
+            if (URL_INetAuthBase::authenticators_.mutex ().acquire () != 0)
+              return false;
+          }
+
+        return false;
       }
   }
 }

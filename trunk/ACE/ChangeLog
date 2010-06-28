@@ -1,3 +1,46 @@
+Mon Jun 28 09:53:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* AuthenticationBase.cpp:
+	* AuthenticationBase.h:
+	* AuthenticationBase.inl:
+	* FTP_ClientRequestHandler.cpp:
+	* FTP_ClientRequestHandler.h:
+	* FTP_ClientRequestHandler.inl:
+	* FTP_IOStream.cpp:
+	* FTP_IOStream.h:
+	* FTP_IOStream.inl:
+	* FTP_Request.cpp:
+	* FTP_Request.h:
+	* FTP_Request.inl:
+	* FTP_Response.cpp:
+	* FTP_Response.h:
+	* FTP_Response.inl:
+	* FTP_Session.cpp:
+	* FTP_Session.h:
+	* FTP_Simple_exec.cpp:
+	* FTP_URL.cpp:
+	* FTP_URL.h:
+	* FTP_URL.inl:
+	* INet_Log.cpp:
+	* INet_Log.h:
+	* ConnectionCache.cpp:
+	* HeaderBase.cpp:
+	* HTTP_ClientRequestHandler.cpp:
+	* HTTP_ClientRequestHandler.h:
+	* HTTP_Request.cpp:
+	* HTTP_Response.cpp:
+	* HTTP_Session.cpp:
+	* HTTP_Simple_exec.cpp:
+	* StreamHandler.cpp:
+	* URLBase.cpp:
+	* URLBase.h:
+	* inet.mpc:
+	  Added library specific logging and logging macros. Use INET_LOG_LEVEL
+	  environment variable to control.
+	  Added FTP URL and protocol (clientside) support.
+	  Added basic authentication handling (currently only used with FTP).
+	  Some minor cleanup and fixes.
+
 Fri Jun 24 19:10:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* HTTP_Simple_exec.cpp:

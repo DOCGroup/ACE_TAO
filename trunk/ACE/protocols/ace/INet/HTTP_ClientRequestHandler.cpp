@@ -38,7 +38,7 @@ namespace ACE
     ClientRequestHandler::SessionFactory::create_connection (
         const ACE::INet::ConnectionKey& key) const
       {
-        ACE_TRACE ("ClientRequestHandler::SessionFactory::create_connection");
+        INET_TRACE ("ClientRequestHandler::SessionFactory::create_connection");
 
         const INetConnectionKey& ikey = dynamic_cast<const INetConnectionKey&> (key);
 
@@ -100,12 +100,8 @@ namespace ACE
 
             this->initialize_request (http_url, this->request_);
 
-            if (this->session ()->send_request (this->request_) &&
-                this->session ()->receive_response (this->response_))
-              {
-                this->handle_response (http_url, this->response_);
-              }
-            else
+            if (!this->session ()->send_request (this->request_) ||
+                !this->session ()->receive_response (this->response_))
               {
                 this->close_connection ();
 
@@ -143,15 +139,6 @@ namespace ACE
       }
 
     void ClientRequestHandler::initialize_request (const URL& /*url*/, Request& /*request*/)
-      {
-      }
-
-    bool ClientRequestHandler::send_request (std::ostream& /*request_stream*/)
-      {
-        return true;
-      }
-
-    void ClientRequestHandler::handle_response (const URL& /*url*/, const Response& /*response*/)
       {
       }
 

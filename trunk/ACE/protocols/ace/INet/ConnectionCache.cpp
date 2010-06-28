@@ -6,6 +6,8 @@
 #include "ace/INet/ConnectionCache.inl"
 #endif
 
+#include "ace/INet/INet_Log.h"
+
 ACE_RCSID(NET_CLIENT,ACE_INet_ConnectionCache,"$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -135,7 +137,7 @@ namespace ACE
                                                     connection_type*& connection,
                                                     ConnectionCacheValue::State& state)
       {
-        ACE_TRACE ("ConnectionCache::claim_existing_connection");
+        INET_TRACE ("ConnectionCache::claim_existing_connection");
 
         ConnectionCacheValue cacheval;
         if (this->find_connection (key, cacheval))
@@ -164,7 +166,7 @@ namespace ACE
                                            const factory_type& connection_factory,
                                            bool wait)
       {
-        ACE_TRACE ("ConnectionCache::claim_connection");
+        INET_TRACE ("ConnectionCache::claim_connection");
 
         while (1)
           {
@@ -232,7 +234,7 @@ namespace ACE
     bool ConnectionCache::release_connection(const ConnectionKey& key,
                                              connection_type* connection)
       {
-        ACE_TRACE ("ConnectionCache::release_connection");
+        INET_TRACE ("ConnectionCache::release_connection");
 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                   guard_,
@@ -265,7 +267,7 @@ namespace ACE
     bool ConnectionCache::close_connection(const ConnectionKey& key,
                                            connection_type* connection)
       {
-        ACE_TRACE ("ConnectionCache::close_connection");
+        INET_TRACE ("ConnectionCache::close_connection");
 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                   guard_,
@@ -300,7 +302,7 @@ namespace ACE
 
     bool ConnectionCache::has_connection(const ConnectionKey& key)
       {
-        ACE_TRACE ("ConnectionCache::has_connection");
+        INET_TRACE ("ConnectionCache::has_connection");
 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                   guard_,
@@ -314,7 +316,7 @@ namespace ACE
 
     void ConnectionCache::close_all_connections()
       {
-        ACE_TRACE ("ConnectionCache::close_all_connections");
+        INET_TRACE ("ConnectionCache::close_all_connections");
 
         ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
                            guard_,
