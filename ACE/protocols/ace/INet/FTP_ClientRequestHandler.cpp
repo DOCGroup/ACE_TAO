@@ -66,9 +66,12 @@ namespace ACE
 
     ClientRequestHandler::Authentication::Authentication (
         const ACE_CString& realm,
-        const ACE_CString& user,
-        const ACE_CString& pw)
-      : AuthenticationBase (realm, user, pw)
+        ACE_CString& user,
+        ACE_CString& pw)
+      : AuthenticationBase (),
+        realm_ (realm),
+        user_ (user),
+        password_ (pw)
       {
       }
 
@@ -77,6 +80,31 @@ namespace ACE
     const ACE_CString& ClientRequestHandler::Authentication::scheme () const
       {
         return URL::PROTOCOL;
+      }
+
+    const ACE_CString& ClientRequestHandler::Authentication::realm () const
+      {
+        return this->realm_;
+      }
+
+    const ACE_CString& ClientRequestHandler::Authentication::user () const
+      {
+        return this->user_;
+      }
+
+    void ClientRequestHandler::Authentication::user (const ACE_CString& usr)
+      {
+        this->user_ = usr;
+      }
+
+    const ACE_CString& ClientRequestHandler::Authentication::password () const
+      {
+        return this->password_;
+      }
+
+    void ClientRequestHandler::Authentication::password (const ACE_CString& pw)
+      {
+        this->password_ = pw;
       }
 
     const ACE_CString ClientRequestHandler::anonymous_user_ = "anonymous";
@@ -200,13 +228,7 @@ namespace ACE
         Authentication authentication (url.get_host(),
                                        user,
                                        password);
-        if (URL::authenticate (authentication))
-          {
-            user = authentication.user ();
-            password = authentication.password ();
-            return true;
-          }
-        return false;
+        return URL::authenticate (authentication);
       }
 
     void ClientRequestHandler::handle_request_error (const URL& /*url*/)

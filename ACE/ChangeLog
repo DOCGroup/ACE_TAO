@@ -1,3 +1,21 @@
+Tue Jun 29 10:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/ace/INet/AuthenticationBase.h:
+	* protocols/ace/INet/AuthenticationBase.inl:
+	* protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+	* protocols/ace/INet/FTP_ClientRequestHandler.h:
+	  Small optimization for authentication (avoid copies).
+	  Added documentation.
+
+	* protocols/ace/INet/BufferedStreamBuffer.h:
+	  Added documentation.
+
+	* protocols/ace/INet/ConnectionCache.cpp:
+	* protocols/ace/INet/ConnectionCache.h:
+	* protocols/ace/INet/ConnectionCache.inl:
+	  Fixed close_connection.
+	  Added documentation.
+
 Tue Jun 29 09:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/FTP_ClientRequestHandler.inl:

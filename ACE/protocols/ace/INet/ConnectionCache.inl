@@ -92,16 +92,6 @@ namespace ACE
         return this->cache_map_.current_size ();
       }
 
-    ACE_INLINE
-    size_t ConnectionCache::maximum_size () const
-      {
-        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                                  guard_,
-                                  this->lock_,
-                                  false));
-        return this->cache_map_.total_size ();
-      }
-
   }
 }
 

@@ -277,7 +277,7 @@ namespace ACE
         ConnectionCacheValue cacheval;
         if (this->find_connection (key, cacheval) &&
               cacheval.connection () == connection &&
-              cacheval.state () == ConnectionCacheValue::CST_IDLE)
+              cacheval.state () == ConnectionCacheValue::CST_BUSY)
           {
             connection_type* conn = cacheval.connection ();
             cacheval.connection (0);
