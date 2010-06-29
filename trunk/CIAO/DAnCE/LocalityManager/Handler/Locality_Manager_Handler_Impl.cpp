@@ -130,17 +130,17 @@ namespace DAnCE
                                        ::CORBA::ULong,
                                        const ::CORBA::Any &instance_reference)
   {
-    LocalityManager_var lm_ref;
+    LocalityManager_ptr lm_ref;
 
     if (!(instance_reference >>= lm_ref) ||
-        CORBA::is_nil (lm_ref.in ()))
+        CORBA::is_nil (lm_ref))
       {
         DANCE_ERROR (1, (LM_ERROR, DLINFO
                          ACE_TEXT ("Locality_Handler_i::remove_instance - "),
                          ACE_TEXT ("Unable to extract valid LocalityManager ")
                          ACE_TEXT ("reference from parameter\n")));
       }
-    this->activator_->remove_locality_manager (lm_ref.in ());
+    this->activator_->remove_locality_manager (lm_ref);
   }
 
   void

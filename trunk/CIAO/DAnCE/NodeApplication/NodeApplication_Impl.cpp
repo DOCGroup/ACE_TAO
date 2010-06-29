@@ -55,7 +55,7 @@ NodeApplication_Impl::NodeApplication_Impl (CORBA::ORB_ptr orb,
   // Spawn thread pool
   // @Todo:  We can probably move this up into the NodeManager and
   // share the thread pool among several node applications.
-  this->scheduler_.activate_scheduler (10);
+  this->scheduler_.activate_scheduler (0);
 }
 
 NodeApplication_Impl::~NodeApplication_Impl()
