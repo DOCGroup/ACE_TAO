@@ -62,7 +62,6 @@ NodeApplication_Impl::~NodeApplication_Impl()
 {
   DANCE_TRACE( "NodeApplication_Impl::~NodeApplication_Impl()");
   this->scheduler_.terminate_scheduler ();
-  PLUGIN_MANAGER::close ();
 }
 
 void

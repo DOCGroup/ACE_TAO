@@ -84,6 +84,8 @@ namespace DAnCE
                           ACE_TEXT("NodeApplicationManager %C\n"), (*iter).ext_id_.c_str ()));
           }
       }
+    
+    PLUGIN_MANAGER::close ();
   }
 
   void
