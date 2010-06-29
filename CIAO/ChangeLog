@@ -1,3 +1,12 @@
+Tue Jun 29 13:09:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeManager-NodeApplicationManager/NodeManager-NodeApplicationManager.mpc:
+          Fixed nmake warning
+
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+          Cleanup code
+
 Tue Jun 29 12:42:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
