@@ -1,3 +1,8 @@
+Tue Jun 29 14:35:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/docs/TestCoverage.odt
+        New doc, describing AMI4CCM tests.
+
 Tue Jun 29 14:29:36 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * DAnCE/MPC/config/dance_split_plan.mpb:
