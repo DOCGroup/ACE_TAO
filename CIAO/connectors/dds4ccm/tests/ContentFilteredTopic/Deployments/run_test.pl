@@ -28,12 +28,6 @@ $ior_nsfile = 0;
 $ior_embase = "EM.ior";
 $ior_emfile = 0;
 
-#Redirect the screen output to the null device.
-open (OLDOUT, ">&STDOUT");
-open (STDOUT, ">" . File::Spec->devnull());
-open (OLDERR, ">&STDERR");
-open (STDERR, ">&STDOUT");
-
 #  Processes
 $E = 0;
 $EM = 0;
@@ -201,7 +195,7 @@ foreach $file (@files) {
     # Invoke executor - start the application -.
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-x $file -k file://$ior_emfile");
+                                      "-x $file -k file://$ior_emfile -q");
     $pl_status = $E->SpawnWaitKill (5 * $tg_executor->ProcessStartWaitInterval ());
     if ($pl_status != 0) {
         print "OK: dance_plan_launcher reported a problem <$pl_status>\n";
