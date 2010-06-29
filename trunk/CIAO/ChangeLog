@@ -1,3 +1,11 @@
+Tue Jun 29 12:42:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html
+        Changes text and layout
+
 Tue Jun 29 12:29:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/run_test.pl:
@@ -72,7 +80,7 @@ Tue Jun 29 08:40:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
         * tutorials/Quoter/Simple/Distributor/StockDistributorDriver.cpp:
           Code layout.
 
-Tue Jun 22 08:37:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+Tue Jun 29 08:37:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
         * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
