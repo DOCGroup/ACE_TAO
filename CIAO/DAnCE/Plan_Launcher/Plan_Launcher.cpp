@@ -39,7 +39,8 @@ namespace
         output_ (false),
         output_prefix_ (0),
         mode_ (LAUNCH),
-        force_ (false)
+        force_ (false),
+        quiet_ (false)
     {}
 
     const ACE_TCHAR *em_ior_;
@@ -53,6 +54,7 @@ namespace
     const ACE_TCHAR *output_prefix_;
     MODE mode_;
     bool force_;
+    bool quiet_;
   };
 }
 
@@ -104,6 +106,7 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("to plan UUID if plan is provided. ")
               ACE_TEXT ("Default is on for NM-based deployments.\n")
 
+              ACE_TEXT ("\t-q|--quiet\t\t\tSupress error messages.\n")
               ACE_TEXT ("\t-h|--help\t\t\tShow this usage information\n")
               ));
 }
@@ -119,7 +122,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   ACE_Get_Opt get_opt(argc, argv,
-                      ACE_TEXT ("k:n:c:x:u:m:a:lsfo::h"));
+                      ACE_TEXT ("k:n:c:x:u:m:a:lsfqo::h"));
   get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
@@ -130,6 +133,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("launch-plan"), 'l', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("stop-plan"), 's', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("force"), 'f', ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("quiet"), 'q', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
 
@@ -247,6 +251,13 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
 
           break;
 
+        case 'q':
+          options.quiet_ = true;
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                           ACE_TEXT ("Plan_Launcher::parse_args - ")
+                           ACE_TEXT ("Plan_Launcher will hide all ouput")
+                           ACE_TEXT ("messages.\n")));
+          break;
         case 'h':
           usage (argv[0]);
           return false;
@@ -371,23 +382,32 @@ int launch_plan (const Options &opts,
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                  ACE_TEXT ("Deployment failed, exception: %C\n"),
-                  ex.ex_.c_str ()));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                      ACE_TEXT ("Deployment failed, exception: %C\n"),
+                      ex.ex_.c_str ()));
+        }
       return 1;
     }
   catch (const CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                  ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
-                  ex._info ().c_str ()));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                      ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
+                      ex._info ().c_str ()));
+        }
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                  ACE_TEXT ("Deployment failed, ")
-                  ACE_TEXT ("caught unknown C++ exception\n")));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                      ACE_TEXT ("Deployment failed, ")
+                      ACE_TEXT ("caught unknown C++ exception\n")));
+        }
       return 1;
     }
 
@@ -461,23 +481,36 @@ int teardown_plan (const Options &opts,
         }
       catch (const DAnCE::Deployment_Failure &ex)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                    ACE_TEXT ("Application Teardown failed, exception: %C\n"),
-                    ex.ex_.c_str ()));
+          if (!opts.quiet_)
+            {
+              ACE_ERROR ((LM_ERROR, DLINFO
+                        ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                        ACE_TEXT ("Application Teardown failed, exception: %C\n"),
+                        ex.ex_.c_str ()));
+            }
           rc = 1;
         }
       catch (const CORBA::Exception &ex)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                      ACE_TEXT ("Application Teardown failed, caught CORBA exception %C\n"),
-                      ex._info ().c_str ()));
+          if (!opts.quiet_)
+            {
+              ACE_ERROR ((LM_ERROR, DLINFO
+                          ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                          ACE_TEXT ("Application Teardown failed, ")
+                          ACE_TEXT ("caught CORBA exception %C\n"),
+                          ex._info ().c_str ()));
+            }
           rc = 1;
         }
       catch (...)
         {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                      ACE_TEXT ("Application Teardown failed, ")
-                      ACE_TEXT ("caught unknown C++ exception\n")));
+          if (!opts.quiet_)
+            {
+              ACE_ERROR ((LM_ERROR, DLINFO
+                          ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                          ACE_TEXT ("Application Teardown failed, ")
+                          ACE_TEXT ("caught unknown C++ exception\n")));
+            }
           rc = 1;
         }
 
@@ -486,23 +519,35 @@ int teardown_plan (const Options &opts,
     }
   catch (const DAnCE::Deployment_Failure &ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                 ACE_TEXT ("Teardown failed, exception: %C\n"),
-                 ex.ex_.c_str ()));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO
+                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                      ACE_TEXT ("Teardown failed, exception: %C\n"),
+                      ex.ex_.c_str ()));
+        }
       return 1;
     }
   catch (const CORBA::Exception &ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                  ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
-                  ex._info ().c_str ()));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO
+                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                      ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
+                      ex._info ().c_str ()));
+        }
       return 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                  ACE_TEXT ("Teardown failed, ")
-                  ACE_TEXT ("caught unknown C++ exception\n")));
+      if (!opts.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO
+                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
+                      ACE_TEXT ("Teardown failed, ")
+                      ACE_TEXT ("caught unknown C++ exception\n")));
+        }
       return 1;
     }
 
@@ -530,6 +575,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int retval = 0;
 
+  Options options;
+
   try
     {
       DAnCE::Logger_Service * dlf =
@@ -547,7 +594,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ORB_Destroyer safe_orb (orb);
 
-      Options options;
       if (!parse_args (argc, argv, options))
         {
           return 1;
@@ -567,10 +613,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (CORBA::is_nil (tmp_em.in ()))
             {
-              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                          ACE_TEXT ("Unable to resolve ")
-                          ACE_TEXT ("ExecutionManager reference <%s>\n"),
-                          options.em_ior_));
+              if (!options.quiet_)
+                {
+                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                              ACE_TEXT ("Unable to resolve ")
+                              ACE_TEXT ("ExecutionManager reference <%s>\n"),
+                              options.em_ior_));
+                }
               return 1;
             }
 
@@ -592,10 +641,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (CORBA::is_nil (tmp_em.in ()))
             {
-              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                          ACE_TEXT ("Unable to resolve ")
-                          ACE_TEXT ("NodeManager reference <%s>\n"),
-                          options.em_ior_));
+              if (!options.quiet_)
+                {
+                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                              ACE_TEXT ("Unable to resolve ")
+                              ACE_TEXT ("NodeManager reference <%s>\n"),
+                              options.em_ior_));
+                }
               return 1;
             }
 
@@ -616,9 +668,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dp = DAnCE::Convert_Plan::read_cdr_plan (options.cdr_plan_);
           if (!dp.ptr ())
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
-                          ACE_TEXT ("PlanLauncher - ")
-                          ACE_TEXT ("Error: Unable to read in CDR plan\n")));
+              if (!options.quiet_)
+                {
+                  ACE_ERROR ((LM_ERROR, DLINFO
+                              ACE_TEXT ("PlanLauncher - ")
+                              ACE_TEXT ("Error: Unable to read ")
+                              ACE_TEXT ("in CDR plan\n")));
+                }
               return 1;
             }
         }
@@ -628,9 +684,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (!dp.ptr ())
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
-                          ACE_TEXT ("PlanLauncher - Error: ")
-                          ACE_TEXT ("Unable to read in XML plan\n")));
+              if (!options.quiet_)
+                {
+                  ACE_ERROR ((LM_ERROR, DLINFO
+                              ACE_TEXT ("PlanLauncher - Error: ")
+                              ACE_TEXT ("Unable to read in XML plan\n")));
+                }
               return 1;
             }
         }
@@ -647,36 +706,51 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         default:
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
-                      ACE_TEXT ("Mode not yet supported\n")));
+          if (!options.quiet_)
+            {
+              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
+                          ACE_TEXT ("Mode not yet supported\n")));
+            }
           break;
 
         };
     }
   catch (const Deployment::PlanError &ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
-                  ACE_TEXT ("Error in plan: <%C>, <%C>\n"),
-                  ex.name.in (),
-                  ex.reason.in ()));
+      if (!options.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
+                      ACE_TEXT ("Error in plan: <%C>, <%C>\n"),
+                      ex.name.in (),
+                      ex.reason.in ()));
+        }
       retval = -1;
     }
   catch (const DAnCE::Deployment_Failure& e)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
-                  ACE_TEXT ("Error: %C.\n"), e.ex_.c_str()));
+      if (!options.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
+                      ACE_TEXT ("Error: %C.\n"), e.ex_.c_str()));
+        }
       retval = 1;
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ( "PlanLauncher - ")
-                  ACE_TEXT ("Error: %C\n"), ex._info ().c_str ()));
+      if (!options.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ( "PlanLauncher - ")
+                      ACE_TEXT ("Error: %C\n"), ex._info ().c_str ()));
+        }
       retval = 1;
     }
   catch (...)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("PlanLauncher - ")
-                  ACE_TEXT ("Error: Unknown exception.\n")));
+      if (!options.quiet_)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("PlanLauncher - ")
+                      ACE_TEXT ("Error: Unknown exception.\n")));
+        }
       retval = 1;
     }
 

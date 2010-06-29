@@ -1,3 +1,11 @@
+Tue Jun 29 12:06:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Added -q (quiet) option. This will suppress error messages.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+          Using the -q option on the plan launcher
+
 Tue Jun 29 11:30:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/MPC/config/dance_artifact_installation.mpb:
@@ -23,7 +31,7 @@ Tue Jun 29 11:30:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * MPC/config/dds4ccm_ts_default.mpb:
           Added missing
           // -*- MPC -*-
- 
+
 Tue Jun 29 11:09:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:

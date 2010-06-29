@@ -201,7 +201,7 @@ print "Invoking executor - launch the application -\n";
 
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-x $cdp_file -k file://$ior_emfile");
+                        "-x $cdp_file -k file://$ior_emfile -q");
 $pl_status = $E->SpawnWaitKill ($tg_executor->ProcessStartWaitInterval ());
 
 if ($pl_status != 0) {
