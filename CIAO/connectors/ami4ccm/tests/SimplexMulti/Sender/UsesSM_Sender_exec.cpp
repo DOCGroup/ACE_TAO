@@ -30,7 +30,7 @@ namespace CIAO_UsesSM_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchroon callback from foo,"
+    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from foo,"
                            " answer = <%C>\n",
                            answer));
      ++nr_of_received;
@@ -59,7 +59,7 @@ namespace CIAO_UsesSM_Sender_Impl
   void
   Two_callback_exec_i::bar (const char * answer)
   {
-     ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchroon callback from bar,"
+     ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from bar,"
                            " answer = <%C>\n",
                            answer));
      ++nr_of_received;

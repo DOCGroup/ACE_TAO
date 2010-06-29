@@ -1,3 +1,13 @@
+Tue Jun 22 08:37:04 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
+        Cleanup code.
+
 Mon Jun 28 23:55:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Properties.idl:

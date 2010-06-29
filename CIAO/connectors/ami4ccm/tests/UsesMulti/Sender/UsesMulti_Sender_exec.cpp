@@ -31,7 +31,7 @@ namespace CIAO_UsesMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchroon callback from foo,"
+    ACE_DEBUG ((LM_DEBUG, "Sender: Get asynchronous callback from foo,"
                            " answer = <%C>\n",
                            answer));
      ++nr_of_received;
