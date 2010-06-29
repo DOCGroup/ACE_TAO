@@ -54,7 +54,8 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     standalone_ (false),
     server_args_ (0),
     domain_nc_ (0),
-    instance_nc_ (0)
+    instance_nc_ (0),
+    best_effort_ (false)
 {
 }
 
@@ -92,6 +93,7 @@ DAnCE_NodeManager_Module::usage (void)
     "\t-t|--timeout\t\t default timeout in seconds to wait for component server spawn\n"
     "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
+    "\t--best-effort\t\t Instruct the node manager and the default behavior for locality managers to be best effort."
     "\t-h|help\t\t\t print this help message\n";
 }
 
@@ -116,9 +118,10 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("standalone-nm"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("timeout"), 't', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("domain-nc"), 'd', ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT("best-effort"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("instance-nc"), ACE_Get_Opt::ARG_REQUIRED);
-
+  
   //get_opts.long_option ("help", '?');
 
   int c;
@@ -205,6 +208,13 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
               this->options_.server_args_ = get_opts.opt_arg ();
             }
           else if (ACE_OS::strcmp (get_opts.long_option (),
+                                   ACE_TEXT("best-effort")) == 0)
+            {
+              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
+                               ACE_TEXT("Using best effort deploment semantics\n")));
+              this->options_.best_effort_ = true;
+            }
+          else if (ACE_OS::strcmp (get_opts.long_option (),
                                    ACE_TEXT("instance-nc")) == 0)
             {
               if (get_opts.opt_arg () == 0)
@@ -212,7 +222,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
                   if (this->options_.domain_nc_ == 0)
                     {
                       DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
-                                    ACE_TEXT("ERROR: instance-nc provided no argument, but domain-nc did not appear before.\n")));
+                                       ACE_TEXT("ERROR: instance-nc provided no argument, ")
+                                       ACE_TEXT("but domain-nc did not appear before.\n")));
                       DANCE_ERROR_RETURN (1, (LM_ERROR, this->usage (), argv[0], c), false);
                     }
                   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
@@ -619,6 +630,12 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &pr
       CORBA::Any val;
       val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.domain_nc_)), 0);
       props.bind (DAnCE::DOMAIN_NC, val);
+    }
+  if (this->options_.best_effort_)
+    {
+      CORBA::Any val;
+      val <<= CORBA::Any::from_boolean (true);
+      props.bind (DAnCE::LOCALITY_BESTEFFORT, val);
     }
 }
 

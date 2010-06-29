@@ -21,6 +21,24 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 
 . The ACE_FOR_TAO MPC feature is not supported anymore for CIAO
 
+. The DeploymentInterceptor interfaces have been merged into
+  a single interface.
+
+. All currently defined interception points are currently invoked
+  at the locality level when deploying plans.
+
+. The NodeApplication and LocalitManager have been refactored to use
+  a thread pool based dispatching system for executing deployment actions.
+  This allows the NodeApplication to use multiple threads to spawn new 
+  dance_locality_manager processes.  The LocalityManager will, for the 
+  time being, be restricted to using only the ORB thread for dispatching
+  deployment events.
+
+. Most deployment errors are now passed to installed deployment interceptors.
+  DAnCE will include interceptors for extant semantics (first failure) and
+  initial support for best effort semantics, whereby deployment failures are
+  logged by otherwise ignored.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
 
