@@ -5,6 +5,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "ace/OS_Memory.h"
 
+#include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
 
 #ifdef GEN_OSTREAM_OPS
@@ -43,8 +44,12 @@ namespace DAnCE
     PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
                                                                 ACE_TEXT_CHAR_TO_TCHAR ("create_Locality_Handler"));
     
-    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+    if (this->properties_.find (DAnCE::LOCALITY_BESTEFFORT) == 0)
+      PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
+                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+    else
+      PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
+                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
 
     DANCE_DEBUG (8, (LM_INFO, DLINFO
                      ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")

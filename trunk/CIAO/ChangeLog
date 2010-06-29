@@ -1,3 +1,28 @@
+Mon Jun 28 23:55:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+
+          Additional documentation, and added a temporary property to trigger
+          best effort deployment.
+
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+
+          New specialization for extracting boolean values from property
+          sequences.
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Added code to optionally enable best effort deployment semantics,
+          controlled by --best-effort to the NodeManager at startup.
+
+        * NEWS:
+
+          Updates.
+
 Mon Jun 28 19:53:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
