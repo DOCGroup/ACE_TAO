@@ -16,7 +16,7 @@ class Get_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Get_Task (ACE_Thread_Manager *thr_mgr,
-            size_t n_threads);
+            int n_threads);
 
   virtual int svc (void);
 
@@ -25,13 +25,13 @@ public:
 private:
   void shutdown ();
 
-  size_t n_threads_;
+  int n_threads_;
   ACE_Array<ACE_CString>  results_;
   ACE_SYNCH_MUTEX lock_;
 };
 
 Get_Task::Get_Task (ACE_Thread_Manager *thr_mgr,
-                    size_t n_threads)
+                    int n_threads)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     n_threads_ (n_threads)
 {
@@ -47,7 +47,7 @@ void Get_Task::shutdown ()
              lock_);
 
   --n_threads_;
-  if (n_threads_ == 0)
+  if (n_threads_ >= 0)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) ending event loop\n")));
       ACE_Reactor::instance ()->end_event_loop ();
@@ -85,6 +85,11 @@ int Get_Task::svc ()
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to open URL %C\n"), http_url.to_string ().c_str ()));
       shutdown ();
     }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) failed to parse URL : result = %C\n"),
+                            http_url.to_string ().c_str ()));
+    }
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) task finished\n")));
 
@@ -103,7 +108,7 @@ public:
 
   virtual int svc (void);
 
-  size_t failures ();
+  int failures ();
 
 private:
   const char* get_url ();
@@ -112,10 +117,10 @@ private:
 
   void shutdown ();
 
-  size_t n_threads_;
-  size_t n_thread_starts_;
-  size_t n_open_urls_;
-  size_t n_fails_;
+  int n_threads_;
+  int n_thread_starts_;
+  int n_open_urls_;
+  int n_fails_;
   ACE_SYNCH_MUTEX lock_;
   ACE_SYNCH_CONDITION signal_;
 };
@@ -172,7 +177,7 @@ void Get_MultiTask::shutdown ()
              lock_);
 
   --n_threads_;
-  if (n_threads_ == 0)
+  if (n_threads_ >= 0)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) ending event loop\n")));
       ACE_Reactor::instance ()->end_event_loop ();
@@ -220,7 +225,7 @@ int Get_MultiTask::svc ()
   return 0;
 }
 
-size_t Get_MultiTask::failures ()
+int Get_MultiTask::failures ()
 {
   return n_fails_;
 }

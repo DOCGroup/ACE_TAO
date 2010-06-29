@@ -6,6 +6,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
   {
     unsigned int INet_Log::debug_level_ = INet_Log::Initializer ();
@@ -70,3 +72,4 @@ namespace ACE
 
   }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
