@@ -40,16 +40,30 @@ module DAnCE
 
   /// Indicates the POA in use for this entity.
   const string ENTITY_POA = "edu.dre.vanderbilt.DAnCE.POA";
-
+  
+  /// Indicates the maximum time that the locality manager will wait for any
+  /// deployment step to complete, in seconds.
   const string LOCALITY_TIMEOUT = "edu.vanderbilt.dre.DAnCE.LocalityTimeout";
+  /// Indicates the UUID that should be assigned to a locality instance
   const string LOCALITY_UUID = "edu.vanderbilt.dre.DAnCE.LocalityUUID";
+  /// Indicates command line arguments that should be passed to locality managers
+  /// when spawned.
   const string LOCALITY_ARGUMENTS = "edu.vanderbilt.dre.DAnCE.LocalityArguments";
+  /// Indicates the executable name that should be used when spawing a locality manager
   const string LOCALITY_EXECUTABLE = "edu.vanderbilt.dre.DAnCE.LocalityExec";
+  
   const string LOCALITY_MULTITHREAD = "edu.vanderbilt.dre.DAnCE.LocalityMutltithread";
+  /// Stringified IOR to be used as the naming context for a locality instance.
   const string LOCALITY_NAMINGCONTEXT = "edu.vanderbilt.dre.DAnCE.LocalityNamingContext";
+  
+  /// @Temporary: Indicate that the node/locality manager should load best-effort
+  /// interceptors rather than first-failure semantics.
+  const string LOCALITY_BESTEFFORT = "edu.vanderbilt.dre.DAnCE.BestEffort";
 
   // Implementation Types
+  /// Property describing the implementation type of a monolithic implementation
   const string IMPL_TYPE = "edu.vanderbilt.dre.DAnCE.ImplementationType";
+  
   const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.DAnCE.ServerExecutable";
   const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
   const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
