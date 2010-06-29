@@ -27,7 +27,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from ONE::foo,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from ONE::foo,"
                           " answer = <%C>\n",
                           answer));
     ++nr_of_received;
@@ -56,7 +56,7 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Two_callback_exec_i::bar (const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from TWO::bar,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from TWO::bar,"
                           " answer = <%C>\n",
                           answer));
     ++nr_of_received;
@@ -86,7 +86,7 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Three_callback_exec_i::plus (const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::plus,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::plus,"
                           " answer = <%C>\n",
                           answer));  
      ++nr_of_received;
@@ -104,7 +104,7 @@ namespace CIAO_InterMulti_Sender_Impl
     ::CORBA::Long /*ami_return_val*/,
     const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::foo,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::foo,"
                           " answer = <%C>\n",
                           answer));  
     ++nr_of_received;
@@ -120,7 +120,7 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Three_callback_exec_i::bar (const char * answer)
   {
-    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchroon callback from THREE::bar,"
+    ACE_DEBUG ((LM_DEBUG, "OK: Get asynchronous callback from THREE::bar,"
                           " answer = <%C>\n",
                           answer));  
     ++nr_of_received;

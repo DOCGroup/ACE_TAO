@@ -95,7 +95,7 @@ namespace CIAO_DelReplyH_Sender_Impl
     try 
       {
         CORBA::String_var answer;
-        my_foo_ami_->foo("synchroon call", answer.out ());
+        my_foo_ami_->foo("synchronous call", answer.out ());
         ACE_DEBUG ((LM_DEBUG, "OK: SYNCH foo returns <%C>.\n",
                               answer.in ()));
       }
