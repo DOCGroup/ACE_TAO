@@ -47,7 +47,6 @@ namespace CIAO
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       if (sc)
         {
@@ -55,15 +54,6 @@ namespace CIAO
                             CCM_DDS_StatusCondition_i (sc),
                             CORBA::NO_MEMORY ());
         }
-#else
-      ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      if (! ::CORBA::is_nil (sc.in ()))
-        {
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_StatusCondition_i (sc.in ()),
-                            CORBA::NO_MEMORY ());
-        }
-#endif
       return retval._retn ();
     }
 
@@ -78,14 +68,10 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_handle (void)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
-#else
-      return this->impl ()->get_instance_handle ();
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -96,19 +82,12 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
       DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
       return this->impl ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
                                                mask);
-#else
-      return this->impl ()->create_datareader (topic,
-                                               qos,
-                                               ccm_dds_drl,
-                                               mask);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -119,19 +98,12 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
       DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
       return this->impl ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
                                                mask);
-#else
-      return this->impl ()->create_datareader (topic,
-                                               qos,
-                                               ccm_dds_drl,
-                                               mask);
-#endif
     }
 
 #if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
@@ -380,7 +352,6 @@ namespace CIAO
       ::DDS::InstanceStateMask instance_states)
     {
       CIAO_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDSDataReaderSeq dds_readers;
 
       ::DDS_ReturnCode_t retcode =
@@ -401,12 +372,6 @@ namespace CIAO
             }
         }
       return retcode;
-#else
-      return this->impl ()->get_datareaders (readers,
-                                             sample_states,
-                                             view_states,
-                                             instance_states);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -422,13 +387,9 @@ namespace CIAO
       const ::DDS::SubscriberQos & qos)
     {
       CIAO_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl ()->get_qos (ccm_dds_qos);
-#else
-      return this->impl ()->set_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -437,14 +398,10 @@ namespace CIAO
       ::DDS::SubscriberQos & qos)
     {
       CIAO_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_SubscriberQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl ()->get_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -502,7 +459,6 @@ namespace CIAO
     CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant (void)
     {
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       if (p)
         {
@@ -510,15 +466,6 @@ namespace CIAO
                             DomainParticipant_type (p),
                             CORBA::NO_MEMORY ());
         }
-#else
-      ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      if (! ::CORBA::is_nil (p.in))
-        {
-          ACE_NEW_THROW_EX (retval,
-                            CCM_DDS_DomainParticipant_T (p.in ()),
-                            CORBA::NO_MEMORY ());
-        }
-#endif
       return retval._retn ();
     }
 
@@ -528,13 +475,9 @@ namespace CIAO
       const ::DDS::DataReaderQos & qos)
     {
       CIAO_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_datareader_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl ()->set_default_datareader_qos (ccm_dds_qos);
-#else
-      return this->impl ()->set_default_datareader_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -543,14 +486,10 @@ namespace CIAO
       ::DDS::DataReaderQos & qos)
     {
       CIAO_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_datareader_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl ()->get_default_datareader_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl ()->get_default_datareader_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -560,7 +499,6 @@ namespace CIAO
       const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::copy_from_topic_qos");
-#if defined (CIAO_DDS4CCM_NDDS) && (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataReaderQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
 
@@ -571,10 +509,6 @@ namespace CIAO
                                              ccm_dds_topic_qos);
       a_datareader_qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->copy_from_topic_qos (a_datareader_qos,
-                                                a_impl_qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
