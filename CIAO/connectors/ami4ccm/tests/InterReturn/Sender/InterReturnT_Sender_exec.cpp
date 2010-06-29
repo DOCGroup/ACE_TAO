@@ -307,7 +307,7 @@ namespace CIAO_InterReturnT_Sender_Impl
         ++arr;
         if ((l_cmd != 5) || (arr->x_array[2] != 102))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR MyFoo synchroon ret_array: "
+            ACE_ERROR ((LM_ERROR, "ERROR MyFoo synchronous ret_array: "
                               "received the wrong long or array, expected 5 "
                               "and 102, received %u and %u\n",
                               l_cmd, arr->x_array[2]));
