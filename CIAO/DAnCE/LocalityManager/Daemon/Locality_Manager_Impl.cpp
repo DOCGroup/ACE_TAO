@@ -128,7 +128,7 @@ namespace DAnCE
     if (props &&
         DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,
                                             *props,
-                                            tmp) == 0)
+                                            tmp))
       {
         PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
                                                           ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
