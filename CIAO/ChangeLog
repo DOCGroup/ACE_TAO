@@ -1,3 +1,29 @@
+Tue Jun 29 11:30:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/MPC/config/dance_artifact_installation.mpb:
+        * DAnCE/MPC/config/dance_completion_counter.mpb:
+        * DAnCE/MPC/config/dance_config_handlers_base.mpb:
+        * DAnCE/MPC/config/dance_convert_plan.mpb:
+        * DAnCE/MPC/config/dance_deployment_scheduler.mpb:
+        * DAnCE/MPC/config/dance_installation_handlers.mpb:
+        * DAnCE/MPC/config/dance_installation_repository_manager.mpb:
+        * DAnCE/MPC/config/dance_locality_handler.mpb:
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+        * DAnCE/MPC/config/dance_logger.mpb:
+        * DAnCE/MPC/config/dance_plan_launcher.mpb:
+        * DAnCE/MPC/config/dance_skel.mpb:
+        * DAnCE/MPC/config/dance_split_plan.mpb:
+        * DAnCE/MPC/config/dance_stub.mpb:
+        * DAnCE/MPC/config/dance_tools.mpb:
+        * MPC/config/ciao_deployment_handlers.mpb:
+        * MPC/config/ciao_logger.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciaoexe.mpb:
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_ts_default.mpb:
+          Added missing
+          // -*- MPC -*-
+ 
 Tue Jun 29 11:09:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:

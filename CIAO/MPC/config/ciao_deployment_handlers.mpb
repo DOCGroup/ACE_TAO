@@ -1,4 +1,6 @@
+// -*- MPC -*-
 // $Id$
+
 project : ciao_base, dance_stub, ciao_session_container, \
         ciao_logger {
    includes += $(CIAO_ROOT)

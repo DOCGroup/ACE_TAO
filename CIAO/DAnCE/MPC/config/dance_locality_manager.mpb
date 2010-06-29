@@ -1,4 +1,6 @@
+// -*- MPC -*-
 // $Id$
+
 project : dance_deployment_scheduler, dance_skel, naming {
   after += DAnCE_LocalityManager_Impl
   libs += DAnCE_LocalityManager_Impl

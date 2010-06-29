@@ -1,3 +1,4 @@
+// -*- MPC -*-
 // $Id$
 
 project : ciao_xml_utils, dynamicany, typecodefactory, exceptions, dance_logger {
