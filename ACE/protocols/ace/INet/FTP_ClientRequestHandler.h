@@ -100,12 +100,27 @@ namespace ACE
                 {
                   public:
                     Authentication (const ACE_CString& realm,
-                                    const ACE_CString& user,
-                                    const ACE_CString& pw);
+                                    ACE_CString& user,
+                                    ACE_CString& pw);
 
                     virtual ~Authentication ();
 
                     virtual const ACE_CString& scheme () const;
+
+                    virtual const ACE_CString& realm () const;
+
+                    virtual const ACE_CString& user () const;
+
+                    virtual void user (const ACE_CString& usr);
+
+                    virtual const ACE_CString& password () const;
+
+                    virtual void password (const ACE_CString& pw);
+
+                  private:
+                    const ACE_CString& realm_;
+                    ACE_CString& user_;
+                    ACE_CString& password_;
                 };
 
               class SessionHolder

@@ -28,7 +28,7 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionKey
         *
-        * @brief
+        * @brief Base class for connection keys.
         *
         */
         class ConnectionKey
@@ -52,8 +52,10 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionCacheKey
         *
-        * @brief
+        * @brief Holder class for connection keys.
         *
+        * Implements non-copying holder object used as ext_id in
+        * connection cache map.
         */
         class ConnectionCacheKey
           {
@@ -80,7 +82,7 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionHolder
         *
-        * @brief
+        * @brief Generic base for connection wrappers.
         *
         */
         class ConnectionHolder
@@ -95,8 +97,11 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionFactory
         *
-        * @brief
+        * @brief Base class for connection factories.
         *
+        * Derived classes create specific connections and
+        * return those for caching wrapped in a connection
+        * holder.
         */
         class ConnectionFactory
           {
@@ -112,8 +117,11 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionCacheValue
         *
-        * @brief
+        * @brief Holder class for connections.
         *
+        * Implements non-copying holder object maintaining
+        * connection state used as int_id in connection
+        * cache map.
         */
         class ConnectionCacheValue
           {
@@ -158,7 +166,7 @@ namespace ACE
         /**
         * @class ACE_INet_ConnectionCache
         *
-        * @brief
+        * @brief Implements a cache for INet connection objects.
         *
         */
         class ACE_INET_Export ConnectionCache
@@ -178,36 +186,67 @@ namespace ACE
               typedef ACE_Hash_Map_Entry <ConnectionCacheKey,
                                           ConnectionCacheValue> map_entry_type;
 
+              /// Constructor
               ConnectionCache(size_t size = ACE_DEFAULT_MAP_SIZE);
+
+              /// Destructor
               ~ConnectionCache ();
 
+              /// Claim a connection from the cache.
+              /// Creates a new connection using <connection_factory>
+              /// if the cache does not contain a matching entry for
+              /// <key>.
+              /// If <wait> is true and the state of the matching
+              /// connection is BUSY the method will block waiting for
+              /// connection to become available.
+              /// Returns true if a connection could be successfully
+              /// claimed and sets <connection> to the claimed connection.
+              /// Returns false otherwise.
               bool claim_connection(const ConnectionKey& key,
                                     connection_type*& connection,
                                     const factory_type& connection_factory,
                                     bool wait = true);
 
+              /// Release a previously claimed connection making it
+              /// available for renewed claiming.
+              /// Returns true if the connection was successfully released.
               bool release_connection(const ConnectionKey& key,
                                     connection_type* connection);
 
+              /// Close a previously claimed connection.
+              /// Deletes the actual connection object and marks the cache entry
+              /// as CLOSED.
+              /// Returns true is the connection was successfully closed.
               bool close_connection(const ConnectionKey& key,
                                     connection_type* connection);
 
+              /// Returns true if the cache contains a connection matching
+              /// <key>. Cache entries with state CLOSED are not considered.
+              /// Returns false otherwise.
               bool has_connection (const ConnectionKey& key);
 
+              /// Unconditionally closes all active connections.
               void close_all_connections ();
 
+              /// Returns the number of registered cache entries (including CLOSED).
               size_t current_size () const;
 
-              size_t maximum_size () const;
-
             private:
+              /// Updates cache entry state
               bool set_connection (const ConnectionKey& key,
                                    const ConnectionCacheValue& cacheval);
 
+              /// Attempts to claim an existing connection.
+              /// Returns true and sets <connection> if successful.
+              /// Returns false otherwise.
+              /// Does not wait when no connection available.
               bool claim_existing_connection(const ConnectionKey& key,
                                              connection_type*& connection,
                                              ConnectionCacheValue::State& state);
 
+              /// Looks up a matching cache entry for <key> and updates
+              /// <cacheval> with the entry state if found.
+              /// Returns true if found, false otherwise.
               bool find_connection (const ConnectionKey& key,
                                     ConnectionCacheValue& cacheval);
 
