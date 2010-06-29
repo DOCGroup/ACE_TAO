@@ -15,6 +15,8 @@
 # define DLINFO ACE_TEXT("(%P|%t) [%M] - %T - ")
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
   {
     class ACE_INET_Export INet_Log
@@ -27,6 +29,8 @@ namespace ACE
         static unsigned int Initializer (void);
     };
   }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // By default tracing is turned on in debugmode, off otherwise
 #if !defined (INET_NTRACE)
