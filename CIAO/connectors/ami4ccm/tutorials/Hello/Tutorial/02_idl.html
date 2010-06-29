@@ -48,15 +48,22 @@ InternalError { </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>long</FONT></FO
 					
 				<LI><P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT COLOR="#0000ff"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>#pragma</FONT></FONT></FONT></CODE><CODE CLASS="western"><FONT COLOR="#000000"> 
     </FONT></CODE><CODE CLASS="western"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>ciao lem 
-    </FONT></FONT></FONT></CODE><CODE CLASS="western"><FONT COLOR="#a31515"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>"Hello_MyFoo_objE.idl", 
+    "Hello_MyFoo_objE.idl", 
 </FONT></FONT></FONT></CODE></P>
 				<LI><P STYLE="MARGIN-BOTTOM: 0cm"><CODE CLASS="western"><FONT COLOR="#0000ff"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>#pragma</FONT></FONT></FONT></CODE><CODE CLASS="western"><FONT COLOR="#000000"> 
     </FONT></CODE><CODE CLASS="western"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>ciao lem 
-    </FONT></FONT></FONT></CODE><CODE CLASS="western"><FONT COLOR="#a31515"><FONT FACE="Times New Roman, serif"><FONT SIZE=2>"Hello_MyFoo_objAE.idl"</FONT></FONT></FONT></CODE></P>
-				<LI><P STYLE="MARGIN-BOTTOM: 0cm"><FONT COLOR="#0000ff"><FONT SIZE=2>#pragma</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>ciao ami4ccm </FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>interface</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#a31515"><FONT SIZE=2>"Hello::MyFoo_obj" /</FONT></FONT><FONT COLOR="#33cc66"><FONT SIZE=2>//</FONT></FONT><FONT COLOR="#008000"><FONT SIZE=2>this is needed per 
-    interface</FONT></FONT></P>
-				<LI><P STYLE="MARGIN-BOTTOM: 0cm"><FONT COLOR="#0000ff"><FONT SIZE=2>#pragma</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>ciao ami4ccm idl </FONT></FONT><FONT COLOR="#a31515"><FONT SIZE=2>"Hello_MyFoo_objA.idl" </FONT></FONT><FONT COLOR="#008000"><FONT SIZE=2>//needed for 'uses multiple', not used in this example 
-    </FONT></FONT></P></LI></UL></LI></UL>
+    "Hello_MyFoo_objAE.idl"</FONT></FONT></FONT></CODE></P>
+				<LI><P STYLE="MARGIN-BOTTOM: 0cm">
+				<FONT COLOR="#000000"><FONT SIZE=3>Pragma needed per interface for implying ami.</FONT></FONT><br>
+				<FONT COLOR="#0000ff"><FONT SIZE=2>#pragma</FONT></FONT><FONT COLOR="#000000"> </FONT>
+				<FONT COLOR="#000000"><FONT SIZE=2>ciao ami4ccm </FONT></FONT>
+				<FONT COLOR="#0000ff"><FONT SIZE=2>interface </FONT><FONT COLOR="#000000">"Hello::MyFoo_obj"</FONT></FONT>
+				</P>
+				<LI><P STYLE="MARGIN-BOTTOM: 0cm"><FONT COLOR="#000000"><FONT SIZE=3>Name implied IDL file, used by IDL compiler to generate ami4ccm 
+				   functionality:</FONT><br><FONT SIZE=2><FONT COLOR="#0000ff">#pragma</FONT></FONT>
+				   <FONT COLOR="#000000"><FONT SIZE=2>ciao ami4ccm idl "Hello_MyFoo_objA.idl" </FONT></FONT>
+				   </P>
+				 </LI></UL></LI></UL>
 <P STYLE="MARGIN-BOTTOM: 0cm; MARGIN-LEFT: 1cm"><FONT COLOR="#000000"><FONT SIZE=3>Also this 
 IDL contains the interface between Sender and Receiver</FONT></FONT></P>
 <P STYLE="MARGIN-BOTTOM: 0cm; MARGIN-LEFT: 2cm"><FONT SIZE=2><FONT COLOR="#0000ff">interface</FONT><FONT COLOR="#000000"> 
@@ -81,14 +88,17 @@ ro_attrib<BR></FONT></FONT><FONT SIZE=2><FONT color=#0000ff>&nbsp;&nbsp;&nbsp;&n
 <P>The <A href="../Hello_asm/Sender_comp/src/Hello_Sender_comp.idl">Hello_Sender_comp.idl</A>
 file in the Sender_comp/src directory defines the asynchronous and
 synchronous connections. <FONT COLOR="#000000"><FONT SIZE=3>For synchronous invocations, the Sender component uses the 
-MyFoo_obj interface (which the Receiver provides). </FONT></FONT><FONT COLOR="#a31515"><FONT SIZE=2>component 
-Sender</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>{ 
-</FONT></FONT><FONT COLOR="#008000"><FONT SIZE=2>/// For synchronous invocation</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>uses MyFoo run_my_foo; }; 
+MyFoo_obj interface (which the Receiver provides):<BR><br></FONT></FONT>
+<FONT COLOR="#000000"><FONT SIZE=2>component 
+Sender<br>{<BR>&nbsp;</FONT></FONT><FONT COLOR="#008000"><FONT SIZE=2>// For synchronous 
+invocation</FONT></FONT>&nbsp;<BR>
+<FONT COLOR="#000000"><FONT SIZE=2>&nbsp;&nbsp;uses MyFoo run_my_foo;<BR>}; 
 </FONT></FONT></P>
 <P><FONT COLOR="#000000"><FONT SIZE=3>For asynchronous invocations, the Sender component uses the 
 AMI_MyFoo_obj interface of the AMI component and provides the 
-AMI_MyFoo_objReplyHandler interface to the AMI component. This is indicated with 
-</FONT></FONT><FONT COLOR="#0000ff"><FONT SIZE=2>#pragma</FONT></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000000"><FONT SIZE=2>ciao ami4ccm receptacle </FONT></FONT><FONT COLOR="#a31515"><FONT SIZE=2>"Hello::Sender_comp::run_my_foo" </FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>.</FONT></FONT></P>
+AMI_MyFoo_objReplyHandler interface to the AMI component. This is indicated with the following pragma:<br><br>
+</FONT></FONT><FONT COLOR="#000000"><FONT SIZE=2>#pragma ciao ami4ccm receptacle "Hello::Sender_comp::run_my_foo"
+.</FONT></FONT></P>
 <H2 CLASS="western"><FONT SIZE=4 STYLE="FONT-SIZE: 16pt">Receiver component IDL file</FONT></H2>
 <P>The <A href="../Hello_asm/Receiver_comp/src/Hello_Receiver_comp.idl">Hello_Receiver_comp.idl</A>
 file in the Receiver_comp/src directory indicates the port the
