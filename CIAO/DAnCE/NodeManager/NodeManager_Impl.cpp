@@ -37,24 +37,24 @@ namespace DAnCE
         this->properties_.bind (i->key (), i->item ());
         i.advance ();
       }
-    
+
     ::Deployment::Properties prop;
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
     PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
                                                                 ACE_TEXT_CHAR_TO_TCHAR ("create_Locality_Handler"));
-    
+
     if (this->properties_.find (DAnCE::LOCALITY_BESTEFFORT) == 0)
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
     else
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
+                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
 
     DANCE_DEBUG (8, (LM_INFO, DLINFO
                      ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
                      ACE_TEXT("Plugin loaded\n")));
-    
+
   }
 
   NodeManager_Impl::~NodeManager_Impl()
