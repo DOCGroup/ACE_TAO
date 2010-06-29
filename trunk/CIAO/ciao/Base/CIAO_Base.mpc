@@ -35,7 +35,7 @@ project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
     CIAO_PropertiesC.h
     Server_init.h
     Client_init.h
-    CIAO_Properties_stub_export.h
+    CIAO_Base_stub_export.h
   }
 
   specific {

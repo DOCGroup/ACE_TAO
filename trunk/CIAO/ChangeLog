@@ -1,3 +1,9 @@
+Tue Jun 29 14:13:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ciao/Base/CIAO_Base.mpc:
+
+          Corrected the name of the export header.
+
 Tue Jun 29 13:12:42 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/docs/TestCoverage.ods:
