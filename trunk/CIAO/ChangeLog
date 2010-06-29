@@ -1,3 +1,10 @@
+Tue Jun 29 14:29:36 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/MPC/config/dance_split_plan.mpb:
+
+          Removed a redundant "includes" that used an incorrect
+          syntax for environment variables: it used $FOO instead of $(FOO).
+
 Tue Jun 29 14:13:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ciao/Base/CIAO_Base.mpc:
