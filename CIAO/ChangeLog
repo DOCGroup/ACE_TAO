@@ -1,3 +1,12 @@
+Tue Jun 29 08:50:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* NEWS:
+	  Updated.
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+	  Corrected best effort interceptor installations.
+
 Tue Jun 29 08:50:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:

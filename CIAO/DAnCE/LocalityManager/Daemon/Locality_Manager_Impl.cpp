@@ -123,19 +123,19 @@ namespace DAnCE
 
     PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
                                                        ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
-    
+
     bool tmp;
     if (props &&
         DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,
                                             *props,
-                                            tmp))
+                                            tmp) == 0)
       {
         PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                           ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
       }
     else
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
+                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
 
     if (this->props_)
       {
@@ -405,7 +405,7 @@ namespace DAnCE
           }
 
         CORBA::Object_var obj_ref;
-        
+
         if (event.contents_.ptr () != 0)
           event.contents_ >>= CORBA::Any::to_object (obj_ref);
         else
@@ -415,7 +415,7 @@ namespace DAnCE
                              ACE_TEXT ("No reference returned for connection <%C>\n"),
                              event.id_.c_str ()));
           }
-        
+
         conn_cmp->length (pos + 1);
         (*conn_cmp)[pos].name = event.id_.c_str ();
         (*conn_cmp)[pos].endpoint.length (1);

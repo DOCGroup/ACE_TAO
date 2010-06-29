@@ -39,6 +39,17 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
   initial support for best effort semantics, whereby deployment failures are
   logged by otherwise ignored.
 
+. An Artifact Installation framework has been added to DAnCE and integrated
+  into the NodeApplication.
+  The framework provides a plugin system for installation handlers and a
+  pluggable local node installation repository/cache.
+  Installation handlers are selected based on the 'scheme' identifiers of
+  location URLs from installation artifact entities in the deployment plan.
+  Multiple installation schemes can be nested inside a single location URL
+  as <scheme>://<scheme>://<resource identification>.
+  The framework comes with 'file' and 'http' scheme installation handlers
+  and a simple local filesystem based installation repository/cache.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
 =======================================================
 
