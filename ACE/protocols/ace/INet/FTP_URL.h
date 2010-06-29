@@ -53,7 +53,7 @@ namespace ACE
 
               enum
               {
-                FTP_PORT = 21,
+                FTP_PORT = 21
               };
 
             protected:
