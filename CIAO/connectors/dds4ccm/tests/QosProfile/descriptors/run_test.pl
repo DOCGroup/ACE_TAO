@@ -12,6 +12,10 @@ $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $DANCE_ROOT = "$ENV{'DANCE_ROOT'}";
 
+$ENV {'DANCE_LOG_LEVEL'} = 6;
+$ENV {'CIAO_LOG_LEVEL'} = 6;
+
+
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
