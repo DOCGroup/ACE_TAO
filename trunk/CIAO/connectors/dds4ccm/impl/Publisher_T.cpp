@@ -44,7 +44,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (qos);
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
@@ -86,12 +85,6 @@ namespace CIAO
 
       ccm_dds_dw->enable ();
       return retval._retn ();
-#else
-      return this->impl ()->create_datawriter (a_topic,
-                                               qos,
-                                               a_listener,
-                                               mask);
-#endif
     }
 
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -162,7 +155,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datawriter");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       DataWriter_type *top = dynamic_cast< DataWriter_type * > (a_datawriter);
 
       if (top == 0)
@@ -194,9 +186,6 @@ namespace CIAO
         }
 
       return retval;
-#else
-      return this->impl ()->delete_datawriter (a_datawriter);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -204,17 +193,10 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_datawriter (const char * impl_name)
     {
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (dw),
                         CORBA::NO_MEMORY ());
-#else
-      ::DDS::DataWriter_var dw = this->impl ()->lookup_datawriter (impl_name);
-      ACE_NEW_THROW_EX (retval,
-                        DataWriter_type (dw.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
       return retval._retn ();
     }
 
@@ -230,13 +212,9 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl ()->set_qos (ccm_dds_qos);
-#else
-      return this->impl ()->set_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -244,16 +222,12 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->impl()->
               get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl ()->get_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -263,7 +237,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       PublisherListener_type * ccm_dds_impl_list  = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
@@ -272,9 +245,6 @@ namespace CIAO
                             CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
-#else
-      return this->impl ()->set_listener (a_listener, mask);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -283,7 +253,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener");
 
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSPublisherListener *ccm_dds_pub_list = this->impl ()->get_listener ();
       PublisherListener_type * list_proxy =
         dynamic_cast <PublisherListener_type *> (ccm_dds_pub_list);
@@ -295,9 +264,6 @@ namespace CIAO
           return ::DDS::PublisherListener::_nil ();
         }
       return list_proxy->get_publisher_listener ();
-#else
-      return this->impl ()->get_listener ();
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -333,13 +299,9 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait_for_acknowledgments (
       const ::DDS::Duration_t & max_wait)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       DDS_Duration_t ccm_dds_dds_duration;
       ccm_dds_dds_duration <<= max_wait;
       return this->impl ()->wait_for_acknowledgments (ccm_dds_dds_duration);
-#else
-      return this->impl ()->wait_for_acknowledgments (max_wait);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -348,17 +310,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_participant");
       ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type (p),
                         CORBA::NO_MEMORY ());
-#else
-      ::DDS::DomainParticipant_var p = this->impl ()->get_participant ();
-      ACE_NEW_THROW_EX (retval,
-                        DomainParticipant_type (p.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
       return retval._retn ();
     }
 
@@ -367,13 +322,9 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_datawriter_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_datawriter_qos (ccm_dds_qos);
-#else
-      return this->impl()->set_default_datawriter_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -381,15 +332,11 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_datawriter_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()->get_default_datawriter_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->get_default_datawriter_qos (qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -398,7 +345,6 @@ namespace CIAO
                                               const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::copy_from_topic_qos");
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DataWriterQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
 
@@ -408,9 +354,6 @@ namespace CIAO
           this->impl()->copy_from_topic_qos (ccm_dds_qos, ccm_dds_topic_qos);
       a_dataimpl_qos <<= ccm_dds_qos;
       return retcode;
-#else
-      return this->impl()->copy_from_topic_qos (a_dataimpl_qos, a_impl_qos);
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -425,17 +368,10 @@ namespace CIAO
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statuscondition (void)
     {
       ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
-#if (CIAO_DDS4CCM_NDDS==1)
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
                         CORBA::NO_MEMORY ());
-#else
-      ::DDS::StatusCondition_var sc = this->impl ()->get_statuscondition ();
-      ACE_NEW_THROW_EX (retval,
-                        CCM_DDS_StatusCondition_i (sc.in ()),
-                        CORBA::NO_MEMORY ());
-#endif
       return retval._retn ();
     }
 
@@ -450,14 +386,10 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_handle (void)
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_InstanceHandle_t const rtihandle = this->impl ()->get_instance_handle ();
       ::DDS::InstanceHandle_t handle;
       handle <<= rtihandle;
       return handle;
-#else
-      return this->impl ()->get_instance_handle ();
-#endif
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

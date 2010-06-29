@@ -1,8 +1,7 @@
 // $Id$
 
-project : dance_exe, dance_nodemanager_stub, dance_logger {
+project : dance, dance_nodemanager_stub, dance_logger {
   exename   = NodeManagerNodeApplicationManagerTest
-  exeout    = .
 
   Source_Files {
     test.cpp
