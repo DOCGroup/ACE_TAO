@@ -1,3 +1,24 @@
+Tue Jun 29 17:54:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+
+          Fix for a segmentation fault that would occur when plans
+          with similar UUIDs were deployed/torn down in sequence.
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Temperorarily disable thread pool in the NodeApplication.  This
+          is expected to be re-enabled in the next release.
+
+Tue Jun 29 14:49:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Moved the plugin manager cleanup to the node manager.
+
 Tue Jun 29 14:37:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.pptx:

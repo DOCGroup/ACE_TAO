@@ -57,8 +57,8 @@ namespace DAnCE
                              guard,
                              this->container_mutex_,
                              CORBA::NO_RESOURCES ());
-        for (SERVER_INFOS::iterator i (this->server_infos_.begin ());
-             !i.done (); ++i)
+        for (SERVER_INFOS::iterator i  (this->server_infos_.begin ());
+             i != this->server_infos_.end (); ++i)
           {
             DANCE_DEBUG (9, (LM_TRACE, DLINFO
                              ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
@@ -135,8 +135,8 @@ namespace DAnCE
                                  guard,
                                  this->container_mutex_,
                                  CORBA::NO_RESOURCES ());
-            for (SERVER_INFOS::ITERATOR j (this->server_infos_);
-                 !j.done (); ++j)
+            for (SERVER_INFOS::iterator j (this->server_infos_.begin ());
+                 j != this->server_infos_.end (); ++j)
               {
                 if ((*j)->uuid_ == server_UUID)
                   {
@@ -217,7 +217,7 @@ namespace DAnCE
                              guard,
                              this->container_mutex_,
                              CORBA::NO_RESOURCES ());
-        server_infos_.insert_tail (server);
+        server_infos_.insert (server);
       }
 
       DANCE_DEBUG (9, (LM_TRACE, DLINFO
@@ -534,19 +534,25 @@ namespace DAnCE
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::remove_locality_manager");
 
-      Server_Info *info = 0;
+      Safe_Server_Info info;
 
       {
         ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
                              guard,
                              this->container_mutex_,
                              CORBA::NO_RESOURCES ());
-        for (SERVER_INFOS::ITERATOR i (this->server_infos_);
-             !i.done (); ++i)
+        
+        SERVER_INFOS::iterator i;
+        for (i = this->server_infos_.begin ();
+             i != this->server_infos_.end ();
+             ++i)
           {
-            if ((*i)->ref_->_is_equivalent (server))
+            if ((!i->null ()) &&
+                (!CORBA::is_nil ((*i)->ref_)) &&
+                (*i)->ref_->_is_equivalent (server))
               {
-                info = (*i).get ();
+                info = *i;
+                this->server_infos_.erase (i);
               }
           }
       }

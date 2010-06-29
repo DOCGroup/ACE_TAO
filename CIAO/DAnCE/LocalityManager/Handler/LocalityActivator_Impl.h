@@ -21,6 +21,8 @@
 
 #include "NodeApplication/NodeApplication_Export.h"
 
+#include <set>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -132,7 +134,7 @@ namespace DAnCE
     };
 
     // Presumably, there won't be too many component servers per node application
-    typedef ACE_Unbounded_Set_Ex <Safe_Server_Info, _server_info> SERVER_INFOS;
+    typedef std::set <Safe_Server_Info, _server_info> SERVER_INFOS;
 
     /**
     * @brief The exit handler class for the locality manager child process
