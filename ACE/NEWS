@@ -15,10 +15,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 
 . Ended daily maintenance for RHEL51
 
-. Added ACE INet addon library for Inet protocol clients (and possibly 
-  servers at some point) like http://, ftp:// etc. 
-  The library implements standard C++ iostream wrapper classes for 
-  ACE Svc_Handler and Reactor based input/output handling, URL classes 
+. Added ACE INet addon library for Inet protocol clients (and possibly
+  servers at some point) like http://, ftp:// etc.
+  The library implements standard C++ iostream wrapper classes for
+  ACE Svc_Handler and Reactor based input/output handling, URL classes
   and protocol handler classes.
   NOTE: This is work in progress! There is no guarentee that the API
   won't change in the next few releases.
@@ -26,7 +26,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
   requests for HTTP and FTP.
   Handling for upload requests should be added in the near future as well
   as HTTP Basic Authentication.
-  
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.8 and ACE-5.7.9
 ====================================================
