@@ -85,17 +85,19 @@ namespace ACE
     ACE_INLINE
     std::ostream& ClientRequestHandler::request_stream ()
       {
-        return this->session_ ?
-          this->out_data_stream_ :
-          ACE::IOS::Null::out_stream_;
+        if (this->session_)
+          return this->out_data_stream_;
+        else
+          return ACE::IOS::Null::out_stream_;
       }
 
     ACE_INLINE
     std::istream& ClientRequestHandler::response_stream ()
       {
-        return this->session_ ?
-          this->in_data_stream_ :
-          ACE::IOS::Null::in_stream_;
+        if (this->session_)
+          return this->in_data_stream_;
+        else
+          return ACE::IOS::Null::in_stream_;
       }
   }
 }
