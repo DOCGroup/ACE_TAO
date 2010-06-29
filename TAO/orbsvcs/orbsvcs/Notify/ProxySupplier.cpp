@@ -67,8 +67,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
 
   if (max_consumers != 0 && consumer_count >= max_consumers.value ())
   {
-    throw CORBA::IMP_LIMIT (
-      ); // we've reached the limit of consumers connected.
+    throw CORBA::IMP_LIMIT (); // we've reached the limit of consumers connected.
   }
 
   {
