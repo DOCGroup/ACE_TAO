@@ -48,11 +48,11 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::update_queue_count (size_t count)
   if (this->queue_item_count_ != 0)
     {
       // get a count of events that are being held at the consumer level.
-      size_t pending =
-        this->
-        //typename ProxyPushSupplier::
-        TAO_Notify_ProxySupplier::consumer()->
-          pending_count();
+    size_t pending = 0;
+    if (TAO_Notify_ProxySupplier::consumer() != 0)
+	{
+        pending = this->TAO_Notify_ProxySupplier::consumer()->pending_count();
+	}
       this->queue_item_count_->receive (count + pending);
     }
   if (this->child_ != 0)
