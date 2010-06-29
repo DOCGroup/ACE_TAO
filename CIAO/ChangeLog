@@ -1,3 +1,8 @@
+Tue Jun 29 08:50:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+          Reverted last changes.
+
 Tue Jun 29 08:40:39 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
