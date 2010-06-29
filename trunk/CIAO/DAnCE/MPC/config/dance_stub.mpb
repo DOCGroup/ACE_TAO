@@ -1,4 +1,6 @@
+// -*- MPC -*-
 // $Id$
+
 project : dance_deployment_stub, dance_applicationmanager_stub, dance_logger {
   after += DAnCE_stub
   libs += DAnCE_stub

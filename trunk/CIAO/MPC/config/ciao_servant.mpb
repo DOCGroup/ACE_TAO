@@ -1,4 +1,6 @@
+// -*- MPC -*-
 //$Id$
+
 project : ciao_port_activator_stub, ciao_servant_activator, ccm_svnt, taoidldefaults, ciao_container_base, portableserver, ccm_cookie, ciao_context_impl {
    after += CIAO_Servant_Impl
    libs += CIAO_Servant_Impl

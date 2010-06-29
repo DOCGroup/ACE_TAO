@@ -1,4 +1,6 @@
+// -*- MPC -*-
 // $Id$
+
 project : dance_deployment_skel,  \
         dance_applicationmanager_skel, dance_stub {
   after += DAnCE_skel

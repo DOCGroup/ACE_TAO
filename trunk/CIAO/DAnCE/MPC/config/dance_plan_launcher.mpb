@@ -1,4 +1,6 @@
+// -*- MPC -*-
 // $Id$
+
 project : dance_logger, dance_convert_plan, \
           dance_executionmanager_stub, \
           dance_domainapplicationmanager_stub, \

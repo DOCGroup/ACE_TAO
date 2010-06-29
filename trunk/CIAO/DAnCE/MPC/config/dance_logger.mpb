@@ -1,5 +1,5 @@
-// $Id$
 // -*- MPC -*-
+// $Id$
 
 project : dance, acelib {
   after += DAnCE_Logger

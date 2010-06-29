@@ -1,3 +1,4 @@
+// -*- MPC -*-
 // $Id$
 
 project : dance, dance_deployment_stub, dance_tools {
