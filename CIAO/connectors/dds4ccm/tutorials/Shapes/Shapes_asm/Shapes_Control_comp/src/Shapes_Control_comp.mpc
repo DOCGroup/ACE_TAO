@@ -37,10 +37,10 @@ project(Shapes_Control_lem_gen) : ciaoidldefaults {
 }
 
 project(Shapes_Control_comp_lem_stub) : ccm_svnt {
-  after += Shapes_Control_lem_gen Shapes_Control_comp_stub Shapes_msg_stub \
+  after += Shapes_Control_lem_gen Shapes_Control_comp_stub Shapes_ShapeType_msg_stub \
            Shapes_Control_obj_stub
 
-  libs  += Shapes_msg_stub Shapes_Control_comp_stub Shapes_Control_obj_stub
+  libs  += Shapes_ShapeType_msg_stub Shapes_Control_comp_stub Shapes_Control_obj_stub
   libpaths += ../../lib
   libout = ../../lib
 
@@ -67,10 +67,10 @@ project(Shapes_Control_comp_lem_stub) : ccm_svnt {
 }
 
 project(Shapes_Control_comp_stub) : ccm_stub {
-  after += Shapes_Control_idl_gen Shapes_msg_stub \
+  after += Shapes_Control_idl_gen Shapes_ShapeType_msg_stub \
            Shapes_Control_obj_stub Shapes_Control_obj_lem_stub
 
-  libs  += Shapes_msg_stub Shapes_Control_obj_stub
+  libs  += Shapes_ShapeType_msg_stub Shapes_Control_obj_stub
   libpaths += ../../lib
   libout = ../../lib
 
@@ -100,7 +100,7 @@ project(Shapes_Control_comp_exec) : ciao_executor {
   after   += Shapes_Control_comp_lem_stub Shapes_Control_comp_stub \
              Shapes_Control_obj_lem_stub
 
-  libs += Shapes_Control_comp_stub Shapes_Control_comp_lem_stub Shapes_msg_stub \
+  libs += Shapes_Control_comp_stub Shapes_Control_comp_lem_stub Shapes_ShapeType_msg_stub \
           Shapes_Control_obj_lem_stub Shapes_Control_obj_stub
   libpaths += ../../lib
   libout = ../../lib
@@ -128,12 +128,12 @@ project(Shapes_Control_comp_exec) : ciao_executor {
 
 
 project(Shapes_Control_comp_svnt) : ciao_servant {
-  after      += Shapes_msg_stub  Shapes_Control_comp_lem_stub \
+  after      += Shapes_ShapeType_msg_stub  Shapes_Control_comp_lem_stub \
                 Shapes_Control_comp_stub Shapes_Control_obj_svnt \
                 Shapes_Control_obj_lem_stub
 
   libs       += Shapes_Control_comp_stub Shapes_Control_comp_lem_stub  \
-                Shapes_msg_stub \
+                Shapes_ShapeType_msg_stub \
                 Shapes_Control_obj_stub Shapes_Control_obj_svnt \
                 Shapes_Control_obj_lem_stub
   libpaths += ../../lib

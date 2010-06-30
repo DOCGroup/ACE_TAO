@@ -1,0 +1,22 @@
+// $Id$
+
+#ifndef SHAPES_SHAPETYPE_MSG_IDL_
+#define SHAPES_SHAPETYPE_MSG_IDL_
+
+#pragma ndds typesupport "Shapes_ShapeType_msgSupport.h"
+#pragma opendds typesupport "Shapes_ShapeType_msgTypeSupportC.h"
+#pragma splice typesupport "Shapes_ShapeType_msgDscpC.h"
+
+#pragma DCPS_DATA_TYPE "ShapeType_msg"
+#pragma DCPS_DATA_KEY "ShapeType_msg color"
+
+struct ShapeType_msg {
+  string color; //@key
+  long x;
+  long y;
+  long shapesize;
+};
+
+#pragma keylist ShapeType_msg color
+
+#endif /* SHAPES_SHAPETYPE_MSG_IDL_ */
