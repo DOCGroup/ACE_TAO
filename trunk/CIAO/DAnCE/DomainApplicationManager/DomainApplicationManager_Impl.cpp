@@ -690,7 +690,7 @@ DAM_NM_ReplyHandlerImpl::Counter::on_all_completed ()
 {
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO
               ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed - ")
-              ACE_TEXT("Successfully prepared plan: %C\n"),
+              ACE_TEXT("Successfully completed operation for plan: %C\n"),
               this->dam_servant_->getPlanUUID ()));
 
   this->em_ch_ptr_->handle_completion (dam_servant_.in ());
@@ -701,12 +701,12 @@ DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure ()
 {
   DANCE_ERROR (1, (LM_ERROR, DLINFO
               ACE_TEXT("DAM_NM_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
-              ACE_TEXT("%u errors preparing plan: %C\n"),
+              ACE_TEXT("%u errors for plan: %C\n"),
               this->fail_count (),
               this->dam_servant_->getPlanUUID ()));
 
   std::ostringstream err;
-  err << this->fail_count () << " errors preparing plan:\n";
+  err << this->fail_count () << " errors executing operation:\n";
   for (DAM_NM_ReplyHandlerImpl::Counter::errors_type::const_iterator it = this->errors ().begin ();
         it != this->errors ().end ();
         ++it)
