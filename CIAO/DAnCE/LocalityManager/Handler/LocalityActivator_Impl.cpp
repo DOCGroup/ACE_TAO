@@ -553,6 +553,7 @@ namespace DAnCE
               {
                 info = *i;
                 this->server_infos_.erase (i);
+                break;
               }
           }
       }

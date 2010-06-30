@@ -1,8 +1,14 @@
+Wed Jun 30 20:34:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+
+          Fix for crash on shutdown for windows. 
+
 Wed Jun 30 16:05:10 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
 
-          Fixed a bug where connections weren't properly collated. 
+          Fixed a bug where connections weren't properly collated.
 
 Wed Jun 30 15:02:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
