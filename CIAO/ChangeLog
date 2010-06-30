@@ -1,3 +1,8 @@
+Wed Jun 30 11:35:20 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:
+          Warning.
+
 Wed Jun 30 10:35:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
@@ -10,10 +15,10 @@ Wed Jun 30 10:35:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 Wed Jun 30 09:20:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	  Cosmetic logging change.
+          Cosmetic logging change.
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
-	  Fixed incorrect Compare functor for server registry set.
+          Fixed incorrect Compare functor for server registry set.
 
 Wed Jun 30 06:04:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
