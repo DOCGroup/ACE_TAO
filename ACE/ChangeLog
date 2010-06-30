@@ -1,3 +1,8 @@
+Wed Jun 30 14:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* protocols/tests/INet/MT_Get/Main.cpp:
+	  Fixed truncation warnings.
+
 Tue Jun 29 11:19:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* protocols/tests/INet/MT_Get/Main.cpp:

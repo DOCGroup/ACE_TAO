@@ -7,6 +7,7 @@
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"
 #include "ace/INet/String_IOStream.h"
+#include "ace/Truncate.h"
 #include <iostream>
 
 size_t n_threads =  3;
@@ -253,7 +254,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Thread_Manager::instance ()->wait ();
 
   // All threads should have resulted in the same data...
-  if (get_task.results ().size () != n_threads)
+  if (get_task.results ().size () != ACE_Utils::truncate_cast<size_t> (n_threads))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%d results found; ")
