@@ -6,7 +6,7 @@
 #include <Components.idl>
 #include <ccm_dds.idl>
 
-#include "Shapes_msg.idl"
+#include "Shapes_ShapeType_msg.idl"
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 
