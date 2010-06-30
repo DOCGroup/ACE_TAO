@@ -25,6 +25,11 @@ namespace DAnCE
       plan_ (plan),
       connectionRef_ (connectionRef)
   {
+    CORBA::Any *tmp;
+    ACE_NEW_THROW_EX (tmp, 
+                      ::CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    ref_ = tmp;
   }
     
   Endpoint_Reference::~Endpoint_Reference (void)

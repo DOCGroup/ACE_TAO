@@ -33,6 +33,12 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Handler_i::install_instance");
     
+    ::CORBA::Any *retval_tmp;
+    ACE_NEW_THROW_EX (retval_tmp,
+                      CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    instance_reference = retval_tmp;
+    
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
     
@@ -204,13 +210,8 @@ namespace CIAO
 
     DEPLOYMENT_STATE::instance ()->add_home (idd.name.in (), cont_id, home_ref.in ());
 
-    CORBA::Any *retval = 0;
-    ACE_NEW_THROW_EX (retval,
-                      CORBA::Any (),
-                      CORBA::NO_MEMORY ());
       
-    (*retval) <<= home_ref;
-    instance_reference = retval;
+    *instance_reference <<=home_ref;
   }
   
   
