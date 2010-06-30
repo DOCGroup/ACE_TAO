@@ -3,7 +3,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 
 . Generalized DDS4CCM connector support to allow user-defined
   DDS4CCM connectors
-  
+
 . Added support for structs in the deployment plan
 
 . Updated DDS4CCM to the beta 3 specification which includes
@@ -29,8 +29,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 
 . The NodeApplication and LocalitManager have been refactored to use
   a thread pool based dispatching system for executing deployment actions.
-  This allows the NodeApplication to use multiple threads to spawn new 
-  dance_locality_manager processes.  The LocalityManager will, for the 
+  This allows the NodeApplication to use multiple threads to spawn new
+  dance_locality_manager processes.  The LocalityManager will, for the
   time being, be restricted to using only the ORB thread for dispatching
   deployment events.
 

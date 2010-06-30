@@ -1,3 +1,10 @@
+Wed Jun 30 13:01:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender.mpc:
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender.mpc:
+          Fixed msvc71 link errors
+
 Wed Jun 30 12:08:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * docs/OMG-CCM-Tutorial.pptx:

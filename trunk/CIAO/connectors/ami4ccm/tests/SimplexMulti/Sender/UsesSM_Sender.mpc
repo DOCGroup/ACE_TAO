@@ -30,8 +30,8 @@ project(AMI_UsesSM_Base_Sender_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI_UsesSM_Base_Sender_lem_stub) : ccm_svnt, ami   {
-  after += AMI_UsesSM_Base_Sender_lem_gen AMI_UsesSM_stub
-  libs  += UsesSM_stub 
+  after += AMI_UsesSM_Base_Sender_lem_gen AMI_UsesSM_stub AMI_UsesSM_Base_Sender_stub
+  libs  += UsesSM_stub UsesSM_Sender_stub
   libpaths += ../lib
   libout = ../lib
   sharedname = UsesSM_Sender_lem_stub
