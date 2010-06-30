@@ -1,3 +1,11 @@
+Wed Jun 30 13:33:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed crash when no properties are passed
+
+        * tests/Bug_3832_Regression/run_test.pl:
+          Fixed this test script
+
 Wed Jun 30 13:01:44 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/IDL_Test/Hello_Component.mpc:

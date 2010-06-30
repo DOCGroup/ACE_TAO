@@ -48,13 +48,12 @@ namespace DAnCE
   {
     DANCE_TRACE ("LocalityManager_i::init");
 
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+    if (props)
+      {
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Received %u properties from init\n"),
                      props->length ()));
-
-    if (props)
-      {
         this->props_ = props;
 
         DAnCE::Utility::update_property_value (ENTITY_POA,
@@ -65,8 +64,9 @@ namespace DAnCE
       }
 
     std::string type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Container_Handler"));
+      PLUGIN_MANAGER::instance ()->register_installation_handler (
+        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+        ACE_TEXT_CHAR_TO_TCHAR ("create_Container_Handler"));
 
     if (type.c_str ())
       {
@@ -80,8 +80,10 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Home_Handler"));
+      PLUGIN_MANAGER::instance ()->register_installation_handler (
+        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+        ACE_TEXT_CHAR_TO_TCHAR ("create_Home_Handler"));
+        
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -94,8 +96,9 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Homed_Component_Handler"));
+      PLUGIN_MANAGER::instance ()->register_installation_handler (
+        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+        ACE_TEXT_CHAR_TO_TCHAR ("create_Homed_Component_Handler"));
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -108,8 +111,9 @@ namespace DAnCE
                      type.c_str ()));
 
     type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Component_Handler"));
+      PLUGIN_MANAGER::instance ()->register_installation_handler (
+        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
+        ACE_TEXT_CHAR_TO_TCHAR ("create_Component_Handler"));
     if (type.c_str ())
       {
         this->handler_order_.push_back (type.c_str ());
@@ -121,8 +125,9 @@ namespace DAnCE
                      ACE_TEXT ("Registered handler for <%C>\n"),
                      type.c_str ()));
 
-    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
-                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
+    PLUGIN_MANAGER::instance ()->register_interceptor (
+      ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
+      ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
 
     bool tmp;
     if (props &&
@@ -130,12 +135,16 @@ namespace DAnCE
                                             *props,
                                             tmp))
       {
-        PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
+        PLUGIN_MANAGER::instance ()->register_interceptor (
+          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
+          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
       }
     else
-      PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+      {
+        PLUGIN_MANAGER::instance ()->register_interceptor (
+          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
+          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
+      }
 
     if (this->props_)
       {
