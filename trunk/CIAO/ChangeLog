@@ -1,3 +1,12 @@
+Wed Jun 30 10:35:10 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/05_compilation.html
+         Changes after review.
+
 Wed Jun 30 09:20:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
