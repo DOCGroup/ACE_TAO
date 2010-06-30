@@ -32,6 +32,13 @@ namespace CIAO
                                          ::CORBA::ULong instanceRef,
                                          ::CORBA::Any_out instance_reference)
   {
+    CORBA::Any *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    
+    instance_reference = retval;
+    
     CIAO_TRACE ("Component_Handler_i::install_instance");
     
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
@@ -208,13 +215,7 @@ namespace CIAO
                                                     cont_id,
                                                     comp_ref.in ());
 
-      CORBA::Any *retval = 0;
-      ACE_NEW_THROW_EX (retval,
-                        CORBA::Any (),
-                        CORBA::NO_MEMORY ());
-      
-      (*retval) <<= comp_ref;
-      instance_reference = retval;
+      *instance_reference <<= comp_ref;;
   }
   
   void

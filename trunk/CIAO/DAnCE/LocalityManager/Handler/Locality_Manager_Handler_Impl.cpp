@@ -43,6 +43,12 @@ namespace DAnCE
                                         ::CORBA::ULong instanceRef,
                                         ::CORBA::Any_out instance_reference)
   {
+    CORBA::Any *outany (0);
+    ACE_NEW_THROW_EX (outany,
+                      CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    instance_reference = outany;
+    
 #ifdef GEN_OSTREAM_OPS
     {
       std::ostringstream plan_stream;
@@ -116,13 +122,7 @@ namespace DAnCE
                                         "LocalityManager from Activator\n");
       }
 
-    CORBA::Any *outany (0);
-    ACE_NEW_THROW_EX (outany,
-                      CORBA::Any (),
-                      CORBA::NO_MEMORY ());
-    (*outany) <<= lm_ref.in ();
-
-    instance_reference = outany;
+    *instance_reference <<= lm_ref.in ();
   }
 
   void
