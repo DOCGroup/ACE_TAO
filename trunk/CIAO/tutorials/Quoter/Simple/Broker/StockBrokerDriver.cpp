@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       orb->destroy ();
 
     }
-  catch (const Stock::Invalid_Stock& ex)
+  catch (const Stock::Invalid_Stock& )
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid stock exception.\n"));
     }
