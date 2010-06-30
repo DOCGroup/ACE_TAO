@@ -1,3 +1,11 @@
+Wed Jun 30 09:20:10 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	  Cosmetic logging change.
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+	  Fixed incorrect Compare functor for server registry set.
+
 Wed Jun 30 06:04:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:

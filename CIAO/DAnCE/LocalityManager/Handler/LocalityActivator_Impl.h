@@ -129,7 +129,7 @@ namespace DAnCE
     {
       bool operator() (const Safe_Server_Info &a, const Safe_Server_Info &b) const
       {
-        return a->uuid_ == b->uuid_;
+        return a->uuid_ < b->uuid_;
       }
     };
 
