@@ -1,3 +1,10 @@
+Wed Jun 30 06:04:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/02_idl.html:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/04_dds4ccm.html:
+          Changes after review.
+
 Tue Jun 29 17:54:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
