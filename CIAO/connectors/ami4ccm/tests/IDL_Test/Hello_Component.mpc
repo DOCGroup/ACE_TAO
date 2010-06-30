@@ -30,8 +30,8 @@ project(AMI4CCM_ITB_Hello_Comp_lem_gen) : ciaoidldefaults {
 }
 
 project(AMI4CCM_ITB_Hello_Comp_lem_stub) : ccm_svnt, ami   {
-  after += AMI4CCM_ITB_Hello_Comp_lem_gen AMI4CCM_IDL_Test_stub Conn_Hello_Base_stub
-  libs  += Hello_stub
+  after += AMI4CCM_ITB_Hello_Comp_lem_gen AMI4CCM_IDL_Test_stub Conn_Hello_Base_stub AMI4CCM_ITB_Hello_Comp_stub
+  libs  += Hello_stub Hello_Component_stub
   libpaths += lib
   libout = lib
   sharedname = Hello_Component_lem_stub
