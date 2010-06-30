@@ -30,24 +30,31 @@
       <li>A controller component</li>
     </ul>
     In this tutorial RTI DDS is used to transfer data from the sender to the receiver.
-    Therefor both the sender and receiver are using a DDS4CCM connector.<br/>
-    The data consists of a struct with the following members:
+    Since the sender and receiver are separate components, each use a DDS4CCM connector.<br/>
+    The exchanged data consists of a struct with the following members:
     <ul>
       <li>color : represents the color of the shape.</li>
       <li>x : represents the location on the x-axis.</li>
       <li>y : represents the location on the y-axis</li>
       <li>shapesize : represents the size of the shape.</li>
     </ul>
+    Separate DDS Topics are used to represent different shapes, i.e., Circle,
+    Square, and Triangle.<br/>
+    The color field is a DDS "key" value, which causes DDS to treat each color
+    as an unique "instance" of a shape.<br/>
+    Each of these instances is registered with DDS and is independently 
+    maintained in regards to Quality of Service (QoS).<br/>  
     The controller controls the location and size of the registered shape.<br/>
-    The only thing the sender does is registering a shape with DDS and transferring
-    the data received from the controller to DDS.<br/>
+    The sender registers a shape instance with DDS and transfers the data received
+    from the controller to DDS.<br/>
     The receiver listens to DDS and receives the updates regarding the shapes data.
   </p>
   <img width="60%" height="40%" src="./images/system.png" />
   <p><i><b>to-be-replaced</b></i></p>
 
   <p>
-    This tutorial runs in conjuntion with the RTI shapes demo.
+    This tutorial runs in conjuntion with the RTI shapes demo, available for download from 
+    http://www.rti.com/downloads/index.html .
   </p>
 
   <h2>Directory structure</h2>
