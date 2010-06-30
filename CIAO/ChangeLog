@@ -1,3 +1,10 @@
+Wed Jun 30 15:02:07 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+
+          In the case where there is no DDS implementation available,
+          install the IDL files so they can be included by some tests.
+
 Wed Jun 30 14:47:44 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:
