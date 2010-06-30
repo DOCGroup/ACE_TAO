@@ -1,8 +1,28 @@
+Wed Jun 30 21:38:41 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Interceptors/Best_Effort.cpp:
+        * DAnCE/LocalityManager/Interceptors/Standard_Error.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Better detection of bad any values passed in.
+
+        * DAnCE/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Endpoint.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Install.cpp:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Earlier allocation of anys to ensure their state is valid
+          in the event of early exit due to exceptional conditions.
+
 Wed Jun 30 20:34:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
 
-          Fix for crash on shutdown for windows. 
+          Fix for crash on shutdown for windows.
 
 Wed Jun 30 16:05:10 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 

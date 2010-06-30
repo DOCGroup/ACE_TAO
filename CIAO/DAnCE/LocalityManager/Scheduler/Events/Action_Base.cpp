@@ -12,6 +12,11 @@ namespace DAnCE
                                         const char *instance_type)
     : Deployment_Event (holder, name, instance_type)
   {
+    CORBA::Any *tmp;
+    ACE_NEW_THROW_EX (tmp, 
+                      ::CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    instance_excep_ = tmp;
   }
   
   Action_Base::~Action_Base (void)

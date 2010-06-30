@@ -30,7 +30,7 @@ namespace DAnCE
                                       const ::CORBA::Any &,
                                       const ::CORBA::Any &exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
@@ -49,7 +49,7 @@ namespace DAnCE
                                          ::CORBA::ULong connection,
                                          const ::CORBA::Any &exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
@@ -68,7 +68,7 @@ namespace DAnCE
                                             ::CORBA::ULong instance_index,
                                             const ::CORBA::Any &exception )
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
@@ -88,7 +88,7 @@ namespace DAnCE
                                        ::CORBA::ULong instance_index,
                                        const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
@@ -108,7 +108,7 @@ namespace DAnCE
                                         ::CORBA::ULong instance_index,
                                         const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
@@ -128,7 +128,7 @@ namespace DAnCE
                                      ::CORBA::ULong instance_index,
                                      const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,

@@ -34,6 +34,13 @@ namespace CIAO
                                                ::CORBA::Any_out instance_reference)
   {
     CIAO_TRACE ("Homed_Component_Handler_i::install_instance");
+
+    CORBA::Any *any = 0;
+    ACE_NEW_THROW_EX (any,
+                      CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    
+    instance_reference = any;
     
     const ::Deployment::InstanceDeploymentDescription &idd (plan.instance[instanceRef]);
     const ::Deployment::MonolithicDeploymentDescription &mdd (plan.implementation[idd.implementationRef]);
@@ -153,16 +160,8 @@ namespace CIAO
     
     DEPLOYMENT_STATE::instance ()->add_component (idd.name.in (),
                                                   cont_id,
-                                                  ref.in ());
-    
-    CORBA::Any *any = 0;
-    ACE_NEW_THROW_EX (any,
-                      CORBA::Any (),
-                      CORBA::NO_MEMORY ());
-    
-    (*any) <<= ref;
-    
-    instance_reference = any;
+                                                  ref.in ());    
+    (*instance_reference) <<= ref;
   }
 
   void

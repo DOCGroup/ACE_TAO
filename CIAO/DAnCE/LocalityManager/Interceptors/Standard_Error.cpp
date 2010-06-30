@@ -30,7 +30,7 @@ namespace DAnCE
                                          const ::CORBA::Any &,
                                          const ::CORBA::Any &exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_install - ")
@@ -45,7 +45,7 @@ namespace DAnCE
                                          ::CORBA::ULong connection,
                                          const ::CORBA::Any &exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_connect - ")
@@ -60,7 +60,7 @@ namespace DAnCE
                                             ::CORBA::ULong instance_index,
                                             const ::CORBA::Any &exception )
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_configured - ")
@@ -76,7 +76,7 @@ namespace DAnCE
                                           ::CORBA::ULong instance_index,
                                           const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_activate - ")
@@ -92,7 +92,7 @@ namespace DAnCE
                                            ::CORBA::ULong instance_index,
                                            const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_passivate - ")
@@ -108,7 +108,7 @@ namespace DAnCE
                                         ::CORBA::ULong instance_index,
                                         const ::CORBA::Any & exception)
   {
-    if (&exception)
+    if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
                          ACE_TEXT ("Standard_Error::instance_post_remove - ")

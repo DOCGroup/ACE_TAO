@@ -49,7 +49,7 @@ namespace CIAO
                      ACE_TEXT ("Interceptor post install for instance %C\n"),
                      plan.instance[instance_index].name.in ()));
     
-    if (&instance_reference == 0)
+    if (instance_reference.type() == ::CORBA::_tc_null)
       {
         DANCE_ERROR (3, (LM_WARNING, DLINFO
                          ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")

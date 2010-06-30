@@ -25,6 +25,12 @@ namespace DAnCE
       plan_ (plan),
       instanceRef_ (instanceRef)
   {
+    CORBA::Any *tmp;
+    ACE_NEW_THROW_EX (tmp, 
+                      ::CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    
+    instance_ = tmp;
   }
 
   Install_Instance::~Install_Instance (void)
@@ -37,7 +43,7 @@ namespace DAnCE
     DANCE_TRACE ("Install_Instance::invoke_pre_interceptor");
     
     (*i)->instance_pre_install (this->plan_,
-                                        this->instanceRef_);
+                                this->instanceRef_);
   }
   
     
@@ -50,9 +56,11 @@ namespace DAnCE
                       ACE_TEXT ("Install_Instance::invoke - ")
                       ACE_TEXT ("Invoking install_instance on handler for type <%C>\n"),
                       this->instance_type_.c_str ()));
+    
     handler->install_instance (this->plan_,
                                this->instanceRef_,
                                this->instance_.out ());
+
     DANCE_DEBUG (10, (LM_TRACE, DLINFO
                       ACE_TEXT ("Install_Instance::invoke - ")
                       ACE_TEXT ("install_instance completed\n")));

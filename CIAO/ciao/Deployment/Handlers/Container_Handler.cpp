@@ -50,6 +50,13 @@ namespace CIAO
                                          ::CORBA::Any_out instance_reference)
   {
     CIAO_TRACE ("Container_Handler_i::install_instance");
+
+    ::CORBA::Any_ptr outref;
+    ACE_NEW_THROW_EX (outref,
+                      ::CORBA::Any (),
+                      CORBA::NO_MEMORY ());
+    
+    instance_reference = outref;
     
     CIAO::Session_Container *cont (0);
     const char *name (plan.instance[instanceRef].name.in ());
@@ -79,14 +86,9 @@ namespace CIAO
     DEPLOYMENT_STATE::instance ()->add_container (name,
                                                   cont);
     
-    ::CORBA::Any_ptr outref;
-    ACE_NEW_THROW_EX (outref,
-                      ::CORBA::Any (),
-                      CORBA::NO_MEMORY ());
-    
     (*outref) <<= container_ref;
     
-    instance_reference = outref;
+    *instance_reference <<= container_ref;
   }
   
   void
