@@ -62,10 +62,6 @@ project (DDS4CCM_idl_install_only) {
 
   custom_only = 1
 
-//  PIDL_Files {
-//    *.idl // otherwise we get a warning from mpc (no useful targets)
-//  }
-
   verbatim(gnuace, bottom) {
 "install:"
 "	$(MKDIR) $(INSTALL_PREFIX)/share/ciao/connectors/dds4ccm/idl"
