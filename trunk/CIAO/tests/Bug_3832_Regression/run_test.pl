@@ -26,9 +26,14 @@ $ENV {'CIAO_LOG_FILE'} = 'test.log';
 
 my $node_app = $server->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
-$SV = $server->CreateProcess ("$node_app");
+$SV = $server->CreateProcess ("$node_app", "-u c7a07968-7ece-11df-8000-67c6697351ff");
 
-$SV->Spawn ();
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: dance_locality_manager returned $server_status\n";
+    exit 1;
+}
 
 if ($server->WaitForFileTimed ($TestCaseC_i,
                                $server->ProcessStartWaitInterval()) == -1) {
