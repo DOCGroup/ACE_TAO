@@ -10,7 +10,7 @@
 #include "ace/Truncate.h"
 #include <iostream>
 
-size_t n_threads =  3;
+int n_threads =  3;
 
 #if defined (ACE_HAS_THREADS)
 class Get_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -265,7 +265,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   else
     {
       const ACE_Array<ACE_CString>& results = get_task.results ();
-      for (size_t i=1;
+      for (int i=1;
            i < n_threads;
            ++i)
         {
