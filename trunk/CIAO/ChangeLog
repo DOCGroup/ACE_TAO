@@ -1,3 +1,9 @@
+Thu Jul  1 21:22:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/docs/sources/LocalityManager.graffle:
+
+          LocalityManager graphics.
+
 Thu Jul  1 10:50:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
