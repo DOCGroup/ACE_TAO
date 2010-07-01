@@ -1,3 +1,8 @@
+Thu Jul  1 09:02:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+          Resolved linker errors on windows when full_ccm is on
+
 Thu Jul  1 08:57:21 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *bin/ciao_tests.lst
