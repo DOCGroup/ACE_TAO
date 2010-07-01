@@ -25,4 +25,5 @@ workspace {
   tests
   examples
   performance-tests
+  tutorials
 }

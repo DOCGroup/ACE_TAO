@@ -1,7 +1,12 @@
+Thu Jul  1 08:37:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+          Added tutorials directory
+
 Thu Jul  1 07:01:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
-          Slower rate. 
+          Slower rate.
 
 Wed Jun 30 21:38:41 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
