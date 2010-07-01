@@ -8,8 +8,10 @@
 #include "DAnCE/Deployment/Deployment_NodeManagerC.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "DAnCE/Logger/Logger_Service.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Config_Handlers/XML_File_Intf.h"
+#include "Config_Handlers/Common.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
@@ -17,6 +19,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
   try
     {
+      DAnCE::Logger_Service
+        *dlf = ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
+
+      if (dlf)
+        {
+          dlf->init (argc, argv);
+        }
+
       if (argc < 1)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Incorrect count of arguments. Path to deployment plan has not been specified.\n")));
@@ -34,6 +44,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                     argv[1]));
           return 1;
         }
+    }
+  catch (const CIAO::Config_Handlers::Config_Error &ex)
+    {
+      DANCE_ERROR (1, (LM_ERROR, "Caught config error while parsing XML into IDL: %C:%C\n",
+                      ex.name_.c_str (), ex.error_.c_str ()));
     }
   catch (...)
     {
