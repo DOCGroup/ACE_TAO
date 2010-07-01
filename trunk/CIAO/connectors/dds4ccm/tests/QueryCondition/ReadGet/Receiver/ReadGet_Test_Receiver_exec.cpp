@@ -322,7 +322,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                                   "Unexpected param value: "
                                   "expected <%d> - received <%C>\n",
                                   this->current_min_iteration_,
-                                  filter->parameters[0]));
+                                  filter->parameters[0].in ()));
             error = true;
           }
       }
@@ -334,7 +334,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                                   "Unexpected param value: "
                                   "expected <%d> - received <%C>\n",
                                   this->current_max_iteration_,
-                                  filter->parameters[1]));
+                                  filter->parameters[1].in ()));
             error = true;
           }
       }

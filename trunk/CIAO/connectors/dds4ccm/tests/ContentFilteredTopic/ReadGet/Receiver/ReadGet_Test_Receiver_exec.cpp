@@ -423,7 +423,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                                   ACE_TEXT ("expected <%d> - received <%C>\n"),
                                   port,
                                   this->current_iter_value1_,
-                                  filter->parameters[0]));
+                                  filter->parameters[0].in ()));
             error = true;
           }
       }
@@ -435,7 +435,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                                   ACE_TEXT ("Unexpected param value: ")
                                   ACE_TEXT ("expected <%d> - received <%C>\n"),
                                   port, this->current_iter_value2_,
-                                  filter->parameters[1]));
+                                  filter->parameters[1].in ()));
             error = true;
           }
       }
