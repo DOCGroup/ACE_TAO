@@ -42,7 +42,7 @@ open (STDERR, ">&STDOUT");
     $APP = $tg->CreateProcess ("./Parsing", "$file");
     $retval = $APP->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
     $status = $status + $retval;
-              
+
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
@@ -50,8 +50,11 @@ open (STDERR, ">&OLDERR");
     print STDERR "ERROR: Parsing returned $retval for file\n";
     $status = 1;
   }
+ else  {
+    print STDERR "Test succeeded\n";
+  }
 
-    sleep (1);
+  sleep (1);
 }
 
 exit $status;
