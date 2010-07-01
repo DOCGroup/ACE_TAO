@@ -419,9 +419,11 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (ACE_OS::atoi (filter->parameters[0]) != this->current_iter_value1_)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Unexpected query when retrieving filter: ")
-                                  ACE_TEXT ("expected <%C> - received <%C>\n"),
-                                  port, QUERY_GETTER_PORT, filter->expression.in ()));
+                                  ACE_TEXT ("Unexpected param value: ")
+                                  ACE_TEXT ("expected <%d> - received <%C>\n"),
+                                  port,
+                                  this->current_iter_value1_,
+                                  filter->parameters[0]));
             error = true;
           }
       }
@@ -430,9 +432,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (ACE_OS::atoi (filter->parameters[1]) != this->current_iter_value2_)
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Unexpected query when retrieving filter: ")
-                                  ACE_TEXT ("expected <%C> - received <%C>\n"),
-                                  port, QUERY_GETTER_PORT, filter->expression.in ()));
+                                  ACE_TEXT ("Unexpected param value: ")
+                                  ACE_TEXT ("expected <%d> - received <%C>\n"),
+                                  port, this->current_iter_value2_,
+                                  filter->parameters[1]));
             error = true;
           }
       }

@@ -319,9 +319,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (ACE_OS::atoi (filter->parameters[0]) != this->current_min_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                  "Unexpected query when retrieving filter: "
-                                  "expected <%C> - received <%C>\n",
-                                  QUERY, filter->expression.in ()));
+                                  "Unexpected param value: "
+                                  "expected <%d> - received <%C>\n",
+                                  this->current_min_iteration_,
+                                  filter->parameters[0]));
             error = true;
           }
       }
@@ -330,9 +331,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (ACE_OS::atoi (filter->parameters[1]) != this->current_max_iteration_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "
-                                  "Unexpected query when retrieving filter: "
-                                  "expected <%C> - received <%C>\n",
-                                  QUERY, filter->expression.in ()));
+                                  "Unexpected param value: "
+                                  "expected <%d> - received <%C>\n",
+                                  this->current_max_iteration_,
+                                  filter->parameters[1]));
             error = true;
           }
       }
@@ -502,8 +504,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
-    this->context_->get_connection_get_port_fresh_data ();
-
     ::ReadGet_Test::QueryConditionTestConnector::Getter_var getter =
       this->context_->get_connection_get_port_fresh_data ();
     DDS::Duration_t to;
