@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/Updater_Connector.idl"
+
+module Updater
+{
+  component Receiver
+  {
+    port UpdaterConnector::DDS_Listen info_out;
+  };
+};
+
+#endif

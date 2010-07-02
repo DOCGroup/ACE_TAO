@@ -1,0 +1,197 @@
+
+Introduction
+------------
+
+RMCast is a reliable source-ordered multicast protocol implementation
+for message-oriented multi-sender group communication built on top of
+IPv4 multicast. It uses sequence numbers for re-ordering, duplicate
+suppression and loss detection. Negative acknowledgments (NAK) with
+retransmissions are used to recover from losses.
+
+One new and interesting idea implemented in this protocol is history
+transmission (dubbed negative retransmission). In a nutshell, each
+sender, along with normal payload, transmits a list of other sender's
+IDs along with sequence numbers of last messages received from those
+senders by this member. This, in some sense, builds a pyramid of
+information: each subsequent message carries some information for a
+number of previous messages (from other senders). This helps other
+receivers detect losses.
+
+The protocol does not track group membership. Messages are retained
+for retransmission for a predefined amount of time. The "last message
+or lost message" dilemma is solved by periodic history transmissions
+in cases when there is no useful traffic (idle network).
+
+
+Examples
+--------
+
+There is a simple example available in examples/RMCast/Send_Msg with
+the corresponding README file.
+
+
+Protocol
+--------
+
+Over-the-wire representation is little-endian CDR. The protocol is
+message-based with information encapsulated into one or multiple
+profiles (Protocol.h):
+
+
+
+struct Profile
+{
+  u16 id;    // Profile id.
+  u16 size;  // Profile size.
+};
+
+struct Message
+{
+  u32 size;                   // Total size of the message.
+  sequence<Profile> profiles; // Sequence of profiles.
+}
+
+
+
+The following profiles are defined (Protocol.h):
+
+
+
+struct From: Profile
+{
+  u32 addr;  // IPv4 address.
+  u16 port;
+};
+
+The 'From' profile appears in each message. It is never transmitted
+over the wire. Instead the 'Link' layer (see below) adds it.
+
+
+
+struct To: Profile
+{
+  u32 addr;  // IPv4 address.
+  u16 port;
+};
+
+The 'To' profile also appears in each message. It is also never
+transmitted over the wire since all communications are done via
+well-known group address. It is added by the 'Link' layer and is used
+by a group member to identify messages from itself ('From' == 'To').
+
+
+
+struct Data: Profile
+{
+  sequence<octet> data;
+};
+
+The 'Data' profile is used to transmit user payload.
+
+
+
+struct SN: Profile
+{
+  u64 sn;
+};
+
+The 'SN' profile carries sequence number for 'Data' and 'NoData' profiles.
+
+
+
+struct NAK: Profile
+{
+  u32 addr;  // IPv4 address.
+  u16 port;
+
+  sequence<u64> sns;
+};
+
+The 'NAK' profile carries sequence numbers of all the messages originated
+from the member identified by addr:port that the receiver detected were
+lost.
+
+
+
+struct NRTM: Profile
+{
+  struct Pair
+  {
+    u32 addr;  // IPv4 address.
+    u16 port;
+
+    u64 max_sn;
+  };
+
+  sequence<Pair> nrtm;
+};
+
+The 'NRTM' profile carries highest sequence numbers known to this member
+for (some sub-) set of members. It is used by other members to detect loses.
+This profile is normally combined with 'Data' transmission.
+
+
+
+struct NoData: Profile
+{
+};
+
+The 'NoData' profile is send in reply to 'NAK' when the lost message is
+no longer available.
+
+
+
+Below is the list of actions that trigger messages with various
+profiles:
+
+
+user calls send():  SN
+                    Data
+                    NRTM
+
+detected loss:      NAK
+
+
+received NAK:       SN     or   SN
+                    Data        NoData
+                    NRTM        NRTM
+
+
+Implementation
+--------------
+
+This section describes high-level architecture of the implementation.
+The protocol is implemented as a stack (Stack.h) of the following
+elements:
+
+'Socket'
+'Acknowledge'
+'Retransmit'
+'Link'
+
+The 'Socket' element is the user interface of the member. When a user
+calls send() 'Socket' creates a new message with 'SN' and 'Data' profiles
+and forwards it to the 'Acknowledge' element. It also receives (from
+'Acknowledge') and queues incoming messages that are delivered to the user
+when recv() is called.
+
+The 'Acknowledge' element is responsible for re-ordering, duplicate
+suppression, loss detection and negative acknowledgments. It maintains a
+dynamically changing "window" (which slides toward higher sequence
+numbers) of received messages. Messages that arrive out of order are held
+in this window. Presence of a hole in the windows for a long period of time
+indicates loss and triggers a negative acknowledgment.
+
+The 'Retransmit' element is responsible for message retention, aging and
+retransmission in response to NAKs. Each message received from the 'Socket'
+element is held for predetermined amount of time in case retransmission is
+required. Upon reception of a NAK duplicate is send if the requested message
+is still available. Otherwise 'NoData' profile is sent.
+
+
+The 'Link' element is responsible for interfacing with the IPv4 multicast
+socket. It also parses over-the-wire representation into in-memory messages
+with individually-accessible profiles.
+
+--
+Boris Kolpackov <boris@kolpackov.net>

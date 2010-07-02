@@ -1,0 +1,14 @@
+// $Id$
+
+This test is regression for bug 2248
+http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2248
+
+To run:
+
+./server -o file1.ior -f file://iogr_10.ior -k KEY1
+./server -o file2.ior -k KEY2
+./client -a file://file1.ior -k KEY1 -b file://file2.ior -l KEY2 \
+     -g iogr_10.ior -h iogr_11.ior
+
+The complete test can be run by run_test.pl.
+The script exits with error code != 0 in case of error.

@@ -1,0 +1,153 @@
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Hello_DDS_Deployment_1</label>
+  <UUID>Hello_DDS_Deployment_1</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Home implementation -->
+  
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+      
+  <implementation xmi:id="CommandlinePassageComponentImplementation">
+    <name>CommandlinePassageComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="CommandlinePassage_ExecArtifact" />
+    <artifact xmi:idref="CommandlinePassage_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Component_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_command_line_test_A_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CommandlinePassage_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CommandlinePassage_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  
+  <instance xmi:id="CompSvrInst">
+    <name>ComponentServerInstance</name>
+    <node>CommandlinePassageNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBSvcConfDirective "static Resource_Factory '-ORBConnectionCacheMax 33'"</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="CommandlinePassageComponentInstance">
+    <name>CommandlinePassageComponent</name>
+    <node>CommandlinePassageNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="CommandlinePassageComponentImplementation" />
+    <!-- set both edu.vanderbilt.dre.CIAO.ComponentServer.Args and
+         tc_max to the same number -->
+    <configProperty>
+      <name>tc_max</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>33</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
+  <artifact xmi:id="CommandlinePassage_ExecArtifact">
+    <name>CommandlinePassage_exec</name>
+    <source/>
+    <node/>
+    <location>CommandlinePassage_exec</location>
+  </artifact>
+  <artifact xmi:id="CommandlinePassage_SvntArtifact">
+    <name>CommandlinePassage_svnt</name>
+    <source/>
+    <node/>
+    <location>CommandlinePassage_svnt</location>
+  </artifact>
+  <artifact xmi:id="CommandlinePassage_StubArtifact">
+    <name>CommandlinePassage_stub</name>
+    <source/>
+    <node/>
+    <location>CommandlinePassage_stub</location>
+  </artifact>
+  
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvrInst" />
+    <constrainedInstance xmi:idref="CommandlinePassageComponentInstance" />
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

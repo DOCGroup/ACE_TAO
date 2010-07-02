@@ -1,0 +1,22 @@
+// $Id$
+
+/**
+ * @file   psat_type.idl
+ */
+
+#ifndef PSAT_TYPE_IDL
+#define PSAT_TYPE_IDL
+
+#pragma ndds typesupport "psat_typeSupport.h"
+
+#pragma DCPS_DATA_TYPE "TestTopic"
+#pragma DCPS_DATA_KEY "TestTopic key"
+
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
+typedef sequence<TestTopic> TestTopicSeq;
+
+#endif

@@ -1,0 +1,34 @@
+// $Id$
+
+/**
+ * @file UCC_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef USERDATA_COPY_COUNT_TEST_BASE_IDL
+#define USERDATA_COPY_COUNT_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/UCC_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "UCCVariableSizedStructTest"
+#pragma DCPS_DATA_KEY "UCCVariableSizedStructTest symbol"
+
+struct UCCVariableSizedStructTest {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<UCCVariableSizedStructTest> UCCVariableSizedStructTestSeq;
+
+#pragma DCPS_DATA_TYPE "UCCFixedSizedStructTest"
+
+struct UCCFixedSizedStructTest {
+  long x;
+  long y;
+  long z;
+};
+
+typedef sequence<UCCFixedSizedStructTest> UCCFixedSizedStructTestSeq;
+
+#endif /* USERDATA_COPY_COUNT_TEST_BASE_IDL */

@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef SINGLE_SERVICE_IDL
+#define SINGLE_SERVICE_IDL
+
+#include <Components.idl>
+#include "Common/Common.idl"
+
+component Single_Service
+{
+  provides Simple_Service ping_port;
+};
+
+#endif

@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file ReadGet_Starter.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERYCONDITION_STARTER_IDL
+#define QUERYCONDITION_STARTER_IDL
+
+#pragma ciao lem "Base/ReadGet_StarterE.idl"
+
+interface ReadGetStarter
+{
+  void set_reader_properties (in unsigned short nr_keys,
+                              in unsigned short nr_iterations);
+  void start_read (in unsigned short run);
+};
+
+interface ReadGetRestarter
+{
+  void restart_write ();
+};
+
+#endif /* QUERYCONDITION_STARTER_IDL */
