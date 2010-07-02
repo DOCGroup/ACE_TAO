@@ -1,7 +1,14 @@
+Fri Jul  2 03:41:14 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/docs/OMG-DnC-Tutorial.ppt:
+        * DAnCE/docs/sources/dance-deployment.odg:
+
+          Updates for LocalityManager.
+
 Fri Jul  2 03:38:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/docs/sources/LocalityManager.graffle:
-        
+
           Diagram updates.
 
 Thu Jul  1 21:22:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
