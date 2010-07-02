@@ -1,3 +1,9 @@
+Fri Jul  2 08:29:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+          Added missing base project. This resolves static linker errors
+          on Linux.
+
 Fri Jul  2 06:51:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc:
