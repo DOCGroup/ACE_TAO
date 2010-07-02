@@ -101,6 +101,7 @@ project (XSC_Config_Handlers) : install, dance_deployment_stub, dance_config_han
 
   Header_Files {
     Config_Handlers_Export.h
+    Common.h
   }
 
 }
