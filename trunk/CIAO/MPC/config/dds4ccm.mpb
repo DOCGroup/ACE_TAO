@@ -19,7 +19,7 @@ feature(dds4ccm_splice) : taoidldefaults {
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
-feature(dds4ccm_ndds) : taoidldefaults, anytypecode {
+feature(dds4ccm_ndds) : taoidldefaults {
   macros += CIAO_DDS4CCM_NDDS=1
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \
               -Wb,dds_impl=ndds \
