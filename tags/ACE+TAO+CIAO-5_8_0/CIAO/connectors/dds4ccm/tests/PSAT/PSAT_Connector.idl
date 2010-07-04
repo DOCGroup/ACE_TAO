@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file PSAT_Connector.idl
+ */
+
+#ifndef PSAT_CONNECTOR_USER_IDL
+#define PSAT_CONNECTOR_USER_IDL
+
+#include  <Components.idl>
+
+/// ccm_dds_psat.idl contains no declarations that generate
+/// code on the skeleton side, so we can process that file
+/// with -SS and include this one here to get dds4ccm_ConnectorS.h.
+#include "connectors/dds4ccm/idl/dds4ccm_Connector.idl"
+
+#include "psat_type.idl"
+#include "ccm_dds_psat.idl"
+
+#pragma ciao lem "PSAT_ConnectorE.idl"
+
+module ::CCM_DDS_PSAT::Typed_PSAT < ::TestTopic, ::TestTopicSeq> TestTopicMod;
+
+#endif /* PSAT_CONNECTOR_USER_IDL */

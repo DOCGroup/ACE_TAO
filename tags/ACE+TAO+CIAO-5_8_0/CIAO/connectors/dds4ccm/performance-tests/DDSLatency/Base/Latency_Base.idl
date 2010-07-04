@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef LATENCY_BASE_IDL
+#define LATENCY_BASE_IDL
+
+//#pragma ndds typesupport "Base/Latency_BaseSupport.h"
+
+const short MAX_DATA_SEQUENCE_LENGTH = 8192;
+
+//#pragma DCPS_DATA_TYPE "Latency"
+
+struct LatencyTest {
+  long seq_num;
+  sequence<octet, MAX_DATA_SEQUENCE_LENGTH> data;
+ };
+
+//typedef sequence<LatencyTest> LatencyTest_Seq;
+
+#endif

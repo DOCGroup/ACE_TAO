@@ -1,0 +1,30 @@
+// $Id$
+
+/**
+ * @file Getter_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef GETTER_TEST_BASE_IDL
+#define GETTER_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/Getter_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Getter_Test_BaseTypeSupportC.h"
+
+#pragma DCPS_DATA_TYPE "GetterTest"
+
+struct GetterTest {
+  string key;
+  long iteration;
+};
+typedef sequence<GetterTest> GetterTestSeq;
+
+#pragma DCPS_DATA_TYPE "GetterFixed"
+
+struct GetterFixed {
+  long key;
+  long iteration;
+};
+typedef sequence<GetterFixed> GetterFixedSeq;
+
+#endif

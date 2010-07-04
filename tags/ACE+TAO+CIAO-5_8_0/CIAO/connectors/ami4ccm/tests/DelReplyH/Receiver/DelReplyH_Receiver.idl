@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef DELREPLYH_RECEIVER_IDL
+#define DELREPLYH_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/DelReplyH.idl"
+
+module DelReplyH
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif

@@ -1,0 +1,284 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>SimpleComponent_Home</label>
+  <UUID>SimpleComponent_Home</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Home implementation -->
+  <implementation xmi:id="SimpleNilFacetProviderHomeImplementation">
+    <name>SimpleNilFacetProviderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleNilFacetProvider_ExecArtifact" />
+    <artifact xmi:idref="SimpleNilFacetProvider_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNilFacetProviderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNilFacetProviderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetProvider_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetProvider_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleNilFacetProviderComponentImplementation">
+    <name>SimpleNilFacetProviderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleNilFacetProvider_ExecArtifact" />
+    <artifact xmi:idref="SimpleNilFacetProvider_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleNilFacetUserHomeImplementation">
+    <name>SimpleNilFacetUserHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleNilFacetUser_ExecArtifact" />
+    <artifact xmi:idref="SimpleNilFacetUser_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNilFacetUserHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Simple_SimpleNilFacetUserHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetUser_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetUser_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SimpleNilFacetUserComponentImplementation">
+    <name>SimpleNilFacetUserComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="SimpleNilFacetUser_ExecArtifact" />
+    <artifact xmi:idref="SimpleNilFacetUser_SvntArtifact" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="SimpleNilFacetProviderHomeInstance">
+    <name>SimpleNilFacetProviderHome</name>
+    <node>NodeOne</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNilFacetProviderHomeImplementation" />
+  </instance>
+
+  <instance xmi:id="SimpleNilFacetProviderComponentInstance">
+    <name>SimpleNilFacetProviderComponent</name>
+    <node>NodeOne</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNilFacetProviderComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetProviderHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SimpleNilFacetUserHomeInstance">
+    <name>SimpleNilFacetUserHome</name>
+    <node>NodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNilFacetUserHomeImplementation" />
+  </instance>
+
+  <instance xmi:id="SimpleNilFacetUserComponentInstance">
+    <name>SimpleNilFacetUserComponent</name>
+    <node>NodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNilFacetUserComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetUserHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SimpleNilFacetUserComponentInstanceReverse">
+    <name>SimpleNilFacetUserComponentReverse</name>
+    <node>NodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SimpleNilFacetUserComponentImplementation" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SimpleNilFacetUserHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>TestConnection</name>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleNilFacetProviderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SimpleNilFacetUserComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>TestConnectionReverse</name>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SimpleNilFacetUserComponentInstanceReverse" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>trig</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SimpleNilFacetProviderComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="SimpleNilFacetProvider_ExecArtifact">
+    <name>SimpleNilFacetProvider_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleNilFacetProvider_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleNilFacetProvider_SvntArtifact">
+    <name>SimpleNilFacetProvider_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleNilFacetProvider_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="SimpleNilFacetUser_ExecArtifact">
+    <name>SimpleNilFacetUser_exec</name>
+    <source/>
+    <node/>
+    <location>SimpleNilFacetUser_exec</location>
+  </artifact>
+  <artifact xmi:id="SimpleNilFacetUser_SvntArtifact">
+    <name>SimpleNilFacetUser_svnt</name>
+    <source/>
+    <node/>
+    <location>SimpleNilFacetUser_svnt</location>
+  </artifact>
+
+  </Deployment:DeploymentPlan>

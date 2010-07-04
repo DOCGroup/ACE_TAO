@@ -1,0 +1,26 @@
+/**
+
+@page Bug_1476_Regersion Test README File
+
+        This is a test for bug 1476.
+
+        When making oneway invocations with sync_none policy applied
+        the orb shouldn't block when making the connection but queue
+        the message on the transport and send it when the transport
+        is connected. In case later the connection establishment fails
+        the message are just dropped, sync_none just doesn't give any
+        guarantee, so if you don't like this behaviour, don't use it.
+
+        For this test the connection between client and server shouldn't
+        be established directly, but take some time, this is hard to
+        get working on localhost or the same lan, use a server on a remote
+        site to test this. Because of this we don't run this test in
+        our daily builds
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

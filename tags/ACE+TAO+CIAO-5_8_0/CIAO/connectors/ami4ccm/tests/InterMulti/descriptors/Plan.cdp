@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="InterMulti_ReceiverHomeImplementation">
+    <name>InterMulti_ReceiverHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="InterMulti_Receiver_ExecArtifact"/>
+    <artifact xmi:idref="InterMulti_Receiver_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="InterMulti_SenderHomeImplementation">
+    <name>InterMulti_SenderHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="InterMulti_Sender_ExecArtifact"/>
+    <artifact xmi:idref="InterMulti_Sender_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.SenderArtifacts.Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.SenderArtifacts.Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+<!-- conn one-->
+  <implementation xmi:id="InterMulti_AMIOneHomeImplementation">
+    <name>InterMulti_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="InterMulti_AMIOne_ExecArtifact"/>
+    <artifact xmi:idref="InterMulti_AMIOne_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_One_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_One_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <!-- conn two-->
+  <implementation xmi:id="InterMulti_AMITwoHomeImplementation">
+    <name>InterMulti_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="InterMulti_AMITwo_ExecArtifact"/>
+    <artifact xmi:idref="InterMulti_AMITwo_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Two_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Two_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <!-- conn one-->
+  <implementation xmi:id="InterMulti_AMIThreeHomeImplementation">
+    <name>InterMulti_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="InterMulti_AMIThree_ExecArtifact"/>
+    <artifact xmi:idref="InterMulti_AMIThree_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Three_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Three_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  
+  <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver">
+    <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="InterMulti_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender">
+    <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="InterMulti_SenderHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIOne">
+    <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIOne</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="InterMulti_AMIOneHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMITwo">
+    <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMITwo</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="InterMulti_AMITwoHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIThree">
+    <name>InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIThree</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="InterMulti_AMIThreeHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  
+  
+  
+
+  <connection>
+    <name>run_asynch_one_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIOne" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>run_asynch_two_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_two</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMITwo" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>run_asynch_three_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_run_my_three</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIThree" />
+    </internalEndpoint>
+  </connection>
+  
+  <connection>
+    <name>do_one_connection</name>
+    <internalEndpoint>
+      <portName>do_my_one</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIOne" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>do_two_connection</name>
+    <internalEndpoint>
+      <portName>do_my_two</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMITwo" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>do_three_connection</name>
+    <internalEndpoint>
+      <portName>do_my_three</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.AMIThree" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_one_connection</name>
+    <internalEndpoint>
+      <portName>do_my_one</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_one</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_two_connection</name>
+    <internalEndpoint>
+      <portName>do_my_two</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_two</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>synch_three_connection</name>
+    <internalEndpoint>
+      <portName>do_my_three</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Receiver" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>run_my_three</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="InterMulti.ComponentImplementations.InterMultiImplementation.InterMulti.Sender" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="InterMulti_AMIOne_SvntArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>InterMulti_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_One_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="InterMulti_AMITwo_SvntArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>InterMulti_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Two_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="InterMulti_AMIThree_SvntArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>InterMulti_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI4CCM_Three_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="InterMulti_AMIOne_ExecArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>InterMulti_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_One_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="InterMulti_AMITwo_ExecArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>InterMulti_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_Two_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+  <artifact xmi:id="InterMulti_AMIThree_ExecArtifact">
+    <name>InterMulti.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>InterMulti_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_Three_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="InterMulti_Receiver_SvntArtifact">
+    <name>InterMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>InterMulti_Receiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="InterMulti_Receiver_ExecArtifact">
+    <name>InterMulti.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>InterMulti_Receiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="InterMulti_Sender_SvntArtifact">
+    <name>InterMulti.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>InterMulti_Sender_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="InterMulti_Sender_ExecArtifact">
+    <name>InterMulti.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>InterMulti_Sender_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_InterMulti_AMI_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:DeploymentPlan>

@@ -1,0 +1,21 @@
+In order to regenerate the data files, you will need to perform the
+following steps:
+
+1) Instrument TAO_Transport to write a copy of each data block into a file
+that was read from a socket by applying Transport.patch.
+
+2) Temporarily change ../Java_Big_Request/client.java to send only 2
+requests.
+
+3) Run the server from PMB_With_Fragments and the java client from
+../Java_Big_Request.
+
+Start the server:
+
+server -ORBEndpoint iiop://localhost:11000 -o ../Java_Big_Request/server.ior
+
+Then run the java client:
+
+java client
+
+4) Move the generated data file to the correct name.
