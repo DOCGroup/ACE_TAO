@@ -43,9 +43,9 @@
 To: ciao-users@cs.wustl.edu
 Subject: [area]: [synopsis]
 
-    CIAO VERSION: 0.7.9
-    TAO VERSION : 1.7.9
-    ACE VERSION : 5.7.9
+    CIAO VERSION: 0.8
+    TAO VERSION : 1.8
+    ACE VERSION : 5.8
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you
