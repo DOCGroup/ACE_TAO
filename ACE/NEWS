@@ -13,8 +13,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 
   The latter is for consistency and clarity.
 
-. Ended daily maintenance for RHEL51
-
 . Added ACE INet addon library for Inet protocol clients (and possibly
   servers at some point) like http://, ftp:// etc.
   The library implements standard C++ iostream wrapper classes for
