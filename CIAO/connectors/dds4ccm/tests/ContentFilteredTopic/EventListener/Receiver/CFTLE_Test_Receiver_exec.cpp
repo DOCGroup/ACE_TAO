@@ -10,14 +10,18 @@
 #define MIN_ITERATION 2
 #define MAX_ITERATION 5
 
+#define SAMPLES_PER_KEY 2
+
 namespace CIAO_CFTLE_Test_Receiver_Impl
 {
   //============================================================
   // ContentFilteredTopicListenEventTest_Listener_exec_i
   //============================================================
   ContentFilteredTopicListenEventTest_Listener::ContentFilteredTopicListenEventTest_Listener (
-                                              Atomic_ThreadId &thread_id)
-    : thread_id_ (thread_id)
+                                              Atomic_ThreadId &thread_id,
+                                              Atomic_Long &samples_received)
+    : thread_id_ (thread_id),
+      samples_received_ (samples_received)
   {
   }
 
@@ -31,6 +35,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
                                   const ::CCM_DDS::ReadInfo & info)
   {
     this->thread_id_ = ACE_Thread::self ();
+    ++this->samples_received_;
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenEventTest_Listener::on_one_data: "
                           "key <%C> - iteration <%d>\n",
                           an_instance.key.in (),
@@ -73,7 +78,9 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : thread_id_listener_ (0),
       iterations_ (10),
-      keys_ (5)
+      keys_ (5),
+      samples_expected_ (keys_ * SAMPLES_PER_KEY),
+      samples_received_ (0)
   {
   }
 
@@ -93,7 +100,8 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ContentFilteredTopicListenEventTest_Listener (
-                this->thread_id_listener_);
+                this->thread_id_listener_,
+                this->samples_received_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -124,13 +132,15 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
   Receiver_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
+
+    this->samples_expected_ = SAMPLES_PER_KEY * this->keys_;
   }
 
   void
   Receiver_exec_i::set_session_context (::Components::SessionContext_ptr ctx)
   {
     this->context_ = ::CFTLE_Test::CCM_Receiver_Context::_narrow (ctx);
-    
+
     if ( ::CORBA::is_nil (this->context_.in ()))
       {
         throw ::CORBA::INTERNAL ();
@@ -174,7 +184,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "QF_EVENT: "
+        ACE_DEBUG ((LM_DEBUG, "CFT_EVENT: "
                               "Thread switch for ReaderListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -183,7 +193,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QF_EVENT: "
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_EVENT: "
                               "Thread switch for ReaderListener "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -194,7 +204,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QF_EVENT: ReaderListener: "
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_EVENT: ReaderListener: "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
@@ -202,13 +212,29 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "QF_EVENT: ReaderListener: "
+        ACE_DEBUG ((LM_DEBUG, "CFT_EVENT: ReaderListener: "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
                               ACE_Thread::self ()));
       }
     #endif
+    if (this->samples_received_ != this->samples_expected_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_EVENT: ReaderListener: "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "CFT_EVENT: ReaderListener: "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

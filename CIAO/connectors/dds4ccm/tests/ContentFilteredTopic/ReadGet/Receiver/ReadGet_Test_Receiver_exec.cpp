@@ -18,8 +18,28 @@
 #define ITER1_VALUE1 "2"
 #define ITER1_VALUE2 "5"
 
-#define ITER2_VALUE1 "12"
-#define ITER2_VALUE2 "25"
+#define ITER2_VALUE1 "22"
+#define ITER2_VALUE2 "34"
+
+// Samples received on the getter port:
+// 2 during the first run.
+// 12 during the second run
+// Beware that the last key (key no 5) is
+// not read by the getter since this one is
+// already read during check_last
+// (see constructor Receiver_exec_i).
+#define SAMPLES_PER_KEY_GETTER (2 + 11)
+
+
+// Samples received on the Reader port depend on the
+// number of iterations send. The sender informs the
+// Receiver about this number by invoking set_reader_properties.
+// The number of expected samples on the receiver port are set
+// when the iterations are set (see Receiver_exec_i::iterations).
+// Besides this, this test also reads on the reader port. This'll
+// result in the same amount of samples of the read on the getter
+// port.
+
 
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
@@ -78,13 +98,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
+    : iterations_ (20),
       keys_ (5),
       has_run_ (false),
-      run_tests_ (true),
       current_iter_value1_ (ACE_OS::atoi (ITER1_VALUE1)),
       current_iter_value2_ (ACE_OS::atoi (ITER1_VALUE2)),
-      ticker_ (0)
+      ticker_ (0),
+      samples_expected_reader_ (0),
+      samples_received_reader_ (0),
+      samples_expected_getter_ (0),
+      samples_received_getter_ (0)
   {
   }
 
@@ -200,13 +223,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         this->check_iter_on_reader_port (queryfiltertest_info_seq[it]);
       }
+    this->samples_received_reader_ += queryfiltertest_info_seq.length ();
   }
 
   void
   Receiver_exec_i::read_all_on_getter_port (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "=================================="
-                          "==================================\n"));
     ::ReadGet_Test::QueryConditionTestConnector::Reader_var get_reader =
       this->context_->get_connection_get_port_data ();
 
@@ -228,6 +250,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         this->check_iter_on_getter_port (queryfiltertest_info_seq[it], "READ");
       }
+    this->samples_received_reader_ += queryfiltertest_info_seq.length ();
   }
 
   void
@@ -254,6 +277,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     if (result)
       {
         this->check_iter_on_getter_port (*qf_info, "GET");
+        ++this->samples_received_getter_;
       }
     else
       {
@@ -267,6 +291,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (result)
           {
             this->check_iter_on_getter_port (*qf_info, "GET");
+            ++this->samples_received_getter_;
           }
       }
   }
@@ -278,10 +303,18 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     try
       {
         get_all_on_getter_port ();
+        ACE_DEBUG ((LM_DEBUG, "=================================="
+                              "==================================\n"));
+
         test = "READ ALL GETTER";
         read_all_on_getter_port ();
+        ACE_DEBUG ((LM_DEBUG, "=================================="
+                              "==================================\n"));
+
         test = "READ ALL READER";
         read_all_on_reader_port ();
+        ACE_DEBUG ((LM_DEBUG, "=================================="
+                              "==================================\n"));
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
@@ -311,19 +344,18 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::check_filter ()
   {
-    check_filter (true);
-    check_filter (false);
+
+
+    this->check_filter_getter ();
+    this->check_filter_reader ();
   }
 
   void
-  Receiver_exec_i::check_filter (bool check_reader)
+  Receiver_exec_i::check_filter_getter (void)
   {
     ::CCM_DDS::QueryFilter * filter = 0;
-    const char * port = "";
-    check_reader ? port = "Reader" : port = "Getter";
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <%C> - ")
-                          ACE_TEXT ("checking filter\n"),
-                          port));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <GETTER> - ")
+                          ACE_TEXT ("checking filter\n")));
 
     try
       {
@@ -331,66 +363,52 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           this->context_->get_connection_get_port_fresh_data ();
         if (::CORBA::is_nil (get_getter.in ()))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Unable to get getter interface\n"),
-                                  port));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                                  ACE_TEXT ("Unable to get getter interface\n")));
             throw ::CCM_DDS::InternalError ();
           }
         CORBA::Object_var cmp = get_getter->_get_component ();
         if (::CORBA::is_nil (cmp.in ()))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Unable to get component interface\n"),
-                                  port));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                                  ACE_TEXT ("Unable to get component interface\n")));
             throw ::CCM_DDS::InternalError ();
           }
         ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State_var conn =
           ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State::_narrow (cmp.in ());
         if (::CORBA::is_nil (conn.in ()))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Unable to narrow connector interface\n"),
-                                  port));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                                  ACE_TEXT ("Unable to narrow connector interface\n")));
             throw ::CCM_DDS::InternalError ();
           }
 
-        if (check_reader)
-          {
-            // todo for marcel, we need an event connecto
-            filter = conn->pull_observer_filter ();
-          }
-        else
-          {
-            filter = conn->pull_observer_filter ();
-          }
+        filter = conn->pull_observer_filter ();
         if (!filter)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                                  ACE_TEXT ("Filter is nil\n"), port));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                                  ACE_TEXT ("Filter is nil\n")));
             return;
           }
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
                               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
-                              port,
                               ex.error_code));
         return;
       }
     catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Receiver_exec_i::check_filter: ");
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                              ACE_TEXT ("Exception caught\n"),
-                              port));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                              ACE_TEXT ("Exception caught\n")));
         return;
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
-                              ACE_TEXT ("caught unknown exception\n"),
-                              port));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
+                              ACE_TEXT ("caught unknown exception\n")));
         return;
       }
 
@@ -398,19 +416,19 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     bool error = false;
     if (ACE_OS::strcmp (filter->expression, QUERY_GETTER_PORT) != 0)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
                               ACE_TEXT ("Unexpected query when retrieving filter: ")
                               ACE_TEXT ("expected <%C> - received <%C>\n"),
-                              port, QUERY_GETTER_PORT, filter->expression.in ()));
+                              QUERY_GETTER_PORT, filter->expression.in ()));
         error = true;
       }
     //check current parameters.
     if (filter->parameters.length () != 2)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
                               ACE_TEXT ("Unexpected number of parameters: ")
                               ACE_TEXT ("expected <%d> - received <%d>\n"),
-                              port, 2, filter->parameters.length ()));
+                              2, filter->parameters.length ()));
         error = true;
       }
 
@@ -418,10 +436,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         if (ACE_OS::atoi (filter->parameters[0]) != this->current_iter_value1_)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
                                   ACE_TEXT ("Unexpected param value: ")
                                   ACE_TEXT ("expected <%d> - received <%C>\n"),
-                                  port,
                                   this->current_iter_value1_,
                                   filter->parameters[0].in ()));
             error = true;
@@ -431,17 +448,130 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         if (ACE_OS::atoi (filter->parameters[1]) != this->current_iter_value2_)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <%C> - ")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <GETTER> - ")
                                   ACE_TEXT ("Unexpected param value: ")
                                   ACE_TEXT ("expected <%d> - received <%C>\n"),
-                                  port, this->current_iter_value2_,
+                                  this->current_iter_value2_,
                                   filter->parameters[1].in ()));
             error = true;
           }
       }
     if (!error)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter - ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <GETTER> - ")
+                              ACE_TEXT ("Passed check_filter test.\n")));
+      }
+  }
+
+  void
+  Receiver_exec_i::check_filter_reader (void)
+  {
+    ::CCM_DDS::QueryFilter * filter = 0;
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <READER> - ")
+                          ACE_TEXT ("checking filter\n")));
+
+    try
+      {
+        ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+          this->context_->get_connection_read_port_data ();
+        if (::CORBA::is_nil (reader.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Unable to get getter interface\n")));
+            throw ::CCM_DDS::InternalError ();
+          }
+        CORBA::Object_var cmp = reader->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Unable to get component interface\n")));
+            throw ::CCM_DDS::InternalError ();
+          }
+        ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State_var conn =
+          ::ReadGet_Test::QueryConditionTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Unable to narrow connector interface\n")));
+            throw ::CCM_DDS::InternalError ();
+          }
+
+        filter = conn->passive_observer_filter ();
+        if (!filter)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Filter is nil\n")));
+            return;
+          }
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+                              ex.error_code));
+        return;
+      }
+    catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: Receiver_exec_i::check_filter: ");
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                              ACE_TEXT ("Exception caught\n")));
+        return;
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                              ACE_TEXT ("caught unknown exception\n")));
+        return;
+      }
+
+    //check query
+    bool error = false;
+    if (ACE_OS::strcmp (filter->expression, QUERY_READER_PORT) != 0)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                              ACE_TEXT ("Unexpected query when retrieving filter: ")
+                              ACE_TEXT ("expected <%C> - received <%C>\n"),
+                              QUERY_READER_PORT, filter->expression.in ()));
+        error = true;
+      }
+    //check current parameters.
+    if (filter->parameters.length () != 2)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                              ACE_TEXT ("Unexpected number of parameters: ")
+                              ACE_TEXT ("expected <%d> - received <%d>\n"),
+                              2, filter->parameters.length ()));
+        error = true;
+      }
+
+    if (filter->parameters.length () >= 1)
+      {
+        if (ACE_OS::atoi (filter->parameters[0]) != this->current_iter_value1_)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Unexpected param value: ")
+                                  ACE_TEXT ("expected <%d> - received <%C>\n"),
+                                  this->current_iter_value1_,
+                                  filter->parameters[0].in ()));
+            error = true;
+          }
+      }
+    if (filter->parameters.length () >= 2)
+      {
+        if (ACE_OS::atoi (filter->parameters[1]) != this->current_iter_value2_)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Receiver_exec_i::check_filter <READER> - ")
+                                  ACE_TEXT ("Unexpected param value: ")
+                                  ACE_TEXT ("expected <%d> - received <%C>\n"),
+                                  this->current_iter_value2_,
+                                  filter->parameters[1].in ()));
+            error = true;
+          }
+      }
+    if (!error)
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Receiver_exec_i::check_filter <READER> - ")
                               ACE_TEXT ("Passed check_filter test.\n")));
       }
   }
@@ -567,42 +697,30 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     }
   }
 
-  ::CORBA::UShort
-  Receiver_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
   void
   Receiver_exec_i::iterations (::CORBA::UShort iterations)
   {
     this->iterations_ = iterations;
-  }
-
-  ::CORBA::UShort
-  Receiver_exec_i::keys (void)
-  {
-    return this->keys_;
+    // during first iteration, 2,3,4 and 5 are filtered out
+    // during the second iteration 22-34 are fitered out but the
+    // iterations of the first run are also received during the
+    // second run
+    // The last addition is from the read action on the getter port.
+    // During the first run, two samples are received. The second run 
+    // includes the two samples from the first run and 11 samples (22-34)
+    // from the second run.
+    this->samples_expected_reader_ =
+      ((this->iterations_ - 4) * this->keys_ * 2) +
+      ((this->iterations_ - 13) * this->keys_) +
+      ((2 + 2 + 11) * this->keys_);
   }
 
   void
   Receiver_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
+    this->samples_expected_getter_ = (keys_ - 1) * SAMPLES_PER_KEY_GETTER;
   }
-
-  ::CORBA::Boolean
-  Receiver_exec_i::run_tests (void)
-  {
-    return this->run_tests_;
-  }
-
-  void
-  Receiver_exec_i::run_tests (::CORBA::Boolean run_tests)
-  {
-    this->run_tests_ = run_tests;
-  }
-
 
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -658,16 +776,37 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (!this->has_run_)
+    if (this->samples_received_reader_ != this->samples_expected_reader_)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
-            ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of DATA_ON_READER ")
-            ACE_TEXT ("events.\n")));
+        ACE_ERROR ((LM_ERROR, "ERROR: READGET READER: "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_reader_,
+                              this->samples_received_reader_));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.\n")));
+        ACE_DEBUG ((LM_DEBUG, "READGET READER: "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_reader_,
+                              this->samples_received_reader_));
+      }
+    if (this->samples_received_getter_ != this->samples_expected_getter_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: READGET GETTER: "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_getter_,
+                              this->samples_received_getter_));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "READGET GETTER: "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_getter_,
+                              this->samples_received_getter_));
       }
   }
 

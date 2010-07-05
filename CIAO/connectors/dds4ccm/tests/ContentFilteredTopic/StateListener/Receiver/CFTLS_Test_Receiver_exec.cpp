@@ -12,14 +12,18 @@
 #define MIN_ITERATION "2"
 #define MAX_ITERATION "5"
 
+#define SAMPLES_PER_KEY 2 //only iteration 3 and 4 should be coming in....
+
 namespace CIAO_CFTLS_Test_Receiver_Impl
 {
   //============================================================
   // ContentFilteredTopicListenStateTest_Listener_exec_i
   //============================================================
   ContentFilteredTopicListenStateTest_Listener::ContentFilteredTopicListenStateTest_Listener (
-                                              Atomic_ThreadId &thread_id)
-    : thread_id_ (thread_id)
+                                              Atomic_ThreadId &thread_id,
+                                              Atomic_Long &samples_received)
+    : thread_id_ (thread_id),
+      samples_received_ (samples_received)
   {
   }
 
@@ -32,6 +36,8 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                       const ContentFilteredTopicListenStateTest& an_instance,
                       const CCM_DDS::ReadInfo& /*read_info*/)
   {
+    ++this->samples_received_;
+
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenStateTest_Listener::on_creation: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -50,10 +56,13 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                       const CCM_DDS::ReadInfo& /*read_info*/)
   {
     this->thread_id_ = ACE_Thread::self ();
+    ++this->samples_received_;
+
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenStateTest_Listener::on_one_update: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));
+
     if (an_instance.iteration <= ACE_OS::atoi (MIN_ITERATION) ||
         an_instance.iteration  > ACE_OS::atoi (MAX_ITERATION) )
       {
@@ -82,7 +91,9 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : thread_id_listener_ (0),
       iterations_ (10),
-      keys_ (5)
+      keys_ (5),
+      samples_expected_ (keys_ * SAMPLES_PER_KEY),
+      samples_received_ (0)
   {
   }
 
@@ -102,7 +113,8 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   Receiver_exec_i::get_info_state_data_listener (void)
   {
     return new ContentFilteredTopicListenStateTest_Listener (
-                this->thread_id_listener_);
+                this->thread_id_listener_,
+                this->samples_received_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -133,6 +145,8 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   Receiver_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
+
+    this->samples_expected_ = SAMPLES_PER_KEY * this->keys_;
   }
 
   void
@@ -184,7 +198,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_DEBUG ((LM_DEBUG, "QF_STATE: "
+        ACE_DEBUG ((LM_DEBUG, "CFT_STATE: "
                               "Thread switch for ReaderListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
                               "listener <%u> - component <%u>\n",
@@ -193,7 +207,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QF_STATE: "
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: "
                               "Thread switch for ReaderListener "
                               "doesn't seem to work! "
                               "listener <%u> - component <%u>\n",
@@ -204,7 +218,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: QF_STATE: ReaderListener: "
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: ReaderListener: "
                               "DDS seems to use a CCM thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
@@ -212,13 +226,30 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "QF_STATE: ReaderListener: "
+        ACE_DEBUG ((LM_DEBUG, "CFT_STATE: ReaderListener: "
                               "DDS seems to use its own thread for its callback: "
                               "listener <%u> - component <%u>\n",
                               this->thread_id_listener_.value (),
                               ACE_Thread::self ()));
       }
     #endif
+
+    if (this->samples_received_ != this->samples_expected_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: ReaderListener: "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "CFT_STATE: ReaderListener: "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

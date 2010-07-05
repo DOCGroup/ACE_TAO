@@ -6,7 +6,7 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 
-#define ITERATIONS 10
+#define ITERATIONS 20
 
 namespace CIAO_ReadGet_Test_Sender_Impl
 {
@@ -68,6 +68,8 @@ namespace CIAO_ReadGet_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
+    ::ReadGet_Test::QueryConditionTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
     ReadGetStarter_var starter =
       this->context_->get_connection_start_reader ();
 
@@ -88,16 +90,18 @@ namespace CIAO_ReadGet_Test_Sender_Impl
             QueryConditionTest new_key;
             ACE_OS::sprintf (key, "KEY_%d", iter_key);
             new_key.symbol = CORBA::string_dup(key);
-            for (CORBA::UShort iter = ((this->run_ - 2) * this->iterations_) + 1;
-                iter < this->run_ * this->iterations_ + 1;
-                ++iter)
+            CORBA::UShort iter = 1;
+            if (this->run_ == 3)
+              {
+                iter = this->iterations_ + 1;
+              }
+            while (iter < (this->run_ - 1) * this->iterations_ + 1)
               {
                 new_key.iteration = iter;
-                ::ReadGet_Test::QueryConditionTestConnector::Writer_var writer
-                  = this->context_->get_connection_info_write_data ();
                 writer->write_one (new_key, ::DDS::HANDLE_NIL);
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
                             key, iter));
+                ++iter;
               }
           }
         ACE_OS::sleep (1);

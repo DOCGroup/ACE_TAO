@@ -223,6 +223,8 @@ namespace CIAO
       ::DDS::StatusMask lst_mask_;
 
       typename DDS_TYPE::data_reader * impl (void);
+
+      void log_query_condition (DDSQueryCondition *qc);
     };
   }
 }
