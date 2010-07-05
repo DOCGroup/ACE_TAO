@@ -1191,6 +1191,7 @@ cat mmraw.list |\
 echo ace/QtReactor/QtReactor.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
+echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
 
 # Install headers and create header lists
 rm -f ace-headers.tmp
@@ -2289,7 +2290,7 @@ fi
 # runtime.  Currently this means these specific .so files need to be
 # shipped in the runtime package instead of the devel package.
 
-%files -n tao-devel -f tao-devel-files.list
+%files -n tao-devel -f tao-devel-files.list %{_includedir}/tao/PortableServer/get_arg.h
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/profile.d/tao-devel.sh
 
