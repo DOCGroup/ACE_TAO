@@ -16,9 +16,14 @@
 #define MIN_ITERATION_1 "2"
 #define MAX_ITERATION_1 "5"
 
-#define MIN_ITERATION_2 "12"
-#define MAX_ITERATION_2 "25"
+#define MIN_ITERATION_2 "22"
+#define MAX_ITERATION_2 "34"
 
+//First run filtered in : 2 (iteration 3 and 4)
+//Second run filtered in : 11 (iterations between 22 and 34)
+#define SAMPLES_PER_KEY_GETTER (2 + 11)
+// Reader also reads already read samples.
+#define SAMPLES_PER_KEY_READER (2 + 2 + 11)
 
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
@@ -77,12 +82,15 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
+    : iterations_ (20),
       keys_ (5),
-      has_run_ (false),
       current_min_iteration_ (ACE_OS::atoi (MIN_ITERATION_1)),
       current_max_iteration_ (ACE_OS::atoi (MAX_ITERATION_1)),
-      ticker_ (0)
+      ticker_ (0),
+      samples_expected_getter_ (0),
+      samples_received_getter_ (0),
+      samples_expected_reader_ (0),
+      samples_received_reader_ (0)
   {
   }
 
@@ -169,6 +177,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         this->check_iter (queryfiltertest_info_seq[it], "READ");
       }
+    this->samples_received_reader_ += queryfiltertest_info_seq.length ();
   }
 
   void
@@ -188,6 +197,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     if (result)
       {
         this->check_iter (qf_info.in (), "GET");
+        ++this->samples_received_getter_;
       }
     else
       {
@@ -201,6 +211,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         if (result)
           {
             this->check_iter (qf_info.in (), "GET");
+            ++this->samples_received_getter_;
           }
       }
   }
@@ -416,7 +427,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         delete this->ticker_;
         this->ticker_ = 0;
       }
-    this->has_run_ = true;
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::run - "
                           "Starting run number <%d>\n",
                           run));
@@ -446,28 +456,20 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     }
   }
 
-  ::CORBA::UShort
-  Receiver_exec_i::iterations (void)
-  {
-    return this->iterations_;
-  }
-
   void
   Receiver_exec_i::iterations (::CORBA::UShort iterations)
   {
     this->iterations_ = iterations;
-  }
 
-  ::CORBA::UShort
-  Receiver_exec_i::keys (void)
-  {
-    return this->keys_;
   }
 
   void
   Receiver_exec_i::keys (::CORBA::UShort keys)
   {
     this->keys_ = keys;
+
+    this->samples_expected_getter_ = (this->keys_ - 1) * SAMPLES_PER_KEY_GETTER;
+    this->samples_expected_reader_ = (this->keys_) * SAMPLES_PER_KEY_READER;
   }
 
   // Port operations.
@@ -534,16 +536,37 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (!this->has_run_)
+    if (this->samples_received_getter_ != this->samples_expected_getter_)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: ")
-            ACE_TEXT ("Test did not run: Didn't receive ")
-            ACE_TEXT ("the expected number of DATA_ON_READER ")
-            ACE_TEXT ("events.\n")));
+        ACE_ERROR ((LM_ERROR, "ERROR: READGET GETTER : "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_getter_,
+                              this->samples_received_getter_));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished query filter test.\n")));
+        ACE_DEBUG ((LM_DEBUG, "READGET : GETTER : "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_getter_,
+                              this->samples_received_getter_));
+      }
+    if (this->samples_received_reader_ != this->samples_expected_reader_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: READGET READER : "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_received_reader_,
+                              this->samples_expected_reader_));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "READGET : READER : "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_received_reader_,
+                              this->samples_expected_reader_));
       }
   }
 

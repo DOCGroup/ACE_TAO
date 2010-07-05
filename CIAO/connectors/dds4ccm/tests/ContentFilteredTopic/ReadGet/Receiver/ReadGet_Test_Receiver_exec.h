@@ -68,9 +68,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     virtual ~Receiver_exec_i (void);
 
     // Supported operations and attributes.
-    ::CORBA::Boolean run_tests (void);
-
-    void run_tests (::CORBA::Boolean run_tests);
+    void iterations (::CORBA::UShort iterations);
+    void keys (::CORBA::UShort keys);
     // Component attributes.
 
     // Port operations.
@@ -83,12 +82,6 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     bool check_last ();
     void start_read (CORBA::UShort run);
     void run (CORBA::UShort run);
-
-    ::CORBA::UShort iterations (void);
-    void iterations (::CORBA::UShort iterations);
-
-    ::CORBA::UShort keys (void);
-    void keys (::CORBA::UShort keys);
 
     // Operations from Components::SessionComponent.
     virtual void
@@ -106,12 +99,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     CORBA::UShort   iterations_;
     CORBA::UShort   keys_;
     bool            has_run_;
-    bool            run_tests_;
 
     int current_iter_value1_;
     int current_iter_value2_;
 
     read_action_Generator *ticker_;
+
+    CORBA::ULong samples_expected_reader_;
+    CORBA::ULong samples_received_reader_;
+    CORBA::ULong samples_expected_getter_;
+    CORBA::ULong samples_received_getter_;
 
     void test_all (void);
     void read_all_on_getter_port (void);
@@ -122,7 +119,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     void check_iter_on_reader_port (const QueryConditionTest & sample);
 
     void check_filter (void);
-    void check_filter (bool check_reader);
+    void check_filter_reader (void);
+    void check_filter_getter (void);
     void test_set_query_parameters (void);
   };
 

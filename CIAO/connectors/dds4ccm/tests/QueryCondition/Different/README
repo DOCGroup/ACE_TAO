@@ -1,0 +1,18 @@
+Test whether Querycondition are NOT shared between two extended ports.
+
+The receiver uses two extend ports of the DDS4CCM State connector:
+1. the DDS_Get port
+2. the DDS_Read port
+
+The Queryfilter on the reader interface of the DDS_Get extended port is different
+from the Queryfilter on the reader interface of the DDS_Read extended port.
+This test checks whether that's the case by checking the query filter expressions.
+Besides that, it verifies that the received data is correct according to the filter
+expression and parameters.
+
+The sender sends 15 samples which are kept in DDS (KEEP_ALL Qos) with iteration 1 to 15.
+The Getter extended port should receive iterations between 6 and 9
+(thus samples with iteration 7 and 8).
+The Reader should receive the other samples (and not samples with iteration 7 and 8).
+
+There's one DDS4CCM connector instance connected to the Receiver.

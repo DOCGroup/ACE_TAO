@@ -12,14 +12,18 @@
 #define MIN_ITERATION "2"
 #define MAX_ITERATION "5"
 
+#define SAMPLES_PER_KEY 2 //only iteration 3 and 4 should be coming in....
+
 namespace CIAO_QCLE_Test_Receiver_Impl
 {
   //============================================================
   // QueryConditionListenEventTest_Listener_exec_i
   //============================================================
   QueryConditionListenEventTest_Listener::QueryConditionListenEventTest_Listener (
-                                              Atomic_ThreadId &thread_id)
-    : thread_id_ (thread_id)
+                                              Atomic_ThreadId &thread_id,
+                                              Atomic_Long &samples_received)
+    : thread_id_ (thread_id),
+      samples_received_ (samples_received)
   {
   }
 
@@ -33,6 +37,8 @@ namespace CIAO_QCLE_Test_Receiver_Impl
     const ::CCM_DDS::ReadInfo & info)
   {
     this->thread_id_ = ACE_Thread::self ();
+    ++this->samples_received_;
+
     ACE_DEBUG ((LM_DEBUG, "QueryConditionListenEventTest_Listener::on_one_data: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -75,7 +81,9 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : thread_id_listener_ (0),
       iterations_ (10),
-      keys_ (5)
+      keys_ (5),
+      samples_expected_ (keys_ * SAMPLES_PER_KEY),
+      samples_received_ (0)
   {
   }
 
@@ -95,7 +103,8 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new QueryConditionListenEventTest_Listener (
-                this->thread_id_listener_);
+                this->thread_id_listener_,
+                this->samples_received_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -226,6 +235,22 @@ namespace CIAO_QCLE_Test_Receiver_Impl
                               ACE_Thread::self ()));
       }
     #endif
+    if (this->samples_received_ != this->samples_expected_)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: QF_EVENT: ReaderListener: "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "QF_EVENT: ReaderListener: "
+                              "Expected number of samples received: "
+                              "expected <%d> - received <%d>\n",
+                              this->samples_expected_,
+                              this->samples_received_.value ()));
+      }
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
