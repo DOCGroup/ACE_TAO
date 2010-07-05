@@ -1,6 +1,42 @@
+Mon Jul  5 09:38:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/README:
+          Additional info
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+          Refactored. Don't send the same iterations again.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/Plan.cdp:
+          Removed report errors since it wasn't used.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver_exec.cpp:
+          Also count the received number of samples.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/Different/*:
+          Added test which tests whether the QueryCondition on different extended ports are different.
+
 Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.8 released.
+        * CIAO version 0.8 released.
 
 Fri Jul  2 08:58:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

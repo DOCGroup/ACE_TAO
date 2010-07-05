@@ -15,13 +15,12 @@
 #include "tao/LocalObject.h"
 #include "ace/OS_NS_Thread.h"
 
-
-
 namespace CIAO_QCLS_Test_Receiver_Impl
 {
   class Receiver_exec_i;
 
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> Atomic_Long;
 
   //============================================================
   // QueryConditionListenStateTest_Listener_exec_i
@@ -32,7 +31,8 @@ namespace CIAO_QCLS_Test_Receiver_Impl
   {
   public:
     QueryConditionListenStateTest_Listener (
-                            Atomic_ThreadId &thread_id);
+                            Atomic_ThreadId &thread_id,
+                            Atomic_Long &samples_received);
     virtual ~QueryConditionListenStateTest_Listener (void);
 
     virtual void
@@ -53,6 +53,7 @@ namespace CIAO_QCLS_Test_Receiver_Impl
 
   private:
     Atomic_ThreadId &thread_id_;
+    Atomic_Long &samples_received_;
   };
 
   //============================================================
@@ -99,6 +100,9 @@ namespace CIAO_QCLS_Test_Receiver_Impl
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
+
+    CORBA::Long samples_expected_;
+    Atomic_Long samples_received_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
