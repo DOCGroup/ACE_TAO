@@ -1,3 +1,8 @@
+Mon Jul  5 08:57:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Update latest minor release to x.8.0
+
 Mon Jul  5 08:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
