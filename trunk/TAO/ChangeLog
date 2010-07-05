@@ -1,6 +1,14 @@
+Mon Jul  5 11:43:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2777_Regression/run_test.pl:
+          Added another path
+
+        * tao/Leader_Follower.h:
+          Doxygen fix
+
 Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.8 released.
+        * TAO version 1.8 released.
 
 Wed Jun 30 14:59:28 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
