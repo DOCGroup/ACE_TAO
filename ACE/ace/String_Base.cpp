@@ -6,7 +6,6 @@
 #include "ace/ACE.h"
 #include "ace/Malloc_Base.h"
 #include "ace/String_Base.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
 #include <algorithm>  // For std::swap<>
