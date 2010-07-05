@@ -83,7 +83,7 @@ ACE_Select_Reactor_Handler_Repository::handle_in_range (ACE_HANDLE handle)
 }
 
 int
-ACE_Select_Reactor_Handler_Repository::open (size_t size)
+ACE_Select_Reactor_Handler_Repository::open (size_type size)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::open");
 
