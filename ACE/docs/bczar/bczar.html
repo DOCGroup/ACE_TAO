@@ -96,27 +96,32 @@
           This is usually in the form of an email plea asking to update all NEWS files in
           the archive. These NEWS files are used as part of the release notes for the release.</li>
         <li>
-          Checkout a new workspace on a Fedora system with the last public release and with
-          all patches installed. This can be achieved using
+          Make sure your release system has all the needed tools. This can be achieved on Fedora
+          using:
           <ul>
-            <li>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh</li>
-             <li>yum update</li>
+            <li><code>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz</code></li>
+             <li><code>yum update</code></li>
           </ul>
+        </li>
+        <li>
+          Checkout a new workspace on a Fedora system with the last public release and with
+          all patches installed. 
+          
         </li>
         <ul>
           <li>
-            The best place to create the workspace is under /export/anduriltmp/bczar (if you are on anduril). Don't 
+            The best place to create the workspace is under <code>/export/anduriltmp/bczar</code> (if you are on anduril). Don't
             use the home directory itself, it is an NFS share and not really fast.
           </li>
           <li>
             Checkout like this:
             <ul>
               <li>
-                svn co --username &lt;your user id&gt; 
-                https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
+                <code>svn co --username &lt;your user id&gt; 
+                https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</code></li>
               <li>
-                svn co --username &lt;your user id&gt; 
-                https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
+                <code>svn co --username &lt;your user id&gt; 
+                https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</code></li>
             </ul>
         </ul>
         <li>
@@ -203,21 +208,20 @@
     <p>
     To summarize, the following is a transcript of the steps up to this point 
     executing successfully:
-    <p><code>$ ssh bczar@anduril.dre.vanderbilt.edu<br>
+    <p><code>$ ssh ..<br>
         No default printer<br>
-        -bash-3.00$ screen<br>
-        -bash-3.00$ cd /tmp<br>
-        -bash-3.00$ rm -rf DOC_ROOT<br>
-        -bash-3.00$ mkdir DOC_ROOT<br>
-        -bash-3.00$ export DOC_ROOT=$PWD/DOC_ROOT<br>
-        -bash-3.00$ export SIGNATURE="Johnny Willemsen"<br>
-        -bash-3.00$ export MAILID=jwillemsen@remedy.nl<br>
-        -bash-3.00$ svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
-        -bash-3.00$ svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk 
-        DOC_ROOT/ACE/MPC<br>
-        -bash-3.00$ cd DOC_ROOT/<br>
-        -bash-3.00$ ACE/bin/make_release.py --beta --update --tag<br>
-        -bash-3.00$ ACE/bin/make_release.py --kit<br>
+        screen<br>
+        cd /tmp<br>
+        rm -rf DOC_ROOT<br>
+        mkdir DOC_ROOT<br>
+        export DOC_ROOT=$PWD/DOC_ROOT<br>
+        export SIGNATURE="Johnny Willemsen"<br>
+        export MAILID=jwillemsen@remedy.nl<br>
+        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
+        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
+        cd DOC_ROOT/<br>
+        ACE/bin/make_release.py --beta --update --tag<br>
+        ACE/bin/make_release.py --kit<br>
       </code>
     <p>
       Feel free to cut and paste with suitable edits.
@@ -236,19 +240,23 @@
         documentation in parrellel with the kit generation above.<br>
         <ul>
           <li>
-            Login to naboo.dre.vanderbilt.edu as bczar and start a screen session:<br>
-            <code>ssh bczar@naboo.dre.vanderbilt.edu</code><br>
+            Login to your release system you prepared with the same packages as above:<br>
             <code>screen</code></li>
           <li>
             After login check that you can,
             <br>
             <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
             to ensure that this succeeds. If not fix the problem, if ok exit again back to 
-            naboo. The make script tries to copy the tar.gz files to the website using ssh.</li>
+            your releas system. </li>
           <li>
-            <code>cd /web/users/isisbuilds/tmp/ACE_wrappers</code><br>
-            and remove the contents of this directory with</li><br>
-          <code>rm -rf *</code>
+            <code>cd /tmp</code><br>
+            and remove the contents of the doxygen directory and recreate it again with</li><br>
+          <code>rm -rf doxygen</code><br>
+          <code>mkdir doxygen</code><br>
+          <code>cd doxygen</code><br>
+          If you create the doxygen documentation on <code>naboo.dre.vanderbilt.edu</code>
+          than make sure you use <code>/web/users/isisbuilds/tmp/ACE_wrappers</code>
+          as working directory
           <li>
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE 
             version number being released e.g. 5_6_7)
@@ -263,35 +271,46 @@
           </li>
           <li>
             Set the needed environment variables using<br>
-            <code>export ACE_ROOT=/web/users/isisbuilds/tmp/ACE_wrappers/ACE_wrappers</code></li>
+            <code>export ACE_ROOT=/tmp/doxygen/ACE_wrappers</code></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
             <code>doxygen --version</code>
+            This should be at least 1.6.2
           </li>
-          <li>
-            Open up <code>$ACE_ROOT/bin/generate_rel_manpages</code> in your favorite 
-            editor.<br>
-            Search for the string '<code><b>doxy_version</b></code>'.<br>
-            Check that the version specified in the file is the same as the one you got 
-            using the shell command. If it is different change the value of the 
-            doxy_version to the one installed on naboo.dre.vanderbilt.edu.</li> Then exit the editor. 
-        Check the file, generate_rel_manpages back into the repository if you have made some 
-        changes to it.
           <br>
         Now you are ready to create documentation
       </li>
       <li>
         <code>cd $ACE_ROOT</code><br>
-        <code>nohup make -f Release manpages &</code>
+        <code>nohup make -f Release manpages &</code><br>
         When this is ready copy the resulting files using<br>
         <code>scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution</code>
-      </li></ul><br>
+      </li></ul>
+            <code>
+        screen<br>
+        cd /tmp<br>
+        rm -rf doxygen<br>
+        mkdir doxygen<br>
+        cd doxygen<br>
+        svn co
+              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE
+              ACE_wrappers<br>
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO
+              ACE_wrappers/TAO<br>
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO
+              ACE_wrappers/TAO/CIAO<br>
+        cd ACE_wrappers<br>
+        export ACE_ROOT=$PWD<br>
+        nohup make -f Release manpages &<br>
+        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
+ </code>
+<br>
       <li>
         While doxygen churns, format a release announcement, including the release 
         notes gathered from developers.
         <ul>
           <li>Get from bugzilla the bugs fixed. Use the following 
-              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2008-11-28&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
+              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
           <li>
             Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before 
             you do anything with them.</li></ul>
@@ -354,14 +373,14 @@
         <li>back out of the temporary directory<br>
           <code>cd ..</code></li>
         <li>
-          Create directory 'Current Version No' for example 5.6.7 and change directory into this new one<br><code>mkdir 5.6.7<br>cd 5.6.7</code></li>
+          Create directory 'Current Version No' for example 5.8.1 and change directory into this new one<br><code>mkdir 5.8.1<br>cd 5.8.1</code></li>
         <li>
           Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
         <li>
           Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
         <li>
-          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.6.7/html 
-          Micro</code></li>
+          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.8.1/html
+          Micro</code>. If this is a minor release also update the <code>Stable</code> link.</li>
         <li>
         Remove the directory tmp -<br><code>rm -rf tmp</code></lib>
       </ul><br>
