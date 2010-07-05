@@ -72,7 +72,7 @@ sub DESTROY
                      "> still running upon object destruction\n";
         $self->Kill ();
     }
-    
+
     if (defined $self->{SCRIPTFILE}) {
       unlink $self->{SCRIPTFILE};
     }
@@ -222,7 +222,7 @@ sub CommandLine ()
       if (defined $self->{TARGET}->{LIBPATH}) {
         $libpath = PerlACE::concat_path ($libpath, $self->{TARGET}->{LIBPATH});
       }
-      my $run_script = 
+      my $run_script =
         "if [ ! -e /tmp/.acerun ]; then mkdir /tmp/.acerun; fi\n".
         "cd $exedir\n".
         "export LD_LIBRARY_PATH=$libpath:\$LD_LIBRARY_PATH\n".
@@ -231,17 +231,17 @@ sub CommandLine ()
         "export SHLIB_PATH=$libpath:\$SHLIB_PATH\n".
         "export PATH=\$PATH:$root/bin:$root/lib:$libpath\n";
       while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
-        $run_script .= 
+        $run_script .=
         "export $env_key=$env_value\n";
       }
-      $run_script .= 
+      $run_script .=
         "$commandline &\n";
-      $run_script .= 
+      $run_script .=
         "MY_PID=\$!\n".
         "echo \$MY_PID > ".$self->{PIDFILE}."\n";
-      $run_script .= 
+      $run_script .=
         "wait \$MY_PID\n";
-      
+
       unless (open (RUN_SCRIPT, ">".$self->{SCRIPTFILE})) {
           print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                         "> failed to create ",$self->{SCRIPTFILE},"\n";
@@ -249,14 +249,14 @@ sub CommandLine ()
       }
       print RUN_SCRIPT $run_script;
       close RUN_SCRIPT;
-      
-      if (defined $ENV{'ACE_TEST_VERBOSE'}) {      
+
+      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
       }
-      
+
       $commandline = "$shell \"source $exedir/".basename ($self->{SCRIPTFILE})."\"";
     }
-    
+
     return $commandline;
 }
 
@@ -411,7 +411,7 @@ sub Spawn ()
                     PerlACE::add_lib_path ($self->{TARGET}->{LIBPATH});
                 }
             }
-            if (!(defined $self->{VALGRIND_CMD} || defined $ENV{'ACE_TEST_WINDOW'}) && 
+            if (!(defined $self->{VALGRIND_CMD} || defined $ENV{'ACE_TEST_WINDOW'}) &&
                   (defined $self->{TARGET}) && ($ENV{'ACE_ROOT'} ne $self->{TARGET}->ACE_ROOT ())) {
                 my $x_dir = dirname ($executable);
                 chdir ($x_dir);
@@ -429,7 +429,7 @@ sub Spawn ()
             print STDERR "ERROR: Can't fork <" . $cmdline . ">: $!\n";
         }
     }
-    
+
     if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
       my $shell = $self->{TARGET}->{REMOTE_SHELL};
       my $pidfile = $self->{PIDFILE};
@@ -453,9 +453,9 @@ sub Spawn ()
       system("$shell rm -f $pidfile 2>&1 >/dev/null");
       if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "INFO: Process started remote with pid [",$self->{REMOTE_PID},"]\n";
-      } 
+      }
     }
-    
+
     $self->{RUNNING} = 1;
     return 0;
 }
@@ -672,11 +672,31 @@ sub kill_all
   my $procmask = shift;
   my $target = shift;
   my $pid = -1;
-  my $first = 1;
-  my $ps_cmd = 'ps xw';
+  my $cmd;
+  my $ps_cmd = 'ps -ef';
+  my $ps_pid_field = 1;
+  my $ps_cmd_field = 7;
+  my $ps_skip_first = 1;
+  my @ps_fields = 0;
   if (defined $target && defined $target->{PS_CMD}) {
     ## in case a special command is required
-    $ps_cmd = $ENV{'PS_CMD'};
+    ## format: <cmd>:<pid field index>:<cmd field index>[:<skip headers flag>]
+    $ps_cmd_field = -1;
+    @ps_fields = split (/:/, $target->{PS_CMD});
+    $ps_cmd = @ps_fields[0];
+    if (@ps_fields > 1) {
+      $ps_pid_field = @ps_fields[1];
+      if (@ps_fields > 2) {
+        $ps_cmd_field = @ps_fields[2];
+        if (@ps_fields > 3) {
+          $ps_skip_first = (@ps_fields[3] == '1' ? 1 : 0);
+        }
+      }
+    } else {
+      print STDERR "ERROR: Missing field index for PID in [PS_CMD=".$target->{PS_CMD}."]\n";
+      return 0;
+    }
+    @ps_fields = 0;
   } elsif (! (defined $target && defined $target->{REMOTE_SHELL}) ) {
     my $ps_file = `which ps`;
     $ps_file =~ s/^\s+//;
@@ -685,21 +705,31 @@ sub kill_all
       ## some embedded targets use BusyBox for base tools
       ## with different arguments
       $ps_cmd = 'ps w';
+      $ps_pid_field = 0;
+      $ps_cmd_field = 4;
     }
   }
   if (defined $target && defined $target->{REMOTE_SHELL}) {
     $ps_cmd = $target->{REMOTE_SHELL}.' '.$ps_cmd;
   }
   for my $line (`$ps_cmd`) {
-    if ($first) {
+    if ($ps_skip_first) {
       # skip first line (headers)
-      $first = 0;
+      $ps_skip_first = 0;
     } else {
-      # find matching process line
-      if ($line =~ /$procmask/) {
-        # find process PID
-        if ($line =~ /^\s*(\d+)\s+/) {
-          $pid = $1;
+      # split line
+      @ps_fields = split (/\s+/, $line);
+      if (@ps_fields > $ps_pid_field && @ps_fields > $ps_cmd_field) {
+
+        $pid = @ps_fields[$ps_pid_field]; # process PID
+        if ($ps_cmd_field >= 0) {
+          $cmd = @ps_fields[$ps_cmd_field]; # process cmd / executable
+        } else {
+          $cmd = $line;
+        }
+
+        # match process cmd
+        if ($cmd =~ /$procmask/) {
           if (defined $target && defined $target->{REMOTE_SHELL}) {
             my $kill_cmd = $target->{REMOTE_SHELL}." kill -s KILL $pid";
             $kill_cmd =  `$kill_cmd`;
