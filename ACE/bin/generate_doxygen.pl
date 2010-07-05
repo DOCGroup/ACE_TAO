@@ -21,11 +21,15 @@ if (!defined $TAO_ROOT) {
 if (!defined $CIAO_ROOT) {
     $CIAO_ROOT = "$TAO_ROOT/CIAO";
 }
+if (!defined $DANCE_ROOT) {
+    $DANCE_ROOT = "$CIAO_ROOT/DAnCE";
+}
 
 $is_release = 0;
 $exclude_ace = 0;
 $exclude_tao = !-r "$TAO_ROOT/VERSION";
 $exclude_ciao = !-r "$CIAO_ROOT/VERSION";
+$exclude_dance = !-r "$CIAO_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $html_output_dir = '.';
@@ -79,6 +83,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'ciao_DAnCE'
              ,'ciao_dds4ccm'
              ,'ciao');
+@DANCE_DOCS = ();
 @DDS_DOCS = ('dds');
 
 # Modify defaults using the command line arguments
@@ -93,10 +98,11 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  "$ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  "$TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO', "$CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DDS',  "$DDS_ROOT", @DDS_DOCS) if $dds;
+&generate_doxy_files ('ACE',  " $ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  " $TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO', " $CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DANCE'," $DANCE_ROOT", @DANCE_DOCS) if (!$exclude_dance);
+&generate_doxy_files ('DDS',   "$DDS_ROOT", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
@@ -115,6 +121,8 @@ sub parse_args {
       $exclude_tao = 1;
     } elsif ($ARGV[0] eq "-exclude_ciao") {
       $exclude_ciao = 1;
+    } elsif ($ARGV[0] eq "-exclude_dance") {
+      $exclude_dance = 1;
     } elsif ($ARGV[0] eq "-include_dds") {
       $dds = 1;
     } elsif ($ARGV[0] eq "-verbose") {
