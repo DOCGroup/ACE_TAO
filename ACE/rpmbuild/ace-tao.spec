@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  5.8
-%define TAOVER  1.8
-%define CIAOVER 0.8
+%define ACEVER  5.8.0
+%define TAOVER  1.8.0
+%define CIAOVER 0.8.0
 
 # Conditional build
 # Default values are
@@ -1960,6 +1960,7 @@ fi
 %{_libdir}/libACE_RMCast.so.%{ACEVERSO}
 %{_libdir}/libACE_TMCast.so.%{ACEVERSO}
 %{_libdir}/libACE_SSL.so.%{ACEVERSO}
+%{_libdir}/libACE_INet.so.%{ACEVERSO}
 
 %doc ACE-INSTALL.html
 %doc AUTHORS
@@ -1982,6 +1983,7 @@ fi
 %{_libdir}/libACE_RMCast.so
 %{_libdir}/libACE_TMCast.so
 %{_libdir}/libACE_SSL.so
+%{_libdir}/libACE_INet.so
 %dir %{_datadir}/ace
 %{_datadir}/ace/include
 %{_datadir}/ace/include/makeinclude
