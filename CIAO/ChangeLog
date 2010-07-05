@@ -1,3 +1,26 @@
+Mon Jul  5 12:58:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        * connectors/ami4ccm/docs/TestCoverage.odt
+        * connectors/ami4ccm/tests/InterInOutArgs
+        * connectors/ami4ccm/tests/InterInOutArgs/Base
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.h
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.h
+        Add AMI4CCM test with inout arguments.
+
 Mon Jul  5 11:45:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
