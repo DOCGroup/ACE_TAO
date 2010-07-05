@@ -1,3 +1,10 @@
+Mon Jul  5 14:59:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added missing file, thanks to Anatoli Sakhnik
+          <sakhnik at gmail dot com> for reporting this, this should fix
+          bugzilla 3870
+
 Mon Jul 05 14:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
