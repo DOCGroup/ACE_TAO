@@ -80,19 +80,23 @@ sub delete_ior_files {
     }
 }
 
-sub kill_node_daemon {
-    for ($i = 0; $i < $nr_daemon; ++$i) {
-        $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
-    }
+sub kill_localities {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         # in case shutdown did not perform as expected
         $tg_daemons[$i]->KillAll ('dance_locality_manager');
     }
 }
 
+sub kill_node_daemons {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
+    }
+    kill_localities ();
+}
+
 sub kill_open_processes {
     if ($daemons_running == 1) {
-        kill_node_daemon ();
+        kill_node_daemons ();
     }
 
     if ($em_running == 1) {
