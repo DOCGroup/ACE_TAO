@@ -11,12 +11,7 @@ require Cwd;
 ###########
 ###### Sanity Checks
 ##########
-my $hostname;
-chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
-unless ("$hostname" eq 'naboo') {
-  #### For efficiency sake . . .
-  die "$0: must run on host naboo.dre.vanderbilt.edu\n";
-}
+
 my  $perl_path = '/usr/bin/perl';
 
 my $status= 0;
@@ -26,14 +21,7 @@ my $status= 0;
 
 my  $doxy_path = '/usr/local/bin';
 
-my $doxy_version = '1.6.2';
-
-&can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
-  die "$0: doxygen path or version incorrect, please fix the script\n";
-
 $ENV{'PATH'} = $ENV{'PATH'}.':'.$doxy_path;
-
-
 
 print "Starting doxygen document generation \n";
 
@@ -44,6 +32,7 @@ my $egrep = 'egrep';
 my $find = 'find';
 my $gzip = 'gzip';
 my $bzip = 'bzip2';
+my $tar = 'tar';
 my $make = 'make -f Release -s';
 my $mv = 'mv -f';
 my $scp = 'scp ';
@@ -87,7 +76,7 @@ my $build_command =
     "md5sum ACE-html.zip > ACE-html.zip.md5;";
 
 &ex ($build_command)
-    && die "$0: failed to generate ACE man pages\n";
+    && die "$0: failed to package ACE man pages\n";
 
 exit $status;
 
