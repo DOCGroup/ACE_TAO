@@ -43,7 +43,7 @@ namespace DAnCE
 
     while (!this->all_completed ())
       {
-        int retval = this->condition_.wait (tv);
+        int const retval = this->condition_.wait (tv);
 
         if (retval == -1)
           {

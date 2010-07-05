@@ -1,5 +1,18 @@
-Mon Jul  5 09:38:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+Mon Jul  5 11:45:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
+          Const change
+
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.cpp:
+          Unicode fix
+
+        * DAnCE/tests/Parsing/Parsing.mpc:
+          Layout change
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Fixed layout of some debug statements
+
+Mon Jul  5 09:38:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReader_T.h:
         * connectors/dds4ccm/impl/DataReader_T.cpp:
