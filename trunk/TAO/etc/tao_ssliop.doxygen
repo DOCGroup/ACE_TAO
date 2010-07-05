@@ -158,8 +158,8 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = YES
-INCLUDED_BY_GRAPH     = YES
+INCLUDE_GRAPH         = NO
+INCLUDED_BY_GRAPH     = NO
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
