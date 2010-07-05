@@ -82,15 +82,19 @@ sub delete_ior_files {
     $tg_exe_man->DeleteFile ($ior_embase);
 }
 
+sub kill_localities {
+    for ($i = 0; $i < $nr_daemon; ++$i) {
+        # in case shutdown did not perform as expected
+        $tg_daemons[$i]->KillAll ('dance_locality_manager');
+    }
+}
+
 sub kill_node_daemons {
     for ($i = 0; $i < $nr_daemon; ++$i) {
         $DEAMONS[$i]->Kill (); $DEAMONS[$i]->TimedWait (1);
         $tg_daemons[$i]->DeleteFile ("$iorbase$i.ior");
     }
-    for ($i = 0; $i < $nr_daemon; ++$i) {
-        # in case shutdown did not perform as expected
-        $tg_daemons[$i]->KillAll ('dance_locality_manager');
-    }
+    kill_localities ();
 }
 
 sub kill_open_processes {
@@ -226,17 +230,18 @@ foreach $file (@files) {
       $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                         "-k file://$ior_emfile -x $file -s");
       $status = $E->SpawnWaitKill (120);
+
       if ($status >= 0) {
           # cleanup any leftover comp.servers (might happen when not correctly
           # started or torn down) otherwise we won't be able to start new ones
-          $tg_executor->KillAll ('dance_locality_manager');
+          kill_localities ();
 
           $file =~ s/Failure.*\.cdp$/NoFailure.cdp/;
 
           # Invoke executor - restart the application -.
           print "Invoking executor - relaunch the application -\n";
           $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                            "-x $file -k file://$ior_emfile -l -ORBLogFile dummy.log");
+                                            "-x $file -k file://$ior_emfile -l");
           $status = $E->SpawnWaitKill (120);
           if ($status != 0) {
             print STDERR "ERROR: Unexpected error from Launch operation [$status]!\n"
