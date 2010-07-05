@@ -1,3 +1,14 @@
+Mon Jul  5 13:29:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Some preparations to move the DAnCE doxygen files to DAnCE
+
+        * docs/bczar/bczar.html:
+          Updated release notes, made it possible to generate doxygen on
+          a regular system instead of on naboo, the side effect is that the
+          doxygen packages on naboo are 350Mb, on FC13 with all latest tools
+          they are 1.4GB
+
 Mon Jul  5 11:22:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
