@@ -1,3 +1,8 @@
+Mon Jul  5 15:20:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed some test code 
+
 Mon Jul  5 14:59:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
