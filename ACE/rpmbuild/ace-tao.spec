@@ -814,7 +814,7 @@ export ACE_ROOT=$(pwd)
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 export DANCE_ROOT=$CIAO_ROOT/DAnCE
-export LD_LIBRARY_PATH=$ACE_ROOT/lib  
+export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
 # Dump the g++ versions, in case the g++ version is broken we can
 # easily see this in the build log
@@ -2290,7 +2290,7 @@ fi
 # runtime.  Currently this means these specific .so files need to be
 # shipped in the runtime package instead of the devel package.
 
-%files -n tao-devel -f tao-devel-files.list %{_includedir}/tao/PortableServer/get_arg.h
+%files -n tao-devel -f tao-devel-files.list
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/profile.d/tao-devel.sh
 
