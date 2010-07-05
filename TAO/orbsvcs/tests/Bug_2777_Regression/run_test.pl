@@ -23,6 +23,7 @@ if ($^O eq "MSWin32") {
 }
 
 my @nslist_paths = (["../../../../bin", ""],
+                    ["../../../bin", ""],
                     ["../../../../TAO/utils/nslist", ""]);
 if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
     push @nslist_paths, ["../../../../bin/" . $PerlACE::Process::ExeSubDir,
