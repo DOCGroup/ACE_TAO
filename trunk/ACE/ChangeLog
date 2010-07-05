@@ -1,53 +1,74 @@
+Mon Jul  5 08:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for x.8.0
+
+        * bin/generate_rel_manpages:
+          Remove restriction to run on naboo, removed doxygen check, updated
+          error message
+
+        * docs/Download.html:
+          Updated to x.8.0
+
+        * etc/ace.doxygen:
+          Layout changes
+
+        * etc/index.html:
+          Added 5.8
+
+        * rpmbuild/ace-tao.spec:
+          Changed version numbers to x.8.0 and added new ACE INet library
+
 Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.8 released.
+        * ACE version 5.8 released.
 
 Thu Jul 01 08:55:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/tests/INet/MT_Get/Main.cpp:
-	  Fixed truncation warnings.
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Fixed truncation warnings.
 
 Wed Jun 30 14:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/tests/INet/MT_Get/Main.cpp:
-	  Fixed truncation warnings.
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Fixed truncation warnings.
 
 Tue Jun 29 11:19:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/tests/INet/MT_Get/Main.cpp:
-	  Fixed truncation warnings.
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Fixed truncation warnings.
 
-	* protocols/ace/INet/INet_Log.h:
-	* protocols/ace/INet/INet_Log.cpp:
-	  Fixed versioned namespace errors.
+        * protocols/ace/INet/INet_Log.h:
+        * protocols/ace/INet/INet_Log.cpp:
+          Fixed versioned namespace errors.
 
 Tue Jun 29 10:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/AuthenticationBase.h:
-	* protocols/ace/INet/AuthenticationBase.inl:
-	* protocols/ace/INet/FTP_ClientRequestHandler.cpp:
-	* protocols/ace/INet/FTP_ClientRequestHandler.h:
-	  Small optimization for authentication (avoid copies).
-	  Added documentation.
+        * protocols/ace/INet/AuthenticationBase.h:
+        * protocols/ace/INet/AuthenticationBase.inl:
+        * protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/FTP_ClientRequestHandler.h:
+          Small optimization for authentication (avoid copies).
+          Added documentation.
 
-	* protocols/ace/INet/BufferedStreamBuffer.h:
-	  Added documentation.
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+          Added documentation.
 
-	* protocols/ace/INet/ConnectionCache.cpp:
-	* protocols/ace/INet/ConnectionCache.h:
-	* protocols/ace/INet/ConnectionCache.inl:
-	  Fixed close_connection.
-	  Added documentation.
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+        * protocols/ace/INet/ConnectionCache.inl:
+          Fixed close_connection.
+          Added documentation.
 
 Tue Jun 29 09:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/FTP_ClientRequestHandler.inl:
-	  Fixed VC71 compile problem.
+          Fixed VC71 compile problem.
 
 Tue Jun 29 08:59:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* protocols/ace/INet/FTP_URL.h:
-	  Fixed Solaris 10 warning.
+        * protocols/ace/INet/FTP_URL.h:
+          Fixed Solaris 10 warning.
 
 Mon Jun 28 19:15:54 UTC 2010  Chad Elliott  <elliott_c@ociweb.com>
 
