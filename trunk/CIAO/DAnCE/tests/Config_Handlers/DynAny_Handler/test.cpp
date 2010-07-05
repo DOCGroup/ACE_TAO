@@ -283,7 +283,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CIAO::Config_Handlers::Config_Error &ex)
     {
-      ACE_ERROR ((LM_ERROR, "Caught config_error: %s:%s\n",
+      ACE_ERROR ((LM_ERROR, "Caught config_error: %C:%C\n",
                   ex.name_.c_str (), ex.error_.c_str ()));
       return -1;
     }
