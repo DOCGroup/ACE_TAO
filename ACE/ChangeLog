@@ -1,7 +1,17 @@
+Tue Jul  6 11:11:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Reduced the size of the colloboration graphs
+
 Mon Jul  5 15:20:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
-          Removed some test code 
+          Removed some test code
 
 Mon Jul  5 14:59:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
