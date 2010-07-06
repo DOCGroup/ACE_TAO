@@ -33,8 +33,8 @@ namespace CIAO
         {
           DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
                                                                             desc.value ());
-
-          toconfig = *dyn->to_any ();
+          CORBA::Any_var any_safe (dyn->to_any ());
+          toconfig = *any_safe;
 
           dyn->destroy ();
         }
