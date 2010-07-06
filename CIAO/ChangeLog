@@ -1,3 +1,8 @@
+Tue Jul 06 13:30:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* ciao/Containers/Servant_Activator.cpp:
+	  Fixed memory leak.
+
 Tue Jul 06 13:18:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* DAnCE/DAnCE/DAnCE_Utility.cpp:
