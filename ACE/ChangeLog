@@ -1,3 +1,10 @@
+Tue Jul  6 11:29:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Service_Repository.h:
+        * ace/Task_T.h:
+          Fixed doxygen warnings
+
 Tue Jul  6 11:22:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
