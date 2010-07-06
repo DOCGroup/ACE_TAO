@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/InterOutArgsTE.idl"
 #pragma ciao ami4ccm interface "InterOutArgsT::MyFoo"
 #pragma ciao lem "Base/InterOutArgsTAE.idl"
+#pragma ciao ami4ccm idl "Base/InterOutArgsTA.idl"
 
 module InterOutArgsT
 {

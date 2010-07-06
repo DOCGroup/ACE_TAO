@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/OneReplyHE.idl"
 #pragma ciao ami4ccm interface "OneReplyH::MyFoo"
 #pragma ciao lem "Base/OneReplyHAE.idl"
+#pragma ciao ami4ccm idl "Base/OneReplyHA.idl"
 
 module OneReplyH
 {
