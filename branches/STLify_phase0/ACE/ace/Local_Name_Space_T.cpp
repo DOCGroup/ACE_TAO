@@ -10,11 +10,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -159,10 +159,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> name_urep (name.rep ());
+      /** 
+          ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> name_urep (name.rep ());
       ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> value_urep (value.rep ());
-      ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
-      ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
+      **/
+
+      ACE_NS_String new_name (name_rep, name.fast_rep(), name_len);
+      ACE_NS_String new_value (value_rep, value.fast_rep (), value_len);
 
       ACE_OS::strcpy (new_type, type);
       ACE_NS_Internal new_internal (new_value, new_type);
