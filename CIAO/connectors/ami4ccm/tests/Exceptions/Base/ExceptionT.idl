@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/ExceptionTE.idl"
 #pragma ciao ami4ccm interface "ExceptionT::MyFoo"
 #pragma ciao lem "Base/ExceptionTAE.idl"
+#pragma ciao ami4ccm idl "Base/ExceptionTA.idl"
 
 module ExceptionT
 {

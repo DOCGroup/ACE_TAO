@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/DelReplyHE.idl"
 #pragma ciao ami4ccm interface "DelReplyH::MyFoo"
 #pragma ciao lem "Base/DelReplyHAE.idl"
+#pragma ciao ami4ccm idl "Base/DelReplyHA.idl"
 
 module DelReplyH
 {

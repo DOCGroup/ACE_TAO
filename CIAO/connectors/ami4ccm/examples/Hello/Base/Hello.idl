@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/HelloE.idl"
 #pragma ciao ami4ccm interface "Hello::MyFoo"
 #pragma ciao lem "Base/HelloAE.idl"
+#pragma ciao ami4ccm idl "Base/HelloA.idl"
 
 module Hello
 {

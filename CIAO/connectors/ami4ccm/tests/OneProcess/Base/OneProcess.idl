@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/OneProcessE.idl"
 #pragma ciao ami4ccm interface "OneProcess::MyFoo"
 #pragma ciao lem "Base/OneProcessAE.idl"
+#pragma ciao ami4ccm idl "Base/OneProcessA.idl"
 
 module OneProcess
 {

@@ -18,7 +18,7 @@ namespace CIAO_InterInOutT_Sender_Impl
   void HandleException (
       long id,
       long expect_id,
-      const char* error_string,
+      const char* /*error_string*/,
       const char* func)
   {
     //expected exception
@@ -369,11 +369,11 @@ namespace CIAO_InterInOutT_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     asynch_foo_generator* asynch_foo_gen =
-      new asynch_foo_generator (this->context_);
+      new asynch_foo_generator (this->context_.in ());
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
     synch_foo_generator* synch_foo_gen =
-       new synch_foo_generator (this->context_);
+       new synch_foo_generator (this->context_.in());
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
 

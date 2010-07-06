@@ -27,7 +27,7 @@ namespace CIAO_InterInOutT_Receiver_Impl
                               "received the wrong string answer,"
                               " expected 'Hi from sender',"
                               " received <%C>\n",
-                              test));
+                              test.in()));
       }
 
     else if (ACE_OS::strlen (in_str) == 0)

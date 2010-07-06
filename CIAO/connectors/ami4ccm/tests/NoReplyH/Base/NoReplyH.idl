@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/NoReplyHE.idl"
 #pragma ciao ami4ccm interface "NoReplyH::MyFoo"
 #pragma ciao lem "Base/NoReplyHAE.idl"
+#pragma ciao ami4ccm idl "Base/NoReplyHA.idl"
 
 module NoReplyH
 {

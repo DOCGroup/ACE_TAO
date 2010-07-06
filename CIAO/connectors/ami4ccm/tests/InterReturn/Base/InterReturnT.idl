@@ -6,6 +6,7 @@
 #pragma ciao lem "Base/InterReturnTE.idl"
 #pragma ciao ami4ccm interface "InterReturnT::MyFoo"
 #pragma ciao lem "Base/InterReturnTAE.idl"
+#pragma ciao ami4ccm idl "Base/InterReturnTA.idl"
 
 module InterReturnT
 {
