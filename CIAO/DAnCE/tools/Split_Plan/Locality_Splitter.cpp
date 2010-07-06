@@ -85,9 +85,10 @@ namespace DAnCE
       const Locality_Splitter::LocalityKey &other_key) const
     {
       return (this->node_ == other_key.node () &&
-                  std::equal (this->instances_.begin (),
-                              this->instances_.end (),
-                              other_key.instances ().begin ()));
+                this->instances_.size () == other_key.instances ().size () &&
+                std::equal (this->instances_.begin (),
+                            this->instances_.end (),
+                            other_key.instances ().begin ()));
     }
 
   Locality_Splitter::LocalityKey::operator ACE_CString ()
