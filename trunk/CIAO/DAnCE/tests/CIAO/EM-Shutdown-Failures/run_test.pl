@@ -221,17 +221,18 @@ foreach $file (@files) {
     #   (redirect log so testoutput doesn't show expected errors)
     print "Invoking executor - launch the application -\n";
     $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                      "-x $file -k file://$ior_emfile -l -ORBLogFile dummy.log");
+                                      "-x $file -k file://$ior_emfile -l");
     $status = $E->SpawnWaitKill (120);
-    if ($status > 0) {
-      print "Launch failed as expected\n";
+    if ($status == 0) {
 
-      print "Teardown the application and attempt relaunch without failure\n";
+      print "Teardown the application\n";
       $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                        "-k file://$ior_emfile -x $file -s");
+                                        "-k file://$ior_emfile -x $file -s -f -ORBLogFile dummy.log");
       $status = $E->SpawnWaitKill (120);
 
-      if ($status >= 0) {
+      if ($status > 0) {
+          print "Teardown had errors as expected\n";
+
           # cleanup any leftover comp.servers (might happen when not correctly
           # started or torn down) otherwise we won't be able to start new ones
           kill_localities ();
@@ -250,7 +251,7 @@ foreach $file (@files) {
           $app_running = 1;
 
       } else {
-          print STDERR "ERROR: Unexpected error from Teardown operation [$status]!\n";
+          print STDERR "ERROR: Unexpected result from Teardown operation [$status]!\n";
       }
     }
     else {
