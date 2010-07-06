@@ -1,3 +1,8 @@
+Tue Jul 06 12:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+	  Fixed memory leak.
+
 Tue Jul  6 12:08:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.idl

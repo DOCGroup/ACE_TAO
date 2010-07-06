@@ -343,8 +343,9 @@ int launch_plan (const Options &opts,
     {
       CORBA::Object_var app_mgr, app;
 
-      ACE_CString
-        uuid (pl_base->launch_plan (*plan, app_mgr.out () , app.out ()));
+      CORBA::String_var
+        uuid_safe (pl_base->launch_plan (*plan, app_mgr.out () , app.out ()));
+      ACE_CString uuid = uuid_safe.in ();
 
       DANCE_DEBUG (2, (LM_NOTICE, DLINFO
                        ACE_TEXT ("Plan_Launcher::launch_plan - ")
