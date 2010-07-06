@@ -79,7 +79,9 @@ namespace CIAO
     }
     catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Port not active\n");
+      // log error and propagate so error gets reported to deployment framework
+      CIAO_ERROR (1, (LM_ERROR, CLINFO "Connector_Servant_Impl_Base::remove - CORBA exception : %C\n", ex._info ().c_str ()));
+      ex._raise (); // propagate
     }
   }
 
