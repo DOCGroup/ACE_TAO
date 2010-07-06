@@ -1,31 +1,39 @@
+Tue Jul  6 11:13:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_DAnCE.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Reduced the size of the colloboration graphs
+
 Tue Jul 06 09:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtPassivate.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtRemove.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeNoFailure.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtPassivate.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtRemove.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeNoFailure.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtPassivate.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtRemove.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeNoFailure.cdp:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/README.txt:
-	* DAnCE/tests/CIAO/EM-Shutdown-Failures/run_test.pl:
-	  Added new testset.
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/README.txt:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/run_test.pl:
+          Added new testset.
 
-	* ciao/Servants/Connector_Servant_Impl_Base.cpp:
-	* ciao/Servants/Servant_Impl_Base.cpp:
-	  Fixed 'eating' of exceptions at component removal.
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Fixed 'eating' of exceptions at component removal.
 
-	* DAnCE/tests/CIAO/EM-Launch-Failures/README.txt:
-	  Updated.
+        * DAnCE/tests/CIAO/EM-Launch-Failures/README.txt:
+          Updated.
 
-	* DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
-	  Added cleanup of test results.
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+          Added cleanup of test results.
 
-	* bin/ciao_tests.lst:
-	  Added new testsets to autobuild testsuite.
+        * bin/ciao_tests.lst:
+          Added new testsets to autobuild testsuite.
 
 Tue Jul  6 07:52:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
@@ -37,10 +45,10 @@ Mon Jul 05 14:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
         * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
         * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl:
-	  Standardized scripts. Proper use of targets.
+          Standardized scripts. Proper use of targets.
 
         * DAnCE/tests/CIAO/EM-Redeployment/README.txt:
-	  Removed outdated comment.
+          Removed outdated comment.
 
 Mon Jul  5 14:02:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
