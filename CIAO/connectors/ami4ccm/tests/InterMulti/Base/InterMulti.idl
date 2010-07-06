@@ -8,6 +8,7 @@
 #pragma ciao ami4ccm interface "InterMulti::Two"
 #pragma ciao ami4ccm interface "InterMulti::Three"
 #pragma ciao lem "Base/InterMultiAE.idl"
+#pragma ciao ami4ccm idl "Base/InterMultiA.idl"
 
 module InterMulti
 {

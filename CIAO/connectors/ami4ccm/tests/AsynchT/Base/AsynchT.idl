@@ -6,6 +6,8 @@
 #pragma ciao lem "Base/AsynchTE.idl"
 #pragma ciao ami4ccm interface "AsynchT::MyFoo"
 #pragma ciao lem "Base/AsynchTAE.idl"
+#pragma ciao ami4ccm idl "Base/AsynchTA.idl"
+
 
 module AsynchT
 {
