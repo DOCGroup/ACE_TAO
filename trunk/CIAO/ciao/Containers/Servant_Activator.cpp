@@ -157,7 +157,8 @@ namespace CIAO
 
     try
       {
-        this->pa_ [pa->oid ()] = Port_Activator::_duplicate (pa);
+	CORBA::String_var safe_oid (pa->oid ());
+        this->pa_ [safe_oid.in ()] = Port_Activator::_duplicate (pa);
       }
     catch (...)
       {
