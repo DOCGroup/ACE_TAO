@@ -220,7 +220,7 @@ namespace DAnCE
 
       return false;
     }
-    
+
     template<>
     bool get_property_value (const char *name,
                              const ::Deployment::Properties &properties,
@@ -386,7 +386,7 @@ namespace DAnCE
         {
           extract_and_throw_exception<Deployment::InvalidProperty> (excep);
         }
-      /* We don't need these, yet. 
+      /* We don't need these, yet.
       else if (ex_id == Deployment::_tc_NameExists->id ())
         {
           extract_and_throw_exception<Deployment::NameExists> (excep);
@@ -413,6 +413,9 @@ namespace DAnCE
           CORBA::SystemException* sysex = TAO::create_system_exception (ex_id.c_str ());
           if (sysex)
             {
+              // Without this, the call to create_system_exception() above
+              // causes a memory leak.
+              auto_ptr<CORBA::SystemException> safety (sysex);
               TAO_OutputCDR cdr_out;
               cdr_out << excep;
               TAO_InputCDR cdr_in(cdr_out);
@@ -442,7 +445,7 @@ namespace DAnCE
       cdr_in >> *tmp;
       return tmp;
     }
-    
+
     DANCE_STUB_Export bool
     stringify_exception_from_any (const CORBA::Any &excep,
                                   std::string &result)
@@ -453,7 +456,7 @@ namespace DAnCE
                         ACE_TEXT("DAnCE::Utility::throw_exception_from_any - ")
                         ACE_TEXT("Found typecode %C\n"), ex_id.c_str ()));
       bool flag (false);
-      
+
       if (ex_id == Deployment::_tc_PlanError->id ())
         {
           result += "PlanError exception -";
@@ -490,7 +493,7 @@ namespace DAnCE
           flag = stringify_exception<Deployment::InvalidProperty> (excep,
                                                                    result);
         }
-      /* We don't need these, yet. 
+      /* We don't need these, yet.
       else if (ex_id == Deployment::_tc_NameExists->id ())
         {
           stringify_exception<Deployment::NameExists> (excep,
@@ -526,22 +529,22 @@ namespace DAnCE
               cdr_out << excep;
               TAO_InputCDR cdr_in(cdr_out);
               sysex->_tao_decode (cdr_in);
-              
+
               result += "CORBA System Exception: ";
               result += sysex->_info ().c_str ();
               flag = true;
             }
         }
-      
+
       if (!flag)
         {
           result += "Unable to decode exception meta-data for ID ";
           result += ex_id;
         }
-      
+
       return flag;
     }
-    
+
   } /* namespace Utility */
 }
 #endif /*DAnCE_Utility_CPP*/
