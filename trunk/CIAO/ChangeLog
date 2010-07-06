@@ -1,3 +1,8 @@
+Tue Jul  6 07:52:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
+        Rename duplicate project name .
+
 Mon Jul 05 14:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
