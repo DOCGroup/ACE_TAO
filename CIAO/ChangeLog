@@ -1,3 +1,32 @@
+Tue Jul 06 09:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtPassivate.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtRemove.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeNoFailure.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtPassivate.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtRemove.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeNoFailure.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtPassivate.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtRemove.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeNoFailure.cdp:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/README.txt:
+	* DAnCE/tests/CIAO/EM-Shutdown-Failures/run_test.pl:
+	  Added new testset.
+
+	* ciao/Servants/Connector_Servant_Impl_Base.cpp:
+	* ciao/Servants/Servant_Impl_Base.cpp:
+	  Fixed 'eating' of exceptions at component removal.
+
+	* DAnCE/tests/CIAO/EM-Launch-Failures/README.txt:
+	  Updated.
+
+	* DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+	  Added cleanup of test results.
+
+	* bin/ciao_tests.lst:
+	  Added new testsets to autobuild testsuite.
+
 Tue Jul  6 07:52:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
