@@ -97,9 +97,9 @@ namespace CIAO
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
-            ACE_CString ior = this->orb_->object_to_string (obj.in ());
+            CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
-            DAnCE::Utility::write_IOR (ACE_TEXT_CHAR_TO_TCHAR (name), ior.c_str ());
+            DAnCE::Utility::write_IOR (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
           }
       }
   }
