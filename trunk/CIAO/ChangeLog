@@ -1,56 +1,61 @@
+Wed Jul 07 08:55:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Fuzz fix.
+
 Wed Jul 07 08:41:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-	* connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
-	* connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
-	* connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
-	* connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h
-	* connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
-	* connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
-	* connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
-	* connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
-	* connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h
-	* connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp
-	* connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h
-	* connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
-	* connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h
-	Pass context to threads i.o cashing connection.
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h
+          Pass context to threads i.o cashing connection.
 
 Wed Jul 07 07:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
-	  Fixed memory leak.
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed memory leak.
 
 Wed Jul 07 07:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/DAnCE/DAnCE_Utility.cpp:
-	  Fixed memory leak.
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+          Fixed memory leak.
 
 Wed Jul 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/NodeManager/NodeManager_Impl.cpp:
-	* DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
-	  Fixed memory leaks.
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed memory leaks.
 
 Tue Jul 06 13:30:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* ciao/Containers/Servant_Activator.cpp:
-	  Fixed memory leak.
+        * ciao/Containers/Servant_Activator.cpp:
+          Fixed memory leak.
 
 Tue Jul 06 13:18:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/DAnCE/DAnCE_Utility.cpp:
-	  Fixed memory leak.
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+          Fixed memory leak.
 
 Tue Jul 06 12:46:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/Config_Handlers/Any_Handler.cpp:
-	  Fixed memory leak.
+        * DAnCE/Config_Handlers/Any_Handler.cpp:
+          Fixed memory leak.
 
 Tue Jul 06 12:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp:
-	  Fixed memory leak.
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Fixed memory leak.
 
 Tue Jul  6 12:08:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
@@ -76,8 +81,8 @@ Tue Jul  6 12:08:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
 Tue Jul 06 11:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
-	* DAnCE/tools/Split_Plan/Locality_Splitter.cpp:
-	  Fixed bug in key comparison causing assertions on VC9.
+        * DAnCE/tools/Split_Plan/Locality_Splitter.cpp:
+          Fixed bug in key comparison causing assertions on VC9.
 
 Tue Jul  6 11:13:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -119,7 +124,7 @@ Tue Jul 06 09:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 Tue Jul  6 07:52:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
-        Rename duplicate project name .
+          Rename duplicate project name .
 
 Mon Jul 05 14:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
