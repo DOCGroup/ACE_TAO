@@ -1,3 +1,8 @@
+Wed Jul 07 07:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/DAnCE/DAnCE_Utility.cpp:
+	  Fixed memory leak.
+
 Wed Jul 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* DAnCE/NodeManager/NodeManager_Impl.cpp:
