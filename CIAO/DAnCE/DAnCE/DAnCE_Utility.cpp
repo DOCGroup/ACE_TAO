@@ -525,6 +525,10 @@ namespace DAnCE
           CORBA::SystemException* sysex = TAO::create_system_exception (ex_id.c_str ());
           if (sysex)
             {
+              // Without this, the call to create_system_exception() above
+              // causes a memory leak.
+              auto_ptr<CORBA::SystemException> safety (sysex);
+
               TAO_OutputCDR cdr_out;
               cdr_out << excep;
               TAO_InputCDR cdr_in(cdr_out);
