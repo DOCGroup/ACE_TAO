@@ -159,14 +159,18 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Worker thread for asynchronous invocations for MyFoo
   //============================================================
-  asynch_foo_generator::asynch_foo_generator (::Hello::AMI4CCM_MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::Hello::AMI4CCM_MyFoo::_duplicate (my_foo_ami))
+  asynch_foo_generator::asynch_foo_generator (
+    ::Hello::CCM_Sender_Context_ptr context)
+  : context_(::Hello::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int asynch_foo_generator::svc ()
   {
     ACE_OS::sleep (3);
+    ::Hello::AMI4CCM_MyFoo_var my_foo_ami_  =
+       context_->get_connection_sendc_run_my_foo();
+
     for (int i = 0; i < 5; ++i)
       {
         if (CORBA::is_nil (my_foo_ami_))
@@ -206,14 +210,18 @@ namespace CIAO_Hello_Sender_Impl
   //============================================================
   // Worker thread for synchronous invocations for MyFoo
   //============================================================
-  synch_foo_generator::synch_foo_generator (::Hello::MyFoo_ptr my_foo_ami)
-  : my_foo_ami_ (::Hello::MyFoo::_duplicate (my_foo_ami))
+  synch_foo_generator::synch_foo_generator (
+    ::Hello::CCM_Sender_Context_ptr context)
+  : context_(::Hello::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int synch_foo_generator::svc ()
   {
     ACE_OS::sleep (3);
+    ::Hello::MyFoo_var my_foo_ami_ =
+         context_->get_connection_run_my_foo ();
+
     //run synch calls
     char * out_str = 0;
     for (int i = 0; i < 5; ++i)
@@ -343,16 +351,12 @@ namespace CIAO_Hello_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::Hello::AMI4CCM_MyFoo_var asynch_foo =
-      this->context_->get_connection_sendc_run_my_foo();
     asynch_foo_generator* asynch_foo_gen =
-        new asynch_foo_generator (asynch_foo);
+      new asynch_foo_generator (this->context_.in ());
     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    ::Hello::MyFoo_var synch_foo =
-        this->context_->get_connection_run_my_foo ();
     synch_foo_generator* synch_foo_gen =
-      new synch_foo_generator (synch_foo);
+       new synch_foo_generator (this->context_.in());
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
 
