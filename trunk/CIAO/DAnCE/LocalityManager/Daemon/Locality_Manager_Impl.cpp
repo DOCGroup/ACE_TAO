@@ -63,67 +63,67 @@ namespace DAnCE
         PLUGIN_MANAGER::instance ()->set_configuration (*props);
       }
 
-    std::string type =
+    CORBA::String_var type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (
         ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
         ACE_TEXT_CHAR_TO_TCHAR ("create_Container_Handler"));
 
-    if (type.c_str ())
+    if (type.in ())
       {
-        this->handler_order_.push_back (type.c_str ());
-        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+        this->handler_order_.push_back (type.in ());
+        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
       }
 
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.c_str ()));
+                     type.in ()));
 
     type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (
         ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
         ACE_TEXT_CHAR_TO_TCHAR ("create_Home_Handler"));
-        
-    if (type.c_str ())
+
+    if (type.in ())
       {
-        this->handler_order_.push_back (type.c_str ());
-        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+        this->handler_order_.push_back (type.in ());
+        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
       }
 
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.c_str ()));
+                     type.in ()));
 
     type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (
         ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
         ACE_TEXT_CHAR_TO_TCHAR ("create_Homed_Component_Handler"));
-    if (type.c_str ())
+    if (type.in ())
       {
-        this->handler_order_.push_back (type.c_str ());
-        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+        this->handler_order_.push_back (type.in ());
+        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
       }
 
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.c_str ()));
+                     type.in ()));
 
     type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (
         ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
         ACE_TEXT_CHAR_TO_TCHAR ("create_Component_Handler"));
-    if (type.c_str ())
+    if (type.in ())
       {
-        this->handler_order_.push_back (type.c_str ());
-        this->instance_handlers_[type.c_str ()] = INSTANCE_LIST ();
+        this->handler_order_.push_back (type.in ());
+        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
       }
 
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("LocalityManager_i::init - ")
                      ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.c_str ()));
+                     type.in ()));
 
     PLUGIN_MANAGER::instance ()->register_interceptor (
       ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
