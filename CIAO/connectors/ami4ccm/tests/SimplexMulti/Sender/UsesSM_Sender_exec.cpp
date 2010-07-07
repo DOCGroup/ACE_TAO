@@ -76,15 +76,20 @@ namespace CIAO_UsesSM_Sender_Impl
   // and Two (simplex)
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-    ::UsesSM::Sender::sendc_run_my_um_oneConnections_var my_one_ami,
-    ::UsesSM::AMI4CCM_Two_ptr my_two_ami)
-   : my_one_ami_ (my_one_ami),
-     my_two_ami_ (::UsesSM::AMI4CCM_Two::_duplicate (my_two_ami))
+    ::UsesSM::CCM_Sender_Context_ptr context)
+  : context_(::UsesSM::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int asynch_foo_generator::svc ()
   {
+      // multiple
+    ::UsesSM::Sender::sendc_run_my_um_oneConnections_var my_one_ami_ =
+      context_->get_connections_sendc_run_my_um_one();
+    // simplex 
+    ::UsesSM::AMI4CCM_Two_var my_two_ami_ =
+      context_->get_connection_sendc_run_my_two();
+
     if (my_one_ami_->length () == 0)
       {
         ACE_ERROR ((LM_ERROR,
@@ -137,13 +142,16 @@ namespace CIAO_UsesSM_Sender_Impl
   // Worker thread for synchronous invocations for One
   //============================================================
   synch_foo_generator::synch_foo_generator (
-   ::UsesSM::Sender::run_my_um_oneConnections_var my_one_ami)
-   : my_one_ami_ (my_one_ami)
+     ::UsesSM::CCM_Sender_Context_ptr context)
+  : context_(::UsesSM::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int synch_foo_generator::svc ()
   {
+    ::UsesSM::Sender::run_my_um_oneConnections_var my_one_ami_ =
+         context_->get_connections_run_my_um_one ();
+ 
     for(CORBA::ULong i = 0; i < my_one_ami_->length(); ++i)
       {
         CORBA::String_var test;
@@ -218,21 +226,12 @@ namespace CIAO_UsesSM_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    // multiple
-    ::UsesSM::Sender::sendc_run_my_um_oneConnections_var asynch_foo =
-    this->context_->get_connections_sendc_run_my_um_one();
-    // simplex 
-    ::UsesSM::AMI4CCM_Two_var asynch_two =
-      this->context_->get_connection_sendc_run_my_two();
-
     asynch_foo_generator* asynch_foo_gen =
-        new asynch_foo_generator (asynch_foo, asynch_two);
-     asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+        new asynch_foo_generator (this->context_.in ());
+    asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    ::UsesSM::Sender::run_my_um_oneConnections_var synch_foo =
-         this->context_->get_connections_run_my_um_one ();
     synch_foo_generator* synch_foo_gen =
-         new synch_foo_generator (synch_foo);
+         new synch_foo_generator (this->context_.in ());
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
 

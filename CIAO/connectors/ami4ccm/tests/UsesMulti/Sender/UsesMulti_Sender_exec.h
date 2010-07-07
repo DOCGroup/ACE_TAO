@@ -23,22 +23,22 @@ namespace CIAO_UsesMulti_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::UsesMulti::Sender::sendc_run_my_um_oneConnections_var);
+    asynch_foo_generator (::UsesMulti::CCM_Sender_Context_ptr context);
     virtual int svc (void);
 
   private:
-    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var my_one_ami_;
+    ::UsesMulti::CCM_Sender_Context_var context_;
   };
 
   /// Worker threads for synchronous invocations
   class synch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_foo_generator (::UsesMulti::Sender::run_my_um_oneConnections_var);
+    synch_foo_generator (::UsesMulti::CCM_Sender_Context_ptr context);
     virtual int svc (void);
 
   private:
-    ::UsesMulti::Sender::run_my_um_oneConnections_var my_one_ami_;
+    ::UsesMulti::CCM_Sender_Context_var context_;
   };
 
   class One_callback_exec_i

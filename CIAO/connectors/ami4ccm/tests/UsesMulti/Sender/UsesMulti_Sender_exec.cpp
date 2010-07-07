@@ -48,13 +48,16 @@ namespace CIAO_UsesMulti_Sender_Impl
   // Worker thread for asynchronous invocations for One
   //============================================================
   asynch_foo_generator::asynch_foo_generator (
-    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var my_one_ami)
-   : my_one_ami_ (my_one_ami)
+    ::UsesMulti::CCM_Sender_Context_ptr context)
+  : context_(::UsesMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int asynch_foo_generator::svc ()
   {
+    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var  my_one_ami_ =
+      context_->get_connections_sendc_run_my_um_one();
+
     //Invoke Asynchronous calls to test
     for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
       {
@@ -92,13 +95,16 @@ namespace CIAO_UsesMulti_Sender_Impl
   // Worker thread for synchronous invocations for One
   //============================================================
   synch_foo_generator::synch_foo_generator (
-   ::UsesMulti::Sender::run_my_um_oneConnections_var my_one_ami)
-   : my_one_ami_ (my_one_ami)
-  {
+     ::UsesMulti::CCM_Sender_Context_ptr context)
+  : context_(::UsesMulti::CCM_Sender_Context::_duplicate (context))
+ {
   }
 
   int synch_foo_generator::svc ()
   {
+    ::UsesMulti::Sender::run_my_um_oneConnections_var my_one_ami_ =
+         context_->get_connections_run_my_um_one ();
+
     for(CORBA::ULong i = 0; i < my_one_ami_->length(); ++i)
       {
         CORBA::String_var test;
@@ -173,16 +179,12 @@ namespace CIAO_UsesMulti_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var asynch_foo =
-    this->context_->get_connections_sendc_run_my_um_one();
     asynch_foo_generator* asynch_foo_gen =
-        new asynch_foo_generator (asynch_foo);
+      new asynch_foo_generator (this->context_.in());
      asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    ::UsesMulti::Sender::run_my_um_oneConnections_var synch_foo =
-         this->context_->get_connections_run_my_um_one ();
-    synch_foo_generator* synch_foo_gen =
-         new synch_foo_generator (synch_foo);
+     synch_foo_generator* synch_foo_gen =
+         new synch_foo_generator (this->context_.in());
     synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   }
 

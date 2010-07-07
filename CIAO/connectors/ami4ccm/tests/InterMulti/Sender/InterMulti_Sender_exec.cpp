@@ -135,14 +135,17 @@ namespace CIAO_InterMulti_Sender_Impl
   //============================================================
   // Worker thread for asynchronous invocations for One
   //============================================================
-  asynch_foo_generator::asynch_foo_generator (
-    ::InterMulti::AMI4CCM_One_ptr my_one_ami)
-  : my_one_ami_ (::InterMulti::AMI4CCM_One::_duplicate (my_one_ami))
+  asynch_one_generator::asynch_one_generator (
+    ::InterMulti::CCM_Sender_Context_ptr context)
+  : context_(::InterMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
-  int asynch_foo_generator::svc ()
+  int asynch_one_generator::svc ()
   {
+    ::InterMulti::AMI4CCM_One_var my_one_ami_  =
+       context_->get_connection_sendc_run_my_one();
+
     //Invoke Asynchronous calls to test 
     my_one_ami_->sendc_foo ( new One_callback_exec_i (),
       "Hi from asynch call ONE::foo", 1);
@@ -153,13 +156,16 @@ namespace CIAO_InterMulti_Sender_Impl
   // Worker thread for asynchronous invocations for Two
   //============================================================
   asynch_two_generator::asynch_two_generator (
-    ::InterMulti::AMI4CCM_Two_ptr my_two_ami)
-  : my_two_ami_ (::InterMulti::AMI4CCM_Two::_duplicate (my_two_ami))
+    ::InterMulti::CCM_Sender_Context_ptr context)
+  : context_(::InterMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int asynch_two_generator::svc ()
   {
+    ::InterMulti::AMI4CCM_Two_var my_two_ami_  =
+       context_->get_connection_sendc_run_my_two();
+
     if (CORBA::is_nil (my_two_ami_.in ()))
       {
         ACE_ERROR ((LM_ERROR, 
@@ -178,13 +184,16 @@ namespace CIAO_InterMulti_Sender_Impl
   // Worker thread for asynchronous invocations for Three
   //============================================================
   asynch_three_generator::asynch_three_generator (
-    ::InterMulti::AMI4CCM_Three_ptr my_three_ami)
-  : my_three_ami_ (::InterMulti::AMI4CCM_Three::_duplicate (my_three_ami))
+   ::InterMulti::CCM_Sender_Context_ptr context)
+  : context_(::InterMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int asynch_three_generator::svc ()
   {
+    ::InterMulti::AMI4CCM_Three_var my_three_ami_  =
+       context_->get_connection_sendc_run_my_three();
+
     if (CORBA::is_nil (my_three_ami_))
       {
         ACE_ERROR ((LM_ERROR, 
@@ -205,14 +214,17 @@ namespace CIAO_InterMulti_Sender_Impl
   //============================================================
   // Worker thread for synchronous invocations for One
   //============================================================
-  synch_foo_generator::synch_foo_generator (
-    ::InterMulti::One_ptr my_one_ami)
-  : my_one_ami_ (::InterMulti::One::_duplicate (my_one_ami))
+  synch_one_generator::synch_one_generator (
+   ::InterMulti::CCM_Sender_Context_ptr context)
+  : context_(::InterMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
-  int synch_foo_generator::svc ()
+  int synch_one_generator::svc ()
   {
+    ::InterMulti::One_var my_one_ami_ =
+         context_->get_connection_run_my_one ();
+
     CORBA::String_var answer;
     CORBA::Long result = my_one_ami_->foo (
                             "Synchronous call foo from class One",
@@ -229,13 +241,16 @@ namespace CIAO_InterMulti_Sender_Impl
   // Worker thread for synchronous invocations for One
   //============================================================
   synch_three_generator::synch_three_generator (
-    ::InterMulti::Three_ptr my_three_ami)
-  : my_three_ami_ (::InterMulti::Three::_duplicate (my_three_ami))
+   ::InterMulti::CCM_Sender_Context_ptr context)
+  : context_(::InterMulti::CCM_Sender_Context::_duplicate (context))
   {
   }
 
   int synch_three_generator::svc ()
   {
+    ::InterMulti::Three_var my_three_ami_ =
+         context_->get_connection_run_my_three ();
+
     ::CORBA::String_var answer;
     CORBA::Long result = my_three_ami_->foo (
                         "Synchronous call foo from class Three, "
@@ -283,38 +298,28 @@ namespace CIAO_InterMulti_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    ::InterMulti::AMI4CCM_One_var asynch_foo =
-      this->context_->get_connection_sendc_run_my_one();
-    asynch_foo_generator* asynch_foo_gen =
-        new asynch_foo_generator (asynch_foo);
-    asynch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+    asynch_one_generator* asynch_one_gen =
+      new asynch_one_generator (this->context_.in ());
+    asynch_one_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-    ::InterMulti::AMI4CCM_Two_var asynch_two =
-      this->context_->get_connection_sendc_run_my_two();
     asynch_two_generator* asynch_two_gen =
-        new asynch_two_generator (asynch_two);
+      new asynch_two_generator (this->context_.in ());
     asynch_two_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-       ::InterMulti::AMI4CCM_Three_var asynch_three =
-      this->context_->get_connection_sendc_run_my_three();
     asynch_three_generator* asynch_three_gen =
-        new asynch_three_generator (asynch_three);
+      new asynch_three_generator (this->context_.in ());
     asynch_three_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
 
-    ::InterMulti::One_var synch_foo =
-        this->context_->get_connection_run_my_one ();
-    synch_foo_generator* synch_foo_gen =
-      new synch_foo_generator (synch_foo);
-    synch_foo_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+    synch_one_generator* synch_one_gen =
+       new synch_one_generator (this->context_.in());
+    synch_one_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
-      ::InterMulti::Three_var synch_three  =
-        this->context_->get_connection_run_my_three ();
     synch_three_generator* synch_three_gen =
-      new synch_three_generator (synch_three);
+       new synch_three_generator (this->context_.in());
     synch_three_gen->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-  }
 
+  }
   void
   Sender_exec_i::ccm_passivate (void)
   {
