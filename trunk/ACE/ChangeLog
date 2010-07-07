@@ -1,3 +1,10 @@
+Wed Jul  7 14:53:12 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/run_test.lst:
+        * tests/Bug_3539_Regression_Test.cpp:
+        * tests/tests.mpc:
+          Added a test for bug 3539 as non-fixed.
+
 Wed Jul  7 11:43:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
