@@ -31,24 +31,24 @@ namespace CIAO_Hello_Sender_Impl
   class asynch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::Hello::AMI4CCM_MyFoo_ptr my_foo_ami);
+    asynch_foo_generator (::Hello::CCM_Sender_Context_ptr context);
 
     virtual int svc (void);
 
   private:
-    ::Hello::AMI4CCM_MyFoo_var my_foo_ami_;
+    ::Hello::CCM_Sender_Context_var context_;
   };
 
   /// Worker thread for synchronous invocations
   class synch_foo_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_foo_generator (::Hello::MyFoo_ptr my_foo_ami);
+    synch_foo_generator (::Hello::CCM_Sender_Context_ptr context);
 
     virtual int svc (void);
 
   private:
-    ::Hello::MyFoo_var my_foo_ami_;
+    ::Hello::CCM_Sender_Context_var context_;
   };
 
   class MyFoo_callback_exec_i

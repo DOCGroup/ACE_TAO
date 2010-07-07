@@ -20,66 +20,66 @@ namespace CIAO_InterMulti_Sender_Impl
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::UShort > Atomic_UShort;
    
   /// Worker threads for asynchronous invocations
-  class asynch_foo_generator : public virtual ACE_Task_Base
+  class asynch_one_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_foo_generator (::InterMulti::AMI4CCM_One_ptr my_one_ami);
+    asynch_one_generator (::InterMulti::CCM_Sender_Context_ptr context);
 
     virtual int svc (void);
 
   private:
-    ::InterMulti::AMI4CCM_One_var my_one_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
 
   class asynch_two_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_two_generator (::InterMulti::AMI4CCM_Two_ptr my_two_ami);
+    asynch_two_generator (::InterMulti::CCM_Sender_Context_ptr context);
 
     virtual int svc (void);
 
   private:
-    ::InterMulti::AMI4CCM_Two_var my_two_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
 
   class asynch_three_generator : public virtual ACE_Task_Base
   {
   public:
-    asynch_three_generator (::InterMulti::AMI4CCM_Three_ptr my_three_ami);
+    asynch_three_generator (::InterMulti::CCM_Sender_Context_ptr context);
 
     virtual int svc (void);
 
   private:
-    ::InterMulti::AMI4CCM_Three_var my_three_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
 
   /// Worker threads for synchronous invocations
-  class synch_foo_generator : public virtual ACE_Task_Base
+  class synch_one_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_foo_generator (::InterMulti::One_ptr my_one_ami);
+    synch_one_generator (::InterMulti::CCM_Sender_Context_ptr context);
     virtual int svc (void);
 
   private:
-    ::InterMulti::One_var my_one_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
   class synch_two_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_two_generator (::InterMulti::Two_ptr my_two_ami);
+    synch_two_generator (::InterMulti::CCM_Sender_Context_ptr context);
     virtual int svc (void);
 
   private:
-    ::InterMulti::Two_var my_two_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
     class synch_three_generator : public virtual ACE_Task_Base
   {
   public:
-    synch_three_generator (::InterMulti::Three_ptr my_three_ami);
+    synch_three_generator (::InterMulti::CCM_Sender_Context_ptr context);
     virtual int svc (void);
 
   private:
-    ::InterMulti::Three_var my_three_ami_;
+    ::InterMulti::CCM_Sender_Context_var context_;
   };
 
   class One_callback_exec_i
