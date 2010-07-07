@@ -1,3 +1,9 @@
+Wed Jul 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+	* DAnCE/NodeManager/NodeManager_Impl.cpp:
+	* DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+	  Fixed memory leaks.
+
 Tue Jul 06 13:30:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
 	* ciao/Containers/Servant_Activator.cpp:
