@@ -200,6 +200,21 @@ namespace CIAO_Foo_Impl
   private:
     ::CCM_Foo_Context_var context_;
     
+    bool 
+      my_short_,
+      my_long_,
+      my_float_,
+      my_double_,
+      my_short_sequence_,
+      my_long_sequence_,
+      my_float_sequence_,
+      my_double_sequence_,
+      my_bar_struct_,
+      my_baz_struct_,
+      my_string_sequence_,
+      my_fixed_string_,
+      my_variable_string_;
+    
   };
   
   extern "C" FOO_EXEC_Export ::Components::EnterpriseComponent_ptr
