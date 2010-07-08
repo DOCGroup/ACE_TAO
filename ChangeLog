@@ -12,6 +12,25 @@ Fri Jun 18 19:58:55 UTC 2010  Steve Huston  <shuston@riverace.com>
           a service contained in ACE itself.
           Fix for Bugzilla #3856.
 
+Tue May  4 21:23:44 UTC 2010  Chad Beaulac <chad@objectivesolutions.com>
+
+        * ace/Service_Types.cpp:
+          One of problems is that ACE_Module_Type::name gets its
+          value from the svc.conf file. The ACE_Module that it references
+          gets its name from the static factory method used to create the
+          module. When the names don't match the call to ACE_Stream_Type::fini
+          fails to remove any ACE_Modules from the underlying ACE_Stream.
+          Since none of the ACE_Modules are removed, ACE_Module_Type::fini
+          tries to call fini on the ACE_Module reader and writer ACE_Task
+          instances. And they've already been deleted by ACE_Stream::close
+          called from ACE_Stream_Type::fini.
+
+          Reassigned ACE_Module::name in ACE_Module_Type::init to
+          ACE_Module_Type::name and fixed the SEGV at shutdown because of the
+          issue described above.
+
+          All of these issues are related: #3334 #3205 #2916 #3847
+
 Fri Apr 23 09:38:35 EDT 2010  Steve Huston  <shuston@riverace.com>
 
 	* ACE version 5.7a released.
