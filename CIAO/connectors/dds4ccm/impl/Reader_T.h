@@ -12,7 +12,8 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "dds4ccm/impl/DataReader_T.h"
+
+#include "dds4ccm/impl/ConditionManager_T.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
@@ -31,6 +32,11 @@ namespace CIAO
           public virtual ::CORBA::LocalObject,
           private virtual ACE_Copy_Disabled
       {
+      typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+        DataReader_type;
+      typedef ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+        ConditionManager_type;
+
       public:
         /// Constructor
         Reader_T (void);
@@ -59,18 +65,20 @@ namespace CIAO
 
         void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
         virtual ::CORBA::Object_ptr _get_component (void);
-          
+
         virtual ::CCM_DDS::QueryFilter *query (void);
 
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
 
-        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * dr);
+        void set_impl (DataReader_type * dr,
+                       ConditionManager_type * condition_manager);
 
       private:
-        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader_;
+        DataReader_type * reader_;
         typename CCM_TYPE::base_type::_var_type component_;
+        ConditionManager_type * condition_manager_;
 
-        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * impl (void);
+        DataReader_type * impl (void);
 
         DDS_InstanceHandle_t check_handle (
           const typename DDS_TYPE::value_type& an_instance,

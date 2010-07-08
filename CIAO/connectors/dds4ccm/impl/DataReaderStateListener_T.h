@@ -21,13 +21,19 @@ namespace CIAO
     class DataReaderStateListener_T :
       public PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     {
+    typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+      ConditionManager_type;
+    typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+      DataReaderStateHandler_type;
+
     public:
       /// Constructor
       DataReaderStateListener_T (
                     typename CCM_TYPE::statelistener_type::_ptr_type listener,
                     ::CCM_DDS::PortStatusListener_ptr port_status_listener,
                     ::CCM_DDS::StateListenerControl_ptr control,
-                    ACE_Reactor* reactor);
+                    ACE_Reactor* reactor,
+                    ConditionManager_type * condition_manager);
 
       /// Destructor
       virtual ~DataReaderStateListener_T (void);
@@ -42,8 +48,7 @@ namespace CIAO
     private:
       typename CCM_TYPE::statelistener_type::_var_type listener_;
       ::CCM_DDS::StateListenerControl_var control_;
-
-      typedef ::CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> drsh;
+      ConditionManager_type * condition_manager_;
     };
   }
 }

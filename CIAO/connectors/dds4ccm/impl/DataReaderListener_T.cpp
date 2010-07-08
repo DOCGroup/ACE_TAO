@@ -9,10 +9,12 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReader
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
   ::CCM_DDS::DataListenerControl_ptr control,
-  ACE_Reactor* reactor)
+  ACE_Reactor* reactor,
+  ConditionManager_type * condition_manager)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
-    control_ (::CCM_DDS::DataListenerControl::_duplicate (control))
+    control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
+    condition_manager_ (condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::DataReaderListener_T");
 }
@@ -25,7 +27,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DataReade
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available (::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available (
+  ::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
@@ -37,8 +40,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
     }
   if (this->reactor_)
     {
-      drh* rh = 0;
-      ACE_NEW (rh, drh (this, rdr));
+      DataReaderHandler_type * rh = 0;
+      ACE_NEW (rh, DataReaderHandler_type (this, rdr));
 
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
@@ -80,7 +83,10 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   typename DDS_TYPE::dds_seq_type data;
   DDS_SampleInfoSeq sample_info;
   ::DDS::ReturnCode_t const result =
-    reader->take (data, sample_info, DDS_LENGTH_UNLIMITED);
+      reader->take (data,
+                    sample_info,
+                    DDS_LENGTH_UNLIMITED,
+                    this->condition_manager_->get_querycondition_listener ());
 
   if (result == DDS_RETCODE_NO_DATA)
     {
@@ -163,7 +169,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   if (! ::CORBA::is_nil (listener) ||
       CIAO_debug_level >= 10)
     {
-      mask |= PortStatusListener::get_mask (listener);
+      mask |= PortStatusListener_type::get_mask (listener);
       DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "DataReaderListener_T::get_mask - "
                                    "Mask becomes %d\n",
                                    mask));

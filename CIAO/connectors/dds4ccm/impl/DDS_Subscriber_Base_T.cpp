@@ -55,7 +55,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                                                     library_name,
                                                     profile_name);
             }
-          this->dds_read_.set_impl (&this->data_reader_);
+          this->dds_read_.set_impl (&this->data_reader_,
+                                    &this->condition_manager_);
           this->dds_read_._set_component (component);
           return true;
         }
@@ -98,12 +99,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
       if (::CORBA::is_nil (this->listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->listener_,
-                            PortStatusListener (status, reactor),
+                            PortStatusListener_type (status, reactor),
                             CORBA::NO_MEMORY ());
         }
       this->data_reader_.set_listener (
         this->listener_.in (),
-        PortStatusListener::get_mask (status));
+        PortStatusListener_type::get_mask (status));
     }
   catch (...)
     {
@@ -121,6 +122,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
 
   try
     {
+      this->condition_manager_.passivate ();
       this->data_reader_.passivate ();
       this->listener_ = ::DDS::DataReaderListener::_nil ();
     }

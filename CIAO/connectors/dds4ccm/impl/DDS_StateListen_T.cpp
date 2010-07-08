@@ -31,14 +31,14 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  if (DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
+  if (DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
             subscriber,
             library_name,
             profile_name))
     {
-      StateListenerControl *dds_slc = dynamic_cast < StateListenerControl * >
+      StateListenerControl_type *dds_slc = dynamic_cast < StateListenerControl_type * >
         (this->data_control_.in ());
       if (dds_slc)
         {
@@ -47,8 +47,9 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
         }
       else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_StateListen_T::configuration_complete - "
-                            "Unable to cast Data control.\n"));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("DDS_StateListen_T::configuration_complete - ")
+                        ACE_TEXT ("Unable to cast Data control.\n")));
           return false;
         }
     }
@@ -69,20 +70,23 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
       if (::CORBA::is_nil (this->listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->listener_,
-                            DataReaderStateListener (
+                            DataReaderStateListener_type (
                               listener,
                               status,
                               this->data_control_.in (),
-                              reactor),
+                              reactor,
+                              &this->condition_manager_),
                             CORBA::NO_MEMORY ());
         }
       this->data_reader_.set_listener (
         this->listener_.in (),
-        DataReaderStateListener::get_mask (listener));
+        DataReaderStateListener_type::get_mask (listener));
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_StateListen_T::activate: Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                    ACE_TEXT ("DDS_StateListen_T::activate: ")
+                    ACE_TEXT ("Caught unexpected exception.\n")));
       throw CORBA::INTERNAL ();
     }
 }
@@ -94,7 +98,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  StateListenerControl *dds_slc = dynamic_cast < StateListenerControl * >
+  StateListenerControl_type *dds_slc = dynamic_cast < StateListenerControl_type * >
     (this->data_control_.in ());
   if (dds_slc)
     {
@@ -102,10 +106,11 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
     }
   else
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_StateListen_T::remove - "
-                        "Unable to cast StateListenerControl.\n"));
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    ACE_TEXT ("DDS_StateListen_T::remove - ")
+                    ACE_TEXT ("Unable to cast StateListenerControl.\n")));
     }
-  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (subscriber);
+  DDSSubscriberBase_type::remove (subscriber);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

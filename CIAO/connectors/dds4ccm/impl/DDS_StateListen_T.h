@@ -10,11 +10,21 @@
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
+#include "dds4ccm/impl/ConditionManager_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_StateListen_T
   : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
 {
+typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  ConditionManager_type;
+typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  DataReaderStateListener_type;
+typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE>
+  StateListenerControl_type;
+typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+  DDSSubscriberBase_type;
+
 public:
   DDS_StateListen_T (void);
   ~DDS_StateListen_T (void);
@@ -48,10 +58,6 @@ private:
   //@{
   ::CCM_DDS::CCM_StateListenerControl_var data_control_;
   //@}
-  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-    DataReaderStateListener;
-  typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE>
-    StateListenerControl;
 };
 
 #include "dds4ccm/impl/DDS_StateListen_T.cpp"

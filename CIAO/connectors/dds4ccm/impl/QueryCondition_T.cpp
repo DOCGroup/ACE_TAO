@@ -17,17 +17,21 @@ namespace CIAO
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::CCM_DDS_QueryCondition_T (DDSQueryCondition * qc)
       : impl_ (qc)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::CCM_DDS_QueryCondition_T");
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~CCM_DDS_QueryCondition_T (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::~CCM_DDS_QueryCondition_T");
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::CORBA::Boolean
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_trigger_value (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_trigger_value");
+
       return this->impl ()->get_trigger_value ();
     }
 
@@ -35,6 +39,8 @@ namespace CIAO
     ::DDS::SampleStateMask
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_sample_state_mask (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_sample_state_mask");
+
       return this->impl ()->get_sample_state_mask ();
     }
 
@@ -42,6 +48,8 @@ namespace CIAO
     ::DDS::ViewStateMask
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_view_state_mask (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_view_state_mask");
+
       return this->impl ()->get_view_state_mask ();
     }
 
@@ -49,6 +57,8 @@ namespace CIAO
     ::DDS::InstanceStateMask
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_state_mask (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_instance_state_mask");
+
       return this->impl ()->get_instance_state_mask ();
     }
 
@@ -56,6 +66,8 @@ namespace CIAO
     ::DDS::DataReader_ptr
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_datareader (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_datareader");
+
       ::DDS::DataReader_var dds_reader = ::DDS::DataReader::_nil ();
       DDSDataReader* reader = this->impl ()->get_datareader ();
       if (reader)
@@ -71,6 +83,8 @@ namespace CIAO
     char *
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_query_expression (void)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_query_expression");
+
       return ::CORBA::string_dup (this->impl ()->get_query_expression ());
     }
 
@@ -79,6 +93,8 @@ namespace CIAO
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_query_parameters (
       ::DDS::StringSeq & query_parameters)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::get_query_parameters");
+
       DDS_StringSeq parameters;
       ::DDS::ReturnCode_t const retval =
         this->impl ()->get_query_parameters (parameters);
@@ -91,8 +107,11 @@ namespace CIAO
     CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_query_parameters (
       const ::DDS::StringSeq & query_parameters)
     {
+      DDS4CCM_TRACE ("CCM_DDS_QueryCondition_T::set_query_parameters");
+
       DDS_StringSeq parameters;
       parameters <<= query_parameters;
+
       return this->impl ()->set_query_parameters (parameters);
     }
 

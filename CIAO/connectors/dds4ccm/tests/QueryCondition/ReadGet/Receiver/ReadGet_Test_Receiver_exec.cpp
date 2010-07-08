@@ -372,6 +372,10 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         reader->query (filter);
         this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
         this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
+
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::test_set_query_parameters - "
+                    "New query parameters set (<%C> - <%C>)!\n",
+                    MIN_ITERATION_2, MAX_ITERATION_2));
       }
     catch (const CCM_DDS::InternalError& ex)
       {
