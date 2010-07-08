@@ -25,6 +25,7 @@ namespace CIAO
   {
     namespace DDS_CCM
     {
+
       /**
       * @class Getter_Base_T<DDS_TYPE,CCM_TYPE>
       *
@@ -46,6 +47,13 @@ namespace CIAO
          public virtual ::CORBA::LocalObject,
          private virtual ACE_Copy_Disabled
       {
+      typedef CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+        ReadCondition_type;
+      typedef CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+        DataReader_type;
+      typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+        ConditionManager_type;
+
       public:
         /// Constructor
         Getter_Base_T (void);
@@ -86,20 +94,29 @@ namespace CIAO
         /**
          * Set the actual pointer to DDS Datareader
          */
-        void set_impl (DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader);
+        void set_impl (DataReader_type * reader,
+                       ConditionManager_type * condition_manager);
 
         void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
         virtual ::CORBA::Object_ptr _get_component (void);
 
       protected:
-        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * reader_;
+        DataReader_type * reader_;
+        ConditionManager_type * condition_manager_;
+
 
         ::DDS_Duration_t time_out_;
         ::CCM_DDS::DataNumber_t max_delivered_data_;
 
-        DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * impl (void);
+        DataReader_type * impl (void);
+
+        ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
+                                 DDS_SampleInfoSeq & sample_info,
+                                 const DDS_Long & max_samples);
+
       private:
         typename CCM_TYPE::base_type::_var_type component_;
+
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

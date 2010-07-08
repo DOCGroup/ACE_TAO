@@ -15,10 +15,16 @@
 #include "dds4ccm/impl/PortStatusListener_T.h"
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/ContentFilteredTopic_T.h"
+#include "dds4ccm/impl/ConditionManager_T.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Subscriber_Base_T
 {
+typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  ConditionManager_type;
+typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+  PortStatusListener_type;
+
 public:
   DDS_Subscriber_Base_T (void);
   ~DDS_Subscriber_Base_T (void);
@@ -65,8 +71,7 @@ protected:
   ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> data_reader_;
   bool configuration_complete_;
   //@}
-private:
-  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> PortStatusListener;
+  ConditionManager_type condition_manager_;
 };
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.cpp"

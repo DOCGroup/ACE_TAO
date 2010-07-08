@@ -58,7 +58,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  this->impl ()->read_wo_instance (data, sample_info);
+  this->impl ()->read_wo_instance (data,
+                                   sample_info,
+                                   this->condition_manager_->get_querycondition_reader ());
 
   CORBA::ULong const nr_of_last_samples =
     this->get_nr_valid_samples (sample_info, true);
@@ -106,7 +108,9 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  this->impl ()->read_wo_instance (data, sample_info);
+  this->impl ()->read_wo_instance (data,
+                                   sample_info,
+                                   this->condition_manager_->get_querycondition_reader ());
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
@@ -266,7 +270,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDO
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::query (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
-  return this->impl ()->query ();
+  return this->condition_manager_->query ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -275,17 +279,20 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::query 
   const ::CCM_DDS::QueryFilter & query)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::query");
-  return this->impl ()->query (query);
+  return this->condition_manager_->query (query);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::set_impl (
-  DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * dr)
+  DataReader_type * dr,
+  ConditionManager_type * condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Reader_T::set_impl");
 
   this->reader_ = dr;
+  this->condition_manager_ = condition_manager;
+  this->condition_manager_->set_impl (dr);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

@@ -23,13 +23,14 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
-  if (DDSSubscriberBase::configuration_complete(component,
-                                                topic,
-                                                subscriber,
-                                                library_name,
-                                                profile_name))
+  if (DDSSubscriberBase_type::configuration_complete (component,
+                                                      topic,
+                                                      subscriber,
+                                                      library_name,
+                                                      profile_name))
     {
-      this->dds_get_.set_impl (&this->data_reader_);
+      this->dds_get_.set_impl (&this->data_reader_,
+                               &this->condition_manager_);
       this->dds_get_._set_component (component);
     }
   return true;
@@ -41,7 +42,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
   ::DDS::Subscriber_ptr subscriber)
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
-  DDSSubscriberBase::remove (subscriber);
+  DDSSubscriberBase_type::remove (subscriber);
   this->dds_get_._set_component (CCM_TYPE::base_type::_nil ());
 }
 

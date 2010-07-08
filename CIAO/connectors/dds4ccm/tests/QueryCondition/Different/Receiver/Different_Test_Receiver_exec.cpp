@@ -366,6 +366,8 @@ namespace CIAO_Different_Test_Receiver_Impl
         get_filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
         get_filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
         get_reader->query (get_filter);
+        ACE_DEBUG ((LM_DEBUG, "Filter set for the getter.\n"));
+
 
         ::CCM_DDS::QueryFilter read_filter;
         read_filter.expression = CORBA::string_dup (QUERY_READER);
@@ -373,6 +375,7 @@ namespace CIAO_Different_Test_Receiver_Impl
         read_filter.parameters[0] = CORBA::string_dup (MIN_ITERATION);
         read_filter.parameters[1] = CORBA::string_dup (MAX_ITERATION);
         read_reader->query (read_filter);
+        ACE_DEBUG ((LM_DEBUG, "Filter set for the reader.\n"));
       }
     catch (...)
       {
