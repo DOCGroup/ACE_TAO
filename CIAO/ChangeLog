@@ -1,3 +1,25 @@
+Thu Jul  8 13:12:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/GetComp
+        * connectors/ami4ccm/tests/GetComp/Base
+        * connectors/ami4ccm/tests/GetComp/Base/GetComp.idl
+        * connectors/ami4ccm/tests/GetComp/Base/GetComp.mpc
+        * connectors/ami4ccm/tests/GetComp/descriptors
+        * connectors/ami4ccm/tests/GetComp/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/GetComp/Receiver
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver.idl
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver.mpc
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.h
+        * connectors/ami4ccm/tests/GetComp/Sender
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.idl
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.mpc
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h
+        Test to check if ami44ccm facet user component uses, does have a 
+        get_component and returns ami4ccm connector.
+
 Thu Jul  8 09:06:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_3769_Regression/Foo_exec.h:
