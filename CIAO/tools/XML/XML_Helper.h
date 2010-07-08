@@ -74,12 +74,12 @@ namespace CIAO
 
       bool is_initialized (void) const;
 
+      /// Terminate the parser
+      void terminate_parser (void);
+
     protected:
       /// Intialize the parser
       void init_parser (void);
-
-      /// Terminate the parser
-      void terminate_parser (void);
 
     private:
       bool initialized_;
