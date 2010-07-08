@@ -18,6 +18,11 @@ namespace CIAO
         idl_dp_ (0)
     {
     }
+    
+    XML_File_Intf::~XML_File_Intf (void)
+    {
+      XML_Helper::XML_HELPER.terminate_parser ();
+    }
 
     bool
     XML_File_Intf::read_process_file (const ACE_TCHAR *file)

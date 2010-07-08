@@ -1,3 +1,13 @@
+Thu Jul  8 08:52:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.h:
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+
+          Explicitly invoke terminate in the destructor of
+          the XML_File_Intf in an attempt to clean up valgrind logs.
+
 Thu Jul  8 07:04:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.h:

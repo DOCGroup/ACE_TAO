@@ -36,6 +36,8 @@ namespace CIAO
     public:
       XML_File_Intf (const ACE_TCHAR *file);
 
+      ~XML_File_Intf (void);
+
       ::Deployment::DeploymentPlan const *get_plan (void);
       ::Deployment::DeploymentPlan *release_plan (void);
 

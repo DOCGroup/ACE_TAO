@@ -224,6 +224,9 @@ namespace CIAO
     void
     XML_Helper<Resolver, Error>::terminate_parser (void)
     {
+      if (!this->initialized_)
+        return;
+
       try
         {
           xercesc::XMLPlatformUtils::Terminate();
