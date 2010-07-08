@@ -1,3 +1,11 @@
+Thu Jul  8 09:06:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+          Updated test to verify that all attributes are actually
+          tested duing cc_activate.
+
 Thu Jul  8 08:52:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/XML_File_Intf.h:
