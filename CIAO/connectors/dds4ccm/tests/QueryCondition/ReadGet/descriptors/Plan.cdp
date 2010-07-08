@@ -58,8 +58,8 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="ReadGet_Test_ConnectorComponentImplementation">
-    <name>ReadGet_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="ReadGet_Test_EventConnectorImplementation">
+    <name>ReadGet_Test_EventConnectorImplementation</name>
     <source/>
     <artifact xmi:idref="ReadGet_Test_Connector_ExecArtifact" />
     <artifact xmi:idref="ReadGet_Test_Connector_SvntArtifact" />
@@ -83,6 +83,57 @@
         </type>
         <value>
           <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QC_ReadGet_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QC_ReadGet_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="ReadGet_Test_StateConnectorImplementation">
+    <name>ReadGet_Test_StateConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="ReadGet_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="ReadGet_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ReadGet_Test_QueryConditionTestConnector_DDS_State_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -168,12 +219,12 @@
     <implementation xmi:idref="ReceiverComponentImplementation" />
   </instance>
 
-  <instance xmi:id="ReadGet_Test_ConnectorComponentInstance">
+  <instance xmi:id="ReadGet_Test_SenderConnectorInstance">
     <name>ReadGet_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ReadGet_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="ReadGet_Test_EventConnectorImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -197,12 +248,42 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="ReadGet_Test_ConnectorComponentInstance2">
-    <name>ReadGet_Test_ConnectorComponent2</name>
+
+  <instance xmi:id="ReadGet_Test_EventConnector">
+    <name>ReadGet_Test_EventConnector</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="ReadGet_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="ReadGet_Test_EventConnectorImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReadGet_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="ReadGet_Test_StateConnector">
+    <name>ReadGet_Test_ConnectorComponent3</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReadGet_Test_StateConnectorImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -261,7 +342,27 @@
       <portName>pull_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ReadGet_Test_EventConnector" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>check_port_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>check_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReadGet_Test_StateConnector" />
     </internalEndpoint>
   </connection>
 
@@ -281,7 +382,7 @@
       <portName>pull_consumer_fresh_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="ReadGet_Test_EventConnector" />
     </internalEndpoint>
   </connection>
 
@@ -301,7 +402,7 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="ReadGet_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="ReadGet_Test_SenderConnectorInstance" />
     </internalEndpoint>
   </connection>
 
