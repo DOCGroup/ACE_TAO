@@ -673,6 +673,7 @@ sub kill_all
   my $target = shift;
   my $pid = -1;
   my $cmd;
+  my $valgrind_cmd = $ENV{"ACE_RUN_VALGRIND_CMD"};
   my $ps_cmd = 'ps -ef';
   my $ps_pid_field = 1;
   my $ps_cmd_field = 7;
@@ -722,10 +723,22 @@ sub kill_all
       if (@ps_fields > $ps_pid_field && @ps_fields > $ps_cmd_field) {
 
         $pid = @ps_fields[$ps_pid_field]; # process PID
-        if ($ps_cmd_field >= 0) {
-          $cmd = @ps_fields[$ps_cmd_field]; # process cmd / executable
+        # take care of valgrind runs
+        if (defined $valgrind_cmd) {
+          my $pos = index ($line, $valgrind_cmd);
+          if ($pos >= 0) {
+            $cmd = substr ($line, $pos + length ($valgrind_cmd));
+            @ps_fields = split (/\s+/, $line);
+            $cmd = @ps_fields[0];
+          } else {
+            $cmd = $line;
+          }
         } else {
-          $cmd = $line;
+          if ($ps_cmd_field >= 0) {
+            $cmd = @ps_fields[$ps_cmd_field]; # process cmd / executable
+          } else {
+            $cmd = $line;
+          }
         }
 
         # match process cmd
