@@ -12,10 +12,12 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataR
   typename CCM_TYPE::statelistener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
   ::CCM_DDS::StateListenerControl_ptr control,
-  ACE_Reactor* reactor)
+  ACE_Reactor* reactor,
+  ConditionManager_type * condition_manager)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
-    control_ (::CCM_DDS::StateListenerControl::_duplicate (control))
+    control_ (::CCM_DDS::StateListenerControl::_duplicate (control)),
+    condition_manager_ (condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::DataReaderStateListener_T");
 }
@@ -29,7 +31,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~Data
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available(::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available(
+  ::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available");
   if (::CORBA::is_nil (this->control_.in ()) ||
@@ -40,12 +43,14 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
     }
   if (this->reactor_)
     {
-      drsh* rh = 0;
-      ACE_NEW (rh, drsh (this, rdr));
+      DataReaderStateHandler_type* rh = 0;
+      ACE_NEW (rh, DataReaderStateHandler_type (this, rdr));
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderStateHandler_T::failed to use reactor.\n")));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("DataReaderStateHandler_T::")
+                        ACE_TEXT ("failed to use reactor.\n")));
         }
     }
   else
@@ -56,7 +61,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available_i (::DDS::DataReader_ptr rdr)
+CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available_i (
+  ::DDS::DataReader_ptr rdr)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i");
 
@@ -72,10 +78,10 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR,
-                         CLINFO ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - "
-                         "Failed to retrieve pointer to proxy from "
-                         "DDSDataReader.\n")));
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
+                    ACE_TEXT ("Failed to retrieve pointer to proxy from ")
+                    ACE_TEXT ("DDSDataReader.\n")));
       return;
     }
 
@@ -94,14 +100,17 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
                   sample_info,
-                  max_samples);
+                  max_samples,
+                  this->condition_manager_->get_querycondition_listener ());
       if (result == DDS_RETCODE_NO_DATA)
         {
           return;
         }
       else if (result != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to take data from data reader, error %d.\n"), result));
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("Unable to take data from data reader, ")
+                        ACE_TEXT ("error %d.\n"), result));
         }
       if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
@@ -164,7 +173,6 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                         ++ix;
                       }
                       this->listener_->on_many_updates (inst_seq, infoseq);
-                      
                       // Clean up
                       updates.clear ();
                     }
@@ -189,7 +197,6 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                   updates.push_back (i);
                 }
             }
-            
           // Send the latest updates.
           if (updates.size () > 0)
             {

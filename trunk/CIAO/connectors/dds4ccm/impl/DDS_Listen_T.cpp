@@ -28,14 +28,14 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  if (DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
+  if (DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
             subscriber,
             library_name,
             profile_name))
     {
-      DataListenerControl *dds_dlc = dynamic_cast < DataListenerControl * >
+      DataListenerControl_type *dds_dlc = dynamic_cast < DataListenerControl_type * >
         (this->data_control_.in ());
       if (dds_dlc)
         {
@@ -66,16 +66,17 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
       if (::CORBA::is_nil (this->listener_.in ()))
         {
           ACE_NEW_THROW_EX (this->listener_,
-                            DataReaderListener (
+                            DataReaderListener_type (
                               listener,
                               status,
                               this->data_control_.in (),
-                              reactor),
+                              reactor,
+                              &this->condition_manager_),
                             CORBA::NO_MEMORY ());
         }
       this->data_reader_.set_listener (
         this->listener_.in (),
-        DataReaderListener::get_mask (status));
+        DataReaderListener_type::get_mask (status));
     }
   catch (...)
     {
@@ -91,7 +92,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  DataListenerControl *dds_dlc = dynamic_cast < DataListenerControl * >
+  DataListenerControl_type *dds_dlc = dynamic_cast < DataListenerControl_type * >
     (this->data_control_.in ());
   if (dds_dlc)
     {
@@ -103,7 +104,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
                         "Unable to cast DataListenerControl.\n"));
     }
 
-  DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (subscriber);
+  DDSSubscriberBase_type::remove (subscriber);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

@@ -39,6 +39,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Object_ptr
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::_get_component");
+
   return CCM_TYPE::base_type::_duplicate (this->component_.in ());
 }
 
@@ -47,7 +49,34 @@ void
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
   typename CCM_TYPE::base_type::_ptr_type component)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::_set_component");
+
   this->component_ = CCM_TYPE::base_type::_duplicate (component);
+}
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+::DDS::ReturnCode_t
+CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
+  typename DDS_TYPE::dds_seq_type & data,
+  DDS_SampleInfoSeq & sample_info,
+  const DDS_Long & max_samples)
+{
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::get");
+
+  if (this->condition_manager_->get_readcondition ())
+    {
+      return this->impl ()->get (data,
+                                 sample_info,
+                                 max_samples,
+                                 this->condition_manager_->get_readcondition ());
+    }
+  else
+    {
+      return this->impl ()->get (data,
+                                 sample_info,
+                                 max_samples,
+                                 this->condition_manager_->get_querycondition_getter ());
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -56,8 +85,10 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
   typename CCM_TYPE::seq_type& instances,
   ::CCM_DDS::ReadInfoSeq& infos)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::get_many");
+
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions, this->time_out_))
+  if (!this->condition_manager_->wait (active_conditions, this->time_out_))
     {
       return false;
     }
@@ -72,15 +103,15 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->impl ()->get_readcondition () ||
-          active_conditions[i] == this->impl ()->get_querycondition ())
+      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
+          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
         {
           // Check trigger
           active_conditions[i]->get_trigger_value ();
 
-          // Take read condition
-          DDS_ReturnCode_t const retcode =
-            this->impl ()->read_w_condition (data, sample_info, max_samples);
+          ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                         sample_info,
+                                                         1);
 
           if (retcode == DDS_RETCODE_OK && data.length () >= 1)
             {
@@ -148,6 +179,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::Duration_t
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::time_out (void)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::time_out");
+
   ::DDS::Duration_t timeout;
   timeout <<= this->time_out_;
 
@@ -180,12 +213,15 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::max_deli
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
-  DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * dr)
+  DataReader_type * dr,
+  ConditionManager_type * condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::set_impl");
 
   this->reader_ = dr;
-  this->impl ()->create_readcondition ();
+  this->condition_manager_ = condition_manager;
+  this->condition_manager_->set_impl (dr);
+  this->condition_manager_->init_readcondition ();
 }
 
 
@@ -195,16 +231,18 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
   typename DDS_TYPE::value_type::_out_type an_instance,
   ::CCM_DDS::ReadInfo_out info)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_T::get_one");
+
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions, this->time_out_))
+  if (!this->condition_manager_->wait (active_conditions, this->time_out_))
     {
       return false;
     }
 
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->impl ()->get_readcondition () ||
-          active_conditions[i] == this->impl ()->get_querycondition ())
+      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
+          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
         {
           bool valid_data_read = false;
 
@@ -213,8 +251,10 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
 
-              ::DDS::ReturnCode_t const retcode =
-                this->impl ()->read_w_condition (data, sample_info, 1);
+              ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                          sample_info,
+                                                          1);
+
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
@@ -275,12 +315,14 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
   typename DDS_TYPE::value_type::_out_type an_instance,
   ::CCM_DDS::ReadInfo_out info)
 {
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_T::get_one");
+
   an_instance = 0;
   ACE_NEW_THROW_EX (an_instance,
                     typename DDS_TYPE::value_type,
                     CORBA::NO_MEMORY ());
   DDSConditionSeq active_conditions;
-  if (!this->impl ()->wait (active_conditions, this->time_out_))
+  if (!this->condition_manager_->wait (active_conditions, this->time_out_))
     {
       return false;
     }
@@ -289,8 +331,8 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
-      if (active_conditions[i] == this->impl ()->get_readcondition () ||
-          active_conditions[i] == this->impl ()->get_querycondition ())
+      if (active_conditions[i] == this->condition_manager_->get_readcondition () ||
+          active_conditions[i] == this->condition_manager_->get_querycondition_getter ())
         {
           bool valid_data_read = false;
 
@@ -298,8 +340,9 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
             {
               DDS_SampleInfoSeq sample_info;
               typename DDS_TYPE::dds_seq_type data;
-              DDS_ReturnCode_t const retcode =
-                this->impl ()->read_w_condition (data, sample_info, 1);
+              ::DDS::ReturnCode_t const retcode = this->get (data,
+                                                          sample_info,
+                                                          1);
               if (retcode == ::DDS::RETCODE_NO_DATA)
                 {
                   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
