@@ -1,3 +1,9 @@
+Thu Jul  8 19:07:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Updated the comment in order to reflect the
+          CIAO_DDS4CCM_CONTEXT_SWITCH better.
+
 Thu Jul  8 18:06:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReader_T.cpp:
