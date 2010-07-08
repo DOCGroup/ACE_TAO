@@ -22,6 +22,7 @@
 //First run filtered in : 2 (iteration 3 and 4)
 //Second run filtered in : 11 (iterations between 22 and 34)
 #define SAMPLES_PER_KEY_GETTER (2 + 11)
+
 // Reader also reads already read samples.
 #define SAMPLES_PER_KEY_READER (2 + 2 + 11)
 
@@ -217,6 +218,51 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::check_all (void)
+  {
+    ::ReadGet_Test::QueryConditionTestConnector::Reader_var reader =
+      this->context_->get_connection_check_port_data ();
+
+    QueryConditionTestSeq queryfiltertest_info_seq;
+    ::CCM_DDS::ReadInfoSeq readinfo_seq;
+    reader->read_all (queryfiltertest_info_seq, readinfo_seq);
+
+    for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t\tCHECK ALL : ")
+            ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
+            queryfiltertest_info_seq[it].symbol.in (),
+            queryfiltertest_info_seq[it].iteration));
+      }
+    CORBA::ULong expected = 0;
+    if (this->current_min_iteration_ == ACE_OS::atoi (MIN_ITERATION_1))
+      {
+        expected = this->iterations_ * this->keys_;
+      }
+    else if (this->current_min_iteration_ == ACE_OS::atoi (MIN_ITERATION_2))
+      {
+        expected = this->iterations_ * this->keys_ * 2;
+      }
+    if (queryfiltertest_info_seq.length () == expected)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_all - "
+                    "OK : All samples received on the DDS_Read port: "
+                    "expected <%u> - received <%u>\n",
+                    expected,
+                    queryfiltertest_info_seq.length ()));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::check_all - "
+                    "ERROR: Unexpected number of samples received "
+                    "on the DDS_Read port: "
+                    "expected <%u> - received <%u>\n",
+                    expected,
+                    queryfiltertest_info_seq.length ()));
+      }
+  }
+
+  void
   Receiver_exec_i::test_all ()
   {
     const char * test = "GET ALL";
@@ -225,6 +271,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         get_all ();
         test = "READ ALL";
         read_all ();
+        //reading all samples on a different port.
+        check_all ();
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
@@ -479,6 +527,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
   // Port operations.
   ::CCM_DDS::CCM_PortStatusListener_ptr
   Receiver_exec_i::get_get_port_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_check_port_status (void)
   {
     return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
