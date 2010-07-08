@@ -369,7 +369,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statusconditio
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_statuscondition");
 
-  ::DDS::StatusCondition_var retval = ::DDS::StatusCondition::_nil ();
+  ::DDS::StatusCondition_var retval;
   DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
   if (sc)
     {
@@ -411,7 +411,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_readconditi
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::create_readcondition");
 
-  ::DDS::ReadCondition_var retval = ::DDS::ReadCondition::_nil ();
+  ::DDS::ReadCondition_var retval;
   DDSReadCondition* rc =
     this->impl ()->create_readcondition (sample_states,
                                          view_states,
@@ -436,7 +436,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_querycondit
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::create_querycondition");
 
-  ::DDS::QueryCondition_var retval = ::DDS::QueryCondition::_nil ();
+  ::DDS::QueryCondition_var retval;
   DDS_StringSeq parameters;
   parameters <<= query_parameters;
   DDSQueryCondition* qc = this->impl ()->create_querycondition (
@@ -585,7 +585,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topicdescripti
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_topicdescription");
 
-  ::DDS::TopicDescription_var dds_td = ::DDS::TopicDescription::_nil ();
+  ::DDS::TopicDescription_var dds_td;
   ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
   ::DDSTopic * tp = ::DDSTopic::narrow (td);
   if (tp)
@@ -614,7 +614,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_subscriber (vo
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_subscriber");
 
-  ::DDS::Subscriber_var dds_td = ::DDS::Subscriber::_nil ();
+  ::DDS::Subscriber_var dds_td;
   ::DDSSubscriber* subscriber = this->impl ()->get_subscriber ();
   ACE_NEW_THROW_EX (dds_td,
                     Subscriber_type (subscriber),

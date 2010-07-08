@@ -16,6 +16,7 @@ module ReadGet_Test
   component Receiver
   {
     port QueryConditionTestConnector::DDS_Get get_port;
+    port QueryConditionTestConnector::DDS_Read check_port;
 
     provides ReadGetStarter reader_start;
     uses ReadGetRestarter writer_restart;

@@ -81,6 +81,9 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_get_port_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_check_port_status (void);
+
     bool check_last ();
     void start_read (CORBA::UShort run);
     void run (CORBA::UShort run);
@@ -116,6 +119,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     void test_all (void);
     void read_all (void);
     void get_all (void);
+    void check_all (void);
     void check_iter (const QueryConditionTest & sample,
                      const char * test);
     void check_filter (void);

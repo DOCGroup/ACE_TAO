@@ -1,3 +1,19 @@
+Thu Jul  8 18:06:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+          Don't initialize _var with _nil.
+
+        * connectors/dds4ccm/impl/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+          Code alignment. Optimized logging.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/Plan.cdp:
+          Extend test with an extra connector. This one tests whether all
+          samples are in DDS.
+
 Thu Jul  8 13:12:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/ami4ccm/tests/GetComp
@@ -17,7 +33,7 @@ Thu Jul  8 13:12:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.mpc
         * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp
         * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h
-        Test to check if ami44ccm facet user component uses, does have a 
+        Test to check if ami44ccm facet user component uses, does have a
         get_component and returns ami4ccm connector.
 
 Thu Jul  8 09:06:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
