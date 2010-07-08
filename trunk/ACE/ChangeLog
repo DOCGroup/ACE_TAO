@@ -1,3 +1,8 @@
+Thu Jul 08 07:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Make killall() recognize and handle valgrind runs correctly.
+
 Wed Jul  7 14:53:12 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/run_test.lst:
