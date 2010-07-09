@@ -166,24 +166,15 @@ ACE_Get_Opt::~ACE_Get_Opt (void)
 {
   ACE_TRACE ("ACE_Get_Opt::~ACE_Get_Opt");
 
-  size_t i = 0;
-  size_t size = this->long_opts_.size ();
-  ACE_Get_Opt_Long_Option *option = 0;
-  for (i = 0; i < size; ++i)
+  typedef std::vector<ACE_Get_Opt_Long_Option *>::iterator loiterator;
+  
+  loiterator end = this->long_opts_.end ();
+  for (loiterator li = this->long_opts_.begin(); li != end; ++li)
     {
-      int retval = this->long_opts_.get (option, i);
-      if (retval != 0)
-        {
-          // Should never happen.
-          retval = 0;
-          continue;
-        }
-      if (option)
-        {
-          delete option;
-          option = 0;
-        }
+      ACE_Get_Opt_Long_Option *tmp = (*li);
+      delete tmp;
     }
+  
   delete this->optstring_;
   delete this->last_option_;
 }
@@ -555,22 +546,17 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
         }
     }
 
-  ACE_Get_Opt_Long_Option *option =
-    new ACE_Get_Opt_Long_Option (name, has_arg, short_option);
-
-  if (!option)
+  std::auto_ptr<ACE_Get_Opt::ACE_Get_Opt_Long_Option>option(
+                                                 new ACE_Get_Opt_Long_Option (name, has_arg, short_option));
+  
+  if (!option.get())
     return -1;
 
-  // Add to array
-  size_t size = this->long_opts_.size ();
-  if (this->long_opts_.size (size + 1) != 0
-      || this->long_opts_.set (option, size) != 0)
-    {
-      delete option;
-      ACE_ERROR_RETURN
-        ((LM_ERROR, ACE_TEXT ("Could not add long option to array.\n")),
-         -1);
-    }
+  // @@ToDO: Should we call reserve? Is this required?
+  //   this->long_opts_.reserve (size + 1);
+  this->long_opts_.push_back(option.release());
+
+
   return 0;
 }
 
