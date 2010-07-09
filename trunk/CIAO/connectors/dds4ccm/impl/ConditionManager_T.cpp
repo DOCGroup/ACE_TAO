@@ -302,16 +302,24 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::wait");
 
+  ACE_Time_Value start = ACE_OS::gettimeofday ();
   DDS_ReturnCode_t const retcode =
      this->ws_->wait (active_conditions, time_out);
 
+  ACE_Time_Value waited = ACE_OS::gettimeofday () - start;
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::wait - ")
-                    ACE_TEXT ("No data available after timeout.\n")));
+                    ACE_TEXT ("No data available after timeout. ")
+                    ACE_TEXT ("waited <%#T>\n"),
+                    &waited));
       return false;
     }
+  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::wait - ")
+                    ACE_TEXT ("waited <%#T>\n"),
+                    &waited));
   return true;
 }
 
