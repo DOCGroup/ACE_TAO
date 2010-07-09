@@ -1,3 +1,8 @@
+Fri Jul 09 09:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix killall() valgrind handling.
+
 Thu Jul 08 14:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
