@@ -224,7 +224,7 @@ public:
 
 private:
   /// Pointer to a descriptor that describes this node.
-  ACE_Auto_Ptr<const ACE_Service_Type_Factory> factory_;
+  std::auto_ptr<const ACE_Service_Type_Factory> factory_;
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Node (const ACE_Dynamic_Node&))
@@ -510,7 +510,7 @@ private:
 private:
   ACE_TString name_;
   int type_;
-  ACE_Auto_Ptr<ACE_Location_Node> location_;
+  std::auto_ptr<ACE_Location_Node> location_;
   int is_active_;
 };
 
