@@ -728,6 +728,7 @@ sub kill_all
           my $pos = index ($line, $valgrind_cmd);
           if ($pos >= 0) {
             $cmd = substr ($line, $pos + length ($valgrind_cmd));
+            $cmd =~ s/^\s+//; # strip leading ws
             @ps_fields = split (/\s+/, $cmd);
             $cmd = @ps_fields[0];
           } else {
