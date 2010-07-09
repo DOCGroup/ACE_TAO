@@ -1,3 +1,9 @@
+Fri Jul  9 11:26:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Remove extraneous call to initialize.
+
 Fri Jul  9 10:24:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.cpp:
