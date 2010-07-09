@@ -11,7 +11,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ConditionMan
   : impl_ (0),
     ws_ (0)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::QueryConditionManager_T::QueryConditionManager_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::ConditionManager_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

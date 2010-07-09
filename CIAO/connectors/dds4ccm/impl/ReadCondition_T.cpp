@@ -7,20 +7,20 @@ CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::CCM_DDS
   DDSReadCondition * rc)
   : impl_ (rc)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::CCM_DDS_ReadCondition_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::CCM_DDS_ReadCondition_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~CCM_DDS_ReadCondition_T (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::~CCM_DDS_ReadCondition_T");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::~CCM_DDS_ReadCondition_T");
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::CORBA::Boolean
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_trigger_value (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_trigger_value");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_trigger_value");
 
   return this->impl ()->get_trigger_value ();
 }
@@ -29,7 +29,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::SampleStateMask
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_sample_state_mask (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_sample_state_mask");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_sample_state_mask");
 
   return this->impl ()->get_sample_state_mask ();
 }
@@ -38,7 +38,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ViewStateMask
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_view_state_mask (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_view_state_mask");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_view_state_mask");
 
   return this->impl ()->get_view_state_mask ();
 }
@@ -47,7 +47,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::InstanceStateMask
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_instance_state_mask (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_instance_state_mask");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_instance_state_mask");
 
   return this->impl ()->get_instance_state_mask ();
 }
@@ -56,7 +56,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::DataReader_ptr
 CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_datareader (void)
 {
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_QueryCondition_T::get_datareader");
+  DDS4CCM_TRACE ("CIAO::DDS4CCM::CCM_DDS_ReadCondition_T::get_datareader");
 
   ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
   DDSDataReader* rd = this->impl ()->get_datareader ();

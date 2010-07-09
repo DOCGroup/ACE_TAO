@@ -118,7 +118,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                 readinfo,
                 ::DDS::HANDLE_NIL);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - "
-                              "last iteration <%d> - <%d>\n",
+                              "last iteration <%02d> - <%02d>\n",
                                queryfiltertest_info.iteration,
                                this->current_max_iteration_ - 1));
         return queryfiltertest_info.iteration >= this->current_max_iteration_ - 1;
@@ -137,7 +137,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
                                const char * test)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C ALL : ")
-        ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
+        ACE_TEXT ("sample received for <%C>: iteration <%02u>\n"),
         test,
         sample.symbol.in (),
         sample.iteration));
@@ -145,7 +145,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
                               "Didn't expect samples with iterations "
-                              "<= %d\n",
+                              "<= %02d\n",
                               test,
                               this->current_min_iteration_));
       }
@@ -153,7 +153,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
                               "Didn't expect samples with iterations "
-                              "> %d\n",
+                              "> %02d\n",
                               test,
                               this->current_max_iteration_));
       }
@@ -230,9 +230,12 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t\tCHECK ALL : ")
-            ACE_TEXT ("sample received for <%C>: iteration <%u>\n"),
+            ACE_TEXT ("sample received for <%C>: iteration <%02u> - ")
+            ACE_TEXT ("access_status <%d> - instance_status <%d>\n"),
             queryfiltertest_info_seq[it].symbol.in (),
-            queryfiltertest_info_seq[it].iteration));
+            queryfiltertest_info_seq[it].iteration,
+            readinfo_seq[it].access_status,
+            readinfo_seq[it].instance_status));
       }
     CORBA::ULong expected = 0;
     if (this->current_min_iteration_ == ACE_OS::atoi (MIN_ITERATION_1))
@@ -247,7 +250,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_all - "
                     "OK : All samples received on the DDS_Read port: "
-                    "expected <%u> - received <%u>\n",
+                    "expected <%02u> - received <%02u>\n",
                     expected,
                     queryfiltertest_info_seq.length ()));
       }
@@ -271,8 +274,8 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         get_all ();
         test = "READ ALL";
         read_all ();
-        //reading all samples on a different port.
-        check_all ();
+        // reading all samples on a different port.
+         check_all ();
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
@@ -413,7 +416,7 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
           this->context_->get_connection_get_port_data ();
 
         ::CCM_DDS::QueryFilter filter;
-        filter.expression = CORBA::string_dup ("na");
+        filter.expression = CORBA::string_dup (QUERY);
         filter.parameters.length (2);
         filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
         filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
@@ -486,23 +489,23 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
     {
       case 1:
         {
-          test_exception ();
-          set_filter ();
+          this->test_exception ();
+          this->set_filter ();
           this->restarter_->restart_write ();
         }
         break;
       case 2:
         {
-          test_all ();
+          this->test_all ();
           check_filter ();
-          test_set_query_parameters ();
+          this->test_set_query_parameters ();
           this->restarter_->restart_write ();
         }
         break;
       case 3:
         {
-          test_all ();
-          check_filter ();
+          this->test_all ();
+          this->check_filter ();
         }
         break;
     }
