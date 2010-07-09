@@ -32,7 +32,6 @@ namespace CIAO
     Environment_Resolver::Environment_Resolver (const ACE_TCHAR *variable,
                                                 const ACE_TCHAR *relpath)
     {
-      xercesc::XMLPlatformUtils::Initialize();
       this->add_path (variable, relpath);
     }
     
