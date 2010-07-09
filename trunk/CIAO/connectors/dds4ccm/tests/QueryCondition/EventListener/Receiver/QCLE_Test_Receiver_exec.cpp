@@ -152,13 +152,6 @@ namespace CIAO_QCLE_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    ::QCLE_Test::QueryConditionListenEventTestConnector::Reader_var reader =
-      this->context_->get_connection_info_listen_data ();
-    if (CORBA::is_nil (reader.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::configuration_complete - "
-                              "Error get reader connection.\n"));
-      }
   }
 
   void
