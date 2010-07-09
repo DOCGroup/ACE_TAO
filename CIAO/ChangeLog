@@ -1,3 +1,34 @@
+Fri Jul  9 07:32:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+          Removed unnecessary code
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/run_test.pl:
+          Added test with two listeners, each having its own querycondition. Each listener
+          should receive the samples he expected.
+
 Thu Jul  8 19:07:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_conf.h:

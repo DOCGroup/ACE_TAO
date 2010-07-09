@@ -162,19 +162,11 @@ namespace CIAO_QCLS_Test_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
-    ::QCLS_Test::QueryConditionListenStateTestConnector::Reader_var reader =
-      this->context_->get_connection_info_state_data ();
-    if (CORBA::is_nil (reader.in ()))
-      {
-        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::configuration_complete - "
-                              "Error get reader connection.\n"));
-      }
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
-
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate - "
                           "Set filter.\n"));
     ::CCM_DDS::QueryFilter filter;
