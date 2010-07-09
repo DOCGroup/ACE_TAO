@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/SStringfwd.h"
-#include "ace/Containers.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -477,7 +477,7 @@ private:
   ACE_Get_Opt_Long_Option *long_option_;
 
   /// Array of long options.
-  ACE_Array<ACE_Get_Opt_Long_Option*> long_opts_;
+  std::vector<ACE_Get_Opt_Long_Option*> long_opts_;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
