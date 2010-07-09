@@ -1,3 +1,8 @@
+Fri Jul  9 10:24:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Logging the wait time.
+
 Fri Jul  9 08:52:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.cpp:
