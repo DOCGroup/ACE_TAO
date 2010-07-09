@@ -52,12 +52,12 @@ namespace CIAO_GetComp_Sender_Impl
   // Component attributes.
   // Operations from Components::SessionComponent.
   int
-  Sender_exec_i::get_component(::GetComp::CCM_Sender_Context_ptr context)
+  Sender_exec_i::get_component(void)
   {
     ACE_OS::sleep (3);
 
     ::GetComp::AMI4CCM_MyFoo_var my_foo_ami_ =
-      context_->get_connection_sendc_run_my_foo();
+      this->context_->get_connection_sendc_run_my_foo();
 
     if (CORBA::is_nil (my_foo_ami_))
       {
@@ -142,7 +142,7 @@ namespace CIAO_GetComp_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
-    if (get_component(this->context_.in())== 0)
+    if (get_component()== 0)
       {
         GetComponent = true;
       }

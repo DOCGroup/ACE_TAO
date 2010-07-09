@@ -37,9 +37,7 @@ namespace CIAO_GetComp_Sender_Impl
   public:
     Sender_exec_i (void);
     virtual ~Sender_exec_i (void);
-    virtual int
-    get_component(
-      ::GetComp::CCM_Sender_Context_ptr context);
+    virtual int get_component(void);
 
     virtual void
     set_session_context (

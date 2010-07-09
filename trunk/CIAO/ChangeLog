@@ -1,3 +1,9 @@
+Fri Jul  9 08:21:58 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h
+        Solved compile warnings.
+
 Fri Jul  9 07:32:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 
