@@ -1,3 +1,12 @@
+Mon Jul 12 08:19:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.h:
+        * ace/Malloc_Base.h:
+        * ace/SString.h:
+        * ace/Stream.h:
+        * ace/Task.h:
+          Fixed set of doxygen warnings
+
 Fri Jul 09 09:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
