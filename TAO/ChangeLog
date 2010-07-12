@@ -1,3 +1,23 @@
+Mon Jul 12 08:26:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_util.cpp:
+        * tools/IDL3_to_IDL2/be_util.h:
+
+          New files containing a utility class
+          of static methods.
+
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+
+          Added new files to project.
+
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_global.h:
+
+          Factored out methods that have nothing
+          to do with global data storage and
+          moved them to the new utility class.
+
 Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/fe_utils.h:
