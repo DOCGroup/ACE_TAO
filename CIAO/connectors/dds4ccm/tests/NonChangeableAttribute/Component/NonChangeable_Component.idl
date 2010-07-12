@@ -14,7 +14,7 @@ module NonChangeable
 {
   component NonChangeableComponent
   {
-    port NonChangeableTestConnector::DDS_Write info_write;
+    port NonChangeableTestConnector::DDS_Get info_get;
   };
 };
 

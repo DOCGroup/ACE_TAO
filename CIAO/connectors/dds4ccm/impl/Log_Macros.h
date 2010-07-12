@@ -103,7 +103,7 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
     if (CIAO_debug_level >= L) \
       { \
         ACE_CString msg (X);\
-        msg+= " - Caught CORBA exception.\n";\
+        msg += " - Caught CORBA exception.\n";\
         DDS4CCM_ERROR (L, (LM_ERROR, msg.c_str ()));\
         E._tao_print_exception (X);\
       } \

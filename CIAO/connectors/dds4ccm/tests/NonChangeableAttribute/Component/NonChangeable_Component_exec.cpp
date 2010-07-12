@@ -134,7 +134,41 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
     return false;
   }
 
+  bool
+  Component_exec_i::test_filter (
+    ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn)
+  {
+    try
+      {
+        ::CCM_DDS::QueryFilter filter;
+        filter.expression = ::CORBA::string_dup ("na");
+        conn->pull_consumer_filter (filter);
+        ACE_ERROR ((LM_ERROR, "NonChangeable_Connector_exec_impl_i::test_filter - "
+                              "ERROR: Able to set filter without "
+                              "an exception.\n"));
+      }
+    catch (const ::CCM_DDS::NonChangeable &)
+      {
+        ACE_DEBUG ((LM_DEBUG, "NonChangeable_Connector_exec_impl_i::test_filter - "
+                              "Caught expected exception.\n"));
+        return true;
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, "NonChangeable_Connector_exec_impl_i::test_filter - "
+                              "ERROR: Caught unexpected exception.\n"));
+        return false;
+      }
+    return false;
+  }
+
   // Operations from Components::SessionComponent.
+  CCM_DDS::CCM_PortStatusListener_ptr
+  Component_exec_i::get_info_get_status (void)
+  {
+    return CCM_DDS::CCM_PortStatusListener::_nil ();
+  }
+
   void
   Component_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
@@ -155,15 +189,15 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-    ::NonChangeable::NonChangeableTestConnector::Writer_var writer =
-      this->context_->get_connection_info_write_data ();
-    if (::CORBA::is_nil (writer.in ()))
+    ::NonChangeable::NonChangeableTestConnector::Reader_var reader =
+      this->context_->get_connection_info_get_data ();
+    if (::CORBA::is_nil (reader.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
-                              "Unable to get writer interface\n"));
+                              "Unable to get reader interface\n"));
         throw ::CORBA::INTERNAL ();
       }
-    ::CORBA::Object_var cmp = writer->_get_component ();
+    ::CORBA::Object_var cmp = reader->_get_component ();
     if (::CORBA::is_nil (cmp.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Component_exec_i::ccm_activate - "
@@ -192,6 +226,10 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
         ACE_DEBUG ((LM_DEBUG, "Set domain_id test passed.\n"));
       }
     if (this->test_qos_profile (conn.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Set qos_profile test passed.\n"));
+      }
+    if (this->test_filter (conn.in ()))
       {
         ACE_DEBUG ((LM_DEBUG, "Set qos_profile test passed.\n"));
       }
