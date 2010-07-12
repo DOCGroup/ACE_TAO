@@ -98,7 +98,7 @@ namespace CIAO
     XML_File_Intf::add_search_path (const ACE_TCHAR *environment,
                                     const ACE_TCHAR *relpath)
     {
-      XML_Helper::_path_resolver.add_path (environment, relpath);
+      XML_Helper::XML_HELPER.get_resolver ().get_resolver ().add_path (environment, relpath);
     }
 
   }

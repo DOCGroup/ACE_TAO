@@ -28,6 +28,10 @@ namespace CIAO
       path.append (systemId);
       return path.release ();
     }
+
+    Environment_Resolver::Environment_Resolver (void)
+    {
+    }
     
     Environment_Resolver::Environment_Resolver (const ACE_TCHAR *variable,
                                                 const ACE_TCHAR *relpath)

@@ -51,11 +51,13 @@ namespace CIAO
       /// actually resolve the location of a schema.
       virtual InputSource * resolveEntity (const XMLCh *const publicId,
                                            const XMLCh *const systemId);
+      
+      Resolver &get_resolver (void);
 
     private:
       XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
 
-      Resolver &resolver_;
+      Resolver resolver_;
     };
 
     /**
@@ -88,8 +90,10 @@ namespace CIAO
      */
     struct CIAO_XML_Utils_Export Environment_Resolver
     {
-      Environment_Resolver (const ACE_TCHAR *variable = ACE_TEXT(""),
-                            const ACE_TCHAR *path = ACE_TEXT("./"));
+      Environment_Resolver (void);
+
+      Environment_Resolver (const ACE_TCHAR *variable,
+                            const ACE_TCHAR *path);
 
       void add_path (const ACE_TCHAR *variable,
                      const ACE_TCHAR *path);

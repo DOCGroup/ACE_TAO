@@ -40,10 +40,12 @@ namespace CIAO
 */
     // TODO this is stub implementation
     template <typename Resolver, typename Error>
-    XML_Helper<Resolver, Error>::XML_Helper (Resolver &resolver, Error &eh)
+    XML_Helper<Resolver, Error>::XML_Helper (Resolver *resolver, Error *eh)
       : initialized_ (false),
         resolver_ (resolver),
-        e_handler_ (eh)
+        release_resolver_(false),
+        e_handler_ (eh),
+        release_e_handler_ (false)
     {
       this->init_parser ();
     }
@@ -51,6 +53,12 @@ namespace CIAO
     template <typename Resolver, typename Error>
     XML_Helper<Resolver, Error>::~XML_Helper (void)
     {
+      if (release_resolver_)
+        delete resolver_;
+      
+      if (release_e_handler_)
+        delete e_handler_;
+      
       this->terminate_parser ();
     }
 
@@ -73,6 +81,18 @@ namespace CIAO
       // Initialize the Xerces run-time
       try
         {
+          if (!resolver_)
+            {
+              resolver_ = new Resolver ();
+              release_resolver_ = true;
+            }
+          
+          if (!e_handler_)
+            {
+              e_handler_ = new Error ();
+              release_e_handler_ = true;
+            }
+
           xercesc::XMLPlatformUtils::Initialize();
         }
       catch (const XMLException& e)
@@ -177,13 +197,13 @@ namespace CIAO
           // The parser will treat validation error as fatal and will exit.
           this->parser_->setValidationConstraintFatal (true);
 
-          this->parser_->setErrorHandler (&e_handler_);
+          this->parser_->setErrorHandler (e_handler_);
 
-          this->parser_->setEntityResolver (&resolver_);
+          this->parser_->setEntityResolver (resolver_);
 
           this->parser_->parse (ACE_TEXT_ALWAYS_CHAR (url));
 
-          if (e_handler_.getErrors ())
+          if (e_handler_ && e_handler_->getErrors ())
             return 0;
 
           return this->parser_->getDocument ();
@@ -229,6 +249,20 @@ namespace CIAO
 
       try
         {
+          if (release_resolver_)
+            {
+              delete resolver_;
+              resolver_ = 0;
+            }
+
+          if (release_e_handler_)
+            {
+              delete e_handler_;
+              e_handler_ = 0;
+            }
+
+          this->parser_.reset (0);
+          this->impl_ = 0;
           xercesc::XMLPlatformUtils::Terminate();
         }
       catch (const XMLException& e)
@@ -241,6 +275,26 @@ namespace CIAO
 
       this->initialized_ = false;
       return;
+    }
+
+    template <typename Resolver, typename Error>
+    Resolver &
+    XML_Helper<Resolver, Error>::get_resolver (void)
+    {
+      if (!this->resolver_)
+        throw std::exception ();
+      
+      return *this->resolver_;
+    }
+
+    template <typename Resolver, typename Error>
+    Error &
+    XML_Helper<Resolver, Error>::get_error_handler (void)
+    {
+      if (!this->e_handler_)
+        throw std::exception ();
+      
+      return *this->e_handler_;
     }
 
     template <typename Resolver, typename Error>
@@ -301,5 +355,7 @@ namespace CIAO
           return false;
         }
     }
+    
+    
   }
 }

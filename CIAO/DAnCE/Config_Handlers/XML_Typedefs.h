@@ -24,8 +24,6 @@ namespace CIAO
       typedef ::CIAO::XML::XML_Error_Handler ERROR_HANDLER;
       typedef ::CIAO::XML::XML_Helper< XML_RESOLVER, ERROR_HANDLER > HELPER;
       
-      static PATH_RESOLVER _path_resolver;
-      static XML_RESOLVER _xml_resolver;
       static ERROR_HANDLER _xml_error_handler;
       
     public:
