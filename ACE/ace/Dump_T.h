@@ -26,7 +26,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Dumpable_Adapter
  *
- * @brief This class inherits the interface of the abstract ACE_Dumpable
+ * @brief
+ * This class inherits the interface of the abstract ACE_Dumpable
  * class and is instantiated with the implementation of the
  * concrete component class <class Concrete>.
  *

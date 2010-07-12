@@ -1,3 +1,17 @@
+Mon Jul 12 10:11:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h:
+        * ace/Dirent.h:
+        * ace/Dump_T.h:
+        * ace/Event_Handler.h:
+        * ace/File_Lock.h:
+        * ace/INET_Addr.h:
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Record.h:
+        * ace/Logging_Strategy.h:
+          Fixed set of doxygen warnings
+
 Mon Jul 12 08:19:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.h:
