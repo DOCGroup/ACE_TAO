@@ -25,6 +25,7 @@ project(TAO_IFR_BE) : taolib, tao_output, conv_lib, ifr_client, avoids_minimum_c
     be_global.cpp
     be_init.cpp
     be_produce.cpp
+    be_util.cpp
     ifr_adding_visitor.cpp
     ifr_adding_visitor_exception.cpp
     ifr_adding_visitor_operation.cpp
