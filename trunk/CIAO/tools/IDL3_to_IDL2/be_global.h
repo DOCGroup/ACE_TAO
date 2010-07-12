@@ -67,18 +67,6 @@ public:
   virtual void parse_args (long &i, char **av);
   // Parse args that affect this backend.
 
-  void prep_be_arg (char *s);
-  // Special BE arg call factored out of DRV_args.
-
-  void arg_post_proc (void);
-  // Checks made after parsing args.
-
-  virtual void usage (void) const;
-  // Usage message for backend options.
-
-  AST_Generator *generator_init (void);
-  // Create an AST node generator.
-
   int outfile_init (TAO_OutStream *&,
                     const char *file_prefix,
                     const char *file_suffix,
