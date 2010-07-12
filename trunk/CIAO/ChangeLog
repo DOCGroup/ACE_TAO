@@ -1,3 +1,10 @@
+Mon Jul 12 10:15:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Added macros to print CCM_DDS::InternalError and CORBA::exceptions
+
 Mon Jul 12 09:47:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:

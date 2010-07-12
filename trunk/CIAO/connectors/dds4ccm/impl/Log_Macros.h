@@ -54,8 +54,10 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 #if defined (DDS4CCM_NLOGGING)
 # define DDS4CCM_ERROR(L, X) do {} while (0)
 # define DDS4CCM_DEBUG(L, X) do {} while (0)
-#define DDS4CCM_ERROR_RETURN(L, X, Y) return (Y)
-#define DDS4CCM_ERROR_BREAK(L, X) { break; }
+# define DDS4CCM_PRINT_INTERNAL_EXCEPTION (L, E, X) do {} while (0)
+# define DDS4CCM_PRINT_CORBA_EXCEPTION (L, E, X) do {} while (0)
+# define DDS4CCM_ERROR_RETURN(L, X, Y) return (Y)
+# define DDS4CCM_ERROR_BREAK(L, X) { break; }
 #else
 # if !defined (DDS4CCM_ERROR)
 #  define DDS4CCM_ERROR(L, X) \
@@ -78,6 +80,32 @@ extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
         ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
         ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
         ace___->log X; \
+      } \
+  } while (0)
+# endif
+
+# if !defined (DDS4CCM_PRINT_INTERNAL_EXCEPTION)
+#  define DDS4CCM_PRINT_INTERNAL_EXCEPTION(L, E, X) \
+  do { \
+    if (CIAO_debug_level >= L) \
+      { \
+        ACE_CString msg (X);\
+        msg += " - Caught CCM_DDS internal exception: error <";\
+        msg += E; \
+        msg += ">\n";\
+        DDS4CCM_ERROR (L, (LM_ERROR, msg.c_str ()));\
+      } \
+  } while (0)
+# endif
+# if !defined (DDS4CCM_PRINT_CORBA_EXCEPTION)
+#  define DDS4CCM_PRINT_CORBA_EXCEPTION(L, E, X) \
+  do { \
+    if (CIAO_debug_level >= L) \
+      { \
+        ACE_CString msg (X);\
+        msg+= " - Caught CORBA exception.\n";\
+        DDS4CCM_ERROR (L, (LM_ERROR, msg.c_str ()));\
+        E._tao_print_exception (X);\
       } \
   } while (0)
 # endif
