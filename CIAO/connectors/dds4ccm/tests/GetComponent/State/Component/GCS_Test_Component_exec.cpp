@@ -114,7 +114,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("updater_data is NIL.\n"))));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_updater: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_reader - ")
@@ -159,7 +159,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("reader_data is NIL.\n"))));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_reader: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_reader - ")
@@ -204,7 +204,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("getter_data is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_getter: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
@@ -245,7 +245,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("getter_fresh_data is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_getter: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_getter - ")
@@ -290,7 +290,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("listen_data is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_listener: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
@@ -330,7 +330,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("listen_data_control is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_listener: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
@@ -375,7 +375,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("statelisten_data is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_statelistener: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")
@@ -415,7 +415,7 @@ namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl
                                   ACE_TEXT ("statelisten_data_control is NIL.\n")));
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Component_exec_i::test_statelistener: ");
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Component_exec_i::test_listener - ")

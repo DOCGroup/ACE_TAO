@@ -507,7 +507,7 @@ Sender_exec_i::record_time (unsigned long long nanotime)
             this->context_->get_connection_ping_listen_data_control ();
         dlc->mode (::CCM_DDS::ONE_BY_ONE);
     }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
         ACE_ERROR ((LM_ERROR,

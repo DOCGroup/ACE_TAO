@@ -165,7 +165,7 @@ namespace CIAO_CFTLE_Test_Sender_Impl
       {
         start ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
         ACE_ERROR ((LM_ERROR,

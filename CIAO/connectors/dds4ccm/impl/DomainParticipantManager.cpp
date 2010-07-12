@@ -191,7 +191,7 @@ namespace CIAO
           DDSParticipantTopic * dpt = 0;
           ACE_NEW_THROW_EX (dpt,
                             DDSParticipantTopic (dp),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
           this->dps_[qos_profile] = dpt;
           DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "DomainParticipantManager::add_participant - "
                             "Added participant with profile <%C>.\n",

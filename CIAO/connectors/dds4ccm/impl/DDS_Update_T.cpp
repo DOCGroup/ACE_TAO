@@ -68,7 +68,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
     {
       ACE_NEW_THROW_EX (this->data_listener_,
                         DataWriterListener (),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   this->ccm_dds_writer_.set_listener (
     this->data_listener_.in (),

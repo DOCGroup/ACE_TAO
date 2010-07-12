@@ -52,7 +52,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (retval,
                             CCM_DDS_StatusCondition_i (sc),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }
@@ -157,7 +157,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             DataReaderListener_type (a_listener, 0),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
 
       DDSDataReader * ccm_dds_dr = 0;
@@ -173,7 +173,7 @@ namespace CIAO
                           "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
                           "Error: Unable to cast provided topic to one of its servant.\n"));
               delete ccm_dds_drl;
-              throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
           else
             ccm_dds_dr = this->create_datareader (cf_topic->get_impl (),
@@ -193,7 +193,7 @@ namespace CIAO
                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
                        "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       else
         {
@@ -205,7 +205,7 @@ namespace CIAO
       ccm_dds_dr->enable ();
       ACE_NEW_THROW_EX (retval,
                         DataReader_type (ccm_dds_dr),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -224,7 +224,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             DataReaderListener_type (a_listener, 0),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
 
       DDSDataReader * ccm_dds_dr = 0;
@@ -239,7 +239,7 @@ namespace CIAO
               DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader_with_profile - "
                           "Error: Unable to cast provided topic to one of its servant.\n"));
               delete ccm_dds_drl;
-              throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
           else
             {
@@ -264,7 +264,7 @@ namespace CIAO
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader_with_profile - "
                        "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       else
         {
@@ -277,7 +277,7 @@ namespace CIAO
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
       ACE_NEW_THROW_EX (retval,
                         DataReader_type (ccm_dds_dr),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
 
       ccm_dds_dr->enable ();
 
@@ -338,7 +338,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (retval,
                             DataReader_type (dr),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }
@@ -367,7 +367,7 @@ namespace CIAO
               ::DDS::DataReader_var rdr;
               ACE_NEW_THROW_EX (rdr,
                                 DataReader_type (dds_readers[i]),
-                                CORBA::NO_MEMORY ());
+                                ::CORBA::NO_MEMORY ());
               readers [i] = rdr._retn ();
             }
         }
@@ -417,7 +417,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             SubscriberListener_type (a_listener),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
     }
@@ -464,7 +464,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (p),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }

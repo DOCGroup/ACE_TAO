@@ -103,7 +103,7 @@ write_back (LatencyTest & an_instance)
     {
       test_data_writer_->write(an_instance, ::DDS::HANDLE_NIL);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")

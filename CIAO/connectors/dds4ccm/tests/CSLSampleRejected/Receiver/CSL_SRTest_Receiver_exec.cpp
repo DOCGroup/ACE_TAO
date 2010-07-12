@@ -272,7 +272,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     if (::CORBA::is_nil (lc.in ()))
       {
         ACE_ERROR ((LM_INFO, ACE_TEXT ("Error:  Listener control receptacle is null!\n")));
-        throw CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
     lc->mode (this->raw_listen_ ? ::CCM_DDS::ONE_BY_ONE : ::CCM_DDS::NOT_ENABLED);
 

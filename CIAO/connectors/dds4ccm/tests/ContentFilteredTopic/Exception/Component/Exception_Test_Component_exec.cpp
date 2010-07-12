@@ -60,7 +60,7 @@ namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl
                               "caught expected InternalErr exception.\n"));
         exception_caught = true;
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Receiver_exec_i::test_set_query_parameters: ");
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::test_set_query_parameters - "

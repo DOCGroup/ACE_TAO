@@ -45,7 +45,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (p),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }

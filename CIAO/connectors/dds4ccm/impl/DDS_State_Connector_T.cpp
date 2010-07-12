@@ -365,10 +365,10 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                          "Caught CCM_DDS internal exception: error <%C> - "
                          "index <%d>\n",
                          ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         index));
-      throw CORBA::INTERNAL ();
+                         ex.index));
+      throw ::CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("DDS_State_Connector_T::configuration_complete");
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
@@ -381,7 +381,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
                          "DDS_State_Connector_T::configuration_complete - "
                          "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -443,10 +443,10 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
                          "Caught CCM_DDS internal exception: error <%C> - "
                          "index <%d>\n",
                          ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         index));
-      throw CORBA::INTERNAL ();
+                         ex.index));
+      throw ::CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("DDS_State_Connector_T::ccm_activate");
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
@@ -459,7 +459,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
                          "DDS_State_Connector_T::ccm_activate - "
                          "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -505,10 +505,10 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
                          "Caught CCM_DDS internal exception: error <%C> - "
                          "index <%d>\n",
                          ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         index));
-      throw CORBA::INTERNAL ();
+                         ex.index));
+      throw ::CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("DDS_State_Connector_T::ccm_passivate");
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
@@ -521,7 +521,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
                          "DDS_State_Connector_T::ccm_passivate - "
                          "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -566,10 +566,10 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
                          "Caught CCM_DDS internal exception: error <%C> - "
                          "index <%d>\n",
                          ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         index));
-      throw CORBA::INTERNAL ();
+                         ex.index));
+      throw ::CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("DDS_State_Connector_T::ccm_remove");
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
@@ -582,7 +582,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
       DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
                          "DDS_State_Connector_T::ccm_remove - "
                          "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
 }
 
