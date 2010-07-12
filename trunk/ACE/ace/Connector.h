@@ -424,7 +424,7 @@ public:
   SUPER;
 
   /**
-   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the SVC_HANDLER when it is opened.
@@ -535,21 +535,21 @@ protected:
   /// Creation strategy for an Connector.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// true if Connector created the creation strategy and thus should
+  /// True if Connector created the creation strategy and thus should
   /// delete it, else false.
   bool delete_creation_strategy_;
 
   /// Connect strategy for a Connector.
   CONNECT_STRATEGY *connect_strategy_;
 
-  /// true if Connector created the connect strategy and thus should
+  /// True if Connector created the connect strategy and thus should
   /// delete it, else false.
   bool delete_connect_strategy_;
 
-  /// Concurrency strategy for an <Connector>.
+  /// Concurrency strategy for a Connector.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// true if Connector created the concurrency strategy and thus should
+  /// True if Connector created the concurrency strategy and thus should
   /// delete it, else false.
   bool delete_concurrency_strategy_;
 };
