@@ -95,7 +95,7 @@ private:
     /// Slot index in the active map.
     ACE_UINT32 slot_index_;
 
-    /// Slot generation number of <slot_index_> slot in the active map.
+    /// Slot generation number of @c slot_index_ slot in the active map.
     ACE_UINT32 slot_generation_;
   };
 
