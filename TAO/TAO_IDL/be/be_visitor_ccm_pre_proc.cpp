@@ -1840,7 +1840,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       i.next (item);
 
       UTL_ScopedName *sn =
-        idl_global->string_to_scoped_name (*item);
+        FE_Utils::string_to_scoped_name (*item);
 
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();
@@ -1941,7 +1941,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
           // Grammar ensures this narrowing will never be 0.
           AST_Component *c =
             AST_Component::narrow_from_scope (s);
-          idl_global->create_uses_multiple_stuff (c, ami_uses);
+          FE_Utils::create_uses_multiple_stuff (c, ami_uses);
         }
     }
 

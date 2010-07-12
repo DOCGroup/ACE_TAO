@@ -1906,7 +1906,7 @@ const_type
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  $<etval>$ = idl_global->PredefinedTypeToExprType (c->pt ());
+                  $<etval>$ = FE_Utils::PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
@@ -5266,7 +5266,7 @@ provides_decl : IDL_PROVIDES interface_type id
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              FE_Utils::original_local_name ($3);
 
               UTL_ScopedName sn ($3,
                                  0);
@@ -5389,7 +5389,7 @@ uses_decl : uses_opt_multiple interface_type id
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              FE_Utils::original_local_name ($3);
 
               UTL_ScopedName sn ($3,
                                  0);
@@ -5413,7 +5413,7 @@ uses_decl : uses_opt_multiple interface_type id
                   // These datatypes must be created in the
                   // front end so they can be looked up
                   // when compiling the generated executor IDL.
-                  idl_global->create_uses_multiple_stuff (c, u);
+                  FE_Utils::create_uses_multiple_stuff (c, u);
                 }
             }
 
@@ -5501,7 +5501,7 @@ emits_decl : IDL_EMITS scoped_name id
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              FE_Utils::original_local_name ($3);
 
               UTL_ScopedName sn ($3,
                                  0);
@@ -5574,7 +5574,7 @@ publishes_decl : IDL_PUBLISHES scoped_name id
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              FE_Utils::original_local_name ($3);
 
               UTL_ScopedName sn ($3,
                                  0);
@@ -5647,7 +5647,7 @@ consumes_decl : IDL_CONSUMES scoped_name id
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ($3);
+              FE_Utils::original_local_name ($3);
 
               UTL_ScopedName sn ($3,
                                  0);
@@ -6359,7 +6359,7 @@ at_least_one_formal_parameter
           // The param added above is always the last one parsed,
           // so we check for matches between sequence<T> & T here.
           ACE_CString bad_id =
-            idl_global->check_for_seq_of_param (
+            FE_Utils::check_for_seq_of_param (
               $2);
 
           if (!bad_id.empty ())
@@ -6644,7 +6644,7 @@ extended_port_decl
                       AST_Component *c =
                         AST_Component::narrow_from_scope (s);
 
-                      idl_global->create_uses_multiple_stuff (
+                      FE_Utils::create_uses_multiple_stuff (
                         c,
                         u,
                         id.get_string ());

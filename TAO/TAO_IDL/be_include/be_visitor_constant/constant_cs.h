@@ -35,14 +35,6 @@ public:
 
   /// visit constant
   virtual int visit_constant (be_constant *node);
-
-  // = special methods
-
-  /// generate the nested namespace begins
-  virtual int gen_nested_namespace_begin (be_module *node);
-
-  /// generate the nested namespace ends
-  virtual int gen_nested_namespace_end (be_module *node);
 };
 
 #endif /* _BE_VISITOR_CONSTANT_CONSTANT_CS_H_ */

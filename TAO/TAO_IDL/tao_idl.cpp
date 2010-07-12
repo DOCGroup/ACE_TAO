@@ -64,15 +64,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "idl_defines.h"
 #include "be_extern.h"
+#include "be_util.h"
+
+#include "idl_defines.h"
 #include "global_extern.h"
+
 #include "fe_extern.h"
+
 #include "ast_root.h"
 #include "ast_extern.h"
+
 #include "utl_string.h"
 #include "utl_identifier.h"
+
 #include "drv_extern.h"
+
 #include "tao/Version.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
@@ -188,7 +195,11 @@ DRV_drive (const char *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  idl_global->idl_src_file (idl_global->utl_string_factory (s));
+  UTL_String *utl_string = 0;
+  ACE_NEW (utl_string,
+           UTL_String (s, true));
+           
+  idl_global->idl_src_file (utl_string);
 
   // Pass through CPP.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
@@ -343,7 +354,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      AST_Generator *gen = be_global->generator_init ();
+      AST_Generator *gen = be_util::generator_init ();
 
       if (0 == gen)
         {

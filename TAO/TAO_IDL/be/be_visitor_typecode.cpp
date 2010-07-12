@@ -12,6 +12,9 @@
  */
 //=============================================================================
 
+#include "be_visitor_typecode.h"
+#include "be_visitor_context.h"
+
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_enum_val.h"
@@ -34,11 +37,11 @@
 #include "be_eventtype.h"
 #include "be_helper.h"
 #include "be_extern.h"
-#include "utl_identifier.h"
-#include "ast_union_label.h"
+#include "be_util.h"
 
-#include "be_visitor_typecode.h"
-#include "be_visitor_context.h"
+#include "utl_identifier.h"
+
+#include "ast_union_label.h"
 
 #include "be_visitor_typecode/typecode_decl.cpp"
 #include "be_visitor_typecode/typecode_defn.cpp"

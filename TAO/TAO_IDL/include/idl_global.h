@@ -80,6 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 
 class AST_Root;
+class AST_Module;
 class AST_Interface;
 class AST_ValueType;
 class AST_Component;
@@ -362,108 +363,116 @@ public:
   // flag to force generation of skeleton includes (see bug #2419).
   bool need_skeleton_includes_;
 
-  // Constructor
   IDL_GlobalData (void);
-  // Destructor
-  virtual ~IDL_GlobalData (void);
+  ~IDL_GlobalData (void);
 
   // Operations
-  virtual UTL_ScopeStack   &scopes (void);              // Scopes stack
+  UTL_ScopeStack   &scopes (void);              // Scopes stack
 
-  virtual AST_Root         *root (void);                // Root of AST
-  virtual void             set_root (AST_Root *);       // Set it
+  AST_Root         *root (void);                // Root of AST
+  void             set_root (AST_Root *);       // Set it
 
-  virtual AST_Generator    *gen (void);                 // Generator
-  virtual void             set_gen (AST_Generator *);   // Set it
+  AST_Generator    *gen (void);                 // Generator
+  void             set_gen (AST_Generator *);   // Set it
 
-  virtual AST_ValueType    *primary_key_base (void);    // PrimaryKeyBase
-  virtual void             primary_key_base (AST_ValueType *);   // Set it
+  AST_ValueType    *primary_key_base (void);    // PrimaryKeyBase
+  void             primary_key_base (AST_ValueType *);   // Set it
 
-  virtual UTL_Error        *err (void);                 // Error reporter
-  virtual void             set_err (UTL_Error *);       // Set it
+  UTL_Error        *err (void);                 // Error reporter
+  void             set_err (UTL_Error *);       // Set it
 
-  virtual int              err_count (void);            // How many errors?
-  virtual void             set_err_count (int);         // Set it
+  int              err_count (void);            // How many errors?
+  void             set_err_count (int);         // Set it
 
-  virtual long             lineno (void);               // Where in file?
-  virtual void             set_lineno (long);           // Set it
+  long             lineno (void);               // Where in file?
+  void             set_lineno (long);           // Set it
 
-  virtual UTL_String       *filename (void);            // What file?
-  virtual void             set_filename (UTL_String *); // Set it
+  UTL_String       *filename (void);            // What file?
+  void             set_filename (UTL_String *); // Set it
 
-  virtual UTL_String       *main_filename (void);       // What's the main
-                                                        // file name?
-  virtual void             set_main_filename (UTL_String *);
-                                                        // Set it
+  UTL_String       *main_filename (void);       // What's the main
+                                                // file name?
+  void             set_main_filename (UTL_String *);
+                                                // Set it
 
-  virtual UTL_String       *real_filename (void);       // What's the real
-                                                        // file name?
-  virtual void             set_real_filename (UTL_String *);
-                                                        // Set it
+  UTL_String       *real_filename (void);       // What's the real
+                                                // file name?
+  void             set_real_filename (UTL_String *);
+                                                // Set it
 
-  virtual UTL_String       *stripped_filename (void);   // Stripped filename
-  virtual void             set_stripped_filename (UTL_String *);  // Set it
+  UTL_String       *stripped_filename (void);   // Stripped filename
+  void             set_stripped_filename (UTL_String *);  // Set it
 
-  virtual bool             imported (void);             // Are we imported?
-  virtual bool             import (void);               // Is import on?
-  virtual void             set_import (bool);       // Set it
+  bool             imported (void);             // Are we imported?
+  bool             import (void);               // Is import on?
+  void             set_import (bool);           // Set it
 
-  virtual bool             in_main_file (void);         // Are we?
-  virtual void             set_in_main_file (bool); // Set it
+  bool             in_main_file (void);         // Are we?
+  void             set_in_main_file (bool);     // Set it
 
-  virtual const char       *prog_name (void);           // Invoked as..
-  virtual void             set_prog_name (const char *);  // Set it
+  const char       *prog_name (void);           // Invoked as..
+  void             set_prog_name (const char *);  // Set it
 
-  virtual const char       *cpp_location (void);        // Where's CPP?
-  virtual void             set_cpp_location (const char *);// Set it
+  const char       *cpp_location (void);        // Where's CPP?
+  void             set_cpp_location (const char *);// Set it
 
-  virtual long             compile_flags (void);        // What flags are on?
-  virtual void             set_compile_flags (long);    // Turn some on or off
+  long             compile_flags (void);        // What flags are on?
+  void             set_compile_flags (long);    // Turn some on or off
 
-  virtual char             *local_escapes (void);       // Get local escapes
-  virtual void             set_local_escapes (const char *);// Set it
+  char             *local_escapes (void);       // Get local escapes
+  void             set_local_escapes (const char *);// Set it
 
-  virtual UTL_Indenter     *indent (void);              // Get indenter
-  virtual void             set_indent (UTL_Indenter *); // Set it
+  UTL_Indenter     *indent (void);              // Get indenter
+  void             set_indent (UTL_Indenter *); // Set it
 
-  virtual void             store_include_file_name (UTL_String *);
+  void             store_include_file_name (UTL_String *);
 
-  virtual UTL_String       **include_file_names (void); // Array of file names
-  virtual void             set_include_file_names (UTL_String **); // Set it
+  UTL_String       **include_file_names (void); // Array of file names
+  void             set_include_file_names (UTL_String **); // Set it
 
-  virtual unsigned long    n_include_file_names (void); // How many
-  virtual void             set_n_include_file_names (unsigned long n);
+  unsigned long    n_include_file_names (void); // How many
+  void             set_n_include_file_names (unsigned long n);
 
-  virtual void             reset_flag_seen (void);
+  void             reset_flag_seen (void);
 
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
-  struct DCPS_Data_Type_Info {
+  
+  struct DCPS_Data_Type_Info
+  {
     UTL_ScopedName *name_;
     DCPS_Key_List   key_list_;
   };
+  
   typedef ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
 
   typedef ACE_Hash_Map_Manager_Ex< const char*,
                                    DCPS_Data_Type_Info*,
                                    ACE_Hash<char*>,
                                    ACE_Equal_To<char*>,
-                                   ACE_Null_Mutex>        DCPS_Type_Info_Map ;
+                                   ACE_Null_Mutex>
+    DCPS_Type_Info_Map ;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  virtual void add_dcps_data_type (const char* id);
+  void add_dcps_data_type (const char* id);
+  
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  virtual bool add_dcps_data_key (const char* id, const char* key);
+  bool add_dcps_data_key (const char* id, const char* key);
+  
   // returns null if not matching; otherwise pointer to the info
-  virtual DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
+  DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
+  
   // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed
-  virtual void dcps_support_zero_copy_read (bool value);
+  void dcps_support_zero_copy_read (bool value);
+  
   // BE calls to check the status of zero-copy read support
-  virtual bool dcps_support_zero_copy_read (void) const;
+  bool dcps_support_zero_copy_read (void) const;
+  
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
-  virtual void dcps_gen_zero_copy_read (bool value);
+  void dcps_gen_zero_copy_read (bool value);
+  
   // BE calls to check the status of zero-copy read support
-  virtual bool dcps_gen_zero_copy_read (void) const;
+  bool dcps_gen_zero_copy_read (void) const;
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
@@ -471,85 +480,78 @@ public:
   //   preprocessor parsed the file.
 
   // Just storing the pointer. No memory will be allocated.
-  virtual void add_to_included_idl_files (const char *file_name);
+  void add_to_included_idl_files (const char *file_name);
 
   // Get all the files.
-  virtual char** included_idl_files (void);
+  char** included_idl_files (void);
 
   // The number of currently availabe include files.
-  virtual size_t n_included_idl_files (void);
+  size_t n_included_idl_files (void);
 
   // Set the number of included_idl_files. Use this carefully. This
   // method is used when we validate all the #included idl files,
   // against the ones that we get after preprocessing.
-  virtual void n_included_idl_files (size_t n);
+  void n_included_idl_files (size_t n);
 
-  // Validate the included idl files, somefiles might have been
-  // ignored by the preprocessor.
-  virtual void validate_included_idl_files (void);
+  ParseState parse_state (void);       // What state we're in
+  void set_parse_state (ParseState s); // Set it
 
-  virtual ParseState parse_state (void);    // What state we're in
-  virtual void set_parse_state (ParseState s); // Set it
-
-  // Convert from a predefined type to an expression type
-  virtual AST_Expression::ExprType
-  PredefinedTypeToExprType (AST_PredefinedType::PredefinedType);
-
-  virtual UTL_String *idl_src_file (void);
+  UTL_String *idl_src_file (void);
   // Returns the IDL source file being compiled.
 
-  virtual void idl_src_file (UTL_String *);
+  void idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
 
-  virtual void temp_dir (const char *s);
+  void temp_dir (const char *s);
   // Set the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  virtual const char *temp_dir (void) const;
+  const char *temp_dir (void) const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  virtual void tao_root (const char *s);
+  void tao_root (const char *s);
   // Set the path of TAO_ROOT.
 
-  virtual const char *tao_root (void) const;
+  const char *tao_root (void) const;
   // Get the path for TAO_ROOT.
 
-  virtual void gperf_path (const char *s);
+  void gperf_path (const char *s);
   // Set the path for the perfect hashing program (GPERF).
 
-  virtual const char *gperf_path (void) const;
+  const char *gperf_path (void) const;
   // Get the path for the perfect hashing program (GPERF).
 
-  virtual void ident_string (const char *s);
+  void ident_string (const char *s);
   // Set the value of the #ident string.
 
-  virtual const char *ident_string (void) const;
+  const char *ident_string (void) const;
   // Get the value of the #ident string.
 
-  virtual void case_diff_error (bool);
+  void case_diff_error (bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
 
-  virtual bool case_diff_error (void);
+  bool case_diff_error (void);
   // are we strict about case-only differences or not?
 
-  virtual void nest_orb (bool);
+  void nest_orb (bool);
   // Set on or off whether we are using the NEST ORB.
 
-  virtual bool nest_orb (void);
+  bool nest_orb (void);
   // are we beIng used with the NEST ORB?
 
-  virtual void destroy (void);
+  void destroy (void);
   // Cleanup function.
 
-  virtual void append_idl_flag (const char *s);
+  void append_idl_flag (const char *s);
   // Save each flag passed to the IDL compiler.
 
-  virtual const char *idl_flags (void) const;
-  // Get a string representation of the flags passed to the idl compiler.
+  const char *idl_flags (void) const;
+  // Get a string representation of the flags
+  // passed to the idl compiler.
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
   idl_keywords (void);
@@ -560,9 +562,6 @@ public:
 
   void update_prefix (char *filename);
   // Do repo id prefix bookkeeping when the file changes.
-
-  UTL_ScopedName *string_to_scoped_name (const char *s);
-  // Parses a string with double colons.
 
   long seen_include_file_before (char *);
   // Seen this include before?
@@ -575,17 +574,12 @@ public:
   void repeat_include (bool val);
   // Accessors for repeat_include_ member.
 
-  const char *stripped_preproc_include (const char *name);
-  // Takes an #include filename generated by the preprocessor, and
-  // strips off any command line -I prefix that may have been
-  // prepended.
-
-  virtual bool preserve_cpp_keywords (void);
+  bool preserve_cpp_keywords (void);
   // Whether we should not mung idl element names that are
   // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Should be true when being used by the IFR Service
 
-  virtual void preserve_cpp_keywords (bool);
+  void preserve_cpp_keywords (bool);
   // Set whether we should not mung idl element names that are C++
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
@@ -626,6 +620,9 @@ public:
   ACE_Unbounded_Queue<char *> & included_ami_recep_names (void);
   // Accessor/mutator for the included_ami_recep_names_ member.
   
+  bool included_ami_receps_done (void) const;
+  void included_ami_receps_done (bool val);
+  
   void add_ciao_ami_idl_fnames (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames (void);
   // Accessor/mutator for the included_ami_idl_fnames_ member.
@@ -639,12 +636,6 @@ public:
   
   ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces (void);
   // Accessor for the member
-
-  FILE * open_included_file (char const * filename,
-                             char const *& directory);
-  // Attempt to open file for reading until it is found in one of the
-  // supplied include paths.  If the file was successfully opened, the
-  // directory within which it was found is returned as well.
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
   file_prefixes (void);
@@ -667,22 +658,6 @@ public:
 
   void fini (void);
   // Do final cleanup just before process exits.
-
-  void create_uses_multiple_stuff (AST_Component *c,
-                                   AST_Uses *u,
-                                   const char *prefix = "");
-  // We must do this in the front end since the executor
-  // mapping IDL will have these data types.
-  
-  void create_implied_ami_uses_stuff (void);
-  // For the executor IDL file, when a pragma ciao ami receptacle
-  // name is multiplex.
-
-  int path_cmp (const char *s, const char *t);
-  // Case insensitive for Windows, otherwise not.
-
-  bool hasspace (const char *s);
-  // To tell if we have to handle a Windows path with spaces.
 
   ACE_Unbounded_Queue<AST_ValueType *> &primary_keys (void);
   // Accessor for the member.
@@ -713,27 +688,27 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
-  UTL_String *utl_string_factory (const char *str);
-  // Utility function to create UTL_String classes on the FE heap.
-
-  ACE_CString check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list);
-  // Check if 'param' is a sequence of a previous param, and if
-  // so, if the previous param exists.
-
 #if defined (ACE_OPENVMS)
-  static char* translateName(const char* name, char *name_buf);
+  static char* translateName (const char* name, char *name_buf);
 #endif
 
-  bool validate_orb_include (UTL_String *);
-  // Check if included file is in TAO specific include dirs.
+  AST_Module *corba_module (void) const;
+  void corba_module (AST_Module *m);
+  // Accessors for the member.
 
-  void original_local_name (Identifier *local_name);
-  // Strips _cxx_ prefix for use in port names.
-  
-private:
-  bool check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
-                               ACE_CString &param_id,
-                               size_t index);
+  struct Include_Path_Info
+  {
+    char *path_;
+    bool is_system_;
+  };
+
+  typedef ACE_Unbounded_Queue<Include_Path_Info>
+    Unbounded_Paths_Queue;
+  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
+    Unbounded_Paths_Queue_Iterator;
+    
+  Unbounded_Paths_Queue &include_paths (void);
+  // Accessor for the member.
 
 private:
   // Data
@@ -810,15 +785,6 @@ private:
   bool preserve_cpp_keywords_;
   // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
-  struct Include_Path_Info {
-    char *path_;
-    bool is_system_;
-  };
-
-  typedef ACE_Unbounded_Queue<Include_Path_Info>
-    Unbounded_Paths_Queue;
-  typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
-    Unbounded_Paths_Queue_Iterator;
   Unbounded_Paths_Queue include_paths_;
   // List of -I options passed to us.
 
@@ -905,6 +871,9 @@ private:
    * both CORBA::Object and CORBA::AbstractBase.
    */
   ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
+  
+  /// For quick access.
+  AST_Module *corba_module_;
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

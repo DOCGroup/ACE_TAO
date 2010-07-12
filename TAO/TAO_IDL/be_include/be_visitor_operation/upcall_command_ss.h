@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 #define _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 
@@ -34,10 +33,6 @@ public:
   int visit (be_operation * node,
              char const * full_skel_name,
              char const * upcall_command_name);
-
-  int gen_nested_namespace_begin (be_module *node);
-
-  int gen_nested_namespace_end (be_module *node);
 
 private:
 

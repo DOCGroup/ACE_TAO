@@ -141,13 +141,11 @@ class TAO_IDL_FE_Export UTL_Scope : public virtual COMMON_Base
   // Friend class UTL_ScopeActiveIterator defines active iterator for
   // UTL_Scope. Definition follows below.
   friend class  UTL_ScopeActiveIterator;
-  friend int tao_yyparse (void);
-  friend class AST_Enum;
-  friend class IDL_GlobalData;
 
 public:
   // Enum to denote the kind of iteration desired.
-  enum ScopeIterationKind {
+  enum ScopeIterationKind
+  {
       IK_both           // Iterate through both decls and local types.
     , IK_decls          // Iterate only through decls.
     , IK_localtypes     // Iterate only through local types.
@@ -331,7 +329,7 @@ protected:
   
   WHICH_PSEUDO which_pseudo_;
   
-protected:
+public:
   /// Scope Management Protocol.
   
   /// Common code for most basic adding action.
@@ -490,6 +488,7 @@ protected:
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
   
+protected:
   /// Quick check on the head of a name to see if it's global.
   bool is_global_name (Identifier *i);
 

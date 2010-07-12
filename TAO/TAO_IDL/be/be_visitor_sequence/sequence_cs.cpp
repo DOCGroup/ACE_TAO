@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Root visitor for client stub class
 // ************************************************************
@@ -42,12 +41,20 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       if (bt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cs::"
-                             "visit_sequence - "
-                            "codegen for anonymous base type failed\n"),
+                             ACE_TEXT ("be_visitor_sequence_cs::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("codegen for anonymous ")
+                             ACE_TEXT ("base type failed\n")),
                            -1);
         }
 
+    }
+    
+  if (be_global->alt_mapping () && node->unbounded ())
+    {
+      // We are just a typedef and don't need any stub source
+      // code generation.
+      return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -70,14 +77,20 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << be_idt << be_idt_nl
           << "::CORBA::ULong max)" << be_uidt_nl
           << ": " << be_idt;
+          
+      int status =
+        node->gen_base_class_name (os,
+                                   "",
+                                   this->ctx_->scope ()->decl ());
 
       // Pass it to the base constructor.
-      if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
+      if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cs::"
-                             "visit_sequence - "
-                             "codegen for base sequence class failed\n"),
+                             ACE_TEXT ("be_visitor_sequence_cs::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("codegen for base ")
+                             ACE_TEXT ("sequence class failed\n")),
                            -1);
         }
 
@@ -90,7 +103,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   /// constructor.
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
-      // constructor with the buffer
+      // Constructor with the buffer
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl;

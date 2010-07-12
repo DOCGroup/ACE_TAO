@@ -224,7 +224,7 @@ be_generator::create_interface (UTL_ScopedName *n,
   /// top. In other files, it will do no harm.                
   if (l && idl_global->in_main_file ())
     {
-      idl_global->create_implied_ami_uses_stuff ();
+      FE_Utils::create_implied_ami_uses_stuff ();
     }
 
   return retval;

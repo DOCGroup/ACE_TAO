@@ -1,3 +1,68 @@
+Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_typecode.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_xplicit_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/ast/ast_visitor_reifying.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be_include/be_visitor_operation/upcall_command_ss.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/be_include/be_visitor_constant/constant_cs.h:
+        * TAO_IDL/be_include/be_constant.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+
+          - Changed generation of alternate mapping sequences to be a
+            typedef of std::vector.
+
+          - Refactored non-data code in FE and BE global data classes
+            to corresponding utils classes.
+
+          - Changed code generation triggered by –SS to generate the
+            *S.h and *C.h includes, so they can be propagated to
+            including IDL files.
+
 Tue Jul  6 11:11:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:

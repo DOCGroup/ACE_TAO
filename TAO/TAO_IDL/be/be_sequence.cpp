@@ -556,7 +556,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
-  
+  /*
   if (be_global->alt_mapping () && this->unbounded ())
     {
       *os << "std::vector<" << elem->nested_type_name (ctx_scope)
@@ -564,7 +564,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           
       return 0;
     }
-
+*/
   // Generate the appropriate base class type.
   switch (this->managed_type ())
     {

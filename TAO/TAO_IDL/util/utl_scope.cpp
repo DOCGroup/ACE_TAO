@@ -1042,107 +1042,40 @@ UTL_Scope::special_lookup (UTL_ScopedName *,
   return 0;
 }
 
-// Lookup the node for a primitive (built in) type.
+// Lookup the node for a primitive (built-in) type.
 AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
-  AST_Decl *as_decl = ScopeAsDecl (this);
-  if (!as_decl)
+  UTL_Scope *search = idl_global->corba_module ();
+  
+  AST_PredefinedType::PredefinedType pdt =
+    FE_Utils::ExprTypeToPredefinedType (et);
+    
+  /// This return value means there was no PredefinedType match
+  /// for the ExprType.  
+  if (pdt == AST_PredefinedType::PT_pseudo)
     {
       return 0;
     }
-
-  UTL_Scope *ancestor = as_decl->defined_in ();
-  if (ancestor)
+  
+  /// The only 'predefined type' not in the CORBA module.
+  if (pdt == AST_PredefinedType::PT_void)
     {
-      return ancestor->lookup_primitive_type (et);
+      search = idl_global->root ();
     }
 
-  AST_PredefinedType::PredefinedType pdt;
-  switch (et)
-    {
-    case AST_Expression::EV_short:
-      pdt = AST_PredefinedType::PT_short;
-      break;
-
-    case AST_Expression::EV_ushort:
-      pdt = AST_PredefinedType::PT_ushort;
-      break;
-
-    case AST_Expression::EV_long:
-      pdt = AST_PredefinedType::PT_long;
-      break;
-
-    case AST_Expression::EV_ulong:
-      pdt = AST_PredefinedType::PT_ulong;
-      break;
-
-    case AST_Expression::EV_longlong:
-      pdt = AST_PredefinedType::PT_longlong;
-      break;
-
-    case AST_Expression::EV_ulonglong:
-      pdt = AST_PredefinedType::PT_ulonglong;
-      break;
-
-    case AST_Expression::EV_float:
-      pdt = AST_PredefinedType::PT_float;
-      break;
-
-    case AST_Expression::EV_double:
-      pdt = AST_PredefinedType::PT_double;
-      break;
-
-    case AST_Expression::EV_longdouble:
-      pdt = AST_PredefinedType::PT_longdouble;
-      break;
-
-    case AST_Expression::EV_char:
-      pdt = AST_PredefinedType::PT_char;
-      break;
-
-    case AST_Expression::EV_wchar:
-      pdt = AST_PredefinedType::PT_wchar;
-      break;
-
-    case AST_Expression::EV_octet:
-      pdt = AST_PredefinedType::PT_octet;
-      break;
-
-    case AST_Expression::EV_bool:
-      pdt = AST_PredefinedType::PT_boolean;
-      break;
-
-    case AST_Expression::EV_any:
-      pdt = AST_PredefinedType::PT_any;
-      break;
-
-    case AST_Expression::EV_object:
-      pdt = AST_PredefinedType::PT_object;
-      break;
-
-    case AST_Expression::EV_void:
-      pdt = AST_PredefinedType::PT_void;
-      break;
-
-    case AST_Expression::EV_enum:
-    case AST_Expression::EV_string:
-    case AST_Expression::EV_wstring:
-    case AST_Expression::EV_none:
-    default:
-      return 0;
-    }
-
-  for (UTL_ScopeActiveIterator i (this, IK_decls);
+  for (UTL_ScopeActiveIterator i (search, IK_decls);
        !i.is_done();
        i.next ())
     {
-      as_decl = i.item ();
+      AST_Decl *as_decl = i.item ();
+      
       if (as_decl->node_type () == AST_Decl::NT_pre_defined)
         {
           AST_PredefinedType *t =
             AST_PredefinedType::narrow_from_decl (as_decl);
-          if (t && t->pt () == pdt)
+            
+          if (t->pt () == pdt)
             {
               if (idl_global->in_main_file ())
                 {
@@ -1151,11 +1084,9 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
                     case AST_PredefinedType::PT_any:
                       idl_global->any_seen_ = true;
                       break;
-
                     case AST_PredefinedType::PT_object:
                       idl_global->base_object_seen_ = true;
                       break;
-
                     default:
                       break;
                     }
@@ -1909,6 +1840,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            i.next ())
         {
           AST_Decl *d = i.item ();
+          
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
@@ -1927,6 +1859,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            j.next ())
         {
           AST_Decl *d = j.item ();
+          
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
