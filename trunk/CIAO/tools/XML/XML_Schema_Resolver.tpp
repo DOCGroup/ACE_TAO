@@ -27,6 +27,13 @@ namespace CIAO
       : resolver_ (res)
     {
     }
+    
+    template<typename Resolver>
+    Resolver &
+    XML_Schema_Resolver<Resolver>::get_resolver (void)
+    {
+      return resolver_;
+    }
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
