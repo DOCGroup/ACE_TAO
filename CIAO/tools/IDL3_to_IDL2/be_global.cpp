@@ -113,42 +113,6 @@ BE_GlobalData::parse_args (long &i, char **av)
     }
 }
 
-// Prepare an argument for a BE.
-void
-BE_GlobalData::prep_be_arg (char *)
-{
-}
-
-void
-BE_GlobalData::arg_post_proc (void)
-{
-}
-
-void
-BE_GlobalData::usage (void) const
-{
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -o <dir>\t\tOutput directory for the generated file.")
-      ACE_TEXT (" Default is current directory\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -e\t\t\tGenerate just an include of original IDL file")
-      ACE_TEXT (" if no IDL3 declarations are found\n")
-    ));
-}
-
-AST_Generator *
-BE_GlobalData::generator_init (void)
-{
-  AST_Generator *gen = 0;
-  ACE_NEW_RETURN (gen,
-                  AST_Generator,
-                  0);
-  return gen;
-}
-
 int
 BE_GlobalData::outfile_init (TAO_OutStream *& os,
                              const char *file_prefix,
