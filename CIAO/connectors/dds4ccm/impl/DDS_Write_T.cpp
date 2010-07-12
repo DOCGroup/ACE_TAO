@@ -29,41 +29,33 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
 
-  try
+  if (!this->ccm_dds_writer_.get_impl ())
     {
-      if (!this->ccm_dds_writer_.get_impl ())
+      ::DDS::DataWriter_var dwv_tmp;
+      if (library_name && profile_name)
         {
-          ::DDS::DataWriter_var dwv_tmp;
-          if (library_name && profile_name)
-            {
-              dwv_tmp = publisher->create_datawriter_with_profile (
-                  topic,
-                  library_name,
-                  profile_name,
-                  ::DDS::DataWriterListener::_nil (),
-                  0);
-            }
-            else
-            {
-              ::DDS::DataWriterQos dwqos;
-              dwv_tmp = publisher->create_datawriter (
-                  topic,
-                  dwqos,
-                  ::DDS::DataWriterListener::_nil (),
-                  0);
-             }
-          ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *rw =
-            dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *>
-              (dwv_tmp.in ());
-          this->ccm_dds_writer_.set_impl (rw->get_impl ());
-          this->writer_t_.set_impl (&this->ccm_dds_writer_);
-          this->writer_t_._set_component (component);
+          dwv_tmp = publisher->create_datawriter_with_profile (
+              topic,
+              library_name,
+              profile_name,
+              ::DDS::DataWriterListener::_nil (),
+              0);
         }
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::configuration_complete: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+        else
+        {
+          ::DDS::DataWriterQos dwqos;
+          dwv_tmp = publisher->create_datawriter (
+              topic,
+              dwqos,
+              ::DDS::DataWriterListener::_nil (),
+              0);
+          }
+      ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *rw =
+        dynamic_cast < ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *>
+          (dwv_tmp.in ());
+      this->ccm_dds_writer_.set_impl (rw->get_impl ());
+      this->writer_t_.set_impl (&this->ccm_dds_writer_);
+      this->writer_t_._set_component (component);
     }
 }
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -71,22 +63,22 @@ void
 DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate");
-  try
+
+  if (::CORBA::is_nil (this->data_listener_.in ()))
     {
-      if (::CORBA::is_nil (this->data_listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->data_listener_,
-                            DataWriterListener (),
-                            CORBA::NO_MEMORY ());
-        }
-      this->ccm_dds_writer_.set_listener (
-        this->data_listener_.in (),
-        DataWriterListener::get_mask ());
+      ACE_NEW_THROW_EX (this->data_listener_,
+                        DataWriterListener (),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
+  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_.set_listener (
+                                                this->data_listener_.in (),
+                                                DataWriterListener::get_mask ());
+  if (retcode != DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::activate: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_Write_T::activate - "
+                    "Error during set_listener - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
 
@@ -95,18 +87,11 @@ void
 DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate");
-  try
-    {
-      this->ccm_dds_writer_.set_listener (
-        ::DDS::DataWriterListener::_nil (),
-        0);
-      this->data_listener_ = ::DDS::DataWriterListener::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::passivate: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+
+  this->ccm_dds_writer_.set_listener (
+    ::DDS::DataWriterListener::_nil (),
+    0);
+  this->data_listener_ = ::DDS::DataWriterListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -115,26 +100,18 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
   ::DDS::Publisher_ptr publisher)
 {
   DDS4CCM_TRACE ("DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove");
-  try
+
+  DDS::ReturnCode_t const retcode =
+    publisher->delete_datawriter (&this->ccm_dds_writer_);
+  if (retcode == DDS::RETCODE_OK)
     {
-      DDS::ReturnCode_t const retval =
-        publisher->delete_datawriter (&this->ccm_dds_writer_);
-      if (retval != DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-            "DDS_Write_T::remove - "
-            "Unable to delete DataWriter: <%C>\n",
-            ::CIAO::DDS4CCM::translate_retcode (retval)));
-          throw CORBA::INTERNAL ();
-        }
       this->ccm_dds_writer_.set_impl (0);
       this->writer_t_._set_component (CCM_TYPE::base_type::_nil ());
       this->writer_t_.set_impl (0);
     }
-  catch (...)
+  else
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Write_T::remove: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      throw ::CCM_DDS::InternalError (retcode, 0);
     }
 }
 

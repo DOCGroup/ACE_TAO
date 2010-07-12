@@ -1,3 +1,24 @@
+Mon Jul 12 09:14:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Changed exception handling. Exceptions are caught in the
+          DDS_Event_Connector_T and DDS_State_Connector_T and not in
+          the ports itself. Also corrected some incorrect parameters
+          of the CCM_DDS::InternalError exception.
+
 Mon Jul 12 06:36:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
 

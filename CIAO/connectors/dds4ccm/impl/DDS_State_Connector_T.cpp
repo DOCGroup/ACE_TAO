@@ -282,78 +282,106 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
-
-  ::CCM_DDS::PortStatusListener_var push_observer_psl =
-    this->context_->get_connection_push_observer_status ();
-  typename CCM_TYPE::listener_type::_var_type push_observer_dl =
-    this->context_->get_connection_push_observer_data_listener ();
-  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
-  this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
-
-  ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
-    this->context_->get_connection_push_state_observer_status ();
-  typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
-    this->context_->get_connection_push_state_observer_data_listener ();
-  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
-  this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
-
-  ::CCM_DDS::PortStatusListener_var pull_observer_psl =
-    this->context_->get_connection_pull_observer_status ();
-  this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
-
-  ::CCM_DDS::PortStatusListener_var passive_observer_psl =
-    this->context_->get_connection_passive_observer_status ();
-  this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
-
-  if (this->observable_obtained_)
+  try
     {
-      this->observable_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->publisher_.in (),
-        this->library_name_,
-        this->profile_name_);
+      TopicBaseConnector::configuration_complete ();
+
+      ::CCM_DDS::PortStatusListener_var push_observer_psl =
+        this->context_->get_connection_push_observer_status ();
+      typename CCM_TYPE::listener_type::_var_type push_observer_dl =
+        this->context_->get_connection_push_observer_data_listener ();
+      this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
+      this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
+
+      ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
+        this->context_->get_connection_push_state_observer_status ();
+      typename CCM_TYPE::statelistener_type::_var_type push_state_observer_dl =
+        this->context_->get_connection_push_state_observer_data_listener ();
+      this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
+      this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
+
+      ::CCM_DDS::PortStatusListener_var pull_observer_psl =
+        this->context_->get_connection_pull_observer_status ();
+      this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
+
+      ::CCM_DDS::PortStatusListener_var passive_observer_psl =
+        this->context_->get_connection_passive_observer_status ();
+      this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
+
+      if (this->observable_obtained_)
+        {
+          this->observable_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->publisher_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+
+      if (this->push_observer_obtained_)
+        {
+          this->push_observer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+
+      if (this->push_state_observer_obtained_)
+        {
+          this->push_state_observer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+
+      if (this->pull_observer_obtained_)
+        {
+          this->pull_observer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+
+      if (this->passive_observer_obtained_)
+        {
+          this->passive_observer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
     }
-
-  if (this->push_observer_obtained_)
+  catch (const ::CCM_DDS::InternalError &ex)
     {
-      this->push_observer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::configuration_complete - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
     }
-
-  if (this->push_state_observer_obtained_)
+  catch (const CORBA::Exception& ex)
     {
-      this->push_state_observer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+      ex._tao_print_exception ("DDS_State_Connector_T::configuration_complete");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::configuration_complete - "
+                         "Caught internal exception.\n"));
+      throw;
     }
-
-  if (this->pull_observer_obtained_)
+  catch (...)
     {
-      this->pull_observer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
-    }
-
-  if (this->passive_observer_obtained_)
-    {
-      this->passive_observer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::configuration_complete - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
     }
 }
 
@@ -363,45 +391,75 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate");
 
-  ACE_Reactor* reactor = 0;
+  try
+    {
+      ACE_Reactor* reactor = 0;
+
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-  reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
+      reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
-  TopicBaseConnector::ccm_activate (reactor);
 
-  if (this->observable_obtained_)
-    {
-      this->observable_.activate ();
+      TopicBaseConnector::ccm_activate (reactor);
+
+      if (this->observable_obtained_)
+        {
+          this->observable_.activate ();
+        }
+
+      if (this->push_observer_obtained_)
+        {
+          this->push_observer_.activate (
+            this->context_->get_connection_push_observer_data_listener (),
+            this->context_->get_connection_push_observer_status (),
+            reactor);
+        }
+
+      if (this->push_state_observer_obtained_)
+        {
+          this->push_state_observer_.activate (
+            this->context_->get_connection_push_state_observer_data_listener (),
+            this->context_->get_connection_push_state_observer_status (),
+            reactor);
+        }
+
+      if (this->pull_observer_obtained_)
+        {
+          this->pull_observer_.activate (
+            this->context_->get_connection_pull_observer_status (),
+            reactor);
+        }
+
+      if (this->passive_observer_obtained_)
+        {
+          this->passive_observer_.activate (
+            this->context_->get_connection_passive_observer_status (),
+            reactor);
+        }
     }
-
-  if (this->push_observer_obtained_)
+  catch (const ::CCM_DDS::InternalError &ex)
     {
-      this->push_observer_.activate (
-        this->context_->get_connection_push_observer_data_listener (),
-        this->context_->get_connection_push_observer_status (),
-        reactor);
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_activate - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
     }
-
-  if (this->push_state_observer_obtained_)
+  catch (const CORBA::Exception& ex)
     {
-      this->push_state_observer_.activate (
-        this->context_->get_connection_push_state_observer_data_listener (),
-        this->context_->get_connection_push_state_observer_status (),
-        reactor);
+      ex._tao_print_exception ("DDS_State_Connector_T::ccm_activate");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_activate - "
+                         "Caught internal exception.\n"));
+      throw;
     }
-
-  if (this->pull_observer_obtained_)
+  catch (...)
     {
-      this->pull_observer_.activate (
-        this->context_->get_connection_pull_observer_status (),
-        reactor);
-    }
-
-  if (this->passive_observer_obtained_)
-    {
-      this->passive_observer_.activate (
-        this->context_->get_connection_passive_observer_status (),
-        reactor);
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_activate - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
     }
 }
 
@@ -410,32 +468,61 @@ void
 DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate");
-  if (this->observable_obtained_)
-    {
-      this->observable_.passivate ();
-    }
 
-  if (this->push_observer_obtained_)
+  try
     {
-      this->push_observer_.passivate ();
-    }
+      if (this->observable_obtained_)
+        {
+          this->observable_.passivate ();
+        }
 
-  if (this->push_state_observer_obtained_)
+      if (this->push_observer_obtained_)
+        {
+          this->push_observer_.passivate ();
+        }
+
+      if (this->push_state_observer_obtained_)
+        {
+          this->push_state_observer_.passivate ();
+        }
+
+      if (this->pull_observer_obtained_)
+        {
+          this->pull_observer_.passivate ();
+        }
+
+      if (this->passive_observer_obtained_)
+        {
+          this->passive_observer_.passivate ();
+        }
+
+      TopicBaseConnector::ccm_passivate ();
+    }
+  catch (const ::CCM_DDS::InternalError &ex)
     {
-      this->push_state_observer_.passivate ();
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_passivate - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
     }
-
-  if (this->pull_observer_obtained_)
+  catch (const CORBA::Exception& ex)
     {
-      this->pull_observer_.passivate ();
+      ex._tao_print_exception ("DDS_State_Connector_T::ccm_passivate");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_passivate - "
+                         "Caught internal exception.\n"));
+      throw;
     }
-
-  if (this->passive_observer_obtained_)
+  catch (...)
     {
-      this->passive_observer_.passivate ();
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_passivate - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
     }
-
-  TopicBaseConnector::ccm_passivate ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -444,30 +531,58 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove");
 
-  if (this->observable_obtained_)
+  try
     {
-      this->observable_.remove (this->publisher_.in ());
-    }
+      if (this->observable_obtained_)
+        {
+          this->observable_.remove (this->publisher_.in ());
+        }
 
-  if (this->push_observer_obtained_)
-    {
-      this->push_observer_.remove (this->subscriber_.in ());
-    }
+      if (this->push_observer_obtained_)
+        {
+          this->push_observer_.remove (this->subscriber_.in ());
+        }
 
-  if (this->push_state_observer_obtained_)
-    {
-      this->push_state_observer_.remove (this->subscriber_.in ());
-    }
+      if (this->push_state_observer_obtained_)
+        {
+          this->push_state_observer_.remove (this->subscriber_.in ());
+        }
 
-  if (this->pull_observer_obtained_)
-    {
-      this->pull_observer_.remove (this->subscriber_.in ());
-    }
+      if (this->pull_observer_obtained_)
+        {
+          this->pull_observer_.remove (this->subscriber_.in ());
+        }
 
-  if (this->passive_observer_obtained_)
-    {
-      this->passive_observer_.remove (this->subscriber_.in ());
+      if (this->passive_observer_obtained_)
+        {
+          this->passive_observer_.remove (this->subscriber_.in ());
+        }
+      TopicBaseConnector::ccm_remove ();
     }
-  TopicBaseConnector::ccm_remove ();
+  catch (const ::CCM_DDS::InternalError &ex)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_remove - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DDS_State_Connector_T::ccm_remove");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_remove - "
+                         "Caught internal exception.\n"));
+      throw;
+    }
+  catch (...)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_State_Connector_T::ccm_remove - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
 

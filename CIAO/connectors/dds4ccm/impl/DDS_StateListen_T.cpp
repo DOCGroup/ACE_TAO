@@ -65,29 +65,26 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate");
 
-  try
+  if (::CORBA::is_nil (this->listener_.in ()))
     {
-      if (::CORBA::is_nil (this->listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->listener_,
-                            DataReaderStateListener_type (
-                              listener,
-                              status,
-                              this->data_control_.in (),
-                              reactor,
-                              &this->condition_manager_),
-                            CORBA::NO_MEMORY ());
-        }
-      this->data_reader_.set_listener (
-        this->listener_.in (),
-        DataReaderStateListener_type::get_mask (listener));
+      ACE_NEW_THROW_EX (this->listener_,
+                        DataReaderStateListener_type (
+                          listener,
+                          status,
+                          this->data_control_.in (),
+                          reactor,
+                          &this->condition_manager_),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
+  ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
+                              this->listener_.in (),
+                              DataReaderStateListener_type::get_mask (listener));
+  if (retcode != DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                    ACE_TEXT ("DDS_StateListen_T::activate: ")
-                    ACE_TEXT ("Caught unexpected exception.\n")));
-      throw CORBA::INTERNAL ();
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_StateListen_T::activate - "
+                    "Error during set_listener - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
 
