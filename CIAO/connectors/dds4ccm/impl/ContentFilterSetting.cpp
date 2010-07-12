@@ -114,7 +114,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "Calling set_filter_parameters without having set a filter\n"));
-          throw CCM_DDS::InternalError ();
+          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
@@ -129,7 +129,7 @@ namespace CIAO
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "Error setting filter parameters: <%C>\n",
                                        translate_retcode (retcode)));
-          throw CCM_DDS::InternalError ();
+          throw CCM_DDS::InternalError (retcode, 0);
         }
     }
   }

@@ -63,6 +63,7 @@ char *
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::topic_name (void)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::topic_name");
+
   return CORBA::string_dup (this->topic_name_.in ());
 }
 
@@ -142,49 +143,40 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
-      try
-        {
-          ::CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *part =
-            dynamic_cast< CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * > (
-              this->domain_participant_.in ());
-          DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
-            part->get_impl (), DDS_TYPE::type_support::get_type_name ());
+      ::CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *part =
+        dynamic_cast< CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * > (
+          this->domain_participant_.in ());
+      DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
+        part->get_impl (), DDS_TYPE::type_support::get_type_name ());
 
-          if (retcode == DDS_RETCODE_OK)
+      if (retcode == DDS_RETCODE_OK)
+        {
+          if (this->library_name_ && this->profile_name_)
             {
-              if (this->library_name_ && this->profile_name_)
-                {
-                  this->topic_ =
-                    this->domain_participant_->create_topic_with_profile (
-                      this->topic_name_.in (),
-                      DDS_TYPE::type_support::get_type_name (),
-                      this->library_name_,
-                      this->profile_name_,
-                      ::DDS::TopicListener::_nil (),
-                      0);
-                }
-              else
-                {
-                  ::DDS::TopicQos tqos;
-                  this->topic_ =
-                    this->domain_participant_->create_topic (
-                      this->topic_name_.in (),
-                      DDS_TYPE::type_support::get_type_name (),
-                      tqos,
-                      ::DDS::TopicListener::_nil (),
-                      0);
-                }
+              this->topic_ =
+                this->domain_participant_->create_topic_with_profile (
+                  this->topic_name_.in (),
+                  DDS_TYPE::type_support::get_type_name (),
+                  this->library_name_,
+                  this->profile_name_,
+                  ::DDS::TopicListener::_nil (),
+                  0);
             }
           else
             {
-              throw CCM_DDS::InternalError (retcode, 0);
+              ::DDS::TopicQos tqos;
+              this->topic_ =
+                this->domain_participant_->create_topic (
+                  this->topic_name_.in (),
+                  DDS_TYPE::type_support::get_type_name (),
+                  tqos,
+                  ::DDS::TopicListener::_nil (),
+                  0);
             }
         }
-      catch (...)
+      else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_default_topic: "
-                                    "Caught unexpected exception.\n"));
-          throw CORBA::INTERNAL ();
+          throw CCM_DDS::InternalError (retcode, 0);
         }
     }
 }
@@ -197,32 +189,23 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_subscriber (voi
 
   if (::CORBA::is_nil (this->subscriber_.in ()))
     {
-      try
+      if (this->library_name_ && this->profile_name_)
         {
-          if (this->library_name_ && this->profile_name_)
-            {
-              this->subscriber_ = this->domain_participant_->
-                create_subscriber_with_profile (
-                  this->library_name_,
-                  this->profile_name_,
-                  ::DDS::SubscriberListener::_nil (),
-                  0);
-            }
-          else
-            {
-              ::DDS::SubscriberQos sqos;
-              this->subscriber_ = this->domain_participant_->
-                create_subscriber (
-                  sqos,
-                  ::DDS::SubscriberListener::_nil (),
-                  0);
-            }
+          this->subscriber_ = this->domain_participant_->
+            create_subscriber_with_profile (
+              this->library_name_,
+              this->profile_name_,
+              ::DDS::SubscriberListener::_nil (),
+              0);
         }
-      catch (...)
+      else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::init_subscriber: "
-                                    "Caught unexpected exception.\n"));
-          throw CORBA::INTERNAL ();
+          ::DDS::SubscriberQos sqos;
+          this->subscriber_ = this->domain_participant_->
+            create_subscriber (
+              sqos,
+              ::DDS::SubscriberListener::_nil (),
+              0);
         }
     }
 }
@@ -261,26 +244,26 @@ void
 DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_topic (ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_default_topic");
-  try
+
+  if (::CORBA::is_nil (this->topiclistener_.in ()))
     {
-      if (::CORBA::is_nil (this->topiclistener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->topiclistener_,
-                            TopicListener (
-                              this->context_->get_connection_error_listener (),
-                              reactor),
-                            CORBA::NO_MEMORY ());
-        }
-      this->topic_->set_listener (
-        this->topiclistener_.in (),
-        TopicListener::get_mask (
-          this->context_->get_connection_error_listener ()));
+      ACE_NEW_THROW_EX (this->topiclistener_,
+                        TopicListener (
+                          this->context_->get_connection_error_listener (),
+                          reactor),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
+
+  ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
+                              this->topiclistener_.in (),
+                              TopicListener::get_mask (
+                              this->context_->get_connection_error_listener ()));
+  if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_default_topic: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::activate_default_topic - "
+                    "Error during set_listener - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
 
@@ -290,55 +273,52 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_subscriber");
 
-  try
+  if (::CORBA::is_nil (this->subscriber_listener_.in ()))
     {
-      if (::CORBA::is_nil (this->subscriber_listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->subscriber_listener_,
-                            SubscriberListener (
-                              this->context_->get_connection_error_listener (),
-                              reactor),
-                            CORBA::NO_MEMORY ());
-        }
-      this->subscriber_->set_listener (
-        this->subscriber_listener_.in (),
-        SubscriberListener::get_mask (
-          this->context_->get_connection_error_listener ()));
+      ACE_NEW_THROW_EX (this->subscriber_listener_,
+                        SubscriberListener (
+                          this->context_->get_connection_error_listener (),
+                          reactor),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
+  ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
+                            this->subscriber_listener_.in (),
+                            SubscriberListener::get_mask (
+                              this->context_->get_connection_error_listener ()));
+  if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_subscriber: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::activate_subscriber - "
+                    "Error during set_listener - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (ACE_Reactor* reactor)
+DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
+  ACE_Reactor* reactor)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::activate_publisher");
 
-  try
+  if (::CORBA::is_nil (this->publisher_listener_.in ()))
     {
-      if (::CORBA::is_nil (this->publisher_listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->publisher_listener_,
-                            PublisherListener (
-                              this->context_->get_connection_error_listener (),
-                              reactor),
-                            CORBA::NO_MEMORY ());
-        }
-      this->publisher_->set_listener (
-        this->publisher_listener_.in (),
-        PublisherListener::get_mask (
-          this->context_->get_connection_error_listener ()));
+      ACE_NEW_THROW_EX (this->publisher_listener_,
+                        PublisherListener (
+                          this->context_->get_connection_error_listener (),
+                          reactor),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
+  ::DDS::ReturnCode_t const retcode = this->publisher_->set_listener (
+                            this->publisher_listener_.in (),
+                            PublisherListener::get_mask (
+                              this->context_->get_connection_error_listener ()));
+  if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::activate_publisher: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::activate_publisher - "
+                    "Error during set_listener - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
 
@@ -348,20 +328,11 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_default_to
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
 
-  try
-    {
-      this->topic_->set_listener (
-        ::DDS::TopicListener::_nil (),
-        0);
+  this->topic_->set_listener (
+    ::DDS::TopicListener::_nil (),
+    0);
 
-      this->topiclistener_ = ::DDS::TopicListener::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->topiclistener_ = ::DDS::TopicListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -370,19 +341,10 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_subscriber
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
 
-  try
-    {
-      this->subscriber_->set_listener (
-        ::DDS::SubscriberListener::_nil (),
-        0);
-      this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_subscriber: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->subscriber_->set_listener (
+    ::DDS::SubscriberListener::_nil (),
+    0);
+  this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -391,19 +353,10 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_publisher 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
 
-  try
-    {
-      this->publisher_->set_listener (
-        ::DDS::PublisherListener::_nil (),
-        0);
-      this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::passivate_default_topic: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->publisher_->set_listener (
+    ::DDS::PublisherListener::_nil (),
+    0);
+  this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -412,26 +365,13 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_default_topic
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_default_topic");
 
-  try
+  ::DDS::ReturnCode_t retcode =
+    this->domain_participant_->delete_topic (this->topic_.in ());
+  if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS::ReturnCode_t retval =
-        this->domain_participant_->delete_topic (this->topic_.in ());
-      if (retval != DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-            "DDS_TopicBase_Connector_T::remove - "
-            "Unable to delete Topic: <%C>\n",
-            ::CIAO::DDS4CCM::translate_retcode (retval)));
-          throw CORBA::INTERNAL ();
-        }
-      this->topic_ = ::DDS::Topic::_nil ();
+      throw CCM_DDS::InternalError (retcode, 0);
     }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_default_topic: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->topic_ = ::DDS::Topic::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -440,17 +380,8 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_subscriber (v
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_subscriber");
 
-  try
-    {
-      this->domain_participant_->delete_subscriber (this->subscriber_.in ());
-      this->subscriber_ = ::DDS::Subscriber::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_subscriber: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->domain_participant_->delete_subscriber (this->subscriber_.in ());
+  this->subscriber_ = ::DDS::Subscriber::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -459,15 +390,6 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_publisher (vo
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::remove_publisher");
 
-  try
-    {
-      this->domain_participant_->delete_publisher (this->publisher_.in ());
-      this->publisher_ = ::DDS::Publisher::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_ERROR, "DDS_TopicBase_Connector_T::remove_publisher: "
-                                "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->domain_participant_->delete_publisher (this->publisher_.in ());
+  this->publisher_ = ::DDS::Publisher::_nil ();
 }

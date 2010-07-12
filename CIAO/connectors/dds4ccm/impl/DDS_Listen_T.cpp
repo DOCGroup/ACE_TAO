@@ -61,28 +61,20 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate");
 
-  try
+  if (::CORBA::is_nil (this->listener_.in ()))
     {
-      if (::CORBA::is_nil (this->listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->listener_,
-                            DataReaderListener_type (
-                              listener,
-                              status,
-                              this->data_control_.in (),
-                              reactor,
-                              &this->condition_manager_),
-                            CORBA::NO_MEMORY ());
-        }
-      this->data_reader_.set_listener (
-        this->listener_.in (),
-        DataReaderListener_type::get_mask (status));
+      ACE_NEW_THROW_EX (this->listener_,
+                        DataReaderListener_type (
+                          listener,
+                          status,
+                          this->data_control_.in (),
+                          reactor,
+                          &this->condition_manager_),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, "DDS_Listen_T::activate: Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->data_reader_.set_listener (
+    this->listener_.in (),
+    DataReaderListener_type::get_mask (status));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

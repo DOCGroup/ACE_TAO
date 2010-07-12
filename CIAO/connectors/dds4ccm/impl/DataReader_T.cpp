@@ -783,6 +783,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
                     "Failed to cast DDS::DataReader to DataReader_T\n"));
-      throw CCM_DDS::InternalError ();
+      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
 }
