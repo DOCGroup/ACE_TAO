@@ -1,3 +1,12 @@
+Mon Jul 12 12:55:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/PS_ForwardS.h:
+        
+          New file, an empty placeholder that is now generated as
+          an include by the IDL compiler. The corresponding IDL
+          file is not automatically processed, but it is included
+          in other IDL files.
+
 Mon Jul 12 11:32:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/y.tab.cpp:
