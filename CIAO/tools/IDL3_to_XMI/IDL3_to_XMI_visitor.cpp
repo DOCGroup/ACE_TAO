@@ -2030,7 +2030,7 @@ namespace CIAO
           CIAO::XML::NoOp_Resolver res_func;
           CIAO::XML::XML_Schema_Resolver<> resolver (res_func);
           CIAO::XML::XML_Error_Handler handler;
-          CIAO::XML::XML_Helper<> helper (resolver, handler);
+          CIAO::XML::XML_Helper<> helper (&resolver, &handler);
 
           // Create XML document
           std::auto_ptr<DOMDocumentType> doctype (
