@@ -48,9 +48,7 @@ namespace CIAO
     {
     public:
       //      XML_Helper (void);
-
-      /// Initialize the resolver we should use.
-      XML_Helper (Resolver &resolver, Error_Handler &eh);
+      XML_Helper (Resolver *resolver = 0, Error_Handler *eh = 0);
 
       ~XML_Helper (void);
 
@@ -76,6 +74,10 @@ namespace CIAO
 
       /// Terminate the parser
       void terminate_parser (void);
+      
+      Resolver &get_resolver (void);
+      
+      Error_Handler &get_error_handler (void);
 
     protected:
       /// Intialize the parser
@@ -86,8 +88,10 @@ namespace CIAO
       XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
       mutable std::auto_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
 
-      Resolver &resolver_;
-      Error_Handler &e_handler_;
+      Resolver *resolver_;
+      bool release_resolver_;
+      Error_Handler *e_handler_;
+      bool release_e_handler_;
     };
 
 

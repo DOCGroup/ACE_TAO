@@ -1,3 +1,17 @@
+Mon Jul 12 13:07:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/Config_Handlers/XML_Typedefs.h:
+        * DAnCE/Config_Handlers/XML_Typedefs.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          A number of fixes to how the XML infrastructure handles memory.  This
+          also happens to fix the segmentation fault caused by my prior commit.
+
 Mon Jul 12 10:15:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
