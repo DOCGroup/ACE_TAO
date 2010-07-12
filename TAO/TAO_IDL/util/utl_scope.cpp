@@ -962,37 +962,34 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     }
 
   bool *seen = 0;
-  UTL_Scope *start_scope = this;
   char *name_string = e->get_string ();
-  if (   !ACE_OS::strcasecmp (name_string, "TypeCode")
-      || !ACE_OS::strcasecmp (name_string, "TCKind"))
+  UTL_Scope *start_scope = idl_global->corba_module ();
+  
+  if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
+      || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
     {
       this->which_pseudo_ = PSEUDO_TYPECODE;
+      start_scope = this;
       seen = &idl_global->typecode_seen_;
+    }
+  else if (ACE_OS::strcasecmp (name_string, "Object") == 0)
+    {
+      this->which_pseudo_ = PSEUDO_OBJECT;
+      seen = &idl_global->base_object_seen_;
+    }
+  else if (ACE_OS::strcasecmp (name_string, "ValueBase") == 0)
+    {
+      this->which_pseudo_ = PSEUDO_VALUEBASE;
+      seen = &idl_global->valuebase_seen_;
+    }
+  else if (ACE_OS::strcasecmp (name_string, "AbstractBase") == 0)
+    {
+      this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
+      seen = &idl_global->abstractbase_seen_;
     }
   else
     {
-      start_scope = idl_global->root ();
-
-      if (!ACE_OS::strcasecmp (name_string, "Object"))
-        {
-          this->which_pseudo_ = PSEUDO_OBJECT;
-          seen = &idl_global->base_object_seen_;
-        }
-      else if (!ACE_OS::strcasecmp (name_string, "ValueBase"))
-        {
-          this->which_pseudo_ = PSEUDO_VALUEBASE;
-          seen = &idl_global->valuebase_seen_;
-        }
-      else if (!ACE_OS::strcasecmp (name_string, "AbstractBase"))
-        {
-          this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
-          seen = &idl_global->abstractbase_seen_;
-        }
-      else
-        {
-          return 0;
-        }
+      return 0;
     }
   
   for (UTL_ScopeActiveIterator i (start_scope, IK_decls);
@@ -1000,6 +997,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
        i.next ())
     {
       AST_Decl *d = i.item ();
+      
       if (e->case_compare (d->local_name ()))
         {
           // These have to be located here because we are just looking
@@ -1016,7 +1014,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   if (this->which_pseudo_ == PSEUDO_TYPECODE)
     {
       AST_Decl *d = this->look_in_prev_mods_local (e);
-      if (d)
+      
+      if (d != 0)
         {
           // Generation of #includes for Typecode.h
           // checks this bit, so we set it for TCKind as well.
@@ -1236,7 +1235,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
   AST_Decl *d = work->lookup_by_name_r (e, full_def_only);
   
-  if (!d)
+  if (d == 0)
     {
       // If all else fails, look though each outer scope.
       for (UTL_Scope *outer = ScopeAsDecl (work)->defined_in ();
@@ -1245,7 +1244,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
         {
           d = outer->lookup_by_name_r (e, full_def_only);
           
-          if (d)
+          if (d != 0)
             {
               work = outer;
               break; // Ok found it, stop searching.
@@ -1256,10 +1255,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   ACE_Unbounded_Queue<AST_Decl *> &masks =
     idl_global->masking_scopes ();
     
-  if (d && !global_scope_name)
+  if (d != 0 && !global_scope_name)
     {
       ACE_Unbounded_Queue<AST_Decl *>::CONST_ITERATOR i (masks);
       AST_Decl **item = 0;
+      
       if (i.next (item))
         {
           // The first queue item (last enqueued) will always
@@ -1268,6 +1268,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
 
           // Now check that the rest of the names don't collide
           const char *const name_str = name->get_string ();
+          
           while (i.advance ())
             {
               i.next (item);
