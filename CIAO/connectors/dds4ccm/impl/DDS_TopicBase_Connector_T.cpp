@@ -125,7 +125,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::key_fields (void)
   ::DDS::StringSeq_var retval = 0;
   ACE_NEW_THROW_EX (retval,
                     ::DDS::StringSeq (this->key_fields_.length ()),
-                    CORBA::NO_MEMORY ());
+                    ::CORBA::NO_MEMORY ());
   retval->length (this->key_fields_.length ());
 
   for (CORBA::ULong i = 0; i < this->key_fields_.length (); ++i)
@@ -176,7 +176,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
         }
       else
         {
-          throw CCM_DDS::InternalError (retcode, 0);
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
     }
 }
@@ -251,7 +251,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
                         TopicListener (
                           this->context_->get_connection_error_listener (),
                           reactor),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
 
   ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
@@ -279,7 +279,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
                         SubscriberListener (
                           this->context_->get_connection_error_listener (),
                           reactor),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
                             this->subscriber_listener_.in (),
@@ -307,7 +307,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
                         PublisherListener (
                           this->context_->get_connection_error_listener (),
                           reactor),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   ::DDS::ReturnCode_t const retcode = this->publisher_->set_listener (
                             this->publisher_listener_.in (),
@@ -369,7 +369,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_default_topic
     this->domain_participant_->delete_topic (this->topic_.in ());
   if (retcode != ::DDS::RETCODE_OK)
     {
-      throw CCM_DDS::InternalError (retcode, 0);
+      throw ::CCM_DDS::InternalError (retcode, 0);
     }
   this->topic_ = ::DDS::Topic::_nil ();
 }

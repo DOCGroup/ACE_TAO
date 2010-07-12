@@ -101,7 +101,7 @@ CORBA::UShort domain_id = 0;
           {
             cmd_data_writer->write(*instance_cmd,::DDS::HANDLE_NIL);
           }
-        catch (const CORBA::Exception& ex)
+        catch (const ::CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Exception caught:");
              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
@@ -121,7 +121,7 @@ CORBA::UShort domain_id = 0;
                      test_data_writer->write(*instance,::DDS::HANDLE_NIL);
                      ++number_of_msg;
                   }
-                catch (const CORBA::Exception&)
+                catch (const ::CORBA::Exception&)
                   {
                      ACE_ERROR ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Internal Error ")

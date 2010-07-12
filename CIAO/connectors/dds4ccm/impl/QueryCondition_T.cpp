@@ -70,7 +70,7 @@ CIAO::DDS4CCM::CCM_DDS_QueryCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_da
     {
       ACE_NEW_THROW_EX (dds_reader,
                         DataReader_type (reader),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   return dds_reader._retn ();
 }

@@ -54,7 +54,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Datawriter 1 connection is NIL.\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
         typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
         DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type *> (dw1.in ());
@@ -68,7 +68,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Error casting DataWriter 1 to typed DataWriter 1\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)
@@ -85,7 +85,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Datawriter 2 connection is NIL.\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
 
         typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
@@ -100,7 +100,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Error casting DataWriter 2 to typed DataWriter 2\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)
@@ -117,7 +117,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Datawriter 3 connection is NIL.\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
 
         typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_Base DataWriter_type;
@@ -132,7 +132,7 @@ namespace CIAO_SharedDP_SharedDPComponent_Impl
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Component_exec_i::ccm_activate - "
                         "Error casting DataWriter 3 to typed DataWriter 3\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
       }
     catch (...)

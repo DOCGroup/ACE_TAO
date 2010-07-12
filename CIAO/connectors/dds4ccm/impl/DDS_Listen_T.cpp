@@ -70,7 +70,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                           this->data_control_.in (),
                           reactor,
                           &this->condition_manager_),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   this->data_reader_.set_listener (
     this->listener_.in (),

@@ -333,7 +333,7 @@ write_one (void)
               ACE_High_Res_Timer::gettimeofday_hr ().to_usec (start_time_);
               test_data_writer_->write (*instance_, DDS_HANDLE_NIL);
             }
-          catch (const CORBA::Exception& )
+          catch (const ::CORBA::Exception& )
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
                           ACE_TEXT ("while writing sample with sequence_number <%u>.\n"),

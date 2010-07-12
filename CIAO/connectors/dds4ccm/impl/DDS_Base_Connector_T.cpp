@@ -176,7 +176,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
                         DomainParticipantListener(
                           this->context_->
                             get_connection_error_listener ()),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
                               this->domainparticipantlistener_.in (),
@@ -213,7 +213,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_remove (void)
                                                 this->domain_participant_.in ());
   if (retcode != ::DDS::RETCODE_OK)
     {
-      throw CCM_DDS::InternalError (retcode, 0);
+      throw ::CCM_DDS::InternalError (retcode, 0);
     }
 
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();

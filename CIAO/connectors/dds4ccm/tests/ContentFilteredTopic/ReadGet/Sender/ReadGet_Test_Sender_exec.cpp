@@ -160,7 +160,7 @@ namespace CIAO_ReadGet_Test_Sender_Impl
                           CORBA::INTERNAL ());
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (this->wh_);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
         ACE_ERROR ((LM_ERROR,

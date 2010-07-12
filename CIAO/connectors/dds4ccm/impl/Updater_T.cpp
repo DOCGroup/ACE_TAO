@@ -57,7 +57,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
       DDS4CCM_ERROR (1, (LM_ERROR,
                   ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
                   ACE_TEXT ("Unable to unregister instance, nil handle.\n")));
-      throw CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
+      throw ::CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
     }
   ::DDS_ReturnCode_t const result  = this->impl ()->write (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
@@ -66,7 +66,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
                   ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
-      throw CCM_DDS::InternalError (result, index);
+      throw ::CCM_DDS::InternalError (result, index);
     }
 }
 
@@ -102,7 +102,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_i (
                   ACE_TEXT ("CIAO::DDS4CCM::Updater_T::update_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
-      throw CCM_DDS::InternalError (result, index);
+      throw ::CCM_DDS::InternalError (result, index);
     }
 }
 
@@ -128,7 +128,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_one (
 
       if (!DDS_InstanceHandle_equals (&hnd, &instance_handle))
         {
-          throw CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
+          throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
         }
     }
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
@@ -155,7 +155,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
                   ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to dispose instance, error %C.\n"),
                   translate_retcode (result)));
-      throw CCM_DDS::InternalError (result, index);
+      throw ::CCM_DDS::InternalError (result, index);
     }
   result = this->impl ()->unregister_instance (an_instance, hnd);
   if (result != DDS_RETCODE_OK)
@@ -164,7 +164,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
                   ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to unregister instance, error %C.\n"),
                   translate_retcode (result)));
-      throw CCM_DDS::InternalError (result, index);
+      throw ::CCM_DDS::InternalError (result, index);
     }
 }
 
@@ -190,7 +190,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_one (
 
       if (!DDS_InstanceHandle_equals (&hnd, &instance_handle))
         {
-          throw CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
+          throw ::CCM_DDS::InternalError (::DDS_RETCODE_BAD_PARAMETER, 0);
         }
     }
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))

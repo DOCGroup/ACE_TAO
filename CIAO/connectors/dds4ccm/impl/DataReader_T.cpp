@@ -337,7 +337,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader 
                     ACE_TEXT ("DataReader_T::delete_datareader - ")
                     ACE_TEXT ("Unable to delete DataReader: <%C>\n"),
                     translate_retcode (retval)));
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
   this->impl_ = 0;
 }
@@ -375,7 +375,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_statusconditio
     {
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   return retval._retn ();
 }
@@ -420,7 +420,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_readconditi
     {
       ACE_NEW_THROW_EX (retval,
                         ReadCondition_type (rc),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   return retval._retn ();
 }
@@ -450,7 +450,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_querycondit
     {
       ACE_NEW_THROW_EX (retval,
                         QueryCondition_type (qc),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   return retval._retn ();
 }
@@ -554,7 +554,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (
                         DataReaderListener_type (
                           a_listener,
                           this),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   this->lst_mask_ = mask;
   return this->impl ()->set_listener (ccm_dds_drl, mask);
@@ -592,7 +592,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topicdescripti
     {
       ACE_NEW_THROW_EX (dds_td,
                         Topic_type (tp),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   else
     {
@@ -602,7 +602,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topicdescripti
         {
           ACE_NEW_THROW_EX (dds_td,
                             ContentFilteredTopic_type (cft),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
     }
   return dds_td._retn ();
@@ -618,7 +618,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_subscriber (vo
   ::DDSSubscriber* subscriber = this->impl ()->get_subscriber ();
   ACE_NEW_THROW_EX (dds_td,
                     Subscriber_type (subscriber),
-                    CORBA::NO_MEMORY ());
+                    ::CORBA::NO_MEMORY ());
   return dds_td._retn ();
 }
 
@@ -783,6 +783,6 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
     {
       DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
                     "Failed to cast DDS::DataReader to DataReader_T\n"));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
 }

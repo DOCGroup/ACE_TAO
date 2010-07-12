@@ -158,7 +158,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
                 }
-              throw CCM_DDS::InternalError (retcode, 1);
+              throw ::CCM_DDS::InternalError (retcode, 1);
             }
 
           DDS_ReturnCode_t const retval =
@@ -278,7 +278,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
                         translate_retcode (retval)));
                     }
 
-                  throw CCM_DDS::InternalError (retcode, 1);
+                  throw ::CCM_DDS::InternalError (retcode, 1);
                 }
               else if (data.length () == 1 && sample_info[0].valid_data)
                 {
@@ -320,7 +320,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
   an_instance = 0;
   ACE_NEW_THROW_EX (an_instance,
                     typename DDS_TYPE::value_type,
-                    CORBA::NO_MEMORY ());
+                    ::CORBA::NO_MEMORY ());
   DDSConditionSeq active_conditions;
   if (!this->condition_manager_->wait (active_conditions, this->time_out_))
     {
@@ -365,7 +365,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
                     }
-                  throw CCM_DDS::InternalError (retcode, 1);
+                  throw ::CCM_DDS::InternalError (retcode, 1);
                 }
               else if (data.length () == 1 && sample_info[0].valid_data)
                 {

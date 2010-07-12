@@ -39,7 +39,7 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::Writer_T::write_i - "
                    "Write unsuccessful, received error code %C\n",
                    translate_retcode (retval)));
-      throw CCM_DDS::InternalError (retval, index);
+      throw ::CCM_DDS::InternalError (retval, index);
     }
 }
 

@@ -295,7 +295,7 @@ namespace CIAO_Quoter_Broker_Impl
     if (::CORBA::is_nil (lc.in ()))
       {
         ACE_DEBUG ((LM_DEBUG, "Error:  Listener control receptacle is null!\n"));
-        throw CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
     //in case of testing Listener set lc-> enabled true
     lc->mode ( ::CCM_DDS::ONE_BY_ONE);
