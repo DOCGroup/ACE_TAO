@@ -193,7 +193,7 @@ public:
                                      ACE_Thread_Manager *thr_mgr,
                                      int flags = THR_DETACHED);
 
-  /// Performs the inverse of the <register_stdin_handler> method.
+  /// Performs the inverse of the register_stdin_handler() method.
   static int remove_stdin_handler (ACE_Reactor *reactor,
                                    ACE_Thread_Manager *thr_mgr);
 

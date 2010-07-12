@@ -69,7 +69,7 @@ public:
 
   /**
    * Note, for interface uniformity with other synchronization
-   * wrappers we include the <acquire> method.  This is implemented as
+   * wrappers we include the acquire() method. This is implemented as
    * a write-lock to be on the safe-side...
    */
   int acquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
