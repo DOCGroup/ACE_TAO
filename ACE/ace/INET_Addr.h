@@ -71,15 +71,15 @@ public:
   explicit ACE_INET_Addr (u_short port_number,
                           ACE_UINT32 ip_addr = INADDR_ANY);
 
-  /// Uses <getservbyname> to create an ACE_INET_Addr from a
-  /// <port_name>, the remote @a host_name, and the @a protocol.
+  /// Uses getservbyname() to create an ACE_INET_Addr from a
+  /// @a port_name, the remote @a host_name, and the @a protocol.
   ACE_INET_Addr (const char port_name[],
                  const char host_name[],
                  const char protocol[] = "tcp");
 
   /**
-   * Uses <getservbyname> to create an ACE_INET_Addr from a
-   * <port_name>, an Internet @a ip_addr, and the @a protocol.  This
+   * Uses getservbyname() to create an ACE_INET_Addr from a
+   * @a port_name, an Internet @a ip_addr, and the @a protocol.  This
    * method assumes that @a ip_addr is in host byte order.
    */
   ACE_INET_Addr (const char port_name[],
