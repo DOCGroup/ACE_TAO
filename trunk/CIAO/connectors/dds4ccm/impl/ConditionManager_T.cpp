@@ -3,6 +3,8 @@
 #include "dds4ccm/impl/ReadCondition_T.h"
 #include "dds4ccm/impl/QueryCondition_T.h"
 
+#include "ace/OS_NS_sys_time.h"
+
 //============================================================
 // ConditionManager_T
 //============================================================
@@ -155,7 +157,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::query");
-  if ( ::CORBA::is_nil (this->qc_reader_.in ()))
+
+  if (!this->get_querycondition_reader ())
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
@@ -241,11 +244,16 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
                         ACE_TEXT ("All query conditions created successfully\n")));
         }
     }
-  else
+  else if (ACE_OS::strlen (filter.expression.in ()) > 0)
     {
       this->set_parameters (filter, this->qc_reader_);
       this->set_parameters (filter, this->qc_getter_);
       this->set_parameters (filter, this->qc_listener_);
+    }
+  else
+    {
+      //remove query conditions
+      this->remove_conditions ();
     }
 }
 
