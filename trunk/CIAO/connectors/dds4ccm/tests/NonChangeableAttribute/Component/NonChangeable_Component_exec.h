@@ -28,6 +28,9 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
     virtual ~Component_exec_i (void);
 
     // Operations from Components::SessionComponent.
+    CCM_DDS::CCM_PortStatusListener_ptr
+    get_info_get_status(void);
+
     virtual void
     set_session_context (
       ::Components::SessionContext_ptr ctx);
@@ -61,6 +64,9 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
     test_domain_id (
       ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
 
+    bool
+    test_filter (
+      ::NonChangeable::NonChangeableTestConnector::CCM_DDS_Event_ptr conn);
   };
 
   extern "C" COMPONENT_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -1,3 +1,14 @@
+Mon Jul 12 15:04:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Code layout.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+          Added filter test.
+
 Mon Jul 12 13:07:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/XML_File_Intf.cpp:

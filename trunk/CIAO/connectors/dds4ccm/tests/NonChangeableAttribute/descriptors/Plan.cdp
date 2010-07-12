@@ -138,19 +138,19 @@
   </instance>
 
   <connection>
-    <name>info_write_data</name>
+    <name>info_get_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
-      <portName>info_write_data</portName>
+      <portName>info_get_data</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
       <instance xmi:idref="NonChangeableComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>supplier_data</portName>
+      <portName>pull_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="NonChangeableConnectorInstance" />
