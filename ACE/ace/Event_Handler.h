@@ -38,7 +38,8 @@ typedef unsigned long ACE_Reactor_Mask;
 /**
  * @class ACE_Event_Handler
  *
- * @brief Provides an abstract interface for handling various types of
+ * @brief
+ * Provides an abstract interface for handling various types of
  * I/O, timer, and signal events.
  *
  * Subclasses read/write input/output on an I/O descriptor,
@@ -94,9 +95,9 @@ public:
 
   // = Get/set priority
 
-  // Priorities run from MIN_PRIORITY (which is the "lowest priority")
-  // to MAX_PRIORITY (which is the "highest priority").
   /// Get the priority of the Event_Handler.
+  /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
+  /// to MAX_PRIORITY (which is the "highest priority").
   virtual int priority (void) const;
 
   /// Set the priority of the Event_Handler.
@@ -177,8 +178,8 @@ public:
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
    * on ACE_STDIN on UNIX.  Note that @a event_handler must be a
-   * subclass of ACE_Event_Handler.  If the <get_handle> method of
-   * this event handler returns <ACE_INVALID_HANDLE> we default to
+   * subclass of ACE_Event_Handler.  If the get_handle() method of
+   * this event handler returns ACE_INVALID_HANDLE we default to
    * reading from ACE_STDIN.
    */
   static ACE_THR_FUNC_RETURN read_adapter (void *event_handler);
@@ -238,7 +239,8 @@ public:
   /**
    * @class Reference_Counting_Policy
    *
-   * @brief This policy dictates the reference counting requirements
+   * @brief
+   * This policy dictates the reference counting requirements
    * for the handler.
    *
    * This policy allows applications to configure whether it wants the
