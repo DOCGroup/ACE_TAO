@@ -956,7 +956,7 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 
           ACE_CString tail (name.substr (start + head.length ()));
 
-          return idl_global->string_to_scoped_name (tail.c_str ());
+          return FE_Utils::string_to_scoped_name (tail.c_str ());
         }
 
       tmp = ScopeAsDecl (tmp->defined_in ());

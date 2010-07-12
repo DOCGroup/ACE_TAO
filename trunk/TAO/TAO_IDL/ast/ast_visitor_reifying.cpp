@@ -635,7 +635,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 
           ACE_CString tail (name.substr (start + head.length ()));
 
-          return idl_global->string_to_scoped_name (tail.c_str ());
+          return FE_Utils::string_to_scoped_name (tail.c_str ());
         }
 
       tmp = ScopeAsDecl (tmp->defined_in ());

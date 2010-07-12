@@ -17,6 +17,7 @@
 #include "be_interface.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "be_util.h"
 
 #include "global_extern.h"
 #include "utl_string.h"
@@ -128,7 +129,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
-  idl_global->validate_included_idl_files ();
+  FE_Utils::validate_included_idl_files ();
 
   // Clean up between multiple files.
   delete this->client_header_;
@@ -503,17 +504,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       return -1;
     }
 
-  // If we are suppressing skel file generation, bail after generating the
-  // copyright text and an informative message.
-  if (!be_global->gen_skel_files ())
-    {
-      *this->server_header_ << be_nl
-                            << "// Skeleton file generation suppressed with "
-                            << "command line option -SS" << be_nl;
-
-      return 0;
-    }
-
   *this->server_header_ << be_nl
                         << "// TAO_IDL - Generated from" << be_nl
                         << "// " << __FILE__ << ":" << __LINE__
@@ -583,6 +573,17 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
+    }
+
+  // If we are suppressing skel file generation, bail after generating the
+  // copyright text and an informative message.
+  if (!be_global->gen_skel_files ())
+    {
+      *this->server_header_ << be_nl << be_nl
+                            << "// Skeleton file generation suppressed with "
+                            << "command line option -SS";
+
+      return 0;
     }
 
   // Some compilers don't optimize the #ifndef header include
@@ -1722,10 +1723,6 @@ TAO_CodeGen::end_client_stubs (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
-  *this->server_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
-                        << be_nl << "// " << __FILE__ << ":" << __LINE__
-                        << be_nl << be_nl;
-
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->server_header_ << be_global->versioning_end ();
@@ -1749,17 +1746,16 @@ TAO_CodeGen::end_server_header (void)
       *this->server_header_ << "#endif /* defined INLINE */";
     }
 
-  // Code to put the last #endif.
-  *this->server_header_ << "\n\n";
-
   if (be_global->post_include () != 0)
     {
-      *this->server_header_ << "#include /**/ \""
+      *this->server_header_ << be_nl << be_nl
+                            << "#include /**/ \""
                             << be_global->post_include ()
-                            << "\"\n";
+                            << "\"";
     }
 
-  *this->server_header_ << "#endif /* ifndef */\n"
+  *this->server_header_ << be_nl << be_nl
+                        << "#endif /* ifndef */\n"
                         << "\n";
                         
   return 0;
@@ -2131,7 +2127,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
   ACE_CString file_str;
 
   const char *output_path =
-    be_global->get_output_path (false, for_skel);
+    be_util::get_output_path (false, for_skel);
 
   if (output_path != 0)
     {

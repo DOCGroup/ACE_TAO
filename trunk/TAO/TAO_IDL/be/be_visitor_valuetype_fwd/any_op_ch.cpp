@@ -91,7 +91,10 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
           << node->local_name () << " *&);";
 
       be_util::gen_nested_namespace_end (os, module);
-      *os << be_global->core_versioning_end () << be_nl;
+      
+      *os << be_nl
+          << be_global->core_versioning_end () << be_nl;
+      
       // emit #else
       *os << "#else\n\n";
     }

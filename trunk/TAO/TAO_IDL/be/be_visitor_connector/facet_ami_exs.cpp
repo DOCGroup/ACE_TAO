@@ -163,7 +163,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
   handler_str += "Handler";
 
   UTL_ScopedName *sn =
-    idl_global->string_to_scoped_name (handler_str.c_str ());
+    FE_Utils::string_to_scoped_name (handler_str.c_str ());
   AST_Decl *d = s->lookup_by_name (sn, true);
 
   sn->destroy ();

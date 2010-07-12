@@ -36,21 +36,20 @@ be_visitor_root_sh::visit_root (be_root *node)
                         -1);
     }
     
-  /// The SI and SS cases are caught in BE_produce(). Sometimes
-  /// we want to generate an empty skeleton header file, which
-  /// has been done, so we can bail here.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SH
-      && !be_global->gen_skel_files ())
+  /// The SI and SS cases are caught in BE_produce(). We
+  /// want to generate an empty skeleton header file, which
+  /// has been done, so -SS can flag a skip of the scope
+  /// traversal, but we want to generate the skeleton
+  /// end-of-header file stuff, so we don't bail completely.
+  if (be_global->gen_skel_files ())
     {
-      return 0;
-    }
-
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_sh::visit_root - ")
-                         ACE_TEXT ("codegen for scope failed\n")),
-                        -1);
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_root_sh::visit_root - ")
+                             ACE_TEXT ("codegen for scope failed\n")),
+                            -1);
+        }
     }
 
   (void) tao_cg->end_server_header ();

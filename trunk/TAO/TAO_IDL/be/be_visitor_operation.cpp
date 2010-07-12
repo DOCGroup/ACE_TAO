@@ -42,6 +42,8 @@
 #include "be_extern.h"
 #include "be_helper.h"
 #include "be_identifier_helper.h"
+#include "be_util.h"
+
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "nr_extern.h"

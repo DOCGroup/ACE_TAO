@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // Root visitor for client header.
 be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -100,29 +99,57 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (node->flat_name ());
 
+  *os << be_nl << be_nl;
+  
   /// If we are using std::vector, we won't be using _vars
   /// and _outs. They may get redefined and reinstated later.
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
       if (this->ctx_->tdef () != 0)
         {
-          *os << be_nl << be_nl
-              << "class " << node->local_name () << ";";
+          *os << "class " << node->local_name () << ";";
         }
 
       if (this->ctx_->tdef () != 0)
         {
-          this->gen_varout_typedefs (node,
-                                     bt);
+          this->gen_varout_typedefs (node, bt);
         }
     }
+  else
+    {
+      *os << "typedef std::vector< ";
 
-  *os << be_nl << be_nl
-      << "class " << be_global->stub_export_macro () << " "
+      // Generate the base type for the buffer.
+      be_visitor_context ctx (*this->ctx_);
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
+      be_visitor_sequence_buffer_type bt_visitor (&ctx);
+
+      if (bt->accept (&bt_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_sequence_ch::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("buffer type visit failed\n")),
+                            -1);
+        }
+        
+      *os << "> " << node->local_name () << ";";
+      
+      os->gen_endif ();
+      node->cli_hdr_gen (true);
+      return 0;
+    }
+
+  *os << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
+      
+  int status =
+    node->gen_base_class_name (os,
+                               "",
+                               this->ctx_->scope ()->decl ());
 
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
@@ -170,9 +197,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       if (bt->accept (&bt_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_ch::"
-                             "visit_sequence - "
-                             "buffer type visit failed\n"),
+                             ACE_TEXT ("be_visitor_sequence_ch::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("buffer type visit failed\n")),
                             -1);
         }
 
@@ -259,7 +286,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os->gen_endif ();
 
-  node->cli_hdr_gen (1);
+  node->cli_hdr_gen (true);
   return 0;
 }
 
