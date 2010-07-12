@@ -229,6 +229,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
     }
   catch (...)
     {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+        "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
+        "Unexpected exception caught\n"));
     }
 }
 

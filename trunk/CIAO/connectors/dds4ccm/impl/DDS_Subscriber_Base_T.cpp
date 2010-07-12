@@ -28,60 +28,35 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
   this->configuration_complete_ = true;
 
-  try
+  if (!this->data_reader_.get_impl ())
     {
-      if (!this->data_reader_.get_impl ())
+      if (ACE_OS::strlen (this->cft_setting_.filter ()->expression.in ()) > 0)
         {
-          if (ACE_OS::strlen (this->cft_setting_.filter ()->expression.in ()) > 0)
+          ::DDS::ContentFilteredTopic_var cft =
+            this->cft_setting_.create_contentfilteredtopic (topic,
+                                                            subscriber);
+          if (CORBA::is_nil (cft.in ()))
             {
-              ::DDS::ContentFilteredTopic_var cft =
-                this->cft_setting_.create_contentfilteredtopic (topic,
-                                                                subscriber);
-              if (CORBA::is_nil (cft.in ()))
-                {
-                  DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::configuration_complete: "
-                                               "Error creating ContentFilteredTopic.\n"));
-                  throw ::CORBA::INTERNAL ();
-                }
-              this->data_reader_.create_datareader (cft,
-                                                    subscriber,
-                                                    library_name,
-                                                    profile_name);
+              DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::configuration_complete: "
+                                            "Error creating ContentFilteredTopic.\n"));
+              throw ::CORBA::INTERNAL ();
             }
-          else
-            {
-              this->data_reader_.create_datareader (topic,
-                                                    subscriber,
-                                                    library_name,
-                                                    profile_name);
-            }
-          this->dds_read_.set_impl (&this->data_reader_,
-                                    &this->condition_manager_);
-          this->dds_read_._set_component (component);
-          return true;
+          this->data_reader_.create_datareader (cft,
+                                                subscriber,
+                                                library_name,
+                                                profile_name);
         }
-    }
-  catch (const ::CCM_DDS::InternalError &)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY,
-                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                         "Caught CCM_DDS internal exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("DDS_Subscriber_Base_T::configuration_complete");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY,
-                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                         "Caught internal exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY,
-                         CLINFO "DDS_Subscriber_Base_T::configuration_complete: "
-                         "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
+      else
+        {
+          this->data_reader_.create_datareader (topic,
+                                                subscriber,
+                                                library_name,
+                                                profile_name);
+        }
+      this->dds_read_.set_impl (&this->data_reader_,
+                                &this->condition_manager_);
+      this->dds_read_._set_component (component);
+      return true;
     }
   return false;
 }
@@ -94,24 +69,15 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate");
 
-  try
+  if (::CORBA::is_nil (this->listener_.in ()))
     {
-      if (::CORBA::is_nil (this->listener_.in ()))
-        {
-          ACE_NEW_THROW_EX (this->listener_,
-                            PortStatusListener_type (status, reactor),
-                            CORBA::NO_MEMORY ());
-        }
-      this->data_reader_.set_listener (
-        this->listener_.in (),
-        PortStatusListener_type::get_mask (status));
+      ACE_NEW_THROW_EX (this->listener_,
+                        PortStatusListener_type (status, reactor),
+                        CORBA::NO_MEMORY ());
     }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::activate: "
-                                              "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->data_reader_.set_listener (
+    this->listener_.in (),
+    PortStatusListener_type::get_mask (status));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -120,18 +86,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate");
 
-  try
-    {
-      this->condition_manager_.passivate ();
-      this->data_reader_.passivate ();
-      this->listener_ = ::DDS::DataReaderListener::_nil ();
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::passivate: "
-                                              "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->condition_manager_.passivate ();
+  this->data_reader_.passivate ();
+  this->listener_ = ::DDS::DataReaderListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -141,18 +98,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  try
-    {
-      this->data_reader_.delete_datareader (subscriber);
-      this->cft_setting_.delete_contentfilteredtopic (subscriber);
-      this->dds_read_._set_component (CCM_TYPE::base_type::_nil ());
-    }
-  catch (...)
-    {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "DDS_Subscriber_Base_T::remove: "
-                                              "Caught unexpected exception.\n"));
-      throw CORBA::INTERNAL ();
-    }
+  this->data_reader_.delete_datareader (subscriber);
+  this->cft_setting_.delete_contentfilteredtopic (subscriber);
+  this->dds_read_._set_component (CCM_TYPE::base_type::_nil ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -208,7 +156,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter (
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_Subscriber_Base_T::get_filter_config: "
                                        "Filter expression not set. Unable to create "
                                        "ContentFilterSetting interface.\n"));
-          throw ::CCM_DDS::InternalError ();
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
       this->cft_setting_.filter (filter);
     }

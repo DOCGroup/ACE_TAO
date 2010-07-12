@@ -159,7 +159,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::check_
   if (!DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL) &&
       !DDS_InstanceHandle_equals (&hnd, &lookup_hnd))
     {
-      throw ::CCM_DDS::InternalError (0, 0);
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
   if (DDS_InstanceHandle_equals (&lookup_hnd, &::DDS_HANDLE_NIL))
     {

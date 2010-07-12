@@ -81,7 +81,7 @@ namespace CIAO
                           "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
                           domain_id));
-              throw CCM_DDS::InternalError (1, 0);
+              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
 
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
@@ -173,7 +173,7 @@ namespace CIAO
               DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
                             "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_participant_with_profile - "
                             "Error: Unable to create DomainParticipant\n"));
-              throw CCM_DDS::InternalError (1, 0);
+              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
           ACE_NEW_THROW_EX (retval,

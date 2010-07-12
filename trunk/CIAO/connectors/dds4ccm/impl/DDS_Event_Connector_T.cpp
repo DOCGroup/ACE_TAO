@@ -173,75 +173,103 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
-
-  this->push_consumer_obtained_ |=
-    ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ());
-
-  ::CCM_DDS::PortStatusListener_var push_consumer_psl =
-    this->context_->get_connection_push_consumer_status ();
-  this->push_consumer_obtained_ |= ! ::CORBA::is_nil (push_consumer_psl.in ());
-
-  ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
-    this->context_->get_connection_pull_consumer_status ();
-  this->pull_consumer_obtained_ |=
-    ! ::CORBA::is_nil (pull_consumer_psl.in ());
-
-  if (this->push_consumer_obtained_)
+  try
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "Creating push consumer port.\n"));
-      this->push_consumer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
+      TopicBaseConnector::configuration_complete ();
+
+      this->push_consumer_obtained_ |=
+        ! ::CORBA::is_nil (this->context_->get_connection_push_consumer_data_listener ());
+
+      ::CCM_DDS::PortStatusListener_var push_consumer_psl =
+        this->context_->get_connection_push_consumer_status ();
+      this->push_consumer_obtained_ |= ! ::CORBA::is_nil (push_consumer_psl.in ());
+
+      ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
+        this->context_->get_connection_pull_consumer_status ();
+      this->pull_consumer_obtained_ |=
+        ! ::CORBA::is_nil (pull_consumer_psl.in ());
+
+      if (this->push_consumer_obtained_)
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "Creating push consumer port.\n"));
+          this->push_consumer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "No need to create push consumer port.\n"));
+        }
+
+      if (this->supplier_obtained_)
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "Creating supplier port.\n"));
+          this->supplier_.configuration_complete(
+            this,
+            this->topic_.in (),
+            this->publisher_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "No need to create supplier port.\n"));
+        }
+
+      if (this->pull_consumer_obtained_)
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "Creating pull consumer port.\n"));
+          this->pull_consumer_.configuration_complete (
+            this,
+            this->topic_.in (),
+            this->subscriber_.in (),
+            this->library_name_,
+            this->profile_name_);
+        }
+      else
+        {
+          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+                        "No need to create pull consumer port.\n"));
+        }
     }
-  else
+  catch (const ::CCM_DDS::InternalError &ex)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "No need to create push consumer port.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
     }
-
-  if (this->supplier_obtained_)
+  catch (const CORBA::Exception& ex)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "Creating supplier port.\n"));
-      this->supplier_.configuration_complete(
-        this,
-        this->topic_.in (),
-        this->publisher_.in (),
-        this->library_name_,
-        this->profile_name_);
+      ex._tao_print_exception ("DDS_Event_Connector_T::configuration_complete");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught internal exception.\n"));
+      throw;
     }
-  else
+  catch (...)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "No need to create supplier port.\n"));
-    }
-
-  if (this->pull_consumer_obtained_)
-    {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "Creating pull consumer port.\n"));
-      this->pull_consumer_.configuration_complete (
-        this,
-        this->topic_.in (),
-        this->subscriber_.in (),
-        this->library_name_,
-        this->profile_name_);
-    }
-  else
-    {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
-                    "No need to create pull consumer port.\n"));
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
     }
 }
 
@@ -250,30 +278,59 @@ void
 DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate");
-  ACE_Reactor* reactor = 0;
+
+  try
+    {
+      ACE_Reactor* reactor = 0;
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-  reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
+      reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
 #endif
-  TopicBaseConnector::ccm_activate (reactor);
+      TopicBaseConnector::ccm_activate (reactor);
 
-  if (this->push_consumer_obtained_)
-    {
-      this->push_consumer_.activate (
-        this->context_->get_connection_push_consumer_data_listener (),
-        this->context_->get_connection_push_consumer_status (),
-        reactor);
+      if (this->push_consumer_obtained_)
+        {
+          this->push_consumer_.activate (
+            this->context_->get_connection_push_consumer_data_listener (),
+            this->context_->get_connection_push_consumer_status (),
+            reactor);
+        }
+
+      if (this->supplier_obtained_)
+        {
+          this->supplier_.activate ();
+        }
+
+      if (this->pull_consumer_obtained_)
+        {
+          this->pull_consumer_.activate (
+            this->context_->get_connection_pull_consumer_status (),
+            reactor);
+        }
     }
-
-  if (this->supplier_obtained_)
+  catch (const ::CCM_DDS::InternalError &ex)
     {
-      this->supplier_.activate ();
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_activate - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
     }
-
-  if (this->pull_consumer_obtained_)
+  catch (const CORBA::Exception& ex)
     {
-      this->pull_consumer_.activate (
-        this->context_->get_connection_pull_consumer_status (),
-        reactor);
+      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_activate");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught internal exception.\n"));
+      throw;
+    }
+  catch (...)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_activate - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
     }
 }
 
@@ -283,21 +340,49 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate");
 
-  if (this->push_consumer_obtained_)
+  try
     {
-      this->push_consumer_.passivate ();
-    }
+      if (this->push_consumer_obtained_)
+        {
+          this->push_consumer_.passivate ();
+        }
 
-  if (this->supplier_obtained_)
-    {
-      this->supplier_.passivate ();
-    }
+      if (this->supplier_obtained_)
+        {
+          this->supplier_.passivate ();
+        }
 
-  if (this->pull_consumer_obtained_)
-    {
-      this->pull_consumer_.passivate ();
+      if (this->pull_consumer_obtained_)
+        {
+          this->pull_consumer_.passivate ();
+        }
+      TopicBaseConnector::ccm_passivate ();
     }
-  TopicBaseConnector::ccm_passivate ();
+  catch (const ::CCM_DDS::InternalError &ex)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_passivate - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_passivate");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught internal exception.\n"));
+      throw;
+    }
+  catch (...)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_passivate - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -306,19 +391,47 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove");
 
-  if (this->push_consumer_obtained_)
+  try
     {
-      this->push_consumer_.remove (this->subscriber_.in ());
-    }
+      if (this->push_consumer_obtained_)
+        {
+          this->push_consumer_.remove (this->subscriber_.in ());
+        }
 
-  if (this->supplier_obtained_)
-    {
-      this->supplier_.remove (this->publisher_.in ());
-    }
+      if (this->supplier_obtained_)
+        {
+          this->supplier_.remove (this->publisher_.in ());
+        }
 
-  if (this->pull_consumer_obtained_)
-    {
-      this->pull_consumer_.remove (this->subscriber_.in ());
+      if (this->pull_consumer_obtained_)
+        {
+          this->pull_consumer_.remove (this->subscriber_.in ());
+        }
+      TopicBaseConnector::ccm_remove ();
     }
-  TopicBaseConnector::ccm_remove ();
+  catch (const ::CCM_DDS::InternalError &ex)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_remove - "
+                         "Caught CCM_DDS internal exception: error <%C> - "
+                         "index <%d>\n",
+                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                         index));
+      throw CORBA::INTERNAL ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_remove");
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::configuration_complete - "
+                         "Caught internal exception.\n"));
+      throw;
+    }
+  catch (...)
+    {
+      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
+                         "DDS_Event_Connector_T::ccm_remove - "
+                         "Caught unexpected exception.\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
