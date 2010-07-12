@@ -248,20 +248,18 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught CCM_DDS internal exception: error <%C> - "
-                         "index <%d>\n",
-                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         ex.index));
+      DDS4CCM_PRINT_INTERNAL_EXCEPTION (
+                              1,
+                              ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                              "DDS_Event_Connector_T::configuration_complete");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DDS_Event_Connector_T::configuration_complete");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught internal exception.\n"));
+      DDS4CCM_PRINT_CORBA_EXCEPTION (
+                              1,
+                              ex,
+                              "DDS_Event_Connector_T::configuration_complete");
       throw;
     }
   catch (...)
@@ -309,20 +307,18 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_activate - "
-                         "Caught CCM_DDS internal exception: error <%C> - "
-                         "index <%d>\n",
-                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         ex.index));
+      DDS4CCM_PRINT_INTERNAL_EXCEPTION (
+                              1,
+                              ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                              "DDS_Event_Connector_T::ccm_activate");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_activate");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught internal exception.\n"));
+      DDS4CCM_PRINT_CORBA_EXCEPTION (
+                              1,
+                              ex,
+                              "DDS_Event_Connector_T::ccm_activate");
       throw;
     }
   catch (...)
@@ -360,20 +356,18 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_passivate - "
-                         "Caught CCM_DDS internal exception: error <%C> - "
-                         "index <%d>\n",
-                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         ex.index));
+      DDS4CCM_PRINT_INTERNAL_EXCEPTION (
+                              1,
+                              ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                              "DDS_Event_Connector_T::ccm_passivate");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_passivate");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught internal exception.\n"));
+      DDS4CCM_PRINT_CORBA_EXCEPTION (
+                              1,
+                              ex,
+                              "DDS_Event_Connector_T::ccm_passivate");
       throw;
     }
   catch (...)
@@ -411,20 +405,18 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
     }
   catch (const ::CCM_DDS::InternalError &ex)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_remove - "
-                         "Caught CCM_DDS internal exception: error <%C> - "
-                         "index <%d>\n",
-                         ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                         ex.index));
+      DDS4CCM_PRINT_INTERNAL_EXCEPTION (
+                              1,
+                              ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
+                              "DDS_Event_Connector_T::ccm_remove");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DDS_Event_Connector_T::ccm_remove");
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught internal exception.\n"));
+      DDS4CCM_PRINT_CORBA_EXCEPTION (
+                              1,
+                              ex,
+                              "DDS_Event_Connector_T::ccm_remove");
       throw;
     }
   catch (...)
