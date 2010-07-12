@@ -15,6 +15,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install_lib, ciao_output, tao_idl_fe {
     be_init.cpp
     be_produce.cpp
     be_sunsoft.cpp
+    be_util.cpp
     checking_visitor.cpp
     identifier_helper.cpp
     idl3_to_idl2_visitor.cpp
