@@ -238,6 +238,16 @@ fe_populate_global_scope (void)
       &AbstractBase_name);
       
   m->fe_add_predefined_type (pdt);
+
+  Identifier TypeCode_id ("TypeCode");
+  UTL_ScopedName TypeCode_name (&TypeCode_id, 0);
+  
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+      AST_PredefinedType::PT_pseudo,
+      &TypeCode_name);
+      
+  m->fe_add_predefined_type (pdt);
 }
 
 // Populate idl_global's hash map with upper case versions of
