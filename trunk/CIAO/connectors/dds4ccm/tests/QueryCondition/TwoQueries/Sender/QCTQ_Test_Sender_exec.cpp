@@ -145,7 +145,7 @@ namespace CIAO_QCTQ_Test_Sender_Impl
         WriteHandler *wh = new WriteHandler (*this);
         this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->notify (wh);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
         ACE_ERROR ((LM_ERROR,

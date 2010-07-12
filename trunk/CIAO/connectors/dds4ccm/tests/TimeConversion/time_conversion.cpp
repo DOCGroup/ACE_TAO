@@ -76,7 +76,7 @@ ACE_TMAIN(int , ACE_TCHAR **)
                                 "regarding nano seconds succeeded\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

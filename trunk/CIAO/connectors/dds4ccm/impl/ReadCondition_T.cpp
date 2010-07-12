@@ -64,7 +64,7 @@ CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dat
     {
       ACE_NEW_THROW_EX (retval,
                         DataReader_type (rd),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   return retval._retn ();
 }

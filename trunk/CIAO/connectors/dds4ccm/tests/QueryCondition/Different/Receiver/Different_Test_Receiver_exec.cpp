@@ -213,7 +213,7 @@ namespace CIAO_Different_Test_Receiver_Impl
               test,
               ex.error_code));
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception (test);
         ACE_ERROR ((LM_ERROR,
@@ -264,7 +264,7 @@ namespace CIAO_Different_Test_Receiver_Impl
                               ex.error_code));
         return;
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: Receiver_exec_i::check_filter: ");
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::check_filter - "

@@ -135,7 +135,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
                               ACE_TEXT ("Unable to write: write_data is nil.\n")));
-        throw CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
 
     try
@@ -169,7 +169,7 @@ namespace CIAO_Shapes_Sender_comp_Impl
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::update_square - ")
                               ACE_TEXT ("Unable to write: write_data is nil.\n")));
-        throw CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
 
     try

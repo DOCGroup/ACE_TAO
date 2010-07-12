@@ -240,14 +240,14 @@ namespace CIAO_Writer_Sender_Impl
             ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
                         "Error casting the typed CCM DataWriter to a typed "
                         "DDS DataWriter.\n"));
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
                     "Error casting DataWriter_var to typed DataWriter\n"));
-        throw CORBA::INTERNAL ();
+        throw ::CORBA::INTERNAL ();
       }
   }
 

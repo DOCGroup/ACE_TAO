@@ -120,7 +120,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
       // (including its proxy).
       ACE_NEW_THROW_EX (this->ws_,
                         DDSWaitSet (),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
 
       if ( ::CORBA::is_nil (this->rd_condition_.in ()))
         {
@@ -144,7 +144,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
                         ACE_TEXT ("Unable to attach read condition to waitset.\n")));
-          throw CCM_DDS::InternalError (retcode, 1);
+          throw ::CCM_DDS::InternalError (retcode, 1);
         }
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
@@ -164,12 +164,12 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
                     ACE_TEXT ("Error: No QueryCondition set yet. ")
                     ACE_TEXT ("First set a filter.\n")));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
   ::CCM_DDS::QueryFilter_var filter;
   ACE_NEW_THROW_EX (filter,
                     ::CCM_DDS::QueryFilter(),
-                    CORBA::NO_MEMORY ());
+                    ::CORBA::NO_MEMORY ());
   filter->expression= this->qc_reader_->get_query_expression ();
   this->qc_reader_->get_query_parameters (filter->parameters);
   return filter._retn ();
@@ -235,7 +235,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
                         this->qc_getter_.in (),
                         this->qc_listener_.in ()));
 
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
         }
       else
         {
@@ -273,7 +273,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_paramete
                     ACE_TEXT ("Error setting expression_parameters. ")
                     ACE_TEXT ("Retval is %C\n"),
                     translate_retcode(retval)));
-      throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
     }
 }
 
@@ -287,7 +287,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_query
     {
       ACE_NEW_THROW_EX (this->ws_,
                         DDSWaitSet (),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   DDS_ReturnCode_t const retcode =
     this->ws_->attach_condition (this->get_querycondition_getter ());
@@ -296,7 +296,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_query
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::ConditionManager_T::attach_querycondition - "
                                           "Unable to attach query condition to waitset.\n"));
-      throw CCM_DDS::InternalError (retcode, 1);
+      throw ::CCM_DDS::InternalError (retcode, 1);
     }
   DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::Getter_Base_T::attach_querycondition - "
                                       "Query condition created and attached to Waitset.\n"));

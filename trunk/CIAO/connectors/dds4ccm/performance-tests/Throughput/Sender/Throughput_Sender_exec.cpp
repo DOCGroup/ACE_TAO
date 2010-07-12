@@ -382,7 +382,7 @@ namespace CIAO_Throughput_Sender_Impl
             throw ::CORBA::INTERNAL ();
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("Exception caught:");
         ACE_ERROR ((LM_ERROR,

@@ -73,7 +73,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
     {
       ACE_NEW_THROW_EX (this->listener_,
                         PortStatusListener_type (status, reactor),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
     }
   this->data_reader_.set_listener (
     this->listener_.in (),

@@ -43,7 +43,7 @@ namespace CIAO
     ::DDS::Entity_ptr
     CCM_DDS_StatusCondition_i::get_entity (void)
     {
-      throw CORBA::NO_IMPLEMENT ();
+      throw ::CORBA::NO_IMPLEMENT ();
     }
 
     DDSStatusCondition *

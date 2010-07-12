@@ -66,7 +66,7 @@ namespace CIAO
       DDSTopic *topic = this->impl ()->get_related_topic ();
       ACE_NEW_THROW_EX (retval,
                         Topic_type (topic),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -92,7 +92,7 @@ namespace CIAO
       DDSDomainParticipant * p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type (p),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 

@@ -52,7 +52,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter - "
                        "Error: Unable to cast provided topic to its servant.\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       DDSDataWriterListener *ccm_dds_drl = 0;
@@ -60,7 +60,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             DataWriterListener_type (a_listener, 0),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
       DDSDataWriter *ccm_dds_dw = this->impl ()->create_datawriter (
@@ -75,13 +75,13 @@ namespace CIAO
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
 
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (ccm_dds_dw),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
 
       ccm_dds_dw->enable ();
       return retval._retn ();
@@ -105,7 +105,7 @@ namespace CIAO
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: Unable to cast provided topic to its servant.\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       DDSDataWriterListener *ccm_dds_drl = 0;
@@ -113,7 +113,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_drl,
                             DataWriterListener_type (a_listener, 0),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       DDSDataWriter *ccm_dds_dw = this->impl ()->create_datawriter_with_profile (
                                                               topic->get_impl (),
@@ -128,7 +128,7 @@ namespace CIAO
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: RTI Topic returned a nil datawriter.\n"));
           delete ccm_dds_drl;
-          throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       else
         {
@@ -142,7 +142,7 @@ namespace CIAO
       ::DDS::DataWriter_var retval = ::DDS::DataWriter::_nil ();
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (ccm_dds_dw),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       ccm_dds_dw->enable ();
 
       return retval._retn ();
@@ -196,7 +196,7 @@ namespace CIAO
       DDSDataWriter* dw = this->impl ()->lookup_datawriter (impl_name);
       ACE_NEW_THROW_EX (retval,
                         DataWriter_type (dw),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -242,7 +242,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             PublisherListener_type (a_listener),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
     }
@@ -313,7 +313,7 @@ namespace CIAO
       DDSDomainParticipant* p = this->impl ()->get_participant ();
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type (p),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -371,7 +371,7 @@ namespace CIAO
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 

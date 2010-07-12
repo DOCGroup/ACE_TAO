@@ -59,7 +59,7 @@ namespace CIAO
           DDS4CCM_ERROR (1, (LM_EMERGENCY,
                              CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                            "Unable to get DomainParticipant.\n"));
-          throw CORBA::INTERNAL ();
+          throw ::CORBA::INTERNAL ();
         }
 
       ACE_Auto_Array_Ptr <char> name;
@@ -67,7 +67,7 @@ namespace CIAO
         char *name_bootstrap = 0;
         ACE_NEW_THROW_EX (name_bootstrap,
                           char[32],
-                          CORBA::NO_MEMORY ());
+                          ::CORBA::NO_MEMORY ());
         name.reset(name_bootstrap);
       }
       ACE_OS::sprintf (name.get (),
@@ -82,7 +82,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                            "Error creating ContentfilteredTopic.\n"));
-          throw CORBA::INTERNAL ();
+          throw ::CORBA::INTERNAL ();
         }
       DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
                                    "successfully created ContentFilteredTopic <%C>\n",
@@ -114,7 +114,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "Calling set_filter_parameters without having set a filter\n"));
-          throw CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       ::DDS::ReturnCode_t retcode = this->cft_->set_expression_parameters (parameters);
@@ -129,7 +129,7 @@ namespace CIAO
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_ContentFilterSetting_i::set_filter_parameters: "
                                        "Error setting filter parameters: <%C>\n",
                                        translate_retcode (retcode)));
-          throw CCM_DDS::InternalError (retcode, 0);
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
     }
   }

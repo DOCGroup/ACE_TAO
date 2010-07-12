@@ -173,7 +173,7 @@ namespace CIAO_CoherentUpdate_Test_Receiver_Impl
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
               ex.error_code));
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: READ ALL: ");
         ACE_ERROR ((LM_ERROR,

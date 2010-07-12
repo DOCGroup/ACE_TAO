@@ -59,7 +59,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
                             TopicListener_type (a_listener),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
     }
@@ -109,7 +109,7 @@ namespace CIAO
       DDSStatusCondition* sc = this->impl ()->get_statuscondition ();
       ACE_NEW_THROW_EX (retval,
                         CCM_DDS_StatusCondition_i (sc),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
       return retval._retn ();
     }
 
@@ -155,7 +155,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (p),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
       return retval._retn ();
     }

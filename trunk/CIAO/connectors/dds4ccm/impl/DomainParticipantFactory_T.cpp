@@ -59,7 +59,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
                             CCM_DDS_DomainParticipantListener_i (a_listener),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
 
       ACE_CString qos_profile = "default";
@@ -81,13 +81,13 @@ namespace CIAO
                           "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_participant - "
                           "Error: Unable to create DomainParticipant for domain <%d>\n",
                           domain_id));
-              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
 
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
           dds_dp->enable ();
 
           DomainParticipant_type *typed_dp =
@@ -110,7 +110,7 @@ namespace CIAO
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
           return retval._retn ();
         }
 #else
@@ -144,7 +144,7 @@ namespace CIAO
         {
           ACE_NEW_THROW_EX (ccm_dds_dpl,
                             CCM_DDS_DomainParticipantListener_i (a_listener),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
         }
 
       ACE_CString qos_profile = library_name;
@@ -173,12 +173,12 @@ namespace CIAO
               DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_DomainParticipantFactory_T"
                             "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_participant_with_profile - "
                             "Error: Unable to create DomainParticipant\n"));
-              throw CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
 
           dds_dp->enable ();
 
@@ -200,7 +200,7 @@ namespace CIAO
           ::DDS::DomainParticipant_var retval = ::DDS::DomainParticipant::_nil ();
           ACE_NEW_THROW_EX (retval,
                             DomainParticipant_type (dds_dp),
-                            CORBA::NO_MEMORY ());
+                            ::CORBA::NO_MEMORY ());
           return retval._retn ();
         }
     }
@@ -264,13 +264,13 @@ namespace CIAO
         ->lookup_participant (domain_id);
        ACE_NEW_THROW_EX (retval,
                          DomainParticipant_type (dp),
-                         CORBA::NO_MEMORY ());
+                         ::CORBA::NO_MEMORY ());
 #else
       ::DDS::DomainParticipant_var dp =
         DDSDomainParticipantFactory::get_instance ()->lookup_participant (domain_id);
       ACE_NEW_THROW_EX (retval,
                         DomainParticipant_type  (dp.in ()),
-                        CORBA::NO_MEMORY ());
+                        ::CORBA::NO_MEMORY ());
 #endif
       return retval._retn ();
     }
@@ -370,7 +370,7 @@ namespace CIAO
 
       ACE_NEW_THROW_EX (retval,
         CCM_DDS_DomainParticipantFactory_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>,
-        CORBA::NO_MEMORY ());
+        ::CORBA::NO_MEMORY ());
 
       return retval._retn ();
     }

@@ -389,7 +389,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                "Caught unexcepted InternalError "
                                "exception\n"));
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR FIXED: TIMEOUT GET ONE:");
         ACE_ERROR ((LM_ERROR,
@@ -434,7 +434,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                "Caught unexcepted InternalError "
                                "exception\n"));
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR VARIABLE: TIMEOUT GET ONE:");
         ACE_ERROR ((LM_ERROR,
@@ -486,7 +486,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                "Caught unexcepted InternalError "
                                "exception\n"));
       }
-    catch (const CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         ex._tao_print_exception ("ERROR: TIMEOUT GET MANY:");
         ACE_ERROR ((LM_ERROR,
