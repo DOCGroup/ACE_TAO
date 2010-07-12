@@ -7316,7 +7316,7 @@ tao_yyreduce:
 
           if (s != 0)
             {
-              d = s->lookup_by_name (n);
+              d = s->lookup_by_name (n, false, false);
             }
 
           if (d == 0)
