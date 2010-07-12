@@ -53,21 +53,13 @@ public:
   virtual int visit_valuetype (be_valuetype * node);
   virtual int visit_eventtype (be_eventtype * node);
 
-  // = special methods
-
-  /// generate the nested namespace begins
-  virtual int gen_nested_namespace_begin (be_module *node);
-
-  /// generate the nested namespace ends
-  virtual int gen_nested_namespace_end (be_module *node);
-
-  // processing for scopes
+  /// Processing for scopes.
 
   /// do any processing after every element except the last one of the scope is
   /// processed
   virtual int post_process (be_decl *);
 
-  // data structure for handling recursive and repeated typecodes
+  // Data structure for handling recursive and repeated typecodes.
 
   struct QNode
   {
@@ -76,7 +68,6 @@ public:
   };
 
 protected:
-
   /// Generate the TypeCode_ptr.
   /**
    * Generate actual TypeCode instance/definition, not the supporting

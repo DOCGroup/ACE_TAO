@@ -1110,7 +1110,7 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
       i.next (item);
 
       UTL_ScopedName *sn =
-        idl_global->string_to_scoped_name (*item);
+        FE_Utils::string_to_scoped_name (*item);
 
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();

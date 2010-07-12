@@ -219,10 +219,8 @@ protected:
   AST_Interface *ami_handler_;
   AST_Interface *ami4ccm_uses_;
 
-protected:
+public:
   // Scope Management Protocol.
-  friend int tao_yyparse (void);
-  friend class IDL_GlobalData;
 
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
@@ -248,6 +246,7 @@ protected:
 
   virtual AST_Native *fe_add_native (AST_Native *n);
 
+protected:
   // Lookup based on the local name, override of UTL_Scope definition.
   // This version checks for redefinitions of attributes or operations.
   AST_Decl *lookup_for_add (AST_Decl *d);

@@ -495,7 +495,7 @@ DRV_cpp_post_init (void)
   ACE_CString include_path3, include_path4, include_path5;
 
   // When adding new dirs here don't forget to update
-  // IDL_GlobalData::validate_orb_include accordingly.
+  // FE_Utils::validate_orb_include accordingly.
   if (TAO_ROOT != 0)
     {
       DRV_add_include_path (include_path3, TAO_ROOT, "/orbsvcs", true);
@@ -528,7 +528,7 @@ DRV_cpp_post_init (void)
   char* CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
 
   // When adding new dirs here don't forget to update
-  // IDL_GlobalData::validate_orb_include accordingly.
+  // FE_Utils::validate_orb_include accordingly.
   if (CIAO_ROOT != 0)
     {
       DRV_add_include_path (include_path4, CIAO_ROOT, 0, true);
@@ -811,7 +811,7 @@ DRV_get_orb_idl_includes (void)
 
  // Search for orb.idl in supplied include file search paths.
   char const * directory = 0;
-  FILE * fp = idl_global->open_included_file (orb_idl, directory);
+  FILE * fp = FE_Utils::open_included_file (orb_idl, directory);
 
   if (fp == 0)
     {
@@ -1035,6 +1035,8 @@ DRV_pre_proc (const char *myfile)
                   tmp_ifile,
                   myfile);
   ACE_OS::fclose (file);
+  
+  UTL_String *utl_string = 0;
 
 #if defined (ACE_OPENVMS)
   {
@@ -1043,19 +1045,26 @@ DRV_pre_proc (const char *myfile)
     char *main_fullpath =
       ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
                         main_abspath);
-    idl_global->set_main_filename (
-                        idl_global->utl_string_factory (main_fullpath));
+    ACE_NEW (utl_string,
+             UTL_String (main_fullpath, true);
+    idl_global->set_main_filename (utl_string);
   }
 #else
-  idl_global->set_main_filename (idl_global->utl_string_factory (myfile));
+  ACE_NEW (utl_string,
+           UTL_String (myfile, true));
+  idl_global->set_main_filename (utl_string);
 #endif
 
   ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
-  UTL_String *tmp =
-    idl_global->utl_string_factory (DRV_stripped_name (safety.get ()));
-  idl_global->set_stripped_filename (tmp);
+  UTL_String *stripped_tmp = 0;
+  ACE_NEW (stripped_tmp,
+           UTL_String (DRV_stripped_name (safety.get ()), true));
+  idl_global->set_stripped_filename (stripped_tmp);
 
-  idl_global->set_real_filename (idl_global->utl_string_factory (t_ifile));
+  UTL_String *real_tmp = 0;
+  ACE_NEW (real_tmp,
+           UTL_String (t_ifile, true));
+  idl_global->set_real_filename (real_tmp);
 
   // We use ACE instead of the (low level) fork facilities, this also
   // works on NT.

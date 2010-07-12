@@ -89,8 +89,9 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // emit #else
-      *os << "#else\n\n";
+      // Emit #else.
+      *os << be_nl << be_nl
+          << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;

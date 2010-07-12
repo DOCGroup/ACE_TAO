@@ -57,17 +57,14 @@ public:
     OPENDDS
   };
 
-  /// Constructor
   BE_GlobalData (void);
-
-  /// Destructor
-  virtual ~BE_GlobalData (void);
+  ~BE_GlobalData (void);
 
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
   // generated with ""s or <>s respectively.
-  virtual void changing_standard_include_files (size_t changing);
-  virtual size_t changing_standard_include_files (void);
+  void changing_standard_include_files (size_t changing);
+  size_t changing_standard_include_files (void);
 
   // Helper functions that generate the file names for the C++ mapping
   // generated code.
@@ -475,18 +472,25 @@ public:
   /// impl and executor IDL files, if generated.
   void ciao_svnt_header_ending (const char* s);
   const char* ciao_svnt_header_ending (void) const;
+  
   void ciao_svnt_source_ending (const char* s);
   const char* ciao_svnt_source_ending (void) const;
+  
   void ciao_exec_header_ending (const char* s);
   const char* ciao_exec_header_ending (void) const;
+  
   void ciao_exec_source_ending (const char* s);
   const char* ciao_exec_source_ending (void) const;
+  
   void ciao_exec_stub_header_ending (const char* s);
   const char* ciao_exec_stub_header_ending (void) const;
+  
   void ciao_exec_idl_ending (const char* s);
   const char* ciao_exec_idl_ending (void) const;
+  
   void ciao_conn_header_ending (const char* s);
   const char* ciao_conn_header_ending (void) const;
+  
   void ciao_conn_source_ending (const char* s);
   const char* ciao_conn_source_ending (void) const;
 
@@ -759,12 +763,16 @@ public:
   void gen_custom_ending (bool val);
 
   /// Accessors for the corresponding members.
+  
   bool gen_ciao_svnt (void) const;
   void gen_ciao_svnt (bool val);
+  
   bool gen_ciao_exec_idl (void) const;
   void gen_ciao_exec_idl (bool val);
+  
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
+  
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
 
@@ -801,22 +809,6 @@ public:
 
   /// Parse args that affect the backend.
   void parse_args (long &i, char **av);
-
-  /// Special BE arg call factored out of DRV_args.
-  void prep_be_arg (char *s);
-
-  /// Checks made after parsing args.
-  void arg_post_proc (void);
-
-  /// Display usage of BE-specific options.
-  void usage (void) const;
-
-  /// Create an AST node generator.
-  AST_Generator *generator_init (void);
-
-  /// Called from various places.
-  const char *get_output_path (bool for_anyop,
-                               bool for_skel);
 
 private:
   /**

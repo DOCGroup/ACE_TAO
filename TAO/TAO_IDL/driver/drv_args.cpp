@@ -70,8 +70,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "drv_extern.h"
 #include "fe_extern.h"
+
 #include "be_global.h"
 #include "be_extern.h"
+#include "be_util.h"
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_ctype.h"
@@ -188,7 +191,7 @@ DRV_usage (void)
       ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
     ));
 
-  be_global->usage ();
+  be_util::usage ();
 }
 
 // Parse arguments on command line
@@ -286,7 +289,7 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-                      has_space = idl_global->hasspace (av[i + 1]);
+                      has_space = FE_Utils::hasspace (av[i + 1]);
 
                       // If the include path has a space, we need to
                       // add literal "s.
@@ -317,7 +320,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  has_space = idl_global->hasspace (av[i]);
+                  has_space = FE_Utils::hasspace (av[i]);
 
                   // If the include path has a space, we need to
                   // add literal "s.
@@ -391,7 +394,7 @@ DRV_parse_args (long ac, char **av)
                 case 'b':
                   if (*(s + 1) == ',')
                     {
-                      be_global->prep_be_arg (s + 2);
+                      be_util::prep_be_arg (s + 2);
                     }
 
                   break;
@@ -519,7 +522,7 @@ DRV_parse_args (long ac, char **av)
         }
     } // End of FOR (i = 1; i < ac; i++)
 
-  be_global->arg_post_proc ();
+  be_util::arg_post_proc ();
 
   // Make sure the output directory is valid.
   if (idl_global->temp_dir () == 0)

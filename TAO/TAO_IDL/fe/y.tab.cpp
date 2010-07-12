@@ -4354,7 +4354,7 @@ tao_yyreduce:
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  (tao_yyval.etval) = idl_global->PredefinedTypeToExprType (c->pt ());
+                  (tao_yyval.etval) = FE_Utils::PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
@@ -8045,7 +8045,7 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              FE_Utils::original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
                                  0);
@@ -8172,7 +8172,7 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              FE_Utils::original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
                                  0);
@@ -8196,7 +8196,7 @@ tao_yyreduce:
                   // These datatypes must be created in the
                   // front end so they can be looked up
                   // when compiling the generated executor IDL.
-                  idl_global->create_uses_multiple_stuff (c, u);
+                  FE_Utils::create_uses_multiple_stuff (c, u);
                 }
             }
 
@@ -8288,7 +8288,7 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              FE_Utils::original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
                                  0);
@@ -8362,7 +8362,7 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              FE_Utils::original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
                                  0);
@@ -8436,7 +8436,7 @@ tao_yyreduce:
                 AST_Type::narrow_from_decl (d);
 
               // Strip off _cxx_, if any, for port name.
-              idl_global->original_local_name ((tao_yyvsp[(3) - (3)].idval));
+              FE_Utils::original_local_name ((tao_yyvsp[(3) - (3)].idval));
 
               UTL_ScopedName sn ((tao_yyvsp[(3) - (3)].idval),
                                  0);
@@ -9226,7 +9226,7 @@ tao_yyreduce:
           // The param added above is always the last one parsed,
           // so we check for matches between sequence<T> & T here.
           ACE_CString bad_id =
-            idl_global->check_for_seq_of_param (
+            FE_Utils::check_for_seq_of_param (
               (tao_yyvsp[(2) - (2)].plval));
 
           if (!bad_id.empty ())
@@ -9553,7 +9553,7 @@ tao_yyreduce:
                       AST_Component *c =
                         AST_Component::narrow_from_scope (s);
 
-                      idl_global->create_uses_multiple_stuff (
+                      FE_Utils::create_uses_multiple_stuff (
                         c,
                         u,
                         id.get_string ());
