@@ -189,12 +189,12 @@ namespace ACE_OS
 
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
-  int hostname (char *name,
+  int hostname (char name[],
                 size_t maxnamelen);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  int hostname (wchar_t *name,
+  int hostname (wchar_t name[],
                 size_t maxnamelen);
 #endif /* ACE_HAS_WCHAR */
 

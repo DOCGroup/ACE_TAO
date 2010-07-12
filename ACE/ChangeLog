@@ -1,3 +1,22 @@
+Mon Jul 12 11:04:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Activation_Queue.h:
+        * ace/Active_Map_Manager.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.inl:
+        * ace/Event_Handler.h:
+        * ace/Filecache.h:
+        * ace/Manual_Event.h:
+        * ace/Map_Manager.h:
+        * ace/Mem_Map.h:
+        * ace/Message_Block.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/OS_NS_unistd.h:
+        * ace/Object_Manager.h:
+        * ace/Recursive_Thread_Mutex.h:
+          Layout, const, and doxygen fixes
+
 Mon Jul 12 10:11:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h:
