@@ -1,3 +1,10 @@
+Tue Jul 13 14:20:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_errno.h:
+          Fixed problems with msvc 10, , thanks to Max Zhou
+          <earthdog at 126.com> for supplying these changes, this fixes
+          bugzilla 3873
+
 Tue Jul 13 11:08:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc10nmake.mpb:
