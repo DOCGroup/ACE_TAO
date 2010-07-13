@@ -1,3 +1,10 @@
+Tue Jul 13 11:08:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc10nmake.mpb:
+        * netsvcs/lib/lib.mpc:
+          vc10 support, thanks to Max Zhou <earthdog at 126.com> for
+          supplying these changes
+
 Mon Jul 12 11:04:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
