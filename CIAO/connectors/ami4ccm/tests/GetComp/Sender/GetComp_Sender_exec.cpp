@@ -65,7 +65,7 @@ namespace CIAO_GetComp_Sender_Impl
                               ACE_TEXT (" :\tmy_foo_ami is NIL !\n")));
         return 1;
       }
-
+ 
     CORBA::Object_var cmp;
     try
       {
@@ -95,8 +95,9 @@ namespace CIAO_GetComp_Sender_Impl
 
     try
       {
-        ::GetComp::AMI4CCM_MyFoo_Connector::AMI4CCM_Connector_var conn =
-          ::GetComp::AMI4CCM_MyFoo_Connector::AMI4CCM_Connector::_narrow (cmp.in ());
+        ::GetComp::AMI4CCM_MyFoo_Connector::CCM_AMI4CCM_Connector_var conn =
+          ::GetComp::AMI4CCM_MyFoo_Connector::CCM_AMI4CCM_Connector::_narrow (cmp.in ());
+        
         if (::CORBA::is_nil (conn.in ()))
           {
             GetComp::InternalError ex (1, "Narrowed connector is nil.\n");
