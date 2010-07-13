@@ -1,3 +1,10 @@
+Tue Jul 13 11:22:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+        
+          Changes corresponding to changes in generated code for
+          sequences (in this test represented by std::vector<>).
+
 Mon Jul 12 12:55:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/PS_ForwardS.h:
