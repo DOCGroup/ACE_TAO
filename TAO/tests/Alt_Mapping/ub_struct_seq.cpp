@@ -53,11 +53,11 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
-  this->in_.length (len);
-  this->inout_.length (len);
+  this->in_.resize (len);
+  this->inout_.resize (len);
   
   // Now set each individual element.
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.size (); i++)
     {
       // Generate some arbitrary struct to be filled into the ith location in
       // the sequence.
@@ -132,23 +132,23 @@ Test_Unbounded_Struct_Sequence::compare (
   const Alt_Mapping::StructSeq &s1,
   const Alt_Mapping::StructSeq &s2)
 {
-  ACE_CDR::ULong s1v = s1.maximum ();
-  ACE_CDR::ULong s2v = s2.maximum ();
+  ACE_CDR::ULong s1v = s1.capacity ();
+  ACE_CDR::ULong s2v = s2.capacity ();
   
   if (s1v != s2v)
     {
       return false;
     }
      
-  s1v = s1.length ();
-  s2v = s2.length ();   
+  s1v = s1.size ();
+  s2v = s2.size ();   
       
   if (s1v != s2v)
     {
       return false;
     }
 
-  for (CORBA::ULong i=0; i < s1.length (); i++)
+  for (CORBA::ULong i=0; i < s1.size (); i++)
     {
       const Alt_Mapping::Fixed_Struct& vs1 = s1[i];
       const Alt_Mapping::Fixed_Struct& vs2 = s2[i];
@@ -173,11 +173,11 @@ Test_Unbounded_Struct_Sequence::print_sequence (
   ACE_DEBUG ((LM_DEBUG,
               "maximum = %d\n"
               "length = %d\n",
-              s.maximum (),
-              s.length ()));
+              s.capacity (),
+              s.size ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
   
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i = 0; i < s.size (); i++)
     {
       const Alt_Mapping::Fixed_Struct& vs = s[i];
 
