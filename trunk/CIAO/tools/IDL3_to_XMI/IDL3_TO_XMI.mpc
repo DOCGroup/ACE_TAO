@@ -14,6 +14,7 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, ciao_xml_utils,
     be_init.cpp
     be_produce.cpp
     be_sunsoft.cpp
+    be_util.cpp
     IDL3_to_XMI_visitor.cpp
     IR_Simulator_visitor.cpp
     Literals.cpp
@@ -25,6 +26,7 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, ciao_xml_utils,
     be_global.h
     be_helper.h
     be_sunsoft.h
+    be_util.h
     IDL3_to_XMI_visitor.h
     CIAO_IDL3_TO_XMI_Export.h
   }
