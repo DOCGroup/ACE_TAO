@@ -1,3 +1,22 @@
+Tue Jul 13 10:30:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/be_util.cpp:
+        * tools/IDL3_to_XMI/be_util.h:
+
+          New files containing a utility class
+          with static methods.
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+
+          Added new files to the project.
+
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_global.h:
+
+          Factored out methods unrelated to global
+          data storage and moved them to the new
+          utility class.
+
 Mon Jul 12 22:52:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:

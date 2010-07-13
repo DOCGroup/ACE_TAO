@@ -29,8 +29,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class AST_Generator;
-
 // Defines a class containing all back end global data.
 
 class CIAO_IDL3_TO_XMI_Export BE_GlobalData
@@ -66,18 +64,6 @@ public:
 
   void parse_args (long &i, char **av);
   // Parse args that affect the backend.
-
-  void prep_be_arg (char *s);
-  // Special BE arg call factored out of DRV_args.
-
-  void arg_post_proc (void);
-  // Checks made after parsing args.
-
-  void usage (void) const;
-  // Usage message for backend options.
-
-  AST_Generator *generator_init (void);
-  // Create an AST node generator.
 
   void destroy (void);
   // Cleanup.
