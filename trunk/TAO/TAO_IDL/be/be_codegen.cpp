@@ -1038,6 +1038,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
             }
         }
     }
+    
   *this->anyop_header_ << "\n";
 
   // Begin versioned namespace support after initial headers have been
@@ -1730,7 +1731,7 @@ TAO_CodeGen::end_server_header (void)
   // Insert the template header.
   if (be_global->gen_tie_classes ())
     {
-      *this->server_header_ << "#include \""
+      *this->server_header_ << "\n\n#include \""
                             << be_global->be_get_server_template_hdr_fname (1)
                             << "\"\n";
     }

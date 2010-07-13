@@ -277,7 +277,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   /// since the field will own it and destroy it.
   UTL_ScopedName *fn = u->uses_type ()->name ();
   AST_Decl *d =
-    idl_global->root ()->lookup_by_name (fn, true);
+    idl_global->root ()->lookup_by_name (fn, true, false);
   AST_Type *ft = AST_Type::narrow_from_decl (d);
 
   Identifier object_id ("objref");

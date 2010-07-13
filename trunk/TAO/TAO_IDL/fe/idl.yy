@@ -5207,7 +5207,7 @@ provides_decl : IDL_PROVIDES interface_type id
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ($2);
+            s->lookup_by_name ($2, true, false);
 
           if (d == 0)
             {
@@ -5331,7 +5331,8 @@ uses_decl : uses_opt_multiple interface_type id
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ($2);
+            s->lookup_by_name ($2, true, false);
+            
           if (d == 0)
             {
               idl_global->err ()->lookup_error ($2);
@@ -5459,7 +5460,7 @@ emits_decl : IDL_EMITS scoped_name id
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ($2);
+            s->lookup_by_name ($2, true, false);
 
           if (0 == d)
             {
@@ -5532,7 +5533,7 @@ publishes_decl : IDL_PUBLISHES scoped_name id
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ($2);
+            s->lookup_by_name ($2, true, false);
 
           if (0 == d)
             {
@@ -5605,7 +5606,7 @@ consumes_decl : IDL_CONSUMES scoped_name id
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ($2);
+            s->lookup_by_name ($2, true, false);
 
           if (0 == d)
             {
