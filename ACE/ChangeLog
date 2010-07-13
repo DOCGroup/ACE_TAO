@@ -1,3 +1,9 @@
+Tue Jul 13 14:33:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Capabilities.h:
+          Doxygen fixes
+
 Tue Jul 13 14:20:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_errno.h:
