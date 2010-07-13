@@ -53,12 +53,6 @@ namespace CIAO
     template <typename Resolver, typename Error>
     XML_Helper<Resolver, Error>::~XML_Helper (void)
     {
-      if (release_resolver_)
-        delete resolver_;
-      
-      if (release_e_handler_)
-        delete e_handler_;
-      
       this->terminate_parser ();
     }
 
@@ -249,13 +243,13 @@ namespace CIAO
 
       try
         {
-          if (release_resolver_)
+          if (release_resolver_ && resolver_)
             {
               delete resolver_;
               resolver_ = 0;
             }
 
-          if (release_e_handler_)
+          if (release_e_handler_ && e_handler_)
             {
               delete e_handler_;
               e_handler_ = 0;
