@@ -7986,7 +7986,7 @@ tao_yyreduce:
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
 
           if (d == 0)
             {
@@ -8114,7 +8114,8 @@ tao_yyreduce:
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
+            
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
@@ -8246,7 +8247,7 @@ tao_yyreduce:
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
 
           if (0 == d)
             {
@@ -8320,7 +8321,7 @@ tao_yyreduce:
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
 
           if (0 == d)
             {
@@ -8394,7 +8395,7 @@ tao_yyreduce:
           AST_Param_Holder *ph = 0;
 
           AST_Decl *d =
-            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist));
+            s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
 
           if (0 == d)
             {
