@@ -454,7 +454,7 @@ namespace DAnCE
         throw Deployment_Failure (buf);
       }
 
-    return CORBA::string_dup (plan.UUID.in());
+    return plan.UUID.in();
   }
 
   template <typename Manager, typename AppManager, typename Application>

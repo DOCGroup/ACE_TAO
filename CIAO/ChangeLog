@@ -1,3 +1,9 @@
+Wed Jul 14 09:17:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Memory leak.
+
 Tue Jul 13 19:38:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
