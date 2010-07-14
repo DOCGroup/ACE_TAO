@@ -370,15 +370,18 @@ int launch_plan (const Options &opts,
                        ACE_TEXT ("Plan_Launcher::launch_plan - ")
                        ACE_TEXT ("Writing Application Manager IOR to <%s>\n"),
                        am_output.c_str ()));
+      CORBA::String_var tmp = orb->object_to_string (app_mgr.in ());
       write_IOR (am_output.c_str (),
-                 orb->object_to_string (app_mgr.in ()));
+                 tmp.in ());
 
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("Plan_Launcher::launch_plan - ")
                        ACE_TEXT ("Writing Application IOR to <%s>\n"),
                        am_output.c_str ()));
+      
+      tmp = orb->object_to_string (app.in ());
       write_IOR (app_output.c_str (),
-                 orb->object_to_string (app.in ()));
+                 tmp.in ());
 
     }
   catch (const DAnCE::Deployment_Failure &ex)
