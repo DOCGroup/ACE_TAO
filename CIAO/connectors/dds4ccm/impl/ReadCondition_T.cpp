@@ -78,7 +78,8 @@ CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_imp
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
-CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (DDSReadCondition * rc)
+CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
+  DDSReadCondition * rc)
 {
   this->impl_ = rc;
 }

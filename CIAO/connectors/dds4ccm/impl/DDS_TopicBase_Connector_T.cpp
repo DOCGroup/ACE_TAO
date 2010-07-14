@@ -146,6 +146,15 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_topic (
       ::CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *part =
         dynamic_cast< CIAO::DDS4CCM::CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> * > (
           this->domain_participant_.in ());
+      if (!part)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+              "DDS_TopicBase_Connector_T::init_default_topic - "
+              "Unable to cast the DomainParticipant proxy to its internal "
+              "representation.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
+
       DDS_ReturnCode_t const retcode = DDS_TYPE::type_support::register_type(
         part->get_impl (), DDS_TYPE::type_support::get_type_name ());
 
@@ -262,7 +271,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     "DDS_TopicBase_Connector_T::activate_default_topic - "
-                    "Error during set_listener - <%C>\n",
+                    "Error while setting the listener on the topic - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
@@ -289,7 +298,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     "DDS_TopicBase_Connector_T::activate_subscriber - "
-                    "Error during set_listener - <%C>\n",
+                    "Error while setting the listener on the subscriber - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
@@ -317,7 +326,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     "DDS_TopicBase_Connector_T::activate_publisher - "
-                    "Error during set_listener - <%C>\n",
+                    "Error while setting the listener on the publisher - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
@@ -328,9 +337,16 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_default_to
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_default_topic");
 
-  this->topic_->set_listener (
-    ::DDS::TopicListener::_nil (),
-    0);
+  ::DDS::ReturnCode_t const retcode = this->topic_->set_listener (
+                                                    ::DDS::TopicListener::_nil (),
+                                                    0);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::passivate_default_topic - "
+                    "Error while setting the listener on the topic - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
 
   this->topiclistener_ = ::DDS::TopicListener::_nil ();
 }
@@ -341,9 +357,17 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_subscriber
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_subscriber");
 
-  this->subscriber_->set_listener (
-    ::DDS::SubscriberListener::_nil (),
-    0);
+  ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
+                                              ::DDS::SubscriberListener::_nil (),
+                                              0);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::passivate_subscriber - "
+                    "Error while setting the listener on the subscriber - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
+
   this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
 }
 
@@ -353,9 +377,17 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_publisher 
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::passivate_publisher");
 
-  this->publisher_->set_listener (
-    ::DDS::PublisherListener::_nil (),
-    0);
+  ::DDS::ReturnCode_t const retcode =   this->publisher_->set_listener (
+                                                ::DDS::PublisherListener::_nil (),
+                                                0);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_TopicBase_Connector_T::passivate_publisher - "
+                    "Error while setting the listener on the publisher - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
+
   this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
 }
 

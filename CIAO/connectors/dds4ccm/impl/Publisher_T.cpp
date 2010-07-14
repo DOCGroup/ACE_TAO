@@ -157,7 +157,7 @@ namespace CIAO
 
       DataWriter_type *top = dynamic_cast< DataWriter_type * > (a_datawriter);
 
-      if (top == 0)
+      if (!top)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Publisher_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datawriter - "
