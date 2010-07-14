@@ -50,7 +50,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     virtual ~Starter_exec_i (void);
 
     virtual void set_reader_properties (CORBA::UShort nr_keys,
-                  CORBA::UShort nr_iterations);
+                  ::CORBA::UShort nr_iterations);
     virtual void start_read (CORBA::UShort run);
 
   private:
@@ -85,8 +85,8 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     get_check_port_status (void);
 
     bool check_last ();
-    void start_read (CORBA::UShort run);
-    void run (CORBA::UShort run);
+    void start_read (::CORBA::UShort run);
+    void run (::CORBA::UShort run);
 
     // Operations from Components::SessionComponent.
     virtual void
@@ -103,23 +103,23 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     ::QCTQ_Test::CCM_Receiver_Context_var context_;
 
     TwoQueriesRestarter_var restarter_;
-    CORBA::UShort   iterations_;
-    CORBA::UShort   keys_;
+    ::CORBA::UShort iterations_;
+    ::CORBA::UShort keys_;
 
     int current_min_iteration_;
     int current_max_iteration_;
 
     read_action_Generator *ticker_;
 
-    CORBA::ULong samples_expected_;
-    CORBA::ULong samples_received_;
+    ::CORBA::ULong samples_expected_;
+    ::CORBA::ULong samples_received_;
 
-    CORBA::ULong test_all (void);
-    CORBA::ULong read_all (void);
+    ::CORBA::ULong test_all (::CORBA::UShort run);
+    ::CORBA::ULong get_all (::CORBA::UShort run);
     void check_iter (const QueryConditionTest & sample,
-                     const char * test);
-    void check_filter (CORBA::UShort run);
-    void set_filter (CORBA::UShort run);
+                     ::CORBA::UShort run);
+    void check_filter (::CORBA::UShort run);
+    void set_filter (::CORBA::UShort run);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

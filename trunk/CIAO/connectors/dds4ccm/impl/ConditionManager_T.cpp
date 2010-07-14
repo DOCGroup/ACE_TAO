@@ -121,35 +121,35 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
       ACE_NEW_THROW_EX (this->ws_,
                         DDSWaitSet (),
                         ::CORBA::NO_MEMORY ());
-
+    }
+  if ( ::CORBA::is_nil (this->rd_condition_.in ()))
+    {
+      this->rd_condition_ = this->impl ()->create_readcondition (
+                              ::DDS::NOT_READ_SAMPLE_STATE,
+                              ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                              ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE);
       if ( ::CORBA::is_nil (this->rd_condition_.in ()))
-        {
-          this->rd_condition_ = this->impl ()->create_readcondition (
-                                  ::DDS::NOT_READ_SAMPLE_STATE,
-                                  ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
-                                  ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE);
-          if ( ::CORBA::is_nil (this->rd_condition_.in ()))
-            {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                            ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
-                            ACE_TEXT ("Error creating read condition.\n")));
-              return;
-            }
-        }
-      DDS_ReturnCode_t const retcode = this->ws_->attach_condition (
-        this->get_readcondition ());
-
-      if (retcode != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
-                        ACE_TEXT ("Unable to attach read condition to waitset.\n")));
-          throw ::CCM_DDS::InternalError (retcode, 1);
+                        ACE_TEXT ("Error creating read condition.\n")));
+          return;
         }
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
-                    ACE_TEXT ("Read condition created and attached to Waitset.\n")));
     }
+  DDS_ReturnCode_t const retcode = this->ws_->attach_condition (
+    this->get_readcondition ());
+
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
+                    ACE_TEXT ("Unable to attach read condition to waitset. Error <%C>\n"),
+                    translate_retcode (retcode)));
+      throw ::CCM_DDS::InternalError (retcode, 1);
+    }
+  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+                ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
+                ACE_TEXT ("Read condition created and attached to Waitset.\n")));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -158,7 +158,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::query");
 
-  if (!this->get_querycondition_reader ())
+  if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
@@ -185,7 +185,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
   // Since the readcondition for the getter is always created (at start up),
   // this should be removed first. Instead of a readcondition, there should
   // be a QueryCondition attached to the waitset
-  if (this->get_readcondition ())
+  if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     { // Getter functionality
       // First remove the existing conditions from the waitset
       // Than create a new (query) condition and attach it to the waitset
@@ -246,14 +246,53 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
     }
   else if (ACE_OS::strlen (filter.expression.in ()) > 0)
     {
-      this->set_parameters (filter, this->qc_reader_);
-      this->set_parameters (filter, this->qc_getter_);
-      this->set_parameters (filter, this->qc_listener_);
+      DDSQueryCondition * qc = this->get_querycondition_getter ();
+      DDS_StringSeq param;
+      param <<= filter.parameters;
+      ::DDS_ReturnCode_t retval = qc->set_query_parameters (param);
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
+                        ACE_TEXT ("Error setting expression_parameters. ")
+                        ACE_TEXT ("Retval is %C\n"),
+                        translate_retcode(retval)));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+        }
+      qc = this->get_querycondition_reader ();
+      retval = qc->set_query_parameters (param);
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
+                        ACE_TEXT ("Error setting expression_parameters. ")
+                        ACE_TEXT ("Retval is %C\n"),
+                        translate_retcode(retval)));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+        }
+      qc = this->get_querycondition_listener ();
+      retval = qc->set_query_parameters (param);
+      if (retval != ::DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
+                        ACE_TEXT ("Error setting expression_parameters. ")
+                        ACE_TEXT ("Retval is %C\n"),
+                        translate_retcode(retval)));
+          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
+        }
+
+
+
+//       this->set_parameters (filter, this->qc_reader_);
+//       this->set_parameters (filter, this->qc_getter_);
+//       this->set_parameters (filter, this->qc_listener_);
     }
   else
     {
       //remove query conditions
       this->remove_conditions ();
+      this->init_readcondition ();
     }
 }
 
@@ -376,8 +415,16 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
   DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions");
 
   ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
-  this->remove_condition (this->qc_reader_.in (), "reader");
-  this->remove_condition (this->qc_listener_.in (), "listener");
+  if (! ::CORBA::is_nil (this->qc_reader_.in ()))
+    {
+      this->remove_condition (this->qc_reader_.in (), "reader");
+      this->qc_reader_ = ::DDS::CCM_QueryCondition::_nil ();
+    }
+  if (! ::CORBA::is_nil (this->qc_listener_.in ()))
+    {
+      this->remove_condition (this->qc_listener_.in (), "listener");
+      this->qc_listener_ = ::DDS::CCM_QueryCondition::_nil ();
+    }
 
   if (this->ws_)
     {
@@ -389,6 +436,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                             ACE_TEXT ("Query condition successfully detached from waitset.\n")));
               this->remove_condition (this->qc_getter_.in (), "getter");
+              this->qc_getter_ = ::DDS::CCM_QueryCondition::_nil ();
             }
           else
             {
@@ -416,7 +464,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
             }
         }
     }
-  if (this->get_readcondition ())
+  if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
       retcode = this->impl ()->delete_readcondition (this->rd_condition_.in ());
       if (retcode != DDS_RETCODE_OK)
@@ -433,9 +481,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                         ACE_TEXT ("Read condition successfully deleted from DDSDataReader.\n")));
         }
+      ReadCondition_type * rc =
+        dynamic_cast <ReadCondition_type *>(this->rd_condition_.in ());
+      if (rc)
+        {
+          rc->set_impl (0);
+        }
+      this->rd_condition_ = ::DDS::CCM_ReadCondition::_nil ();
     }
-  delete this->ws_;
-  this->ws_ = 0;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

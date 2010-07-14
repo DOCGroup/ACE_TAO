@@ -90,12 +90,6 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
           dds_dp->enable ();
 
-          DomainParticipant_type *typed_dp =
-            dynamic_cast < DomainParticipant_type *>
-            (retval.in ());
-
-          typed_dp->set_impl (dds_dp);
-
           DPMANAGER->add_participant (qos_profile.c_str (), dds_dp);
 
           return retval._retn ();
