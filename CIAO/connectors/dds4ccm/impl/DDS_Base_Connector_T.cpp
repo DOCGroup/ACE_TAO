@@ -181,11 +181,11 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
   ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
                               this->domainparticipantlistener_.in (),
                               DomainParticipantListener::get_mask ());
-  if (retcode == DDS_RETCODE_OK)
+  if (retcode != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     "DDS_Base_Connector_T::ccm_activate - "
-                    "Error during set_listener - <%C>\n",
+                    "Error setting the listener on the domain participant - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }
@@ -196,11 +196,19 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate (void)
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate");
 
-  this->domain_participant_->set_listener (
-    ::DDS::DomainParticipantListener::_nil (),
-    0);
-  this->domainparticipantlistener_ =
-    ::DDS::DomainParticipantListener::_nil ();
+  ::DDS::ReturnCode_t const retcode = this->domain_participant_->set_listener (
+                                      ::DDS::DomainParticipantListener::_nil (),
+                                      0);
+  if (retcode != DDS_RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DDS_Base_Connector_T::ccm_passivate - "
+                    "Error while setting the listener on the "
+                    "domain participant - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
+
+  this->domainparticipantlistener_ = ::DDS::DomainParticipantListener::_nil ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

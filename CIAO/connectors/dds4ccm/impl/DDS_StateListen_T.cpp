@@ -83,7 +83,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
     {
       DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
                     "DDS_StateListen_T::activate - "
-                    "Error during set_listener - <%C>\n",
+                    "Error setting the listener on the DataReader - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
     }
 }

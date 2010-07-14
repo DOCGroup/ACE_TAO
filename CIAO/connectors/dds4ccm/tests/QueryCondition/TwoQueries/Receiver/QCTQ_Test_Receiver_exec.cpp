@@ -10,6 +10,7 @@
 #include "ace/Log_Msg.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/Utils.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
 
@@ -18,6 +19,9 @@
 
 #define MIN_ITERATION_2 "22"
 #define MAX_ITERATION_2 "34"
+
+#define MIN_ITERATION_3 "68"
+#define MAX_ITERATION_3 "77"
 
 // Reader also reads already read samples.
 #define SAMPLES_PER_KEY_READER (2 + 11)
@@ -62,15 +66,15 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   }
 
   void
-  Starter_exec_i::set_reader_properties (CORBA::UShort nr_keys,
-                                         CORBA::UShort nr_iterations)
+  Starter_exec_i::set_reader_properties (::CORBA::UShort nr_keys,
+                                         ::CORBA::UShort nr_iterations)
   {
     this->callback_.keys (nr_keys);
     this->callback_.iterations (nr_iterations);
   }
 
   void
-  Starter_exec_i::start_read (CORBA::UShort run)
+  Starter_exec_i::start_read (::CORBA::UShort run)
   {
     this->callback_.start_read (run);
   }
@@ -106,7 +110,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
         ::CCM_DDS::ReadInfo readinfo;
         char key[10];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
-        queryfiltertest_info.symbol = CORBA::string_dup (key);
+        queryfiltertest_info.symbol = ::CORBA::string_dup (key);
         reader->read_one_last (
                 queryfiltertest_info,
                 readinfo,
@@ -128,91 +132,126 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   // Supported operations and attributes.
   void
   Receiver_exec_i::check_iter (const QueryConditionTest & sample,
-                               const char * test)
+                               ::CORBA::UShort run)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C ALL : ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL : ")
         ACE_TEXT ("sample received for <%C>: iteration <%02u>\n"),
-        test,
         sample.symbol.in (),
         sample.iteration));
-    if (sample.iteration <= ACE_OS::atoi (MIN_ITERATION_1))
+    if (run == 3)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
-                              "Didn't expect samples with iterations "
-                              "<= %02d\n",
-                              test,
-                              this->current_min_iteration_));
-      }
-    if (sample.iteration > this->current_max_iteration_)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: %C ALL: "
-                              "Didn't expect samples with iterations "
-                              "> %02d\n",
-                              test,
-                              this->current_max_iteration_));
-      }
-  }
-
-  CORBA::ULong
-  Receiver_exec_i::read_all (void)
-  {
-    ::QCTQ_Test::QueryConditionTestConnector::Reader_var reader =
-      this->context_->get_connection_get_port_data ();
-
-    QueryConditionTestSeq queryfiltertest_info_seq;
-    ::CCM_DDS::ReadInfoSeq readinfo_seq;
-    reader->read_all (queryfiltertest_info_seq, readinfo_seq);
-    if (queryfiltertest_info_seq.length () == 0)
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::read_all : "
-                              "No samples available in Reader!\n"));
-      }
-    if (this->current_max_iteration_ != 0 && this->current_max_iteration_ != 0)
-      {
-        for (CORBA::ULong it = 0; it < queryfiltertest_info_seq.length (); ++it)
+        // We need to receive all UNread samples. Therefor we should
+        // receive all samples except the ones between
+        // MIN_ITERATION_1 and MAX_ITERATION_1 and between
+        // MIN_ITERATION_2 and MAX_ITERATION_2
+        if ((sample.iteration > ACE_OS::atoi (MIN_ITERATION_1)  &&
+             sample.iteration < ACE_OS::atoi (MAX_ITERATION_1)) ||
+            (sample.iteration > ACE_OS::atoi (MIN_ITERATION_2)  &&
+             sample.iteration < ACE_OS::atoi (MAX_ITERATION_2)))
           {
-            this->check_iter (queryfiltertest_info_seq[it], "READ");
+            ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
+                                  "Didn't except samples between "
+                                  "<%02d> and <%02d> and between "
+                                  "<%02d> and <%02d>\n",
+                                  ACE_OS::atoi (MIN_ITERATION_1),
+                                  ACE_OS::atoi (MAX_ITERATION_1),
+                                  ACE_OS::atoi (MIN_ITERATION_2),
+                                  ACE_OS::atoi (MAX_ITERATION_2)));
           }
       }
-    return queryfiltertest_info_seq.length ();
+    else
+      {
+        if (sample.iteration <= current_min_iteration_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
+                                  "Didn't expect samples with iterations "
+                                  "<= %02d\n",
+                                  this->current_min_iteration_));
+          }
+        if (sample.iteration > this->current_max_iteration_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
+                                  "Didn't expect samples with iterations "
+                                  "> %02d\n",
+                                  this->current_max_iteration_));
+          }
+      }
   }
 
-  CORBA::ULong
-  Receiver_exec_i::test_all (void)
+  ::CORBA::ULong
+  Receiver_exec_i::get_all (::CORBA::UShort run)
   {
-    const char * test = "READ ALL";
+    ::QCTQ_Test::QueryConditionTestConnector::Getter_var getter =
+      this->context_->get_connection_get_port_fresh_data ();
+    ::CORBA::ULong samples_received = 0;
+
+    if (::CORBA::is_nil (getter.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: No Getter\n"));
+      }
+    QueryConditionTest_var qf_info;
+    ::CCM_DDS::ReadInfo readinfo;
+    ::CORBA::Boolean result = getter->get_one (qf_info.out (), readinfo);
+    if (result)
+      {
+        this->check_iter (qf_info.in (), run);
+        ++samples_received;
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                              "ERROR: time out when retrieving "
+                              "first sample.\n"));
+      }
+    while (result)
+      {
+        result = getter->get_one (qf_info.out (), readinfo);
+        if (result)
+          {
+            this->check_iter (qf_info.in (), run);
+            ++samples_received;
+          }
+      }
+    return samples_received;
+  }
+
+  ::CORBA::ULong
+  Receiver_exec_i::test_all (::CORBA::UShort run)
+  {
     try
       {
-        return read_all ();
+        return get_all (run);
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
-        for (CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
+        for (::CORBA::ULong i = 0; i < ex.indexes.length (); ++i)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR %C: ")
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ERROR test_all <%d>: ")
                   ACE_TEXT ("caught expected exception: index <%u>\n"),
-                  test,
+                  run,
                   ex.indexes[i]));
           }
       }
     catch (const CCM_DDS::InternalError& ex)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: %C: ")
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: test_all <%d>: ")
               ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
-              test,
+              run,
               ex.error_code));
       }
     catch (const ::CORBA::Exception& ex)
       {
-        ex._tao_print_exception (test);
+        ex._tao_print_exception ("test_all");
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT ("ERROR: Receiver_exec_i::test_all : Exception caught\n")));
+          ACE_TEXT ("ERROR: Receiver_exec_i::test_all <%d> : Exception caught\n"),
+          run));
       }
     return 0;
   }
 
   void
-  Receiver_exec_i::check_filter (CORBA::UShort run)
+  Receiver_exec_i::check_filter (::CORBA::UShort run)
   {
     ::CCM_DDS::QueryFilter_var filter;
     ::QCTQ_Test::QueryConditionTestConnector::Reader_var reader =
@@ -299,43 +338,64 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::set_filter (CORBA::UShort run)
+  Receiver_exec_i::set_filter (::CORBA::UShort run)
   {
     ACE_DEBUG ((LM_DEBUG, "Set filter for run <%d>\n", run));
     ::QCTQ_Test::QueryConditionTestConnector::Reader_var reader =
       this->context_->get_connection_get_port_data ();
 
-    ::CCM_DDS::QueryFilter filter;
-    filter.expression = CORBA::string_dup (QUERY);
-    filter.parameters.length (2);
-    if (run == 1)
+    try
       {
-        filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_1);
-        filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_1);
-        this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_1);
-        this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_1);
-      }
-    else if (run == 2)
-      {
-        filter.parameters[0] = CORBA::string_dup (MIN_ITERATION_2);
-        filter.parameters[1] = CORBA::string_dup (MAX_ITERATION_2);
-        this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
-        this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
-      }
-    else if (run == 3)
-      {
-        filter.expression = CORBA::string_dup ("");
+        ::CCM_DDS::QueryFilter filter;
+        run != 3 ? filter.expression = ::CORBA::string_dup (QUERY) :
+                   filter.expression = ::CORBA::string_dup ("");
         filter.parameters.length (2);
-        filter.parameters[0] = CORBA::string_dup ("0");
-        filter.parameters[1] = CORBA::string_dup ("0");
-        this->current_min_iteration_ = 0;
-        this->current_max_iteration_ = 0;
+        if (run == 1)
+          {
+            filter.parameters[0] = ::CORBA::string_dup (MIN_ITERATION_1);
+            filter.parameters[1] = ::CORBA::string_dup (MAX_ITERATION_1);
+            this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_1);
+            this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_1);
+          }
+        else if (run == 2)
+          {
+            filter.parameters[0] = ::CORBA::string_dup (MIN_ITERATION_2);
+            filter.parameters[1] = ::CORBA::string_dup (MAX_ITERATION_2);
+            this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_2);
+            this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_2);
+          }
+        else if (run == 3)
+          {
+            filter.parameters[0] = ::CORBA::string_dup ("0");
+            filter.parameters[1] = ::CORBA::string_dup ("0");
+            this->current_min_iteration_ = (run - 1) * this->iterations_;
+            this->current_max_iteration_ = run * this->iterations_;
+          }
+        else if (run == 4)
+          {
+            filter.parameters[0] = ::CORBA::string_dup (MIN_ITERATION_3);
+            filter.parameters[1] = ::CORBA::string_dup (MAX_ITERATION_3);
+            this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_3);
+            this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_3);
+          }
+        reader->query (filter);
       }
-    reader->query (filter);
+    catch (const ::CCM_DDS::InternalError &ex)
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::set_filter - "
+                    "ERROR: Unexpected InternalError exception caught "
+                    "with <%C> as error\n.",
+                    ::CIAO::DDS4CCM::translate_retcode (ex.error_code)));
+      }
+    catch (...)
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::set_filter - "
+                    "ERROR: Unexpected exception caught.\n"));
+      }
   }
 
   void
-  Receiver_exec_i::start_read (CORBA::UShort run)
+  Receiver_exec_i::start_read (::CORBA::UShort run)
   {
     this->ticker_ = new read_action_Generator (*this, run);
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
@@ -349,7 +409,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::run (CORBA::UShort run)
+  Receiver_exec_i::run (::CORBA::UShort run)
   {
     if (this->ticker_)
       {
@@ -364,7 +424,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     {
       case 1:
         {
-          this->samples_received_ += this->test_all ();
+          this->samples_received_ += this->test_all (run);
           this->check_filter (run);
           //set filter for the next run
           this->set_filter (run + 1);
@@ -373,7 +433,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
         break;
       case 2:
         {
-          this->samples_received_ += this->test_all ();
+          this->samples_received_ += this->test_all (run);
           check_filter (run);
           //set filter for the next run
           this->set_filter (run + 1);
@@ -382,27 +442,17 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
         break;
       case 3:
         {
-          CORBA::ULong all = this->test_all ();
-          if (all != static_cast <CORBA::ULong>(run * this->keys_ * this->iterations_))
-            {
-              ACE_ERROR ((LM_ERROR, "Receiver_exec_i::run - "
-                                    "ERROR: Did not receive the expected "
-                                    "number of samples: "
-                                    "expected <%u> - received <%u>\n",
-                                    run * this->keys_ * this->iterations_,
-                                    all));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::run - "
-                                    "Receive the expected number of samples: "
-                                    "expected <%u> - received <%u>\n",
-                                    run * this->keys_ * this->iterations_,
-                                    all));
-            }
+          this->samples_received_ += this->test_all (run);
           this->check_filter (run);
+          //set filter for the next run
+          this->set_filter (run + 1);
+          this->restarter_->restart_write ();
         }
         break;
+      case 4:
+        {
+          this->samples_received_ += this->test_all (run);
+        }
     }
   }
 
@@ -461,6 +511,11 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    ::QCTQ_Test::QueryConditionTestConnector::Getter_var getter =
+      this->context_->get_connection_get_port_fresh_data ();
+    DDS::Duration_t to;
+    to.sec = 5; to.nanosec = 0;
+    getter->time_out (to);
     //set filter for the first run
     this->set_filter (1);
     this->restarter_ = this->context_->get_connection_writer_restart ();

@@ -254,7 +254,16 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::passivate");
 
-  this->set_listener (::DDS::DataReaderListener::_nil (), 0);
+  ::DDS::ReturnCode_t const retcode = this->set_listener (
+                                              ::DDS::DataReaderListener::_nil (),
+                                              0);
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                    "DataReader_T::passivate - "
+                    "Error while setting the listener on the data reader - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

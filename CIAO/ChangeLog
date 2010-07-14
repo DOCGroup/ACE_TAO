@@ -1,3 +1,33 @@
+Wed Jul 14 12:01:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+          Created DataWriter typedef.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+          Check the outcome of the dynamic_cast.
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Implemented resetting of the querycondition.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/run_test.pl:
+          Testing resetting the QueryCondition.
+
 Wed Jul 14 10:02:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:

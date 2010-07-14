@@ -98,7 +98,7 @@ namespace CIAO_QCTQ_Test_Sender_Impl
             ++iter;
           }
       }
-    ACE_OS::sleep (1);
+    ACE_OS::sleep (2);
     starter->start_read (this->run_);
   }
 
