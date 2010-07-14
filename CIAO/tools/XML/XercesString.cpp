@@ -49,8 +49,7 @@ namespace CIAO
 
     XStr::~XStr ()
     {
-      if (_wstr)
-        XMLString::release(&_wstr);
+      this->reset ();
     }
 
     const XMLCh* XStr::begin () const
@@ -133,6 +132,14 @@ namespace CIAO
       XMLCh* tmp = _wstr;
       this->_wstr = 0;
       return tmp;
+    }
+    
+    void
+    XStr::reset (void)
+    {
+      if (_wstr)
+        XMLString::release(&_wstr);
+      _wstr = 0;
     }
 
     bool operator== (const XStr& lhs, const XStr& rhs)

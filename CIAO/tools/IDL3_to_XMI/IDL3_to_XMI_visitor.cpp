@@ -2103,6 +2103,9 @@ namespace CIAO
 
           helper.write_DOM (this->dom_,
                             ACE_TEXT_CHAR_TO_TCHAR (target_name.c_str ()));
+          
+          this->id_map_.close ();
+          this->base_id_.reset ();
         }
       catch (const Error &ex)
         {
