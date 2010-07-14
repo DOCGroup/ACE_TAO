@@ -59,6 +59,7 @@ TAO/CIAO/connectors/ami4ccm/tests/AsynchT/descriptors/run_test.pl: !STATIC !MINI
 TAO/CIAO/connectors/ami4ccm/tests/OneProcess/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tests/UsesMulti/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tests/SimplexMulti/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
+TAO/CIAO/connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl: !FIXED_BUGS_ONLY !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Deployment/scripts/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST
 TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST NDDS
 TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_sender.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NOXERCES !ACE_FOR_TAO !ST !LabVIEW_RT !WinCE NDDS
