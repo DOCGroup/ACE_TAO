@@ -59,6 +59,9 @@ namespace CIAO
       operator const XMLCh* () const { return _wstr; };
     
       XMLCh * release (void);
+      
+      /// Release the held string and free its memory.
+      void reset (void);
     private:
 
       XMLCh* _wstr; // Internal representation

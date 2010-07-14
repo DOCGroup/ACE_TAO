@@ -298,7 +298,7 @@ namespace CIAO
 
       XERCES_CPP_NAMESPACE::DOMElement *associations_;
 
-      const CIAO::XML::XStr base_id_;
+      CIAO::XML::XStr base_id_;
 
       /// true if for some reason the generated output is bad
       /// and shouldn't be written.

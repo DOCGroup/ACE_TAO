@@ -1,8 +1,19 @@
+Wed Jul 14 09:47:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+         Memory leak fixes.
+
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Added a reset method to release memory on demand.
+
 Wed Jul 14 09:45:59 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst
-        Add AMI4CCM test GetComp. 
-        
+        Add AMI4CCM test GetComp.
 
 Wed Jul 14 09:17:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
