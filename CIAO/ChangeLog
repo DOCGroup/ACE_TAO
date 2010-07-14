@@ -1,3 +1,8 @@
+Wed Jul 14 12:12:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Removed unnecessary code. Using set_parameters again.
+
 Wed Jul 14 12:01:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:

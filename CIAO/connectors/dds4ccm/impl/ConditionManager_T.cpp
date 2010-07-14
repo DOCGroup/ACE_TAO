@@ -246,47 +246,9 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
     }
   else if (ACE_OS::strlen (filter.expression.in ()) > 0)
     {
-      DDSQueryCondition * qc = this->get_querycondition_getter ();
-      DDS_StringSeq param;
-      param <<= filter.parameters;
-      ::DDS_ReturnCode_t retval = qc->set_query_parameters (param);
-      if (retval != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
-                        ACE_TEXT ("Error setting expression_parameters. ")
-                        ACE_TEXT ("Retval is %C\n"),
-                        translate_retcode(retval)));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-        }
-      qc = this->get_querycondition_reader ();
-      retval = qc->set_query_parameters (param);
-      if (retval != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
-                        ACE_TEXT ("Error setting expression_parameters. ")
-                        ACE_TEXT ("Retval is %C\n"),
-                        translate_retcode(retval)));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-        }
-      qc = this->get_querycondition_listener ();
-      retval = qc->set_query_parameters (param);
-      if (retval != ::DDS::RETCODE_OK)
-        {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
-                        ACE_TEXT ("Error setting expression_parameters. ")
-                        ACE_TEXT ("Retval is %C\n"),
-                        translate_retcode(retval)));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, retval);
-        }
-
-
-
-//       this->set_parameters (filter, this->qc_reader_);
-//       this->set_parameters (filter, this->qc_getter_);
-//       this->set_parameters (filter, this->qc_listener_);
+      this->set_parameters (filter, this->qc_reader_);
+      this->set_parameters (filter, this->qc_getter_);
+      this->set_parameters (filter, this->qc_listener_);
     }
   else
     {
