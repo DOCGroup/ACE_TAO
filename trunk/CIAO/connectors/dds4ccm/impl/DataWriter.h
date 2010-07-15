@@ -16,6 +16,8 @@
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
+#include "tao/LocalObject.h"
+
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
 #endif

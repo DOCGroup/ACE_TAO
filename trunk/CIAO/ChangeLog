@@ -1,3 +1,10 @@
+Thu Jul 15 09:12:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/DataWriter.h:
+        * connectors/dds4ccm/impl/StatusCondition.h:
+          Resolved compile issues on Windows.
+
 Thu Jul 15 08:38:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.h:
