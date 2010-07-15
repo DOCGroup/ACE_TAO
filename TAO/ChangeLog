@@ -1,3 +1,14 @@
+Thu Jul 15 12:55:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
+        
+          Added code generation for _get_component() and
+          _set_component) in the AMI4CCM connector's facet executor,
+          as well as code to initialize and reset this value in
+          the corresponding connector executor.
+
 Thu Jul 15 09:44:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
