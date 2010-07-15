@@ -18,7 +18,8 @@
 
 namespace CIAO_SL_ManyByMany_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_Long;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Bool;
 
   class Receiver_exec_i;
   class read_action_Generator
@@ -56,13 +57,14 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       ::DDS::DataReader_ptr the_reader,
       const ::DDS::SampleLostStatus & status);
   };
+
   class RECEIVER_EXEC_Export StateListener_exec_i
     : public virtual ::SL_ManyByMany::SLManyByManyConnector::CCM_StateListener,
       public virtual ::CORBA::LocalObject
   {
   public:
-    StateListener_exec_i (Atomic_Boolean &, Atomic_Boolean &, Atomic_Boolean &,
-                          Atomic_Boolean &, Atomic_Boolean &, Atomic_Boolean &);
+    StateListener_exec_i (Atomic_Long &, Atomic_Long &, Atomic_Long &,
+                          Atomic_Long &, Atomic_Bool &, Atomic_Bool &);
     virtual ~StateListener_exec_i (void);
 
     virtual void
@@ -82,12 +84,12 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
   private:
-     Atomic_Boolean &no_operation_;
-     Atomic_Boolean &on_creation_;
-     Atomic_Boolean &on_many_update_;
-     Atomic_Boolean &on_deletion_;
-     Atomic_Boolean &create_data_;
-     Atomic_Boolean &update_data_;
+     Atomic_Long &no_operation_;
+     Atomic_Long &on_creation_;
+     Atomic_Long &on_many_update_;
+     Atomic_Long &on_deletion_;
+     Atomic_Bool &create_data_;
+     Atomic_Bool &update_data_;
 
  };
 
@@ -121,13 +123,13 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     ::SL_ManyByMany::CCM_Receiver_Context_var context_;
     read_action_Generator * ticker_;
     CORBA::ULong rate_;
-    Atomic_Boolean no_operation_;
-    Atomic_Boolean on_creation_;
-    Atomic_Boolean on_many_update_;
-    Atomic_Boolean on_deletion_;
-    Atomic_Boolean create_data_;
-    Atomic_Boolean update_data_;
-    Atomic_Boolean reader_data_;
+    Atomic_Long no_operation_;
+    Atomic_Long on_creation_;
+    Atomic_Long on_many_update_;
+    Atomic_Long on_deletion_;
+    Atomic_Bool create_data_;
+    Atomic_Bool update_data_;
+    Atomic_Long reader_data_;
 
 };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
