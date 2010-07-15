@@ -1,3 +1,8 @@
+Thu Jul 15 08:26:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Only generate documentation for the core directories
+
 Thu Jul 15 07:21:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
