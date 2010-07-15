@@ -1,3 +1,11 @@
+Thu Jul 15 09:47:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+        
+          Added -Gex to command line of HelloA.idl processing,
+          and the resuling generated reply handler implementation
+          files to the connector project.
+
 Thu Jul 15 09:34:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/LocalityManager/Interceptors/Standard_Error.h:
