@@ -1,3 +1,11 @@
+Thu Jul 15 09:11:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+        * include/makeinclude/platform_clang_common.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Preliminary support for clang compiler.
+
 Tue Jul 13 14:39:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
