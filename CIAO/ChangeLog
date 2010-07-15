@@ -1,3 +1,11 @@
+Thu Jul 15 09:34:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Interceptors/Standard_Error.h:
+          Doxygen changes
+
+        * etc/ciao_DAnCE.doxygen:
+          Use INet tag file
+
 Thu Jul 15 09:12:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.h:
