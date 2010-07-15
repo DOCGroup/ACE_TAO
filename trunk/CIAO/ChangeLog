@@ -1,3 +1,9 @@
+Thu Jul 15 19:11:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+          Don't call a dds narrow with 0 pointer, it causes an error to be
+          logged
+
 Thu Jul 15 09:48:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipant_T.h:
