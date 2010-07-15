@@ -245,7 +245,7 @@ public:
     return mb_;
   }
 
-  /// Replaces the current buffer with <mb>, using only <length> bytes.
+  /// Replaces the current buffer with @a mb, using only @a length bytes.
   /// It takes a duplicate of <mb> so the user still owns it.
   inline void replace (CORBA::ULong length, const ACE_Message_Block* mb) {
     unbounded_value_sequence<CORBA::Octet> s (length, mb);
