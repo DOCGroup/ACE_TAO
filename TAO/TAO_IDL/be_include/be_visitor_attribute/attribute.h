@@ -43,10 +43,15 @@ public:
 
   void for_facets (bool val);
   void op_scope (be_decl *node);
+  void exec_class_extension (const char *extension);
 
 private:
   bool for_facets_;
   be_decl *op_scope_;
+  
+  /// Defaults to "exec_i" but in special cases we want to
+  /// modify it.
+  ACE_CString exec_class_extension_;
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

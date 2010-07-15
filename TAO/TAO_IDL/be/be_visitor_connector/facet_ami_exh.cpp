@@ -15,7 +15,11 @@
 
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx)
+  : be_visitor_component_scope (ctx),
+    iface_ (0),
+    callback_iface_ (0),
+    scope_name_ (0),
+    iface_name_ (0)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
@@ -33,6 +37,11 @@ be_visitor_facet_ami_exh::visit_component (be_component *node)
 {
   this->node_ = node;
 
+  /// Not sure if this bulletproof. The contents of *A.idl come
+  /// from iteration over the AMI4CCM interfaces list, which is
+  /// in turn populated by the corresponding pragmas. We may
+  /// eventually have to do the same for this code generation,
+  /// as well as that of be_visitor_connector_ami_exh.
   return this->visit_scope (node);
 }
 
@@ -79,7 +88,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
     {
       return  0;
     }
-
+    
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
   be_visitor_operation_ih v (this->ctx_);
@@ -97,16 +106,15 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
   return 0;
 }
 
-int
-be_visitor_facet_ami_exh::gen_reply_handler_class (void)
+void
+be_visitor_facet_ami_exh::init (bool for_impl)
 {
-  const char *suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
-  const char *scope_name = scope->full_name ();
+  this->scope_name_ = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
-  const char *iface_name = this->iface_->local_name ();
+  this->smart_scope_ = (global ? "" : "::");
+  this->iface_name_ = this->iface_->local_name ();
 
   /// The reply handler class we are generating inherits from the
   /// CORBA AMI skeleton class, not the AMI_xxxCallback class
@@ -114,38 +122,50 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
   /// So to get the correct *_excep operation signatures, we
   /// visit the scope of the AMI_xxxHandler interface generated
   /// by -GC, which must be applied to this IDL file.
-  ACE_CString handler_str (scope_name);
-  handler_str += smart_scope;
-  handler_str += "AMI_";
-  ACE_CString tmp (iface_name);
-  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
-  handler_str += "Handler";
+  this->handler_str_ = this->scope_name_;
+  this->handler_str_ += this->smart_scope_;
+  
+  this->handler_str_ += (for_impl ? "" : "AMI_");
+  ACE_CString tmp (this->iface_name_);
+  this->handler_str_ +=
+    (for_impl ? tmp : tmp.substr (ACE_OS::strlen ("AMI4CCM_")));
+  this->handler_str_ += (for_impl ? "Reply" : "");
+  this->handler_str_ += "Handler";
 
-  os_ << be_nl
-      << "class " << this->export_macro_.c_str () << " "
-      << iface_name << suffix << be_idt_nl
-      << ": public ::POA_" << handler_str.c_str () << be_uidt_nl
-      << "{" << be_nl
-      << "public:" << be_idt_nl
-      << iface_name << suffix << " (" << be_idt_nl
-      << "::" << scope_name << "::" << iface_name
-      << "ReplyHandler_ptr callback," << be_nl
-      << "::PortableServer::POA_ptr poa);" << be_uidt_nl << be_nl
-      << "virtual ~" << iface_name << suffix << " (void);";
-
+  /// Look up the AMI_xxxCallback class (see comment above)
+  /// so we can traverse its inheritance graph below.
   UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (handler_str.c_str ());
-  AST_Decl *d = s->lookup_by_name (sn, true);
+    FE_Utils::string_to_scoped_name (this->handler_str_.c_str ());
+  AST_Decl *d = s->lookup_by_name (sn, true, false);
+  this->callback_iface_ = be_interface::narrow_from_decl (d);
 
   sn->destroy ();
   delete sn;
   sn = 0;
+}
 
-  be_interface *callback_iface =
-    be_interface::narrow_from_decl (d);
+int
+be_visitor_facet_ami_exh::gen_reply_handler_class (void)
+{
+  const char *suffix = "_reply_handler";
+  this->init (false);
+
+  os_ << be_nl
+      << "class " << this->export_macro_.c_str () << " "
+      << this->iface_name_ << suffix << be_idt_nl
+      << ": public ::POA_" << this->handler_str_.c_str ()
+      << be_uidt_nl
+      << "{" << be_nl
+      << "public:" << be_idt_nl
+      << this->iface_name_ << suffix << " (" << be_idt_nl
+      << "::" << this->scope_name_ << this->smart_scope_
+      << this->iface_name_
+      << "ReplyHandler_ptr callback," << be_nl
+      << "::PortableServer::POA_ptr poa);" << be_uidt_nl << be_nl
+      << "virtual ~" << this->iface_name_ << suffix << " (void);";
 
   int const status =
-    callback_iface->traverse_inheritance_graph (
+    this->callback_iface_->traverse_inheritance_graph (
       be_interface::op_attr_decl_helper,
       &os_,
       false,
@@ -162,7 +182,8 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "::" << scope_name << "::" << iface_name
+      << "::" << this->scope_name_ << this->smart_scope_
+      << this->iface_name_
       << "ReplyHandler_var callback_;" << be_nl
       << "::PortableServer::POA_var poa_;" << be_uidt_nl
       << "};";

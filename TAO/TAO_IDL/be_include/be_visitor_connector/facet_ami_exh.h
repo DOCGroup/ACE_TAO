@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_COMPONENT_FACET_AMI_EXH_H_
 #define _BE_COMPONENT_FACET_AMI_EXH_H_
 
@@ -38,12 +37,21 @@ public:
   virtual int visit_provides (be_provides *node);
   virtual int visit_operation (be_operation *node);
   
+protected:
+  /// Common the this class and derived class.
+  void init (bool for_impl);
+  
+protected:
+  be_interface *iface_;
+  be_interface *callback_iface_;
+  ACE_CString handler_str_;
+  const char *scope_name_;
+  const char *iface_name_;
+  const char *smart_scope_;
+  
 private:
   int gen_reply_handler_class (void);
   int gen_facet_executor_class (void);
-  
-private:
-  be_interface *iface_;
 };
 
 #endif /* _BE_COMPONENT_FACET_AMI_EXH_H_ */

@@ -72,67 +72,73 @@ public:
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
   static const char *be_get_client_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_client_stub_fname (void);
 
   static const char *be_get_client_inline_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_server_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_implementation_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_implementation_skel_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_server_template_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_server_skeleton_fname (void);
 
   static const char *be_get_implementation_skeleton_fname (void);
 
   static const char *be_get_server_template_skeleton_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_server_inline_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_anyop_source_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_anyop_header_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_svnt_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_svnt_src_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_exec_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_exec_src_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_exec_stub_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_exec_idl_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_conn_hdr_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_conn_src_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
 
   static const char *be_get_ciao_ami_conn_idl_fname (
-      bool base_name_only = false);
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_ami_conn_impl_hdr_fname (
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_ami_conn_impl_src_fname (
+    bool base_name_only = false);
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
@@ -222,6 +228,14 @@ public:
     bool base_name_only = false);
 
   static const char *be_get_ciao_ami_conn_idl (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_ami_conn_impl_hdr (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
+
+  static const char *be_get_ciao_ami_conn_impl_src (
     UTL_String *idl_file_name,
     bool base_name_only = false);
 
@@ -501,6 +515,16 @@ public:
   /// For optionally generating CIAO AMI connector IDL file.
   void ciao_ami_conn_idl_ending (const char* s);
   const char* ciao_ami_conn_idl_ending (void) const;
+
+  /// For optionally generating CIAO AMI reply handler
+  /// impl header file.
+  void ciao_ami_conn_impl_hdr_ending (const char* s);
+  const char* ciao_ami_conn_impl_hdr_ending (void) const;
+
+  /// For optionally generating CIAO AMI reply handler
+  /// impl source file.
+  void ciao_ami_conn_impl_src_ending (const char* s);
+  const char* ciao_ami_conn_impl_src_ending (void) const;
 
   /// Set the clonable_in_args.
   void use_clonable_in_args (bool clonable);
@@ -929,6 +953,14 @@ private:
 
   /// CIAO AMI connector IDL file name ending. Default is "A.idl".
   char* ciao_ami_conn_idl_ending_;
+  
+  /// CIAO AMI reply handler impl header file name ending.
+  /// Default is "A_impl.h".
+  char* ciao_ami_conn_impl_hdr_ending_;
+
+  /// CIAO AMI reply handler impl source file name ending.
+  /// Default is "A_impl.cpp".
+  char* ciao_ami_conn_impl_src_ending_;
 
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
