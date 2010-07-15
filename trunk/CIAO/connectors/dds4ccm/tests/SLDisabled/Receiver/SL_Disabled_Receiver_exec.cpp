@@ -11,6 +11,8 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/TimeUtilities.h"
 
+#define SAMPLES_EXPECTED 3
+
 namespace CIAO_SL_Disabled_Receiver_Impl
 {
   //============================================================
@@ -42,8 +44,8 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   //============================================================
   // StateListener_exec_i
   //============================================================
-  StateListener_exec_i::StateListener_exec_i (Atomic_Boolean &no_operation)
-    :no_operation_(no_operation)
+  StateListener_exec_i::StateListener_exec_i (Atomic_Long & no_operation)
+    : no_operation_ (no_operation)
   {
   }
 
@@ -56,28 +58,28 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   StateListener_exec_i::on_creation (const ::TestTopic & /*datum*/,
                                      const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->no_operation_ = false;
+    ++this->no_operation_;
   }
 
   void
   StateListener_exec_i::on_one_update (const ::TestTopic & /*datum*/,
                                        const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->no_operation_ = false;
+    ++this->no_operation_;
   }
 
   void
   StateListener_exec_i::on_many_updates (const ::TestTopicSeq & /*data*/,
                                          const ::CCM_DDS::ReadInfoSeq & /*infos*/)
   {
-    this->no_operation_ = false;
+    ++this->no_operation_;
   }
 
   void
   StateListener_exec_i::on_deletion (const ::TestTopic & /*datum*/,
                                      const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->no_operation_ = false;
+    ++this->no_operation_;
   }
 
   //============================================================
@@ -85,8 +87,8 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
-    no_operation_ (true),
-    updater_data_ (false)
+    no_operation_ (0),
+    updater_data_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -113,7 +115,6 @@ namespace CIAO_SL_Disabled_Receiver_Impl
         reader->read_all(TestTopic_infos, readinfoseq);
         for (CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
           {
-            this->updater_data_ = true;
             ACE_Time_Value tv;
             tv <<= readinfoseq[i].source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
@@ -128,6 +129,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
                         TestTopic_infos[i].key.in (),
                         TestTopic_infos[i].x));
           }
+        this->updater_data_ += readinfoseq.length ();
       }
     catch (const CCM_DDS::InternalError& )
       {
@@ -180,7 +182,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       }
 
     lc->mode (::CCM_DDS::NOT_ENABLED);
-    
+
     // Calculate the interval time
     long const usec = 1000000 / this->rate_;
     if (this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ()->schedule_timer (
@@ -203,12 +205,12 @@ namespace CIAO_SL_Disabled_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (!this->no_operation_.value ()|| !this->updater_data_.value())
+    if (this->no_operation_.value () > 0)
       {
 
          ACE_ERROR ((LM_ERROR,
                      ACE_TEXT ("ERROR: Received an unexpected ")
-                     ACE_TEXT (" operation. StateListener or Updater doesn't work in Receiver")
+                     ACE_TEXT (" operation. StateListener doesn't work in Receiver\n")
                     ));
       }
 
@@ -216,8 +218,26 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("OK : Haven't received an  unexpected ")
-                    ACE_TEXT (" oparation from StateListener in Receiver")
+                    ACE_TEXT (" oparation from StateListener in Receiver\n")
                    ));
+      }
+    if (this->updater_data_.value () != SAMPLES_EXPECTED)
+      {
+
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ERROR: Unexpected number of samples received: ")
+                     ACE_TEXT ("expected <%d> - received <%d>\n"),
+                     SAMPLES_EXPECTED, this->updater_data_.value ()
+                    ));
+      }
+
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("OK : Received the expected number of samples: ")
+                    ACE_TEXT ("expected <%d> - received <%d>\n"),
+                    SAMPLES_EXPECTED, this->updater_data_.value ()
+                    ));
       }
   }
 

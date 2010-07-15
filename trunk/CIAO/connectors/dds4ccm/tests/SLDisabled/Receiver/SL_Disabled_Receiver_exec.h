@@ -18,7 +18,7 @@
 
 namespace CIAO_SL_Disabled_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long > Atomic_Long;
 
   class Receiver_exec_i;
 
@@ -49,7 +49,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    StateListener_exec_i (Atomic_Boolean &);
+    StateListener_exec_i (Atomic_Long &);
     virtual ~StateListener_exec_i (void);
 
     virtual void
@@ -69,7 +69,7 @@ namespace CIAO_SL_Disabled_Receiver_Impl
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
   private:
-     Atomic_Boolean &no_operation_;
+     Atomic_Long & no_operation_;
    };
 
   //============================================================
@@ -106,8 +106,8 @@ namespace CIAO_SL_Disabled_Receiver_Impl
     read_action_Generator * ticker_;
 
     CORBA::ULong rate_;
-    Atomic_Boolean no_operation_;
-    Atomic_Boolean updater_data_;
+    Atomic_Long no_operation_;
+    Atomic_Long updater_data_;
 };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_SL_Disabled_Receiver_Impl (void);
