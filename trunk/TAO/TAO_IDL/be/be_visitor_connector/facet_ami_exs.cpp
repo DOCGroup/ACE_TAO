@@ -29,6 +29,11 @@ be_visitor_facet_ami_exs::visit_component (be_component *node)
 {
   this->node_ = node;
 
+  /// Not sure if this bulletproof. The contents of *A.idl come
+  /// from iteration over the AMI4CCM interfaces list, which is
+  /// in turn populated by the corresponding pragmas. We may
+  /// eventually have to do the same for this code generation,
+  /// as well as that of be_visitor_connector_ami_exs.
   return this->visit_scope (node);
 }
 

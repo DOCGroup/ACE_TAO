@@ -41,7 +41,8 @@
 be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     for_facets_ (false),
-    op_scope_ (0)
+    op_scope_ (0),
+    exec_class_extension_ ("exec_i")
 {
 }
 
@@ -207,6 +208,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
+        visitor.class_extension (this->exec_class_extension_.c_str ());
         status = get_op.accept (&visitor);
         break;
       }
@@ -375,6 +377,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       {
         be_visitor_operation_exs visitor (&ctx);
         visitor.scope (this->op_scope_);
+        visitor.class_extension (this->exec_class_extension_.c_str ());
         status = set_op.accept (&visitor);
         break;
       }
@@ -429,3 +432,8 @@ be_visitor_attribute::op_scope (be_decl *node)
   this->op_scope_ = node;
 }
 
+void
+be_visitor_attribute::exec_class_extension (const char *extension)
+{
+  this->exec_class_extension_ = extension;
+}

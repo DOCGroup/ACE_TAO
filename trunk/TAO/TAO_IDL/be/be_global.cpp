@@ -83,6 +83,8 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
     dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
     ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
+    ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
+    ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
     output_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
@@ -509,6 +511,30 @@ BE_GlobalData::be_get_ciao_ami_conn_idl (
 }
 
 const char *
+BE_GlobalData::be_get_ciao_ami_conn_impl_hdr (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->ciao_ami_conn_impl_hdr_ending (),
+      base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_ami_conn_impl_src (
+  UTL_String *idl_file_name,
+  bool base_name_only)
+{
+  return
+    be_change_idl_file_extension (
+      idl_file_name,
+      be_global->ciao_ami_conn_impl_src_ending (),
+      base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_client_hdr_fname (
   bool base_name_only)
 {
@@ -700,6 +726,24 @@ BE_GlobalData::be_get_ciao_ami_conn_idl_fname (
   return
     be_get_ciao_ami_conn_idl (idl_global->stripped_filename (),
                               base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_ami_conn_impl_hdr_fname (
+  bool base_name_only)
+{
+  return
+    be_get_ciao_ami_conn_impl_hdr (idl_global->stripped_filename (),
+                                   base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
+  bool base_name_only)
+{
+  return
+    be_get_ciao_ami_conn_impl_src (idl_global->stripped_filename (),
+                                   base_name_only);
 }
 
 const char*
@@ -1364,6 +1408,32 @@ const char *
 BE_GlobalData::ciao_ami_conn_idl_ending (void) const
 {
   return this->ciao_ami_conn_idl_ending_;
+}
+
+void
+BE_GlobalData::ciao_ami_conn_impl_hdr_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
+  this->ciao_ami_conn_impl_hdr_ending_ = ACE::strnew (s);
+}
+
+const char *
+BE_GlobalData::ciao_ami_conn_impl_hdr_ending (void) const
+{
+  return this->ciao_ami_conn_impl_hdr_ending_;
+}
+
+void
+BE_GlobalData::ciao_ami_conn_impl_src_ending (const char* s)
+{
+  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
+  this->ciao_ami_conn_impl_src_ending_ = ACE::strnew (s);
+}
+
+const char *
+BE_GlobalData::ciao_ami_conn_impl_src_ending (void) const
+{
+  return this->ciao_ami_conn_impl_src_ending_;
 }
 
 void

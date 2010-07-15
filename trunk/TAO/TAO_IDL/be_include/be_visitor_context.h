@@ -172,7 +172,7 @@ private:
   /// See the method declaration above.
   be_interface *interface_;
   
-  /// Used in enough visitor to put it here.
+  /// Used in enough visitors to put it here.
   ACE_CString port_prefix_;
 };
 

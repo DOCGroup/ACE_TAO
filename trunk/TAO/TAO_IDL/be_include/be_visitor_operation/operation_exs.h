@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 
@@ -39,6 +38,7 @@ public:
   virtual int visit_operation (be_operation *node);
   
   void scope (be_decl *node);
+  void class_extension (const char *extension);
 
 private:
   int gen_op_body (be_type *return_type);
@@ -47,6 +47,7 @@ private:
   TAO_OutStream &os_;
   be_decl *scope_;
   const char *your_code_here_;
+  ACE_CString class_extension_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_EXS_H_ */
