@@ -456,14 +456,6 @@ project(Conn Test) : acetest {
   }
 }
 
-project(Connector Test) : acetest {
-  avoids += ace_for_tao
-  exename = Connector_Test
-  Source_Files {
-    Connector_Test.cpp
-  }
-}
-
 project(Date Time Test) : acetest {
   avoids += ace_for_tao
   exename = Date_Time_Test
