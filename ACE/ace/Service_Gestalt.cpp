@@ -1236,7 +1236,7 @@ ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
 
   if (this->svc_conf_file_queue_ == 0
       || this->svc_conf_file_queue_->is_empty ())
-    return 0;
+    return -1;
 
   ACE_TString *sptr = 0;
   ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
