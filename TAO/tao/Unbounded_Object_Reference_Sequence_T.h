@@ -54,20 +54,20 @@ public:
     : impl_(maximum, length, data, release)
   {}
 
-  /// @copydoc details::generic_sequence::maximum
+  /// @copydoc details::generic_sequence::maximum()
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
-  /// @copydoc details::generic_sequence::release
+  /// @copydoc details::generic_sequence::release()
   inline CORBA::Boolean release() const {
     return impl_.release();
   }
-  /// @copydoc details::generic_sequence::length
+  /// @copydoc details::generic_sequence::length()
   inline CORBA::ULong length() const {
     return impl_.length();
   }
 
-  /// @copydoc details::generic_sequence::length
+  /// @copydoc details::generic_sequence::length()
   inline void length(CORBA::ULong length) {
     impl_.length(length);
   }
@@ -79,11 +79,11 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  /// @copydoc details::generic_sequence::get_buffer
+  /// @copydoc details::generic_sequence::get_buffer()
   inline value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  /// @copydoc details::generic_sequence::replace
+  /// @copydoc details::generic_sequence::replace()
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
@@ -95,7 +95,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  /// @copydoc details::generic_sequence::swap
+  /// @copydoc details::generic_sequence::swap()
   inline void swap(unbounded_object_reference_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
@@ -123,56 +123,56 @@ public:
   typedef MM_Sequence_Reverse_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > reverse_iterator;
   typedef Const_MM_Sequence_Reverse_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > const_reverse_iterator;
 
-  // Get an iterator that points to the beginning of the sequence.
+  /// Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
   {
     return iterator (&this->impl_);
   }
 
-  // Get a const iterator that points to the beginning of the sequence.
+  /// Get a const iterator that points to the beginning of the sequence.
   const_iterator begin (void) const
   {
     return const_iterator (&this->impl_);
   }
 
-  // Get an iterator that points to the end of the sequence.
+  /// Get an iterator that points to the end of the sequence.
   iterator end (void)
   {
     return iterator (&this->impl_,
                      this->impl_.length ());
   }
 
-  // Get a const iterator that points to the end of the sequence.
+  /// Get a const iterator that points to the end of the sequence.
   const_iterator end (void) const
   {
     return const_iterator (&this->impl_,
                            this->impl_.length ());
   }
 
-  // Get a reverse iterator that points to the end of the sequence.
+  /// Get a reverse iterator that points to the end of the sequence.
   reverse_iterator rbegin (void)
   {
     return reverse_iterator (&this->impl_,
                              this->impl_.length () - 1);
   }
 
-  // Get a const reverse iterator that points to the end of the sequence.
+  /// Get a const reverse iterator that points to the end of the sequence.
   const_reverse_iterator rbegin (void) const
   {
     return const_reverse_iterator (&this->impl_,
                                    this->impl_.length () - 1);
   }
 
-  // Get a reverse iterator that points to one before the beginning
-  // of the sequence.
+  /// Get a reverse iterator that points to one before the beginning
+  /// of the sequence.
   reverse_iterator rend (void)
   {
     return reverse_iterator (&this->impl_,
                              -1);
   }
 
-  // Get a const reverse iterator that points to one before the
-  // beginning of the sequence.
+  /// Get a const reverse iterator that points to one before the
+  /// beginning of the sequence.
   const_reverse_iterator rend (void) const
   {
     return const_reverse_iterator (&this->impl_,
