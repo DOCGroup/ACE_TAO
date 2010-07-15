@@ -75,7 +75,8 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
                   backlog,
                   protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                "ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor"));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor")));
 }
 
 // General purpose routine for accepting new connections.
