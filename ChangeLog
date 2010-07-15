@@ -1,3 +1,15 @@
+Thu Jul 15 17:53:47 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+        * THANKS:
+        
+          Restore pre-gestalt behavior of returning -1 if svc.conf does
+          not exist and an ACE_Service_Config::open() is expecting to use
+          the default file.
+
+          Thanks to Daynesh Mangal (daynesh@gmail.com) for reporting the
+          errant behavior.
+        
 Thu Jun 24 02:07:18 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Gestalt.inl (open): Allow the command line options to
