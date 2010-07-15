@@ -29,6 +29,7 @@
 
 #include "be_visitor_connector.h"
 #include "be_visitor_operation.h"
+#include "be_visitor_attribute.h"
 #include "be_visitor_context.h"
 
 #include "be_visitor_connector/connector_dds_ex_base.cpp"
@@ -41,3 +42,5 @@
 #include "be_visitor_connector/facet_ami_exs.cpp"
 #include "be_visitor_connector/executor_ami_exh.cpp"
 #include "be_visitor_connector/executor_ami_exs.cpp"
+#include "be_visitor_connector/connector_ami_rh_exh.cpp"
+#include "be_visitor_connector/connector_ami_rh_exs.cpp"

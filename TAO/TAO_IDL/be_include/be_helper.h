@@ -113,7 +113,9 @@ public:
       CIAO_EXEC_IDL,
       CIAO_CONN_HDR,
       CIAO_CONN_IMPL,
-      CIAO_AMI4CCM_CONN_IDL
+      CIAO_AMI4CCM_CONN_IDL,
+      CIAO_AMI_RH_IMPL_HDR,
+      CIAO_AMI_RH_IMPL_SRC
     };
 
   TAO_OutStream (void);

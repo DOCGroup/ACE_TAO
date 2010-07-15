@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_CONNECTOR_AMI_EXH_H_
 #define _BE_CONNECTOR_CONNECTOR_AMI_EXH_H_
 
