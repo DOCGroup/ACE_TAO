@@ -10,8 +10,6 @@
 #ifndef QUERYCONDITION_T_H_
 #define QUERYCONDITION_T_H_
 
-#include "tao/LocalObject.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
@@ -24,8 +22,6 @@
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::QueryCondition DDSQueryCondition;
 #endif
-
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

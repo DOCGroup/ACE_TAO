@@ -304,18 +304,3 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_many (
       this->delete_i (data[index], ::DDS::HANDLE_NIL, index);
     }
 }
-
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-::CORBA::Object_ptr
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
-{
-  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-void
-CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
-  typename CCM_TYPE::base_type::_ptr_type component)
-{
-  this->component_ = CCM_TYPE::base_type::_duplicate (component);
-}

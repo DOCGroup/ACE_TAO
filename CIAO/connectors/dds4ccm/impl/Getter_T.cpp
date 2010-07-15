@@ -36,25 +36,6 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (vo
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-::CORBA::Object_ptr
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_get_component (void)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::_get_component");
-
-  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-void
-CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::_set_component (
-  typename CCM_TYPE::base_type::_ptr_type component)
-{
-  DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::_set_component");
-
-  this->component_ = CCM_TYPE::base_type::_duplicate (component);
-}
-
-template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
   typename DDS_TYPE::dds_seq_type & data,

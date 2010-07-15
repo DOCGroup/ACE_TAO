@@ -10,11 +10,9 @@
 #ifndef DDS4CCM_STATUSCONDITION_H
 #define DDS4CCM_STATUSCONDITION_H
 
-#include "tao/LocalObject.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -25,8 +23,6 @@
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::StatusCondition DDSStatusCondition;
 #endif
-
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

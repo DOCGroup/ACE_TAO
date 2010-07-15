@@ -12,8 +12,6 @@
 
 #include "DomainParticipant_T.h"
 
-#include "tao/LocalObject.h"
-
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::Topic DDSTopic;
 #endif

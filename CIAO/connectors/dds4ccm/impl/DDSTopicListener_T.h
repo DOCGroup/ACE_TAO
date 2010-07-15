@@ -9,11 +9,10 @@
 #ifndef DDSTOPICLISTENER_T_H_
 #define DDSTOPICLISTENER_T_H_
 
-#include "tao/LocalObject.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm_dds_impl_export.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+
+#include "dds4ccm_dds_impl_export.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
 # include "ndds/ndds_cpp.h"
