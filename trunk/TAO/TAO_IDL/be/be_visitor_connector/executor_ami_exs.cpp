@@ -90,7 +90,8 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   os_ << be_nl << be_nl
       << "void" << be_nl
       << class_name << "::configuration_complete (void)" << be_nl
-      << "{" << be_nl
+      << "{" << be_idt_nl
+      << "this->facet_exec_->_set_component (this);" << be_uidt_nl
       << "}";
       
   os_ << be_nl << be_nl
@@ -105,10 +106,19 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "{" << be_nl
       << "}";
       
+  AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global =
+   (s->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
+
   os_ << be_nl << be_nl
       << "void" << be_nl
       << class_name << "::ccm_remove (void)" << be_nl
-      << "{" << be_nl 
+      << "{" << be_idt_nl
+      << "this->facet_exec_->_set_component (" << be_idt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "::_nil ());" << be_uidt << be_uidt_nl
       << "}";
   
   return 0;
