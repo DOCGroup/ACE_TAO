@@ -10,11 +10,9 @@
 #ifndef READCONDITION_T_H_
 #define READCONDITION_T_H_
 
-#include "tao/LocalObject.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
+
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
@@ -24,8 +22,6 @@
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::ReadCondition DDSReadCondition;
 #endif
-
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

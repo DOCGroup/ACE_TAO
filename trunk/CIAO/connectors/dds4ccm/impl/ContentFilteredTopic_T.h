@@ -12,7 +12,6 @@
 #include "DomainParticipant_T.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "tao/LocalObject.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::ContentFilteredTopic DDSContentFilteredTopic;

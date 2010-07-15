@@ -10,7 +10,6 @@
 #ifndef DOMAINPARTICIPANT_T_H_
 #define DOMAINPARTICIPANT_T_H_
 
-#include "tao/LocalObject.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
@@ -23,8 +22,6 @@
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::DomainParticipant DDSDomainParticipant;
 #endif
-
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

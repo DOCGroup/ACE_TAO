@@ -10,8 +10,6 @@
 #ifndef DDSPUBLISHERLISTENER_T_H_
 #define DDSPUBLISHERLISTENER_T_H_
 
-#include "tao/LocalObject.h"
-
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
@@ -30,8 +28,6 @@ typedef ::DDS::LivelinessLostStatus DDS_LivelinessLostStatus;
 typedef ::DDS::PublicationMatchedStatus DDS_PublicationMatchedStatus;
 typedef ::DDS::ReliableWriterCacheChangedStatus DDS_ReliableWriterCacheChangedStatus;
 #endif
-
-#include "tao/LocalObject.h"
 
 namespace CIAO
 {

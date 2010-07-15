@@ -28,13 +28,8 @@ public:
   /// Get the is_filter_interpreted
   virtual void is_filter_interpreted (::CORBA::Boolean is_filter_interpreted);
 
-  /// Set the component
-  void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-  virtual ::CORBA::Object_ptr _get_component (void);
-
 private:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CORBA::Boolean> is_filter_interpreted_;
-  typename CCM_TYPE::base_type::_var_type component_;
 };
 
 #include "dds4ccm/impl/StateListenerControl_T.cpp"

@@ -12,6 +12,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#include "dds4ccm/impl/DDS4CCM_LocalObject_T.h"
 
 #include "dds4ccm/impl/ConditionManager_T.h"
 
@@ -29,7 +30,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
-          public virtual ::CORBA::LocalObject,
+          public virtual DDS4CCM_LocalObject_T<CCM_TYPE>,
           private virtual ACE_Copy_Disabled
       {
       typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
@@ -63,9 +64,6 @@ namespace CIAO
           ::CCM_DDS::ReadInfoSeq& infos,
           const ::DDS::InstanceHandle_t & instance_handle);
 
-        void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-        virtual ::CORBA::Object_ptr _get_component (void);
-
         virtual ::CCM_DDS::QueryFilter *query (void);
 
         virtual void query (const ::CCM_DDS::QueryFilter & filter);
@@ -75,7 +73,6 @@ namespace CIAO
 
       private:
         DataReader_type * reader_;
-        typename CCM_TYPE::base_type::_var_type component_;
         ConditionManager_type * condition_manager_;
 
         DataReader_type * impl (void);

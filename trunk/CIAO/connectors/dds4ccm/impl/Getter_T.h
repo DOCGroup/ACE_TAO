@@ -44,7 +44,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
       class Getter_Base_T :
          public virtual CCM_TYPE::getter_type,
-         public virtual ::CORBA::LocalObject,
+         public virtual DDS4CCM_LocalObject_T<CCM_TYPE>,
          private virtual ACE_Copy_Disabled
       {
       typedef CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
@@ -96,10 +96,6 @@ namespace CIAO
          */
         void set_impl (DataReader_type * reader,
                        ConditionManager_type * condition_manager);
-
-        void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-        virtual ::CORBA::Object_ptr _get_component (void);
-
       protected:
         DataReader_type * reader_;
         ConditionManager_type * condition_manager_;
@@ -113,10 +109,6 @@ namespace CIAO
         ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
                                  DDS_SampleInfoSeq & sample_info,
                                  const DDS_Long & max_samples);
-
-      private:
-        typename CCM_TYPE::base_type::_var_type component_;
-
       };
 
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
