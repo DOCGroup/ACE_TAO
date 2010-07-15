@@ -35,6 +35,8 @@ DISTRIBUTE_GROUP_DOC  = YES
 TAB_SIZE              = 8
 ENABLED_SECTIONS      =
 SHORT_NAMES           = YES
+GENERATE_DEPRECATEDLIST = YES
+GENERATE_TODOLIST       = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
