@@ -11,6 +11,11 @@
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/TimeUtilities.h"
 
+#define ON_CREATION_EXPECTED 4
+#define ON_MANY_EXPECTED 4
+#define ON_DELETION_EXPECTED 4
+#define ON_READER_EXPECTED 0
+
 namespace CIAO_SL_ManyByMany_Receiver_Impl
 {
   //============================================================
@@ -41,18 +46,18 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   //============================================================
   // Facet Executor Implementation Class: StateListener_exec_i
   //============================================================
-  StateListener_exec_i::StateListener_exec_i (Atomic_Boolean &no_operation,
-                                              Atomic_Boolean &on_creation,
-                                              Atomic_Boolean &on_many_update,
-                                              Atomic_Boolean &on_deletion,
-                                              Atomic_Boolean &create_data,
-                                              Atomic_Boolean &update_data)
-    :no_operation_(no_operation),
-     on_creation_(on_creation),
-     on_many_update_(on_many_update),
-     on_deletion_(on_deletion),
-     create_data_(create_data),
-     update_data_(update_data)
+  StateListener_exec_i::StateListener_exec_i (Atomic_Long &no_operation,
+                                              Atomic_Long &on_creation,
+                                              Atomic_Long &on_many_update,
+                                              Atomic_Long &on_deletion,
+                                              Atomic_Bool &create_data,
+                                              Atomic_Bool &update_data)
+  : no_operation_ (no_operation),
+    on_creation_ (on_creation),
+    on_many_update_ (on_many_update),
+    on_deletion_ (on_deletion),
+    create_data_ (create_data),
+    update_data_ (update_data)
   {
   }
 
@@ -65,19 +70,19 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   StateListener_exec_i::on_creation (const ::TestTopic & data,
                                      const ::CCM_DDS::ReadInfo & readinfo)
   {
-    this->on_creation_ = true;
+    ++this->on_creation_;
     ACE_Time_Value tv;
     tv <<= readinfo.source_timestamp;
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_creation ReadInfo ")
                           ACE_TEXT ("-> UTC date =%#T\n"),
                           &tv));
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Statelistener:on_creation : ")
-               ACE_TEXT ("Received datum for <%C> at %u\n"),
-                data.key.in (),
-                data.x));
+                          ACE_TEXT ("Received datum for <%C> at %u\n"),
+                          data.key.in (),
+                          data.x));
     //one of the data must have the key 'KEY_1' with x == 1
-    if((strcmp(data.key.in() ,"KEY_1")==0) && (data.x == 1L))
+    if (strcmp (data.key.in(), "KEY_1") == 0 && data.x == 1L)
       {
         this->create_data_ = true;
       }
@@ -87,39 +92,42 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   StateListener_exec_i::on_one_update (const ::TestTopic & /*datum*/,
                                        const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    this->no_operation_ = false;
+    ++this->no_operation_;
   }
 
   void
   StateListener_exec_i::on_many_updates (const ::TestTopicSeq & data,
                                          const ::CCM_DDS::ReadInfoSeq & readinfoseq)
   {
-    this->on_many_update_ = true;
+    this->on_many_update_ += readinfoseq.length();
     for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
       {
-        if( readinfoseq[i].instance_status != CCM_DDS::INSTANCE_UPDATED)
+        if (readinfoseq[i].instance_status != CCM_DDS::INSTANCE_UPDATED)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
-                                  ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED'")
-                                  ACE_TEXT ("  with operation 'on_many_updates' from StateListener in Receiver\n")
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
+                                  ACE_TEXT ("info.instance_status ")
+                                  ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED' ")
+                                  ACE_TEXT ("with operation 'on_many_updates' ")
+                                  ACE_TEXT ("from StateListener in Receiver\n")
                         ));
 
           }
         ACE_Time_Value tv;
         tv <<= readinfoseq[i].source_timestamp;
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_many_updates ReadInfo ")
                               ACE_TEXT ("-> UTC date =%#T\n"),
                               &tv));
       }
-    for(CORBA::ULong i = 0; i < data.length(); ++i)
+    for (CORBA::ULong i = 0; i < data.length(); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                    ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-                    i,
-                    data[i].key.in (),
-                    data[i].x));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_many_updates info : ")
+                              ACE_TEXT ("Number <%d> : received TestTopic_info ")
+                              ACE_TEXT ("for <%C> at %u\n"),
+                              i,
+                              data[i].key.in (),
+                              data[i].x));
         //one of the data must have the key 'KEY_1' with x == 2
-        if((strcmp(data[i].key,"KEY_1")==0 ) && (data[i].x == 2L))
+        if (strcmp(data[i].key,"KEY_1") == 0 && data[i].x == 2L)
           {
             this->update_data_ = true;
           }
@@ -138,9 +146,9 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                     ));
 
       }
-    if((!datum.key.in()==0) && (info.instance_status == CCM_DDS::INSTANCE_DELETED))
+    if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_DELETED)
       {
-        this->on_deletion_ = true;
+        ++this->on_deletion_;
       }
   }
   //============================================================
@@ -170,17 +178,17 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   }
 
   //============================================================
-  // Component Executor Implementation Class: Receiver_exec_iTestTopic_RawListener_exec_i ();
+  // Component Executor Implementation Class: Receiver_exec_i ();
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
-    no_operation_(true),
-    on_creation_(false),
-    on_many_update_(false),
-    on_deletion_(false),
-    create_data_(false),
-    update_data_(false),
-    reader_data_(false)
+    no_operation_ (0),
+    on_creation_ (0),
+    on_many_update_ (0),
+    on_deletion_ (0),
+    create_data_ (false),
+    update_data_ (false),
+    reader_data_ (0)
   {
     this->ticker_ = new read_action_Generator (*this);
   }
@@ -194,9 +202,9 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   Receiver_exec_i::read_all (void)
   {
     ::SL_ManyByMany::SLManyByManyConnector::Reader_var reader =
-      this->context_->get_connection_info_out_data();
+      this->context_->get_connection_info_out_data ();
 
-    if (::CORBA::is_nil (reader.in ()))
+    if ( ::CORBA::is_nil (reader.in ()))
       {
         return;
       }
@@ -204,8 +212,9 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {
         TestTopicSeq TestTopic_infos;
         ::CCM_DDS::ReadInfoSeq readinfoseq;
-        reader->read_all(TestTopic_infos, readinfoseq);
-        for(CORBA::ULong i = 0; i < readinfoseq.length(); ++i)
+        reader->read_all (TestTopic_infos, readinfoseq);
+        this->reader_data_ += TestTopic_infos.length ();
+        for (CORBA::ULong i = 0; i < readinfoseq.length (); ++i)
           {
             ACE_Time_Value tv;
             tv <<= readinfoseq[i].source_timestamp;
@@ -213,11 +222,10 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                                   ACE_TEXT ("-> UTC date =%#T\n"),
                                   &tv));
           }
-        for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
+        for (CORBA::ULong i = 0; i < TestTopic_infos.length (); ++i)
           {
-            this->reader_data_= true;
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                       ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL info : ")
+                        ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
                         i,
                         TestTopic_infos[i].key.in (),
                         TestTopic_infos[i].x));
@@ -241,7 +249,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   ::SL_ManyByMany::SLManyByManyConnector::CCM_StateListener_ptr
   Receiver_exec_i::get_info_out_data_listener (void)
   {
-    return new StateListener_exec_i(this->no_operation_,
+    return new StateListener_exec_i (this->no_operation_,
                                      this->on_creation_,
                                      this->on_many_update_,
                                      this->on_deletion_,
@@ -302,61 +310,125 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    CORBA::Boolean no_error = true;
-    if(!this->no_operation_.value ())
+    if (this->no_operation_.value () > 0)
       {
-         no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive an unexpected ")
-                               ACE_TEXT (" operation 'on_one_update' from StateListener in Receiver\n")
+                               ACE_TEXT ("operation 'on_one_update' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
                     ));
       }
-    if(!this->on_creation_ .value ())
+    else
       {
-         no_error = false;
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did not receive an unexpected ")
+                               ACE_TEXT ("operation 'on_one_update' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
+                    ));
+      }
+
+    if (this->on_creation_.value () != ON_CREATION_EXPECTED)
+      {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_creation' from StateListener in Receiver\n")
+                               ACE_TEXT ("number of 'on_creation' calls: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_CREATION_EXPECTED,
+                               this->on_creation_.value ()
                     ));
       }
-    if(!this->create_data_ .value ())
+    else
       {
-         no_error = false;
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
+                               ACE_TEXT ("number of 'on_creation' calls: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_CREATION_EXPECTED,
+                               this->on_creation_.value ()
+                    ));
+      }
+
+    if (!this->create_data_ .value ())
+      {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" data with 'on_creation' from StateListener in Receiver\n")
+                               ACE_TEXT ("sample in 'on_creation' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
                     ));
       }
-    if(!this->on_many_update_.value  ())
+    else
       {
-         no_error = false;
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
+                               ACE_TEXT ("sample in 'on_creation' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
+                    ));
+      }
+
+    if(this->on_many_update_.value  () != ON_MANY_EXPECTED)
+      {
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
+                               ACE_TEXT ("number of 'on_many_update' samples: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_MANY_EXPECTED,
+                               this->on_many_update_.value ()
+                    ));
+      }
+    else
+      {
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
+                               ACE_TEXT ("number of 'on_many_update' samples: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_MANY_EXPECTED,
+                               this->on_many_update_.value ()
+                    ));
+      }
+
+    if (!this->update_data_.value ())
+      {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_many_updates' from StateListener in Receiver\n")
+                               ACE_TEXT (" data with 'on_many_updates' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
                     ));
       }
-    if(!this->update_data_.value  ())
+    else
       {
-         no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR:didn't receive the expected ")
-                               ACE_TEXT (" data with 'on_many_updates' from StateListener in Receiver\n")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
+                               ACE_TEXT ("sample in 'on_many_updates' from ")
+                               ACE_TEXT ("StateListener in Receiver\n")
                     ));
       }
-    if(!this->on_deletion_.value ())
+
+    if (this->on_deletion_.value () != ON_DELETION_EXPECTED)
       {
-         no_error = false;
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
-                               ACE_TEXT (" operation 'on_deletion' from StateListener in Receiver\n")
+                               ACE_TEXT ("number of 'on_deletion' calls: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_DELETION_EXPECTED,
+                               this->on_deletion_.value ()
                     ));
       }
-      if(this->reader_data_.value ())
+    else
       {
-         no_error = false;
-         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did receive unexpected ")
-                               ACE_TEXT (" data on the Reader in combination with StateListener in Receiver\n")
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
+                               ACE_TEXT ("number of 'on_deletion' calls: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_DELETION_EXPECTED,
+                               this->on_deletion_.value ()
                     ));
       }
-    if(no_error==true)
+
+    if (this->reader_data_.value () != ON_READER_EXPECTED)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the  expected ")
-                               ACE_TEXT (" operations for MANY_BY_MANY from StateListener in Receiver\n")
-                   ));
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't read the expected ")
+                               ACE_TEXT ("number of samples: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_READER_EXPECTED,
+                               this->reader_data_.value ()
+                    ));
+      }
+    else
+      {
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: read the expected ")
+                               ACE_TEXT ("number of samples: ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_READER_EXPECTED,
+                               this->reader_data_.value ()
+                    ));
       }
   }
 

@@ -19,7 +19,7 @@
 
 namespace CIAO_SL_OneByOne_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_Long;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
@@ -32,10 +32,10 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    StateListener_exec_i (Atomic_Boolean &,
-                          Atomic_Boolean &,
-                          Atomic_Boolean &,
-                          Atomic_Boolean &,
+    StateListener_exec_i (Atomic_Long &,
+                          Atomic_Long &,
+                          Atomic_Long &,
+                          Atomic_Long &,
                           Atomic_ThreadId &);
     virtual ~StateListener_exec_i (void);
 
@@ -56,10 +56,10 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
         const ::TestTopic & datum,
         const ::CCM_DDS::ReadInfo & info);
   private:
-     Atomic_Boolean &on_many_updates_;
-     Atomic_Boolean &on_creation_;
-     Atomic_Boolean &on_one_update_;
-     Atomic_Boolean &on_deletion_;
+     Atomic_Long &on_many_updates_;
+     Atomic_Long &on_creation_;
+     Atomic_Long &on_one_update_;
+     Atomic_Long &on_deletion_;
      Atomic_ThreadId &thread_id_;
   };
 
@@ -94,11 +94,11 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   private:
     ::SL_OneByOne::CCM_Receiver_Context_var context_;
 
-    Atomic_Boolean on_many_updates_;
-    Atomic_Boolean updater_data_;
-    Atomic_Boolean on_creation_;
-    Atomic_Boolean on_one_update_;
-    Atomic_Boolean on_deletion_;
+    Atomic_Long on_many_updates_;
+    Atomic_Long updater_data_;
+    Atomic_Long on_creation_;
+    Atomic_Long on_one_update_;
+    Atomic_Long on_deletion_;
     Atomic_ThreadId thread_id_listener_;
   };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
