@@ -1849,40 +1849,47 @@ TAO_CodeGen::end_client_stubs (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
-  // End versioned namespace support.  Do not place include directives
-  // before this.
-  *this->server_header_ << be_global->versioning_end ();
+  TAO_OutStream *os = this->server_header_;
 
-  // Insert the template header.
-  if (be_global->gen_tie_classes ())
-    {
-      *this->server_header_ << "\n\n#include \""
-                            << be_global->be_get_server_template_hdr_fname (1)
-                            << "\"\n";
-    }
+  /// Otherwise just generate the post_include(), if any,
+  /// and the #endif.
+  if (be_global->gen_skel_files ())
+    {    
+      // End versioned namespace support.  Do not place include directives
+      // before this.
+      *os << be_global->versioning_end ();
 
-  // Only when we generate a server inline file generate the include
-  if (be_global->gen_server_inline ())
-    {
-      // Insert the code to include the inline file.
-      *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
-      *this->server_header_ << "#include \""
-                            << be_global->be_get_server_inline_fname (1)
-                            << "\"\n";
-      *this->server_header_ << "#endif /* defined INLINE */";
+      // Insert the template header.
+      if (be_global->gen_tie_classes ())
+        {
+          *os << "\n\n#include \""
+              << be_global->be_get_server_template_hdr_fname (true)
+              << "\"\n";
+        }
+
+      // Only when we generate a server inline file generate the include
+      if (be_global->gen_server_inline ())
+        {
+          // Insert the code to include the inline file.
+          *os << "\n#if defined (__ACE_INLINE__)\n";
+          *os << "#include \""
+              << be_global->be_get_server_inline_fname (1)
+              << "\"\n";
+          *os << "#endif /* defined INLINE */";
+        }
     }
 
   if (be_global->post_include () != 0)
     {
-      *this->server_header_ << be_nl << be_nl
-                            << "#include /**/ \""
-                            << be_global->post_include ()
-                            << "\"";
+      *os << be_nl << be_nl
+          << "#include /**/ \""
+          << be_global->post_include ()
+          << "\"";
     }
 
-  *this->server_header_ << be_nl << be_nl
-                        << "#endif /* ifndef */\n"
-                        << "\n";
+  *os << be_nl << be_nl
+      << "#endif /* ifndef */\n"
+      << "\n";
                         
   return 0;
 }
