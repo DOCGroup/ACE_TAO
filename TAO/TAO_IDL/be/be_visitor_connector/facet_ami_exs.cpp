@@ -256,6 +256,37 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
+      
+  AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global =
+   (s->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
+
+  os_ << be_nl << be_nl
+      << "::CORBA::Object_ptr" << be_nl
+      << iface_name << "_exec_i::_get_component (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return" << be_idt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "::_duplicate (" << be_idt_nl
+      << "this->component_.in ());"
+      << be_uidt << be_uidt << be_uidt_nl
+      << "}";
+      
+  os_ << be_nl << be_nl
+      << "void" << be_nl
+      << iface_name << "_exec_i::_set_component (" << be_idt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "_ptr component)" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "this->component_ =" << be_idt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "::_duplicate (" << be_idt_nl
+      << "component);" << be_uidt << be_uidt << be_uidt_nl
+      << "}";
 
   return 0;
 }

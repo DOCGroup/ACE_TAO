@@ -225,12 +225,29 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
   os_ << be_nl << be_nl
       << "virtual void set_session_context (" 
       << "::Components::SessionContext_ptr ctx);";
+      
+  AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
+  bool is_global =
+   (s->node_type () == AST_Decl::NT_root);
+  const char *smart_scope = (is_global ? "" : "::");
 
+  os_ << be_nl << be_nl
+      << "virtual ::CORBA::Object_ptr _get_component (void);";
+      
+  os_ << be_nl << be_nl
+      << "virtual void _set_component (" << be_idt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "_ptr);" << be_uidt;
+      
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
-      << "::" << ScopeAsDecl (this->node_->defined_in ())->name ()
-      << "::CCM_" << this->node_->local_name ()
-      << "_Context_var context_;" << be_uidt_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "_Context_var context_;" << be_nl
+      << "::" << s->name () << smart_scope
+      << "CCM_" << this->node_->local_name ()
+      << "_var component_;" << be_uidt_nl
       << "};";
 
   return 0;
