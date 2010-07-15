@@ -1,0 +1,19 @@
+#!/bin/csh -f
+
+echo "Memory test = 512, 40M"
+./memory_test -i 80000 -M 512
+echo "Memory test = 1024, 40M"
+./memory_test -i 40000 -M 1024
+echo "Memory test = 2048, 40M"
+./memory_test -i 20000 -M 2048
+echo "Memory test = 4096, 40M"
+./memory_test -i 10000 -M 4096
+
+echo "Pipe test = 512, 40M"
+./pipe_test -i 80000 -M 512
+echo "Pipe test = 1024, 40M"
+./pipe_test -i 40000 -M 1024
+echo "Pipe test = 2048, 40M"
+./pipe_test -i 20000 -M 2048
+echo "Pipe test = 4096, 40M"
+./pipe_test -i 10000 -M 4096

@@ -1,0 +1,194 @@
+1. INTRODUCTION
+
+This directory contains an example that illustrates how to use both
+threaded and reactive concurrency mechanisms in ACE.  The example
+application schedules and processes heterogenerous user input and
+timer-based events in the context of a bounded packet relay mechanism.
+
+In this example, a transmission begins, packets arrive from an input device 
+object, and are transferred to an output device object by a relay object at
+a specified pace.  The transfer continues until all packets have been 
+relayed, a duration limit expires, or the transmission is cancelled.
+
+User input is handled concurrently with a running transmission.  You
+can run a transmission, cancel a transmission, change transmission
+parameters, view statistics from the most recent transmission, or exit
+the program, using selections from an interactive text-based menu.
+In addition, the example program can be run in batch mode, with the
+appropriate commands piped to the program's standard input stream.  
+
+Transmission parameters are intialized to default values.  Transmission 
+parameter values persist until/unless they are subsequently modified by an 
+appropriate command.  If an invalid value for a command is given, or a run
+or report command is issued while a transmission is in progress, the 
+offending command has no effect, and an error message is generated.
+
+2. USER INTERFACE
+
+Commands that can be given to the program include the following:
+
+Settings commands:
+
+  1 <number of packets to relay in one transmission>
+
+     Minimum value is 1 packet, defaults to 1000 packets.
+
+  2 <input packet arrival period (in usec)>  
+
+     Minimum value is 1 usec, defaults to 10000 usec (10 msec).
+
+  3 <output packet transmission period (in usec)>
+
+     Minimum value is 1 usec, defaults to 10000 usec (10 msec).
+
+  4 <limit on duration of transmission (in usec)>
+
+     Minimum value is 1 usec, defaults to 20000000 usec (20 sec).
+     A value of 0 is also a valid input, in which case no limit
+     will be placed on the duration of the transmission (it will
+     end when all packets have been relayed from the input device
+     to the output device).
+
+  5 <logging level>
+     
+     0 - does no logging
+     1 - logs packets created by the input device
+     2 - logs packets consumed by the output device
+     4 - prints contents of packets consumed by the output device
+
+     To set several flags, pass their sum as the logging level value:
+     e.g., a logging level value of 7 turns on all possible logging.
+
+Action commands:
+
+  6 - runs a transmission using the current settings
+
+  7 - cancels a transmission if there is one running
+
+  8 - reports statistics from the most recent transmission
+
+  9 - quits the program
+
+3. APPLICATION DESIGN
+
+3.1. KEY COMPONENTS
+
+The design of this example application consists of four main
+components: the driver object, the relay object, the input device
+object, and the output device object.
+
+The driver object is responsible for receiving user input and overall handling
+of user input commands.  The driver object is active, with separate threads
+for receiving user input and managing its transmission timer queue.  This
+allows the user to issue commands while a transmission is in progress.  The
+driver object uses an ACE_Thread_Timer_Queue_Adapter, which is derived from
+ACE_Task_Base.  The driver object starts another active object, called
+User_Input_Task, which is also derived from ACE_Task_Base.  This allows both
+the timer queue and the user input object to be made active, running in their
+own threads of control.
+
+The relay object is passive, managing a message queue and necessary
+locks to allow safe access from multiple threads.  It provides methods
+to receive and enqueue a mesage from the input device, dequeue a
+message and send it to the output device, and to start or end a
+transmission.  It uses ACE_Message_Queue (which contains ACE_Message_Block 
+objects) and ACE_Thread_Mutex objects to implement this functionality.
+
+The input object is active, managing timeouts and input events in its
+own thread.  The input object is also reactive, using an ACE_Reactor to
+allow response to multiple input handles as well as to do polling at
+specific timeouts.  The input pseudo-device wrapper in this example
+does not make use of input handles and only does timed polling, but
+extending this only requires registering the appropriate input handles
+and handlers with the reactor.  The input object is derived from
+ACE_Task_Base, and is activated by the relay object when a new
+transmission starts.  The input object packages each data packet in an
+ACE_Message_Block before sending it to the relay object.
+
+The output object is passive.  If logging is turned on, it will report
+the arrival time, relative to the start of the transmission, of each
+output message, and the contents of that message.  The output object
+will also "consume" each ACE_Message_Block passed to it, calling
+delete on the passed pointer.
+
+3.2. RUN-TIME CHARACTERSITICS
+
+When the user initiates a transmission, the appropriate settings are passed
+by the driver to the relay object's start transmission method. The relay
+object tries to start a new transmission.  If another transmission is in
+progress, the method returns an error.  Otherwise, the relay object's start
+transmission method initializes itself and the input and output device
+objects, activates the input device object, and stores the handle for
+the new input device thread. 
+
+The driver then constructs a timeout handler with a count of the
+number of messages to relay and a send timeout value, and pushes a
+timer with this handler onto the timer queue.  If there is a limit on
+the duration of the transmission, the driver constructs a different
+handler for end-of-transmission, and pushes a timer for the end of
+the transmission with this handler onto the timer queue as well.  When
+the user issues a cancel transmission command, the driver calls the
+relay's end transmission method.
+
+When a send timeout expires, the handler (running in the timer queue
+thread) calls the send method of the relay.  If there are any enqueued
+messages from the input device object in its queue, the relay object's
+send method will dequeue a message, pass it to the output device
+object, and return success.  If there are no messages in the queue,
+the relay object's send method will return failure.  If the send was
+successful, the handler will decrement its count of remaining
+messages.  If the count is greater than zero, the handler will
+register a new send timer for itself and exit.  If the count is zero,
+then the handler will call the relay's end transmission method, clear
+the timer queue, and mark itself inactive before exiting.
+
+Similarly, if the end-of-transmission timer expires before all packets
+have been sent, that handler will call the relay's end transmission
+method, clear the timer queue, release the semaphore, and then exit.
+
+When the relay's end transmission method is called, it marks the relay
+itself inactive, and calls the input device's deactivate method, which
+sets the input device's activity flag to inactive (see below).  The
+relay's end transmission method then waits until the input device thread
+exits, before returning.
+
+While it is still active, the input device thread blocks on a reactor
+timeout for the duration it was given by the relay.  When the timeout
+expires, the input device checks a flag to see if it is still active.
+If the flag says the input device is inactive, the thread simply
+exits.  This allows cancellation of the input device when a
+transmission has ended.  If the flag says it is still active, the
+thread builds a new character buffer, and wraps this with a new
+ACE_Message_Block.  The input device passes this message block to the
+execution method of the send input message command object with which
+it was constructed. This level of indirection allows the input device
+to be used with arbitrary types, so that it could for example be
+connected directly to an output device.  The input device also
+maintains a count of the number of messages it has sent.  Once the
+input device has sent all its messages, it marks itself inactive, and
+its thread simply exits.
+
+4. ACCESSING THE SOURCE CODE 
+
+The files for this example are located in
+$ACE_ROOT/examples/Bounded_Packet_Relay in the latest release of ACE,
+which is located at
+
+http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz
+
+Source Files: Thread_Bounded_Packet_Relay.h
+              Thread_Bounded_Packet_Relay.cpp
+              BPR_Driver.h
+              BPR_Driver.cpp
+              BPR_Driver_T.h
+              BPR_Driver_T.cpp
+              bpr_thread.cpp
+
+Make file:    Makefile
+
+Doc file:     README (this file)
+
+Executable:   bpr_thread
+
+
+
