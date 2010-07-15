@@ -11,7 +11,6 @@
 #define WRITER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
 #include "InstanceHandleManager_T.h"
 
 namespace CIAO
@@ -19,8 +18,11 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class Writer_T :
-      public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::writer_type, VENDOR_TYPE>
+    class Writer_T
+      : public InstanceHandleManager_T <DDS_TYPE,
+                                        CCM_TYPE,
+                                        typename CCM_TYPE::writer_type,
+                                        VENDOR_TYPE>
     {
     public:
       /// Constructor
@@ -45,16 +47,12 @@ namespace CIAO
       virtual void is_coherent_write ( ::CORBA::Boolean value);
       //@}
 
-      void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-      virtual ::CORBA::Object_ptr _get_component (void);
-
     private:
       void write_i (const typename DDS_TYPE::value_type& datum,
                     const ::DDS::InstanceHandle_t& instance_handle,
                     ::CCM_DDS::DataNumber_t index);
 
       bool is_coherent_write_;
-      typename CCM_TYPE::base_type::_var_type component_;
     };
   }
 }

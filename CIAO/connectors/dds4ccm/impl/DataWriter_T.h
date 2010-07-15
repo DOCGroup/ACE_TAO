@@ -17,7 +17,6 @@
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/DataWriter.h"
-#include "tao/LocalObject.h"
 
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "ndds/ndds_cpp.h"
@@ -50,7 +49,7 @@ namespace CIAO
 
     public:
       explicit CCM_DDS_DataWriter_T (DDSDataWriter * dw);
-      
+
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 
       virtual ::DDS::ReturnCode_t get_qos (::DDS::DataWriterQos & qos);

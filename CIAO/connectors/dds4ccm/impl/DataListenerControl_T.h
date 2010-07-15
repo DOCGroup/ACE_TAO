@@ -5,7 +5,8 @@
 #define DATALISTENERCONTROL_T_H_
 
 #include "dds4ccm/idl/dds4ccm_DataListenerControlEC.h"
-#include "tao/LocalObject.h"
+#include "dds4ccm/impl/DDS4CCM_LocalObject_T.h"
+
 #include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -15,7 +16,7 @@
 template <typename BASE_TYPE, typename CCM_TYPE>
 class CCM_DDS_DataListenerControl_T
   : public virtual BASE_TYPE,
-    public virtual ::CORBA::LocalObject,
+    public virtual ::CIAO::DDS4CCM::DDS4CCM_LocalObject_T<CCM_TYPE>,
     private ACE_Copy_Disabled
 {
 public:
@@ -37,16 +38,9 @@ public:
   /// Get the max_delivered_data
   virtual void max_delivered_data (::CCM_DDS::DataNumber_t max_delivered_data);
 
-  /// Set the component
-  void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-  virtual ::CORBA::Object_ptr _get_component (void);
-
 protected:
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::ListenerMode> mode_;
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, ::CCM_DDS::DataNumber_t> max_delivered_data_;
-
-private:
-  typename CCM_TYPE::base_type::_var_type component_;
 };
 
 #include "dds4ccm/impl/DataListenerControl_T.cpp"

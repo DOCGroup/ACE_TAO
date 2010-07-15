@@ -18,8 +18,8 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class Updater_T :
-      public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type, VENDOR_TYPE>
+    class Updater_T
+      : public InstanceHandleManager_T <DDS_TYPE, CCM_TYPE, typename CCM_TYPE::updater_type, VENDOR_TYPE>
     {
     public:
       /// Constructor
@@ -57,9 +57,6 @@ namespace CIAO
       virtual void is_coherent_write (bool value_);
       //@}
 
-      void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
-      virtual ::CORBA::Object_ptr _get_component (void);
-
     private:
       void create_i (
         const typename DDS_TYPE::value_type& an_instance,
@@ -81,7 +78,6 @@ namespace CIAO
 
       bool is_global_scope_;
       bool is_coherent_write_;
-      typename CCM_TYPE::base_type::_var_type component_;
     };
   }
 }

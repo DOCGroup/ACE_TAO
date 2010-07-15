@@ -3,8 +3,7 @@
 
 template <typename BASE_TYPE, typename CCM_TYPE>
 CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::CCM_DDS_StateListenerControl_T (void)
-    : is_filter_interpreted_ (false),
-      component_ (CCM_TYPE::base_type::_nil ())
+    : is_filter_interpreted_ (false)
 {
   DDS4CCM_TRACE ("CCM_DDS_StateListenerControl_T::CCM_DDS_StateListenerControl_T");
 }
@@ -36,25 +35,5 @@ CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::is_filter_interpreted (
   throw ::CORBA::NO_IMPLEMENT ();
 #else
   this->is_filter_interpreted_ = is_filter_interpreted;
-#endif  
+#endif
 }
-
-template <typename BASE_TYPE, typename CCM_TYPE>
-::CORBA::Object_ptr
-CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::_get_component (void)
-{
-  DDS4CCM_TRACE ("CCM_DDS_StateListenerControl_T::_get_component");
-
-  return CCM_TYPE::base_type::_duplicate (this->component_.in ());
-}
-
-template <typename BASE_TYPE, typename CCM_TYPE>
-void
-CCM_DDS_StateListenerControl_T<BASE_TYPE, CCM_TYPE>::_set_component (
-  typename CCM_TYPE::base_type::_ptr_type component)
-{
-  DDS4CCM_TRACE ("CCM_DDS_StateListenerControl_T::_set_component");
-
-  this->component_ = CCM_TYPE::base_type::_duplicate (component);
-}
-
