@@ -1,25 +1,39 @@
+Thu Jul 15 09:23:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Endpoint.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Doxygen improvements
+
 Tue Jul 13 11:29:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/fe/fe_utils.cpp:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/idl.yy:
-        
+
           Fixes for various code generation errors stemming from
-          
+
           Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jul 13 11:22:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/ub_struct_seq.cpp:
-        
+
           Changes corresponding to changes in generated code for
           sequences (in this test represented by std::vector<>).
 
 Mon Jul 12 12:55:55 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/PS_ForwardS.h:
-        
+
           New file, an empty placeholder that is now generated as
           an include by the IDL compiler. The corresponding IDL
           file is not automatically processed, but it is included
@@ -31,7 +45,7 @@ Mon Jul 12 11:32:30 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/fe_init.cpp:
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Changes in handling of pseudo object creation and lookup.
 
 Mon Jul 12 08:26:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
