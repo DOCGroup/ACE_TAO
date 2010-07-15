@@ -118,7 +118,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO . ACEXML
+INCLUDE_PATH          = TAO/tao TAO/orbsvcs/orbsvcs . ace
 PREDEFINED            = __ACE_INLINE__ \
                         ACE_TEMPLATES_REQUIRE_SOURCE \
                         ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
