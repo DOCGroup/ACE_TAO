@@ -29,8 +29,8 @@ pipes ?= 1
 
 CFLAGS  += $(FLAGS_C_CC)
 
-CC              = gcc
-CXX             = g++
+CC              ?= gcc
+CXX             ?= g++
 CFLAGS          += -Wall -Wpointer-arith 
 
 DCFLAGS         += -g
@@ -46,8 +46,11 @@ SOBUILD			= -o $(VSHDIR)$*.dylib $<
 
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+ifeq ($(findstring g++,$(CXX)),)#
+  include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+else
+  include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
+endif
 
 LDFLAGS         += -flat_namespace
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
