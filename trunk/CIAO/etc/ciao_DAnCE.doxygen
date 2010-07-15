@@ -142,7 +142,8 @@ TAGFILES              = html/ace/ACE.tag=../../../ace \
                         html/acexml/ACEXML.tag=../../../acexml \
                         html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
                         html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../ifr
+                        html/tao/ifr/TAO_IFR.tag=../../ifr \
+                        html/ace/inet/ACE_INet.tag=../../../protocols/INet
 GENERATE_TAGFILE      = html/tao/ciao/DAnCE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl

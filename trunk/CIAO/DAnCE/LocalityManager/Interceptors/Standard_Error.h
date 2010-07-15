@@ -24,13 +24,12 @@ namespace DAnCE
     : public virtual DAnCE::DeploymentInterceptor_Base
   {
   public:
-    // Constructor 
-    
+    /// Constructor
     Standard_Error (void);
-  
-    // Destructor 
+
+    /// Destructor
     virtual ~Standard_Error (void);
-  
+
     virtual
       void instance_post_install (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong instance_index,
@@ -47,31 +46,31 @@ namespace DAnCE
       void instance_post_configured (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void instance_post_activate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
                                    const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void instance_post_passivate (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong instanceRef,
                                     const ::CORBA::Any & exception_thrown);
-  
+
     virtual
       void instance_post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
                                  const ::CORBA::Any & exception_thrown);
     virtual
       void configure(const Deployment::Properties&);
-    
+
   private:
   };
 }
 
 extern "C"
 {
-  ::DAnCE::DeploymentInterceptor_ptr 
+  ::DAnCE::DeploymentInterceptor_ptr
   DAnCE_Error_Interceptors_Export create_DAnCE_Standard_Error (void);
 }
 
