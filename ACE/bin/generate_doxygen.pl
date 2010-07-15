@@ -48,6 +48,7 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              'ace_rmcast',
              'ace_ssl',
              'ace_qos',
+             'ace_inet',
              'acexml');
 @TAO_DOCS = ('tao'
              ,'tao_anytypecode'
