@@ -79,7 +79,7 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  /// @copydoc details::generic_sequence::get_buffer()
+  /// @copydoc TAO::details::generic_sequence::get_buffer()
   inline value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
