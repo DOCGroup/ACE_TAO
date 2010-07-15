@@ -1,7 +1,14 @@
+Thu Jul 15 09:48:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/Subscriber_T.h:
+        * connectors/dds4ccm/impl/Topic_T.h:
+          Resolved compile issues.
+
 Thu Jul 15 09:47:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
-        
+
           Added -Gex to command line of HelloA.idl processing,
           and the resuling generated reply handler implementation
           files to the connector project.
