@@ -1,3 +1,10 @@
+Thu Jul 15 09:29:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * etc/ace_inet.doxygen:
+        * html/index.html:
+          Added ACE INet library
+
 Thu Jul 15 09:11:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-macosx-snowleopard.h:
