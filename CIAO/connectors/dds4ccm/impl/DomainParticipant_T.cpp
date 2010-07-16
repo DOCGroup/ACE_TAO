@@ -374,7 +374,7 @@ namespace CIAO
       DDSTopicDescription * dds_td = 
         this->impl ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
-      if (dds_td != 0)
+      if (dds_td)
         {
           dds_tp = DDSTopic::narrow (dds_td);
         }
@@ -471,7 +471,7 @@ namespace CIAO
       DDSTopicDescription * dds_td = 
         this->impl ()->lookup_topicdescription (impl_name);
       DDSTopic * dds_tp = 0;
-      if (dds_td != 0)
+      if (dds_td)
         {
           dds_tp = DDSTopic::narrow (dds_td);
         }
@@ -539,7 +539,7 @@ namespace CIAO
       DDSTopicDescription * dds_td =
         this->impl ()->lookup_topicdescription (topic_name);
       DDSTopic * tp = 0;
-      if (dds_td != 0)
+      if (dds_td)
         {
           tp = DDSTopic::narrow (dds_td);
         }

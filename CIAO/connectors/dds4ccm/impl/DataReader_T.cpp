@@ -595,23 +595,28 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_topicdescripti
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::get_topicdescription");
 
   ::DDS::TopicDescription_var dds_td;
-  ::DDSTopicDescription* td = this->impl ()->get_topicdescription ();
-  ::DDSTopic * tp = ::DDSTopic::narrow (td);
-  if (tp)
+  DDSTopicDescription* td = this->impl ()->get_topicdescription ();
+  DDSTopic * tp = 0;
+  if (td)
     {
-      ACE_NEW_THROW_EX (dds_td,
-                        Topic_type (tp),
-                        ::CORBA::NO_MEMORY ());
-    }
-  else
-    {
-      ::DDSContentFilteredTopic * cft =
-        DDSContentFilteredTopic::narrow (td);
-      if (cft)
+      tp = DDSTopic::narrow (td);
+
+      if (tp)
         {
           ACE_NEW_THROW_EX (dds_td,
-                            ContentFilteredTopic_type (cft),
+                            Topic_type (tp),
                             ::CORBA::NO_MEMORY ());
+        }
+      else
+        {
+          ::DDSContentFilteredTopic * cft =
+            DDSContentFilteredTopic::narrow (td);
+          if (cft)
+            {
+              ACE_NEW_THROW_EX (dds_td,
+                                ContentFilteredTopic_type (cft),
+                                ::CORBA::NO_MEMORY ());
+            }
         }
     }
   return dds_td._retn ();
