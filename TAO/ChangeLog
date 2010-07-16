@@ -1,7 +1,17 @@
+Fri Jul 16 22:13:14 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Detect and allow an ENOENT error returned from opening a service
+          configuration context. That is alright because any explicitly named
+          service config files are checked for existence when the -ORBSvcConf
+          argument is processed, so the only file that could raise ENOENT is
+          a defaulted svc.conf. 
+        
 Thu Jul 15 13:37:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(end_server_header):
-        
+
           Changes to avoid a mismatched versioned namespace macro
           pair in *S.h when the -SS option is used.
 
@@ -10,7 +20,7 @@ Thu Jul 15 12:55:54 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
         * TAO_IDL/be/be_visitor_connector/facet_ami_exh.cpp:
-        
+
           Added code generation for _get_component() and
           _set_component) in the AMI4CCM connector's facet executor,
           as well as code to initialize and reset this value in
