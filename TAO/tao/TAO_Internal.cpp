@@ -327,15 +327,35 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   // okay?
   if (status == -1)
+    if (errno != ENOENT)
+      {
+        if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - Failed to open process-")
+                        ACE_TEXT ("wide service configuration context\n")));
+          }
+        
+        return -1;
+      }
+    else
+      {
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Did not find default svc.conf\n")));
+        status = 0;
+      }
+
+  if (status > 0)
     {
+      // one or more directives failed, but we don't know which
       if (TAO_debug_level > 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Failed to open process-")
-                      ACE_TEXT ("wide service configuration context\n")));
-        }
-
-      return -1;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - process-wide service ")
+                      ACE_TEXT ("configuration context had %d failed ")
+                      ACE_TEXT ("directives\n"), status));
+        }          
     }
 
   if (TAO_debug_level > 2)
@@ -468,13 +488,34 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                                  ignore_default_svc_conf_file);
     }
 
-  if (status < 0 && TAO_debug_level > 0)
+  if (status == -1)
+    if (errno != ENOENT)
+      {
+        if (TAO_debug_level > 0)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
+                      ACE_TEXT ("service configuration\n")));
+        return -1;
+      }
+    else
+      {
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Did not find default svc.conf\n")));
+        status = 0;
+      }
+  if (status > 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) - Failed to ")
-                         ACE_TEXT ("open orb service configuration\n")),
-                        -1);
+      // one or more directives failed, but we don't know which
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - ORB-specific service ")
+                      ACE_TEXT ("configuration context had %d failed ")
+                      ACE_TEXT ("directives\n"), status));
+        }          
     }
+
 
   return status;
 }
