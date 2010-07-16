@@ -1,3 +1,8 @@
+Fri Jul 16 14:00:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Updates regarding DDS4CCM.
+
 Fri Jul 16 12:13:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReader_T.cpp:
