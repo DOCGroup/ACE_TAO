@@ -252,7 +252,7 @@ public:
    * provided in the svc.conf file(s).  Returns the number of errors
    * that occurred.
    */
-  int process_directives (bool ignore_default_svc_conf_file);
+  int process_directives (bool defunct_option = false);
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
   /// down.  This method calls @c close_svcs.  Returns 0.
