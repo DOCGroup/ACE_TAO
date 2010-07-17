@@ -1,3 +1,9 @@
+Sat Jul 17 14:13:33 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp (ORB::open_services): 
+        
+          Silence compiler warnings
+
 Fri Jul 16 22:13:14 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
