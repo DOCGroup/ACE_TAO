@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(INet) : acelib, ace_output, install {
+project(INet) : acelib, ace_output, install, inet_ssl {
   sharedname   = ACE_INet
   dynamicflags += ACE_INET_BUILD_DLL
   includes += $(ACE_ROOT)/protocols
@@ -21,6 +21,7 @@ project(INet) : acelib, ace_output, install {
     HTTP_Response.cpp
     HTTP_Request.cpp
     HTTP_IOStream.cpp
+    HTTP_SessionBase.cpp
     URLBase.cpp
     AuthenticationBase.cpp
     HTTP_URL.cpp

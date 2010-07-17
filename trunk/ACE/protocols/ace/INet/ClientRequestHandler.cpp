@@ -57,8 +57,13 @@ namespace ACE
 
     bool ClientINetRequestHandler::INetConnectionKey::equal (const ConnectionKey& key) const
       {
-        const INetConnectionKey& ikey = dynamic_cast<const INetConnectionKey&> (key);
-        return this->host_ == ikey.host_ && this->port_ == ikey.port_;
+        try {
+          const INetConnectionKey& ikey = dynamic_cast<const INetConnectionKey&> (key);
+          return this->host_ == ikey.host_ && this->port_ == ikey.port_;
+        }
+        catch (...) {
+          return false;
+        }
       }
 
   }

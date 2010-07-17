@@ -25,7 +25,8 @@ namespace ACE
         /**
         * @class ACE_HTTP_FixedLengthStreamPolicy
         *
-        * @brief
+        * @brief Implements stream policy for fixed length data stream
+        *   in HTTP response or request.
         *
         */
         template <class STREAM_BUFFER>
@@ -53,7 +54,8 @@ namespace ACE
         /**
         * @class ACE_HTTP_ChunkedTransferStreamPolicy
         *
-        * @brief
+        * @brief Implements stream policy for chunked data streams
+        *   in HTTP response or request.
         *
         */
         template <class STREAM_BUFFER>

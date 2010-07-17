@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/INet/HTTP_URL.h"
+#include "ace/INet/HTTPS_URL.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/INet/HTTP_URL.inl"
+#include "ace/INet/HTTPS_URL.inl"
 #endif
 
 #include "ace/INet/String_IOStream.h"
@@ -13,9 +13,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace HTTP
+  namespace HTTPS
   {
-    const char* URL::PROTOCOL = "http";
+    const char* URL::PROTOCOL = "https";
 
     const ACE_CString& URL::protocol ()
       {
@@ -24,28 +24,20 @@ namespace ACE
       }
 
     URL::URL ()
-      : URL_INetAuthBase (HTTP_PORT),
-        proxy_port_ (HTTP_PROXY_PORT)
+      : ACE::HTTP::URL (HTTPS_PORT)
       {
       }
 
     URL::URL (const ACE_CString& url_string)
-      : URL_INetAuthBase (HTTP_PORT),
-        proxy_port_ (HTTP_PROXY_PORT)
+      : ACE::HTTP::URL (HTTPS_PORT)
       {
         this->parse (url_string);
       }
 
     URL::URL (const URL& url)
-      : URL_INetAuthBase (0)
+      : ACE::HTTP::URL (0)
       {
         *this = url;
-      }
-
-    URL::URL (u_short port)
-      : URL_INetAuthBase (port),
-        proxy_port_ (HTTP_PROXY_PORT)
-      {
       }
 
     URL::~URL ()
@@ -54,19 +46,14 @@ namespace ACE
 
     URL& URL::operator =(const URL& url)
       {
-        this->set_user_info (url.get_user_info ());
-        this->set_host (url.get_host ());
-        this->set_port (url.get_port ());
-        this->set_path (url.get_path ());
-        this->set_query (url.get_query ());
-        this->set_fragment (url.get_fragment ());
-        this->set_proxy (url.get_proxy_host (), url.get_proxy_port ());
+        ACE::HTTP::URL::operator=(url);
         return *this;
       }
 
     ACE_CString URL::get_request_uri () const
       {
         ACE::IOS::CString_OStream sos;
+#if 0
         if (!this->proxy_host_.empty ())
           {
             sos << this->get_scheme ().c_str () << "://"
@@ -76,6 +63,7 @@ namespace ACE
                 sos << ':' << ACE::INet::URL_INetBase::get_port ();
               }
           }
+#endif
         // if path is empty we're requesting the root
         sos << (this->get_path ().empty () ?
                     "/" :
@@ -87,23 +75,10 @@ namespace ACE
         return sos.str ();
       }
 
-    ACE_CString URL::to_string () const
-      {
-        ACE::IOS::CString_OStream sos;
-        sos << this->get_scheme () << "://"
-            << this->get_authority ().c_str ()
-            << this->get_path ().c_str ();
-        if (!this->get_query ().empty ())
-          sos << '?' << this->get_query ().c_str ();
-        if (!this->get_fragment ().empty ())
-          sos << '#' << this->get_fragment ().c_str ();
-        return sos.str ();
-      }
-
     ACE::INet::ClientRequestHandler* URL::create_default_request_handler () const
       {
         ACE::INet::ClientRequestHandler* prh = 0;
-        ACE_NEW_NORETURN (prh, ClientRequestHandler ());
+        ACE_NEW_NORETURN (prh, ACE::HTTP::ClientRequestHandler ());
         return prh;
       }
 

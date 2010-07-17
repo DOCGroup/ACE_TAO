@@ -30,7 +30,7 @@ namespace ACE
         /**
         * @class ACE_IOS_StreamInterceptorBase
         *
-        * @brief
+        * @brief Abstract base for stream interceptors.
         *
         */
         template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >

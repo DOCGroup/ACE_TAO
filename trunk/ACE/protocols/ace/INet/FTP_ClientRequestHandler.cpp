@@ -79,7 +79,7 @@ namespace ACE
 
     const ACE_CString& ClientRequestHandler::Authentication::scheme () const
       {
-        return URL::PROTOCOL;
+        return URL::protocol ();
       }
 
     const ACE_CString& ClientRequestHandler::Authentication::realm () const

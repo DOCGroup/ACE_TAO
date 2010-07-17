@@ -1,44 +1,47 @@
 // $Id$
 
 /**
- * @file HTTP_Session.h
+ * @file HTTPS_Session.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
 
-#ifndef ACE_HTTP_SESSION_H
-#define ACE_HTTP_SESSION_H
+#ifndef ACE_HTTPS_SESSION_H
+#define ACE_HTTPS_SESSION_H
 
 #include /**/ "ace/pre.h"
 
+#include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/INet/HTTP_SessionBase.h"
-#include "ace/SOCK_Connector.h"
 #include "ace/INet/StreamHandler.h"
-#include "ace/INet/Sock_IOStream.h"
+#include "ace/INet/SSLSock_IOStream.h"
+#include "ace/INet/HTTPS_Context.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
   {
-    namespace HTTP
+    namespace HTTPS
       {
         /**
-        * @class ACE_HTTP_Session
+        * @class ACE_HTTPS_Session
         *
-        * @brief Encapsulates HTTP session.
+        * @brief Encapsulates HTTPS session.
         *
         */
         template <ACE_SYNCH_DECL>
-        class Session_T : public SessionBase
+        class Session_T : public ACE::HTTP::SessionBase
           {
             public:
-              typedef ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> connection_type;
+              typedef ACE::IOS::StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> connection_type;
 
-              Session_T (bool keep_alive = false);
+              Session_T (bool keep_alive = true,
+                         Context& ctx = Context::instance ());
 
               Session_T (const ACE_Time_Value& timeout,
-                         bool keep_alive = false,
-                         const ACE_Time_Value* alive_timeout = 0);
+                         bool keep_alive = true,
+                         const ACE_Time_Value* alive_timeout = 0,
+                         Context& ctx = Context::instance ());
 
               virtual ~Session_T ();
 
@@ -57,10 +60,11 @@ namespace ACE
               virtual std::iostream& sock_stream ();
 
             private:
-              typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;
+              typedef ACE::IOS::SSLSock_IOStreamBase<ACE_SYNCH_USE> sock_stream_type;
 
               connection_type* connection_;
               sock_stream_type* sock_stream_;
+              Context& context_;
           };
 
         typedef Session_T<ACE_NULL_SYNCH> Session;
@@ -70,12 +74,12 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/INet/HTTP_Session.cpp"
+#include "ace/INet/HTTPS_Session.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTTP_Session.cpp")
+#pragma implementation ("HTTPS_Session.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-#endif /* ACE_HTTP_SESSION_H */
+#endif /* ACE_HTTPS_SESSION_H */

@@ -32,8 +32,11 @@ namespace ACE
         /**
         * @class ACE_INet_URLStream
         *
-        * @brief
+        * @brief Provides abstracted wrapper class for the resulting
+        *   stream of an URL <open> operation.
         *
+        * Provides proper life cycle management for either factory provided
+        * or user provided request handlers.
         */
         class ACE_INET_Export URLStream
           {
@@ -142,7 +145,7 @@ namespace ACE
             private:
               typedef ACE_Map_Manager<ACE_CString,
                                       Factory*,
-                                      ACE_SYNCH::RECURSIVE_MUTEX> TURLFactoryMap;
+                                      ACE_SYNCH::MUTEX> TURLFactoryMap;
               typedef ACE_Singleton<TURLFactoryMap,
                                     ACE_SYNCH::NULL_MUTEX> TURLFactorySingleton;
               static TURLFactoryMap* factories_;

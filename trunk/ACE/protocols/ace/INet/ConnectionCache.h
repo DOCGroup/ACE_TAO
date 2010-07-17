@@ -31,7 +31,7 @@ namespace ACE
         * @brief Base class for connection keys.
         *
         */
-        class ConnectionKey
+        class ACE_INET_Export ConnectionKey
           {
             public:
               ConnectionKey ();
@@ -85,7 +85,7 @@ namespace ACE
         * @brief Generic base for connection wrappers.
         *
         */
-        class ConnectionHolder
+        class ACE_INET_Export ConnectionHolder
           {
             public:
               virtual ~ConnectionHolder ();
@@ -103,7 +103,7 @@ namespace ACE
         * return those for caching wrapped in a connection
         * holder.
         */
-        class ConnectionFactory
+        class ACE_INET_Export ConnectionFactory
           {
             public:
               ConnectionFactory ();
