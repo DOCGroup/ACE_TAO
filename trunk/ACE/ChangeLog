@@ -1,3 +1,10 @@
+Sat Jul 17 14:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Some include shuffling to fix an incomplete type warning
+          with MSVC.
+
 Sat Jul 17 11:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/inet_ssl.mpb:

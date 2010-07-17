@@ -11,12 +11,12 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/SString.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/INet/INet_Export.h"
-#include "ace/INet/URLBase.h"
 #include "ace/INet/RequestHandler.h"
 #include "ace/INet/ConnectionCache.h"
 #include <iostream>
@@ -27,6 +27,7 @@ namespace ACE
   {
     namespace INet
       {
+        class URL_Base; // forward
 
         /**
         * @class ACE_INet_ClientRequestHandler
