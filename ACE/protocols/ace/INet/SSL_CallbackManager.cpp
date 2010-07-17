@@ -45,8 +45,8 @@ namespace ACE
 
         this->ssl_ctx_ = ssl_ctx == 0 ? ACE_SSL_Context::instance () : ssl_ctx;
         ::SSL_CTX_set_ex_data (this->ssl_ctx_->context (), ssl_ctx_mngr_index_, this);
-        this->ssl_ctx_->default_verify_callback (&verify_certificate_callback);
-        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), &passwd_callback);
+        this->ssl_ctx_->default_verify_callback (verify_certificate_callback);
+        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), passwd_callback);
         ::SSL_CTX_set_default_passwd_cb_userdata (ssl_ctx->context(), this);
       }
 
