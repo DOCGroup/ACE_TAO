@@ -19,6 +19,7 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/AuthenticationBase.h"
+#include "ace/INet/ClientRequestHandler.h"
 #include <iosfwd>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -27,7 +28,6 @@ namespace ACE
   {
     namespace INet
       {
-        class ClientRequestHandler; // Forward
 
         /**
         * @class ACE_INet_URLStream
