@@ -327,24 +327,26 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   // okay?
   if (status == -1)
-    if (errno != ENOENT)
-      {
-        if (TAO_debug_level > 0)
-          {
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) - Failed to open process-")
-                        ACE_TEXT ("wide service configuration context\n")));
-          }
-        
-        return -1;
-      }
-    else
-      {
-        if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Did not find default svc.conf\n")));
-        status = 0;
-      }
+    {
+      if (errno != ENOENT)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - Failed to open process-")
+                          ACE_TEXT ("wide service configuration context\n")));
+            }
+          return -1;
+        }
+      else
+        {
+          if (TAO_debug_level > 4)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                        ACE_TEXT ("svc.conf\n")));
+          status = 0;
+        }
+    }
 
   if (status > 0)
     {
@@ -489,21 +491,25 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     }
 
   if (status == -1)
-    if (errno != ENOENT)
-      {
-        if (TAO_debug_level > 0)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
-                      ACE_TEXT ("service configuration\n")));
-        return -1;
-      }
-    else
-      {
-        if (TAO_debug_level > 4)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Did not find default svc.conf\n")));
-        status = 0;
-      }
+    {
+      if (errno != ENOENT)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
+                        ACE_TEXT ("service configuration\n")));
+          return -1;
+        }
+      else
+        {
+          if (TAO_debug_level > 4)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                        ACE_TEXT ("svc.conf\n")));
+          status = 0;
+        }
+    }
+
   if (status > 0)
     {
       // one or more directives failed, but we don't know which
