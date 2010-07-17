@@ -67,7 +67,6 @@ namespace ACE
               ClientINetRequestHandler ();
               virtual ~ClientINetRequestHandler ();
 
-            protected:
               /**
               * @class ACE_INet_INetConnectionKey
               *

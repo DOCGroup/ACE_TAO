@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib {
+project : acelib, inetssl {
   avoids   += wince
   avoids   += old_stdstream
   after    += INet

@@ -9,15 +9,33 @@ namespace ACE
   namespace HTTP
   {
     ACE_INLINE
-    ClientRequestHandler::SessionHolder::session_type& ClientRequestHandler::SessionHolder::operator *()
+    SessionBase& SessionHolder::operator *()
       {
-        return this->session_;
+        return this->session ();
       }
 
     ACE_INLINE
-    ClientRequestHandler::SessionHolder::session_type* ClientRequestHandler::SessionHolder::operator -> ()
+    SessionBase* SessionHolder::operator -> ()
       {
-        return &this->session_;
+        return &this->session ();
+      }
+
+    ACE_INLINE
+    bool ClientRequestHandler::HttpConnectionKey::is_proxy_connection () const
+      {
+        return this->proxy_connection_;
+      }
+
+    ACE_INLINE
+    const ACE_CString& ClientRequestHandler::HttpConnectionKey::proxy_target_host () const
+      {
+        return this->proxy_target_host_;
+      }
+
+    ACE_INLINE
+    u_short ClientRequestHandler::HttpConnectionKey::proxy_target_port () const
+      {
+        return this->proxy_target_port_;
       }
 
     ACE_INLINE
@@ -45,7 +63,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    ClientRequestHandler::SessionHolder& ClientRequestHandler::session ()
+    SessionHolder& ClientRequestHandler::session ()
       {
         return *this->session_;
       }

@@ -23,7 +23,7 @@ namespace ACE
         /**
         * @class ACE_IOS_StreamPolicyBase
         *
-        * @brief
+        * @brief Abstract base for HTTP stream policies.
         *
         */
         template <class STREAM_BUFFER>

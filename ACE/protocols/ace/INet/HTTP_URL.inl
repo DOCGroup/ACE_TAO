@@ -12,7 +12,7 @@ namespace ACE
     ACE_INLINE
     const ACE_CString& URL::get_scheme () const
       {
-        return PROTOCOL;
+        return protocol ();
       }
 
     ACE_INLINE

@@ -1,0 +1,18 @@
+feature(ssl) : ace_openssl {
+  Source_Files {
+    SSL_X509Cert.cpp
+    SSL_CertificateCallback.cpp
+    SSL_PasswordCallback.cpp
+    SSL_CallbackManager.cpp
+    HTTPS_Context.cpp
+    HTTPS_URL.cpp
+    HTTPS_SessionFactory.cpp
+    SSL_Proxy_Connector.cpp
+  }
+  Template_Files {
+    SSLSock_IOStream.cpp
+    HTTPS_Session.cpp
+  }
+  Header_Files {
+  }
+}
