@@ -15,7 +15,13 @@ namespace ACE
 {
   namespace FTP
   {
-    const ACE_CString URL::PROTOCOL ("ftp");
+    const char* URL::PROTOCOL = "ftp";
+
+    const ACE_CString& URL::protocol ()
+      {
+        static const ACE_CString protocol_ (PROTOCOL);
+        return protocol_;
+      }
 
     URL::URL ()
       : URL_INetAuthBase (FTP_PORT)
@@ -75,7 +81,7 @@ namespace ACE
 
     const ACE_CString& URL::Factory::protocol ()
       {
-        return URL::PROTOCOL;
+        return URL::protocol ();
       }
 
     ACE::INet::URL_Base* URL::Factory::create_from_string (const ACE_CString& url_string)

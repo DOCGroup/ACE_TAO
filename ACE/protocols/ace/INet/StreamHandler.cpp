@@ -160,8 +160,8 @@ namespace ACE
               }
             if (send_cnt <= 0)
               {
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p; ACE_IOS_StreamHandler - "),
+                INET_ERROR (1, (LM_ERROR, DLINFO
+                            ACE_TEXT ("%p; ACE_IOS_StreamHandler - "),
                             ACE_TEXT ("send failed\n")));
                 this->connected_ = false;
                 return this->using_reactor () ? -1 : 0;

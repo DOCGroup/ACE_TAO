@@ -1,3 +1,80 @@
+Sat Jul 17 10:26:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * bin/MakeProjectCreator/config/inet.mpb:
+          Added feature project for SSL based parts of INet.
+          Setting feature ssl=1 will automatically cause correct
+          dependencies for SSL to be generated in INet based projects.
+
+        * protocols/ace/INet/HTTPS_Context.cpp:
+        * protocols/ace/INet/HTTPS_Context.h:
+        * protocols/ace/INet/HTTPS_Context.inl:
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+        * protocols/ace/INet/HTTP_SessionBase.h:
+        * protocols/ace/INet/HTTP_SessionBase.inl:
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.h:
+        * protocols/ace/INet/HTTPS_Session.h:
+        * protocols/ace/INet/HTTPS_URL.cpp:
+        * protocols/ace/INet/HTTPS_URL.h:
+        * protocols/ace/INet/HTTPS_URL.inl:
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CallbackManager.inl:
+        * protocols/ace/INet/SSL_CertificateCallback.cpp:
+        * protocols/ace/INet/SSL_CertificateCallback.h:
+        * protocols/ace/INet/SSL_CertificateCallback.inl:
+        * protocols/ace/INet/SSL_PasswordCallback.cpp:
+        * protocols/ace/INet/SSL_PasswordCallback.h:
+        * protocols/ace/INet/SSL_Proxy_Connector.cpp:
+        * protocols/ace/INet/SSL_Proxy_Connector.h:
+        * protocols/ace/INet/SSLSock_IOStream.cpp:
+        * protocols/ace/INet/SSLSock_IOStream.h:
+        * protocols/ace/INet/SSL_X509Cert.cpp:
+        * protocols/ace/INet/SSL_X509Cert.h:
+        * protocols/ace/INet/SSL_X509Cert.inl:
+          New files implementing SSL/HTTPS support.
+          Includes support for proxy CONNECT tunneling.
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Feature project which will include SSL/HTTPS support
+          into INet when MPC feature ssl=1 is set.
+
+        * protocols/ace/INet/ClientRequestHandler.cpp:
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+        * protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/FTP_URL.cpp:
+        * protocols/ace/INet/FTP_URL.h:
+        * protocols/ace/INet/FTP_URL.inl:
+        * protocols/ace/INet/HeaderBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.inl:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.h:
+        * protocols/ace/INet/HTTP_StreamPolicy.h:
+        * protocols/ace/INet/HTTP_URL.cpp:
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_URL.inl:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/RequestHandler.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/StreamInterceptor.h:
+        * protocols/ace/INet/URLBase.h:
+          Some redesign to accomodate addition of HTTPS.
+          Some additional logging.
+          Some additional documentation.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Extended to include HTTPS support.
+
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Added some traces.
+
 Fri Jul 16 22:08:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:

@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  namespace FTP
+  namespace HTTPS
   {
 
     ACE_INLINE
@@ -18,7 +18,7 @@ namespace ACE
     ACE_INLINE
     u_short URL::default_port () const
       {
-        return FTP_PORT;
+        return HTTPS_PORT;
       }
 
   }

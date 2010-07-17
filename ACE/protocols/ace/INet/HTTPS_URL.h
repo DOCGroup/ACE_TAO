@@ -1,13 +1,13 @@
 // $Id$
 
 /**
- * @file FTP_URL.h
+ * @file HTTPS_URL.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
 
-#ifndef ACE_FTP_URL_H
-#define ACE_FTP_URL_H
+#ifndef ACE_HTTPS_URL_H
+#define ACE_HTTPS_URL_H
 
 #include /**/ "ace/pre.h"
 
@@ -18,22 +18,22 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INet/INet_Export.h"
-#include "ace/INet/URLBase.h"
+#include "ace/INet/HTTP_URL.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
   {
-    namespace FTP
+    namespace HTTPS
       {
         /**
-        * @class ACE_FTP_URL
+        * @class ACE_HTTPS_URL
         *
-        * @brief
+        * @brief Implements HTTPS url support.
         *
         */
         class ACE_INET_Export URL
-          : public ACE::INet::URL_INetAuthBase
+          : public ACE::HTTP::URL
           {
             public:
               URL ();
@@ -45,7 +45,7 @@ namespace ACE
 
               virtual const ACE_CString& get_scheme () const;
 
-              virtual ACE_CString to_string () const;
+              virtual ACE_CString get_request_uri () const;
 
               virtual u_short default_port () const;
 
@@ -55,7 +55,7 @@ namespace ACE
 
               enum
               {
-                FTP_PORT = 21
+                HTTPS_PORT = 443,
               };
 
             protected:
@@ -82,8 +82,8 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/INet/FTP_URL.inl"
+#include "ace/INet/HTTPS_URL.inl"
 #endif
 
 #include /**/ "ace/post.h"
-#endif /* ACE_FTP_URL_H */
+#endif /* ACE_HTTPS_URL_H */

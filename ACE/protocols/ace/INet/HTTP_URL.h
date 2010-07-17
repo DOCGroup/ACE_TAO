@@ -29,7 +29,7 @@ namespace ACE
         /**
         * @class ACE_HTTP_URL
         *
-        * @brief
+        * @brief Implements HTTP url support.
         *
         */
         class ACE_INET_Export URL
@@ -49,7 +49,7 @@ namespace ACE
 
               virtual const ACE_CString& get_fragment () const;
 
-              ACE_CString get_request_uri () const;
+              virtual ACE_CString get_request_uri () const;
 
               virtual void set_query (const ACE_CString& query);
 
@@ -67,7 +67,9 @@ namespace ACE
 
               virtual u_short default_port () const;
 
-              static const ACE_CString PROTOCOL;
+              static const char* PROTOCOL;
+
+              static const ACE_CString& protocol ();
 
               enum
               {
@@ -76,6 +78,8 @@ namespace ACE
               };
 
             protected:
+              URL (u_short port);
+
               virtual ACE::INet::ClientRequestHandler* create_default_request_handler () const;
 
             private:

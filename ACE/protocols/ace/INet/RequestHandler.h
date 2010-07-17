@@ -25,7 +25,7 @@ namespace ACE
         /**
         * @class ACE_INet_RequestHandler
         *
-        * @brief
+        * @brief Abstract base for request handlers.
         *
         */
         class ACE_INET_Export RequestHandler

@@ -153,8 +153,8 @@ namespace ACE
                   }
                 else
                   {
-                    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::claim_existing_connection - ")
-                                          ACE_TEXT ("failed to claim connection entry")));
+                    INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("ConnectionCache::claim_existing_connection - ")
+                                              ACE_TEXT ("failed to claim connection entry")));
                   }
               }
           }
@@ -181,6 +181,8 @@ namespace ACE
 
                 if (this->claim_existing_connection (key, connection, state))
                   {
+                    INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("%P|%t) ConnectionCache::claim_connection - ")
+                                             ACE_TEXT ("successfully claimed existing connection\n")));
                     return true;
                   }
 
@@ -193,8 +195,8 @@ namespace ACE
                   {
                     if (!this->set_connection (key, ConnectionCacheValue ()))
                       {
-                        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::claim_connection - ")
-                                              ACE_TEXT ("failed to initialize connection entry")));
+                        INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
+                                                  ACE_TEXT ("failed to initialize connection entry")));
                         return false;
                       }
 
@@ -202,13 +204,17 @@ namespace ACE
                   }
                 else
                   {
+                    INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
+                                             ACE_TEXT ("waiting for connection to become available\n")));
                     // wait for connection to become ready/free
                     if (this->condition_.wait () != 0)
                       {
-                        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::claim_connection - ")
-                                              ACE_TEXT ("error waiting for connection condition (%p)\n")));
+                        INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("(%P|%t) ConnectionCache::claim_connection - ")
+                                                  ACE_TEXT ("error waiting for connection condition (%p)\n")));
                         return false;
                       }
+                    INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
+                                             ACE_TEXT ("awoken and retrying to claim connection\n")));
                   }
               }
             while (0);
@@ -218,6 +224,9 @@ namespace ACE
                 connection = connection_factory.create_connection (key);
                 if (connection)
                   {
+                    INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
+                                             ACE_TEXT ("successfully created new connection\n")));
+
                     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                               guard_,
                                               this->lock_,
@@ -227,6 +236,8 @@ namespace ACE
                     cacheval.state (ConnectionCacheValue::CST_BUSY);
                     return this->set_connection (key, cacheval);
                   }
+                else
+                  return false;
               }
           }
       }
@@ -235,6 +246,9 @@ namespace ACE
                                              connection_type* connection)
       {
         INET_TRACE ("ConnectionCache::release_connection");
+
+        INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::release_connection - ")
+                                 ACE_TEXT ("releasing connection\n")));
 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                   guard_,
@@ -255,8 +269,8 @@ namespace ACE
               }
             else
               {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::release_connection - ")
-                                      ACE_TEXT ("failed to release connection entry")));
+                INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("ConnectionCache::release_connection - ")
+                                          ACE_TEXT ("failed to release connection entry")));
                 return false;
               }
           }
@@ -268,6 +282,9 @@ namespace ACE
                                            connection_type* connection)
       {
         INET_TRACE ("ConnectionCache::close_connection");
+
+        INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::close_connection - ")
+                                 ACE_TEXT ("closing connection\n")));
 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                                   guard_,
@@ -291,8 +308,8 @@ namespace ACE
               }
             else
               {
-                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%P|%t) ConnectionCache::close_connection - ")
-                                      ACE_TEXT ("failed to close connection entry")));
+                INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("ConnectionCache::close_connection - ")
+                                          ACE_TEXT ("failed to close connection entry")));
                 return false;
               }
           }
