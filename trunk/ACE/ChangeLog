@@ -1,3 +1,12 @@
+Sat Jul 17 11:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Replaced ace_openssl base project by ssl. Fixes missing
+          ACE_SSL lib link errors.
+
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+          Fixed MSVC compile errors.
+
 Sat Jul 17 10:26:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/config/inetssl.mpb:
