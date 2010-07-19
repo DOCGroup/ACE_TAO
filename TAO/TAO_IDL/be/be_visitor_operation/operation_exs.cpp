@@ -17,7 +17,7 @@ be_visitor_operation_exs::be_visitor_operation_exs (be_visitor_context *ctx)
     os_ (*ctx->stream ()),
     scope_ (0),
     your_code_here_ ("/* Your code here. */"),
-    class_extension_ ("exec_i")
+    class_extension_ ("_exec_i")
 {
 }
 
