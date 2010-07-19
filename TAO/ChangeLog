@@ -1,3 +1,9 @@
+Mon Jul 19 18:25:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
+        
+          Fixed fuzz error.
+
 Mon Jul 19 18:19:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:

@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    connector_ami_rh_exw.cpp
+ *  @file    connector_ami_rh_exs.cpp
  *
  *  $Id$
  *
