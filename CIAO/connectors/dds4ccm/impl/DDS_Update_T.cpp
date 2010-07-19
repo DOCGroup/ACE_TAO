@@ -54,7 +54,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
 
       if (!rw)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         "DDS_Update_T::configuration_complete - "
                         "Unable to cast created DataWriter proxy to its "
                         "internal represenation.\n"));
@@ -92,7 +92,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
                                               0);
   if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DDS_Update_T::passivate - "
                     "Error while setting the listener on the writer - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -111,7 +111,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
     publisher->delete_datawriter (&this->ccm_dds_writer_);
   if (retval != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
         "DDS_Update_T::remove - "
         "Unable to delete DataWriter: <%C>\n",
         ::CIAO::DDS4CCM::translate_retcode (retval)));

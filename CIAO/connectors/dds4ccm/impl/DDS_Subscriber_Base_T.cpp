@@ -37,8 +37,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                                                             subscriber);
           if (CORBA::is_nil (cft.in ()))
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, "DDS_Subscriber_Base_T::configuration_complete: "
-                                            "Error creating ContentFilteredTopic.\n"));
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR,
+                            "DDS_Subscriber_Base_T::configuration_complete: "
+                            "Error creating ContentFilteredTopic.\n"));
               throw ::CORBA::INTERNAL ();
             }
           this->data_reader_.create_datareader (cft,
@@ -153,9 +154,10 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter (
     {
       if (ACE_OS::strlen (filter.expression.in ()) == 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_Subscriber_Base_T::filter: "
-                                       "Filter expression not set. Unable to create "
-                                       "ContentFilterSetting interface.\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "DDS_Subscriber_Base_T::filter: "
+                        "Filter expression not set. Unable to create "
+                        "ContentFilterSetting interface.\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
       this->cft_setting_.filter (filter);

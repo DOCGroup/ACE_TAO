@@ -46,7 +46,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
         }
     }
   else
@@ -74,7 +75,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
                          ACE_TEXT ("Failed to retrieve pointer to proxy from ")
                          ACE_TEXT ("DDSDataReader.\n")));
@@ -95,7 +96,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
     }
   else if (result != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                           ACE_TEXT ("Unable to take data from data reader, ")
                           ACE_TEXT ("error %C.\n"),
                           translate_retcode (result)));
@@ -152,7 +153,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
   if (retval != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
         "CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i - "
         "Error returning loan to DDS - <%C>\n",
         translate_retcode (retval)));
@@ -168,12 +169,13 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
 
   ::DDS::StatusMask mask = ::DDS::DATA_AVAILABLE_STATUS;
   if (! ::CORBA::is_nil (listener) ||
-      CIAO_debug_level >= 10)
+      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       mask |= PortStatusListener_type::get_mask (listener);
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "DataReaderListener_T::get_mask - "
-                                   "Mask becomes %d\n",
-                                   mask));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "DataReaderListener_T::get_mask - "
+                    "Mask becomes %d\n",
+                    mask));
     }
   return mask;
 }

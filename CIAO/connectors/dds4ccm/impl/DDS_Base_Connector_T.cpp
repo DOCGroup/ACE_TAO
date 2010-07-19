@@ -82,8 +82,9 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain");
 
-  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "DDS_Base_Connector_T::init_default_domain - "
-                "Configuring default domain <%d>\n",
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+                "DDS_Base_Connector_T::init_default_domain - "
+                "Start configuring default domain <%d>\n",
                 this->domain_id_));
 #if (CIAO_DDS4CCM_NDDS==1)
   ACE_Env_Value<int> verbosity (ACE_TEXT("DDS4CCM_NDDS_LOG_VERBOSITY"),
@@ -183,7 +184,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_activate (void)
                               DomainParticipantListener::get_mask ());
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DDS_Base_Connector_T::ccm_activate - "
                     "Error setting the listener on the domain participant - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -201,7 +202,7 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_passivate (void)
                                       0);
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DDS_Base_Connector_T::ccm_passivate - "
                     "Error while setting the listener on the "
                     "domain participant - <%C>\n",
