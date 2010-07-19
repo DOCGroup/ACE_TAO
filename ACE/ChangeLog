@@ -1,3 +1,16 @@
+Mon Jul 19 11:50:59 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.inl:
+        * ace/TSS_T.h:
+        * ace/TSS_T.cpp:
+          Mostly fixed bug 3539. It doesn't fix a case when main thread
+          doesn't own ACE_TSS but still uses it. Fixing the later is not
+          straight forward and will require a lot more efforts.
+          Also rearranged the code so that it has less duplicates.
+
+        * tests/run_test.lst:
+          Marked the test as fixed.
+
 Mon Jul 19 09:15:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/config/inet.mpb:
@@ -111,8 +124,8 @@ Fri Jul 16 22:08:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:
         * ace/Service_Gestalt.cpp:
-        
-          Further refinement of service initialization process. This 
+
+          Further refinement of service initialization process. This
           restores the order of processing, and is more explicit about
           handling a defaulted svc.conf.
 
