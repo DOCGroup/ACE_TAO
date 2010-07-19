@@ -1046,7 +1046,7 @@ DRV_pre_proc (const char *myfile)
       ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
                         main_abspath);
     ACE_NEW (utl_string,
-             UTL_String (main_fullpath, true);
+             UTL_String (main_fullpath, true));
     idl_global->set_main_filename (utl_string);
   }
 #else
