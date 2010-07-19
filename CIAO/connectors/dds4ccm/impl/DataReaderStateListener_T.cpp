@@ -48,7 +48,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       ACE_Event_Handler_var safe_handler (rh);
       if (this->reactor_->notify (rh) != 0)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("DataReaderStateHandler_T::")
                         ACE_TEXT ("failed to use reactor.\n")));
         }
@@ -78,7 +78,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
 
   if (!reader)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
                     ACE_TEXT ("Failed to retrieve pointer to proxy from ")
                     ACE_TEXT ("DDSDataReader.\n")));
@@ -108,7 +108,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
         }
       else if (result != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("Unable to take data from data reader, ")
                         ACE_TEXT ("error %d.\n"), result));
         }
@@ -221,7 +221,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
             "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
             "Error returning loan to DDS - <%C>\n",
             translate_retcode (retval)));
@@ -229,7 +229,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
         "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
         "Unexpected exception caught\n"));
     }
@@ -240,7 +240,8 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   typename CCM_TYPE::statelistener_type::_ptr_type listener)
 {
-  if (! ::CORBA::is_nil (listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (listener) ||
+      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       return ::DDS::DATA_AVAILABLE_STATUS |
              ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |

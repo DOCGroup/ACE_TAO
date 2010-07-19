@@ -76,8 +76,9 @@ namespace CIAO
         dynamic_cast <DataWriterListener_type *> (wr);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
-                                    "DDS returned a NIL listener.\n"));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        "CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
+                        "DDS returned a NIL listener.\n"));
           return ::DDS::DataWriterListener::_nil ();
         }
       return list_proxy->get_datawriterlistener ();

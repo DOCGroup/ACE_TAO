@@ -191,8 +191,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
       if (this->push_consumer_obtained_)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "Creating push consumer port.\n"));
           this->push_consumer_.configuration_complete (
             this,
@@ -203,15 +204,17 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "No need to create push consumer port.\n"));
         }
 
       if (this->supplier_obtained_)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "Creating supplier port.\n"));
           this->supplier_.configuration_complete(
             this,
@@ -222,15 +225,17 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "No need to create supplier port.\n"));
         }
 
       if (this->pull_consumer_obtained_)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "Creating pull consumer port.\n"));
           this->pull_consumer_.configuration_complete (
             this,
@@ -241,8 +246,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
-                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, "
+                        "VENDOR_TYPE>::configuration_complete - "
                         "No need to create pull consumer port.\n"));
         }
     }
@@ -264,9 +270,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::configuration_complete - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Event_Connector_T::configuration_complete - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -323,9 +329,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_activate - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Event_Connector_T::ccm_activate - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -372,9 +378,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_passivate - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Event_Connector_T::ccm_passivate - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -421,9 +427,9 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_Event_Connector_T::ccm_remove - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Event_Connector_T::ccm_remove - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }

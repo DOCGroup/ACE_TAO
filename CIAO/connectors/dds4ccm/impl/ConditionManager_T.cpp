@@ -37,7 +37,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_readcond
         (this->rd_condition_.in ());
       if (!rc)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO 
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO 
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::get_readcondition - ")
                         ACE_TEXT ("Unable to cast ::DDS::ReadCondition to its internal ")
                         ACE_TEXT ("representation.\n")));
@@ -58,7 +58,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_querycon
   QueryCondition_type * qc = dynamic_cast <QueryCondition_type *> (dds_qc);
   if (!qc)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::get_querycondition - ")
                     ACE_TEXT ("Unable to cast ::DDS::QueryCondition to its internal ")
                     ACE_TEXT ("representation.\n")));
@@ -130,7 +130,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
                               ::DDS::ALIVE_INSTANCE_STATE | ::DDS::NOT_ALIVE_INSTANCE_STATE);
       if ( ::CORBA::is_nil (this->rd_condition_.in ()))
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
                         ACE_TEXT ("Error creating read condition.\n")));
           return;
@@ -141,13 +141,13 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_readcon
 
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
                     ACE_TEXT ("Unable to attach read condition to waitset. Error <%C>\n"),
                     translate_retcode (retcode)));
       throw ::CCM_DDS::InternalError (retcode, 1);
     }
-  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                 ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::init_readcondition - ")
                 ACE_TEXT ("Read condition created and attached to Waitset.\n")));
 }
@@ -160,7 +160,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (void)
 
   if (! ::CORBA::is_nil (this->rd_condition_.in ()))
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
                     ACE_TEXT ("Error: No QueryCondition set yet. ")
                     ACE_TEXT ("First set a filter.\n")));
@@ -227,7 +227,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
           ::CORBA::is_nil (this->qc_getter_.in ()) ||
           ::CORBA::is_nil (this->qc_listener_.in ()))
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
                         ACE_TEXT ("Error creating query conditions ")
                         ACE_TEXT ("reader <%@> - getter <%@> - listener <%@>.\n"),
@@ -239,7 +239,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::query - ")
                         ACE_TEXT ("All query conditions created successfully\n")));
         }
@@ -269,7 +269,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_paramete
   ::DDS::ReturnCode_t const retval = qc->set_query_parameters (filter.parameters);
   if (retval != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::set_parameters - ")
                     ACE_TEXT ("Error setting expression_parameters. ")
                     ACE_TEXT ("Retval is %C\n"),
@@ -295,12 +295,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::attach_query
 
   if (retcode != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::ConditionManager_T::attach_querycondition - "
-                                          "Unable to attach query condition to waitset.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::ConditionManager_T::attach_querycondition - "
+                    "Unable to attach query condition to waitset.\n"));
       throw ::CCM_DDS::InternalError (retcode, 1);
     }
-  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CIAO::DDS4CCM::Getter_Base_T::attach_querycondition - "
-                                      "Query condition created and attached to Waitset.\n"));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                "CIAO::DDS4CCM::Getter_Base_T::attach_querycondition - "
+                "Query condition created and attached to Waitset.\n"));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -320,7 +322,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
 
 #if !defined (DDS4CCM_NLOGGING)
   ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
-  DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                 ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::wait - ")
                 ACE_TEXT ("waited <%#T>\n"),
                 &waited));
@@ -328,7 +330,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::wait (
 
   if (retcode == DDS_RETCODE_TIMEOUT)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::wait - ")
                     ACE_TEXT ("No data available after timeout.\n")));
       return false;
@@ -352,14 +354,14 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
           if (retcode == ::DDS::RETCODE_OK)
             {
               qc->set_impl (0);
-              DDS4CCM_DEBUG (8, (LM_DEBUG, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL, (LM_DEBUG, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_condition - ")
                             ACE_TEXT ("Succesfully removed query condition for <%C>.\n"),
                             type));
             }
           else
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_condition - ")
                             ACE_TEXT ("Unable to remove query condition for <%C>.")
                             ACE_TEXT ("Error <%C>\n"),
@@ -394,7 +396,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
         {
           if (this->ws_->detach_condition (this->get_querycondition_getter ()) == DDS_RETCODE_OK)
             {
-              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                             ACE_TEXT ("Query condition successfully detached from waitset.\n")));
               this->remove_condition (this->qc_getter_.in (), "getter");
@@ -402,7 +404,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
             }
           else
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                             ACE_TEXT ("Unable to detach query condition from waitset.\n")));
             }
@@ -412,7 +414,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
           retcode = this->ws_->detach_condition (this->get_readcondition ());
           if (retcode != DDS_RETCODE_OK)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                             ACE_TEXT ("Unable to detach read condition ")
                             ACE_TEXT ("from waitset. Error <%C>\n"),
@@ -420,7 +422,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
             }
           else
             {
-              DDS4CCM_DEBUG (6, (LM_INFO, CLINFO
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                             ACE_TEXT ("Read condition successfully detached from waitset.\n")));
             }
@@ -431,7 +433,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
       retcode = this->impl ()->delete_readcondition (this->rd_condition_.in ());
       if (retcode != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                         ACE_TEXT ("Unable to delete read condition from DDSDataReader.")
                         ACE_TEXT ("Error <%C>\n"),
@@ -439,7 +441,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_conditions - ")
                         ACE_TEXT ("Read condition successfully deleted from DDSDataReader.\n")));
         }
