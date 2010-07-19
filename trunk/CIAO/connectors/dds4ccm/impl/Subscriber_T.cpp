@@ -169,9 +169,10 @@ namespace CIAO
             dynamic_cast < ContentFilteredTopic_type * > (a_topic);
           if (!cf_topic)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T"
-                          "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
-                          "Error: Unable to cast provided topic to one of its servant.\n"));
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+                          "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                          "VENDOR_TYPE>::create_datareader -Error: Unable to "
+                          "cast provided topic to one of its servant.\n"));
               delete ccm_dds_drl;
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
@@ -189,7 +190,7 @@ namespace CIAO
 
       if (!ccm_dds_dr)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T"
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T"
                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
                        "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
@@ -197,8 +198,9 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_T"
-                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::create_datareader - "
                         "Successfully created datareader.\n"));
         }
 
@@ -236,8 +238,11 @@ namespace CIAO
             dynamic_cast < ContentFilteredTopic_type * > (a_topic);
           if (!cf_topic)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader_with_profile - "
-                          "Error: Unable to cast provided topic to one of its servant.\n"));
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+                            "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                            "VENDOR_TYPE>::create_datareader_with_profile - "
+                            "Error: Unable to cast provided topic to one "
+                            "of its servant.\n"));
               delete ccm_dds_drl;
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
@@ -261,17 +266,21 @@ namespace CIAO
 
       if (!ccm_dds_dr)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader_with_profile - "
-                       "Error: RTI Topic returned a nil datareader.\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::create_datareader_with_profile - "
+                        "Error: RTI Topic returned a nil datareader.\n"));
           delete ccm_dds_drl;
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader_with_profile - "
-                       "Successfully created datareader with profile <%C#%C>.\n",
-                       library_name,
-                       profile_name));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::create_datareader_with_profile - "
+                        "Successfully created datareader with profile <%C#%C>.\n",
+                        library_name,
+                        profile_name));
         }
 
       ::DDS::DataReader_var retval = ::DDS::DataReader::_nil ();
@@ -292,28 +301,34 @@ namespace CIAO
       DataReader_type *dr = dynamic_cast< DataReader_type *> (a_datareader);
       if (!dr)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T"
-                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader - "
-                        "Unable to cast provided object reference to servant.\n"));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::delete_datareader -Unable to cast "
+                        "provided object reference to servant.\n"));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CCM_DDS_Subscriber_T"
-                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader - "
-                    "Successfully casted provided object reference to servant.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL, (LM_TRACE, CLINFO
+                    "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                    "VENDOR_TYPE>::delete_datareader - "
+                    "Successfully casted provided object reference "
+                    "to servant.\n"));
 
       DDS_ReturnCode_t const retval = this->impl ()->delete_datareader (dr->get_impl ());
 
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CCM_DDS_Subscriber_T"
-                        "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader - "
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::delete_datareader - "
                         "Error: Returned non-ok error code %C\n",
                         translate_retcode (retval)));
         }
       else
         {
-          DDS4CCM_DEBUG (6, (LM_INFO, CLINFO "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader - "
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::delete_datareader - "
                         "Datareader successfully  deleted\n"));
         }
 
@@ -433,8 +448,10 @@ namespace CIAO
         dynamic_cast <SubscriberListener_type *> (ccm_dds_impl_list);
       if (!list_proxy)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
-                                    "DDS returned a NIL listener.\n"));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
+                        "VENDOR_TYPE>::get_listener - "
+                        "DDS returned a NIL listener.\n"));
           return ::DDS::SubscriberListener::_nil ();
         }
       return list_proxy->get_subscriber_listener ();

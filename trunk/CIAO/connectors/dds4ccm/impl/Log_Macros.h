@@ -18,6 +18,24 @@
 #  define CLINFO "(%P|%t) [%M] - %T - "
 #endif
 
+// Defines for log levels
+#define DDS4CCM_LOG_LEVEL_ERROR           1
+#define DDS4CCM_LOG_LEVEL_CAST_ERROR      2
+#define DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN  3
+#define DDS4CCM_LOG_LEVEL_4               4 //unused
+#define DDS4CCM_LOG_LEVEL_5               5 //unused
+#define DDS4CCM_LOG_LEVEL_ACTION          6
+#define DDS4CCM_LOG_LEVEL_UNIMP_ACTION    7
+#define DDS4CCM_LOG_LEVEL_ACTION_STARTING 8
+#define DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL  9
+#define DDS4CCM_LOG_LEVEL_DDS_STATUS     10
+
+#if !defined (CLINFO)
+#  define CLINFO "(%P|%t) [%M] - %T - "
+#endif
+
+
+
 extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 
 // By default tracing is turned off.

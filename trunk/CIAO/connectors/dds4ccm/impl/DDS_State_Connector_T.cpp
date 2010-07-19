@@ -376,9 +376,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_State_Connector_T::configuration_complete - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_State_Connector_T::configuration_complete - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -452,9 +452,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_State_Connector_T::ccm_activate - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_State_Connector_T::ccm_activate - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -512,9 +512,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_State_Connector_T::ccm_passivate - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_State_Connector_T::ccm_passivate - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }
@@ -571,9 +571,9 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
     }
   catch (...)
     {
-      DDS4CCM_ERROR (1, (LM_EMERGENCY, CLINFO
-                         "DDS_State_Connector_T::ccm_remove - "
-                         "Caught unexpected exception.\n"));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_State_Connector_T::ccm_remove - "
+                    "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
 }

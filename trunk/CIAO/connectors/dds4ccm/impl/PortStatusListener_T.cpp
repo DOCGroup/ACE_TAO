@@ -29,12 +29,12 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_requested_deadline_missed");
 
-  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
-              ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-              ACE_TEXT ("total count <%d> - total change <%d> - ")
-              ACE_TEXT ("last instance handle <length <%l> - isValid <%l>\n"),
-              status.total_count, status.total_count_change,
-              status.last_instance_handle.length, status.last_instance_handle.isValid));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                ACE_TEXT ("total count <%d> - total change <%d> - ")
+                ACE_TEXT ("last instance handle <length <%l> - isValid <%l>\n"),
+                status.total_count, status.total_count_change,
+                status.last_instance_handle.length, status.last_instance_handle.isValid));
 
   if (! ::CORBA::is_nil (this->port_status_listener_))
     {
@@ -49,7 +49,7 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                               ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
                               ACE_TEXT ("failed to use reactor.\n")));
                 }
@@ -61,15 +61,16 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
         }
       catch (...)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-                                 ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                        ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                        ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG,
-                  ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-                  ACE_TEXT ("No portstatus listener installed\n")));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                    ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
+                    ACE_TEXT ("No portstatus listener installed\n")));
     }
 }
 
@@ -81,10 +82,10 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::on_sample_lost");
 
-  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
-              ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-              ACE_TEXT ("total count <%d> - total change <%d>\n"),
-              status.total_count, status.total_count_change));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                ACE_TEXT ("total count <%d> - total change <%d>\n"),
+                status.total_count, status.total_count_change));
 
   if (! ::CORBA::is_nil (this->port_status_listener_))
     {
@@ -101,9 +102,9 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
               ACE_Event_Handler_var safe_handler (rh);
               if (this->reactor_->notify (rh) != 0)
                 {
-                  DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                              ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                              ACE_TEXT ("failed to use reactor.\n")));
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                                ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                                ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
           else
@@ -113,15 +114,16 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
         }
       catch (...)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                                 ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                        ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                        ACE_TEXT ("DDS Exception caught\n")));
         }
     }
   else
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG,
-                  ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                  ACE_TEXT ("No portstatus listener installed\n")));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
+                    ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
+                    ACE_TEXT ("No portstatus listener installed\n")));
     }
 }
 
@@ -171,12 +173,14 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::get_mask");
 
-  if (! ::CORBA::is_nil (psl) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (psl) ||
+      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "PortStatusListener_T::get_mask - "
-                                   "Mask becomes %d\n",
-                                   DDS_REQUESTED_DEADLINE_MISSED_STATUS |
-                                   DDS_SAMPLE_LOST_STATUS));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "PortStatusListener_T::get_mask - "
+                    "Mask becomes %d\n",
+                    DDS_REQUESTED_DEADLINE_MISSED_STATUS |
+                    DDS_SAMPLE_LOST_STATUS));
       return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
              DDS_SAMPLE_LOST_STATUS;
     }

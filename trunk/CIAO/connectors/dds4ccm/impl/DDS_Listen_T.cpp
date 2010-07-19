@@ -44,7 +44,8 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
         }
       else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_Listen_T::configuration_complete - "
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                            "DDS_Listen_T::configuration_complete - "
                             "Unable to cast DataListenerControl.\n"));
           return false;
         }
@@ -92,7 +93,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
     }
   else
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "DDS_Listen_T::remove - "
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO "DDS_Listen_T::remove - "
                         "Unable to cast DataListenerControl.\n"));
     }
 

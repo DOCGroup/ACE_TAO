@@ -47,7 +47,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
         }
       else
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("DDS_StateListen_T::configuration_complete - ")
                         ACE_TEXT ("Unable to cast Data control.\n")));
           return false;
@@ -81,7 +81,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                               DataReaderStateListener_type::get_mask (listener));
   if (retcode != DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DDS_StateListen_T::activate - "
                     "Error setting the listener on the DataReader - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -103,7 +103,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
     }
   else
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("DDS_StateListen_T::remove - ")
                     ACE_TEXT ("Unable to cast StateListenerControl.\n")));
     }

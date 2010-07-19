@@ -29,10 +29,10 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::on_inconsistent_topic");
 
-  DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
-              ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
-              ACE_TEXT ("total count <%d> - total change <%d> - "),
-              status.total_count, status.total_count_change));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                ACE_TEXT ("total count <%d> - total change <%d> - "),
+                status.total_count, status.total_count_change));
 
   if (! ::CORBA::is_nil (this->error_listener_.in ()))
     {
@@ -47,9 +47,9 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent
           ACE_Event_Handler_var safe_handler (rh);
           if (this->reactor_->notify (rh) != 0)
             {
-              DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
-                          ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
-                          ACE_TEXT ("failed to use reactor.\n")));
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                            ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                            ACE_TEXT ("failed to use reactor.\n")));
             }
         }
       else
@@ -66,7 +66,8 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");
 
-  if (! ::CORBA::is_nil (error_listener) || CIAO_debug_level >= 10)
+  if (! ::CORBA::is_nil (error_listener) ||
+      CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       return ::DDS::INCONSISTENT_TOPIC_STATUS;
     }

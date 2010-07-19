@@ -50,30 +50,33 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::log_query_conditio
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::log_query_condition");
 
-  if (CIAO_debug_level >= 10)
+  if (CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::")
                     ACE_TEXT ("read_wo_instance - read_w_condition:\n")));
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                     ACE_TEXT ("\t\texpression <%C>\n"),
                     qc->get_query_expression ()));
       ::DDS_StringSeq dds_qp;
       qc->get_query_parameters (dds_qp);
       for (DDS_Long i = 0; i < dds_qp.length (); ++i)
         {
-          DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                         ACE_TEXT ("\t\tparameter %d <%C>\n"),
                         i + 1,
                         dds_qp[i]));
 
         }
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "\t\tinstance state mask <%d>\n",
-                          qc->get_instance_state_mask ()));
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "\t\tsample state mask <%d>\n",
-                          qc->get_sample_state_mask ()));
-      DDS4CCM_DEBUG (10, (LM_DEBUG, CLINFO "\t\tview state mask <%d>\n",
-                          qc->get_view_state_mask ()));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "\t\tinstance state mask <%d>\n",
+                    qc->get_instance_state_mask ()));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "\t\tsample state mask <%d>\n",
+                    qc->get_sample_state_mask ()));
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                    "\t\tview state mask <%d>\n",
+                    qc->get_view_state_mask ()));
     }
 }
 
@@ -108,12 +111,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_wo_instance (
       DDS_ReturnCode_t const retval = this->return_loan (data, sample_info);
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_wo_instance - ")
                         ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                         translate_retcode (retval)));
         }
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_wo_instance - ")
                             ACE_TEXT ("retval is %C\n"),
                             translate_retcode(retval)));
@@ -130,9 +133,9 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::read_w_instance");
 
-  DDS4CCM_DEBUG (6, (LM_INFO, CLINFO
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_INFO, CLINFO
                 ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
-                ACE_TEXT ("Reading with instance.\n")));
+                ACE_TEXT ("Start reading with instance.\n")));
   DDS_ReturnCode_t const retval = this->impl ()->read_instance (
                                         data,
                                         sample_info,
@@ -146,12 +149,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
       DDS_ReturnCode_t const retval = this->return_loan (data, sample_info);
       if (retval != DDS_RETCODE_OK)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
                         ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                         translate_retcode (retval)));
         }
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
                     ACE_TEXT ("retval is %C\n"),
                     translate_retcode(retval)));
@@ -259,7 +262,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
                                               0);
   if (retcode != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DataReader_T::passivate - "
                     "Error while setting the listener on the data reader - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
@@ -342,7 +345,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader 
   ::DDS::ReturnCode_t const retval = subscriber->delete_datareader (this);
   if (retval != ::DDS::RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     ACE_TEXT ("DataReader_T::delete_datareader - ")
                     ACE_TEXT ("Unable to delete DataReader: <%C>\n"),
                     translate_retcode (retval)));
@@ -479,7 +482,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_readconditi
     {
       if (!qc)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_DEBUG, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::delete_readcondition - ")
                         ACE_TEXT ("Unable to cast provided condition to a typed ")
                         ACE_TEXT ("read condition nor a typed query condition\n")));
@@ -488,7 +491,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_readconditi
       dds_rc = dynamic_cast < DDSQueryCondition *> (qc->get_impl ());
       if (!dds_rc)
         {
-          DDS4CCM_DEBUG (6, (LM_DEBUG, CLINFO
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_DEBUG, CLINFO
                         ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::delete_readcondition - ")
                         ACE_TEXT ("Unable to cast DDSQueryCondition to a ")
                         ACE_TEXT ("DDSReadCondition\n")));
@@ -580,7 +583,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener (void
     dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (drl);
   if (!ccm_dds_drl)
     {
-      DDS4CCM_DEBUG (6, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T"
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T"
                                 "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
                                 "DDS returned a NIL listener.\n"));
       return ::DDS::DataReaderListener::_nil ();
@@ -789,13 +792,15 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
       this->impl_ = dds_dr->get_impl ();
       if (!this->impl_)
         {
-          DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
-                      "Failed to cast DDS::DataReader to DataReader_T\n"));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+                        "Failed to cast DDS::DataReader to DataReader_T\n"));
         }
     }
   else
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::DataReader_T::create_datareader - "
                     "Failed to cast DDS::DataReader to DataReader_T\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }

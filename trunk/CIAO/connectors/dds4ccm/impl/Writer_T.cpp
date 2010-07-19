@@ -37,9 +37,10 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_i (
 
   if (retval != DDS_RETCODE_OK)
     {
-      DDS4CCM_ERROR (1, (LM_ERROR, CLINFO "CIAO::DDS4CCM::Writer_T::write_i - "
-                   "Write unsuccessful, received error code %C\n",
-                   translate_retcode (retval)));
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "CIAO::DDS4CCM::Writer_T::write_i - "
+                    "Write unsuccessful, received error code %C\n",
+                    translate_retcode (retval)));
       throw ::CCM_DDS::InternalError (retval, index);
     }
 }
@@ -54,8 +55,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_one (
 
   this->write_i (an_instance, instance_handle, 0);
 
-  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CIAO::DDS4CCM::Writer_T::write_one - "
-               "Write successful\n"));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, CLINFO
+                "CIAO::DDS4CCM::Writer_T::write_one - "
+                "Write successful\n"));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -68,8 +70,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
   Coherent_Changes_Guard guard (this->impl ()->get_publisher(),
                                 this->is_coherent_write_);
 
-  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CIAO::DDS4CCM::Writer_T::write_many - "
-               "Preparing to write to DDS\n"));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
+                "CIAO::DDS4CCM::Writer_T::write_many - "
+                "Preparing to write to DDS\n"));
 
   for (typename CCM_TYPE::seq_type::size_type index = 0;
        index < instances.length();
@@ -78,8 +81,9 @@ CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::write_many (
       this->write_i (instances[index], ::DDS::HANDLE_NIL, index);
     }
 
-  DDS4CCM_DEBUG (9, (LM_TRACE, CLINFO "CIAO::DDS4CCM::Writer_T::write_many - "
-               "Write successful\n"));
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, CLINFO
+                "CIAO::DDS4CCM::Writer_T::write_many - "
+                "Write successful\n"));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
