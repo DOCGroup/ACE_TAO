@@ -1,3 +1,11 @@
+Mon Jul 19 09:15:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * protocols/ace/INet/inet.mpc:
+          Added new feature 'exclude_inet' to allow builds to
+          explicitly exclude building INet.
+
 Mon Jul 19 08:49:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/HTTPS_Session.cpp:
