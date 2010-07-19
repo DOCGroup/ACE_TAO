@@ -52,7 +52,7 @@ Bug_3432_Regression_Test
 Bug_3500_Regression_Test
 Bug_3505_Regression_Test
 Bug_3532_Regression_Test
-Bug_3539_Regression_Test: !FIXED_BUGS_ONLY
+Bug_3539_Regression_Test
 Bug_3541_Regression_Test
 Bug_3673_Regression_Test
 Bug_3709_Regression_Test: !LabVIEW_RT
