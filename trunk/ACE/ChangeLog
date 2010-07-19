@@ -1,3 +1,11 @@
+Mon Jul 19 08:49:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_Session.h:
+          Fixed compile errors byadding version check to disable
+          'relatively' new OpenSSL functionality for builds using
+          outdated OpenSSL installations (OpenSSL <= 0.9.8e).
+
 Sat Jul 17 14:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/ClientRequestHandler.h:

@@ -17,6 +17,14 @@
 #include "ace/INet/SSLSock_IOStream.h"
 #include "ace/INet/HTTPS_Context.h"
 
+// we need OpenSSL > v0.9.8e to get support for SSL_set_SSL_CTX
+#define OPENSSL_VERSION_098E 0x0090805fL
+#if OPENSSL_VERSION_NUMBER > OPENSSL_VERSION_098E
+# define SSL_HAS_SSL_set_SSL_CTX 1
+#else
+# define SSL_HAS_SSL_set_SSL_CTX 0
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -35,13 +43,19 @@ namespace ACE
             public:
               typedef ACE::IOS::StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> connection_type;
 
-              Session_T (bool keep_alive = true,
-                         Context& ctx = Context::instance ());
+              Session_T (bool keep_alive = true
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+                         , Context* ctx = 0
+#endif
+                         );
 
               Session_T (const ACE_Time_Value& timeout,
                          bool keep_alive = true,
-                         const ACE_Time_Value* alive_timeout = 0,
-                         Context& ctx = Context::instance ());
+                         const ACE_Time_Value* alive_timeout = 0
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+                         , Context* ctx = 0
+#endif
+                         );
 
               virtual ~Session_T ();
 
@@ -64,7 +78,9 @@ namespace ACE
 
               connection_type* connection_;
               sock_stream_type* sock_stream_;
-              Context& context_;
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+              Context* context_;
+#endif
           };
 
         typedef Session_T<ACE_NULL_SYNCH> Session;
