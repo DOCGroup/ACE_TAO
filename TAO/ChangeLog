@@ -1,3 +1,9 @@
+Mon Jul 19 17:14:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
+        
+          Fixed typo in facet impl operation generation.
+
 Sat Jul 17 14:13:33 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp (ORB::open_services): 
