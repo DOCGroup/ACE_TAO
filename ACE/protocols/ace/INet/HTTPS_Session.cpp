@@ -26,11 +26,17 @@ namespace ACE
   {
 
     template <ACE_SYNCH_DECL>
-    Session_T<ACE_SYNCH_USE>::Session_T (bool keep_alive, Context& ctx)
+    Session_T<ACE_SYNCH_USE>::Session_T (bool keep_alive
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+                                         , Context* ctx
+#endif
+                                         )
       : SessionBase (URL::HTTPS_PORT, keep_alive),
         connection_ (0),
-        sock_stream_ (0),
-        context_ (ctx)
+        sock_stream_ (0)
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+        , context_ (ctx)
+#endif
       {
         INET_TRACE ("ACE_HTTPS_Session - ctor");
       }
@@ -38,12 +44,17 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout,
                                          bool keep_alive,
-                                         const ACE_Time_Value* alive_timeout,
-                                         Context& ctx)
+                                         const ACE_Time_Value* alive_timeout
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+                                         , Context* ctx
+#endif
+                                         )
       : SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout),
         connection_ (0),
-        sock_stream_ (0),
-        context_ (ctx)
+        sock_stream_ (0)
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+        , context_ (ctx)
+#endif
       {
         INET_TRACE ("ACE_HTTPS_Session - ctor");
         this->close_streams ();
@@ -117,10 +128,14 @@ namespace ACE
             ACE_NEW_RETURN (new_connection,
                             connection_type(sync_opt),
                             false);
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
             // set the provided SSL context for the SSL structure of the SSL_SOCK_Stream
-            ::SSL * ssl_ptr = new_connection->peer ().ssl ();
-            ::SSL_set_SSL_CTX (ssl_ptr, this->context_.ssl_context ().context ());
-
+            if (this->context_ != 0)
+              {
+                ::SSL * ssl_ptr = new_connection->peer ().ssl ();
+                ::SSL_set_SSL_CTX (ssl_ptr, this->context_->ssl_context ().context ());
+              }
+#endif
             ACE_HANDLE proxy_conn_handle = proxy_connection.peer ().get_handle ();
             proxy_connection.peer ().set_handle (ACE_INVALID_HANDLE);
 
@@ -142,10 +157,14 @@ namespace ACE
             ACE_NEW_RETURN (new_connection,
                             connection_type(sync_opt),
                             false);
+#if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
             // set the provided SSL context for the SSL structure of the SSL_SOCK_Stream
-            ::SSL * ssl_ptr = new_connection->peer ().ssl ();
-            ::SSL_set_SSL_CTX (ssl_ptr, this->context_.ssl_context ().context ());
-
+            if (this->context_ != 0)
+              {
+                ::SSL * ssl_ptr = new_connection->peer ().ssl ();
+                ::SSL_set_SSL_CTX (ssl_ptr, this->context_->ssl_context ().context ());
+              }
+#endif
             typedef ACE_Connector<connection_type, ACE_SSL_SOCK_Connector> connector_type;
 
             connector_type connector;
