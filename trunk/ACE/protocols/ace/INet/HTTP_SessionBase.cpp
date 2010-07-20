@@ -183,7 +183,10 @@ namespace ACE
 
     std::ostream& SessionBase::request_stream ()
       {
-        return this->out_stream_ ? *this->out_stream_ : ACE::IOS::Null::out_stream_;
+        if (this->out_stream_)
+          return *this->out_stream_;
+        else
+          return ACE::IOS::Null::out_stream_;
       }
 
     std::ostream& SessionBase::request_stream (
@@ -278,7 +281,10 @@ namespace ACE
 
     std::istream& SessionBase::response_stream ()
       {
-        return this->in_stream_ ? *this->in_stream_ : ACE::IOS::Null::in_stream_;
+        if (this->in_stream_)
+          return *this->in_stream_;
+        else
+          return ACE::IOS::Null::in_stream_;
       }
 
     std::istream& SessionBase::response_stream (
