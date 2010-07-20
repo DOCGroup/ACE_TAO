@@ -1,3 +1,10 @@
+Tue Jul 20 18:23:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Bugfix whereby the NodeApplication would mistakenly believe that
+          the deployment scheduler had timed out.
+
 Tue Jul 20 18:22:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test_shs.pl:
