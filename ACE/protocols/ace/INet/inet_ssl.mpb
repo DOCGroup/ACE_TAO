@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 feature(ssl) : ssl {
   Source_Files {
     SSL_X509Cert.cpp
