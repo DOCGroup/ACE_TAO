@@ -1,3 +1,24 @@
+Tue Jul 20 18:17:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.idl:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.cpp:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.h:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.cpp:
+        * DAnCE/tools/System_Health/Interceptors:
+        * DAnCE/tools/System_Health/Interceptors/DAnCE_SHS_CORBA_Transport_export.h:
+        * DAnCE/tools/System_Health/Interceptors/DAnCE_SHS_Interceptors_export.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Transport.h:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+        * DAnCE/tools/System_Health/System_Health.mpc:
+
+          Initial implementation of system health & status service.
+
 Tue Jul 20 12:32:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:

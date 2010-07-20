@@ -1,0 +1,21 @@
+#ifndef System_Health_Daemon
+#define System_Health_Daemon
+
+#include "System_Health/SHS_DataModel.idl"
+
+module DAnCE
+{
+  module SHS
+  {
+    /**
+     * simple interface to receive system health updates. 
+     */
+    interface SHS_Daemon
+    {
+      void update (in Status_Update update);    
+      oneway void shutdown ();
+    };
+  };
+};
+
+#endif // System_Health_Daemon
