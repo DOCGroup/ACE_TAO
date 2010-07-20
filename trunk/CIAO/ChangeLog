@@ -1,3 +1,17 @@
+Tue Jul 20 18:25:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Daemon:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.cpp:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.idl:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.h:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.cpp:
+
+          Placeholder for the Plan Launcher daemon, a process using the
+          DAnCE_Plan_Launcher to provide an IDL interface for deployment
+          execution.  Right now, it only provides an interface for parsing
+          XML/CDR plans into IDL.
+
 Tue Jul 20 18:23:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
