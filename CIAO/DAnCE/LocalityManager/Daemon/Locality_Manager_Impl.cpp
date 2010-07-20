@@ -128,7 +128,11 @@ namespace DAnCE
     PLUGIN_MANAGER::instance ()->register_interceptor (
       ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
       ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
-
+    
+    PLUGIN_MANAGER::instance ()->register_interceptor (
+         ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_SHS_Interceptors"),
+         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_SHS_Interceptor"));
+    
     bool tmp;
     if (props &&
         DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,

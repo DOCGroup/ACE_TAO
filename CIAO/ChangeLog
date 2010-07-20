@@ -1,3 +1,10 @@
+Tue Jul 20 18:19:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Load SHS interceptors.
+
 Tue Jul 20 18:17:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/Daemon/SHS_Daemon.idl:
