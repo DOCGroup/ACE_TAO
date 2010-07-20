@@ -444,7 +444,7 @@ NodeApplication_Impl::remove_instances (void)
 
   ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
 
-  if (completion.wait_on_completion (&tv))
+  if (!completion.wait_on_completion (&tv))
     {
       DANCE_ERROR (1, (LM_ERROR, DLINFO
                        ACE_TEXT("NodeApplication_Impl::remove_instances - ")
