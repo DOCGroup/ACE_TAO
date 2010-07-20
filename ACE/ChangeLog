@@ -1,3 +1,9 @@
+Tue Jul 20 03:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Fuzz fixes.
+
 Mon Jul 19 11:50:59 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/TSS_T.inl:
