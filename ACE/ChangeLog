@@ -1,3 +1,11 @@
+Tue Jul 20 08:48:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.cpp:
+          Fixed a bug in ACE_TSS::ts_get() that only exhibited on
+          SunOS/Studio builds. The later configutsyion uses ACE_HAS_THR_C_DEST
+          and with that define ts_get() behaved differently. In particular it
+          didn't create a ts_obj if tss_adapter was not 0.
+
 Tue Jul 20 07:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/SSL_CallbackManager.h:
