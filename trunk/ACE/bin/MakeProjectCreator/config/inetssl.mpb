@@ -1,2 +1,5 @@
+// -*- MPC -*-
+// $Id$
+
 feature(ssl) : ssl {
 } 
