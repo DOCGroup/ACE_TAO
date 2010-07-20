@@ -1,3 +1,14 @@
+Tue Jul 20 15:08:49 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3319_Regression_Test.cpp:
+
+          Fix the test to be consistent with revised service config 
+          behavior. The test had assumed that ACE_Service_Config::open() 
+          would return 0 even if svc.conf were not present, but since it
+          was setting the ignore_default_svc_conf_file to 0, the restore
+          behavior of the service configurator is to fail with ENOENT in
+          that case.
+        
 Tue Jul 20 08:48:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/TSS_T.cpp:
