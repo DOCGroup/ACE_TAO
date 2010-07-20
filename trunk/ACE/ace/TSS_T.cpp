@@ -196,6 +196,15 @@ ACE_TSS<TYPE>::ts_get (void) const
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter = this->ts_value ();
+  ACE_TSS_Adapter *fake_tss_adapter = 0;
+
+  // If tss_adapter is not 0 but its ts_obj_ is 0 then we still need to create
+  // a proper ts_obj. That's the intent of this member function.
+  if (tss_adapter != 0 && tss_adapter->ts_obj_ == 0)
+    {
+      fake_tss_adapter = tss_adapter;
+      tss_adapter = 0;
+    }
 
   // Check to see if this is the first time in for this thread.
   if (tss_adapter == 0)
@@ -240,6 +249,8 @@ ACE_TSS<TYPE>::ts_get (void) const
     }
 
 #if defined (ACE_HAS_THR_C_DEST)
+  // Delete the adapter that didn't actually have a real ts_obj.
+  delete fake_tss_adapter;
   // Return the underlying ts object.
   return static_cast <TYPE *> (tss_adapter->ts_obj_);
 #else
