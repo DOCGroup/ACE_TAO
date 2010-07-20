@@ -23,6 +23,7 @@ project(INet) : acelib, ace_output, install, inet_ssl {
     HTTP_Request.cpp
     HTTP_IOStream.cpp
     HTTP_SessionBase.cpp
+    HTTP_BasicAuthentication.cpp
     URLBase.cpp
     AuthenticationBase.cpp
     HTTP_URL.cpp
