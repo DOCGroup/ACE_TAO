@@ -1,3 +1,12 @@
+Tue Jul 20 12:28:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        
+          Fixed typo in facet impl attribute operation generation,
+          similar to the fix in
+          
+          Mon Jul 19 17:14:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Jul 19 18:25:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
