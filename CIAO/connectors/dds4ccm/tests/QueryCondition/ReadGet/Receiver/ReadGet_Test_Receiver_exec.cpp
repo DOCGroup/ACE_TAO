@@ -24,7 +24,7 @@
 #define SAMPLES_PER_KEY_GETTER (2 + 11)
 
 // Reader also reads already read samples.
-#define SAMPLES_PER_KEY_READER (2 + 2 + 11)
+#define SAMPLES_PER_KEY_READER (2 + 11)
 
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
