@@ -1,0 +1,47 @@
+project (DAnCE_PL_Daemon_idl) : ciaolib_with_idl, dance_output, gen_ostream, \
+        valuetype, dance_deployment_stub {
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=DANCE_PL_STUB_Export \
+                  -Wb,stub_export_include=DAnCE_PL_stub_export.h \
+                  -Wb,skel_export_macro=DANCE_PL_SKEL_Export \
+                  -Wb,skel_export_include=DAnCE_PL_skel_export.h \
+                  -Gxhst -Gxhsk
+
+  IDL_Files {
+   PL_Daemon.idl
+  }
+}
+
+project (DAnCE_PL_Daemon_stub) : dance_deployment_stub, dance_output, dance_lib {
+
+  after += DAnCE_PL_Daemon_idl
+  dynamicflags += DANCE_PL_STUB_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    PL_DaemonC.cpp
+  }
+
+  Header_Files {
+    PL_DaemonC.h
+  }
+}
+
+project (DAnCE_PL_Daemon) : dance_exe, install, dance_plan_launcher, utils, dance_stub {
+   exename = dance_pl_daemon
+   after += DAnCE_PL_Daemon_stub
+   libs += DAnCE_PL_Daemon_stub
+   dynamicflags += DANCE_PL_SKEL_BUILD_DLL
+
+   Source_Files {
+     PL_DaemonS.cpp
+     PL_Daemon_Impl.cpp
+     PL_Daemon.cpp
+   }
+  
+   Header_Files {
+     PL_Daemon_Impl.h
+   }
+}
