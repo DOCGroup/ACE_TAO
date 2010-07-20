@@ -5,8 +5,10 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"
-#include "ace/INet/SSL_CallbackManager.h"
-#include "ace/INet/HTTPS_Context.h"
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
+# include "ace/INet/SSL_CallbackManager.h"
+# include "ace/INet/HTTPS_Context.h"
+#endif
 #include "ace/INet/INet_Log.h"
 #include <iostream>
 #include <fstream>
@@ -15,12 +17,14 @@ ACE_CString proxy_hostname;
 u_short proxy_port = ACE::HTTP::URL::HTTP_PROXY_PORT;
 ACE_CString url;
 ACE_CString outfile;
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
 int ssl_mode = ACE_SSL_Context::SSLv3;
 bool verify_peer = true;
 bool ignore_verify = false;
 ACE_CString certificate;
 ACE_CString private_key;
 ACE_CString ca_location;
+#endif
 
 void
 usage (void)
@@ -30,18 +34,24 @@ usage (void)
   std::cout << "\t-H <hostname>   \t\tproxy host to connect to\n";
   std::cout << "\t-p <port>       \t\tproxy port to connect to\n";
   std::cout << "\t-o <filename>   \t\tfile to write output to\n";
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
   std::cout << "\t-v <ssl version>\t\tSSL version to use: 2, 23, 3\n";
   std::cout << "\t-n              \t\tno peer certificate verification\n";
   std::cout << "\t-i              \t\tignore peer certificate verification failures\n";
   std::cout << "\t-c <filename>   \t\tcertificate file (PEM format)\n";
   std::cout << "\t-k <filename>   \t\tprivate key file (PEM format); requires -c\n";
   std::cout << "\t-C <path>       \t\ttrusted CA file or directory\n";
+#endif
 }
 
 bool
 parse_args (int argc, ACE_TCHAR *argv [])
 {
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("H:p:o:hv:nic:k:C:"), 0, 0, ACE_Get_Opt::RETURN_IN_ORDER);
+#else
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("H:p:o:h"), 0, 0, ACE_Get_Opt::RETURN_IN_ORDER);
+#endif
 
   int c;
   ACE_CString s;
@@ -64,6 +74,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
           outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
         case 'v':
           {
             ACE_CString ver = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
@@ -98,7 +109,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
         case 'C':
           ca_location = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
-
+#endif
         case 'h':
         default:
           usage ();
@@ -169,6 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       return 1;
     }
 
+#if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
   ACE::HTTPS::Context::set_default_ssl_mode (ssl_mode);
   ACE::HTTPS::Context::set_default_verify_mode (verify_peer);
   ACE::HTTPS::Context::instance ().use_default_ca ();
@@ -197,6 +209,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   if (ignore_verify)
     ACE::INet::SSL_CallbackManager::instance ()->set_certificate_callback (new ACE::INet::SSL_CertificateAcceptor);
+#endif
 
   std::cout << "Starting..." << std::endl;
 

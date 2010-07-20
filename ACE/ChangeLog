@@ -1,3 +1,11 @@
+Tue Jul 20 03:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+          Fixed MSVC 7.1 compile problems.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Fixed compile problems for non-SSL builds.
+
 Tue Jul 20 03:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/config/inetssl.mpb:
