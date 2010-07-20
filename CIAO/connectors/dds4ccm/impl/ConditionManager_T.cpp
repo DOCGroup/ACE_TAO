@@ -354,7 +354,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove_condi
           if (retcode == ::DDS::RETCODE_OK)
             {
               qc->set_impl (0);
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL, (LM_DEBUG, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_DEBUG, CLINFO
                             ACE_TEXT ("CIAO::DDS4CCM::ConditionManager_T::remove_condition - ")
                             ACE_TEXT ("Succesfully removed query condition for <%C>.\n"),
                             type));

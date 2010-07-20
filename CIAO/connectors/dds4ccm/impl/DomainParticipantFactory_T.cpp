@@ -230,7 +230,7 @@ namespace CIAO
                         "type, bailing.\n"));
           return DDS::RETCODE_ERROR;
         }
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL, (LM_TRACE, CLINFO
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipantFactory_T"
                     "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                     "Successfully casted provided object reference to servant type.\n"));
