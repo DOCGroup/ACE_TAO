@@ -1,3 +1,8 @@
+Tue Jul 20 07:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/SSL_CallbackManager.h:
+          Fixed comment typo.
+
 Tue Jul 20 05:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/HTTP_BasicAuthentication.cpp:
