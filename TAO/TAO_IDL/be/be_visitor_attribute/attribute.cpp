@@ -42,7 +42,7 @@ be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     for_facets_ (false),
     op_scope_ (0),
-    exec_class_extension_ ("exec_i")
+    exec_class_extension_ ("_exec_i")
 {
 }
 
