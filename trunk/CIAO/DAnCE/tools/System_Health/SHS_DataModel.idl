@@ -1,0 +1,69 @@
+// $Id$
+
+#include "Deployment/Deployment_Base.idl"
+
+module DAnCE
+{
+  module SHS
+  {
+    module Constants
+    {
+      /// Diagnostic message
+      const string SHS_DIAGNOSTIC = "edu.vanderbilt.dre.DAnCE.SHS.Diagnostic";
+      /// Connection status update
+      const string SHS_CONNECTION = "edu.vanderbilt.dre.DAnCE.SHS.Connection";
+      /// Process ID
+      const string SHS_PID = "edu.vanderbilt.dre.DAnCE.SHS.PID";
+      /// Process or thread priority
+      const string SHS_PRIORITY = "edu.vanderbilt.dre.DAnCE.SHS.Priority";
+      /// Process affinity mask
+      const string SHS_AFFINITY = "edu.vanderbilt.dre.DAnCE.SHS.Affinity";
+      /// Number of threads configured with the reactor
+      const string SHS_TPOOL = "edu.vanderblt.dre.DAnCE.SHS.ThreadPool";
+      /// Memory footprint of the instance
+      const string SHS_MEM_FP = "edu.vanderblt.dre.DAnCE.SHS.MemoryFootprint";
+      /// IDs of hosted instances
+      const string SHS_HOSTED_INSTANCES = "edu.vanderblt.dre.DAnCE.SHS.HostedInstances";
+    };
+    
+    /// Enumberation describing liveness status of event
+    enum Instance_Status
+    {
+      /**
+       * The instance has been loaded into memory
+       */
+      INSTALLED,
+      /**
+       * The process or element is actively executing
+       */
+      ACTIVE,
+      /**
+       * The process or element is loaded in memory but not active.
+       */
+      PASSIVE,
+      /**
+       * The process or element encountered an error condition
+       */
+      ERROR,
+      /**
+       * The process or element is now defunct
+       */
+      DEFUNCT
+    };
+  
+    struct Status_Update
+    {
+      /// Name assigned to instance
+      string id;
+    
+      /// Instance type
+      string type;
+    
+      /// New status of instance
+      Instance_Status new_status;
+    
+      /// Additional information about instance
+      ::Deployment::Properties instance_info;
+    };
+  };
+};
