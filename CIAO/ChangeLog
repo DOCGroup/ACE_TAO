@@ -1,3 +1,14 @@
+Tue Jul 20 12:32:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+          Removed the domain_id since this tutorial doesn't work in conjunction
+          with the RTI shapes demo because of coding standards.
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+          Mentioned that this tutorial doesn't run in conjunction
+          with the RTI Shapes demo. If one would like to see this,
+          one should compile and run the Shapes example.
+
 Tue Jul 20 09:58:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
