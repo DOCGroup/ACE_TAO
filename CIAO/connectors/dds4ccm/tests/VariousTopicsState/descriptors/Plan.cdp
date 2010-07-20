@@ -265,7 +265,111 @@
       </value>
     </execParameter>
   </implementation>
+
+  <implementation xmi:id="VTS_Union_ConnectorComponentImplementation">
+    <name>VTS_Union_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="VTS_Union_Connector_ExecArtifact" />
+    <artifact xmi:idref="VTS_Union_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_TopicUnionConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_TopicUnionConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VTS_Union_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VTS_Union_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
   
+  <implementation xmi:id="VT_X_Union_ConnectorComponentImplementation">
+    <name>VT_X_Union_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="VTS_Union_Connector_ExecArtifact" />
+    <artifact xmi:idref="VTS_Union_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_X_UnionConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_VTopic_X_UnionConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VTS_Union_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>VTS_Union_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -472,8 +576,81 @@
       </value>
     </configProperty>
   </instance>
+
+  <instance xmi:id="VTS_Union_ConnectorComponentInstance">
+    <name>VTS_Union_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VTS_Union_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestUnion</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="VTS_Union_ConnectorComponentInstance2">
+    <name>VTS_Union_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VTS_Union_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestUnion</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
   
-  
+  <instance xmi:id="VT_X_Union_ConnectorComponentInstance">
+    <name>VT_X_Union_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VT_X_Union_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Test_X_Union</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="VT_X_Union_ConnectorComponentInstance2">
+    <name>VT_X_Union_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="VT_X_Union_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Test_X_Union</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -700,6 +877,89 @@
     </internalEndpoint>
   </connection>
 
+  <!--
+      *****************************
+      Union connector connections
+      *****************************
+      -->
+  <connection>
+    <name>connector_status_receiver_union</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VTS_Union_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>connector_status_sender_union</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VTS_Union_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>connector_status_receiver_x_union</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VT_X_Union_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>connector_status_sender_x_union</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>connector_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>error_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="VT_X_Union_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>
     <source/>
@@ -792,6 +1052,25 @@
     <source/>
     <node/>
     <location>DDS_VTS_Seq_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="VTS_Union_Connector_ExecArtifact">
+    <name>VTS_Union_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_VTS_Union_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="VTS_Union_Connector_SvntArtifact">
+    <name>VTS_Union_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_VTS_Union_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="VTS_Union_Connector_StubArtifact">
+    <name>VTS_Union_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_VTS_Union_Connector_stub</location>
   </artifact>
 
   <artifact xmi:id="Receiver_ExecArtifact">
