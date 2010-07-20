@@ -27,14 +27,8 @@
 #define DDS4CCM_LOG_LEVEL_ACTION          6
 #define DDS4CCM_LOG_LEVEL_UNIMP_ACTION    7
 #define DDS4CCM_LOG_LEVEL_ACTION_STARTING 8
-#define DDS4CCM_LOG_LEVEL_CAST_SUCCESFUL  9
+#define DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL 9
 #define DDS4CCM_LOG_LEVEL_DDS_STATUS     10
-
-#if !defined (CLINFO)
-#  define CLINFO "(%P|%t) [%M] - %T - "
-#endif
-
-
 
 extern DDS4CCM_DDS_IMPL_Export unsigned int DDS4CCM_debug_level;
 
