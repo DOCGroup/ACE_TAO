@@ -303,17 +303,6 @@
         </value>
       </value>
     </configProperty>
-    <configProperty>
-      <name>domain_id</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>0</long> <!-- 0 to work with RTI shapes demo-->
-        </value>
-      </value>
-    </configProperty>
   </instance>
 
   <instance xmi:id="Shapes_ReceiverConnectorInstance">
@@ -330,17 +319,6 @@
         </type>
         <value>
           <string>Square</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>domain_id</name>
-      <value>
-        <type>
-          <kind>tk_long</kind>
-        </type>
-        <value>
-          <long>0</long> <!-- 0 to work with RTI shapes demo-->
         </value>
       </value>
     </configProperty>
