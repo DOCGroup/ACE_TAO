@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file SSL_CertificateManager.h
+ * @file SSL_CallbackManager.h
  *
  * @author Martin Corino <mcorino@remedy.nl>
  */
