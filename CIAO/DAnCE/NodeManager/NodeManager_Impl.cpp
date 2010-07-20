@@ -51,7 +51,9 @@ namespace DAnCE
     else
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
                                                          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
-
+    
+    PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_SHS_Interceptors"),
+                                                       ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_SHS_Interceptor"));
     DANCE_DEBUG (8, (LM_INFO, DLINFO
                      ACE_TEXT("NodeApplication_Impl::NodeApplication_Impl - ")
                      ACE_TEXT("Plugin loaded\n")));
