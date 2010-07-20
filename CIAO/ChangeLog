@@ -1,3 +1,10 @@
+Tue Jul 20 23:22:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_shs_daemon.mpb:
+        * DAnCE/MPC/config/dance_shs_stub.mpb:
+
+          Files missing from previous commit.
+
 Tue Jul 20 18:25:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Daemon:

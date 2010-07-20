@@ -1,0 +1,4 @@
+project : dance_shs_stub { 
+  after += DAnCE_SHS_Daemon_stub
+  libs += DAnCE_SHS_Daemon_stub
+}
