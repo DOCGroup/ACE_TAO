@@ -1,22 +1,29 @@
+Wed Jul 21 21:38:11 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+        * orbsvcs/orbsvcs/miop.idl:
+        
+          Fix anonymous arrays that the IDL compiler now complains about.
+
 Wed Jul 21 16:22:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Overlooked change in error message call signature.
-          
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Added new option -aw from
-          
+
           Wed Jul 21 15:02:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           to necessary IDL files.
 
 Wed Jul 21 15:54:27 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
-        
+
           reverted for_TAO specific call to service gestalt open.
 
 Wed Jul 21 15:43:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>

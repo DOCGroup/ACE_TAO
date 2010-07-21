@@ -28,9 +28,10 @@ module MIOP
 {
   typedef sequence <octet, 252> UniqueId;
 
+  typedef char char4[4];
   struct PacketHeader_1_0
   {
-    char              magic[4];
+    char4              magic;
     octet             hdr_version;
     octet             flags;
     unsigned short    packet_length;
