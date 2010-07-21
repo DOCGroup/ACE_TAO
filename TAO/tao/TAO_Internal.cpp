@@ -582,7 +582,7 @@ namespace
     // Copy command line parameter to allow conversion
     ACE_Argv_Type_Converter command_line (argc, argv);
 
-    return pcfg->open_for_tao (command_line.get_argc (),
+    return pcfg->open_for_TAO (command_line.get_argc (),
 			       command_line.get_TCHAR_argv (),
 			       0,
 			       false, // Don't ignore static services.
