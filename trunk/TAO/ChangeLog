@@ -1,34 +1,42 @@
+Wed Jul 21 02:34:25 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+        
+          Use the modified open method in the ACE_Service_Gestalt to get
+          the behavior that has been assumed since the introduction of 
+          multiple service contexts.
+
 Tue Jul 20 12:28:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-        
+
           Fixed typo in facet impl attribute operation generation,
           similar to the fix in
-          
+
           Mon Jul 19 17:14:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jul 19 18:25:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_connector/connector_ami_rh_exs.cpp:
-        
+
           Fixed fuzz error.
 
 Mon Jul 19 18:19:22 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
-        
+
           Fixed typo in OpenVMS-spcific code.
 
 Mon Jul 19 17:14:48 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_exs.cpp:
-        
+
           Fixed typo in facet impl operation generation.
 
 Sat Jul 17 14:13:33 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
-        * tao/TAO_Internal.cpp (ORB::open_services): 
-        
+        * tao/TAO_Internal.cpp (ORB::open_services):
+
           Silence compiler warnings
 
 Fri Jul 16 22:13:14 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
@@ -39,8 +47,8 @@ Fri Jul 16 22:13:14 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
           configuration context. That is alright because any explicitly named
           service config files are checked for existence when the -ORBSvcConf
           argument is processed, so the only file that could raise ENOENT is
-          a defaulted svc.conf. 
-        
+          a defaulted svc.conf.
+
 Thu Jul 15 13:37:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp(end_server_header):
