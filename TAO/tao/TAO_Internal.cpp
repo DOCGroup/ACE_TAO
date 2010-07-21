@@ -582,11 +582,11 @@ namespace
     // Copy command line parameter to allow conversion
     ACE_Argv_Type_Converter command_line (argc, argv);
 
-    return pcfg->open_for_TAO (command_line.get_argc (),
-			       command_line.get_TCHAR_argv (),
-			       0,
-			       false, // Don't ignore static services.
-			       ignore_default_svc_conf_file);
+    return pcfg->open (command_line.get_argc (),
+                       command_line.get_TCHAR_argv (),
+                       0,
+                       false, // Don't ignore static services.
+                       ignore_default_svc_conf_file);
   }
 
   /// @brief registers all process-wide (global) services, available
