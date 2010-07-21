@@ -2368,6 +2368,15 @@ TAO_ORB_Core::destroy (void)
   // Invoke Interceptor::destroy() on all registered interceptors.
   this->destroy_interceptors ();
 
+  // Clean TSS resources. This cannot be done in shutdown() since the later
+  // can be called during an upcall and once it's done it will remove
+  // resources such as PICurrent that are required after the upcall. And this
+  // cannot be postponed to TAO_ORB_Core's destructor as fini() needs access
+  // to orb core and what is more important orb core can be destroyed too late
+  // when some required libraries are already unloaded and we'll get
+  // 'pure virtual method called' during cleanup.
+  this->get_tss_resources ()->fini ();
+
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
   TAO::ORB_Table::instance ()->unbind (this->orbid_);

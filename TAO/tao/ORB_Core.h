@@ -564,8 +564,8 @@ public:
   /// argument.  This method return 0 on success, and -1 on failure.
   int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id);
 
-  /// Return the underlying TSS cleanup function registry.
-  TAO_Cleanup_Func_Registry *tss_cleanup_funcs (void);
+  /// Cleans up ts_objects using the underlying TSS cleanup function registry.
+  void tss_cleanup (ACE_Array_Base<void *> &ts_objects);
 
   /// Get access to the leader_follower class.
   TAO_Leader_Follower &leader_follower (void);
