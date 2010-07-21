@@ -1,9 +1,15 @@
-Wed Jul 21 02:34:25 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+Wed Jul 21 03:09:21 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
         
+          Fix for premature committal error.
+
+Wed Jul 21 02:34:25 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
           Use the modified open method in the ACE_Service_Gestalt to get
-          the behavior that has been assumed since the introduction of 
+          the behavior that has been assumed since the introduction of
           multiple service contexts.
 
 Tue Jul 20 12:28:24 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
