@@ -60,7 +60,7 @@ private:
    * DDS_Listen
    */
   //@{
-  ::CCM_DDS::CCM_DataListenerControl_var data_control_;
+  DataListenerControl_type data_control_;
   //@}
 };
 
