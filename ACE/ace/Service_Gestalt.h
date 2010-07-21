@@ -186,6 +186,15 @@ public:
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
 
+  /// A TAO-specific variant of open. It evaluates directives from any files
+  /// before evaluating command-line supplied directives.
+  int open_for_TAO (int argc,
+		    ACE_TCHAR *argv[],
+		    const ACE_TCHAR *logger_key = 0,
+		    bool ignore_static_svcs = true,
+		    bool ignore_default_svc_conf_file = false,
+		    bool ignore_debug_flag = false);
+
   /// Has it been opened?  Returns the difference between the times
   /// open and close have been called on this instance
   int is_opened (void);
@@ -348,7 +357,8 @@ protected:
               const ACE_TCHAR *logger_key = 0,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
-              bool ignore_debug_flag = false);
+              bool ignore_debug_flag = false,
+	      bool for_TAO);
 
   /// Initialize the @c svc_conf_file_queue_ if necessary.
   int init_svc_conf_file_queue (void);
