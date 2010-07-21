@@ -73,11 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "fe_extern.h"
+#include "idl_defines.h"
+
 #include "ast_interface.h"
 #include "ast_enum.h"
 #include "ast_union.h"
 #include "ast_union_label.h"
-#include "idl_defines.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -181,6 +182,10 @@ error_string (UTL_Error::ErrorCode c)
       return "spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_KEYWORD_WARNING:
       return "Warning - spelling differs from IDL keyword only in case: ";
+    case UTL_Error::EIDL_ANONYMOUS_ERROR:
+      return "anonymous types are deprecated by OMG spec";
+    case UTL_Error::EIDL_ANONYMOUS_WARNING:
+      return "Warning - anonymous tyes are deprecated by OMG spec";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
       return "enumerator expected: ";
     case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -1593,3 +1598,25 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
               ACE_TEXT ("line %d ?\n"),
               masking->line () ));
 }                                
+
+void
+UTL_Error::anonymous_type_diagnostic (void)
+{
+  bool aw = idl_global->anon_warning ();
+  bool nw = (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
+  bool warning = (aw & !nw);
+  
+  ErrorCode ec =
+    (warning ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
+    
+  idl_error_header (ec,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+                    
+  ACE_ERROR ((LM_ERROR, "\n"));
+  
+  if (!warning)
+    {
+      idl_global->set_err_count (idl_global->err_count () + 1);
+    }
+}

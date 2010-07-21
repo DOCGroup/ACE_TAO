@@ -151,7 +151,9 @@ IDL_GlobalData::IDL_GlobalData (void)
     big_file_name_ ("PICML_IDL_file_bag"),
     current_params_ (0),
     included_ami_receps_done_ (false),
-    corba_module_ (0)
+    corba_module_ (0),
+    anon_warning_ (false),
+    in_typedef_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -1722,4 +1724,28 @@ IDL_GlobalData::Unbounded_Paths_Queue &
 IDL_GlobalData::include_paths (void)
 {
   return this->include_paths_;
+}
+
+bool
+IDL_GlobalData::anon_warning (void) const
+{
+  return this->anon_warning_;
+}
+
+void
+IDL_GlobalData::anon_warning (bool val)
+{
+  this->anon_warning_ = val;
+}
+
+bool
+IDL_GlobalData::in_typedef (void) const
+{
+  return this->in_typedef_;
+}
+
+void
+IDL_GlobalData::in_typedef (bool val)
+{
+  this->in_typedef_ = val;
 }

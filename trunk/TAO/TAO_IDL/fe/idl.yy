@@ -2292,6 +2292,7 @@ type_dcl
         {
 // type_dcl : IDL_TYPEDEF
           idl_global->set_parse_state (IDL_GlobalData::PS_TypedefSeen);
+          idl_global->in_typedef (true);
         }
         type_declarator
         {
@@ -2408,6 +2409,7 @@ type_declarator :
                     }
 
                   (void) s->fe_add_typedef (t);
+                  idl_global->in_typedef (false);
                 }
 
               // This FE_Declarator class isn't destroyed with the AST.
@@ -3602,6 +3604,12 @@ sequence_type_spec
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
+                      
+                  if (!idl_global->in_typedef ())
+                    {
+                      idl_global->err ()->anonymous_type_diagnostic (
+                        $$);
+                    }
                 }
             }
 
@@ -3656,6 +3664,12 @@ sequence_type_spec
                         s->is_local (),
                         s->is_abstract ()
                       );
+                      
+                  if (!idl_global->in_typedef ())
+                    {
+                      idl_global->err ()->anonymous_type_diagnostic (
+                        $$);
+                    }
                 }
             }
         }
@@ -3756,6 +3770,12 @@ string_type_spec
                                               $$
                                             )
                                         );
+                      
+          if (!idl_global->in_typedef ())
+            {
+              idl_global->err ()->anonymous_type_diagnostic (
+                $$);
+            }
         }
         ;
 
@@ -3869,6 +3889,12 @@ array_declarator :
               $3 = 0;
 
               sn.destroy ();
+              
+              if (!idl_global->in_typedef ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic (
+                    $$);
+                }
             }
         }
         ;
