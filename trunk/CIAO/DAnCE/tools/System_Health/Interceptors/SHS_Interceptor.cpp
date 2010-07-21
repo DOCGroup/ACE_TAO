@@ -37,7 +37,7 @@ namespace DAnCE
   void
   SHS_Interceptor::instance_post_install (const ::Deployment::DeploymentPlan &plan,
                                           ::CORBA::ULong instance_index,
-                                          const ::CORBA::Any &reference,
+                                          const ::CORBA::Any &/*reference*/,
                                           const ::CORBA::Any &exception)
   {
     ::DAnCE::SHS::Status_Update update;
