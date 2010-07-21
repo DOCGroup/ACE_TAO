@@ -992,7 +992,8 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
                              const ACE_TCHAR* logger_key,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
-                             bool ignore_debug_flag)
+                             bool ignore_debug_flag,
+			     bool for_TAO)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open_i");
   int result = 0;
@@ -1083,10 +1084,19 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     result = -1;
   else
     {
-      if (this->process_commandline_directives () == -1)
-        result = -1;
+      if (for_TAO)
+	{
+	  if (this->process_commandline_directives () == -1)
+	    result = -1;
+	  else
+	    result = this->process_directives ();
+	}
       else
-        result = this->process_directives ();
+	{
+	  result = this->process_directives ();
+	  if (result != -1 || errno == ENOENT)
+	    result = this->process_commandline_directives ();
+	}
     }
 
 

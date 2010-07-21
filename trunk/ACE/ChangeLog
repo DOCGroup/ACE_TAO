@@ -1,3 +1,12 @@
+Wed Jul 21 02:30:45 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+        
+          Add a specialized open method to be called by TAO. TAO depends
+          on a modified order of directive evaluation.
+
 Tue Jul 20 18:02:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
