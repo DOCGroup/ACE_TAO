@@ -1,7 +1,21 @@
+Wed Jul 21 09:57:34 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/ORB_Core_TSS_Resources.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core_TSS_Resources.h:
+        * tao/ORB_Core.h:
+          Fixed bug 2533. Now ORB_Core's TSS resources are cleaned during
+          orb destroy.
+
+        * tests/Portable_Interceptors/Slot/driver.cpp:
+          Explicitely destroy orb since doing this implicitely when main()
+          returns is too late.
+
 Wed Jul 21 03:09:21 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
-        
+
           Fix for premature committal error.
 
 Wed Jul 21 02:34:25 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
