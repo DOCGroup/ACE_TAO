@@ -1,3 +1,10 @@
+Wed Jul 21 18:23:32 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Basic_Types.h (ACE_INT8_FORMAT_SPECIFIER): Added the missing
+          "_ASCII" to the ACE_INT8_FORMAT_SPECIFIER macro usage.  Thanks
+          to Andre Kostur <akostur at incognito dot com> for reporting
+          this.
+
 Wed Jul 21 15:52:32 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:
