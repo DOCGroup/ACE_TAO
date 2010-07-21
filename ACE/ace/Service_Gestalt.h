@@ -358,7 +358,7 @@ protected:
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false,
-	      bool for_TAO);
+	      bool for_TAO = false);
 
   /// Initialize the @c svc_conf_file_queue_ if necessary.
   int init_svc_conf_file_queue (void);

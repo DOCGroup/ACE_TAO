@@ -1084,7 +1084,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     result = -1;
   else
     {
-      if (for_TAO)
+      if (!for_TAO)
 	{
 	  if (this->process_commandline_directives () == -1)
 	    result = -1;
