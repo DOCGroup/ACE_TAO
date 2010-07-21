@@ -1,3 +1,11 @@
+Wed Jul 21 07:50:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+          Resolved compile error.
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+          Resolved compile warning.
+
 Tue Jul 20 23:22:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_shs_daemon.mpb:

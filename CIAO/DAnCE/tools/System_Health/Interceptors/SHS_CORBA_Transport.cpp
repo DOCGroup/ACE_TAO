@@ -1,7 +1,7 @@
 // $Id$
 
 #include "SHS_CORBA_Transport.h"
-#include "orbsvcs/CoSNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
