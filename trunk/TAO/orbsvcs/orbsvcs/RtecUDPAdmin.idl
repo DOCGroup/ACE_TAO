@@ -45,9 +45,10 @@ module RtecUDPAdmin
    * @brief Represent a UDP SAP sufficient to hold an IPv6 address.
    */
 
+  typedef char char16[16];
   struct UDP_Addr_v6
   {
-    char ipaddr[16]; // used to match with ACE_INET_Addr::set_address
+    char16 ipaddr; // used to match with ACE_INET_Addr::set_address
     unsigned short _port;
   };
 
