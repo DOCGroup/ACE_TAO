@@ -12,6 +12,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 
+#include "dds4ccm/impl/DataListenerControl_T.h"
 #include "dds4ccm/impl/PortStatusListener_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -32,14 +33,16 @@ namespace CIAO
       PortStatusListener_type;
     typedef ::CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
       ConditionManager_type;
+    typedef CCM_DDS_DataListenerControl_T< ::CCM_DDS::CCM_DataListenerControl, CCM_TYPE>
+      DataListenerControl_type;
 
     public:
       /// Constructor
       DataReaderListener_T (
         typename CCM_TYPE::listener_type::_ptr_type listener,
         ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-        ::CCM_DDS::DataListenerControl_ptr control,
-        ACE_Reactor* reactor,
+        DataListenerControl_type * control,
+        ACE_Reactor * reactor,
         ConditionManager_type * condition_manager);
 
       /// Destructor
@@ -54,7 +57,7 @@ namespace CIAO
 
     private:
       typename CCM_TYPE::listener_type::_var_type listener_;
-      ::CCM_DDS::DataListenerControl_var control_;
+      DataListenerControl_type * control_;
       ConditionManager_type * condition_manager_;
     };
   }
