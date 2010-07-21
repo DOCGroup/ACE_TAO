@@ -125,6 +125,8 @@ public:
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
     EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
+    EIDL_ANONYMOUS_ERROR,       // Anonymous types are deprecated by spec
+    EIDL_ANONYMOUS_WARNING,     // Same as above, but only a warning
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
@@ -372,6 +374,9 @@ public:
   // in the scoped name from the scope it masks.
   void scope_masking_error (AST_Decl *masked,
                             AST_Decl *loc);
+          
+  // Error (default) or warning (set by command line option).                        
+  void anonymous_type_diagnostic (void);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

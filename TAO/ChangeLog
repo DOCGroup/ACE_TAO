@@ -1,3 +1,27 @@
+Wed Jul 21 15:02:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_array.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          An error is now output when an anonymous
+          type is seen. For legacy IDL files, a
+          command line option -aw has been added,
+          which will cause a warning to be output
+          instead.
+          
+        * tao/docs/compiler.html:
+        
+          Updated documentation with the new option above.
+
 Wed Jul 21 09:57:34 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/ORB_Core_TSS_Resources.cpp:
