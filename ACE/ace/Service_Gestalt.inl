@@ -49,35 +49,7 @@ ACE_Service_Gestalt::open (int argc,
                        logger_key,
                        this->no_static_svcs_,
                        ignore_default_svc_conf,
-                       ignore_debug_flag,
-		       false);
-}
-
-ACE_INLINE int
-ACE_Service_Gestalt::open_for_TAO (int argc,
-				   ACE_TCHAR *argv[],
-				   const ACE_TCHAR *logger_key,
-				   bool ignore_static_svcs,
-				   bool ignore_default_svc_conf,
-				   bool ignore_debug_flag)
-{
-  ACE_TRACE ("ACE_Service_Gestalt::open");
-
-  // Parsing argv may change no_static_svcs_ so set the default here, then
-  // parse, then pass the final value to open_i().
-  this->no_static_svcs_ = ignore_static_svcs;
-
-  if (this->parse_args_i (argc,
-                          argv,
-                          ignore_default_svc_conf) == -1)
-    return -1;
-
-  return this->open_i (argv == 0 ? 0 : argv[0],
-                       logger_key,
-                       this->no_static_svcs_,
-                       ignore_default_svc_conf,
-                       ignore_debug_flag,
-		       true);
+                       ignore_debug_flag);
 }
 
 /// Searches for a service object declaration in the local repo, only

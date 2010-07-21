@@ -1,8 +1,17 @@
+Wed Jul 21 15:52:32 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Reverted for_TAO specific change, revised the processing to
+          ensure default first, then files, then cmdline directives.
+        
 Wed Jul 21 03:07:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:
         * ace/Service_Gestalt.cpp:
-        
+
           Fix errors in premature committal.
 
 Wed Jul 21 02:30:45 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
