@@ -18,7 +18,7 @@ Wed Jul 21 15:02:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           which will cause a warning to be output
           instead.
           
-        * tao/docs/compiler.html:
+        * docs/compiler.html:
         
           Updated documentation with the new option above.
 
