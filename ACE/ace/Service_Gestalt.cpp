@@ -992,8 +992,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
                              const ACE_TCHAR* logger_key,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
-                             bool ignore_debug_flag,
-			     bool for_TAO)
+                             bool ignore_debug_flag)
 {
   ACE_TRACE ("ACE_Service_Gestalt::open_i");
   int result = 0;
@@ -1061,11 +1060,39 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
         ACE_Log_Msg::disable_debug_messages ();
     }
 
-  if (!ignore_default_svc_conf_file && svc_conf_file_queue_->is_empty ())
+  if (!ignore_default_svc_conf_file)
     {
-      // Load the default "svc.conf" entry here if there weren't
+      bool add_default = true;
+      bool has_files = this->svc_conf_file_queue_ && 
+        !this->svc_conf_file_queue_->is_empty ();
+      bool has_cmdline = this->svc_queue_ && !this->svc_queue_->is_empty ();
+      if (has_files || has_cmdline)
+        {
+          // check if default file is already listed
+          ACE_TString *sptr = 0;
+          ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
+
+          for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
+               iter.next (sptr) != 0 && add_default;
+               iter.advance ())
+            {
+              add_default = (*sptr != default_svc_conf);
+            }
+
+          if (add_default)
+            {
+              FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
+              if (fp != 0)
+                ACE_OS::fclose(fp);
+              else
+                add_default = false;
+
+            }
+        }
+
+      // Load the default "svc.conf" entry. here if there weren't
       // overriding -f arguments in <parse_args>.
-      if (svc_conf_file_queue_->enqueue_tail
+      if (add_default && svc_conf_file_queue_->enqueue_head
           (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
         {
           errno = ENOENT;
@@ -1084,21 +1111,10 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     result = -1;
   else
     {
-      if (!for_TAO)
-	{
-	  if (this->process_commandline_directives () == -1)
-	    result = -1;
-	  else
-	    result = this->process_directives ();
-	}
-      else
-	{
-	  result = this->process_directives ();
-	  if (result != -1 || errno == ENOENT)
-	    result = this->process_commandline_directives ();
-	}
+      result = this->process_directives ();
+      if (result != -1 || errno == ENOENT)
+        result = this->process_commandline_directives ();
     }
-
 
   // Reset debugging back to the way it was when we came into
   // into <open_i>.
@@ -1241,8 +1257,6 @@ ACE_Service_Gestalt::process_directives (bool )
     }
 
   ACE_TString *sptr = 0;
-  ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
-
   int failed = 0;
 
   // Iterate through all the svc.conf files.

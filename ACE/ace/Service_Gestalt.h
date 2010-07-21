@@ -154,11 +154,19 @@ public:
    *        specifies service directives without the need for a configuration
    *        file. Can be specified multiple times.
    *
-   * Note: Options '-f' and '-S' complement each other. Directives from files
-   * and from '-S' option are processed together in the following order. First,
-   * all files are processed in the order they are specified in @a argv
-   * parameter. Second, all directive strings are executed in the order the
-   * directives appear in @a argv parameter.
+   * Note: Options '-f' and '-S' complement each other. Directives
+   * from files and from '-S' option are processed together in the
+   * following order. First, the default file "./svc.conf" is
+   * evaluated if not ignored, then all files are processed in the
+   * order they are specified in '-f' @a argv parameter. Finally, all
+   * '-S' directive strings are executed in the order the directives
+   * appear in @a argv parameter.
+   *
+   * If no files or directives are added via the '-f' and '-S'
+   * arguments, and the default file is not ignored, it will be
+   * evaluated whether it exists or not, possibly causing a failure
+   * return. If any other directives are added then the default file
+   * will be evaluated only if it exists.
    *
    * @param argc The number of commandline arguments.
    * @param argv The array with commandline arguments
@@ -167,16 +175,16 @@ public:
    *                     socket address.
    * @param ignore_static_svcs   If true then static services are not loaded,
    *                             otherwise, they are loaded.
-   * @param ignore_default_svc_conf_file  If false then the @c svc.conf
+   * @param ignore_default_svc_conf_file  If false then the @c ./svc.conf
    *                                      configuration file will be ignored.
    * @param ignore_debug_flag If false then the application is responsible
    *                          for setting the @c ACE_Log_Msg::priority_mask
    *                          appropriately.
    *
-   * @retval -1   The configuration file is not found or cannot
+   * @retval -1   A configuration file is not found or cannot
    *              be opened (errno is set accordingly).
    * @retval  0   Success.
-   * @retval  >0  The number of errors encountered while processing
+   * @retval  >0  The number of directive errors encountered while processing
    *              the service configuration file(s).
    */
   int open (int argc,
@@ -185,15 +193,6 @@ public:
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
-
-  /// A TAO-specific variant of open. It evaluates directives from any files
-  /// before evaluating command-line supplied directives.
-  int open_for_TAO (int argc,
-		    ACE_TCHAR *argv[],
-		    const ACE_TCHAR *logger_key = 0,
-		    bool ignore_static_svcs = true,
-		    bool ignore_default_svc_conf_file = false,
-		    bool ignore_debug_flag = false);
 
   /// Has it been opened?  Returns the difference between the times
   /// open and close have been called on this instance
@@ -344,21 +343,20 @@ protected:
                     bool& ignore_default_svc_conf_file);
 
   /**
-   * Performs an open without parsing command-line arguments.  The
-   * @a logger_key indicates where to write the logging output, which
-   * is typically either a STREAM pipe or a socket address.  If
-   * @a ignore_default_svc_conf_file is non-0 then the "svc.conf" file
-   * will be ignored.  If @a ignore_debug_flag is non-0 then the
-   * application is responsible for setting the
-   * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
+   * Performs an open without parsing command-line arguments.  The @a
+   * logger_key indicates where to write the logging output, which is
+   * typically either a STREAM pipe or a socket address.  If @a
+   * ignore_default_svc_conf_file is non-0 then the "svc.conf" file
+   * will not be added by default.  If @a ignore_debug_flag is non-0
+   * then the application is responsible for setting the @c
+   * ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
   int open_i (const ACE_TCHAR program_name[],
               const ACE_TCHAR *logger_key = 0,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
-              bool ignore_debug_flag = false,
-	      bool for_TAO = false);
+              bool ignore_debug_flag = false);
 
   /// Initialize the @c svc_conf_file_queue_ if necessary.
   int init_svc_conf_file_queue (void);
