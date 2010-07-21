@@ -8,12 +8,12 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderListener_T (
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-  ::CCM_DDS::DataListenerControl_ptr control,
-  ACE_Reactor* reactor,
+  DataListenerControl_type * control,
+  ACE_Reactor * reactor,
   ConditionManager_type * condition_manager)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
-    control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
+    control_ (control),
     condition_manager_ (condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::DataReaderListener_T");
@@ -32,8 +32,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if (::CORBA::is_nil (this->control_.in ()) ||
-      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+  if ((this->control_ &&
+       this->control_->mode () == ::CCM_DDS::NOT_ENABLED) ||
       ::CORBA::is_nil (rdr))
     {
       return;
@@ -63,8 +63,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
-  if (::CORBA::is_nil (this->control_.in ()) ||
-      this->control_->mode () == ::CCM_DDS::NOT_ENABLED ||
+  if ((this->control_ &&
+       this->control_->mode () == ::CCM_DDS::NOT_ENABLED) ||
       ::CORBA::is_nil (rdr))
     {
       return;

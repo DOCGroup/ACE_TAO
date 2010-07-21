@@ -1,3 +1,11 @@
+Wed Jul 21 11:44:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          DataControlListener is now by value (instead of by reference).
+
 Wed Jul 21 07:50:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:

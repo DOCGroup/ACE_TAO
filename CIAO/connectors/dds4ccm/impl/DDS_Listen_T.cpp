@@ -6,9 +6,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_Listen_T (void) :
-  data_control_ (new CCM_DDS_DataListenerControl_T
-    < ::CCM_DDS::CCM_DataListenerControl, CCM_TYPE> ())
+DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_Listen_T (void)
 {
 }
 
@@ -35,20 +33,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
             library_name,
             profile_name))
     {
-      DataListenerControl_type *dds_dlc = dynamic_cast < DataListenerControl_type * >
-        (this->data_control_.in ());
-      if (dds_dlc)
-        {
-          dds_dlc->_set_component (component);
-          return true;
-        }
-      else
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            "DDS_Listen_T::configuration_complete - "
-                            "Unable to cast DataListenerControl.\n"));
-          return false;
-        }
+      this->data_control_._set_component (component);
     }
   return false;
 }
@@ -68,7 +53,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         DataReaderListener_type (
                           listener,
                           status,
-                          this->data_control_.in (),
+                          &data_control_,
                           reactor,
                           &this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
@@ -85,17 +70,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  DataListenerControl_type *dds_dlc = dynamic_cast < DataListenerControl_type * >
-    (this->data_control_.in ());
-  if (dds_dlc)
-    {
-      dds_dlc->_set_component (CCM_TYPE::base_type::_nil ());
-    }
-  else
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO "DDS_Listen_T::remove - "
-                        "Unable to cast DataListenerControl.\n"));
-    }
+  this->data_control_._set_component (CCM_TYPE::base_type::_nil ());
 
   DDSSubscriberBase_type::remove (subscriber);
 }
@@ -106,6 +81,6 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control (void)
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control");
 
-  return ::CCM_DDS::CCM_DataListenerControl::_duplicate (this->data_control_.in ());
+  return &this->data_control_;
 }
 
