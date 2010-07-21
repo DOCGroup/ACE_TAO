@@ -143,6 +143,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
+      ACE_TEXT ("(default is error)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
     ));
   ACE_DEBUG ((
@@ -257,6 +262,22 @@ DRV_parse_args (long ac, char **av)
               ACE_OS::strcat (idl_global->local_escapes (), s);
               ACE_OS::strcat (idl_global->local_escapes (), " ");
               break;
+            case 'a':
+              if (av[i][2] == 'w')
+                {
+                  idl_global->anon_warning (true);
+                }
+              else
+                {
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand")
+                      ACE_TEXT (" the '%s' option\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
+                    ));
+                 }
+                 
+               break;
             // Temp directory for the IDL compiler to keep its files.
             case 't':
               if ((av[i][2] == '\0') && (i < ac - 1))

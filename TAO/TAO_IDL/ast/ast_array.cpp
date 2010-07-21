@@ -272,6 +272,4 @@ AST_Array::set_dims (AST_Expression **ds,
   this->pd_n_dims = nds;
 }
 
-
-
 IMPL_NARROW_FROM_DECL(AST_Array)

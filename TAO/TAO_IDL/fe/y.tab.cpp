@@ -4774,6 +4774,7 @@ tao_yyreduce:
     {
 // type_dcl : IDL_TYPEDEF
           idl_global->set_parse_state (IDL_GlobalData::PS_TypedefSeen);
+          idl_global->in_typedef (true);
         }
     break;
 
@@ -4911,6 +4912,7 @@ tao_yyreduce:
                     }
 
                   (void) s->fe_add_typedef (t);
+                  idl_global->in_typedef (false);
                 }
 
               // This FE_Declarator class isn't destroyed with the AST.
@@ -6178,6 +6180,12 @@ tao_yyreduce:
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
+              
+                  if (!idl_global->in_typedef ())
+                    {
+                      idl_global->err ()->anonymous_type_diagnostic (
+                        tao_yyval.dcval);
+                    }
                 }
             }
 
@@ -6234,6 +6242,12 @@ tao_yyreduce:
                         s->is_local (),
                         s->is_abstract ()
                       );
+              
+                  if (!idl_global->in_typedef ())
+                    {
+                      idl_global->err ()->anonymous_type_diagnostic (
+                        tao_yyval.dcval);
+                    }
                 }
             }
         }
@@ -6318,6 +6332,12 @@ tao_yyreduce:
                                                   (tao_yyval.dcval)
                                                 )
                                             );
+                      
+              if (!idl_global->in_typedef ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic (
+                    tao_yyval.dcval);
+                }
             }
 
           delete ev;
@@ -6472,6 +6492,12 @@ tao_yyreduce:
               (tao_yyvsp[(3) - (3)].elval) = 0;
 
               sn.destroy ();
+              
+              if (!idl_global->in_typedef ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic (
+                    tao_yyval.dcval);
+                }
             }
         }
     break;

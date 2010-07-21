@@ -709,6 +709,14 @@ public:
     
   Unbounded_Paths_Queue &include_paths (void);
   // Accessor for the member.
+  
+  bool anon_warning (void) const;
+  void anon_warning (bool val);
+  // Accessors for the member.
+  
+  bool in_typedef (void) const;
+  void in_typedef (bool val);
+  // Accessors for the member.
 
 private:
   // Data
@@ -874,6 +882,14 @@ private:
   
   /// For quick access.
   AST_Module *corba_module_;
+  
+  /// Anonymous type diagnostic limited to warning?
+  /// False by default, can be overridden from command line.
+  bool anon_warning_;
+  
+  /// Flag set in parser so we can decide whether to emit
+  /// an anonymous type diagnostic.
+  bool in_typedef_;
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH
