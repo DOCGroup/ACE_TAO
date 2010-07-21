@@ -53,6 +53,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "ERROR: Slot value was not preserved.\n"));
       return 1;
     }
+
+    orb->destroy ();
   }
   catch (PortableInterceptor::InvalidSlot const&)
   {
