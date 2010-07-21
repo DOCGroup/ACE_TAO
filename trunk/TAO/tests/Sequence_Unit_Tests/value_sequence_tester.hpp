@@ -70,6 +70,8 @@ struct value_sequence_tester
   {
     tested_sequence x;
     x.length(8);
+    // Set x[4] to any value just for suppressing valgrind complains.
+    x[4] = 1;
 
     tested_sequence const & y = x;
     const_value_type & z = y[4];

@@ -1,3 +1,8 @@
+Wed Jul 21 15:43:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Fixed a valgrind complain about uninitialized value.
+
 Wed Jul 21 15:02:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_array.cpp:
@@ -17,9 +22,9 @@ Wed Jul 21 15:02:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           command line option -aw has been added,
           which will cause a warning to be output
           instead.
-          
+
         * docs/compiler.html:
-        
+
           Updated documentation with the new option above.
 
 Wed Jul 21 09:57:34 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
