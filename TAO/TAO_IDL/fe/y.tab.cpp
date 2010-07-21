@@ -6183,8 +6183,7 @@ tao_yyreduce:
               
                   if (!idl_global->in_typedef ())
                     {
-                      idl_global->err ()->anonymous_type_diagnostic (
-                        tao_yyval.dcval);
+                      idl_global->err ()->anonymous_type_diagnostic ();
                     }
                 }
             }
@@ -6245,8 +6244,7 @@ tao_yyreduce:
               
                   if (!idl_global->in_typedef ())
                     {
-                      idl_global->err ()->anonymous_type_diagnostic (
-                        tao_yyval.dcval);
+                      idl_global->err ()->anonymous_type_diagnostic ();
                     }
                 }
             }
@@ -6335,8 +6333,7 @@ tao_yyreduce:
                       
               if (!idl_global->in_typedef ())
                 {
-                  idl_global->err ()->anonymous_type_diagnostic (
-                    tao_yyval.dcval);
+                  idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
 
@@ -6495,8 +6492,7 @@ tao_yyreduce:
               
               if (!idl_global->in_typedef ())
                 {
-                  idl_global->err ()->anonymous_type_diagnostic (
-                    tao_yyval.dcval);
+                  idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
         }
