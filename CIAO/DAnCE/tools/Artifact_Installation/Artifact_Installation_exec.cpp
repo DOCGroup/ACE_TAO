@@ -132,8 +132,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       if (plan.get () == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "dance_artifact_installation - "
-                           "Unable to convert provided plan into IDL representation\n"));
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("dance_artifact_installation - ")
+                           ACE_TEXT ("Unable to convert provided plan into IDL representation\n")));
           return 0;
         }
 

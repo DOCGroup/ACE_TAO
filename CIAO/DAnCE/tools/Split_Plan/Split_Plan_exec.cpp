@@ -58,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 't':
-          split_type = *get_opt.opt_arg ();
+          split_type = *ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           if (split_type != 'N' && split_type != 'L')
             {
               DANCE_ERROR (1, (LM_ERROR, ACE_TEXT("Invalid split type specified.\n")));
@@ -119,8 +119,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       
       if (plan.get () == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "Split_Plan - "
-                           "Unable to convert provided plan into IDL representation\n"));
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Split_Plan - ")
+                           ACE_TEXT ("Unable to convert provided plan into IDL representation\n")));
           return 0;
         }
 
@@ -134,8 +134,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               ++iter_plans)
             {
               ACE_CString label ((*iter_plans).int_id_.label.in ());
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO "Split_Plan - "
-                              "Writing sub plan : %C\n",
+              DANCE_DEBUG (3, (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
+                              ACE_TEXT ("Writing sub plan : %C\n"),
                               label.c_str ()));
 
               ACE_CString name ((*iter_plans).ext_id_);
@@ -155,8 +155,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
               ++iter_plans)
             {
               ACE_CString label ((*iter_plans).int_id_.label.in ());
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO "Split_Plan - "
-                              "Writing sub plan : %C\n",
+              DANCE_DEBUG (3, (LM_DEBUG, DLINFO ACE_TEXT ("Split_Plan - ")
+                              ACE_TEXT ("Writing sub plan : %C\n"),
                               label.c_str ()));
 
               ACE_CString name ((*iter_plans).ext_id_);
@@ -174,7 +174,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "Split_Plan - error: unknown c++ exception\n"));
+      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Split_Plan - error: unknown c++ exception\n")));
       retval = -1;
     }
   

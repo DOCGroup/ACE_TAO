@@ -34,29 +34,29 @@ namespace CIAO
           if (!XML_Helper::XML_HELPER.is_initialized ())
             return false;
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO "XML_File_Intf::read_process_file - "
-                       "Constructing DOM\n"));
+          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_file - ")
+                       ACE_TEXT ("Constructing DOM\n")));
           XERCES_CPP_NAMESPACE::DOMDocument *dom =
             XML_Helper::XML_HELPER.create_dom ((file));
 
           if (dom == 0)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO "XML_File_Intf::read_process_file - "
-                           "Failed to open file %s\n", file));
+              DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::read_process_file - ")
+                           ACE_TEXT ("Failed to open file %s\n"), file));
               return false;
             }
 
           XERCES_CPP_NAMESPACE::DOMElement *foo = dom->getDocumentElement ();
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO "XML_File_Intf::read_process_file - "
-                       "DOMElement pointer: %u\n", foo));
+          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_file - ")
+                       ACE_TEXT ("DOMElement pointer: %u\n"), foo));
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO "XML_File_Intf::read_process_file - "
-                       "Parsing XML file with XSC\n"));
+          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_file - ")
+                       ACE_TEXT ("Parsing XML file with XSC\n")));
           deploymentPlan dp =
             CIAO::Config_Handlers::reader::DeploymentPlan (dom);
 
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO "XML_File_Intf::read_process_file - "
-                       "Processing using config handlers\n"));
+          DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_file - ")
+                       ACE_TEXT ("Processing using config handlers\n")));
           DP_Handler dp_handler (dp);
 
           this->idl_dp_.reset (dp_handler.plan ());
@@ -67,7 +67,7 @@ namespace CIAO
       catch (...)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO "XML_File_Intf::caught - "
-                      "Unexpected exception whilst parsing XML into IDL.\n"));
+                      ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
           throw Config_Error (this->file_,
                               ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
         }

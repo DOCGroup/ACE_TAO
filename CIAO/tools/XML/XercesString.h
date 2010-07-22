@@ -30,7 +30,10 @@ namespace CIAO
     public:
       XStr() : _wstr(0L) { };
 
+// On unicode windows, ACE_TCHAR == XMLCh
+#if !defined (_MSC_VER) && !defined (ACE_USES_WCHAR)	  
       XStr (const ACE_TCHAR* str);
+#endif
 
       XStr (XMLCh* wstr);
 
