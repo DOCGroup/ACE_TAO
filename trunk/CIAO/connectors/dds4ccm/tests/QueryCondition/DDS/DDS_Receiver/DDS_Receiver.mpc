@@ -1,6 +1,6 @@
 // $Id$
 
-project(*receiver) : nddslib {
+project(*qc_receiver) : nddslib {
   exename = DDS_receiver
 
   includes += ../Base
