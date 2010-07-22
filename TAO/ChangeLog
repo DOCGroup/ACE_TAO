@@ -1,8 +1,15 @@
+Thu Jul 22 03:57:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fuzz.
+
 Wed Jul 21 21:38:11 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
         * orbsvcs/orbsvcs/miop.idl:
-        
+
           Fix anonymous arrays that the IDL compiler now complains about.
 
 Wed Jul 21 16:22:38 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
