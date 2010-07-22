@@ -30,11 +30,11 @@ namespace CIAO_Shapes_Receiver_comp_Impl
 
     virtual void
     on_one_data (
-      const ShapeType_msg & an_instance,
+      const ShapeType & an_instance,
       const ::CCM_DDS::ReadInfo & info);
     virtual void
     on_many_data (
-      const ::Shapes::ShapeType_msgSeq & an_instance,
+      const ::Shapes::ShapeTypeSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   };
 
