@@ -2,14 +2,14 @@
 <!--//$Id$  -->
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
-	<TITLE>AMI4CCM Tutorial Hello - IDL</TITLE>
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+  <TITLE>AMI4CCM Tutorial Hello - IDL</TITLE>
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=2 CELLSPACING=2 STYLE="PAGE-BREAK-BEFORE: always">
   <TR>
     <TD ALIGN=left><A href="01_general.html">Previous</A></TD>
-    <TD ALIGN=center><IMG border=0 name=graphics1 align=bottom src="images/images.png" width="4%" height="5%" ></TD>
+    <TD ALIGN=center></TD>
     <TD ALIGN=right><A href="03_executors.html">Next</A></TD>
   </TR>
 </TABLE>
@@ -20,21 +20,21 @@ understand this example better, it'll give an overview of which IDL files are
 generated. </P>
 
 <H2 CLASS="western">Common IDL files</H2>
-<P>Below an simplied represenation of the common IDL files. 
+<P>Below a simplied represenation of the common IDL files.
 Use the links to view the file itself. The following IDL files can be found in 
 Hello_asm/ports: </P>
 <UL>
   <LI><A href="../Hello_asm/ports/Hello_Common_defn.idl">Hello_Common_defn.idl</A>
-	: <BR>for common includes and IDL defenitions. 
-  <CODE module Hello { exception InternalError { long id; string error_string; }; };</CODE></LI>
+  : <BR>for common includes and IDL definitions.
+  </LI>
  <LI><A href="../Hello_asm/ports/Hello_MyFoo_obj.idl">Hello_MyFoo_obj.idl</A>
-	: <BR>for IDL interfaces. This IDL contains the #pragma's 
+  : <BR>for IDL interfaces. This IDL contains the #pragma's
   for enabling AMI4CCM , needed by the TAO_IDL compiler: </P>
   <UL>
     <LI><CODE>#pragma ciao lem "Hello_MyFoo_objE.idl" </CODE></LI>
     <LI><CODE>#pragma ciao lem "Hello_MyFoo_objAE.idl"</CODE></LI>
     <LI>Pragma needed per interface for implying ami.<br>
-	<CODE>#pragma ciao ami4ccm interface "Hello::MyFoo_obj"</CODE></LI>
+  <CODE>#pragma ciao ami4ccm interface "Hello::MyFoo_obj"</CODE></LI>
    <LI>Name implied IDL file, used by IDL compiler to generate ami4ccm  functionality:<br>
    <CODE>#pragma ciao ami4ccm idl "Hello_MyFoo_objA.idl" </CODE></LI>
   </UL>
@@ -44,7 +44,8 @@ Hello_asm/ports: </P>
 <P>Also this IDL contains the interface between Sender and Receiver</P>
 <P STYLE="MARGIN-BOTTOM: 0cm; MARGIN-LEFT: 1cm"><CODE>interface MyFoo_obj<BR>
 {<BR>
-&nbsp;&nbsp;<font color="blue">long</font> foo (<font color="blue">in string </font>in_str, <font color="blue">out string</font> answer)<BR>
+&nbsp;&nbsp;<font color="blue">long</font> foo (<font color="blue">in string </font>in_str,
+<font color="blue">out string</font> answer)<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;raises 
 (InternalError);<br>
 &nbsp;&nbsp;<font color="blue">void </font>hello (<font color="blue">out long </font>answer)<BR>
@@ -64,14 +65,14 @@ file in the Sender_comp/src directory defines the asynchronous and
 synchronous connections.<br> For synchronous invocations, the Sender component uses the 
 MyFoo_obj interface (which the Receiver provides):<BR><br>
 <CODE>component Sender<br>{<BR>
-&nbsp;<FONT COLOR="green">// For synchronous invocation</FONT><BR>
+&nbsp;&nbsp;<FONT COLOR="green">// For synchronous invocation</FONT><BR>
 &nbsp;&nbsp;uses MyFoo run_my_foo;<BR>};</CODE> 
 </P>
 <P><FONT COLOR="#000000"><FONT SIZE=3>For asynchronous invocations, the Sender component uses the 
 AMI_MyFoo_obj interface of the AMI component and provides the 
 AMI_MyFoo_objReplyHandler interface to the AMI component.<br> This is indicated with the following pragma:<br><br>
 <CODE>#pragma ciao ami4ccm receptacle "Hello::Sender_comp::run_my_foo"
-.</CODE></P>
+</CODE></P>
 
 <H3><U>Receiver component IDL file</U></H3>
 <P>The <A href="../Hello_asm/Receiver_comp/src/Hello_Receiver_comp.idl">Hello_Receiver_comp.idl</A>
@@ -79,15 +80,16 @@ file in the Receiver_comp/src directory indicates the port the
 receiver provide.</P>
 <P> <CODE>component Receiver<BR>
 {<BR>
-&nbsp;&nbsp;&nbsp;<FONT color="green">//Provides<BR></FONT>
+&nbsp;&nbsp;<FONT color="green">//Provides<BR></FONT>
 &nbsp;&nbsp;provides MyFoo_obj do_my_foo;<BR>
 };</CODE><BR><br>
-The receiver isn't aware of the calls are a- or synchronously.</P>
+The receiver isn't aware of the calls that were invoked by the sender were asynchronous
+or synchronous.</P>
 
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=2 CELLSPACING=2>
 <TR>
   <TD ALIGN=left><A href="01_general.html">Previous</A></TD>
-  <TD ALIGN=center><IMG border=0 name=graphics2 align=bottom src="images/images.png" width="4%" height="5%" ></TD>
+  <TD ALIGN=center></TD>
   <TD ALIGN=right><A href="03_executors.html">Next</A></TD></TR></TABLE>
 <P><BR><BR></P>
 </BODY>
