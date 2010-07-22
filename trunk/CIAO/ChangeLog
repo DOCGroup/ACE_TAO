@@ -1,3 +1,13 @@
+<<<<<<< .mine
+Thu Jul 22 15:24:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.h:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.cpp:
+
+          Windows compile fixes.
+
+=======
 Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/dds4ccm.mpb:
@@ -15,6 +25,7 @@ Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         
           Replace an anonymous bounded octet sequence with a typedef.
 
+>>>>>>> .r91173
 Thu Jul 22 13:12:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:
