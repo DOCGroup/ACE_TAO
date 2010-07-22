@@ -1,6 +1,6 @@
 // $Id$
 
-project(*sender) : nddslib, acelib {
+project(*hello_sender) : nddslib, acelib {
   exename = DDS_Sender
   avoids += ace_for_tao
 

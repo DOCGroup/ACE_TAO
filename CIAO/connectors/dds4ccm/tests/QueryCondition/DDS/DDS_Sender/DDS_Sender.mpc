@@ -1,6 +1,6 @@
 // $Id$
 
-project(*sender) : nddslib, acelib {
+project(*qc_sender) : nddslib, acelib {
   exename = DDS_Sender
 
   includes += ../Base
