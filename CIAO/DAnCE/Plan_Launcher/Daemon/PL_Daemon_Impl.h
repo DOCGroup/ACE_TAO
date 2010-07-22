@@ -16,7 +16,7 @@
 namespace DAnCE
 {
 
-class DANCE_PL_STUB_Export Plan_Launcher_Daemon_i
+class Plan_Launcher_Daemon_i
   : public virtual POA_DAnCE::Plan_Launcher_Daemon
 {
 public:
