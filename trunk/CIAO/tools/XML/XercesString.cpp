@@ -13,12 +13,14 @@ namespace CIAO
 {
   namespace XML
   {
-
+// On unicode windows, ACE_TCHAR == XMLCh
+#if !defined (_MSC_VER) && !defined (ACE_USES_WCHAR)
     XStr::XStr (const ACE_TCHAR* str)
       : _wstr(0)
     {
       _wstr = XMLString::transcode(ACE_TEXT_ALWAYS_CHAR (str));
     }
+#endif
 
     XStr::XStr (XMLCh *wstr)
       : _wstr(wstr)

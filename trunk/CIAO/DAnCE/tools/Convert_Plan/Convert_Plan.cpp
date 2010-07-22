@@ -97,8 +97,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       
       if (!input_filename)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - " 
-                           "No input filename provided\n"));
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ") 
+                           ACE_TEXT ("No input filename provided\n")));
           return -1;
         }
 
@@ -106,8 +106,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       
       if (!plan.get ())
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan - "
-                           "Unable to load an XML based plan\n"));
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan - ")
+                           ACE_TEXT ("Unable to load an XML based plan\n")));
           return -1;
         }
 
@@ -122,8 +122,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   
       if (!output_filename)
         {
-          DANCE_DEBUG (2, (LM_DEBUG, DLINFO "Convert_Plan - "
-                           "XML Input file validated correctly with no output file specifed, exiting\n"));
+          DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - "
+                           ACE_TEXT ("XML Input file validated correctly with no ")
+						   ACE_TEXT ("output file specifed, exiting\n"));
           return 0;
         }
 
@@ -131,8 +132,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (const ::Deployment::PlanError &ex)
     {
-      DANCE_ERROR (1, (LM_ERROR, "Convert_Plan - Config error while parsing plan "
-                       "<%C>, <%C>\n",
+      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
+				       ACE_TEXT ("Config error while parsing plan ")
+                       ACE_TEXT ("<%C>, <%C>\n"),
                        ex.name.in (),
                        ex.reason.in ()));
       retval = -1;
@@ -144,7 +146,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "Convert_Plan - error: unknown c++ exception\n"));
+      DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
+					   ACE_TEXT ("error: unknown c++ exception\n"));
       retval = -1;
     }
   
