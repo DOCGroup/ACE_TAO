@@ -6,6 +6,8 @@
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/ORB_Core.h"
 
+#define MIN_SIZE 5
+
 namespace CIAO_Shapes_Control_comp_Impl
 {
   //============================================================
@@ -84,8 +86,15 @@ namespace CIAO_Shapes_Control_comp_Impl
           }
         else
           {
-            --this->current_size_;
-            this->size_increasing_ = this->current_size_ - 1 < 0;
+            if (this->current_size_ == MIN_SIZE)
+              {
+                this->size_increasing_ = true;
+              }
+            else
+              {
+                --this->current_size_;
+                this->size_increasing_ = this->current_size_ - 1 < 0;
+              }
           }
       }
     ::Shapes::Control_obj_var control =

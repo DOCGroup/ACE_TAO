@@ -10,7 +10,7 @@
 #pragma DCPS_DATA_TYPE "ShapeType_msg"
 #pragma DCPS_DATA_KEY "ShapeType_msg color"
 
-struct ShapeType_msg {
+struct ShapeType {
   string color; //@key
   long x;
   long y;

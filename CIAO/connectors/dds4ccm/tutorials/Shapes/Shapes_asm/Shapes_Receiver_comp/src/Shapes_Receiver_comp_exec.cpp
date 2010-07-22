@@ -23,14 +23,14 @@ namespace CIAO_Shapes_Receiver_comp_Impl
   // Operations from ::CCM_DDS::ShapeType_Listener
   void
   info_out_data_listener_exec_i::on_many_data (
-    const ::Shapes::ShapeType_msgSeq & /* an_instance */,
+    const ::Shapes::ShapeTypeSeq & /* an_instance */,
     const ::CCM_DDS::ReadInfoSeq & /* info */)
   {
   }
 
   void
   info_out_data_listener_exec_i::on_one_data (
-    const ShapeType_msg & an_instance ,
+    const ShapeType & an_instance ,
     const ::CCM_DDS::ReadInfo & /* info */)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ShapeType_Listener: ")
