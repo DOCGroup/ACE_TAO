@@ -28,7 +28,7 @@ namespace DAnCE
       throw CORBA::BAD_PARAM ();
   
     Deployment::DeploymentPlan * plan = 
-      DAnCE::Convert_Plan::read_xml_plan (plan_location);
+      DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (plan_location));
   
     if (plan)
       return plan;
@@ -44,7 +44,7 @@ namespace DAnCE
       throw CORBA::BAD_PARAM ();
   
     Deployment::DeploymentPlan * plan = 
-      DAnCE::Convert_Plan::read_xml_plan (plan_location);
+      DAnCE::Convert_Plan::read_xml_plan (ACE_TEXT_CHAR_TO_TCHAR (plan_location));
   
     if (plan)
       return plan;

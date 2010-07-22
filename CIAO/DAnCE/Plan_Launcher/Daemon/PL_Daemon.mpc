@@ -4,9 +4,7 @@ project (DAnCE_PL_Daemon_idl) : ciaolib_with_idl, dance_output, gen_ostream, \
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DANCE_PL_STUB_Export \
                   -Wb,stub_export_include=DAnCE_PL_stub_export.h \
-                  -Wb,skel_export_macro=DANCE_PL_SKEL_Export \
-                  -Wb,skel_export_include=DAnCE_PL_skel_export.h \
-                  -Gxhst -Gxhsk
+                  -Gxhst
 
   IDL_Files {
    PL_Daemon.idl
