@@ -17,14 +17,14 @@
 #define MIN_ITERATION_1 "2"
 #define MAX_ITERATION_1 "5"
 
-#define MIN_ITERATION_2 "22"
-#define MAX_ITERATION_2 "34"
+#define MIN_ITERATION_2 "7"
+#define MAX_ITERATION_2 "9"
 
 #define MIN_ITERATION_3 "68"
 #define MAX_ITERATION_3 "77"
 
 // Reader also reads already read samples.
-#define SAMPLES_PER_KEY_READER (2 + 11)
+#define SAMPLES_PER_KEY_GETTER (2 + 1 + +17 + 8)
 
 namespace CIAO_QCTQ_Test_Receiver_Impl
 {
@@ -468,7 +468,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   {
     this->keys_ = keys;
 
-    this->samples_expected_ = (this->keys_) * SAMPLES_PER_KEY_READER;
+    this->samples_expected_ = (this->keys_ - 1) * SAMPLES_PER_KEY_GETTER;
   }
 
   // Port operations.
@@ -537,19 +537,19 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   {
     if (this->samples_received_ != this->samples_expected_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: READGET READER : "
+        ACE_ERROR ((LM_ERROR, "ERROR: READGET GETTER : "
                               "Unexpected number of samples received: "
                               "expected <%d> - received <%d>\n",
-                              this->samples_received_,
-                              this->samples_expected_));
+                              this->samples_expected_,
+                              this->samples_received_));
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "READGET : READER : "
+        ACE_DEBUG ((LM_DEBUG, "READGET : GETTER : "
                               "Expected number of samples received: "
                               "expected <%d> - received <%d>\n",
-                              this->samples_received_,
-                              this->samples_expected_));
+                              this->samples_expected_,
+                              this->samples_received_));
       }
   }
 

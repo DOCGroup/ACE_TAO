@@ -1,0 +1,16 @@
+// $Id$
+
+/**
+ * @file QCTQ_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_CONDITION_TEST_BASE_IDL_
+#define QUERY_CONDITION_TEST_BASE_IDL_
+
+struct QueryConditionTest {
+  string symbol; //@key
+  long iteration;
+};
+
+#endif

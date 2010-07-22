@@ -1,3 +1,14 @@
+Thu Jul 22 08:20:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/*:
+          Added a small reproducer which should reproduce the time out
+          which occurs after setting the query parameters.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Got this one working. The reproducer will log an error about
+          the unexpected timeout.
+
 Thu Jul 22 03:55:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/MPC/config/dance_shs_daemon.mpb:
