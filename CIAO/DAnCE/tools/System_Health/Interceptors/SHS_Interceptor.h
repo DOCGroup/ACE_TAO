@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file Best_Effort.h
+ * @file SHS_Interceptor.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Interceptors which implement a Best Effort error handling mechanism.

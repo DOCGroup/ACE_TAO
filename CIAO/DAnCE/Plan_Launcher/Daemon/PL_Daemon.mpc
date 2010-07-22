@@ -1,3 +1,4 @@
+// $Id$
 project (DAnCE_PL_Daemon_idl) : ciaolib_with_idl, dance_output, gen_ostream, \
         valuetype, dance_deployment_stub {
   custom_only = 1
