@@ -38,23 +38,23 @@ namespace DAnCE
 
     switch (update.new_status)
       {
-      case ::DAnCE::SHS::INSTALLED:
+      case ::DAnCE::SHS::INST_INSTALLED:
         str << "INSTALLED.";
         break;
 
-      case ::DAnCE::SHS::ACTIVE:
+      case ::DAnCE::SHS::INST_ACTIVE:
         str << "ACTIVE.";
         break;
         
-      case ::DAnCE::SHS::PASSIVE:
+      case ::DAnCE::SHS::INST_PASSIVE:
         str << "PASSIVE.";
         break;
         
-      case ::DAnCE::SHS::ERROR:
+      case ::DAnCE::SHS::INST_ERROR:
         str << "ERROR.";
         break;
         
-      case ::DAnCE::SHS::DEFUNCT:
+      case ::DAnCE::SHS::INST_DEFUNCT:
         str << "DEFUNCT.";
         break;
       }

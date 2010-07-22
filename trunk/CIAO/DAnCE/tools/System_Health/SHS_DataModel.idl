@@ -34,23 +34,23 @@ module DAnCE
       /**
        * The instance has been loaded into memory
        */
-      INSTALLED,
+      INST_INSTALLED,
       /**
        * The process or element is actively executing
        */
-      ACTIVE,
+      INST_ACTIVE,
       /**
        * The process or element is loaded in memory but not active.
        */
-      PASSIVE,
+      INST_PASSIVE,
       /**
        * The process or element encountered an error condition
        */
-      ERROR,
+      INST_ERROR,
       /**
        * The process or element is now defunct
        */
-      DEFUNCT
+      INST_DEFUNCT
     };
   
     struct Status_Update
