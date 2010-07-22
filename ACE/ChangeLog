@@ -1,3 +1,9 @@
+Thu Jul 22 04:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += ace_for_tao.
+
 Wed Jul 21 18:23:32 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Basic_Types.h (ACE_INT8_FORMAT_SPECIFIER): Added the missing

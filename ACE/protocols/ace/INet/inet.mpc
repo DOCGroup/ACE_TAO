@@ -8,6 +8,7 @@ project(INet) : acelib, ace_output, install, inet_ssl {
   avoids += wince
   avoids += old_stdstream
   avoids += exclude_inet
+  avoids += ace_for_tao
   Source_Files {
     IOS_util.cpp
     INet_Log.cpp

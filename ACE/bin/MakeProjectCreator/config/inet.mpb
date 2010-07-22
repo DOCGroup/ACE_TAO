@@ -5,6 +5,7 @@ project : acelib, inetssl {
   avoids   += wince
   avoids   += old_stdstream
   avoids   += exclude_inet
+  avoids   += ace_for_tao
   after    += INet
   libs     += ACE_INet
   includes += $(ACE_ROOT)/protocols
