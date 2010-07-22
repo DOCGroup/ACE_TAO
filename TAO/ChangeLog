@@ -1,3 +1,13 @@
+Thu Jul 22 19:21:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/CSD_Strategy/ThreadPool4/Foo.idl:
+        * orbsvcs/orbsvcs/miop.idl:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/Test.idl:
+        * performance-tests/Anyop/test.idl:
+        * tests/Bug_2119_Regression/test.idl:
+        
+          Fix anonymous type errors.
+
 Thu Jul 22 03:57:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/util/utl_err.cpp:
