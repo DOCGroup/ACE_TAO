@@ -1,3 +1,14 @@
+Thu Jul 22 13:12:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.cxx:
+          Fuzz
+
 Thu Jul 22 12:26:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/DDS_Receiver/DDS_Receiver.mpc:
