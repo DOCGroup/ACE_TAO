@@ -1,7 +1,11 @@
 // $Id$
+
+valuetype MyValueType;
+typedef sequence<MyValueType> MyValueType_Seq;
+
 valuetype MyValueType
 {
-   private sequence<MyValueType> myValueTypes;
+   private MyValueType_Seq myValueTypes;
 };
 
 
