@@ -1,3 +1,20 @@
+Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/dds4ccm.mpb:
+        
+          Added -aw option to ndds feature, so it will be applied
+          to all current DDS4CCM builds. The DDS implementation
+          IDL contains anonymous constructs.
+          
+        * tests/Bug_3769_Regression/Foo.idl:
+        
+          Changed anonymous IDL constructs, substituted typedefs
+          for a bounded string and bounded wstring.
+          
+        * connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
+        
+          Replace an anonymous bounded octet sequence with a typedef.
+
 Thu Jul 22 13:12:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:

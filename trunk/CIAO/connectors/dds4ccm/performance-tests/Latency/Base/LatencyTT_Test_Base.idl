@@ -10,13 +10,15 @@
 
 #pragma ndds typesupport "Base/LatencyTT_Test_BaseSupport.h"
 
+#pragma DCPS_DATA_TYPE "LatencyTTTest"
+
 const short MAX_DATA_SEQUENCE_LENGTH = 8192;
 
-#pragma DCPS_DATA_TYPE "LatencyTTTest"
+typedef sequence<octet, MAX_DATA_SEQUENCE_LENGTH> BD_oct_seq;
 
 struct LatencyTTTest {
   long seq_num;
-  sequence<octet, MAX_DATA_SEQUENCE_LENGTH> data;
+  BD_oct_seq data;
  };
 
 typedef sequence<LatencyTTTest> LatencyTTTestSeq;
