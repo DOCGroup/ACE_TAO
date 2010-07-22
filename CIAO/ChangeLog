@@ -1,3 +1,11 @@
+Thu Jul 22 12:26:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Resolved duplicate names.
+
 Thu Jul 22 11:44:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html:
