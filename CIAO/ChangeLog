@@ -1,4 +1,15 @@
-<<<<<<< .mine
+Thu Jul 22 15:28:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.h:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+
+          Windows compile fixes.  Note that the enum in the DataModel IDL
+          file has changed to accomodate a windows specific preprocessor
+          define.
+
 Thu Jul 22 15:24:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
@@ -7,22 +18,21 @@ Thu Jul 22 15:24:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Windows compile fixes.
 
-=======
 Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/dds4ccm.mpb:
-        
+
           Added -aw option to ndds feature, so it will be applied
           to all current DDS4CCM builds. The DDS implementation
           IDL contains anonymous constructs.
-          
+
         * tests/Bug_3769_Regression/Foo.idl:
-        
+
           Changed anonymous IDL constructs, substituted typedefs
           for a bounded string and bounded wstring.
-          
+
         * connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
-        
+
           Replace an anonymous bounded octet sequence with a typedef.
 
 >>>>>>> .r91173

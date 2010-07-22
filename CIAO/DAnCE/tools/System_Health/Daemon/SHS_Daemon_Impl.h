@@ -15,7 +15,7 @@
 
 namespace DAnCE
 {
-  class SHS_Daemon_STUB_Export SHS_Daemon_i
+  class SHS_Daemon_i
     : public virtual POA_DAnCE::SHS::SHS_Daemon
   {
   public:

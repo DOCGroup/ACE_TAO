@@ -53,14 +53,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::INSTALLED;
+        update.new_status = DAnCE::SHS::INST_INSTALLED;
       }
     
     if (this->shs_transport_.get ())
@@ -83,14 +83,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::ACTIVE;
+        update.new_status = DAnCE::SHS::INST_ACTIVE;
       }
 
     if (this->shs_transport_.get ())
@@ -115,14 +115,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::PASSIVE;
+        update.new_status = DAnCE::SHS::INST_PASSIVE;
       }
 
     if (this->shs_transport_.get ())
@@ -148,14 +148,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::ACTIVE;
+        update.new_status = DAnCE::SHS::INST_ACTIVE;
       }
 
     if (this->shs_transport_.get ())
@@ -181,14 +181,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::PASSIVE;
+        update.new_status = DAnCE::SHS::INST_PASSIVE;
       }
 
     if (this->shs_transport_.get ())
@@ -214,14 +214,14 @@ namespace DAnCE
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
         
-        update.new_status = DAnCE::SHS::ERROR;
+        update.new_status = DAnCE::SHS::INST_ERROR;
         update.instance_info.length (1);
         update.instance_info[0].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
         update.instance_info[0].value <<= CORBA::Any::from_string (result.c_str (), 0);
       }
     else
       {
-        update.new_status = DAnCE::SHS::DEFUNCT;
+        update.new_status = DAnCE::SHS::INST_DEFUNCT;
       }
 
     if (this->shs_transport_.get ())

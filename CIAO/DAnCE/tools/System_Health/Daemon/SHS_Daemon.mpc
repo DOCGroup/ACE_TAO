@@ -3,9 +3,7 @@ project (DAnCE_SHS_Daemon_idl) : install, dance_shs_stub, gen_ostream {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=SHS_Daemon_STUB_Export \
                   -Wb,stub_export_include=SHS_Daemon_stub_export.h \
-                  -Wb,skel_export_macro=SHS_Daemon_SKEL_Export \
-                  -Wb,skel_export_include=SHS_Daemon_skel_export.h \
-                  -Gxhst -Gxhsk
+                  -Gxhst 
 
   IDL_Files {
     SHS_Daemon.idl
@@ -45,7 +43,6 @@ project (DAnCE_SHS_Daemon) : taoserver, dance_deployment_stub, dance_logger, dan
  
   Header_Files {
    SHS_DaemonS.h
-   SHS_Daemon.h
    SHS_Daemon_Impl.h
   }
 }
