@@ -1,3 +1,15 @@
+Thu Jul 22 09:10:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+          This tutorial now works in conjunction with the RTI Shapes Demo.
+
 Thu Jul 22 08:20:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
