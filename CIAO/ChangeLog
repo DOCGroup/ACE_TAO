@@ -1,3 +1,20 @@
+Thu Jul 22 15:30:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+        * DAnCE/tools/Split_Plan/Split_Plan_exec.cpp:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Unicode fixes on Windows.
+
 Thu Jul 22 15:28:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:

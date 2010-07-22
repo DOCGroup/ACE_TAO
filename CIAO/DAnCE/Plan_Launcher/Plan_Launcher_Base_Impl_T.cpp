@@ -33,15 +33,15 @@ namespace DAnCE
     DANCE_TRACE ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl");
     if (CORBA::is_nil (this->orb_.in ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                         "Plan Launcher requires a valid ORB\n"));
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                         ACE_TEXT ("Plan Launcher requires a valid ORB\n")));
         throw Deployment_Failure ("Plan launcher requires a valid ORB\n");
       }
 
     if (CORBA::is_nil (this->manager_.in ()))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO "Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - "
-                         "Plan Launcher requires a valid Manager reference.\n"));
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher_Base_Impl::Plan_Launcher_Base_Impl - ")
+                         ACE_TEXT ("Plan Launcher requires a valid Manager reference.\n")));
         throw Deployment_Failure ("Plan launcher requires a valid Manager reference\n");
       }
   }
@@ -590,7 +590,8 @@ namespace DAnCE
           //&& plan.connection[i].externalReference[0].provider)
           {
             DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                             "Plan_Launcher_i::create_external_connections - create connection %C from IOR %C\n",
+                             ACE_TEXT ("Plan_Launcher_i::create_external_connections - ")
+							 ACE_TEXT ("create connection %C from IOR %C\n"),
                              plan.connection[i].name.in(),
                              plan.connection[i].externalReference[0].location.in()));
 
@@ -617,7 +618,8 @@ namespace DAnCE
                 else
                   {
                     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                                     ACE_TEXT("Plan_Launcher_i::create_external_connections - can't create object for IOR %C\n"),
+                                     ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
+									 ACE_TEXT("can't create object for IOR %C\n"),
                                      plan.connection[i].externalReference[0].location.in()));
                   }
               }

@@ -20,15 +20,15 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->target_mgr_ = ::Deployment::TargetManager::_duplicate(target);
 
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO "DAnCE::DomainDataManager::init - "
-                "Parsing initial domain from file %s\n",
+  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
+                ACE_TEXT ("Parsing initial domain from file %s\n"),
                 domain_name));
 
   CIAO::Config_Handlers::DD_Handler dd (domain_name);
   ::Deployment::Domain* dmn = dd.domain_idl ();
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO "DAnCE::DomainDataManager::init - "
-                "Initial domain successfully parsed\n"));
+  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
+                ACE_TEXT ("Initial domain successfully parsed\n")));
 #ifdef GEN_OSTREAM_OPS
   std::ostringstream _stream;
   _stream << *dmn << std::endl;

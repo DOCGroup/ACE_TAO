@@ -104,8 +104,8 @@ namespace DAnCE
 
     if (n != bufsize)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan_Impl::read_cdr_plan - read %u bytes "
-                         "instead of %u bytes\n", n, bufsize));
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - read %u bytes ")
+                         ACE_TEXT ("instead of %u bytes\n"), n, bufsize));
         return 0;
       }
   
@@ -116,8 +116,8 @@ namespace DAnCE
     TAO_InputCDR input_cdr (&mb);
     input_cdr.reset_byte_order ((int) byte_order);
   
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO "Convert_Plan_Impl::read_cdr_plan - "
-                     "Reading file %s in %s endian format with size %u\n",
+    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Convert_Plan_Impl::read_cdr_plan - ")
+                     ACE_TEXT ("Reading file %s in %s endian format with size %u\n"),
                      filename, 
                      ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
                      bufsize));
@@ -144,7 +144,7 @@ namespace DAnCE
   {
     if (!output_filename)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan_Impl::write_cdr_plan - passed nil file name\n"));
+        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - passed nil file name\n")));
         return false;
       }    
   
@@ -156,7 +156,7 @@ namespace DAnCE
         
         if (file == 0)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO "Convert_Plan_Impl::write_cdr_plan - failed to open file %s\n",
+            DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - failed to open file %s\n"),
                              output_filename));
             return false;
           }
@@ -169,7 +169,7 @@ namespace DAnCE
         ACE_UINT32 cdr_length (output_cdr.total_length ());
         n += ACE_OS::fwrite (&cdr_length, 1, sizeof (cdr_length), file);
 
-        DANCE_DEBUG (9, (LM_TRACE, DLINFO  "Convert_Plan_Impl::write_cdr_plan - "
+        DANCE_DEBUG (9, (LM_TRACE, DLINFO  ACE_TEXT ("Convert_Plan_Impl::write_cdr_plan - ")
                          ACE_TEXT ("Writing plan to file %s in %s endian format and length %u\n"),
                          output_filename,
                          ACE_CDR_BYTE_ORDER ? ACE_TEXT("little") : ACE_TEXT("big"),
