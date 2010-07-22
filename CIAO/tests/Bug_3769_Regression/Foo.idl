@@ -12,6 +12,8 @@ typedef sequence<double> double_sequence;
 typedef sequence<string> string_sequence;
 typedef long long_array[5];
 typedef string string_array[5];
+typedef string<50> fixed_string;
+typedef wstring<50> fixed_wstring;
 
 struct Bar
 {
@@ -57,9 +59,9 @@ component Foo
   attribute long   my_long;
   attribute float  my_float;
   attribute double my_double;
-  attribute string<50> my_fixed_string;
+  attribute fixed_string my_fixed_string;
   attribute string my_variable_string;
-  attribute wstring<50> my_fixed_wstring;
+  attribute fixed_wstring my_fixed_wstring;
   attribute wstring my_variable_wstring;
 
   attribute long_array my_long_array;
