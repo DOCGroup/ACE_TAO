@@ -1,3 +1,17 @@
+Thu Jul 22 03:55:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_shs_daemon.mpb:
+        * DAnCE/MPC/config/dance_shs_stub.mpb:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.idl:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.idl:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+        * DAnCE/tools/System_Health/System_Health.mpc:
+
+          Fuzz.
+
 Wed Jul 21 11:44:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Listen_T.h:

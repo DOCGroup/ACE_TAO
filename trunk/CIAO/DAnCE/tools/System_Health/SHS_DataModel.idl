@@ -1,4 +1,6 @@
 // $Id$
+#ifndef SHS_DataModel_IDL
+#define SHS_DataModel_IDL
 
 #include "Deployment/Deployment_Base.idl"
 
@@ -67,3 +69,5 @@ module DAnCE
     };
   };
 };
+
+#endif

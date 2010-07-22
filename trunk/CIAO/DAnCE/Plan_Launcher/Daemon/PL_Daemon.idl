@@ -7,6 +7,9 @@
  * Daemonized version of the Plan Launcher.
  */
 
+#ifndef PL_DAEMON_IDL
+#define PL_DAEMON_IDL
+
 #include "Deployment/Deployment_DeploymentPlan.idl"
 
 module DAnCE
@@ -22,3 +25,5 @@ module DAnCE
     oneway void shutdown ();
   };
 };
+
+#endif
