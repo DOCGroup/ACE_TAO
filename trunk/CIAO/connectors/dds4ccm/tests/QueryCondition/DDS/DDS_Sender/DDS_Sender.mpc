@@ -1,0 +1,21 @@
+// $Id$
+
+project(*sender) : nddslib, acelib {
+  exename = DDS_Sender
+
+  includes += ../Base
+
+  exeout += ../descriptors
+
+  Source_Files {
+    QC_Sender.cpp
+    ../Base/Base.cxx
+    ../Base/BasePlugin.cxx
+    ../Base/BaseSupport.cxx
+  }
+
+  Header_Files {
+    ../Base/*.h
+  }
+}
+
