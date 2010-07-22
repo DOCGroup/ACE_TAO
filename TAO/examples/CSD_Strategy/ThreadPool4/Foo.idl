@@ -11,6 +11,7 @@ typedef sequence<char, 32> Bounded_Var_Size;
 typedef sequence<char> Unbounded_Var_Size;
 typedef long Fixed_Array[20];
 typedef string Var_Array [3];
+typedef string<20> Bounded_String20;
 
 struct TimeOfDay {
     short   hour;       // 0 - 23
@@ -40,7 +41,7 @@ interface Foo
 
   oneway void test_unbounded_string_arg(in string message);
 
-  oneway void test_bounded_string_arg(in string<20> message);
+  oneway void test_bounded_string_arg(in Bounded_String20 message);
 
   oneway void test_fixed_array_arg(in Fixed_Array message);
 
