@@ -1,3 +1,4 @@
+// $Id$
 
 /*
   WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
@@ -55,16 +56,16 @@ DDS_TypeCode* QueryConditionTest_get_typecode()
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
+                0/* Member type code is assigned later */
             },
             0, /* Ignored */
             0, /* Ignored */
             0, /* Ignored */
-            NULL, /* Ignored */
+            0, /* Ignored */
             DDS_BOOLEAN_TRUE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
-            NULL/* Ignored */
+            0/* Ignored */
         },
         {
             (char *)"iteration",/* Member name */
@@ -72,16 +73,16 @@ DDS_TypeCode* QueryConditionTest_get_typecode()
                 0,/* Representation ID */
                 DDS_BOOLEAN_FALSE,/* Is a pointer? */
                 -1, /* Bitfield bits */
-                NULL/* Member type code is assigned later */
+                0/* Member type code is assigned later */
             },
             0, /* Ignored */
             0, /* Ignored */
             0, /* Ignored */
-            NULL, /* Ignored */
+            0, /* Ignored */
             DDS_BOOLEAN_FALSE, /* Is a key? */
             DDS_PRIVATE_MEMBER,/* Ignored */
             0,/* Ignored */
-            NULL/* Ignored */
+            0/* Ignored */
         }
     };
 
@@ -91,10 +92,10 @@ DDS_TypeCode* QueryConditionTest_get_typecode()
         DDS_BOOLEAN_FALSE, /* Ignored */
         -1,/* Ignored */
         (char *)"QueryConditionTest", /* Name */
-        NULL, /* Ignored */
         0, /* Ignored */
         0, /* Ignored */
-        NULL, /* Ignored */
+        0, /* Ignored */
+        0, /* Ignored */
         2, /* Number of members */
         QueryConditionTest_g_tc_members, /* Members */
         DDS_VM_NONE /* Ignored */
@@ -124,7 +125,7 @@ RTIBool QueryConditionTest_initialize_ex(
 {
 
     sample->symbol = DDS_String_alloc((255));
-    if (sample->symbol == NULL) {
+    if (sample->symbol == 0) {
         return RTI_FALSE;
     }
             

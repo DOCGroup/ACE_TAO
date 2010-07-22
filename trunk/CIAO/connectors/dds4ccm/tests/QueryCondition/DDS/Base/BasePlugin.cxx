@@ -1,3 +1,4 @@
+// $Id$
 
 /*
   WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
@@ -64,15 +65,15 @@
 
 QueryConditionTest *
 QueryConditionTestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    QueryConditionTest *sample = NULL;
+    QueryConditionTest *sample = 0;
 
     RTIOsapiHeap_allocateStructure(
         &sample, QueryConditionTest);
 
-    if(sample != NULL) {
+    if(sample != 0) {
         if (!::QueryConditionTest_initialize_ex(sample,allocate_pointers)) {
             RTIOsapiHeap_freeStructure(&sample);
-            return NULL;
+            return 0;
         }
     }
     return sample; 
@@ -124,21 +125,21 @@ QueryConditionTestPluginSupport_print_data(
 
     RTICdrType_printIndent(indent_level);
 
-    if (desc != NULL) {
+    if (desc != 0) {
       RTILog_debug("%s:\n", desc);
     } else {
       RTILog_debug("\n");
     }
 
-    if (sample == NULL) {
+    if (sample == 0) {
       RTILog_debug("NULL\n");
       return;
     }
 
 
-    if (&sample->symbol==NULL) {
+    if (&sample->symbol==0) {
         RTICdrType_printString(
-            NULL, "symbol", indent_level + 1);                
+            0, "symbol", indent_level + 1);
     } else {
         RTICdrType_printString(
             sample->symbol, "symbol", indent_level + 1);                
@@ -152,7 +153,7 @@ QueryConditionTestPluginSupport_print_data(
 
 QueryConditionTest *
 QueryConditionTestPluginSupport_create_key_ex(RTIBool allocate_pointers){
-    QueryConditionTest *key = NULL;
+    QueryConditionTest *key = 0;
 
     RTIOsapiHeap_allocateStructure(
         &key, QueryConditionTestKeyHolder);
@@ -225,7 +226,7 @@ QueryConditionTestPlugin_on_endpoint_attached(
     RTIBool top_level_registration, 
     void *containerPluginContext)
 {
-    PRESTypePluginEndpointData epd = NULL;
+    PRESTypePluginEndpointData epd = 0;
 
     unsigned int serializedKeyMaxSize;
 
@@ -242,8 +243,8 @@ QueryConditionTestPlugin_on_endpoint_attached(
             (PRESTypePluginDefaultEndpointDataDestroyKeyFunction)
             ::QueryConditionTestPluginSupport_destroy_key);
 
-    if (epd == NULL) {
-        return NULL;
+    if (epd == 0) {
+        return 0;
     }
    
     serializedKeyMaxSize = ::QueryConditionTestPlugin_get_serialized_key_max_size(
@@ -253,7 +254,7 @@ QueryConditionTestPlugin_on_endpoint_attached(
             epd,serializedKeyMaxSize)) 
     {
         PRESTypePluginDefaultEndpointData_delete(epd);
-        return NULL;
+        return 0;
     }
 
     
@@ -267,7 +268,7 @@ QueryConditionTestPlugin_on_endpoint_attached(
             ::QueryConditionTestPlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
-            return NULL;
+            return 0;
         }
     }
     
@@ -310,7 +311,7 @@ QueryConditionTestPlugin_serialize(
     RTIBool serialize_sample, 
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
   if(serialize_encapsulation) {
@@ -326,7 +327,7 @@ QueryConditionTestPlugin_serialize(
 
   if(serialize_sample) {
 
-    if (sample->symbol == NULL) {
+    if (sample->symbol == 0) {
         return RTI_FALSE;
     }
     if (!RTICdrStream_serializeString(
@@ -360,7 +361,7 @@ QueryConditionTestPlugin_deserialize_sample(
     RTIBool deserialize_sample, 
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
     if(deserialize_encapsulation) {
@@ -412,7 +413,7 @@ QueryConditionTestPlugin_deserialize(
 {
 
     return ::QueryConditionTestPlugin_deserialize_sample( 
-        endpoint_data, (sample != NULL)?*sample:NULL,
+        endpoint_data, (sample != 0)?*sample:0,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
  
@@ -427,7 +428,7 @@ RTIBool QueryConditionTestPlugin_skip(
     RTIBool skip_sample, 
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
     if(skip_encapsulation) {
@@ -615,7 +616,7 @@ QueryConditionTestPlugin_serialize_key(
     RTIBool serialize_key,
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
     if(serialize_encapsulation) {
@@ -630,7 +631,7 @@ QueryConditionTestPlugin_serialize_key(
 
     if(serialize_key) {
 
-    if (sample->symbol == NULL) {
+    if (sample->symbol == 0) {
         return RTI_FALSE;
     }
     if (!RTICdrStream_serializeString(
@@ -658,7 +659,7 @@ RTIBool QueryConditionTestPlugin_deserialize_key_sample(
     RTIBool deserialize_key,
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
     if(deserialize_encapsulation) {
@@ -702,7 +703,7 @@ RTIBool QueryConditionTestPlugin_deserialize_key(
     void *endpoint_plugin_qos)
 {
     return ::QueryConditionTestPlugin_deserialize_key_sample(
-        endpoint_data, (sample != NULL)?*sample:NULL, stream,
+        endpoint_data, (sample != 0)?*sample:0, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
 }
 
@@ -755,7 +756,7 @@ QueryConditionTestPlugin_serialized_sample_to_key(
     RTIBool deserialize_key, 
     void *endpoint_plugin_qos)
 {
-    char * position = NULL;
+    char * position = 0;
 
 
     if(deserialize_encapsulation) {
@@ -831,11 +832,11 @@ QueryConditionTestPlugin_instance_to_keyhash(
     DDS_KeyHash_t *keyhash,
     const QueryConditionTest *instance)
 {
-    struct RTICdrStream * md5Stream = NULL;
+    struct RTICdrStream * md5Stream = 0;
 
     md5Stream = PRESTypePluginDefaultEndpointData_getMD5Stream(endpoint_data);
 
-    if (md5Stream == NULL) {
+    if (md5Stream == 0) {
         return RTI_FALSE;
     }
 
@@ -846,7 +847,7 @@ QueryConditionTestPlugin_instance_to_keyhash(
     RTICdrStream_setDirtyBit(md5Stream, RTI_TRUE);
 
     if (!::QueryConditionTestPlugin_serialize_key(
-            endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,NULL)) {
+            endpoint_data,instance,md5Stream, RTI_FALSE, RTI_CDR_ENCAPSULATION_ID_CDR_BE, RTI_TRUE,0)) {
         return RTI_FALSE;
     }
     
@@ -873,7 +874,7 @@ QueryConditionTestPlugin_serialized_sample_to_keyhash(
     RTIBool deserialize_encapsulation,
     void *endpoint_plugin_qos) 
 {   
-    char * position = NULL;
+    char * position = 0;
     QueryConditionTest * sample;
 
 
@@ -890,7 +891,7 @@ QueryConditionTestPlugin_serialized_sample_to_keyhash(
     sample = (QueryConditionTest *)
                 PRESTypePluginDefaultEndpointData_getTempSample(endpoint_data);
 
-    if (sample == NULL) {
+    if (sample == 0) {
         return RTI_FALSE;
     }
 
@@ -920,14 +921,14 @@ QueryConditionTestPlugin_serialized_sample_to_keyhash(
  
 struct PRESTypePlugin *QueryConditionTestPlugin_new(void) 
 { 
-    struct PRESTypePlugin *plugin = NULL;
+    struct PRESTypePlugin *plugin = 0;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
         PRES_TYPE_PLUGIN_VERSION_2_0;
 
     RTIOsapiHeap_allocateStructure(
         &plugin, struct PRESTypePlugin);
-    if (plugin == NULL) {
-       return NULL;
+    if (plugin == 0) {
+       return 0;
     }
 
     plugin->version = PLUGIN_VERSION;
@@ -1014,7 +1015,7 @@ struct PRESTypePlugin *QueryConditionTestPlugin_new(void)
     plugin->keyToInstanceFnc =
         (PRESTypePluginKeyToInstanceFunction)
         ::QueryConditionTestPlugin_key_to_instance;
-    plugin->serializedKeyToKeyHashFnc = NULL; /* Not supported yet */
+    plugin->serializedKeyToKeyHashFnc = 0; /* Not supported yet */
     
     plugin->typeCode =  (struct RTICdrTypeCode *)::QueryConditionTest_get_typecode();
     
