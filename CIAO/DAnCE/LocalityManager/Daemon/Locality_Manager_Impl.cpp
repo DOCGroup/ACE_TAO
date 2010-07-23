@@ -149,6 +149,10 @@ namespace DAnCE
           ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
           ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
       }
+    
+    PLUGIN_MANAGER::instance ()->register_configuration_plugin (
+	       ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
+               ACE_TEXT_CHAR_TO_TCHAR ("create_Process_Name"));
 
     if (this->props_)
       {
@@ -164,11 +168,20 @@ namespace DAnCE
         
         for (CORBA::ULong i = 0; i < this->props_->length (); ++i)
           {
+            DANCE_DEBUG (8, (LM_DEBUG, DLINFO
+                             ACE_TEXT ("LocalityManager_i::init - ")
+			     ACE_TEXT ("Looking up configuration handler for <%C>\n"),
+			     this->props_[i].name.in ()));
+
             ::DAnCE::LocalityConfiguration_var config = 
               PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
             
             if (config.in ())
               {
+		DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+				 ACE_TEXT ("LocalityManager_i::init - ")
+				 ACE_TEXT ("Invoking configuration handler for <%C>\n"),
+				 this->props_[i].name.in ()));
                 config->configure (this->props_[i]);
               }
           }
