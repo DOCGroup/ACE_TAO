@@ -714,6 +714,10 @@ public:
   void anon_warning (bool val);
   // Accessors for the member.
   
+  bool anon_silent (void) const;
+  void anon_silent (bool val);
+  // Accessors for the member.
+  
   bool in_typedef (void) const;
   void in_typedef (bool val);
   // Accessors for the member.
@@ -885,7 +889,12 @@ private:
   
   /// Anonymous type diagnostic limited to warning?
   /// False by default, can be overridden from command line.
+  /// Error mesesage is default behavior.
   bool anon_warning_;
+  
+  /// Anonymous type diagnostic completely disabled?
+  /// False by default.
+  bool anon_silent_;
   
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.

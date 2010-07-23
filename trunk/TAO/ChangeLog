@@ -1,3 +1,22 @@
+Fri Jul 23 20:59:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added -as option to completely silence any diagnostic
+          for anonymous IDL constructs.
+          
+        * docs/compiler.html:
+        
+          Updated IDL compiler options documentation.
+          
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Replace -aw option with the new -as option.
+
 Fri Jul 23 19:56:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/big_union.cpp:

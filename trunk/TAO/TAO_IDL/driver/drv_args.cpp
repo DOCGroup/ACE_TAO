@@ -148,6 +148,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
+      ACE_TEXT ("(default is error)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
     ));
   ACE_DEBUG ((
@@ -266,6 +271,10 @@ DRV_parse_args (long ac, char **av)
               if (av[i][2] == 'w')
                 {
                   idl_global->anon_warning (true);
+                }
+              else if (av[i][2] == 's')
+                {
+                  idl_global->anon_silent (true);
                 }
               else
                 {

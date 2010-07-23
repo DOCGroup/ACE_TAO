@@ -6181,7 +6181,8 @@ tao_yyreduce:
                                             s->is_abstract ()
                                           );
               
-                  if (!idl_global->in_typedef ())
+                  if (!idl_global->in_typedef ()
+                      && !idl_global->anon_silent ())
                     {
                       idl_global->err ()->anonymous_type_diagnostic ();
                     }
@@ -6242,7 +6243,8 @@ tao_yyreduce:
                         s->is_abstract ()
                       );
               
-                  if (!idl_global->in_typedef ())
+                  if (!idl_global->in_typedef ()
+                      && !idl_global->anon_silent ())
                     {
                       idl_global->err ()->anonymous_type_diagnostic ();
                     }
@@ -6331,7 +6333,8 @@ tao_yyreduce:
                                                 )
                                             );
                       
-              if (!idl_global->in_typedef ())
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
                 {
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
@@ -6490,7 +6493,8 @@ tao_yyreduce:
 
               sn.destroy ();
               
-              if (!idl_global->in_typedef ())
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
                 {
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }

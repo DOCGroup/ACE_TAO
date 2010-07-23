@@ -61,14 +61,14 @@ project(*IDL): taoserver, messaging, gen_ostream {
   }
   
   IDL_Files {
-    idlflags += -GA -aw
+    idlflags += -GA -as
     anonymous.idl
     dif2.idl
     valuetype.idl
   }
   
   IDL_Files {
-    idlflags += -aw
+    idlflags += -as
     array.idl
     enum_in_struct.idl
     included.idl
