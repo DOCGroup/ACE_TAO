@@ -10,6 +10,8 @@
 
 module InterOutArgsT
 {
+  typedef short short_array[5];
+
   // Mixed struct
   struct TestTopic {
     string key;
@@ -25,7 +27,7 @@ module InterOutArgsT
   // Array
   struct TopicArray {
     string key; 
-    short x_array[5];
+    short_array x_array;
     };
 
   // Union
