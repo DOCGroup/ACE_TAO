@@ -124,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         {
           DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - ")
                            ACE_TEXT ("XML Input file validated correctly with no ")
-			   ACE_TEXT ("output file specifed, exiting\n")));
+                           ACE_TEXT ("output file specifed, exiting\n")));
           return 0;
         }
 
@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   catch (const ::Deployment::PlanError &ex)
     {
       DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
-				       ACE_TEXT ("Config error while parsing plan ")
+                                       ACE_TEXT ("Config error while parsing plan ")
                        ACE_TEXT ("<%C>, <%C>\n"),
                        ex.name.in (),
                        ex.reason.in ()));
@@ -147,7 +147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   catch (...)
     {
       DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
-		       ACE_TEXT ("error: unknown c++ exception\n")));
+                       ACE_TEXT ("error: unknown c++ exception\n")));
       retval = -1;
     }
   
