@@ -10,6 +10,8 @@
 
 module InterReturnT
 {
+  typedef short short_array[5];
+
   // Mixed struct
   struct TestStruct {
     string key;
@@ -19,9 +21,9 @@ module InterReturnT
  // Array
   struct TestArr {
     string key; 
-    short x_array[5];
+    short_array x_array;
     };
- 
+
   typedef TestArr TestArray[5];
 
   // Union
@@ -38,7 +40,7 @@ module InterReturnT
     string x_teststr;
     };
   typedef sequence<test> TestSeq;
-  
+
   enum test_enum
   {
     ZERO,
@@ -51,7 +53,7 @@ module InterReturnT
       long id;
       string error_string;
     };
-  
+
   // Sender/Receiver interface
   interface MyFoo
     {

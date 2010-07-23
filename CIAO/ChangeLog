@@ -1,3 +1,12 @@
+Fri Jul 23 07:29:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl:
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl:
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl:
+        * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+          Replace an anonymous bounded octet sequence with a typedef.
+
 Fri Jul 23 06:48:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
@@ -76,7 +85,6 @@ Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Replace an anonymous bounded octet sequence with a typedef.
 
->>>>>>> .r91173
 Thu Jul 22 13:12:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:

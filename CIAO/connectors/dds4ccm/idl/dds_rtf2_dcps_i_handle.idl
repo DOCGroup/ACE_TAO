@@ -7,9 +7,9 @@
 
 module DDS {
 #if (CIAO_DDS4CCM_NDDS==1)
-
+    typedef octet octet_value[16];
     struct NativeInstanceHandle_t {
-        octet value[16];
+        octet_value value;
         unsigned long length;
         unsigned long isValid;
     };

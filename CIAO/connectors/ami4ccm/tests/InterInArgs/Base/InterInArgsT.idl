@@ -12,6 +12,8 @@ module InterInArgsT
 {
   const short update_val = 999;
 
+  typedef short short_array[5];
+
   // Mixed struct
   struct TestTopic {
     string key;
@@ -27,7 +29,7 @@ module InterInArgsT
   // Array
   struct TopicArray {
     string key;
-    short x_array[5];
+    short_array x_array;
     };
 
   typedef TopicArray TestArray[5];
