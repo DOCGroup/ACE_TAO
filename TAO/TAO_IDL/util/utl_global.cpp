@@ -153,6 +153,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     included_ami_receps_done_ (false),
     corba_module_ (0),
     anon_warning_ (false),
+    anon_silent_ (false),
     in_typedef_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
@@ -1736,6 +1737,18 @@ void
 IDL_GlobalData::anon_warning (bool val)
 {
   this->anon_warning_ = val;
+}
+
+bool
+IDL_GlobalData::anon_silent (void) const
+{
+  return this->anon_silent_;
+}
+
+void
+IDL_GlobalData::anon_silent (bool val)
+{
+  this->anon_silent_ = val;
 }
 
 bool
