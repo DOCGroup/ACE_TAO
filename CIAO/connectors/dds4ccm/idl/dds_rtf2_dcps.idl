@@ -31,9 +31,12 @@
 
 module DDS {
     typedef long DomainId_t;
+    typedef long long_3[3];
+
     struct BuiltinTopicKey_t {
-        long value[3];
+        long_3 value;
     };
+
     typedef long ReturnCode_t;
     typedef long QosPolicyId_t;
     typedef sequence<string> StringSeq;
