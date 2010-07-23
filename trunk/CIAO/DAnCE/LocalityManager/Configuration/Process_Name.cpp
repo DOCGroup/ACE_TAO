@@ -80,6 +80,8 @@ namespace DAnCE
                                         message.c_str ());
       }
     
+    std::cerr << "***********setting process name to " << pname.in () << std::endl;
+
     return;
 #endif
 #endif
