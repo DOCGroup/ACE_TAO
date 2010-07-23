@@ -24,8 +24,7 @@ feature(dds4ccm_ndds) : taoidldefaults {
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \
               -Wb,dds_impl=ndds \
               -I $(CIAO_ROOT)/connectors \
-              -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              -aw
+              -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
