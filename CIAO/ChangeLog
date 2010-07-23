@@ -1,3 +1,12 @@
+Fri Jul 23 08:25:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+          Removed the -aw as IDL compiler option. We've
+          changed the IDL instead.
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Replace an anonymous bounded octet sequence with a typedef.
+
 Fri Jul 23 07:29:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl:
