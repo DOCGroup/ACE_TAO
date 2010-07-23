@@ -1,3 +1,9 @@
+Fri Jul 23 15:05:19 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+
+          Compile fixes. 
+
 Fri Jul 23 14:26:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
