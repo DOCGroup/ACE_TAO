@@ -122,9 +122,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   
       if (!output_filename)
         {
-          DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - "
+          DANCE_DEBUG (2, (LM_DEBUG, DLINFO ACE_TEXT ("Convert_Plan - ")
                            ACE_TEXT ("XML Input file validated correctly with no ")
-						   ACE_TEXT ("output file specifed, exiting\n"));
+			   ACE_TEXT ("output file specifed, exiting\n")));
           return 0;
         }
 
@@ -147,7 +147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   catch (...)
     {
       DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Convert_Plan - ")
-					   ACE_TEXT ("error: unknown c++ exception\n"));
+		       ACE_TEXT ("error: unknown c++ exception\n")));
       retval = -1;
     }
   
