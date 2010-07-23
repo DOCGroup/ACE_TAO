@@ -10,6 +10,9 @@
 
 #pragma ndds typesupport "Base/VTopics_BaseSupport.h"
 
+typedef octet octet_array[5];
+
+
 // Plain Topic
 struct TestTopic {
   string key; //@key
@@ -25,7 +28,7 @@ struct TopicString {
 // Arrays
 struct TopicArray {
   string key; //@key
-  octet x_array[5];
+  octet_array x_array;
 };
 
 // Unions
