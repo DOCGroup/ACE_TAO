@@ -339,7 +339,7 @@ namespace DAnCE
 
       const char *path = this->cs_path_.c_str ();
 
-      if (si.cmap_->find (SERVER_EXECUTABLE, val) == 0)
+      if (si.cmap_->find (DAnCE::LOCALITY_EXECUTABLE, val) == 0)
         {
           val >>= path;
           DANCE_DEBUG (6, (LM_DEBUG, DLINFO

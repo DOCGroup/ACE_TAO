@@ -16,6 +16,7 @@ module DAnCE
   // Component Configuration Properties
   /// Describes the entrypoint for the component executor. Property value is string.
   const string COMPONENT_FACTORY = "component factory";
+
   /// Indicates that the component instance should be deployed using specified home ID.
   /// Property value is string.
   const string EXPLICIT_HOME = "edu.vanderbilt.dre.DAnCE.ExplicitHome";
@@ -24,17 +25,21 @@ module DAnCE
   /// Indicates that the instance object reference should be registered in the
   /// Instance naming context using a specified name.  Property value is string.
   const string REGISTER_NAMING = "edu.vanderbilt.dre.DAnCE.RegisterNaming";
+
   /// Indicates that the instance object reference should be printed to a specifid
   /// file.  Property value is string.
   const string INSTANCE_IOR_FILE = "edu.vanderbilt.dre.DAnCE.InstanceIOR";
+
   // const string REGISTER_PORT_NAMING = "edu.vanderbilt.dre.DAnCE.RegisterPortNaming";
 
   // Node Infrastructure Configuration
   /// Indicates that the NodeManager is running as a standalone entity.
   const string STANDALONE_NM = "edu.vanderbilt.dre.DAnCE.StandaloneNM";
+
   /// Indicates the naming context for domain objects, which includes infrastructure
   /// and redirection.
   const string DOMAIN_NC = "edu.vanderbilt.dre.DAnCE.DomainNC";
+
   /// Indicates the naming context used for instance objects.
   const string INSTANCE_NC = "edu.vanderbilt.dre.DAnCE.InstanceNC";
 
@@ -44,15 +49,19 @@ module DAnCE
   /// Indicates the maximum time that the locality manager will wait for any
   /// deployment step to complete, in seconds.
   const string LOCALITY_TIMEOUT = "edu.vanderbilt.dre.DAnCE.LocalityTimeout";
+
   /// Indicates the UUID that should be assigned to a locality instance
   const string LOCALITY_UUID = "edu.vanderbilt.dre.DAnCE.LocalityUUID";
+
   /// Indicates command line arguments that should be passed to locality managers
   /// when spawned.
   const string LOCALITY_ARGUMENTS = "edu.vanderbilt.dre.DAnCE.LocalityArguments";
+
   /// Indicates the executable name that should be used when spawing a locality manager
   const string LOCALITY_EXECUTABLE = "edu.vanderbilt.dre.DAnCE.LocalityExec";
   
   const string LOCALITY_MULTITHREAD = "edu.vanderbilt.dre.DAnCE.LocalityMutltithread";
+
   /// Stringified IOR to be used as the naming context for a locality instance.
   const string LOCALITY_NAMINGCONTEXT = "edu.vanderbilt.dre.DAnCE.LocalityNamingContext";
   
@@ -64,7 +73,6 @@ module DAnCE
   /// Property describing the implementation type of a monolithic implementation
   const string IMPL_TYPE = "edu.vanderbilt.dre.DAnCE.ImplementationType";
   
-  const string SERVER_EXECUTABLE = "edu.vanderbilt.dre.DAnCE.ServerExecutable";
   const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
   const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
   const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
@@ -75,5 +83,6 @@ module DAnCE
   const string DANCE_LM_PATH = "edu.vanderbilt.dre.DAnCE.LocalityManager.path";
   const string DANCE_LM_LIBPATH = "edu.vanderbilt.dre.DAnCE.LocalityManager.libpath";
   const string DANCE_LM_INSTALLER = "edu.vanderbilt.dre.DAnCE.LocalityManager.installer";
+  const string DANCE_LM_PROCESSNAME = "edu.vanderbilt.dre.DAnCE.LocalityManager.ProcessName";
 };
 
