@@ -1,21 +1,21 @@
 // $Id$
 
-project(*qc_receiver) : nddslib {
+project(*qc_receiver) : nddslib, dds4ccm_ts_default {
   exename = DDS_receiver
+  after += Base_stub
 
   includes += ../Base
+
+  libs += Base_stub
+  libpaths += ../descriptors
 
   exeout += ../descriptors
 
   Source_Files {
     QC_Receiver.cpp
-    ../Base/Base.cxx
-    ../Base/BasePlugin.cxx
-    ../Base/BaseSupport.cxx
   }
 
   Header_Files {
-    ../Base/*.h
   }
 }
 

@@ -1,21 +1,20 @@
 // $Id$
 
-project(*qc_sender) : nddslib, acelib {
+project(*qc_sender) : nddslib, acelib, dds4ccm_ts_default {
   exename = DDS_Sender
+  after += Base_stub
 
   includes += ../Base
 
   exeout += ../descriptors
+  libs += Base_stub
+  libpaths += ../descriptors
 
   Source_Files {
     QC_Sender.cpp
-    ../Base/Base.cxx
-    ../Base/BasePlugin.cxx
-    ../Base/BaseSupport.cxx
   }
 
   Header_Files {
-    ../Base/*.h
   }
 }
 
