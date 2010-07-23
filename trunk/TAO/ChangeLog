@@ -1,3 +1,12 @@
+Fri Jul 23 19:56:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/recursive_union.cpp:
+        
+          Removed anonymous constructs from test IDL and modified
+          test code accordingly.
+
 Thu Jul 22 19:21:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool4/Foo.idl:

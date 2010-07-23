@@ -200,7 +200,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
 
       ru.nested_member (nru);
 
-      Param_Test::Recursive_Union::_rec_member_seq tmp (MAX_SEQ_LENGTH);
+      Param_Test::RecUnionSeq tmp (MAX_SEQ_LENGTH);
 
       ru.rec_member (tmp);
 
@@ -215,7 +215,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
       // This line is TAO-specific, but some compilers we support
       // are broken in their handling of the portable scoped typedef
       // required by CORBA 2.3
-      Param_Test::Recursive_Union::_rec_member_seq tmp (MAX_SEQ_LENGTH);
+      Param_Test::RecUnionSeq tmp (MAX_SEQ_LENGTH);
 
       tmp.length (len);
 
@@ -253,7 +253,7 @@ Test_Recursive_Union::deep_init_nested (Param_Test::nested_rec_union &nu,
       // This line is TAO-specific, but some compilers we support
       // are broken in their handling of the portable scoped typedef
       // required by CORBA 2.3
-      Param_Test::nested_rec_union::_nested_rec_member_seq tmp (MAX_SEQ_LENGTH);
+      Param_Test::NestedSeq tmp (MAX_SEQ_LENGTH);
 
       tmp.length (len);
 
