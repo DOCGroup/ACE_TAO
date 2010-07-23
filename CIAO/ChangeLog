@@ -1,3 +1,21 @@
+Fri Jul 23 06:48:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Added MPC file for Base.idl.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.cxx:
+
+          Removed these files.
+
 Thu Jul 22 16:00:37 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/SHS_DataModel.idl:
