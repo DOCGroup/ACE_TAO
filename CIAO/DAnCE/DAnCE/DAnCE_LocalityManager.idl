@@ -17,8 +17,13 @@
 
 module DAnCE
 {
-  /// intended to implement installation logic for a particular instance
-  /// type
+  /**
+   * @interface InstanceDeploymentHandler
+   * @brief Interface used to manage the lifecycle of instances.
+   *
+   * This interface is used by the LocalityManager to manage the lifecycle
+   * of various instance types.  Each instance type requires a seperate IDH.
+   */
   local interface InstanceDeploymentHandler
   {
     readonly attribute string instance_type;
@@ -86,7 +91,14 @@ module DAnCE
 
     oneway void shutdown ();
   };
-  
+
+  local interface LocalityConfiguration
+  {
+    readonly attribute string type;
+
+    void configure (in ::Deployment::Property prop);
+  };
+
   interface LocalityManagerActivator
   {
     void locality_manager_callback (in LocalityManager ref,

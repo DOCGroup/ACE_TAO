@@ -52,6 +52,12 @@ namespace DAnCE
       INTERCEPTORS;
     
     const INTERCEPTORS & fetch_interceptors (void);
+    
+    void register_configuration_plugin (const ACE_TCHAR *artifact,
+                                        const ACE_TCHAR *entrypoint);
+    
+    ::DAnCE::LocalityConfiguration_ptr
+        get_configuration_handler (const char *id);
 
   private:
     ::Deployment::Properties config_;
@@ -59,9 +65,14 @@ namespace DAnCE
     typedef std::map < std::string,
                        ::DAnCE::InstanceDeploymentHandler_var > HANDLER_MAP;
     
+    typedef std::map < std::string,
+                       LocalityConfiguration_var > CONFIG_MAP;
+    
     HANDLER_MAP handler_map_;
 
     INTERCEPTORS interceptors_;
+    
+    CONFIG_MAP config_plugins_;
   };
 
   typedef ACE_Singleton <Plugin_Manager,

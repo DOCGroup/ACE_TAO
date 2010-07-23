@@ -1,3 +1,28 @@
+Fri Jul 23 14:26:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+
+          Added local interface for configuration plugins.
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Added logic to invoke configuration plugins if present.
+
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+          Loading logic for configuration plugins.
+
+        * DAnCE/LocalityManager/Configuration:
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+        * DAnCE/LocalityManager/Configuration/Process_Name.h:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Name_export.h:
+
+          Change process name configuration plugin.  Note that this only
+          works on Linux (kernel 2.6.9) and later.  If invoked on other
+          platforms, it will generate a StartError exception.
+
 Fri Jul 23 14:24:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Interceptors/Error_Interceptors.mpc:
