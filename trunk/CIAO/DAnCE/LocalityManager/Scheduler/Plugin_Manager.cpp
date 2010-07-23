@@ -8,6 +8,91 @@
 
 namespace DAnCE
 {
+  namespace
+  {
+    template <typename PLUGIN>
+    typename PLUGIN::_ptr_type
+    load_plugin (const ACE_TCHAR *artifact,
+                 const ACE_TCHAR *entrypoint)
+    {
+      if (!artifact || !entrypoint)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                           ACE_TEXT ("Must provide non-nill artifact and entrypoint names\n")));
+          throw ::Deployment::PlanError ("",
+                                         "Invalid parameters for plug-in installation");
+        }
+    
+      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                       ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                       ACE_TEXT ("Loading plugin from <%s>:<%s>\n"),
+                       artifact,
+                       entrypoint));
+                     
+      ACE_DLL plugin_dll;
+    
+      if (plugin_dll.open (artifact,
+                           ACE_DEFAULT_SHLIB_MODE,
+                           false) != 0)
+        {
+          const ACE_TCHAR *error = plugin_dll.error ();
+        
+          DANCE_ERROR (1, (LM_ERROR, DLINFO 
+                           ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                           ACE_TEXT ("Error while loading artifact <%s>: %s\n"),
+                           artifact,
+                           error));
+        
+          throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+                                         ACE_TEXT_ALWAYS_CHAR (error));
+        }
+    
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                       ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                       ACE_TEXT ("Loading artifact <%s> successfully loaded.\n"),
+                       artifact));
+
+      void *void_ptr = plugin_dll.symbol (entrypoint);
+      ptrdiff_t tmp_ptr = reinterpret_cast <ptrdiff_t> (void_ptr);
+
+      typedef typename PLUGIN::_ptr_type (*PluginFactory) (void);
+      PluginFactory pcreator = reinterpret_cast<PluginFactory> (tmp_ptr);
+
+      if (!pcreator)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                           ACE_TEXT ("Unable to load plugin <%s>:<%s>\n"),
+                           artifact,
+                           entrypoint));
+          throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+                                         "Invalid entrypoint");
+        }
+    
+      typename PLUGIN::_var_type plugin = pcreator ();
+    
+      if (CORBA::is_nil (plugin))
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                           ACE_TEXT ("Unable to load plugin <%s>:<%s>, nil result from factory\n"),
+                           artifact,
+                           entrypoint));
+          throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+                                         "Nil result from factory");
+        }
+    
+      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                       ACE_TEXT ("Plugin_Manager::load_plugin - ")
+                       ACE_TEXT ("Successfully created plugin from <%s>:<%s>.\n"),
+                       artifact,
+                       entrypoint));
+
+    
+      return plugin._retn ();
+    }
+  }
   Plugin_Manager::Plugin_Manager (void)
   {
   }
@@ -26,80 +111,9 @@ namespace DAnCE
   Plugin_Manager::register_installation_handler (const ACE_TCHAR *artifact,
                                                  const ACE_TCHAR *entrypoint)
   {
-    if (!artifact || !entrypoint)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                         ACE_TEXT ("Must provide non-nill artifact and entrypoint names\n")));
-        throw ::Deployment::PlanError ("",
-                                       "Invalid parameters for plug-in installation");
-      }
-    
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                     ACE_TEXT ("Loading plugin from <%s>:<%s>\n"),
-                     artifact,
-                     entrypoint));
-                     
-    ACE_DLL plugin_dll;
-    
-    if (plugin_dll.open (artifact,
-                         ACE_DEFAULT_SHLIB_MODE,
-                         false) != 0)
-      {
-        const ACE_TCHAR *error = plugin_dll.error ();
-        
-        DANCE_ERROR (1, (LM_ERROR, DLINFO 
-                         ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                         ACE_TEXT ("Error while loading artifact <%s>: %s\n"),
-                         artifact,
-                         error));
-        
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       ACE_TEXT_ALWAYS_CHAR (error));
-      }
-    
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                     ACE_TEXT ("Loading artifact <%s> successfully loaded.\n"),
-                     artifact));
-
-    void *void_ptr = plugin_dll.symbol (entrypoint);
-    ptrdiff_t tmp_ptr = reinterpret_cast <ptrdiff_t> (void_ptr);
-
-    typedef ::DAnCE::InstanceDeploymentHandler_ptr (*PluginFactory) (void);
-    PluginFactory pcreator = reinterpret_cast<PluginFactory> (tmp_ptr);
-    
-    if (!pcreator)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                         ACE_TEXT ("Unable to load plugin <%s>:<%s>\n"),
-                         artifact,
-                         entrypoint));
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       "Invalid entrypoint");
-      }
-    
-    ::DAnCE::InstanceDeploymentHandler_var plugin = pcreator ();
-    
-    if (CORBA::is_nil (plugin))
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                         ACE_TEXT ("Unable to load plugin <%s>:<%s>, nil result from factory\n"),
-                         artifact,
-                         entrypoint));
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       "Nil result from factory");
-      }
-    
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
-                     ACE_TEXT ("Successfully created installation handler from <%s>:<%s>.\n"),
-                     artifact,
-                     entrypoint));
-
+    ::DAnCE::InstanceDeploymentHandler_var plugin = 
+      load_plugin< ::DAnCE::InstanceDeploymentHandler > (artifact,
+                                                         entrypoint);
     
     try
       {
@@ -143,81 +157,10 @@ namespace DAnCE
   Plugin_Manager::register_interceptor (const ACE_TCHAR *artifact,
                                         const ACE_TCHAR *entrypoint)
   {
-    if (!artifact || !entrypoint)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                         ACE_TEXT ("Must provide non-nill artifact and entrypoint names\n")));
-        throw ::Deployment::PlanError ("",
-                                       "Invalid parameters for plug-in installation");
-      }
     
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                     ACE_TEXT ("Loading plugin from <%s>:<%s>\n"),
-                     artifact,
-                     entrypoint));
-                     
-    ACE_DLL plugin_dll;
-    
-    if (plugin_dll.open (artifact,
-                         ACE_DEFAULT_SHLIB_MODE,
-                         false) != 0)
-      {
-        const ACE_TCHAR *error = plugin_dll.error ();
-        
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                         ACE_TEXT ("Error while loading artifact <%s>: %s\n"),
-                         artifact,
-                         error));
-        
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       ACE_TEXT_ALWAYS_CHAR (error));
-      }
-    
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                     ACE_TEXT ("Loading artifact <%s> successfully loaded.\n"),
-                     artifact));
-
-    void *void_ptr = plugin_dll.symbol (entrypoint);
-    ptrdiff_t tmp_ptr = reinterpret_cast <ptrdiff_t> (void_ptr);
-
-    typedef ::DAnCE::DeploymentInterceptor_ptr (*PluginFactory) (void);
-    PluginFactory pcreator = reinterpret_cast<PluginFactory> (tmp_ptr);
-    
-    if (!pcreator)
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                         ACE_TEXT ("Unable to load plugin <%s>:<%s>\n"),
-                         artifact,
-                         entrypoint));
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       "Invalid entrypoint");
-      }
-    
-    ::DAnCE::DeploymentInterceptor_var plugin = pcreator ();
-    
-    if (CORBA::is_nil (plugin))
-      {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                         ACE_TEXT ("Unable to load interceptor <%s>:<%s>, nil result from factory\n"),
-                         artifact,
-                         entrypoint));
-        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
-                                       "Nil result from factory");
-      }
-    
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("Plugin_Manager::register_interceptor - ")
-                     ACE_TEXT ("Successfully created deployment interceptor from <%s>:<%s>.\n"),
-                     artifact,
-                     entrypoint));
-
-    
+    ::DAnCE::DeploymentInterceptor_var plugin = 
+      load_plugin< ::DAnCE::DeploymentInterceptor > (artifact,
+                                                     entrypoint);
     try
       {
         plugin->configure (this->config_);
@@ -280,4 +223,66 @@ namespace DAnCE
   {
     return this->interceptors_;
   }
+
+  void 
+  Plugin_Manager::register_configuration_plugin (const ACE_TCHAR *artifact,
+                                                 const ACE_TCHAR *entrypoint)
+  {
+    DAnCE::LocalityConfiguration_var plugin = 
+      load_plugin< DAnCE::LocalityConfiguration > (artifact,
+                                                   entrypoint);
+    
+    try
+      {
+        const char *id = plugin->type ();
+        
+        this->config_plugins_[id] = plugin._retn ();
+      }
+    catch (const CORBA::Exception &ex)
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("Plugin_Manager::register_configuration_plugin - ")
+                         ACE_TEXT ("CORBA Exception caught while loading artifact <%s>:<%s> - %C\n"),
+                         artifact,
+                         entrypoint,
+                         ex._info ().c_str ()));
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+                                        ex._info ().c_str ());
+      }
+    catch (...)
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("Plugin_Manager::register_configuration_plugin - ")
+                         ACE_TEXT ("Unknown C++ exception while configuring plugin from <%s>:<%s>\n"),
+                         artifact,
+                         entrypoint));
+        throw ::Deployment::PlanError (ACE_TEXT_ALWAYS_CHAR (artifact),
+                                        "Unknown C++ exception during plugin configuration\n");
+      }
+  }
+  
+  ::DAnCE::LocalityConfiguration_ptr
+  Plugin_Manager::get_configuration_handler (const char *id)
+  {
+    if (id == 0)
+      {
+        return 0;
+      }
+    
+    CONFIG_MAP::iterator i;
+
+    if ((i = this->config_plugins_.find (id)) ==
+        this->config_plugins_.end ())
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("Plugin_Manager::get_configuration_handler - ")
+                         ACE_TEXT ("No configuration plugin for type %C found\n"),
+                         id));
+        
+        return 0;
+      }
+    
+    return ::DAnCE::LocalityConfiguration::_duplicate (i->second);
+  }
+
 }

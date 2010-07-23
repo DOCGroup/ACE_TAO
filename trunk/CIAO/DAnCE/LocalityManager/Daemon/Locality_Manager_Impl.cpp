@@ -161,6 +161,17 @@ namespace DAnCE
                              ACE_TEXT ("Using provided spawn delay %u\n"),
                              this->spawn_delay_));
           }
+        
+        for (CORBA::ULong i = 0; i < this->props_->length (); ++i)
+          {
+            ::DAnCE::LocalityConfiguration_var config = 
+              PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
+            
+            if (config.in ())
+              {
+                config->configure (this->props_[i]);
+              }
+          }
       }
   }
 
