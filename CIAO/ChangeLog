@@ -1,3 +1,11 @@
+Fri Jul 23 13:56:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * tools/XML/XercesString.h:
+
+          Fuzz.
+
 Fri Jul 23 13:54:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:

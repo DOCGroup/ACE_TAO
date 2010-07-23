@@ -591,7 +591,7 @@ namespace DAnCE
           {
             DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                              ACE_TEXT ("Plan_Launcher_i::create_external_connections - ")
-							 ACE_TEXT ("create connection %C from IOR %C\n"),
+                                                         ACE_TEXT ("create connection %C from IOR %C\n"),
                              plan.connection[i].name.in(),
                              plan.connection[i].externalReference[0].location.in()));
 
@@ -619,7 +619,7 @@ namespace DAnCE
                   {
                     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                                      ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-									 ACE_TEXT("can't create object for IOR %C\n"),
+                                                                         ACE_TEXT("can't create object for IOR %C\n"),
                                      plan.connection[i].externalReference[0].location.in()));
                   }
               }
