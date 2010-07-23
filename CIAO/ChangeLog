@@ -1,16 +1,26 @@
+Fri Jul 23 17:37:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/ExplicitExec:
+        * DAnCE/tests/LocalityManager/ExplicitExec/Deployment.cdp:
+        * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
+        * bin/ciao_tests.lst
+
+          Test for explicitly using a locality executable name other than
+          dance_locality_manager.
+
 Fri Jul 23 16:06:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
 
-          Bugfixes. 
+          Bugfixes.
 
         * DAnCE/tests/LocalityManager/ProcessName:
         * DAnCE/tests/LocalityManager/ProcessName/Deployment.cdp:
         * DAnCE/tests/LocalityManager/ProcessName/run_test.pl:
 
           Test for process name changing.
-        
+
         * bin/ciao_tests.lst:
 
           Added tests to daily build.

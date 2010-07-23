@@ -1,0 +1,12 @@
+// $Id$
+
+project (DAnCE_LocalityManager_ExplicitExec) : \
+        dance_locality_manager, ciao_logger {
+  exename = explicit_exec
+  libs += CIAO_Deployment_Handlers
+  after += CIAO_Deployment_Handlers
+  Source_Files {
+     $(DANCE_ROOT)/LocalityManager/Daemon/Locality_Manager_Task.cpp
+     $(DANCE_ROOT)/LocalityManager/Daemon/Locality_Manager.cpp
+  }
+}
