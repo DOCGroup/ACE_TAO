@@ -1,3 +1,10 @@
+Sat Jul 24 20:41:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_global.cpp:
+          For the moment make -as the default, that should resolve a lot of
+          issues on the scoreboard and makes it possible to resolve the fallout
+          seperately and get a feeling on the current repo status
+
 Sat Jul 24 07:35:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/OBV/ValueBox/vb_struct.idl:
