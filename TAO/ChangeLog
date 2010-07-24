@@ -1,3 +1,10 @@
+Sat Jul 24 07:35:12 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/OBV/ValueBox/vb_struct.idl:
+
+          Removed anonymous constructs from test IDL and modified
+          test code accordingly.
+
 Sat Jul 24 07:28:04 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
