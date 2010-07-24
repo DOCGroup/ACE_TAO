@@ -1,8 +1,13 @@
+Sat Jul 24 07:04:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+          Added.
+
 Fri Jul 23 17:41:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst:
 
-          Add in the Hello SHS test. 
+          Add in the Hello SHS test.
 
 Fri Jul 23 17:37:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
