@@ -1,3 +1,11 @@
+Sat Jul 24 07:15:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3506_Regression/IF_EXE_M_R_Structs.idl:
+        * tests/Bug_3524_Regression/test.idl:
+
+          Removed anonymous constructs from test IDL and modified
+          test code accordingly.
+
 Fri Jul 23 20:59:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_global.h:
@@ -5,16 +13,16 @@ Fri Jul 23 20:59:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/driver/drv_args.cpp:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added -as option to completely silence any diagnostic
           for anonymous IDL constructs.
-          
+
         * docs/compiler.html:
-        
+
           Updated IDL compiler options documentation.
-          
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Replace -aw option with the new -as option.
 
 Fri Jul 23 19:56:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -22,7 +30,7 @@ Fri Jul 23 19:56:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Param_Test/big_union.cpp:
         * tests/Param_Test/param_test.idl:
         * tests/Param_Test/recursive_union.cpp:
-        
+
           Removed anonymous constructs from test IDL and modified
           test code accordingly.
 
@@ -33,7 +41,7 @@ Thu Jul 22 19:21:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/Test.idl:
         * performance-tests/Anyop/test.idl:
         * tests/Bug_2119_Regression/test.idl:
-        
+
           Fix anonymous type errors.
 
 Thu Jul 22 03:57:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -365,7 +373,7 @@ Mon Jul 12 08:19:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           - Refactored non-data code in FE and BE global data classes
             to corresponding utils classes.
 
-          - Changed code generation triggered by –SS to generate the
+          - Changed code generation triggered by ï¿½SS to generate the
             *S.h and *C.h includes, so they can be propagated to
             including IDL files.
 
