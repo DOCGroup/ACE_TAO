@@ -1,3 +1,10 @@
+Mon Jul 26 13:40:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Tweak a preprocessor check for MSVC and unicode.
+
 Mon Jul 26 13:01:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Properties.idl:
@@ -5,9 +12,9 @@ Mon Jul 26 13:01:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
           Added property for CPU Affinity.
 
         * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
-        
+
           Bugfix.
-        
+
         * DAnCE/tests/LocalityManager/CPUAffinity:
         * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.idl:
         * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.mpc:
