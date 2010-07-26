@@ -151,8 +151,12 @@ namespace DAnCE
       }
     
     PLUGIN_MANAGER::instance ()->register_configuration_plugin (
-	       ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
+               ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
                ACE_TEXT_CHAR_TO_TCHAR ("create_Process_Name"));
+
+    PLUGIN_MANAGER::instance ()->register_configuration_plugin (
+               ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
+               ACE_TEXT_CHAR_TO_TCHAR ("create_CPU_Affinity"));
 
     if (this->props_)
       {
@@ -170,18 +174,18 @@ namespace DAnCE
           {
             DANCE_DEBUG (8, (LM_DEBUG, DLINFO
                              ACE_TEXT ("LocalityManager_i::init - ")
-			     ACE_TEXT ("Looking up configuration handler for <%C>\n"),
-			     this->props_[i].name.in ()));
+                             ACE_TEXT ("Looking up configuration handler for <%C>\n"),
+                             this->props_[i].name.in ()));
 
             ::DAnCE::LocalityConfiguration_var config = 
               PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
             
             if (config.in ())
               {
-		DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-				 ACE_TEXT ("LocalityManager_i::init - ")
-				 ACE_TEXT ("Invoking configuration handler for <%C>\n"),
-				 this->props_[i].name.in ()));
+                DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                                 ACE_TEXT ("LocalityManager_i::init - ")
+                                 ACE_TEXT ("Invoking configuration handler for <%C>\n"),
+                                 this->props_[i].name.in ()));
                 config->configure (this->props_[i]);
               }
           }

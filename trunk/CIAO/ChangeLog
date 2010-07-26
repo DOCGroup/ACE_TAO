@@ -1,3 +1,15 @@
+Mon Jul 26 01:14:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.h:
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity_export.h:
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          CPU Affinity configuration plugin.  Currently works on Linux
+          kernel 2.5.8 or later.
+
 Sat Jul 24 07:04:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
