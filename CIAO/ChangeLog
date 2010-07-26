@@ -1,3 +1,13 @@
+Mon Jul 26 17:50:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+
+          Use ACE_OS::num_processors to detect if #cpus is greater than 1.
+        
+        * bin/ciao_tests.lst:
+
+          remove MULTICORE from restrictions.
+
 Mon Jul 26 13:40:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/XML/XercesString.h:
