@@ -47,8 +47,8 @@ namespace DAnCE
       {
         char *tmp (0);
         ACE_NEW_THROW_EX (tmp,
-			  char[16],
-			  CORBA::NO_MEMORY ());
+                          char[16],
+                          CORBA::NO_MEMORY ());
         
         safe_array.reset (tmp);
         
