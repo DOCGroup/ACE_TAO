@@ -1,3 +1,9 @@
+Mon Jul 26 07:02:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += corba_e_compact.
+
 Thu Jul 22 04:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/config/inet.mpb:

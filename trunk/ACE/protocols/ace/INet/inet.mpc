@@ -9,6 +9,7 @@ project(INet) : acelib, ace_output, install, inet_ssl {
   avoids += old_stdstream
   avoids += exclude_inet
   avoids += ace_for_tao
+  avoids += corba_e_compact
   Source_Files {
     IOS_util.cpp
     INet_Log.cpp
