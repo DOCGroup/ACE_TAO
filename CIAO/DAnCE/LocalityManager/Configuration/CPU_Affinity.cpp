@@ -29,7 +29,7 @@ namespace DAnCE
 
   char * CPU_Affinity::type (void)
   {
-    return CORBA::string_dup (DAnCE::DANCE_LM_PROCESSNAME);
+    return CORBA::string_dup (DAnCE::DANCE_LM_CPUAFFINITY);
   }
 
   void CPU_Affinity::configure (const ::Deployment::Property & prop)
@@ -63,6 +63,10 @@ namespace DAnCE
         
         if (i >= 0)
           {
+            DANCE_DEBUG (7, (LM_DEBUG, DLINFO
+                             ACE_TEXT ("CPU_Affinity::configure - ") 
+                             ACE_TEXT ("Toggling affinity for CPU %i\n"),
+                             i));
             CPU_SET (i, &mask);
           }
         else
@@ -97,6 +101,9 @@ namespace DAnCE
         throw ::Deployment::StartError (prop.name.in (),
                                         message.c_str ());
       }
+    
+    return;
+
 #endif
 #endif
     
