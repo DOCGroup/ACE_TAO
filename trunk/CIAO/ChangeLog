@@ -1,3 +1,11 @@
+Mon Jul 26 01:57:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/CommandlinePassage:
+        * DAnCE/tests/CIAO/CommandlinePassage:
+        * bin/ciao_tests.lst:
+        
+          Moved CommandLinePassage test to a more appropriate location.
+
 Mon Jul 26 01:53:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
