@@ -63,6 +63,13 @@ namespace CIAO_cpuaffinity_A_Impl
   {
 #if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
+    
+    if (ACE_OS::num_processors () < 2)
+      {
+        ACE_DEBUG ((LM_DEBUG, "This machine only has a single processor, aborting\n"));
+        return;
+      }
+
     cpu_set_t mask;
     CPU_ZERO (&mask);
 
