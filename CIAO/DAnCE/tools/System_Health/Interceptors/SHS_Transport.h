@@ -21,6 +21,8 @@ namespace DAnCE
     class SHS_Transport
     {
     public:
+      virtual ~SHS_Transport (void) {}
+
       virtual void configure (const Deployment::Properties &) = 0;
       
       virtual void push_event (const Status_Update &update) = 0;

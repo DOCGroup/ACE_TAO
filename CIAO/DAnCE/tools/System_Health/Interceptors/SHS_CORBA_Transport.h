@@ -22,7 +22,7 @@ namespace DAnCE
     public:
       SHS_CORBA_Transport (void);
       
-      ~SHS_CORBA_Transport (void);
+      virtual ~SHS_CORBA_Transport (void);
       
       virtual void configure (const Deployment::Properties &);
       
