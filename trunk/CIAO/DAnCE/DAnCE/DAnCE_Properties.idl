@@ -84,5 +84,6 @@ module DAnCE
   const string DANCE_LM_LIBPATH = "edu.vanderbilt.dre.DAnCE.LocalityManager.libpath";
   const string DANCE_LM_INSTALLER = "edu.vanderbilt.dre.DAnCE.LocalityManager.installer";
   const string DANCE_LM_PROCESSNAME = "edu.vanderbilt.dre.DAnCE.LocalityManager.ProcessName";
+  const string DANCE_LM_CPUAFFINITY = "edu.vanderbilt.dre.DAnCE.LocalityManager.CPUAffinity";
 };
 

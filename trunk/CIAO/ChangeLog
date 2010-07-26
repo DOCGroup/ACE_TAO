@@ -1,3 +1,25 @@
+Mon Jul 26 13:01:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+
+          Added property for CPU Affinity.
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        
+          Bugfix.
+        
+        * DAnCE/tests/LocalityManager/CPUAffinity:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.idl:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.mpc:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.h:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+        * DAnCE/tests/LocalityManager/CPUAffinity/Component.cdp:
+        * DAnCE/tests/LocalityManager/CPUAffinity/run_test.pl:
+        * bin/ciao_tests.lst:
+
+          Added test for CPUAffinity.  Must have MULTICORE set for test
+          script.  This test requires at least 2 processors/cores.
+
 Mon Jul 26 12:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
