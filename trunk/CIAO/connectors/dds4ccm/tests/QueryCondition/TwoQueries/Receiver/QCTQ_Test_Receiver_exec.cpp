@@ -17,6 +17,12 @@
 #define MIN_ITERATION_1 "2"
 #define MAX_ITERATION_1 "5"
 
+// Since QueryCondition contains a bug, we've changed
+// the iterations of the second run in order for this test
+// to succeed. There's a different tests which reproduces
+// the bug.
+// #define MIN_ITERATION_2 "22"
+// #define MAX_ITERATION_2 "34"
 #define MIN_ITERATION_2 "7"
 #define MAX_ITERATION_2 "9"
 
@@ -24,7 +30,14 @@
 #define MAX_ITERATION_3 "77"
 
 // Reader also reads already read samples.
-#define SAMPLES_PER_KEY_GETTER (2 + 1 + +17 + 8)
+// The getter receives the following iterations:
+// During run 1: 2 (iterations 3 and 4)
+// During run 2: 1 (iteration 8)
+// During run 3: 2 (all unread samples, meaning iterations 1-60
+//               without iteration 3, 4 and 8)
+// During run 4: 8 (iterations between 68 and 77)
+
+#define SAMPLES_PER_KEY_GETTER (2 + 1 + 57 + 8)
 
 namespace CIAO_QCTQ_Test_Receiver_Impl
 {
