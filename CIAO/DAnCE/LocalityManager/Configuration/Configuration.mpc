@@ -1,11 +1,14 @@
+// $Id$
 project (DAnCE_LM_Config_Plugins) : dance_deployment_stub, dance_stub, dance_lib, dance_output {
   dynamicflags += PROCESS_NAME_BUILD_DLL
 
   Source_Files {
     Process_Name.cpp
+    CPU_Affinity.cpp
   }
 
   Header_Files {
     Process_Name.h
+    CPU_Affinity.h
   }
 }
