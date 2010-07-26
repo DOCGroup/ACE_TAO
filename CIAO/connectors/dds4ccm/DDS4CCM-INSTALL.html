@@ -1,0 +1,52 @@
+<!-- $Id$  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>Building and Installing DDS4CCM</title>
+    <LINK rev="made" href="mailto:schmidt@cs.wustl.edu"></head>
+  <body text="#000000" vLink="#ff0f0f" link="#000fff" bgColor="#ffffff">
+    <hr>
+    <h3>Introduction</h3>
+    <p>The DDS4CCM connector implements the DDS4LwCCM specification.<br/>
+      DDS4CCM is part of CIAO and intergrates DDS into a Component based framework,
+      which can be easily deployed, using DAnCE.<br/>
+      For now, the DDS4CCM connector only supports
+      <a href="http://www.rti.com/products/dds/index.html">RTI DDS</a>.
+    </p>
+    <h3>Building and Installing DDS4CCM</h3>
+    <p>First of all, be sure that CIAO is build and installed and functioning as
+      expected (see <a href="../../CIAO-INSTALL.html">CIAO-INSTALL.html</a> on
+      how to build and install CIAO).<br/>
+      DDS4CCM uses DAnCE as deployement tool in all of the examples and tests.
+      Therefor one should also be sure that DAnCE is build and installed
+      in order to run the DDS4CCM examples.<br/><br/>
+      But... before one builds and installs CIAO and DAnCE, one should
+      first set the correct flags in the default.features and platform_macros.GNU.
+    </p>
+    <h4>Setting up default.features and platform_macros.GNU</h4>
+    <p>Besided the flags needed to build ACE, TAO, CIAO, and, DAnCE, the following
+      flags should be added for DDS4CCM.
+    </p>
+    <p>default.features should contain the following flags:<br/>
+      <ul>
+        <li><code>dds4ccm_ndds=1</code></li>
+      </ul>
+    </p>
+    <p>platform_macros.GNU should contain the following flags:<br/>
+      <ul>
+        <li><code>ndds=1</code></li>
+      </ul>
+    </p>
+    <p>
+      To be sure that CIAO, DAnCE and DDS4CCM are build correctly, one might
+      use the CIAO_TAO_DAnCE.mwc workspace.
+    </p>
+    <hr>
+
+    <h3>Supported Platforms for DDS4CCM</h3>
+    <p>DDS4CCM should be usable on all platforms that CIAO runs on.
+    </p>
+    <hr>
+    <p>Back to the <a href="../../CIAO-INSTALL.html">CIAO</a> install page</p>
+  </body>
+</html>
