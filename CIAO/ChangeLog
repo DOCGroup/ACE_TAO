@@ -1,3 +1,10 @@
+Mon Jul 26 01:53:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+
+          Address exception warning on Windows.
+
 Mon Jul 26 01:51:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.h:

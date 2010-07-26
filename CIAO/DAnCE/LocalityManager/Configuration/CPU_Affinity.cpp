@@ -111,9 +111,9 @@ extern "C"
   {
     DAnCE::LocalityConfiguration_ptr retval (0);
     
-    ACE_NEW_THROW_EX (retval,
-                      DAnCE::CPU_Affinity (),
-                      CORBA::NO_MEMORY ());
+    ACE_NEW_RETURN (retval,
+                    DAnCE::CPU_Affinity (),
+                    0);
 
     return retval;
   }
