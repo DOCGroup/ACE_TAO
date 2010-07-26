@@ -1604,7 +1604,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_set_size The size of the cpu_mask, in bytes.
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */
@@ -1621,7 +1621,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_set_size The size of the cpu_mask, in bytes.
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */
