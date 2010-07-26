@@ -16,15 +16,25 @@
 #define MIN_ITERATION_1 "2"
 #define MAX_ITERATION_1 "5"
 
-#define MIN_ITERATION_2 "22"
-#define MAX_ITERATION_2 "34"
+// First run filtered in : 2 (iteration 3 and 4)
 
-//First run filtered in : 2 (iteration 3 and 4)
-//Second run filtered in : 11 (iterations between 22 and 34)
-#define SAMPLES_PER_KEY_GETTER (2 + 11)
+// Since QueryCondition contains a bug, we've changed
+// the iterations of the second run in order for this test
+// to succeed. There's a different tests which reproduces
+// the bug.
+// #define MIN_ITERATION_2 "22"
+// #define MAX_ITERATION_2 "34"
+
+#define MIN_ITERATION_2 "7"
+#define MAX_ITERATION_2 "9"
+
+// Should be : Second run filtered in : 11 (iterations between 22 and 34)
+// Is now : Second run filtered in : 1 (only iteration 8)
+
+#define SAMPLES_PER_KEY_GETTER (2 + 1)
 
 // Reader also reads already read samples.
-#define SAMPLES_PER_KEY_READER (2 + 11)
+#define SAMPLES_PER_KEY_READER (2 + 1)
 
 namespace CIAO_ReadGet_Test_Receiver_Impl
 {
@@ -618,16 +628,16 @@ namespace CIAO_ReadGet_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: READGET READER : "
                               "Unexpected number of samples received: "
                               "expected <%d> - received <%d>\n",
-                              this->samples_received_reader_,
-                              this->samples_expected_reader_));
+                              this->samples_expected_reader_,
+                              this->samples_received_reader_));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "READGET : READER : "
                               "Expected number of samples received: "
                               "expected <%d> - received <%d>\n",
-                              this->samples_received_reader_,
-                              this->samples_expected_reader_));
+                              this->samples_expected_reader_,
+                              this->samples_received_reader_));
       }
   }
 

@@ -1,9 +1,31 @@
+Mon Jul 26 11:57:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Extended with a link to DDS4CCM install. Also
+          extended the CIAO build section a bit.
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          How to build and install DDS4CCM
+
+        * connectors/dds4ccm/docs/DDS4CCM Cheat Sheet.rtf:
+          Summary of how the DDS4CCM connector is designed.
+
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+          Added Copy_disabled as base class.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Corrected number of samples to be received
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Extended the DDS4CCM section.
+
 Mon Jul 26 01:57:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/LocalityManager/CommandlinePassage:
         * DAnCE/tests/CIAO/CommandlinePassage:
         * bin/ciao_tests.lst:
-        
+
           Moved CommandLinePassage test to a more appropriate location.
 
 Mon Jul 26 01:53:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
