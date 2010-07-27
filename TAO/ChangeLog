@@ -1,3 +1,36 @@
+Tue Jul 27 20:00:14 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        
+          Modified IDL compiler handling of anonymous types.
+          Default is now silence, or no output. IDL_ANON_ERROR,
+          IDL_ANON_WARNING, or IDL_ANON_SILENT may be defined
+          in config.h to select global behavior of outputting
+          error, warning or nothing respectively. The command
+          line options -ae (error), -aw (warning) or -as
+          (silent) may be used to override this behavior
+          locally.
+          
+        * MPC/config/idl_anon_error.mpb:
+        * MPC/config/idl_anon_warning.mpb:
+        * MPC/config/idl_anon_silent.mpb:
+        
+          New base project files, which simply add -ae, -aw
+          or -as, respectively, to the IDL compiler command
+          line.
+          
+        * docs/compiler.html:
+        
+          Updated IDL compiler documentation.
+          
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Removed -as option from project, it is now the default
+          behavior.
+
 Tue Jul 27 11:51:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * examples/CSD_Strategy/ThreadPool5/Foo.idl:

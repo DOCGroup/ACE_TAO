@@ -143,13 +143,18 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
+      ACE_TEXT ("(default is silent)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
-      ACE_TEXT ("(default is error)\n")
+      ACE_TEXT ("(default is silent)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
-      ACE_TEXT ("(default is error)\n")
+      ACE_TEXT ("(default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -268,13 +273,20 @@ DRV_parse_args (long ac, char **av)
               ACE_OS::strcat (idl_global->local_escapes (), " ");
               break;
             case 'a':
-              if (av[i][2] == 'w')
+              if (av[i][2] == 'e')
                 {
-                  idl_global->anon_warning (true);
+                  idl_global->anon_type_diagnostic (
+                    IDL_GlobalData::ANON_TYPE_ERROR);
+                }
+              else if (av[i][2] == 'w')
+                {
+                  idl_global->anon_type_diagnostic (
+                    IDL_GlobalData::ANON_TYPE_WARNING);
                 }
               else if (av[i][2] == 's')
                 {
-                  idl_global->anon_silent (true);
+                  idl_global->anon_type_diagnostic (
+                    IDL_GlobalData::ANON_TYPE_SILENT);
                 }
               else
                 {
