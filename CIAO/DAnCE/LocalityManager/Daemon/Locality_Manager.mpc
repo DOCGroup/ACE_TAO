@@ -32,4 +32,10 @@ project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
   specific {
     install_dir = DAnCE/LocalityManager/Daemon
   }
+
+  verbatim(gnuace, postinstall) {
+"	$(MKDIR) $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Daemon"
+"	cp  Locality_Manager_Task.cpp $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Daemon/"
+"	cp  Locality_Manager.cpp $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Daemon/"
+  }
 }
