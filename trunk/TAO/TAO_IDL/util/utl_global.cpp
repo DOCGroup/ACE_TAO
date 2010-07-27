@@ -152,8 +152,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     current_params_ (0),
     included_ami_receps_done_ (false),
     corba_module_ (0),
-    anon_warning_ (false),
-    anon_silent_ (true),
+    anon_type_diagnostic_ (ANON_TYPE_SILENT),
     in_typedef_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
@@ -207,6 +206,14 @@ IDL_GlobalData::IDL_GlobalData (void)
                        ace_root);
 #endif /* ACE_GPERF */
     }
+    
+#if defined (IDL_ANON_ERROR)
+  this->anon_type_diagnostic_ = ANON_TYPE_ERROR;
+#elif defined (IDL_ANON_WARNING)
+  this->anon_type_diagnostic_ = ANON_TYPE_WARNING;
+#elif defined (IDL_ANON_SILENT)
+  this->anon_type_diagnostic_ = ANON_TYPE_SILENT;
+#endif
 
   // ambiguous_type_seen_ and basic_type_seen_ are not reset between
   // command line idl files, so do those here and then reset the rest.
@@ -1727,28 +1734,29 @@ IDL_GlobalData::include_paths (void)
   return this->include_paths_;
 }
 
+void
+IDL_GlobalData::anon_type_diagnostic (
+  IDL_GlobalData::ANON_TYPE_DIAGNOSTIC val)
+{
+  this->anon_type_diagnostic_ = val;
+}
+
+bool
+IDL_GlobalData::anon_error (void) const
+{
+  return (this->anon_type_diagnostic_ == ANON_TYPE_ERROR);
+}
+
 bool
 IDL_GlobalData::anon_warning (void) const
 {
-  return this->anon_warning_;
-}
-
-void
-IDL_GlobalData::anon_warning (bool val)
-{
-  this->anon_warning_ = val;
+  return (this->anon_type_diagnostic_ == ANON_TYPE_WARNING);
 }
 
 bool
 IDL_GlobalData::anon_silent (void) const
 {
-  return this->anon_silent_;
-}
-
-void
-IDL_GlobalData::anon_silent (bool val)
-{
-  this->anon_silent_ = val;
+  return (this->anon_type_diagnostic_ == ANON_TYPE_SILENT);
 }
 
 bool
