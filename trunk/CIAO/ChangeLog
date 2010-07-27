@@ -1,3 +1,9 @@
+Tue Jul 27 23:19:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+
+          Further tweak of previous fix.
+
 Tue Jul 27 22:45:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
