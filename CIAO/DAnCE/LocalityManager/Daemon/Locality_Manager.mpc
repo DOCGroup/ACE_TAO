@@ -20,7 +20,7 @@ project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
 }
 
 project (DAnCE_LocalityManager_Exec) : dance_exe, dance_exe, dance_output, \
-        dance_locality_manager, ciao_logger {
+        dance_locality_manager, ciao_logger, install {
   exename = dance_locality_manager
   libs += CIAO_Deployment_Handlers
   after += CIAO_Deployment_Handlers
