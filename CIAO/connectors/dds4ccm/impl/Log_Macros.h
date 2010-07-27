@@ -11,6 +11,7 @@
 
 // default information printed with CIAO logging messages.
 
+#include "ace/Log_Msg.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
