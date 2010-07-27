@@ -1602,12 +1602,21 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 void
 UTL_Error::anonymous_type_diagnostic (void)
 {
+  if (idl_global->anon_silent ())
+    {
+      return;
+    }
+    
   bool aw = idl_global->anon_warning ();
   bool nw = (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
-  bool warning = (aw & !nw);
+  
+  if (aw && nw)
+    {
+      return;
+    }
   
   ErrorCode ec =
-    (warning ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
+    (aw ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
     
   idl_error_header (ec,
                     idl_global->lineno (),
@@ -1615,7 +1624,7 @@ UTL_Error::anonymous_type_diagnostic (void)
                     
   ACE_ERROR ((LM_ERROR, "\n"));
   
-  if (!warning)
+  if (ec == EIDL_ANONYMOUS_ERROR)
     {
       idl_global->set_err_count (idl_global->err_count () + 1);
     }

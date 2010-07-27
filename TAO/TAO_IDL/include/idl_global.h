@@ -710,13 +710,22 @@ public:
   Unbounded_Paths_Queue &include_paths (void);
   // Accessor for the member.
   
-  bool anon_warning (void) const;
-  void anon_warning (bool val);
-  // Accessors for the member.
+  enum ANON_TYPE_DIAGNOSTIC
+  {
+    ANON_TYPE_ERROR,
+    ANON_TYPE_WARNING,
+    ANON_TYPE_SILENT
+  };
+  // Determines which type of diagnostic to emit, if any, upon
+  // detecting the presence of an anonymous IDL construct.
   
+  void anon_type_diagnostic (ANON_TYPE_DIAGNOSTIC val);
+  // Mutator for the member.
+  
+  bool anon_error (void) const; 
+  bool anon_warning (void) const;
   bool anon_silent (void) const;
-  void anon_silent (bool val);
-  // Accessors for the member.
+  // Simple checks for the value of anon_type_diagnostic_.
   
   bool in_typedef (void) const;
   void in_typedef (bool val);
@@ -887,14 +896,7 @@ private:
   /// For quick access.
   AST_Module *corba_module_;
   
-  /// Anonymous type diagnostic limited to warning?
-  /// False by default, can be overridden from command line.
-  /// Error mesesage is default behavior.
-  bool anon_warning_;
-  
-  /// Anonymous type diagnostic completely disabled?
-  /// False by default.
-  bool anon_silent_;
+  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
   
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
