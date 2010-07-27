@@ -1,3 +1,12 @@
+Tue Jul 27 11:51:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool5/Foo.idl:
+        * examples/Logging/Logger.idl:
+        * tests/DII_Collocation_Tests/oneway/Test.idl:
+
+          Removed anonymous constructs from test IDL and modified
+          test code accordingly.
+
 Sat Jul 24 20:41:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_global.cpp:
