@@ -1,3 +1,8 @@
+Tue Jul 27 15:52:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Resolve compile issue on Windows.
+
 Tue Jul 27 07:23:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/Log_Macros.h:
