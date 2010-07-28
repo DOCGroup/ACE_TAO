@@ -1,3 +1,10 @@
+Wed Jul 28 07:30:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          LocalityManager/run_test.pl doesn't exist and
+          LocalityManager/CommandlinePassage/run_test.pl wasn't listed.
+          Corrected this.
+
 Wed Jul 28 07:17:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
