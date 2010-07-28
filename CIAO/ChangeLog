@@ -1,3 +1,9 @@
+Wed Jul 28 12:29:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+          Fuzz
+
 Wed Jul 28 07:30:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
