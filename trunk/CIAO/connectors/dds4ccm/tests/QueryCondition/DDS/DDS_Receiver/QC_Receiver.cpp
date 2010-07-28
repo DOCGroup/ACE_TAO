@@ -180,7 +180,7 @@ int clean_up (DDSDomainParticipant * participant)
   return main_result;
 }
 
-int ACE_TMAIN (int , char *[])
+int ACE_TMAIN (int , ACE_TCHAR *[])
 {
   int                 main_result = 1; /* error by default */
   DDSTopic*           topic = 0;

@@ -65,7 +65,7 @@ void write (DDSDataWriter * writer)
   last_iteration_ = number_of_iterations_ * run_;
 }
 
-int ACE_TMAIN (int , char *[])
+int ACE_TMAIN (int , ACE_TCHAR *[])
 {
     DDS_ReturnCode_t    retcode;
     DDSTopic*           topic = 0;
