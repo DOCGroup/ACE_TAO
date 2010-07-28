@@ -6,6 +6,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.0 and ACE-5.8.1
 . Reduced the amount of doxygen pages generated, the original settings caused
   a doxygen generated html package of 1.4GB which was way too large
 
+. Extended ACE INet addon library with:
+  * HTTP Basic Authentication
+  * SSL/HTTPS support.
+  * Proxy CONNECT tunneling.
+
+
 USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 ====================================================
 
