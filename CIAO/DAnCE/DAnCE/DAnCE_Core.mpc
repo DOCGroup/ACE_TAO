@@ -26,7 +26,7 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
 
 project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
          dance_applicationmanager_stub, dance_deployment_stub, \
-	 dance_logger \
+	 dance_logger, install \
 {
   after += DAnCE_IDL
   dynamicflags += DANCE_STUB_BUILD_DLL
@@ -41,10 +41,23 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
     DAnCE_Utility.cpp
     DAnCE_DeploymentInterceptors_Base_Impl.cpp
   }
+
+  Header_Files {
+    DAnCE_Utility.h
+    DAnCE_stub_export.h
+    DAnCE_DeploymentInterceptorsC.h
+    DAnCE_PropertiesC.h
+    DAnCE_LocalityManagerC.h
+    DAnCE_ArtifactInstallationC.h
+  }
+
+  Template_Files {
+    DAnCE_Utility.tpp
+  }
 }
 
 project (DAnCE_skel) : ciaolib_with_idl, dance_output, dance_stub, \
-         dance_applicationmanager_skel, dance_deployment_skel \
+         dance_applicationmanager_skel, dance_deployment_skel, install   \
 {
   dynamicflags += DANCE_SKEL_BUILD_DLL
   IDL_Files {
@@ -53,5 +66,11 @@ project (DAnCE_skel) : ciaolib_with_idl, dance_output, dance_stub, \
   Source_Files {
     DAnCE_LocalityManagerS.cpp
     DAnCE_ArtifactInstallationS.cpp
+  }
+
+  Header_Files {
+    DAnCE_LocalityManagerS.h
+    DAnCE_ArtifactInstallationS.h
+    DAnCE_skel_export.h
   }
 }
