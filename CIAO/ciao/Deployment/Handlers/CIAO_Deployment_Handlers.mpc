@@ -1,5 +1,5 @@
 // $Id$
-project (CIAO_Deployment_Handlers) : dance_stub, ciao_base, ciao_lib, ciao_output, \
+project (CIAO_Deployment_Handlers) : install, dance_stub, ciao_base, ciao_lib, ciao_output, \
         ciao_session_container, ciao_logger, dance_logger {
   dynamicflags += CIAO_LOCALITY_HANDLER_BUILD_DLL
 
@@ -20,5 +20,9 @@ project (CIAO_Deployment_Handlers) : dance_stub, ciao_base, ciao_lib, ciao_outpu
     Homed_Component_Handler.h
     CIAO_State.h
     CIAO_Locality_Handler_Export.h
+  }
+
+  specific {
+    install_dir = ciao/Deployment/Handlers
   }
 }
