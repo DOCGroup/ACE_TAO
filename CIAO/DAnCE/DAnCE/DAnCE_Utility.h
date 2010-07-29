@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "DAnCE_stub_export.h"
+#include "DAnCE/DAnCE_stub_export.h"
 
 #include "ace/config-all.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -137,11 +137,11 @@ namespace DAnCE
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "DAnCE_Utility.tpp"
+#include "DAnCE/DAnCE_Utility.tpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DAnCE_Utility.tpp")
+#pragma implementation ("DAnCE/DAnCE_Utility.tpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 
