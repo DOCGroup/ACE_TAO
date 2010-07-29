@@ -3,6 +3,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
 
 . Implemented _get_component for AMI4CCM
 
+. Implemented resetting of Query Conditions in the
+  DDS4CCM connector. This according to the beta 3
+  specification.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 =======================================================
 
