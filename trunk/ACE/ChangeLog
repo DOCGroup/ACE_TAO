@@ -1,3 +1,13 @@
+Thu Jul 29 10:43:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Created a new feature, inet_ssl. When set, the INet libary
+          builds, using SSL. To let the INet libary use SSL, one should
+          enable the inet_ssl feature in default.features and add ssl=1 to
+          the platform_macos.GNU.
+
 Mon Jul 26 20:26:53 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.h: Note that the cpu_set_size to the get/set
@@ -30,7 +40,7 @@ Wed Jul 21 15:52:32 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Reverted for_TAO specific change, revised the processing to
           ensure default first, then files, then cmdline directives.
-        
+
 Wed Jul 21 03:07:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:
