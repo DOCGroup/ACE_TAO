@@ -314,6 +314,12 @@ project(Deployment_AM_skel) : install, dance_output, dance_deployment_skel, danc
   Source_Files {
     Deployment_ApplicationManagerS.cpp
   }
+
+  Header_Files {
+    Deployment_ApplicationManagerS.h
+    Deployment_ApplicationManager_skel_export.h
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -695,6 +701,10 @@ project(Deployment_skel) : install, dance_deployment_stub, dance_output, ciaolib
   Source_Files {
     Deployment_ApplicationS.cpp
     Deployment_ResourceCommitmentManagerS.cpp
+  }
+  
+  Header_Files {
+    Deployment_skel_export.h
   }
 
   specific {
