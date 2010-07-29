@@ -63,6 +63,7 @@ mcpp          = 0
 wireshark     = 0
 old_stdstream = 0
 exclude_inet  = 0
+inet_ssl      = 0
 
 dds4ccm_opendds = 0
 dds4ccm_ndds = 0

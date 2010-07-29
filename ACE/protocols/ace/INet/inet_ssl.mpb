@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(ssl) : ssl {
+feature(inet_ssl) : ssl {
   Source_Files {
     SSL_X509Cert.cpp
     SSL_CertificateCallback.cpp
@@ -12,10 +12,12 @@ feature(ssl) : ssl {
     HTTPS_SessionFactory.cpp
     SSL_Proxy_Connector.cpp
   }
+
   Template_Files {
     SSLSock_IOStream.cpp
     HTTPS_Session.cpp
   }
+
   Header_Files {
   }
 }
