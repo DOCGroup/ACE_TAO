@@ -241,6 +241,25 @@ project(Deployment_stub) : install, ciaolib_with_idl, dance_output, valuetype, i
     Deployment_InvalidComponentExecParameterC.h
     Deployment_InvalidConnectionC.h
     Deployment_ResourceNotAvailableC.h
+
+    Deployment_StopErrorS.h
+    Deployment_StartErrorS.h
+    Deployment_BaseS.h
+    Deployment_ConnectionS.h
+    Deployment_DataS.h
+    Deployment_DeploymentPlanS.h
+    Deployment_TargetDataS.h
+    Deployment_ApplicationS.h
+    Deployment_Packaging_DataS.h
+    Deployment_PlanErrorS.h
+    DeploymentS.h
+    Deployment_ResourceCommitmentManagerS.h
+    Deployment_InvalidPropertyS.h
+    Deployment_InvalidNodeExecParameterS.h
+    Deployment_InvalidComponentExecParameterS.h
+    Deployment_InvalidConnectionS.h
+    Deployment_ResourceNotAvailableS.h
+
     Deployment_stub_export.h
   }
 
