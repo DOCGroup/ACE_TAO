@@ -1,3 +1,10 @@
+Thu Jul 29 02:27:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Explicitly close the plugin manager in the shutdown operation instead of
+          the destructor so it is called before the ORB is destroyed.
+
 Wed Jul 28 12:29:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
