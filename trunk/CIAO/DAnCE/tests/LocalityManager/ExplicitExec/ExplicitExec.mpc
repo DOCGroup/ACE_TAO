@@ -3,6 +3,7 @@
 project (DAnCE_LocalityManager_ExplicitExec) : \
         dance_locality_manager, ciao_logger {
   exename = explicit_exec
+  avoids += test_installed
   libs += CIAO_Deployment_Handlers
   after += CIAO_Deployment_Handlers 
   
