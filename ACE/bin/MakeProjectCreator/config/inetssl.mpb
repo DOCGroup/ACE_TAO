@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-feature(ssl) : ssl {
-} 
+feature(inet_ssl) : ssl {
+}
