@@ -39,8 +39,6 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::~LocalityManager_i");
 
     this->scheduler_.terminate_scheduler ();
-
-    PLUGIN_MANAGER::close ();
   }
 
   void
@@ -985,6 +983,8 @@ namespace DAnCE
                      uuid_.c_str ()));
 
     this->orb_->shutdown ();
-    // Add your implementation here
+    
+    // Explicitly close the plugin manager to release memory.
+    PLUGIN_MANAGER::close ();
   }
 }
