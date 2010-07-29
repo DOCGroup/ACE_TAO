@@ -1,3 +1,12 @@
+Thu Jul 29 13:44:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+
+          Attempt at some install fixes.
+
 Thu Jul 29 12:33:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * CIAO-INSTALL.html:

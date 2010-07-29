@@ -1,5 +1,5 @@
 // $Id$
-project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance_logger {
+project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance_logger, install {
   dynamicflags += DEPLOYMENT_SCHEDULER_BUILD_DLL
  
   includes += $(DANCE_ROOT)/tools
@@ -38,5 +38,12 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
 
   specific {
     install_dir = DAnCE/LocalityManager/Scheduler
+  }
+
+  verbatim(gnuace, postinstall) {
+"	$(MKDIR) $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Scheduler"
+"	cp  Deployment_Scheduler.h $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Scheduler/"
+"	cp  Deployment_Event.h $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Scheduler/"
+"	cp  Deployment_Scheduler_export.h $(INSTALL_PREFIX)/share/DAnCE/LocalityManager/Scheduler/"
   }
 }
