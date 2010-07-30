@@ -1,7 +1,7 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.8.0 and ACE-5.8.1
 ====================================================
 
-. Added support for Microsoft Visual Studio 2010
+. Added support for Microsoft Visual Studio 2010 using nmake 
 
 . Reduced the amount of doxygen pages generated, the original settings caused
   a doxygen generated html package of 1.4GB which was way too large
@@ -10,7 +10,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.8.0 and ACE-5.8.1
   * HTTP Basic Authentication
   * SSL/HTTPS support.
   * Proxy CONNECT tunneling.
-
 
 USER VISIBLE CHANGES BETWEEN ACE-5.7.9 and ACE-5.8.0
 ====================================================
