@@ -1,3 +1,10 @@
+Sat Jul 31 14:53:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+          Installed fixes.
+
 Fri Jul 30 11:22:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
