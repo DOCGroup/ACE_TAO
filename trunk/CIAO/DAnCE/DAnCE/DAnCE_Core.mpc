@@ -42,6 +42,13 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
     DAnCE_DeploymentInterceptors_Base_Impl.cpp
   }
 
+  Inline_Files {
+    DAnCE_DeploymentInterceptorsC.inl
+    DAnCE_PropertiesC.inl
+    DAnCE_LocalityManagerC.inl
+    DAnCE_ArtifactInstallationC.inl
+  }
+
   Header_Files {
     DAnCE_Utility.h
     DAnCE_stub_export.h
@@ -66,6 +73,11 @@ project (DAnCE_skel) : ciaolib_with_idl, dance_output, dance_stub, \
   Source_Files {
     DAnCE_LocalityManagerS.cpp
     DAnCE_ArtifactInstallationS.cpp
+  }
+
+  Inline_Files {
+    DAnCE_LocalityManagerS.inl
+    DAnCE_ArtifactInstallationS.inl
   }
 
   Header_Files {
