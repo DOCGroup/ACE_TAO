@@ -7,6 +7,29 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
   DDS4CCM connector. This according to the beta 3
   specification.
 
+. Added a preliminary System Health and Status Service.  Please see
+  DAnCE/tools/System_Health.  This has two parts:  there is the
+  interceptor, which publishes instance status updates using a
+  strategizeable transport protocol (included in this release is a
+  simple CORBA transport plugin), and there is the dance_shs_daemon.
+  A test which uses the SHS service is
+  CIAO/examples/Hello/descriptors/run_test_shs.pl.
+
+. Added a new configuration plugin facility to the LocalityManager.
+  This faciliy will invoke configuration plugins based on
+  configProperties attached to an explicitly deployed LocalityManager
+  instance.  Included plugins are one for CPU Affinity, and another
+  for setting the locality manager process name.  Both work only under
+  Linux 2.6 and later.  Please see
+  DAnCE/tests/LocalityManager/ProcessName and
+  DAnCE/tests/LocalityManager/CPUAffinity for information on how to
+  use these plugins.
+
+. There is a known bug when running some of the LocalityManager tests
+  (DAnCE/tests/LocalityManager), in which an attempt to tear down a
+  locality manager with no installed components results in a memory
+  access violation.  This will be fixed in CIAO 0.8.2.
+ 
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 =======================================================
 
