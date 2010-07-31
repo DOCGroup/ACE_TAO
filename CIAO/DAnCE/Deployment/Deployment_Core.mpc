@@ -315,6 +315,10 @@ project(Deployment_AM_skel) : install, dance_output, dance_deployment_skel, danc
     Deployment_ApplicationManagerS.cpp
   }
 
+  Inline_Files {
+    Deployment_ApplicationManagerS.inl
+  }
+
   Header_Files {
     Deployment_ApplicationManagerS.h
     Deployment_ApplicationManager_skel_export.h
@@ -366,6 +370,11 @@ project(Deployment_DAM_skel) : install, dance_output, dance_applicationmanager_s
   Source_Files {
     Deployment_DomainApplicationManagerS.cpp
   }
+
+  Inline_Files {
+    Deployment_DomainApplicationManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -456,6 +465,11 @@ project(Deployment_DomainApplication_skel) : install, dance_output, dance_deploy
   Source_Files {
     Deployment_DomainApplicationS.cpp
   }
+
+  Inline_Files {
+    Deployment_DomainApplicationS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -501,6 +515,11 @@ project(Deployment_NAM_skel) : install, dance_output, dance_applicationmanager_s
   Source_Files {
     Deployment_NodeApplicationManagerS.cpp
   }
+
+  Inline_Files {
+    Deployment_NodeApplicationManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -546,6 +565,11 @@ project(Deployment_NodeManager_skel) : install, dance_output, dance_deployment_s
   Source_Files {
     Deployment_NodeManagerS.cpp
   }
+
+  Inline_Files {
+    Deployment_NodeManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -634,6 +658,11 @@ project(Deployment_RepositoryManager_skel) : install, dance_output, dance_deploy
   Source_Files {
     Deployment_RepositoryManagerS.cpp
   }
+
+  Inline_Files {
+    Deployment_RepositoryManagerS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -679,6 +708,11 @@ project(Deployment_NodeApplication_skel) : install, dance_output, dance_deployme
   Source_Files {
     Deployment_NodeApplicationS.cpp
   }
+
+  Inline_Files {
+    Deployment_NodeApplicationS.inl
+  }
+
   specific {
     install_dir = DAnCE/Deployment
   }
@@ -705,6 +739,10 @@ project(Deployment_skel) : install, dance_deployment_stub, dance_output, ciaolib
   
   Header_Files {
     Deployment_skel_export.h
+  }
+
+  Inline_Files {
+    Deployment_ApplicationS.inl
   }
 
   specific {
