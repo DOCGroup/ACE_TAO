@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 # @file make_release.py
 # @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -396,8 +397,8 @@ def update_debianbuild ():
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
-            elif re.search ('^Replaces:', line) is not None:
-                line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
+            #elif re.search ('^Replaces:', line) is not None:
+            #    line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
 
             new_ctrl += line
 
