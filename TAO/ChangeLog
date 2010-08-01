@@ -1,11 +1,16 @@
+Sun Aug  1 18:16:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
 Sun Aug 01 11:30:54 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.8.1 released.
+        * TAO version 1.8.1 released.
 
 Wed Jul 28 13:34:11 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Updated with IDL compiler changes.
 
 Tue Jul 27 20:00:14 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -14,7 +19,7 @@ Tue Jul 27 20:00:14 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_err.cpp:
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/include/idl_global.h:
-        
+
           Modified IDL compiler handling of anonymous types.
           Default is now silence, or no output. IDL_ANON_ERROR,
           IDL_ANON_WARNING, or IDL_ANON_SILENT may be defined
@@ -23,21 +28,21 @@ Tue Jul 27 20:00:14 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           line options -ae (error), -aw (warning) or -as
           (silent) may be used to override this behavior
           locally.
-          
+
         * MPC/config/idl_anon_error.mpb:
         * MPC/config/idl_anon_warning.mpb:
         * MPC/config/idl_anon_silent.mpb:
-        
+
           New base project files, which simply add -ae, -aw
           or -as, respectively, to the IDL compiler command
           line.
-          
+
         * docs/compiler.html:
-        
+
           Updated IDL compiler documentation.
-          
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Removed -as option from project, it is now the default
           behavior.
 
