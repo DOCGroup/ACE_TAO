@@ -79,7 +79,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-5.7.9 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 5.8d), ${misc:Depends}
+Depends: libace-ssl-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 5.8d), ${misc:Depends}
 Description: ACE secure socket layer library development files
  This package contains the header files and static library for the ACE
  SSL library.
@@ -232,7 +232,7 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-5.7.9 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 5.8), ${misc:Depends}
+Depends: libace-xtreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
@@ -255,7 +255,7 @@ Description: ACE-GUI reactor integration for Tk
 Package: libace-tkreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tkreactor-5.7.9 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 5.8), ${misc:Depends}
+Depends: libace-tkreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Tk development files
  This package contains header files and static library for the ACE-Tk
  reactor integration.
@@ -277,7 +277,7 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-5.7.9 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 5.8), ${misc:Depends}
+Depends: libace-flreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
