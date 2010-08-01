@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Writer_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef WRITER_BASE_IDL
+#define WRITER_BASE_IDL
+
+#pragma ndds typesupport "Base/Writer_BaseSupport.h"
+
+typedef sequence<octet> OctetSeq;
+
+#pragma DCPS_DATA_TYPE "WriterTest"
+#pragma DCPS_DATA_KEY "WriterTest key"
+
+struct WriterTest {
+  string key;
+  long iteration;
+  OctetSeq data;
+};
+
+typedef sequence<WriterTest> WriterTestSeq;
+
+#endif

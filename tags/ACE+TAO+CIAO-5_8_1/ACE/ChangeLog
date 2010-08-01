@@ -1,0 +1,524 @@
+Sun Aug 01 11:30:54 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE version 5.8.1 released.
+
+Thu Jul 29 14:41:32 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h (set_handles): Clarify that passing ACE_INVALID_HANDLE
+          for any of the handle values will cause a duplicate of the
+          corresponding ACE_STDIN/OUT/ERR to be used in the options.
+
+Thu Jul 29 10:43:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Created a new feature, inet_ssl. When set, the INet libary
+          builds, using SSL. To let the INet libary use SSL, one should
+          enable the inet_ssl feature in default.features and add ssl=1 to
+          the platform_macos.GNU.
+
+Mon Jul 26 20:26:53 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.h: Note that the cpu_set_size to the get/set
+          affinity methods is a byte count.
+
+Mon Jul 26 07:02:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += corba_e_compact.
+
+Thu Jul 22 04:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += ace_for_tao.
+
+Wed Jul 21 18:23:32 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Basic_Types.h (ACE_INT8_FORMAT_SPECIFIER): Added the missing
+          "_ASCII" to the ACE_INT8_FORMAT_SPECIFIER macro usage.  Thanks
+          to Andre Kostur <akostur at incognito dot com> for reporting
+          this.
+
+Wed Jul 21 15:52:32 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Reverted for_TAO specific change, revised the processing to
+          ensure default first, then files, then cmdline directives.
+
+Wed Jul 21 03:07:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Fix errors in premature committal.
+
+Wed Jul 21 02:30:45 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Add a specialized open method to be called by TAO. TAO depends
+          on a modified order of directive evaluation.
+
+Tue Jul 20 18:02:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Fixed some typos, thanks to Thomas Lockhart
+          <Thomas dot lockhart at jpl dot nasa dot gov> for reporting this
+
+Tue Jul 20 15:08:49 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3319_Regression_Test.cpp:
+
+          Fix the test to be consistent with revised service config
+          behavior. The test had assumed that ACE_Service_Config::open()
+          would return 0 even if svc.conf were not present, but since it
+          was setting the ignore_default_svc_conf_file to 0, the restore
+          behavior of the service configurator is to fail with ENOENT in
+          that case.
+
+Tue Jul 20 08:48:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.cpp:
+          Fixed a bug in ACE_TSS::ts_get() that only exhibited on
+          SunOS/Studio builds. The later configutsyion uses ACE_HAS_THR_C_DEST
+          and with that define ts_get() behaved differently. In particular it
+          didn't create a ts_obj if tss_adapter was not 0.
+
+Tue Jul 20 07:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/SSL_CallbackManager.h:
+          Fixed comment typo.
+
+Tue Jul 20 05:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTP_BasicAuthentication.cpp:
+        * protocols/ace/INet/HTTP_BasicAuthentication.h:
+        * protocols/ace/INet/HTTP_BasicAuthentication.inl:
+        * protocols/ace/INet/inet.mpc:
+          Added basic support for HTTP Basic Authentication scheme.
+
+Tue Jul 20 03:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+          Fixed MSVC 7.1 compile problems.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Fixed compile problems for non-SSL builds.
+
+Tue Jul 20 03:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Fuzz fixes.
+
+Mon Jul 19 11:50:59 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.inl:
+        * ace/TSS_T.h:
+        * ace/TSS_T.cpp:
+          Mostly fixed bug 3539. It doesn't fix a case when main thread
+          doesn't own ACE_TSS but still uses it. Fixing the later is not
+          straight forward and will require a lot more efforts.
+          Also rearranged the code so that it has less duplicates.
+
+        * tests/run_test.lst:
+          Marked the test as fixed.
+
+Mon Jul 19 09:15:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * protocols/ace/INet/inet.mpc:
+          Added new feature 'exclude_inet' to allow builds to
+          explicitly exclude building INet.
+
+Mon Jul 19 08:49:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_Session.h:
+          Fixed compile errors byadding version check to disable
+          'relatively' new OpenSSL functionality for builds using
+          outdated OpenSSL installations (OpenSSL <= 0.9.8e).
+
+Sat Jul 17 14:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Some include shuffling to fix an incomplete type warning
+          with MSVC.
+
+Sat Jul 17 11:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Replaced ace_openssl base project by ssl. Fixes missing
+          ACE_SSL lib link errors.
+
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+          Fixed MSVC compile errors.
+
+Sat Jul 17 10:26:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * bin/MakeProjectCreator/config/inet.mpb:
+          Added feature project for SSL based parts of INet.
+          Setting feature ssl=1 will automatically cause correct
+          dependencies for SSL to be generated in INet based projects.
+
+        * protocols/ace/INet/HTTPS_Context.cpp:
+        * protocols/ace/INet/HTTPS_Context.h:
+        * protocols/ace/INet/HTTPS_Context.inl:
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+        * protocols/ace/INet/HTTP_SessionBase.h:
+        * protocols/ace/INet/HTTP_SessionBase.inl:
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.h:
+        * protocols/ace/INet/HTTPS_Session.h:
+        * protocols/ace/INet/HTTPS_URL.cpp:
+        * protocols/ace/INet/HTTPS_URL.h:
+        * protocols/ace/INet/HTTPS_URL.inl:
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CallbackManager.inl:
+        * protocols/ace/INet/SSL_CertificateCallback.cpp:
+        * protocols/ace/INet/SSL_CertificateCallback.h:
+        * protocols/ace/INet/SSL_CertificateCallback.inl:
+        * protocols/ace/INet/SSL_PasswordCallback.cpp:
+        * protocols/ace/INet/SSL_PasswordCallback.h:
+        * protocols/ace/INet/SSL_Proxy_Connector.cpp:
+        * protocols/ace/INet/SSL_Proxy_Connector.h:
+        * protocols/ace/INet/SSLSock_IOStream.cpp:
+        * protocols/ace/INet/SSLSock_IOStream.h:
+        * protocols/ace/INet/SSL_X509Cert.cpp:
+        * protocols/ace/INet/SSL_X509Cert.h:
+        * protocols/ace/INet/SSL_X509Cert.inl:
+          New files implementing SSL/HTTPS support.
+          Includes support for proxy CONNECT tunneling.
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Feature project which will include SSL/HTTPS support
+          into INet when MPC feature ssl=1 is set.
+
+        * protocols/ace/INet/ClientRequestHandler.cpp:
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+        * protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/FTP_URL.cpp:
+        * protocols/ace/INet/FTP_URL.h:
+        * protocols/ace/INet/FTP_URL.inl:
+        * protocols/ace/INet/HeaderBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.inl:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.h:
+        * protocols/ace/INet/HTTP_StreamPolicy.h:
+        * protocols/ace/INet/HTTP_URL.cpp:
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_URL.inl:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/RequestHandler.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/StreamInterceptor.h:
+        * protocols/ace/INet/URLBase.h:
+          Some redesign to accomodate addition of HTTPS.
+          Some additional logging.
+          Some additional documentation.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Extended to include HTTPS support.
+
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Added some traces.
+
+Fri Jul 16 22:08:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Further refinement of service initialization process. This
+          restores the order of processing, and is more explicit about
+          handling a defaulted svc.conf.
+
+Thu Jul 15 17:53:47 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+        * THANKS:
+
+          Restore pre-gestalt behavior of returning -1 if svc.conf does
+          not exist and an ACE_Service_Config::open() is expecting to use
+          the default file.
+
+          Thanks to Daynesh Mangal (daynesh@gmail.com) for reporting the
+          errant behavior.
+
+Thu Jul 15 12:53:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Generate deprecated/todo pages
+
+Thu Jul 15 12:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/SSL/SSL_SOCK_Stream.h:
+        * ace/SSL/SSL_SOCK_Stream.inl:
+          Added two method overloads available in ACE_SOCK_Stream but
+          missing from ACE_SSL_SOCK_Stream.
+
+Thu Jul 15 09:49:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_POSITION_INDEPENDENT_POINTERS
+
+Thu Jul 15 09:29:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * etc/ace_inet.doxygen:
+        * html/index.html:
+          Added ACE INet library
+
+Thu Jul 15 09:11:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+        * include/makeinclude/platform_clang_common.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Preliminary support for clang compiler.
+
+Tue Jul 13 14:39:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated
+
+Tue Jul 13 14:33:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Capabilities.h:
+          Doxygen fixes
+
+Tue Jul 13 14:20:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_errno.h:
+          Fixed problems with msvc 10, , thanks to Max Zhou
+          <earthdog at 126.com> for supplying these changes, this fixes
+          bugzilla 3873
+
+Tue Jul 13 11:08:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc10nmake.mpb:
+        * netsvcs/lib/lib.mpc:
+          vc10 support, thanks to Max Zhou <earthdog at 126.com> for
+          supplying these changes
+
+Mon Jul 12 11:04:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Activation_Queue.h:
+        * ace/Active_Map_Manager.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.inl:
+        * ace/Event_Handler.h:
+        * ace/Filecache.h:
+        * ace/Manual_Event.h:
+        * ace/Map_Manager.h:
+        * ace/Mem_Map.h:
+        * ace/Message_Block.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/OS_NS_unistd.h:
+        * ace/Object_Manager.h:
+        * ace/Recursive_Thread_Mutex.h:
+          Layout, const, and doxygen fixes
+
+Mon Jul 12 10:11:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h:
+        * ace/Dirent.h:
+        * ace/Dump_T.h:
+        * ace/Event_Handler.h:
+        * ace/File_Lock.h:
+        * ace/INET_Addr.h:
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Record.h:
+        * ace/Logging_Strategy.h:
+          Fixed set of doxygen warnings
+
+Mon Jul 12 08:19:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.h:
+        * ace/Malloc_Base.h:
+        * ace/SString.h:
+        * ace/Stream.h:
+        * ace/Task.h:
+          Fixed set of doxygen warnings
+
+Fri Jul 09 09:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix killall() valgrind handling.
+
+Thu Jul 08 14:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix killall() valgrind handling.
+
+Thu Jul 08 07:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Make killall() recognize and handle valgrind runs correctly.
+
+Wed Jul  7 14:53:12 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/run_test.lst:
+        * tests/Bug_3539_Regression_Test.cpp:
+        * tests/tests.mpc:
+          Added a test for bug 3539 as non-fixed.
+
+Wed Jul  7 11:43:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Extended instructions
+
+Tue Jul  6 12:28:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          CIAO is also online available
+
+Tue Jul  6 11:29:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Service_Repository.h:
+        * ace/Task_T.h:
+          Fixed doxygen warnings
+
+Tue Jul  6 11:22:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Improved doxygen configuration
+
+Tue Jul  6 11:11:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Reduced the size of the colloboration graphs
+
+Mon Jul  5 15:20:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed some test code
+
+Mon Jul  5 14:59:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added missing file, thanks to Anatoli Sakhnik
+          <sakhnik at gmail dot com> for reporting this, this should fix
+          bugzilla 3870
+
+Mon Jul 05 14:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fixes problem with killall() function being not selective enough.
+
+Mon Jul  5 13:56:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Disable include and included graphs, this should reduce the size
+          of the documentation a lot
+
+Mon Jul  5 13:29:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Some preparations to move the DAnCE doxygen files to DAnCE
+
+        * docs/bczar/bczar.html:
+          Updated release notes, made it possible to generate doxygen on
+          a regular system instead of on naboo, the side effect is that the
+          doxygen packages on naboo are 350Mb, on FC13 with all latest tools
+          they are 1.4GB
+
+Mon Jul  5 11:22:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed doxygen warning
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Define ACE_INLINE as inline and not as 1
+
+Mon Jul  5 10:56:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec-release.patch:
+          Removed this file.
+
+Mon Jul  5 09:11:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Removed link to very old patches and fixed typo
+
+Mon Jul  5 09:05:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Updated filenames in text
+
+Mon Jul  5 08:57:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Update latest minor release to x.8.0
+
+Mon Jul  5 08:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for x.8.0
+
+        * bin/generate_rel_manpages:
+          Remove restriction to run on naboo, removed doxygen check, updated
+          error message
+
+        * docs/Download.html:
+          Updated to x.8.0
+
+        * etc/ace.doxygen:
+          Layout changes
+
+        * etc/index.html:
+          Added 5.8
+
+        * rpmbuild/ace-tao.spec:
+          Changed version numbers to x.8.0 and added new ACE INet library
+
+Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.8 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

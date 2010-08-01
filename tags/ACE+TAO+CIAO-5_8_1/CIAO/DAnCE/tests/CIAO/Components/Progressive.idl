@@ -1,0 +1,22 @@
+// $Id$
+
+#ifndef SIMPLE_USER_IDL
+#define SIMPLE_USER_IDL
+
+#include "SimpleCommon.idl"
+#include "Components.idl"
+
+module Simple
+{
+  component Progressive
+  {
+    uses Trigger trig_out;
+    provides Trigger trig_in;
+  };
+  
+  home ProgressiveHome manages Progressive
+  {
+  };
+};
+
+#endif /*SIMPLE_USER_IDL*/

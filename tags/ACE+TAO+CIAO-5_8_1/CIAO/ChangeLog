@@ -1,0 +1,1419 @@
+Sun Aug 01 11:30:54 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* CIAO version 0.8.1 released.
+
+Sat Jul 31 15:03:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          Updated.
+
+Sat Jul 31 14:53:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+          Installed fixes.
+
+Fri Jul 30 11:22:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
+
+          removed the avoids += test_installed.
+
+Thu Jul 29 18:15:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+
+          Installed fix.
+
+Thu Jul 29 17:53:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Updated
+
+Thu Jul 29 17:47:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+          Installed fix.
+
+Thu Jul 29 15:25:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_Core.mpc:
+
+          Installed fix.
+
+Thu Jul 29 14:06:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
+
+          avoids += test_installed, so we can disable on installed builds.
+
+Thu Jul 29 13:44:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+        * DAnCE/DAnCE/DAnCE_Utility.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+
+          Attempt at some install fixes.
+
+Thu Jul 29 12:33:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Removed unneeded phrase regarding ssl.
+
+Thu Jul 29 02:27:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Explicitly close the plugin manager in the shutdown operation instead of
+          the destructor so it is called before the ORB is destroyed.
+
+Wed Jul 28 12:29:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+          Fuzz
+
+Wed Jul 28 07:30:33 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          LocalityManager/run_test.pl doesn't exist and
+          LocalityManager/CommandlinePassage/run_test.pl wasn't listed.
+          Corrected this.
+
+Wed Jul 28 07:17:02 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+          Fuzz
+
+Tue Jul 27 23:19:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+
+          Further tweak of previous fix.
+
+Tue Jul 27 22:45:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+
+          Attempt at a fix for the installed build.
+
+Tue Jul 27 16:00:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+          Resolved compile issue on Windows.
+
+Tue Jul 27 15:52:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Resolve compile issue on Windows.
+
+Tue Jul 27 07:23:54 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Added ace/Log_Msg.h include.
+
+Tue Jul 27 06:29:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/DDS4CCM Cheat Sheet.rtf:
+          Replaced.
+
+Mon Jul 26 23:16:54 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+
+          Windows linker issue.
+
+Mon Jul 26 17:50:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+
+          Use ACE_OS::num_processors to detect if #cpus is greater than 1.
+
+        * bin/ciao_tests.lst:
+
+          remove MULTICORE from restrictions.
+
+Mon Jul 26 13:40:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Tweak a preprocessor check for MSVC and unicode.
+
+Mon Jul 26 13:01:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+
+          Added property for CPU Affinity.
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+
+          Bugfix.
+
+        * DAnCE/tests/LocalityManager/CPUAffinity:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.idl:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity.mpc:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.h:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+        * DAnCE/tests/LocalityManager/CPUAffinity/Component.cdp:
+        * DAnCE/tests/LocalityManager/CPUAffinity/run_test.pl:
+        * bin/ciao_tests.lst:
+
+          Added test for CPUAffinity.  Must have MULTICORE set for test
+          script.  This test requires at least 2 processors/cores.
+
+Mon Jul 26 12:29:14 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Update
+
+Mon Jul 26 11:57:45 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Extended with a link to DDS4CCM install. Also
+          extended the CIAO build section a bit.
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          How to build and install DDS4CCM
+
+        * connectors/dds4ccm/docs/DDS4CCM Cheat Sheet.rtf:
+          Summary of how the DDS4CCM connector is designed.
+
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+          Added Copy_disabled as base class.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Corrected number of samples to be received
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Extended the DDS4CCM section.
+
+Mon Jul 26 01:57:17 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/CommandlinePassage:
+        * DAnCE/tests/CIAO/CommandlinePassage:
+        * bin/ciao_tests.lst:
+
+          Moved CommandLinePassage test to a more appropriate location.
+
+Mon Jul 26 01:53:38 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+
+          Address exception warning on Windows.
+
+Mon Jul 26 01:51:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Transport.h:
+
+          Add virtual destructor.
+
+Mon Jul 26 01:48:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
+
+          Prevent a possible race condition during parallel builds.
+
+Mon Jul 26 01:14:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.h:
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity_export.h:
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          CPU Affinity configuration plugin.  Currently works on Linux
+          kernel 2.5.8 or later.
+
+Sat Jul 24 07:04:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+          Added.
+
+Fri Jul 23 17:41:04 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao_tests.lst:
+
+          Add in the Hello SHS test.
+
+Fri Jul 23 17:37:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/ExplicitExec:
+        * DAnCE/tests/LocalityManager/ExplicitExec/Deployment.cdp:
+        * DAnCE/tests/LocalityManager/ExplicitExec/ExplicitExec.mpc:
+        * bin/ciao_tests.lst
+
+          Test for explicitly using a locality executable name other than
+          dance_locality_manager.
+
+Fri Jul 23 16:06:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Bugfixes.
+
+        * DAnCE/tests/LocalityManager/ProcessName:
+        * DAnCE/tests/LocalityManager/ProcessName/Deployment.cdp:
+        * DAnCE/tests/LocalityManager/ProcessName/run_test.pl:
+
+          Test for process name changing.
+
+        * bin/ciao_tests.lst:
+
+          Added tests to daily build.
+
+Fri Jul 23 15:05:19 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+
+          Compile fixes.
+
+Fri Jul 23 14:26:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+
+          Added local interface for configuration plugins.
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Added logic to invoke configuration plugins if present.
+
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+          Loading logic for configuration plugins.
+
+        * DAnCE/LocalityManager/Configuration:
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+        * DAnCE/LocalityManager/Configuration/Process_Name.h:
+        * DAnCE/LocalityManager/Configuration/Process_Name.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Name_export.h:
+
+          Change process name configuration plugin.  Note that this only
+          works on Linux (kernel 2.6.9) and later.  If invoked on other
+          platforms, it will generate a StartError exception.
+
+Fri Jul 23 14:24:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Interceptors/Error_Interceptors.mpc:
+
+          dynamicflags should use +=
+
+Fri Jul 23 14:21:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+
+          Added some documentation, removed a couple extraneous properties.
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+
+          Update to accomodate the changes in DAnCE_Properties.idl.
+
+Fri Jul 23 13:55:56 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/Base/Latency_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl:
+          Replace an anonymous bounded octet sequence with a typedef.
+
+Fri Jul 23 13:56:23 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * tools/XML/XercesString.h:
+
+          Fuzz.
+
+Fri Jul 23 13:54:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+
+          Compile fix.
+
+Fri Jul 23 08:25:07 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+          Removed the -aw as IDL compiler option. We've
+          changed the IDL instead.
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Replace an anonymous bounded octet sequence with a typedef.
+
+Fri Jul 23 07:29:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl:
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl:
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl:
+        * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.idl:
+        * connectors/dds4ccm/idl/dds_rtf2_dcps_i_handle.idl:
+          Replace an anonymous bounded octet sequence with a typedef.
+
+Fri Jul 23 06:48:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Added MPC file for Base.idl.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.cxx:
+
+          Removed these files.
+
+Thu Jul 22 16:00:37 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+
+          Fuzz.
+
+Thu Jul 22 15:30:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin.cpp:
+        * DAnCE/RepositoryManager/repository_manager_admin_exec.cpp:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/tools/Artifact_Installation/Artifact_Installation_exec.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan.cpp:
+        * DAnCE/tools/Convert_Plan/Convert_Plan_Impl.cpp:
+        * DAnCE/tools/Split_Plan/Split_Plan_exec.cpp:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Unicode fixes on Windows.
+
+Thu Jul 22 15:28:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.h:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+
+          Windows compile fixes.  Note that the enum in the DataModel IDL
+          file has changed to accomodate a windows specific preprocessor
+          define.
+
+Thu Jul 22 15:24:25 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.h:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.cpp:
+
+          Windows compile fixes.
+
+Thu Jul 22 15:00:09 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/dds4ccm.mpb:
+
+          Added -aw option to ndds feature, so it will be applied
+          to all current DDS4CCM builds. The DDS implementation
+          IDL contains anonymous constructs.
+
+        * tests/Bug_3769_Regression/Foo.idl:
+
+          Changed anonymous IDL constructs, substituted typedefs
+          for a bounded string and bounded wstring.
+
+        * connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
+
+          Replace an anonymous bounded octet sequence with a typedef.
+
+Thu Jul 22 13:12:50 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.cxx:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BasePlugin.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.h:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/BaseSupport.cxx:
+          Fuzz
+
+Thu Jul 22 12:26:08 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Resolved duplicate names.
+
+Thu Jul 22 11:44:24 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/01_general.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/02_idl.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/03_executors.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/04_ami4ccm.html:
+        * connectors/ami4ccm/tutorials/Hello/Tutorial/05_compilation.html:
+          Minor improvements.
+
+Thu Jul 22 09:54:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Added some more info regarding the DDS4CCM connector.
+
+Thu Jul 22 09:38:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Added some more info regarding the DDS4CCM connector.
+
+Thu Jul 22 09:10:37 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+          This tutorial now works in conjunction with the RTI Shapes Demo.
+
+Thu Jul 22 08:20:36 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/*:
+          Added a small reproducer which should reproduce the time out
+          which occurs after setting the query parameters.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+          Got this one working. The reproducer will log an error about
+          the unexpected timeout.
+
+Thu Jul 22 03:55:53 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_shs_daemon.mpb:
+        * DAnCE/MPC/config/dance_shs_stub.mpb:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.idl:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.idl:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+        * DAnCE/tools/System_Health/System_Health.mpc:
+
+          Fuzz.
+
+Wed Jul 21 11:44:19 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          DataControlListener is now by value (instead of by reference).
+
+Wed Jul 21 07:50:29 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+          Resolved compile error.
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+          Resolved compile warning.
+
+Tue Jul 20 23:22:50 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/MPC/config/dance_shs_daemon.mpb:
+        * DAnCE/MPC/config/dance_shs_stub.mpb:
+
+          Files missing from previous commit.
+
+Tue Jul 20 18:25:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Daemon:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.cpp:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.idl:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.h:
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon_Impl.cpp:
+
+          Placeholder for the Plan Launcher daemon, a process using the
+          DAnCE_Plan_Launcher to provide an IDL interface for deployment
+          execution.  Right now, it only provides an interface for parsing
+          XML/CDR plans into IDL.
+
+Tue Jul 20 18:23:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+
+          Bugfix whereby the NodeApplication would mistakenly believe that
+          the deployment scheduler had timed out.
+
+Tue Jul 20 18:22:02 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test_shs.pl:
+
+          Simple test that loads the SHS daemon.
+
+Tue Jul 20 18:19:34 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Load SHS interceptors.
+
+Tue Jul 20 18:17:33 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.idl:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.cpp:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon.mpc:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.h:
+        * DAnCE/tools/System_Health/Daemon/SHS_Daemon_Impl.cpp:
+        * DAnCE/tools/System_Health/Interceptors:
+        * DAnCE/tools/System_Health/Interceptors/DAnCE_SHS_CORBA_Transport_export.h:
+        * DAnCE/tools/System_Health/Interceptors/DAnCE_SHS_Interceptors_export.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Transport.h:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+        * DAnCE/tools/System_Health/System_Health.mpc:
+
+          Initial implementation of system health & status service.
+
+Tue Jul 20 12:32:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+          Removed the domain_id since this tutorial doesn't work in conjunction
+          with the RTI shapes demo because of coding standards.
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/01_general.html:
+          Mentioned that this tutorial doesn't run in conjunction
+          with the RTI Shapes demo. If one would like to see this,
+          one should compile and run the Shapes example.
+
+Tue Jul 20 09:58:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Corrected number of samples expected to be received.
+
+Tue Jul 20 08:31:28 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/VariousTopicsState/descriptors/Plan.cdp:
+          Added union connectors to these deployment plans.
+
+Tue Jul 20 06:04:31 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.h:
+          Fuzz
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Log_Macros.h:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+          Changed misspelled define.
+
+Mon Jul 19 12:39:40 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Log_Macros.h:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/Topic_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+          Replaced CIAO_Log_level number with DDS4CCM_LOG_LEVEL_*
+          defines.
+
+Fri Jul 16 14:00:57 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/OMG-CCM-Tutorial.pptx:
+          Updates regarding DDS4CCM.
+
+Fri Jul 16 12:13:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+          Don't call a dds narrow with 0 pointer, it causes an error to be
+          logged
+
+Thu Jul 15 19:11:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+          Don't call a dds narrow with 0 pointer, it causes an error to be
+          logged
+
+Thu Jul 15 09:48:46 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/Subscriber_T.h:
+        * connectors/dds4ccm/impl/Topic_T.h:
+          Resolved compile issues.
+
+Thu Jul 15 09:47:04 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.mpc:
+
+          Added -Gex to command line of HelloA.idl processing,
+          and the resuling generated reply handler implementation
+          files to the connector project.
+
+Thu Jul 15 09:34:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Interceptors/Standard_Error.h:
+          Doxygen changes
+
+        * etc/ciao_DAnCE.doxygen:
+          Use INet tag file
+
+Thu Jul 15 09:12:22 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/DataWriter.h:
+        * connectors/dds4ccm/impl/StatusCondition.h:
+          Resolved compile issues on Windows.
+
+Thu Jul 15 08:38:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.h:
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.cpp:
+        * connectors/dds4ccm/impl/DDSDataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DDSPublisherListener_T.h:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/DataListenerControl_T.cpp:
+        * connectors/dds4ccm/impl/DataWriter.h:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.h:
+        * connectors/dds4ccm/impl/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/DomainParticipantListener_T.h:
+        * connectors/dds4ccm/impl/DomainParticipant_T.h:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/Publisher_T.h:
+        * connectors/dds4ccm/impl/QueryCondition_T.h:
+        * connectors/dds4ccm/impl/ReadCondition_T.h:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/StateListenerControl_T.h:
+        * connectors/dds4ccm/impl/StateListenerControl_T.cpp:
+        * connectors/dds4ccm/impl/StatusCondition.h:
+        * connectors/dds4ccm/impl/Subscriber_T.h:
+        * connectors/dds4ccm/impl/TopicDescription_T.h:
+        * connectors/dds4ccm/impl/Topic_T.h:
+        * connectors/dds4ccm/impl/Updater_T.h:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.h:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+          Reorganized _get/_setcomponent methods. Created a new templated
+          class called DDS4CCM_LocalObject_T which derives from CORBA::LocalObject.
+          This class contains the _get/_setcomponent methods.
+          Also cleanup quite a few includes of tao/LocalObject.h which weren't
+          neccesary.
+
+Thu Jul 15 08:26:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Only generate documentation for the core directories
+
+Thu Jul 15 07:21:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+          Count the number of samples received and check whether this number is right.
+          Code layout.
+
+Wed Jul 14 12:12:11 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Removed unnecessary code. Using set_parameters again.
+
+Wed Jul 14 12:01:30 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+          Created DataWriter typedef.
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+          Check the outcome of the dynamic_cast.
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Implemented resetting of the querycondition.
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/run_test.pl:
+          Testing resetting the QueryCondition.
+
+Wed Jul 14 10:02:39 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+
+          Compile fix.
+
+Wed Jul 14 09:55:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+          Memory leak fix.
+
+Wed Jul 14 09:47:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.h:
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+         Memory leak fixes.
+
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+          Added a reset method to release memory on demand.
+
+Wed Jul 14 09:45:59 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        Add AMI4CCM test GetComp.
+
+Wed Jul 14 09:17:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Memory leak.
+
+Tue Jul 13 19:38:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+
+         Possible fix for compile error on scoreboard.
+
+        * tools/XML/XML_Helper.tpp:
+
+          Possible fix for segfault on scoreboard, as I can't reproduce in my
+          workspace.
+
+Tue Jul 13 15:11:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSAT/PSAT_Connector.idl:
+          Removed include which we don't need anymore now the behaviour of -SS
+          on tao_idl doesn't break the include chain anymore
+
+Tue Jul 13 14:52:59 UTC 2010  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp:
+        Small changes in test criteria.
+
+Tue Jul 13 10:30:59 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/be_util.cpp:
+        * tools/IDL3_to_XMI/be_util.h:
+
+          New files containing a utility class
+          with static methods.
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+
+          Added new files to the project.
+
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_global.h:
+
+          Factored out methods unrelated to global
+          data storage and moved them to the new
+          utility class.
+
+Mon Jul 12 22:52:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+
+          Updated to match new XML_Helper interface.
+
+Mon Jul 12 15:04:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Code layout.
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.h:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/descriptors/Plan.cdp:
+          Added filter test.
+
+Mon Jul 12 13:07:57 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/Config_Handlers/XML_Typedefs.h:
+        * DAnCE/Config_Handlers/XML_Typedefs.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          A number of fixes to how the XML infrastructure handles memory.  This
+          also happens to fix the segmentation fault caused by my prior commit.
+
+Mon Jul 12 10:15:03 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/Log_Macros.h:
+          Added macros to print CCM_DDS::InternalError and CORBA::exceptions
+
+Mon Jul 12 09:47:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+        * connectors/dds4ccm/impl/StatusCondition.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/TopicDescription_T.cpp:
+        * connectors/dds4ccm/impl/Topic_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Receiver/Latency_Receiver.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/DDS_Sender/Throughput_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CSLDeadline/Receiver/CSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Receiver/CoherentUpdate_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentUpdater/Sender/CoherentUpdate_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Exception/Component/Exception_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/DDSWriterEntity/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/GetComponent/Event/Component/GCE_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/GetComponent/State/Component/GCS_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Sender/LMBM_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Sender/LOBO_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component_exec.cpp:
+        * connectors/dds4ccm/tests/TimeConversion/time_conversion.cpp:
+        * connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.cpp:
+          Using :: for namespaces.
+
+Mon Jul 12 09:14:06 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Changed exception handling. Exceptions are caught in the
+          DDS_Event_Connector_T and DDS_State_Connector_T and not in
+          the ports itself. Also corrected some incorrect parameters
+          of the CCM_DDS::InternalError exception.
+
+Mon Jul 12 06:36:52 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Resolved compile error.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/*:
+          Added test which checks whether resetting the query condition
+          works. Need to extend this test.
+
+Fri Jul  9 12:00:41 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Only logging the wait time when logging is enabled.
+
+Fri Jul  9 11:26:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/XML/XML_Schema_Resolver.cpp:
+
+          Remove extraneous call to initialize.
+
+Fri Jul  9 10:24:17 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+          Logging the wait time.
+
+Fri Jul  9 08:52:43 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+          Fuzz (mismatch traces).
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Improved logging.
+
+Fri Jul  9 08:21:58 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h
+        Solved compile warnings.
+
+Fri Jul  9 07:32:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+          Removed unnecessary code
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Connector/QCTL_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/descriptors/run_test.pl:
+          Added test with two listeners, each having its own querycondition. Each listener
+          should receive the samples he expected.
+
+Thu Jul  8 19:07:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Updated the comment in order to reflect the
+          CIAO_DDS4CCM_CONTEXT_SWITCH better.
+
+Thu Jul  8 18:06:47 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+          Don't initialize _var with _nil.
+
+        * connectors/dds4ccm/impl/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/ReadCondition_T.cpp:
+          Code alignment. Optimized logging.
+
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/Plan.cdp:
+          Extend test with an extra connector. This one tests whether all
+          samples are in DDS.
+
+Thu Jul  8 13:12:40 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/GetComp
+        * connectors/ami4ccm/tests/GetComp/Base
+        * connectors/ami4ccm/tests/GetComp/Base/GetComp.idl
+        * connectors/ami4ccm/tests/GetComp/Base/GetComp.mpc
+        * connectors/ami4ccm/tests/GetComp/descriptors
+        * connectors/ami4ccm/tests/GetComp/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/GetComp/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/GetComp/Receiver
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver.idl
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver.mpc
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.h
+        * connectors/ami4ccm/tests/GetComp/Sender
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.idl
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender.mpc
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp
+        * connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h
+        Test to check if ami44ccm facet user component uses, does have a
+        get_component and returns ami4ccm connector.
+
+Thu Jul  8 09:06:40 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+          Updated test to verify that all attributes are actually
+          tested duing cc_activate.
+
+Thu Jul  8 08:52:29 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/XML_File_Intf.h:
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+
+          Explicitly invoke terminate in the destructor of
+          the XML_File_Intf in an attempt to clean up valgrind logs.
+
+Thu Jul  8 07:04:05 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/QueryCondition_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Added a ConditionManager. This class manages all read conditions
+          and query conditions. There's one conditionmanager per port.
+          Also code layout changes and consistent naming of typedefs.
+
+        * connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+          Optimized debug messages.
+
+Wed Jul 07 08:55:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Fuzz fix.
+
+Wed Jul 07 08:41:30 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp
+        * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp
+        * connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp
+        * connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h
+          Pass context to threads i.o cashing connection.
+
+Wed Jul 07 07:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed memory leak.
+
+Wed Jul 07 07:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+          Fixed memory leak.
+
+Wed Jul 07 07:12:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed memory leaks.
+
+Tue Jul 06 13:30:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Fixed memory leak.
+
+Tue Jul 06 13:18:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/DAnCE/DAnCE_Utility.cpp:
+          Fixed memory leak.
+
+Tue Jul 06 12:46:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/Config_Handlers/Any_Handler.cpp:
+          Fixed memory leak.
+
+Tue Jul 06 12:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+          Fixed memory leak.
+
+Tue Jul  6 12:08:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/examples/Hello/Base/Hello.idl
+        * connectors/ami4ccm/tests/AsynchT/Base/AsynchT.idl
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h
+        * connectors/ami4ccm/tests/DelReplyH/Base/DelReplyH.idl
+        * connectors/ami4ccm/tests/Exceptions/Base/ExceptionT.idl
+        * connectors/ami4ccm/tests/InterInArgs/Base/InterInArgsT.idl
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterMulti/Base/InterMulti.idl
+        * connectors/ami4ccm/tests/InterOutArgs/Base/InterOutArgsT.idl
+        * connectors/ami4ccm/tests/InterReturn/Base/InterReturnT.idl
+        * connectors/ami4ccm/tests/NoReplyH/Base/NoReplyH.idl
+        * connectors/ami4ccm/tests/OneProcess/Base/OneProcess.idl
+        * connectors/ami4ccm/tests/OneReplyH/Base/OneReplyH.idl
+        Add extra pragma to  idl files. Pass context to threads i.o cashing connection.
+
+Tue Jul 06 11:33:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/tools/Split_Plan/Locality_Splitter.cpp:
+          Fixed bug in key comparison causing assertions on VC9.
+
+Tue Jul  6 11:13:22 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_DAnCE.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Reduced the size of the colloboration graphs
+
+Tue Jul 06 09:50:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/1NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/2NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtPassivate.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeFailureAtRemove.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/5NodeNoFailure.cdp:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/README.txt:
+        * DAnCE/tests/CIAO/EM-Shutdown-Failures/run_test.pl:
+          Added new testset.
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+          Fixed 'eating' of exceptions at component removal.
+
+        * DAnCE/tests/CIAO/EM-Launch-Failures/README.txt:
+          Updated.
+
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+          Added cleanup of test results.
+
+        * bin/ciao_tests.lst:
+          Added new testsets to autobuild testsuite.
+
+Tue Jul  6 07:52:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
+          Rename duplicate project name .
+
+Mon Jul 05 14:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * DAnCE/tests/CIAO/ExecutionManager-Deployments/run_test.pl:
+        * DAnCE/tests/CIAO/EM-Launch-Failures/run_test.pl:
+        * DAnCE/tests/CIAO/EM-Redeployment/run_test.pl:
+          Standardized scripts. Proper use of targets.
+
+        * DAnCE/tests/CIAO/EM-Redeployment/README.txt:
+          Removed outdated comment.
+
+Mon Jul  5 14:02:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_DAnCE.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Disable include and included graphs, this should reduce the size
+          of the documentation a lot
+
+Mon Jul  5 12:58:34 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst
+        * connectors/ami4ccm/docs/TestCoverage.odt
+        * connectors/ami4ccm/tests/InterInOutArgs
+        * connectors/ami4ccm/tests/InterInOutArgs/Base
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Base/InterInOutT.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors/Plan.cdp
+        * connectors/ami4ccm/tests/InterInOutArgs/descriptors/run_test.pl
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.cpp
+        * connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.h
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender.idl
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender.mpc
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp
+        * connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.h
+        Add AMI4CCM test with inout arguments.
+
+Mon Jul  5 11:45:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Scheduler/Deployment_Completion.cpp:
+          Const change
+
+        * DAnCE/tests/Config_Handlers/DynAny_Handler/test.cpp:
+          Unicode fix
+
+        * DAnCE/tests/Parsing/Parsing.mpc:
+          Layout change
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Fixed layout of some debug statements
+
+Mon Jul  5 09:38:25 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+          Optimized logging.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/README:
+          Additional info
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+          Refactored. Don't send the same iterations again.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/Plan.cdp:
+          Removed report errors since it wasn't used.
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Receiver/CFTLS_Test_Receiver_exec.cpp:
+          Also count the received number of samples.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/Different/*:
+          Added test which tests whether the QueryCondition on different extended ports are different.
+
+Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 0.8 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

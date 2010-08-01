@@ -1,0 +1,115 @@
+// -*- MPC -*-
+// $Id$
+
+project(CosTime_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -Wb,stub_export_macro=TAO_Time_Export -Wb,stub_export_include=orbsvcs/Time/time_export.h -Wb,skel_export_macro=TAO_Time_Skel_Export -Wb,skel_export_include=orbsvcs/Time/time_skel_export.h
+
+  IDL_Files {
+    TimeService.idl
+  }
+}
+
+project(CosTime) : orbsvcslib, orbsvcs_output, install {
+  sharedname   = TAO_CosTime
+  dynamicflags += TAO_TIME_BUILD_DLL
+  tagchecks   += Time
+  after       += CosTime_IDL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TimeServiceC.cpp
+  }
+
+  Header_Files {
+    TimeServiceC.h
+    Time/time_export.h
+  }
+
+  Inline_Files {
+    TimeServiceC.inl
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTime.pc.in
+  }
+}
+
+project(CosTime_Skel) : orbsvcslib, orbsvcs_output, install, time, portableserver {
+  sharedname   = TAO_CosTime_Skel
+  dynamicflags += TAO_TIME_SKEL_BUILD_DLL
+  tagchecks   += Time
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TimeServiceS.cpp
+  }
+
+  Header_Files {
+    TimeServiceS.h
+    Time/time_skel_export.h
+  }
+
+  Inline_Files {
+    TimeServiceS.inl
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTime_Skel.pc.in
+  }
+}
+
+project(CosTime_Serv) : orbsvcslib, orbsvcs_output, install, time_skel, svc_utils {
+  sharedname   = TAO_CosTime_Serv
+  dynamicflags += TAO_TIME_SERV_BUILD_DLL
+  tagchecks   += Time
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Time/TAO_TIO.cpp
+    Time/TAO_Time_Service_Clerk.cpp
+    Time/TAO_Time_Service_Server.cpp
+    Time/TAO_UTO.cpp
+    Time/Timer_Helper.cpp
+  }
+
+  Header_Files {
+    Time/TAO_TIO.h
+    Time/TAO_Time_Service_Clerk.h
+    Time/TAO_Time_Service_Server.h
+    Time/TAO_UTO.h
+    Time/Timer_Helper.h
+    Time/time_serv_export.h
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosTime_Serv.pc.in
+  }
+}

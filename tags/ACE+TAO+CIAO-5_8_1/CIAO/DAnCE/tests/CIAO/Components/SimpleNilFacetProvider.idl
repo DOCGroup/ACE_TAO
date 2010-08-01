@@ -1,0 +1,23 @@
+// $Id$
+
+#ifndef SIMPLE_PROVIDER_IDL
+#define SIMPLE_PROVIDER_IDL
+
+#include "SimpleCommon.idl"
+#include "Components.idl"
+
+#pragma ciao lem "SimpleNilFacetProviderE.idl"
+
+module Simple
+{
+  component SimpleNilFacetProvider
+  {
+    provides Trigger trig;
+  };
+
+  home SimpleNilFacetProviderHome manages SimpleNilFacetProvider
+  {
+  };
+};
+
+#endif /*SIMPLE_PROVIDER_IDL*/

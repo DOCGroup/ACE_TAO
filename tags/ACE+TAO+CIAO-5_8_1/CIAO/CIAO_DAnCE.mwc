@@ -1,0 +1,11 @@
+//$Id$
+
+workspace {
+  ccm
+  ciao
+  DAnCE
+  tools/XML
+  exclude {
+    DAnCE/tests
+  }
+}

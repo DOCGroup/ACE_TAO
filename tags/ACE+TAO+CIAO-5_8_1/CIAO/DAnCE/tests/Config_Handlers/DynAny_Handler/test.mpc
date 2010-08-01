@@ -1,0 +1,16 @@
+// $Id$
+project (XSC_DynAny_Test) : dance_config_handlers, ifr_client, ciaoidldefaults {
+  requires += dummy_label
+  exename = test
+  macros   += XML_USE_PTHREADS
+
+  IDL_Files {
+    dynany_test.idl
+  }
+
+  Source_Files {
+    test.cpp
+  }
+}
+
+

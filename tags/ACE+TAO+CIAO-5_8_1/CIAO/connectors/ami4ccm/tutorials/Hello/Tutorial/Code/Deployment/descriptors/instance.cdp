@@ -1,0 +1,54 @@
+<instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Receiver">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Receiver</name>
+    <node>Receiver</node>
+    <source/>
+    <implementation xmi:idref="Hello_ReceiverHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.Sender">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.Sender</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="Hello_SenderHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Hello.ComponentImplementations.HelloImplementation.Hello.AMI">
+    <name>Hello.ComponentImplementations.HelloImplementation.Hello.AMI</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="Hello_AMIHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+

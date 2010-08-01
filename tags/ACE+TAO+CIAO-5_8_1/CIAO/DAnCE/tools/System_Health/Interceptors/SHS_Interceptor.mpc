@@ -1,0 +1,31 @@
+// $Id$
+
+project (DAnCE_SHS_CORBA_Transport) : dance_lib, dance_output, dance_logger, \
+        dance_shs_daemon, naming {
+  
+   dynamicflags += DANCE_SHS_CORBA_TRANSPORT_BUILD_DLL
+
+   Source_Files {
+     SHS_CORBA_Transport.cpp
+   }
+
+   Header_Files {
+     SHS_Transport.h
+     SHS_CORBA_Transport.h   
+   }
+}
+
+project (DAnCE_SHS_Interceptors) : dance_skel, dance_lib, dance_output, dance_logger, \
+        dance_shs_daemon, naming {
+   dynamicflags += DANCE_SHS_INTERCEPTORS_BUILD_DLL
+   after += DAnCE_SHS_CORBA_Transport
+   libs += DAnCE_SHS_CORBA_Transport
+
+   Source_Files {
+     SHS_Interceptor.cpp
+   }
+
+   Header_Files {
+     SHS_Interceptor.h
+   }
+}
