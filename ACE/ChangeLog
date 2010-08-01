@@ -1,6 +1,19 @@
+Sun Aug  1 18:14:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/make_release.py:
+        * docs/Download.html:
+        * etc/index.html:
+          Updated because of release
+
+        * debian/*:
+          Did rename actions the release script didn't do, have to sort this
+          out later
+
 Sun Aug 01 11:30:54 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.8.1 released.
+        * ACE version 5.8.1 released.
 
 Thu Jul 29 14:41:32 UTC 2010  Steve Huston  <shuston@riverace.com>
 
