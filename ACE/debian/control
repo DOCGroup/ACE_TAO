@@ -174,7 +174,7 @@ Package: libkokyu-5.8
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: libtao-1.7.7, libtao-orbsvcs-1.8
+Suggests: libtao-1.8.1, libtao-orbsvcs-1.8
 Description: ACE scheduling and dispatching library
  Kokyu is a library designed to provide flexible scheduling and
  dispatching services.
