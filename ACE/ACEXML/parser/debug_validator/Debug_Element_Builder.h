@@ -44,24 +44,21 @@ public:
    */
   virtual int setElementName (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-    ;
+                              const ACEXML_Char *qName);
 
   /**
    * Define the content type of the element.
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
-    ;
+  virtual int setContentType (CONTENT_TYPE type);
 
   /**
    * Insert one more element into Mixed definition.
    */
   virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-    ;
+                                  const ACEXML_Char *qName);
 
   /**
    * Start a new group of children.
@@ -73,7 +70,7 @@ public:
    *
    * @retval 0 on success.
    */
-  virtual int endChildGroup (CARDINALITY card ACEXML_ENV_ARG_DECL);
+  virtual int endChildGroup (CARDINALITY card);
 
   /**
    * Set the type of current child group to Choice.
@@ -100,7 +97,7 @@ public:
    */
   virtual int insertElement  (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                              const ACEXML_Char *qName)
     ;
 
   /**

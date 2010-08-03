@@ -23,7 +23,7 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            size_t start,
-                           size_t length ACEXML_ENV_ARG_DECL);
+                           size_t length);
 
   const ACEXML_Char *get_test_string (void)
     { return Basic_Content_Tester::test_string_; }
@@ -40,20 +40,20 @@ const ACEXML_Char * Basic_Content_Tester::test_string_ =
 void
 Basic_Content_Tester::characters (const ACEXML_Char *ch,
                                   size_t start,
-                                  size_t length ACEXML_ENV_ARG_DECL)
+                                  size_t length)
 {
-  static int already_called = 0;
+  static bool already_called = false;
   static const ACEXML_Char *expect =
     ACE_TEXT ("Example\nd'internationalisation");
 
   if (already_called)
     {
-      ACEXML_THROW (ACEXML_SAXException
-                    (ACE_TEXT ("characters() called too much\n")));
+      throw ACEXML_SAXException
+                    (ACE_TEXT ("characters() called too much\n"));
     }
-  already_called = 1;
+  already_called = true;
 
-  size_t expected_len = ACE_OS::strlen (expect);
+  size_t const expected_len = ACE_OS::strlen (expect);
   if (length != expected_len)
     {
       ACE_ERROR ((LM_ERROR,
@@ -61,9 +61,8 @@ Basic_Content_Tester::characters (const ACEXML_Char *ch,
                   ACE_TEXT ("got %u (%*s)\n"),
                   expected_len, expected_len, ch + start,
                   length, length, ch + start));
-      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("Functionality failure")));
+      throw ACEXML_SAXException (ACE_TEXT ("Functionality failure"));
     }
-  return;
 }
 
 int
@@ -82,20 +81,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACEXML_InputSource input (test_stream);
   ACEXML_Parser parser;
   parser.setContentHandler (&tester);
-  ACEXML_TRY_NEW_ENV
+  try
   {
     parser.setFeature (ACE_TEXT ("http://xml.org/sax/features/validation"),
-                       0
-                       ACEXML_ENV_ARG_PARAMETER);
-    ACEXML_TRY_CHECK;
-    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-    ACEXML_TRY_CHECK;
+                       0);
+    parser.parse (&input);
   }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  catch (const ACEXML_SAXException& ex)
   {
     ex.print();
     status = 1;
   }
-  ACEXML_ENDTRY;
   return status;
 }
