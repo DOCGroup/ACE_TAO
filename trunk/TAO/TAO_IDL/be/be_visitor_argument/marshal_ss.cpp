@@ -29,7 +29,8 @@ be_visitor_args_marshal_ss::
 {
 }
 
-int be_visitor_args_marshal_ss::visit_argument (be_argument *node)
+int be_visitor_args_marshal_ss::visit_argument (
+  be_argument *node)
 {
   this->ctx_->node (node);
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
@@ -212,27 +213,32 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_args_marshal_ss::visit_interface (be_interface *)
+int be_visitor_args_marshal_ss::visit_interface (
+  be_interface *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_interface_fwd (be_interface_fwd *)
+int be_visitor_args_marshal_ss::visit_interface_fwd (
+  be_interface_fwd *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuebox (be_valuebox *)
+int be_visitor_args_marshal_ss::visit_valuebox (
+  be_valuebox *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuetype (be_valuetype *)
+int be_visitor_args_marshal_ss::visit_valuetype (
+  be_valuetype *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *)
+int be_visitor_args_marshal_ss::visit_valuetype_fwd (
+  be_valuetype_fwd *)
 {
   return this->emit_common ();
 }
@@ -241,6 +247,8 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
     be_predefined_type *node
   )
 {
+  int status = this->gen_pd_arg (node, false);
+/*
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     be_argument::narrow_from_decl (this->ctx_->node ());
@@ -259,16 +267,20 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << lname << ".out ()";
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::ACE_InputCDR::to_char (" << lname << ")";
+              *os << "::ACE_InputCDR::to_char ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::ACE_InputCDR::to_wchar (" << lname << ")";
+              *os << "::ACE_InputCDR::to_wchar ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::ACE_InputCDR::to_boolean (" << lname << ")";
+              *os << "::ACE_InputCDR::to_boolean ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::ACE_InputCDR::to_octet (" << lname << ")";
+              *os << "::ACE_InputCDR::to_octet ("
+                  << lname << ")";
               break;
             default:
               *os << lname;
@@ -294,16 +306,20 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << lname << ".in ()";
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::ACE_OutputCDR::from_char (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_char ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::ACE_OutputCDR::from_wchar (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_wchar ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::ACE_OutputCDR::from_boolean (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_boolean ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::ACE_OutputCDR::from_octet (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_octet ("
+                  << lname << ")";
               break;
             default:
               *os << lname;
@@ -321,16 +337,20 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << lname << ".in ()";
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::ACE_OutputCDR::from_char (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_char ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::ACE_OutputCDR::from_wchar (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_wchar ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::ACE_OutputCDR::from_boolean (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_boolean ("
+                  << lname << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::ACE_OutputCDR::from_octet (" << lname << ")";
+              *os << "::ACE_OutputCDR::from_octet ("
+                  << lname << ")";
               break;
             default:
               *os << lname;
@@ -342,12 +362,12 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_marshal_ss::"
-                         "visit_array - "
-                         "Bad substate\n"),
+                         ACE_TEXT ("be_visitor_args_marshal_ss::")
+                         ACE_TEXT ("visit_array - ")
+                         ACE_TEXT ("Bad substate\n")),
                         -1);
     }
-
+*/
   return 0;
 }
 
@@ -430,7 +450,8 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      // we need to make a distinction between bounded and unbounded strings
+      // We need to make a distinction between
+      // bounded and unbounded strings.
       if (bound == 0)
         {
           switch (this->direction ())

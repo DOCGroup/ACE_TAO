@@ -698,7 +698,7 @@ be_visitor_module::visit_component (be_component *node)
     {
     case TAO_CodeGen::TAO_ROOT_CH:
       {
-        be_visitor_component_ch visitor (&ctx);
+        be_visitor_interface_ch visitor (&ctx);
         // So we can pick up the abstract ops helpers.
         ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
         status = node->accept (&visitor);
@@ -706,25 +706,25 @@ be_visitor_module::visit_component (be_component *node)
       }
     case TAO_CodeGen::TAO_ROOT_CI:
       {
-        be_visitor_component_ci visitor (&ctx);
+        be_visitor_interface_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CS:
       {
-        be_visitor_component_cs visitor (&ctx);
+        be_visitor_interface_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
-        be_visitor_component_cdr_op_ch visitor (&ctx);
+        be_visitor_interface_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        be_visitor_component_cdr_op_cs visitor (&ctx);
+        be_visitor_interface_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -736,13 +736,13 @@ be_visitor_module::visit_component (be_component *node)
       }
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
-        be_visitor_component_any_op_ch visitor (&ctx);
+        be_visitor_interface_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
-        be_visitor_component_any_op_cs visitor (&ctx);
+        be_visitor_interface_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

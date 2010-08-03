@@ -59,14 +59,17 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_macro (node->flat_name ());
 
   // default constructor
   *os << be_nl << be_nl
-      << node->name () << "::" << node->local_name () << " (void)" << be_nl
+      << node->name () << "::" << node->local_name ()
+      << " (void)" << be_nl
       << "{}";
 
   // for unbounded sequences, we have a different set of constructors
@@ -123,9 +126,9 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       if (bt->accept (&bt_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cs::"
-                             "visit_sequence - "
-                             "base type visit failed\n"),
+                             ACE_TEXT ("be_visitor_sequence_cs::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("base type visit failed\n")),
                             -1);
         }
 
@@ -135,12 +138,15 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "  : " << be_idt << be_idt;
 
       // Pass it to the base constructor.
-      if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
+      if (node->gen_base_class_name (os,
+                                     "",
+                                     this->ctx_->scope ()->decl ()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cs::"
-                             "visit_sequence - "
-                             "codegen for base sequence class\n"),
+                             ACE_TEXT ("be_visitor_sequence_cs::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("codegen for base ")
+                             ACE_TEXT ("sequence class\n")),
                             -1);
         }
 
@@ -164,12 +170,15 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       << "  : " << be_idt << be_idt;
 
   // Pass it to the base constructor.
-  if (node->gen_base_class_name (os, "", this->ctx_->scope ()->decl ()) == -1)
+  if (node->gen_base_class_name (os,
+                                 "",
+                                 this->ctx_->scope ()->decl ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cs::"
-                         "visit_sequence - "
-                         "codegen for base sequence class\n"),
+                         ACE_TEXT ("be_visitor_sequence_cs::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("codegen for base ")
+                         ACE_TEXT ("sequence class\n")),
                         -1);
     }
 
@@ -207,14 +216,19 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "}";
     }
 
-  if (be_global->any_support () && !node->anonymous ())
+  if (be_global->any_support ()
+      && !node->anonymous ()
+      && (!node->is_local ()
+          || be_global->gen_local_iface_anyops ()))
     {
       *os << be_nl << be_nl
           << "void "
-          << node->name () << "::_tao_any_destructor (" << be_idt << be_idt_nl
+          << node->name () << "::_tao_any_destructor ("
+          << be_idt << be_idt_nl
           << "void * _tao_void_pointer)" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << node->local_name () << " * _tao_tmp_pointer =" << be_idt_nl
+          << node->local_name () << " * _tao_tmp_pointer ="
+          << be_idt_nl
           << "static_cast<" << node->local_name ()
           << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl

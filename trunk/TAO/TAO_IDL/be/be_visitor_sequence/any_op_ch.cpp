@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client header
 // ***************************************************************************
@@ -32,7 +31,9 @@ int
 be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 {
   if (node->cli_hdr_any_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || (node->is_local ()
+          && !be_global->gen_local_iface_anyops ()))
     {
       return 0;
     }
@@ -40,8 +41,12 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
   ACE_CString name;
   

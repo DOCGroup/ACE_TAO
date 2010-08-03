@@ -26,13 +26,13 @@ CORBA::Context::~Context (void)
 }
 
 CORBA::ULong
-CORBA::Context::_incr_refcnt (void)
+CORBA::Context::_incr_refcount (void)
 {
   return ++refcount_;
 }
 
 CORBA::ULong
-CORBA::Context::_decr_refcnt (void)
+CORBA::Context::_decr_refcount (void)
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -165,13 +165,13 @@ CORBA::ContextList::_destroy (void)
 }
 
 void
-CORBA::ContextList::_incr_refcnt (void)
+CORBA::ContextList::_incr_refcount (void)
 {
   ++this->ref_count_;
 }
 
 void
-CORBA::ContextList::_decr_refcnt (void)
+CORBA::ContextList::_decr_refcount (void)
 {
   --this->ref_count_;
 

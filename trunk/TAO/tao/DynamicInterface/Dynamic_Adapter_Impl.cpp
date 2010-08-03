@@ -81,7 +81,7 @@ TAO_Dynamic_Adapter_Impl::context_release (CORBA::Context_ptr ctx)
 {
   if (ctx != 0)
     {
-      ctx->_decr_refcnt ();
+      ctx->_decr_refcount ();
     }
 }
 
@@ -96,7 +96,7 @@ TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 {
   if (req != 0)
     {
-      req->_decr_refcnt ();
+      req->_decr_refcount ();
     }
 }
 
@@ -111,7 +111,7 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 {
   if (req != 0)
     {
-      req->_decr_refcnt ();
+      req->_decr_refcount ();
     }
 }
 

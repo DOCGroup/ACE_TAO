@@ -43,7 +43,6 @@ be_extended_port::destroy (void)
   this->be_field::destroy ();
 }
 
-
 int
 be_extended_port::accept (be_visitor *visitor)
 {

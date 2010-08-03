@@ -15,6 +15,7 @@
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================
+
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
 
@@ -149,6 +150,12 @@ namespace CORBA
     /// The previous environment on the "default environment stack".
     Environment *previous_;
   };
+  
+  template<>
+  inline void release (Environment_ptr env)
+  {
+    delete env;
+  }
 } // End CORBA namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

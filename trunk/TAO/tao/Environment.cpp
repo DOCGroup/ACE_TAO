@@ -9,12 +9,6 @@
 # include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Environment,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Environment::Environment (void)

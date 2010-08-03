@@ -34,9 +34,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->create_name (this->ctx_->tdef ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "failed creating name\n"),
+                         ACE_TEXT ("be_visitor_sequence_ch::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("failed creating name\n")),
                         -1);
     }
 
@@ -61,9 +61,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "Bad element type\n"),
+                         ACE_TEXT ("be_visitor_sequence_ch::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("Bad element type\n")),
                         -1);
     }
 
@@ -83,9 +83,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       if (bt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_ch::"
-                             "visit_sequence - "
-                             "codegen for anonymous base type failed\n"),
+                             ACE_TEXT ("be_visitor_sequence_ch::")
+                             ACE_TEXT ("visit_sequence - ")
+                             ACE_TEXT ("codegen for anonymous ")
+                             ACE_TEXT ("base type failed\n")),
                             -1);
         }
 
@@ -93,7 +94,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       this->ctx_->tdef (tmp);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
 
@@ -140,7 +143,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  *os << "class " << be_global->stub_export_macro () << " "
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
       
@@ -152,9 +156,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_ch::"
-                         "visit_sequence - "
-                         "Base class name generation failed\n"),
+                         ACE_TEXT ("be_visitor_sequence_ch::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("Base class name ")
+                         ACE_TEXT ("generation failed\n")),
                         -1);
     }
 
@@ -221,26 +226,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << be_nl << be_nl
           << "virtual ::CORBA::ULong maximum (void) const;";
     }
+    
+  *os << be_nl;
 
-  if (be_global->any_support () && !node->anonymous ())
-    {
-      *os << be_nl << be_nl
-          << "static void _tao_any_destructor (void *);";
-    }
-
-  /// If we are using std::vector, we can't implement this
-  /// constructor.
-  if (!be_global->alt_mapping () || !node->unbounded ())
-    {
-      // Generate the _var_type typedef (only if we are not anonymous).
-      if (this->ctx_->tdef () != 0)
-        {
-          *os << be_nl << be_nl
-              << "typedef " << node->local_name () << "_var _var_type;"
-              << be_nl
-              << "typedef " << node->local_name () << "_out _out_type;";
-        }
-    }
+  node->gen_stub_decls (os);
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).

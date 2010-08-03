@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PRINCIPAL_H
 #define TAO_PRINCIPAL_H
 
@@ -68,8 +67,8 @@ namespace CORBA
     static Principal * _nil (void);
 
     // = Stuff required for memory management.
-    unsigned long _incr_refcnt (void);
-    unsigned long _decr_refcnt (void);
+    unsigned long _incr_refcount (void);
+    unsigned long _decr_refcount (void);
 
     Principal (void);
 

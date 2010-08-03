@@ -29,28 +29,14 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include "tao/CORBA_methods.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
-
-  class NVList;
-  typedef NVList *NVList_ptr;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
-
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr );
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
+  template<>
+  TAO_AnyTypeCode_Export void release (CORBA::TypeCode_ptr);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

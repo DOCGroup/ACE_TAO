@@ -39,7 +39,7 @@ public:
   virtual int visit_extended_port (be_extended_port *node);
   virtual int visit_mirror_port (be_mirror_port *node);
 
-  /// Automatically recurses to the ancestor scopes, if any.
+  /// Automatically iterates over ancestor scopes, if any.
   int visit_component_scope (be_component *node);
 
   /// These two methods are used instead of overriding

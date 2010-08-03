@@ -11,10 +11,6 @@
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (IFR_Client,
-           IFR_Client_Adapter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

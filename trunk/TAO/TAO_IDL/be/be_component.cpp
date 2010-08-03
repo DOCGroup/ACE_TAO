@@ -15,6 +15,7 @@
 
 #include "be_component.h"
 #include "be_visitor.h"
+#include "be_helper.h"
 
 #include "ast_mirror_port.h"
 #include "ast_uses.h"
@@ -270,6 +271,81 @@ be_component::scan (UTL_Scope *s)
   if (c != 0)
     {
       this->scan (c->base_component ());
+    }
+}
+
+void
+be_component::gen_stub_inheritance (TAO_OutStream *os)
+{
+  this->analyze_parentage ();
+
+  *os << "public virtual ::";
+
+  AST_Component *parent = this->base_component ();
+
+  if (parent != 0)
+    {
+      *os << parent->name ();
+    }
+  else
+    {
+      *os << "Components::CCMObject";
+    }
+
+  long nsupports = this->n_inherits ();
+
+  if (nsupports > 0)
+    {
+      *os << be_idt;
+      
+      AST_Type **supp_list = this->supports ();
+
+      for (long i = 0; i < nsupports; ++i)
+        {
+          *os << ", " << be_nl
+              << "public virtual ::"
+              << supp_list[i]->name ();
+        }
+
+      *os << be_uidt;
+    }
+    
+  *os << be_uidt;
+}
+
+int
+be_component::gen_is_a_ancestors (TAO_OutStream *os)
+{
+  AST_Component *ancestor = this;
+
+  while (ancestor != 0)
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"" << ancestor->repoID () << "\"" << be_uidt_nl
+          << ") == 0 ||" << be_uidt_nl;
+
+      ancestor = ancestor->base_component ();
+    }
+
+  *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+      << "value," << be_nl
+      << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
+      << ") == 0" << be_uidt << be_uidt_nl;
+      
+  return 0;
+}
+
+void
+be_component::gen_parent_collocation (TAO_OutStream *os)
+{
+  AST_Component *base = this->base_component ();
+
+  if (base != 0)
+    {
+      *os << be_nl
+          << "this->" << base->flat_name ()
+          << "_setup_collocation" << " ();";
     }
 }
 

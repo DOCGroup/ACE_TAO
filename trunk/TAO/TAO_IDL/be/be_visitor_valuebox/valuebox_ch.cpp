@@ -64,14 +64,13 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   *os << be_uidt << be_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "typedef " << node->local_name () << " * _ptr_type;" << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;" << be_nl
-      << "typedef " << node->local_name () << "_out _out_type;"
-      << be_nl << be_nl;
+      << "public:" << be_idt;
+      
+  node->gen_stub_decls (os);
 
   // _downcast method
-  *os << "static " << node->local_name () << "* "
+  *os << be_nl << be_nl
+      << "static " << node->local_name () << "* "
       << "_downcast ( ::CORBA::ValueBase *);" << be_nl;
 
   // _copy_value method
@@ -92,13 +91,6 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "TAO_InputCDR &," << be_nl
       << node->local_name () << " *&" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void *);"
-          << be_nl;
-    }
 
   if (be_global->tc_support ())
     {

@@ -22,22 +22,18 @@
 # include "tao/AnyTypeCode/NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (AnyTypeCode,
-           NVList,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
 
 CORBA::ULong
-CORBA::NamedValue::_incr_refcnt (void)
+CORBA::NamedValue::_incr_refcount (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NamedValue::_decr_refcnt (void)
+CORBA::NamedValue::_decr_refcount (void)
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -60,13 +56,13 @@ CORBA::NamedValue::~NamedValue (void)
 // ****************************************************************
 
 CORBA::ULong
-CORBA::NVList::_incr_refcnt (void)
+CORBA::NVList::_incr_refcount (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NVList::_decr_refcnt (void)
+CORBA::NVList::_decr_refcount (void)
 {
   CORBA::ULong const new_count = --this->refcount_;
 

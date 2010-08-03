@@ -12,8 +12,15 @@
  */
 //=============================================================================
 
+#include "ace/Auto_Ptr.h"
+
+#include "utl_identifier.h"
+#include "utl_exceptlist.h"
+#include "nr_extern.h"
+
 #include "be_argument.h"
 #include "be_interface.h"
+#include "be_mirror_port.h"
 #include "be_attribute.h"
 #include "be_constant.h"
 #include "be_enum.h"
@@ -35,9 +42,6 @@
 #include "be_extern.h"
 #include "be_util.h"
 #include "be_native.h"
-#include "utl_identifier.h"
-#include "utl_exceptlist.h"
-#include "nr_extern.h"
 
 #include "be_visitor_interface.h"
 #include "be_visitor_attribute.h"
@@ -53,7 +57,6 @@
 #include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
 #include "be_visitor_native.h"
-#include "ace/Auto_Ptr.h"
 
 #include "be_visitor_interface/interface.cpp"
 #include "be_visitor_interface/interface_ch.cpp"
