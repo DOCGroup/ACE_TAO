@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Attributes.h"
-#include "ACEXML/common/Env.h"
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
@@ -44,8 +43,7 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int startElement (ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
-        = 0;
+  virtual int startElement (ACEXML_Attributes *atts) = 0;
 
   /**
    * Validate the next child element.
@@ -54,8 +52,7 @@ public:
    */
   virtual int nextElement (const ACEXML_Char *namespaceURI,
                             const ACEXML_Char *localName,
-                            const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        = 0;
+                            const ACEXML_Char *qName) = 0;
 };
 
 

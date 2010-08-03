@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/Env.h"
 #include "ACEXML/common/SAXExceptions.h"
 #include "ace/Auto_Ptr.h"
 
@@ -75,21 +74,18 @@ public:
   /**
    * Set the attribute type.
    */
-  virtual int setAttType (const ATT_TYPE type ACEXML_ENV_ARG_DECL)
-     = 0;
+  virtual int setAttType (const ATT_TYPE type) = 0;
 
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char *Name ACEXML_ENV_ARG_DECL)
-     = 0;
+  virtual int insertList (const ACEXML_Char *Name) = 0;
 
   /**
    * Set default attribute declaration.
    */
   virtual int setDefault (const DEFAULT_DECL def,
-                          const ACEXML_Char *value ACEXML_ENV_ARG_DECL)
-     = 0;
+                          const ACEXML_Char *value) = 0;
 
   /**
    * Check validity of the current attribute definition being built.
@@ -128,18 +124,17 @@ public:
    */
   virtual int setElement (const ACEXML_Char *namespaceURI,
                           const ACEXML_Char *localName,
-                          const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        = 0;
+                          const ACEXML_Char *qName) = 0;
 
   /**
    * Acquire an Attribute_Builder.
    */
-  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder () = 0;
+  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder (void) = 0;
 
   /**
    * Add a definition for one attribute.
    */
-  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def ACEXML_ENV_ARG_DECL) = 0;
+  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def) = 0;
 
 
   /**
