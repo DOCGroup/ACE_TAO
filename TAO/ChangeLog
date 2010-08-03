@@ -1,3 +1,14 @@
+Tue Aug  3 12:07:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taodefaults.mpb:
+          Removed exceptions as base, we are removing non exception support
+
+        * tao/Acceptor_Registry.cpp:
+          Removed not needed include
+
+        * tao/CORBALOC_Parser.h:
+          Updated include base ace/Array.h will be removed soon
+
 Sun Aug  1 18:16:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
