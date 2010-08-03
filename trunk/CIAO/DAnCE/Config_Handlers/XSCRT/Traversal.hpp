@@ -223,7 +223,7 @@ namespace XSCRT
 
       Traverser ()
       {
-        map (typeid (Type), *this);
+        DispatcherBase<B>::map (typeid (Type), *this);
       }
 
       virtual void
