@@ -55,4 +55,10 @@ CORBA::AbstractBase::_is_local (void) const
   return this->is_local_;
 }
 
+inline void
+CORBA::AbstractBase::_decr_refcount (void)
+{
+  this->_remove_ref ();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

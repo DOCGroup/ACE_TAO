@@ -43,32 +43,27 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   // Generate the _var and _out typedefs.
   node->gen_common_varout (os);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl
       << "struct " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt;
 
-  // Generate the typedefs.
-  *os << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl
-      << "typedef " << node->local_name () << "_out _out_type;"
-      << be_nl << be_nl;
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void *);";
-    }
+  node->gen_stub_decls (os);
+  
+  *os << be_nl;
 
   // Generate code for field members.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_ch::"
-                         "visit_structure - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_structure_ch::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -83,9 +78,9 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_ch::"
-                             "visit_structure - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_structure_ch::")
+                             ACE_TEXT ("visit_structure - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }

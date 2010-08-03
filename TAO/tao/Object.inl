@@ -2,9 +2,24 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+template<>
+ACE_INLINE
+CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  if (obj == 0)
+    {
+      return true;
+    }
+    
+  return CORBA::Object::is_nil_i (obj);
+}
+
+// ****************************************************************
 
 ACE_INLINE
 CORBA::Object::Object (int)
@@ -27,33 +42,6 @@ CORBA::Object::_duplicate (CORBA::Object_ptr obj)
 
   return obj;
 }
-
-// ************************************************************
-// These are in CORBA namespace
-
-ACE_INLINE
-void
-CORBA::release (CORBA::Object_ptr obj)
-{
-  if (obj)
-    {
-      obj->_remove_ref ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  if (obj == 0)
-    {
-      return true;
-    }
-
-  return CORBA::Object::is_nil_i (obj);
-}
-
-// ************************************************************
 
 // Null pointers represent nil objects.
 
@@ -93,6 +81,12 @@ ACE_INLINE const IOP::IOR &
 CORBA::Object::ior (void) const
 {
   return this->ior_.in ();
+}
+
+inline void
+CORBA::Object::_decr_refcount (void)
+{
+  this->_remove_ref ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

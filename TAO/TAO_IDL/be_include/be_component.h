@@ -67,13 +67,22 @@ public:
   ACE_CDR::ULong n_consumes (void) const;
   ACE_CDR::ULong n_emits (void) const;
   
+  /// Update the has_* members.
+  void scan (UTL_Scope *s);
+  
+  /// Generate the "public virtual" entries in the stub header.
+  virtual void gen_stub_inheritance (TAO_OutStream *os);
+  
+  /// Generate the string compares for ancestors in _is_a().
+  virtual int gen_is_a_ancestors (TAO_OutStream *os);
+  
+  /// Generate setup_collocation() for base component, if any.
+  virtual void gen_parent_collocation (TAO_OutStream *os);
+  
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (be_component);
   DEF_NARROW_FROM_SCOPE (be_component);
-  
-  /// Update the has_* members.
-  void scan (UTL_Scope *s);
   
 private:
   /// Specialized version for mirror ports.

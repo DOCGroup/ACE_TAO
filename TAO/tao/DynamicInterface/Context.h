@@ -49,6 +49,12 @@ namespace CORBA
 
   class NVList;
   typedef NVList *NVList_ptr;
+  
+  class Context;
+  typedef Context * Context_ptr;
+  
+  class ContextList;
+  typedef ContextList * ContextList_ptr;
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
   typedef TAO_Pseudo_Out_T<Context> Context_out;
@@ -81,8 +87,8 @@ namespace CORBA
     static Context *_nil (void);
 
     // = Reference counting.
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+    CORBA::ULong _incr_refcount (void);
+    CORBA::ULong _decr_refcount (void);
 
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
@@ -163,8 +169,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcnt (void);
-    void  _decr_refcnt (void);
+    void _incr_refcount (void);
+    void  _decr_refcount (void);
 
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;

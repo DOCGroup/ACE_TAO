@@ -74,24 +74,24 @@ CORBA::ExceptionList::remove (CORBA::ULong)
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_duplicate (void)
 {
-  this->_incr_refcnt ();
+  this->_incr_refcount ();
   return this;
 }
 
 void
 CORBA::ExceptionList::_destroy (void)
 {
-  this->_decr_refcnt ();
+  this->_decr_refcount ();
 }
 
 void
-CORBA::ExceptionList::_incr_refcnt (void)
+CORBA::ExceptionList::_incr_refcount (void)
 {
   ++this->ref_count_;
 }
 
 void
-CORBA::ExceptionList::_decr_refcnt (void)
+CORBA::ExceptionList::_decr_refcount (void)
 {
   CORBA::ULong const refcount = --this->ref_count_;
 

@@ -28,11 +28,6 @@
 # include "tao/Object.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Object,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object::~Object (void)

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client header
 // ***************************************************************************
@@ -41,8 +40,12 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
   be_module *module = 0;
 
@@ -104,9 +107,9 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_any_op_ch::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_interface_any_op_ch::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -114,3 +117,18 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   node->cli_hdr_any_op_gen (1);
   return 0;
 }
+
+int
+be_visitor_interface_any_op_ch::visit_component (
+  be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_any_op_ch::visit_connector (
+  be_connector *node)
+{
+  return this->visit_interface (node);
+}
+

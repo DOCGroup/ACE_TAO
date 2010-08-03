@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_INTERFACE_H_
 #define _BE_INTERFACE_INTERFACE_H_
 
@@ -42,57 +41,31 @@ class AST_Operation;
  *
  * @brief be_visitor_interface
  *
- * This is a concrete visitor for interface that abstracts all common tasks
+ * This is a concrete visitor for interface that abstracts
+ * all common tasks.
  */
 class be_visitor_interface : public be_visitor_scope
 {
 public:
-  /// constructor
   be_visitor_interface (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_interface (void);
 
-  /// visit the interface node
   virtual int visit_interface (be_interface *node);
 
   /// An override of the base class method so we can generate code for
   /// any abstract parents the interface may have.
   virtual int visit_scope (be_scope *node);
 
-  // =visit methods on all elements syntactically valid in a Interface scope
-
-  /// visit attribute
   virtual int visit_attribute (be_attribute *node);
-
-  /// visit a constant
   virtual int visit_constant (be_constant *node);
-
-  /// visit an native
   virtual int visit_native (be_native *node);
-
-  /// visit an enum
   virtual int visit_enum (be_enum *node);
-
-  /// visit an exception
   virtual int visit_exception (be_exception *node);
-
-  /// visit operation
   virtual int visit_operation (be_operation *node);
-
-  /// visit a structure
   virtual int visit_structure (be_structure *node);
-
-  /// visit a forward declared structure
   virtual int visit_structure_fwd (be_structure_fwd *node);
-
-  /// visit a union
   virtual int visit_union (be_union *node);
-
-  /// visit a union
   virtual int visit_union_fwd (be_union_fwd *node);
-
-  /// visit the typedef node
   virtual int visit_typedef (be_typedef *node);
 
  protected:

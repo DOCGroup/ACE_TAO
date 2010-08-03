@@ -1,3 +1,128 @@
+Tue Aug  3 13:59:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/cdr_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_component/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_component/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ci.h:
+        * TAO_IDL/be_include/be_visitor_component/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_component/component_cs.h:
+
+          Removed these files, the contained visitors are now
+          replaced in the traversal by the corresponding interface
+          visitor.
+
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_extended_port.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
+        * TAO_IDL/be_include/be_visitor_argument/argument.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_visitor_interface/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_interface/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/any_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ci.h:
+        * TAO_IDL/be_include/be_visitor_interface/cdr_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
+        * TAO_IDL/be_include/be_visitor_component_scope.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          - Factored common stub header file code generation into
+            a method in class be_type.
+
+          - Abstracted differences in stub code generation between
+            interfaces and components into methods on the
+            corresponding node classes.
+
+          - Replaced calls to component visitors for stub, cdr op
+            and any op generation with the corresponding interface
+            visitors.
+
+        * tao/Object.inl:
+        * tao/AnyTypeCode/TypeCode.cpp:
+        * tao/AnyTypeCode/AnyTypeCode_methods.h:
+        * tao/AnyTypeCode/TypeCode.inl:
+        * tao/AnyTypeCode/NVList.h:
+        * tao/AnyTypeCode/NVList.cpp:
+        * tao/AnyTypeCode/NVList.inl:
+        * tao/Adapter.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/ZIOP_Adapter.cpp:
+        * tao/Unbounded_Sequence_CDR_T.h:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/ExceptionList.inl:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/DII_CORBA_methods.h:
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+        * tao/DynamicInterface/Server_Request.inl:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/Context.inl:
+        * tao/DynamicInterface/Request.inl:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/CORBA_methods.h:
+        * tao/Environment.h:
+        * tao/ORB.h:
+        * tao/Environment.cpp:
+        * tao/Object.h:
+        * tao/IORManipulation/IORManip_Filter.h:
+        * tao/Principal.cpp:
+        * tao/Principal.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/Value_CORBA_methods.h:
+        * tao/Object.cpp::
+        * tao/ORB.inl
+        * tao/Environment.inl:
+        * tao/Principal.inl:
+
+          Made CORBA::is_nil() and CORBA::release() into
+          template functions, and removed all the overloads.
+          This fix closes [BUGID:3854].
+
 Tue Aug  3 12:07:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/taodefaults.mpb:

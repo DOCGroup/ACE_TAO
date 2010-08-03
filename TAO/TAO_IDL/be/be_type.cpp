@@ -19,6 +19,11 @@
 #include "be_visitor.h"
 #include "be_codegen.h"
 #include "be_helper.h"
+#include "be_extern.h"
+
+#include "ast_valuetype.h"
+#include "ast_sequence.h"
+
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
@@ -281,6 +286,63 @@ be_type::gen_common_varout (TAO_OutStream *os)
     }
 
   this->common_varout_gen_ = true;
+}
+
+void
+be_type::gen_stub_decls (TAO_OutStream *os)
+{
+  if (this->anonymous ())
+    {
+      return;
+    }
+    
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl;
+      
+  AST_Interface *i = AST_Interface::narrow_from_decl (this);
+  AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
+  
+  if (i != 0)
+    {
+      *os << be_nl
+          << "typedef " << this->local_name ()
+          << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
+    }
+    
+  bool skip_varout = false;
+  AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+  
+  if (s != 0)
+    {
+      // _vars and _outs not supported yet by alt mapping.
+      if (be_global->alt_mapping () && s->unbounded ())
+        {
+          skip_varout = true;
+        }
+    }
+  
+  if (!skip_varout)
+    {  
+      *os << be_nl
+          << "typedef " << this->local_name ()
+          << "_var _var_type;" << be_nl
+          << "typedef " << this->local_name ()
+          << "_out _out_type;";
+    }
+      
+  bool gen_any_destructor =
+    be_global->any_support ()
+    && (!this->is_local ()
+        || be_global->gen_local_iface_anyops ());
+
+  if (gen_any_destructor)
+    {
+      *os << be_nl << be_nl
+          << "static void _tao_any_destructor (void *);";
+    }
 }
 
 bool

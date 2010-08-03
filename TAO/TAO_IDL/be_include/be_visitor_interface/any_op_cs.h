@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_ANY_OP_CS_H_
 #define _BE_INTERFACE_ANY_OP_CS_H_
 
@@ -29,14 +28,12 @@ class be_visitor_interface_any_op_cs : public be_visitor_interface
 {
 
 public:
-  /// constructor
   be_visitor_interface_any_op_cs (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_interface_any_op_cs (void);
 
-  /// visit interface
   virtual int visit_interface (be_interface *node);
+  virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
 };
 
 #endif /* _BE_INTERFACE_ANY_OP_CS_H_ */

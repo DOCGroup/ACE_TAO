@@ -4,31 +4,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE
-void
-CORBA::release (CORBA::ServerRequest_ptr x)
-{
-  if (x != 0)
-    {
-      x->_decr_refcnt ();
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::ServerRequest_ptr x)
-{
-  return x == 0;
-}
-
-// ===================================================================
-
 ACE_INLINE CORBA::ServerRequest_ptr
 CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 {
   if (x != 0)
     {
-      x->_incr_refcnt ();
+      x->_incr_refcount ();
     }
 
   return x;

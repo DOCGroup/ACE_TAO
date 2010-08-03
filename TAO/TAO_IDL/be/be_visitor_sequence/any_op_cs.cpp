@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client
 // stubs file
@@ -33,7 +32,9 @@ int
 be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 {
   if (node->cli_stub_any_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || (node->is_local ()
+          && !be_global->gen_local_iface_anyops ()))
     {
       return 0;
     }
