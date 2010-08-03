@@ -34,6 +34,8 @@ DISTRIBUTE_GROUP_DOC  = YES
 TAB_SIZE              = 8
 ENABLED_SECTIONS      =
 SHORT_NAMES           = YES
+GENERATE_DEPRECATEDLIST = YES
+GENERATE_TODOLIST       = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -71,7 +73,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ciao/dds4ccm
+HTML_OUTPUT           = html/ciao/dds4ccm
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -143,7 +145,7 @@ TAGFILES              = html/ace/ACE.tag=../../../ace \
                         html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
                         html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
                         html/tao/ifr/TAO_IFR.tag=../../ifr
-GENERATE_TAGFILE      = html/tao/ciao/DAnCE.tag
+GENERATE_TAGFILE      = html/ciao/dds4ccm/dds4ccm.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

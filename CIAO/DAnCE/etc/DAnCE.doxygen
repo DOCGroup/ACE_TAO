@@ -71,7 +71,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ciao/dance
+HTML_OUTPUT           = html/dance
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -144,7 +144,7 @@ TAGFILES              = html/ace/ACE.tag=../../../ace \
                         html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
                         html/tao/ifr/TAO_IFR.tag=../../ifr \
                         html/ace/inet/ACE_INet.tag=../../../protocols/INet
-GENERATE_TAGFILE      = html/tao/ciao/DAnCE.tag
+GENERATE_TAGFILE      = html/dance/DAnCE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
