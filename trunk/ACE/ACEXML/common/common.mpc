@@ -26,7 +26,6 @@ project(ACEXML): acelib, ace_output, codecs, install, zzip, zlib {
     Locator.h
     XMLFilter.h
     XMLReader.h
-    XML_Macros.h
     XML_Types.h
     XML_Util.h
   }
