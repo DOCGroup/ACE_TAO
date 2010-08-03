@@ -1,3 +1,11 @@
+Tue Aug  3 16:50:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/DTD_Manager.h:
+          Fixed compile error
+
+        * common/SAXExceptions.inl:
+          Fixed fuzz
+
 Tue Aug  3 11:58:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/Makefile.am:
