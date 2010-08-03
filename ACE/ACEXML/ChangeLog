@@ -1,3 +1,47 @@
+Tue Aug  3 11:52:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf.cpp:
+        * apps/svcconf/Svcconf_Handler.h:
+        * apps/svcconf/Svcconf_Handler.cpp:
+        * common/Attributes_Def_Builder.h:
+        * common/CharStream.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DTD_Manager.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/Element_Def_Builder.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Exception.h:
+        * common/SAXExceptions.inl:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLReader.h:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * examples/SAXPrint/main.cpp:
+        * parser/debug_validator/Debug_Attributes_Builder.h:
+        * parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * parser/debug_validator/Debug_DTD_Manager.h:
+        * parser/debug_validator/Debug_DTD_Manager.cpp:
+        * parser/debug_validator/Debug_Element_Builder.h:
+        * parser/debug_validator/Debug_Element_Builder.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+        * tests/ContentHandler_Test.cpp:
+        * tests/Transcoder_Test.cpp:
+          Removed support for emulated exceptions
+
+        * common/Env.h:
+        * common/Env.inl:
+        * common/Env.cpp:
+        * common/XML_Macros.h:
+          Removed these files.
+
 Thu Mar 25 19:41:57 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * parser/parser/Parser.cpp (ACEXML_Parser::parse_encoding_decl):

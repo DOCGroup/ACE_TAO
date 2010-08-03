@@ -36,13 +36,13 @@ ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler (void)
 void
 ACEXML_Svcconf_Handler::characters (const ACEXML_Char *,
                                     int,
-                                    int ACEXML_ENV_ARG_DECL_NOT_USED)
+                                    int)
 {
   // no-op
 }
 
 void
-ACEXML_Svcconf_Handler::endDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::endDocument (void)
 {
   // no-op
 }
@@ -50,7 +50,7 @@ ACEXML_Svcconf_Handler::endDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                     const ACEXML_Char *,
-                                    const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                                    const ACEXML_Char *qName)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
@@ -268,7 +268,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char *)
 {
   // no-op
 }
@@ -276,14 +276,14 @@ ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char * ACEXML_ENV_ARG_DEC
 void
 ACEXML_Svcconf_Handler::ignorableWhitespace (const ACEXML_Char *,
                                              int,
-                                             int ACEXML_ENV_ARG_DECL_NOT_USED)
+                                             int)
 {
   // no-op
 }
 
 void
 ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
-                                               const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                               const ACEXML_Char *)
 {
   // no-op
 }
@@ -295,13 +295,13 @@ ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator)
 }
 
 void
-ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char *)
 {
   // no-op
 }
 
 void
-ACEXML_Svcconf_Handler::startDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::startDocument (void)
 {
   // no-op
 }
@@ -310,24 +310,24 @@ void
 ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
                                       const ACEXML_Char *,
                                       const ACEXML_Char *qName,
-                                      ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+                                      ACEXML_Attributes *alist)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
-      this->get_dynamic_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_dynamic_attrs (alist);
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("initializer")) == 0)
     {
-      this->get_initializer_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_initializer_attrs (alist);
 
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {
-      this->get_static_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_static_attrs (alist);
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {
-      this->get_stream_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_stream_id (alist);
 
       if (ACE_Service_Repository::instance()->find
           (this->stream_info_.name (),
@@ -359,7 +359,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("resume")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Resume %s in stream %s\n"),
@@ -400,7 +400,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("suspend")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Suspend %s in stream %s\n"),
@@ -441,7 +441,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("remove")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Remove %s in stream %s\n"),
@@ -495,7 +495,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
 void
 ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
-                                            const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                            const ACEXML_Char *)
 {
   // No-op.
 }
@@ -505,7 +505,7 @@ ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
 void
 ACEXML_Svcconf_Handler::notationDecl (const ACEXML_Char *,
                                       const ACEXML_Char *,
-                                      const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                      const ACEXML_Char *)
 {
   // No-op.
 }
@@ -514,7 +514,7 @@ void
 ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
                                             const ACEXML_Char *,
                                             const ACEXML_Char *,
-                                            const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                            const ACEXML_Char *)
 {
   // No-op.
 }
@@ -523,7 +523,7 @@ ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
 
 ACEXML_InputSource *
 ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
-                                       const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                       const ACEXML_Char *)
 {
   // No-op.
   return 0;
@@ -535,7 +535,7 @@ ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
    * Receive notification of a recoverable error.
    */
 void
-ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -544,7 +544,7 @@ ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_
 }
 
 void
-ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -553,7 +553,7 @@ ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_
 }
 
 void
-ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -562,7 +562,7 @@ ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DEC
 }
 
 int
-ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
@@ -588,7 +588,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
 }
 
 int
-ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
@@ -615,7 +615,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
 }
 
 int
-ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
@@ -696,7 +696,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
 }
 
 int
-ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
@@ -734,7 +734,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
 }
 
 int
-ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
