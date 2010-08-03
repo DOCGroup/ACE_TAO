@@ -64,9 +64,21 @@ namespace CIAO
           if (this->idl_dp_.get ())
             return true;
         }
+      catch (CORBA::Exception &ex)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
+                           ACE_TEXT ("CORBA Exception whilst parsing XML into IDL\n"),
+                           ex._info ().c_str ()));
+          throw Config_Error (this->file_,
+                              ex._info ().c_str ());
+        }
+      catch (Config_Error &ex)
+        {
+          throw ex;
+        }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO "XML_File_Intf::caught - "
+          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
                       ACE_TEXT ("Unexpected exception whilst parsing XML into IDL.\n")));
           throw Config_Error (this->file_,
                               ACE_TEXT ("Unexpected C++ exception whilst parsing XML"));
