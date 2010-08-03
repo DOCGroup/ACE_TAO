@@ -176,3 +176,4 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
     
   return 0;
 }
+
