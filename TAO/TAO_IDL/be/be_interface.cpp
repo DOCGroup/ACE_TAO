@@ -2161,10 +2161,10 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+  *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
-      << ") ||" << be_uidt_nl;
+      << ") == 0 ||" << be_uidt_nl;
 
   return 0;
 }
@@ -2918,6 +2918,148 @@ void
 be_interface::dds_connector_traits_done (bool val)
 {
   this->dds_connector_traits_done_ = val;
+}
+
+void
+be_interface::gen_stub_inheritance (TAO_OutStream *os)
+{
+  long i;
+  long nparents = this->n_inherits ();
+  bool has_concrete_parent = false;
+  bool i_am_abs = this->is_abstract ();
+
+  // If node interface inherits from other interfaces.
+  if (nparents > 0)
+    {
+      *os << be_idt;
+      
+      AST_Type **parents = this->inherits ();
+
+      for (i = 0; i < nparents; ++i)
+        {
+          AST_Type *parent = parents[i];
+        
+          if (! parent->is_abstract ())
+            {
+              has_concrete_parent = true;
+            }
+
+          *os << "public virtual ::"
+              << parent->name ();
+
+          if (i < nparents - 1)
+            {
+              // Node has multiple inheritance, so put a comma.
+              *os << "," << be_nl;
+            }
+        }
+
+      if (has_concrete_parent || i_am_abs)
+        {
+          *os << be_uidt << be_uidt_nl;
+        }
+      else if (! i_am_abs)
+        {
+          *os << "," << be_nl;
+        }
+    }
+
+  if (i_am_abs && nparents == 0)
+    {
+      *os << "public virtual ::CORBA::AbstractBase"
+          << be_uidt_nl;
+    }
+
+  if (! has_concrete_parent && ! i_am_abs)
+    {
+      *os << "public virtual ::CORBA::Object";
+
+      if (nparents > 0)
+        {
+          *os << be_uidt;
+        }
+
+      *os << be_uidt;
+    }
+}
+
+int
+be_interface::gen_is_a_ancestors (TAO_OutStream *os)
+{
+   int const status =
+    this->traverse_inheritance_graph (be_interface::is_a_helper,
+                                      os);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_interface::")
+                         ACE_TEXT ("gen_is_a_ancestors - ")
+                         ACE_TEXT ("traverse_inheritance_graph failed\n")),
+                        -1);
+    }
+
+  if (this->is_abstract () || this->has_mixed_parentage ())
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << ") == 0";
+    }
+  else if (this->is_local ())
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
+          << ") == 0";
+    }
+
+  if (this->has_mixed_parentage () || this->is_local ())
+    {
+      *os << " ||" << be_uidt_nl;
+    }
+  else if (this->is_abstract ())
+    {
+      *os << be_uidt << be_uidt_nl;
+    }
+
+  if (! this->is_abstract ())
+    {
+      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "value," << be_nl
+          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
+          << ") == 0" << be_uidt << be_uidt_nl;
+    }
+
+  return 0;
+}
+
+void
+be_interface::gen_parent_collocation (TAO_OutStream *os)
+{
+  long n_parents = this->n_inherits ();
+  bool has_parent = false;
+  AST_Type **parents = this->inherits ();
+
+  if (n_parents > 0)
+    {
+      for (long i = 0; i < n_parents; ++i)
+        {
+          be_interface *inherited =
+            be_interface::narrow_from_decl (parents[i]);
+
+          if (!has_parent)
+            {
+              *os << be_nl;
+            }
+
+          has_parent = true;
+
+          *os << be_nl
+              << "this->" << inherited->flat_name ()
+              << "_setup_collocation" << " ();";
+        }
+    }
 }
 
 // =================================================================

@@ -65,6 +65,9 @@ public:
 
   /// Generate _var and _out typedefs for structs and unions.
   void gen_common_varout (TAO_OutStream *os);
+  
+  /// Generate common typedef and any destructor decl.
+  void gen_stub_decls (TAO_OutStream *os);
 
   /// Accessors for the member.
   bool seen_in_sequence (void) const;

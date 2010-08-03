@@ -37,18 +37,6 @@ namespace CORBA
   class ORB;
   typedef ORB *ORB_ptr;
 
-  class Environment;
-  typedef Environment *Environment_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-
-  class Principal;
-  typedef Principal *Principal_ptr;
-
-  class OperationDef;
-  typedef OperationDef *OperationDef_ptr;
-
   /**
    * ORB Initialization
    */
@@ -65,17 +53,18 @@ namespace CORBA
                                       const wchar_t * orb_name);
 #endif
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Object_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
+  template<typename T> inline Boolean is_nil (T x)
+  {
+    return x == 0;
+  }
+  
+  template<typename T> inline void release (T x)
+  {
+    if (x != 0)
+      {
+        x->_decr_refcount ();
+      }
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -54,9 +54,6 @@
 #include "be_extern.h"
 
 #include "be_visitor_component/component.cpp"
-#include "be_visitor_component/component_ch.cpp"
-#include "be_visitor_component/component_ci.cpp"
-#include "be_visitor_component/component_cs.cpp"
 #include "be_visitor_component/component_sh.cpp"
 #include "be_visitor_component/component_si.cpp"
 #include "be_visitor_component/component_ss.cpp"
@@ -79,8 +76,4 @@
 #include "be_visitor_component/component_exs.cpp"
 #include "be_visitor_component/facet_exs.cpp"
 #include "be_visitor_component/executor_exs.cpp"
-#include "be_visitor_component/any_op_ch.cpp"
-#include "be_visitor_component/any_op_cs.cpp"
-#include "be_visitor_component/cdr_op_ch.cpp"
-#include "be_visitor_component/cdr_op_cs.cpp"
 

@@ -96,9 +96,11 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "TAO_ORB_Core *oc)" << be_uidt_nl;
       *os << ": ::CORBA::Object (ior, oc)" << be_idt_nl;
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation()
+          || be_global->gen_thru_poa_collocation ())
         {
-          *os << ", the"<< node->base_proxy_broker_name () << "_ (0)";
+          *os << ", the" << node->base_proxy_broker_name ()
+              << "_ (0)";
         }
 
       *os << be_uidt << be_uidt_nl
@@ -109,3 +111,16 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   node->cli_inline_gen (true);
   return 0;
 }
+
+int
+be_visitor_interface_ci::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_ci::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
+}
+

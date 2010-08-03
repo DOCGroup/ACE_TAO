@@ -59,16 +59,11 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
     // Generate destructor.
-      << "~" << node->local_name () << " (void);" << be_nl;
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void*);"
-          << be_nl << be_nl;
-    }
+      << "~" << node->local_name () << " (void);";
 
     // Generate assignment operator.
-  *os << node->local_name () << " &operator= (const "
+  *os << be_nl << be_nl
+      << node->local_name () << " &operator= (const "
       << node->local_name () << " &);";
 
   // Retrieve the disriminant type.
@@ -91,20 +86,13 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (bt->accept (&ud_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         " visit_union - "
-                         "codegen for discriminant failed\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT (" visit_union - ")
+                         ACE_TEXT ("codegen for discriminant failed\n")),
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // Generate the typedefs.
-  *os << be_nl << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl
-      << "typedef " << node->local_name () << "_out _out_type;";
+  node->gen_stub_decls (os);
 
   // Now generate the public defn for the union branch members. For this,
   // set our state to reflect what we are aiming to do.
@@ -113,9 +101,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "codegen for public defn of union members\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("codegen for public ")
+                         ACE_TEXT ("defn of union members\n")),
                         -1);
     }
 
@@ -125,9 +114,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (node->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "computing default value failed\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("computing default ")
+                         ACE_TEXT ("value failed\n")),
                         -1);
     }
 
@@ -158,9 +148,10 @@ int be_visitor_union_ch::visit_union (be_union *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ch::"
-                         "visit_union - "
-                         "codegen for private members of union\n"),
+                         ACE_TEXT ("be_visitor_union_ch::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("codegen for private")
+                         ACE_TEXT (" members of union\n")),
                         -1);
     }
 
@@ -182,9 +173,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
       if (node->accept (&tc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_ch::"
-                             "visit_union - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_union_ch::")
+                             ACE_TEXT ("visit_union - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }

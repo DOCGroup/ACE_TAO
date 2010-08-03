@@ -52,9 +52,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_exception_ch::"
-                         "visit_exception - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_exception_ch::")
+                         ACE_TEXT ("visit_exception - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -74,7 +74,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     {
       *os << "static void _tao_any_destructor (void *);" << be_nl << be_nl;
     }
-
 
   *os << "static " << node->local_name ()
       << " *_downcast ( ::CORBA::Exception *);" << be_nl
@@ -100,9 +99,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_exception::"
-                             "visit_exception - "
-                             "codegen for ctor failed\n"),
+                             ACE_TEXT ("be_visitor_exception::")
+                             ACE_TEXT ("visit_exception - ")
+                             ACE_TEXT ("codegen for ctor failed\n")),
                             -1);
         }
     }
@@ -123,9 +122,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                              "(%N:%l) be_visitor_exception_ch::"
-                              "visit_exception - "
-                              "TypeCode declaration failed\n"),
+                              ACE_TEXT ("be_visitor_exception_ch::")
+                              ACE_TEXT ("visit_exception - ")
+                              ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }

@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 // ******************************************************
 // Valuetype visitor for client header
 // ******************************************************
@@ -167,24 +166,22 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Generate the body.
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "typedef " << node->local_name () << " * _ptr_type;" << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl
-      << "typedef " << node->local_name () << "_out _out_type;"
-      << be_nl << be_nl;
+      << "public:" << be_idt;
+      
+  node->gen_stub_decls (os);
 
   if (is_an_amh_exception_holder)
     {
       // Generate the constructor and destructor.
-      *os << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
+      *os << be_nl << be_nl
+          << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl << be_nl
-          << "virtual ~" << node->local_name () << " (void);"
-          << be_nl << be_nl;
+          << "virtual ~" << node->local_name () << " (void);";
     }
 
-  *os << "static " << node->local_name () << "* "
+  *os << be_nl << be_nl
+      << "static " << node->local_name () << "* "
       << "_downcast ( ::CORBA::ValueBase *v);" << be_nl
       << be_nl
       << "// (TAO extensions or internals)" << be_nl
@@ -199,12 +196,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
       << be_nl << be_nl
       << "static const char* "
-      << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
-
-  if (be_global->any_support ())
-    {
-      *os << "static void _tao_any_destructor (void *);";
-    }
+      << "_tao_obv_static_repository_id (void);";
 
   if (be_global->tc_support ())
     {
@@ -216,9 +208,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (this->visit_valuetype_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -235,9 +227,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "traversal of supported interfaces failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("traversal of supported ")
+                         ACE_TEXT ("interfaces failed\n")),
                         -1);
     }
 
@@ -359,9 +352,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (visitor.visit_valuetype (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "failed to generate _init construct.\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("failed to generate ")
+                         ACE_TEXT ("_init construct.\n")),
                         -1);
     }
 
@@ -374,9 +368,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_ch::"
-                             "visit_structure - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_valuetype_ch::")
+                             ACE_TEXT ("visit_structure - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }
@@ -409,9 +403,9 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_operation - "
-                         "Bad return type\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("Bad return type\n")),
                         -1);
     }
 
@@ -421,9 +415,9 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   if (bt->accept (&or_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for return type failed\n")),
                         -1);
     }
 
@@ -436,9 +430,10 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   if (node->accept (&ooa_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_ch::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for argument ")
+                         ACE_TEXT ("list failed\n")),
                         -1);
     }
 
@@ -470,8 +465,8 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
   if (node->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_obv_ch::"
-                         "visit_field - codegen failed\n"),
+                         ACE_TEXT ("be_visitor_valuetype_obv_ch::")
+                         ACE_TEXT ("visit_field - codegen failed\n")),
                         -1);
     }
 
@@ -516,9 +511,9 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
       if (d == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_ch::"
-                             "gen_supported_ops - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_valuetype_ch::")
+                             ACE_TEXT ("gen_supported_ops - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
         }
 
@@ -532,9 +527,9 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
           if (visitor.visit_operation (op) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_valuetype_ch::"
-                                 "gen_supported_ops - "
-                                 "failed to accept visitor\n"),
+                                 ACE_TEXT ("be_visitor_valuetype_ch::")
+                                 ACE_TEXT ("gen_supported_ops - ")
+                                 ACE_TEXT ("failed to accept visitor\n")),
                                 -1);
             }
         }

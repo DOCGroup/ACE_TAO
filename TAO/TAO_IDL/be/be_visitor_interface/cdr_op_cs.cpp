@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
     be_visitor_context *ctx
   )
@@ -156,3 +155,18 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   node->cli_stub_cdr_op_gen (1);
   return 0;
 }
+
+int
+be_visitor_interface_cdr_op_cs::visit_component (
+  be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_cdr_op_cs::visit_connector (
+  be_connector *node)
+{
+  return this->visit_interface (node);
+}
+

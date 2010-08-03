@@ -14,31 +14,7 @@
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (Valuetype,
-           AbstractBase,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// ************************************************************
-// These are in CORBA namespace
-
-void
-CORBA::release (CORBA::AbstractBase_ptr obj)
-{
-  if (obj)
-    {
-      obj->_remove_ref ();
-    }
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::AbstractBase_ptr obj)
-{
-  return (obj == 0);
-}
-
-// ************************************************************
 
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (false)

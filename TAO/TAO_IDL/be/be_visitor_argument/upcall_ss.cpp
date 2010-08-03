@@ -34,9 +34,9 @@ int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_upcall_ss::"
-                         "visit_argument - "
-                         "Bad argument type\n"),
+                         ACE_TEXT ("be_visitor_args_upcall_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("Bad argument type\n")),
                         -1);
     }
 
@@ -49,9 +49,9 @@ int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_upcall_ss::"
-                         "visit_argument - "
-                         "cannot accept visitor\n"),
+                         ACE_TEXT ("be_visitor_args_upcall_ss::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("cannot accept visitor\n")),
                         -1);
     }
 
@@ -124,22 +124,26 @@ int be_visitor_args_upcall_ss::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_interface (be_interface *)
+int be_visitor_args_upcall_ss::visit_interface (
+  be_interface *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
+int be_visitor_args_upcall_ss::visit_interface_fwd (
+  be_interface_fwd *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_valuebox (be_valuebox *)
+int be_visitor_args_upcall_ss::visit_valuebox (
+  be_valuebox *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
+int be_visitor_args_upcall_ss::visit_valuetype (
+  be_valuetype *)
 {
   return this->emit_common ();
 }
@@ -234,13 +238,14 @@ int be_visitor_args_upcall_ss::visit_predefined_type (
           *os << arg->local_name ();
 
           break;
-        } // end switch direction
-    } // end of else
+        }
+    }
 
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
+int be_visitor_args_upcall_ss::visit_sequence (
+  be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
@@ -270,31 +275,36 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_string (be_string *)
+int be_visitor_args_upcall_ss::visit_string (
+  be_string *)
 {
   return this->emit_common ();
 }
 
-int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
+int be_visitor_args_upcall_ss::visit_structure (
+  be_structure *node)
 {
   return this->emit_common2 (node);
 }
 
-int be_visitor_args_upcall_ss::visit_union (be_union *node)
+int be_visitor_args_upcall_ss::visit_union (
+  be_union *node)
 {
   return this->emit_common2 (node);
 }
 
-int be_visitor_args_upcall_ss::visit_typedef (be_typedef *node)
+int be_visitor_args_upcall_ss::visit_typedef (
+  be_typedef *node)
 {
   this->ctx_->alias (node);
 
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_args_upcall_ss::"
-                         "visit_typedef - "
-                         "accept on primitive type failed\n"),
+                         ACE_TEXT ("be_visitor_args_upcall_ss::")
+                         ACE_TEXT ("visit_typedef - ")
+                         ACE_TEXT ("accept on primitive ")
+                         ACE_TEXT ("type failed\n")),
                         -1);
     }
 
@@ -383,7 +393,8 @@ int be_visitor_args_upcall_ss::emit_common (void)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::emit_common2 (be_type *node)
+int be_visitor_args_upcall_ss::emit_common2 (
+  be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =

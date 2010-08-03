@@ -33,6 +33,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Profile;
 class TAO_MProfile;
 
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+}
+
 class TAO_IORManip_Export TAO_IORManip_Filter
 {
 public:

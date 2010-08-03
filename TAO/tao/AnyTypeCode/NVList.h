@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
 
@@ -97,8 +96,8 @@ namespace CORBA
     static NamedValue * _nil (void);
 
     // = Reference counting.
-    ULong _incr_refcnt (void);
-    ULong _decr_refcnt (void);
+    ULong _incr_refcount (void);
+    ULong _decr_refcount (void);
 
     // Useful for template programming.
     typedef NamedValue_ptr _ptr_type;
@@ -195,8 +194,8 @@ namespace CORBA
     static NVList * _nil (void);
 
     // = Reference counting.
-    ULong _incr_refcnt (void);
-    ULong _decr_refcnt (void);
+    ULong _incr_refcount (void);
+    ULong _decr_refcount (void);
 
     // = TAO Extensions:
 

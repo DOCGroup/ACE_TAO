@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Interface visitor for client stubs
 // ************************************************************
@@ -45,6 +44,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       bt = node;
     }
 
+  AST_Component *c = AST_Component::narrow_from_decl (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -90,7 +90,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return ";
 
-          if (node->is_abstract ())
+          if (node->is_abstract () || c != 0)
             {
               *os << "cdr << p;";
             }
@@ -103,7 +103,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  if (be_global->gen_ostream_operators ())
+  if (c == 0 && be_global->gen_ostream_operators ())
     {
       *os << be_nl << be_nl
           << "std::ostream &" << be_nl
@@ -158,9 +158,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_interface_cs::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -194,7 +194,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   if (! node->is_local () &&
-     (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
+     (be_global->gen_direct_collocation()
+      || be_global->gen_thru_poa_collocation ()))
     {
       *os << be_nl << be_nl
           << "void" << be_nl
@@ -242,28 +243,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}" << be_uidt;
 
       // Now we setup the immediate parents.
-      long n_parents = node->n_inherits ();
-      bool has_parent = false;
-
-      if (n_parents > 0)
-        {
-          for (long i = 0; i < n_parents; ++i)
-            {
-              be_interface *inherited =
-                be_interface::narrow_from_decl (node->inherits ()[i]);
-
-              if (has_parent == 0)
-                {
-                  *os << be_nl;
-                }
-
-              has_parent = true;
-
-              *os << be_nl
-                  << "this->" << inherited->flat_name ()
-                  << "_setup_collocation" << " ();";
-            }
-        }
+      node->gen_parent_collocation (os);
 
       *os << be_uidt_nl << "}";
     }
@@ -275,7 +255,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   bool gen_any_destructor =
     be_global->any_support ()
-    && (!node->is_local () || be_global->gen_local_iface_anyops ());
+    && (!node->is_local ()
+        || be_global->gen_local_iface_anyops ());
 
   if (gen_any_destructor)
     {
@@ -301,25 +282,23 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // The _narrow method
-  if (this->gen_xxx_narrow ("narrow",
-                            node) == false)
+  if (! this->gen_xxx_narrow ("narrow", node))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "_narrow () method codegen failed\n"),
+                         ACE_TEXT ("be_visitor_interface_cs::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("_narrow () method codegen failed\n")),
                         -1);
     }
 
-  // The _unchecked_narrow method
-  if (this->gen_xxx_narrow ("unchecked_narrow",
-                            node) == false)
+  // The _unchecked_narrow method, not for components.
+  if (c == 0 && ! this->gen_xxx_narrow ("unchecked_narrow", node))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "_unchecked_narrow () method codegen"
-                         " failed\n"),
+                         ACE_TEXT ("be_visitor_interface_cs::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("_unchecked_narrow () method codegen")
+                         ACE_TEXT (" failed\n")),
                         -1);
     }
 
@@ -338,13 +317,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl << be_nl;
 
   // The _tao_release method
-  *os << "void" << be_nl
-      << node->full_name () << "::_tao_release ("
-      << bt->local_name ()
-      << "_ptr obj)" << be_nl
-      << "{" << be_idt_nl
-      << "::CORBA::release (obj);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+  if (c == 0)
+    {
+      *os << "void" << be_nl
+          << node->full_name () << "::_tao_release ("
+          << bt->local_name ()
+          << "_ptr obj)" << be_nl
+          << "{" << be_idt_nl
+          << "::CORBA::release (obj);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
 
   *os << "::CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (const char *value)" << be_nl;
@@ -352,51 +334,17 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "{" << be_idt_nl
       << "if (" << be_idt << be_idt_nl;
 
-  int const status =
-    node->traverse_inheritance_graph (be_interface::is_a_helper,
-                                      os);
-
+  int status = node->gen_is_a_ancestors (os);
+  
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "_is_a method codegen failed\n"),
+                         ACE_TEXT ("be_visitor_interface_cs::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("gen_is_a_ancestors() failed\n")),
                         -1);
     }
-
-  if (node->is_abstract () || node->has_mixed_parentage ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-          << ")";
-    }
-  else if (node->is_local ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
-          << ")";
-    }
-
-  if (node->has_mixed_parentage () || node->is_local ())
-    {
-      *os << " ||" << be_uidt_nl;
-    }
-  else if (node->is_abstract ())
-    {
-      *os << be_uidt << be_uidt_nl;
-    }
-
-  if (! node->is_abstract ())
-    {
-      *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl;
-    }
-
+      
   *os << ")" << be_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
@@ -425,22 +373,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "::CORBA::Boolean" << be_nl;
-
-  if (node->is_local ())
-    {
-      *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
-          << "{" << be_idt_nl
-          << "return false;" << be_uidt_nl
-          << "}";
-    }
-  else
-    {
-      *os << node->name () << "::marshal (TAO_OutputCDR &cdr)" << be_nl
-          << "{" << be_idt_nl
-          << "return (cdr << this);" << be_uidt_nl
-          << "}";
-    }
+      << "::CORBA::Boolean" << be_nl
+      << node->name () << "::marshal (TAO_OutputCDR &cdr)"
+      << be_nl
+      << "{" << be_idt_nl
+      << "return "
+      << (node->is_local () ? "false" : "(cdr << this)")
+      << ";" << be_uidt_nl
+      << "}";
 
   if (! node->is_abstract ())
     {
@@ -455,9 +395,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           if (node->accept (&isp_visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_interface_cs::"
-                                 "visit_interface - "
-                                 "codegen for smart proxy classes failed\n"),
+                                 ACE_TEXT ("be_visitor_interface_cs::")
+                                 ACE_TEXT ("visit_interface - ")
+                                 ACE_TEXT ("codegen for smart ")
+                                 ACE_TEXT ("proxy classes failed\n")),
                                 -1);
             }
         }
@@ -467,15 +408,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
 
       be_visitor_context ctx = *this->ctx_;
-      //       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 
       if (node->accept (&tc_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_cs::"
-                             "visit_interface - "
-                             "TypeCode definition failed\n"),
+                             ACE_TEXT ("be_visitor_interface_cs::")
+                             ACE_TEXT ("visit_interface - ")
+                             ACE_TEXT ("TypeCode definition failed\n")),
                             -1);
         }
     }
@@ -579,6 +519,76 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
 
   return true;
+}
+
+int
+be_visitor_interface_cs::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_cs::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
+{
+  this->ctx_->port_prefix () = node->local_name ()->get_string ();
+  this->ctx_->port_prefix () += '_';
+
+  /// If the port visit traverses any attributes defined in the
+  /// original porttype, this is a way for visitors down the
+  /// line to tell what scope we are actually in.
+  this->ctx_->interface (
+    be_interface::narrow_from_scope (node->defined_in ()));
+  
+  /// Will ignore everything but porttype attributes.
+  int status = this->visit_scope (node->port_type ());
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_interface_ch")
+                         ACE_TEXT ("::visit_extended_port - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+
+  /// Reset port prefix string.
+  this->ctx_->port_prefix () = "";
+  return 0;
+}
+
+int
+be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
+{
+  this->ctx_->port_prefix () = node->local_name ()->get_string ();
+  this->ctx_->port_prefix () += '_';
+
+  /// If the port visit traverses any attributes defined in the
+  /// original porttype, this is a way for visitors down the
+  /// line to tell what scope we are actually in.
+  this->ctx_->interface (
+    be_interface::narrow_from_scope (node->defined_in ()));
+  
+  /// Will ignore everything but porttype attributes.
+  int status = this->visit_scope (node->port_type ());
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_interface_ch")
+                         ACE_TEXT ("::visit_mirror_port - ")
+                         ACE_TEXT ("visit_scope failed\n")),
+                        -1);
+    }
+
+  /// Reset port prefix string.
+  this->ctx_->port_prefix () = "";
+  return 0;
 }
 
 int
