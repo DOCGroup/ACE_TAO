@@ -83,7 +83,7 @@ CORBA::Object::ior (void) const
   return this->ior_.in ();
 }
 
-inline void
+ACE_INLINE void
 CORBA::Object::_decr_refcount (void)
 {
   this->_remove_ref ();
