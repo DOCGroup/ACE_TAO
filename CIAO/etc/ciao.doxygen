@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ciao/ciao
+HTML_OUTPUT           = html/ciao/ciao
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -144,7 +144,7 @@ TAGFILES              = html/ace/ACE.tag=../../../ace \
                         html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
                         html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
                         html/tao/ifr/TAO_IFR.tag=../../ifr
-GENERATE_TAGFILE      = html/tao/ciao/ciao/CIAO.tag
+GENERATE_TAGFILE      = html/ciao/ciao/CIAO.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
