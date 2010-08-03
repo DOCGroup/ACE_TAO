@@ -73,7 +73,7 @@ public:
    */
   virtual ACEXML_Validator *getValidator (const ACEXML_Char *namespaceURI,
                                           const ACEXML_Char *localName,
-                                          const ACEXML_Char *qName ACEXML_ENV_ARG_DECL) = 0;
+                                          const ACEXML_Char *qName) = 0;
 };
 
 
