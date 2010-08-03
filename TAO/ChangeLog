@@ -1,3 +1,18 @@
+Tue Aug  3 14:48:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Environment.cpp:
+        
+          Added Id string.
+          
+        * tao/Object.inl:
+        * tao/Valuetype/AbstractBase.inl:
+        
+          Replace 'inline' with 'ACE_INLINE'.
+          
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+        
+          Added missing final newline.
+
 Tue Aug  3 14:17:23 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Exposed_Policies/Policy_Verifier.cpp:

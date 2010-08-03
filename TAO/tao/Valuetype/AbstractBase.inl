@@ -55,7 +55,7 @@ CORBA::AbstractBase::_is_local (void) const
   return this->is_local_;
 }
 
-inline void
+ACE_INLINE void
 CORBA::AbstractBase::_decr_refcount (void)
 {
   this->_remove_ref ();
