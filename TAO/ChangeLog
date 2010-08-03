@@ -1,3 +1,8 @@
+Tue Aug  3 14:17:23 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+          Fixed memory leaks.
+
 Tue Aug  3 13:59:58 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/any_op_ch.cpp:
