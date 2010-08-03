@@ -81,10 +81,9 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_pss'
              ,'tao_ifr');
 @CIAO_DOCS = ('ciao_config_handlers'
-             ,'ciao_DAnCE'
              ,'ciao_dds4ccm'
              ,'ciao');
-@DANCE_DOCS = ();
+@DANCE_DOCS = ('DAnCE');
 @DDS_DOCS = ('dds');
 
 # Modify defaults using the command line arguments
