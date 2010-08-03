@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project SYSTEM "mga.dtd">
 
-<project guid="{3B3C7E6C-9B48-4F45-B0DB-07D6B9B1E566}" cdate="Thu Jun 24 20:35:23 2010" mdate="Thu Jun 24 20:35:23 2010" version="" metaguid="{5F77330E-CA80-484B-A55B-C3FE09972987}" metaversion="" metaname="PICML">
+<project guid="{00732281-3470-45AD-93A1-F7B24F70F90D}" cdate="Tue Jul 20 01:12:51 2010" mdate="Tue Jul 20 01:12:51 2010" version="" metaguid="{2F7F508E-4611-4335-8291-97CE955BF877}" metaversion="" metaname="PICML">
 	<name>Quoter</name>
 	<comment></comment>
 	<author></author>
@@ -86,7 +86,7 @@
 							<attribute kind="VersionTag" status="meta">
 								<value></value>
 							</attribute>
-							<reference id="id-0067-0000000b" kind="InParameter" role="InParameter" guid="{9e5c5c20-1846-4798-9a7e-0a1510c8dbd4}" relid="0x0" referred="id-0066-00000017">
+							<reference id="id-0067-00000012" kind="InParameter" role="InParameter" guid="{9e5c5c20-1846-4798-9a7e-0a1510c8dbd4}" relid="0x0" referred="id-0066-00000017">
 								<name>stock_name</name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -98,7 +98,7 @@
 									</regnode>
 								</regnode>
 							</reference>
-							<reference id="id-0067-0000000c" kind="ExceptionRef" role="ExceptionRef" guid="{fcde9cf9-9f55-4dab-8c62-08a992547327}" relid="0x0" referred="id-0065-00000012">
+							<reference id="id-0067-00000013" kind="ExceptionRef" role="ExceptionRef" guid="{fcde9cf9-9f55-4dab-8c62-08a992547327}" relid="0x0" referred="id-0065-00000012">
 								<name></name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -128,7 +128,7 @@
 							<attribute kind="VersionTag" status="meta">
 								<value></value>
 							</attribute>
-							<reference id="id-0067-0000000d" kind="InParameter" role="InParameter" guid="{761869eb-de4e-41be-860b-07bdd6ad265d}" relid="0x0" referred="id-0066-00000017">
+							<reference id="id-0067-00000014" kind="InParameter" role="InParameter" guid="{761869eb-de4e-41be-860b-07bdd6ad265d}" relid="0x0" referred="id-0066-00000017">
 								<name>stock_name</name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -140,7 +140,7 @@
 									</regnode>
 								</regnode>
 							</reference>
-							<reference id="id-0067-0000000e" kind="ExceptionRef" role="ExceptionRef" guid="{7d0471c7-052d-4d10-a99d-072548a7f028}" relid="0x0" referred="id-0065-00000012">
+							<reference id="id-0067-00000015" kind="ExceptionRef" role="ExceptionRef" guid="{7d0471c7-052d-4d10-a99d-072548a7f028}" relid="0x0" referred="id-0065-00000012">
 								<name></name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -166,7 +166,7 @@
 							<value></value>
 						</attribute>
 						<attribute kind="UUID">
-							<value>9B04C822-7FF1-11DF-8DCF-000C2958D27B</value>
+							<value>73EAC356-93BD-11DF-8000-000C2958D27B</value>
 						</attribute>
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
@@ -186,7 +186,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-0000000f" kind="InEventPort" role="InEventPort" guid="{82ffec99-a737-4511-a3c4-5b44b1da64b1}" relid="0x0" referred="id-0065-00000016">
+						<reference id="id-0067-00000016" kind="InEventPort" role="InEventPort" guid="{82ffec99-a737-4511-a3c4-5b44b1da64b1}" relid="0x0" referred="id-0065-00000016">
 							<name>notify_in</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -213,7 +213,7 @@
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000010" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{3e89af30-89f9-4434-bc0b-aa3573a78e7c}" relid="0x0" referred="id-0065-00000014">
+						<reference id="id-0067-00000017" kind="RequiredRequestPort" role="RequiredRequestPort" guid="{3e89af30-89f9-4434-bc0b-aa3573a78e7c}" relid="0x0" referred="id-0065-00000014">
 							<name>read_quoter</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -366,7 +366,7 @@
 							<value></value>
 						</attribute>
 						<attribute kind="UUID">
-							<value>9B072A7C-7FF1-11DF-8000-000C2958D27B</value>
+							<value>73EAC356-93BD-11DF-8001-000C2958D27B</value>
 						</attribute>
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
@@ -382,7 +382,7 @@
 							<attribute kind="VersionTag" status="meta">
 								<value></value>
 							</attribute>
-							<reference id="id-0067-00000013" kind="AttributeMember" role="AttributeMember" guid="{2995bc00-1e57-45e2-a6c5-fce226cde8b7}" relid="0x0" referred="id-0066-0000000c">
+							<reference id="id-0067-00000018" kind="AttributeMember" role="AttributeMember" guid="{2995bc00-1e57-45e2-a6c5-fce226cde8b7}" relid="0x0" referred="id-0066-0000000c">
 								<name></name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -398,7 +398,7 @@
 						<reference id="id-0067-00000002" kind="Supports" role="Supports" guid="{cdb984d7-bd0b-4313-b144-a098ff082e8b}" relid="0x1" referred="id-0065-0000000a">
 							<name>Supports</name>
 						</reference>
-						<reference id="id-0067-00000011" kind="OutEventPort" role="OutEventPort" guid="{b963ddf3-c197-4aca-ba72-6dd96d12dc8d}" relid="0x0" referred="id-0065-00000016">
+						<reference id="id-0067-00000019" kind="OutEventPort" role="OutEventPort" guid="{b963ddf3-c197-4aca-ba72-6dd96d12dc8d}" relid="0x0" referred="id-0065-00000016">
 							<name>notify_out</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
@@ -422,7 +422,7 @@
 								<value>false</value>
 							</attribute>
 						</reference>
-						<reference id="id-0067-00000012" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{5b65bc9b-25a0-4c3d-a5c0-c37af7ed6c22}" relid="0x0" referred="id-0065-00000014">
+						<reference id="id-0067-0000001a" kind="ProvidedRequestPort" role="ProvidedRequestPort" guid="{5b65bc9b-25a0-4c3d-a5c0-c37af7ed6c22}" relid="0x0" referred="id-0065-00000014">
 							<name>push_quoter</name>
 							<attribute kind="SpecifyIdTag" status="meta">
 								<value></value>
@@ -523,7 +523,7 @@
 						<attribute kind="VersionTag" status="meta">
 							<value></value>
 						</attribute>
-						<reference id="id-0067-00000015" kind="Member" role="Member" guid="{dcfc0bf4-e55b-44ed-a506-e032e2241660}" relid="0x0" referred="id-0066-00000017">
+						<reference id="id-0067-0000001b" kind="Member" role="Member" guid="{dcfc0bf4-e55b-44ed-a506-e032e2241660}" relid="0x0" referred="id-0066-00000017">
 							<name>name</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -535,7 +535,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-00000016" kind="Member" role="Member" guid="{2d2d6f97-1b31-4a0d-a72f-d1bc35e1ef49}" relid="0x0" referred="id-0066-0000000c">
+						<reference id="id-0067-0000001c" kind="Member" role="Member" guid="{2d2d6f97-1b31-4a0d-a72f-d1bc35e1ef49}" relid="0x0" referred="id-0066-0000000c">
 							<name>high</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -547,7 +547,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-00000017" kind="Member" role="Member" guid="{ddc550e3-37fd-4ea1-841e-c42d3e0fcab9}" relid="0x0" referred="id-0066-0000000c">
+						<reference id="id-0067-0000001d" kind="Member" role="Member" guid="{ddc550e3-37fd-4ea1-841e-c42d3e0fcab9}" relid="0x0" referred="id-0066-0000000c">
 							<name>low</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -559,7 +559,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-00000018" kind="Member" role="Member" guid="{d384e553-3ae5-42a3-900c-d475c6502b1b}" relid="0x0" referred="id-0066-0000000c">
+						<reference id="id-0067-0000001e" kind="Member" role="Member" guid="{d384e553-3ae5-42a3-900c-d475c6502b1b}" relid="0x0" referred="id-0066-0000000c">
 							<name>last</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -633,7 +633,7 @@
 									</regnode>
 								</regnode>
 							</reference>
-							<reference id="id-0067-00000019" kind="InParameter" role="InParameter" guid="{33b9b514-6e7b-431e-9990-5f33a7bf7a6b}" relid="0x0" referred="id-0066-00000017">
+							<reference id="id-0067-0000001f" kind="InParameter" role="InParameter" guid="{33b9b514-6e7b-431e-9990-5f33a7bf7a6b}" relid="0x0" referred="id-0066-00000017">
 								<name>stock_name</name>
 								<regnode name="PartRegs" isopaque="yes">
 									<value></value>
@@ -667,7 +667,7 @@
 						<attribute kind="abstract" status="meta">
 							<value>false</value>
 						</attribute>
-						<reference id="id-0067-0000001a" kind="Member" role="Member" guid="{11cd421b-8be0-4f2a-9a34-852bd9dcad4d}" relid="0x0" referred="id-0066-00000017">
+						<reference id="id-0067-00000020" kind="Member" role="Member" guid="{11cd421b-8be0-4f2a-9a34-852bd9dcad4d}" relid="0x0" referred="id-0066-00000017">
 							<name>name</name>
 							<regnode name="PartRegs" isopaque="yes">
 								<value></value>
@@ -680,7 +680,7 @@
 							</regnode>
 						</reference>
 					</model>
-					<reference id="id-0067-00000014" kind="Collection" role="Collection" guid="{f42f7d79-43a6-4130-8c52-6ebf46957332}" relid="0x1" referred="id-0066-00000008">
+					<reference id="id-0067-00000021" kind="Collection" role="Collection" guid="{f42f7d79-43a6-4130-8c52-6ebf46957332}" relid="0x1" referred="id-0066-00000008">
 						<name>ImageBlob</name>
 						<attribute kind="PostPreprocessorDirectives" status="meta">
 							<value></value>
@@ -717,7 +717,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8001-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8002-000C2958D27B</value>
 					</attribute>
 					<attribute kind="architecture" status="meta">
 						<value></value>
@@ -750,7 +750,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8002-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8003-000C2958D27B</value>
 					</attribute>
 					<attribute kind="architecture" status="meta">
 						<value></value>
@@ -786,7 +786,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8003-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8004-000C2958D27B</value>
 					</attribute>
 					<attribute kind="architecture" status="meta">
 						<value></value>
@@ -819,7 +819,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8004-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8005-000C2958D27B</value>
 					</attribute>
 					<attribute kind="architecture" status="meta">
 						<value></value>
@@ -858,7 +858,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8005-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8006-000C2958D27B</value>
 					</attribute>
 					<attribute kind="defaultVersion" status="meta">
 						<value>0.0.0.0</value>
@@ -942,7 +942,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>9B072A7C-7FF1-11DF-8006-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8007-000C2958D27B</value>
 					</attribute>
 					<attribute kind="defaultVersion" status="meta">
 						<value>0.0.0.0</value>
@@ -1023,7 +1023,7 @@
 						</regnode>
 					</regnode>
 					<attribute kind="UUID">
-						<value>36D98A86-7FF6-11DF-8000-000C2958D27B</value>
+						<value>73EAC356-93BD-11DF-8008-000C2958D27B</value>
 					</attribute>
 					<attribute kind="label" status="meta">
 						<value></value>
@@ -1040,9 +1040,9 @@
 							</regnode>
 						</regnode>
 						<attribute kind="UUID">
-							<value>9DF81520-7FF6-11DF-8000-000C2958D27B</value>
+							<value>73EAC356-93BD-11DF-8009-000C2958D27B</value>
 						</attribute>
-						<reference id="id-0067-0000001b" kind="ComponentInstanceType" role="ComponentInstanceType" guid="{5aa7ed2c-f85f-4037-b821-c8ac11a32ae9}" relid="0x1" referred="id-0066-00000005">
+						<reference id="id-0067-0000000b" kind="ComponentInstanceType" role="ComponentInstanceType" guid="{5aa7ed2c-f85f-4037-b821-c8ac11a32ae9}" relid="0x1" referred="id-0066-00000005">
 							<name>Stock_StockBrokerImpl</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1054,7 +1054,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-0000001c" kind="InEventPortInstance" role="InEventPortInstance" guid="{0f3eb0a6-cf10-432b-b554-36ae64397f94}" relid="0x2" referred="id-0067-0000000f">
+						<reference id="id-0067-00000022" kind="InEventPortInstance" role="InEventPortInstance" guid="{0f3eb0a6-cf10-432b-b554-36ae64397f94}" relid="0x2" referred="id-0067-00000016">
 							<name>notify_in</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1066,7 +1066,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-0000001d" kind="RequiredRequestPortInstance" role="RequiredRequestPortInstance" guid="{377ad686-3dbf-41e0-8059-0e4d032f6e79}" relid="0x3" referred="id-0067-00000010">
+						<reference id="id-0067-00000023" kind="RequiredRequestPortInstance" role="RequiredRequestPortInstance" guid="{377ad686-3dbf-41e0-8059-0e4d032f6e79}" relid="0x3" referred="id-0067-00000017">
 							<name>read_quoter</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1091,9 +1091,9 @@
 							</regnode>
 						</regnode>
 						<attribute kind="UUID">
-							<value>F2A0DB24-7FF7-11DF-8000-000C2958D27B</value>
+							<value>73EAC356-93BD-11DF-800A-000C2958D27B</value>
 						</attribute>
-						<reference id="id-0067-0000001e" kind="ComponentInstanceType" role="ComponentInstanceType" guid="{19eaa81e-5a80-4347-bcee-f7419ee3e2f2}" relid="0x1" referred="id-0066-00000006">
+						<reference id="id-0067-0000000c" kind="ComponentInstanceType" role="ComponentInstanceType" guid="{19eaa81e-5a80-4347-bcee-f7419ee3e2f2}" relid="0x1" referred="id-0066-00000006">
 							<name>Stock_StockDistributorImpl</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1105,7 +1105,19 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-0000001f" kind="OutEventPortInstance" role="OutEventPortInstance" guid="{344ff42c-c74d-48da-b98c-f1646956e6d2}" relid="0x2" referred="id-0067-00000011">
+						<reference id="id-0067-0000000d" kind="AttributeInstance" role="AttributeInstance" guid="{5068134e-bedd-45fb-ae7c-e966f5c05dc2}" relid="0x4" referred="id-0065-0000000e">
+							<name>rate</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="ComponentInterface" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>13,13</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000024" kind="OutEventPortInstance" role="OutEventPortInstance" guid="{344ff42c-c74d-48da-b98c-f1646956e6d2}" relid="0x2" referred="id-0067-00000019">
 							<name>notify_out</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1117,7 +1129,7 @@
 								</regnode>
 							</regnode>
 						</reference>
-						<reference id="id-0067-00000020" kind="ProvidedRequestPortInstance" role="ProvidedRequestPortInstance" guid="{33a13d00-8c6e-4e6c-8a33-4c7105447d2e}" relid="0x3" referred="id-0067-00000012">
+						<reference id="id-0067-00000025" kind="ProvidedRequestPortInstance" role="ProvidedRequestPortInstance" guid="{33a13d00-8c6e-4e6c-8a33-4c7105447d2e}" relid="0x3" referred="id-0067-0000001a">
 							<name>push_quoter</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
@@ -1125,18 +1137,6 @@
 									<value></value>
 									<regnode name="Position" isopaque="yes">
 										<value>427,203</value>
-									</regnode>
-								</regnode>
-							</regnode>
-						</reference>
-						<reference id="id-0067-00000021" kind="AttributeInstance" role="AttributeInstance" guid="{5068134e-bedd-45fb-ae7c-e966f5c05dc2}" relid="0x4" referred="id-0065-0000000e">
-							<name>rate</name>
-							<regnode name="PartRegs" status="undefined">
-								<value></value>
-								<regnode name="ComponentInterface" status="undefined">
-									<value></value>
-									<regnode name="Position" isopaque="yes">
-										<value>13,13</value>
 									</regnode>
 								</regnode>
 							</regnode>
@@ -1153,20 +1153,23 @@
 								</regnode>
 							</regnode>
 						</regnode>
-						<attribute kind="DataValue">
-							<value>StockDistributor.ior</value>
+						<attribute kind="DataValue" status="meta">
+							<value></value>
 						</attribute>
-						<reference id="id-0067-00000022" kind="DataType" role="DataType" guid="{e1fb0d84-a980-49e6-af8d-ae052322d75c}" relid="0x1" referred="id-0066-00000017">
-							<name>String</name>
+						<reference id="id-0067-00000026" kind="DataValue" role="DataValue" guid="{e1fb0d84-a980-49e6-af8d-ae052322d75c}" relid="0x1" referred="id-0066-00000017">
+							<name>ComponentIOR</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
-								<regnode name="DataTypeAspect" status="undefined">
+								<regnode name="DataValueAspect" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
-										<value>115,199</value>
+										<value>8,8</value>
 									</regnode>
 								</regnode>
 							</regnode>
+							<attribute kind="Value">
+								<value>StockDistributor.ior</value>
+							</attribute>
 						</reference>
 					</model>
 					<model id="id-0065-00000020" kind="Property" role="Property" guid="{42882a70-c74b-4d98-9b53-06f56b8f0ee6}" relid="0x6" childrelidcntr="0x1">
@@ -1180,31 +1183,34 @@
 								</regnode>
 							</regnode>
 						</regnode>
-						<attribute kind="DataValue">
-							<value>StockBroker.ior</value>
+						<attribute kind="DataValue" status="meta">
+							<value></value>
 						</attribute>
-						<reference id="id-0067-00000023" kind="DataType" role="DataType" guid="{e9184e00-1421-4971-9f03-9a5c0cfc719a}" relid="0x1" referred="id-0066-00000017">
-							<name>String</name>
+						<reference id="id-0067-00000027" kind="DataValue" role="DataValue" guid="{e9184e00-1421-4971-9f03-9a5c0cfc719a}" relid="0x1" referred="id-0066-00000017">
+							<name>ComponentIOR</name>
 							<regnode name="PartRegs" status="undefined">
 								<value></value>
-								<regnode name="DataTypeAspect" status="undefined">
+								<regnode name="DataValueAspect" status="undefined">
 									<value></value>
 									<regnode name="Position" isopaque="yes">
-										<value>255,227</value>
+										<value>8,8</value>
 									</regnode>
 								</regnode>
 							</regnode>
+							<attribute kind="Value">
+								<value>StockBroker.ior</value>
+							</attribute>
 						</reference>
 					</model>
 					<connection id="id-0068-00000009" kind="SendsTo" role="SendsTo" guid="{b736ae94-a9ee-4ce0-aa4d-d8b4abf3fc3b}" relid="0x3">
 						<name>SendsTo</name>
-						<connpoint role="dst" target="id-0067-0000001c"/>
-						<connpoint role="src" target="id-0067-0000001f"/>
+						<connpoint role="dst" target="id-0067-00000022"/>
+						<connpoint role="src" target="id-0067-00000024"/>
 					</connection>
 					<connection id="id-0068-0000000a" kind="Invoke" role="Invoke" guid="{1487749f-b75a-49e4-9747-5cc7473d141c}" relid="0x4">
 						<name>Invoke</name>
-						<connpoint role="src" target="id-0067-0000001d"/>
-						<connpoint role="dst" target="id-0067-00000020"/>
+						<connpoint role="src" target="id-0067-00000023"/>
+						<connpoint role="dst" target="id-0067-00000025"/>
 					</connection>
 					<connection id="id-0068-0000000b" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" guid="{b15f8100-119c-46e8-9a3f-25ac7228496e}" relid="0x7">
 						<name>AssemblyConfigProperty</name>
@@ -1214,7 +1220,7 @@
 						<connpoint role="src" target="id-0065-0000001e"/>
 						<connpoint role="dst" target="id-0065-0000001f"/>
 					</connection>
-					<connection id="id-0068-0000000d" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" guid="{90829bd1-9c98-4004-bfe1-d40d4ae1044a}" relid="0x8">
+					<connection id="id-0068-0000000c" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" guid="{90829bd1-9c98-4004-bfe1-d40d4ae1044a}" relid="0x8">
 						<name>AssemblyConfigProperty</name>
 						<regnode name="autorouterPref" isopaque="yes">
 							<value>En</value>
@@ -1287,7 +1293,7 @@
 			<model id="id-0065-00000021" kind="Domain" guid="{7026e4e2-1769-4a70-8764-a6d1d170f288}" relid="0x1" childrelidcntr="0x2">
 				<name>Domain</name>
 				<attribute kind="UUID">
-					<value>3875F876-7FFA-11DF-8000-000C2958D27B</value>
+					<value>73EAC356-93BD-11DF-800B-000C2958D27B</value>
 				</attribute>
 				<attribute kind="label" status="meta">
 					<value></value>
@@ -1341,12 +1347,12 @@
 			<model id="id-0065-00000024" kind="DeploymentPlan" guid="{af9df4c3-6a0e-484a-8a59-80a80e10f4ca}" relid="0x1" childrelidcntr="0x8">
 				<name>Plan</name>
 				<attribute kind="UUID">
-					<value>ADE53DA6-7FFA-11DF-8000-000C2958D27B</value>
+					<value>73EAC356-93BD-11DF-800C-000C2958D27B</value>
 				</attribute>
 				<attribute kind="label" status="meta">
 					<value></value>
 				</attribute>
-				<reference id="id-0067-00000024" kind="NodeReference" role="NodeReference" guid="{94822615-ceea-41a4-b451-34744f1d5c4b}" relid="0x1" referred="id-0065-00000022">
+				<reference id="id-0067-0000000e" kind="NodeReference" role="NodeReference" guid="{94822615-ceea-41a4-b451-34744f1d5c4b}" relid="0x1" referred="id-0065-00000022">
 					<name>Node_Broker</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -1364,7 +1370,7 @@
 						</regnode>
 					</regnode>
 				</reference>
-				<reference id="id-0067-00000025" kind="NodeReference" role="NodeReference" guid="{234a85ad-3551-450a-b15a-59f4cffbcbe3}" relid="0x2" referred="id-0065-00000023">
+				<reference id="id-0067-0000000f" kind="NodeReference" role="NodeReference" guid="{234a85ad-3551-450a-b15a-59f4cffbcbe3}" relid="0x2" referred="id-0065-00000023">
 					<name>Node_Distributor</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -1382,7 +1388,7 @@
 						</regnode>
 					</regnode>
 				</reference>
-				<reference id="id-0067-00000026" kind="ComponentInstanceRef" role="ComponentInstanceRef" guid="{43d81657-2d62-434a-931c-0cfbf49e4ab9}" relid="0x7" referred="id-0065-0000001d">
+				<reference id="id-0067-00000010" kind="ComponentInstanceRef" role="ComponentInstanceRef" guid="{43d81657-2d62-434a-931c-0cfbf49e4ab9}" relid="0x7" referred="id-0065-0000001d">
 					<name>StockBroker</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -1394,7 +1400,7 @@
 						</regnode>
 					</regnode>
 				</reference>
-				<reference id="id-0067-00000027" kind="ComponentInstanceRef" role="ComponentInstanceRef" guid="{27fe02fd-6e92-44a5-aab2-e8a7d5ee27d3}" relid="0x8" referred="id-0065-0000001e">
+				<reference id="id-0067-00000011" kind="ComponentInstanceRef" role="ComponentInstanceRef" guid="{27fe02fd-6e92-44a5-aab2-e8a7d5ee27d3}" relid="0x8" referred="id-0065-0000001e">
 					<name>StockDistributor</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -1406,17 +1412,17 @@
 						</regnode>
 					</regnode>
 				</reference>
-				<connection id="id-0068-0000000e" kind="InstanceMapping" role="InstanceMapping" guid="{5b192945-d483-4815-a73f-d59c8e397d91}" relid="0x4">
+				<connection id="id-0068-0000000d" kind="InstanceMapping" role="InstanceMapping" guid="{5b192945-d483-4815-a73f-d59c8e397d91}" relid="0x4">
 					<name></name>
-					<connpoint role="dst" target="id-0067-00000024"/>
+					<connpoint role="dst" target="id-0067-0000000e"/>
 					<connpoint role="src" target="id-0069-00000001"/>
 				</connection>
-				<connection id="id-0068-0000000f" kind="InstanceMapping" role="InstanceMapping" guid="{ca117dc4-c513-432f-88a6-48b5c5d614e1}" relid="0x6">
+				<connection id="id-0068-0000000e" kind="InstanceMapping" role="InstanceMapping" guid="{ca117dc4-c513-432f-88a6-48b5c5d614e1}" relid="0x6">
 					<name></name>
-					<connpoint role="dst" target="id-0067-00000025"/>
+					<connpoint role="dst" target="id-0067-0000000f"/>
 					<connpoint role="src" target="id-0069-00000002"/>
 				</connection>
-				<set id="id-0069-00000001" kind="CollocationGroup" role="CollocationGroup" guid="{dad0afb5-00b8-42c1-bd3c-cc50865bc4ae}" relid="0x3" members="id-0067-00000026">
+				<set id="id-0069-00000001" kind="CollocationGroup" role="CollocationGroup" guid="{dad0afb5-00b8-42c1-bd3c-cc50865bc4ae}" relid="0x3" members="id-0067-00000010">
 					<name>DefaultGroup</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>
@@ -1428,7 +1434,7 @@
 						</regnode>
 					</regnode>
 				</set>
-				<set id="id-0069-00000002" kind="CollocationGroup" role="CollocationGroup" guid="{a0d5f10b-b542-4d4d-b506-a20c1aded824}" relid="0x5" members="id-0067-00000027">
+				<set id="id-0069-00000002" kind="CollocationGroup" role="CollocationGroup" guid="{a0d5f10b-b542-4d4d-b506-a20c1aded824}" relid="0x5" members="id-0067-00000011">
 					<name>DefaultGroup</name>
 					<regnode name="PartRegs" status="undefined">
 						<value></value>

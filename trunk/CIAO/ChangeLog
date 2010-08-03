@@ -1,3 +1,24 @@
+Tue Aug  3 04:29:02 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/ami4ccm/examples/Hello/models:
+        * connectors/ami4ccm/examples/Hello/models/Hello-complete.xme:
+        * connectors/ami4ccm/examples/Hello/models/Hello.xme:
+
+          PICML models for the example.
+
+        * connectors/ami4ccm/models/ami4ccm.xme:
+
+          Updated the ami4ccm model to latest version of PICML.
+
+        * connectors/dds4ccm/examples/Shapes/models/Shapes-complete.xme:
+        * connectors/dds4ccm/examples/Shapes/models/Shapes.xme:
+
+          Updated models for example to latest version of PICML.
+
+        * tutorials/Quoter/Simple/Model/Quoter.xme:
+
+          Update exampe to latest vers
+
 Sun Aug  1 18:16:59 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
