@@ -1,3 +1,19 @@
+Wed Aug  4 20:52:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        
+          New IDL compiler option -Sg, which disables the generation of
+          unique extensions on header file preprocessor guards. These
+          changes are from a patch supplied by Bogdan Jeram
+          <bjeram at eso dot org>, and close [BUGID:3867].
+          
+        * docs/compiler.html:
+        
+          Updated IDL compiler options table.
+
 Wed Aug  4 19:24:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/rtcosscheduling.mpb:

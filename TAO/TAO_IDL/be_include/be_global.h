@@ -786,6 +786,10 @@ public:
   bool gen_custom_ending (void) const;
   void gen_custom_ending (bool val);
 
+  /// Accessors for the member gen_unique_guards_.
+  bool gen_unique_guards (void) const;
+  void gen_unique_guards (bool val);
+  
   /// Accessors for the corresponding members.
   
   bool gen_ciao_svnt (void) const;
@@ -1128,6 +1132,12 @@ private:
    * $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
    */
   bool gen_custom_ending_;
+
+ /**
+   * True by default, but a command line option can turn this off so
+   * the generated code (header) files will not be proteced by unique guards.
+   */
+  bool gen_unique_guards_;
 
   /// False by default, these flags trigger code generation
   /// formerly done by the CIAO CIDL compiler.

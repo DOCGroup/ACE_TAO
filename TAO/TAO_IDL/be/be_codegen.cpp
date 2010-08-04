@@ -2464,10 +2464,13 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
         }
     }
 
-  ACE_OS::strcat (macro_name, "_XXXXXX");
-  char * const t = ACE_OS::strstr (macro_name, "XXXXXX");
+  if (be_global->gen_unique_guards ())
+    {
+      ACE_OS::strcat (macro_name, "_XXXXXX");
+      char * const t = ACE_OS::strstr (macro_name, "XXXXXX");
 
-  this->make_rand_extension (t);
+      this->make_rand_extension (t);
+    }
 
   ACE_OS::strcat (macro_name, suffix);
 
