@@ -1,3 +1,11 @@
+Wed Aug  4 14:16:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Check more internal return values
+
+        * rpmbuild/ace-tao.spec-bugfixonly.patch:
+          Removed this file, not needed
+
 Tue Aug  3 12:14:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:
