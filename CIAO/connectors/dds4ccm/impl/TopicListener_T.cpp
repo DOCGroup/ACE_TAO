@@ -66,14 +66,18 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::TopicListener_T::get_mask");
 
+  ::DDS::StatusMask mask = 0;
+
   if (! ::CORBA::is_nil (error_listener) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      return ::DDS::INCONSISTENT_TOPIC_STATUS;
+      mask = ::DDS::INCONSISTENT_TOPIC_STATUS;
     }
-  else
-    {
-      return 0;
-    }
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "TopicListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+  return mask;
 }
 

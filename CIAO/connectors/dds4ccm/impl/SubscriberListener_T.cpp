@@ -263,17 +263,22 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr csl)
 {
+  ::DDS::StatusMask mask = 0;
+
   if (! ::CORBA::is_nil (csl) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      return ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
+      mask = ::DDS::REQUESTED_INCOMPATIBLE_QOS_STATUS |
              ::DDS::SAMPLE_REJECTED_STATUS |
              ::DDS::LIVELINESS_CHANGED_STATUS |
              ::DDS::SUBSCRIPTION_MATCHED_STATUS;
     }
-  else
-    {
-      return 0;
-    }
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "SubscriberListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+
+  return mask;
 }
 

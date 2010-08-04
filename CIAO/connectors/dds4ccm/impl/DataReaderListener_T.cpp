@@ -168,14 +168,17 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::get_mask");
 
   ::DDS::StatusMask mask = ::DDS::DATA_AVAILABLE_STATUS;
+  
   if (! ::CORBA::is_nil (listener) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       mask |= PortStatusListener_type::get_mask (listener);
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
-                    "DataReaderListener_T::get_mask - "
-                    "Mask becomes %d\n",
-                    mask));
     }
+    
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "DataReaderListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+                 
   return mask;
 }

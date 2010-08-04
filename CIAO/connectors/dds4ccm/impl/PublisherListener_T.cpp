@@ -282,10 +282,12 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   ::CCM_DDS::ConnectorStatusListener_ptr error_listener)
 {
-  if (! ::CORBA::is_nil (error_listener) ||
+  ::DDS::StatusMask mask = 0;
+
+   if (! ::CORBA::is_nil (error_listener) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      return ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
+      mask = ::DDS::OFFERED_DEADLINE_MISSED_STATUS |
              ::DDS::OFFERED_INCOMPATIBLE_QOS_STATUS |
 #if (CIAO_DDS4CCM_NDDS==1)
              ::DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS |
@@ -294,9 +296,11 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
              ::DDS::LIVELINESS_LOST_STATUS |
              ::DDS::PUBLICATION_MATCHED_STATUS;
     }
-  else
-    {
-      return 0;
-    }
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "PublisherListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+  return mask;
 }
 
