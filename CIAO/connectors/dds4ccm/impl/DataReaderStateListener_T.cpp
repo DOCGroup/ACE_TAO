@@ -240,16 +240,21 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
   typename CCM_TYPE::statelistener_type::_ptr_type listener)
 {
+  ::DDS::StatusMask mask = 0;
+
   if (! ::CORBA::is_nil (listener) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      return ::DDS::DATA_AVAILABLE_STATUS |
+      mask = ::DDS::DATA_AVAILABLE_STATUS |
              ::DDS::REQUESTED_DEADLINE_MISSED_STATUS |
              ::DDS::SAMPLE_LOST_STATUS;
     }
-  else
-    {
-      return 0;
-    }
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "DataReaderStateListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+
+  return mask;
 }
 
