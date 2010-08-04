@@ -1,10 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(ACE_gperf) : acelib, install_lib, crosscompile, ace_output {
-  sharedname   = ACE_gperf_lib
-  dynamicflags += ACE_GPERF_BUILD_DLL
+project(gperf) : aceexe, install, crosscompile {
+  install = $(ACE_ROOT)/bin
+  exename = ace_gperf
   Source_Files {
+    gperf.cpp
     Options.cpp
     Iterator.cpp
     Gen_Perf.cpp
@@ -14,16 +15,6 @@ project(ACE_gperf) : acelib, install_lib, crosscompile, ace_output {
     Bool_Array.cpp
     Vectors.cpp
     Version.cpp
-  }
-}
-
-project(gperf) : aceexe, install, crosscompile {
-  install = $(ACE_ROOT)/bin
-  after += ACE_gperf
-  libs += ACE_gperf_lib
-  exename = ace_gperf
-  Source_Files {
-    gperf.cpp
   }
 
   verbatim(gnuace, postinstall) {

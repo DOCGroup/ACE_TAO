@@ -29,7 +29,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/Copy_Disabled.h"
-#include "gperf_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -102,7 +101,7 @@ enum
  *
  * @todo The Options class should be changed to use the Singleton pattern.
  */
-class ACE_GPERF_Export Options : private ACE_Copy_Disabled
+class Options : private ACE_Copy_Disabled
 {
 public:
   Options (void);
@@ -189,7 +188,7 @@ private:
 };
 
 /// Global option coordinator for the entire program.
-extern ACE_GPERF_Export Options option;
+extern Options option;
 
 #endif /* ACE_HAS_GPERF */
 #endif /* OPTIONS_H */
