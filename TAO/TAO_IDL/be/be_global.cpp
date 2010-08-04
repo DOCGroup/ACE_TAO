@@ -129,6 +129,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_template_export_ (false),
     gen_ostream_operators_ (false),
     gen_custom_ending_ (true),
+    gen_unique_guards_ (true),
     gen_ciao_svnt_ (false),
     gen_ciao_exec_idl_ (false),
     gen_ciao_exec_impl_ (false),
@@ -2265,6 +2266,18 @@ BE_GlobalData::gen_custom_ending (bool val)
 }
 
 bool
+BE_GlobalData::gen_unique_guards (void) const
+{
+  return this->gen_unique_guards_;
+}
+
+void
+BE_GlobalData::gen_unique_guards (bool val)
+{
+  this->gen_unique_guards_ = val;
+}
+
+bool
 BE_GlobalData::gen_ciao_svnt (void) const
 {
   return this->gen_ciao_svnt_;
@@ -3274,9 +3287,14 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'e')
           {
-            // disable custom file endings for included idl/pidl
+            // Disable custom file endings for included idl/pidl
             // files from TAO specific include paths.
             be_global->gen_custom_ending (false);
+          }
+        else if (av[i][2] == 'g')
+          {
+            // Disable generation of unique guards.
+            be_global->gen_unique_guards (false);
           }
         else
           {
