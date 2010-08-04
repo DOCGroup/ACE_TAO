@@ -13,14 +13,10 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
 #include "tao/ORB_Core.h" 
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
@@ -254,10 +250,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       client.clear ();
 
       orb->shutdown ();
-
       orb->destroy ();
 
-      CORBA::ULong ref_count  = orb->_refcnt();
+      CORBA::ULong ref_count  = orb->_refcount();
+      
       if (ref_count > 1)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount orb %d\n"), ref_count));
