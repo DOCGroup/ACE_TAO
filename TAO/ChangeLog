@@ -1,3 +1,12 @@
+Wed Aug  4 14:48:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/tao.mpc:
+
+          orb.idl is not a Template_File.  Adding it to that list causes
+          uninteded side-effects that produce an unusable project with vc10.
+          Moved it to the PIDL_Files so that it will continue to not be
+          compiled by tao_idl.
+
 Wed Aug  4 14:43:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/XML_Loader.h:
