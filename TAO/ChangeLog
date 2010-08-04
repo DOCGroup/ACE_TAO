@@ -1,3 +1,24 @@
+Wed Aug  4 17:54:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * test//Bug_3672_Regression/client.cpp:
+        
+          Changed call orb->_decr_refcnt() to new name _decr_refcount().
+          
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        
+          Removed unused local variable and commented out code.
+          
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        
+          In the generated marshal() operation, added generation of
+          /*. . .*/ guards around the 'cdr' parameter if the 
+          interface is local and parameter is not used.
+          
+        * tao/Object.h:
+        
+          Removed hard-coded 'inline' from declaration of _decr_refcount().
+
 Wed Aug  4 14:48:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/tao.mpc:
