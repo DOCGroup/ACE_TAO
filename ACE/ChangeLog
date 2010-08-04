@@ -1,3 +1,8 @@
+Wed Aug  4 17:21:17 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+          Added specific clause for cdt6.
+
 Wed Aug  4 14:16:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
