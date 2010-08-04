@@ -173,19 +173,18 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::PortStatusListener_T::get_mask");
 
+  ::DDS::StatusMask mask = 0;
   if (! ::CORBA::is_nil (psl) ||
       CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
-                    "PortStatusListener_T::get_mask - "
-                    "Mask becomes %d\n",
-                    DDS_REQUESTED_DEADLINE_MISSED_STATUS |
-                    DDS_SAMPLE_LOST_STATUS));
-      return DDS_REQUESTED_DEADLINE_MISSED_STATUS |
+      mask = DDS_REQUESTED_DEADLINE_MISSED_STATUS |
              DDS_SAMPLE_LOST_STATUS;
     }
-  else
-    {
-      return 0;
-    }
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
+                 "PortStatusListener_T::get_mask - "
+                 "Mask becomes %x\n",
+                 mask));
+
+  return mask;                    
 }
