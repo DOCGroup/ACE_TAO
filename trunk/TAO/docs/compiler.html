@@ -1171,6 +1171,19 @@ also receives other options that are specific to it.<p>
         use TAO specific files with their original endings;</td>
   </tr>
 
+  <tr><a name="Sg">
+    <td><tt>-Sg</tt></td>
+
+    <td>Disable generation of unique preprocessor guards for generated
+        header files. The guards will still be generated, but without
+        the unique random extension.</td>
+    <td>This option is useful when a system has several versions of a
+        generated header file, and only the newest version is to be
+        included by the preprocessor. The default behavior will
+        generate a unique extension for each version, subverting
+        the desired function of the preprocessor in such a system.</td>
+  </tr>
+
   <tr><a name="Sfr">
     <td><tt>-Sfr</tt></td>
 
