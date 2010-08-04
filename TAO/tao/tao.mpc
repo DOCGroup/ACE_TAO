@@ -658,7 +658,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Condition.cpp
     Connector_Impl.cpp
     TAO_Singleton.cpp
-    orb.idl
   }
 
   Pkgconfig_Files {
@@ -666,6 +665,10 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   }
 
   IDL_Files {
+  }
+
+  PIDL_Files {
+    orb.idl // not compiled
   }
 
   InstallData_Files {
