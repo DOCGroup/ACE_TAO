@@ -1,22 +1,54 @@
+Wed Aug  4 19:24:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rtcosscheduling.mpb:
+        * orbsvcs/orbsvcs/RTCosScheduling:
+        * orbsvcs/orbsvcs/RTCosScheduling.idl:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.inl:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.inl:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_export.h:
+        * orbsvcs/tests/RTCosScheduling:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.h:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.cpp:
+        * orbsvcs/tests/RTCosScheduling/README:
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/tests/RTCosScheduling/run_test.pl:
+        * orbsvcs/tests/RTCosScheduling/schedule.cfg:
+        * orbsvcs/tests/RTCosScheduling/server.ior:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+        * orbsvcs/tests/RTCosScheduling/svc.conf:
+        * orbsvcs/tests/RTCosScheduling/testSched.idl:
+        * orbsvcs/tests/RTCosScheduling/testSched_export.h:
+          Removed these files, RTCosScheduling got disabled with a dummy label
+          5 years ago because it used a non portable way to register
+          interceptors and in those 5 years nobody complained about this
+
 Wed Aug  4 17:54:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * test//Bug_3672_Regression/client.cpp:
-        
+
           Changed call orb->_decr_refcnt() to new name _decr_refcount().
-          
+
         * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
         * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-        
+
           Removed unused local variable and commented out code.
-          
+
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-        
+
           In the generated marshal() operation, added generation of
-          /*. . .*/ guards around the 'cdr' parameter if the 
+          /*. . .*/ guards around the 'cdr' parameter if the
           interface is local and parameter is not used.
-          
+
         * tao/Object.h:
-        
+
           Removed hard-coded 'inline' from declaration of _decr_refcount().
 
 Wed Aug  4 14:48:11 UTC 2010  Adam Mitz  <mitza@ociweb.com>
