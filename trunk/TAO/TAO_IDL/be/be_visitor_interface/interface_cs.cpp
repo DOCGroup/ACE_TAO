@@ -371,14 +371,17 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID ()
       << "\";" << be_uidt_nl
       << "}";
+      
+  bool is_loc = node->is_local ();
 
   *os << be_nl << be_nl
       << "::CORBA::Boolean" << be_nl
-      << node->name () << "::marshal (TAO_OutputCDR &cdr)"
-      << be_nl
+      << node->name () << "::marshal (TAO_OutputCDR &"
+      << (is_loc ? " /* " : "") << "cdr"
+      << (is_loc ? " */" : "") << ")" << be_nl
       << "{" << be_idt_nl
       << "return "
-      << (node->is_local () ? "false" : "(cdr << this)")
+      << (is_loc ? "false" : "(cdr << this)")
       << ";" << be_uidt_nl
       << "}";
 

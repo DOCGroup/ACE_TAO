@@ -345,10 +345,9 @@ namespace CORBA
             
     /// Wrapper for _remove_ref(), naming convention for
     /// templatizing.                              
-    inline void _decr_refcount (void);
+    void _decr_refcount (void);
 
   protected:
-
     /// Initializing a local object.
     Object (int dummy = 0);
 
