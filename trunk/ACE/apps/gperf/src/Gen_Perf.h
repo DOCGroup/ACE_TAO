@@ -29,7 +29,6 @@
 #include "Options.h"
 #include "Key_List.h"
 #include "Bool_Array.h"
-#include "gperf_export.h"
 #include "ace/Copy_Disabled.h"
 
 #if defined (ACE_HAS_GPERF)
@@ -38,7 +37,7 @@
  * Provides high-level routines to manipulate the keyword list
  * structures the code generation output.
  */
-class ACE_GPERF_Export Gen_Perf : private ACE_Copy_Disabled
+class Gen_Perf : private ACE_Copy_Disabled
 {
 public:
   /// Constructor.

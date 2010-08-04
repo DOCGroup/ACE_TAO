@@ -34,10 +34,6 @@
 #include "Vectors.h"
 #include "ace/Copy_Disabled.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
-#include "gperf_export.h"
-#endif
-
 /**
  * Describes a duplicate entry.
  *
@@ -64,11 +60,7 @@ public:
  * the Gen_Perf.hash function.  A Key_List is a singly-linked list
  * of List_Nodes.
  */
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
-class ACE_GPERF_Export Key_List : private ACE_Copy_Disabled
-#else
 class Key_List : private ACE_Copy_Disabled
-#endif
 {
 public:
   Key_List (void);
