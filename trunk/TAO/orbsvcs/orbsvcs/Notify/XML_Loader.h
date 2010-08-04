@@ -58,11 +58,11 @@ public:
   virtual void startElement (const ACEXML_Char* namespaceURI,
     const ACEXML_Char* localName,
     const ACEXML_Char* qName,
-    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL);
+    ACEXML_Attributes* atts);
 
   virtual void endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED);
+    const ACEXML_Char* name);
 
 private:
   /// The name of the file from which data is read.
@@ -72,7 +72,7 @@ private:
 
   typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
   TopoStack object_stack_;
-  /// if false, then we're just checking syntax of topology file.
+  /// If false, then we're just checking syntax of topology file.
   bool live_;
 };
 
