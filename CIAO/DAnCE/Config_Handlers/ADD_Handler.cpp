@@ -5,10 +5,6 @@
 #include "Property_Handler.h"
 #include "ace/UUID.h"
 
-ACE_RCSID (DAnCE,
-           ADD_Handler,
-           "$Id$")
-
 namespace CIAO
 {
   namespace Config_Handlers

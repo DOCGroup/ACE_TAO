@@ -1,3 +1,25 @@
+Wed Aug  4 18:05:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/ADD_Handler.cpp:
+        * DAnCE/Config_Handlers/DP_Handler.cpp:
+        * DAnCE/Config_Handlers/DnC_Dump_T.cpp:
+        * DAnCE/Config_Handlers/Dump_Obj.cpp:
+        * DAnCE/Config_Handlers/IDREF_Base.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/RepositoryManager/Repository_Manager_Module.cpp:
+        * DAnCE/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/tools/Completion/Completion_Counter_Base.cpp:
+        * ciao/Servants/Port_Activator.cpp:
+        * ciao/Valuetype_Factories/ConfigValue.cpp:
+        * ciao/Valuetype_Factories/Cookies.cpp:
+        * performance-tests/Protocols/Sender/Custom_Network_Priority_Mapping.cpp:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/xmlvalidator.cpp:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+          Removed ACE_RCSID
+
 Wed Aug  4 18:01:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:

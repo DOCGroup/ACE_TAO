@@ -18,10 +18,6 @@
 #include "Artifact_Installation/File_Installation_Handler.h"
 #include "Artifact_Installation/Http_Installation_Handler.h"
 
-ACE_RCSID (DAnCE,
-           Node_Manager_Module,
-           "$Id$")
-
 namespace DAnCE
 {
   namespace Node_Manager

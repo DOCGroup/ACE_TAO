@@ -25,10 +25,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
-ACE_RCSID (be,
-           be_helper,
-           "$Id$")
-
 static const char copyright[] =
 " <--\n"
 " -*- XML -*-\n"
