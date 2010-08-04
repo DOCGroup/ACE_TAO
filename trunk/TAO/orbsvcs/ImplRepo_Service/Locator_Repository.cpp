@@ -192,18 +192,16 @@ static int loadAsXML (const ACE_CString& fname, Locator_Repository& repo)
   parser.setErrorHandler (&handler);
   parser.setEntityResolver (&handler);
 
-  ACEXML_TRY_NEW_ENV
+  try
     {
-      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
+      parser.parse (&input);
     }
-  ACEXML_CATCH (ACEXML_Exception, ex)
+  catch (const ACEXML_Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, "Error during load of ImR persistence xml file."));
       ex.print ();
       return -1;
     }
-  ACEXML_ENDTRY;
   return 0;
 }
 
