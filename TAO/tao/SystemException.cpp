@@ -238,7 +238,7 @@ CORBA::SystemException::_info (void) const
 
   ACE_CString info = "system exception, ID '";
   info += this->_rep_id ();
-#if defined (TAO_SKIP_NEW_LINE_IN_EXCEPTION_LOGGING)
+#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
   info += "'; ";
 #else
   info += "'\n";
@@ -399,7 +399,7 @@ CORBA::SystemException::_info (void) const
       ACE_OS::sprintf (buffer,
                        "TAO exception, "
                        "minor code = %x (%s; %s), "
-#if defined (TAO_SKIP_NEW_LINE_IN_EXCEPTION_LOGGING)
+#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
                        "completed = %s; ",
 #else
                        "completed = %s\n",
@@ -432,7 +432,7 @@ CORBA::SystemException::_info (void) const
       ACE_OS::sprintf (buffer,
                        "OMG minor code (%d), "
                        "described as '%s', "
-#if defined (TAO_SKIP_NEW_LINE_IN_EXCEPTION_LOGGING)
+#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
                        "completed = %s; ",
 #else
                        "completed = %s\n",
@@ -451,7 +451,7 @@ CORBA::SystemException::_info (void) const
       char buffer[BUFSIZ];
       ACE_OS::sprintf (buffer,
                        "Unknown vendor minor code id (%x), "
-#if defined (TAO_SKIP_NEW_LINE_IN_EXCEPTION_LOGGING)
+#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
                        "minor code = %x, completed = %s; ",
 #else
                        "minor code = %x, completed = %s\n",
