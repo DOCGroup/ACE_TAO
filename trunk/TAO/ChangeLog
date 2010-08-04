@@ -1,3 +1,10 @@
+Wed Aug  4 12:21:58 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/SystemException.cpp:
+          Added TAO_SKIP_NEW_LINE_IN_EXCEPTION_LOGGING define. When set,
+          no newline character will occur in the exception logging and therefor 
+          all logging will appear on one line.
+
 Wed Aug  4 08:41:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
