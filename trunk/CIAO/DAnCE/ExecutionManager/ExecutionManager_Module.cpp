@@ -12,10 +12,6 @@
 #include "ExecutionManager_Impl.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
-ACE_RCSID (DAnCE,
-           DAnCE_ExecutionManager_Module,
-           "$Id$")
-
 namespace DAnCE
 {
   namespace ExecutionManager

@@ -5,10 +5,6 @@
 
 #include "XML_Helper.h"
 
-ACE_RCSID (IDL2XMI_Test,
-           xmlvalidator,
-           "$Id$")
-
 const ACE_TCHAR *inp_file = ACE_TEXT ("");
 
 int

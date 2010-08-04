@@ -26,10 +26,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (be,
-           be_helper,
-           "$Id$")
-
 static const char copyright[] =
 "// -*- C++ -*-\n"
 "//\n"

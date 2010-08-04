@@ -1,9 +1,6 @@
 // $Id$
-#include "ConfigValue.h"
 
-ACE_RCSID (ciao,
-           ConfigValue,
-           "$Id$")
+#include "ConfigValue.h"
 
 namespace CIAO
 {
