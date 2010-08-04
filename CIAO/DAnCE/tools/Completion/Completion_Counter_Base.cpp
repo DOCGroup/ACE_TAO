@@ -4,8 +4,6 @@
 
 #include "Completion/Completion_Counter_Base.h"
 
-ACE_RCSID(DAnCE, Completion_Counter_Base, "$Id$")
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

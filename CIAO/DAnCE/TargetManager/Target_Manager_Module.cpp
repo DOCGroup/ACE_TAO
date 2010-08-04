@@ -13,10 +13,6 @@
 
 #include "TargetManager_Impl.h"
 
-ACE_RCSID (DAnCE,
-           Targer_Manager_Module,
-           "$Id$")
-
 namespace DAnCE
 {
   namespace Target_Manager

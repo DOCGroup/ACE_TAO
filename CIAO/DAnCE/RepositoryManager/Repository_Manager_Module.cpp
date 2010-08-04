@@ -18,10 +18,6 @@
 
 #include "RepositoryManager_Impl.h"
 
-ACE_RCSID (DAnCE,
-           Repository_Manager_Module,
-           "$Id$")
-
 namespace DAnCE
 {
   namespace Repository_Manager

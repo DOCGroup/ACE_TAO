@@ -9,10 +9,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-ACE_RCSID (be,
-           be_sunsoft,
-           "$Id$")
-
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
   : TAO_OutStream ()
 {

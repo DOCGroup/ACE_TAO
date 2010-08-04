@@ -7,11 +7,6 @@
 #include "IDREF_Base.h"
 #include <iostream>
 
-
-ACE_RCSID (DAnCE,
-           IDREF_Base,
-           "$Id$")
-
 namespace CIAO
   {
     namespace Config_Handlers

@@ -15,262 +15,258 @@
 
 #include "PCD_Handler.h"
 
-ACE_RCSID (Config_Handlers,
-           DP_Handler,
-           "$Id$")
-
-  namespace CIAO
+namespace ciao
+{
+  namespace config_handlers
   {
-    namespace Config_Handlers
+    dp_handler::dp_handler (deploymentplan &dp)
+      :   xsc_dp_ (0)
+      , idl_dp_ (0)
+      , retval_ (true)
     {
-      DP_Handler::DP_Handler (deploymentPlan &dp)
-        :   xsc_dp_ (0)
-        , idl_dp_ (0)
-        , retval_ (true)
-      {
-        if (!this->resolve_plan (dp))
-          throw;
-      }
+      if (!this->resolve_plan (dp))
+        throw;
+    }
 
-      DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
-        : xsc_dp_ (new deploymentPlan),
-          idl_dp_ (0),
-          retval_ (0)
-      {
-        if (!this->build_xsc (plan))
-          throw;
-      }
+    dp_handler::dp_handler (const ::deployment::deploymentplan &plan)
+      : xsc_dp_ (new deploymentplan),
+        idl_dp_ (0),
+        retval_ (0)
+    {
+      if (!this->build_xsc (plan))
+        throw;
+    }
 
-      DP_Handler::~DP_Handler (void)
-        throw ()
-      {
-      }
+    dp_handler::~dp_handler (void)
+      throw ()
+    {
+    }
 
-      deploymentPlan const *
-      DP_Handler::xsc (void) const
-      {
-        if (this->retval_ && this->xsc_dp_.get () != 0)
-          return this->xsc_dp_.get ();
+    deploymentplan const *
+    dp_handler::xsc (void) const
+    {
+      if (this->retval_ && this->xsc_dp_.get () != 0)
+        return this->xsc_dp_.get ();
 
-        throw NoPlan ();
-      }
+      throw noplan ();
+    }
 
-      deploymentPlan *
-      DP_Handler::xsc (void)
-      {
-        if (this->retval_ && this->xsc_dp_.get () != 0)
-          return this->xsc_dp_.release ();
+    deploymentplan *
+    dp_handler::xsc (void)
+    {
+      if (this->retval_ && this->xsc_dp_.get () != 0)
+        return this->xsc_dp_.release ();
 
-        throw NoPlan ();
-      }
+      throw noplan ();
+    }
 
-      ::Deployment::DeploymentPlan const *
-      DP_Handler::plan (void) const
-      {
-        if (this->retval_ && this->idl_dp_.get () != 0)
-          return this->idl_dp_.get ();
+    ::deployment::deploymentplan const *
+    dp_handler::plan (void) const
+    {
+      if (this->retval_ && this->idl_dp_.get () != 0)
+        return this->idl_dp_.get ();
 
-        throw NoPlan ();
-      }
+      throw noplan ();
+    }
 
-      ::Deployment::DeploymentPlan *
-      DP_Handler::plan (void)
-      {
-        if (this->retval_ && this->idl_dp_.get () != 0)
-          return this->idl_dp_.release ();
+    ::deployment::deploymentplan *
+    dp_handler::plan (void)
+    {
+      if (this->retval_ && this->idl_dp_.get () != 0)
+        return this->idl_dp_.release ();
 
-        throw NoPlan ();
-      }
+      throw noplan ();
+    }
 
-      bool
-      DP_Handler::resolve_plan (deploymentPlan &xsc_dp)
-      {
-        DANCE_TRACE ("DP_Handler::resolve_plan");
+    bool
+    dp_handler::resolve_plan (deploymentplan &xsc_dp)
+    {
+      dance_trace ("dp_handler::resolve_plan");
 
-        ::Deployment::DeploymentPlan *tmp =
-            new Deployment::DeploymentPlan;
+      ::deployment::deploymentplan *tmp =
+          new deployment::deploymentplan;
 
-        this->idl_dp_.reset (tmp);
+      this->idl_dp_.reset (tmp);
 
-        // Read in the label, if present, since minoccurs = 0
-        if (xsc_dp.label_p ())
-          {
-            this->idl_dp_->label =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (xsc_dp.label ().c_str ()));
-          }
+      // read in the label, if present, since minoccurs = 0
+      if (xsc_dp.label_p ())
+        {
+          this->idl_dp_->label =
+            corba::string_dup (ace_text_always_char (xsc_dp.label ().c_str ()));
+        }
 
-        // Read in the UUID, if present
-        if (xsc_dp.UUID_p ())
-          {
-            this->idl_dp_->UUID =
-              CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR  (xsc_dp.UUID ().c_str ()));
-          }
+      // read in the uuid, if present
+      if (xsc_dp.uuid_p ())
+        {
+          this->idl_dp_->uuid =
+            corba::string_dup (ace_text_always_char  (xsc_dp.uuid ().c_str ()));
+        }
 
-        // Similar thing for dependsOn
-        for (deploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
-             dstart != xsc_dp.end_dependsOn ();
-             ++dstart)
-          {
-            CORBA::ULong len = this->idl_dp_->dependsOn.length ();
-            this->idl_dp_->dependsOn.length (len + 1);
-            ID_Handler::get_ImplementationDependency (*(*dstart),
-                                                      this->idl_dp_->dependsOn [len]);
+      // similar thing for dependson
+      for (deploymentplan::dependson_const_iterator dstart = xsc_dp.begin_dependson ();
+            dstart != xsc_dp.end_dependson ();
+            ++dstart)
+        {
+          corba::ulong len = this->idl_dp_->dependson.length ();
+          this->idl_dp_->dependson.length (len + 1);
+          id_handler::get_implementationdependency (*(*dstart),
+                                                    this->idl_dp_->dependson [len]);
 
-          }
+        }
 
-        // ... An the property stuff
-        for (deploymentPlan::infoProperty_const_iterator pstart = xsc_dp.begin_infoProperty ();
-             pstart != xsc_dp.end_infoProperty ();
-             ++pstart)
-          {
-            CORBA::ULong len =
-              this->idl_dp_->infoProperty.length ();
+      // ... an the property stuff
+      for (deploymentplan::infoproperty_const_iterator pstart = xsc_dp.begin_infoproperty ();
+            pstart != xsc_dp.end_infoproperty ();
+            ++pstart)
+        {
+          corba::ulong len =
+            this->idl_dp_->infoproperty.length ();
 
-            this->idl_dp_->infoProperty.length (len + 1);
+          this->idl_dp_->infoproperty.length (len + 1);
 
-            Property_Handler::handle_property (*(*pstart),
-                                               this->idl_dp_->infoProperty [len]);
-          }
+          property_handler::handle_property (*(*pstart),
+                                              this->idl_dp_->infoproperty [len]);
+        }
 
-        // Read in the realizes, if present
-        if (xsc_dp.realizes_p ())
-          {
-            CCD_Handler::component_interface_descr (
-                                                    xsc_dp.realizes (),
-                                                    this->idl_dp_->realizes);
-          }
+      // read in the realizes, if present
+      if (xsc_dp.realizes_p ())
+        {
+          ccd_handler::component_interface_descr (
+                                                  xsc_dp.realizes (),
+                                                  this->idl_dp_->realizes);
+        }
 
-        ADD_Handler::artifact_deployment_descrs (xsc_dp,
-                                                 this->idl_dp_->artifact);
+      add_handler::artifact_deployment_descrs (xsc_dp,
+                                                this->idl_dp_->artifact);
 
-        MDD_Handler::mono_deployment_descriptions (xsc_dp,
-                                                   this->idl_dp_->implementation);
+      mdd_handler::mono_deployment_descriptions (xsc_dp,
+                                                  this->idl_dp_->implementation);
 
-        IDD_Handler::instance_deployment_descrs (xsc_dp,
-                                                 this->idl_dp_->instance);
+      idd_handler::instance_deployment_descrs (xsc_dp,
+                                                this->idl_dp_->instance);
 
-        this->idl_dp_->connection.length (xsc_dp.count_connection ());
-        std::for_each (xsc_dp.begin_connection (),
-                       xsc_dp.end_connection (),
-                       PCD_Functor (this->idl_dp_->connection));
+      this->idl_dp_->connection.length (xsc_dp.count_connection ());
+      std::for_each (xsc_dp.begin_connection (),
+                      xsc_dp.end_connection (),
+                      pcd_functor (this->idl_dp_->connection));
 
-        this->idl_dp_->localityConstraint.length (xsc_dp.count_localityConstraint ());
+      this->idl_dp_->localityconstraint.length (xsc_dp.count_localityconstraint ());
 
-        std::for_each (xsc_dp.begin_localityConstraint (),
-                       xsc_dp.end_localityConstraint (),
-                       PL_Functor (this->idl_dp_->localityConstraint));
+      std::for_each (xsc_dp.begin_localityconstraint (),
+                      xsc_dp.end_localityconstraint (),
+                      pl_functor (this->idl_dp_->localityconstraint));
 
-        //PCD_Handler::get_PlanConnectionDescription (xsc_dp, this->idl_dp_->connection);
+      //pcd_handler::get_planconnectiondescription (xsc_dp, this->idl_dp_->connection);
 
-        return true;
-      }
+      return true;
+    }
 
-      bool
-      DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
-      {
-        DANCE_TRACE ("DP_Handler::build_xsc");
+    bool
+    dp_handler::build_xsc (const ::deployment::deploymentplan &plan)
+    {
+      dance_trace ("dp_handler::build_xsc");
 
-        // Initialize the UUID generator.
-        ACE_Utils::UUID_GENERATOR::instance ()->init ();
+      // initialize the uuid generator.
+      ace_utils::uuid_generator::instance ()->init ();
 
-        // Clear IDREF tables
-        IDD_Handler::IDREF.unbind_refs ();
-        MDD_Handler::IDREF.unbind_refs ();
-        ADD_Handler::IDREF.unbind_refs ();
+      // clear idref tables
+      idd_handler::idref.unbind_refs ();
+      mdd_handler::idref.unbind_refs ();
+      add_handler::idref.unbind_refs ();
 
 
-        size_t len; //Used for checking the length of struct data members
+      size_t len; //used for checking the length of struct data members
 
-        // Read in the label, if present, since minoccurs = 0
-        if (plan.label != 0)
-          {
-            XMLSchema::string< ACE_TCHAR > i(ACE_TEXT_CHAR_TO_TCHAR (plan.label));
-            this->xsc_dp_->label(i);
-          }
+      // read in the label, if present, since minoccurs = 0
+      if (plan.label != 0)
+        {
+          xmlschema::string< ace_tchar > i(ace_text_char_to_tchar (plan.label));
+          this->xsc_dp_->label(i);
+        }
 
-        // Read in the UUID, if present
-        if (plan.UUID != 0)
-          {
-            XMLSchema::string< ACE_TCHAR > j(ACE_TEXT_CHAR_TO_TCHAR(plan.UUID));
-            this->xsc_dp_->UUID(j);
-          }
+      // read in the uuid, if present
+      if (plan.uuid != 0)
+        {
+          xmlschema::string< ace_tchar > j(ace_text_char_to_tchar(plan.uuid));
+          this->xsc_dp_->uuid(j);
+        }
 
-        // Similar thing for dependsOn
-        len = plan.dependsOn.length();
-        for (size_t j = 0;
-             j < len;
-             ++j)
-          {
-            //this->xsc_dp_->add_dependsOn(ID_Handler::impl_dependency(plan.dependsOn[j]));
-          }
+      // similar thing for dependson
+      len = plan.dependson.length();
+      for (size_t j = 0;
+            j < len;
+            ++j)
+        {
+          //this->xsc_dp_->add_dependson(id_handler::impl_dependency(plan.dependson[j]));
+        }
 
-        // ... And the property stuff
-        len = plan.infoProperty.length();
-        for (size_t q = 0;
-             q < len;
-             q++)
-          {
-            if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
-                                "CIAOServerResources") == 0)
-              {
-                DANCE_DEBUG (1, (LM_ERROR,
-                            "(%P|%t) DP_Handler: Dumping of ServerResources not currently supported."));
-                continue;
-              }
+      // ... and the property stuff
+      len = plan.infoproperty.length();
+      for (size_t q = 0;
+            q < len;
+            q++)
+        {
+          if (ace_os::strcmp (plan.infoproperty[q].name.in (),
+                              "ciaoserverresources") == 0)
+            {
+              dance_debug (1, (lm_error,
+                          "(%p|%t) dp_handler: dumping of serverresources not currently supported."));
+              continue;
+            }
 
-            //this->xsc_dp_->add_infoProperty (Property_Handler::get_property (plan.infoProperty[q]));
-          }
+          //this->xsc_dp_->add_infoproperty (property_handler::get_property (plan.infoproperty[q]));
+        }
 
 
-        // We are assuming there is a realizes for the moment
-        // @@ We may want to change this at a later date by creating a sequence of
-        // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../DAnCE/Deployment/Deployment_Data.idl
-        // @@ so we can check for length
-        this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
-        if (!this->xsc_dp_->realizes_p())
-          {
-            DANCE_DEBUG (1, (LM_ERROR,
-                        "(%P|%t) DP_Handler: "
-                        "Error parsing Component Interface Descriptor."));
-            return false;
-          }
+      // we are assuming there is a realizes for the moment
+      // @@ we may want to change this at a later date by creating a sequence of
+      // @@ componentinterfacedescriptions in the deploymentplan in ../dance/deployment/deployment_data.idl
+      // @@ so we can check for length
+      this->xsc_dp_->realizes(ccd_handler::component_interface_descr(plan.realizes));
+      if (!this->xsc_dp_->realizes_p())
+        {
+          dance_debug (1, (lm_error,
+                      "(%p|%t) dp_handler: "
+                      "error parsing component interface descriptor."));
+          return false;
+        }
 
-        //Take care of the artifact(s) if they exist
-        len = plan.artifact.length();
-        for(size_t k = 0;
-            k < len;
-            k++)
-          {
-            //this->xsc_dp_->add_artifact (ADD_Handler::artifact_deployment_descr (plan.artifact[k]));
-          }
+      //take care of the artifact(s) if they exist
+      len = plan.artifact.length();
+      for(size_t k = 0;
+          k < len;
+          k++)
+        {
+          //this->xsc_dp_->add_artifact (add_handler::artifact_deployment_descr (plan.artifact[k]));
+        }
 
-        //Take care of the implementation(s) if they exist
-        len = plan.implementation.length();
-        for(size_t l = 0;
-            l < len;
-            l++)
-          {
-            //this->xsc_dp_->add_implementation (MDD_Handler::mono_deployment_description (plan.implementation[l]));
-          }
+      //take care of the implementation(s) if they exist
+      len = plan.implementation.length();
+      for(size_t l = 0;
+          l < len;
+          l++)
+        {
+          //this->xsc_dp_->add_implementation (mdd_handler::mono_deployment_description (plan.implementation[l]));
+        }
 
-        //Ditto for the instance(s)
-        len = plan.instance.length();
-        for(size_t m = 0;
-            m < len;
-            m++)
-          {
-            //this->xsc_dp_->add_instance (IDD_Handler::instance_deployment_descr (plan.instance[m]));
-          }
+      //ditto for the instance(s)
+      len = plan.instance.length();
+      for(size_t m = 0;
+          m < len;
+          m++)
+        {
+          //this->xsc_dp_->add_instance (idd_handler::instance_deployment_descr (plan.instance[m]));
+        }
 
-        //Finally, take care of the Connection Planning
-        len = plan.connection.length();
-        for(size_t n = 0; n < len; n++)
-          {
-            //this->xsc_dp_->add_connection (PCD_Handler::get_PlanConnectionDescription (plan.connection[n]));
-          }
+      //finally, take care of the connection planning
+      len = plan.connection.length();
+      for(size_t n = 0; n < len; n++)
+        {
+          //this->xsc_dp_->add_connection (pcd_handler::get_planconnectiondescription (plan.connection[n]));
+        }
 
-        retval_ = true;
-        return true;
-      }
+      retval_ = true;
+      return true;
     }
   }
+}

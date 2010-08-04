@@ -1,9 +1,5 @@
 #include "Port_Activator.h"
 
-ACE_RCSID (ciao,
-           Servant_Activator,
-           "$Id$")
-
 namespace CIAO
 {
   Port_Activator_i::Port_Activator_i (const char *oid,
