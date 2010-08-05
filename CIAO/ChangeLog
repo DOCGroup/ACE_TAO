@@ -1,3 +1,8 @@
+Thu Aug  5 14:09:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Corrected links to other documentations
+
 Thu Aug  5 07:58:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/DP_Handler.cpp:
