@@ -53,7 +53,7 @@ WARN_FORMAT           = "$file:$line: $text"
 INPUT                 = TAO/CIAO/connectors/dds4ccm/idl TAO/CIAO/connectors/dds4ccm/impl
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl *.idl3
 RECURSIVE             = YES
-EXCLUDE               = 
+EXCLUDE               =
 EXCLUDE_PATTERNS      =
 EXAMPLE_PATH          =
 EXAMPLE_PATTERNS      =
@@ -134,17 +134,17 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../../ace \
-                        html/tao/TAO.tag=../.. \
-                        html/ace/ssl/ACE_SSL.tag=../../../ace/ssl \
-                        html/tao/portableserver/TAO_PortableServer.tag=../../portableserver \
-                        html/tao/iortable/TAO_IORTable.tag=../../iortable \
-                        html/tao/rtcorba/TAO_RTCORBA.tag=../../rtcorba \
-                        html/tao/security/TAO_Security.tag=../../security \
-                        html/acexml/ACEXML.tag=../../../acexml \
-                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
-                        html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../ifr
+TAGFILES              = html/ace/ACE.tag=../../ace \
+                        html/tao/TAO.tag=../tao \
+                        html/ace/ssl/ACE_SSL.tag=../../ace/ssl \
+                        html/tao/portableserver/TAO_PortableServer.tag=../tao/portableserver \
+                        html/tao/iortable/TAO_IORTable.tag=../tao/iortable \
+                        html/tao/rtcorba/TAO_RTCORBA.tag=../tao/rtcorba \
+                        html/tao/security/TAO_Security.tag=../tao/security \
+                        html/acexml/ACEXML.tag=../../acexml \
+                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../tao/rtportableserver \
+                        html/tao/cosnaming/TAO_CosNaming.tag=../tao/cosnaming \
+                        html/tao/ifr/TAO_IFR.tag=../tao/ifr
 GENERATE_TAGFILE      = html/ciao/dds4ccm/dds4ccm.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
