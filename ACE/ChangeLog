@@ -1,3 +1,9 @@
+Thu Aug  5 16:56:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+        * protocols/tests/RMCast/RMCast.mpc:
+          Removed exceptions as base project
+
 Thu Aug  5 09:00:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
