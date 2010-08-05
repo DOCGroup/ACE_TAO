@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Port_Activator.h"
 
 namespace CIAO
