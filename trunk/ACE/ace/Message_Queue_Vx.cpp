@@ -7,11 +7,6 @@
 #include "ace/Message_Queue_Vx.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Message_Queue_Vx,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_VXWORKS)

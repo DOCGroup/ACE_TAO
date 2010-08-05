@@ -1,10 +1,6 @@
 #include "ace/Countdown_Time.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (ace,
-           Countdown_Time,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Countdown_Time.inl"
 #endif /* __ACE_INLINE__ */

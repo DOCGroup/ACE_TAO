@@ -2,10 +2,6 @@
 
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID (ace,
-           OS_NS_stdlib,
-           "$Id$")
-
 #include "ace/Default_Constants.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)

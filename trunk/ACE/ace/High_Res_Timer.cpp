@@ -22,7 +22,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(ace, High_Res_Timer, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

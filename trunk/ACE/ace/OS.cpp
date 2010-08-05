@@ -13,7 +13,7 @@
 # include "ace/OS.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-ACE_RCSID(ace, OS, "$Id$")
+
 
 // include new cpps
 #include "ace/Cleanup.cpp"

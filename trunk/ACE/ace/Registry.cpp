@@ -2,10 +2,6 @@
 
 #include "ace/Registry.h"
 
-ACE_RCSID (ace,
-           Registry,
-           "$Id$")
-
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 #  include "ace/os_include/os_netdb.h"

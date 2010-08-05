@@ -13,7 +13,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Framework_Component, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

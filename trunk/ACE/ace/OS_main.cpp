@@ -2,7 +2,7 @@
 
 #include "ace/OS_main.h"
 
-ACE_RCSID(ace, OS_main, "$Id$")
+
 
 #if !defined (ACE_DOESNT_DEFINE_MAIN)
 

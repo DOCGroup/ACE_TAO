@@ -7,7 +7,7 @@
 
 #include "ace/config-all.h"
 
-ACE_RCSID(ace, gethrtime, "$Id$")
+
 
 #if defined (ghs) && (defined (i386) || defined(__i386__))
 

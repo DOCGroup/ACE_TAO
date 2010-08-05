@@ -18,10 +18,6 @@
 #include "ace/MMAP_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace,
-          MMAP_Memory_Pool,
-          "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)

@@ -5,7 +5,7 @@
 #include "ace/OS_NS_sys_shm.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Shared_Memory_Pool, "$Id$")
+
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 

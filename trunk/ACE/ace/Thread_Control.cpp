@@ -12,7 +12,7 @@
 #include "ace/Thread_Control.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(ace, Thread_Control, "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Thread_Control.inl"

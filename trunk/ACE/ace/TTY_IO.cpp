@@ -11,10 +11,6 @@
 # include <termio.h>
 #endif
 
-ACE_RCSID (ace,
-           TTY_IO,
-           "$Id$")
-
 namespace
 {
   const char ACE_TTY_IO_NONE[]  = "none";

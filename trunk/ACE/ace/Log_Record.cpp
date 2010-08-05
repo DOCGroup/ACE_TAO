@@ -21,7 +21,7 @@
 
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(ace, Log_Record, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

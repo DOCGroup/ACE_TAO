@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "ace/RW_Process_Mutex.inl"

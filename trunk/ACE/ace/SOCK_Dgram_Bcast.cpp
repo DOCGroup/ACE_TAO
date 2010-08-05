@@ -13,7 +13,7 @@
 #include "ace/SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

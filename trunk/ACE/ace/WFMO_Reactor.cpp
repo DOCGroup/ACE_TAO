@@ -14,7 +14,7 @@
 #include "ace/WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, WFMO_Reactor, "$Id$")
+
 
 #include "ace/Auto_Ptr.h"
 

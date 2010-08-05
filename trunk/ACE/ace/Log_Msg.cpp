@@ -45,7 +45,7 @@
 #include "ace/Log_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Log_Msg, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1649,7 +1649,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // Weekday Month day year hour:minute:sec.usec
                   {
                     ACE_TCHAR day_and_time[35];
-                    // Did we find the flag indicating a time value argument 
+                    // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
                     {
                       ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
@@ -1685,15 +1685,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #else
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
-                    // Did we find the flag indicating a time value argument 
+                    // Did we find the flag indicating a time value argument
                     if (format[1] == ACE_TEXT('#'))
                     {
                       ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
                       if (can_check)
                         this_len = ACE_OS::snprintf
                           (bp, bspace, format,
-                          ACE::timestamp (*time_value, 
-                                         day_and_time, 
+                          ACE::timestamp (*time_value,
+                                         day_and_time,
                                          sizeof day_and_time / sizeof (ACE_TCHAR)));
                       else
                         this_len = ACE_OS::sprintf

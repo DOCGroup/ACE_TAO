@@ -2,7 +2,7 @@
 
 #include "ace/UPIPE_Connector.h"
 
-ACE_RCSID(ace, UPIPE_Connector, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

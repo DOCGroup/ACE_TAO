@@ -5,7 +5,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID(ace, Thread_Exit, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

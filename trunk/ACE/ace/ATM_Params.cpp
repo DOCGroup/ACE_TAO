@@ -4,7 +4,7 @@
 
 #if defined (ACE_HAS_ATM)
 
-ACE_RCSID(ace, ATM_Params, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Params.inl"
