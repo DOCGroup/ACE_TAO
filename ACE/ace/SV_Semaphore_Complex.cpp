@@ -1,4 +1,3 @@
-// SV_Semaphore_Complex.cpp
 // $Id$
 
 #include "ace/SV_Semaphore_Complex.h"

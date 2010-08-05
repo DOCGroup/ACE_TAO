@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Synch_Options.h"
 
 #include "ace/Global_Macros.h"
