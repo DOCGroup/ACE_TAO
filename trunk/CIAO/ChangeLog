@@ -1,3 +1,9 @@
+Thu Aug  5 15:46:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/MPC/config/dance_config_handlers_base.mpb:
+        * MPC/config/ciao_xml_utils.mpb:
+          Removed exceptions as base projects
+
 Thu Aug  5 14:09:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_dds4ccm.doxygen:
