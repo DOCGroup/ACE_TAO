@@ -37,14 +37,8 @@ extern "C" int maxFiles;
 #  include "ace/OS_NS_poll.h"
 #endif /* ACE_HAS_POLL  && ACE_HAS_LIMITED_SELECT */
 
-
-ACE_RCSID (ace,
-           ACE,
-           "$Id$")
-
-
 // Open versioned namespace, if enabled by the user.
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {

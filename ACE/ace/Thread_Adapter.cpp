@@ -7,10 +7,6 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID (ace,
-           Thread_Adapter,
-           "$Id$")
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

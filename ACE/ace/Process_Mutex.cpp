@@ -11,7 +11,7 @@
 #include "ace/Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Process_Mutex, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

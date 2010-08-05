@@ -5,10 +5,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID (ace,
-           Local_Name_Space,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_NS_String::~ACE_NS_String (void)

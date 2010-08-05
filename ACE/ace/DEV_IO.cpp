@@ -7,7 +7,7 @@
 #include "ace/DEV_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, DEV_IO, "$Id$")
+
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

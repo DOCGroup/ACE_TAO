@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(ace, TLI_Acceptor, "$Id$")
+
 
 #if defined (ACE_HAS_TLI)
 

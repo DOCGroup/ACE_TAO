@@ -10,7 +10,7 @@
 
 #include "ace/TSS_Adapter.h"
 
-ACE_RCSID(ace, TSS_Adapter, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

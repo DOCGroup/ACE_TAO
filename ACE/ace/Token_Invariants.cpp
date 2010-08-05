@@ -5,10 +5,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/os_include/os_typeinfo.h"
 
-ACE_RCSID (ace,
-           Token_Invariants,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;

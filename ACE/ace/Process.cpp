@@ -29,7 +29,7 @@
 # include <taskLib.h>
 #endif
 
-ACE_RCSID (ace, Process, "$Id$")
+
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.

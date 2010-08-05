@@ -3,7 +3,7 @@
 #include "ace/Thread_Hook.h"
 #include "ace/Object_Manager_Base.h"
 
-ACE_RCSID(ace, Thread_Hook, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

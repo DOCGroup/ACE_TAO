@@ -2,7 +2,7 @@
 
 #include "ace/ATM_Acceptor.h"
 
-ACE_RCSID(ace, ATM_Acceptor, "$Id$")
+
 
 #if defined (ACE_HAS_ATM)
 

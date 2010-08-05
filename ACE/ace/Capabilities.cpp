@@ -9,11 +9,6 @@
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (ace,
-           Capabilities,
-           "$Id$")
-
-
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

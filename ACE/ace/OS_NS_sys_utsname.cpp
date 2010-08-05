@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_sys_utsname.h"
 
-ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
+
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"

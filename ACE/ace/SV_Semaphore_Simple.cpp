@@ -7,10 +7,6 @@
 #include "ace/SV_Semaphore_Simple.inl"
 #endif /* !__ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           SV_Semaphore_Simple,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)

@@ -7,7 +7,7 @@
 #include "ace/SV_Shared_Memory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SV_Shared_Memory, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -11,11 +11,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (ace,
-           Service_Types,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;

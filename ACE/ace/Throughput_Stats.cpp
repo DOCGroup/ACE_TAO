@@ -7,7 +7,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Throughput_Stats, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

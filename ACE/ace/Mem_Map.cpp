@@ -13,7 +13,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(ace, Mem_Map, "Mem_Map.cpp,v 4.39 2003/11/01 11:15:13 dhinton Exp")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

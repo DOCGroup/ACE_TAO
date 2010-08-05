@@ -2,10 +2,6 @@
 
 #include "ace/Base_Thread_Adapter.h"
 
-ACE_RCSID (ace,
-           Base_Thread_Adapter,
-           "$Id$")
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Base_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

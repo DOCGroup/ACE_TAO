@@ -12,7 +12,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(ace, FIFO, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -8,10 +8,6 @@
 #include "ace/Message_Queue_NT.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Message_Queue_NT,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)

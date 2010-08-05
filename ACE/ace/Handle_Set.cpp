@@ -9,7 +9,7 @@
 
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Handle_Set, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

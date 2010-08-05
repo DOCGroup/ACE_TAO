@@ -18,7 +18,7 @@
 #include "ace/Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Pipe, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
