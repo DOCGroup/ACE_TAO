@@ -12,7 +12,7 @@
 #include "ace/SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SOCK_IO, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -5,10 +5,6 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 
-ACE_RCSID (ace,
-           Dev_Poll_Reactor,
-           "$Id$")
-
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
 # include "ace/OS_NS_unistd.h"

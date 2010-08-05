@@ -4,13 +4,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ace,
-           Dynamic_Service_Dependency,
-           "$Id$")
-
-
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_TCHAR *principal)
 {

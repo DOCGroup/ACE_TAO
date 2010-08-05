@@ -3,10 +3,6 @@
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (ace,
-           Atomic_Op,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Atomic_Op.inl"
 #endif /* __ACE_INLINE__ */

@@ -14,7 +14,7 @@
 # include "ace/Trace.h"
 #endif /* ACE_HAS_TRACE */
 
-ACE_RCSID(ace, Naming_Context, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Naming_Context.inl"

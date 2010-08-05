@@ -12,8 +12,6 @@
 #include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, ARGV, "$Id$")
-
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

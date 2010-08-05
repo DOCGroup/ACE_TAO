@@ -4,7 +4,7 @@
 #include "ace/Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
-ACE_RCSID(ace, Strategies, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

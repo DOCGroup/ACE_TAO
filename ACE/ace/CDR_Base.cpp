@@ -8,10 +8,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ace,
-           CDR_Base,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (NONNATIVE_LONGDOUBLE)

@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_wchar.h"
 
-ACE_RCSID(ace, OS_NS_wchar, "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_wchar.inl"

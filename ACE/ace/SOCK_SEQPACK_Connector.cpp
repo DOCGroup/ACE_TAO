@@ -18,7 +18,7 @@
 #include "ace/SOCK_SEQPACK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SOCK_SEQPACK_Connector, "SOCK_SEQPACK_Connector.cpp,v 4.35 2002/03/08 23:18:09 spark Exp")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

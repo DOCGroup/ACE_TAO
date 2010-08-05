@@ -9,10 +9,6 @@
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ace,
-           Dynamic_Message_Strategy,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ctor

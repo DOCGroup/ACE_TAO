@@ -3,7 +3,7 @@
 
 #include "ace/OS_NS_arpa_inet.h"
 
-ACE_RCSID(ace, OS_NS_arpa_inet, "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_arpa_inet.inl"

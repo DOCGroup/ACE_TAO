@@ -2,10 +2,6 @@
 
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (ace,
-           Atomic_Op_GCC,
-           "$Id$")
-
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
 
 #if !defined (__ACE_INLINE__)

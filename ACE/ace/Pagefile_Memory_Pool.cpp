@@ -21,7 +21,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, Pagefile_Memory_Pool, "$Id$")
+
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 #if !defined (ACE_HAS_WINCE)

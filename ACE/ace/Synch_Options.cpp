@@ -3,10 +3,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (ace,
-           Synch_Options,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)

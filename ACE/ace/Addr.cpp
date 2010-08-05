@@ -2,10 +2,6 @@
 
 #include "ace/Addr.h"
 
-ACE_RCSID (ace,
-           Addr,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Addr.inl"
 #endif /* __ACE_INLINE__ */

@@ -11,7 +11,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(ace, TLI, "$Id$")
+
 
 #if defined (ACE_HAS_TLI)
 

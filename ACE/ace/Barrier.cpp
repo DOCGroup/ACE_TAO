@@ -15,10 +15,6 @@
 #  include "ace/Log_Msg.h"
 #endif /* ACE_HAS_DUMP */
 
-ACE_RCSID (ace,
-           Barrier,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)

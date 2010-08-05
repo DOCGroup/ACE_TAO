@@ -18,10 +18,6 @@
 
 #if defined (ACE_HAS_EBCDIC)
 
-ACE_RCSID (ace,
-           Codeset_IBM1047,
-           "$Id$")
-
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 

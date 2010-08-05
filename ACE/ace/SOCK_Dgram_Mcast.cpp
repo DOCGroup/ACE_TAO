@@ -20,10 +20,6 @@
 #include "ace/SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           SOCK_Dgram_Mcast,
-           "$Id$")
-
 #include "ace/Log_Msg.h"
 
 // This is a workaround for platforms with non-standard

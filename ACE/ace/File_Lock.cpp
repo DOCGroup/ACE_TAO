@@ -7,7 +7,7 @@
 #include "ace/File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, File_Lock, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

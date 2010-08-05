@@ -10,7 +10,7 @@
 #include "ace/MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, MEM_IO, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -280,12 +280,12 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
     ACE_GUARD_RETURN (ACE_SYNCH_PROCESS_MUTEX, ace_mon, *this->recv_channel_.lock_, -1);
 
     buf = this->recv_channel_.queue_.read ();
-    
+
     if (buf != 0)
       {
         return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
       }
-      
+
     return -1;
   }
 }
@@ -403,9 +403,9 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
         reinterpret_cast<ACE_MEM_SAP_Node *> (
           this->deliver_strategy_->acquire_buffer (
             ACE_Utils::truncate_cast<ssize_t> (len)));
-          
+
       size_t n = 0;
-      
+
       while (message_block != 0)
         {
           ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
@@ -429,7 +429,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
                                                 0,
                                                 timeout);
     }
-    
+
   return 0;
 }
 

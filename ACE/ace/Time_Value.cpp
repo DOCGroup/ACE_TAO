@@ -1,9 +1,5 @@
 #include "ace/Time_Value.h"
 
-ACE_RCSID (ace,
-           Time_Value,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */

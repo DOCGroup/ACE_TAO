@@ -6,10 +6,6 @@
 #include "ace/Argv_Type_Converter.inl"
 #endif  /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Argv_Type_Converter,
-           "$Id$")
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
 

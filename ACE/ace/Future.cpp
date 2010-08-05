@@ -9,8 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID (ace, Future, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 #  include "ace/Guard_T.h"

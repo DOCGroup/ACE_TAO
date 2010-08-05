@@ -19,10 +19,6 @@
 #include /**/ <iphlpapi.h>
 #endif
 
-ACE_RCSID (ace,
-           SOCK_Dgram,
-           "$Id$")
-
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure
 #if ! defined (IMR_MULTIADDR)

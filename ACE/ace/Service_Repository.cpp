@@ -14,11 +14,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ace,
-           Service_Repository,
-           "$Id$")
-
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 

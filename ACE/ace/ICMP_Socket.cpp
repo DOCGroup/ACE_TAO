@@ -9,12 +9,6 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
 
-
-ACE_RCSID (ace,
-           ICMP_Socket,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)

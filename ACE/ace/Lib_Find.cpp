@@ -110,7 +110,7 @@ template ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex> *
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 #endif
 
-ACE_RCSID(ace, Lib_Find, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
