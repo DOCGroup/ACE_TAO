@@ -1,6 +1,5 @@
 # $Id$
 
-exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 0

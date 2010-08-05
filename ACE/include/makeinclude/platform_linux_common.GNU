@@ -4,7 +4,6 @@
 # We always include config-linux.h on Linux platforms.
 ACE_PLATFORM_CONFIG ?= config-linux.h
 
-exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1

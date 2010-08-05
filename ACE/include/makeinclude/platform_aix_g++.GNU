@@ -9,7 +9,6 @@
 
 debug ?= 1
 distrib ?= 0
-exceptions ?= 1
 optimize ?= 1
 threads ?= 1
 buildbits ?= 32

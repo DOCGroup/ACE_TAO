@@ -11,11 +11,6 @@ include $(ACE_ROOT)/include/makeinclude/platform_tru64_pre.GNU
 # you should be careful when turning off debug.
 debug ?= 1
 
-# exceptions=1 is the default on this platform. exceptions=0 has not
-# been tested. See the bottom of this file for more. Turning off exceptions
-# on this platform can cause bad things to happen.
-exceptions ?= 1
-
 threads ?= 1
 
 # Use of Standard C++ Library requires some flags to be added to the
@@ -118,15 +113,6 @@ SOFLAGS         += -shared -use_ld_input $(ACELIB)
 LIBS            :=  $(LIBS)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
-
-ifeq (0,$(exceptions))
-  #### Disable the default exception handling of cxx >= 6.0.
-  #### This is untested.  exceptions=1 is the default, so it's not used
-  #### by default.
-  ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
-    CCFLAGS += -nocleanup
-  endif # 6.x
-endif # ! exceptions
 
 ### There is a bug with pthreads header file shipped with v1885 of
 ### V5.1. We need to turn this flag to get asm () inline for

@@ -63,12 +63,8 @@
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#  if defined (ACE_HAS_EXCEPTIONS)
-#    define ACE_HAS_NEW_NOTHROW
-#  else
-     // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
-#    define _RWSTD_NO_EXCEPTIONS 1
-#  endif /* ! ACE_HAS_EXCEPTIONS */
+#   define ACE_HAS_NEW_NOTHROW
+#  endif 
 # elif (__SUNPRO_CC == 0x420) || (__SUNPRO_CC == 0x410)
 # define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __SUNPRO_CC >= 0x500 */
@@ -81,24 +77,9 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
-  // ACE_HAS_EXCEPTIONS precludes -noex in
-  // include/makeinclude/platform_macros.GNU.  But beware, we have
-  // seen problems with exception handling on multiprocessor
-  // UltraSparcs:  threaded executables core dump when threads exit.
-  // This problem does not seem to appear on single-processor UltraSparcs.
-  // And, it is solved with the application of patch
-  //   104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
-  // to Sun C++ 4.2.
-  // To provide optimum performance, ACE_HAS_EXCEPTIONS is disabled by
-  // default.  It can be enabled by adding "exceptions=1" to the "make"
-  // invocation.  See include/makeinclude/platform_sunos5_sunc++.GNU
-  // for details.
-
-#  if defined (ACE_HAS_EXCEPTIONS)
-     // If exceptions are enabled and we are using Sun/CC then
-     // <operator new> throws an exception instead of returning 0.
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif /* ACE_HAS_EXCEPTIONS */
+// If exceptions are enabled and we are using Sun/CC then
+// <operator new> throws an exception instead of returning 0.
+#define ACE_NEW_THROWS_EXCEPTIONS
 
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */

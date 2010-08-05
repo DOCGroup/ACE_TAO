@@ -10,13 +10,8 @@
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-exceptions ?= 1
 pipes ?= 1
 buildbits ?= 32
-
-ifeq ($(exceptions),0)
-  CCFLAGS += -fno-exceptions
-endif # exceptions
 
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64

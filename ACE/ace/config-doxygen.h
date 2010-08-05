@@ -58,9 +58,6 @@
 /// Enable support for the SSL wrappers
 #define ACE_HAS_SSL 1
 
-/// Enable exceptions
-#define ACE_HAS_EXCEPTIONS
-
 /// Enable timeprobes
 #define ACE_COMPILE_TIMEPROBES
 

@@ -26,8 +26,6 @@
 
 ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
 
-#if defined (ACE_HAS_EXCEPTIONS)
-
 // Just need a simple exception class.
 class Except {};
 
@@ -129,14 +127,11 @@ worker (void)
 }
 #endif /* ACE_HAS_THREADS */
 
-#endif /* ACE_HAS_EXCEPTIONS */
-
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Exceptions_Test"));
 
-#if defined (ACE_HAS_EXCEPTIONS)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting tracing\n")));
 
@@ -186,12 +181,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) exiting main\n")));
-#else
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("C++ exception support not enabled on this platform\n")));
-#endif /* ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;
   return 0;

@@ -1,3 +1,81 @@
+Thu Aug  5 08:13:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CORBA_macros.h:
+        * ace/Global_Macros.h:
+        * ace/Vector_T.h:
+        * ace/ace_wchar.h:
+        * ace/config-cxx-common.h:
+        * ace/config-doxygen.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-macros.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-suncc-common.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-interix.h:
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+
+        * include/makeinclude/platform_aix.GNU:
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * include/makeinclude/platform_cray.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+        * include/makeinclude/platform_irix6.x_common.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_icc.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_openvms.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_tandem.GNU:
+        * include/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/platform_tru64_g++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_icc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+        * rpmbuild/ace-tao.spec:
+
+        * tests/Bug_3673_Regression_Test.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/tests.mpc:
+
+        * ace/Exception_Macros.h:
+
+        * bin/MakeProjectCreator/config/exceptions.mpb:
+
+          Removed these files.
+
 Thu Aug  5 07:40:00 UTC 2010  Build CZar  <buildczar at prismtech dot com>
 
         * ace/OS_NS_Thread.cpp:

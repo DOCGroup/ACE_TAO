@@ -59,10 +59,6 @@
 # define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
 #endif
 
-#ifndef ACE_HAS_EXCEPTIONS
-# define ACE_HAS_EXCEPTIONS
-#endif
-
 // Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
 // This has been true up thrugh the versions. We don't have any indication
 // that this might be supported in the future, but it is an easy enough fix

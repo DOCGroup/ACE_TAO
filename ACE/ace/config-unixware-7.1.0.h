@@ -89,13 +89,6 @@
    readdir_r, etc. */
 #define ACE_HAS_DIRENT 1
 
-/* Compiler supports C++ exception handling */
-// MM-Graz if ! defined inserted, to prevent warnings, because it is already
-//  defined in config-g++common.h
-# if !defined (ACE_HAS_EXCEPTIONS)
-#define ACE_HAS_EXCEPTIONS 1
-# endif
-
 /* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be
    defined, except on Win32) */
 #define ACE_HAS_GETPAGESIZE 1
