@@ -2,10 +2,8 @@
 
 # debug = 1
 # optimize = 1
-# exceptions = 0
 
 winsock2 ?= 1
-exceptions ?= 0
 debug ?= 1
 optimize ?= 1
 threads ?= 1

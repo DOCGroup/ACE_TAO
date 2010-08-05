@@ -27,9 +27,7 @@
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.x.GNU/wrapper_macros.GNU.
-#   if defined (ACE_HAS_EXCEPTIONS)
-#     define ACE_NEW_THROWS_EXCEPTIONS
-#   endif /* ACE_HAS_EXCEPTIONS */
+#   define ACE_NEW_THROWS_EXCEPTIONS
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 

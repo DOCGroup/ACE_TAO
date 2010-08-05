@@ -5,7 +5,6 @@
 
 debug ?= 1
 distrib ?= 0
-exceptions ?= 1
 optimize ?= 0
 threads ?= 1
 buildbits ?= 32
@@ -35,13 +34,6 @@ XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cp
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
 AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
-
-# Use of exceptions should be a compiler-specific setting, but for now it's
-# not. IBM C/C++ doesn't have a way to turn exceptions off, and Visual
-# Age C++ V5 building ACE without exception handling causes segv on startup
-# of every test. Until this is straightened out, force exceptions=1 for
-# both compilers.
-exceptions=1
 
 SOEXT = so
 SOFLAGS += -G
@@ -105,9 +97,7 @@ else
     # According to documentation, default is -qeh, which is equivalent
     # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
     # try-catch blocks.
-    ifeq ($(exceptions),1)
-      CCFLAGS     += -qeh=v6
-    endif
+    CCFLAGS     += -qeh=v6
   else
     ifeq ($(XLCVERSION),0x0800)
       CCFLAGS += -qflag=w:w
@@ -119,9 +109,7 @@ else
       # According to documentation, default is -qeh, which is equivalent
       # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
       # try-catch blocks.
-      ifeq ($(exceptions),1)
-        CCFLAGS     += -qeh=v6
-      endif
+      CCFLAGS     += -qeh=v6
     else
       ifeq ($(XLCVERSION),0x0900)
         CCFLAGS += -qflag=w:w
@@ -133,9 +121,7 @@ else
         # According to documentation, default is -qeh, which is equivalent
         # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
         # try-catch blocks.
-        ifeq ($(exceptions),1)
-          CCFLAGS     += -qeh=v6
-        endif
+        CCFLAGS     += -qeh=v6
       else
         CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
       endif

@@ -46,10 +46,6 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_EXCEPTIONS)
-#define ACE_HAS_EXCEPTIONS
-#endif /* ACE_HAS_WINCE */
-
 #define ACE_LACKS_STRPTIME
 
 #define ACE_HAS_SIG_ATOMIC_T

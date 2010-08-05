@@ -14,7 +14,6 @@ ifeq ($(RET),1)
 versioned_so = 1
 endif
 
-exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 1

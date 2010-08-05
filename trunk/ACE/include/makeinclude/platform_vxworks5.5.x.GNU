@@ -32,7 +32,6 @@ endif
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-exceptions ?= 1
 xerces ?= 0
 versioned_so ?= 0
 
@@ -276,19 +275,12 @@ endif
 endif  # TOOL == gnu
 
 ifeq ("$(TOOL)","diab")
-ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
-else
-  C++FLAGS += -Xexceptions-off
 endif
 else
 ifeq ("$(TOOL)","gnu")
 C++FLAGS += -ftemplate-depth-50
-ifeq ($(exceptions),1)
-  C++FLAGS += -fexceptions
-else
-  C++FLAGS += -fno-exceptions
-endif
+C++FLAGS += -fexceptions
 endif
 endif
 

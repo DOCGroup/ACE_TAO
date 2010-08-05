@@ -5,7 +5,6 @@
 #       users. Non-Fink users should simply create these directories to
 #       eliminate the warnings.
 
-exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 0

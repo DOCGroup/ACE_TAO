@@ -3,11 +3,9 @@
 # support for Mac OS X 10.4 (Tiger)
 # By default, this uses the default compiler selected using gcc_select.
 
-cidl = 1
 boost = 1
 zzip = 1
 zlib = 1
-exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 0

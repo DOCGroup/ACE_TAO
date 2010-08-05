@@ -20,7 +20,6 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-exceptions ?= 1
 rtp ?= 1
 ifeq ($(rtp),0)
   pthread ?= 0
@@ -340,18 +339,10 @@ endif
 endif  # TOOL_FAMILY == gnu
 
 ifeq ("$(TOOL_FAMILY)","diab")
-ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
-  C++FLAGS += -Xexceptions-off
-endif
-else
 ifeq ("$(TOOL_FAMILY)","gnu")
-ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
-else
-  C++FLAGS += -fno-exceptions
-endif
 endif
 endif
 

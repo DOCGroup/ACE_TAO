@@ -371,9 +371,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // Compiler specific parts
 //=========================================================================
 
-// Compiler supports C++ exception handling
-#define ACE_HAS_EXCEPTIONS 1
-
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
