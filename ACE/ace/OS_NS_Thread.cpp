@@ -1151,7 +1151,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   // consistent relative to each other.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
     {
-      return -1
+      return -1;
     }
     
   bool have_waiters = false;
@@ -1169,7 +1169,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
     {
       // This is really bad, we have the lock but can't release it anymore
-      return -1
+      return -1;
     }
     
   int result = 0;
@@ -1316,7 +1316,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
     return -1;
   bool const have_waiters = cv->waiters_ > 0;
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1
+    return -1;
 
   if (have_waiters)
     return ACE_OS::sema_post (&cv->sema_);
@@ -1341,7 +1341,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ++cv->waiters_;
   
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1
+    return -1;
 
   int result = 0;
 
@@ -1442,7 +1442,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   // Prevent race conditions on the <waiters_> count.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1
+    return -1;
     
   ++cv->waiters_;
   
