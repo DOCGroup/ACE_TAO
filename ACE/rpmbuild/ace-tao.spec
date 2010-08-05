@@ -88,6 +88,10 @@ PreReq:         %install_info_prereq %insserv_prereq  %fillup_prereq
 PreReq:         pwdutils
 %endif
 
+%if 0%{?mdkversion}
+BuildRequires:  sendmail
+%endif
+
 BuildRequires:  openssl-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libstdc++-devel
@@ -99,10 +103,6 @@ BuildRequires:  zlib-devel
 
 %if %{?_with_bzip2:1}%{!?_with_bzip2:0}
 BuildRequires:  bzip2
-%endif
-
-%if 0%{?mdkversion}
-BuildRequires: sendmail
 %endif
 
 BuildRequires:  perl
@@ -1393,7 +1393,7 @@ ln -sfn %{_datadir}/ace/bin/mwc.pl %{buildroot}%{_bindir}/mwc.pl
 install -d %{buildroot}%{_mandir}
 install -d %{buildroot}%{_mandir}/man1
 install ${TAO_ROOT}/TAO_IDL/tao_idl.1 %{buildroot}%{_mandir}/man1
-install ${ACE_ROOT}/apps/gperf/ace_gperf.1 %{buildroot}%{_mandir}/man1
+install ${ACE_ROOT}/apps/gperf/ACE_gperf.1 %{buildroot}%{_mandir}/man1
 install -d  %{buildroot}%{_infodir}
 install ${ACE_ROOT}/apps/gperf/ace_gperf.info %{buildroot}%{_infodir}
 
@@ -2037,7 +2037,6 @@ fi
 %files -n ace-gperf
 %defattr(-,root,root,-)
 %{_bindir}/ace_gperf
-%{_libdir}/libACE_gperf_lib.so.%{ACEVERSO}
 %attr(0644,root,root) %{_mandir}/man1/ace_gperf.1%{_extension}
 %attr(0644,root,root) %{_infodir}/ace_gperf.info%{_extension}
 

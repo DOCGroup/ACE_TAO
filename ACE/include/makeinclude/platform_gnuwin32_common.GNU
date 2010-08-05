@@ -16,7 +16,6 @@ no_hidden_visibility ?= 1
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
 
 winsock2 ?= 1
-exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1

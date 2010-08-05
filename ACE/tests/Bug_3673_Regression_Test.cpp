@@ -15,7 +15,6 @@ ACE_RCSID (tests,
            Bug_3673_Regression_Test,
            "$Id$")
 
-#if defined (ACE_HAS_EXCEPTIONS)
 static bool construct_alpha = false;
 static bool destruct_alpha = false;
 static bool construct_beta = false;
@@ -41,7 +40,6 @@ struct Test
 
   Test() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("throw oops\n"))); throw "oops"; }
 };
-#endif
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -49,7 +47,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_3673_Regression_Test"));
   int result = 0;
 
-#if defined (ACE_HAS_EXCEPTIONS)
   bool caught_excep = false;
   try
   {
@@ -86,10 +83,6 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Destructor beta not called\n")));
     ++result;
   }
-#else
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("C++ exception support not enabled on this platform\n")));
-#endif /* ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;
 

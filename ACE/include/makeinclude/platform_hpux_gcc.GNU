@@ -4,7 +4,6 @@
 buildbits ?= 64
 debug ?= 1
 distrib ?= 0
-exceptions ?= 1
 optimize ?= 1
 stdcpplib ?= 1
 threads ?= 1

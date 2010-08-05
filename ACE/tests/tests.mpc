@@ -110,6 +110,7 @@ project(ACE Init Test) : acetest {
   exename = ACE_Init_Test
   Source_Files {
     ACE_Init_Test.cpp
+    ACE_Init_TestDlg.cpp
   }
   Resource_Files {
     ACE_Init_Test.rc

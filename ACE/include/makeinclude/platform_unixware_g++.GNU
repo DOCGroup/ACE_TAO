@@ -3,7 +3,6 @@
 # UnixWare V2.2.1.2 with g++ version 2.7.2.2
 
 debug ?= 0
-exceptions ?= 1
 threads ?= 1
 
 CC              = gcc
@@ -11,9 +10,7 @@ CXX             = g++
 
 ACE_GNUG_ON_UNIXWARE = 1
 
-#ifeq ($(exceptions),1)
-  CCFLAGS += -fexceptions
-#endif
+CCFLAGS += -fexceptions
 
 DCFLAGS         += -g
 #DCFLAGS         += -g

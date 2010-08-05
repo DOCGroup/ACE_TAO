@@ -41,7 +41,6 @@ optimize ?= 1
 debug ?= 1
 pipes ?= 1
 threads ?= 1
-exceptions ?= 1
 
 ifeq ($(threads),1)
   CFLAGS  += -mthreads

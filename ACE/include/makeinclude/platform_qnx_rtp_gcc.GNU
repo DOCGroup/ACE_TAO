@@ -5,15 +5,9 @@
 inline ?= 1
 debug ?= 1
 optimize ?= 0
-exceptions ?= 1
 threads ?= 1
-ifeq ($(exceptions),1)
-  CCFLAGS += -fexceptions
-  LDFLAGS += -fexceptions
-else
-  CCFLAGS += -fno-exceptions
-  LDFLAGS += -fno-exceptions
-endif # ! exceptions
+CCFLAGS += -fexceptions
+LDFLAGS += -fexceptions
 
 ifeq ($(inline),1)
   CCFLAGS += -finline-functions

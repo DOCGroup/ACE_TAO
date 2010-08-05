@@ -26,6 +26,8 @@
 #include "ace/Version.h"
 #include "ace/Versioned_Namespace.h"
 
+#define ACE_HAS_EXCEPTIONS
+
 // ACE_HAS_TLI is used to decide whether to try any XTI/TLI functionality
 // so if it isn't set, set it. Capabilities and differences between
 // XTI and TLI favor XTI, but when deciding to do anything, as opposed to
@@ -54,19 +56,6 @@
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 #endif /* ! ACE_DEFAULT_LOG_STREAM */
 
-// These two are only for backward compatibility. You should avoid
-// using them if not necessary.
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-/**
- * @deprecated The ACE_SYNCH_1 macro is deprecated
- */
-# define ACE_SYNCH_1 ACE_SYNCH_DECL
-/**
- * @deprecated The ACE_SYNCH_2 macro is deprecated
- */
-# define ACE_SYNCH_2 ACE_SYNCH_USE
-#endif
-
 // For Win32 compatibility...
 # if !defined (ACE_WSOCK_VERSION)
 #   define ACE_WSOCK_VERSION 0, 0
@@ -88,32 +77,6 @@
 # if defined (ACE_HAS_VALGRIND)
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
 # endif /* ACE_HAS_VALGRIND */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-/**
- * @deprecated The @c ACE_HAS_USING macros are deprecated
- */
-#   define ACE_USING using
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-/**
- * @deprecated The @c ACE_TYPENAME macros is deprecated.  Use standard
- *             C++ keyword typename instead.
- */
-# define ACE_TYPENAME typename
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-/**
- * @deprecated The @c ACE_TEMPLATE_SPECIALIZATION and
- *             @c ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION macros are
- *             deprecated.  Use standard C++ template specialization
- *             syntax instead.
- */
-# define ACE_TEMPLATE_SPECIALIZATION template<>
-# define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
@@ -218,31 +181,6 @@
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  // =========================================================================
-  // EXPLICIT macro
-  // =========================================================================
-
-  /**
-   * @deprecated explicit is deprecated.  ACE requires C++
-   *             "explicit" keyword support.
-   */
-  # define ACE_EXPLICIT explicit
-#endif /* ACE_LACKS_DEPRECATED_MACROS */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  // =========================================================================
-  // MUTABLE macro
-  // =========================================================================
-
-  /**
-   * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
-   *             keyword support.
-   */
-  # define ACE_MUTABLE mutable
-  # define ACE_CONST_WHEN_MUTABLE const
-#endif /* ACE_LACKS_DEPRECATED_MACROS */
-
 // ============================================================================
 // EXPORT macros
 //
@@ -304,60 +242,6 @@
 // ============================================================================
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  /**
-   * @deprecated ACE_{static,reinterpret,dynamic,const}_cast@<@> is
-   *             deprecated.  Directly use standard C++ casts instead.
-   */
-  #   define ACE_static_cast(TYPE, EXPR)                                 static_cast<TYPE> (EXPR)
-  #   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       static_cast<TYPE<T1> *> (EXPR)
-  #   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> *> (EXPR)
-  #   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       static_cast<TYPE<T1> &> (EXPR)
-  #   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> &> (EXPR)
-  #   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-  #   define ACE_const_cast(TYPE, EXPR)                                  const_cast<TYPE> (EXPR)
-  #   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        const_cast<TYPE<T1> *> (EXPR)
-  #   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> *> (EXPR)
-  #   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        const_cast<TYPE<T1> &> (EXPR)
-  #   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> &> (EXPR)
-  #   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-  #   define ACE_reinterpret_cast(TYPE, EXPR)                            reinterpret_cast<TYPE> (EXPR)
-  #   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> *> (EXPR)
-  #   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> *> (EXPR)
-  #   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> &> (EXPR)
-  #   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> &> (EXPR)
-  #   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
-  #   define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
-  #   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
-  #   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
-  #   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
-  #   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-  #   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-  #   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
-  #   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
-  #   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
-  #   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-  #   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 # if !defined (ACE_CAST_CONST)
     // Sun CC 4.2, for example, requires const in reinterpret casts of
