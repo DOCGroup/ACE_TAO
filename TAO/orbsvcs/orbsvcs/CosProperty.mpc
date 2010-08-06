@@ -12,7 +12,7 @@ project(CosProperty_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_i
 
 project(CosProperty) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_CosProperty
-  dynamicflags += TAO_PROPERTY_BUILD_DLL
+  dynamicflags = TAO_PROPERTY_BUILD_DLL
   tagchecks   += Property
   after       += CosProperty_IDL
 
@@ -46,7 +46,7 @@ project(CosProperty) : orbsvcslib, orbsvcs_output, install {
 
 project(CosProperty_Skel) : orbsvcslib, orbsvcs_output, install, property, portableserver {
   sharedname   = TAO_CosProperty_Skel
-  dynamicflags += TAO_PROPERTY_SKEL_BUILD_DLL
+  dynamicflags = TAO_PROPERTY_SKEL_BUILD_DLL
   tagchecks   += Property
 
   IDL_Files {
@@ -75,7 +75,7 @@ project(CosProperty_Skel) : orbsvcslib, orbsvcs_output, install, property, porta
 
 project(CosProperty_Serv) : orbsvcslib, orbsvcs_output, install, property_skel {
   sharedname   = TAO_CosProperty_Serv
-  dynamicflags += TAO_PROPERTY_SERV_BUILD_DLL
+  dynamicflags = TAO_PROPERTY_SERV_BUILD_DLL
   tagchecks   += Property
 
   IDL_Files {

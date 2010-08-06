@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Unions in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Unions in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           union_cs,
+           "$Id$")
 
 // ******************************************************
 // For client stubs.
@@ -85,15 +94,13 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_nl << be_nl
       << node->name () << "::" << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
+      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
+      << "this->disc_ = ";
 
   // The default constructor must initialize the discriminator
   // to the first case label value found in the union declaration
   // so that, if the uninitialized union is inserted into an Any,
   // the Any destructor's call to deep_free() will work properly.
-
-  *os << "this->disc_ = ";
-
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
   be_union_branch *ub = 0;
 
@@ -110,8 +117,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // Get the first label in its list.
   AST_UnionLabel *ul = ub->label (0);
-
   AST_Union::DefaultValue dv;
+
   // This can indicate an error in the return value, but it is
   // caught elsewhere.
   (void) node->default_value (dv);

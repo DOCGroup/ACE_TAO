@@ -7,7 +7,7 @@
 #include "ace/Asynch_IO.h"
 #include "ace/Singleton.h"
 
-#include "jaws3/Jaws_IO.h"
+#include "jaws3/IO.h"
 #include "jaws3/Event_Result.h"
 #include "jaws3/Event_Completer.h"
 

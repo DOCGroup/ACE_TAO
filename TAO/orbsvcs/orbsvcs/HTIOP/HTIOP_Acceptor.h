@@ -20,7 +20,6 @@
 
 #include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
-#include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -79,10 +78,10 @@ namespace TAO
       /// Returns the array of endpoints in this acceptor
       const ACE::HTBP::Addr *endpoints (void);
 
-      typedef TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
-      typedef Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
-      typedef Concurrency_Strategy<Completion_Handler> CONCURRENCY_STRATEGY;
-      typedef Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+      typedef ACE_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+      typedef TAO_Creation_Strategy<Completion_Handler> CREATION_STRATEGY;
+      typedef ACE_Concurrency_Strategy<Completion_Handler> CONCURRENCY_STRATEGY;
+      typedef TAO_Accept_Strategy<Completion_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
 
       /**
        * The TAO::Acceptor methods, check the documentation in

@@ -1,18 +1,22 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_component_fwd.h
- *
- *  $Id$
- *
- *  Extension of class AST_ComponentFwd that provides additional
- *  means for C++ mapping of a forward declared component.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_component_fwd.h
+//
+// = DESCRIPTION
+//    Extension of class AST_ComponentFwd that provides additional
+//    means for C++ mapping of a forward declared component.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef BE_COMPONENT_FWD_H
 #define BE_COMPONENT_FWD_H
@@ -29,6 +33,8 @@ class be_component_fwd : public virtual AST_ComponentFwd,
   // =DESCRIPTION
   //   Extensions to the AST_ComponentFwd class
 public:
+  be_component_fwd (void);
+
   be_component_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 

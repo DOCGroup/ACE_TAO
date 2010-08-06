@@ -116,18 +116,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
 
-      // wait for oneway sends and twoway replies to be processed
-      client_task.wait ();
-      
-      // shutdown server
-      sender->shutdown ();
-      
-      // shutdown ourself
-      receiver->shutdown ();
-      
-      // wait for event loop to finish
-      server_task.wait ();
-        
+      ACE_Thread_Manager::instance ()->wait ();
+
       ACE_DEBUG ((LM_DEBUG,
                   "Event Loop finished\n"));
 

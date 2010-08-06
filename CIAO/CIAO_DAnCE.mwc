@@ -1,11 +1,8 @@
 //$Id$
 
 workspace {
-  ccm
   ciao
   DAnCE
-  tools/XML
-  exclude {
-    DAnCE/tests
-  }
+  ciaosvcs
+  tools/Config_Handlers
 }

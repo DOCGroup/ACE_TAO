@@ -516,18 +516,6 @@ operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
                0);
 }
 
-void
-operator <<= (CORBA::Any &any, const std::string & str)
-{
-  any <<= str.c_str ();
-}
-
-void
-operator <<= (CORBA::Any &, std::string *)
-{
-  // TODO
-}
-
 // Extraction: these are safe and hence we have to check that the
 // typecode of the Any is equal to the one we are trying to extract
 // into.
@@ -731,16 +719,6 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
       CORBA::_tc_TypeCode,
       tc
     );
-}
-
-CORBA::Boolean
-operator >>= (const CORBA::Any &any, std::string &str)
-{
-  const char *buf = 0;
-  CORBA::Boolean flag = any >>= buf;
-  str.assign (buf);
-  ACE::strdelete (const_cast <char *> (buf));
-  return flag;
 }
 
 // ================================================================

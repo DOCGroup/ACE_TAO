@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components. This is a generic visitor.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components. This is a generic visitor.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component,
+           "$Id$")
 
 // ******************************************************
 // Generic Component visitor
@@ -75,19 +85,11 @@ be_visitor_component::visit_operation (be_operation *node)
     // These first two cases may have the context state changed
     // by a strategy, so we use the visitor factory below.
     case TAO_CodeGen::TAO_INTERFACE_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-        be_visitor_operation_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
+      ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
+      break;
     case TAO_CodeGen::TAO_ROOT_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-        be_visitor_operation_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
+      ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+      break;
     case TAO_CodeGen::TAO_ROOT_SH:
       {
         be_visitor_operation_sh visitor (&ctx);
@@ -118,13 +120,6 @@ be_visitor_component::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SVH:
-    case TAO_CodeGen::TAO_ROOT_SVS:
-    case TAO_CodeGen::TAO_ROOT_EXH:
-    case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:
       {
@@ -147,6 +142,66 @@ be_visitor_component::visit_operation (be_operation *node)
                          "visit_operation - "
                          "failed to accept visitor\n"),
                         -1);
+    }
+
+  // Change the state depending on the kind of node strategy.
+  ctx.state (node->next_state (ctx.state ()));
+
+  // Grab the appropriate visitor.
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_component::"
+                         "visit_operation - "
+                         "NUL visitor\n"),
+                         -1);
+    }
+
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_component::"
+                         "visit_operation - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+
+  delete visitor;
+  visitor = 0;
+
+  // Do additional code generation is necessary.
+  // Note, this call is delegated to the strategy connected to
+  // the node.
+  if (node->has_extra_code_generation (ctx.state ()))
+    {
+      // Change the state depending on the kind of node strategy.
+      ctx.state (node->next_state (ctx.state (), 1));
+
+      // Grab the appropriate visitor.
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_component::"
+                             "visit_operation - "
+                             "NUL visitor\n"),
+                            -1);
+        }
+
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_component::"
+                             "visit_operation - "
+                             "failed to accept visitor\n"),
+                            -1);
+        }
+
+      delete visitor;
+      visitor = 0;
     }
 
   return 0;
@@ -279,13 +334,6 @@ be_visitor_component::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_SVH:
-    case TAO_CodeGen::TAO_ROOT_SVS:
-    case TAO_CodeGen::TAO_ROOT_EXH:
-    case TAO_CodeGen::TAO_ROOT_EXS:
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-    case TAO_CodeGen::TAO_ROOT_EX_IDL:
       return 0; // nothing to be done
     default:
       {
@@ -308,61 +356,4 @@ be_visitor_component::visit_typedef (be_typedef *node)
 
   return 0;
 }
-
-int
-be_visitor_component::visit_extended_port (be_extended_port *node)
-{
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
-
-  /// If the port visit traverses any attributes defined in the
-  /// original porttype, this is a way for visitors down the
-  /// line to tell what scope we are actually in.
-  this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
-  
-  be_porttype *pt = node->port_type ();
-  
-  if (this->visit_scope (pt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component::")
-                         ACE_TEXT ("visit_extended_port - ")
-                         ACE_TEXT ("visit_scope () failed\n")),
-                        -1);
-    }
-    
-  this->ctx_->port_prefix () = "";
-  
-  return 0;
-}
-
-int
-be_visitor_component::visit_mirror_port (be_mirror_port *node)
-{
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
-
-  /// If the port visit traverses any attributes defined in the
-  /// original porttype, this is a way for visitors down the
-  /// line to tell what scope we are actually in.
-  this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
-  
-  be_porttype *pt = node->port_type ();
-  
-  if (this->visit_scope (pt) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_component::")
-                         ACE_TEXT ("visit_extended_port - ")
-                         ACE_TEXT ("visit_scope () failed\n")),
-                        -1);
-    }
-    
-  this->ctx_->port_prefix () = "";
-  
-  return 0;
-}
-
 

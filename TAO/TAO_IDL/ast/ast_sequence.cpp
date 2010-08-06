@@ -73,21 +73,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_sequence.h"
 #include "ast_typedef.h"
 #include "ast_expression.h"
-#include "ast_param_holder.h"
 #include "ast_visitor.h"
-
 #include "utl_identifier.h"
-#include "utl_err.h"
-
 #include "global_extern.h"
-#include "fe_extern.h"
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-AST_Decl::NodeType const
-AST_Sequence::NT = AST_Decl::NT_sequence;
+ACE_RCSID (ast,
+           ast_sequence,
+           "$Id$")
+
+AST_Sequence::AST_Sequence (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_max_size (0),
+    pd_base_type (0),
+    owns_base_type_ (false)
+{
+  // A sequence data type is always VARIABLE.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 AST_Sequence::AST_Sequence (AST_Expression *ms,
                             AST_Type *bt,
@@ -107,36 +115,15 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     pd_base_type (bt),
     owns_base_type_ (false)
 {
-  AST_Decl::NodeType bnt = bt->node_type ();
-    
-  if (bnt == AST_Decl::NT_param_holder)
-    {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (bt);
-        
-      if (ph->info ()->type_ == AST_Decl::NT_const)
-        {
-          idl_global->err ()->not_a_type (bt);
-          bt->destroy ();
-          delete bt;
-          bt = 0;
-          throw Bailout ();
-        }
-    }
-
   // Check if we are bounded or unbounded. An expression value of 0 means
-  // unbounded. If our bound is a template parameter, skip the
-  // check altogether, this node will trigger no code generation.
-  if (ms->param_holder () == 0)
+  // unbounded.
+  if (ms->ev ()->u.ulval == 0)
     {
-      if (ms->ev ()->u.ulval == 0)
-        {
-          this->unbounded_ = true;
-        }
-      else
-        {
-          this->unbounded_ = false;
-        }
+      this->unbounded_ = true;
+    }
+  else
+    {
+      this->unbounded_ = false;
     }
 
   // A sequence data type is always VARIABLE.
@@ -144,10 +131,10 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  this->owns_base_type_ =
-    nt == AST_Decl::NT_array
-    || nt == AST_Decl::NT_sequence
-    || nt == AST_Decl::NT_param_holder;
+  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
+    {
+      this->owns_base_type_ = true;
+    }
 }
 
 AST_Sequence::~AST_Sequence (void)
@@ -259,12 +246,6 @@ AST_Sequence::legal_for_primary_key (void) const
   return this->base_type ()->legal_for_primary_key ();
 }
 
-bool
-AST_Sequence::is_defined (void)
-{
-  return this->pd_base_type->is_defined ();
-}
-
 void
 AST_Sequence::destroy (void)
 {
@@ -281,5 +262,7 @@ AST_Sequence::destroy (void)
 
   this->AST_ConcreteType::destroy ();
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Sequence)

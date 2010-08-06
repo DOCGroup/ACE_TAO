@@ -1239,14 +1239,11 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_res
   transfer_count = 0;
 
   // Get the error status of the aio_ operation.
-  // The following aio_ptr anathema is required to work around a bug in an over-aggressive
-  // optimizer in GCC 4.1.2.
-  aiocb *aio_ptr (asynch_result);
-  error_status  = aio_error (aio_ptr);
+  error_status  = aio_error (asynch_result);
   if (error_status == EINPROGRESS)
     return 0;  // not completed
 
-  ssize_t op_return = aio_return (aio_ptr);
+  ssize_t op_return = aio_return (asynch_result);
   if (op_return > 0)
     transfer_count = static_cast<size_t> (op_return);
   // else transfer_count is already 0, error_status reports the error.
@@ -1428,18 +1425,16 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   const ACE_TCHAR *ptype = 0;
 
   // Start IO
-  // The following aio_ptr anathema is required to work around a bug in 
-  // the optimizer for GCC 4.1.2
-  aiocb * aio_ptr (result);
+
   switch (result->aio_lio_opcode )
     {
     case LIO_READ :
       ptype = ACE_TEXT ("read ");
-      ret_val = aio_read (aio_ptr);
+      ret_val = aio_read (result);
       break;
     case LIO_WRITE :
       ptype = ACE_TEXT ("write");
-      ret_val = aio_write (aio_ptr);
+      ret_val = aio_write (result);
       break;
     default:
       ptype = ACE_TEXT ("?????");

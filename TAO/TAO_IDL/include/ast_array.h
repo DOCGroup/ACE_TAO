@@ -82,12 +82,18 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
+  // Operations.
+
+  // Constructor(s).
+  AST_Array (void);
+
   AST_Array (UTL_ScopedName *n,
              ACE_CDR::ULong ndims,
              UTL_ExprList *dims,
              bool local,
              bool abstract);
 
+  // Destructor.
   virtual ~AST_Array (void);
 
   // Data Accessors.
@@ -118,9 +124,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
-  static AST_Decl::NodeType const NT;
-  
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.

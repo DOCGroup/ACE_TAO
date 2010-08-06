@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    discriminant_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for discriminant of the union.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    discriminant_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for discriminant of the union.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           discriminant_ci,
+           "$Id$")
 
 // *************************************************************************
 // be_visitor_discriminant_ci - visitor for discriminant in client inline file
@@ -32,8 +41,8 @@ int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    this->ctx_->be_node_as_union ();
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -71,22 +80,29 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "{" << be_idt_nl
           << "this->_reset ();" << be_nl
           << "this->disc_ = ";
- 
-      // We use one of the enum values that isn't used in this
-      // union if one is available.
-      UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);
-      if (sn)
+
+      be_type* dt =
+        be_type::narrow_from_decl (bu->disc_type ());
+
+      if (dt == 0)
         {
-          // The function value_to_name() takes care of adding
-          // any necessary scoping to the output.
-          *os << sn;
+          return -1;
         }
-      else
+
+      // Find where was the enum defined, if it was defined in the globa
+      // scope, then it is easy to generate the enum values....
+      be_scope* scope =
+        be_scope::narrow_from_scope (dt->defined_in ());
+
+      if (scope == 0)
         {
-          // Since CORBA defines enums to be 32bits, use -1 as the
-          // out-of-bounds value for the _default() function.
-          *os << "(" << bt->name () << ") -1";
+          *os << node->value_to_name (dv.u.enum_val);
+          return 0;
         }
+
+      // The function value_to_name() takes care of adding
+      // any necessary scoping to the output.
+      *os << node->value_to_name (dv.u.enum_val);
       *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
@@ -118,9 +134,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   )
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union ();
 
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -179,7 +195,10 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
 
           break;
         case AST_Expression::EV_char:
-          os->print ("'\\%o'", dv.u.char_val);
+          os->print ("'\\%d'", dv.u.char_val);
+          break;
+        case AST_Expression::EV_wchar:
+          os->print ("L'\\%d'", dv.u.wchar_val);
           break;
         case AST_Expression::EV_bool:
           *os << (dv.u.bool_val == 0 ? "false" : "true");

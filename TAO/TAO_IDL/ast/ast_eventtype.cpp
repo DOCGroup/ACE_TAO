@@ -7,18 +7,29 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_EventType::NT = AST_Decl::NT_eventtype;
+ACE_RCSID (ast,
+           ast_eventtype,
+           "$Id$")
+
+AST_EventType::AST_EventType (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    AST_ValueType ()
+{
+}
 
 AST_EventType::AST_EventType (UTL_ScopedName *n,
-                              AST_Type **inherits,
+                              AST_Interface **inherits,
                               long n_inherits,
-                              AST_Type *inherits_concrete,
+                              AST_ValueType *inherits_concrete,
                               AST_Interface **inherits_flat,
                               long n_inherits_flat,
-                              AST_Type **supports,
+                              AST_Interface **supports,
                               long n_supports,
-                              AST_Type *supports_concrete,
+                              AST_Interface *supports_concrete,
                               bool abstract,
                               bool truncatable,
                               bool custom)

@@ -14,6 +14,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
 
@@ -45,9 +46,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class ExceptionList;
-  typedef ExceptionList * ExceptionList_ptr;
-
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
   typedef TAO_Pseudo_Out_T<ExceptionList> ExceptionList_out;
 
@@ -99,8 +97,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcount (void);
-    void _decr_refcount (void);
+    void _incr_refcnt (void);
+    void _decr_refcnt (void);
 
     /// Useful for template programming.
     typedef CORBA::ExceptionList_ptr _ptr_type;

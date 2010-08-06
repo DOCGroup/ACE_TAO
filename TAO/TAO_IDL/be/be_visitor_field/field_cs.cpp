@@ -1,22 +1,33 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    field_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/array_cs.h"
 #include "be_visitor_enum/enum_cs.h"
 #include "be_visitor_sequence/sequence_cs.h"
 #include "be_visitor_structure/structure_cs.h"
 #include "be_visitor_union/union_cs.h"
+
+ACE_RCSID (be_visitor_field, 
+           field_cs, 
+           "$Id$")
+
 
 // **********************************************
 //  Visitor for field in the client stubs file.
@@ -63,7 +74,7 @@ int
 be_visitor_field_cs::visit_array (be_array *node)
 {
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -86,7 +97,7 @@ int
 be_visitor_field_cs::visit_enum (be_enum *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -109,7 +120,7 @@ int
 be_visitor_field_cs::visit_sequence (be_sequence *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -132,7 +143,7 @@ int
 be_visitor_field_cs::visit_structure (be_structure *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -149,16 +160,6 @@ be_visitor_field_cs::visit_structure (be_structure *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_field_cs::visit_structure_fwd (
-  be_structure_fwd *node)
-{
-  be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
-    
-  return this->visit_structure (s);
 }
 
 int
@@ -184,7 +185,7 @@ int
 be_visitor_field_cs::visit_union (be_union *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -202,13 +203,3 @@ be_visitor_field_cs::visit_union (be_union *node)
 
   return 0;
 }
-
-int
-be_visitor_field_cs::visit_union_fwd (be_union_fwd *node)
-{
-  be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
-    
-  return this->visit_union (u);
-}
-

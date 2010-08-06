@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::In_Basic_SArgument_T<S,Insert_Policy>::demarshal (TAO_InputCDR &cdr)
 {
@@ -22,11 +22,11 @@ TAO::In_Basic_SArgument_T<S,Insert_Policy>::demarshal (TAO_InputCDR &cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::In_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -34,7 +34,7 @@ TAO::In_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any) 
 // ===========================================================
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -42,7 +42,7 @@ TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 }
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
@@ -52,11 +52,11 @@ TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -64,7 +64,7 @@ TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *an
 // ==============================================================
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -74,11 +74,11 @@ TAO::Out_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Out_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -86,7 +86,7 @@ TAO::Out_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any)
 // ============================================================
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -96,11 +96,11 @@ TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Ret_Basic_SArgument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

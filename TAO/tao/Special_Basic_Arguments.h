@@ -25,7 +25,6 @@
 
 #include "tao/Special_Basic_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
-#include "tao/Any_Insert_Policy_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +41,7 @@ namespace TAO
     : public Special_Basic_Arg_Traits_T<CORBA::Char,
                                         ACE_InputCDR::to_char,
                                         ACE_OutputCDR::from_char,
-                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_char> >
   {
   };
 
@@ -51,7 +50,7 @@ namespace TAO
     : public Special_Basic_Arg_Traits_T<CORBA::WChar,
                                         ACE_InputCDR::to_wchar,
                                         ACE_OutputCDR::from_wchar,
-                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_wchar> >
   {
   };
 
@@ -60,7 +59,7 @@ namespace TAO
     : public Special_Basic_Arg_Traits_T<CORBA::Octet,
                                         ACE_InputCDR::to_octet,
                                         ACE_OutputCDR::from_octet,
-                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_octet> >
   {
   };
 
@@ -69,7 +68,7 @@ namespace TAO
     : public Special_Basic_Arg_Traits_T<CORBA::Boolean,
                                         ACE_InputCDR::to_boolean,
                                         ACE_OutputCDR::from_boolean,
-                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_boolean> >
   {
   };
 }

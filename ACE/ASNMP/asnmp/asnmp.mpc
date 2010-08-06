@@ -2,7 +2,7 @@
 
 project (asnmp_lib) : ace_output, acelib {
   sharedname   = asnmp
-  dynamicflags += ASNMP_BUILD_DLL
+  dynamicflags = ASNMP_BUILD_DLL
   includes += $(ACE_ROOT)/ASNMP
 
   source_files {

@@ -18,7 +18,7 @@ How to Run:
 -----------
 To start the Naming_Service:
 ----------------------------
-$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -ORBListenEndpoints iiop://localhost:2809 &
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -ORBEndPoint iiop://localhost:2809 &
 
 
 To start the server:

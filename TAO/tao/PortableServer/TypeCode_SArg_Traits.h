@@ -23,8 +23,6 @@
 
 #include "tao/PortableServer/Object_SArgument_T.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/Any_Insert_Policy_T.h"
-#include "tao/PortableServer/portableserver_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,7 +48,7 @@ namespace TAO
     : public Object_SArg_Traits_T<CORBA::TypeCode_ptr,
                                   CORBA::TypeCode_var,
                                   CORBA::TypeCode_out,
-                                  TAO::Any_Insert_Policy_Stream
+                                  TAO::Any_Insert_Policy_Stream <CORBA::TypeCode_ptr>
                                  >
   {
   };

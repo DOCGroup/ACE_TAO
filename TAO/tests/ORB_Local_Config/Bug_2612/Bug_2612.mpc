@@ -3,7 +3,7 @@
 
 project (DllOrb) : taolib, portableserver {
 
-        dynamicflags += DLLORB_BUILD_DLL
+        dynamicflags = DLLORB_BUILD_DLL
 
         source_files {
                 DllOrb.cpp

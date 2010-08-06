@@ -19,7 +19,6 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
-#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
@@ -27,13 +26,10 @@
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
-#include "ast_component.h"
 #include "ast_native.h"
-
 #include "utl_exceptlist.h"
 #include "utl_idlist.h"
 #include "utl_identifier.h"
-
 #include "nr_extern.h"
 
 basic_visitor::basic_visitor (void)
@@ -68,19 +64,12 @@ basic_visitor::visit_scope (UTL_Scope *node)
           continue;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
-
-      /// We want to skip the uses_xxxConnection structs added by uses
-      /// multiple ports. We have no CCM preprocessing visitor as
-      /// with tao_idl, so the get_connections() operation gets
-      /// created before we see the xxxXonnections return type
-      /// it need. So we just generate the struct and sequence
-      /// typedef literally as well, just before generating the
-      /// operation.
-      if (AST_Component::narrow_from_scope (node) != 0
-          && (nt == AST_Decl::NT_struct
-              || nt == AST_Decl::NT_sequence
-              || nt == AST_Decl::NT_typedef))
+      // Want to skip the uses_xxxConnection structs added by uses
+      // multiple ports.
+      // @@@ (JP) This will go away when the visitor is finished, since
+      // those uses_xxxConnection structs will not be added to the AST.
+      if (ScopeAsDecl (node)->node_type () == AST_Decl::NT_component
+          && d->node_type () != AST_Decl::NT_attr)
         {
           continue;
         }
@@ -192,7 +181,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Decl::NodeType nt = node->node_type ();
-  AST_Type **parents = node->inherits ();
+  AST_Interface **parents = node->inherits ();
   long ninherits = node->n_inherits ();
 
   long i = 0;
@@ -216,7 +205,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           << "Components::EventBase";
     }
 
-  AST_Type **supports = node->supports ();
+  AST_Interface **supports = node->supports ();
 
   for (i = 0; i < node->n_supports (); ++i)
     {
@@ -229,14 +218,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           *os << ", ";
         }
 
-      if (i == 0 && node->supports_concrete () != 0)
-        {
-          supports[i] = node->supports_concrete ();
-        }
-
-      AST_Type *supported = supports[i];
-
-      *os << IdentifierHelper::orig_sn (supported->name ()).c_str ();
+      *os << IdentifierHelper::orig_sn (supports[i]->name ()).c_str ();
     }
 
   *os << be_nl
@@ -284,62 +266,13 @@ basic_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 }
 
 int
-basic_visitor::visit_template_module (AST_Template_Module *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_template_module_inst (AST_Template_Module_Inst *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_porttype (AST_PortType *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_provides (AST_Provides *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_uses (AST_Uses *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_publishes (AST_Publishes *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_emits (AST_Emits *)
-{
-  return 0;
-}
-
-int
-basic_visitor::visit_consumes (AST_Consumes *)
-{
-  return 0;
-}
-
-int
 basic_visitor::visit_factory  (AST_Factory *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   *os << be_nl;
 
   *os << "factory "
@@ -465,7 +398,7 @@ basic_visitor::visit_enum (AST_Enum *node)
       *os << be_nl;
 
       AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (i.item ());
-
+      
       *os << IdentifierHelper::try_escape (ev->original_local_name ()).c_str ();
 
       // Advance here so the check below will work.
@@ -573,7 +506,7 @@ basic_visitor::visit_union (AST_Union *node)
       << "union "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << " switch (";
-
+      
   *os << this->type_name (node->disc_type ())
       << ")" << be_nl
       << "{" << be_idt;
@@ -837,12 +770,6 @@ basic_visitor::visit_native (AST_Native *node)
   return 0;
 }
 
-int
-basic_visitor::visit_param_holder (AST_Param_Holder *)
-{
-  return 0;
-}
-
 //========================================================
 
 void
@@ -974,7 +901,7 @@ basic_visitor::gen_params (UTL_Scope *s, int arg_count)
 {
   if (arg_count > 0)
     {
-      *os << be_idt;
+      *os << be_idt << be_idt;
 
       for (UTL_ScopeActiveIterator si (s, UTL_Scope::IK_decls);
            !si.is_done ();)
@@ -994,7 +921,7 @@ basic_visitor::gen_params (UTL_Scope *s, int arg_count)
             }
         }
 
-      *os << be_uidt;
+      *os << be_uidt_nl << be_uidt;
     }
 }
 
@@ -1056,24 +983,24 @@ basic_visitor::gen_operation (AST_Operation *node)
 void
 basic_visitor::gen_attribute (AST_Attribute *node)
 {
-  bool rd_only = node->readonly ();
+   bool rd_only = node->readonly ();
 
-  // Keep output statements separate because of side effects.
-  // No need to check for anonymous array - anonymous types not
-  // accepted by parser for attributes.
-  *os << be_nl << be_nl
-     << (rd_only ? "readonly " : "") << "attribute ";
-  *os << this->type_name (node->field_type ());
-  *os << " " << this->port_prefix_.c_str ()
-     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+   // Keep output statements separate because of side effects.
+   // No need to check for anonymous array - anonymous types not
+   // accepted by parser for attributes.
+   *os << be_nl << be_nl
+       << (rd_only ? "readonly " : "") << "attribute ";
+   *os << this->type_name (node->field_type ());
+   *os << " "
+       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
-  this->gen_exception_list (node->get_get_exceptions (),
-                           rd_only ? "" : "get");
+   this->gen_exception_list (node->get_get_exceptions (),
+                             rd_only ? "" : "get");
 
-  this->gen_exception_list (node->get_set_exceptions (),
-                           "set");
+   this->gen_exception_list (node->get_set_exceptions (),
+                             "set");
 
-  *os << ";";
+   *os << ";";
 }
 
 void
@@ -1094,12 +1021,12 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
         {
           *os << IdentifierHelper::orig_sn (ScopeAsDecl (s)->name ()).c_str ()
               << "::";
-
+              
           Identifier *id =
             IdentifierHelper::original_local_name (val->n ()->last_component ());
 
           *os << IdentifierHelper::try_escape (id).c_str ();
-
+          
           id->destroy ();
           delete id;
           id = 0;
@@ -1130,7 +1057,7 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
       case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
         *os << "ACE_UINT64_LITERAL (";
-        this->os->print (ACE_UINT64_FORMAT_SPECIFIER_ASCII, ev->u.ullval);
+        this->os->print (ACE_UINT64_FORMAT_SPECIFIER, ev->u.ullval);
         *os << ")";
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
@@ -1166,7 +1093,7 @@ basic_visitor::can_skip_module (AST_Module *m)
     {
       AST_Decl *d = si.item ();
       AST_Decl::NodeType nt = d->node_type ();
-
+      
       switch (nt)
         {
           case AST_Decl::NT_interface:
@@ -1180,20 +1107,20 @@ basic_visitor::can_skip_module (AST_Module *m)
               {
                 break;
               }
-
+              
             return false;
           case AST_Decl::NT_module:
             if (!this->can_skip_module (AST_Module::narrow_from_decl (d)))
               {
                 return false;
               }
-
+              
             break;
           default:
             break;
         }
     }
-
+    
   return true;
 }
 
@@ -1208,16 +1135,16 @@ basic_visitor::match_excluded_file (const char *raw_filename)
     {
       ACE_CString::size_type cursor = p;
       p = be_global->excluded_filenames ().find (' ', cursor);
-
+      
       ACE_CString one_filename =
         be_global->excluded_filenames ().substr (cursor, p - cursor);
-
+        
       if (one_filename == raw_filename)
         {
           return true;
         }
-
-      // Skip the whitespace.
+        
+      // Skip the whitespace.  
       if (p != ACE_CString::npos)
         {
           while (be_global->excluded_filenames ()[p] == ' ')
@@ -1226,6 +1153,6 @@ basic_visitor::match_excluded_file (const char *raw_filename)
             }
         }
     }
-
+    
   return false;
 }

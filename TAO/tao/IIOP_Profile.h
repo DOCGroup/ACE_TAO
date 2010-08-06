@@ -72,7 +72,7 @@ public:
 
   /**
    * Add @a endp to this profile's list of endpoints (it is inserted
-   * at the end of the list).  This profiles takes ownership of
+   * next to the head of the list).  This profiles takes ownership of
    * @a endp.
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
@@ -183,9 +183,6 @@ protected:
   //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_START
 
   TAO_IIOP_Endpoint endpoint_;
-
-  /// For efficient insertion at the end of the list
-  TAO_IIOP_Endpoint *last_endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;

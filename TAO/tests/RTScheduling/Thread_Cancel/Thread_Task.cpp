@@ -2,6 +2,7 @@
 
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -18,6 +19,14 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 {
   try
     {
+      ACE_NEW_RETURN (shutdown_lock_,
+                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
+                      -1);
+
+      ACE_NEW_RETURN (lock_,
+                      ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
+                      -1);
+
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
       CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
@@ -62,17 +71,16 @@ Thread_Task::svc (void)
                                                 implicit_sched_param);
 
       size_t count = 0;
-      RTScheduling::Current::IdType_var id = this->current_->id ();
       ACE_OS::memcpy (&count,
-                      id->get_buffer (),
-                      id->length ());
+                      current_->id ()->get_buffer (),
+                      current_->id ()->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
                                                 sched_param,
                                                 implicit_sched_param);
 
-      this->guid_[guid_index++] = id.in ();
+      this->guid_[guid_index++] = *(this->current_->id ());
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
@@ -81,7 +89,7 @@ Thread_Task::svc (void)
 
 
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
         RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names ();
 
         ACE_DEBUG ((LM_DEBUG,
@@ -115,7 +123,7 @@ Thread_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Distributable Thread Cancelled - Expected Exception\n"));
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
         --active_thread_count_;
         if (active_thread_count_ == 0)
           orb_->shutdown ();

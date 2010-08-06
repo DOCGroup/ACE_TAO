@@ -28,6 +28,11 @@
 # include "tao/Object.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
+ACE_RCSID (tao,
+           Object,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object::~Object (void)
@@ -822,9 +827,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
     {
       if (orb_core->resource_factory ()->resource_usage_strategy () ==
           TAO_Resource_Factory::TAO_LAZY)
-        {
-          lazy_strategy = true;
-        }
+        lazy_strategy = true;
     }
 
   if (!lazy_strategy)
@@ -832,11 +835,11 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       // If the user has set up a eager strategy..
       CORBA::String_var type_hint;
 
-      if (!(cdr >> type_hint.inout ()))
+      if ((cdr >> type_hint.inout ()) == 0)
         return false;
 
       CORBA::ULong profile_count;
-      if (!(cdr >> profile_count))
+      if ((cdr >> profile_count) == 0)
         return false;
 
       if (profile_count == 0)
@@ -875,9 +878,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
             {
               TAO_Profile *pfile = connector_registry->create_profile (cdr);
               if (pfile != 0)
-                {
-                  mp.give_profile (pfile);
-                }
+                mp.give_profile (pfile);
             }
 
           // Make sure we got some profiles!
@@ -886,11 +887,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               // @@ This occurs when profile creation fails when decoding the
               //    profile from the IOR.
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) - ERROR: Could not create all ")
-                                 ACE_TEXT ("profiles while extracting object [%d, %d]\n")
-                                 ACE_TEXT ("TAO (%P|%t) - ERROR: reference from the ")
-                                 ACE_TEXT ("CDR stream.\n"),
-                                 mp.profile_count (), profile_count),
+                                 ACE_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
+                                 ACE_TEXT ("profiles while extracting object\n")
+                                 ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
+                                 ACE_TEXT ("CDR stream.\n")),
                                 false);
             }
 
@@ -900,7 +900,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
         {
           if (TAO_debug_level > 0)
             ex._tao_print_exception (
-              ACE_TEXT ("TAO (%P|%t) - ERROR creating stub ")
+              ACE_TEXT ("TAO - ERROR creating stub ")
               ACE_TEXT ("object when demarshaling object ")
               ACE_TEXT ("reference.\n"));
 
@@ -910,10 +910,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
       x = orb_core->create_object (safe_objdata.get ());
-      if (!x)
-        {
-          return false;
-        }
+      if (x == 0)
+        return false;
 
       // Transfer ownership to the CORBA::Object
       (void) safe_objdata.release ();
@@ -925,16 +923,12 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       ACE_NEW_RETURN (ior,
                       IOP::IOR (),
-                      false);
+                      0);
 
-      if (!(cdr >> *ior))
-        {
-          return false;
-        }
-        
+      cdr >> *ior;
       ACE_NEW_RETURN (x,
                       CORBA::Object (ior, orb_core),
-                      false);
+                      0);
     }
 
   return (CORBA::Boolean) cdr.good_bit ();

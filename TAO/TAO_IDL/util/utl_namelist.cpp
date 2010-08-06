@@ -74,6 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_namelist.h"
 
+ACE_RCSID (util,
+           utl_namelist,
+           "$Id$")
+
 UTL_NameList::UTL_NameList (UTL_ScopedName *s,
                             UTL_NameList *cdr)
   : UTL_List (cdr),

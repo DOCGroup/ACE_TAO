@@ -44,6 +44,7 @@ AC_PREREQ([2.58])
 AC_CONFIG_SRCDIR([tao/TAO_Internal.cpp])
 
 AC_CONFIG_AUX_DIR([../aux_config])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_MACRO_DIR([../m4])
 
 dnl Check what platform we are running on.
@@ -429,6 +430,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2709_Regression/Makefile
     orbsvcs/tests/Bug_2800_Regression/Makefile
     orbsvcs/tests/Bug_2925_Regression/Makefile
+    orbsvcs/tests/Bug_2926_Regression/Makefile
     orbsvcs/tests/Bug_3215_Regression/Makefile
     orbsvcs/tests/Bug_3216_Regression/Makefile
     orbsvcs/tests/COIOP_Naming_Test/Makefile
@@ -506,7 +508,6 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Notify/MC/Makefile
     orbsvcs/tests/Notify/MT_Dispatching/Makefile
     orbsvcs/tests/Notify/Ordering/Makefile
-    orbsvcs/tests/Notify/Persistent_Filter/Makefile
     orbsvcs/tests/Notify/Persistent_POA/Makefile
     orbsvcs/tests/Notify/PluggableTopology/Makefile
     orbsvcs/tests/Notify/RT_lib/Makefile
@@ -522,7 +523,6 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile
     orbsvcs/tests/Notify/performance-tests/Throughput/Makefile
     orbsvcs/tests/Notify/Timeout/Makefile
-    orbsvcs/tests/Notify/Validate_Client/Makefile
     orbsvcs/tests/Property/Makefile
     orbsvcs/tests/Redundant_Naming/Makefile
     orbsvcs/tests/Sched/Makefile

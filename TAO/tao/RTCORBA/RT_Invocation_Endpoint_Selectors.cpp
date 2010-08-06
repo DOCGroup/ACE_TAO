@@ -36,7 +36,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
   CORBA::Policy_var client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL, *r);
 
-  if (CORBA::is_nil(client_protocol_policy_base.in ()))
+  if (client_protocol_policy_base.ptr () == 0)
     {
       do
         {
@@ -47,13 +47,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         }
       while (r->stub ()->next_profile_retry () != 0);
 
-      // If we get here, we completely failed to find an endpoint
-      // that we know how to use. We used to throw an exception
-      // but that would prevent any request interception points
-      // being called. They may know how to fix the problem so
-      // we wait to throw the exception in
-      // Synch_Twoway_Invocation::remote_twoway and
-      // Synch_Oneway_Invocation::remote_oneway instead.
+      // If we get here, we completely failed to find an endpoint selector
+      // that we know how to use, so throw an exception.
+      throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
   else
     {
@@ -124,9 +120,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
   // policy with no success.  Throw exception.
   if (!valid_profile_found)
     {
-      CORBA::PolicyList *p = r.inconsistent_policies ();
-      if (p)
+      if (r.inconsistent_policies ())
         {
+          CORBA::PolicyList *p = r.inconsistent_policies ();
 
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
@@ -134,13 +130,10 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
       throw ::CORBA::INV_POLICY ();
     }
 
-  // If we get here, we completely failed to find an endpoint
-  // that we know how to use. We used to throw an exception
-  // but that would prevent any request interception points
-  // being called. They may know how to fix the problem so
-  // we wait to throw the exception in
-  // Synch_Twoway_Invocation::remote_twoway and
-  // Synch_Oneway_Invocation::remote_oneway instead.
+  // If we get here, we found at least one pertinent profile, but no
+  // usable endpoints.
+  throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+
 }
 
 int
@@ -171,14 +164,14 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   CORBA::Short max_priority = 0;
 
   // If the priority model policy is not set.
-  if (CORBA::is_nil (priority_model_policy.in ()))
+  if (priority_model_policy.ptr () == 0)
     {
       // Bands without priority model do not make sense.
-      if (!CORBA::is_nil (bands_policy.in ()))
+      if (bands_policy.ptr () != 0)
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
-          if (p)
+          if (r.inconsistent_policies ())
             {
+              CORBA::PolicyList *p = r.inconsistent_policies ();
 
               p->length (1);
               (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
@@ -257,9 +250,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                   // If priority doesn't fall into any of the bands.
                   if (!in_range)
                     {
-                      CORBA::PolicyList *p = r.inconsistent_policies ();
-                      if (p)
+                      if (r.inconsistent_policies ())
                         {
+
+                          CORBA::PolicyList *p = r.inconsistent_policies ();
                           p->length (2);
                           (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
                           (*p)[1u] =

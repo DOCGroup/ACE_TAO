@@ -5,7 +5,7 @@
 #include "ace/CDR_Stream.h"
 #include "ace/Truncate.h"
 
-
+ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

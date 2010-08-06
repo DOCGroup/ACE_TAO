@@ -27,14 +27,6 @@
 #include "tao/Basic_Types.h"
 #include "tao/GIOPC.h"
 
-#include "ace/Atomic_Op.h"
-#include "ace/Intrusive_Auto_Ptr.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Allocator;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declarations.
@@ -60,7 +52,7 @@ class TAO_Export TAO_Reply_Dispatcher
 
 public:
   /// Constructor.
-  TAO_Reply_Dispatcher (ACE_Allocator *allocator = 0);
+  TAO_Reply_Dispatcher (void);
 
   /// Destructor.
   virtual ~TAO_Reply_Dispatcher (void);
@@ -94,23 +86,12 @@ public:
 
   GIOP::ReplyStatusType reply_status (void) const;
 
-  static void intrusive_add_ref (TAO_Reply_Dispatcher*);
-  static void intrusive_remove_ref (TAO_Reply_Dispatcher*);
-
 protected:
   /// LocateReply status.
   GIOP::LocateStatusType locate_reply_status_;
 
   // RequestReply status
   GIOP::ReplyStatusType reply_status_;
-
-private:
-  /// Support for intrusive reference counting
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> refcnt_;
-
-  /// Allocator that was used to allocate this reply dispatcher. In case of
-  /// zero we come from the heap.
-  ACE_Allocator *allocator_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

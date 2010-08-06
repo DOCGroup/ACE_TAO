@@ -185,6 +185,7 @@ namespace TAO
     TAO_InputCDR icdr (cdr);
 
     CORBA::String_var rep_id;
+
     CORBA::ULong min, cs = 0;
 
     if (!(icdr.read_string (rep_id.out ()) &&
@@ -228,7 +229,7 @@ namespace TAO
     {
       IOP::ServiceContext sc;
       sc.context_id = IOP::FT_GROUP_VERSION;
-
+      
       if (this->ft_send_extended_sc_)
         {
           // We send the whole tagged component as a service context.
@@ -242,29 +243,29 @@ namespace TAO
           TAO_InputCDR cdr (reinterpret_cast<const char*> (tp->component_data.get_buffer ()),
             tp->component_data.length ());
           CORBA::Boolean byte_order;
-
-          if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+    
+          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             return;
-
+    
           cdr.reset_byte_order (static_cast<int> (byte_order));
-
+    
           FT::TagFTGroupTaggedComponent gtc;
-
-          if (!(cdr >> gtc))
+    
+          if ((cdr >> gtc) == 0)
             throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
-
+    
           TAO_OutputCDR ocdr;
           if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
             return;
-
+            
           if (!(ocdr << gtc.object_group_ref_version))
             return;
-
-          CORBA::ULong const length =
+            
+          CORBA::ULong length =
             static_cast<CORBA::ULong> (ocdr.total_length ());
           sc.context_data.length (length);
           CORBA::Octet *buf = sc.context_data.get_buffer ();
-
+    
           for (const ACE_Message_Block *i = ocdr.begin ();
             i != 0;
             i = i->cont ())
@@ -274,7 +275,8 @@ namespace TAO
           }
         }
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc,
+        0);
 
     }
     catch (const CORBA::Exception&)
@@ -349,11 +351,13 @@ namespace TAO
       }
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc,
+        0);
     }
     catch (const CORBA::Exception&)
     {
     }
+    return;
   }
 
   TimeBase::TimeT
@@ -371,7 +375,8 @@ namespace TAO
 
     if (p.in ())
       {
-        t = p->request_duration_policy_value ();
+        t =
+        p->request_duration_policy_value ();
       }
     else
       {

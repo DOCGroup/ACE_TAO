@@ -2,7 +2,7 @@
 
 #include "ace/Log_Msg.h"
 
-#include "orbsvcs/Notify/MonitorControl/Control.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

@@ -252,12 +252,6 @@ public:
   void collocation_resolver_name (const char *s);
   const char *collocation_resolver_name (void) const;
 
-  void forward_invocation_on_object_not_exist (bool opt);
-  bool forward_invocation_on_object_not_exist (void) const;
-
-  void forward_once_exception (const int);
-  int forward_once_exception () const;
-
 private:
   // Each "endpoint" is of the form:
   //
@@ -467,19 +461,6 @@ private:
    * poa_factory_name_ dynamically.
    */
   ACE_TString poa_factory_directive_;
-
-
-  /**
-   * Do we need forward invocation to next avaiable profile upon
-   * OBJECT_NOT_EXIST exception?
-   */
-  bool forward_invocation_on_object_not_exist_;
-
-
-  /**
-   * The exceptions upon which the requests will be forwarded once.
-   */
-  int forward_once_exception_;
 
   /**
    * Name of the collocation resolver that needs to be instantiated.

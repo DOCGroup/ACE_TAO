@@ -44,6 +44,7 @@ public:
 static int TAO_Requires_NVList_Adapter_Impl_Initializer =
   TAO_NVList_Adapter_Impl::Initializer ();
 
+
 ACE_STATIC_SVC_DECLARE (TAO_NVList_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_NVList_Adapter_Impl)
 

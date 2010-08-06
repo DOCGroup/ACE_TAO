@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Driver.cpp
- *
- *  $Id$
- *
- *  This code builds an abstraction to factor out common code for
- *  the different implementations of the Timer_Queue.
- *
- *
- *  @author Douglas Schmidt      <schmidt@cs.wustl.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Driver.cpp
+//
+// = DESCRIPTION
+//    This code builds an abstraction to factor out common code for
+//    the different implementations of the Timer_Queue.
+//
+// = AUTHOR
+//    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+// ============================================================================
 
 #if !defined (_DRIVER_CPP_)
 #define _DRIVER_CPP_

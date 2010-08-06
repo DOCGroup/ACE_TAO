@@ -142,7 +142,7 @@ public:
                           TAO::ObjectKey &key) = 0;
 
   /// This method is not directly associated with the method of the same
-  /// name on the ACE_Acceptor template class. However, it is called by
+  /// name on the ACE_Acceptor template class.  However, it is called by
   /// the TAO_Strategy_Acceptor method of the same name.
   int handle_accept_error (ACE_Event_Handler* base_acceptor);
 
@@ -185,8 +185,7 @@ class TAO_Strategy_Acceptor:
 {
 public:
   TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
-   : acceptor_ (acceptor)
-  {
+   : acceptor_ (acceptor) {
   }
 
   virtual int handle_accept_error (void)
@@ -194,7 +193,8 @@ public:
     return this->acceptor_->handle_accept_error (this);
   }
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void*)
+  virtual int handle_timeout (const ACE_Time_Value&,
+                              const void*)
   {
     return this->acceptor_->handle_expiration (this);
   }

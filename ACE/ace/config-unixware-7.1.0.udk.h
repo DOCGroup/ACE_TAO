@@ -114,6 +114,11 @@
    readdir_r, etc. */
 #define ACE_HAS_DIRENT
 
+/* Compiler supports C++ exception handling */
+# if !defined (ACE_HAS_EXCEPTIONS)
+#define ACE_HAS_EXCEPTIONS
+# endif
+
 /* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be
    defined, except on Win32) */
 #define ACE_HAS_GETPAGESIZE
@@ -263,6 +268,9 @@
 
 /* Platform supports STREAM pipes */
 #define ACE_HAS_STREAM_PIPES
+
+/* Compiler/platform supports strerror () */
+#define ACE_HAS_STRERROR
 
 /* Platform/Compiler supports a String class (e.g., GNU or Win32). */
 #define ACE_HAS_STRING_CLASS

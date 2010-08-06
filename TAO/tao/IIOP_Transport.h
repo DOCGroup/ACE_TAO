@@ -84,7 +84,7 @@ protected:
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
-                            TAO::Transport::Drain_Constraints const & dc);
+                            ACE_Time_Value const * timeout = 0);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 
@@ -111,6 +111,10 @@ public:
                             TAO_Stub *stub = 0,
                             TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
+
+  virtual int generate_request_header (TAO_Operation_Details &opdetails,
+                                       TAO_Target_Specification &spec,
+                                       TAO_OutputCDR &msg);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 

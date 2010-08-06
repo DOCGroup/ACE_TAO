@@ -13,8 +13,6 @@
 #include "Valuetype_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "Valuetype_Sequence_Element_T.h"
-#include "tao/MM_Sequence_Iterator_T.h"
-#include "tao/Bounded_Reference_Allocation_Traits_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +27,6 @@ public:
   typedef object_type * value_type;
   typedef value_type const const_value_type;
   typedef object_t_var object_type_var;
-  typedef ::CORBA::ULong size_type;
 
   typedef details::valuetype_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
@@ -91,85 +88,10 @@ public:
   {
     return implementation_type::allocbuf(maximum);
   }
-  static value_type * allocbuf()
-  {
-    return implementation_type::allocbuf(MAX);
-  }
   static void freebuf(value_type * buffer)
   {
     implementation_type::freebuf(buffer);
   }
-
-#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
-
-  ///
-  /// Additions to support iterator semantics for TAO bounded value type
-  /// sequences.
-  ///
-
-  // = Traits and factory methods that create iterators.
-  typedef MM_Sequence_Iterator<bounded_valuetype_sequence<object_t, object_t_var, MAX> > iterator;
-  typedef Const_MM_Sequence_Iterator<bounded_valuetype_sequence<object_t, object_t_var, MAX> > const_iterator;
-  typedef MM_Sequence_Reverse_Iterator<bounded_valuetype_sequence<object_t, object_t_var, MAX> > reverse_iterator;
-  typedef Const_MM_Sequence_Reverse_Iterator<bounded_valuetype_sequence<object_t, object_t_var, MAX> > const_reverse_iterator;
-
-  // Get an iterator that points to the beginning of the sequence.
-  inline iterator begin (void)
-  {
-    return iterator (&this->impl_);
-  }
-
-  // Get a const iterator that points to the beginning of the sequence.
-  inline const_iterator begin (void) const
-  {
-    return const_iterator (&this->impl_);
-  }
-
-  // Get an iterator that points to the end of the sequence.
-  inline iterator end (void)
-  {
-    return iterator (&this->impl_,
-                     this->impl_.length ());
-  }
-
-  // Get a const iterator that points to the end of the sequence.
-  inline const_iterator end (void) const
-  {
-    return const_iterator (&this->impl_,
-                           this->impl_.length ());
-  }
-
-  // Get a reverse iterator that points to the end of the sequence.
-  inline reverse_iterator rbegin (void)
-  {
-    return reverse_iterator (&this->impl_,
-                             this->impl_.length () - 1);
-  }
-
-  // Get a const reverse iterator that points to the end of the sequence.
-  inline const_reverse_iterator rbegin (void) const
-  {
-    return const_reverse_iterator (&this->impl_,
-                                   this->impl_.length () - 1);
-  }
-
-  // Get a reverse iterator that points to one before the beginning
-  // of the sequence.
-  inline reverse_iterator rend (void)
-  {
-    return reverse_iterator (&this->impl_,
-                             -1);
-  }
-
-  // Get a const reverse iterator that points to one before the
-  // beginning of the sequence.
-  inline const_reverse_iterator rend (void) const
-  {
-    return const_reverse_iterator (&this->impl_,
-                                   -1);
-  }
-
-#endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
 
 
 private:
@@ -181,7 +103,7 @@ private:
   bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
 
     const ::CORBA::ULong length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {

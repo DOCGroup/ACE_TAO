@@ -1,37 +1,43 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    valuetype_si.h
- *
- *  $Id$
- *
- *  Concrete visitor for the valuetype node.
- *  This provides for code generation in the server inline
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_si.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the valuetype node.
+//    This provides for code generation in the server inline
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_SI_H_
 #define _BE_VALUETYPE_VALUETYPE_SI_H_
 
-/**
- * @class be_visitor_valuetype_si
- *
- * @brief be_visitor_valuetype_si
- *
- * This is a concrete visitor to generate the server inline for valuetype
- */
 class be_visitor_valuetype_si : public be_visitor_valuetype
 {
+  //
+  // = TITLE
+  //   be_visitor_valuetype_si
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the server inline for valuetype
+  //
+  //
 public:
-  /// constructor
   be_visitor_valuetype_si (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_valuetype_si (void);
+  // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);

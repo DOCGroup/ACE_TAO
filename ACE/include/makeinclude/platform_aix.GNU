@@ -27,8 +27,14 @@
 
 debug ?= 1
 distrib ?= 0
+exceptions ?= 1
 optimize ?= 0
 threads ?= 1
+
+# There's no way to turn off exceptions with IBM C/C++
+ifeq (0,$(exceptions))
+  exceptions = 1
+endif
 
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.

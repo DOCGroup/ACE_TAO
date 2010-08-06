@@ -13,9 +13,6 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#include "tao/ORB.h"
-#include "tao/Object.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T>

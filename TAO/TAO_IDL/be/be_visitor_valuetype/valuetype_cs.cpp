@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client stubs file.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client stubs file.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cs,
+           "$Id$")
 
 // ************************************************************
 // Valuetype visitor for client stubs.
@@ -313,31 +323,24 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
-      << "::CORBA::Boolean is_indirected = false;" << be_nl
-      << "::CORBA::Boolean is_null_object = false;" << be_nl
       << "::CORBA::Boolean const retval =" << be_idt_nl
       << "::CORBA::ValueBase::_tao_unmarshal_pre ("
       << be_idt << be_idt_nl
       << "strm," << be_nl
       << "base," << be_nl
-      << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
-      << "is_null_object," << be_nl
-      << "is_indirected" << be_uidt_nl << be_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl
+      << node->local_name () << "::_tao_obv_static_repository_id ()"
+      << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "::CORBA::ValueBase_var owner (base);" << be_nl << be_nl
       << "if (!retval)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "if (is_null_object)"  << be_idt_nl
-      << "return true;" << be_uidt_nl << be_nl
-      << "if (!is_indirected && base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
+      << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object."
       << be_nl
       << "// Align the pointer to the right subobject." << be_nl
-      << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "if (is_indirected)" << be_idt_nl
-      << "new_object->_add_ref ();" << be_uidt_nl << be_nl
-      << "owner._retn ();" << be_nl
+      << "new_object = " << node->local_name () << "::_downcast (base);"
+      << be_nl << "owner._retn ();" << be_nl
       << "return true;" << be_uidt_nl
       << "}";
 
@@ -475,7 +478,7 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
                                                  unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
+  AST_ValueType *parent = node->inherits_concrete ();
     
   // Recurse up the parent chain.  
   if (parent != 0)
@@ -507,9 +510,6 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
           
       ACE_CString instance_name ("this->");
       instance_name += f->local_name ()->get_string ();
-      f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
-                                      false,
-                                      true);
+      f->gen_member_ostream_operator (os, instance_name.c_str (), true);
     }
 }

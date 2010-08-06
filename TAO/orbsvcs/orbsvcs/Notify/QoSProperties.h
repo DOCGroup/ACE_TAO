@@ -47,10 +47,10 @@ public:
   /// This version initializes the base from our members
   void init ();
 
-  /// Populate @a qos_properties with all properties from this object. Returns -1 on error.
+  /// Populate <qos_properties> with all properties from this object. Returns -1 on error.
   int copy (TAO_Notify_QoSProperties& qos_properties);
 
-  /// Populate @a qos_properties with properties that can be transfered.Returns -1 on error.
+  /// Populate <qos_properties> with properties that can be transfered.Returns -1 on error.
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
   ///= Accessors

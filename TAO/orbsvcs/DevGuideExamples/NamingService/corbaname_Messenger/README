@@ -36,7 +36,7 @@ Here are some examples:
 REM start the name server
 cd/d %TAO_ROOT%\orbsvcs\Naming_Service
 title NS
-Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+Naming_Service -ORBEndpoint iiop://localhost:2809 -m 0
 
 REM start the example server
 cd/d %EXAMPLES%\NamingService\corbaname_Messenger\Debug

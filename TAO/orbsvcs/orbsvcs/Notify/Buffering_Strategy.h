@@ -76,14 +76,8 @@ public:
   class TAO_Notify_Serv_Export Tracker
   {
   public:
-    Tracker (void);
     virtual ~Tracker (void);
     virtual void update_queue_count (size_t count) = 0;
-    virtual void count_queue_overflow (bool local_overflow, bool global_overflow) = 0;
-    void register_child (Tracker * child);
-    void unregister_child (Tracker * child);
-  protected:
-    Tracker * child_;
   };
 
   /// Set the tracker object.  This strategy does not own the tracker.

@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for unions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for unions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           cdr_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating CDR operator declarations in the client
@@ -187,8 +196,6 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       *os << be_nl;
       *os << "default:" << be_idt_nl;
-      *os << "_tao_union._default ();" << be_nl;
-      *os << "// For maximum interop compatability, force the same value as transmitted" << be_nl;
       *os << "_tao_union._d (_tao_discriminant);" << be_nl;
       *os << "break;" << be_uidt;
     }
@@ -197,16 +204,14 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl;
-      
-  bool use_underscore = (this->ctx_->tdef () == 0);
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, use_underscore);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (true);
+  node->cli_stub_cdr_op_gen (1);
   return 0;
 }

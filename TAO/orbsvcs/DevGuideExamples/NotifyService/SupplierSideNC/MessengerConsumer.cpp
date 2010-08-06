@@ -97,10 +97,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var poa =
       PortableServer::POA::_narrow(poa_object.in());
 
-    PortableServer::Servant_var<StructuredEventConsumer_i> servant =
-      new StructuredEventConsumer_i(orb.in());
+    StructuredEventConsumer_i  servant(orb.in());
 
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
     CosNotifyComm::StructuredPushConsumer_var consumer =
       CosNotifyComm::StructuredPushConsumer::_narrow(consumer_obj.in());

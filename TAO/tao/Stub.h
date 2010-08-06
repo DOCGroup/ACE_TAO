@@ -262,9 +262,6 @@ public:
   /// Needed to avoid copying forward_profiles for thread safety
   CORBA::Boolean marshal (TAO_OutputCDR&);
 
-  void forwarded_on_exception (bool forwarded);
-  bool forwarded_on_exception () const;
-
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to
@@ -402,11 +399,6 @@ protected:
    * stubs to be decoubled from ORB_Core. Please do not move it away.
    */
   CORBA::Boolean const collocation_opt_;
-
-
-  // True if forwarding request upon some specific exceptions
-  // (e.g. OBJECT_NOT_EXIST) already happened.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
 };
 
 // Define a TAO_Stub auto_ptr class.

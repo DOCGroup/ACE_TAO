@@ -75,31 +75,4 @@ TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name (void) const
   return "ec_proxy_push_consumer";
 }
 
-void
-TAO_Notify_CosEC_ProxyPushConsumer::validate ()
-{
-  TAO_Notify_Supplier* sup = this->supplier ();
-  if (sup != 0 && ! sup->is_alive (true))
-  {
-    if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushConsumer::validate(%d)")
-                  ACE_TEXT ("disconnecting \n"), this->id ()));
-    }
-
-    this->disconnect_push_consumer ();
-  }
-}
-
-void
-TAO_Notify_CosEC_ProxyPushConsumer::configure(
-  TAO_Notify_SupplierAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // Nothing to do.
-  // This virtual method was added to support Notification MC
-}
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 # $Id$
 
 ifneq ($(mingw32),1)
@@ -11,11 +10,10 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-no_hidden_visibility ?= 1
-
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
 
 winsock2 ?= 1
+exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
@@ -31,27 +29,18 @@ endif
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
-CC      = ${COMPARCH}gcc
-CXX     = ${COMPARCH}g++
-RC      = ${COMPARCH}windres
-DLLTOOL = ${COMPARCH}dlltool
+
+CC      = gcc
+CXX     = g++
+RC      = windres
+DLLTOOL = dlltool
 
 RC_OUTPUT_FLAG = -o
 
 ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
-  cpumodelflag ?= 1
-  tunemodelflag ?= 0
-else
-  cpumodelflag ?= 0
-  tunemodelflag ?= 1
-endif
-
-ifeq ($(tunemodelflag),1)
-  MODEL_FLAGS += -mtune=$(TCPU)
-endif
-
-ifeq ($(cpumodelflag),1)
   MODEL_FLAGS += -mcpu=$(TCPU)
+else
+  MODEL_FLAGS += -mtune=$(TCPU)
 endif
 
 CFLAGS += -Wpointer-arith
@@ -76,9 +65,9 @@ endif
 
 OCFLAGS += -O3
 PIC        =
-AR         = ${COMPARCH}ar
+AR         = ar
 ARFLAGS    = rsuv
-RANLIB     = ${COMPARCH}ranlib
+RANLIB     = ranlib
 SOEXT      = dll
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
@@ -97,13 +86,12 @@ PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 
 # The sed below is to strip comments on the .def file,
 # to workaround to a bug in ld.
-CMDSEP ?= ;
 SHLIBBUILD = \
-  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def $(CMDSEP) \
+  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
   $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
     $(VSHOBJS) \
   && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
-  && sed "s/;.*$$//g" < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
+  && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)

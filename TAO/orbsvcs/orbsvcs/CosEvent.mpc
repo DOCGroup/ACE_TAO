@@ -12,7 +12,7 @@ project (CosEvent_IDL) : orbsvcslib, orbsvcs_output, install, avoids_minimum_cor
 
 project (CosEvent) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, ec_typed_events {
   sharedname   = TAO_CosEvent
-  dynamicflags += TAO_EVENT_BUILD_DLL
+  dynamicflags = TAO_EVENT_BUILD_DLL
   tagchecks   += CosEvent
   after       += CosEvent_IDL
 
@@ -51,7 +51,7 @@ project (CosEvent) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, 
 
 project (CosEvent_Skel) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event, portableserver, ec_typed_events_skel {
   sharedname   = TAO_CosEvent_Skel
-  dynamicflags += TAO_EVENT_SKEL_BUILD_DLL
+  dynamicflags = TAO_EVENT_SKEL_BUILD_DLL
   tagchecks   += CosEvent
 
   IDL_Files {
@@ -88,7 +88,7 @@ project (CosEvent_Skel) : orbsvcslib, orbsvcs_output, install, avoids_minimum_co
 
 project (CosEvent_Serv) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
   sharedname   = TAO_CosEvent_Serv
-  dynamicflags += TAO_EVENT_SERV_BUILD_DLL
+  dynamicflags = TAO_EVENT_SERV_BUILD_DLL
   tagchecks   += CosEvent
 
   IDL_Files {

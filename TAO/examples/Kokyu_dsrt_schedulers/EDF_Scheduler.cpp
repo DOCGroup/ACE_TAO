@@ -30,7 +30,7 @@ EDF_Scheduler::EDF_Scheduler (CORBA::ORB_ptr orb,
                               Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type,
                               int ace_sched_policy,
                               int ace_sched_scope)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+  : orb_ (orb),
     disp_impl_type_ (disp_impl_type),
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
@@ -230,10 +230,9 @@ void
 EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   int int_guid;
-  RTScheduling::Current::IdType_var guid = this->current_->id ();
   ACE_OS::memcpy (&int_guid,
-                  guid->get_buffer (),
-                  guid->length ());
+                  this->current_->id ()->get_buffer (),
+                  this->current_->id ()->length ());
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_CLIENT_SCHED_TIME, int_guid, 0, 0);
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
@@ -251,7 +250,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   IOP::ServiceContext sc;
   sc.context_id = Client_Interceptor::SchedulingInfo;
 
-  CORBA::Policy_var sched_policy =
+  CORBA::Policy_ptr sched_policy =
     this->current_->scheduling_parameter();
 
   CORBA::Long importance;
@@ -286,8 +285,8 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 #endif
     }
   //Fill the guid in the SC Qos struct
-  sc_qos.guid.length (guid->length ());
-  guid_copy (sc_qos.guid, guid.in ());
+  sc_qos.guid.length (this->current_->id ()->length ());
+  guid_copy (sc_qos.guid, *(this->current_->id ()));
   sc_qos.deadline = deadline;
   sc_qos.importance = importance;
   sc_qos.task_id = task_id;
@@ -295,8 +294,9 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   CORBA::Any sc_qos_as_any;
   sc_qos_as_any <<= sc_qos;
 
-  CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-  sc.context_data = cdtmp.in ();
+  sc.context_data =
+    ACE_reinterpret_cast<IOP::ServiceContext::_tao_seq_CORBA_Octet_ &> (
+      *codec_->encode (sc_qos_as_any));
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -316,7 +316,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, CALL_KOKYU_DISPATCH_UPDATE_SCHEDULE,
                   int_guid, 0, 0);
-  kokyu_dispatcher_->update_schedule (guid.in (),
+  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
                                       Kokyu::BLOCK);
   DSUI_EVENT_LOG (EDF_SCHED_FAM, LEAVE_KOKYU_DISPATCH_UPDATE_SCHEDULE,
                    int_guid,0,0);
@@ -389,8 +389,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                                 sc->context_data.get_buffer (),
                                                 0);
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
-      sc_qos_as_any = scqostmp.in ();
+      sc_qos_as_any = *codec_->decode (oc_seq);
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
       sc_qos_as_any >>= sc_qos_ptr;
@@ -464,10 +463,9 @@ void
 EDF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 {
   int int_guid;
-  RTScheduling::Current::IdType_var guid = this->current_->id ();
   ACE_OS::memcpy (&int_guid,
-                  guid->get_buffer (),
-                  guid->length ());
+                  this->current_->id ()->get_buffer (),
+                  this->current_->id ()->length ());
   DSUI_EVENT_LOG (EDF_SCHED_FAM, SEND_POLL, int_guid, 0, 0);
 }
 
@@ -475,10 +473,9 @@ void
 EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   int int_guid;
-  RTScheduling::Current::IdType_var guid = this->current_->id ();
   ACE_OS::memcpy (&int_guid,
-                  guid->get_buffer (),
-                  guid->length ());
+                  this->current_->id ()->get_buffer (),
+                  this->current_->id ()->length ());
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SEND_REPLY, int_guid, 0, 0);
 
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
@@ -499,7 +496,7 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
   CORBA::Long importance;
   TimeBase::TimeT deadline;
 
-  CORBA::Policy_var sched_policy =
+  CORBA::Policy_ptr sched_policy =
     this->current_->scheduling_parameter();
 
   if (CORBA::is_nil (sched_policy))
@@ -525,8 +522,8 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
 
 
-      sc_qos.guid.length (guid->length ());
-      guid_copy (sc_qos.guid, guid.in ());
+      sc_qos.guid.length (this->current_->id ()->length ());
+      guid_copy (sc_qos.guid, *(this->current_->id ()));
 
       deadline = sched_param->deadline;
       importance = sched_param->importance;
@@ -536,8 +533,10 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = ACE_reinterpret_cast(
+                                             IOP::ServiceContext::
+                                             _tao_seq_CORBA_Octet_ &,
+                                             *codec_->encode (sc_qos_as_any));
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1);
@@ -547,7 +546,7 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 #endif
     }
 
-  kokyu_dispatcher_->update_schedule (guid.in (),
+  kokyu_dispatcher_->update_schedule (*(this->current_->id ()),
                                       Kokyu::BLOCK);
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, EXIT_SEND_REPLY, int_guid, 0, 0);
@@ -560,10 +559,9 @@ void
 EDF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   int int_guid;
-  RTScheduling::Current::IdType_var guid = this->current_->id ();
   ACE_OS::memcpy (&int_guid,
-                  guid->get_buffer (),
-                  guid->length ());
+                  this->current_->id ()->get_buffer (),
+                  this->current_->id ()->length ());
   DSUI_EVENT_LOG (EDF_SCHED_FAM, SEND_EXCEPTION, int_guid, 0, 0);
 
   send_reply (ri);
@@ -573,10 +571,9 @@ void
 EDF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   int int_guid;
-  RTScheduling::Current::IdType_var guid = this->current_->id ();
   ACE_OS::memcpy (&int_guid,
-                  guid->get_buffer (),
-                  guid->length ());
+                  this->current_->id ()->get_buffer (),
+                  this->current_->id ()->length ());
   DSUI_EVENT_LOG (EDF_SCHED_FAM, SEND_OTHER, int_guid, 0, 0);
 
   send_reply (ri);
@@ -631,8 +628,7 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
       //and we are not supposed to free it.
       Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
-      sc_qos_as_any = scqostmp.in ();
+      sc_qos_as_any = *codec_->decode (oc_seq);
       sc_qos_as_any >>= sc_qos_ptr;
 
       deadline  = sc_qos_ptr->deadline;

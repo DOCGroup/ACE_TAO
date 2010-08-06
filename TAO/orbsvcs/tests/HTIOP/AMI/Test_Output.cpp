@@ -16,7 +16,7 @@
  */
 // ============================================================================
 
-#include "../test_config.h"
+#include "tests/test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"

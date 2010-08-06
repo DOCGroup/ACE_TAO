@@ -35,19 +35,19 @@ int AcceptHandler::open(void) {
     // open a port using the acceptor; reuse the address later
     if (mAcceptor.open(addr, 1) == -1)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to open ")
-                        ACE_TEXT ("listening socket. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+                        ACE_TEXT ("listening socket. (errno = %i: %m)\n"), errno), -1);
 
     // register the handler with the reactor
     if (mReactor->register_handler(this,
             ACE_Event_Handler::ACCEPT_MASK) == -1) {
       ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to register accept ")
-                 ACE_TEXT ("handler. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+                 ACE_TEXT ("handler. (errno = %i: %m)\n"), errno));
 
         // don't leave the acceptor open
         if (mAcceptor.close() == -1)
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close the socket ")
                      ACE_TEXT ("after previous error. (errno = %i: %m)\n"),
-                        ACE_ERRNO_GET));
+                        errno));
         return -1;
     }
 
@@ -69,7 +69,7 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
     ACE_NEW_NORETURN (reader, ReadHandler());
     if (reader == 0)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
-                        ACE_TEXT ("reader. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+                        ACE_TEXT ("reader. (errno = %i: %m)\n"), errno), -1);
 
     // put reader in an auto pointer so we can use ACE_ERROR_RETURN safely
     auto_ptr<ReadHandler> pReader(reader);
@@ -77,13 +77,13 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
     // accept the connection using the reader's stream
     if (mAcceptor.accept(reader->getStream(), &clientAddr) == -1)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to accept ")
-                    ACE_TEXT ("client connection. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+                    ACE_TEXT ("client connection. (errno = %i: %m)\n"), errno), -1);
 
     // register the reader with the reactor
     if (mReactor->register_handler(reader,
             ACE_Event_Handler::READ_MASK) == -1)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to register ")
-                        ACE_TEXT ("read handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
+                        ACE_TEXT ("read handler. (errno = %i: %m)\n"), errno), -1);
 
     // from now on the read handler takes care of itself
     pReader.release();
@@ -97,7 +97,7 @@ int AcceptHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask) {
     // close the listening socket
     if (mAcceptor.close() == -1)
       ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close the ")
-                 ACE_TEXT ("socket. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+                 ACE_TEXT ("socket. (errno = %i: %m)\n"), errno));
 
     // no need to distinguish between error during close and normal close
     // since ACE does not evaluate the return value of handle_close()

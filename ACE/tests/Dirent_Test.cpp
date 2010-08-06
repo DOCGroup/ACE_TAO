@@ -180,7 +180,7 @@ dirent_test (void)
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
 
-  for (ACE_DIRENT *directory = 0;
+  for (ACE_DIRENT *directory;
        (directory = dir.read ()) != 0;
        entrycount++)
     {
@@ -249,8 +249,6 @@ dirent_count (const ACE_TCHAR *dir_path,
                        dir_path),
                       -1);
 # endif
-#else
-  ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
 
   ACE_Dirent dir;

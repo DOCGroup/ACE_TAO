@@ -1,18 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Thread_Timer_Queue_Test.cpp
- *
- *  $Id$
- *
- *    This test exercises the <ACE_Thread_Timer_Queue_Adapter>
- *    using an <ACE_Timer_Heap>.
- *
- *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Thread_Timer_Queue_Test.cpp
+//
+// = DESCRIPTION
+//      This test exercises the <ACE_Thread_Timer_Queue_Adapter>
+//      using an <ACE_Timer_Heap>.
+//
+// = AUTHORS
+//    Carlos O'Ryan <coryan@cs.wustl.edu> and
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
@@ -141,8 +145,11 @@ Input_Task::cancel_timer (void *argument)
 // (see Command pattern)
 
 int
-Input_Task::list_timer (void *)
+Input_Task::list_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   // Dump the timer queue contents.
   this->dump ();
 
@@ -153,8 +160,11 @@ Input_Task::list_timer (void *)
 // <Timer_Queue_Test_Driver> class that we are done.
 
 int
-Input_Task::shutdown_timer (void *)
+Input_Task::shutdown_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
 #if defined (ACE_LACKS_PTHREAD_CANCEL)
   // Cancel the thread timer queue task "voluntarily."
   this->queue_->deactivate ();

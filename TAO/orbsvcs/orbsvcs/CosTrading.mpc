@@ -15,7 +15,7 @@ project(CosTrading_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_id
 
 project(CosTrading) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_CosTrading
-  dynamicflags += TAO_TRADING_BUILD_DLL
+  dynamicflags = TAO_TRADING_BUILD_DLL
   tagchecks   += Trader
   after       += CosTrading_IDL
 
@@ -57,7 +57,7 @@ project(CosTrading) : orbsvcslib, orbsvcs_output, install {
 
 project(CosTrading_Skel) : orbsvcslib, orbsvcs_output, install, trading, portableserver {
   sharedname   = TAO_CosTrading_Skel
-  dynamicflags += TAO_TRADING_SKEL_BUILD_DLL
+  dynamicflags = TAO_TRADING_SKEL_BUILD_DLL
   tagchecks   += Trader
 
   IDL_Files {
@@ -93,7 +93,7 @@ project(CosTrading_Skel) : orbsvcslib, orbsvcs_output, install, trading, portabl
 
 project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dynamicany, svc_utils, utils, iortable {
   sharedname   = TAO_CosTrading_Serv
-  dynamicflags += TAO_TRADING_SERV_BUILD_DLL
+  dynamicflags = TAO_TRADING_SERV_BUILD_DLL
   tagchecks   += Trader
   pch_header   =
   pch_source   =

@@ -8,7 +8,6 @@
 #define TAO_MAXLOGMSGLEN 4 * 1024
 #endif /* TAO_MAXLOGMSGLEN */
 
-typedef string<TAO_MAXLOGMSGLEN> TAO_log_string;
 interface Logger
 {
   // = TITLE
@@ -79,11 +78,11 @@ interface Logger
 
   struct Log_Record
   {
-    Log_Priority type;       // Type of logging message.
-    long time;               // Timestamp of the sender.
-    long app_id;             // Process id of the sender.
-    long host_addr;          // IP address of the sender.
-    TAO_log_string msg_data; // The logging message.
+    Log_Priority type;                 // Type of logging message.
+    long time;                         // Timestamp of the sender.
+    long app_id;                       // Process id of the sender.
+    long host_addr;                    // IP address of the sender.
+    string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
 
   oneway void log (in Log_Record log_rec);

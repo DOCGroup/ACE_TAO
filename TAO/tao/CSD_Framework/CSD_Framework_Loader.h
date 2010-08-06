@@ -50,10 +50,6 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
 
   /// Initialize the PI_Server loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
-
-private:
-  /// Set to true after init is called.
-  bool initialized_;
 };
 
 

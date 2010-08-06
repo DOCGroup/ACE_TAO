@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_decl.h
- *
- *  $Id$
- *
- *  Extension of the AST_Decl class.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_decl.h
+//
+// = DESCRIPTION
+//    Extension of the AST_Decl class.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_DECL_H
 #define TAO_BE_DECL_H
@@ -23,48 +28,51 @@ class be_scope;
 class be_visitor;
 class be_type;
 
-/**
- * @class be_decl
- *
- * @brief be_decl
- *
- * The back end extension of the AST_Decl class. Provides an abstract
- * interface.
- */
 class be_decl : public virtual AST_Decl
 {
+  // = TITLE
+  //    be_decl
+  // = DESCRIPTION
+  //    The back end extension of the AST_Decl class. Provides an abstract
+  //    interface.
+  //
 public:
+  be_decl (void);
+  // Default constructor.
+
   be_decl (AST_Decl::NodeType type,
            UTL_ScopedName *n);
+  // Constructor that sets the node type.
 
   ~be_decl (void);
+  // Destructor.
 
   // Methods used by the interface type strategy.
-  /// Both the arguments should be non-null!!!. Applies prefix and
-  /// suffix to the local name and makes a flat name.
   void compute_full_name  (const char *prefix,
                            const char *suffix,
                            char *&name);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
 
-  /// Both the arguments should be non-null!!!. Applies prefix and
-  /// suffix to the local name and makes a flat name.
   void compute_flat_name (const char *prefix,
                           const char *suffix,
                           char *& name);
+  // Both the arguments should be non-null!!!. Applies prefix and
+  // suffix to the local name and makes a flat name.
 
   // End of Methods use by the interface type strategy.
 
-  /// Return the scope created by this node (if one exists).
   virtual be_scope *scope (void);
+  // Return the scope created by this node (if one exists).
 
   // Visiting
   virtual int accept (be_visitor *visitor);
 
-  /// Cleanup function.
   virtual void destroy (void);
+  // Cleanup function.
 
-  /// Temporarily set this node's is_local_ flag.
   void set_local (bool val);
+  // Temporarily set this node's is_local_ flag.
 
   // Boolean methods to test if code was already generated.
   bool cli_hdr_gen (void);
@@ -111,12 +119,6 @@ public:
   bool srv_retarg_tmpl_class_gen (void);
   bool srv_retarg_pragma_inst_gen (void);
   bool ccm_pre_proc_gen (void);
-  bool ex_idl_facet_gen (void);
-  bool svnt_hdr_facet_gen (void);
-  bool svnt_src_facet_gen (void);
-  bool exec_hdr_facet_gen (void);
-  bool exec_src_facet_gen (void);
-  bool ami4ccm_ex_idl_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (bool);
@@ -163,12 +165,6 @@ public:
   void srv_retarg_tmpl_class_gen (bool);
   void srv_retarg_pragma_inst_gen (bool);
   void ccm_pre_proc_gen (bool);
-  void ex_idl_facet_gen (bool);
-  void svnt_hdr_facet_gen (bool);
-  void svnt_src_facet_gen (bool);
-  void exec_hdr_facet_gen (bool);
-  void exec_src_facet_gen (bool);
-  void ami4ccm_ex_idl_gen (bool);
 
   // Narrowing
 
@@ -225,12 +221,6 @@ private:
   bool srv_retarg_tmpl_class_gen_;
   bool srv_retarg_pragma_inst_gen_;
   bool ccm_pre_proc_gen_;
-  bool ex_idl_facet_gen_;
-  bool svnt_hdr_facet_gen_;
-  bool svnt_src_facet_gen_;
-  bool exec_hdr_facet_gen_;
-  bool exec_src_facet_gen_;
-  bool ami4ccm_ex_idl_gen_;
 };
 
 #endif // if !defined

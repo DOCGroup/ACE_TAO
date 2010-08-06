@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,11 +44,17 @@ class ACE_Export ACE_RW_Process_Mutex
 public:
   /// Create a cross-process readers/writer mutex, passing in the optional
   /// @a name, @a flags and @a mode \sa ACE_File_Lock.
-  /// If not specified, a name is generated and flags and mode are set
-  /// to default platform values.
+  ///  If not specified, a name is generated and flags and mode are set
+  ///  to default platform values.
+#if defined (ACE_WIN32)
   ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
                         int flags = O_CREAT|O_RDWR,
-                        mode_t mode =  ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS);
+                        mode_t mode =  ACE_DEFAULT_OPEN_PERMS);
+#else
+  ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
+                        int flags = O_CREAT|O_RDWR,
+                        mode_t mode = S_IRUSR | S_IWUSR );
+#endif /* ACE_WIN32 */
 
   ~ACE_RW_Process_Mutex (void);
 

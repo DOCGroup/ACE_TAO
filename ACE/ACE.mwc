@@ -21,7 +21,7 @@ workspace {
   }
 
   // The '--' is a special key that indicates that the associated
-  // projects should be of the form @NAME@ in the generated Makefile.am.
+  // projects should be of the form @NAME@ in the generate Makefile.am.
   associate(--) {
     ACEXML
     ASNMP

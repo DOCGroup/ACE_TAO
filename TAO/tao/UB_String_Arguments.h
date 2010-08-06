@@ -37,14 +37,14 @@ namespace TAO
   template<>
   class TAO_Export Arg_Traits<CORBA::Char *>
     : public UB_String_Arg_Traits_T<CORBA::String_var,
-                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Char const *> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::WChar *>
     : public UB_String_Arg_Traits_T<CORBA::WString_var,
-                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::WChar const *> >
   {
   };
 }

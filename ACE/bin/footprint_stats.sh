@@ -43,10 +43,6 @@ LIBS="ace/libACE.a \
 
 cd $ACE_ROOT
 
-mkdir -p $DEST/source
-mkdir -p $DEST/data
-mkdir -p $DEST/images
-
 for i in $BINS; do
   b=`basename $i`
   if [ -x $i ]; then

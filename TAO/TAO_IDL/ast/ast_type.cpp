@@ -78,6 +78,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
+ACE_RCSID (ast,
+           ast_type,
+           "$Id$")
+
+AST_Type::AST_Type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    ifr_added_ (0),
+    ifr_fwd_added_ (0),
+    size_type_ (AST_Type::SIZE_UNKNOWN),
+    has_constructor_ (0),
+    nested_type_name_ (0),
+    in_recursion_ (-1),
+    recursing_in_legal_pk_ (false),
+    gen_dds_decls_ (false)
+{
+}
+
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),
@@ -89,7 +107,8 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
     has_constructor_ (0),
     nested_type_name_ (0),
     in_recursion_ (-1),
-    recursing_in_legal_pk_ (false)
+    recursing_in_legal_pk_ (false),
+    gen_dds_decls_ (false)
 {
 }
 
@@ -145,6 +164,14 @@ AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
 }
 
 bool
+AST_Type::is_defined (void)
+{
+  // AST_Interface, AST_Structure, and AST_Union will
+  // override this, as will AST_InterfaceFwd, etc.
+  return 1;
+}
+
+bool
 AST_Type::ifr_added (void)
 {
   return this->ifr_added_;
@@ -166,6 +193,18 @@ void
 AST_Type::ifr_fwd_added (bool val)
 {
   this->ifr_fwd_added_ = val;
+}
+
+bool
+AST_Type::gen_dds_decls (void) const
+{
+  return this->gen_dds_decls_;
+}
+
+void
+AST_Type::gen_dds_decls (bool val)
+{
+  this->gen_dds_decls_ = val;
 }
 
 bool

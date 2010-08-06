@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typecode_decl.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TypeCode declaration for a type
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typecode_decl.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TypeCode declaration for a type
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_typecode,
+           typecode_decl,
+           "$Id$")
 
 // ******************************************************
 // TypeCode declarations
@@ -100,12 +110,6 @@ be_visitor_typecode_decl::visit_interface (be_interface *node)
 
 int
 be_visitor_typecode_decl::visit_component (be_component *node)
-{
-  return this->visit_type (node);
-}
-
-int
-be_visitor_typecode_decl::visit_connector (be_connector *node)
 {
   return this->visit_type (node);
 }

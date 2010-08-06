@@ -1,7 +1,9 @@
 // $Id$
 
-project (*) : aceexe, ace_mc, avoids_ace_for_tao, mc_test_utils {
+project (*) : aceexe, ace_mc, avoids_ace_for_tao {
   exename = num_threads
+  after += MC_Test_Utilities
+  libs  += MC_Test_Utilities
 
   source_files {
     num_threads.cpp

@@ -1,20 +1,30 @@
 
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_obv_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes
- *  OBV_ class implementation
- *  (see C++ mapping OMG 20.17)
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- *  @author derived from interface_ch.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_obv_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes
+//    OBV_ class implementation
+//    (see C++ mapping OMG 20.17)
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
+//    derived from interface_ch.cpp from Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_obv_cs,
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for OBV_ class implementation
@@ -184,7 +194,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
+  AST_ValueType *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
   if (parent != 0)
@@ -218,7 +228,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
+  AST_ValueType *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
   if (parent != 0)

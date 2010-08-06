@@ -42,7 +42,6 @@ TAO_Codeset_Initializer::init (void)
 
   result += ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Codeset_Manager_Factory,1); // force replacement
-
   return result;
 }
 

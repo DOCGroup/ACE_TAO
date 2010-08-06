@@ -241,8 +241,8 @@ public:
   /**
    * Delete all the resources held in the message.
    *
-   * @note Note that release() is designed to release the continuation
-   * chain; the destructor is not. See release() for details.
+   * Note that <release()> is designed to release the continuation
+   * chain; the destructor is not. See <release()> for details.
    */
   virtual ~ACE_Message_Block (void);
 
@@ -505,8 +505,8 @@ public:
 
   /**
    * Set the number of bytes in the top-level Message_Block,
-   * reallocating space if necessary.  However, the @c rd_ptr_ and
-   * @c wr_ptr_ remain at the original offsets into the buffer, even if
+   * reallocating space if necessary.  However, the <rd_ptr_> and
+   * <wr_ptr_> remain at the original offsets into the buffer, even if
    * it is reallocated.  Returns 0 if successful, else -1.
    */
   int size (size_t length);

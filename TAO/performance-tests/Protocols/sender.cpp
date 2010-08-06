@@ -709,7 +709,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mapping_manager->mapping (cnpm);
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());

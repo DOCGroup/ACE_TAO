@@ -268,7 +268,9 @@ ACE_Thread_Manager::at_exit (void *object,
   if (td == 0)
     return -1;
   else
-    return td->at_exit (object, cleanup_hook, param);
+    return td->at_exit (object,
+                        cleanup_hook,
+                        param);
 }
 
 ACE_INLINE void

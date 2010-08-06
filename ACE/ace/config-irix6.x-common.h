@@ -119,6 +119,9 @@
 // Platform supports STREAMS.
 #define ACE_HAS_STREAMS
 
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
+
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 

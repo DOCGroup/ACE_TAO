@@ -95,7 +95,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
-  const char *value = 0;
+  const char *value;
   *ap >>= value;
 
   if (TAO_debug_level >= 10)

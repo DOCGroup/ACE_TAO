@@ -62,7 +62,7 @@ ACE::HTBP::Session::Session (void)
     destroy_proxy_addr_ (0),
     inbound_ (0),
     outbound_ (0),
-    closed_ (false),
+    closed_ (0),
     handler_ (0),
     reactor_(0),
     stream_ (0),
@@ -70,8 +70,8 @@ ACE::HTBP::Session::Session (void)
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
   session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
+  delete[] htid;
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
   ACE_NEW (outbound_, ACE::HTBP::Channel (this));
@@ -81,12 +81,12 @@ ACE::HTBP::Session::Session (const ACE::HTBP::Addr &peer,
                              const ACE::HTBP::Addr &local,
                              ACE_UINT32 sid,
                              ACE_INET_Addr *proxy,
-                             bool take_proxy)
+                             int take_proxy)
   : proxy_addr_ (proxy),
     destroy_proxy_addr_ (take_proxy),
     inbound_ (0),
     outbound_ (0),
-    closed_ (false),
+    closed_ (0),
     handler_ (0),
     reactor_(0),
     stream_ (0),
@@ -103,13 +103,13 @@ ACE::HTBP::Session::Session (const ACE::HTBP::Addr &peer,
 
 ACE::HTBP::Session::Session (const ACE::HTBP::Session_Id_t &id,
                              ACE_INET_Addr *proxy,
-                             bool take_proxy)
+                             int take_proxy)
   : proxy_addr_ (proxy),
     destroy_proxy_addr_ (take_proxy),
     session_id_(id),
     inbound_ (0),
     outbound_ (0),
-    closed_ (false),
+    closed_ (0),
     handler_ (0),
     reactor_ (0),
     stream_ (0),
@@ -138,9 +138,6 @@ ACE::HTBP::Session::~Session (void)
 {
   if (destroy_proxy_addr_)
     delete proxy_addr_;
-
-  delete this->inbound_;
-  delete this->outbound_;
 }
 
 int
@@ -150,7 +147,7 @@ ACE::HTBP::Session::close (void)
     this->inbound_->close();
   if (this->outbound_)
     this->outbound_->close();
-  this->closed_ = true;
+  this->closed_= 1;
   return ACE::HTBP::Session::remove_session (this);
 }
 
@@ -159,7 +156,7 @@ ACE::HTBP::Channel *
 ACE::HTBP::Session::outbound (void) const
 {
   if (!this->closed_ && this->proxy_addr_)
-    this->reconnect();
+    const_cast<ACE::HTBP::Session *> (this)->reconnect();
   if ( this->outbound_ == 0)
     return 0;
   ACE::HTBP::Channel::State s =this->outbound_->state();
@@ -167,9 +164,11 @@ ACE::HTBP::Session::outbound (void) const
 }
 
 void
-ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
+ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s)
 {
   ACE_SOCK_Connector conn;
+  char host[100];
+  this->proxy_addr_->get_host_name(host,100);
   if (conn.connect (s->ace_stream(),*this->proxy_addr_) == -1)
     {
       ACE_TCHAR buffer[128];
@@ -179,19 +178,6 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
                   ACE_TEXT(" failed to %s, %p\n"),
                   buffer, s == this->inbound_ ?
                   ACE_TEXT("inbound") : ACE_TEXT ("outbound")));
-    }
-  else
-    {
-#if !defined (ACE_LACKS_TCP_NODELAY)
-      int no_delay = 1;
-      int result = s->ace_stream().set_option (ACE_IPPROTO_TCP,
-                                               TCP_NODELAY,
-                                               (void *) &no_delay,
-                                               sizeof (no_delay));
-      if (result == -1)
-        ACE_DEBUG ((LM_DEBUG, "HTBP::Session::reconnect_i, %p\n", "set_option" ));
-#endif /* ! ACE_LACKS_TCP_NODELAY */
-      
     }
   s->register_notifier(this->reactor_);
   if (s == this->inbound_)
@@ -249,7 +235,6 @@ ACE::HTBP::Session::flush_outbound_queue (void)
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);
-      ACE_Auto_Array_Ptr<iovec> guard (iov);
       this->outbound_queue_.peek_dequeue_head (msg);
       for (size_t i = 0; i < this->outbound_queue_.message_count(); i++)
         {
@@ -260,11 +245,9 @@ ACE::HTBP::Session::flush_outbound_queue (void)
       if (this->outbound_->state() ==  ACE::HTBP::Channel::Wait_For_Ack)
         this->outbound_->recv_ack();
       result = this->outbound_->sendv (iov,this->outbound_queue_.message_count(),0);
-      while (this->outbound_queue_.message_count ())
-        {
-          this->outbound_queue_.dequeue_head (msg);
-          msg->release ();
-        }
+      delete [] iov;
+      while (this->outbound_queue_.dequeue_head(msg))
+        msg->release();
     }
   return result;
 }

@@ -1,94 +1,109 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use File::Copy;
 use Getopt::Std;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
 
 # -n notify.conf -s high_path.conf -c other_paths.conf -o output_dir -h
 getopts ("n:s:c:o:h");
 
-if ($opt_h) {
-    $opt_h = 0; #to disable fuxx.pl warning only
+if ($opt_h)
+{
     print STDERR "-n notify.conf -s high_path.conf -c other_paths.conf -o output_dir -h\n";
     exit 0;
 }
 
-my $notify_ior    = "notify.ior";
-my $naming_ior    = "naming.ior";
-my $high_path_ior = "high_path.ior";
+$experiment_timeout = 120;
+$startup_timeout = 120;
 
-my $other_paths_conf = "other_paths.conf";
-my $high_path_conf   = "high_path.conf";
-my $notify_conf      = "notify.conf";
+if ($opt_n)
+{
+    $notify_conf = PerlACE::LocalFile ($opt_n);
 
-if ($opt_n) {
-    $notify_conf = $opt_n;
+}else
+{
+    $notify_conf = PerlACE::LocalFile ("notify.conf");
 }
 
-if ($opt_s) {
-    $high_path_conf = $opt_s;
+if ($opt_s)
+{
+    $high_path_conf = PerlACE::LocalFile ($opt_s);
+
+}else
+{
+    $high_path_conf = PerlACE::LocalFile ("high_path.conf");
 }
 
-if ($opt_c) {
-    $other_paths_conf = $opt_c;
+if ($opt_c)
+{
+    $other_paths_conf = PerlACE::LocalFile ($opt_c);
+
+}else
+{
+    $other_paths_conf = PerlACE::LocalFile ("other_paths.conf");
 }
 
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+$notify_ior = PerlACE::LocalFile ("notify.ior");
 
-my $test_notify_ior   = $test->LocalFile ($notify_ior);
-my $test_naming_ior   = $test->LocalFile ($naming_ior);
-my $test_highpath_ior = $test->LocalFile ($high_path_ior);
-$test->DeleteFile($notify_ior);
-$test->DeleteFile($naming_ior);
-$test->DeleteFile($high_path_ior);
+$naming_ior = PerlACE::LocalFile ("naming.ior");
 
-my $test_highpath_conf = $test->LocalFile ($high_path_conf);
+$high_path_ior = PerlACE::LocalFile ("high_path.ior");
 
-#uncomment it when test will be fixed
-#@datfiles = glob("*.dat");
-#for $file (@datfiles) {
-#    $test->DeleteFile($file);
-#}
+@list=glob("*.dat");
+for $file (@list)
+{
+  unlink $file or die "Could not delete $file";
+}
 
-$T = $test->CreateProcess ("../../../Driver/Notify_Tests_Driver",
-                           "-ORBInitRef NameService=file://$test_naming_ior ".
-                           "-IORoutput $test_highpath_ior ".
-                           "-ORBSvcConf $test_highpath_conf");
+$status = 0;
 
-if ($test->WaitForFileTimed ($notify_ior,
-                             $test->ProcessStartWaitInterval() + 105) == -1) {
-    print STDERR "ERROR: waiting for the notify service to start\n";
+
+$High_path = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
+
+$High_path_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $high_path_ior -ORBSvcConf $high_path_conf";
+
+
+if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the notify service to start\n";
+  exit 1;
+}
+
+unlink $high_path_ior;
+$High_path->Arguments ($High_path_Args);
+$args = $High_path->Arguments ();
+print STDERR "Running High_path with arguments: $args\n";
+$status = $High_path->SpawnWaitKill ($experiment_timeout);
+
+if ($status != 0)
+  {
+    print STDERR "ERROR: Other_paths returned $status\n";
+    $High_path->Kill ();
+
     exit 1;
-}
+  }
 
-$test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 105);
+if ($opt_o)
+  {
+      $results_directory = PerlACE::LocalFile ($opt_o);
 
-if ($test_status != 0) {
-    print STDERR "ERROR: test returned $test_status\n";
-    exit 1;
-}
+      if (! -e $results_directory)
+      {
+          mkdir $results_directory, 0777;
+      }
 
-if ($opt_o) {
-    print STDERR "Results are not saved in $opt_o\n";
-}
+      print STDERR "Saving results to $results_directory\n";
 
-$test->DeleteFile($notify_ior);
-$test->DeleteFile($naming_ior);
-$test->DeleteFile($high_path_ior);
+      @list=glob("*.dat");
+      for $file (@list)
+      {
+          move ("$file", "$results_directory/$file");
+      }
+  }
 
 exit $status;

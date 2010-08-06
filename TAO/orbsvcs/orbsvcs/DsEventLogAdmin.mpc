@@ -12,7 +12,7 @@ project(DsEventLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin, 
 
 project(DsEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
-  dynamicflags += TAO_EVENTLOG_BUILD_DLL
+  dynamicflags = TAO_EVENTLOG_BUILD_DLL
   tagchecks   += EventLog
   after       += DsEventLogAdmin_IDL
 
@@ -47,7 +47,7 @@ project(DsEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, even
 
 project(DsEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
   sharedname   = TAO_DsEventLogAdmin_Skel
-  dynamicflags += TAO_EVENTLOG_SKEL_BUILD_DLL
+  dynamicflags = TAO_EVENTLOG_SKEL_BUILD_DLL
   tagchecks   += EventLog
 
   IDL_Files {
@@ -76,7 +76,7 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dseventloga
 
 project(DsEventLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, dseventlogadmin_skel, dslogadmin_serv, event_serv {
   sharedname   = TAO_DsEventLogAdmin_Serv
-  dynamicflags += TAO_EVENTLOG_SERV_BUILD_DLL
+  dynamicflags = TAO_EVENTLOG_SERV_BUILD_DLL
   tagchecks   += EventLog
 
   IDL_Files {

@@ -117,6 +117,7 @@ public:
   /// Always leaves the smart pointer in the "nil" state upon return.
   T* _retn (void);
 
+
 private:
 
   /// Claim a "copy" of the reference-counted object by adding
@@ -130,6 +131,7 @@ private:
   /// Note that this method will always leave this smart pointer
   /// in the "nil" state upon its return.
   void drop (void);
+
 
   /// The underlying pointer to the (intrusively) reference-counted object.
   /// Set to 0 when this smart pointer is in the "nil" state.  Otherwise,

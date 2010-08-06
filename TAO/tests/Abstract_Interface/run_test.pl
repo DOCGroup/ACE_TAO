@@ -59,14 +59,14 @@ $CL = $client->CreateProcess ("client",
                               . " $debug "
                               . " $which_test");
 
-$client_status = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval());
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill (20);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

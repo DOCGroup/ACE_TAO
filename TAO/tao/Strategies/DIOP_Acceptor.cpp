@@ -140,12 +140,13 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           CORBA::Short priority)
 {
   CORBA::ULong index = 0;
+  TAO_Profile *pfile = 0;
   TAO_DIOP_Profile *diop_profile = 0;
 
   // First see if <mprofile> already contains a DIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
-      TAO_Profile *pfile = mprofile.get_profile (i);
+      pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_DIOP_PROFILE)
       {
         diop_profile = dynamic_cast<TAO_DIOP_Profile *> (pfile);
@@ -180,7 +181,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           diop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
           TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager ();
           if (csm)
-            csm->set_codeset (diop_profile->tagged_components ());
+            csm->set_codeset (pfile->tagged_components ());
         }
 
       index = 1;
@@ -320,7 +321,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("DIOP_Acceptor::open, specified host=%C:%d\n"),
+                  ACE_TEXT ("DIOP_Acceptor::open, specified host=%s:%d\n"),
                   (specified_hostname.length () == 0 ? "<null>" : specified_hostname.c_str ()),
                   addr.get_port_number ()));
     }

@@ -14,7 +14,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  CORBA::Object_var obj = orb->string_to_object (argv[1]);
+  CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
   StateTransfer_var server = StateTransfer::_narrow (obj.in ());
 
   CORBA::Short n  = server->number ();

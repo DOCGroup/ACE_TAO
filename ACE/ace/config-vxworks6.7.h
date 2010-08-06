@@ -17,6 +17,7 @@
 #include "ace/config-vxworks6.6.h"
 
 #undef ACE_HAS_NONCONST_INET_ADDR
+#undef ACE_LACKS_ISASCII
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_7_H */

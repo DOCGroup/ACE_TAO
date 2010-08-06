@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for valueboxes in the client inline file
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for valueboxes in the client inline file
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_ci,
+           "$Id: valuebox_ci.cpp Exp")
 
 be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)
@@ -403,6 +412,9 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // Retrieve the node being visited by this be_visitor_valuebox_ch.
+  be_decl * vb_node = this->ctx_->node ();
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -411,7 +423,6 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
   this->emit_copy_constructor_alloc (node);
   this->emit_assignment_alloc (node);
   this->emit_accessor_modifier (node);
-  
   // Access to the boxed value for method signatures
   if (node->size_type() == AST_Type::FIXED)
     {
@@ -428,7 +439,7 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
   AST_Decl *d;
   be_field *field;
   be_visitor_context ctx (*this->ctx_);
-  
+  ctx.scope (vb_node);
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
@@ -445,6 +456,7 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
 
       // Create a visitor and use that to process the field type.
       be_visitor_valuebox_field_ci visitor (&ctx);
+      ctx.node (field);
 
       if (visitor.visit_field (field) == -1)
         {
@@ -453,9 +465,6 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
                              "visit_field failed\n"
                          ), -1);
         }
-        
-      // Restore the valuebox node in the field visitor's context.  
-      ctx.node (this->ctx_->node ());
     }
 
   return 0;
@@ -484,6 +493,9 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  // Retrieve the node being visited by this be_visitor_valuebox_ci.
+  be_decl * vb_node = this->ctx_->node ();
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -492,10 +504,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
   this->emit_copy_constructor_alloc (node);
   this->emit_assignment_alloc (node);
   this->emit_accessor_modifier (node);
-  
-  be_valuebox *vb_node =
-    be_valuebox::narrow_from_decl (this->ctx_->node ());
-  
   if (node->size_type() == AST_Type::FIXED)
     {
       this->emit_boxed_access (node, "");
@@ -510,7 +518,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
   AST_Decl *d;
   be_union_branch *member;
   be_visitor_context ctx (*this->ctx_);
-  
+  ctx.scope (vb_node);
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
         si.next ())
@@ -527,6 +535,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
       // Create a visitor and use that to process the union member type.
       be_visitor_valuebox_union_member_ci visitor (&ctx);
+      ctx.node (member);
 
       if (visitor.visit_union_member (member) == -1)
         {
@@ -535,15 +544,11 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
                              "visit_field failed\n"
                          ), -1);
         }
-        
-      // Restore the valuebox node to the union member visitor's
-      // context.
-      ctx.node (vb_node);
     }
 
 
   // Retrieve the disriminant type.
-  be_type *bt = 0;
+  be_type *bt;
   bt = be_type::narrow_from_decl (node->disc_type ());
 
   if (!bt)

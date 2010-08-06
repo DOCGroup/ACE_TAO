@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ATOMIC_OP_T_CPP
 #define ACE_ATOMIC_OP_T_CPP
 
@@ -22,6 +20,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op_Ex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
 
+ACE_RCSID(ace, Atomic_Op_T, "$Id$")
+
 // *************************************************
 template <class ACE_LOCK, class TYPE> ACE_LOCK &
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex (void)
@@ -38,7 +38,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 

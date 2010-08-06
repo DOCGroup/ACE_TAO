@@ -101,13 +101,7 @@ namespace TAO
       CORBA::String_var id_;
 
       /// The actual recursive TypeCode.
-      ///
-      /// Originally this was a *_var, but that led to a
-      /// loop of references meaning the type codes would
-      /// leak.  Keeping a *_ptr to the previous occurrence of
-      /// type type is safe because whenever we dereference it
-      /// the target object will exist because it contains this one!
-      CORBA::TypeCode_ptr the_typecode_;
+      CORBA::TypeCode_var the_typecode_;
     };
 
   }  // End namespace TypeCodeFactory

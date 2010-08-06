@@ -153,14 +153,7 @@ main (int, char **)
           char buf[BUFSIZ];
 
           strcpy (buf, ace_root);
-          strcat (buf, "/lib/");
-          const char *subdir_env = getenv ("ACE_EXE_SUB_DIR");
-          if (subdir_env)
-            {
-              strcat (buf, subdir_env);
-              strcat (buf, "/");
-            }
-          strcat (buf, "lib");
+          strcat (buf, "/lib/lib");
 #if defined (ACE_LIB_NAME)
           strcat (buf, ACE_LIB_NAME);
 #else

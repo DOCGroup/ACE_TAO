@@ -12,6 +12,7 @@
 include $(ACE_ROOT)/include/makeinclude/platform_tru64_pre.GNU
 
 debug ?= 1
+exceptions ?= 1
 threads ?= 1
 optimize ?= 1
 

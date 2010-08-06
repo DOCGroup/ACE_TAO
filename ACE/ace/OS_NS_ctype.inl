@@ -123,10 +123,9 @@ ACE_INLINE int
 ACE_OS::ace_isprint (ACE_TCHAR c)
 {
 #if defined (ACE_USES_WCHAR)
-# if defined (ACE_LACKS_CORRECT_ISWPRINT_TAB)
-  /* The MS CRT has the bug that for tab (\t) iswprint returns true instead of
-   * false.  This has been reported to Microsoft:
-   * https://connect.microsoft.com/VisualStudio/feedback ID# 381915
+# if defined (_WIN32_WCE) && (_WIN32_WCE <= 0x600)
+  /* WinCE 6 and earlier have the bug that for tab (\t) the
+   * iswprint returns true instead of false
    */
   if (c == 0x9)
     {

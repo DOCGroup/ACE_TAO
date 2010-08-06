@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
 #include "ace/DLL_Manager.h"

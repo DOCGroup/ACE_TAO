@@ -415,8 +415,8 @@ TAO_SCIOP_Connection_Handler::set_tos (int tos)
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - SCIOP_Connection_Handler::")
-                      ACE_TEXT("set_dscp_codepoint -> dscp: %x; result: %d; %C\n"),
+                      "TAO (%P|%t) - SCIOP_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));
@@ -458,12 +458,6 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
     }
 
   return 0;
-}
-
-int
-TAO_SCIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

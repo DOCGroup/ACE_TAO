@@ -26,7 +26,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile -i 3");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile -i 100");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile -ORBEndpoint iiop://:9950/hostname_in_ior=foobar.baz");
 $server_status = $SV->Spawn ();
 

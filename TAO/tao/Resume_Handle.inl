@@ -30,12 +30,9 @@ TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
 ACE_INLINE TAO_Resume_Handle &
 TAO_Resume_Handle::operator= (const TAO_Resume_Handle &rhs)
 {
-  if (this != &rhs)
-    {
-      this->orb_core_ = rhs.orb_core_;
-      this->handle_ = rhs.handle_;
-      this->flag_ = rhs.flag_;
-    }
+  this->orb_core_ = rhs.orb_core_;
+  this->handle_ = rhs.handle_;
+  this->flag_ = rhs.flag_;
 
   return *this;
 }

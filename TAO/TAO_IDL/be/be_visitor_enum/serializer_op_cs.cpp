@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Enum for the 
- *  TAO::DCPS::Serializer operators
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    serializer_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Enum for the 
+//    TAO::DCPS::Serializer operators
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_enum,
+           serializer_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************

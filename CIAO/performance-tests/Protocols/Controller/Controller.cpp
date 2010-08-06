@@ -7,9 +7,9 @@
 #include "ace/OS_NS_string.h"
 
 
-static const ACE_TCHAR *sender_ior = ACE_TEXT("file://sender.ior");
-static const ACE_TCHAR *distributor_ior = ACE_TEXT("file://distributor.ior");
-static const ACE_TCHAR *receiver_ior = ACE_TEXT("file://receiver.ior");
+static const char *sender_ior = "file://sender.ior";
+static const char *distributor_ior = "file://distributor.ior";
+static const char *receiver_ior = "file://receiver.ior";
 static int shutdown_sender = 0;
 static int shutdown_distributor = 0;
 static int shutdown_receiver = 0;
@@ -19,15 +19,15 @@ static int count_missed_end_deadlines = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 100;
-static const ACE_TCHAR *test_protocol = ACE_TEXT("IIOP");
+static const char *test_protocol = "IIOP";
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static int enable_diffserv_code_points = 0;
 static int corba_priority = 0;
-static const ACE_TCHAR *test_type = ACE_TEXT("PACED");
+static const char *test_type = "PACED";
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:i:m:p:r:s:t:u:v:w:x:y:z:"));
   int c;
@@ -172,15 +172,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object (receiver_ior);
 
       CORBA::ULong test_protocol_tag = IOP::TAG_INTERNET_IOP;
-      if (ACE_OS::strcmp (test_protocol, ACE_TEXT("DIOP")) == 0)
+      if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
         test_protocol_tag = TAO_TAG_DIOP_PROFILE;
-      else if (ACE_OS::strcmp (test_protocol, ACE_TEXT("SCIOP")) == 0)
+      else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
         test_protocol_tag = TAO_TAG_SCIOP_PROFILE;
 
       Protocols::Sender_Controller::Test_Type test_type_tag = Protocols::Sender_Controller::PACED;
-      if (ACE_OS::strcmp (test_type, ACE_TEXT("THROUGHPUT")) == 0)
+      if (ACE_OS::strcmp (test_type, "THROUGHPUT") == 0)
         test_type_tag = Protocols::Sender_Controller::THROUGHPUT;
-      else if (ACE_OS::strcmp (test_type, ACE_TEXT("LATENCY")) == 0)
+      else if (ACE_OS::strcmp (test_type, "LATENCY") == 0)
         test_type_tag = Protocols::Sender_Controller::LATENCY;
 
       sender->start (iterations,

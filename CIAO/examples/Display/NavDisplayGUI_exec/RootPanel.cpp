@@ -1,19 +1,21 @@
 // $Id$
 
 #include "RootPanel.h"
-#include <Qt/qmenubar.h>
-#include <Qt/qapplication.h>
-#include <Qt/qprogressdialog.h>
-#include <Qt/qsplitter.h>
+#include <qmenubar.h>
+#include <qapplication.h>
+#include <qprogressdialog.h>
 #include <stdlib.h>
+#include <qsplitter.h>
 #include "NodeItem.h"
 #include "Command.h"
 
 
-RootPanel::RootPanel(Q3Canvas &c, QWidget *parent, const char *name)
+RootPanel::RootPanel(QCanvas &c, QWidget *parent, const char *name)
 : QMainWindow(parent, name), canvas(c)
 {
-  QSplitter *s1 = new QSplitter( Qt::Vertical, this , "main" );
+  QSplitter *s1 = new QSplitter( QSplitter::Vertical, this , "main" );
+
+
   navview = new MapView(canvas, s1);
   s1->moveToFirst(navview);
 
@@ -21,21 +23,23 @@ RootPanel::RootPanel(Q3Canvas &c, QWidget *parent, const char *name)
 
   QMenuBar* menu = menuBar();
 
-  Q3PopupMenu* file = new Q3PopupMenu;
+  QPopupMenu* file = new QPopupMenu;
     //file->insertItem("&Fill canvas", this, SLOT(init()), CTRL+Key_F);
     //file->insertItem("&Erase canvas", this, SLOT(clear()), CTRL+Key_E);
     //file->insertItem("&New view", this, SLOT(newView()), CTRL+Key_N);
     file->insertSeparator();
-    file->insertItem("E&xit", qApp, SLOT(quit()), Qt::CTRL + Qt::Key_Q);
+    file->insertItem("E&xit", qApp, SLOT(quit()), CTRL+Key_Q);
   menu->insertItem("&File", file);
 
   setCentralWidget(s1);
 }
 
+
 RootPanel::~RootPanel()
 {
   clear();
 }
+
 
 void
 RootPanel::addUnit(NavUnit *unit)
@@ -59,6 +63,7 @@ RootPanel::updateUnit(NavUnit *unit)
 
   this->details->updateLocation(loc);
 }
+
 
 void
 RootPanel::clear()

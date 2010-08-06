@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure, 
+           cdr_op_cs, 
+           "$Id$")
 
 be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
     be_visitor_context *ctx
@@ -138,7 +147,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

@@ -50,7 +50,7 @@ struct SupplierTask : ACE_Task_Base
         ACE_Time_Value event_delay (0, 1000 * delay_ms);
         ACE_OS::sleep (event_delay);
       }
-    this->orb_->shutdown ();
+    this->orb_->destroy ();
     return 0;
   }
 };
@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           servant.activate ();
         }
 
-      ACE_Auto_Ptr<SupplierTask> pST;
+      SupplierTask *pST = 0;
       if (supplier)
         {
           // The supplier will use its own ORB.
@@ -155,9 +155,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           consumer->connect_push_supplier
             (CosEventComm::PushSupplier::_nil ());
 
-          SupplierTask *tmp = 0;
-          ACE_NEW_RETURN (tmp, SupplierTask (consumer.in (), s_orb.in ()), -1);
-          pST.reset (tmp);
+          ACE_NEW_RETURN (pST, SupplierTask (consumer.in (), s_orb.in ()), -1);
           pST->activate ();
         }
 

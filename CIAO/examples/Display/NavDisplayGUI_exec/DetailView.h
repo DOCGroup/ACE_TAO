@@ -5,13 +5,15 @@
 
 
 #include "NavUnit.h"
-#include <Qt/qwidget.h>
-#include <Qt/qmovie.h>
-#include <Qt/q3table.h>
+#include <qwidget.h>
+#include <qmovie.h>
+
 
 class QLabel;
 class QLineEdit;
 class QSpinBox;
+class QTable;
+
 
 class DetailView : public QWidget
 {
@@ -34,10 +36,10 @@ private:
   QSpinBox *x_edit;
   QSpinBox *y_edit;
   QSpinBox *z_edit;
-  Q3Table *child_list;
-  Q3Table *parent_list;
+  QTable *child_list;
+  QTable *parent_list;
   QLabel *movielabel;
-  QMovie *movie;
+  QMovie movie;
   QLabel *separatorlabel;
   QMovie separator;
 

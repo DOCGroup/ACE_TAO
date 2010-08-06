@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    marshal_ch.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for valuetypes.
- *  This one provides code generation for marshalling.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    marshal_ch.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for valuetypes.
+//    This one provides code generation for marshalling.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype, 
+           marshal_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating  declarations

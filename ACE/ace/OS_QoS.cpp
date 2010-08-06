@@ -363,7 +363,7 @@ void
 ACE_QoS::provider_specific (const iovec &ps)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  this->ProviderSpecific = (WSABUF) (const_cast <iovec &> (ps));
+  this->ProviderSpecific = (WSABUF) ((iovec &) ps);
 #else
   ACE_UNUSED_ARG (ps);
 #endif /* ACE_HAS_WINSOCK2 */

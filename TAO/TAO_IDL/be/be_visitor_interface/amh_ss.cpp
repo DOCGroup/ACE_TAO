@@ -10,6 +10,10 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           amh_ss,
+           "$Id$")
+
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
     be_visitor_context *ctx
   )
@@ -241,7 +245,7 @@ emit (be_interface *derived,
 
   if (base->is_nested ())
     {
-      be_decl *scope = 0;
+      be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::AMH_"

@@ -37,18 +37,11 @@ class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public ACE_Service_Object
 {
 public:
 
-  /// Constructor.
-  TAO_RT_ORB_Loader (void);
-
   /// Destructor.
   virtual ~TAO_RT_ORB_Loader (void);
 
   /// Initialize the RT ORB loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
-
-private:
-  /// Set to true after init is called.
-  bool initialized_;
 };
 
 

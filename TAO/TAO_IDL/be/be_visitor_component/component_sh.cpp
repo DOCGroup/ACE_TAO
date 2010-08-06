@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    component_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Components in the server header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    component_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Components in the server header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_component,
+           component_sh,
+           "$Id$")
 
 // ******************************************************
 // Component visitor for server header
@@ -86,13 +96,12 @@ be_visitor_component_sh::visit_component (be_component *node)
 
   if (be_global->gen_direct_collocation ())
     {
+      *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
 
   if (be_global->gen_direct_collocation ())
     {
-      *os << "class " << node->direct_proxy_impl_name ()
-          << ";" << be_nl
-          << "class " << node->strategized_proxy_broker_name ()
+      *os << "class " << node->strategized_proxy_broker_name ()
           << ";" << be_nl;
     }
 
@@ -114,8 +123,8 @@ be_visitor_component_sh::visit_component (be_component *node)
     }
 
   long nsupports = node->n_inherits ();
-  AST_Type **supports = node->supports ();
-  AST_Type *supported = 0;
+  AST_Interface **supports = node->supports ();
+  AST_Interface *supported = 0;
 
   for (long i = 0; i < nsupports; ++i)
     {
@@ -157,8 +166,8 @@ be_visitor_component_sh::visit_component (be_component *node)
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall);" << be_uidt
-      << be_uidt_nl << be_nl;
+      << "void *servant_upcall" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   if (!be_global->gen_minimum_corba ())
     {
@@ -166,8 +175,8 @@ be_visitor_component_sh::visit_component (be_component *node)
     *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest &req," << be_nl
         << "void *servant," << be_nl
-        << "void *servant_upcall);" << be_uidt
-        << be_uidt_nl << be_nl;
+        << "void *servant_upcall" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
@@ -176,8 +185,8 @@ be_visitor_component_sh::visit_component (be_component *node)
     *os << "static void _interface_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest &req," << be_nl
         << "void *servant," << be_nl
-        << "void *servant_upcall);" << be_uidt
-        << be_uidt_nl << be_nl;
+        << "void *servant_upcall" << be_uidt_nl
+        << ");" << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
@@ -186,8 +195,8 @@ be_visitor_component_sh::visit_component (be_component *node)
       *os << "static void _component_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest &req," << be_nl
           << "void *obj," << be_nl
-          << "void *servant_upcall);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << "void *servant_upcall" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
     }
 
   if (!be_global->gen_minimum_corba ())
@@ -203,12 +212,13 @@ be_visitor_component_sh::visit_component (be_component *node)
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall);" << be_uidt
-      << be_uidt_nl << be_nl;
+      << "void *_servant_upcall" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // _this
-  *os << "::" << node->full_name () << " *_this (void);"
-      << be_nl;
+  *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt
+      << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // _interface_repository_id
   *os << "virtual const char* _interface_repository_id "
@@ -229,8 +239,9 @@ be_visitor_component_sh::visit_component (be_component *node)
   // before invoking the call.
   int status =
     node->traverse_inheritance_graph (
-      be_interface::gen_skel_helper,
-      os);
+              be_interface::gen_skel_helper,
+              os
+            );
 
   if (status == -1)
     {
@@ -290,12 +301,6 @@ be_visitor_component_sh::visit_component (be_component *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_component_sh::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

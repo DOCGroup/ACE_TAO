@@ -89,43 +89,6 @@ TAO_Notify_Properties::allow_reconnect (bool b)
 }
 
 ACE_INLINE bool
-TAO_Notify_Properties::validate_client (void)
-{
-  return this->validate_client_;
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::validate_client (bool b)
-{
-  this->validate_client_ = b;
-}
-
-ACE_INLINE ACE_Time_Value
-TAO_Notify_Properties::validate_client_delay (void)
-{
-  return this->validate_client_delay_;
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::validate_client_delay (ACE_Time_Value b)
-{
-  this->validate_client_delay_ = b;
-}
-
-ACE_INLINE ACE_Time_Value
-TAO_Notify_Properties::validate_client_interval (void)
-{
-  return this->validate_client_interval_;
-}
-
-ACE_INLINE void
-TAO_Notify_Properties::validate_client_interval (ACE_Time_Value b)
-{
-  this->validate_client_interval_ = b;
-}
-
-
-ACE_INLINE bool
 TAO_Notify_Properties::separate_dispatching_orb (void)
 {
   return this->separate_dispatching_orb_;

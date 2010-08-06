@@ -73,9 +73,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Expression;
 class AST_Type;
 
+// A sequence is a combination of a maximum size and a base type.
+
 class TAO_IDL_FE_Export AST_Sequence : public virtual AST_ConcreteType
 {
 public:
+  AST_Sequence (void);
+
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
                 UTL_ScopedName *n,
@@ -100,10 +104,6 @@ public:
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
   
-  // Is the element type a forward declared struct or union
-  // that hasn't yet been fully defined?
-  virtual bool is_defined (void);
-  
   // Cleanup method.
   virtual void destroy (void);
 
@@ -116,8 +116,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   // Data.

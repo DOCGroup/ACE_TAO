@@ -14,12 +14,12 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
-#include "test_config.h"
+#include "tests/test_config.h"
 
 ACE_RCSID(tests, Get_Opt_Test, "$Id$")
 

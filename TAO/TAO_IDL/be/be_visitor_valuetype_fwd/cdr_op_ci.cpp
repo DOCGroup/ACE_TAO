@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for forward
- *  declarations of valuetypes. This uses compiled marshaling.
- *
- *
- *  @author Torsten Kuepper based on code from Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
- */
-//=============================================================================
+// ================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for forward
+//    declarations of valuetypes. This uses compiled marshaling.
+//
+// = AUTHOR
+//    Torsten Kuepper based on code from
+//    Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
+//
+// ================================================================
 
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the

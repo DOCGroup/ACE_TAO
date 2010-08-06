@@ -1,17 +1,18 @@
-//=============================================================================
-/**
- *  @file    array_ch.cpp
- *
- *  $Id$
-
- *
- *  Visitor for Array code generation in client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor for Array code generation in client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 ACE_RCSID (be_visitor_array,
            array_ch,
@@ -33,7 +34,7 @@ be_visitor_array_ch::~be_visitor_array_ch (void)
 int be_visitor_array_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
+  be_decl *scope = this->ctx_->scope ();
 
   // Nothing to do if we are imported or code is already generated.
   if (node->imported () || node->cli_hdr_gen ())
@@ -60,6 +61,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__;
 
+  // Generate the ifdefined macro.
+  os->gen_ifdef_macro (node->flat_name ());
+
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
   if (nt == AST_Decl::NT_sequence)
@@ -80,7 +84,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()->decl ()))
+      && bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -287,24 +291,24 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << " *_tao_slice " << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << " *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice") << " *_tao_to," << be_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
-          << " *_tao_from);" << be_uidt
-          << be_uidt << be_nl;
+          << " *_tao_from" << be_uidt_nl
+          << ");" << be_uidt << be_nl;
     }
   else
     {
@@ -317,16 +321,16 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << " *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup", "_")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << " *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << be_idt << be_idt_nl;
@@ -337,6 +341,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt;
     }
+
+  // Generate the endif macro.
+  os->gen_endif ();
 
   node->cli_hdr_gen (1);
   return 0;

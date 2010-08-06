@@ -24,16 +24,11 @@
 #include "orbsvcs/Notify/Topology_Factory.h"
 #include "orbsvcs/Notify/Reconnection_Registry.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
-#include "orbsvcs/Notify/Validate_Client_Task.h"
-#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
-#include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Notify_FilterFactory;
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -52,6 +47,7 @@ template <class TYPE> class TAO_Notify_Container_T;
 class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   : public virtual POA_NotifyExt::EventChannelFactory
   , public TAO_Notify::Topology_Parent
+
 {
   friend class TAO_Notify_Builder;
   typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
@@ -107,10 +103,6 @@ public:
                                                    const TAO_Notify::NVPList& attrs);
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
   virtual void reconnect (void);
-  virtual void validate ();
-
-  /// at shutdown time, this causes the validator thread to exit.
-  void stop_validator (void);
 
   /// Handle change notifications
   bool handle_change (void);
@@ -178,9 +170,6 @@ private:
   /// Release this object.
   virtual void release (void);
 
-  ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
-
-  PortableServer::POA_var poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

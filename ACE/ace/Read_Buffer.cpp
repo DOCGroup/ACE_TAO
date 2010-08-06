@@ -13,7 +13,7 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
 
-
+ACE_RCSID(ace, Read_Buffer, "$Id$")
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

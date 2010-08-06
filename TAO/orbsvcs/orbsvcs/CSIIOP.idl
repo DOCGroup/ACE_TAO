@@ -120,7 +120,7 @@ module CSIIOP {
 
   struct TransportAddress {
     string host_name;
-    unsigned short _port;
+    unsigned short port;
   };
 
   typedef sequence <TransportAddress> TransportAddressList;

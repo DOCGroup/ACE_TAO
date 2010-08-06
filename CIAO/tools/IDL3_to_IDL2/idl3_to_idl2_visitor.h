@@ -29,8 +29,7 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
-class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor
-  : public basic_visitor
+class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor : public basic_visitor
 {
   //
   // = TITLE
@@ -49,39 +48,24 @@ public:
   virtual int visit_interface (AST_Interface *node);
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
-  virtual int visit_provides (AST_Provides *node);
-  virtual int visit_uses (AST_Uses *node);
-  virtual int visit_publishes (AST_Publishes *node);
-  virtual int visit_emits (AST_Emits *node);
-  virtual int visit_consumes (AST_Consumes *node);
-  virtual int visit_porttype (AST_PortType *node);
-  virtual int visit_extended_port (AST_Extended_Port *node);
-  virtual int visit_mirror_port (AST_Mirror_Port *node);
-  virtual int visit_connector (AST_Connector *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
-  virtual int visit_factory (AST_Factory *node);
-  virtual int visit_finder (AST_Finder *node);
   virtual int visit_root (AST_Root *node);
-  virtual int visit_param_holder(AST_Param_Holder *node);
-  
+
 private:
+  void gen_provides (AST_Component *node);
+  void gen_uses (AST_Component *node);
+  void gen_publishes (AST_Component *node);
+  void gen_emits (AST_Component *node);
+  void gen_consumes (AST_Component *node);
   UTL_ScopedName *create_scoped_name (const char *prefix,
                                       const char *local_name,
                                       const char *suffix,
                                       AST_Decl *parent);
-                                      
   void tranfer_scope_elements (AST_Home *src, AST_Interface &dst);
-  
-  /// We don't want to visit a porttype when its declaration is
-  /// encountered but rather by navigating to it from an
-  /// extended port or a mirror port.
-  int visit_porttype_scope (AST_PortType *node);
-  int visit_porttype_scope_mirror (AST_PortType *node);
-  
-private:
-  AST_Home *home_;
+  void gen_factories (AST_Home *node, AST_Interface &xplicit);
+  void gen_finders (AST_Home *node, AST_Interface &xplicit);
 };
 
 #endif /* TAO_IDL3_TO_IDL2_VISITOR_H */

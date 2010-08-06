@@ -15,6 +15,7 @@
 #endif /* SCO */
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_STRRECVFD
@@ -61,6 +62,9 @@
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
+
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
 
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 

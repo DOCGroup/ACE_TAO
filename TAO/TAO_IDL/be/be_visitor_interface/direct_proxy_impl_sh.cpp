@@ -2,6 +2,10 @@
 // $Id$
 //
 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_sh,
+           "$Id$")
+
 be_visitor_interface_direct_proxy_impl_sh::
 be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -40,7 +44,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      AST_Type *parent = 0;
+      AST_Interface *parent = 0;
 
       for (int i = 0; i < node->n_inherits (); ++i)
         {
@@ -198,14 +202,8 @@ be_visitor_interface_direct_proxy_impl_sh::gen_abstract_ops_helper (
 }
 
 int be_visitor_interface_direct_proxy_impl_sh::visit_component (
-    be_component *node)
+    be_component *node
+  )
 {
   return this->visit_interface (node);
 }
-
-int be_visitor_interface_direct_proxy_impl_sh::visit_connector (
-    be_connector *node)
-{
-  return this->visit_component (node);
-}
-

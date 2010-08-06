@@ -99,9 +99,6 @@ namespace ACE_OS
   ACE_HANDLE dup (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE dup (ACE_HANDLE handle, pid_t pid);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
   int dup2 (ACE_HANDLE oldfd,
             ACE_HANDLE newfd);
 
@@ -189,12 +186,12 @@ namespace ACE_OS
 
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
-  int hostname (char name[],
+  int hostname (char *name,
                 size_t maxnamelen);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  int hostname (wchar_t name[],
+  int hostname (wchar_t *name,
                 size_t maxnamelen);
 #endif /* ACE_HAS_WCHAR */
 

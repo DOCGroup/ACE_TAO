@@ -100,8 +100,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_Thread::join (threadHandle);
 
         server->shutdown ();
-
-        orb->destroy ();
     }
 
     catch (const CORBA::Exception& ex)

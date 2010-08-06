@@ -20,8 +20,7 @@ Crash_Task::svc (void)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting crash task\n"));
   ACE_OS::sleep (this->running_time_);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sleep done, crashing the server\n"));
-  ACE_DEBUG ((LM_DEBUG, "Aborting\n"));
-  ACE::terminate_process (ACE_OS::getpid ());
+  ACE_DEBUG ((LM_DEBUG, "%a"));
 
   return 0;
 }

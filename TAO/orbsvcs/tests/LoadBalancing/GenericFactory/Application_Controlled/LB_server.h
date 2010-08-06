@@ -15,7 +15,6 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Get_Opt.h"
 
 // Forward Declaration of the kind of servant we would like to handle
 // by the server.
@@ -65,10 +64,6 @@ public:
 
 private:
 
-    int parse_args (int, ACE_TCHAR **);
-
-private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 
@@ -88,5 +83,4 @@ private:
   int argc_;
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
 };

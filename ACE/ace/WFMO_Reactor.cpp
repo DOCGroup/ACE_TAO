@@ -14,7 +14,7 @@
 #include "ace/WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 
 #include "ace/Auto_Ptr.h"
 
@@ -1756,7 +1756,6 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   // grab the lock and recheck the ok_to_wait_ event. When we can get them
   // both, or there's an error/timeout, return.
 #if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (alertable);
   ACE_Time_Value timeout;
   if (max_wait_time != 0)
     {

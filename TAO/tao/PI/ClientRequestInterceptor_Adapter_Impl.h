@@ -33,7 +33,6 @@
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/PI/PI_includeC.h"
 #include "tao/PI/ClientRequestDetails.h"
-#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -63,9 +62,9 @@ namespace TAO
    */
   class ClientRequestInterceptor_Adapter_Impl
     : public ClientRequestInterceptor_Adapter
-    , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
+
     ClientRequestInterceptor_Adapter_Impl (void);
 
     /**
@@ -108,12 +107,8 @@ namespace TAO
     virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base);
 
-    void popTSC (TAO_ORB_Core *orb_core)
-      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
-    void pushTSC (TAO_ORB_Core *orb_core)
-      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
-
   protected:
+
     /// Process the given PortableInterceptor::ForwardRequest exception,
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
@@ -121,6 +116,7 @@ namespace TAO
                                   const PortableInterceptor::ForwardRequest &exc);
 
   private:
+
     /// List of registered interceptors.
     ClientRequestInterceptor_List interceptor_list_;
   };

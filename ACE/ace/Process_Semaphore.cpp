@@ -10,7 +10,7 @@
 
 #include "ace/ACE.h"
 
-
+ACE_RCSID(ace, Process_Semaphore, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

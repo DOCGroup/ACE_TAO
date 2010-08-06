@@ -11,7 +11,7 @@ project(*idl): taoidldefaults {
 project(ORB_DLL_Server) : taolib_with_idl, portableserver, threads {
   after += *idl
   sharedname   = ORB_DLL_Server
-  dynamicflags += SERVICE_CONFIG_ORB_DLL_BUILD_DLL
+  dynamicflags = SERVICE_CONFIG_ORB_DLL_BUILD_DLL
 
   verbatim(gnuace, macros) {
     ifeq ($(OSTYPE),VMS)
@@ -39,9 +39,9 @@ project(ORB_DLL_Server) : taolib_with_idl, portableserver, threads {
 }
 
 project(ORB_DLL_Client) : taolib_with_idl, portableserver {
-  after += ORB_DLL_Server *idl
+  after += ORB_DLL_Server
   sharedname   = ORB_DLL_Client
-  dynamicflags += SERVICE_CONFIG_ORB_DLL_BUILD_DLL
+  dynamicflags = SERVICE_CONFIG_ORB_DLL_BUILD_DLL
 
   IDL_Files {
   }

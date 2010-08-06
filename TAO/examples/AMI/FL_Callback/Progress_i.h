@@ -18,7 +18,7 @@
 
 #include "testS.h"
 
-#include <FL/Fl_Box.H>
+#include <FL/Fl_Box.h>
 
 class Progress_Window : public Fl_Box
 {

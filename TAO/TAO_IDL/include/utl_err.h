@@ -117,16 +117,10 @@ public:
     EIDL_CONCRETE_VT_EXPECTED,  // We got something else..
     EIDL_ABSTRACT_EXPECTED,     // We got something else..
     EIDL_EVENTTYPE_EXPECTED,    // We got something else..
-    EIDL_TMPL_MODULE_EXPECTED,  // We got something else..
-    EIDL_PORTTYPE_EXPECTED,     // We got something else..
-    EIDL_CONNECTOR_EXPECTED,    // We got something else..
-    EIDL_TYPEDEF_EXPECTED,      // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
     EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
-    EIDL_ANONYMOUS_ERROR,       // Anonymous types are deprecated by spec
-    EIDL_ANONYMOUS_WARNING,     // Same as above, but only a warning
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
@@ -146,10 +140,6 @@ public:
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
     EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
     EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
-    EIDL_MISMATCHED_T_PARAM,    // Between defined & referenced template interfaces
-    EIDL_DUPLICATE_T_PARAM,     // A template interface's param ids must be unique
-    EIDL_T_ARG_LENGTH,          // Wrong # of template args
-    EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
     EIDL_OK                     // No error
   };
 
@@ -263,10 +253,6 @@ public:
   // Report incompatible types in constant assignment
   void incompatible_type_error (AST_Expression *d);
 
-  // Report incompatible types in discriminator vs label.
-  void incompatible_disc_error (AST_Decl *d,
-                                AST_Expression *e);
-
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union
   // label did not evaluate to a constant
@@ -277,11 +263,6 @@ public:
   // something else instead. This most likely is a case in a supports
   // or inheritance list.
   void interface_expected (AST_Decl *d);
-
-  // Report a situation where a template module was expected but we got
-  // something else instead. This most likely is a case in a template
-  // module instantiation or alias.
-  void template_module_expected (AST_Decl *d);
 
   // Report a situation where a value type was expected but we got
   // something else instead. This most likely is a case in a primary
@@ -358,25 +339,6 @@ public:
   // Valuetype violates a spec-defined constraint on a
   // valuetype used as a primary key.
   void illegal_primary_key (AST_Decl *d);
-
-  // Template parameter was repeated.
-  void duplicate_param_id (UTL_ScopedName *n);
-
-  // Referenced template parameter not matched in param list.
-  void mismatched_template_param (const char *name);
-  
-  // Given a template param of the form 'sequence<T>', the
-  // 'T' must match a previous param in the list.
-  void mismatch_seq_of_param (const char *param_id);
-  
-  // Informative message when a lookup fails because a
-  // masking scope has not been correctly differentiated
-  // in the scoped name from the scope it masks.
-  void scope_masking_error (AST_Decl *masked,
-                            AST_Decl *loc);
-          
-  // Error (default) or warning (set by command line option).                        
-  void anonymous_type_diagnostic (void);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

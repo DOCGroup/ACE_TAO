@@ -6,149 +6,97 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+use Getopt::Std;
+
+local ($opt_i, $opt_b);
+
+if (!getopts ('i:b:')) {
+    print "Usage: run_test.pl [-b payload_size] [-i iterations]\n";
+    exit 1;
+}
+
+my $server_args = " -p 3";
+if (defined $opt_i) {
+    $server_args .= " -i ".$opt_i;
+}
+if (defined $opt_b) {
+    $server_args .= " -b ".$opt_b;
+}
+$iorfilebase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 $status = 0;
-$debug_level = '0';
-
-$iterations = -1;
-$payload = -1;
-for ($i = 0; $i < scalar @ARGV; $i++){
-    if ($ARGV[$i] eq '-debug') {
-        $debug_level = '10';
-    } elsif ($ARGV[$i] eq '-i') {
-        $i++;
-        $iterations = $ARGV[$i];
-    } elsif ($ARGV[$i] eq '-b') {
-        $i++;
-        $payload = $ARGV[$i];
-    } else {
-        print "Usage: run_test.pl [-b payload_size] [-i iterations]\n";
-        exit 1;
-    }
+unlink $iorfile;
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $client3 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+$CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client1_iorfile = $client1->LocalFile ($iorbase);
-my $client2_iorfile = $client2->LocalFile ($iorbase);
-my $client3_iorfile = $client3->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client1->DeleteFile($iorbase);
-$client2->DeleteFile($iorbase);
-$client3->DeleteFile($iorbase);
+$server = $SV->Spawn ();
 
-my $server_args = "-p 3";
-if ($iterations >= 0) {
-    $server_args = "$server_args -i $iterations";
-}
-if ($payload >= 0) {
-    $server_args = "$server_args -b $payload";
-}
-
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile $server_args");
-$CL1 = $client1->CreateProcess ("client", "-k file://$client1_iorfile");
-$CL2 = $client2->CreateProcess ("client", "-k file://$client2_iorfile");
-$CL3 = $client3->CreateProcess ("client", "-k file://$client3_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill ();
+  exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client1 = $CL1->Spawn ();
+if ($client1 != 0) {
+  print STDERR "ERROR: client 1 returned $client1\n";
+  $SV->Kill ();
+  exit 1;
 }
-if ($client1->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client1_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client2 = $CL2->Spawn ();
+if ($client2 != 0) {
+  print STDERR "ERROR: client 2 returned $client2\n";
+  $CL1->Kill ();
+  $SV->Kill ();
+  exit 1;
 }
-if ($client2->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client2_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client3->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client3_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL1->Spawn ();
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client3 = $CL3->Spawn ();
+if ($client3 != 0) {
+  print STDERR "ERROR: client 3 returned $client3\n";
+  $CL2->Kill ();
+  $CL1->Kill ();
+  $SV->Kill ();
+  exit 1;
 }
 
-$client_status = $CL2->Spawn ();
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $CL1->Kill (); $CL1->TimedWait (1);
-    exit 1;
+$client1 = $CL1->WaitKill (300);
+if ($client1 != 0) {
+  print STDERR "ERROR: client 1 returned $client1\n";
+  $status = 1;
 }
 
-$client_status = $CL3->Spawn ();
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $CL1->Kill (); $CL1->TimedWait (1);
-    $CL2->Kill (); $CL2->TimedWait (1);
-    exit 1;
+$client2 = $CL2->WaitKill (60);
+if ($client2 != 0) {
+  print STDERR "ERROR: client 2 returned $client2\n";
+  $status = 1;
 }
 
-$client_status = $CL1->WaitKill ($client1->ProcessStopWaitInterval() + 285);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+$client3 = $CL3->WaitKill (60);
+if ($client3 != 0) {
+  print STDERR "ERROR: client 3 returned $client3\n";
+  $status = 1;
 }
 
-$client_status = $CL2->WaitKill ($client2->ProcessStopWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+$server = $SV->WaitKill (15);
+if ($server != 0) {
+  print STDERR "ERROR: server returned $server\n";
+  $status = 1;
 }
 
-$client_status = $CL3->WaitKill ($client3->ProcessStopWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client1->DeleteFile($iorbase);
-$client2->DeleteFile($iorbase);
-$client3->DeleteFile($iorbase);
-
+unlink $iorfile;
 exit $status;

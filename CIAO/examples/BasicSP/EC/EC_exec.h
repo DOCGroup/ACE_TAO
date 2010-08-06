@@ -70,16 +70,13 @@ namespace MyImpl
     ACE_Thread_Manager thr_mgr_;
   };
 
-  extern "C" EC_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_BasicSP_EC_Impl (void);
-
   /**
    * @class EC_exec_i
    *
    * EC executor implementation class.
    */
   class EC_EXEC_Export EC_exec_i :
-    public virtual CIAO_BasicSP_EC_Impl::EC_Exec,
+    public virtual CIDL_EC_Impl::EC_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -110,9 +107,12 @@ namespace MyImpl
 
     virtual void set_session_context (Components::SessionContext_ptr ctx);
 
-    virtual void configuration_complete ();
+    virtual void ciao_preactivate ();
 
     virtual void ccm_activate ();
+
+    virtual void ciao_postactivate ();
+
 
     virtual void ccm_passivate ();
 
@@ -139,7 +139,7 @@ namespace MyImpl
    * EC home executor implementation class.
    */
   class EC_EXEC_Export ECHome_exec_i :
-    public virtual ::CIAO_BasicSP_EC_Impl::ECHome_Exec, 
+    public virtual CIDL_EC_Impl::ECHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

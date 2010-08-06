@@ -8,13 +8,13 @@
 // with the feature set to 0.
 
 feature(vc_avoid_deprecated_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9) {
     DisableSpecificWarnings += 4996
   }
 }
 
 feature(vc_avoid_dominance_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9) {
     DisableSpecificWarnings += 4250
   }
 }

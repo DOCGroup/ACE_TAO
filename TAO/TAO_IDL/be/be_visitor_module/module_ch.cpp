@@ -1,17 +1,25 @@
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    module_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Module in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    module_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Module in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_module,
+           module_ch,
+           "$Id$")
 
 // ******************************************************
 // Module visitor for client header

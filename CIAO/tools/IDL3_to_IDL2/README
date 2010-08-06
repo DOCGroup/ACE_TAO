@@ -4,7 +4,8 @@
 A pluggable back end used with the IDL compiler parser
 and command line processor, this tool converts CCM-related
 IDL constructs into their corresponding IDL2 equivalents,
-in a new IDL file. For more information about CIAO, please see
+in a new IDL file. For more information about CIAO and the CIAO
+CIDL compiler, please see
 
 $CIAO_ROOT/docs/releasenotes/index.html
 
@@ -33,18 +34,15 @@ BACKEND OPTIONS:
 output directory, overriding the default, which is the directory of
 execution.
 
+-x <filename> Excludes included IDL file <filename> from having its
+corresponding include generated with an '_IDL2' suffix. This feature
+is to be used when an included IDL file cannot or need not be
+itself coverted by this tool.
+
 -e Generates a file foo_IDL2.idl from foo.idl that simply includes
 foo.idl instead of generating its IDL declarations. Note that this
 option takes effect only if foo.idl contains no 'IDL3' declarations,
 otherwise it's a no-op.
-
-Note that the original -x <filename> option (which manually excludes
-an included IDL file from being transformed to an include of the 
-'_IDL2' decorated corresponding file) has been eliminated. This
-option was intended for included IDL files that contained no IDL3
-constructs, and therefore didn't need processing by this tool.
-Detection of such included files is now automatic, and the processed
-include filename will appear accordingly.
 
 CAVEAT:
 

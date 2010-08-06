@@ -25,7 +25,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class BMDISPLAY_EXEC_Export BMDisplay_exec_i :
-    public virtual CIAO_BasicSP_BMDisplay_Impl::BMDisplay_Exec,
+    public virtual CIDL_BMDisplay_Impl::BMDisplay_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -46,10 +46,13 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    configuration_complete ();
+    ciao_preactivate ();
 
     virtual void
     ccm_activate ();
+
+    virtual void
+    ciao_postactivate ();
 
     virtual void
     ccm_passivate ();
@@ -61,16 +64,13 @@ namespace MyImpl
     BasicSP::CCM_BMDisplay_Context_var context_;
   };
 
-  extern "C" BMDISPLAY_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_BasicSP_BMDisplay_Impl (void);
-
   /**
    * @class BMDisplayHome_exec_impl
    *
    * BMDisplay home executor implementation class.
    */
   class BMDISPLAY_EXEC_Export BMDisplayHome_exec_impl :
-    public virtual CIAO_BasicSP_BMDisplay_Impl::BMDisplayHome_Exec,
+    public virtual CIDL_BMDisplay_Impl::BMDisplayHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

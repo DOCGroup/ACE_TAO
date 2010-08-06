@@ -11,7 +11,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # Do not use environment variables here since not all platforms use ACE_ROOT
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use English;
 
 $status = 0;
@@ -19,11 +19,9 @@ $exflags = "";
 
 # Run the test
 
-$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
-
-$EX = $tg->CreateProcess ("EventAny");
+$EX = new PerlACE::Process ("EventAny");
 $EX->Arguments ($exflags);
-$test = $EX->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
+$test = $EX->SpawnWaitKill (10);
 
 if ($test != 0) {
     print STDERR "ERROR: test error status $test\n";

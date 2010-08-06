@@ -69,9 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_list.h"
 
-// Member type is not AST_Exception, since it could also be a
-// param holder for a template parameter.
-class AST_Type;
+class AST_Exception;
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -82,11 +80,11 @@ class AST_Type;
 class TAO_IDL_FE_Export UTL_ExceptList : public UTL_List
 {
 public:
-  UTL_ExceptList (AST_Type *s, 
+  UTL_ExceptList (AST_Exception *s, 
                   UTL_ExceptList *cdr);
 
   // Get list item.
-  AST_Type *head (void);
+  AST_Exception *head (void);
   
   // Cleanup.
   virtual void destroy (void);
@@ -97,7 +95,7 @@ public:
 
 private:
   // Data.
-  AST_Type *pd_car_data;
+  AST_Exception *pd_car_data;
 };
 
 // Active iterator for UTL_ExceptList.
@@ -108,7 +106,7 @@ public:
   UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
-  AST_Type *item (void);
+  AST_Exception *item (void);
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

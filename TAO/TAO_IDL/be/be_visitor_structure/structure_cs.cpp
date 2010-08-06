@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Structures in the client stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Structures in the client stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           structure_cs,
+           "$Id$")
 
 // ***************************************************************************
 // For client stubs.

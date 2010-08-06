@@ -33,7 +33,7 @@ AMH_Messenger_i::send_message (
   std::cout << "Message:      " << message << std::endl;
   CORBA::String_var inout_message_arg =
     CORBA::string_dup("Thanks for the message.");
-  CORBA::Boolean result = true;
+  CORBA::Boolean result = 1;
 
   _tao_rh->send_message(result,inout_message_arg.inout ());
 }

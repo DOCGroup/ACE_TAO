@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef ROUNDTRIP_CIDL
+#define ROUNDTRIP_CIDL
+
+#include "RoundTrip.idl"
+
+composition session RoundTrip_Impl
+{
+
+  home executor RoundTripHome_Exec
+  {
+    implements Benchmark::RoundTripHome;
+    manages RoundTrip_Exec;
+  };
+
+};
+
+#endif /* ROUNDTRIP_CIDL */

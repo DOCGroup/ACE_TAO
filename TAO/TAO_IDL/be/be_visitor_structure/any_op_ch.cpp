@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client header
@@ -72,7 +81,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_structure_any_op_ch::visit_field (be_field *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   // First generate the type information.
   bt = be_type::narrow_from_decl (node->field_type ());

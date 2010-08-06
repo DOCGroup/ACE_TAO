@@ -22,12 +22,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/Any.h"
 #include "tao/Var_Size_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
-#include "tao/Any_Insert_Policy_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace CORBA
+{
+  class Any;
+}
 
 namespace TAO
 {
@@ -36,7 +39,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::Any,
-            TAO::Any_Insert_Policy_Stream
+            TAO::Any_Insert_Policy_Stream <CORBA::Any>
           >
   {
   };

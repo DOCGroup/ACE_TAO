@@ -23,7 +23,6 @@
 #if !defined (ACE_LACKS_UNIX_SYSLOG)
 
 #include "ace/Log_Msg_Backend.h"
-#include "ace/Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

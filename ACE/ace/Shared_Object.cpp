@@ -11,7 +11,11 @@
 #include "ace/Shared_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (ace,
+           Shared_Object,
+           "$Id$")
+
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initializes object when dynamic linking occurs.
 

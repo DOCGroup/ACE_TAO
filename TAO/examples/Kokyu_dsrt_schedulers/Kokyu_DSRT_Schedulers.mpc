@@ -3,7 +3,7 @@
 
 project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba, codecfactory {
   sharedname  = Kokyu_DSRT_Schedulers
-  dynamicflags += KOKYU_DSRT_SCHEDULERS_BUILD_DLL
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
   idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
   Source_Files {

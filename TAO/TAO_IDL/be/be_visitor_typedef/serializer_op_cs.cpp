@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TAO::DCPS::Serializer operators
- *  in the client stubs
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    serializer_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TAO::DCPS::Serializer operators
+//    in the client stubs
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef,
+           serializer_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating Serializer operator declarations in the client
@@ -59,7 +68,7 @@ be_visitor_typedef_serializer_op_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -132,7 +141,7 @@ be_visitor_typedef_serializer_op_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_serializer_op_cs::visit_array (be_array *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -164,7 +173,7 @@ be_visitor_typedef_serializer_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_serializer_op_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -195,7 +204,7 @@ be_visitor_typedef_serializer_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_serializer_op_cs::visit_structure (be_structure *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -226,7 +235,7 @@ be_visitor_typedef_serializer_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_typedef_serializer_op_cs::visit_union (be_union *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {

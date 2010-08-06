@@ -6,77 +6,80 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$iorfile = PerlACE::LocalFile ("server.ior");
 
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
-$SV = $server->CreateProcess ("server", " -o $server_iorfile");
-$CL = $client->CreateProcess ("client", " -k file://$client_iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-}
+} 
 
-$client_status = $CL->SpawnWaitKill (2*$client->ProcessStartWaitInterval ());
+$client = $CL->SpawnWaitKill (300);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+$server = $SV->WaitKill (25);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 ################################
 print STDERR "===== Client with RW handler\n";
+if (PerlACE::is_vxworks_test()) {
+    $SV1 = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV1 = new PerlACE::Process ("server");
+}
+$CL1 = new PerlACE::Process ("client", 
+                             " -ORBSvcConf client.conf");
 
-$SV2 = $server->CreateProcess ("server");
-$CL2 = $client->CreateProcess ("client", " -ORBSvcConf client.conf");
+$SV1->Spawn ();
 
-$SV2->Spawn ();
-
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV2->Kill (); $SV2->TimedWait (1);
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-}
+} 
 
-$client_status = $CL2->SpawnWaitKill (2*$client->ProcessStartWaitInterval ());
+$client1 = $CL1->SpawnWaitKill (300);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client 2 returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV2->WaitKill ($server->ProcessStopWaitInterval ());
+$server1 = $SV1->WaitKill (25);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server 2 returned $server_status\n";
+if ($server1 != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
 
+unlink $iorfile;
 exit $status;

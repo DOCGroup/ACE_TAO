@@ -2,9 +2,24 @@
 //
 // $Id$
 
+
 #include "ace/OS_Memory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::is_nil (CORBA::Environment_ptr env)
+{
+  return env == 0;
+}
+
+ACE_INLINE
+void
+CORBA::release (CORBA::Environment_ptr env)
+{
+  delete env;
+}
 
 ACE_INLINE
 CORBA::Exception *

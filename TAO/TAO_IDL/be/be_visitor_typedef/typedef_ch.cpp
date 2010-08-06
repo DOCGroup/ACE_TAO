@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Typedef in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Typedef in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID(be_visitor_typedef,
+          typedef_ch,
+          "$Id$")
 
 // ******************************************************
 // Typedef visitor for client header
@@ -50,7 +59,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->tdef ())
     {
@@ -140,8 +149,8 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Is the base type an alias to an array node or an actual array node.
   if (this->ctx_->alias ())
@@ -235,20 +244,21 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << "ACE_INLINE " << static_decl << be_nl
           << td_name << "_slice *" << be_nl
           << td_name << "_dup (" << be_idt << be_idt_nl
-          << "const " << td_name << "_slice *_tao_slice);" << be_uidt
-          << be_uidt_nl;
+          << "const " << td_name << "_slice *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt_nl;
       // _copy
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << "void " << td_name << "_copy (" << be_idt << be_idt_nl
           << td_name << "_slice *_tao_to," << be_nl
-          << "const " << td_name << "_slice *_tao_from);" << be_uidt
-          << be_uidt_nl;
+          << "const " << td_name << "_slice *_tao_from" << be_uidt_nl
+          << ");" << be_uidt_nl;
       // _free
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << "void " << td_name << "_free (" << be_idt << be_idt_nl
-          << td_name << "_slice *_tao_slice);" << be_uidt << be_uidt;
+          << td_name << "_slice *_tao_slice" << be_uidt_nl
+          << ");" << be_uidt;
     }
 
   return 0;
@@ -259,8 +269,8 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -303,8 +313,8 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -352,8 +362,8 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -397,7 +407,7 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
+  be_decl *scope = this->ctx_->scope ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
@@ -431,8 +441,8 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -479,8 +489,8 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -525,8 +535,8 @@ be_visitor_typedef_ch::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -571,8 +581,8 @@ be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -607,8 +617,8 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = 0;
+  be_decl *scope = this->ctx_->scope ();
+  be_type *bt;
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())

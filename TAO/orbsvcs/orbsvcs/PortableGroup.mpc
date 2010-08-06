@@ -5,7 +5,7 @@ project(PortableGroup) : orbsvcslib, orbsvcs_output, install, naming, iormanip, 
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export \
                  -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h
-  dynamicflags += TAO_PORTABLEGROUP_BUILD_DLL
+  dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL
   tagchecks   += PortableGroup
 
   IDL_Files {
@@ -19,11 +19,16 @@ project(PortableGroup) : orbsvcslib, orbsvcs_output, install, naming, iormanip, 
   }
 
   Source_Files {
+    miopC.cpp
+    miopS.cpp
+    PortableGroupC.cpp
+    PortableGroupS.cpp
+    PortableGroup_Simple_DSC.cpp
     PortableGroup
   }
 
   Header_Files {
-    PortableGroup
+    PortableGroup/portablegroup_export.h
   }
 
   Template_Files {

@@ -285,7 +285,7 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int const result =
+  int result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -393,7 +393,7 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - DIOP_Connection_Handler::"
-                      "set_dscp_codepoint, dscp: %x; result: %d; %C\n",
+                      "set_dscp_codepoint, dscp: %x; result: %d; %s\n",
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));
@@ -433,12 +433,6 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
         }
     }
   return 0;
-}
-
-int
-TAO_DIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

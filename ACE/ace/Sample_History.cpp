@@ -10,7 +10,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-
+ACE_RCSID(ace, Sample_History, "$Id$")
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

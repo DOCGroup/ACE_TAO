@@ -56,6 +56,11 @@ public:
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 
+  /// @name Mutators for refcount
+  //@{
+  void incr_refcount (void);
+  void decr_refcount (void);
+  //@}
 
   /// A helper method that can be used by the subclasses
   /**
@@ -78,10 +83,6 @@ protected:
 
   /// Destructor.
   virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
-
-private:
-  void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);
-  TAO_Asynch_Reply_Dispatcher_Base (const TAO_Asynch_Reply_Dispatcher_Base &);
 
 protected:
   /// The service context list.
@@ -108,11 +109,18 @@ protected:
   TAO_Transport *transport_;
 
 private:
-  /// Lock to protect @c is_reply_dispatched_ flag.
+  /// Lock to protect refcount and @c is_reply_dispatched_ flag.
   ACE_Lock *lock_;
+
+  /// Refcount paraphernalia for this class
+  CORBA::ULong refcount_;
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;
+
+  /// Allocator that was used to allocate this reply dispatcher. In case of
+  /// zero we come from the heap.
+  ACE_Allocator *allocator_;
 };
 
 namespace TAO

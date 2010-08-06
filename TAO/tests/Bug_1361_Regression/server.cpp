@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Echo_Caller.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
@@ -36,11 +37,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("PolicyCurrent");
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
       ACE_Thread_Manager mymanager;
-      Thread_Pool callback_pool (orb.in (), &mymanager, 10);
+      Thread_Pool callback_pool (&mymanager, 10);
 
       TAO::Utils::Servant_Var<Echo_Caller> impl;
       {
@@ -50,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Echo_Caller(&callback_pool),
+                        Echo_Caller(orb.in(), &callback_pool),
                         1);
         impl = tmp;
       }
@@ -86,6 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
+      callback_pool.shutdown ();
       mymanager.wait ();
       worker.wait ();
 

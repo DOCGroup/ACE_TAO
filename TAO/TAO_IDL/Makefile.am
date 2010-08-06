@@ -31,34 +31,24 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_component.cpp \
   ast/ast_component_fwd.cpp \
   ast/ast_concrete_type.cpp \
-  ast/ast_connector.cpp \
   ast/ast_constant.cpp \
-  ast/ast_consumes.cpp \
   ast/ast_decl.cpp \
-  ast/ast_emits.cpp \
   ast/ast_enum.cpp \
   ast/ast_enum_val.cpp \
   ast/ast_eventtype.cpp \
   ast/ast_eventtype_fwd.cpp \
   ast/ast_exception.cpp \
   ast/ast_expression.cpp \
-  ast/ast_extended_port.cpp \
   ast/ast_factory.cpp \
   ast/ast_field.cpp \
-  ast/ast_finder.cpp \
   ast/ast_generator.cpp \
   ast/ast_home.cpp \
   ast/ast_interface.cpp \
   ast/ast_interface_fwd.cpp \
-  ast/ast_mirror_port.cpp \
   ast/ast_module.cpp \
   ast/ast_native.cpp \
   ast/ast_operation.cpp \
-  ast/ast_param_holder.cpp \
-  ast/ast_porttype.cpp \
   ast/ast_predefined_type.cpp \
-  ast/ast_provides.cpp \
-  ast/ast_publishes.cpp \
   ast/ast_recursive.cpp \
   ast/ast_redef.cpp \
   ast/ast_root.cpp \
@@ -66,35 +56,23 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_string.cpp \
   ast/ast_structure.cpp \
   ast/ast_structure_fwd.cpp \
-  ast/ast_template_module.cpp \
-  ast/ast_template_module_inst.cpp \
-  ast/ast_template_module_ref.cpp \
   ast/ast_type.cpp \
   ast/ast_typedef.cpp \
   ast/ast_union.cpp \
   ast/ast_union_branch.cpp \
   ast/ast_union_fwd.cpp \
   ast/ast_union_label.cpp \
-  ast/ast_uses.cpp \
   ast/ast_valuebox.cpp \
   ast/ast_valuetype.cpp \
   ast/ast_valuetype_fwd.cpp \
   ast/ast_visitor.cpp \
-  ast/ast_visitor_context.cpp \
-  ast/ast_visitor_reifying.cpp \
-  ast/ast_visitor_tmpl_module_inst.cpp \
-  ast/ast_visitor_tmpl_module_ref.cpp \
-  fe/fe_component_header.cpp \
   fe/fe_declarator.cpp \
   fe/fe_extern.cpp \
   fe/fe_global.cpp \
-  fe/fe_home_header.cpp \
   fe/fe_init.cpp \
   fe/fe_interface_header.cpp \
   fe/fe_lookup.cpp \
-  fe/fe_obv_header.cpp \
   fe/fe_private.cpp \
-  fe/fe_utils.cpp \
   fe/lex.yy.cpp \
   fe/y.tab.cpp \
   narrow/narrow.cpp \
@@ -124,71 +102,50 @@ noinst_HEADERS = \
   include/ast_component.h \
   include/ast_component_fwd.h \
   include/ast_concrete_type.h \
-  include/ast_connector.h \
   include/ast_constant.h \
-  include/ast_consumes.h \
   include/ast_decl.h \
-  include/ast_emits.h \
   include/ast_enum.h \
   include/ast_enum_val.h \
   include/ast_eventtype.h \
   include/ast_eventtype_fwd.h \
   include/ast_exception.h \
   include/ast_expression.h \
-  include/ast_extended_port.h \
   include/ast_extern.h \
   include/ast_factory.h \
   include/ast_field.h \
-  include/ast_finder.h \
   include/ast_generator.h \
   include/ast_home.h \
   include/ast_interface.h \
   include/ast_interface_fwd.h \
-  include/ast_mirror_port.h \
   include/ast_module.h \
   include/ast_native.h \
   include/ast_operation.h \
-  include/ast_param_holder.h \
-  include/ast_porttype.h \
   include/ast_predefined_type.h \
-  include/ast_provides.h \
-  include/ast_publishes.h \
   include/ast_root.h \
   include/ast_sequence.h \
   include/ast_string.h \
   include/ast_structure.h \
   include/ast_structure_fwd.h \
-  include/ast_template_module.h \
-  include/ast_template_module_inst.h \
-  include/ast_template_module_ref.h \
   include/ast_type.h \
   include/ast_typedef.h \
   include/ast_union.h \
   include/ast_union_branch.h \
   include/ast_union_fwd.h \
   include/ast_union_label.h \
-  include/ast_uses.h \
   include/ast_valuebox.h \
   include/ast_valuetype.h \
   include/ast_valuetype_fwd.h \
   include/ast_visitor.h \
-  include/ast_visitor_context.h \
-  include/ast_visitor_reifying.h \
-  include/ast_visitor_tmpl_module_inst.h \
-  include/ast_visitor_tmpl_module_ref.h \
   include/drv_extern.h \
-  include/fe_component_header.h \
   include/fe_declarator.h \
   include/fe_extern.h \
-  include/fe_home_header.h \
   include/fe_interface_header.h \
-  include/fe_obv_header.h \
   include/fe_private.h \
-  include/fe_utils.h \
   include/global_extern.h \
   include/idl_defines.h \
   include/idl_global.h \
   include/idl_narrow.h \
+  include/idl_uns_long.h \
   include/nr_extern.h \
   include/utl_decllist.h \
   include/utl_err.h \
@@ -225,49 +182,38 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_codegen.cpp \
   be/be_component.cpp \
   be/be_component_fwd.cpp \
-  be/be_connector.cpp \
   be/be_constant.cpp \
-  be/be_consumes.cpp \
   be/be_decl.cpp \
-  be/be_emits.cpp \
   be/be_enum.cpp \
   be/be_enum_val.cpp \
   be/be_eventtype.cpp \
   be/be_eventtype_fwd.cpp \
   be/be_exception.cpp \
   be/be_expression.cpp \
-  be/be_extended_port.cpp \
   be/be_factory.cpp \
   be/be_field.cpp \
-  be/be_finder.cpp \
   be/be_generator.cpp \
   be/be_global.cpp \
   be/be_helper.cpp \
   be/be_home.cpp \
-  be/be_identifier_helper.cpp \
   be/be_init.cpp \
   be/be_interface.cpp \
   be/be_interface_fwd.cpp \
-  be/be_mirror_port.cpp \
+  be/be_interface_strategy.cpp \
   be/be_module.cpp \
   be/be_native.cpp \
-  be/be_null_return_emitter.cpp \
   be/be_operation.cpp \
-  be/be_param_holder.cpp \
-  be/be_porttype.cpp \
+  be/be_operation_strategy.cpp \
   be/be_predefined_type.cpp \
   be/be_produce.cpp \
-  be/be_provides.cpp \
-  be/be_publishes.cpp \
   be/be_root.cpp \
   be/be_scope.cpp \
   be/be_sequence.cpp \
+  be/be_stream_factory.cpp \
   be/be_string.cpp \
   be/be_structure.cpp \
   be/be_structure_fwd.cpp \
-  be/be_template_module.cpp \
-  be/be_template_module_inst.cpp \
-  be/be_template_module_ref.cpp \
+  be/be_sunsoft.cpp \
   be/be_tmplinst.cpp \
   be/be_type.cpp \
   be/be_typedef.cpp \
@@ -275,7 +221,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_union_branch.cpp \
   be/be_union_fwd.cpp \
   be/be_union_label.cpp \
-  be/be_uses.cpp \
   be/be_util.cpp \
   be/be_valuebox.cpp \
   be/be_valuetype.cpp \
@@ -283,7 +228,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor.cpp \
   be/be_visitor_amh_pre_proc.cpp \
   be/be_visitor_ami_pre_proc.cpp \
-  be/be_visitor_any_extracted_type_decl.cpp \
   be/be_visitor_arg_traits.cpp \
   be/be_visitor_argument.cpp \
   be/be_visitor_array.cpp \
@@ -291,20 +235,18 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_ccm_pre_proc.cpp \
   be/be_visitor_component.cpp \
   be/be_visitor_component_fwd.cpp \
-  be/be_visitor_component_scope.cpp \
-  be/be_visitor_connector.cpp \
   be/be_visitor_constant.cpp \
   be/be_visitor_context.cpp \
   be/be_visitor_decl.cpp \
   be/be_visitor_enum.cpp \
   be/be_visitor_exception.cpp \
+  be/be_visitor_factory.cpp \
   be/be_visitor_field.cpp \
   be/be_visitor_home.cpp \
   be/be_visitor_interface.cpp \
   be/be_visitor_interface_fwd.cpp \
   be/be_visitor_module.cpp \
   be/be_visitor_native.cpp \
-  be/be_visitor_null_return_value.cpp \
   be/be_visitor_operation.cpp \
   be/be_visitor_root.cpp \
   be/be_visitor_scope.cpp \
@@ -320,8 +262,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_union_fwd.cpp \
   be/be_visitor_valuebox.cpp \
   be/be_visitor_valuetype.cpp \
-  be/be_visitor_valuetype_fwd.cpp \
-  be/be_visitor_xplicit_pre_proc.cpp
+  be/be_visitor_valuetype_fwd.cpp
 
 noinst_HEADERS += \
   be_include/TAO_IDL_BE_Export.h \
@@ -331,55 +272,43 @@ noinst_HEADERS += \
   be_include/be_codegen.h \
   be_include/be_component.h \
   be_include/be_component_fwd.h \
-  be_include/be_connector.h \
   be_include/be_constant.h \
-  be_include/be_consumes.h \
   be_include/be_decl.h \
-  be_include/be_emits.h \
   be_include/be_enum.h \
   be_include/be_enum_val.h \
   be_include/be_eventtype.h \
   be_include/be_eventtype_fwd.h \
   be_include/be_exception.h \
   be_include/be_expression.h \
-  be_include/be_extended_port.h \
   be_include/be_extern.h \
   be_include/be_factory.h \
   be_include/be_field.h \
-  be_include/be_finder.h \
   be_include/be_generator.h \
   be_include/be_global.h \
   be_include/be_helper.h \
   be_include/be_home.h \
-  be_include/be_identifier_helper.h \
   be_include/be_interface.h \
   be_include/be_interface_fwd.h \
-  be_include/be_mirror_port.h \
+  be_include/be_interface_strategy.h \
   be_include/be_module.h \
   be_include/be_native.h \
-  be_include/be_null_return_emitter.h \
   be_include/be_operation.h \
-  be_include/be_param_holder.h \
-  be_include/be_porttype.h \
+  be_include/be_operation_strategy.h \
   be_include/be_predefined_type.h \
-  be_include/be_provides.h \
-  be_include/be_publishes.h \
   be_include/be_root.h \
   be_include/be_scope.h \
   be_include/be_sequence.h \
+  be_include/be_stream_factory.h \
   be_include/be_string.h \
   be_include/be_structure.h \
   be_include/be_structure_fwd.h \
-  be_include/be_template_module.h \
-  be_include/be_template_module_inst.h \
-  be_include/be_template_module_ref.h \
+  be_include/be_sunsoft.h \
   be_include/be_type.h \
   be_include/be_typedef.h \
   be_include/be_union.h \
   be_include/be_union_branch.h \
   be_include/be_union_fwd.h \
   be_include/be_union_label.h \
-  be_include/be_uses.h \
   be_include/be_util.h \
   be_include/be_valuebox.h \
   be_include/be_valuetype.h \
@@ -387,7 +316,6 @@ noinst_HEADERS += \
   be_include/be_visitor.h \
   be_include/be_visitor_amh_pre_proc.h \
   be_include/be_visitor_ami_pre_proc.h \
-  be_include/be_visitor_any_extracted_type_decl.h \
   be_include/be_visitor_arg_traits.h \
   be_include/be_visitor_argument.h \
   be_include/be_visitor_array.h \
@@ -395,20 +323,18 @@ noinst_HEADERS += \
   be_include/be_visitor_ccm_pre_proc.h \
   be_include/be_visitor_component.h \
   be_include/be_visitor_component_fwd.h \
-  be_include/be_visitor_component_scope.h \
-  be_include/be_visitor_connector.h \
   be_include/be_visitor_constant.h \
   be_include/be_visitor_context.h \
   be_include/be_visitor_decl.h \
   be_include/be_visitor_enum.h \
   be_include/be_visitor_exception.h \
+  be_include/be_visitor_factory.h \
   be_include/be_visitor_field.h \
   be_include/be_visitor_home.h \
   be_include/be_visitor_interface.h \
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_module.h \
   be_include/be_visitor_native.h \
-  be_include/be_visitor_null_return_value.h \
   be_include/be_visitor_operation.h \
   be_include/be_visitor_root.h \
   be_include/be_visitor_scope.h \
@@ -424,8 +350,7 @@ noinst_HEADERS += \
   be_include/be_visitor_union_fwd.h \
   be_include/be_visitor_valuebox.h \
   be_include/be_visitor_valuetype.h \
-  be_include/be_visitor_valuetype_fwd.h \
-  be_include/be_visitor_xplicit_pre_proc.h
+  be_include/be_visitor_valuetype_fwd.h
 
 ## Makefile.TAO_IDL_EXE.am
 

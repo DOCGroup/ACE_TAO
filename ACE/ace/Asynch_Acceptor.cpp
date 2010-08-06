@@ -10,6 +10,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
+
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
@@ -336,7 +338,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       && result.error () != ECANCELED
 #endif
       )
-    this->accept (this->bytes_to_read_, result.act ());
+    this->accept (this->bytes_to_read_);
 }
 
 template <class HANDLER> int

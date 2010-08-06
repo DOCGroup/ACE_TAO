@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the TAO::DCPS::Serializer operators 
- *  for types defined in Module's scope.
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    serializer_op.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the TAO::DCPS::Serializer operators 
+//    for types defined in Module's scope.
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_module, 
+           serializer_op, 
+           "$Id: serializer_op.cpp,v 1.2 1999/05/28 02:16:43 coryan Exp ")
 
 // ***************************************************************************
 // Module visitor for generating Serializer operator declarations in the client header

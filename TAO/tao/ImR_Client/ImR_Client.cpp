@@ -122,18 +122,7 @@ namespace TAO
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          ACE_CString serverId = poa->orb_core ().server_id ();
-          ACE_CString name;
-          if (serverId.empty ())
-          {
-            name = poa->name();
-          }
-          else
-          {
-            name = serverId + ":" + poa->name();
-          }
-
-          imr_locator->server_is_running (name.c_str (),
+          imr_locator->server_is_running (poa->name().c_str (),
                                           partial_ior.c_str(),
                                           svr.in());
         }

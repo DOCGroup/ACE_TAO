@@ -27,7 +27,6 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
   : COMPLETION_BASE(t,0,0),
     orb_core_ (0),
     channel_(0),
-    creation_strategy_ (0),
     concurrency_strategy_ (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -43,7 +42,6 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
   :  COMPLETION_BASE(orb_core->thr_mgr(),0,0),
      orb_core_ (orb_core),
      channel_(0),
-     creation_strategy_ (0),
      concurrency_strategy_ (0)
 {
 }
@@ -51,8 +49,6 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
 
 TAO::HTIOP::Completion_Handler::~Completion_Handler (void)
 {
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
 }
 
 int
@@ -61,9 +57,6 @@ TAO::HTIOP::Completion_Handler::open (void*)
   this->orb_core_->reactor()->register_handler(this,
                                                ACE_Event_Handler::READ_MASK);
 
-  ACE_NEW_RETURN (creation_strategy_,
-                  TAO::HTIOP::CREATION_STRATEGY2 (this->orb_core_),
-                  -1);
   ACE_NEW_RETURN (concurrency_strategy_,
                   TAO::HTIOP::CONCURRENCY_STRATEGY2 (this->orb_core_),
                   -1);
@@ -109,7 +102,7 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
   if (handler == 0)
     {
       TAO::HTIOP::Connection_Handler *svc_handler = 0;
-      if (this->creation_strategy_->make_svc_handler (svc_handler) == -1)
+      if (this->make_svc_handler (svc_handler) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -151,6 +144,27 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
       this->reactor()->notify (session->handler(),
                                ACE_Event_Handler::READ_MASK);
     }
+  return 0;
+}
+
+int
+TAO::HTIOP::Completion_Handler::make_svc_handler (TAO::HTIOP::Connection_Handler *&sh)
+{
+  if (sh == 0)
+    {
+      // Purge connections (if necessary)
+      this->orb_core_->lane_resources ().transport_cache ().purge ();
+      ACE_NEW_RETURN (sh,
+                      TAO::HTIOP::Connection_Handler (this->orb_core_),
+                      -1);
+    }
+
+  return 0;
+}
+
+int
+TAO::HTIOP::Completion_Handler::add_transport_to_cache (void)
+{
   return 0;
 }
 

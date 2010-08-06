@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -16,6 +14,10 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client
@@ -190,9 +192,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl << be_nl
-          << "#else\n";
+      // emit #else
+      *os << "#else\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -257,18 +258,3 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   node->cli_stub_any_op_gen (1);
   return 0;
 }
-
-int
-be_visitor_interface_any_op_cs::visit_component (
-  be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_any_op_cs::visit_connector (
-  be_connector *node)
-{
-  return this->visit_interface (node);
-}
-

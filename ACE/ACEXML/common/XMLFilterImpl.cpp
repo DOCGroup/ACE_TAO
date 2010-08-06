@@ -32,68 +32,72 @@ ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl (void)
 }
 
 void
-ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input)
+ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
 {
   if (this->setupParser () < 0)
     {
-      throw ACEXML_SAXException (ACE_TEXT ("No Parent available"));
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("No Parent available")));
     }
-  this->parent_->parse (input);
+  this->parent_->parse (input ACEXML_ENV_ARG_PARAMETER);
+  return;
 }
 
 void
-ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId)
+ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
 {
   if (this->setupParser () < 0)
     {
-      throw ACEXML_SAXException (ACE_TEXT ("No Parent available"));
+      ACEXML_THROW (ACEXML_SAXException (ACE_TEXT ("No Parent available")));
     }
 
-  this->parent_->parse (new ACEXML_InputSource (systemId));
+  this->parent_->parse (new ACEXML_InputSource (systemId) ACEXML_ENV_ARG_PARAMETER);
+  return;
 }
 
 int
-ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 {
   if (this->parent_ != 0)
-    return this->parent_->getFeature (name);
+    return this->parent_->getFeature (name ACEXML_ENV_ARG_PARAMETER);
 
-  throw ACEXML_SAXNotRecognizedException (name);
+  ACEXML_THROW_RETURN (ACEXML_SAXNotRecognizedException (name), 0);
 }
 
 void *
-ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 {
   if (this->parent_ != 0)
-    return this->parent_->getProperty (name);
+    return this->parent_->getProperty (name ACEXML_ENV_ARG_PARAMETER);
 
-  throw ACEXML_SAXNotRecognizedException (name);
+  ACEXML_THROW_RETURN (ACEXML_SAXNotRecognizedException (name), 0);
 }
 
 void
-ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name, int boolean_value)
+ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name,
+                                  int boolean_value ACEXML_ENV_ARG_DECL)
 {
   if (this->parent_ != 0)
     {
-      this->parent_->setFeature (name, boolean_value);
+      this->parent_->setFeature (name,
+                                 boolean_value ACEXML_ENV_ARG_PARAMETER);
+      return;
     }
-  else
-    {
-      throw ACEXML_SAXNotRecognizedException (name);
-    }
+
+  ACEXML_THROW (ACEXML_SAXNotRecognizedException (name));
 }
 
 void
-ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name, void *value)
+ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name,
+                                   void *value ACEXML_ENV_ARG_DECL)
 {
   if (this->parent_ != 0)
     {
-      this->parent_->setProperty (name, value);
+      this->parent_->setProperty (name,
+                                  value ACEXML_ENV_ARG_PARAMETER);
+      return;
     }
-  else
-    {
-      throw ACEXML_SAXNotRecognizedException (name);
-    }
+
+  ACEXML_THROW (ACEXML_SAXNotRecognizedException (name));
 }
 
 ACEXML_XMLReader *
@@ -111,55 +115,56 @@ ACEXML_XMLFilterImpl::setParent (ACEXML_XMLReader *parent)
 void
 ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
                                   size_t start,
-                                  size_t length)
+                                  size_t length
+                                  ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
-    this->contentHandler_->characters (ch, start, length);
+    this->contentHandler_->characters (ch, start, length ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
-ACEXML_XMLFilterImpl::endDocument (void)
+ACEXML_XMLFilterImpl::endDocument (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
-    this->contentHandler_->endDocument ();
+    this->contentHandler_->endDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName)
+                                  const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endElement (namespaceURI,
                                        localName,
-                                       qName);
+                                       qName ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
-ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix)
+ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
-    this->contentHandler_->endPrefixMapping (prefix);
+    this->contentHandler_->endPrefixMapping (prefix ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
                                            int start,
-                                           int length)
+                                           int length ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->ignorableWhitespace (ch,
                                                 start,
-                                                length);
+                                                length ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
-                                             const ACEXML_Char *data)
+                                             const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->processingInstruction (target,
-                                                  data);
+                                                  data ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
@@ -170,94 +175,94 @@ ACEXML_XMLFilterImpl::setDocumentLocator (ACEXML_Locator *locator)
 }
 
 void
-ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
-    this->contentHandler_->skippedEntity (name);
+    this->contentHandler_->skippedEntity (name ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
-ACEXML_XMLFilterImpl::startDocument (void)
+ACEXML_XMLFilterImpl::startDocument (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
-    this->contentHandler_->startDocument ();
+    this->contentHandler_->startDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
                                     const ACEXML_Char *localName,
                                     const ACEXML_Char *qName,
-                                    ACEXML_Attributes *atts)
+                                    ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startElement (namespaceURI,
                                          localName,
                                          qName,
-                                         atts);
+                                         atts ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
-                                          const ACEXML_Char *uri)
+                                          const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startPrefixMapping (prefix,
-                                               uri);
+                                               uri ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
                                     const ACEXML_Char *publicId,
-                                    const ACEXML_Char *systemId)
+                                    const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
 {
   if (this->dtdHandler_ != 0)
     this->dtdHandler_->notationDecl (name,
                                      publicId,
-                                     systemId);
+                                     systemId ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
 ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
                                           const ACEXML_Char *publicId,
                                           const ACEXML_Char *systemId,
-                                          const ACEXML_Char *notationName)
+                                          const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
 {
   if (this->dtdHandler_ != 0)
     this->dtdHandler_->unparsedEntityDecl (name,
                                            publicId,
                                            systemId,
-                                           notationName);
+                                           notationName ACEXML_ENV_ARG_PARAMETER);
 }
 
 ACEXML_InputSource *
 ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
-                                     const ACEXML_Char *systemId)
+                                     const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
 {
   if (this->entityResolver_ != 0)
     return this->entityResolver_->resolveEntity (publicId,
-                                                 systemId);
+                                                 systemId ACEXML_ENV_ARG_PARAMETER);
   return 0;
 }
 
 void
-ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception)
+ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
 {
   if (this->errorHandler_ != 0)
-    this->errorHandler_->error (exception);
+    this->errorHandler_->error (exception ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
-ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception)
+ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
 {
   if (this->errorHandler_ != 0)
-    this->errorHandler_->fatalError (exception);
+    this->errorHandler_->fatalError (exception ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
-ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception)
+ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
 {
   if (this->errorHandler_ != 0)
-    this->errorHandler_->warning (exception);
+    this->errorHandler_->warning (exception ACEXML_ENV_ARG_PARAMETER);
 }
 
 ACEXML_DTDHandler *

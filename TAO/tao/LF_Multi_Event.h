@@ -73,10 +73,6 @@ public:
   int error_detected (void) const;
 
   //@}
-private:
-  void operator= (const TAO_LF_Multi_Event &);
-  TAO_LF_Multi_Event (const TAO_LF_Multi_Event &);
-
 protected:
 
   /// Validate the state change

@@ -12,7 +12,7 @@ project(CosTime_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_d
 
 project(CosTime) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_CosTime
-  dynamicflags += TAO_TIME_BUILD_DLL
+  dynamicflags = TAO_TIME_BUILD_DLL
   tagchecks   += Time
   after       += CosTime_IDL
 
@@ -45,7 +45,7 @@ project(CosTime) : orbsvcslib, orbsvcs_output, install {
 
 project(CosTime_Skel) : orbsvcslib, orbsvcs_output, install, time, portableserver {
   sharedname   = TAO_CosTime_Skel
-  dynamicflags += TAO_TIME_SKEL_BUILD_DLL
+  dynamicflags = TAO_TIME_SKEL_BUILD_DLL
   tagchecks   += Time
 
   IDL_Files {
@@ -77,7 +77,7 @@ project(CosTime_Skel) : orbsvcslib, orbsvcs_output, install, time, portableserve
 
 project(CosTime_Serv) : orbsvcslib, orbsvcs_output, install, time_skel, svc_utils {
   sharedname   = TAO_CosTime_Serv
-  dynamicflags += TAO_TIME_SERV_BUILD_DLL
+  dynamicflags = TAO_TIME_SERV_BUILD_DLL
   tagchecks   += Time
 
   IDL_Files {

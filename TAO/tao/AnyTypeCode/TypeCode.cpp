@@ -2,6 +2,11 @@
 
 #include "tao/AnyTypeCode/TypeCode.h"
 
+ACE_RCSID (AnyTypeCode,
+           TypeCode,
+           "$Id$")
+
+
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */

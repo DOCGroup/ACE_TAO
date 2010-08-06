@@ -15,7 +15,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
+static const char* ior_file = "supplier.ior";
 static bool useFilters = false;
 static Notify_Push_Supplier* supplier = 0;
 static bool use_or_operator = false;
@@ -73,7 +73,7 @@ public:
 int
 Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:f:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:f:"));
   int x;
 
   while ((x = get_opts ()) != -1)
@@ -89,16 +89,11 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
       num_events = ACE_OS::atoi (get_opts.optarg);
       break;
 
-    case 'o':
-      ior_output_file = get_opts.optarg;
-      break;
-
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
         "[-f] [-e num_events] -o <AND | OR>"
         " -ORBInitRef <Naming Service Location>"
-        "-o <ior_output_file>"
         "\n",
         argv [0]),
         -1);
@@ -224,12 +219,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     create_supplier (admin.in(), ec.in(), client.root_poa());
 
     // If the ior_file exists, output the ior to it
-    if (ior_output_file != 0)
+    if (ior_file != 0)
     {
       CORBA::String_var ior =
         client.orb ()->object_to_string (sig.in ());
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
+      FILE *output_file= ACE_OS::fopen (ior_file, "w");
       ACE_ASSERT (output_file != 0);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
@@ -249,7 +244,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     sig_impl->wait_for_completion();
 
-    ACE_OS::unlink (ior_output_file);
+    ACE_OS::unlink (ior_file);
 
     ec->destroy();
 

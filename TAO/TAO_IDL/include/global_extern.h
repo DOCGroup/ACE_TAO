@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL_FE_Export.h"
 #include "idl_global.h"
 
+
 class AST_Decl;
 
 // global_extern.hh - Global data for the IDL compiler

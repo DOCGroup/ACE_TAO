@@ -8,6 +8,7 @@
 ACE_RCSID(Bug_2494_Regression, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+int nthreads = 5;
 int do_shutdown = 0;
 
 class Simple_Server_i : public POA_Simple_Server

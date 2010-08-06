@@ -27,8 +27,6 @@
 #include "assert.h"
 #include <map>
 #include <list>
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/ServantLocatorC.h"
 
 using namespace std;
 

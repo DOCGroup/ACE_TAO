@@ -14,7 +14,13 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (ace,
+           DLL_Manager,
+           "DLL_Manager.cpp,v 4.23 2003/11/05 23:30:46 shuston Exp")
+
+/******************************************************************/
+
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
@@ -55,7 +61,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
         {
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Handle::open: error, ")
+                        ACE_TEXT ("(%P|%t) DLL_Handle::open: error, ")
                         ACE_TEXT ("tried to reopen %s with name %s\n"),
                         this->dll_name_,
                         dll_name));
@@ -145,9 +151,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                 ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
                             ACE_TEXT ("(\'%s\') failed, errno=")
-                            ACE_TEXT ("%d: <%s>\n"),
+                            ACE_TEXT ("%d: %s\n"),
                             name->c_str (),
-                            ACE_ERRNO_GET,
+                            errno,
                             this->error ()->c_str ()));
 
 #if defined (AIX)
@@ -364,7 +370,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) DLL_Handle::get_handle: ")
+                ACE_TEXT ("ACE (%P|%t) ACE_DLL_Handle::get_handle: ")
                 ACE_TEXT ("post call: handle %s, refcount %d\n"),
                 this->handle_ == ACE_SHLIB_INVALID_HANDLE ?
                 ACE_TEXT ("invalid") : ACE_TEXT ("valid"),
@@ -531,7 +537,7 @@ ACE_DLL_Manager::ACE_DLL_Manager (int size)
 
   if (this->open (size) != 0 && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE (%P|%t) DLL_Manager ctor failed to allocate ")
+                ACE_TEXT ("ACE_DLL_Manager ctor failed to allocate ")
                 ACE_TEXT ("handle_vector_.\n")));
 }
 
@@ -541,7 +547,7 @@ ACE_DLL_Manager::~ACE_DLL_Manager (void)
 
   if (this->close () != 0 && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE (%P|%t) DLL_Manager dtor failed to close ")
+                ACE_TEXT ("ACE_DLL_Manager dtor failed to close ")
                 ACE_TEXT ("properly.\n")));
 }
 
@@ -577,7 +583,7 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
           // Error while opening dll. Free temp handle
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Manager::open_dll: Could not ")
+                        ACE_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
                         ACE_TEXT ("open dll %s.\n"),
                         dll_name));
 
@@ -760,7 +766,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
         {
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload error.\n")));
+                        ACE_TEXT ("ACE_DLL_Manager::unload error.\n")));
 
           return -1;
         }
@@ -769,7 +775,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE (%P|%t) DLL_Manager::unload_dll called with ")
+                    ACE_TEXT ("ACE_DLL_Manager::unload_dll called with ")
                     ACE_TEXT ("null pointer.\n")));
 
       return -1;

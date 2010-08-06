@@ -24,7 +24,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class NAVDISPLAY_EXEC_Export NavDisplay_exec_impl
-    : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_Exec,
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -45,13 +45,15 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-      configuration_complete (void);
-
+    ciao_preactivate (void);
     virtual void
     ccm_activate (void);
 
     virtual void
-      ccm_passivate (void)  {};
+    ciao_postactivate (void);
+
+    virtual void
+    ccm_passivate (void);
 
     virtual void
     ccm_remove (void);

@@ -62,8 +62,8 @@ project(*TestServer) : orbsvcsexe, portableserver, iortable, avoids_corba_e_micr
 
 // Another simple server that can be loaded dynamically into the
 // combined_service.
-project(*DynamicServer) : taolib, portableserver, iortable, avoids_corba_e_micro {
-  dynamicflags += DYNSERVER_BUILD_DLL
+project(*DynamicServer) : taolib, tao_output, portableserver, iortable, avoids_corba_e_micro {
+  dynamicflags = DYNSERVER_BUILD_DLL
   sharedname   = DynServer
   after += *IDL
   // The gnuace specific portion is to prevent invalid object files from

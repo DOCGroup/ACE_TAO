@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    array.cpp
- *
- *  $Id$
- *
- *  Generic visitor for code generation for Arrays
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array.cpp
+//
+// = DESCRIPTION
+//    Generic visitor for code generation for Arrays
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_array,
+           array,
+           "$Id$")
 
 
 // ************************************************************************
@@ -102,11 +112,11 @@ be_visitor_array::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "::TAO::String_Manager";
+      *os << "TAO::String_Manager";
     }
   else
     {
-      *os << "::TAO::WString_Manager";
+      *os << "TAO::WString_Manager";
     }
 
   return 0;
@@ -138,13 +148,13 @@ be_visitor_array::visit_typedef (be_typedef *node)
   // the node's type name, possibly suffixed with '_var'.
   if (nt == AST_Decl::NT_string)
     {
-      *os << "::TAO::String_Manager";
+      *os << "TAO::String_Manager";
 
       return 0;
     }
   else if (nt == AST_Decl::NT_wstring)
     {
-      *os << "::TAO::WString_Manager";
+      *os << "TAO::WString_Manager";
 
       return 0;
     }
@@ -175,7 +185,7 @@ int
 be_visitor_array::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -188,7 +198,7 @@ be_visitor_array::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+      *os << bt->nested_type_name (this->ctx_->scope ());
     }
   else
     {
@@ -202,7 +212,7 @@ int
 be_visitor_array::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -215,7 +225,7 @@ be_visitor_array::emit_common (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ARRAY_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
     }
   else
     {

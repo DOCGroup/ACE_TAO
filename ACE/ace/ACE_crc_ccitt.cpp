@@ -2,6 +2,10 @@
 
 #include "ace/ACE.h"
 
+ACE_RCSID (ace,
+           ACE_crc_ccitt,
+           "$Id$")
+
 namespace
 {
   /*****************************************************************/

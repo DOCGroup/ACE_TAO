@@ -1150,6 +1150,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
     }
 }
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                        PortableServer::Servant servant)
@@ -1175,7 +1176,9 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
         return;
     }
 }
+#endif
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant servant,
@@ -1188,6 +1191,7 @@ TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                              priority,
                              wait_occurred_restart_call);
 }
+#endif
 
 void
 TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
@@ -1270,6 +1274,7 @@ TAO_Root_POA::deactivate_object (const PortableServer::ObjectId &oid)
 
   this->deactivate_object_i (oid);
 }
+
 
 void
 TAO_Root_POA::deactivate_object_i (const PortableServer::ObjectId &id)
@@ -2220,7 +2225,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   for (CORBA::ULong i = 0; i != len; ++i)
     {
       this->add_ior_component (mprofile, this->tagged_component_[i]);
-    }
+      }
 
   len = this->tagged_component_id_.length ();
 

@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_enum.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Enum
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_enum.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Enum
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_enum.h"
 #include "be_enum_val.h"
@@ -30,3 +35,6 @@
 #include "be_visitor_enum/serializer_op_ch.cpp"
 #include "be_visitor_enum/serializer_op_cs.cpp"
 
+ACE_RCSID (be, 
+           be_visitor_enum, 
+           "$Id$")

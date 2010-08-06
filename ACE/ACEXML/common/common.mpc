@@ -6,10 +6,6 @@ project(ACEXML): acelib, ace_output, codecs, install, zzip, zlib {
   sharedname    = ACEXML
   dynamicflags += ACEXML_BUILD_DLL
 
-  specific {
-    install_dir = ACEXML/common
-  }
-
   Source_Files {
     // This file will only be added if the ace_codecs feature is enabled.
     // See codecs.mpb for more information.
@@ -26,6 +22,7 @@ project(ACEXML): acelib, ace_output, codecs, install, zzip, zlib {
     Locator.h
     XMLFilter.h
     XMLReader.h
+    XML_Macros.h
     XML_Types.h
     XML_Util.h
   }

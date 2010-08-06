@@ -913,7 +913,6 @@ libTAO_la_SOURCES = \
   Remote_Object_Proxy_Broker.cpp \
   Reply_Dispatcher.cpp \
   Request_Dispatcher.cpp \
-  RequestInterceptor_Adapter.cpp \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
   ServerRequestInterceptor_Adapter.cpp \
@@ -1025,6 +1024,7 @@ nobase_include_HEADERS = \
   Block_Flushing_Strategy.h \
   Blocked_Connect_Strategy.h \
   BooleanSeq.pidl \
+  BooleanSeq.pidl \
   BooleanSeqC.h \
   BooleanSeqS.h \
   Bounded_Array_Allocation_Traits_T.h \
@@ -1040,6 +1040,7 @@ nobase_include_HEADERS = \
   CDR.h \
   CDR.inl \
   CONV_FRAME.pidl \
+  CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
   CORBALOC_Parser.h \
@@ -1051,6 +1052,7 @@ nobase_include_HEADERS = \
   Cache_Entries_T.cpp \
   Cache_Entries_T.h \
   Cache_Entries_T.inl \
+  CharSeq.pidl \
   CharSeq.pidl \
   CharSeqC.h \
   CharSeqS.h \
@@ -1082,6 +1084,7 @@ nobase_include_HEADERS = \
   Connector_Registry.h \
   Connector_Registry.inl \
   Current.pidl \
+  Current.pidl \
   CurrentC.h \
   CurrentS.h \
   DLL_Parser.h \
@@ -1089,6 +1092,7 @@ nobase_include_HEADERS = \
   Default_Endpoint_Selector_Factory.h \
   Default_Stub_Factory.h \
   Default_Thread_Lane_Resources_Manager.h \
+  DoubleSeq.pidl \
   DoubleSeq.pidl \
   DoubleSeqC.h \
   DoubleSeqS.h \
@@ -1112,9 +1116,11 @@ nobase_include_HEADERS = \
   Fixed_Size_Argument_T.h \
   Fixed_Size_Argument_T.inl \
   FloatSeq.pidl \
+  FloatSeq.pidl \
   FloatSeqC.h \
   FloatSeqS.h \
   Flushing_Strategy.h \
+  GIOP.pidl \
   GIOP.pidl \
   GIOPC.h \
   GIOPC.inl \
@@ -1141,6 +1147,7 @@ nobase_include_HEADERS = \
   HTTP_Parser.h \
   IFR_Client_Adapter.h \
   IIOP.pidl \
+  IIOP.pidl \
   IIOPC.h \
   IIOP_Acceptor.h \
   IIOP_Acceptor.inl \
@@ -1149,11 +1156,13 @@ nobase_include_HEADERS = \
   IIOP_Endpoint.h \
   IIOP_Endpoint.inl \
   IIOP_Endpoints.pidl \
+  IIOP_Endpoints.pidl \
   IIOP_EndpointsC.h \
   IIOP_EndpointsS.h \
   IIOP_Factory.h \
   IIOP_Profile.h \
   IIOP_Transport.h \
+  IOP.pidl \
   IOP.pidl \
   IOPC.h \
   IOPS.h \
@@ -1171,9 +1180,6 @@ nobase_include_HEADERS = \
   Intrusive_Ref_Count_Handle_T.cpp \
   Intrusive_Ref_Count_Handle_T.h \
   Intrusive_Ref_Count_Handle_T.inl \
-  Intrusive_Ref_Count_Object_T.cpp \
-  Intrusive_Ref_Count_Object_T.h \
-  Intrusive_Ref_Count_Object_T.inl \
   InvalidName.pidl \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \
@@ -1209,23 +1215,26 @@ nobase_include_HEADERS = \
   LocateRequest_Invocation.h \
   LocateRequest_Invocation_Adapter.h \
   LongDoubleSeq.pidl \
+  LongDoubleSeq.pidl \
   LongDoubleSeqC.h \
   LongDoubleSeqS.h \
   LongLongSeq.pidl \
+  LongLongSeq.pidl \
   LongLongSeqC.h \
   LongLongSeqS.h \
+  LongSeq.pidl \
   LongSeq.pidl \
   LongSeqC.h \
   LongSeqS.h \
   MCAST_Parser.h \
   MCAST_Parser.inl \
-  Message_Semantics.h \
   MMAP_Allocator.h \
-  MM_Sequence_Iterator_T.h \
   MProfile.h \
   MProfile.inl \
   Messaging_PolicyValue.pidl \
+  Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
+  Messaging_SyncScope.pidl \
   Messaging_SyncScope.pidl \
   Messaging_SyncScopeC.h \
   Muxed_TMS.h \
@@ -1248,6 +1257,7 @@ nobase_include_HEADERS = \
   Object.h \
   Object.inl \
   ObjectIdList.pidl \
+  ObjectIdList.pidl \
   ObjectIdListC.h \
   ObjectKey_Table.h \
   Object_Argument_T.cpp \
@@ -1269,11 +1279,14 @@ nobase_include_HEADERS = \
   Objref_VarOut_T.h \
   Objref_VarOut_T.inl \
   OctetSeq.pidl \
+  OctetSeq.pidl \
   OctetSeqC.h \
   OctetSeqS.h \
   On_Demand_Fragmentation_Strategy.h \
   PI_Forward.pidl \
+  PI_Forward.pidl \
   PI_ForwardC.h \
+  ParameterMode.pidl \
   ParameterMode.pidl \
   ParameterModeC.h \
   ParameterModeS.h \
@@ -1290,15 +1303,18 @@ nobase_include_HEADERS = \
   Policy_Current.h \
   Policy_Current.inl \
   Policy_Current.pidl \
+  Policy_Current.pidl \
   Policy_CurrentC.h \
   Policy_CurrentS.h \
   Policy_Current_Impl.h \
   Policy_Current_Impl.inl \
   Policy_Forward.pidl \
+  Policy_Forward.pidl \
   Policy_ForwardC.h \
   Policy_ForwardS.h \
   Policy_Manager.h \
   Policy_Manager.inl \
+  Policy_Manager.pidl \
   Policy_Manager.pidl \
   Policy_ManagerC.h \
   Policy_ManagerS.h \
@@ -1306,6 +1322,7 @@ nobase_include_HEADERS = \
   Policy_Set.inl \
   Policy_Validator.h \
   PortableInterceptor.h \
+  PortableInterceptor.pidl \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
   PortableInterceptorS.h \
@@ -1334,7 +1351,6 @@ nobase_include_HEADERS = \
   Reply_Dispatcher.h \
   Reply_Dispatcher.inl \
   Request_Dispatcher.h \
-  RequestInterceptor_Adapter.h \
   Resource_Factory.h \
   Resume_Handle.h \
   Resume_Handle.inl \
@@ -1354,9 +1370,11 @@ nobase_include_HEADERS = \
   Service_Context_Handler.h \
   Service_Context_Handler_Registry.h \
   Services.pidl \
+  Services.pidl \
   ServicesC.h \
   ServicesS.h \
   Services_Activate.h \
+  ShortSeq.pidl \
   ShortSeq.pidl \
   ShortSeqC.h \
   ShortSeqS.h \
@@ -1364,6 +1382,7 @@ nobase_include_HEADERS = \
   Special_Basic_Argument_T.h \
   Special_Basic_Argument_T.inl \
   Special_Basic_Arguments.h \
+  StringSeq.pidl \
   StringSeq.pidl \
   StringSeqC.h \
   StringSeqS.h \
@@ -1382,6 +1401,7 @@ nobase_include_HEADERS = \
   Synch_Reply_Dispatcher.h \
   SystemException.h \
   SystemException.inl \
+  TAO.pidl \
   TAO.pidl \
   TAOC.h \
   TAOS.h \
@@ -1402,6 +1422,7 @@ nobase_include_HEADERS = \
   Thread_Lane_Resources.h \
   Thread_Lane_Resources_Manager.h \
   Thread_Per_Connection_Handler.h \
+  TimeBase.pidl \
   TimeBase.pidl \
   TimeBaseC.h \
   TimeBaseS.h \
@@ -1430,14 +1451,15 @@ nobase_include_HEADERS = \
   UB_String_Argument_T.h \
   UB_String_Argument_T.inl \
   UB_String_Arguments.h \
-  Unbounded_BD_String_Sequence_T.h \
-  Bounded_BD_String_Sequence_T.h \
+  ULongLongSeq.pidl \
   ULongLongSeq.pidl \
   ULongLongSeqC.h \
   ULongLongSeqS.h \
   ULongSeq.pidl \
+  ULongSeq.pidl \
   ULongSeqC.h \
   ULongSeqS.h \
+  UShortSeq.pidl \
   UShortSeq.pidl \
   UShortSeqC.h \
   UShortSeqS.h \
@@ -1467,8 +1489,10 @@ nobase_include_HEADERS = \
   Version.h \
   Versioned_Namespace.h \
   WCharSeq.pidl \
+  WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \
+  WStringSeq.pidl \
   WStringSeq.pidl \
   WStringSeqC.h \
   WStringSeqS.h \
@@ -1494,6 +1518,7 @@ nobase_include_HEADERS = \
   operation_details.h \
   operation_details.inl \
   orb.idl \
+  orb_types.pidl \
   orb_types.pidl \
   orb_typesC.h \
   orb_typesS.h \
@@ -1556,7 +1581,6 @@ libTAO_Codeset_la_SOURCES = \
   Codeset/Codeset_Descriptor.cpp \
   Codeset/Codeset_Manager_Factory.cpp \
   Codeset/Codeset_Manager_i.cpp \
-  Codeset/Codeset_Service_Context_Handler.cpp \
   Codeset/Codeset_Translator_Factory.cpp \
   Codeset/UTF16_BOM_Factory.cpp \
   Codeset/UTF16_BOM_Translator.cpp \
@@ -1575,7 +1599,6 @@ nobase_include_HEADERS += \
   Codeset/CodeSetContextC.h \
   Codeset/CodeSetContextS.h \
   Codeset/Codeset.h \
-  Codeset/Codeset_Service_Context_Handler.h \
   Codeset/Codeset_Descriptor.h \
   Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
@@ -2051,9 +2074,11 @@ nobase_include_HEADERS += \
   CodecFactory/CodecFactory.h \
   CodecFactory/CodecFactory_impl.h \
   CodecFactory/IOP_Codec.pidl \
+  CodecFactory/IOP_Codec.pidl \
   CodecFactory/IOP_CodecA.h \
   CodecFactory/IOP_CodecC.h \
   CodecFactory/IOP_CodecS.h \
+  CodecFactory/IOP_Codec_include.pidl \
   CodecFactory/IOP_Codec_include.pidl \
   CodecFactory/IOP_Codec_includeA.h \
   CodecFactory/IOP_Codec_includeC.h \
@@ -2355,8 +2380,7 @@ libTAO_PI_la_SOURCES = \
   PI/ProcessingModePolicyC.cpp \
   PI/RequestInfoA.cpp \
   PI/RequestInfoC.cpp \
-  PI/RequestInfo_Util.cpp \
-  PI/RequestInterceptor_Adapter_Impl.cpp
+  PI/RequestInfo_Util.cpp
 
 libTAO_PI_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2372,9 +2396,11 @@ nobase_include_HEADERS += \
   PI/ClientRequestDetails.inl \
   PI/ClientRequestInfo.h \
   PI/ClientRequestInfo.pidl \
+  PI/ClientRequestInfo.pidl \
   PI/ClientRequestInfoA.h \
   PI/ClientRequestInfoC.h \
   PI/ClientRequestInfoS.h \
+  PI/ClientRequestInterceptor.pidl \
   PI/ClientRequestInterceptor.pidl \
   PI/ClientRequestInterceptorA.h \
   PI/ClientRequestInterceptorC.h \
@@ -2384,11 +2410,13 @@ nobase_include_HEADERS += \
   PI/ClientRequestInterceptor_Factory_Impl.h \
   PI/DLL_Resident_ORB_Initializer.h \
   PI/Interceptor.pidl \
+  PI/Interceptor.pidl \
   PI/InterceptorA.h \
   PI/InterceptorC.h \
   PI/InterceptorS.h \
   PI/Interceptor_List_T.cpp \
   PI/Interceptor_List_T.h \
+  PI/InvalidSlot.pidl \
   PI/InvalidSlot.pidl \
   PI/InvalidSlotA.h \
   PI/InvalidSlotC.h \
@@ -2396,9 +2424,11 @@ nobase_include_HEADERS += \
   PI/ORBInitInfo.h \
   PI/ORBInitInfo.inl \
   PI/ORBInitInfo.pidl \
+  PI/ORBInitInfo.pidl \
   PI/ORBInitInfoA.h \
   PI/ORBInitInfoC.h \
   PI/ORBInitInfoS.h \
+  PI/ORBInitializer.pidl \
   PI/ORBInitializer.pidl \
   PI/ORBInitializerA.h \
   PI/ORBInitializerC.h \
@@ -2408,6 +2438,7 @@ nobase_include_HEADERS += \
   PI/PICurrent.h \
   PI/PICurrent.inl \
   PI/PICurrent.pidl \
+  PI/PICurrent.pidl \
   PI/PICurrentA.h \
   PI/PICurrentC.h \
   PI/PICurrentS.h \
@@ -2415,11 +2446,13 @@ nobase_include_HEADERS += \
   PI/PICurrent_Impl.inl \
   PI/PICurrent_Loader.h \
   PI/PIForwardRequest.pidl \
+  PI/PIForwardRequest.pidl \
   PI/PIForwardRequestA.h \
   PI/PIForwardRequestC.h \
   PI/PIForwardRequestS.h \
   PI/PI_ORBInitializer.h \
   PI/PI_PolicyFactory.h \
+  PI/PI_include.pidl \
   PI/PI_include.pidl \
   PI/PI_includeA.h \
   PI/PI_includeC.h \
@@ -2432,15 +2465,16 @@ nobase_include_HEADERS += \
   PI/PolicyFactory_Registry.h \
   PI/ProcessingModePolicy.h \
   PI/ProcessingModePolicy.pidl \
+  PI/ProcessingModePolicy.pidl \
   PI/ProcessingModePolicyA.h \
   PI/ProcessingModePolicyC.h \
   PI/ProcessingModePolicyS.h \
+  PI/RequestInfo.pidl \
   PI/RequestInfo.pidl \
   PI/RequestInfoA.h \
   PI/RequestInfoC.h \
   PI/RequestInfoS.h \
   PI/RequestInfo_Util.h \
-  PI/RequestInterceptor_Adapter_Impl.h \
   PI/pi_export.h
 
 pkgconfig_DATA += \
@@ -2509,6 +2543,7 @@ libTAO_BiDirGIOP_la_LIBADD = \
 
 nobase_include_HEADERS += \
   BiDir_GIOP/BiDirGIOP.h \
+  BiDir_GIOP/BiDirPolicy.pidl \
   BiDir_GIOP/BiDirPolicy.pidl \
   BiDir_GIOP/BiDirPolicyC.h \
   BiDir_GIOP/BiDirPolicyS.h \
@@ -2612,10 +2647,12 @@ nobase_include_HEADERS += \
   Compression/Base_Compressor.h \
   Compression/Compression.h \
   Compression/Compression.pidl \
+  Compression/Compression.pidl \
   Compression/CompressionA.h \
   Compression/CompressionC.h \
   Compression/CompressionS.h \
   Compression/Compression_Manager.h \
+  Compression/Compression_include.pidl \
   Compression/Compression_include.pidl \
   Compression/Compression_includeA.h \
   Compression/Compression_includeC.h \
@@ -3201,6 +3238,7 @@ nobase_include_HEADERS += \
   PortableServer/Active_Policy_Strategies.h \
   PortableServer/Active_Policy_Strategies.inl \
   PortableServer/AdapterActivator.pidl \
+  PortableServer/AdapterActivator.pidl \
   PortableServer/AdapterActivatorA.h \
   PortableServer/AdapterActivatorC.h \
   PortableServer/AdapterActivatorS.h \
@@ -3228,10 +3266,12 @@ nobase_include_HEADERS += \
   PortableServer/Fixed_Size_SArgument_T.h \
   PortableServer/Fixed_Size_SArgument_T.inl \
   PortableServer/ForwardRequest.pidl \
+  PortableServer/ForwardRequest.pidl \
   PortableServer/ForwardRequestA.h \
   PortableServer/ForwardRequestC.h \
   PortableServer/ForwardRequestS.h \
   PortableServer/IdAssignmentPolicy.h \
+  PortableServer/IdAssignmentPolicy.pidl \
   PortableServer/IdAssignmentPolicy.pidl \
   PortableServer/IdAssignmentPolicyA.h \
   PortableServer/IdAssignmentPolicyC.h \
@@ -3242,6 +3282,7 @@ nobase_include_HEADERS += \
   PortableServer/IdAssignmentStrategySystem.h \
   PortableServer/IdAssignmentStrategyUser.h \
   PortableServer/IdUniquenessPolicy.h \
+  PortableServer/IdUniquenessPolicy.pidl \
   PortableServer/IdUniquenessPolicy.pidl \
   PortableServer/IdUniquenessPolicyA.h \
   PortableServer/IdUniquenessPolicyC.h \
@@ -3255,6 +3296,7 @@ nobase_include_HEADERS += \
   PortableServer/ImR_Client_Adapter.h \
   PortableServer/ImplicitActivationPolicy.h \
   PortableServer/ImplicitActivationPolicy.pidl \
+  PortableServer/ImplicitActivationPolicy.pidl \
   PortableServer/ImplicitActivationPolicyA.h \
   PortableServer/ImplicitActivationPolicyC.h \
   PortableServer/ImplicitActivationPolicyS.h \
@@ -3265,6 +3307,7 @@ nobase_include_HEADERS += \
   PortableServer/ImplicitActivationStrategyImplicit.h \
   PortableServer/Key_Adapters.h \
   PortableServer/LifespanPolicy.h \
+  PortableServer/LifespanPolicy.pidl \
   PortableServer/LifespanPolicy.pidl \
   PortableServer/LifespanPolicyA.h \
   PortableServer/LifespanPolicyC.h \
@@ -3296,12 +3339,15 @@ nobase_include_HEADERS += \
   PortableServer/Operation_Table_Linear_Search.h \
   PortableServer/Operation_Table_Perfect_Hash.h \
   PortableServer/POA.pidl \
+  PortableServer/POA.pidl \
   PortableServer/POAC.h \
   PortableServer/POAManager.h \
   PortableServer/POAManager.inl \
   PortableServer/POAManager.pidl \
+  PortableServer/POAManager.pidl \
   PortableServer/POAManagerC.h \
   PortableServer/POAManagerFactory.h \
+  PortableServer/POAManagerFactory.pidl \
   PortableServer/POAManagerFactory.pidl \
   PortableServer/POAManagerFactoryC.h \
   PortableServer/POAManagerFactoryS.h \
@@ -3317,6 +3363,7 @@ nobase_include_HEADERS += \
   PortableServer/POA_Policy_Set.h \
   PortableServer/POA_Policy_Set.inl \
   PortableServer/PS_Current.pidl \
+  PortableServer/PS_Current.pidl \
   PortableServer/PS_CurrentC.h \
   PortableServer/PS_CurrentS.h \
   PortableServer/PS_Forward.pidl \
@@ -3329,11 +3376,13 @@ nobase_include_HEADERS += \
   PortableServer/Policy_Strategy.h \
   PortableServer/PortableServer.h \
   PortableServer/PortableServer.pidl \
+  PortableServer/PortableServer.pidl \
   PortableServer/PortableServerA.h \
   PortableServer/PortableServerC.h \
   PortableServer/PortableServerS.h \
   PortableServer/PortableServer_Functions.h \
   PortableServer/PortableServer_WFunctions.h \
+  PortableServer/PortableServer_include.pidl \
   PortableServer/PortableServer_include.pidl \
   PortableServer/PortableServer_includeA.h \
   PortableServer/PortableServer_includeC.h \
@@ -3341,6 +3390,7 @@ nobase_include_HEADERS += \
   PortableServer/Regular_POA.h \
   PortableServer/Regular_POA.inl \
   PortableServer/RequestProcessingPolicy.h \
+  PortableServer/RequestProcessingPolicy.pidl \
   PortableServer/RequestProcessingPolicy.pidl \
   PortableServer/RequestProcessingPolicyA.h \
   PortableServer/RequestProcessingPolicyC.h \
@@ -3361,18 +3411,22 @@ nobase_include_HEADERS += \
   PortableServer/Root_POA.inl \
   PortableServer/SArg_Traits_T.h \
   PortableServer/ServantActivator.pidl \
+  PortableServer/ServantActivator.pidl \
   PortableServer/ServantActivatorA.h \
   PortableServer/ServantActivatorC.h \
   PortableServer/ServantActivatorS.h \
+  PortableServer/ServantLocator.pidl \
   PortableServer/ServantLocator.pidl \
   PortableServer/ServantLocatorA.h \
   PortableServer/ServantLocatorC.h \
   PortableServer/ServantLocatorS.h \
   PortableServer/ServantManager.pidl \
+  PortableServer/ServantManager.pidl \
   PortableServer/ServantManagerA.h \
   PortableServer/ServantManagerC.h \
   PortableServer/ServantManagerS.h \
   PortableServer/ServantRetentionPolicy.h \
+  PortableServer/ServantRetentionPolicy.pidl \
   PortableServer/ServantRetentionPolicy.pidl \
   PortableServer/ServantRetentionPolicyA.h \
   PortableServer/ServantRetentionPolicyC.h \
@@ -3399,6 +3453,7 @@ nobase_include_HEADERS += \
   PortableServer/Special_Basic_SArguments.h \
   PortableServer/StrategyFactory.h \
   PortableServer/ThreadPolicy.h \
+  PortableServer/ThreadPolicy.pidl \
   PortableServer/ThreadPolicy.pidl \
   PortableServer/ThreadPolicyA.h \
   PortableServer/ThreadPolicyC.h \
@@ -3507,6 +3562,7 @@ nobase_include_HEADERS += \
   CSD_Framework/CSD_FW_Export.h \
   CSD_Framework/CSD_FW_Server_Request_Wrapper.h \
   CSD_Framework/CSD_FW_Server_Request_Wrapper.inl \
+  CSD_Framework/CSD_Framework.pidl \
   CSD_Framework/CSD_Framework.pidl \
   CSD_Framework/CSD_FrameworkA.h \
   CSD_Framework/CSD_FrameworkC.h \
@@ -3686,7 +3742,6 @@ libTAO_DiffServPolicy_la_SOURCES = \
   DiffServPolicy/DiffServPolicy.cpp \
   DiffServPolicy/DiffServPolicyA.cpp \
   DiffServPolicy/DiffServPolicyC.cpp \
-  DiffServPolicy/DiffServ_Service_Context_Handler.cpp \
   DiffServPolicy/DiffServPolicy_Factory.cpp \
   DiffServPolicy/DiffServPolicy_ORBInitializer.cpp \
   DiffServPolicy/DiffServ_Network_Priority_Hook.cpp \
@@ -3706,7 +3761,6 @@ libTAO_DiffServPolicy_la_LIBADD = \
 
 nobase_include_HEADERS += \
   DiffServPolicy/Client_Network_Priority_Policy.h \
-  DiffServPolicy/DiffServ_Service_Context_Handler.h \
   DiffServPolicy/DiffServPolicy.h \
   DiffServPolicy/DiffServPolicy.pidl \
   DiffServPolicy/DiffServPolicyA.h \
@@ -3898,6 +3952,7 @@ nobase_include_HEADERS += \
   DynamicAny/DynValueCommon_i.h \
   DynamicAny/DynValue_i.h \
   DynamicAny/DynamicAny.h \
+  DynamicAny/DynamicAny.pidl \
   DynamicAny/DynamicAny.pidl \
   DynamicAny/DynamicAnyC.h \
   DynamicAny/DynamicAnyS.h \
@@ -4556,10 +4611,12 @@ libTAO_IFR_Client_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IFR_Client/IFR_Base.pidl \
+  IFR_Client/IFR_Base.pidl \
   IFR_Client/IFR_BaseA.h \
   IFR_Client/IFR_BaseC.h \
   IFR_Client/IFR_BaseC.inl \
   IFR_Client/IFR_BaseS.h \
+  IFR_Client/IFR_Basic.pidl \
   IFR_Client/IFR_Basic.pidl \
   IFR_Client/IFR_BasicA.h \
   IFR_Client/IFR_BasicC.h \
@@ -4567,10 +4624,12 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_BasicS.h \
   IFR_Client/IFR_Client_Adapter_Impl.h \
   IFR_Client/IFR_Components.pidl \
+  IFR_Client/IFR_Components.pidl \
   IFR_Client/IFR_ComponentsA.h \
   IFR_Client/IFR_ComponentsC.h \
   IFR_Client/IFR_ComponentsC.inl \
   IFR_Client/IFR_ComponentsS.h \
+  IFR_Client/IFR_Extended.pidl \
   IFR_Client/IFR_Extended.pidl \
   IFR_Client/IFR_ExtendedA.h \
   IFR_Client/IFR_ExtendedC.h \
@@ -4691,6 +4750,7 @@ libTAO_ObjRefTemplate_la_LIBADD = \
 
 nobase_include_HEADERS += \
   ObjRefTemplate/Default_ORT.pidl \
+  ObjRefTemplate/Default_ORT.pidl \
   ObjRefTemplate/Default_ORTA.h \
   ObjRefTemplate/Default_ORTC.h \
   ObjRefTemplate/Default_ORTC.inl \
@@ -4699,11 +4759,13 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ORT_Adapter_Impl.h \
   ObjRefTemplate/ObjectReferenceTemplate.h \
   ObjRefTemplate/ObjectReferenceTemplate.pidl \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl \
   ObjRefTemplate/ObjectReferenceTemplateA.h \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
   ObjRefTemplate/ObjectReferenceTemplateS.h \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
+  ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
   ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
   ObjRefTemplate/ObjectReferenceTemplate_includeA.h \
   ObjRefTemplate/ObjectReferenceTemplate_includeC.h \
@@ -4798,9 +4860,11 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInfo.h \
   IORInterceptor/IORInfo.inl \
   IORInterceptor/IORInfo.pidl \
+  IORInterceptor/IORInfo.pidl \
   IORInterceptor/IORInfoC.h \
   IORInterceptor/IORInfoS.h \
   IORInterceptor/IORInterceptor.h \
+  IORInterceptor/IORInterceptor.pidl \
   IORInterceptor/IORInterceptor.pidl \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptorS.h \
@@ -4874,6 +4938,7 @@ libTAO_IORManip_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IORManipulation/IOR.pidl \
+  IORManipulation/IOR.pidl \
   IORManipulation/IORA.h \
   IORManipulation/IORC.h \
   IORManipulation/IORManip_Filter.h \
@@ -4944,6 +5009,7 @@ libTAO_IORTable_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IORTable/IORTable.h \
+  IORTable/IORTable.pidl \
   IORTable/IORTable.pidl \
   IORTable/IORTableC.h \
   IORTable/IORTableS.h \
@@ -5049,10 +5115,12 @@ libTAO_ImR_Client_la_LIBADD = \
 nobase_include_HEADERS += \
   ImR_Client/ImR_Client.h \
   ImR_Client/ImplRepo.pidl \
+  ImR_Client/ImplRepo.pidl \
   ImR_Client/ImplRepoA.h \
   ImR_Client/ImplRepoC.h \
   ImR_Client/ImplRepoC.inl \
   ImR_Client/ImplRepoS.h \
+  ImR_Client/ServerObject.pidl \
   ImR_Client/ServerObject.pidl \
   ImR_Client/ServerObjectA.h \
   ImR_Client/ServerObjectC.h \
@@ -5162,6 +5230,7 @@ nobase_include_HEADERS += \
   PI_Server/PI_Server.h \
   PI_Server/PI_Server_Loader.h \
   PI_Server/PI_Server_include.pidl \
+  PI_Server/PI_Server_include.pidl \
   PI_Server/PI_Server_includeA.h \
   PI_Server/PI_Server_includeC.h \
   PI_Server/PI_Server_includeS.h \
@@ -5173,6 +5242,7 @@ nobase_include_HEADERS += \
   PI_Server/ServerRequestDetails.inl \
   PI_Server/ServerRequestInfo.h \
   PI_Server/ServerRequestInfo.inl \
+  PI_Server/ServerRequestInfo.pidl \
   PI_Server/ServerRequestInfo.pidl \
   PI_Server/ServerRequestInfoA.h \
   PI_Server/ServerRequestInfoC.h \
@@ -5265,7 +5335,6 @@ libTAO_RTCORBA_la_SOURCES = \
   RTCORBA/RTCORBAC.cpp \
   RTCORBA/RTCORBA_includeC.cpp \
   RTCORBA/RT_Current.cpp \
-  RTCORBA/RT_Service_Context_Handler.cpp \
   RTCORBA/RT_Endpoint_Selector_Factory.cpp \
   RTCORBA/RT_Endpoint_Utils.cpp \
   RTCORBA/RT_Invocation_Endpoint_Selectors.cpp \
@@ -5299,7 +5368,6 @@ nobase_include_HEADERS += \
   RTCORBA/Continuous_Priority_Mapping.h \
   RTCORBA/Direct_Priority_Mapping.h \
   RTCORBA/Linear_Network_Priority_Mapping.h \
-  RTCORBA/RT_Service_Context_Handler.h \
   RTCORBA/Linear_Priority_Mapping.h \
   RTCORBA/Multi_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping.h \
@@ -5310,9 +5378,11 @@ nobase_include_HEADERS += \
   RTCORBA/Priority_Mapping_Manager.inl \
   RTCORBA/RTCORBA.h \
   RTCORBA/RTCORBA.pidl \
+  RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBAA.h \
   RTCORBA/RTCORBAC.h \
   RTCORBA/RTCORBAS.h \
+  RTCORBA/RTCORBA_include.pidl \
   RTCORBA/RTCORBA_include.pidl \
   RTCORBA/RTCORBA_includeA.h \
   RTCORBA/RTCORBA_includeC.h \
@@ -5439,9 +5509,11 @@ libTAO_RTPortableServer_la_LIBADD = \
 nobase_include_HEADERS += \
   RTPortableServer/RTPortableServer.h \
   RTPortableServer/RTPortableServer.pidl \
+  RTPortableServer/RTPortableServer.pidl \
   RTPortableServer/RTPortableServerA.h \
   RTPortableServer/RTPortableServerC.h \
   RTPortableServer/RTPortableServerS.h \
+  RTPortableServer/RTPortableServer_include.pidl \
   RTPortableServer/RTPortableServer_include.pidl \
   RTPortableServer/RTPortableServer_includeA.h \
   RTPortableServer/RTPortableServer_includeC.h \
@@ -5554,6 +5626,7 @@ nobase_include_HEADERS += \
   RTScheduling/Distributable_Thread.h \
   RTScheduling/RTScheduler.h \
   RTScheduling/RTScheduler.pidl \
+  RTScheduling/RTScheduler.pidl \
   RTScheduling/RTSchedulerA.h \
   RTScheduling/RTSchedulerC.h \
   RTScheduling/RTSchedulerS.h \
@@ -5561,6 +5634,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler_Loader.h \
   RTScheduling/RTScheduler_Manager.h \
   RTScheduling/RTScheduler_Manager.inl \
+  RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeA.h \
   RTScheduling/RTScheduler_includeC.h \
@@ -5985,17 +6059,20 @@ libTAO_Monitor_la_LIBADD = \
 nobase_include_HEADERS += \
   Monitor/Monitor.h \
   Monitor/Monitor.pidl \
+  Monitor/Monitor.pidl \
   Monitor/MonitorA.h \
   Monitor/MonitorC.h \
   Monitor/MonitorC.inl \
   Monitor/MonitorS.h \
   Monitor/Monitor_Impl.h \
   Monitor/Monitor_Types.pidl \
+  Monitor/Monitor_Types.pidl \
   Monitor/Monitor_TypesA.h \
   Monitor/Monitor_TypesC.h \
   Monitor/Monitor_TypesC.inl \
   Monitor/Monitor_TypesS.h \
   Monitor/Monitor_export.h \
+  Monitor/Monitor_include.pidl \
   Monitor/Monitor_include.pidl \
   Monitor/Monitor_includeA.h \
   Monitor/Monitor_includeC.h \
@@ -6454,7 +6531,6 @@ libTAO_ZIOP_la_SOURCES = \
   ZIOP/ZIOP_ORBInitializer.cpp \
   ZIOP/ZIOP_PolicyFactory.cpp \
   ZIOP/ZIOP_Policy_Validator.cpp \
-  ZIOP/ZIOP_Service_Context_Handler.cpp \
   ZIOP/ZIOP_Policy_i.cpp \
   ZIOP/ZIOP_Stub.cpp \
   ZIOP/ZIOP_Stub_Factory.cpp
@@ -6473,13 +6549,13 @@ libTAO_ZIOP_la_LIBADD = \
 nobase_include_HEADERS += \
   ZIOP/ZIOP.h \
   ZIOP/ZIOP.pidl \
+  ZIOP/ZIOP.pidl \
   ZIOP/ZIOPC.h \
   ZIOP/ZIOPS.h \
   ZIOP/ZIOP_ORBInitializer.h \
   ZIOP/ZIOP_PolicyFactory.h \
   ZIOP/ZIOP_Policy_Validator.h \
   ZIOP/ZIOP_Policy_i.h \
-  ZIOP/ZIOP_Service_Context_Handler.h \
   ZIOP/ZIOP_Stub.h \
   ZIOP/ZIOP_Stub_Factory.h \
   ZIOP/ziop_export.h

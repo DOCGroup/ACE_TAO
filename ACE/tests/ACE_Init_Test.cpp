@@ -25,7 +25,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("ACE_Init_Test"));
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("This is not a Win32 platform with MFC support, test skipped\n")));
+              ACE_TEXT ("This is not a Win32 platform, test skipped\n")));
   ACE_END_TEST;
   return 0;
 }

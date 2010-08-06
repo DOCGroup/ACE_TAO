@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for interfaces
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for interfaces
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           cdr_op_cs,
+           "$Id$")
 
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
     be_visitor_context *ctx
@@ -62,14 +72,12 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->full_name () << "_ptr _tao_objref)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
-      
-  AST_Decl::NodeType nt = node->node_type ();
 
   if (node->is_abstract ())
     {
       *os << "::CORBA::AbstractBase_ptr";
     }
-  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  else if (node->node_type () == AST_Decl::NT_component)
     {
       *os << "Components::CCMObject_ptr";
     }
@@ -95,7 +103,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << "::CORBA::AbstractBase_var obj;";
     }
-  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  else if (node->node_type () == AST_Decl::NT_component)
     {
       *os << "Components::CCMObject_var obj;";
     }
@@ -147,7 +155,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << be_nl;
 
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
@@ -155,18 +163,3 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   node->cli_stub_cdr_op_gen (1);
   return 0;
 }
-
-int
-be_visitor_interface_cdr_op_cs::visit_component (
-  be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_cdr_op_cs::visit_connector (
-  be_connector *node)
-{
-  return this->visit_interface (node);
-}
-

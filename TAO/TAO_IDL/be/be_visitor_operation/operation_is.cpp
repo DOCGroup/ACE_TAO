@@ -1,16 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    operation_is.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the implementation skeleton
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_is.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the implementation skeleton
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           operation_is, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for implementation skeleton
@@ -77,8 +85,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   // STEP 2: generate the operation name
   *os << " " << be_global->impl_class_prefix () << classname
-      << be_global->impl_class_suffix () << "::"
-      << node->local_name ();
+      << be_global->impl_class_suffix () << "::" << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

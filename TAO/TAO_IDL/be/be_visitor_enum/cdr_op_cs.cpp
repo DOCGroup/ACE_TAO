@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Enum for the CDR operators
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Enum for the CDR operators
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_enum,
+           cdr_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************
@@ -65,7 +75,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

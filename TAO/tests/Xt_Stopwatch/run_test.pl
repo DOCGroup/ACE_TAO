@@ -1,76 +1,45 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$file = PerlACE::LocalFile ("test.ior");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+unlink $file;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+$SV = new PerlACE::Process ("server", "-o $file");
+$CL = new PerlACE::Process ("client", "file://$file");
 
 print STDERR "\n\n==== XtReactor demo test\n";
 
-$server_status = $SV->Spawn ();
+$SV->Spawn ();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($file, 3) == -1) {
+    print STDERR "ERROR: cannot find file <$file>\n";
+    $SV->Kill (); 
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL->SpawnWaitKill (60);
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $file;
 
 exit $status;

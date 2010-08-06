@@ -1,32 +1,56 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_eventtype.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_EventType and be_valuetype that provides
- *  additional means for C++ mapping of an eventtype.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_eventtype.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_EventType and be_valuetype that provides
+//    additional means for C++ mapping of an eventtype.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_eventtype.h"
 #include "be_visitor.h"
 
-#include "global_extern.h"
+ACE_RCSID (be,
+           be_eventtype,
+           "$Id$")
 
+// Default constructor.
+be_eventtype::be_eventtype (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_interface (),
+    AST_ValueType (),
+    be_valuetype (),
+    AST_EventType ()
+{
+}
+
+// Constructor used to build the AST.
 be_eventtype::be_eventtype (UTL_ScopedName *n,
-                            AST_Type **inherits,
+                            AST_Interface **inherits,
                             long n_inherits,
-                            AST_Type *inherits_concrete,
+                            AST_ValueType *inherits_concrete,
                             AST_Interface **inherits_flat,
                             long n_inherits_flat,
-                            AST_Type **supports,
+                            AST_Interface **supports,
                             long n_supports,
-                            AST_Type *supports_concrete,
+                            AST_Interface *supports_concrete,
                             bool abstract,
                             bool truncatable,
                             bool custom)
@@ -104,9 +128,7 @@ be_eventtype::~be_eventtype (void)
 int
 be_eventtype::accept (be_visitor *visitor)
 {
-  return (idl_global->ignore_idl3 ()
-            ? 0
-            : visitor->visit_eventtype (this));
+  return visitor->visit_eventtype (this);
 }
 
 void

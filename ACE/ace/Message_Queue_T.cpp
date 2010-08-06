@@ -9,10 +9,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
 
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-#include "ace/Message_Queue_NT.h"
-#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -60,13 +56,13 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (size_t ne
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
-ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (size_t high_water_mark,
-                                                                             size_t low_water_mark,
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (size_t hwm,
+                                                                             size_t lwm,
                                                                              ACE_Notification_Strategy *ns)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex");
 
-  if (this->queue_.open (high_water_mark, low_water_mark, ns) == -1)
+  if (this->queue_.open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Queue_Ex")));
 }
@@ -1142,7 +1138,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
       else
         this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
     }
-
   return previous_state;
 }
 
@@ -1173,12 +1168,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  // There's no need to check the return value of deactivate_i() since
-  // it never fails!
-  this->deactivate_i ();
+  int const result = this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
-  return this->flush_i ();
+  this->flush_i ();
+
+  return result;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -1769,7 +1764,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   int queue_count = 0;
-  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1783,17 +1777,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
       return -1;
 
     queue_count = this->enqueue_head_i (new_item);
+
     if (queue_count == -1)
       return -1;
 
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-    this->monitor_->receive (this->cur_length_);
-#endif
-    notifier = this->notification_strategy_;
+    this->notify ();
   }
-
-  if (0 != notifier)
-    notifier->notify();
   return queue_count;
 }
 
@@ -1807,7 +1796,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
   int queue_count = 0;
-  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1825,13 +1813,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-    this->monitor_->receive (this->cur_length_);
-#endif
-    notifier = this->notification_strategy_;
+    this->notify ();
   }
-  if (0 != notifier)
-    notifier->notify ();
   return queue_count;
 }
 
@@ -1845,7 +1828,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline");
   int queue_count = 0;
-  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1863,13 +1845,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-    this->monitor_->receive (this->cur_length_);
-#endif
-    notifier = this->notification_strategy_;
+    this->notify ();
   }
-  if (0 != notifier)
-    notifier->notify ();
   return queue_count;
 }
 
@@ -1890,7 +1867,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   int queue_count = 0;
-  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1908,13 +1884,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-    this->monitor_->receive (this->cur_length_);
-#endif
-    notifier = this->notification_strategy_;
+    this->notify ();
   }
-  if (0 != notifier)
-    notifier->notify ();
   return queue_count;
 }
 
@@ -2014,6 +1985,10 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
+
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+  this->monitor_->receive (this->cur_length_);
+#endif
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)

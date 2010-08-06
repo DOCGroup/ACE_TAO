@@ -31,20 +31,23 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *val)
 {
-  bool retval = this->select_primary (r, val);
+  bool retval =
+    this->select_primary (r,
+                          val);
 
   if (retval)
     return;
 
-  retval = this->select_secondary (r, val);
+  retval =
+    this->select_secondary (r,
+                            val);
 
-  // If we get here and still haven't found a primary or
-  // secondary then we used to throw a TRANSIENT exception here.
-  // But that would prevent any request interception points
-  // being called. They may know how to fix the problem so
-  // we wait to throw the exception in
-  // Synch_Twoway_Invocation::remote_twoway and
-  // Synch_Oneway_Invocation::remote_oneway instead.
+  if (retval == false)
+    {
+      // If we get here, we completely failed to find an endpoint selector
+      // that we know how to use, so throw an exception.
+      throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+    }
 
   return;
 }
@@ -66,8 +69,9 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
   if (prof_list == 0)
     return false;
 
-  // Try to look for primaries all over the place
-  CORBA::ULong const sz = prof_list->size ();
+  // Did not succeed. Try to look for primaries all over the place
+  CORBA::ULong sz =
+    prof_list->size ();
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
@@ -80,7 +84,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       bool retval =
         this->check_profile_for_primary (tmp);
 
-      // Found a primary
+      // Choose a non-primary
       if (retval == true && tmp != 0)
         {
           retval =
@@ -88,7 +92,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
                                tmp,
                                max_wait_time);
 
-          if (retval)
+          if (retval == true)
             return true;
         }
     }
@@ -114,7 +118,8 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
   if (prof_list == 0)
     return false;
 
-  CORBA::ULong const sz = prof_list->size ();
+  CORBA::ULong sz =
+    prof_list->size ();
 
   for (CORBA::ULong i = 0;
        i != sz;
@@ -126,7 +131,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
       bool retval =
         this->check_profile_for_primary (tmp);
 
-      // Found a non-primary
+      // Choose a non-primary
       if (retval == false && tmp != 0)
         {
           retval =
@@ -184,7 +189,7 @@ bool
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
     TAO_Profile *pfile)
 {
-  if (!pfile)
+  if (pfile == 0)
     return false;
 
   IOP::TaggedComponent tagged_component;

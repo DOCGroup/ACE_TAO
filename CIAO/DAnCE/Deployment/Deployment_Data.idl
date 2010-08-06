@@ -6,10 +6,15 @@
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 
 module Deployment {
+
   struct ComponentPackageReference {
     string requiredUUID;
     string requiredName;
-    ComponentInterfaceDescription requiredType;
+
+    // @@changed
+    //ComponentInterfaceDescription requiredType;
+
+    string requiredType;
   };
 
   typedef sequence < ComponentPackageReference > ComponentPackageReferences;
@@ -20,6 +25,7 @@ module Deployment {
     ResourceUsageKinds resourceUsage;
     string resourcePort;
     string componentPort;
+    // @@ changed: order of name and resourceType
     string name;
     string resourceType;
     Properties property;
@@ -37,5 +43,3 @@ module Deployment {
 };
 
 #endif /* DEPLOYMENT_DATA_IDL */
-
-

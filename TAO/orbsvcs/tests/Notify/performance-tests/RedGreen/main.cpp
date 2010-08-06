@@ -17,6 +17,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       client.init (argc, argv); //Init the Client
 
       client.run ();
+
+      client.destroy_ec ();
     }
   catch (const CORBA::Exception& se)
     {

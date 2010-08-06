@@ -1,5 +1,9 @@
 // $Id$
 
+ACE_RCSID (be_visitor_operation,
+           proxy_impl_xh,
+           "$Id$")
+
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
     be_visitor_context *ctx
   )
@@ -13,13 +17,6 @@ be_visitor_operation_proxy_impl_xh::~be_visitor_operation_proxy_impl_xh (void)
 
 int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
 {
-  /// These implied IDL operations are not to be processed on
-  /// the skeleton side.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-    
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
@@ -42,8 +39,7 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str ()
-      << node->local_name () << " (" << be_idt_nl
+  *os << node->local_name () << " (" << be_idt_nl
       << "TAO_Abstract_ServantBase *servant, "
       << "TAO::Argument **args, "
       << "int num_args);" << be_uidt_nl;

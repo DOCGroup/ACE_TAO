@@ -1,34 +1,14 @@
 //$Id$
-project(*idl) : tao_versioning_idl_defaults {
-  custom_only = 1
-  IDL_Files {
-    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
-                -Wb,export_macro=TAO_BiDirGIOP_Export \
-                -Wb,export_include=tao/BiDir_GIOP/bidirgiop_export.h \
-                -Wb,include_guard=TAO_BIDIRGIOP_SAFE_INCLUDE \
-                -Wb,safe_include=tao/BiDir_GIOP/BiDirGIOP.h \
-                -o BiDir_GIOP
-    BiDir_GIOP/BiDirPolicy.pidl
-  }
-}
-
-project(BiDir_GIOP) : taolib, tao_output, install, pi, taoidldefaults {
-  after       += *idl
+project(BiDir_GIOP) : taolib, tao_output, install, pi, tao_versioning_idl_defaults {
   sharedname   = TAO_BiDirGIOP
-  dynamicflags += TAO_BIDIRGIOP_BUILD_DLL
+  dynamicflags = TAO_BIDIRGIOP_BUILD_DLL
 
   Source_Files {
     BiDir_GIOP
-  }
-
-  Source_Files {
-    BiDir_GIOP/BiDirPolicyC.cpp
   }
 
   Header_Files {
     BiDir_GIOP
-    BiDir_GIOP/BiDirPolicyC.h
-    BiDir_GIOP/BiDirPolicyS.h
   }
 
   Inline_Files {
@@ -48,6 +28,13 @@ project(BiDir_GIOP) : taolib, tao_output, install, pi, taoidldefaults {
   }
 
   IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
+                -Wb,export_macro=TAO_BiDirGIOP_Export \
+                -Wb,export_include=tao/BiDir_GIOP/bidirgiop_export.h \
+                -Wb,include_guard=TAO_BIDIRGIOP_SAFE_INCLUDE \
+                -Wb,safe_include=tao/BiDir_GIOP/BiDirGIOP.h \
+                -o BiDir_GIOP
+    BiDir_GIOP/BiDirPolicy.pidl
   }
 
   Pkgconfig_Files {

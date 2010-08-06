@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    smart_proxy_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation node in the client header.
- *
- *
- *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_smart_proxy_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation node in the client header.
+//
+// = AUTHOR
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           smart_proxy_ch, 
+           "$Id$")
 
 // ******************************************************
 // Primary visitor for "operation" in client header.
@@ -66,8 +76,7 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
         }
 
       // STEP 2: generate the operation name.
-      *os << " " << this->ctx_->port_prefix ().c_str ()
-          << node->local_name ();
+      *os << " " << node->local_name ();
 
       // STEP 3: generate the argument list with the appropriate mapping. For these
       // we grab a visitor that generates the parameter listing

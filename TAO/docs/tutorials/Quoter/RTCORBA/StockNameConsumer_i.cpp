@@ -23,7 +23,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
        i < the_stockname->names ().length ();
        ++i)
     {
-      if (ACE_OS::strcmp (this->stock_name_.in (),
+      if (ACE_OS::strcmp (this->stock_name_,
                           the_stockname->names ()[i]) == 0)
         {
           // Get the quoter for the connection from the <context_>.
@@ -58,16 +58,17 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
     }
 }
 
+
 ::Stock::Cookie *
-Stock_StockNameConsumer_i::cookie_ ()
+Stock_StockNameConsumer_i::cookie ()
 {
-  return this->cookie__.in ();
+  return this->cookie_.in ();
 }
 
 void
-Stock_StockNameConsumer_i::cookie_ (::Stock::Cookie *cookie)
+Stock_StockNameConsumer_i::cookie (::Stock::Cookie *cookie)
 {
-  this->cookie__ = cookie;
+  this->cookie_ = cookie;
   cookie->_add_ref ();
 }
 

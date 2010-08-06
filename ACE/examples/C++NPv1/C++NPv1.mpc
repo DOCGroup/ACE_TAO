@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Iterative_Logging_Server) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*Iterative_Logging_Server) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = iterative_logging_server
   Source_Files {
     Iterative_Logging_Server.cpp
@@ -19,8 +19,8 @@ project(*Logging_Client) : aceexe {
   }
 }
 
-project(*PPC_Logging_Server) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*PPC_Logging_Server) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = ppc_logging_server
   Source_Files {
     Process_Per_Connection_Logging_Server.cpp
@@ -29,8 +29,8 @@ project(*PPC_Logging_Server) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*Reactive_Logging_Server) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*Reactive_Logging_Server) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = reactive_logging_server
   Source_Files {
     Reactive_Logging_Server.cpp
@@ -39,8 +39,8 @@ project(*Reactive_Logging_Server) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*Reactive_Logging_Server_Ex) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*Reactive_Logging_Server_Ex) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = reactive_logging_server_ex
   Source_Files {
     Reactive_Logging_Server_Ex.cpp
@@ -49,8 +49,8 @@ project(*Reactive_Logging_Server_Ex) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*RTTPC_Logging_Server) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*RTTPC_Logging_Server) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = RTTPC_logging_server
   Source_Files {
     RT_Thread_Per_Connection_Logging_Server.cpp
@@ -59,8 +59,8 @@ project(*RTTPC_Logging_Server) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*TPC_Logging_Server) : aceexe, avoids_ace_for_tao {
-  avoids += uses_wchar
+project(*TPC_Logging_Server) : aceexe {
+  avoids += uses_wchar ace_for_tao
   exename = tpc_logging_server
   Source_Files {
     Thread_Per_Connection_Logging_Server.cpp

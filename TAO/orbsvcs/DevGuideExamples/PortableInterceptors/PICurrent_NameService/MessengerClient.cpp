@@ -7,7 +7,6 @@
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_unistd.h"
 #include <iostream>
 
 int
@@ -43,15 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       name.length(1);
       name[0].id = CORBA::string_dup( "Messenger" );
 
-      CORBA::Object_var obj = CORBA::Object::_nil();
-      while ( CORBA::is_nil( obj.in() ) ) {
-        try {
-          obj = root->resolve( name );
-        } catch (const CosNaming::NamingContext::NotFound&) {
-          // Sleep for a second and try again
-          ACE_OS::sleep(1);
-        }
-      }
+      CORBA::Object_var obj = root->resolve( name );
 
       Messenger_var messenger = Messenger::_narrow( obj.in() );
       if( CORBA::is_nil( messenger.in() ) ) {

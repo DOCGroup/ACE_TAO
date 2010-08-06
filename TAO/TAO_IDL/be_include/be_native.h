@@ -1,16 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_native.h
- *
- *  $Id$
- *
- *  The native IDL type
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// Id
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_native.h
+//
+// = DESCRIPTION
+//    The native IDL type
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
 
 #ifndef BE_NATIVE_H
 #define BE_NATIVE_H
@@ -31,23 +37,29 @@ class be_native : public virtual AST_Native,
                   public virtual be_exception
 {
 public:
+  be_native (void);
+  // Default constructor.
+
   be_native (UTL_ScopedName *n);
+  // Constructor that initializes its scoped name.
 
   virtual ~be_native (void) {}
+  // Destructor
 
-  /// Generate the typecode description.
   virtual int gen_typecode (void);
+  // Generate the typecode description.
 
-  /// Return typecode size.
   virtual long tc_size (void);
+  // Return typecode size.
   
-  /// Cleanup.
   virtual void destroy (void);
+  // Cleanup.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(be_native);
 };
 

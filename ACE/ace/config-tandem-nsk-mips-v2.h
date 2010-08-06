@@ -185,6 +185,9 @@ typedef enum CMA_T_SCHED_POLICY {
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
 
+// Compiler/platform supports strerror ()
+#define ACE_HAS_STRERROR
+
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
 
@@ -335,6 +338,9 @@ typedef enum CMA_T_SCHED_POLICY {
 //=========================================================================
 // Compiler specific parts
 //=========================================================================
+
+// Compiler supports C++ exception handling
+#define ACE_HAS_EXCEPTIONS
 
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS

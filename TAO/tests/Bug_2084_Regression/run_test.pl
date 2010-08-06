@@ -6,95 +6,79 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$iorbase = "test.ior";
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+    $iorfile = $iorbase;
 }
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server");
-
-print STDERR "======== Running in Default Mode\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile " .
-                "-ORBdebuglevel $debug_level");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+else {
+    $SV = new PerlACE::Process ("server");
+    $iorfile = PerlACE::LocalFile ($iorbase);
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running in Default Mode \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
-print STDERR "======== Running with per-orb\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile " .
-                "-ORBdebuglevel $debug_level -ORBCollocation per-orb");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running with per-orb \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation per-orb");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
-print STDERR "======== Running with no collocation\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile " .
-                "-ORBdebuglevel $debug_level -ORBCollocation no");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running with no collocation \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation no");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
-print STDERR "======== Running in default mode and two ORBS\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n " .
-                "-ORBdebuglevel $debug_level");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running in default mode and two ORBS \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile -n ");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
-print STDERR "======== Running in per-orb mode and two ORBS\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n " .
-                "-ORBdebuglevel $debug_level -ORBCollocation per-orb");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running in per-orb mode and two ORBS \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
-print STDERR "======== Running in no collocation mode and two ORBS\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -n " .
-                "-ORBdebuglevel $debug_level -ORBCollocation no");
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
 }
+unlink $iorfile;
 
-$server->DeleteFile($iorbase);
+print STDERR "======== Running in no collocation mode and two ORBS \n";
+$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+
+if ($sv != 0) {
+    print STDERR "ERROR in Bug_2084_Regression\n";
+    $status = 1;
+}
+unlink $iorfile;
 
 exit $status;

@@ -44,7 +44,7 @@
       about a compile error in a particular configuration, try setting up a build to 
       make sure that it doesn't show up again if it has been fixed.
       <li>
-        Keep an eye on the <a href="http://bugzilla.dre.vanderbilt.edu/">bugzilla
+        Keep an eye on the <a href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bugzilla
         </a>
       entries that are registered by users and developers. Decide on the bugs that 
       need to be fixed for the beta and pain developers for an ETA.
@@ -55,7 +55,7 @@
     </P>
     <P>
       The Build Czar is empowered to set up more builds on his own for his 
-      convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD">
+      convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
@@ -73,11 +73,13 @@
       while cutting a beta:
       <ol>
         <li>
-          The whole process takes somewhere between 3-4 hours.</li>
+          The whole process takes somewhere between 8-9 hours, it now takes much longer 
+          than the original 2 hours for making the release itself where as generating the 
+          doxygen documentation now completes in around this 2-3 hours mark.</li>
         <li>
-          We suggest you take advantage of GNU Screen so that even if your SSH session is
-          interrupted, the cutting process can continue. This command must be installed on
-          the machines we use to cut the release.
+          I suggest you take advantage of GNU Screen so that even if your SSH session is 
+          interrupted, the cutting process can continue. This command is available on 
+          both of the two machines we use to cut the release.
           <ul>
             <li>
               type <code>screen</code> to start screen.</li>
@@ -89,42 +91,27 @@
             <li>
               when finished, just type exit twice</li>
           </ul>
-          <li>
-            After login check that you can,
-            <br>
-            <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
-            to ensure that this succeeds. If not fix the problem, if ok exit again back to
         <li>
           Prior to starting this, gather aggregate release notes from all developers. 
-          This is usually in the form of an email plea asking to update all NEWS files in
-          the archive. These NEWS files are used as part of the release notes for the release.</li>
+          This is usually in the form of an email plea asking for a writeup of 
+          significant changes since the last beta. Add these notes to the NEWS files 
+          before cutting the release so that all notes are part of the release.</li>
         <li>
-          Make sure your release system has all the needed tools. This can be achieved on Fedora
-          using:
-          <ul>
-            <li><code>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz</code></li>
-             <li><code>yum update</code></li>
-          </ul>
-        </li>
-        <li>
-          Checkout a new workspace on a Fedora system with the last public release and with
-          all patches installed. 
-          
-        </li>
+          Checkout a new workspace on <tt>anduril.dre.vanderbilt.edu</tt></li>
         <ul>
           <li>
-            The best place to create the workspace is under <code>/export/anduriltmp/bczar</code> (if you are on anduril). Don't
+            The best place to create the workspace is under /export/anduriltmp/bczar. Don't 
             use the home directory itself, it is an NFS share and not really fast.
           </li>
           <li>
             Checkout like this:
             <ul>
               <li>
-                <code>svn co --username &lt;your user id&gt; 
-                https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</code></li>
+                svn co --username &lt;your user id&gt; 
+                https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
               <li>
-                <code>svn co --username &lt;your user id&gt; 
-                https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</code></li>
+                svn co --username &lt;your user id&gt; 
+                https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
             </ul>
         </ul>
         <li>
@@ -134,13 +121,13 @@
           to fill the ChangeLog entry.</li>
         <ul>
           <li>
-            For example,<tt>export SIGNATURE="Johnny Willemsen"</tt></li></ul>
+            For example,<tt>export SIGNATURE="Chris Cleeland"</tt></li></ul>
         <li>
           Set an environment variable MAILID indicating your mail id. This is used to 
           fill the mail id portion of the ChangeLog entry.</li>
         <ul>
           <li>
-            For example,<tt>export MAILID="jwillemsen@remedy.nl"</tt></li></ul>
+            For example,<tt>export MAILID="cleeland@ociweb.com"</tt></li></ul>
         <li>
           Change directories to <tt>$DOC_ROOT</tt>
         </li>
@@ -152,8 +139,6 @@
           documentation in parallel. NOTE that <code>--beta</code> should be replaced 
           with <code>--minor</code> or <code>--major</code> as appropriate.</li>
         <br>
-        After the repository has been tagged check each file listed below to make
-        sure version numbers are updated as expected.<br>
         <br>
         In the <em>EXTREMELY</em> unlikely event that something goes wrong during the <em>
           tagging</em> of the repo, the following files must be returned to the state 
@@ -201,32 +186,31 @@
       <li>
         Create the kits by executing<br>
         <code>ACE/bin/make_release.py --kit</code><br>
-        This will take somewhere arround 2-4 hours to complete.
+        This will take somewhere arround 4-8 hours to complete.
         <ul>
           <li>
             These commands only tags and creates the kits for the software itself, not 
             documentation, this can be started in parrellel with this activity.
           </li>
           <li>
-            The kits end up in <tt>$DOC_ROOT/packages</tt></li>
+            The kits end up in <tt>/export/anduriltmp/bczar/packages</tt></li>
         </ul>
     <p>
     To summarize, the following is a transcript of the steps up to this point 
     executing successfully:
-    <p><code>$ ssh ..<br>
+    <p><code>$ ssh bczar@anduril.dre.vanderbilt.edu<br>
         No default printer<br>
-        screen<br>
-        cd /tmp<br>
-        rm -rf DOC_ROOT<br>
-        mkdir DOC_ROOT<br>
-        export DOC_ROOT=$PWD/DOC_ROOT<br>
-        export SIGNATURE="Johnny Willemsen"<br>
-        export MAILID=jwillemsen@remedy.nl<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
-        cd DOC_ROOT/<br>
-        ACE/bin/make_release.py --beta --update --tag<br>
-        ACE/bin/make_release.py --kit<br>
+        -bash-3.00$ screen<br>
+        -bash-3.00$ cd /export/anduriltmp/bczar<br>
+        -bash-3.00$ export DOC_ROOT=$PWD/DOC_ROOT<br>
+        -bash-3.00$ export SIGNATURE="Johnny Willemsen"<br>
+        -bash-3.00$ export MAILID=jwillemsen@remedy.nl<br>
+        -bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
+        -bash-3.00$ svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk 
+        DOC_ROOT/ACE/MPC<br>
+        -bash-3.00$ cd DOC_ROOT/<br>
+        -bash-3.00$ ACE/bin/make_release.py --beta --update --tag<br>
+        -bash-3.00$ ACE/bin/make_release.py --kit<br>
       </code>
     <p>
       Feel free to cut and paste with suitable edits.
@@ -234,34 +218,30 @@
         The packages end up by default under $DOC_ROOT/package-&lt;PID&gt;, you can 
         copy them to the webserver using the following commands. (Note that &lt;PID&gt; 
         needs to be the numerical pid of the process that created the kit, use<br>
-        <code>ls -ald</code>
+        <code>ls -ald</code><br>
         to determine the correct filename.) At the moment you execute these commands 
-        all users can download these packages.</li>
-      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
-        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
+        all users can download these packages.</li><br>
+      <code>cp $DOC_ROOT/package-&lt;PID&gt;/ACE* 
+        /export/www/download.dre/ACE+TAO-distribution<br>
       </code>
       <li>
         After the repository is tagged you can also start generating the doxygen 
         documentation in parrellel with the kit generation above.<br>
         <ul>
           <li>
-            Login to a release system you prepared with the same packages as above:<br>
+            Login to naboo.dre.vanderbilt.edu as bczar and start a screen session:<br>
+            <code>ssh bczar@naboo.dre.vanderbilt.edu</code><br>
             <code>screen</code></li>
           <li>
             After login check that you can,
             <br>
             <code>ssh bczar@download.dre.vanderbilt.edu</code><br>
             to ensure that this succeeds. If not fix the problem, if ok exit again back to 
-            your release system. </li>
+            naboo. The make script tries to copy the tar.gz files to the website using ssh.</li>
           <li>
-            <code>cd /tmp</code><br>
-            and remove the contents of the doxygen directory and recreate it again with</li><br>
-          <code>rm -rf doxygen</code><br>
-          <code>mkdir doxygen</code><br>
-          <code>cd doxygen</code><br>
-          If you create the doxygen documentation on <code>naboo.dre.vanderbilt.edu</code>
-          than make sure you use <code>/web/users/isisbuilds/tmp/ACE_wrappers</code>
-          as working directory
+            <code>cd /web/users/isisbuilds/tmp/ACE_wrappers</code><br>
+            and remove the contents of this directory with</li><br>
+          <code>rm -rf *</code>
           <li>
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE 
             version number being released e.g. 5_6_7)
@@ -274,50 +254,35 @@
               svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO 
               ACE_wrappers/TAO/CIAO </code>
           </li>
-          <li>Change to the ACE_wrappers directory using <br>
-          cd ACE_wrappers</li>
           <li>
             Set the needed environment variables using<br>
-            <code>export ACE_ROOT=$PWD</code></li>
+            <code>export ACE_ROOT=/web/users/isisbuilds/tmp/ACE_wrappers/ACE_wrappers</code></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
             <code>doxygen --version</code>
-            This should be at least 1.6.2
           </li>
+          <li>
+            Open up <code>$ACE_ROOT/bin/generate_rel_manpages</code> in your favorite 
+            editor.<br>
+            Search for the string '<code><b>doxy_version</b></code>'.<br>
+            Check that the version specified in the file is the same as the one you got 
+            using the shell command. If it is different change the value of the 
+            doxy_version to the one installed on naboo.dre.vanderbilt.edu.</li> Then exit the editor. 
+        Check the file, generate_rel_manpages back into the repository if you have made some 
+        changes to it.
           <br>
         Now you are ready to create documentation
       </li>
       <li>
         <code>cd $ACE_ROOT</code><br>
-        <code>nohup make -f Release manpages &</code><br>
-        When this is ready copy the resulting files using<br>
-        <code>scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution</code>
-      </li></ul>
-            <code>
-        screen<br>
-        cd /tmp<br>
-        rm -rf doxygen<br>
-        mkdir doxygen<br>
-        cd doxygen<br>
-        svn co
-              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE
-              ACE_wrappers<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO
-              ACE_wrappers/TAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO
-              ACE_wrappers/TAO/CIAO<br>
-        cd ACE_wrappers<br>
-        export ACE_ROOT=$PWD<br>
-        nohup make -f Release manpages &<br>
-        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
- </code>
-<br>
+        <code>make -f Release manpages</code>
+      </li></ul><br>
       <li>
         While doxygen churns, format a release announcement, including the release 
         notes gathered from developers.
         <ul>
           <li>Get from bugzilla the bugs fixed. Use the following 
-              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
+              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2008-11-28&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
           <li>
             Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before 
             you do anything with them.</li></ul>
@@ -380,19 +345,19 @@
         <li>back out of the temporary directory<br>
           <code>cd ..</code></li>
         <li>
-          Create directory 'Current Version No' for example 5.8.1 and change directory into this new one<br><code>mkdir 5.8.1<br>cd 5.8.1</code></li>
+          Create directory 'Current Version No' for example 5.6.7 and change directory into this new one<br><code>mkdir 5.6.7<br>cd 5.6.7</code></li>
         <li>
           Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
         <li>
-          Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
+          Now back our of this directory and remove the already existing soflink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
         <li>
-          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.8.1/html
-          Micro</code>. If this is a minor release also update the <code>Stable</code> link.</li>
+          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.6.7/html 
+          Micro</code></li>
         <li>
         Remove the directory tmp -<br><code>rm -rf tmp</code></lib>
       </ul><br>
       <li>
-        On <b>anduril.dre.vanderbilt.edu</b> where the kit was being generated and once <b>BOTH</b> the kit
+        Back on <b>anduril.dre.vanderbilt.edu</b> where the kit was being generated and once <b>BOTH</b> the kit
         and doxygen generation have finished their work, you should also move the packages to the
         previous versions directory with the appropriate decorators.
         <ul>
@@ -403,16 +368,24 @@
           <li>
             Modify <b><code>/export/anduriltmp/bczar/copy_script.sh</code></b>
           to use the correct ACE version X.Y.Z and run it.
-          <li>
-            Update the copy_script.sh file for the new micro release</li>
         </ul><br>
       <li>
-        Validate the packages on the webserver whether they are really containing the new release. Make at least
-        one build where you run the TAO Hello world test and check if the libraries are having the
-        correct version number.</li>
+        Mail the approved release announcement out to, at minimum the following: <tt>ciao-users@list.isis.vanderbilt.edu</tt>,
+        <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
+        <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>. 
+        Do this as yourself (not as bugzilla). <b>N.B.</b>
+      You will not be able to post to the users' lists unless you are subscribed to 
+      them. Odds are you will not be able to post to the announce lists at all. Ask 
+      someone else (like Doug or Johnny) to do this step.<br>
+      <li>
+        When all cidlc builds are ready with the new version, login to 
+        naboo.dre.vanderbilt.edu as bczar and run <code>./cut_cidlc.sh version-number</code>
+         where the version-number is the CIAO release just made. For example<br>
+         <code>./cut_cidlc.sh 0.6.7</code><br>If this script is not in its place, then 
+        the original is in the bin directory of the distribution.</li>
       <li>
         Update in the autobuild archive the file configs/scoreboard/releases.xml with 
-        the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.theaceorb.nl  Remember to do a changelog entry.</li>
+        the made release (version number and release date). This is used by the integrated scoreboard on http://remedy.nl  Remember to do a changelog entry.</li>
       <li>
         Update the ACE_wrappers repo (remember to create a changelog entry, and possiably archive the old changelog to the changelog directory if this has become too long):<ul>
         <li>docs/Download.html to show the new release. Make sure you refer to the 
@@ -424,53 +397,54 @@
       <li>
         Update the NEWS, TAO/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
       <li>
-        Mail the approved release announcement out to, at minimum the following: <tt>ciao-users@list.isis.vanderbilt.edu</tt>,
-        <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
-        <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>. 
-        Do this as yourself (not as bugzilla). <b>N.B.</b>
-      You will not be able to post to the users' lists unless you are subscribed to 
-      them. Odds are you will not be able to post to the announce lists at all. Ask 
-      someone else (like Doug or Johnny) to do this step.<br>
+        Update the rpmbuild/*.spec files to have a new version for the next release.</li>
+      <li>
+        Validate the packages on the webserver whether they are really containing the new release. Make at least
+        one builid where you run the TAO Hello world test and check if the libraries are having the
+        correct version number.</li>
       </ol>
     </p>
     <hr>
     <h2>
       Tips to being a Build Czar</h2>
-    <p><ol>
-      <li>Trust no one.</li>
-      <li>Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he 
+    <p>
+      1. Trust no one.<br>
+      2. Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he 
       is notorious in breaking builds (and fixing them as well...Rumour has it that 
       it's actually a super-scalar, super-pipelined processor capable of out-of-order 
-      execution, in human incarnation).</li>
-      <li>Don't forgive people who break ACE :-)</li>
-      <li>If a build hasn't run in a long time (symptoms are a "red" in the Last Run 
+      execution, in human incarnation).<br>
+      3. Don't forgive people who break ACE :-)<br>
+      4. If a build hasn't run in a long time (symptoms are a "red" in the Last Run 
       column of the build scoreboard), delete the .disable file in 
-      /path/to/build/directory/BUILD_NAME/ by hand.</li>
-      <li>Think of the group who wrote the scoreboard update script, every time you 
+      /path/to/build/directory/BUILD_NAME/ by hand.<br>
+      5. Think of the group who wrote the scoreboard update script, every time you 
       catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
-        DEVO group</a> about it.</li>
-      <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
-      </li>
-      <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
-      <li>Trust the release script when making a release. Don't make tar balls by 
+        DEVO group</a> about it.<br>
+      6. Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
+      <br>
+      7. Compile once on Win32, Linux and Solaris before cutting a beta.<br>
+      8. Trust the release script when making a release. Don't make tar balls by 
       hand. Make sure that the public ftp directories 
       (/project/beguine/ftp/pub/ACE+TAO-distribution and 
       /project/beguine/ftp/pub/ACE+TAO-distribution/diffs) have the right 
-      permissions, so that the release script can copy the tar balls.</li>
-      <li>When all hell breaks loose, don't wait for the nightly builds to monitor 
-      improvement. Instead manually start the builds.</li>
-      <li>Maintain private up-to-date workspaces for problem platforms (read as 
-      Solaris).</li>
-      <li>Don't hesitate to ask for help.</li>
-      <li>When you get an account to access the svn repo, make sure you are added to 
+      permissions, so that the release script can copy the tar balls.<br>
+      9. When making a release, make sure that all the auto_compiles on that machine 
+      (deuce.doc.wustl.edu) are stopped. Also make sure that there is enough space in 
+      /tmp on that machine.<br>
+      10. When all hell breaks loose, don't wait for the nightly builds to monitor 
+      improvement. Instead manually start the builds.<br>
+      11. Maintain private up-to-date workspaces for problem platforms (read as 
+      Solaris).<br>
+      12. Don't hesitate to ask for help.<br>
+      13. When you get an account to access the svn repo, make sure you are added to 
       the correct groups, for example, 
       gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have 
-      problem to checkout various modules.</li>
-      <li>Install your public key to the different machines you have frequent access 
-      to avoid typing password.</li>
-      <li>Update this page if you have any more tips for future build czars :-). This 
-      page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code></li>
-    </p></ol>
+      problem to checkout various modules.<br>
+      14. Install your public key to the different machines you have frequent access 
+      to avoid typing password.<br>
+      15. Update this page if you have any more tips for future build czars :-). This 
+      page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code><br>
+    </p>
     <hr>
     <Center>
       <h1>The Realm of the Build Czar</h1>

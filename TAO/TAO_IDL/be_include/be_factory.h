@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_factory.h
- *
- *  $Id$
- *
- *  Extension of class AST_Factory that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_factory.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Factory that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
 
 #ifndef BE_FACTORY_H
 #define BE_FACTORY_H
@@ -31,22 +36,25 @@ class be_factory : public virtual AST_Factory,
                    public virtual be_decl
 {
 public:
+  be_factory (void);
+  // Default constructor.
+
   be_factory (UTL_ScopedName *n);
+  // Constructor
 
   ~be_factory (void);
+  // Destructor.
 
-  /// Cleanup method.
   virtual void destroy (void);
+  // Cleanup method.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Add an argument to the scope.
-  virtual AST_Argument *be_add_argument (AST_Argument *arg);
-
   // Narrowing
+
   DEF_NARROW_FROM_DECL (be_factory);
   DEF_NARROW_FROM_SCOPE (be_factory);
 };
 
-#endif // BE_FACTORY_H
+#endif

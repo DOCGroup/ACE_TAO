@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Enums for the Any operators
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Enums for the Any operators
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_enum,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Enum visitor for generating Any operator declarations in the client header

@@ -6,15 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-my $policies = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("Policies");
+}
+else {
+    $T = new PerlACE::Process ("Policies");
+}
 
-$SV = $policies->CreateProcess ("Policies");
-$status = $SV->SpawnWaitKill ($policies->ProcessStartWaitInterval ());
+$test = $T->SpawnWaitKill (60);
 
-if ($status != 0) {
-    print STDERR "ERROR: test returns $status\n";
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
     exit 1;
 }
 

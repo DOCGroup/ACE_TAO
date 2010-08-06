@@ -29,6 +29,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Array_Base.h"
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
@@ -50,9 +51,8 @@ namespace TAO
   {
   public:
     /// Constructor.
-    PICurrent_Impl (TAO_ORB_Core *orb_core= 0,
-                    size_t tss_slot= 0,
-                    PICurrent_Impl *pop= 0);
+    PICurrent_Impl (void);
+
     /// Destructor.
     ~PICurrent_Impl (void);
 
@@ -66,12 +66,6 @@ namespace TAO
 
     /// Logically/Lazy (shallow) copy the given object's slot table.
     void take_lazy_copy (PICurrent_Impl *p);
-
-    /// Push a new PICurrent_Impl on stack
-    void push (void);
-
-    /// Pop old PICurrent_Impl from stack
-    void pop (void);
 
   private:
     /// Force this object to convert from a logical (referenced)
@@ -104,12 +98,6 @@ namespace TAO
     //@}
 
   private:
-    /// Allow for stack of PICurrent_Impl as required.
-    TAO_ORB_Core   *orb_core_;
-    size_t         tss_slot_;
-    PICurrent_Impl *pop_;
-    PICurrent_Impl *push_;
-
     /// Array of CORBA::Anys that is the underlying "slot table."
     Table slot_table_;
 

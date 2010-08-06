@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation node in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation node in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           operation_ch, 
+           "$Id$")
 
 // ******************************************************
 // Primary visitor for "operation" in client header.
@@ -33,11 +43,10 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   this->ctx_->node (node);
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     
   // Every operation is declared virtual in the client code.
-  *os << be_nl << be_nl
-      << "virtual ";
+  *os << "virtual ";
 
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -45,12 +54,12 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_operation_ch::")
-                         ACE_TEXT ("visit_operation - ")
-                         ACE_TEXT ("Bad return type\n")),
+                         "(%N:%l) be_visitor_operation_ch::"
+                         "visit_operation - "
+                         "Bad return type\n"),
                         -1);
     }
-    
+
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype or_visitor (&ctx);
@@ -64,10 +73,8 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                         -1);
     }
 
-  // STEP 2: generate the operation name. The port prefix should
-  // be an empty string except for operations from attributes
-  // defined in a porttype.
-  *os << be_nl << node->local_name ();
+  // STEP 2: generate the operation name.
+  *os << " " << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -82,26 +89,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
-    }
-    
-  be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
-   
-  /// If we are in a reply handler, are not an execp_* operation,
-  /// and have no native args, then generate the AMI static
-  /// reply stub declaration.  
-  if (intf != 0
-      && intf->is_ami_rh ()
-      && !node->is_excep_ami ()
-      && !node->has_native ())
-    {
-      *os << be_nl << be_nl
-          << "static void " << be_nl
-          << node->local_name () << "_reply_stub (" << be_idt_nl
-          << "TAO_InputCDR &_tao_reply_cdr," << be_nl
-          << "::Messaging::ReplyHandler_ptr _tao_reply_handler,"
-          << be_nl
-          << "::CORBA::ULong reply_status);" << be_uidt;
     }
 
   return 0;

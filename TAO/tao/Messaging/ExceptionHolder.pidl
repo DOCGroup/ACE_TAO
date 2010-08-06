@@ -34,9 +34,9 @@ module Messaging
     void raise_exception_with_list(
       in Dynamic::ExceptionList exc_list)
       raises (UserExceptionBase);
-    private boolean is_system_exception;
-    private boolean byte_order;
-    private CORBA::OctetSeq marshaled_exception;
+   private boolean is_system_exception;
+   private boolean byte_order;
+   private CORBA::OctetSeq marshaled_exception;
   };
 };
 

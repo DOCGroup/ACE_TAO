@@ -1,18 +1,23 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_interface_fwd.h
- *
- *  $Id$
- *
- *  Concrete visitor for the interface_fwd class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_interface_fwd.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the interface_fwd class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_INTERFACE_FWD_H
 #define TAO_BE_VISITOR_INTERFACE_FWD_H

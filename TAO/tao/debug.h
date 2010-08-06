@@ -2,13 +2,14 @@
 
 //=============================================================================
 /**
- *  @file debug.h
+ *  @file    debug.h
  *
  *  $Id$
  *
- *  @author DOC Group
+ *  @author  DOC Group - Wash U and UCI
  */
 //=============================================================================
+
 
 #ifndef TAO_DEBUG_H
 #define TAO_DEBUG_H

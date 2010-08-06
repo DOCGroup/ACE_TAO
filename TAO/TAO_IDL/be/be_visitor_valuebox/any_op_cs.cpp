@@ -1,17 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for valueboxes in the stubs
- *  file.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for valueboxes in the stubs
+//    file.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuebox,
+           any_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************
@@ -134,9 +142,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl << be_nl
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;

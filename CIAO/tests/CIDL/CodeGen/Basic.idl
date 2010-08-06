@@ -16,20 +16,10 @@
 
 // @@NOTE: Do we need a pragma prefix. Anyway its broken now in TAO..
 
-#pragma ciao lem "BasicE.idl"
-
 module Extra
 {
   exception NoReason {};
   exception NoRhyme {};
-
-  struct UserDataQosPolicy {
-    sequence<octet> value;
-  };
-
-  struct key {
-    long value[3];
-  };
 
   interface Superfluous
   {
@@ -37,7 +27,7 @@ module Extra
     long superfluous_op (in string empty_arg)
       raises (NoReason);
   };
-
+  
   interface Supernumerary
   {
     void supernumerary_op (out string dummy_arg)
@@ -49,11 +39,11 @@ module Extra
 
 module Basic
 {
-  interface ReadData : Extra::Superfluous
+  interface ReadData : Extra::Superfluous 
   {
     string get_data ();
   };
-
+  
   interface AnalyzeData
   {
     void perform_analysis (inout string data);

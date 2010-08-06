@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the CDR operators for types defined in Module's
- *  scope.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the CDR operators for types defined in Module's
+//    scope.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_module, 
+           cdr_op, 
+           "$Id: cdr_op.cpp,v 1.2 1999/05/28 02:16:43 coryan Exp ")
 
 // ***************************************************************************
 // Module visitor for generating CDR operator declarations in the client header

@@ -66,7 +66,7 @@ Process_Factory::create_new_process (void)
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
-                  ACE_ERRNO_GET));
+                  errno));
       throw Test::Spawn_Failed ();
     }
 

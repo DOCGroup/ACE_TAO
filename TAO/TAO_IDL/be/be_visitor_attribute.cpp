@@ -1,42 +1,31 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_attribute.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Attribute
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_attribute.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Attribute
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
-#include "be_array.h"
-#include "be_component.h"
-#include "be_enum.h"
-#include "be_eventtype.h"
-#include "be_home.h"
-#include "be_predefined_type.h"
-#include "be_sequence.h"
-#include "be_string.h"
-#include "be_structure.h"
-#include "be_typedef.h"
-#include "be_union.h"
-#include "be_valuebox.h"
-#include "be_valuetype.h"
 #include "be_attribute.h"
 #include "be_operation.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
 
-#include "be_helper.h"
-
 #include "be_visitor_attribute.h"
 #include "be_visitor_context.h"
 #include "be_visitor_operation.h"
-#include "be_visitor_any_extracted_type_decl.h"
-
 
 #include "ast_generator.h"
 #include "utl_identifier.h"
@@ -45,6 +34,8 @@
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_attribute/attribute.cpp"
-#include "be_visitor_attribute/set_from_extracted.cpp"
-#include "be_visitor_attribute/ccm_init.cpp"
+
+ACE_RCSID (be, 
+           be_visitor_attribute, 
+           "$Id$")
 

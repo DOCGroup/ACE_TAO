@@ -57,10 +57,10 @@ ClientInterceptor::send_request (
 
   ACE_OS::strcpy (reinterpret_cast<char*> (buf), user_name);
 
-  sc.context_data.replace (string_len, string_len, buf, true);
+  sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, false);
+  ri->add_request_service_context (sc, 0);
 
 }
 

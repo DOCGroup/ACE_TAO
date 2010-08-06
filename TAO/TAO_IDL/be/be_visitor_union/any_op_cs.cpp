@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for Union.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for Union.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client

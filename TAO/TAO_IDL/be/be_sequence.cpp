@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_sequence.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Sequence that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_sequence.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Sequence that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_sequence.h"
 #include "be_typedef.h"
@@ -20,10 +25,9 @@
 #include "be_interface_fwd.h"
 #include "be_predefined_type.h"
 #include "be_field.h"
-#include "be_string.h"
 #include "be_visitor.h"
 #include "be_helper.h"
-#include "be_extern.h"
+#include "be_string.h"
 
 #include "utl_identifier.h"
 #include "idl_defines.h"
@@ -31,6 +35,27 @@
 #include "global_extern.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_sequence,
+           "$Id$")
+
+be_sequence::be_sequence (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    AST_Sequence (),
+    UTL_Scope (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    mt_ (be_sequence::MNG_UNKNOWN),
+    field_node_ (0)
+{
+  // Always the case.
+  this->has_constructor (true);
+}
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
@@ -124,14 +149,6 @@ be_sequence::be_sequence (AST_Expression *v,
     }
 }
 
-be_type *
-be_sequence::base_type (void) const
-{
-  return
-    be_type::narrow_from_decl (
-      this->AST_Sequence::base_type ());
-}
-
 // Helper to create_name.
 char *
 be_sequence::gen_name (void)
@@ -184,6 +201,7 @@ be_sequence::gen_name (void)
       // template and non-template implementations of IDL sequences.
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
+      parent->add_sequence (seq);
       char *seq_name = seq->gen_name ();
 
       ACE_OS::sprintf (namebuf,
@@ -312,7 +330,6 @@ be_sequence::managed_type (void)
           case AST_Decl::NT_interface_fwd:
           case AST_Decl::NT_component:
           case AST_Decl::NT_component_fwd:
-          case AST_Decl::NT_connector:
             this->mt_ = be_sequence::MNG_OBJREF;
             break;
           case AST_Decl::NT_valuebox:
@@ -388,8 +405,7 @@ be_sequence::decl (void)
 
 // Overridden method
 void
-be_sequence::gen_ostream_operator (TAO_OutStream *os,
-                                   bool /* use_underscore */)
+be_sequence::gen_ostream_operator (TAO_OutStream *os)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -491,7 +507,7 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "::TAO::unbounded_basic_string_sequence<char>");
+                           "TAO::unbounded_basic_string_sequence<char>");
         }
       else
         {
@@ -505,7 +521,7 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "::TAO::unbounded_basic_string_sequence<CORBA::WChar>");
+                           "TAO::unbounded_basic_string_sequence<CORBA::WChar>");
         }
       else
         {
@@ -527,7 +543,7 @@ be_sequence::instance_name ()
               && predef->pt() == AST_PredefinedType::PT_octet)
             {
               ACE_OS::sprintf (namebuf,
-                               "::TAO::unbounded_value_sequence<CORBA::Octet>");
+                               "TAO::unbounded_value_sequence<CORBA::Octet>");
             }
           else
             {
@@ -556,15 +572,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
-  /*
-  if (be_global->alt_mapping () && this->unbounded ())
-    {
-      *os << "std::vector<" << elem->nested_type_name (ctx_scope)
-          << ">";
-          
-      return 0;
-    }
-*/
+
   // Generate the appropriate base class type.
   switch (this->managed_type ())
     {
@@ -572,7 +580,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
-          *os << "::TAO::unbounded_object_reference_sequence<" << linebreak
+          *os << "TAO::unbounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -582,7 +590,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "::TAO::bounded_object_reference_sequence<" << linebreak
+          *os << "TAO::bounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak << be_nl;
           *os << elem->nested_type_name (ctx_scope, "_var") << ","
@@ -595,7 +603,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {
-          *os << "::TAO::unbounded_valuetype_sequence<" << linebreak
+          *os << "TAO::unbounded_valuetype_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -605,7 +613,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "::TAO::bounded_valuetype_sequence<" << linebreak
+          *os << "TAO::bounded_valuetype_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -649,12 +657,12 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               {
                 if (this->unbounded ())
                   {
-                    *os << "::TAO::unbounded_bd_string_sequence<char, "
+                    *os << "TAO::unbounded_bd_string_sequence<char, "
                         << str->max_size ()->ev ()->u.ulval << ">";
                   }
                 else
                   {
-                    *os << "::TAO::bounded_bd_string_sequence<char, "
+                    *os << "TAO::bounded_bd_string_sequence<char, "
                         << this->max_size ()->ev ()->u.ulval << ", "
                         << str->max_size ()->ev ()->u.ulval << ">";
                   }
@@ -663,11 +671,11 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               {
                 if (this->unbounded ())
                   {
-                    *os << "::TAO::unbounded_basic_string_sequence<char>";
+                    *os << "TAO::unbounded_basic_string_sequence<char>";
                   }
                 else
                   {
-                    *os << "::TAO::bounded_basic_string_sequence<char, "
+                    *os << "TAO::bounded_basic_string_sequence<char, "
                         << this->max_size ()->ev ()->u.ulval << ">";
                   }
               }
@@ -708,12 +716,12 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               {
                 if (this->unbounded ())
                   {
-                    *os << "::TAO::unbounded_bd_string_sequence<CORBA::WChar, "
+                    *os << "TAO::unbounded_bd_string_sequence<CORBA::WChar, "
                         << str->max_size ()->ev ()->u.ulval << ">";
                   }
                 else
                   {
-                    *os << "::TAO::bounded_bd_string_sequence<CORBA::WChar, "
+                    *os << "TAO::bounded_bd_string_sequence<CORBA::WChar, "
                         << this->max_size ()->ev ()->u.ulval << ", "
                         << str->max_size ()->ev ()->u.ulval << ">";
                   }
@@ -722,11 +730,11 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               {
                 if (this->unbounded ())
                   {
-                    *os << "::TAO::unbounded_basic_string_sequence<CORBA::WChar>";
+                    *os << "TAO::unbounded_basic_string_sequence<CORBA::WChar>";
                   }
                 else
                   {
-                    *os << "::TAO::bounded_basic_string_sequence<CORBA::WChar, "
+                    *os << "TAO::bounded_basic_string_sequence<CORBA::WChar, "
                         << this->max_size ()->ev ()->u.ulval << ">";
                   }
               }
@@ -740,7 +748,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           case AST_Decl::NT_array:
             if (this->unbounded ())
               {
-                *os << "::TAO::unbounded_array_sequence<" << linebreak
+                *os << "TAO::unbounded_array_sequence<" << linebreak
                      << be_idt << be_idt_nl
                      << elem->nested_type_name (ctx_scope) << "," << linebreak
                      << be_nl;
@@ -752,7 +760,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               }
             else
               {
-                *os << "::TAO::bounded_array_sequence<" << linebreak
+                *os << "TAO::bounded_array_sequence<" << linebreak
                      << be_idt << be_idt_nl
                      << elem->nested_type_name (ctx_scope) << "," << linebreak
                      << be_nl;
@@ -769,7 +777,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           default:
             if (this->unbounded ())
               {
-                *os << "::TAO::unbounded_value_sequence<" << linebreak
+                *os << "TAO::unbounded_value_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << linebreak
                     << be_uidt_nl
@@ -777,7 +785,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               }
             else
               {
-                *os << "::TAO::bounded_value_sequence<" << linebreak
+                *os << "TAO::bounded_value_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl

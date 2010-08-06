@@ -18,7 +18,7 @@
 
 #include "ace/ACE.h"
 
-
+ACE_RCSID(ace, Thread_Semaphore, "$Id$")
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

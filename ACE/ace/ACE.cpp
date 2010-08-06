@@ -37,8 +37,14 @@ extern "C" int maxFiles;
 #  include "ace/OS_NS_poll.h"
 #endif /* ACE_HAS_POLL  && ACE_HAS_LIMITED_SELECT */
 
+
+ACE_RCSID (ace,
+           ACE,
+           "$Id$")
+
+
 // Open versioned namespace, if enabled by the user.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -155,13 +161,6 @@ ACE::compiler_beta_version (void)
 #else
   return 0;
 #endif
-}
-
-ACE_TCHAR
-ACE::nibble2hex (u_int n)
-{
-  // Yes, this works for UNICODE
-  return ACE_TEXT ("0123456789abcdef")[n & 0x0f];
 }
 
 bool
@@ -652,7 +651,8 @@ ACE::recv_n_i (ACE_HANDLE handle,
               errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_read_ready (handle, timeout);
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -713,7 +713,8 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_read_ready (handle, 0);
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
               // Did select() succeed?
               if (result != -1)
@@ -770,7 +771,8 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
               errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_read_ready (handle, timeout);
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -830,7 +832,8 @@ ACE::recv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_read_ready (handle, 0);
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
               // Did select() succeed?
               if (result != -1)
@@ -885,7 +888,8 @@ ACE::recv_n_i (ACE_HANDLE handle,
               errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_read_ready (handle, timeout);
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -923,8 +927,8 @@ ssize_t
 ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
-  int const total_tuples = static_cast<int> (n / 2);
-  iovec *iovp = 0;
+  int total_tuples = static_cast<int> (n / 2);
+  iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -941,7 +945,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
       iovp[i].iov_len = va_arg (argp, int);
     }
 
-  ssize_t const result = ACE_OS::recvv (handle, iovp, total_tuples);
+  ssize_t result = ACE_OS::recvv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -981,10 +985,14 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
 
-  for (int s = 0; s < iovcnt; )
+  for (int s = 0;
+       s < iovcnt;
+       )
     {
       // Try to transfer as much of the remaining data as possible.
-      ssize_t n = ACE_OS::recvv (handle, iov + s, iovcnt - s);
+      ssize_t n = ACE_OS::recvv (handle,
+                                 iov + s,
+                                 iovcnt - s);
       // Check EOF.
       if (n == 0)
         return 0;
@@ -996,7 +1004,8 @@ ACE::recvv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_read_ready (handle, 0);
+              int result = ACE::handle_read_ready (handle,
+                                                   0);
 
               // Did select() succeed?
               if (result != -1)
@@ -1044,21 +1053,28 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
 
-  for (int s = 0; s < iovcnt; )
+  for (int s = 0;
+       s < iovcnt;
+       )
     {
       // Try to transfer as much of the remaining data as possible.
       // Since the socket is in non-blocking mode, this call will not
       // block.
-      ssize_t n = ACE_OS::recvv (handle, iov + s, iovcnt - s);
+      ssize_t n = ACE_OS::recvv (handle,
+                                 iov + s,
+                                 iovcnt - s);
 
       // Check for errors.
-      if (n == 0 || n == -1)
+      if (n == 0 ||
+          n == -1)
         {
           // Check for possible blocking.
-          if (n == -1 && errno == EWOULDBLOCK)
+          if (n == -1 &&
+              errno == EWOULDBLOCK)
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_read_ready (handle, timeout);
+              int rtn = ACE::handle_read_ready (handle,
+                                                timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -1219,8 +1235,7 @@ ACE::send (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t const bytes_transferred =
-            ACE_OS::send (handle, (const char *) buf, n, flags);
+          ssize_t bytes_transferred = ACE_OS::send (handle, (const char *) buf, n, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1245,8 +1260,7 @@ ACE::t_snd (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t const bytes_transferred =
-            ACE_OS::t_snd (handle, (const char *) buf, n, flags);
+          ssize_t bytes_transferred = ACE_OS::t_snd (handle, (const char *) buf, n, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1270,7 +1284,7 @@ ACE::send (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t const bytes_transferred = ACE::send_i (handle, buf, n);
+          ssize_t bytes_transferred = ACE::send_i (handle, buf, n);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1292,8 +1306,7 @@ ACE::sendmsg (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t const bytes_transferred =
-            ACE_OS::sendmsg (handle, msg, flags);
+          ssize_t bytes_transferred = ACE_OS::sendmsg (handle, msg, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1318,7 +1331,7 @@ ACE::sendto (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t const bytes_transferred =
+          ssize_t bytes_transferred =
             ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
@@ -1361,7 +1374,8 @@ ACE::send_n_i (ACE_HANDLE handle,
 #endif /* ACE_WIN32 */
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_write_ready (handle, 0);
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
               // Did select() succeed?
               if (result != -1)
@@ -1414,10 +1428,12 @@ ACE::send_n_i (ACE_HANDLE handle,
           n == -1)
         {
           // Check for possible blocking.
-          if (n == -1 && (errno == EWOULDBLOCK || errno == ENOBUFS))
+          if (n == -1 &&
+              (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_write_ready (handle, timeout);
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -1482,7 +1498,8 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_write_ready (handle, 0);
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
               // Did select() succeed?
               if (result != -1)
@@ -1539,7 +1556,8 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
               errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_write_ready (handle, timeout);
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -1600,7 +1618,8 @@ ACE::send_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_write_ready (handle, 0);
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
               // Did select() succeed?
               if (result != -1)
@@ -1655,7 +1674,8 @@ ACE::send_n_i (ACE_HANDLE handle,
               (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_write_ready (handle, timeout);
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -1761,8 +1781,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
        )
     {
       // Try to transfer as much of the remaining data as possible.
-      ssize_t n = ACE_OS::sendv (handle, iov + s, iovcnt - s);
-      
+      ssize_t n = ACE_OS::sendv (handle,
+                                 iov + s,
+                                 iovcnt - s);
       // Check EOF.
       if (n == 0)
         return 0;
@@ -1774,7 +1795,8 @@ ACE::sendv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK || errno == ENOBUFS)
             {
               // Wait for the blocking to subside.
-              int const result = ACE::handle_write_ready (handle, 0);
+              int result = ACE::handle_write_ready (handle,
+                                                    0);
 
               // Did select() succeed?
               if (result != -1)
@@ -1831,7 +1853,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       // Try to transfer as much of the remaining data as possible.
       // Since the socket is in non-blocking mode, this call will not
       // block.
-      ssize_t n = ACE_OS::sendv (handle, iov + s, iovcnt - s);
+      ssize_t n = ACE_OS::sendv (handle,
+                                 iov + s,
+                                 iovcnt - s);
 
       // Check for errors.
       if (n == 0 ||
@@ -1842,7 +1866,8 @@ ACE::sendv_n_i (ACE_HANDLE handle,
               (errno == EWOULDBLOCK || errno == ENOBUFS))
             {
               // Wait upto <timeout> for the blocking to subside.
-              int const rtn = ACE::handle_write_ready (handle, timeout);
+              int rtn = ACE::handle_write_ready (handle,
+                                                 timeout);
 
               // Did select() succeed?
               if (rtn != -1)
@@ -2391,22 +2416,6 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                 size_t date_and_timelen,
                 bool return_pointer_to_first_digit)
 {
-  return ACE::timestamp (ACE_Time_Value::zero,
-                         date_and_time,
-                         date_and_timelen,
-                         return_pointer_to_first_digit);
-}
-
-// Returns the given timestamp in the form
-// "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array.
-
-ACE_TCHAR *
-ACE::timestamp (const ACE_Time_Value& time_value,
-                ACE_TCHAR date_and_time[],
-                size_t date_and_timelen,
-                bool return_pointer_to_first_digit)
-{
   //ACE_TRACE ("ACE::timestamp");
 
   if (date_and_timelen < 35)
@@ -2416,57 +2425,52 @@ ACE::timestamp (const ACE_Time_Value& time_value,
     }
 
 #if defined (WIN32)
-  if (time_value == ACE_Time_Value::zero)
-  {
-    // Emulate Unix.  Win32 does NOT support all the UNIX versions
-    // below, so DO we need this ifdef.
-    static const ACE_TCHAR *day_of_week_name[] =
-      {
-        ACE_TEXT ("Sun"),
-        ACE_TEXT ("Mon"),
-        ACE_TEXT ("Tue"),
-        ACE_TEXT ("Wed"),
-        ACE_TEXT ("Thu"),
-        ACE_TEXT ("Fri"),
-        ACE_TEXT ("Sat")
-      };
-  
-    static const ACE_TCHAR *month_name[] =
-      {
-        ACE_TEXT ("Jan"),
-        ACE_TEXT ("Feb"),
-        ACE_TEXT ("Mar"),
-        ACE_TEXT ("Apr"),
-        ACE_TEXT ("May"),
-        ACE_TEXT ("Jun"),
-        ACE_TEXT ("Jul"),
-        ACE_TEXT ("Aug"),
-        ACE_TEXT ("Sep"),
-        ACE_TEXT ("Oct"),
-        ACE_TEXT ("Nov"),
-        ACE_TEXT ("Dec")
-      };
-  
-    SYSTEMTIME local;
-    ::GetLocalTime (&local);
-  
-    ACE_OS::sprintf (date_and_time,
-                    ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
-                    day_of_week_name[local.wDayOfWeek],
-                    month_name[local.wMonth - 1],
-                    (int) local.wDay,
-                    (int) local.wYear,
-                    (int) local.wHour,
-                    (int) local.wMinute,
-                    (int) local.wSecond,
-                    (int) (local.wMilliseconds * 1000));
-    return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
-  }
-#endif  /* WIN32 */
+  // Emulate Unix.  Win32 does NOT support all the UNIX versions
+  // below, so DO we need this ifdef.
+  static const ACE_TCHAR *day_of_week_name[] =
+    {
+      ACE_TEXT ("Sun"),
+      ACE_TEXT ("Mon"),
+      ACE_TEXT ("Tue"),
+      ACE_TEXT ("Wed"),
+      ACE_TEXT ("Thu"),
+      ACE_TEXT ("Fri"),
+      ACE_TEXT ("Sat")
+    };
+
+  static const ACE_TCHAR *month_name[] =
+    {
+      ACE_TEXT ("Jan"),
+      ACE_TEXT ("Feb"),
+      ACE_TEXT ("Mar"),
+      ACE_TEXT ("Apr"),
+      ACE_TEXT ("May"),
+      ACE_TEXT ("Jun"),
+      ACE_TEXT ("Jul"),
+      ACE_TEXT ("Aug"),
+      ACE_TEXT ("Sep"),
+      ACE_TEXT ("Oct"),
+      ACE_TEXT ("Nov"),
+      ACE_TEXT ("Dec")
+    };
+
+  SYSTEMTIME local;
+  ::GetLocalTime (&local);
+
+  ACE_OS::sprintf (date_and_time,
+                   ACE_TEXT ("%3s %3s %2d %04d %02d:%02d:%02d.%06d"),
+                   day_of_week_name[local.wDayOfWeek],
+                   month_name[local.wMonth - 1],
+                   (int) local.wDay,
+                   (int) local.wYear,
+                   (int) local.wHour,
+                   (int) local.wMinute,
+                   (int) local.wSecond,
+                   (int) (local.wMilliseconds * 1000));
+  return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+#else  /* UNIX */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
-  ACE_Time_Value cur_time = 
-    (time_value == ACE_Time_Value::zero) ? 
-        ACE_Time_Value (ACE_OS::gettimeofday ()) : time_value;
+  ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
   time_t secs = cur_time.sec ();
 
   ACE_OS::ctime_r (&secs,
@@ -2495,6 +2499,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
                    cur_time.usec ());
   date_and_time[33] = '\0';
   return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+#endif /* WIN32 */
 }
 
 // This function rounds the request to a multiple of the page size.

@@ -6,6 +6,7 @@ optimize ?= 1
 
 shared_libs =
 static_libs = 1
+exceptions ?= 1
 
 #### CPU type
 ifndef CPU
@@ -53,7 +54,9 @@ CXX = $(GHSROOT)/cx$(CPU)
 
 # undefine "vector" because it's predefined for 7400 boards
 IOPS = -bspname=$(RTOSROOT)/target/$(BSP).bld -os_dir $(RTOSROOT) --one_instantiation_per_object -non_shared -Uvector
-IOPS += --exceptions
+ifeq (1, $(exceptions))
+   IOPS += --exceptions
+endif # exceptions
 
 CCFLAGS  += $(CFLAGS) -integrate -dynamic -I$(RTOSROOT)/INTEGRITY-include-SCA $(IOPS) -bspfile=$(TARGET_BSP) $(TARGET_LD)
 DCFLAGS  += -G

@@ -23,11 +23,7 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#if defined (ACE_HAS_QT4)
-#include <Qt/qapplication.h>
-#else
 #include <qapplication.h>
-#endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

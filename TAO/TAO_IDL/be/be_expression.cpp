@@ -1,21 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_expression.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Expression that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_expression.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Expression that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_expression.h"
 #include "be_visitor.h"
+
+ACE_RCSID (be,
+           be_expression,
+           "$Id$")
 
 be_expression::be_expression (UTL_ScopedName *n)
   : AST_Expression (n)
@@ -42,29 +51,15 @@ be_expression::be_expression (ACE_CDR::Long l)
 {
 }
 
-be_expression::be_expression (ACE_CDR::LongLong l)
-  : AST_Expression (l)
-{
-}
-
 be_expression::be_expression (ACE_CDR::Boolean b)
   : AST_Expression (b)
 {
 }
 
-be_expression::be_expression (ACE_CDR::ULong l)
-  : AST_Expression (l)
-{
-}
-
-be_expression::be_expression (ACE_CDR::ULongLong l)
-  : AST_Expression (l)
-{
-}
-
 be_expression::be_expression (ACE_CDR::ULong l,
                               AST_Expression::ExprType t)
-  : AST_Expression (l, t)
+  : AST_Expression (l,
+                    t)
 {
 }
 

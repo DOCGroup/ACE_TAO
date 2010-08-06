@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    constant_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Constant node in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    constant_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Constant node in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_constant,
+           constant_ch,
+           "$Id$")
+
 
 // ********************************************************************
 // Visitor implementation for the Constant type

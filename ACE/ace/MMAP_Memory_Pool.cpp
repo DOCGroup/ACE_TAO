@@ -18,6 +18,10 @@
 #include "ace/MMAP_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace,
+          MMAP_Memory_Pool,
+          "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
@@ -40,7 +44,7 @@ ACE_MMAP_Memory_Pool::release (int destroy)
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   if (destroy)
-    this->mmap_.remove ();
+  this->mmap_.remove ();
   else
     this->mmap_.close ();
   return 0;
@@ -65,8 +69,9 @@ ACE_MMAP_Memory_Pool::sync (int flags)
   return this->mmap_.sync (len, flags);
 }
 
-/// Sync @a len bytes of the memory region to the backing store starting
-/// at <addr_>.
+// Sync <len> bytes of the memory region to the backing store starting
+// at <addr_>.
+
 int
 ACE_MMAP_Memory_Pool::sync (void *addr, size_t len, int flags)
 {

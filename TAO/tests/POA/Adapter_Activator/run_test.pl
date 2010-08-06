@@ -11,8 +11,7 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$server->AddLibPath ('../Generic_Servant/.');
-$client->AddLibPath ('../Generic_Servant/.');
+PerlACE::add_lib_path ('../Generic_Servant/.');
 
 $iorbase = "ior";
 
@@ -99,7 +98,7 @@ $iorfile_client3 = $client->LocalFile ("$iorfile_3");
 
 $CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_client1");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client 1 returned $client_status\n";
@@ -108,7 +107,7 @@ if ($client_status != 0) {
 
 $CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_client2");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client 2 returned $client_status\n";
@@ -117,14 +116,14 @@ if ($client_status != 0) {
 
 $CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_client3 -x");
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client_status = $CL->SpawnWaitKill (60);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client 3 returned $client_status\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server_status = $SV->WaitKill (15);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

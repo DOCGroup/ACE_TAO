@@ -110,7 +110,7 @@ template ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex> *
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 #endif
 
-
+ACE_RCSID(ace, Lib_Find, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -375,9 +375,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
               return 0;
 #else
-          ACE_TCHAR *ld_path = 0;
+          ACE_TCHAR *ld_path;
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
-          ld_path = const_cast <ACE_TCHAR*> (ACE_DEFAULT_LD_SEARCH_PATH);
+          ld_path = ACE_DEFAULT_LD_SEARCH_PATH;
 #  else
 #    if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
           ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
@@ -593,8 +593,8 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
                                  buffer);
 
   // Make sure to return -1 if there is an error
-  if ((result == 0 && ::GetLastError () != ERROR_SUCCESS)
-      || (result > static_cast<int> (buffer_len)))
+  if (result == 0 && ::GetLastError () != ERROR_SUCCESS
+      || result > static_cast<int> (buffer_len))
     result = -1;
 
 #else /* ACE_WIN32 */

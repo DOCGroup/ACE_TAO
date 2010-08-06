@@ -1,13 +1,14 @@
 // $Id$
 
 #include "DetailView.h"
-#include <Qt/q3table.h>
-#include <Qt/qlayout.h>
-#include <Qt/qpushbutton.h>
-#include <Qt/qtabwidget.h>
-#include <Qt/qlabel.h>
-#include <Qt/qlineedit.h>
-#include <Qt/qspinbox.h>
+#include <qlayout.h>
+#include <qpushbutton.h>
+#include <qtabwidget.h>
+#include <qtable.h>
+#include <qlabel.h>
+#include <qlineedit.h>
+#include <qspinbox.h>
+
 
 DetailView::DetailView(QWidget *parent, const char *name)
 : QWidget(parent, name), current_unit(0)
@@ -63,10 +64,10 @@ DetailView::DetailView(QWidget *parent, const char *name)
   {
     path_to_movie = "../NavDisplayGUI_exec/trolltech.gif";
   }
-  movie = new QMovie(path_to_movie);
+  movie = QMovie(path_to_movie);
   movielabel = new QLabel(this, "label1" );
-//  movie->connectStatus(this, SLOT(movieStatus(int)));
-//  movie->connectUpdate(this, SLOT(movieUpdate(const QRect&)));
+  movie.connectStatus(this, SLOT(movieStatus(int)));
+  movie.connectUpdate(this, SLOT(movieUpdate(const QRect&)));
   movielabel->setFrameStyle( QFrame::Box | QFrame::Plain );
   movielabel->setMovie(movie);
   movielabel->setFixedSize( 128+movielabel->frameWidth()*2,
@@ -86,8 +87,8 @@ DetailView::DetailView(QWidget *parent, const char *name)
   QTabWidget *tabs = new QTabWidget(this);
 
 
-  child_list = new Q3Table(0, 6, tabs);
-  child_list->setSelectionMode(Q3Table::Single);
+  child_list = new QTable(0, 6, tabs);
+  child_list->setSelectionMode(QTable::Single);
   child_list->horizontalHeader()->setLabel(0, "FDN");
   child_list->horizontalHeader()->setLabel(1, "Description");
   child_list->horizontalHeader()->setLabel(2, "X Coordinate");
@@ -95,8 +96,8 @@ DetailView::DetailView(QWidget *parent, const char *name)
   child_list->horizontalHeader()->setLabel(4, "Z Coordinate");
   child_list->horizontalHeader()->setLabel(5, "Color");
 
-  parent_list = new Q3Table(0, 6, tabs);
-  parent_list->setSelectionMode(Q3Table::Single);
+  parent_list = new QTable(0, 6, tabs);
+  parent_list->setSelectionMode(QTable::Single);
   parent_list->horizontalHeader()->setLabel(0, "FDN");
   parent_list->horizontalHeader()->setLabel(1, "Description");
   parent_list->horizontalHeader()->setLabel(2, "X Coordinate");
@@ -111,10 +112,11 @@ DetailView::DetailView(QWidget *parent, const char *name)
   grid->addMultiCellWidget(tabs, 5, 5, 0, 9);
 }
 
+
 DetailView::~DetailView()
 {
-  delete movie;
 }
+
 
 void
 DetailView::currentNode(NavUnit *unit)
@@ -147,9 +149,9 @@ DetailView::movieUpdate( const QRect& )
 
 
 void
-DetailView::movieStatus( int )
+DetailView::movieStatus( int s )
 {
-/*  switch ( s )
+  switch ( s )
     {
     case QMovie::SourceEmpty:
     case QMovie::UnrecognizedFormat:
@@ -161,6 +163,6 @@ DetailView::movieStatus( int )
       break;
     default:
       if ( movielabel->movie() ) // for flicker-free animation:
-        movielabel->setBackgroundMode( Qt::NoBackground );
-    }*/
+        movielabel->setBackgroundMode( NoBackground );
+    }
 }

@@ -35,7 +35,7 @@ CORBA::Boolean Messenger_i::send_message (
   std::cerr << "Message from: " << user_name << std::endl;
   std::cerr << "Subject:      " << subject << std::endl;
   std::cerr << "Message:      " << message << std::endl;
-  return true;
+  return 1;
 }
 
 char * Messenger_i::get_time (void)

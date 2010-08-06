@@ -65,23 +65,6 @@ TAO_Notify_StructuredProxyPushSupplier::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::validate ()
-{
-  TAO_Notify_Consumer* con = this->consumer ();
-  if (con != 0 && ! con->is_alive (true))
-  {
-    if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushSupplier::validate(%d)")
-                  ACE_TEXT ("disconnecting \n"), this->id ()));
-    }
-
-    this->disconnect_structured_push_supplier ();
-  }
-}
-
-void
 TAO_Notify_StructuredProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
@@ -104,15 +87,6 @@ TAO_Notify_StructuredProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& a
       // if we can't connect... tough
     }
   }
-}
-
-void
-TAO_Notify_StructuredProxyPushSupplier::configure(
-  TAO_Notify_ConsumerAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // Nothing to do.
-  // This virtual method was added to support Notification MC
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

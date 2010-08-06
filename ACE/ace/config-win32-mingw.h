@@ -55,13 +55,16 @@
 # undef ACE_LACKS_USECONDS_T
 #endif
 
+#undef ACE_LACKS_SIGSET
 #undef ACE_HAS_WTOF
 
+#define ACE_LACKS_SIGSET_DEFINITIONS
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_STRPTIME
+#define ACE_HAS_STRERROR
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_SYS_MSG_H
@@ -98,8 +101,6 @@
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
-
-#define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW_H */

@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*multiple_contexts) : aceexe, avoids_ace_for_tao {
+project(*multiple_contexts) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = multiple_contexts
   Source_Files {
@@ -9,7 +10,8 @@ project(*multiple_contexts) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*non_existent) : aceexe, avoids_ace_for_tao {
+project(*non_existent) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = non_existent
   Source_Files {
@@ -17,7 +19,8 @@ project(*non_existent) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*writers) : aceexe, avoids_ace_for_tao {
+project(*writers) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = writers
   Source_Files {
@@ -25,7 +28,8 @@ project(*writers) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*open) : aceexe, avoids_ace_for_tao {
+project(*open) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = open
   Source_Files {

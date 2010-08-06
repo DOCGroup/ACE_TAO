@@ -5,7 +5,7 @@
 #include "ace/config-macros.h"
 #include "ace/ace_wchar.h"
 
-
+ACE_RCSID(ace, ace_wchar, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

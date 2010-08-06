@@ -11,8 +11,9 @@
 #include "tao/LocalObject.h"
 #include <orbsvcs/CosNamingC.h>
 
+#include "ciao/CIAO_common.h"
 #include "ciao/Version.h"
-#include "ciao/Containers/Session/Session_Container.h"
+
 #include "TSEC_CheckPoint_exec.h"
 #include "TSEC_CheckPoint_svnt.h"
 
@@ -222,9 +223,9 @@ Impl::TSEC_CheckPoint_exec_i::installServant
 )
 {
   assert( this->_p_sessionContainer );
-  PortableServer::ObjectId_var oid;
+
   return this->_p_sessionContainer->install_servant( Servant,
-                             CIAO::Container_Types::COMPONENT_t, oid.out ());
+                             CIAO::Container::Component );
 }
 
 
@@ -240,7 +241,7 @@ Impl::TSEC_CheckPoint_exec_i::uninstallServant
 {
   assert( this->_p_sessionContainer );
 
-  this->_p_sessionContainer->uninstall( ObjRef, CIAO::Container_Types::COMPONENT_t);
+  this->_p_sessionContainer->uninstall( ObjRef, CIAO::Container::Component );
 }
 
 
@@ -433,15 +434,15 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
     throw CORBA::INTERNAL();
   }
 
-  CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
-    CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
+  CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
+             CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
 
   if( !p_checkPoint_Context )
   {
     throw CORBA::INTERNAL();
   }
 
-  this->_p_sessionContainer = dynamic_cast < ::CIAO::Session_Container*>(p_checkPoint_Context->_ciao_the_Container());
+  this->_p_sessionContainer = p_checkPoint_Context->_ciao_the_Container();
 
   if( !_p_sessionContainer )
   {
@@ -469,11 +470,11 @@ Impl::TSEC_CheckPoint_exec_i::push_lifeTokenIn
 //-------------------------------------------------------------------
 
 void
-Impl::TSEC_CheckPoint_exec_i::configuration_complete
+Impl::TSEC_CheckPoint_exec_i::ciao_preactivate
 (
 )
 {
-  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::configuration_complete\n" ) );
+  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::ciao_preactivate\n" ) );
 }
 
 
@@ -504,6 +505,18 @@ Impl::TSEC_CheckPoint_exec_i::ccm_activate
   _isActivated = true;
 }
 
+
+//-------------------------------------------------------------------
+// Operation
+//-------------------------------------------------------------------
+
+void
+Impl::TSEC_CheckPoint_exec_i::ciao_postactivate
+(
+)
+{
+  ACE_DEBUG( ( LM_DEBUG, "Impl::TSEC_CheckPoint_exec_i::ciao_postactivate\n" ) );
+}
 
 
 //-------------------------------------------------------------------

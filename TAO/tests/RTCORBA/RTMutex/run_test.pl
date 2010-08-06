@@ -6,18 +6,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 print STDERR "\n********** RTCORBA RTMutex Unit Test **********\n\n";
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+if (PerlACE::is_vxworks_test()) {
+    $T = new PerlACE::ProcessVX ("server");
+}
+else {
+    $T = new PerlACE::Process ("server");
+}
 
-$SV = $server->CreateProcess ("server");
+$test = $T->SpawnWaitKill (60);
 
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval () + 45);
-
-if ($server_status != 0) {
-    print STDERR "ERROR: test returned $server_status\n";
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
     exit 1;
 }
 

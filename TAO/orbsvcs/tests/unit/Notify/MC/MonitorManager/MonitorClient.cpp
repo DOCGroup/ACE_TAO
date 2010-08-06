@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

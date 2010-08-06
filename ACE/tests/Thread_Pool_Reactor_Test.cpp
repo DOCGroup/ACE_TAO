@@ -38,7 +38,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -48,11 +48,11 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
-ACE_RCSID(tests, Thread_Pool_Reactor_Test, "$Id$")
+ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-#include "Thread_Pool_Reactor_Test.h"
+#include "tests/Thread_Pool_Reactor_Test.h"
 typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 // Accepting end point.  This is actually "localhost:10010", but some

@@ -10,6 +10,7 @@
 # Contributed by Doug Anderson <dla@home.com>
 
 debug = 1
+exceptions = 1
 static_libs_only = 1
 quantify =
 purify =
@@ -27,7 +28,11 @@ DCCFLAGS        += $(DCFLAGS)
 OCFLAGS         += -O2
 OCCFLAGS        += $(OCFLAGS)
 
-CCFLAGS += -h exceptions
+ifeq (1,$(exceptions))
+  CCFLAGS += -h exceptions
+else
+  CCFLAGS += -h noexceptions
+endif # exceptions
 
 DLD             = $(CXX)
 LD              = $(CXX)

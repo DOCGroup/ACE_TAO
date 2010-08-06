@@ -1,22 +1,61 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_NodeApplication): install, dance_lib, \
-                          dance_nodeapplication_skel, dance_deployment_scheduler, \
-                          dance_logger, iortable, naming, dance_locality_handler, \
-                          gen_ostream, avoids_ace_for_tao, dance_applicationmanager_stub {
-  sharedname   = DAnCE_NodeApplication
-  dynamicflags += NODEAPPLICATION_BUILD_DLL
-
+project(Config_Manager) : ciao_deployment_stub, ace_output {
+  sharedname   = CIAO_Config_Manager
+  dynamicflags = CONFIG_MANAGER_BUILD_DLL
   Source_Files {
-    NodeApplication_Impl.cpp
-  }
-
-  Header_Files {
-    NodeApplication_Impl.h
-  }
-
-  specific {
-    install_dir = DAnCE/NodeApplication
+    Config_Manager.cpp
   }
 }
+
+project(NodeApp_Configurator): ciao_config_manager, ace_output {
+  sharedname   = CIAO_NodeApp_Configurator
+  dynamicflags = NODEAPP_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NodeApp_Configurator.cpp
+  }
+}
+
+project(NoOp_Configurator): ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NoOp_Configurator
+  dynamicflags = NOOP_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NoOp_Configurator.cpp
+  }
+}
+
+project(RTNA_Configurator): negotiate_codesets, rtportableserver, rtcorba, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_RTNA_Configurator
+  dynamicflags = CIAO_RTNA_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    RTConfig_Manager.cpp
+  }
+}
+
+project(NA_Configurator): ciao_deployment_stub, diffservpolicy, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NA_Configurator
+  dynamicflags = CIAO_NA_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NAConfig_Manager.cpp
+  }
+}
+
+project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NodeApplication
+  dynamicflags = NODEAPPLICATION_BUILD_DLL
+  Source_Files {
+    Configurator_Factory.cpp
+    Container_Impl.cpp
+    NodeApplication_Core.cpp
+    NodeApplication_Impl.cpp
+  }
+}
+
+project(NodeApplication): ciao_server_dnc, ciao_events_dnc, ciao_nodeapplication, ciaoexe {
+  exename   = NodeApplication
+  Source_Files {
+    NodeApplication.cpp
+  }
+}
+

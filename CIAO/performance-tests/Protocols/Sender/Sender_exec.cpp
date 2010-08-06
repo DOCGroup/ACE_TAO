@@ -290,14 +290,14 @@ Worker::print_stats (void)
     {
       if (this->do_dump_history_)
         {
-          this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
+          this->history_.dump_samples ("HISTORY", gsf);
         }
 
       ACE_Basic_Stats stats;
       this->history_.collect_basic_stats (stats);
-      stats.dump_results (ACE_TEXT("Total"), gsf);
+      stats.dump_results ("Total", gsf);
 
-      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              this->test_end_ - this->test_start_,
                                              this->iterations_);
     }
@@ -651,7 +651,7 @@ CIDL_SenderImpl::SenderExec_i::set_session_context (
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::set_session_context\n"));
 
   this->context_ =
-    ::CIAO_Protocols_Sender_Impl::Sender_Exec_Context::_narrow (ctx);
+    CIDL_SenderImpl::SenderExec_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();
@@ -677,9 +677,15 @@ CIDL_SenderImpl::SenderExec_i::ccm_remove (void)
 
 
 void
-CIDL_SenderImpl::SenderExec_i::configuration_complete (void)
+CIDL_SenderImpl::SenderExec_i::ciao_preactivate (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::configuration_complete\n"));
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_preactivate\n"));
+}
+
+void
+CIDL_SenderImpl::SenderExec_i::ciao_postactivate (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_postactivate\n"));
 }
 
 ::Components::EnterpriseComponent_ptr

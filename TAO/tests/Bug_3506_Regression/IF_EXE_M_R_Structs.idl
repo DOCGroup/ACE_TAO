@@ -9,7 +9,7 @@ module IF_EXE_M_R {
   struct CORBA_LatLongFOOB {
       double latitude;
       double longitude;
-      double FOOB;
+                        double FOOB;
     };
     struct CORBA_PositionXYZ {
       double x;
@@ -182,12 +182,12 @@ module IF_EXE_M_R {
   };
 
   typedef sequence <CORBA_FOOJPosition> CORBA_FOOJPosList;
-  typedef sequence <long> long_sequence;
+
   struct CORBA_FOOHPlanHeader {
     long FOOHOffset;
     double FOOHFOOA;
     FOOAMode_E FOOAReference;
-    long_sequence FOOGSpacing;
+    sequence <long> FOOGSpacing;
     unsigned long datasetVersion;
     ENUM_FOOF FOOF;
     CORBA_FOOJPosList centreLine;

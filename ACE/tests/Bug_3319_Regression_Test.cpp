@@ -8,7 +8,7 @@
  */
 
 #include "ace/ACE.h"
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
@@ -27,7 +27,7 @@ run_main (int, ACE_TCHAR *[])
   args.add (ACE_TEXT("MyProgram"), true);
   int ret = ACE_Service_Config::open(args.argc(), args.argv(),
                                      ACE_DEFAULT_LOGGER_KEY,
-                                     1, 1, 1);
+                                     1, 0, 1);
 
   if (ACE_OS::strcmp (log_msg->program_name (), ACE_TEXT("MyProgram")) != 0)
   {

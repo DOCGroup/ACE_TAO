@@ -42,17 +42,6 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
 $CL2 = $client->CreateProcess ("client",
                                " -ORBdebuglevel $debug_level"
                                . " -k file://$client_iorfile "

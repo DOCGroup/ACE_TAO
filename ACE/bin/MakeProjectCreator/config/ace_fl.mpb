@@ -10,9 +10,9 @@ project : ace_x11, ace_gl {
     CPPFLAGS += $(PLATFORM_GL_CPPFLAGS) $(PLATFORM_X11_CPPFLAGS)
     LIBS += $(PLATFORM_FL_LIBS) $(PLATFORM_GL_LIBS) $(PLATFORM_X11_LIBS)
     LDFLAGS += $(PLATFORM_FL_LDFLAGS) $(PLATFORM_GL_LDFLAGS)
-    LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+    LDFLAGS += $(PLATFORM_GL_LDFLAGS)
   }
-  specific(prop:microsoft) {
+  specific(vc10,vc9,vc8,vc71) {
      libs += fltkdll
   }
 

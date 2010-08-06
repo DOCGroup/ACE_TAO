@@ -1,19 +1,43 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_native.cpp
- *
- *  $Id$
- *
- *  The native IDL type
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_native.cpp
+//
+// = DESCRIPTION
+//    The native IDL type
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_native.h"
 #include "be_visitor.h"
+
+ACE_RCSID (be,
+           be_native,
+           "$Id$")
+
+
+be_native::be_native (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    AST_Native (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_exception ()
+{
+}
 
 be_native::be_native (UTL_ScopedName *n)
   : COMMON_Base (),
@@ -36,9 +60,6 @@ be_native::be_native (UTL_ScopedName *n)
              n),
     be_type (AST_Decl::NT_native,
              n),
-    be_structure (n,
-                  true,
-                  false),
     be_exception (n,
                   true,
                   false)

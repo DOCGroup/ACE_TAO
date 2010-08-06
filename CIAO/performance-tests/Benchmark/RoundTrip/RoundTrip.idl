@@ -14,8 +14,6 @@
 #include "../Benchmark.idl"
 #include <Components.idl>
 
-#pragma ciao lem "RoundTripE.idl"
-
 module Benchmark
 {
   component RoundTrip

@@ -162,9 +162,9 @@ const char * FT_TestReplica_i::repository_id()
 int
 FT_TestReplica_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
-    ACE_UNUSED_ARG (argc);
-    ACE_UNUSED_ARG (argv);
-    return 0;
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  return 0;
 }
 
 //static
@@ -195,11 +195,9 @@ PortableServer::ObjectId FT_TestReplica_i::object_id()const
  * @param orbManager our ORB -- we keep var to it.
  * @return zero for success; nonzero is process return code for failure.
  */
-int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persistent)
+int FT_TestReplica_i::init (CORBA::ORB_var & orb)
 {
   this->orb_ = orb;
-
-  this->name_persistent_storage = file_persistent;
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -422,7 +420,7 @@ void FT_TestReplica_i::request_quit()
 
 void FT_TestReplica_i::store(long counter)
 {
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage, "w");
+  FILE * f = ACE_OS::fopen("Persistent.dat", "w");
   if(f != 0)
   {
     unsigned char* buffer = 0;
@@ -443,7 +441,7 @@ void FT_TestReplica_i::store(long counter)
 long FT_TestReplica_i::load ()
 {
   long counter = 0;
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage,"r");
+  FILE * f = ACE_OS::fopen("Persistent.dat","r");
   if(f != 0)
   {
     unsigned char buffer[sizeof(long)];

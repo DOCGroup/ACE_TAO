@@ -223,7 +223,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
     {
       ACE_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "
-                  "ECG_UDP_Receiver::handle_input: %C\n",
+                  "ECG_UDP_Receiver::handle_input: %s\n",
                   ex._info ().c_str ()));
     }
   return 0;

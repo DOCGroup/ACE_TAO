@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ciao/CIAO_common.h"
 #include "NavDisplay_exec.h"
 
 /// Default constructor.
@@ -20,7 +21,7 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev)
   ACE_UNUSED_ARG (ev);
 
 //   ACE_DEBUG ((LM_DEBUG,
-//   ACE_TEXT ("NAVDISPLAY: Received Refresh Event\n")));
+//               ACE_TEXT ("NAVDISPLAY: Received Refresh Event\n")));
 
   // Refresh position
   HUDisplay::position_var loc =
@@ -46,8 +47,12 @@ void
 MyImpl::NavDisplay_exec_impl::set_session_context (
   Components::SessionContext_ptr ctx)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::set_session_context\n"));
+    }
+
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx);
 
@@ -59,22 +64,43 @@ MyImpl::NavDisplay_exec_impl::set_session_context (
 }
 
 void
-MyImpl::NavDisplay_exec_impl::configuration_complete (void)
+MyImpl::NavDisplay_exec_impl::ciao_preactivate (void)
 {
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_activate (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_activate\n"));
+    }
+}
+
+void
+MyImpl::NavDisplay_exec_impl::ciao_postactivate (void)
+{
+}
+
+void
+MyImpl::NavDisplay_exec_impl::ccm_passivate (void)
+{
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_passivate\n"));
+    }
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_remove (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "MyImpl::NavDisplay_exec_impl::ccm_remove\n"));
+    }
 }
 
 /// Default ctor.

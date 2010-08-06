@@ -2,7 +2,7 @@
 
 #include "ace/XTI_ATM_Mcast.h"
 
-
+ACE_RCSID(ace, XTI_ATM_Mcast, "$Id$")
 
 #if defined (ACE_HAS_XTI_ATM)
 

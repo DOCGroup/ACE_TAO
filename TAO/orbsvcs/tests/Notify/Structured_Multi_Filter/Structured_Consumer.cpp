@@ -14,7 +14,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://messenger.ior");
+static const char* ior = "file://supplier.ior";
 static NS_FilterType consumerFilter = None;
 static NS_FilterType supplierFilter = None;
 static int numEvents = 90; // Must be multiple of 9
@@ -31,16 +31,12 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:f:s:e:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:s:e:"));
   int x;
 
   while ((x = get_opts ()) != -1)
     switch (x)
   {
-    case 'k':
-      ior = get_opts.opt_arg ();
-      break;
-
     case 'e':
       numEvents = ACE_OS::atoi (get_opts.optarg);
       break;
@@ -62,7 +58,6 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
-        "-k <ior>"
         "[-s <AND | OR>] -n <num events> "
         "[-f <AND | OR>]"
         "\n",

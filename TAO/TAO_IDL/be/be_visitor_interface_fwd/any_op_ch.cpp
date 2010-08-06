@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for a forward declared interface
- *  in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for a forward declared interface
+//    in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_interface_fwd,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Generates Any operator declarations in the client header
@@ -89,9 +98,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl << be_nl
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;

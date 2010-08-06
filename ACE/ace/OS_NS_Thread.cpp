@@ -1,6 +1,8 @@
-// $Id$
-
 #include "ace/OS_NS_Thread.h"
+
+ACE_RCSID (ace,
+           OS_NS_Thread,
+           "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_Thread.inl"
@@ -31,9 +33,9 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined (ACE_HAS_WINCE)
+#elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
+      CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
   // Green Hills compiler gets confused when __stdcall is imbedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
@@ -115,15 +117,17 @@ ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 #    if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
 void
-ACE_TSS_Emulation_cleanup (void *)
+ACE_TSS_Emulation_cleanup (void *ptr)
 {
+   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
 #    else
 void
-ACE_TSS_Emulation_cleanup (void *)
+ACE_TSS_Emulation_cleanup (void *ptr)
 {
+   ACE_UNUSED_ARG (ptr);
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
@@ -1138,6 +1142,25 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 /*****************************************************************************/
 
 #if defined (ACE_LACKS_COND_T)
+// NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
+// defined here either because they're too big to be inlined, or
+// to avoid use before definition if they were inline.
+
+// @@ The following functions could be inlined if i could figure where
+// to put it among the #ifdefs!
+int
+ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
+{
+  attributes.type = type;
+  return 0;
+}
+
+int
+ACE_OS::condattr_destroy (ACE_condattr_t &)
+{
+  return 0;
+}
+
 int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
@@ -1147,12 +1170,8 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 
   // This is needed to ensure that <waiters_> and <was_broadcast_> are
   // consistent relative to each other.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    {
-      return -1;
-    }
-    
-  bool have_waiters = false;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  int have_waiters = 0;
 
   if (cv->waiters_ > 0)
     {
@@ -1161,15 +1180,9 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
       // cond_wait() method know how to optimize itself.  Be sure to
       // set this with the <waiters_lock_> held.
       cv->was_broadcast_ = 1;
-      have_waiters = true;
+      have_waiters = 1;
     }
-    
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    {
-      // This is really bad, we have the lock but can't release it anymore
-      return -1;
-    }
-    
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
   int result = 0;
   if (have_waiters)
     {
@@ -1205,14 +1218,8 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 #   elif defined (ACE_VXWORKS)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #   endif /* ACE_VXWORKS */
-  int result = 0;
-  if (ACE_OS::thread_mutex_destroy (&cv->waiters_lock_) != 0)
-    result = -1;
-  
-  if (ACE_OS::sema_destroy (&cv->sema_) != 0)
-    result = -1;
-
-  return result;
+  ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
+  return ACE_OS::sema_destroy (&cv->sema_);
 # else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
@@ -1310,13 +1317,11 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
   // lost wakeup bug...  This is needed to ensure that the <waiters_>
   // value is not in an inconsistent internal state while being
   // updated by another thread.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-  bool const have_waiters = cv->waiters_ > 0;
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  int have_waiters = cv->waiters_ > 0;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-  if (have_waiters)
+  if (have_waiters != 0)
     return ACE_OS::sema_post (&cv->sema_);
   else
     return 0; // No-op
@@ -1333,13 +1338,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OS_TRACE ("ACE_OS::cond_wait");
 # if defined (ACE_HAS_THREADS)
   // Prevent race conditions on the <waiters_> count.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-  
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   ++cv->waiters_;
-  
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
 
@@ -1366,18 +1367,16 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
     }
 
   // Reacquire lock to avoid race conditions on the <waiters_> count.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
   // We're ready to return, so there's one less waiter.
   --cv->waiters_;
 
-  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
   // Release the lock so that other collaborating threads can make
   // progress.
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result == -1)
     // Bad things happened, so let's just return below.
@@ -1439,19 +1438,17 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_WTHREADS) || defined (ACE_VXWORKS)
 
   // Prevent race conditions on the <waiters_> count.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-    
-  ++cv->waiters_;
-  
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   ACE_Errno_Guard error (errno, 0);
-  int msec_timeout = 0;
+  int msec_timeout;
 
-  if (timeout != 0 && *timeout != ACE_Time_Value::zero)
+  if (*timeout == ACE_Time_Value::zero)
+    msec_timeout = 0; // Do a "poll."
+  else
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
@@ -1460,7 +1457,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time > ACE_Time_Value::zero)
+      if (relative_time < ACE_Time_Value::zero)
+        msec_timeout = 0;
+      else
         msec_timeout = relative_time.msec ();
     }
 
@@ -1502,15 +1501,12 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     }
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-    
-  --cv->waiters_;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_--;
 
-  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
 #     if defined (ACE_WIN32)
   if (result != WAIT_OBJECT_0)
@@ -1591,22 +1587,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
-#else
-int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
-{
-  ACE_condattr_t attributes;
-  if (ACE_OS::condattr_init (attributes, type) == 0
-      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
-    {
-      (void) ACE_OS::condattr_destroy (attributes);
-      return 0;
-    }
-  return -1;
-}
-#endif /* ACE_LACKS_COND_T */
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
+# if defined (ACE_HAS_WTHREADS)
 int
 ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_thread_mutex_t *external_mutex,
@@ -1618,35 +1600,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
 
-#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
-  int msec_timeout = 0;
-  int result = 0;
-
-  ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-  // Watchout for situations where a context switch has caused the
-  // current time to be > the timeout.
-  if (relative_time > ACE_Time_Value::zero)
-     msec_timeout = relative_time.msec ();
-
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, msec_timeout),
-                                result),
-              int, -1, result);
-  return result;
-#else
   // Prevent race conditions on the <waiters_> count.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-  
-  ++cv->waiters_;
-  
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
-  int msec_timeout = 0;
+  int msec_timeout;
 
-  if (timeout != 0 && *timeout != ACE_Time_Value::zero)
+  if (*timeout == ACE_Time_Value::zero)
+    msec_timeout = 0; // Do a "poll."
+  else
     {
       // Note that we must convert between absolute time (which is
       // passed as a parameter) and relative time (which is what
@@ -1655,7 +1620,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
       // Watchout for situations where a context switch has caused the
       // current time to be > the timeout.
-      if (relative_time > ACE_Time_Value::zero)
+      if (relative_time < ACE_Time_Value::zero)
+        msec_timeout = 0;
+      else
         msec_timeout = relative_time.msec ();
     }
 
@@ -1679,15 +1646,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
-  --cv->waiters_;
+  cv->waiters_--;
 
-  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result != WAIT_OBJECT_0)
     {
@@ -1709,12 +1674,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   // We must always regain the <external_mutex>, even when errors
   // occur because that's the guarantee that we give to our callers.
-  if (ACE_OS::thread_mutex_lock (external_mutex) != 0)
-    result = -1;
-
+  ACE_OS::thread_mutex_lock (external_mutex);
   errno = error;
   return result;
-#   endif
 #   else
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
@@ -1726,17 +1688,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
 #   if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result),
-                     int, -1);
-#else
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
-  ++cv->waiters_;
-  
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
+  cv->waiters_++;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
   int error = 0;
@@ -1762,15 +1716,13 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 
   // Reacquire lock to avoid race conditions.
-  if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
   cv->waiters_--;
 
-  bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
-  if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
-    return -1;
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   if (result != WAIT_OBJECT_0)
     {
@@ -1790,18 +1742,30 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   // We must always regain the <external_mutex>, even when errors
   // occur because that's the guarantee that we give to our callers.
-  if (ACE_OS::thread_mutex_lock (external_mutex) != 0)
-    result = -1;
+  ACE_OS::thread_mutex_lock (external_mutex);
 
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
-#endif
 #   else
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
 # endif /* ACE_HAS_WTHREADS */
+#else
+int
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
+{
+  ACE_condattr_t attributes;
+  if (ACE_OS::condattr_init (attributes, type) == 0
+      && ACE_OS::cond_init (cv, attributes, name, arg) == 0)
+    {
+      (void) ACE_OS::condattr_destroy (attributes);
+      return 0;
+    }
+  return -1;
+}
+#endif /* ACE_LACKS_COND_T */
 
 /*****************************************************************************/
 // CONDITIONS END
@@ -1825,7 +1789,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (sa);
 
-# if defined (ACE_PTHREAD_MUTEXATTR_T_INITIALIZE)
+# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
   /* Tests show that VxWorks 6.x pthread lib does not only
    * require zeroing of mutex/condition objects to function correctly
    * but also of the attribute objects.
@@ -1875,7 +1839,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   if (result == 0)
 {
-#   if defined (ACE_PTHREAD_MUTEX_T_INITIALIZE)
+#   if defined (ACE_VXWORKS)&& (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
       /* VxWorks 6.x API reference states:
        * If the memory for the mutex variable object has been allocated
        *   dynamically, it is a good policy to always zero out the
@@ -2435,8 +2399,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
                      && errno == EBUSY)
                 {
                   event->eventdata_->is_signaled_ = 1;
-                  if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
-                    return -1;
+                  ACE_OS::cond_broadcast (&event->eventdata_->condition_);
                   ACE_OS::thr_yield ();
                 }
 # else
@@ -2495,8 +2458,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
                  && errno == EBUSY)
             {
               event->eventdata_->is_signaled_ = 1;
-              if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
-                return -1;
+              ACE_OS::cond_broadcast (&event->eventdata_->condition_);
               ACE_OS::thr_yield ();
             }
 # else
@@ -3025,7 +2987,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       // WaitForSingleObjects() expects).
       // <timeout> parameter is given in absolute or relative value
       // depending on parameter <use_absolute_time>.
-      int msec_timeout = 0;
+      int msec_timeout;
       if (use_absolute_time)
         {
           // Time is given in absolute time, we should use
@@ -3035,7 +2997,9 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           // Watchout for situations where a context switch has caused
           // the current time to be > the timeout.  Thanks to Norbert
           // Rapp <NRapp@nexus-informatics.de> for pointing this.
-          if (relative_time > ACE_Time_Value::zero)
+          if (relative_time < ACE_Time_Value::zero)
+            msec_timeout = 0;
+          else
             msec_timeout = relative_time.msec ();
         }
       else
@@ -3466,7 +3430,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
           rw->ref_count_ = 0;
           rw->num_waiting_writers_ = 0;
           rw->num_waiting_readers_ = 0;
-          rw->important_writer_ = false;
+          rw->important_writer_ = 0;
           result = 0;
         }
       ACE_OS::condattr_destroy (attributes);
@@ -3870,7 +3834,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 # if defined (ACE_HAS_PTHREADS)
   int result;
-# if defined (ACE_PTHREAD_ATTR_T_INITIALIZE)
+# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
   /* Tests show that VxWorks 6.x pthread lib does not only
    * require zeroing of mutex/condition objects to function correctly
    * but also of the attribute objects.
@@ -4673,14 +4637,6 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
       return -1;
     }
   return 0;
-#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
-  ACE_UNUSED_ARG (cpu_set_size);
-  int result = 0;
-  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
-    {
-      return -1;
-    }
-  return 0;
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (cpu_set_size);
@@ -4719,13 +4675,6 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
   if (::sched_setaffinity (thr_id, cpu_set_size, cpu_mask) == -1)
-    {
-      return -1;
-    }
-  return 0;
-#elif defined (ACE_HAS_TASKCPUAFFINITYSET)
-  int result = 0;
-  if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
     {
       return -1;
     }
@@ -5185,62 +5134,59 @@ add_to_argv (int& argc, char** argv, int max_args, char* string)
   size_t previous = 0;
   size_t length   = ACE_OS::strlen (string);
 
-  if (length > 0)
+  // We use <= to make sure that we get the last argument
+  for (size_t i = 0; i <= length; i++)
     {
-      // We use <= to make sure that we get the last argument
-      for (size_t i = 0; i <= length; i++)
+      // Is it a double quote that hasn't been escaped?
+      if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
         {
-          // Is it a double quote that hasn't been escaped?
-          if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
+          indouble ^= 1;
+          if (indouble)
             {
-              indouble ^= 1;
-              if (indouble)
-                {
-                  // We have just entered a double quoted string, so
-                  // save the starting position of the contents.
-                  previous = i + 1;
-                }
-              else
-                {
-                  // We have just left a double quoted string, so
-                  // zero out the ending double quote.
-                  string[i] = '\0';
-                }
+              // We have just entered a double quoted string, so
+              // save the starting position of the contents.
+              previous = i + 1;
             }
-          else if (string[i] == '\\')  // Escape the next character
+          else
             {
-              // The next character is automatically skipped because
-              // of the memmove().
-              ACE_OS::memmove (string + i, string + i + 1, length);
-              --length;
-            }
-          else if (!indouble &&
-                   (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
-            {
+              // We have just left a double quoted string, so
+              // zero out the ending double quote.
               string[i] = '\0';
-              if (argc < max_args)
-                {
-                  argv[argc] = string + previous;
-                  ++argc;
-                }
-              else
-                {
-                  ACE_OS::fprintf (stderr, "spae(): number of arguments "
-                                           "limited to %d\n", max_args);
-                }
-
-              // Skip over whitespace in between arguments
-              for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
-                {
-                }
-
-              // Save the starting point for the next time around
-              previous = i;
-
-              // Make sure we don't skip over a character due
-              // to the above loop to skip over whitespace
-              --i;
             }
+        }
+      else if (string[i] == '\\')  // Escape the next character
+        {
+          // The next character is automatically
+          // skipped because of the strcpy
+          ACE_OS::strcpy (string + i, string + i + 1);
+          length--;
+        }
+      else if (!indouble &&
+               (ACE_OS::ace_isspace (string[i]) || string[i] == '\0'))
+        {
+          string[i] = '\0';
+          if (argc < max_args)
+            {
+              argv[argc] = string + previous;
+              argc++;
+            }
+          else
+            {
+              ACE_OS::fprintf (stderr, "spae(): number of arguments "
+                                       "limited to %d\n", max_args);
+            }
+
+          // Skip over whitespace in between arguments
+          for(++i; i < length && ACE_OS::ace_isspace (string[i]); ++i)
+            {
+            }
+
+          // Save the starting point for the next time around
+          previous = i;
+
+          // Make sure we don't skip over a character due
+          // to the above loop to skip over whitespace
+          i--;
         }
     }
 }
@@ -5366,10 +5312,9 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
+
   if (arg)
-    {
-      add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
-    }
+    add_to_argv(argc, argv, ACE_MAX_ARGS, arg);
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
@@ -5398,18 +5343,4 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   // successful
   return ret > 0 ? _vx_call_rc : 255;
 }
-
-#if defined(ACE_AS_STATIC_LIBS) && defined (ACE_VXWORKS_DEBUGGING_HELPER)
-/** Wind River workbench allows the user to spawn a kernel task as a
-    "Debug Configuration".  Use this function as the entrypoint so that
-    the arguments are translated into the form that ace_main() requires.
- */
-int ace_wb_exec (int arg0, int arg1, int arg2, int arg3, int arg4,
-                 int arg5, int arg6, int arg7, int arg8, int arg9)
-{
-  return spaef ((FUNCPTR) ace_main, arg0, arg1, arg2, arg3, arg4,
-                arg5, arg6, arg7, arg8, arg9);
-}
-#endif /* ACE_AS_STATIC_LIBS && ... */
-
 #endif /* ACE_VXWORKS && !__RTP__ */

@@ -34,6 +34,6 @@ Messenger_i::send_message (const char* user_name,
     std::cout << "Native Priority: " << native_priority  << std::endl;
   }
   std::cout << "Message:         " << message   << std::endl << std::endl;
-  return true;
+  return 1;
 }
 

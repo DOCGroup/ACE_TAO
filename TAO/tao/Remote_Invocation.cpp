@@ -36,17 +36,20 @@ namespace TAO
   }
 
   void
-  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec,
-                                       TAO_OutputCDR &output)
+  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec)
   {
-    // Generate all service contexts
-    this->resolver_.stub ()->orb_core ()->service_context_registry ().
-      generate_service_context (
-        this->resolver_.stub (),
-        *this->resolver_.transport (),
-        this->details_,
-        target_spec,
-        output);
+    /**
+     * Mega hack for RTCORBA start. I don't think that
+     * PortableInterceptor would work here esp. for RTCORBA. PI needs
+     * to be improved to help our cause.
+     */
+    this->resolver_.stub ()->orb_core ()->service_context_list (
+      this->resolver_.stub (),
+      this->details_.request_service_context (),
+      0);
+    /**
+     * Mega hack for RTCORBA END
+     */
 
     TAO_Profile *pfile = this->resolver_.profile ();
 
@@ -58,7 +61,8 @@ namespace TAO
         break;
       case TAO_Target_Specification::Profile_Addr:
         {
-          IOP::TaggedProfile *tp = pfile->create_tagged_profile ();
+          IOP::TaggedProfile *tp =
+            pfile->create_tagged_profile ();
 
           if (tp)
             {
@@ -96,10 +100,10 @@ namespace TAO
   void
   Remote_Invocation::write_header (TAO_OutputCDR &out_stream)
   {
-    this->resolver_.transport ()->clear_translators (0, &out_stream);
-
     TAO_Target_Specification spec;
-    this->init_target_spec (spec, out_stream);
+    this->init_target_spec (spec);
+
+    this->resolver_.transport ()->clear_translators (0, &out_stream);
 
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
@@ -168,10 +172,6 @@ namespace TAO
     // Note that if noth nph and tph are 0, then we do not make any
     // virtual calls any more, because we have removed the default
     // implementations.
-
-    if (! this->resolver_.transport ()->is_connected()) {
-      throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-    }
 
     int const retval =
       this->resolver_.transport ()->send_request (

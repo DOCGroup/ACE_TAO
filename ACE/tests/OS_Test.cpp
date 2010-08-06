@@ -25,7 +25,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_netdb.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")
 
@@ -45,9 +44,6 @@ template <typename T> bool is_equal (const T& a, const T& b)
 int
 access_test (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing access method\n")));
-
   int test_status = 0;
 
   int status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
@@ -910,34 +906,6 @@ string_convert_test (void)
 #endif /* ACE_HAS_WCHAR */
 }
 
-// Test ACE_OS::strsignal()
-int
-strsignal_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing strsignal method\n")));
-
-  int test_status = 0;
-
-  const char* result = 0;
-
-  for (int i=-1; i < (ACE_NSIG + 1); ++i)
-    {
-      result = ACE_OS::strsignal (i);
-      if (result == 0)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("strsignal returned null\n")));
-          test_status = 1;
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Sig #%d: %C\n"), i, result));
-        }
-    }
-
-  return test_status;
-}
-
 // Test the methods for getting cpu info
 int
 cpu_info_test (void)
@@ -1138,60 +1106,6 @@ ace_ctype_test (void)
 }
 
 int
-ceilf_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing ceilf method\n")));
-
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-2.0, -1.0, 2.0, 3.0};
-  float result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
-    {
-      result = ACE_OS::ceil (values [i]);
-      if (!is_equal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceilf error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-floorf_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing floorf method\n")));
-
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-3.0, -2.0, 1.0, 2.0};
-  float result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
-    {
-      result = ACE_OS::floor (values [i]);
-      if (!is_equal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"),
-                      values [i], result, results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
 ceil_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1207,12 +1121,8 @@ ceil_test (void)
       result = ACE_OS::ceil (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
         }
     }
 
@@ -1235,66 +1145,8 @@ floor_test (void)
       result = ACE_OS::floor (values [i]);
       if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-ceill_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing ceill method\n")));
-
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-2.0, -1.0, 2.0, 3.0};
-  long double result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
-    {
-      result = ACE_OS::ceil (values [i]);
-      if (!is_equal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-floorl_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing floorl method\n")));
-
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-3.0, -2.0, 1.0, 2.0};
-  long double result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
-    {
-      result = ACE_OS::floor (values [i]);
-      if (!is_equal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
-                      values [i], result, results [i]));
-          ++error_count;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
         }
     }
 
@@ -1308,7 +1160,7 @@ log2_test (void)
               ACE_TEXT ("Testing log2 method\n")));
 
   double values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
-  int const results[] = {0, 1, 2, 3, 20};
+  int results[] = {0, 1, 2, 3, 20};
   int result = 0;
   int error_count = 0;
 
@@ -1318,7 +1170,7 @@ log2_test (void)
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %.1F, output %d, expected %d\n"), values [i], result, results [i]));
-          ++error_count;
+          error_count++;
         }
     }
 
@@ -1353,31 +1205,16 @@ run_main (int, ACE_TCHAR *[])
   if ((result = string_strsncpy_test ()) != 0)
       status = result;
 
-  if ((result = strsignal_test ()) != 0)
-      status = result;
-
   if ((result = cpu_info_test ()) != 0)
       status = result;
 
   if ((result = pagesize_test ()) != 0)
       status = result;
 
-  if ((result = ceilf_test ()) != 0)
-      status = result;
-
-  if ((result = floorf_test ()) != 0)
-      status = result;
-
   if ((result = ceil_test ()) != 0)
       status = result;
 
   if ((result = floor_test ()) != 0)
-      status = result;
-
-  if ((result = ceill_test ()) != 0)
-      status = result;
-
-  if ((result = floorl_test ()) != 0)
       status = result;
 
   if ((result = log2_test ()) != 0)

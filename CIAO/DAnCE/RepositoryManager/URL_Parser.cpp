@@ -3,9 +3,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "URL_Parser.h"
-#include "ace/ACE.h"
 
-#include "DAnCE/Logger/Log_Macros.h"
+#include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 bool
 URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,20 +38,20 @@ URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 URL_Parser::URL_Parser (void)
-  : hostname_ (ACE::strnew (ACE_TEXT("127.0.0.1"))),
+  : hostname_ (ACE::strnew ("127.0.0.1")),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),
     debug_ (false)
 {
 }
 
-bool URL_Parser::parseURL (ACE_TCHAR* url)
+bool URL_Parser::parseURL (char* url)
 {
-  ACE_TCHAR* ptr = 0;
+  char* ptr = 0;
   bool success = true;
-  ptr = ACE_OS::strstr (url, ACE_TEXT("http://"));
+  ptr = ACE_OS::strstr (url, "http://");
   if (ptr)
-    url += ACE_OS::strlen (ACE_TEXT("http://"));
+    url += ACE_OS::strlen ("http://");
 
   if (url[0] == '/')
     {
@@ -91,7 +91,7 @@ bool URL_Parser::parseURL (ACE_TCHAR* url)
 
 void URL_Parser::Error (void)
 {
-  DANCE_DEBUG (6, (LM_DEBUG, "./http_client -u http://hostname:port/filename [-d]\n"));
+  ACE_DEBUG ((LM_DEBUG, "./http_client -u http://hostname:port/filename [-d]\n"));
 }
 
 URL_Parser::~URL_Parser()

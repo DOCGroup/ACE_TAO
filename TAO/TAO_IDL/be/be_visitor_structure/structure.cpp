@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Structures. This is a generic visitor.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Structures. This is a generic visitor.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_structure, 
+           structure, 
+           "$Id$")
 
 be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

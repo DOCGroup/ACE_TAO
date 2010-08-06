@@ -11,8 +11,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 
-const ACE_TCHAR *rategen_ior_ = ACE_TEXT("file://rategen.ior");
-int rate = 3;
+const char *rategen_ior_ = 0;
+int rate = 2;
 int turn_on = 1;
 
 int
@@ -58,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (rategen_ior_ == 0)
     {
-      rategen_ior_ = ACE_TEXT("file://ec.ior");
+      rategen_ior_ = "file://ec.ior";
     }
 
   if (rate == 0)
@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           pulser->hertz (rate);
 
-          ACE_DEBUG ((LM_EMERGENCY, "Start up the Event services\n"));
+          ACE_DEBUG ((LM_DEBUG, "Start up the Event services\n"));
 
           pulser->start ();
         }
@@ -109,14 +109,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           pulser->stop ();
 
-          ACE_DEBUG ((LM_EMERGENCY, "Stop the ES\n"));
+          ACE_DEBUG ((LM_DEBUG, "Stop the ES\n"));
         }
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Who is the culprit\n");
+      ex._tao_print_exception ("Who is the culprit \n");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Uncaught CORBA exception\n"),
                         1);

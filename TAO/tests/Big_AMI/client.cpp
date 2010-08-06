@@ -7,6 +7,7 @@
  *
  *  A very simple client which uses the AMI callback model.
  *
+ *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -120,6 +121,8 @@ private:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+
+
   try
     {
       CORBA::ORB_var orb =
@@ -140,10 +143,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // We reuse the object_var smart pointer!
-      CORBA::Object_var ior_object = orb->string_to_object (ior);
+      object_var = orb->string_to_object (ior);
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (ior_object.in ());
+        A::AMI_Test::_narrow (object_var.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
@@ -186,6 +189,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    "Let's talk AMI.",
                                    payload);
         }
+
+      // We are just sending all requests, but we shouldn't get any replies
+      // until we run the orb or do a real synchronous call, so check whether
+      // we didn't get any reply until this moment
+      if (handler.reply_count () > 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "ERROR: Got a reply during sending asynchronous calls\n"),
+                            1);
 
       if (debug)
         {

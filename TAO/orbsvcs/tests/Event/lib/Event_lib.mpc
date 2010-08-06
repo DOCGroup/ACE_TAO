@@ -3,7 +3,7 @@
 
 project(Event_Test_Lib): rtevent_serv, naming {
   sharedname   = ECTests
-  dynamicflags += EC_TEST_BUILD_DLL
+  dynamicflags = EC_TEST_BUILD_DLL
   Header_Files {
     ectest_export.h
   }

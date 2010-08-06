@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument_marshal.cpp
- *
- *  $Id$
- *
- *  Visitor to pass arguments to the CDR operators. This one helps in
- *  generating the && and the , at the right place. This one is for the
- *  skeleton side.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument_marshal.cpp
+//
+// = DESCRIPTION
+//    Visitor to pass arguments to the CDR operators. This one helps in
+//    generating the && and the , at the right place. This one is for the
+//    skeleton side.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           argument_marshal, 
+           "$Id$")
 
 // ************************************************************
 // operation visitor to handle the passing of arguments to the CDR operators
@@ -45,11 +55,10 @@ be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) "
                          "be_visitor_operation_argument_marshal"
-                         "::pre_process - "
+                         "::post_process - "
                          "Bad argument node\n"),
                         -1);
     }
-    
   switch (arg->direction ())
     {
     case AST_Argument::dir_IN:
@@ -109,7 +118,6 @@ be_visitor_operation_argument_marshal::post_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
-    
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -191,8 +199,7 @@ be_visitor_args_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // retrieve the field node
-  be_argument *f =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+  be_argument *f = this->ctx_->be_node_as_argument ();
 
   if (f == 0)
     {
@@ -212,7 +219,7 @@ be_visitor_args_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (!this->ctx_->alias () // not a typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope
@@ -262,8 +269,7 @@ be_visitor_args_decl::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
 
-  // The node to be visited in the base primitve
-  // type that gets typedefed.
+  // the node to be visited in the base primitve type that gets typedefed
   be_type *bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))

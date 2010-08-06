@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_exec.h"
+#include "CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -34,7 +35,8 @@ MyImpl::timeout_Handler::close_h ()
   this->done_ = 1;
   this->reactor ()->notify ();
 
-  ACE_DEBUG ((LM_EMERGENCY, "Waiting\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "Waiting\n"));
   return this->wait ();
 }
 
@@ -77,11 +79,12 @@ int
 MyImpl::timeout_Handler::handle_close (ACE_HANDLE handle,
                                        ACE_Reactor_Mask close_mask)
 {
-  ACE_DEBUG ((LM_EMERGENCY,
-              ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
-              this,
-              handle,
-              close_mask));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
+                this,
+                handle,
+                close_mask));
 
   return 0;
 }
@@ -92,7 +95,7 @@ MyImpl::timeout_Handler::handle_timeout (const ACE_Time_Value &,
 {
   this->pulse_callback_->pulse ();
 
-  //   ACE_DEBUG ((LM_EMERGENCY,
+  //   ACE_DEBUG ((LM_DEBUG,
   //               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
   //               this,
   //               tv.sec (),
@@ -176,7 +179,8 @@ MyImpl::EC_exec_i::active ()
 void
 MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 {
-  ACE_DEBUG ((LM_EMERGENCY, "MyImpl::EC_exec_i::set_session_context\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::set_session_context\n"));
 
   this->context_ =
     BasicSP::CCM_EC_Context::_narrow (ctx);
@@ -188,29 +192,37 @@ MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 }
 
 void
-MyImpl::EC_exec_i::configuration_complete ()
+MyImpl::EC_exec_i::ciao_preactivate ()
 {
 }
 
 void
 MyImpl::EC_exec_i::ccm_activate ()
 {
-  ACE_DEBUG ((LM_EMERGENCY, "MyImpl::EC_exec_i::ccm_activate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_activate\n"));
 
   this->pulser_.open_h ();
 }
 
 void
+MyImpl::EC_exec_i::ciao_postactivate ()
+{
+}
+
+void
 MyImpl::EC_exec_i::ccm_passivate ()
 {
-  ACE_DEBUG ((LM_EMERGENCY, "MyImpl::EC_exec_i::ccm_passivate\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_passivate\n"));
   this->pulser_.close_h ();
 }
 
 void
 MyImpl::EC_exec_i::ccm_remove ()
 {
-  ACE_DEBUG ((LM_EMERGENCY, "MyImpl::EC_exec_i::ccm_remove\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_remove\n"));
 }
 
 void
@@ -218,31 +230,19 @@ MyImpl::EC_exec_i::pulse (void)
 {
   try
     {
-      ACE_DEBUG ((LM_EMERGENCY,
-                  ACE_TEXT ("Pushing BasicSP::TimeOut event!\n")));
+      if (CIAO::debug_level () > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Pushing BasicSP::TimeOut event!\n")));
 
       BasicSP::TimeOut_var ev = new OBV_BasicSP::TimeOut ();
 
-      this->context_->push_timeout_value (ev.in ());
+      this->context_->push_timeout (ev.in ());
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception while pushing "
                                "BasicSP::TimeOut event to BMDevice");
     }
-}
-
-extern "C" EC_EXEC_Export ::Components::EnterpriseComponent_ptr
-create_BasicSP_EC_Impl (void)
-{
-  ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
-  
-  ACE_NEW_RETURN (retval,
-                  MyImpl::EC_exec_i,
-                  ::Components::EnterpriseComponent::_nil ());
-  
-  return retval;
 }
 
 MyImpl::ECHome_exec_i::ECHome_exec_i ()

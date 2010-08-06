@@ -21,38 +21,16 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
  : name_ (name),
    expected_ (expected),
    count_ (0),
-   delay_count_ (0),
-   delay_period_ (5),
    client_ (client)
 {
   this->client_.consumer_start (this);
 }
 
-void
-Notify_Structured_Push_Consumer::set_delay_parameters (unsigned int delay_count, unsigned long delay_period)
-{
-  this->delay_count_ = delay_count;
-  this->delay_period_ = delay_period;
-}
 
 void
 Notify_Structured_Push_Consumer::_connect (
                 CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
-#ifdef TEST_QOS_MAX_EVENTS_PER_CONSUMER
-  CosNotification::QoSProperties properties (8);
-  properties.length (2);
-  CORBA::ULong idx = 0;
-  properties[idx].name = CORBA::string_dup (CosNotification::DiscardPolicy);
-  properties[idx].value <<= this->CosNotification::FifoOrder;
-  idx += 1;
-  properties[idx].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
-  properties[idx].value <<= 500;
-  idx += 1;
-  ACE_OS::printf("Setting %d::%d QoS properties in Admin.\n", (int)idx, (int)properties.length());
-  consumer_admin->set_qos (properties);
-#endif // TEST_QOS_MAX_EVENTS_PER_CONSUMER
-
   CosNotifyComm::StructuredPushConsumer_var objref = this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
@@ -92,12 +70,6 @@ Notify_Structured_Push_Consumer::push_structured_event (
   static const ACE_Time_Value sl (0, 2000);
 
   this->count_++;
-
-  if (this->delay_count_ != 0 && this->count_ % this->delay_count_ == 0)
-    {
-      ACE_OS::sleep (this->delay_period_);
-    }
-
   if (this->count_ > this->expected_)
   {
     ACE_ERROR ((LM_ERROR,

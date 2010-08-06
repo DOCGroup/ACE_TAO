@@ -75,6 +75,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exprlist.h"
 #include "ast_expression.h"
 
+ACE_RCSID (util,
+           utl_exprlist,
+           "$Id$")
+
 UTL_ExprList::UTL_ExprList (AST_Expression *s,
                             UTL_ExprList *cdr)
   : UTL_List (cdr),

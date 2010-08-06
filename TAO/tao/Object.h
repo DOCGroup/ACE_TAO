@@ -83,13 +83,8 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
-  
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-  
-  template<>
-  TAO_Export Boolean
-  is_nil (Object_ptr);
 
   /**
    * @class Object
@@ -236,7 +231,7 @@ namespace CORBA
     virtual void _remove_ref (void);
 
     /// Get the refcount
-    virtual CORBA::ULong _refcount_value (void) const;
+    virtual CORBA::ULong _refcount_value(void) const;
     //@}
 
     // Useful for template programming.
@@ -342,12 +337,9 @@ namespace CORBA
     /// implement Smart Proxies and no others.
     virtual char* convert_to_ior (bool use_omg_ior_format,
                                   const char* ior_prefix) const;
-            
-    /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.                              
-    void _decr_refcount (void);
 
   protected:
+
     /// Initializing a local object.
     Object (int dummy = 0);
 
@@ -417,7 +409,7 @@ namespace TAO
                                  CORBA::Object_var,
                                  CORBA::Object_out,
                                  TAO::Objref_Traits<CORBA::Object>,
-                                 TAO::Any_Insert_Policy_CORBA_Object>
+                                 TAO::Any_Insert_Policy_CORBA_Object <CORBA::Object_ptr> >
   {
   };
 

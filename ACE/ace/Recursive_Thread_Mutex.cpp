@@ -18,7 +18,7 @@
 
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(ace, Recursive_Thread_Mutex, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,7 +82,7 @@ int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_VXTHREADS) || defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE) || defined (ACE_HAS_VXTHREADS) || defined (ACE_HAS_PHARLAP)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
 # if defined (ACE_WIN32)

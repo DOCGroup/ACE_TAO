@@ -28,8 +28,6 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/SString.h"
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
@@ -279,7 +277,7 @@ worker_parent (void *arg)
   // so we need to indicate that it's the child.
   const ACE_TCHAR *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
-                       ACE_TEXT ("%sSignal_Test")
+                       ACE_TEXT ("Signal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
                        ACE_TEXT (" -c");
   l_argv[0] = const_cast <ACE_TCHAR *> (t);
@@ -289,15 +287,7 @@ worker_parent (void *arg)
   ACE_ARGV argv (l_argv);
 
   // Generate a command-line!
-  ACE_TString exe_sub_dir;
-  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
-  if (subdir_env)
-    {
-      exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
-      exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
-    }
-
-  options.command_line (argv.buf (), exe_sub_dir.c_str ());
+  options.command_line (argv.buf ());
   ACE_Process pm;
 
   child_pid = pm.spawn (options);
@@ -483,7 +473,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
-#ifdef ACE_HAS_THREADS
       ++test_number;
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
@@ -498,9 +487,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 3: handle signals asynchronously in this thread\n")));
-#else
-      test_number += 2;
-#endif /* ACE_HAS_THREADS */
 
       ++test_number;
       // And finally by handling asynchronously signals in this thread.

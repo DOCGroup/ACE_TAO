@@ -340,7 +340,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var receiver =
         test::_narrow (object.in ());

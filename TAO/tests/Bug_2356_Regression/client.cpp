@@ -91,10 +91,10 @@ public:
                         ACE_OS::strlen(ex.whatDidTheRightThing.in()) * sizeof(CORBA::WChar)
                         ));
 
-          CORBA::WChar const* wstring = L"Hello world";
+          CORBA::WChar* wstring = CORBA::wstring_dup(L"Hello world");
 #else
-          CORBA::WChar const empty[] = { 0 };
-          CORBA::WChar const* wstring = empty;
+          CORBA::WChar empty[] = { 0 };
+          CORBA::WChar* wstring = CORBA::wstring_dup(empty);
 #endif
           if (ACE_OS::strcmp (wstring, ex.whatDidTheRightThing.in()) != 0)
             {

@@ -11,7 +11,8 @@ use PerlACE::TestTarget;
 #
 # These tests only run on Win32
 #
-if ($^O ne "MSWin32") {
+if ($^O ne "MSWin32")
+{
     exit;
 }
 
@@ -39,7 +40,8 @@ if ($^O ne "MSWin32") {
 my $target = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";;
 $test_timeout = 60 + $target->ProcessStartWaitInterval();
 
-for $test (@tests) {
+for $test (@tests)
+{
     print STDOUT "\n________________________________________\n";
     print STDOUT "\nStarting test \"$test\"";
     print STDOUT "\n________________________________________\n\n";
@@ -49,11 +51,14 @@ for $test (@tests) {
     if (! -e $test_process->Executable ()) {
         print STDERR "Error: " . $test_process->Executable () .
                      " does not exist or is not runnable\n";
-    } else {
+    }
+    else
+    {
        $test_process->Spawn ();
        $test_result = $test_process->WaitKill ($test_timeout);
 
-       if ($test_result != 0) {
+       if ($test_result != 0)
+       {
            print STDERR "\n________________________________________\n";
            print STDERR "\nERROR: \"$test\" returned $test_result";
            print STDERR "\n________________________________________\n";

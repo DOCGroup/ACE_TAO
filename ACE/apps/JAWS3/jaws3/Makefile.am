@@ -33,7 +33,7 @@ libJAWS3_la_SOURCES = \
   Event_Completer.cpp \
   Event_Dispatcher.cpp \
   FILE.cpp \
-  Jaws_IO.cpp \
+  IO.cpp \
   Options.cpp \
   Protocol_Handler.cpp \
   Reactive_IO.cpp \
@@ -63,7 +63,7 @@ noinst_HEADERS = \
   Event_Result.h \
   Export.h \
   FILE.h \
-  Jaws_IO.h \
+  IO.h \
   Options.h \
   Protocol_Handler.h \
   Reactive_IO.h \

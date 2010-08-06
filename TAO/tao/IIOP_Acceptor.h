@@ -213,10 +213,6 @@ protected:
                              CORBA::Short priority);
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
-private:
-  void operator= (const TAO_IIOP_Acceptor &);
-  TAO_IIOP_Acceptor (const TAO_IIOP_Acceptor &);
-
   //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_START
 protected:
 

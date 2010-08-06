@@ -13,7 +13,8 @@
  */
 
 #include "testing_exception.hpp"
-#include "ace/Copy_Disabled.h"
+
+#include <boost/utility.hpp>
 
 #include <iostream>
 
@@ -58,7 +59,7 @@ private:
  *        number of times.
  */
 class expected_calls
-  : private ACE_Copy_Disabled
+  : private boost::noncopyable
 {
 public:
   inline expected_calls(call_counter const & counter)
@@ -99,6 +100,7 @@ inline std::ostream & operator<<(std::ostream & os, expected_calls const & x)
 {
   return os << "current=" << x.current_count()
             << ",previous=" << x.previous_count();
+    
 }
 
 #endif // guard_testing_counters_hpp

@@ -1,17 +1,27 @@
+//
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ami_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu> Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ami_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale,
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Michael Kircher
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           operation_ami_cs,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for client stubs
@@ -81,8 +91,23 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Generate the scope::operation name.
   *os << parent->full_name ()
-      << "::" << this->ctx_->port_prefix ().c_str ()
-      << node->local_name ()->get_string ();
+      << "::sendc_";
+
+    // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
+    {
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "set_";
+        }
+      else
+        {
+          *os << "get_";
+        }
+    }
+
+  *os << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -90,7 +115,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_visitor_operation_arglist oa_visitor (&ctx);
 
   // Get the AMI version from the strategy class.
-  be_operation *ami_op = node;
+  be_operation *ami_op = node->arguments ();
 
   if (ami_op->accept (&oa_visitor) == -1)
     {
@@ -132,8 +157,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
           *os << "if (this->the_TAO_" << parent->local_name ()
               << "_Proxy_Broker_ == 0)" << be_idt_nl
@@ -194,27 +218,35 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
-  ACE_CString base (node->local_name ()->get_string ());
-  
-  /// The sendc_* operation makes the invocation with the
-  /// original operation name.
-  ACE_CString lname_str (base.substr (ACE_OS::strlen ("sendc_")));
-  const char *lname = lname_str.c_str ();
-  
-  ACE_CString opname (node->is_attr_op () ? "_" : "");
+  const char *lname = node->local_name ()->get_string ();
+  ACE_CDR::ULong opname_len = ACE_OS::strlen (lname);
+  ACE_CString opname;
+
+  if (this->ctx_->attribute ())
+    {
+      // If we are a attribute node, add 5 for '_get_' or '_set_'.
+      opname_len += 5;
+
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          opname = "_set_";
+        }
+      else
+        {
+          opname = "_get_";
+        }
+    }
+
   opname += lname;
-  
-  /// Some compilers can't resolve the stream operator overload.
-  const char *op_name = opname.c_str ();
-  ACE_CDR::ULong len = opname.length ();
 
   *os << be_nl << be_nl
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
-      << "\"" << op_name << "\"," << be_nl
-      << len << "," << be_nl;
+      << "\"" << opname.fast_rep () << "\"," << be_nl
+      << opname_len << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
@@ -227,7 +259,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << be_uidt_nl
       << ");" << be_uidt;
-  
+
   *os << be_nl << be_nl
       << "_tao_call.invoke (" << be_idt << be_idt_nl
       << "ami_handler," << be_nl
@@ -240,9 +272,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       *os << gparent->name () << "::";
     }
-    
-  *os << "AMI_"  << parent->local_name () << "Handler::"
-      << lname << "_reply_stub" << be_uidt_nl
+
+  *os << "AMI_" << parent->local_name () << "Handler::"
+      << opname.fast_rep () + (this->ctx_->attribute () != 0)
+      << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;
 
   *os << be_uidt_nl
@@ -256,7 +289,7 @@ int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0; // argument type
+  be_type *bt; // argument type
 
   // Retrieve the type for this argument.
   bt = be_type::narrow_from_decl (node->field_type ());
@@ -292,11 +325,14 @@ be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *,
-                                                be_type *)
+be_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
+                                                be_type *bt)
 {
-  // Nothing to be done here, we do not throw any exceptions
+  // Nothing to be done here, we do not through any exceptions,
   // besides system exceptions, so we do not need an user exception table.
+  ACE_UNUSED_ARG (node);
+  ACE_UNUSED_ARG (bt);
+
   return 0;
 }
 

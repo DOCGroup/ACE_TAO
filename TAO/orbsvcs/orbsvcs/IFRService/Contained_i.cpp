@@ -598,10 +598,9 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
         }
         case CORBA::dk_Native:
         {
-          CORBA::NativeDef_var new_defn =
-            container_impl.create_native_i (new_id.c_str (),
-                                            new_name,
-                                            new_version);
+          container_impl.create_native_i (new_id.c_str (),
+                                          new_name,
+                                          new_version);
           break;
         }
         case CORBA::dk_ValueBox:
@@ -614,9 +613,9 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
 
           CORBA::ValueBoxDef_var new_defn =
             container_impl.create_value_box_i (new_id.c_str (),
-                                               new_name,
-                                               new_version,
-                                               otype.in ());
+                                              new_name,
+                                              new_version,
+                                              otype.in ());
 
           ACE_TString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
@@ -751,12 +750,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
 
           CORBA::Any_var value = impl.value_i ();
 
-          CORBA::ConstantDef_var new_defn =
-            container_impl.create_constant_i (new_id.c_str (),
-                                              new_name,
-                                              new_version,
-                                              type_def.in (),
-                                              value.in ());
+          container_impl.create_constant_i (new_id.c_str (),
+                                            new_name,
+                                            new_version,
+                                            type_def.in (),
+                                            value.in ());
           break;
         }
         case CORBA::dk_Attribute:
@@ -775,12 +773,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               TAO_InterfaceDef_i idef (this->repo_);
               idef.section_key (container_key);
 
-              CORBA::AttributeDef_var new_defn =
-                idef.create_attribute_i (new_id.c_str (),
-                                         new_name,
-                                         new_version,
-                                         type_def.in (),
-                                         mode);
+              idef.create_attribute_i (new_id.c_str (),
+                                       new_name,
+                                       new_version,
+                                       type_def.in (),
+                                       mode);
               break;
             }
           else if (container_dk == CORBA::dk_Value)
@@ -788,12 +785,11 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               TAO_ValueDef_i vdef (this->repo_);
               vdef.section_key (container_key);
 
-              CORBA::AttributeDef_var new_defn =
-                vdef.create_attribute_i (new_id.c_str (),
-                                         new_name,
-                                         new_version,
-                                         type_def.in (),
-                                         mode);
+              vdef.create_attribute_i (new_id.c_str (),
+                                       new_name,
+                                       new_version,
+                                       type_def.in (),
+                                       mode);
               break;
             }
           else
@@ -828,15 +824,14 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               TAO_InterfaceDef_i idef (this->repo_);
               idef.section_key (container_key);
 
-              CORBA::OperationDef_var new_defn =
-                idef.create_operation_i (new_id.c_str (),
-                                         new_name,
-                                         new_version,
-                                         result.in (),
-                                         mode,
-                                         params.in (),
-                                         exceptions.in (),
-                                         contexts.in ());
+              idef.create_operation_i (new_id.c_str (),
+                                       new_name,
+                                       new_version,
+                                       result.in (),
+                                       mode,
+                                       params.in (),
+                                       exceptions.in (),
+                                       contexts.in ());
               break;
             }
           else if (container_dk == CORBA::dk_Value)
@@ -844,15 +839,14 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               TAO_ValueDef_i vdef (this->repo_);
               impl.section_key (container_key);
 
-              CORBA::OperationDef_var new_defn =
-                vdef.create_operation_i (new_id.c_str (),
-                                         new_name,
-                                         new_version,
-                                         result.in (),
-                                         mode,
-                                         params.in (),
-                                         exceptions.in (),
-                                         contexts.in ());
+              vdef.create_operation_i (new_id.c_str (),
+                                       new_name,
+                                       new_version,
+                                       result.in (),
+                                       mode,
+                                       params.in (),
+                                       exceptions.in (),
+                                       contexts.in ());
               break;
             }
           else

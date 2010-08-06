@@ -260,7 +260,7 @@ class TAO_Offer_Id_Iterator :
   virtual CORBA::Boolean next_n(CORBA::ULong _n,
                                 CosTrading::OfferIdSeq_out _ids);
 
-  /// Insert a @a new_id into the contents of the iterator.
+  /// Insert a <new_id> into the contents of the iterator.
   void insert_id(CosTrading::OfferId new_id);
 
  private:

@@ -61,7 +61,7 @@ private:
 
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  bool initialized_;
+  static bool is_activated_;
 };
 
 static bool

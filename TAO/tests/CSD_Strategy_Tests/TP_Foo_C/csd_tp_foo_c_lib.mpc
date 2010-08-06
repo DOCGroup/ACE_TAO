@@ -1,7 +1,7 @@
 //$Id$
 project : csd_tp_test_lib, avoids_corba_e_micro {
   sharedname   = CSD_TP_Foo_C
-  dynamicflags += CSD_TP_FOO_C_BUILD_DLL
+  dynamicflags = CSD_TP_FOO_C_BUILD_DLL
   idlflags  += -b -Wb,export_macro=CSD_TP_Foo_C_Export -Wb,export_include=CSD_TP_Foo_C_Export.h
   includes    += $(TAO_ROOT)/tao
 

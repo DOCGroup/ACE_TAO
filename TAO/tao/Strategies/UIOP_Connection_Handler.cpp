@@ -127,7 +127,7 @@ TAO_UIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
-                ACE_TEXT ("<%C> on %d\n"),
+                ACE_TEXT ("<%s> on %d\n"),
                 addr.get_path_name (), this->peer ().get_handle ()));
 
   // Set that the transport is now connected, if fails we return -1
@@ -236,12 +236,6 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
 
   // Add the handler to Cache
   return cache.cache_transport (&prop, this->transport ());
-}
-
-int
-TAO_UIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

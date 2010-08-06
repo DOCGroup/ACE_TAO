@@ -2,7 +2,7 @@
 
 project(*lib): orbsvcslib, notify_serv {
   sharedname = NotifyPlugTop
-  dynamicflags += PLUGTOP_BUILD_DLL
+  dynamicflags = PLUGTOP_BUILD_DLL
   source_files {
     Test_Saver.cpp
     Test_Topology_Factory.cpp

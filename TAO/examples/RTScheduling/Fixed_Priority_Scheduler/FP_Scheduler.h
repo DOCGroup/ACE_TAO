@@ -18,8 +18,6 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 
   CORBA::Policy_ptr copy (void);
 
-  virtual CORBA::PolicyType policy_type (void);
-
   void destroy (void);
 
  private:
@@ -103,6 +101,8 @@ public ::CORBA::LocalObject
 
  private:
   RTScheduling::Current_var current_;
+  RTCORBA::PriorityMapping* pm_;
+
 };
 
 #endif //FIXED_PRIORITY_SCHEDULER_H

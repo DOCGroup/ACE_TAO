@@ -4,6 +4,7 @@
 #include "HTBP_Inside_Squid_Filter.h"
 #include "HTBP_Outside_Squid_Filter.h"
 
+#include "HTBP_Stream.h"
 #include "ace/Service_Object.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"

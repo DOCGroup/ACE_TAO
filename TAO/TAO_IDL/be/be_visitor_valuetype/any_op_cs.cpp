@@ -1,17 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for valuetypes in the stubs
- *  file.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for valuetypes in the stubs
+//    file.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           any_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************
@@ -137,9 +146,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl << be_nl
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;

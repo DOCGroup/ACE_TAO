@@ -58,9 +58,10 @@ public:
   /// Shutdown reactor.
   void shutdown_reactor (void);
 
-  /// Certain ORB policies such as dropping replies on shutdown 
-  /// would need cleanup of transports to wake threads up.
-  void close_all_transports (void);
+  /// Certain ORB policies such as dropping replies on shutdown with
+  /// RW connection handlers would need cleanup of transports to wake
+  /// threads up.
+  void cleanup_rw_transports (void);
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
@@ -75,10 +76,6 @@ public:
   TAO_Thread_Pool_Manager &tp_manager (void);
 
   // @}
-
-private:
-  void operator= (const TAO_RT_Thread_Lane_Resources_Manager &);
-  TAO_RT_Thread_Lane_Resources_Manager (const TAO_RT_Thread_Lane_Resources_Manager &);
 
 protected:
 

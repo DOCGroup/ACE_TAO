@@ -1,762 +1,359 @@
 // $Id$
 
-#include "ace/Dynamic_Service.h"
-#include "ace/Env_Value_T.h"
+#include "Plan_Launcher_Benchmark_Impl.h"
+
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
-#include "tao/ORB.h"
-#include "tao/Object.h"
-#include "DAnCE/Logger/Log_Macros.h"
-#include "DAnCE/Logger/Logger_Service.h"
-#include "DAnCE/tools/Convert_Plan/Convert_Plan_Impl.h"
+#include <iostream>
 
-#include "EM_Launcher.h"
-#include "NM_Launcher.h"
+#include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 
-//#include "Plan_Launcher_Impl.h"
-
-namespace
+namespace CIAO
 {
-  struct Options
+  namespace Plan_Launcher
   {
-    enum MODE
-      {
-        LAUNCH,
-        STARTLAUNCH,
-        FINISHLAUNCH,
-        START,
-        TEARDOWN,
-        INVALID
-      };
+    // deployment plan URL
+    const char* deployment_plan_url = 0;
+    bool use_package_name = true;
+    const char* package_names = 0;
+    const char* package_types = 0;
+    const char* new_deployment_plan_url = 0;
+    const char* plan_uuid = 0;
+    bool em_use_naming = false;
+    const char* em_ior_file = "file://em.ior";
+    bool rm_use_naming = false;
+    bool use_repoman = false;
+    const char* rm_ior_file = "file://rm.ior";
+    const char* repoman_name_ = "RepositoryManager";
+    const char* dap_ior_filename = 0;
+    const char* dap_ior = 0;
+    bool do_benchmarking = false;
+    size_t niterations = 0;
+    CORBA::Short priority = 0;
 
-    Options (void)
-      : em_ior_ (0),
-        nm_ior_ (0),
-        xml_plan_ (0),
-        cdr_plan_ (0),
-        uuid_ (0),
-        am_ior_ (0),
-        app_ior_ (0),
-        output_ (false),
-        output_prefix_ (0),
-        mode_ (LAUNCH),
-        force_ (false),
-        quiet_ (false)
-    {}
+    enum mode_type {
+      pl_mode_start,
+      pl_mode_interactive,
+      pl_mode_stop_by_dam,
+      pl_mode_stop_by_uuid,
+      pl_mode_redeployment
+    };
 
-    const ACE_TCHAR *em_ior_;
-    const ACE_TCHAR *nm_ior_;
-    const ACE_TCHAR *xml_plan_;
-    const ACE_TCHAR *cdr_plan_;
-    const ACE_TCHAR *uuid_;
-    const ACE_TCHAR *am_ior_;
-    const ACE_TCHAR *app_ior_;
-    bool output_;
-    const ACE_TCHAR *output_prefix_;
-    MODE mode_;
-    bool force_;
-    bool quiet_;
-  };
-}
+    // default mode
+    mode_type mode = pl_mode_interactive;
 
-
-void
-usage(const ACE_TCHAR*)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Plan Launcher Options :\n")
-              ACE_TEXT ("\t-k|--em-ior <EM IOR>\t\t")
-              ACE_TEXT ("ExecutionManager IOR for EM based deployment.\n")
-              ACE_TEXT ("\t-n|--nm-ior <NodeManager IOR>\t")
-              ACE_TEXT ("NodeManager IOR for NM based deployment.\n")
-              /*
-              ACE_TEXT ("\nName Service Options\n")
-              ACE_TEXT ("\t--domain-nc [NC]\t\t)
-              ACE_TEXT (Domain Naming Context (default will rir NameService)\n")
-              ACE_TEXT ("\t--instance-nc [NC]\t\t")
-              ACE_TEXT("Instance Naming Context (default will rir NameService)\n")
-              */
-              ACE_TEXT ("\nPlan Identification Options:\n")
-              ACE_TEXT ("\t-c|--cdr-plan <CDR Deployment Plan>\n")
-              ACE_TEXT ("\t-x|--xml-plan <XML Deployment Plan>\n")
-
-              ACE_TEXT ("\t-u|--plan-uuid <PLAN UUID>\t")
-              ACE_TEXT ("Only supported for EM-based deployments\n")
-
-              ACE_TEXT ("\t-a|--app-ior <APP IOR>\t\t")
-              ACE_TEXT ("IOR for Application entity (Domain or Node)\n")
-
-              ACE_TEXT ("\t-m|--am-ior <AM IOR>\t\t")
-              ACE_TEXT ("IOR For ApplicationManager entity (Domain or Node)\n")
-
-              ACE_TEXT ("\nPlan Control Options:\n")
-              ACE_TEXT ("The default action is to fully launch a plan. ")
-              ACE_TEXT ("The following options may be used\n")
-              ACE_TEXT ("to arrive at a different state\n")
-              ACE_TEXT ("\t-l|--launch-plan\t\t")
-              ACE_TEXT ("Launch the plan (Requires CDR/XML plan)\n")
-
-              ACE_TEXT ("\t-s|--stop-plan\t\t\tStop the plan ")
-              ACE_TEXT ("(Requires Plan, UUID, or APP/AM references\n")
-
-              ACE_TEXT ("\t-f|--force\t\t\tDo not stop teardown on errors")
-
-              ACE_TEXT ("\nOther Options\n")
-              ACE_TEXT ("\t-o|--output[prefix]\t\tOutput IOR files ")
-              ACE_TEXT ("that result from plan control action, ")
-              ACE_TEXT ("if any. Optional prefix to filename defaults ")
-              ACE_TEXT ("to plan UUID if plan is provided. ")
-              ACE_TEXT ("Default is on for NM-based deployments.\n")
-
-              ACE_TEXT ("\t-q|--quiet\t\t\tSupress error messages.\n")
-              ACE_TEXT ("\t-h|--help\t\t\tShow this usage information\n")
-              ));
-}
-
-bool
-parse_args(int argc, ACE_TCHAR *argv[], Options &options)
-{
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("PL options : \"")));
-
-  for (int i = 0; i < argc; ++i)
+    static void
+    usage (const ACE_TCHAR* program)
     {
-      DANCE_DEBUG (9, (LM_TRACE, "\t%s\n", argv[i]));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("[(%P|%t) Executor] Usage: %s\n")
+                  ACE_TEXT ("-a <PACKAGE_NAMES>\n")
+                  ACE_TEXT ("-b <BENCHMARKING_ITERATIONS>\n")
+                  ACE_TEXT ("-e <PACKAGE_TYPES>\n")
+                  ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>: Tear down the application launched by this Domain Application Manager\n")
+                  ACE_TEXT ("-k <EXECUTION_MANAGER_IOR>")
+                  ACE_TEXT (" : Default file://em.ior\n")
+                  ACE_TEXT ("-l <REPOSITORY_MANAGER_IOR>")
+                  ACE_TEXT (" : Default file://rm.ior\n")
+                  ACE_TEXT ("-n : Use naming service to fetch EM\n")
+                  ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>: Use this option to dump out the IOR of the Domain Application Manager\n")
+                  ACE_TEXT ("-p <DEPLOYMENT_PLAN_URL>\n")
+                  ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
+                  ACE_TEXT ("-t <PLAN_UUID>\n")
+                  ACE_TEXT ("-v <REPOSITORY_MANAGER_NAME>: Use naming service to fetch RM with the given name")
+                  ACE_TEXT (" : Default RepositoryManager\n")
+                  ACE_TEXT ("-z <DESIRED_CORBA_PRIORITY_FOR_EXECUTION_MANAGER>\n")
+                  ACE_TEXT ("-h : Show this usage information\n"),
+                  program));
     }
 
-  ACE_Get_Opt get_opt(argc, argv,
-                      ACE_TEXT ("k:n:c:x:u:m:a:lsfqo::h"));
-  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("cdr-plan"), 'c', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("plan-uuid"), 'u', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("am-ior"), 'm', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("app-ior"), 'a', ACE_Get_Opt::ARG_REQUIRED);
-  get_opt.long_option(ACE_TEXT("launch-plan"), 'l', ACE_Get_Opt::NO_ARG);
-  get_opt.long_option(ACE_TEXT("stop-plan"), 's', ACE_Get_Opt::NO_ARG);
-  get_opt.long_option(ACE_TEXT("force"), 'f', ACE_Get_Opt::NO_ARG);
-  get_opt.long_option(ACE_TEXT("quiet"), 'q', ACE_Get_Opt::NO_ARG);
-  get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
-  get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
-
-  int c;
-  ACE_CString s;
-  while ( (c = get_opt ()) != EOF)
+    static bool
+    parse_args (int argc,
+                ACE_TCHAR *argv[])
     {
-      switch (c)
+      ACE_Get_Opt get_opt (argc,
+                           argv,
+                           ACE_TEXT ("a:b:e:p:nk:l:v:t:o:i:r:z:h"));
+      int c;
+
+      while ((c = get_opt ()) != EOF)
         {
-        case 'k':
-          if (get_opt.opt_arg () == 0)
+          switch (c)
             {
-              options.em_ior_ = ACE_TEXT ("corbaname:rir:/NameService#ExecutionManager");
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::parse_args - ")
-                               ACE_TEXT ("Defaulting to NameService lookup")
-                               ACE_TEXT ("of ExecutionManager\n")));
+              case 'a':
+                package_names = get_opt.opt_arg ();
+                use_package_name = true;
+                break;
+              case 'b':
+                do_benchmarking = true;
+                niterations = ACE_OS::atoi (get_opt.opt_arg ());
+                break;
+              case 'e':
+                package_types = get_opt.opt_arg ();
+                use_package_name = false;
+                break;
+              case 'p':
+                deployment_plan_url = get_opt.opt_arg ();
+                break;
+              case 'n':
+                em_use_naming = true;
+                break;
+              case 'k':
+                em_ior_file = get_opt.opt_arg ();
+                break;
+              case 'l':
+                use_repoman = true;
+                rm_ior_file = get_opt.opt_arg ();
+                break;
+              case 'v':
+                use_repoman = true;
+                rm_use_naming = true;
+                repoman_name_ = get_opt.opt_arg ();
+                break;
+              case 'o':
+                dap_ior_filename = get_opt.opt_arg ();
+                mode = pl_mode_start;
+                break;
+              case 'i':
+                dap_ior = get_opt.opt_arg ();
+                mode = pl_mode_stop_by_dam;
+                break;
+              case 't':
+                plan_uuid = get_opt.opt_arg ();
+                mode = pl_mode_stop_by_uuid;
+                break;
+              case 'r':
+                new_deployment_plan_url = get_opt.opt_arg ();
+                mode = pl_mode_redeployment;
+                break;
+              case 'z':
+                priority = ACE_OS::atoi (get_opt.opt_arg ());
+                break;
+              case 'h':
+              default:
+                usage(argv[0]);
+                return false;
             }
-          else
-            {
-              options.em_ior_ = get_opt.opt_arg ();
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::parse_args - ")
-                               ACE_TEXT ("Using ExecutionManager IOR: %s\n"),
-                               options.em_ior_));
-            }
-          break;
+        }
 
-        case 'n':
-          options.nm_ior_ = get_opt.opt_arg ();
-          options.output_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Using NodeManager IOR: %s\n"),
-                           options.nm_ior_));
-          break;
-
-        case 'x':
-          options.xml_plan_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Using XML plan: %s\n"),
-                           options.xml_plan_));
-          break;
-
-        case 'c':
-          options.cdr_plan_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Using CDR plan: %s\n"),
-                           options.cdr_plan_));
-          break;
-
-        case 'u':
-          options.uuid_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Using UUID: %s\n"),
-                           options.uuid_));
-          break;
-
-        case 'm':
-          options.am_ior_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Using ApplicationManager IOR %s\n"),
-                           options.am_ior_));
-          break;
-
-        case 'a':
-          options.app_ior_ = get_opt.opt_arg ();
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Application IOR: %s\n"),
-                           options.app_ior_));
-          break;
-
-        case 'l':
-          options.mode_ = Options::LAUNCH;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Launching nominated plan\n")));
-          break;
-
-        case 's':
-          options.mode_ = Options::TEARDOWN;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Tearing down nominated plan\n")));
-          break;
-
-        case 'f':
-          options.force_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Not stopping teardown on errors\n")));
-          break;
-
-        case 'o':
-          options.output_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("IOR files will be output to ")
-                           ACE_TEXT ("the current working directory\n")));
-
-          if (get_opt.opt_arg () != 0)
-            {
-              options.output_prefix_ = get_opt.opt_arg ();
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::parse_args - ")
-                               ACE_TEXT ("Storing user-provided output ")
-                               ACE_TEXT ("postfix <%s>\n"),
-                               options.output_prefix_));
-            }
-
-          break;
-
-        case 'q':
-          options.quiet_ = true;
-          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::parse_args - ")
-                           ACE_TEXT ("Plan_Launcher will hide all ouput")
-                           ACE_TEXT ("messages.\n")));
-          break;
-        case 'h':
-          usage (argv[0]);
-          return false;
-        default:
+      if ((mode != pl_mode_stop_by_dam) &&
+          (mode != pl_mode_stop_by_uuid) &&
+          (package_names == 0) &&
+          (package_types == 0) &&
+          (deployment_plan_url == 0) &&
+          (new_deployment_plan_url == 0))
+        {
           usage (argv[0]);
           return false;
         }
-    }
 
-  /// Sanity checking on the options.
-
-  // In all cases, we need to have a EM/NM IOR specified, but only one.
-  if ((!options.em_ior_ && !options.nm_ior_) ||
-      (options.em_ior_ && options.nm_ior_))
-    {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
-                  ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
-      return false;
-    }
-
-  // Launching plans requires a plan (duh), and only one plan
-  if ((options.mode_ == Options::LAUNCH) &&
-      ((!options.xml_plan_ && !options.cdr_plan_) ||
-       (options.xml_plan_ && options.cdr_plan_)))
-    {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                  ACE_TEXT ("Error: Launching plans requires ")
-                  ACE_TEXT ("exactly one type of plan (CDR/XML) be ")
-                  ACE_TEXT ("specified.\n")));
-      return false;
-    }
-
-  // tearing down plans requires a bit more complex set of options:
-  if ((options.mode_ == Options::TEARDOWN)
-      // Either way (EM/NM), we ca use a combination of a AM and a APP.
-      && !(
-           (options.am_ior_ && options.app_ior_) ||
-           // If we are tearing down from EM, we have more options, namely:
-           // A plan of some kind
-           (options.em_ior_ &&
-            (
-             ((!options.xml_plan_ && !options.cdr_plan_) ||
-              (options.xml_plan_ && options.cdr_plan_)) ||
-             // A UUID
-             (!options.uuid_)
-             )
-            )
-           )
-      )
-    {
-      ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::parse_args - ")
-                  ACE_TEXT ("Invalid set of plan identification ")
-                  ACE_TEXT ("as required for teardown\n")));
-      return false;
-    }
-
-
-  return true;
-}
-
-bool
-write_IOR (const ACE_TCHAR * ior_file_name, const char* ior)
-{
-  FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
-
-  if (ior_output_file_)
-    {
-      ACE_OS::fprintf (ior_output_file_, "%s", ior);
-      ACE_OS::fclose (ior_output_file_);
       return true;
     }
-  return false;
-}
 
-int launch_plan (const Options &opts,
-                 DAnCE::Plan_Launcher_Base *pl_base,
-                 const ::Deployment::DeploymentPlan *plan,
-                 CORBA::ORB_ptr orb)
-{
-  DANCE_TRACE ("Plan_Launcher::launch_plan");
-
-  try
+    static ::Deployment::DomainApplicationManager_ptr
+    read_dap_ior (CORBA::ORB_ptr orb)
     {
-      CORBA::Object_var app_mgr, app;
-
-      CORBA::String_var
-        uuid_safe (pl_base->launch_plan (*plan, app_mgr.out () , app.out ()));
-      ACE_CString uuid = uuid_safe.in ();
-
-      DANCE_DEBUG (2, (LM_NOTICE, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Successfully deployed plan ")
-                       ACE_TEXT ("with UUID: <%C>\n"),
-                       uuid.c_str ()));
-
-      if (!opts.output_)
-        return 0;
-
-      ACE_TString am_output, app_output;
-
-      if (opts.output_prefix_)
-        am_output = app_output = opts.output_prefix_;
-      else
-        am_output = app_output = ACE_TEXT_CHAR_TO_TCHAR (uuid.c_str ());
-
-      am_output += ACE_TEXT ("_AM.ior");
-      app_output += ACE_TEXT ("_APP.ior");
-
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Writing Application Manager IOR to <%s>\n"),
-                       am_output.c_str ()));
-      CORBA::String_var tmp = orb->object_to_string (app_mgr.in ());
-      write_IOR (am_output.c_str (),
-                 tmp.in ());
-
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                       ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                       ACE_TEXT ("Writing Application IOR to <%s>\n"),
-                       am_output.c_str ()));
-      
-      tmp = orb->object_to_string (app.in ());
-      write_IOR (app_output.c_str (),
-                 tmp.in ());
-
-    }
-  catch (const DAnCE::Deployment_Failure &ex)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, exception: %C\n"),
-                      ex.ex_.c_str ()));
-        }
-      return 1;
-    }
-  catch (const CORBA::Exception &ex)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, caught CORBA exception %C\n"),
-                      ex._info ().c_str ()));
-        }
-      return 1;
-    }
-  catch (...)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
-                      ACE_TEXT ("Deployment failed, ")
-                      ACE_TEXT ("caught unknown C++ exception\n")));
-        }
-      return 1;
+      CORBA::Object_var obj = orb->string_to_object (dap_ior);
+      return
+        Deployment::DomainApplicationManager::_narrow (obj.in ());
     }
 
-  return 0;
-}
-
-int teardown_plan (const Options &opts,
-                   DAnCE::Plan_Launcher_Base *pl_base,
-                   const ::Deployment::DeploymentPlan *plan,
-                   CORBA::ORB_ptr orb)
-{
-  DANCE_TRACE ("Plan_Launcher::teardown_plan");
-
-  int rc = 0;
-  try
+    static int
+    write_dap_ior (CORBA::ORB_ptr orb,
+                   ::Deployment::DomainApplicationManager_ptr dap)
     {
-      CORBA::Object_var am;
-      CORBA::Object_var app;
-      if (opts.am_ior_ && opts.app_ior_)
+      CORBA::String_var ior = orb->object_to_string (dap);
+
+      FILE* ior_output_file = ACE_OS::fopen (dap_ior_filename, "w");
+
+      if (ior_output_file)
         {
-          DANCE_DEBUG (3, (LM_DEBUG, DLINFO
-                           ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                           ACE_TEXT ("Tearing down plan with explicitly ")
-                           ACE_TEXT ("nominated App and AM IORs.\n")));
-          am = orb->string_to_object (opts.am_ior_);
-          app = orb->string_to_object (opts.app_ior_);
+          ACE_OS::fprintf (ior_output_file, "%s", ior.in ());
+          ACE_OS::fclose (ior_output_file);
+
+          return 0;
         }
       else
         {
-          // Need to perform lookup by uuid,
-          // either explicitly provided or in plan.
-          ACE_CString uuid;
-          if (plan)
-            uuid = plan->UUID.in ();
-          else
-            uuid = ACE_TEXT_ALWAYS_CHAR (opts.uuid_);
-
-          DAnCE::EM_Launcher *em_launcher =
-            dynamic_cast <DAnCE::EM_Launcher *> (pl_base);
-
-          if (!em_launcher)
-            {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Error: Attempting UUID lookup on non")
-                               ACE_TEXT ("-EM managed plan not supported\n")));
-              return 1;
-            }
-
-          if (em_launcher->lookup_by_uuid (uuid.c_str (),
-                                           am.out (),
-                                           app.out ()))
-            {
-              DANCE_DEBUG (3, (LM_DEBUG, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Tearing down plan with UUID %C\n"),
-                               uuid.c_str ()));
-            }
-          else
-            {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
-                               ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                               ACE_TEXT ("Error: Lookup by UUID failed\n")));
-              return 1;
-            }
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error in opening file %s to write DAM IOR: %m",
+                      dap_ior_filename));
+          return -1;
         }
+    }
+
+    static int
+    run_main_implementation (int argc, char *argv[])
+    {
 
       try
         {
-          pl_base->teardown_application (am, app);
-        }
-      catch (const DAnCE::Deployment_Failure &ex)
-        {
-          if (!opts.quiet_)
+          CORBA::ORB_var orb =
+            CORBA::ORB_init (argc, argv);
+
+          if (parse_args (argc, argv) == false)
+            return -1;
+
+          Plan_Launcher_i * launcher = 0;
+
+          if (do_benchmarking)
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
-                        ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                        ACE_TEXT ("Application Teardown failed, exception: %C\n"),
-                        ex.ex_.c_str ()));
+              ACE_NEW_RETURN (launcher,
+                              Plan_Launcher_Benchmark_i,
+                              -1);
             }
-          rc = 1;
-        }
-      catch (const CORBA::Exception &ex)
-        {
-          if (!opts.quiet_)
+          else
             {
-              ACE_ERROR ((LM_ERROR, DLINFO
-                          ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                          ACE_TEXT ("Application Teardown failed, ")
-                          ACE_TEXT ("caught CORBA exception %C\n"),
-                          ex._info ().c_str ()));
+              ACE_NEW_RETURN (launcher,
+                              Plan_Launcher_i,
+                              -1);
             }
-          rc = 1;
+
+          if (!launcher->init (em_use_naming ? 0 : em_ior_file,
+                               orb.in (),
+                               use_repoman,
+                               rm_use_naming,
+                               rm_use_naming ? repoman_name_ : rm_ior_file,
+                               priority,
+                               niterations))
+            {
+              ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
+              return -1;
+            }
+
+          ::Deployment::DomainApplicationManager_var dapp_mgr;
+
+          if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
+            {
+              CORBA::String_var uuid;
+
+              if (package_names != 0)
+                uuid = launcher->launch_plan (deployment_plan_url,
+                                              package_names,
+                                              use_package_name,
+                                              use_repoman);
+              else
+                uuid = launcher->launch_plan (deployment_plan_url,
+                                              package_types,
+                                              use_package_name,
+                                              use_repoman);
+
+              if (uuid.in () == 0)
+                {
+                  ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error launching plan\n"));
+                  return -1;
+                }
+
+              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n",
+                          uuid.in ()));
+              dapp_mgr = launcher->get_dam (uuid.in ());
+
+              // Write out DAM ior if requested
+              if (mode == pl_mode_start)
+                {
+                  if (write_dap_ior (orb.in (), dapp_mgr.in ()) != 0)
+                    return -1;
+                }
+              else // if (pl_mode_interactive)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Press <Enter> to tear down application\n"));
+                  char dummy [256];
+                  std::cin.getline (dummy, 256);
+
+                  // Tear down the assembly
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Plan_Launcher: destroy the application.....\n"));
+                  if (! launcher->teardown_plan (uuid))
+                    ACE_DEBUG ((LM_DEBUG,
+                                "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                                "unknown plan uuid.\n"));
+                }
+            }
+          else if (mode == pl_mode_redeployment && new_deployment_plan_url != 0) // do redeployment
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: reconfigure application assembly.....\n"));
+
+              CORBA::String_var uuid;
+
+              if (package_names != 0)
+                uuid = launcher->re_launch_plan (new_deployment_plan_url,
+                                                 package_names,
+                                                 use_package_name,
+                                                 use_repoman);
+              else
+                uuid = launcher->re_launch_plan (new_deployment_plan_url,
+                                                 package_types,
+                                                 use_package_name,
+                                                 use_repoman);
+
+              if (uuid.in () == 0)
+                {
+                  ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
+                  return -1;
+                }
+            }
+          else if (mode == pl_mode_stop_by_dam) // tear down by DAM
+            {
+              dapp_mgr = read_dap_ior (orb.in ());
+
+              if (CORBA::is_nil (dapp_mgr.in ()))
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                              "nil DomainApplicationManager reference\n"));
+                  return -1;
+                }
+
+              // Tear down the assembly
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: destroy the application.....\n"));
+              launcher->teardown_plan (dapp_mgr.in ());
+            }
+          else if (mode == pl_mode_stop_by_uuid) // tear down by plan_uuid
+            {
+              // Tear down the assembly
+              ACE_DEBUG ((LM_DEBUG,
+                          "Plan_Launcher: destroy the application.....\n"));
+              if (! launcher->teardown_plan (plan_uuid))
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                              "unkown plan uuid.\n"));
+                }
+            }
+
+          orb->destroy ();
+        }
+      catch (const Plan_Launcher_i::Deployment_Failure&)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Deployment failed. Plan_Launcher exiting.\n"));
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception ("(%P|%t) Plan_Launcher: ");
+
+          return -1;
         }
       catch (...)
         {
-          if (!opts.quiet_)
-            {
-              ACE_ERROR ((LM_ERROR, DLINFO
-                          ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                          ACE_TEXT ("Application Teardown failed, ")
-                          ACE_TEXT ("caught unknown C++ exception\n")));
-            }
-          rc = 1;
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) Plan_Launcher: Unknown exception.\n"));
+          return -1;
         }
 
-      if (rc == 0 || opts.force_)
-        pl_base->destroy_app_manager (am);
+      return 0;
     }
-  catch (const DAnCE::Deployment_Failure &ex)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO
-                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                      ACE_TEXT ("Teardown failed, exception: %C\n"),
-                      ex.ex_.c_str ()));
-        }
-      return 1;
-    }
-  catch (const CORBA::Exception &ex)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO
-                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                      ACE_TEXT ("Teardown failed, caught CORBA exception %C\n"),
-                      ex._info ().c_str ()));
-        }
-      return 1;
-    }
-  catch (...)
-    {
-      if (!opts.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO
-                      ACE_TEXT ("Plan_Launcher::teardown_plan - ")
-                      ACE_TEXT ("Teardown failed, ")
-                      ACE_TEXT ("caught unknown C++ exception\n")));
-        }
-      return 1;
-    }
-
-  return rc;
+  }
 }
 
-struct ORB_Destroyer
-{
-  ORB_Destroyer (CORBA::ORB_var &orb) :
-    orb_ (orb)
-  {
-  }
-
-  ~ORB_Destroyer (void)
-  {
-    orb_->destroy ();
-  }
-  CORBA::ORB_var &orb_;
-};
+using namespace CIAO::Plan_Launcher;
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc,
+           ACE_TCHAR *argv[])
 {
-  DANCE_DISABLE_TRACE ();
-
-  int retval = 0;
-
-  Options options;
-
-  try
-    {
-      DAnCE::Logger_Service * dlf =
-        ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
-
-      if (dlf)
-        {
-          dlf->init (argc, argv);
-        }
-
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                       ACE_TEXT("PlanLauncher - initializing ORB\n")));
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-      ORB_Destroyer safe_orb (orb);
-
-      if (!parse_args (argc, argv, options))
-        {
-          return 1;
-        }
-
-
-      auto_ptr<DAnCE::Plan_Launcher_Base> pl_base (0);
-
-      if (options.em_ior_)
-        {
-          // Resolve ExecutionManager IOR for EM base deployment.
-          DAnCE::EM_Launcher *em_pl (0);
-
-          CORBA::Object_var obj = orb->string_to_object (options.em_ior_);
-          Deployment::ExecutionManager_var tmp_em =
-            Deployment::ExecutionManager::_narrow (obj);
-
-          if (CORBA::is_nil (tmp_em.in ()))
-            {
-              if (!options.quiet_)
-                {
-                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                              ACE_TEXT ("Unable to resolve ")
-                              ACE_TEXT ("ExecutionManager reference <%s>\n"),
-                              options.em_ior_));
-                }
-              return 1;
-            }
-
-          ACE_NEW_THROW_EX (em_pl,
-                            DAnCE::EM_Launcher (orb.in (),
-                                                tmp_em.in ()),
-                            CORBA::NO_MEMORY ());
-
-          pl_base.reset (em_pl);
-        }
-      else
-        {
-          // Resolve NM IOR for NM based deployment.
-          DAnCE::NM_Launcher *nm_pl (0);
-
-          CORBA::Object_var obj = orb->string_to_object (options.nm_ior_);
-          Deployment::NodeManager_var tmp_em =
-            Deployment::NodeManager::_narrow (obj);
-
-          if (CORBA::is_nil (tmp_em.in ()))
-            {
-              if (!options.quiet_)
-                {
-                  ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                              ACE_TEXT ("Unable to resolve ")
-                              ACE_TEXT ("NodeManager reference <%s>\n"),
-                              options.em_ior_));
-                }
-              return 1;
-            }
-
-          ACE_NEW_THROW_EX (nm_pl,
-                            DAnCE::NM_Launcher (orb.in (),
-                                                tmp_em.in ()),
-                            CORBA::NO_MEMORY ());
-
-          pl_base.reset (nm_pl);
-        }
-
-      Deployment::DeploymentPlan_var dp;
-
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                       ACE_TEXT ("Parsing deployment plan\n")));
-      if (options.cdr_plan_)
-        {
-          dp = DAnCE::Convert_Plan::read_cdr_plan (options.cdr_plan_);
-          if (!dp.ptr ())
-            {
-              if (!options.quiet_)
-                {
-                  ACE_ERROR ((LM_ERROR, DLINFO
-                              ACE_TEXT ("PlanLauncher - ")
-                              ACE_TEXT ("Error: Unable to read ")
-                              ACE_TEXT ("in CDR plan\n")));
-                }
-              return 1;
-            }
-        }
-      else if (options.xml_plan_)
-        {
-          dp = DAnCE::Convert_Plan::read_xml_plan (options.xml_plan_);
-
-          if (!dp.ptr ())
-            {
-              if (!options.quiet_)
-                {
-                  ACE_ERROR ((LM_ERROR, DLINFO
-                              ACE_TEXT ("PlanLauncher - Error: ")
-                              ACE_TEXT ("Unable to read in XML plan\n")));
-                }
-              return 1;
-            }
-        }
-
-      switch (options.mode_)
-        {
-        case Options::LAUNCH:
-          retval = launch_plan (options, pl_base.get (), dp, orb.in ());
-
-          break;
-
-        case Options::TEARDOWN:
-          retval = teardown_plan (options, pl_base.get (), dp, orb.in ());
-          break;
-
-        default:
-          if (!options.quiet_)
-            {
-              ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher -")
-                          ACE_TEXT ("Mode not yet supported\n")));
-            }
-          break;
-
-        };
-    }
-  catch (const Deployment::PlanError &ex)
-    {
-      if (!options.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
-                      ACE_TEXT ("Error in plan: <%C>, <%C>\n"),
-                      ex.name.in (),
-                      ex.reason.in ()));
-        }
-      retval = -1;
-    }
-  catch (const DAnCE::Deployment_Failure& e)
-    {
-      if (!options.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ("PlanLauncher - ")
-                      ACE_TEXT ("Error: %C.\n"), e.ex_.c_str()));
-        }
-      retval = 1;
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      if (!options.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, DLINFO ACE_TEXT ( "PlanLauncher - ")
-                      ACE_TEXT ("Error: %C\n"), ex._info ().c_str ()));
-        }
-      retval = 1;
-    }
-  catch (...)
-    {
-      if (!options.quiet_)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("PlanLauncher - ")
-                      ACE_TEXT ("Error: Unknown exception.\n")));
-        }
-      retval = 1;
-    }
-
-  return retval;
+  return run_main_implementation (argc, argv);
 }

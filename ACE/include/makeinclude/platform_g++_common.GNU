@@ -11,9 +11,8 @@ else
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
+CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e "s/[^0-9\.]//g" | sed -e "s/\..*$$//")
 else
 CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
@@ -29,7 +28,7 @@ endif
 templates ?= automatic
 
 # The correct flags to pass to the linker for ELF dynamic shared library
-# versioning.
+# versioning. None of this works on OpenBSD's ld.
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
@@ -37,10 +36,13 @@ ifeq ($(versioned_so),1)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
-    ifeq ($(with_ld),aix)
-    # What to do here???
+    ifeq ($(with_ld),openbsd)
     else
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      ifeq ($(with_ld),aix)
+      # What to do here???
+      else
+        SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      endif
     endif
   endif
 endif
@@ -61,17 +63,13 @@ ifneq ($(DLD),)
   ifneq ($(mingw32),1)
     GNU_LD := $(shell sh -c '$(LD_FOR_VERSION_TEST) -v 2>&1 | grep -c "GNU ld"')
   else
-    GNU_LD := $(if $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v)), 1, 0)
+    GNU_LD := $(shell $(LD_FOR_VERSION_TEST) -v | grep -c 'GNU ld')
   endif # mingw32
 endif # DLD
 
 ifeq ($(GNU_LD),1)
   STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
-
-ifeq ($(no_strict_aliasing), 1)
-  CCFLAGS += -fno-strict-aliasing
-endif
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
@@ -124,8 +122,3 @@ else
     CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
   endif # GXX_4_OR_BETTER == 1
 endif # shared_libs
-
-# GCC 2.x needs this to compile TAO correctly 
-ifeq ($(CXX_MAJOR_VERSION), 2)
-  CCFLAGS += -ftemplate-depth-23
-endif

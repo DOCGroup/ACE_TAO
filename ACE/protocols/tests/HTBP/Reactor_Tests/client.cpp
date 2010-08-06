@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client: ")
                   ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
-                  n,retrycount,ACE_ERRNO_GET));
+                  n,retrycount,errno));
 
       retrycount = 10;
       while ((n = stream.recv(buffer,1000)) == -1
@@ -195,7 +195,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Client: ")
               ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
-              n,retrycount,ACE_ERRNO_GET));
+              n,retrycount,errno));
 
   return 0;
 }

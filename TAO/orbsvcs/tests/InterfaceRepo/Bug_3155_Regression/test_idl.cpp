@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
+#include "tao/IFR_Client/IFR_ComponentsC.h"
 
 namespace
 {
@@ -68,7 +68,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // get IFR
   CORBA::Object_var objref =
-    the_orb->string_to_object (ifr_ior_file);
+    the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ifr_ior_file));
   if (objref.in () == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -100,7 +100,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // get value type definition
   CORBA::ExtValueDef_var value_def =
     CORBA::ExtValueDef::_narrow (current_contained.in ());
-  CORBA::ExtValueDef::ExtFullValueDescription_var value_descr;
+  CORBA::ExtValueDef::ExtFullValueDescription * value_descr;
   try
     {
       value_descr = value_def->describe_ext_value ();

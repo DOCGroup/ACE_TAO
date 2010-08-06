@@ -63,7 +63,7 @@ project(nestea server) : portableserver, orbsvcsexe, avoids_minimum_corba, iorta
   // object files (and resulting SunWS_cache directory) in a different
   // location than the default.
   verbatim(gnuace, macros) {
-    VDIR = $(if $(ARCH),$(ARCH)/).obj/nestea_server/
+    VDIR := .obj/nestea_server/
   }
 }
 
@@ -83,7 +83,7 @@ project(nestea client) : portableserver, orbsvcsexe, avoids_minimum_corba, iorta
   // object files (and resulting SunWS_cache directory) in a different
   // location than the default.
   verbatim(gnuace, macros) {
-    VDIR = $(if $(ARCH),$(ARCH)/).obj/nestea_client/
+    VDIR := .obj/nestea_client/
   }
 }
 

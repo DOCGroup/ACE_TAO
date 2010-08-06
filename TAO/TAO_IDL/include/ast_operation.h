@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 
 class UTL_ExceptList;
-class AST_Type;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope
@@ -85,12 +84,16 @@ public:
      , OP_idempotent            // Operation is idempotent.
   };
 
+  // Constructor(s).
+  AST_Operation (void);
+
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
 
+  // Destructor.
   virtual ~AST_Operation (void);
 
   // Data Accessors.
@@ -105,7 +108,7 @@ public:
 
   // Public operations.
 
-  bool void_return_type (void);
+  int void_return_type (void);
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments
@@ -136,18 +139,22 @@ public:
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
+  // Method to add exceptions
+  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  // Add an argument to the scope.
+  AST_Argument *be_add_argument (AST_Argument *arg);
+
+  // Insert an exception at the head of the list.
+  int be_insert_exception (AST_Exception *ex);
+
   // Cleanup function.
   virtual void destroy (void);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  // Method to add exceptions
-  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
-  static AST_Decl::NodeType const NT;
-
-protected:
+private:
   // Data.
 
   AST_Type *pd_return_type;

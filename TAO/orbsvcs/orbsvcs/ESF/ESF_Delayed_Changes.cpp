@@ -12,10 +12,8 @@
 #include "orbsvcs/ESF/ESF_Defaults.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "orbsvcs/ESF/ESF_Delayed_Command.h"
-#include "tao/SystemException.h"
 
 #include "ace/Functor.h"
-#include "ace/Guard_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

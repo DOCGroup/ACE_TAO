@@ -33,7 +33,7 @@ public:
   void op4 (Baz::AMH_CResponseHandler_ptr _tao_rh);
   void shutdown (Baz::AMH_CResponseHandler_ptr _tao_rh);
 protected:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
 };
 
 

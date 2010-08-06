@@ -63,15 +63,15 @@ ACE_File_Lock::release (short whence, ACE_OFF_T start, ACE_OFF_T len)
 }
 
 ACE_INLINE int
-ACE_File_Lock::remove (bool unlink_file)
+ACE_File_Lock::remove (int unlink_file)
 {
 // ACE_TRACE ("ACE_File_Lock::remove");
 
   int result = 0;
 
-  if (!this->removed_)
+  if (this->removed_ == 0)
     {
-      this->removed_ = true;
+      this->removed_ = 1;
       result = ACE_OS::flock_destroy (&this->lock_,
                                       unlink_file);
     }
@@ -90,7 +90,7 @@ ACE_File_Lock::set_handle (ACE_HANDLE h)
 {
 // ACE_TRACE ("ACE_File_Lock::set_handle");
   this->lock_.handle_ = h;
-  this->removed_ = false;
+  this->removed_ = 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -53,7 +53,7 @@ public:
   bool forward_location_done() const;
 private:
   const char *myname_;
-  CORBA::Object_var forward_location_;
+  CORBA::Object_ptr forward_location_;
   bool forward_location_done_;
 };
 

@@ -2,6 +2,8 @@
 
 #include "ace/ATM_Stream.h"
 
+ACE_RCSID (ace, ATM_Stream, "$Id$")
+
 #if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)

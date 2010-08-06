@@ -33,6 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         collocated_ior_file = get_opts.opt_arg ();
         break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,6 +61,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
@@ -71,9 +75,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
                          client_orb.c_str ());
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
 
       {
         ACE_Manual_Event me;

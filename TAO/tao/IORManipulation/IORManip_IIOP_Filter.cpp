@@ -208,13 +208,12 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
 
   // Extract the Byte Order.
   CORBA::Boolean byte_order;
-  if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return 0;
-
   in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
   // Extract endpoints sequence.
-  if (!(in_cdr >> endpoints))
+  if ((in_cdr >> endpoints) == 0)
     return 0;
 
   return 1;

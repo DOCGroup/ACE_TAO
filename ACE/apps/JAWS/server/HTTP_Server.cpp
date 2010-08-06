@@ -12,7 +12,7 @@
 #include "ace/Signal.h"
 #include "ace/Auto_Ptr.h"
 
-#include "JAWS_IO.h"
+#include "IO.h"
 #include "HTTP_Server.h"
 
 ACE_RCSID(server, HTTP_Server, "$Id$")

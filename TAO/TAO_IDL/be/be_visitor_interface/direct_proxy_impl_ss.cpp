@@ -2,6 +2,10 @@
 //$Id$
 //
 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_ss,
+           "$Id$")
+
 be_visitor_interface_direct_proxy_impl_ss::
 be_visitor_interface_direct_proxy_impl_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -160,14 +164,10 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
 }
 
 int be_visitor_interface_direct_proxy_impl_ss::visit_component (
-    be_component *node)
+    be_component *node
+  )
 {
   return this->visit_interface (node);
 }
 
-int be_visitor_interface_direct_proxy_impl_ss::visit_connector (
-    be_connector *node)
-{
-  return this->visit_component (node);
-}
 

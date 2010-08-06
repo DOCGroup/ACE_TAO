@@ -15,8 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
-
 #include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -44,6 +42,10 @@ public:
 
   T * operator-> (void);
   const T * operator-> (void) const;
+
+  operator const T & () const;
+  operator T & ();
+  operator T & () const;
 
   typedef const T &   _in_type;
   typedef       T &   _inout_type;
@@ -83,10 +85,6 @@ public:
   // Fixed-size types only.
   TAO_Fixed_Var_T & operator= (const T &);
 
-  operator const T & () const;
-  operator T & ();
-  operator T & () const;
-
   typedef T &   _out_type;
   typedef T     _retn_type;
 
@@ -115,10 +113,6 @@ public:
 
   // Variable size types only.
   operator T *& ();
-
-  operator const T & () const;
-  operator T & ();
-  operator T & () const;
 
   typedef T *&  _out_type;
   typedef T *   _retn_type;
@@ -155,7 +149,7 @@ public:
 private:
   T *& ptr_;
 
-  /// Assignment from T_var not allowed.
+  // Assignment from T_var not allowed.
   void operator= (const T_var &);
 };
 

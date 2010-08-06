@@ -1,25 +1,24 @@
---- y.tab.cpp.orig	2009-06-23 14:56:31.000000000 -0500
-+++ y.tab.cpp	2009-06-23 15:04:04.000000000 -0500
-@@ -1935,13 +1935,9 @@ tao_yy_symbol_value_print (tao_yyoutput,
-   if (tao_yytype < TAO_YYNTOKENS)
-     TAO_YYPRINT (tao_yyoutput, tao_yytoknum[tao_yytype], *tao_yyvaluep);
- # else
-+  TAO_YYUSE (tao_yytype);
-   TAO_YYUSE (tao_yyoutput);
- # endif
+--- y.tab.cpp.orig	2005-01-28 10:00:07.000000000 -0600
++++ y.tab.cpp	2005-01-28 10:07:56.000000000 -0600
+@@ -1759,11 +1759,6 @@
+   else
+     TAO_YYFPRINTF (tao_yyoutput, "nterm %s (", tao_yytname[tao_yytype]);
+ 
 -  switch (tao_yytype)
 -    {
 -      default:
 -        break;
 -    }
+   TAO_YYFPRINTF (tao_yyoutput, ")");
  }
  
+@@ -1778,14 +1778,9 @@
+ #endif
+ {
+   /* Pacify ``unused variable'' warnings.  */
++  (void) tao_yytype;
+   (void) tao_yyvaluep;
  
-@@ -2298,13 +2298,6 @@ tao_yydestruct (tao_yymsg, tao_yytype, t
-   if (!tao_yymsg)
-     tao_yymsg = "Deleting";
-   TAO_YY_SYMBOL_PRINT (tao_yymsg, tao_yytype, tao_yyvaluep, tao_yylocationp);
--
 -  switch (tao_yytype)
 -    {
 -
@@ -27,5 +26,13 @@
 -        break;
 -    }
  }
- 
  
+@@ -8147,7 +8147,7 @@
+ `---------------------------------------------------*/
+ tao_yyerrorlab:
+ 
+-#ifdef __GNUC__
++#if defined (__GNUC__) || defined (WIN32) || defined (__HP_aCC)
+   /* Pacify GCC when the user code never invokes TAO_YYERROR and the label
+      tao_yyerrorlab therefore never appears in user code.  */
+   if (0)

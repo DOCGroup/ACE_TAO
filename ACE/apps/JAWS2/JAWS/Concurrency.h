@@ -14,7 +14,7 @@
 #include "ace/Synch_Traits.h"
 
 #include "JAWS/Export.h"
-#include "JAWS/Jaws_IO.h"
+#include "JAWS/IO.h"
 
 class JAWS_Data_Block;
 class JAWS_Dispatch_Policy;

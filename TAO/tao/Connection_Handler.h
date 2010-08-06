@@ -136,8 +136,6 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
 
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
-
   /*
    * Hook to add public methods from concrete connection handler
    * implementation onto the base connection handler.
@@ -200,15 +198,15 @@ protected:
   //@}
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connection_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
-
-private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
 
   /// Transport object reference
   TAO_Transport* transport_;
+
+  /// Internal state lock, needs to be separate from the reference
+  /// count / pending upcalls lock because they interleave.
+  ACE_Lock * lock_;
 
   /// Stores the connection pending state
   bool connection_pending_;

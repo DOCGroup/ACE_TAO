@@ -29,12 +29,16 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout)
   try
     {
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", timeout);
+        orb->resolve_initial_references (TAO_OBJID_NAMESERVICE, timeout);
 
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the NameService.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to "
+                             "initialize the NameService.\n"),
+                            -1);
+        }
+        
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }

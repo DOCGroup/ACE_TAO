@@ -58,6 +58,9 @@
 /// Enable support for the SSL wrappers
 #define ACE_HAS_SSL 1
 
+/// Enable exceptions
+#define ACE_HAS_EXCEPTIONS
+
 /// Enable timeprobes
 #define ACE_COMPILE_TIMEPROBES
 
@@ -113,13 +116,5 @@
 #define ACE_HAS_NETLINK
 
 #define ACE_HAS_IP_MULTICAST
-
-#define ACE_INLINE
-#define ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-#define ACE_END_VERSIONED_NAMESPACE_DECL
-#define TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-#define TAO_END_VERSIONED_NAMESPACE_DECL
-
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 
 #endif /* ACE_CONFIG_DOXYGEN_H */

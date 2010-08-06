@@ -17,6 +17,7 @@
 #define ACE_HAS_STRING_CLASS
 
 #include "ace/config-g++-common.h"
+#define ACE_HAS_GNU_CSTRING_H
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -105,6 +106,9 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
+
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -123,7 +127,8 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-#define ACE_HAS_STRSIGNAL
+// Compiler/platform supports sys_siglist array.
+#define ACE_HAS_SYS_SIGLIST
 
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.

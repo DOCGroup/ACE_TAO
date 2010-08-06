@@ -7,13 +7,6 @@
 #include "tao/AnyTypeCode/AnySeq.pidl"
 
 module Deployment {
-  struct ResourceAllocation {
-    string elementName;
-    string resourceName;
-    Properties property;
-  };
-
-  typedef sequence < ResourceAllocation > ResourceAllocations;
 
   exception ResourceCommitmentFailure {
     string reason;
@@ -21,6 +14,20 @@ module Deployment {
     string propertyName;
     ::CORBA::AnySeq propertyValue;
   };
+  /**
+   * @struct ResourceAllocation
+   * @brief Identifies a resource within a domain that is 
+   *  allocated from and the amount it is allocated
+   */
+  struct ResourceAllocation
+  {
+    string elementName;
+    string resourceName;
+    Properties property;
+  };
+
+  /// The Resource Allocation Sequence
+  typedef sequence <ResourceAllocation> ResourceAllocations;
 
   interface ResourceCommitmentManager {
     void commitResources (in ResourceAllocations resources)
@@ -30,5 +37,5 @@ module Deployment {
   };
 };
 
-#endif //RESOURCE_COMMITMENT_MANAGER_IDL
 
+#endif

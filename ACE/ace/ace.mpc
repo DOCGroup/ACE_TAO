@@ -4,7 +4,7 @@
 project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
   avoids       = ace_for_tao
   sharedname   = ACE
-  dynamicflags += ACE_BUILD_DLL
+  dynamicflags = ACE_BUILD_DLL
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
@@ -291,7 +291,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Asynch_Acceptor.cpp
     Asynch_Connector.cpp
     Atomic_Op_T.cpp
-    Atomic_Op_GCC_T.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
@@ -361,7 +360,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
-    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
@@ -481,38 +479,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   }
 
   Pkgconfig_Files {
-    ACE.pc.in
-  }
-
-  InstallData_Files {
-    gendir = bin
-    ../bin/MakeProjectCreator
-    ../bin/DependencyGenerator
-    ../bin/mwc.pl
-    ../bin/mpc.pl
-    ../bin/add_rel_link.sh
-    ../bin/depgen.pl
-  }
-  InstallData_Files {
-    gendir = include
-    ../include/makeinclude
-  }
-  InstallData_Files {
-    gendir = .
-    ../README
-    ../VERSION
-    ../PROBLEM-REPORT-FORM
-    ../NEWS
-    ../COPYING
-    ../AUTHORS
-    ../THANKS
-    ../docs
-  }
-
-  verbatim(gnuace, postinstall) {
-"	perl -i -pe's!\\$$[{(]ACE_ROOT[})]!$(INSTALL_PREFIX)/include!g unless /^\\s*include / || /^INS/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/wrapper_macros.GNU"
-"	perl -i -pe'BEGIN {$$lib = qq($(INSTALL_PREFIX)/$(INSTALL_LIB)); $$lp = qq(-value_project libpaths+=$$lib\\n); $$cl = qq(command_line =)}' -e'if ($$. == 1 && /^$$cl (.*)/ && $$1 !~ /$$lib\\b/) {chomp; print qq($$_ $$lp); $$_ = qq()}' -e'elsif ($$. == 1 && !/^$$cl/) {print qq($$cl $$lp)}' $(INSTALL_PREFIX)/share/ace/bin/MakeProjectCreator/config/MPC.cfg"
-"	perl -i -ne'print unless /^\\s*ARCH\\s*[+?:]?=/' $(INSTALL_PREFIX)/share/ace/include/makeinclude/platform_macros.GNU"
-"	echo export ACE_ROOT=$(INSTALL_PREFIX)/share/ace> $(INSTALL_PREFIX)/share/ace/ace-devel.sh"
+     ACE.pc.in
   }
 }

@@ -1,62 +1,47 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
+# ex
+
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use File::Compare;
 
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-my $pass = 3;
-my $port = $test->RandomPort();
-my $loadtest_xml = "loadtest.xml";
-my $abc_xml = "abc.xml";
-my $prefix = "abc";
-
-$T = $test->CreateProcess ("main", "-ORBdebuglevel $debug_level -orbobjrefstyle url ".
-                                   "-ORBEndpoint iiop://:$port -pass $pass");
+$port = 12000 + PerlACE::uniqueid ();
 
 sub cleanup() {
-    $test->DeleteFile($loadtest_xml);
-    $test->DeleteFile($abc_xml);
-
-    for ($i = 0; $i < 10; ++$i) {
-        $test->DeleteFile($prefix.".00".$i);
-    }
-    for ($i = 10; $i < 20; ++$i) {
-        $test->DeleteFile($prefix.".0".$i);
-    }
+  unlink "loadtest.xml";
+  unlink "abc.xml";
+  for ($i = 0; $i < 10; ++$i) {
+    unlink "abc.00" . $i;
+  }
+  for ($i = 10; $i < 20; ++$i) {
+    unlink "abc.0" . $i;
+  }
 }
 
 cleanup();
 
-$test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval());
+$ret = 0;
 
-if ($test_status != 0) {
-    print STDERR "ERROR: test returned $test_status\n";
-    $status = 1;
+$UTEST = new PerlACE::Process("main", "-orbobjrefstyle url -ORBEndpoint iiop://:$port -pass 3");
+$ret = $UTEST->SpawnWaitKill(20);
+if ($ret != 0) {
+  print "ERROR : main returned $ret\n";
+  exit $ret;
 }
 
-$different = compare($loadtest_xml, $abc_xml);
+$different = compare("loadtest.xml", "abc.xml");
 if ($different) {
-    print "ERROR : $loadtest_xml != $abc_xml\n";
-    exit 1;
-}
-else {
-    print "Success : $loadtest_xml == $abc_xml\n";
+  print "ERROR : loadtest.xml != abc.xml\n";
+  exit 1;
+} else {
+  print "Success : loadtest.xml == abc.xml\n";
 }
 
-exit $status;
+
+exit $ret;

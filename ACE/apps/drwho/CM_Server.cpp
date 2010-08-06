@@ -21,7 +21,7 @@ CM_Server::open (short port_number)
   if (this->sokfd_ < 0)
     return -1;
 
-  ACE_OS::memset (&this->sin_, 0, sizeof this->sin_);
+  ACE_OS::memset (&this->sin_, sizeof this->sin_, 0);
   this->sin_.sin_family = AF_INET;
   this->sin_.sin_port = htons (port_number);
   this->sin_.sin_addr.s_addr = INADDR_ANY;

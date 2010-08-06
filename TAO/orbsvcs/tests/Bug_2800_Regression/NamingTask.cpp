@@ -19,8 +19,6 @@ NamingTask::NamingTask (const char* orbname, int argc, ACE_TCHAR **argv, unsigne
   my_argv[my_argc++] = buf;
 
   orb_ = CORBA::ORB_init (my_argc, my_argv, orbname);
-
-  delete [] my_argv;
 }
 
 void NamingTask::waitInit ()
@@ -66,7 +64,7 @@ int NamingTask::svc()
                     0) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "The Naming Service Task is ready.\n"));
-      ior_ = naming.naming_service_ior ();
+      ior_ = CORBA::string_dup (naming.naming_service_ior ());
       initialized_ = true;
       // Accept requests
       orb_->run();

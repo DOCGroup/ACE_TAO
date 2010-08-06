@@ -16,9 +16,11 @@
 
 #include "tao/Unbounded_Object_Reference_Sequence_T.h"
 
-#include "test_macros.h"
+#include <boost/test/unit_test.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
-
+using namespace boost::unit_test_framework;
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 struct Tester
@@ -31,7 +33,7 @@ struct Tester
   typedef tested_sequence::allocation_traits tested_allocation_traits;
   typedef TAO::details::range_checking<value_type,true> range;
 
-  int test_default_constructor()
+  void test_default_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
@@ -39,22 +41,46 @@ struct Tester
     {
       tested_sequence x;
 
-      CHECK_EQUAL(CORBA::ULong(0), x.maximum());
-      CHECK_EQUAL(CORBA::ULong(0), x.length());
-      CHECK_EQUAL(false, x.release());
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
+      BOOST_CHECK_EQUAL(false, x.release());
     }
-    FAIL_RETURN_IF_NOT(a.expect(0), a);
-    FAIL_RETURN_IF_NOT(f.expect(0), f);
-    FAIL_RETURN_IF_NOT(i.expect(0), i);
-    return 0;
+    BOOST_CHECK_MESSAGE(a.expect(0), a);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
+    BOOST_CHECK_MESSAGE(i.expect(0), i);
   }
+
+  void add_all(test_suite * ts)
+  {
+    boost::shared_ptr<Tester> shared_this(self_);
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_default_constructor,
+                shared_this));
+  }
+
+  static boost::shared_ptr<Tester> allocate()
+  {
+    boost::shared_ptr<Tester> ptr(new Tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  Tester() {}
+
+  boost::weak_ptr<Tester> self_;
 };
 
-int ACE_TMAIN(int,ACE_TCHAR*[])
+ACE_Proper_Export_Flag test_suite *
+init_unit_test_suite(int, char*[])
 {
-  int status = 0;
-  Tester x;
-  status += x.test_default_constructor ();
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
 
-  return status;
+  boost::shared_ptr<Tester> tester(Tester::allocate());
+  tester->add_all(ts);
+
+  return ts;
 }
+

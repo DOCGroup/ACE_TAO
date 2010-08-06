@@ -4,7 +4,7 @@
 project(RTEvent_Serv) : orbsvcslib, orbsvcs_output, install, rtevent_skel, svc_utils, messaging {
   avoids      += ace_for_tao  // Requires ACE_crc32
   sharedname   = TAO_RTEvent_Serv
-  dynamicflags += TAO_RTEVENT_SERV_BUILD_DLL
+  dynamicflags = TAO_RTEVENT_SERV_BUILD_DLL
   tagchecks   += RTEvent
 
   IDL_Files {
@@ -82,10 +82,6 @@ project(RTEvent_Serv) : orbsvcslib, orbsvcs_output, install, rtevent_skel, svc_u
     Event/EC_TPC_ProxyConsumer.cpp
     Event/EC_TPC_ProxySupplier.cpp
     Event/EC_Thread_Flags.cpp
-  }
-
-  Header_Files {
-    Event
   }
 
   Template_Files {

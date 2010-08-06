@@ -238,11 +238,7 @@ CORBA::SystemException::_info (void) const
 
   ACE_CString info = "system exception, ID '";
   info += this->_rep_id ();
-#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
-  info += "'; ";
-#else
   info += "'\n";
-#endif
 
   CORBA::ULong const VMCID = this->minor () & 0xFFFFF000u;
 
@@ -316,7 +312,7 @@ CORBA::SystemException::_info (void) const
           location = "unknown location";
         }
 
-      const char *errno_indication = 0;
+      const char *errno_indication;
       char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)
@@ -399,11 +395,7 @@ CORBA::SystemException::_info (void) const
       ACE_OS::sprintf (buffer,
                        "TAO exception, "
                        "minor code = %x (%s; %s), "
-#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
-                       "completed = %s; ",
-#else
                        "completed = %s\n",
-#endif
                        minor_code,
                        location,
                        errno_indication,
@@ -432,11 +424,7 @@ CORBA::SystemException::_info (void) const
       ACE_OS::sprintf (buffer,
                        "OMG minor code (%d), "
                        "described as '%s', "
-#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
-                       "completed = %s; ",
-#else
                        "completed = %s\n",
-#endif
                        minor_code,
                        minor_description,
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :
@@ -451,11 +439,7 @@ CORBA::SystemException::_info (void) const
       char buffer[BUFSIZ];
       ACE_OS::sprintf (buffer,
                        "Unknown vendor minor code id (%x), "
-#if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
-                       "minor code = %x, completed = %s; ",
-#else
                        "minor code = %x, completed = %s\n",
-#endif
                        VMCID,
                        this->minor (),  // Use the raw minor code
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :

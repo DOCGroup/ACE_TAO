@@ -32,9 +32,9 @@
    }
 #endif /* !ACE_LACKS_ARPA_INET_H */
 
-#if defined (ACE_USES_INETLIB_H)
+#if defined (ACE_VXWORKS)
 #  include /**/ <inetLib.h>
-#endif /* ACE_USES_INETLIB_H */
+#endif /* ACE_VXWORKS */
 
 /**
  * In some environments it is useful to swap the bytes on write, for

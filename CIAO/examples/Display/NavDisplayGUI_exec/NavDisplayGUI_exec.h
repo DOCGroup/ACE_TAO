@@ -13,7 +13,7 @@
 #define NAVDISPLAY_EXEC_H
 
 #include "NavDisplayEC.h"
-#include "NavDisplay_exec_export.h"
+#include "NavDisplayGUI_exec_export.h"
 #include "ace/Synch.h"
 #include "tao/LocalObject.h"
 #include "NavUnit.h"
@@ -28,7 +28,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl
-    : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_Exec,
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -49,10 +49,13 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    configuration_complete (void);
+    ciao_preactivate (void);
 
     virtual void
     ccm_activate (void);
+
+    virtual void
+    ciao_postactivate (void);
 
     virtual void
     ccm_passivate (void);

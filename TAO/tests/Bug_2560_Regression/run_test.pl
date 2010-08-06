@@ -63,7 +63,7 @@ if ($client_status != 0) {
 sleep (2);
 
 print STDERR "Killing client\n";
-$CL->Kill ($client->ProcessStopWaitInterval());
+$CL->Kill (3);
 
 $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15);
 

@@ -42,7 +42,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior);
+    CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
     // force a scope to see the destruction of the server object
     {

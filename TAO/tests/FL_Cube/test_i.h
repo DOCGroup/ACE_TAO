@@ -18,7 +18,7 @@
 
 #include "testS.h"
 
-#include <FL/Fl_Gl_Window.H>
+#include <FL/Fl_Gl_Window.h>
 
 
 class Simple_Window : public Fl_Gl_Window

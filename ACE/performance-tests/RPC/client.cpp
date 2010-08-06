@@ -4,13 +4,12 @@
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-#include "ace/Throughput_Stats.h"
 
 #include "ping.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  char* host = 0;
+  const char* host = 0;
   int nsamples = 10000;
   int c;
 

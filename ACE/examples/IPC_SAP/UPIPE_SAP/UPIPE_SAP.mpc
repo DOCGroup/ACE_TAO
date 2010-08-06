@@ -1,21 +1,24 @@
 // -*- MPC -*-
 // $Id$
 
-project(*ex1) : aceexe, avoids_ace_for_tao {
+project(*ex1) : aceexe {
+  avoids += ace_for_tao
   exename = ex1
   Source_Files {
     ex1.cpp
   }
 }
 
-project(*ex2) : aceexe, avoids_ace_for_tao {
+project(*ex2) : aceexe {
+  avoids += ace_for_tao
   exename = ex2
   Source_Files {
     ex2.cpp
   }
 }
 
-project(*ex3) : aceexe, avoids_ace_for_tao {
+project(*ex3) : aceexe {
+  avoids += ace_for_tao
   exename = ex3
   Source_Files {
     ex3.cpp

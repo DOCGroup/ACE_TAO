@@ -22,14 +22,16 @@ project(Mutex) : aceexe {
   }
 }
 
-project(RW Lock) : aceexe, avoids_ace_for_tao {
+project(RW Lock) : aceexe {
+  avoids += ace_for_tao
   exename = RW_Lock
   Source_Files {
     RW_Lock.cpp
   }
 }
 
-project(Semaphore) : aceexe, avoids_ace_for_tao {
+project(Semaphore) : aceexe {
+  avoids += ace_for_tao
   exename = Semaphore
   Source_Files {
     Semaphore.cpp

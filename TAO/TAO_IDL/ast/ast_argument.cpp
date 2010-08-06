@@ -73,6 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_visitor.h"
 
+ACE_RCSID (ast,
+           ast_argument,
+           "$Id$")
+
 // Static functions.
 
 // Convert an enum Direction value to a char *.
@@ -92,8 +96,13 @@ direction_to_string (AST_Argument::Direction d)
   return 0;
 }
 
-AST_Decl::NodeType const
-AST_Argument::NT = AST_Decl::NT_argument;
+AST_Argument::AST_Argument (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    pd_direction (dir_IN)
+{
+}
 
 AST_Argument::AST_Argument (Direction d,
                             AST_Type *ft,
@@ -135,5 +144,7 @@ AST_Argument::direction (void)
 {
   return this->pd_direction;
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Argument)

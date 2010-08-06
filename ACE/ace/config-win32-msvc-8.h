@@ -53,10 +53,9 @@
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
-#if defined (ACE_HAS_WINCE)
-# define ACE_FILENO_EQUIVALENT ::_fileno
-#else
-# define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
+
+#ifndef ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
 #endif
 
 // Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
@@ -67,11 +66,12 @@
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 6.0 or less */
 
+#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 #if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_INTRIN_H
-# define ACE_HAS_INTRINSIC_INTERLOCKED
+#  define ACE_HAS_INTRIN_H
+#  define ACE_HAS_INTRINSIC_INTERLOCKED
 #endif
 
 #if !defined (_WIN32_WCE) || (_WIN32_WCE >= 0x501)

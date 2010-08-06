@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -16,6 +14,10 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
+
+ACE_RCSID (be_visitor_sequence,
+           cdr_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating CDR operator declarations in the client
@@ -97,105 +99,45 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << node->flat_name () << "_CPP_" << be_nl
       << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
       << be_nl;
-      
-  bool alt = be_global->alt_mapping ();
 
   *os << be_global->core_versioning_begin () << be_nl;
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-  
-  if (alt)
-    {
-      *os << "::CORBA::Boolean operator<< (" << be_idt_nl
-          << "TAO_OutputCDR &strm," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_vector)"
-          << be_uidt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::ULong length = _tao_vector.size ();"
-          << be_nl
-          << "strm << length;" << be_nl << be_nl
-          << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << "if (! (strm << _tao_vector[i]))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return false;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "return true;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
-    }
-  else
-    {
-      *os << "::CORBA::Boolean operator<< ("
-          << be_idt << be_idt_nl
-          << "TAO_OutputCDR &strm," << be_nl
-          << "const " << node->name () << " &_tao_sequence"
-          << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return TAO::marshal_sequence(strm, _tao_sequence);"
-          << be_uidt_nl
-          << "}" << be_nl << be_nl;
-        }
+
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << node->name ()
+      << " &_tao_sequence" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  *os << "return TAO::marshal_sequence(strm, _tao_sequence);"
+      << be_uidt_nl;
+
+  *os << "}" << be_nl << be_nl;
 
   //  Set the sub state as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
-  if (alt)
-    {
-      *os << "::CORBA::Boolean operator>> (" << be_idt_nl
-          << "TAO_InputCDR &strm," << be_nl
-          << "std::vector<" << bt->full_name ()
-          << "> &_tao_vector)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "::CORBA::ULong length = 0UL;" << be_nl
-          << bt->full_name ();
-          
-      if (bt->size_type () == AST_Type::VARIABLE)
-        {
-          *os << " *";
-        }
-          
-      *os << " tmp;" << be_nl << be_nl
-          << "if (! (strm >> length))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "_tao_vector.resize (length);" << be_nl << be_nl
-          << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << "if (! (strm >> tmp))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "_tao_vector[i] = tmp;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "return true;" << be_uidt_nl
-          << "}" << be_nl;
-    }
-  else
-    {
-      *os << "::CORBA::Boolean operator>> ("
-          << be_idt << be_idt_nl
-          << "TAO_InputCDR &strm"
-          << "," << be_nl
-          << node->name ()
-          << " &_tao_sequence"
-          << be_uidt_nl
-          << ")" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return TAO::demarshal_sequence(strm, _tao_sequence);"
-          << be_uidt_nl
-          << "}" << be_nl;
-    }
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &strm";
+
+  *os << "," << be_nl
+      << node->name () << " &_tao_sequence";
+
+  *os << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  *os << "return TAO::demarshal_sequence(strm, _tao_sequence);"
+      << be_uidt_nl;
+
+  *os << "}" << be_nl;
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_nl << be_global->core_versioning_end ();

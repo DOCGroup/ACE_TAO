@@ -19,6 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ACEXML/common/Env.h"
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/common/Locator.h"
 #include "ACEXML/common/Attributes.h"
@@ -52,37 +53,44 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            size_t start,
-                           size_t length) = 0;
+                           size_t length
+                           ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void) = 0;
+  virtual void endDocument (ACEXML_ENV_SINGLE_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of the end of an element.
    */
   virtual void endElement (const ACEXML_Char *namespaceURI,
                            const ACEXML_Char *localName,
-                           const ACEXML_Char *qName) = 0;
+                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * End the scope of a prefix-URI mapping.
    */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix) = 0;
+  virtual void endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of ignorable whitespace in element content.
    */
   virtual void ignorableWhitespace (const ACEXML_Char *ch,
                                     int start,
-                                    int length) = 0;
+                                    int length ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of a processing instruction.
    */
   virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data) = 0;
+                                      const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Receive an object for locating the origin of SAX document events.
@@ -92,12 +100,14 @@ public:
   /**
    * Receive notification of a skipped entity.
    */
-  virtual void skippedEntity (const ACEXML_Char *name) = 0;
+  virtual void skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void) = 0;
+  virtual void startDocument (ACEXML_ENV_SINGLE_ARG_DECL)
+        = 0;
 
   /**
    * Receive notification of the beginning of an element.
@@ -105,13 +115,15 @@ public:
   virtual void startElement (const ACEXML_Char *namespaceURI,
                              const ACEXML_Char *localName,
                              const ACEXML_Char *qName,
-                             ACEXML_Attributes *atts) = 0;
+                             ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
+        = 0;
 
   /**
    * Begin the scope of a prefix-URI Namespace mapping.
    */
   virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri) = 0;
+                                   const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
+        = 0;
 };
 
 #include /**/ "ace/post.h"

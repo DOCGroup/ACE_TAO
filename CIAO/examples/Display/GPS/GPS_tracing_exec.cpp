@@ -1,6 +1,7 @@
 // $Id$
 
 #include "GPS_tracing_exec.h"
+#include "CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
@@ -78,7 +79,7 @@ MyImpl::GPS_tracing_exec_i::set_session_context (
 }
 
 void
-MyImpl::GPS_tracing_exec_i::configuraton_complete ()
+MyImpl::GPS_tracing_exec_i::ciao_preactivate ()
 {
 }
 
@@ -87,6 +88,11 @@ MyImpl::GPS_tracing_exec_i::ccm_activate ()
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_activate\n"));
+}
+
+void
+MyImpl::GPS_tracing_exec_i::ciao_postactivate ()
+{
 }
 
 void

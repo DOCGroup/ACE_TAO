@@ -63,9 +63,6 @@ public:
   virtual void disconnect_push_supplier (
   );
 
-  virtual void validate ();
-  virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
-
 private:
   /// Release
   virtual void release (void);

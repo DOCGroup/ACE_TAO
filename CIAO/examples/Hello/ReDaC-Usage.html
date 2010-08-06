@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!--//$Id$ -->
+
+
+  
+  <title>ReDaC Service Usage</title>
+</head>
+
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#0000ff" link="#000fff" vlink="#ff0f0f">
+
+
+<hr>
+<h2>Simple Tutorial for using ReDaC (<span style="font-style: italic;">Redeployment and Reconfiguration</span>)</h2>
+
+
+<span style="font-weight: bold;">Prerequisite</span><b>:<br>
+
+
+<br>
+
+
+</b>Before you proceed further, please read the <a href="./step-by-step.html">step-by-step</a> tutorial
+page first.<b><br>
+
+
+<br>
+
+
+</b><b>Note:</b>
+<br>
+
+
+<ul>
+
+
+  <li>ReDaC is a middleware service provided by the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/docs/releasenotes/dance.html">DAnCE</a>
+framework.</li>
+
+
+  <li>ReDaC service is used for redeployment and/or
+reconfiguration of your&nbsp;running component-based application on
+the fly without shutting down your application.&nbsp;</li>
+
+
+  <li>ReDaC currently works for CIAO QoS-enabled component
+middleware only.</li>
+
+
+</ul>
+
+
+<hr>
+<h2>Example Description</h2>
+
+
+We will use the Hello example to illustrate how one could use ReDaC
+service to perform redeployment and reconfiguration.
+<hr>
+<h3>Initial Deployment</h3>
+
+
+Below steps are required for the initial deployment of your application,
+which is performed by DAnCE. The below steps are different from those
+presented in the <a href="./step-by-step.html">step-by-step</a>
+tutorial page in the sense that we pass different command line options
+to the <span style="font-style: italic;">Plan_Launcher</span>
+client:<br>
+
+
+<ul>
+
+
+  <li> Go into the <em> descriptors </em> directory
+Start NodeManagers (NodeDameons) by running <code>
+run_NodeDaemons.pl </code> </li>
+
+
+  
+  <ul>
+
+
+    <li>This step is the same as the one presented in the
+&nbsp;<a href="step-by-step.html">step-by-step</a>
+tutorial page. </li>
+
+
+  
+  </ul>
+
+
+  <li> Start the execution manager: <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager
+-o EM.ior -i NodeManagerMap.dat </code> </li>
+
+
+  
+  <ul>
+
+
+    <li> As one can see, we use the
+"NodeManagerMap.dat" file to instruct the Execution_Manager how to find
+the endpoint of each individual NodeManager (i.e., Node Daemon) where
+component(s) will be deployed.</li>
+
+
+  
+  </ul>
+
+
+  
+  <ul>
+
+
+    <li>This step is the same as the one presented in the
+&nbsp;<a href="step-by-step.html">step-by-step</a>
+tutorial page. </li>
+
+
+  
+  </ul>
+
+
+  <li> Start the plan launcher: <code>
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p
+flattened_deploymentplan_without_ns.cdp -k file://EM.ior -o DAM.ior</code>&nbsp;</li>
+
+
+  
+  <ul>
+
+
+    <li>After this, components should be deployed
+successfully. </li>
+
+
+    <li>This step is different &nbsp;from the one presented
+in the
+&nbsp;<a href="step-by-step.html">step-by-step</a>
+tutorial page in the way that we added an additional "<code>-o</code>"
+option when running <code>Plan_Launcher</code>, which
+dumps an IOR file of DAnCE's DomainApplicationManager. &nbsp;With
+this option added, the <code>plan_launcher </code>will
+exit immediately after the application is deployed, instead of staying
+in the interactive mode. (As a normal user, you don't need to worry
+about the details of what exactly a DomainApplicationManager is.)</li>
+
+
+  
+  </ul>
+
+
+</ul>
+
+
+<hr>
+<h3>Redeployment and Reconfiguration</h3>
+
+
+Basically, you could use ReDaC service in two ways. <br>
+
+
+<ol style="font-weight: bold;">
+
+
+  <li>Use ReDaC service <span style="font-style: italic;">directly</span>
+through DAnCE's&nbsp;<span style="font-style: italic;">Plan_Launcher</span>
+client</li>
+
+
+  <li><span style="font-weight: bold;">Use ReDaC
+service <span style="font-style: italic;">programmatically</span>
+by writing your own client</span></li>
+
+
+</ol>
+
+
+This tutorial illustrates how exactly you could use ReDaC.<br>
+
+
+<br style="font-weight: bold;">
+
+
+<span style="font-weight: bold;">Use ReDaC service through
+</span><span style="font-style: italic; font-weight: bold;">Plan_Launcher</span><span style="font-weight: bold;">&nbsp; of DAnCE:</span><br>
+
+
+<ul>
+
+
+  <li>As we've already mentioned, you should first deploy your
+Hello application with DAnCE, which is described in the above "Initial
+Deployment" section of this tutorial.<code> </code>
+  </li>
+
+
+  <li>
+    
+    <p> Use ReDaC service through <code>Plan_Launcher</code>'s
+"-r" command line option to perform redeployment and reconfiguration.<br>
+
+
+Run the command
+    <code>$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -r
+flattened_deploymentplan_without_ns_add.cdp </code>will add
+additional components to the existing running assembly.</p>
+
+
+  </li>
+
+
+  <li>
+    
+    <p>Run the command
+    <code>$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -r
+flattened_deploymentplan_without_ns_remove.cdp </code>will
+remove components from the existing running assembly.</p>
+
+
+  </li>
+
+
+  <li>Run the command
+    <code></code><code>$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher
+-i file://DAM.ior</code> will tear down your entire application
+completely.</li>
+
+
+</ul>
+
+
+<br>
+
+
+<div style="margin-left: 40px;"><span style="font-weight: bold;">NOTE: &nbsp;</span>By
+using ReDaC through Plan_Launcher, as a user you must provide a new
+DeploymentPlan (.cdp) XML file, which captures the new deployment and
+configuration settings of your application, and the Plan_UUID of the
+new DeploymentPlan should be&nbsp;the same as the one of the old
+(running) DeploymentPlan. Otherwise, DAnCE will think you want to
+deploy a totally different deployment plan, instead of applying some
+changes to the existing plan. One could use <a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> MDD tool to create such a deployment plan XML file.<br>
+
+</div>
+
+
+<br>
+
+
+<span style="font-weight: bold;">Use ReDaC service <span style="font-style: italic;">programmatically</span>:</span><span style="font-weight: bold;"></span>
+<ul>
+
+
+  
+  <p> You could also use ReDaC service programmatically by writing your
+own client to invoke ReDaC service. Basically, to accomplish this, your
+client program needs to:</p>
+
+  
+  <ol>
+
+    <li>Obtain the&nbsp;<code>ExecutionManager</code> object reference, either through naming service or through IOR file.</li>
+
+    <li>Invoke the operation&nbsp;<code>perform_redeployment</code> on this interface by passing a single argument type called&nbsp;<code>DeploymentPlan</code>.</li>
+
+  
+  </ol>
+
+
+</ul>
+
+
+<div style="margin-left: 40px;">The IDL signature of this operation is as follows:<br>
+
+<code><br>
+
+&nbsp;&nbsp;&nbsp; void perform_redeployment (in DeploymentPlan new_plan)<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raises (PlanError,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InstallationFailure,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UnknownImplId,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ImplEntryPointNotFound,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InvalidConnection,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InvalidProperty,<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::Components::RemoveFailure);</code><br>
+
+</div>
+
+
+<br>
+<div style="margin-left: 40px;">In order to simplify the creation of a the&nbsp;<code>"new_plan", </code>we are implementing a utility class which allows a developer to easily manipulate a deployment plan data structure.</div>
+
+
+<hr>
+<b>Email: </b>
+<address>ciao-users@cse.wustl.edu</address>
+
+
+</body>
+</html>

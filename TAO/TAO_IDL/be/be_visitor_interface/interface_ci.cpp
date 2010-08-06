@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -15,6 +13,10 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           interface_ci,
+           "$Id$")
 
 // **************************************************
 // Interface visitor for client inline
@@ -67,6 +69,8 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name (), "");
+
   if (node->is_abstract ())
     {
       *os << be_nl << be_nl
@@ -93,14 +97,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << node->local_name () << " ("
           << be_idt << be_idt_nl
           << "::IOP::IOR *ior," << be_nl
-          << "TAO_ORB_Core *oc)" << be_uidt_nl;
+          << "TAO_ORB_Core *oc" << be_uidt_nl
+          << ")" << be_nl;
       *os << ": ::CORBA::Object (ior, oc)" << be_idt_nl;
 
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
-          *os << ", the" << node->base_proxy_broker_name ()
-              << "_ (0)";
+          *os << ", the"<< node->base_proxy_broker_name () << "_ (0)";
         }
 
       *os << be_uidt << be_uidt_nl
@@ -108,19 +111,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "}" ;
     }
 
+  os->gen_endif ();
   node->cli_inline_gen (true);
   return 0;
 }
-
-int
-be_visitor_interface_ci::visit_component (be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_ci::visit_connector (be_connector *node)
-{
-  return this->visit_interface (node);
-}
-

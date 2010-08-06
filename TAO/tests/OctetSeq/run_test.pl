@@ -8,23 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-$status = 0;
-$debug_level = '0';
-
-$client_iterations = '5000';
-
-$octet_iterations = '32';
-$low = '8192';
-$high = '8192';
-$step = '1';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $t3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
@@ -37,15 +20,9 @@ my $client_iorfile = $t3->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $server_iorfile");
-
-$T = $client->CreateProcess ("OctetSeq",
-                             "-ORBdebuglevel $debug_level " .
-                             "-n $octet_iterations -l $low -h $high -s $step -q");
-
-$CL = $t3->CreateProcess ("client", "-i $client_iterations -k file://$client_iorfile");
+$SV = $server->CreateProcess ("server", "-o $server_iorfile");
+$T = $client->CreateProcess ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
+$CL = $t3->CreateProcess ("client", "-i 5000 -k file://$client_iorfile");
 
 print STDERR "\n\n==== Octet sequence passing test\n";
 
@@ -63,17 +40,6 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 100);
 
 if ($client_status != 0) {
@@ -81,7 +47,7 @@ if ($client_status != 0) {
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 10);
+$server_status = $SV->WaitKill (25);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server\n";
@@ -90,7 +56,7 @@ if ($server_status != 0) {
 
 print STDERR "\n\n==== Octet sequence performance test\n";
 
-$test = $T->SpawnWaitKill ($t3->ProcessStartWaitInterval() + 45);
+$test = $T->SpawnWaitKill (60);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";

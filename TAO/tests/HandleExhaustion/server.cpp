@@ -182,12 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       Descriptors descriptors;
-      descriptors.leak (
-#ifdef _WRS_KERNEL
-                        "server.out");
-#else
-                        argv[0]);
-#endif
+      descriptors.leak (argv[0]);
 
       ACE_Time_Value tv (10);
       orb->run (tv);

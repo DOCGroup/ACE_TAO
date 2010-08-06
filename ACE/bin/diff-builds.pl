@@ -18,8 +18,8 @@ my $append_revision_to_new_test_fails = 0;  # Default to not doing this.
 # The root of the test statistics
 my $teststaturl = "http://download.theaceorb.nl/teststat/builds/";
 
-my $allbuildsurl = "http://download.theaceorb.nl/teststat/buildscore";
-my $cleanbuildsurl = "http://download.theaceorb.nl/teststat/cleanbuildtests";
+my $allbuildsurl = "http://download.theaceorb.nl/teststat/buildscore.txt";
+my $cleanbuildsurl = "http://download.theaceorb.nl/teststat/cleanbuildtests.txt";
 
 # Determine the available timestamps for a build on a date,
 # by scanning the index page (build.html)
@@ -268,17 +268,17 @@ if ($#builds == -1 && $#dates >= 0)
 {
     my %revisions = {};
 
+    if ($clean_builds_only) {
+        find_builds (\@builds, $cleanbuildsurl, 8, \%revisions, 7);
+    }
+    else {
+        find_builds (\@builds, $allbuildsurl, 4, \%revisions, 3);
+    }
+
     # only the start date given - implies we should
     # use the today's date
     if ($#dates == 0) {
         $dates[1] = strftime ("%Y_%m_%d", gmtime);
-    }
-
-    if ($clean_builds_only) {
-        find_builds (\@builds, $cleanbuildsurl . "-" . $dates[1] . ".txt" , 8, \%revisions, 7);
-    }
-    else {
-        find_builds (\@builds, $allbuildsurl . "-" . $dates[1] . ".txt" , 4, \%revisions, 3);
     }
 
     foreach $build (sort @builds) {

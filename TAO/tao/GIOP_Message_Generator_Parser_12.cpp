@@ -35,12 +35,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
-  // Here are the Octet values for different policies. See the meaning
-  // of response_flags of RequestHeader_1_2 in the CORBA specification as
-  // to why the values below are used.
+  // Here are the Octet values for different policies
   // '00000000' for SYNC_NONE
   // '00000000' for SYNC_WITH_TRANSPORT
-  // '00000001' for SYNC_WITH_SERVER
+  // '00000010' for SYNC_WITH_SERVER
   // '00000011' for SYNC_WITH_TARGET
   // '00000011' for regular two ways, but if they are invoked via a
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
@@ -123,12 +121,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply)
 {
   // Write the request ID
-  if (!(output.write_ulong (reply.request_id_)))
-    return false;
+  output.write_ulong (reply.request_id_);
 
   // Write the reply status
-  if (!(output.write_ulong (reply.reply_status ())))
-    return false;
+  output.write_ulong (reply.reply_status ());
 
   if (!(output << reply.service_context_notowned ()))
     return false;
@@ -151,12 +147,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
     CORBA::ULong request_id,
     TAO_GIOP_Locate_Status_Msg &status_info)
 {
-  if (!(output.write_ulong (request_id)))
-    return false;
+  output.write_ulong (request_id);
 
   // Make the header for the locate request
-  if (!(output.write_ulong (status_info.status)))
-    return false;
+  output.write_ulong (status_info.status);
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -183,7 +177,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
         CORBA::Object_ptr object_ptr =
           status_info.forward_location_var.in ();
 
-        if (!(output << object_ptr))
+        if ( ! (output << object_ptr))
         {
           if (TAO_debug_level > 0)
             {

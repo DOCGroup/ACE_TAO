@@ -17,12 +17,16 @@
 # include "ace/Lib_Find.h"
 #endif
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (ace,
+           Service_Object,
+           "$Id$")
+
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
+  ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
-void
+  void
 ACE_Service_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -106,9 +110,6 @@ ACE_Service_Type::fini (void)
     }
 
   int ret = this->type_->fini ();
-
-  // Ensure type is 0 to prevent invalid access after call to fini.
-  this->type_ = 0;
 
   // Ensure that closing the DLL is done after type_->fini() as it may
   // require access to the code for the service object destructor,

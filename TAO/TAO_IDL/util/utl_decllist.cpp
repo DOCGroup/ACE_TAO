@@ -64,6 +64,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
+// utl_decllist.cc
+//
+// Implementation of a list of declarators
+
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
 //   It relies on a type-unsafe cast from UTL_List to subclasses, which
@@ -72,6 +76,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_decllist.h"
 #include "fe_declarator.h"
+
+ACE_RCSID (util,
+           utl_decllist,
+           "$Id$")
 
 /*
  * Constructor(s)

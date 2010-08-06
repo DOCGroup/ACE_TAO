@@ -17,13 +17,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +47,6 @@ class TAO_Array_Forany_T
 public:
   typedef T _array_type;
   typedef T_slice _slice_type;
-  typedef TAG _tag_type;
 
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);

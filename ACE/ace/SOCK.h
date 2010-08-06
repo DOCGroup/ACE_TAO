@@ -125,6 +125,7 @@ protected:
    * pointer/reference.
    */
   ~ACE_SOCK (void);
+
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

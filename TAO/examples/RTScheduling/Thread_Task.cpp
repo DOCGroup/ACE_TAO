@@ -18,7 +18,7 @@ Thread_Task::Thread_Task (void)
    dt_creator_ (0),
    base_time_ (0),
    dist_ (0),
-   job_name_ (),
+   job_name_ (0),
    task_stats_ (0)
 {
 }
@@ -41,10 +41,9 @@ Thread_Task::svc (void)
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ());
 
-      RTScheduling::Current::IdType_var guid = this->current_->id ();
       ACE_OS::memcpy (&count_,
-                      guid->get_buffer (),
-                      guid->length ());
+                      this->current_->id ()->get_buffer (),
+                      this->current_->id ()->length ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -61,10 +60,6 @@ Thread_Task::svc (void)
       this->current_->end_scheduling_segment (name);
 
       dt_creator_->dt_ended () ;
-    }
-  catch (const CORBA::THREAD_CANCELLED &)
-    {
-      // Threads can be cancelled.
     }
   catch (const CORBA::Exception& ex)
     {
@@ -95,7 +90,7 @@ Thread_Task::perform_task (void)
 const char*
 Thread_Task::job (void)
 {
-  return job_name_.in ();
+  return job_name_;
 }
 
 void

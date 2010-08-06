@@ -1,20 +1,30 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exception_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Exception in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exception_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Exception in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
 #include "utl_err.h"
+
+ACE_RCSID (be_visitor_exception,
+           exception_ch,
+           "$Id$")
 
 // ******************************************************
 // For client header.
@@ -42,6 +52,8 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  os->gen_ifdef_macro (node->flat_name ());
+
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()
             << " : public ::CORBA::UserException" << be_nl;
@@ -52,9 +64,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_exception_ch::")
-                         ACE_TEXT ("visit_exception - ")
-                         ACE_TEXT ("codegen for scope failed\n")),
+                         "(%N:%l) be_visitor_exception_ch::"
+                         "visit_exception - "
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -74,6 +86,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     {
       *os << "static void _tao_any_destructor (void *);" << be_nl << be_nl;
     }
+
 
   *os << "static " << node->local_name ()
       << " *_downcast ( ::CORBA::Exception *);" << be_nl
@@ -99,9 +112,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_exception::")
-                             ACE_TEXT ("visit_exception - ")
-                             ACE_TEXT ("codegen for ctor failed\n")),
+                             "(%N:%l) be_visitor_exception::"
+                             "visit_exception - "
+                             "codegen for ctor failed\n"),
                             -1);
         }
     }
@@ -122,13 +135,14 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("be_visitor_exception_ch::")
-                              ACE_TEXT ("visit_exception - ")
-                              ACE_TEXT ("TypeCode declaration failed\n")),
+                              "(%N:%l) be_visitor_exception_ch::"
+                              "visit_exception - "
+                              "TypeCode declaration failed\n"),
                             -1);
         }
     }
 
+  os->gen_endif ();
   node->cli_hdr_gen (1);
   return 0;
 }

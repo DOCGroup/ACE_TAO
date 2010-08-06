@@ -4,12 +4,10 @@
 #define SERVERINITIALIZER_H
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
 #include "tao/PI/PI.h"
 
 class ServerInitializer :
-public virtual PortableInterceptor::ORBInitializer,
-public virtual CORBA::LocalObject
+public virtual PortableInterceptor::ORBInitializer
 {
  public:
   ServerInitializer ();

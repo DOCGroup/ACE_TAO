@@ -173,8 +173,8 @@ namespace CORBA
     static CORBA::Request* _nil (void);
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcnt (void);
+    CORBA::ULong _decr_refcnt (void);
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);

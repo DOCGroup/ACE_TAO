@@ -1,1 +1,1 @@
-NodeOne corbaloc:iiop:localhost:60001/NodeOne.NodeManager
+NodeA corbaloc:iiop:localhost:10000/NodeManager

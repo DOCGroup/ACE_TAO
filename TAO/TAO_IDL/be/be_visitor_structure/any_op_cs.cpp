@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client

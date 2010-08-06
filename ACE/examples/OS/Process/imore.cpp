@@ -38,6 +38,8 @@ ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
+static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
+static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else
 static const char * executable = "more"; // I like less better.
 static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("/tmp");
@@ -92,7 +94,6 @@ parse_args (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-#if !defined (ACE_WIN32)
 static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
@@ -141,9 +142,7 @@ setup_named_pipes (ACE_Process_Options &opt)
   wfifo.close ();
   return 0;
 }
-#endif
 
-#if !defined (ACE_WIN32)
 static int
 setup_unnamed_pipe (ACE_Process_Options &opt)
 {
@@ -170,9 +169,7 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
   pipe.close ();
   return 0;
 }
-#endif
 
-#if !defined (ACE_WIN32)
 static int
 print_file (ACE_HANDLE infd)
 {
@@ -196,10 +193,9 @@ print_file (ACE_HANDLE infd)
             }
         }
     }
-
+    
   return 0;
 }
-#endif
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

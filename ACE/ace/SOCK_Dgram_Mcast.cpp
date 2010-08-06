@@ -13,12 +13,16 @@
 #endif
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <iphlpapi.h>
+#include /**/ <Iphlpapi.h>
 #endif
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (ace,
+           SOCK_Dgram_Mcast,
+           "$Id$")
 
 #include "ace/Log_Msg.h"
 

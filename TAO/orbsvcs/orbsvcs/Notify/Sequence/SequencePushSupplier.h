@@ -51,10 +51,7 @@ public:
   virtual ACE_CString get_ior (void) const;
 
 protected:
-
-  virtual CORBA::Object_ptr get_supplier (void);
-
- /// The Supplier
+  /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;
 };
 

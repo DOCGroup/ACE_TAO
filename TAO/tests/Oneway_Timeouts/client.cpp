@@ -43,7 +43,6 @@ namespace
   bool retry_transients = false;
   bool retry_timeouts = false;
   bool make_request_queued = false;
-  const ACE_TCHAR *server_ior = ACE_TEXT ("file://test.ior");
 
   void print_usage (const ACE_TCHAR *argv0)
   {
@@ -65,8 +64,7 @@ namespace
                 "[-buffer_bytes n=0] "
                 "[-buffer_timeout ms=0] "
                 "[-sync delayed|none] "
-                "[-make_request_queued] "
-                "[-server_ior <ior>]\n",
+                "[-make_request_queued]\n",
                 argv0));
   }
 
@@ -196,12 +194,6 @@ namespace
           make_request_queued = true;
           args.consume_arg ();
         }
-        else if (args.cur_arg_strncasecmp (ACE_TEXT("-server_ior")) == 0)
-          {
-            args.consume_arg ();
-            server_ior = args.get_current ();
-            args.consume_arg ();
-          }
         else
           {
             ACE_ERROR ((LM_ERROR, "Error: Unknown argument \"%s\"\n",
@@ -340,7 +332,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       set_connect_timeout (orb.in ());
       set_buffering (orb.in ());
 
-      ACE_TString ior (server_ior);
+      ACE_TString ior (ACE_TEXT("file://server.ior"));
       if (force_timeout)
         {
           ior = non_existent_ior;

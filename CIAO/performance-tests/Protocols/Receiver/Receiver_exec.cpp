@@ -74,7 +74,7 @@ namespace CIDL_ReceiverImpl
 
     if (do_dump_history)
       {
-        this->inter_arrival_times_->dump_samples (ACE_TEXT("Inter-arrival times"), gsf);
+        this->inter_arrival_times_->dump_samples ("Inter-arrival times", gsf);
       }
 
     ACE_Basic_Stats stats;
@@ -116,9 +116,9 @@ namespace CIDL_ReceiverImpl
                     "Session id ends %d\n",
                     this->session_id_));
 
-        stats.dump_results (ACE_TEXT("Inter-arrival times"), gsf);
+        stats.dump_results ("Inter-arrival times", gsf);
 
-        ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Inter-arrival times"), gsf,
+        ACE_Throughput_Stats::dump_throughput ("Inter-arrival times", gsf,
                                               this->test_end_ - this->test_start_,
                                               stats.samples_count ());
       }
@@ -219,6 +219,7 @@ namespace CIDL_ReceiverImpl
 
     this->orb_ =
       CORBA::ORB_init (argc, argv);
+
   }
 
   ::Protocols::CCM_test_ptr
@@ -241,7 +242,7 @@ namespace CIDL_ReceiverImpl
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::set_session_context\n"));
 
     this->context_ =
-      ::CIAO_Protocols_Receiver_Impl::Receiver_Exec_Context::_narrow (ctx);
+      ReceiverExec_Context::_narrow (ctx);
 
     if (CORBA::is_nil (this->context_.in ()))
       throw CORBA::INTERNAL ();
@@ -266,9 +267,15 @@ namespace CIDL_ReceiverImpl
   }
 
   void
-  ReceiverExec_i::configuration_complete (void)
+  ReceiverExec_i::ciao_preactivate (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::configuration_complete\n"));
+    ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_preactivate\n"));
+  }
+
+  void
+  ReceiverExec_i::ciao_postactivate (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_postactivate\n"));
   }
 
   ::Components::EnterpriseComponent_ptr

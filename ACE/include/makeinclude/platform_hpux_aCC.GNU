@@ -13,6 +13,7 @@
 buildbits ?= 0
 debug ?= 1
 distrib ?= 0
+exceptions ?= 1
 optimize ?= 0
 stdcpplib ?= 1
 threads ?= 1
@@ -58,6 +59,8 @@ ifeq (1,$(stdcpplib))
   endif
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
+# If you still have problems with this area, uncomment the following line:
+#  exceptions = 1
 else
   CCFLAGS += -AP
 endif
@@ -101,6 +104,7 @@ ifeq (03,$(CXXMAJORVERS))
   # Suppress Warning 361 (missing return from non-void function)
   # Suppress Warning 1039(Binary incompatabilty between old and new compilers)
   CCFLAGS                += +W302,361,1039
+
   ifeq (57,$(CXXMINORVERS))
     # aCC 3.57 has a bug. When a class has private constructors
     # and is trying to be created from a friend class we end up with
@@ -111,14 +115,6 @@ ifeq (03,$(CXXMAJORVERS))
   ifeq (60,$(CXXMINORVERS))
     # Same bug as above
     export aCC_ARRAY_OPT=OFF
-  endif
-  ifeq (80,$(CXXMINORVERS))
-    # Enabled template meta programming
-    CCFLAGS += +hpxstd98
-  endif
-  ifeq (85,$(CXXMINORVERS))
-    # Enabled template meta programming
-    CCFLAGS += +hpxstd98
   endif
 endif
 
@@ -136,6 +132,12 @@ endif
 
 CPPFLAGS        += $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 CCFLAGS         += $(CC_THR_DEFS)
+
+# If exception support is explicitly disabled, tell the compiler.
+# This is not recommended since the run-time library can throw exceptions.
+ifneq ($(exceptions),1)
+  CCFLAGS  += +noeh
+endif
 
 DCCFLAGS        += -g
 DLD             = $(CXX) $(CCFLAGS)

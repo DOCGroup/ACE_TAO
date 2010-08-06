@@ -46,15 +46,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#define TAO_NOTIFY_MONITOR_CONTROL_EXTENSION "TAO_MC_Notify_Service"
 ACE_FACTORY_DECLARE (TAO_Notify_MC_Ext, TAO_MC_Notify_Service)
-
-#if defined(TAO_AS_STATIC_LIBS)
-
-ACE_STATIC_SVC_DECLARE (TAO_MC_Notify_Service)
-
-#endif
-
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 

@@ -22,6 +22,6 @@ CORBA::Boolean Logger_i::log_message (const char * message)
   log_time_string[24] = '\0';
   log_file << ACE_TEXT_ALWAYS_CHAR(log_time_string.c_str()) << " "
            << message << std::endl;
-  return true;
+  return 1;
 }
 

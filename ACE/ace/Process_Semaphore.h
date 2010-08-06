@@ -135,6 +135,8 @@ protected:
 template <class T> class ACE_Malloc_Lock_Adapter_T;
 
 /**
+ * @class ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+ *
  * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
  * ACE_Process_Semaphore.
  *

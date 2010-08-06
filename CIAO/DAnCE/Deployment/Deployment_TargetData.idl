@@ -8,6 +8,7 @@
 #include "tao/ULongSeq.pidl"
 
 module Deployment {
+
   struct Resource {
     string name;
     ::CORBA::StringSeq resourceType;
@@ -22,7 +23,6 @@ module Deployment {
     ::CORBA::ULongSeq nodeRef;
     SatisfierProperties property;
   };
-
   typedef sequence < SharedResource > SharedResources;
 
   struct Node {
@@ -32,7 +32,6 @@ module Deployment {
     ::CORBA::ULongSeq connectionRef;
     Resources resource;
   };
-
   typedef sequence < Node > Nodes;
 
   struct Interconnect {
@@ -42,7 +41,6 @@ module Deployment {
     ::CORBA::ULongSeq connectRef;
     Resources resource;
   };
-
   typedef sequence < Interconnect > Interconnects;
 
   struct Bridge {
@@ -51,7 +49,6 @@ module Deployment {
     ::CORBA::ULongSeq connectRef;
     Resources resource;
   };
-
   typedef sequence < Bridge > Bridges;
 
   struct Domain {

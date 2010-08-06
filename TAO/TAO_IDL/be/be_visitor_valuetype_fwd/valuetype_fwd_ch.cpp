@@ -1,17 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_fwd_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for ValueTypeFwd node in the client header.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from  Torsten Kuepper based on code from Aniruddha Gokhale (interface_fwd_ch.cpp)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_fwd_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for ValueTypeFwd node in the client header.
+//
+// = AUTHOR
+//    Boris Kolpackov <bosk@ipmce.ru>
+//    based on code from  Torsten Kuepper
+//    based on code from Aniruddha Gokhale (interface_fwd_ch.cpp)
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           valuetype_fwd_ch, 
+           "$Id$")
 
 be_visitor_valuetype_fwd_ch::be_visitor_valuetype_fwd_ch (
     be_visitor_context *ctx

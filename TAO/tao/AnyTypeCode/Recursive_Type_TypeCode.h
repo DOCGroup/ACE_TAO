@@ -18,7 +18,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/ValueModifierC.h"
 #include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
 #include "ace/Recursive_Thread_Mutex.h"

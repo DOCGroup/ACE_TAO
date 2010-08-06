@@ -1,22 +1,41 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_typedef.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Typedef that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_typedef.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Typedef that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_typedef.h"
 #include "be_visitor.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_typedef,
+           "$Id$")
+
+be_typedef::be_typedef (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_Typedef (),
+    be_decl (),
+    be_type ()
+{
+}
 
 be_typedef::be_typedef (AST_Type *bt,
                         UTL_ScopedName *n,
@@ -28,9 +47,6 @@ be_typedef::be_typedef (AST_Type *bt,
               n),
     AST_Type (AST_Decl::NT_typedef,
               n),
-    AST_Field (AST_Decl::NT_typedef,
-               bt,
-               n),
     AST_Typedef (bt,
                  n,
                  bt->is_local () || local,
@@ -100,12 +116,10 @@ be_typedef::base_node_type (void) const
 void
 be_typedef::gen_member_ostream_operator (TAO_OutStream *os,
                                          const char *instance_name,
-                                         bool use_underscore,
                                          bool accessor)
 {
   this->primitive_base_type ()->gen_member_ostream_operator (os,
                                                              instance_name,
-                                                             use_underscore,
                                                              accessor);
 }
 
@@ -121,5 +135,7 @@ be_typedef::accept (be_visitor *visitor)
 {
   return visitor->visit_typedef (this);
 }
+
+
 
 IMPL_NARROW_FROM_DECL (be_typedef)

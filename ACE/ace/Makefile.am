@@ -402,9 +402,6 @@ nobase_include_HEADERS += \
   Atomic_Op.inl \
   Atomic_Op_Sparc.h \
   Atomic_Op_T.cpp \
-  Atomic_Op_GCC_T.h \
-  Atomic_Op_GCC_T.cpp \
-  Atomic_Op_GCC_T.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.inl \
   Auto_Event.h \
@@ -478,7 +475,6 @@ nobase_include_HEADERS += \
   Containers_T.inl \
   Copy_Disabled.h \
   Countdown_Time.h \
-  Countdown_Time.inl \
   DEV.h \
   DEV.inl \
   DEV_Addr.h \
@@ -1075,10 +1071,9 @@ nobase_include_HEADERS += \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \
+  Timer_Queuefwd.h \
   Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
-  Tokenizer_T.cpp \
-  Tokenizer_T.h \
   Timer_Hash.h \
   Timer_Heap.h \
   Timer_List.h \

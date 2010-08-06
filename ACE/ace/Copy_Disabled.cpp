@@ -8,6 +8,12 @@
 
 #include "ace/Copy_Disabled.h"
 
+
+ACE_RCSID (ace,
+           Copy_Disabled,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Copy_Disabled::ACE_Copy_Disabled (void)

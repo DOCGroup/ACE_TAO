@@ -9,6 +9,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_RCSID (ace, Future, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #  include "ace/Guard_T.h"
@@ -326,7 +328,8 @@ template <class T> int
 ACE_Future<T>::cancel (const T &r)
 {
   this->cancel ();
-  return this->future_rep_->set (r, *this);
+  return this->future_rep_->set (r,
+                                 *this);
 }
 
 template <class T> int
@@ -343,7 +346,8 @@ template <class T> int
 ACE_Future<T>::set (const T &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
-  return this->future_rep_->set (r, *this);
+  return this->future_rep_->set (r,
+                                 *this);
 }
 
 template <class T> int

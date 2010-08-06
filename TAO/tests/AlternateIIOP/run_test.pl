@@ -6,85 +6,47 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
+$iorbase = "altiiop.ior";
+$iorfile = PerlACE::LocalFile ("altiiop.ior");
+unlink $iorfile;
 $status = 0;
-$debug_level = '0';
+@bogus_eps = ("-orbendpoint iiop://localhost:10210/hostname_in_ior=bogus.com",
+              "-orbendpoint iiop://localhost:10212/hostname_in_ior=bogus.com");
+$valid_ep = "-orbendpoint iiop://localhost:10211";
 
-$use_shared_profile = '1';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if (PerlACE::is_vxworks_test()) {
+$SV_ALT_IIOP = new PerlACE::ProcessVX ("../Hello/server", "-o $iorbase -ORBUseSharedProfile 1 ",
+                                       "$bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
+else {
+$SV_ALT_IIOP = new PerlACE::Process ("../Hello/server", "-o $iorfile -ORBUseSharedProfile 1 ",
+                                     "$bogus_eps[0] $valid_ep $bogus_eps[1]");
+}
+$CL_ALT_IIOP = new PerlACE::Process ("../Hello/client", " -k file://$iorfile");
+$SV_ALT_IIOP->Spawn ();
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-$hostname = $server->HostName ();
-
-$port1 = $server->RandomPort ();
-$port2 = $port1 + 1;
-$port3 = $port2 + 1;
-
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-my $bogus_host = 'tao_test_nonexistent_host';
-
-$SV = $server->CreateProcess ("../Hello/server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $server_iorfile " .
-                              "-ORBUseSharedProfile $use_shared_profile " .
-                              "-OrbEndPoint iiop://$hostname:$port1/hostname_in_ior=$bogus_host " .
-                              "-OrbEndPoint iiop://$hostname:$port2 " .
-                              "-OrbEndPoint iiop://$hostname:$port3/hostname_in_ior=$bogus_host");
-
-$CL = $client->CreateProcess ("../Hello/client", "-k file://$client_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV_ALT_IIOP->Kill ();
+    $SV_ALT_IIOP->TimedWait (1);
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL_ALT_IIOP->SpawnWaitKill (300);
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 45);
+$server = $SV_ALT_IIOP->WaitKill (60);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
 
 exit $status;

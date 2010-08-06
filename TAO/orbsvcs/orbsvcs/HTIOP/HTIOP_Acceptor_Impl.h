@@ -58,53 +58,81 @@ namespace TAO
     };
 
     template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-    class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+    class Accept_Strategy
     {
     public:
+
       /// Constructor.
       Accept_Strategy (TAO_ORB_Core *orb_core);
 
       /// Initialize the <peer_acceptor_> with <local_addr>.  If the
       /// process runs out of handles, purge some "old" connections.
       int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                bool restart = false);
+                int restart = 0);
+
+      /// Returns the underlying PEER_ACCEPTOR object
+      ACE_PEER_ACCEPTOR &acceptor (void) const;
 
       /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
       /// process runs out of handles, purge some "old" connections.
       int accept_svc_handler (SVC_HANDLER *svc_handler);
 
+      ACE_HANDLE get_handle (void) const;
+
     protected:
-      /// Base class.
-      typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
+
+    private:
+
+      /// Factory that establishes connections passively
+      ACE_PEER_ACCEPTOR peer_acceptor_;
     };
 
-    /**
-     * @class Concurrency_Strategy
-     *
-     * @brief Activates the Svc_Handler.
-     */
-    template <class SVC_HANDLER>
-    class Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+
+    template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
+    class Strategy_Acceptor : public ACE_Service_Object
     {
     public:
-      /// Constructor.
-      Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
-      /**
-       * Activates the Svc_Handler.
-       */
-      int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                void *arg);
+      /// Default constructor.
+      Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
+                                   const ACE_TCHAR service_description[] = 0,
+                                   int use_select = 1,
+                                   int reuse_addr = 1);
 
-    protected:
-      /// Base class.
-      typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY_BASE;
+      int open (const ACE_PEER_ACCEPTOR_ADDR &,
+                ACE_Reactor * = ACE_Reactor::instance (),
+                Creation_Strategy<SVC_HANDLER> * = 0,
+                Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * =0,
+                ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
+                int reuse_addr = 1);
 
-      /// Pointer to the ORB Core.
-      TAO_ORB_Core *orb_core_;
+      int close ();
+
+      virtual ACE_HANDLE get_handle (void) const;
+
+
+    private:
+
+      int handle_input (ACE_HANDLE);
+
+      int activate_svc_handler (SVC_HANDLER *svc_handler);
+
+      int accept_svc_handler (SVC_HANDLER *svc_handler);
+
+      int make_svc_handler (SVC_HANDLER *&sh);
+
+      int shared_open (const ACE_PEER_ACCEPTOR_ADDR &,
+                       int protocol_family,
+                       int backlog);
+
+      Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> *accept_strategy_;
+
+      Creation_Strategy<SVC_HANDLER> * creation_strategy_;
+
+      ACE_Concurrency_Strategy<SVC_HANDLER> * concurrency_strategy_;
     };
 
   }

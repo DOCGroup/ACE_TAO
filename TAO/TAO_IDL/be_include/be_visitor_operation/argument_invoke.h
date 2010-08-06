@@ -1,19 +1,24 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument_invoke.h
- *
- *  $Id$
- *
- *  Visitor for generating code for IDL operations. This is a visitor for
- *  passing arguments to the CDR operators in a compiled marshaling
- *  stub/skeleton
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument_invoke.h
+//
+// = DESCRIPTION
+//    Visitor for generating code for IDL operations. This is a visitor for
+//    passing arguments to the CDR operators in a compiled marshaling
+//    stub/skeleton
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_
@@ -34,17 +39,17 @@ class be_visitor_operation_argument_invoke
   //   return type
   //
 public:
-  /// constructor
   be_visitor_operation_argument_invoke (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_operation_argument_invoke (void);
+  // destructor
 
-  /// stuff to o/p before each element of the scope is handled
   virtual int pre_process (be_decl *bd);
+  // stuff to o/p before each element of the scope is handled
 
-  /// stuff to o/p after each element of the scope is handled
   virtual int post_process (be_decl *bd);
+  // stuff to o/p after each element of the scope is handled
 
   enum LAST_ARG_PRINTED
   {

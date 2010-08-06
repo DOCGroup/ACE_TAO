@@ -14,7 +14,7 @@ module PublishesEmits
   
   component Foo
     {
-      publishes foo_event p_foo;
+      publishes foo_event foo;
     };
   
   component Bar

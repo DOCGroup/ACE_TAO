@@ -5,7 +5,7 @@
 
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(ace, LSOCK_Dgram, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/LSOCK_Dgram.inl"

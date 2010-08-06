@@ -73,6 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+ACE_RCSID (util,
+           utl_identifier,
+           "$Id$")
+
 Identifier::Identifier (void)
   : pv_string (0),
     escaped_ (false)
@@ -159,7 +163,11 @@ Identifier::get_string (void)
 void
 Identifier::replace_string (const char * s)
 {
-  delete [] this->pv_string;
+  if (this->pv_string != 0)
+    {
+      delete [] this->pv_string;
+    }
+
   this->pv_string = ACE::strnew (s);
 }
 
@@ -167,29 +175,52 @@ Identifier::replace_string (const char * s)
 bool
 Identifier::compare (Identifier *o)
 {
-  if (!o ||
-      !o->pv_string ||
-      !this->pv_string ||
-      this->escaped_ ^ o->escaped_)
+  if (o == 0)
+    {
+      return false;
+    };
+
+  if (this->pv_string == 0 || o->get_string () == 0)
     {
       return false;
     }
 
-  return !ACE_OS::strcmp (this->pv_string, o->pv_string);
+  if (this->escaped_ ^ o->escaped_)
+    {
+      return false;
+    }
+
+  return (ACE_OS::strcmp (this->pv_string, o->get_string ()) == 0);
 }
 
 // Report the appropriate error if the two identifiers differ only in case.
 bool
 Identifier::case_compare (Identifier *o)
 {
-  return UTL_String::compare (this->pv_string, o->pv_string);
+  UTL_String member (this->pv_string);
+  UTL_String other (o->get_string ());
+
+  bool result = member.compare (&other);
+
+  member.destroy ();
+  other.destroy ();
+
+  return result;
 }
 
 // Report no error if the two identifiers differ only in case.
 bool
 Identifier::case_compare_quiet (Identifier *o)
 {
-  return UTL_String::compare_quiet (this->pv_string, o->pv_string);
+  UTL_String member (this->pv_string);
+  UTL_String other (o->pv_string);
+
+  bool const result = member.compare_quiet (&other);
+
+  member.destroy ();
+  other.destroy ();
+
+  return result;
 }
 
 Identifier *

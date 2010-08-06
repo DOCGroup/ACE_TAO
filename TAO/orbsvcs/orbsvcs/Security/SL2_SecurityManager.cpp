@@ -251,7 +251,7 @@ TAO::Security::AccessDecision::add_object
                     "unexpectedly failed (errno=%d)\n",
                     hash.operator()(key),
                     allow_insecure_access,
-                    ACE_ERRNO_GET));
+                    errno));
       throw
         CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                   errno),
@@ -304,7 +304,7 @@ TAO::Security::AccessDecision::remove_object
                         "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
                         " unexpected error during unbind from map (errno=%d\n)",
                         hash.operator()(key),
-                        ACE_ERRNO_GET));
+                        errno));
 
           throw CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                          errno),

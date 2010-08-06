@@ -107,8 +107,6 @@ TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event)
     connection_valid = 1;
   }
 
-  last_ping_ = ACE_OS::gettimeofday ();
-
   this->push_consumer_->push_structured_event (notification);
 }
 
@@ -139,8 +137,6 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
       }
     connection_valid = 1;
   }
-
-  last_ping_ = ACE_OS::gettimeofday ();
 
   this->push_consumer_->push_structured_event (event);
 }
@@ -178,12 +174,6 @@ TAO_Notify_StructuredPushConsumer::get_ior (void) const
     result.fast_clear();
   }
   return result;
-}
-
-CORBA::Object_ptr
-TAO_Notify_StructuredPushConsumer::get_consumer (void)
-{
-  return CosNotifyComm::StructuredPushConsumer::_duplicate (this->push_consumer_.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

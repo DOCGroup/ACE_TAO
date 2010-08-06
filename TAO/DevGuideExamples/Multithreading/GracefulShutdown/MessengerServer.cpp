@@ -8,8 +8,7 @@
 #include "tao/ORB_Core.h"
 #include <iostream>
 #include <fstream>
-
-ACE_TString ior_output_file = ACE_TEXT ("test.ior");
+ACE_TString ior_output_file;
 
 // By default, shutdown when client calls Messenger::shutdown().
 MessengerServer::ShutdownMethod s_method = MessengerServer::s_client_call;
@@ -153,14 +152,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    // Create a MessengerServer object.
-    MessengerServer * server = new MessengerServer (orb.in());
-    ACE_Auto_Ptr<MessengerServer> safe_ptr (server);
-
-    // Parse arguments to determine how we should shutdown.
-    if (server->parse_args (argc, argv) != 0)
-      return 1;
-
     //Get reference to the RootPOA.
     CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
     PortableServer::POA_var poa = PortableServer::POA::_narrow( obj.in() );
@@ -178,11 +169,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa->activate_object( &messenger_servant );
     CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( messenger_obj.in() );
-    std::ofstream iorFile(ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()));
+    std::ofstream iorFile( "Messenger.ior" );
     iorFile << str.in() << std::endl;
     iorFile.close();
-    std::cout << "IOR written to file " <<
-      ACE_TEXT_ALWAYS_CHAR (ior_output_file.c_str ()) << std::endl;
+    std::cout << "IOR written to file Messenger.ior" << std::endl;
+
+    // Create a MessengerServer object.
+    MessengerServer * server = new MessengerServer (orb.in());
+
+    // Parse arguments to determine how we should shutdown.
+    if (server->parse_args (argc, argv) != 0)
+      return 1;
 
     switch (s_method)
     {
@@ -214,6 +211,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         server->run (timeout);
         break;
     }
+
+    // Finished.
+    delete server;
+
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << "CORBA exception: " << ex << std::endl;

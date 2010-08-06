@@ -56,14 +56,10 @@ public:
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
-  virtual int visit_provides (AST_Provides *node);
-  virtual int visit_uses (AST_Uses *node);
-  virtual int visit_publishes (AST_Publishes *node);
-  virtual int visit_emits (AST_Emits *node);
-  virtual int visit_consumes (AST_Consumes *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
+  virtual int visit_factory (AST_Factory *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
@@ -141,7 +137,7 @@ protected:
                                   AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
-                        AST_Type **list,
+                        AST_Interface **list,
                         CORBA::Long length);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,
@@ -160,7 +156,22 @@ protected:
                         UTL_ExceptList *list);
 
   void fill_params (CORBA::ParDescriptionSeq &result,
-                    UTL_Scope *node);
+                    AST_Operation *node);
+
+  void visit_all_provides (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_uses (AST_Component *node,
+                       CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_emits (AST_Component *node,
+                        CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_publishes (AST_Component *node,
+                            CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_consumes (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_factories (AST_Home *node,
                             CORBA::ComponentIR::HomeDef_ptr h);

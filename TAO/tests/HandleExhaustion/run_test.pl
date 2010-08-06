@@ -6,93 +6,84 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use strict;
 
 if ($^O eq 'hpux' || $^O eq 'lynxos') {
-    print "This test will not run properly on HP-UX or LynxOS.\n",
+  print "This test will not run properly on HP-UX or LynxOS.\n",
         "When one process uses up all of the file descriptors, no other\n",
         "processes run by the same user can start.\n";
-    exit(0);
+  exit(0);
 }
 
 my $status = 0;
+my $iorfile = 'server.ior';
+my $logfile = 'server.log';
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+my $SV = $class->new('server', '-ORBAcceptErrorDelay 5 -ORBDebugLevel 1 ' .
+                               "-ORBLogFile $logfile");
+my $CL = new PerlACE::Process('client');
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+unlink($iorfile, $logfile);
+my $server = $SV->Spawn();
 
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-my $logbase = 'server.log';
-my $server_logfile = $server->LocalFile ($logbase);
-$server->DeleteFile($logbase);
-
-my $SV = $server->CreateProcess ("server", "-ORBAcceptErrorDelay 5 -ORBDebugLevel 1 -ORBLogFile $logbase -o $server_iorfile");
-my $CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
-
-my $server_status = $SV->Spawn();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($server != 0) {
+  print STDERR "ERROR: server returned $server\n";
+  exit(1);
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if (PerlACE::waitforfile_timed(
+               $iorfile,
+               $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill();
+  exit(1);
 }
 
-my $client_status = $CL->SpawnWaitKill(10 + $client->ProcessStartWaitInterval ());
+my $client = $CL->SpawnWaitKill(30);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+if ($client != 0) {
+  print STDERR "ERROR: client returned $client\n";
+  $status = 1;
 }
 
-$server_status = $SV->WaitKill($server->ProcessStopWaitInterval ());
+$server = $SV->WaitKill(5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
+if ($server != 0) {
+  print STDERR "ERROR: server returned $server\n";
+  $status = 1;
 }
 
 if ($status == 0) {
-    if (open(FH, $server_logfile)) {
-        my $error_achieved = 0;
-        my $reregister = 0;
-        while(<FH>) {
-            if (/TAO_Acceptor::handle_accept_error.+Too many files open/) {
-                ++$error_achieved;
-            }
-            elsif (/TAO_Acceptor::handle_expiration.+registering\s+the\s+acceptor/) {
-                ++$reregister;
-            }
-        }
-        close(FH);
+  if (open(FH, $logfile)) {
+    my $error_achieved = 0;
+    my $reregister = 0;
+    while(<FH>) {
+      if (/TAO_Acceptor::handle_accept_error.+Too many files open/) {
+        ++$error_achieved;
+      }
+      elsif (/TAO_Acceptor::handle_expiration.+registering\s+the\s+acceptor/) {
+        ++$reregister;
+      }
+    }
+    close(FH);
 
-        if (!$error_achieved) {
-            print "ERROR: The error situation was not achieved\n";
-            ++$status;
-        }
-        if (!$reregister) {
-            print "ERROR: The acceptor was not reregistered\n";
-            ++$status;
-        }
+    if (!$error_achieved) {
+      print "ERROR: The error situation was not achieved\n";
+      ++$status;
     }
-    else {
-        print "ERROR: Unable to read $server_logfile\n";
-        ++$status;
+    if (!$reregister) {
+      print "ERROR: The acceptor was not reregistered\n";
+      ++$status;
     }
+  }
+  else {
+    print "ERROR: Unable to read $logfile\n";
+    ++$status;
+  }
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-$server->DeleteFile($logbase);
+unlink($iorfile, $logfile);
 
 exit($status);

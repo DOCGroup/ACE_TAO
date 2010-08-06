@@ -6,10 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+use PerlACE::Run_Test;
 
 $status = 0;
 $quiet = 0;
@@ -20,16 +17,9 @@ if ($#ARGV >= 0 && $ARGV[0] eq '-q') {
 }
 
 # Test parameters.
-
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$database = "test_run.data";
-$data_file = $server->LocalFile ($database);
-$server->DeleteFile ($database);
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
+$data_file = PerlACE::LocalFile ("test_run.data");
 
 $debug_level = 1;
 $iterations = 50;
@@ -55,21 +45,26 @@ else {
     $priority2 = 50;
 }
 
-# Hack for VxWorks platform.
-my $is_vxworks = $server->isa ("PerlACE::TestTarget_VxWorks");
+# Clean up leftovers from previous runs.
+unlink $iorfile;
+unlink $data_file;
 
 $server_args =
     "-ORBdebuglevel $debug_level "
     ."-ORBendpoint iiop:// "
-    .($is_vxworks ? "" : "-ORBendpoint shmiop:// ");
+    .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ");
 
 $client_args =
-    "-o file://$client_iorfile  "
+    "-o file://$iorfile  "
     ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
-$SV = $server->CreateProcess ("server", "-o $server_iorfile $server_args");
-
-$CL = $client->CreateProcess ("client", $client_args);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorfilebase $server_args");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
+}
+$CL = new PerlACE::Process ("client", $client_args);
 
 print STDERR "\n********** MT Client Protocol & CLIENT_PROPAGATED combo Test\n\n";
 
@@ -87,11 +82,11 @@ $fh = \*OLDERR;
 # Run server and client.
 $SV->Spawn ();
 
-
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    $server_status = $SV->TimedWait (1);
-    if ($server_status == 2) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1)
+{
+    $server = $SV->TimedWait (1);
+    if ($server == 2)
+    {
         # Could not change priority levels so exit.
 
         # redirect STDOUT away from $data_file and set back to normal
@@ -104,24 +99,27 @@ if ($server->WaitForFileTimed ($iorbase,
         $SV->{RUNNING} = 0;
         exit $status;
     }
-    else {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+    else
+    {
+        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        $SV->Kill ();
         exit 1;
     }
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+$client = $CL->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0)
+{
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+$server = $SV->WaitKill (60);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0)
+{
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
@@ -130,34 +128,35 @@ close (STDOUT);
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 # Run a processing script on the test output.
 print STDERR "\n********** Processing test output\n\n";
 
 $errors = system ("perl process-output.pl $data_file $iterations $priority1 $priority2") >> 8;
 
-if ($errors > 0) {
+if ($errors > 0)
+{
     $status = 1;
 
     if (!$quiet) {
         print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$data_file")) {
+        if (open (DATA, "<$data_file"))
+        {
             print STDERR "================================= Begin\n";
             print STDERR <DATA>;
             print STDERR "================================= End\n";
             close (DATA);
         }
-        else {
+        else
+        {
             print STDERR "ERROR: Could not open $data_file\n";
         }
     }
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-$server->DeleteFile($database);
+unlink $iorfile;
+unlink $data_file;
 
 # Clean up shmiop files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

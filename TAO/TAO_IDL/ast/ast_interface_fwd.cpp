@@ -75,8 +75,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_InterfaceFwd::NT = AST_Decl::NT_interface_fwd;
+ACE_RCSID( ast,
+           ast_interface_fwd,
+           "$Id$")
+
+AST_InterfaceFwd::AST_InterfaceFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_full_definition (0),
+    is_defined_ (false)
+{
+}
 
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
@@ -133,9 +143,7 @@ AST_InterfaceFwd::full_def_seen (void)
   if (AST_Decl::NT_module == s->scope_node_type ())
     {
       AST_Module *m = AST_Module::narrow_from_scope (s);
-      AST_Decl *d =
-        m->look_in_prev_mods_local (this->local_name (),
-                                    false);
+      AST_Decl *d = m->look_in_previous (this->local_name (), false);
 
       if (0 != d)
         {
@@ -219,8 +227,7 @@ AST_InterfaceFwd::is_defined (void)
 
       if (0 != m)
         {
-          AST_Decl *d =
-            m->look_in_prev_mods_local (this->local_name ());
+          AST_Decl *d = m->look_in_previous (this->local_name ());
 
           if (0 != d)
             {
@@ -242,7 +249,7 @@ AST_InterfaceFwd::is_defined (void)
               // is a sufficient way to tell if our full
               // definition has already gone through the
               // add_to_scope process.
-              if (0 != fwd && fwd->is_defined ())
+              if (0 != fwd && fwd->full_definition ()->added ())
                 {
                   this->is_defined_ = true;
                 }
@@ -282,27 +289,6 @@ AST_InterfaceFwd::destroy (void)
   this->AST_Type::destroy ();
 }
 
-bool
-AST_InterfaceFwd::is_fwd (void)
-{
-  return true; // This is a fwd declared type
-}
 
-// We don't actually want the forward declaration,
-// but want to return the full definition member,
-// whether defined yet or not.
-AST_Decl *
-AST_InterfaceFwd::adjust_found (
-  bool ignore_fwd,
-  bool full_def_only)
-{
-  if (ignore_fwd)
-    {
-      AST_Interface *i = this->full_definition ();
-      return (full_def_only && !i->is_defined () ? 0 : i);
-    }
-
-  return this;
-}
 
 IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

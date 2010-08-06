@@ -116,6 +116,7 @@ private:
 
   // Friend class.
   friend class UTL_ListActiveIterator;
+  friend class UTL_ExceptList;
 };
 
 // Active iterator for lists.

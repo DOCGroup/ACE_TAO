@@ -21,7 +21,7 @@ project(JAWS2) : ace_output, acelib {
         FILE.cpp
         Filecache.cpp
         Headers.cpp
-        Jaws_IO.cpp
+        IO.cpp
         IO_Acceptor.cpp
         IO_Handler.cpp
         Parse_Headers.cpp

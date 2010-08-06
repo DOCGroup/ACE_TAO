@@ -11,6 +11,10 @@
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
 
+ACE_RCSID (IFR_Client,
+           IFR_Client_Adapter_Impl,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -23,7 +27,7 @@ namespace TAO
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
             TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
           >
   {
   };

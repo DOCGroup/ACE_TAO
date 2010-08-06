@@ -62,7 +62,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
 {
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "Received Timestamp # %d on %T\n", calls_received));
-  ++calls_received;
+  calls_received++;
 
   // When _tao_rh destructor is called, it shouldn't send anything to
   // the client as well
@@ -152,7 +152,8 @@ ST_AMH_Server::start_orb_and_poa (void)
   try
     {
       this->orb_ = CORBA::ORB_init (*(this->argc_),
-                                    this->argv_);
+                                    this->argv_,
+                                    "");
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");

@@ -431,7 +431,7 @@ TAO_Naming_Server::init_with_orb (int argc,
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              this->ior_file_name_,
-                             ACE_ERRNO_GET,
+                             errno,
                              ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
@@ -712,15 +712,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::fini (void)
 {
-  // First get rid of the multi cast handler
-  if (this->ior_multicast_)
-    {
-      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
-         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
-      delete this->ior_multicast_;
-      this->ior_multicast_ = 0;
-    }
-
   // Destroy the child POA ns_poa that is created when initializing
   // the Naming Service
   try
@@ -756,6 +747,13 @@ TAO_Naming_Server::fini (void)
   ns_poa_ = PortableServer::POA::_nil ();
   root_poa_ = PortableServer::POA::_nil ();
   orb_ = CORBA::ORB::_nil ();
+
+  if (this->ior_multicast_ != 0)
+    {
+      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
+         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      delete this->ior_multicast_;
+    }
 
 #if !defined (CORBA_E_MICRO)
   delete this->context_index_;

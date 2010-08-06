@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: build_files {
+project {
   // Set the idl compiler and flags as template values, except for
   // automake.  It has it's own settings in AutomakeWorkspaceHelper.pm and
   // expects to see $(TAO_IDL) in the generated Makefile.am
@@ -55,39 +55,6 @@ project: build_files {
     }
     optional(header_pre_extension) {
       commandflags(-GA && !-oA || -GX) += A
-    }
-
-    optional(source_pre_extension) {
-      commandflags(-Gsv) += _svnt
-    }
-
-    optional(header_pre_extension) {
-      commandflags(-Gsv) += _svnt
-    }
-
-    optional(source_pre_extension) {
-      commandflags(-Gcn) += _conn
-    }
-
-    optional(header_pre_extension) {
-      commandflags(-Gcn) += _conn
-    }
-
-    optional(source_pre_extension) {
-      commandflags(-Gex) += _exec
-    }
-
-    optional(header_pre_extension) {
-      commandflags(-Gex) += _exec
-    }
-
-    optional(generic_outputext) {
-      commandflags(-Glem || -GM) += .idl
-    }
-
-    optional(generic_pre_extension) {
-      commandflags(-Glem) += E
-      commandflags(-GM) += A
     }
   }
 

@@ -1,18 +1,23 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_valuebox.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuebox class
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuebox.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuebox class
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_VALUEBOX_H
 #define TAO_BE_VISITOR_VALUEBOX_H

@@ -58,7 +58,7 @@ public:
   /// Default constructor.
   ACE_MEM_Acceptor (void);
 
-  /// Destructor.
+  /// destructor.
   ~ACE_MEM_Acceptor (void);
 
   /// Initiate a passive mode socket.

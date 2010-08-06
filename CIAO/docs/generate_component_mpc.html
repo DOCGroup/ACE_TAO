@@ -14,15 +14,16 @@
 		<HR>
 		<P>
 			<h4>Assumptions</h4>
-			This script is useful for generating MPC files for relatively simple component
+			This script is useful for generating MPC files for relatively simple component 
 			applications. The string name passed to the script should be the name of the <em>single</em>
-		IDL file for that build (without the extension). The names of export files, preprocessor
-		macros, and library names in the generated MPC file will all be constructed
-		from this string. It is also assumed that the IDL file for a component build
+		IDL file for that build (without the extension) and also the name of the single 
+		CIDL file, if it is a component build. The names of export files, preprocessor 
+		macros, and library names in the generated MPC file will all be constructed 
+		from this string. It is also assumed that the IDL file for a component build 
 		will contain a single component declaration.
 		<P>
-		Judicious use of the script options in the table below will generate a build
-		that keeps to a minimum both the code generated from IDL and the number of
+		Judicious use of the script options in the table below will generate a build 
+		that keeps to a minimum both the code generated from IDL and the number of 
 		linked libraries from the middleware.
 		<P>
 			<HR>
@@ -60,22 +61,22 @@
 					</A> <a name="n">
 						<td><tt>-n</tt></td>
 						<td>Non-component make/project</td>
-						<td>Generates a <tt>*_stub</tt> and <tt>*_skel</tt> pair of builds, instead of the
+						<td>Generates a <tt>*_stub</tt> and <tt>*_skel</tt> pair of builds, instead of the 
 							default <tt>*_stub</tt>, <tt>*_svnt</tt> and <tt>*_exec</tt> builds.</td>
 				</tr>
 				<tr>
 					</A> <a name="c">
 						<td><tt>-c</tt></td>
 						<td>Create a client make/project</td>
-						<td>Generates a build for a "driver" executable. Assumes there is a single C++
+						<td>Generates a build for a "driver" executable. Assumes there is a single C++ 
 							source file named <tt>client.cpp</tt></td>
 				</tr>
 				<tr>
 					</A> <a name="u">
 						<td><tt>-u</tt></TT><i> string</i></td>
 						<td>Unique project name prefix</td>
-						<td>Occasionally needed since MPC doesn't accept duplicate project names anywhere
-							in the tree over which it is proecessing. This option overrides the value of
+						<td>Occasionally needed since MPC doesn't accept duplicate project names anywhere 
+							in the tree over which it is proecessing. This option overrides the value of 
 							the <tt>-p</tt> option, if present</td>
 				</tr>
 			</table>

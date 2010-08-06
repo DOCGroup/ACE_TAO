@@ -8,7 +8,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
-#include "tao/LocalObject.h"
 
 int g_nthreads = 1;
 bool g_setTimeout = true;
@@ -66,8 +65,7 @@ private:
 };
 
 class MyORBinitializer
-  : public virtual PortableInterceptor::ORBInitializer
-  , public virtual CORBA::LocalObject
+  : public PortableInterceptor::ORBInitializer
 {
 public:
   MyORBinitializer( ACE_CString orbID )

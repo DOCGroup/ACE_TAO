@@ -248,7 +248,7 @@ public:
   /// end the stream.
   virtual int destroy (void);
 
-public:
+private:
   /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
 };

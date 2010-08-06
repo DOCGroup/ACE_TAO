@@ -28,7 +28,8 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
   while (!this->follower_free_list_.empty ())
     {
-      TAO_LF_Follower *follower = this->follower_free_list_.pop_front ();
+      TAO_LF_Follower *follower =
+        this->follower_free_list_.pop_front ();
       delete follower;
     }
   // Hand the reactor back to the resource factory.
@@ -63,7 +64,8 @@ TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 int
 TAO_Leader_Follower::elect_new_leader_i (void)
 {
-  TAO_LF_Follower* const follower = this->follower_set_.head ();
+  TAO_LF_Follower* const follower =
+    this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
@@ -91,8 +93,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           if (this->event_loop_threads_condition_.wait () == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::")
-                          ACE_TEXT ("wait_for_client_leader_to_complete - ")
+                          ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
                           ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;
@@ -107,8 +108,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
             {
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::")
-                            ACE_TEXT ("wait_for_client_leader_to_complete - ")
+                            ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
                             ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;

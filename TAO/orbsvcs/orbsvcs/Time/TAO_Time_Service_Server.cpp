@@ -6,6 +6,7 @@
 
 #include "tao/debug.h"
 
+
 ACE_RCSID (Time,
            TAO_Time_Service_Server,
            "$Id$")
@@ -39,7 +40,7 @@ TAO_Time_Service_Server::universal_time (void)
                              0,
                              0),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var xfer = uto;
+
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -72,7 +73,6 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                              inaccuracy,
                              tdf),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var xfer = uto;
 
   return uto->_this ();
 }
@@ -89,7 +89,6 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc)
                              utc.inacclo + utc.inacchi,
                              utc.tdf),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var xfer = uto;
 
   return uto->_this ();
 }
@@ -106,7 +105,7 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                     TAO_TIO (lower,
                              upper),
                     CORBA::NO_MEMORY ());
-  PortableServer::ServantBase_var xfer = tio;
+
   return tio->_this ();
 }
 

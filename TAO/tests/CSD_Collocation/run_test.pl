@@ -9,10 +9,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $svcconf = "svc.conf.csd";
-my $server_svcconf = $server->LocalFile ($svcconf);
 
-$SV = $server->CreateProcess ("Collocation",  "-ORBSvcConf $server_svcconf");
+$SV = $server->CreateProcess ("Collocation",  "-ORBSvcConf svc.conf.csd");
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 

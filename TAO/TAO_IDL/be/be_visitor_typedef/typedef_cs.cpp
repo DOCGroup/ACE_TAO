@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Typedef in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Typedef in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef, 
+           typedef_cs, 
+           "$Id$")
 
 // ******************************************************
 // Typedef visitor for client stubs
@@ -50,7 +59,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -69,7 +78,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"),
+                             "bad primitive base type\n"),  
                             -1);
         }
 
@@ -79,7 +88,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),
+                             "failed to accept visitor\n"),  
                             -1);
         }
 
@@ -99,7 +108,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"),
+                             "bad base type\n"),  
                             -1);
         }
 
@@ -109,7 +118,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),
+                             "failed to accept visitor\n"), 
                             -1);
         }
 
@@ -124,7 +133,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_cs::"
                                  "visit_typedef - "
-                                 "TypeCode definition failed\n"),
+                                 "TypeCode definition failed\n"), 
                                 -1);
             }
 

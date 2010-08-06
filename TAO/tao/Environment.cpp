@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
@@ -10,6 +8,12 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
+
+
+ACE_RCSID (tao,
+           Environment,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

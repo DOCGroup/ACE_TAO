@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "../test_config.h"
+#include "tests/test_config.h"
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"

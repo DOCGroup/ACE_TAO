@@ -5,7 +5,7 @@
 project(SSL_FOR_TAO) : acelib, ace_output, install, ace_openssl {
   requires    += ssl ace_for_tao
   sharedname   = ACE_SSL_FOR_TAO
-  dynamicflags += ACE_SSL_BUILD_DLL
+  dynamicflags = ACE_SSL_BUILD_DLL
 
   Source_Files {
     SSL_Context.cpp
@@ -38,9 +38,5 @@ project(SSL_FOR_TAO) : acelib, ace_output, install, ace_openssl {
 
   pkgconfig_files {
     ACE_SSL.pc.in
-  }
-
-  specific {
-    install_dir = ace/SSL
   }
 }

@@ -11,9 +11,13 @@ use strict;
 
 my $final_result = 0;
 
-my @testsToRun = qw(Bug_3549_Regression
+my @tests = qw(Bug_3549_Regression
                Bug_3558_Regression
               );
+
+my @testsToRun = qw();
+
+push(@testsToRun, @tests);
 
 foreach my $process (@testsToRun) {
 

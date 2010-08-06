@@ -13,8 +13,8 @@
 // Includes
 //-------------------------------------------------------------------
 
-#include "ace/streams.h"
-#include "ace/Get_Opt.h"
+#include <ace/streams.h>
+#include <ace/Get_Opt.h>
 
 #include "TSEC_CheckPointC.h"
 
@@ -35,9 +35,9 @@
 // Statics
 //-------------------------------------------------------------------
 
-static int         _testcase           = TESTCASE_NOT_DEFINED;
-static int         _loop               = 0;
-static int         _ident              = 1;
+static int              _testcase           = TESTCASE_NOT_DEFINED;
+static int              _loop               = 0;
+static int              _ident              = 1;
 static const ACE_TCHAR* _sessionService_ior = 0;
 
 
@@ -91,7 +91,7 @@ parse_args
 
   if ( _sessionService_ior == 0 )
   {
-    _sessionService_ior = ACE_TEXT("file://TSEC_CheckPoint.ior");
+    _sessionService_ior = ACE_TEXT ("file://TSEC_CheckPoint.ior");
   }
 
   if( _testcase == 0 )
@@ -118,15 +118,14 @@ ACE_TMAIN
   {
     // Initialize orb
     CORBA::ORB_var orb =
-                        CORBA::ORB_init( argc, argv);
+                        CORBA::ORB_init (argc, argv);
 
-    if( parse_args( argc, argv ) != 0 )
+    if( parse_args (argc, argv) != 0 )
     {
       return -1;
     }
 
-    CORBA::Object_var obj = orb->string_to_object( _sessionService_ior
- );
+    CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (_sessionService_ior));
 
     ENW::ISessionService_var sessionService =
                ENW::ISessionService::_narrow (obj.in () );
@@ -186,7 +185,7 @@ ACE_TMAIN
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("Who is the culprit\n");
+    ex._tao_print_exception ("Who is the culprit \n");
     cerr << "Uncaught CORBA exception" << endl;
 
     return 1;

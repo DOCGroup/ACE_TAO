@@ -53,7 +53,8 @@ TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer* consumer)
   TAO_EC_Scheduling_Strategy *s =
     this->event_channel_->scheduling_strategy ();
 
-  s->add_proxy_supplier_dependencies (this, consumer);
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer);
 }
 
 void
@@ -62,7 +63,8 @@ TAO_EC_ProxyPushSupplier::reconnected (TAO_EC_ProxyPushConsumer* consumer)
   TAO_EC_Scheduling_Strategy *s =
     this->event_channel_->scheduling_strategy ();
 
-  s->add_proxy_supplier_dependencies (this, consumer);
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer);
 }
 
 void

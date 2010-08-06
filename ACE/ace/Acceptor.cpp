@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ACCEPTOR_CPP
 #define ACE_ACCEPTOR_CPP
 
@@ -16,6 +14,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_select.h"
+
+ACE_RCSID (ace,
+           Acceptor,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -285,18 +287,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-
-  ACE_Reactor *reactor = this->reactor ();
-  bool reset_new_handle;
-
-  if (reactor)
-    reset_new_handle = reactor->uses_event_associations ();
-  else
-    {
-      // Acceptor is closed, so reject this call
-      errno = EINVAL;
-      return -1;
-    }
+  bool const reset_new_handle = this->reactor ()->uses_event_associations ();
 
   if (this->acceptor ().accept (svc_handler->peer (), // stream
                                 0, // remote address

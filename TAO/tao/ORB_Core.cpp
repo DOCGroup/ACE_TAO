@@ -56,7 +56,6 @@
 #include "ace/Static_Object_Lock.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
-#include "ace/Logging_Strategy.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -295,7 +294,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
   ACE_NEW (this->request_dispatcher_,
            TAO_Request_Dispatcher);
 
-  this->set_sync_scope_hook (TAO_ORB_Core::default_sync_scope_hook);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -846,6 +844,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
           ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBVerboseLogging"))))
@@ -871,20 +870,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             }
 
           (ACE_LOG_MSG->*flagop)(value);
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBHandleLoggingStrategyEvents"))))
-        {
-          ACE_Logging_Strategy *logging_strategy =
-            dynamic_cast<ACE_Logging_Strategy*> (
-              ACE_Dynamic_Service<ACE_Service_Object>::instance (current_arg));
-
-          if (logging_strategy != 0)
-            {
-              logging_strategy->reactor (this->reactor ());
-            }
-
-          arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIMR"))))
@@ -1087,53 +1072,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardInvocationOnObjectNotExist"))))
-        {
-          int forward = ACE_OS::atoi (current_arg);
-          if (forward)
-            this->orb_params_.forward_invocation_on_object_not_exist (true);
-          else
-            this->orb_params_.forward_invocation_on_object_not_exist (false);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
-        {
-          int forward = ACE_OS::atoi (current_arg);
-          if (forward)
-            this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnceOnCommFailure"))))
-        {
-          int forward = ACE_OS::atoi (current_arg);
-          if (forward)
-            this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnceOnTransient"))))
-        {
-          int forward = ACE_OS::atoi (current_arg);
-          if (forward)
-            this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBForwardOnceOnInvObjref"))))
-        {
-          int forward = ACE_OS::atoi (current_arg);
-          if (forward)
-            this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);
-
-          arg_shifter.consume_arg ();
-        }
 
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
@@ -1183,7 +1121,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR: Environment variable ")
                           ACE_TEXT ("TAO_ORBENDPOINT set to invalid value ")
-                          ACE_TEXT ("<%C>.\n"),
+                          ACE_TEXT ("<%s>.\n"),
                           env_endpoint));
             }
 
@@ -1220,7 +1158,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (trf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Resource Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -1240,7 +1178,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (reactor == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
       throw ::CORBA::INITIALIZE (
         CORBA::SystemException::_tao_minor_code (
@@ -1254,7 +1192,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   if (ssf == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
       throw ::CORBA::INTERNAL (
@@ -1357,7 +1295,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->orb_params ()->negotiate_codesets (negotiate_codesets);
 
   if (this->codeset_manager())
-    this->codeset_manager_->open(*this);
+    this->codeset_manager_->open();
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -1816,6 +1754,26 @@ TAO_ORB_Core::service_raise_transient_failure (
   return TAO::TAO_INVOKE_FAILURE;
 }
 
+void
+TAO_ORB_Core::service_context_list (
+    TAO_Stub *stub,
+    TAO_Service_Context &service_context,
+    CORBA::Boolean restart)
+{
+  if (this->protocols_hooks_ != 0)
+    {
+      this->protocols_hooks_->rt_service_context (stub, service_context, restart);
+    }
+
+  // call the network priority protocols hooks that has been
+  // registered.
+  if (network_priority_protocols_hooks_ != 0)
+    {
+      this->network_priority_protocols_hooks_->np_service_context (stub,
+        service_context, restart);
+    }
+}
+
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
 {
@@ -2099,10 +2057,6 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
     {
       retval = collocated_orb_core.get ()->adapter_registry ().initialize_collocated_object (stub);
     }
-  else
-    {
-      stub->is_collocated (false);
-    }
 
   return retval;
 }
@@ -2308,9 +2262,9 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
   // Shutdown reactor.
   this->thread_lane_resources_manager ().shutdown_reactor ();
 
-  // Cleanup transports
-  this->thread_lane_resources_manager ().close_all_transports ();
-  
+  // Cleanup transports that use the RW strategies
+  this->thread_lane_resources_manager ().cleanup_rw_transports ();
+
   // Grab the thread manager
   ACE_Thread_Manager *tm = this->thr_mgr ();
 
@@ -2322,12 +2276,8 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
     tm->wait ();
 
   // Explicitly destroy the valuetype adapter
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
-
-    delete this->valuetype_adapter_;
-    this->valuetype_adapter_ = 0;
-  }
+  delete this->valuetype_adapter_;
+  this->valuetype_adapter_ = 0;
 
   // Explicitly destroy the object reference table since it
   // contains references to objects, which themselves may contain
@@ -2367,15 +2317,6 @@ TAO_ORB_Core::destroy (void)
 
   // Invoke Interceptor::destroy() on all registered interceptors.
   this->destroy_interceptors ();
-
-  // Clean TSS resources. This cannot be done in shutdown() since the later
-  // can be called during an upcall and once it's done it will remove
-  // resources such as PICurrent that are required after the upcall. And this
-  // cannot be postponed to TAO_ORB_Core's destructor as fini() needs access
-  // to orb core and what is more important orb core can be destroyed too late
-  // when some required libraries are already unloaded and we'll get
-  // 'pure virtual method called' during cleanup.
-  this->get_tss_resources ()->fini ();
 
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
@@ -2472,7 +2413,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (void)
       if (loader == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to instantiate ")
+                      ACE_TEXT ("(%P|%t) Unable to instantiate ")
                       ACE_TEXT ("a TypeCodeFactory_Loader\n")));
           throw ::CORBA::ORB::InvalidName ();
         }
@@ -2717,8 +2658,8 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
   if (this->orb_params ()->add_endpoints (lane, endpoints) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("Invalid endpoint(s) specified: <%C>.\n"),
+                  ACE_TEXT ("(%P|%t)\n")
+                  ACE_TEXT ("Invalid endpoint(s) specified:\n%C\n"),
                   endpoints.c_str ()));
       throw ::CORBA::BAD_PARAM (
         CORBA::SystemException::_tao_minor_code (
@@ -2994,16 +2935,6 @@ TAO_ORB_Core::implrepo_service (void)
 }
 
 void
-TAO_ORB_Core::default_sync_scope_hook (TAO_ORB_Core *,
-                                       TAO_Stub *,
-                                       bool &has_synchronization,
-                                       Messaging::SyncScope &scope)
-{
-  has_synchronization = true;
-  scope = Messaging::SYNC_WITH_TRANSPORT;
-}
-
-void
 TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
                                     bool &has_synchronization,
                                     Messaging::SyncScope &scope)
@@ -3163,7 +3094,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Not overwriting alternate ")
-                    ACE_TEXT ("connection timeout hook. It is %@\n"),
+                    ACE_TEXT ("connection timeout hook. It is %@"),
                     TOCSRi->alt_connection_timeout_hook_));
       }
 
@@ -3265,7 +3196,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("IORInterceptor Adapter Factory instance")));
 
@@ -3322,7 +3253,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3371,7 +3302,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3395,7 +3326,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Client Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3419,7 +3350,7 @@ TAO_ORB_Core::add_interceptor (
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                  ACE_TEXT ("TAO (%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
                   ACE_TEXT ("Server Request Interceptor Adapter Factory ")
                   ACE_TEXT ("instance")));
@@ -3497,82 +3428,6 @@ TAO_ORB_Core::valuetype_adapter (void)
 
   return this->valuetype_adapter_;
 }
-
-// *************************************************************
-// Valuetype factory operations
-// *************************************************************
-
-#if !defined(CORBA_E_MICRO)
-CORBA::ValueFactory
-TAO_ORB_Core::register_value_factory (const char *repository_id,
-                                      CORBA::ValueFactory factory)
-{
-  if (this->valuetype_adapter ())
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-
-      if (this->valuetype_adapter_ == 0)
-        {
-          return 0;
-        }
-
-      int const result =
-        this->valuetype_adapter_->vf_map_rebind (repository_id, factory);
-
-      if (result == 0) // No previous factory found
-        {
-          return 0;
-        }
-
-      if (result == -1)
-        {
-          // Error on bind.
-          throw ::CORBA::MARSHAL ();
-        }
-    }
-
-  return factory;    // previous factory was found
-}
-#endif
-
-#if !defined(CORBA_E_MICRO)
-void
-TAO_ORB_Core::unregister_value_factory (const char *repository_id)
-{
-  if (this->valuetype_adapter ())
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-
-      if (this->valuetype_adapter_ == 0)
-        {
-          return;
-        }
-
-      // Dont care whther it was successful or not!
-      (void) this->valuetype_adapter_->vf_map_unbind (repository_id);
-    }
-}
-#endif
-
-#if !defined(CORBA_E_MICRO)
-CORBA::ValueFactory
-TAO_ORB_Core::lookup_value_factory (const char *repository_id)
-{
-  if (this->valuetype_adapter ())
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-
-      if (this->valuetype_adapter_ == 0)
-        {
-          return 0;
-        }
-
-      return this->valuetype_adapter_->vf_map_find (repository_id);
-    }
-
-  return 0;
-}
-#endif
 
 // ****************************************************************
 

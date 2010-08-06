@@ -59,12 +59,11 @@ ACE_TMAIN(int argc, ACE_TCHAR* argv[])
        mgr->activate();
 
        // Create our Messenger servant.
-       PortableServer::Servant_var<Messenger_i> messenger_servant =
-         new Messenger_i(orb.in());
+       Messenger_i messenger_servant(orb.in());
 
        // Register it with the RootPOA.
        PortableServer::ObjectId_var oid =
-         poa->activate_object( messenger_servant.in() );
+         poa->activate_object( &messenger_servant );
        CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
 
        // Generating the ior file is just for the purpose of synchronize the

@@ -170,8 +170,6 @@ TestServer::TestServer (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 , numPOAS_(0)
 , numObjsPerPOA_(0)
 , useItLoseItSecs_(0)
-, managerIor_("file://manager.ior")
-, outputIor_("imr_test.ior")
 , orb_(CORBA::ORB::_duplicate(orb))
 , iorTable_(IORTable::Table::_nil())
 , root_(PortableServer::POA::_nil())
@@ -191,6 +189,7 @@ TestServer::TestServer (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 
 TestServer::~TestServer()
 {
+  root_->destroy(1, 1);
 }
 
 //  TestServer::parseCommands
@@ -198,7 +197,7 @@ TestServer::~TestServer()
 //
 int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:m:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:"));
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -276,15 +275,7 @@ int TestServer::parseCommands (int argc, ACE_TCHAR *argv[])
       break;
 
     case 'b':
-      baseDir_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
-      break;
-
-    case 'm':
-      managerIor_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
-      break;
-
-    case 'i':
-      outputIor_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
+      baseDir_ =  ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg());
       break;
 
     case '?':
@@ -392,7 +383,7 @@ void TestServer::run()
     iorTable_ = IORTable::Table::_narrow(obj.in());
   }
 
-  servant_ = new Messenger_i(orb_.in(), serverInstanceID_);
+  servant_.reset(new Messenger_i(orb_.in(), serverInstanceID_));
 
   buildObjects();
 
@@ -432,7 +423,7 @@ bool TestServer::registerWithManager()
   if (writeIORFile_ == false)
   {
     // Get the manager's ref
-    CORBA::Object_var obj = orb_->string_to_object(managerIor_.c_str());
+    CORBA::Object_var obj = orb_->string_to_object("file://manager.ior");
     if (CORBA::is_nil(obj.in()))
     {
       cerr << "Server Error: Could not get Manager IOR." << endl;
@@ -475,7 +466,7 @@ bool TestServer::registerWithManager()
 void TestServer::buildObjects()
 {
   // Append to existing file
-  ofstream iorFile(outputIor_.c_str(), ios::app);
+  ofstream iorFile("imr_test.ior", ios::app);
 
   // Create number of requested POAS
   for (int i = 0; i < numPOAS_; i++)
@@ -512,7 +503,7 @@ void TestServer::buildObjects()
       ACE_DEBUG((LM_DEBUG, "* Activating Obj: %C\n", objName.c_str()));
 
       PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId(objName.c_str());
-      sub_poa->activate_object_with_id(oid.in(), servant_.in());
+      sub_poa->activate_object_with_id(oid.in(), servant_.get());
 
       // Output the stringified ID to the file for the client
       if (! useIORTable_)

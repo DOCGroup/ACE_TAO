@@ -88,6 +88,10 @@ public:
   // Indicates if we are fixed size or variable. Most useful for structs,
   // unions, and arrays.
 
+  // Operations.
+
+  AST_Type (void);
+
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
@@ -97,6 +101,10 @@ public:
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
+
+  // To be overridden by the subclasses interface, struct, union, and
+  // the corresponding forward declaration classes.
+  virtual bool is_defined (void);
 
   virtual void size_type (SIZE_TYPE);
   // Set the size type.
@@ -117,6 +125,9 @@ public:
 
   bool ifr_fwd_added (void);
   void ifr_fwd_added (bool val);
+
+  bool gen_dds_decls (void) const;
+  void gen_dds_decls (bool val);
 
   const char *nested_type_name (AST_Decl *d,
                                 const char *suffix = 0,
@@ -177,6 +188,10 @@ protected:
 
   mutable bool recursing_in_legal_pk_;
   // Node-specific flag to abort recursion in legal_for_primary_key().
+  
+  bool gen_dds_decls_;
+  // Flag triggering generation of decls related to the datatype,
+  // to help with template programming.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

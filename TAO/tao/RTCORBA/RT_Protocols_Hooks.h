@@ -19,7 +19,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 
@@ -81,6 +80,10 @@ public:
 
   CORBA::Long get_dscp_codepoint (void);
 
+  void rt_service_context (TAO_Stub *stub,
+                           TAO_Service_Context &service_context,
+                           CORBA::Boolean restart);
+
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
                           &is_client_propagated,
@@ -98,7 +101,7 @@ public:
    * some critical components.
    */
   //@{
-  int get_thread_CORBA_priority (CORBA::Short &priority);
+  int get_thread_CORBA_priority (CORBA::Short &);
 
   int get_thread_native_priority (CORBA::Short &);
 

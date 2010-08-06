@@ -38,10 +38,6 @@ public:
 
   /// Initialize the Messaging loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
-
-private:
-  /// Set to true after init is called.
-  bool initialized_;
 };
 
 

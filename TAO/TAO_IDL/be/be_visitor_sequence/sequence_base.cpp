@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    sequence_base.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the base type of the Sequence
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    sequence_base.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the base type of the Sequence
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence, 
+           sequence_base, 
+           "$Id$")
 
 // ****************************************************************
 // We have to generate the parameters for the template that implements
@@ -43,7 +52,7 @@ int
 be_visitor_sequence_base::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -59,11 +68,11 @@ be_visitor_sequence_base::visit_node (be_type *node)
       if (this->ctx_->sub_state ()
             == TAO_CodeGen::TAO_ARRAY_SEQ_CH_TEMPLATE_VAR)
         {
-          *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
+          *os << bt->nested_type_name (this->ctx_->scope (), "_var");
         }
       else
         {
-          *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+          *os << bt->nested_type_name (this->ctx_->scope ());
         }
     }
   else
@@ -198,7 +207,7 @@ int
 be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -211,8 +220,8 @@ be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl ()) << ",";
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
     }
   else
     {
@@ -229,7 +238,7 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -242,8 +251,8 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BASE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl ()) << ",";
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl (), "_var");
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var");
     }
   else
     {

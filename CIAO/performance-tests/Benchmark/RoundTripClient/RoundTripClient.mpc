@@ -1,41 +1,45 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p Benchmark -l .. -c client RoundTripClient"
 
-project(Benchmark_RoundTripClient_idl_gen) : componentidldefaults {
-  after += Benchmark_idl_gen
+project(Benchmark_RoundTripClient_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
   custom_only = 1
-  idlflags +=  \
-              -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
+  idlflags += -Wb,stub_export_macro=ROUNDTRIPCLIENT_STUB_Export \
               -Wb,stub_export_include=RoundTripClient_stub_export.h \
               -Wb,skel_export_macro=ROUNDTRIPCLIENT_SVNT_Export \
-              -Wb,skel_export_include=RoundTripClient_svnt_export.h \
-              -Wb,exec_export_macro=ROUNDTRIPCLIENT_EXEC_Export \
-              -Wb,exec_export_include=RoundTripClient_exec_export.h \
+              -Wb,skel_export_include=RoundTripClient_svnt_export.h
 
   IDL_Files {
     RoundTripClient.idl
   }
 }
 
-project(Benchmark_RoundTripClient_lem_gen) : ciaoidldefaults {
+project(Benchmark_RoundTripClient_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
   custom_only = 1
-  after += Benchmark_RoundTripClient_idl_gen
+  cidlflags += --svnt-export-macro ROUNDTRIPCLIENT_SVNT_Export \
+               --svnt-export-include RoundTripClient_svnt_export.h
   idlflags += -Wb,export_macro=ROUNDTRIPCLIENT_EXEC_Export \
               -Wb,export_include=RoundTripClient_exec_export.h \
-              -SS -I..
-
+              -SS
+              
+  CIDL_Files {
+    RoundTripClient.cidl
+  }
+  
   IDL_Files {
     RoundTripClientE.idl
     RoundTripClientEI.idl << RoundTripClientE.idl
   }
 }
 
-project(Benchmark_RoundTripClient_stub) : ccm_stub {
+project(Benchmark_RoundTripClient_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
   after += Benchmark_RoundTripClient_idl_gen Benchmark_stub
   libs  += Benchmark_stub
   libpaths += ..
   sharedname = RoundTripClient_stub
-  dynamicflags += ROUNDTRIPCLIENT_STUB_BUILD_DLL
+  dynamicflags   = ROUNDTRIPCLIENT_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -54,13 +58,13 @@ project(Benchmark_RoundTripClient_stub) : ccm_stub {
   }
 }
 
-project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
-  after   += Benchmark_RoundTripClient_lem_gen Benchmark_RoundTripClient_stub
+project(Benchmark_RoundTripClient_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
+  after   += Benchmark_RoundTripClient_cidl_gen Benchmark_RoundTripClient_stub
   sharedname = RoundTripClient_exec
   libs += RoundTripClient_stub Benchmark_stub
   libpaths += ..
-  dynamicflags += ROUNDTRIPCLIENT_EXEC_BUILD_DLL
-  includes += ..
+  dynamicflags   = ROUNDTRIPCLIENT_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -70,14 +74,14 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
     RoundTripClientEIC.cpp
     RoundTripClient_exec.cpp
   }
-
+  
   Header_Files {
     RoundTripClientEC.h
     RoundTripClientEIC.h
     RoundTripClient_exec.h
     RoundTripClient_exec_export.h
   }
-
+  
   Inline_Files {
     RoundTripClientEC.inl
     RoundTripClientEIC.inl
@@ -85,7 +89,8 @@ project(Benchmark_RoundTripClient_exec) : ciao_executor, avoids_ace_for_tao {
 }
 
 
-project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
+project(Benchmark_RoundTripClient_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
   after      += Benchmark_skel Benchmark_RoundTripClient_exec
   sharedname  = RoundTripClient_svnt
   libs       += RoundTripClient_exec \
@@ -93,8 +98,10 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
                 Benchmark_skel \
                 Benchmark_stub
   libpaths += ..
-  dynamicflags += ROUNDTRIPCLIENT_SVNT_BUILD_DLL
-  includes += ..
+  dynamicflags = ROUNDTRIPCLIENT_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
 
   IDL_Files {
   }
@@ -103,19 +110,20 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
     RoundTripClientS.cpp
     RoundTripClient_svnt.cpp
   }
-
+  
   Header_Files {
     RoundTripClientS.h
     RoundTripClient_svnt.h
     RoundTripClient_svnt_export.h
   }
-
+  
   Inline_Files {
     RoundTripClientS.inl
   }
 }
 
-project (RoundTripClient_client) : ccm_stub, valuetype, avoids_ace_for_tao {
+project (RoundTripClient_client) : ciao_client_dnc, valuetype {
+  avoids += ace_for_tao
   exename = client
   after += Benchmark_RoundTripClient_stub
   libs  += RoundTripClient_stub Benchmark_stub
@@ -126,10 +134,10 @@ project (RoundTripClient_client) : ccm_stub, valuetype, avoids_ace_for_tao {
   Source_Files {
     client.cpp
   }
-
+  
   Header_Files {
   }
-
+  
   Inline_Files {
   }
 }

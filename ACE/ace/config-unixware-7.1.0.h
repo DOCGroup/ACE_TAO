@@ -89,6 +89,13 @@
    readdir_r, etc. */
 #define ACE_HAS_DIRENT 1
 
+/* Compiler supports C++ exception handling */
+// MM-Graz if ! defined inserted, to prevent warnings, because it is already
+//  defined in config-g++common.h
+# if !defined (ACE_HAS_EXCEPTIONS)
+#define ACE_HAS_EXCEPTIONS 1
+# endif
+
 /* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be
    defined, except on Win32) */
 #define ACE_HAS_GETPAGESIZE 1
@@ -99,6 +106,9 @@
 /* Platform has a getrusage () prototype in sys/resource.h that differs from
    the one in ace/OS.i. */
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
+
+/* Denotes that GNU has cstring.h as standard which redefines memchr() */
+#define ACE_HAS_GNU_CSTRING_H
 
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF 1
@@ -218,6 +228,9 @@
 
 /* Platform supports STREAM pipes */
 #define ACE_HAS_STREAM_PIPES 1
+
+/* Compiler/platform supports strerror () */
+#define ACE_HAS_STRERROR 1
 
 /* Platform/Compiler supports a String class (e.g., GNU or Win32). */
 #define ACE_HAS_STRING_CLASS 1

@@ -3,7 +3,7 @@
 
 project(*ts) : orbsvcslib, portableserver, avstreams, naming {
   sharedname   = TAO_TS
-  dynamicflags += TAO_TS_BUILD_DLL
+  dynamicflags = TAO_TS_BUILD_DLL
 
   Source_Files {
     TimeStamp.cpp

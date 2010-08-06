@@ -1,6 +1,7 @@
 # $Id$
 
 xt_reactor ?= 1
+exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 

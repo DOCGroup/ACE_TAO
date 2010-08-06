@@ -22,18 +22,22 @@
 # include "tao/AnyTypeCode/NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (AnyTypeCode,
+           NVList,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
 
 CORBA::ULong
-CORBA::NamedValue::_incr_refcount (void)
+CORBA::NamedValue::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NamedValue::_decr_refcount (void)
+CORBA::NamedValue::_decr_refcnt (void)
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -56,15 +60,15 @@ CORBA::NamedValue::~NamedValue (void)
 // ****************************************************************
 
 CORBA::ULong
-CORBA::NVList::_incr_refcount (void)
+CORBA::NVList::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NVList::_decr_refcount (void)
+CORBA::NVList::_decr_refcnt (void)
 {
-  CORBA::ULong const new_count = --this->refcount_;
+  const CORBA::ULong new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
@@ -230,7 +234,7 @@ CORBA::NVList::add_element (CORBA::Flags flags)
       return 0;
     }
 
-  ++this->max_;
+  this->max_++;
   return nv; // success
 }
 
@@ -435,13 +439,17 @@ CORBA::NVList::evaluate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->incoming_ != 0)
+  if (this->incoming_ == 0)
     {
-      auto_ptr<TAO_InputCDR> incoming (this->incoming_);
-      this->incoming_ = 0;
-
-      this->_tao_decode (*(incoming.get ()), this->incoming_flag_);
+      return;
     }
+
+  auto_ptr<TAO_InputCDR> incoming (this->incoming_);
+  this->incoming_ = 0;
+
+  this->_tao_decode (*(incoming.get ()),
+                     this->incoming_flag_
+                    );
 }
 
 CORBA::Boolean

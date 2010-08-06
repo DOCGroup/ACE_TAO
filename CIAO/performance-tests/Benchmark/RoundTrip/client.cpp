@@ -22,7 +22,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Throughput_Stats.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+const char *ior = "file://test.ior";
 int niterations = 100;
 int do_dump_history = 0;
 
@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Parse arguments.
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hxk:i:"));
   int c;
-
+  
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -53,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         /* Could be any other parameter like -ORBSvcConf file so ignore */
        break;
       }
-
+      
   // Indicates sucessful parsing of the command line
   return 0;
 }
@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 void
 set_priority ()
 {
-  int const priority =
+  int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Set priority on the platform
+      //set priority on the platform
       set_priority();
 
       // Initialize orb
@@ -111,20 +111,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (home.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire TestHome objref\n"), -1);
 
-      Benchmark::RoundTrip_var test = home->create ();
+      Benchmark::RoundTrip_var test
+        = home->create ();
 
-      // Get the RoundTrip reference
-      obj = test->provide_facet ("latency");
-      Benchmark::LatencyTest_var round_trip =
-        Benchmark::LatencyTest::_narrow (obj.in ());
+      //Get the RoundTrip reference
+      Benchmark::LatencyTest_var round_trip = test->provide_latency ();
 
-      if (CORBA::is_nil (round_trip.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire LatencyTest objref\n"), -1);
-
-      // Warmup the System by making some empty calls
+      //Warmup the System by making some empty calls
+      long start = 0L;
       for (int j = 0; j < 100; ++j)
         {
-          round_trip->makeCall (0L);
+          round_trip->makeCall (start);
         }
 
       ///// Start Test ////////////////////////////////////////////
@@ -133,18 +130,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
-          ACE_hrtime_t const start = ACE_OS::gethrtime ();
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          // Test value to be sent to the server
+          //Test value to be sent to the server
           long test = 0;
 
           (void) round_trip->makeCall (test);
 
-          ACE_hrtime_t const now = ACE_OS::gethrtime ();
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
         }
 
-      ACE_hrtime_t const test_end = ACE_OS::gethrtime ();
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
@@ -154,14 +151,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (do_dump_history)
         {
-          history.dump_samples (ACE_TEXT("HISTORY"), gsf);
+          history.dump_samples ("HISTORY", gsf);
         }
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);
-      stats.dump_results (ACE_TEXT("Total"), gsf);
+      stats.dump_results ("Total", gsf);
 
-      ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              test_end - test_start,
                                              stats.samples_count ());
 

@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(HA Proactive Status) : aceexe, avoids_ace_for_tao {
+project(HA Proactive Status) : aceexe {
+  avoids += ace_for_tao
   exename = HA_Proactive_Status
   Source_Files {
     HA_Proactive_Status.cpp

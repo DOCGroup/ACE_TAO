@@ -14,7 +14,31 @@
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (Valuetype,
+           AbstractBase,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// ************************************************************
+// These are in CORBA namespace
+
+void
+CORBA::release (CORBA::AbstractBase_ptr obj)
+{
+  if (obj)
+    {
+      obj->_remove_ref ();
+    }
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::AbstractBase_ptr obj)
+{
+  return (obj == 0);
+}
+
+// ************************************************************
 
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (false)
@@ -39,7 +63,7 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
       rhs.concrete_stubobj_->_incr_refcnt ();
     }
 
-  if (!CORBA::is_nil (rhs.equivalent_obj_.in ()))
+  if (!CORBA::is_nil (rhs.equivalent_obj_))
     {
       this->equivalent_obj_ =
         CORBA::Object::_duplicate (rhs.equivalent_obj_);

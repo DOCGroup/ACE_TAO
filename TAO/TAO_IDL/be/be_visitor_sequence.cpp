@@ -1,16 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_visitor_sequence.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Sequence
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_sequence.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Sequence
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
@@ -56,3 +60,6 @@
 #include "be_visitor_sequence/sequence_ch.cpp"
 #include "be_visitor_sequence/sequence_cs.cpp"
 
+ACE_RCSID (be, 
+           be_visitor_sequence, 
+           "$Id$")

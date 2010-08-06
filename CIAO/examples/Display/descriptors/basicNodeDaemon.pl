@@ -6,45 +6,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
+use PerlACE::Run_Test;
 
 $status = 0;
-$iorbase1 = "NodeApp1.ior";
-$iorbase2 = "NodeApp2.ior";
-$iorbase3 = "NodeApp3.ior";
-$iorbase4 = "NodeApp4.ior";
-$iorbase5 = "NodeApp5.ior";
+$iorfile1 = PerlACE::LocalFile ("NodeApp1.ior");
+$iorfile2 = PerlACE::LocalFile ("NodeApp2.ior");
+$iorfile3 = PerlACE::LocalFile ("NodeApp3.ior");
+$iorfile4 = PerlACE::LocalFile ("NodeApp4.ior");
+$iorfile5 = PerlACE::LocalFile ("NodeApp5.ior");
 
-$iorfile1 = $tg->LocalFile ("NodeApp1.ior");
-$iorfile2 = $tg->LocalFile ("NodeApp2.ior");
-$iorfile3 = $tg->LocalFile ("NodeApp3.ior");
-$iorfile4 = $tg->LocalFile ("NodeApp4.ior");
-$iorfile5 = $tg->LocalFile ("NodeApp5.ior");
+#for ($iter = 0; $iter <= $#ARGV; $iter++) {
+#    if ($ARGV[$iter] eq "-h" || $ARGV[$iter] eq "-?") {
+#      print "Run_Test Perl script for NodeApplicationTest \n\n";
+#      print "run_test \n";
+#      print "\n";
+#      print "-h                  -- prints this information\n";
+#      exit 0;
+#  }
+#}
 
-$tg->DeleteFile ("NodeApp1.ior");
-$tg->DeleteFile ("NodeApp2.ior");
-$tg->DeleteFile ("NodeApp3.ior");
-$tg->DeleteFile ("NodeApp4.ior");
-$tg->DeleteFile ("NodeApp5.ior");
+
+unlink $iorfile1;
+unlink $iorfile2;
+unlink $iorfile3;
+unlink $iorfile4;
+unlink $iorfile5;
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-$SV1 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$SV1 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:10000 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV2 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$SV2 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:20000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV3 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$SV3 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:30000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV4 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$SV4 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:40000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
-
-$SV5 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
-                             "-ORBEndpoint iiop://localhost:50000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
+                             
+$SV5 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
+                             "-ORBEndpoint iiop://localhost:50000  -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");                             
 $SV1->Spawn ();
 $SV2->Spawn ();
 $SV3->Spawn ();

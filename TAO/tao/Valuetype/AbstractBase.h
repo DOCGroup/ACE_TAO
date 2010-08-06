@@ -40,8 +40,7 @@ class TAO_Abstract_ServantBase;
 
 namespace CORBA
 {
-  class AbstractBase;
-  typedef AbstractBase * AbstractBase_ptr;
+  class ValueBase;
 
   typedef TAO_Pseudo_Var_T<AbstractBase> AbstractBase_var;
   typedef TAO_Pseudo_Out_T<AbstractBase> AbstractBase_out;
@@ -127,10 +126,6 @@ namespace CORBA
      */
     CORBA::Object_ptr equivalent_objref (void);
 
-    /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.                              
-    void _decr_refcount (void);
-
   protected:
 
     AbstractBase (void);
@@ -187,7 +182,7 @@ namespace TAO
           CORBA::AbstractBase_var,
           CORBA::AbstractBase_out,
           TAO::Objref_Traits<CORBA::AbstractBase>,
-          TAO::Any_Insert_Policy_Stream
+          TAO::Any_Insert_Policy_Stream <CORBA::AbstractBase_ptr>
         >
   {
   };

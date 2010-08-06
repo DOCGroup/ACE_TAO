@@ -53,7 +53,7 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("i:"));
 
   int c;
 
@@ -61,19 +61,19 @@ ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
     {
       switch (c)
       {
-        case 'k':
+        case 'i':
           this->ior_ = get_opts.opt_arg();
           break;
 
         case '?':
           ACE_DEBUG((LM_DEBUG,
-                     "(%P|%t) usage:  %s -k <ior_string>\n",
+                     "(%P|%t) usage:  %s -i <ior_string>\n",
                      argv[0]));
           return 1;
 
         default:
           ACE_ERROR((LM_ERROR,
-                     "(%P|%t) usage:  %s -k <ior_string>\n",
+                     "(%P|%t) usage:  %s -i <ior_string>\n",
                      argv[0]));
           return -1;
       }

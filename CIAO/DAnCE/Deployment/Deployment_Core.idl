@@ -1,0 +1,49 @@
+// $Id$
+
+#if !defined (DEPLOYMENT_CORE_IDL)
+#define DEPLOYMENT_CORE_IDL
+
+#include "ciao/CCM_Component.idl"
+#include "DAnCE/Deployment/Deployment_TargetData.idl"
+#include "DAnCE/Deployment/Deployment_Data.idl"
+#include "DAnCE/Deployment/Deployment_Application.idl"
+
+// *************** Packaging and Deployment ***************
+module Deployment
+{
+  // Typeprefix Components "omg.org";
+  // OMG threw these things away, didn't it.
+
+  /// CIAO specific
+  exception UnknownImplId
+  {
+    string name;
+    string reason;
+  };
+
+  /// CIAO specific
+  exception InstallationFailure
+  {
+    string name;
+    string reason;
+  };
+
+  /// CIAO specific
+  exception ImplEntryPointNotFound
+  {
+    string name;
+    string reason;
+  };
+
+  /**
+   * The StopError exception is raised if a problem occurred while terminating
+   * an application, either during the terminate operation of the
+   * ApplicationManager or during the destroyManager operation of the
+   * ExecutionManager.
+   */
+  exception StopError {
+    string name;
+    string reason;
+  };
+};
+#endif /* DEPLOYMENT_CORE_IDL */

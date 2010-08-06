@@ -2,7 +2,7 @@
 
 #include "ace/Log_Msg_Backend.h"
 
-
+ACE_RCSID(ace, Log_Msg_Backend, "$Id$")
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

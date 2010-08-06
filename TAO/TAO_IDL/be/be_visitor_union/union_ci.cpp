@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union in the client inline file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union in the client inline file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union, 
+           union_ci, 
+           "$Id$")
 
 // ******************************************************
 // For client inline.

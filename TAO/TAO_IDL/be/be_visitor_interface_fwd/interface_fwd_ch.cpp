@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    interface_fwd_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interface_Fwd node in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_fwd_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interface_Fwd node in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_interface_fwd, 
+           interface_fwd_ch, 
+           "$Id$")
 
 // ********************************************************************
 // Visitor implementation for the Interface_Fwd type

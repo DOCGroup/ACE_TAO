@@ -8,6 +8,12 @@
 #include "ace/DEV_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
+
+ACE_RCSID (ace,
+           DEV_Connector,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Connector)

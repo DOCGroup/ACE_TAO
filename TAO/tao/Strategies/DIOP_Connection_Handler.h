@@ -124,7 +124,6 @@ protected:
    * @name TAO_Connection Handler overloads
    */
   virtual int release_os_resources (void);
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
   /// Helper method used by the set_dscp_codepoint () methods

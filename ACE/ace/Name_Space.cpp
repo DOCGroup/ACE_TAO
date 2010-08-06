@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
-
+ACE_RCSID(ace, Name_Space, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +42,7 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-const ACE_Name_Binding&
+void
 ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 {
   ACE_TRACE ("ACE_Name_Binding::operator =");
@@ -54,8 +54,6 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
       this->value_ = s.value_;
       this->type_ = ACE_OS::strdup (s.type_);
     }
-
-  return *this;
 }
 
 bool

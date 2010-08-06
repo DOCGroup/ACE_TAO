@@ -52,6 +52,7 @@ public:
                                            int argc,
                                            ACE_TCHAR *argv[]);
 
+
  protected:
   /// Instance of the TAO_Naming_Server
   TAO_Naming_Server naming_server_;

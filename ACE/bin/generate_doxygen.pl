@@ -21,15 +21,11 @@ if (!defined $TAO_ROOT) {
 if (!defined $CIAO_ROOT) {
     $CIAO_ROOT = "$TAO_ROOT/CIAO";
 }
-if (!defined $DANCE_ROOT) {
-    $DANCE_ROOT = "$CIAO_ROOT/DAnCE";
-}
 
 $is_release = 0;
 $exclude_ace = 0;
 $exclude_tao = !-r "$TAO_ROOT/VERSION";
 $exclude_ciao = !-r "$CIAO_ROOT/VERSION";
-$exclude_dance = !-r "$CIAO_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $html_output_dir = '.';
@@ -48,7 +44,6 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              'ace_rmcast',
              'ace_ssl',
              'ace_qos',
-             'ace_inet',
              'acexml');
 @TAO_DOCS = ('tao'
              ,'tao_anytypecode'
@@ -81,10 +76,8 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
              ,'tao_pss'
              ,'tao_ifr');
 @CIAO_DOCS = ('ciao_config_handlers'
-             ,'ciao_dds4ccm'
+             ,'ciao_DAnCE'
              ,'ciao');
-@DANCE_DOCS = ('DAnCE');
-@DDS_DOCS = ('dds');
 
 # Modify defaults using the command line arguments
 &parse_args ();
@@ -98,11 +91,10 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  " $ACE_ROOT", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  " $TAO_ROOT", @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO', " $CIAO_ROOT", @CIAO_DOCS) if (!$exclude_ciao);
-&generate_doxy_files ('DANCE'," $DANCE_ROOT", @DANCE_DOCS) if (!$exclude_dance);
-&generate_doxy_files ('DDS',   "$DDS_ROOT", @DDS_DOCS) if $dds;
+&generate_doxy_files ('ACE',  "$ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  "$TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO',"$CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DDS',  "$DDS_ROOT/VERSION", ('dds')) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
@@ -121,8 +113,6 @@ sub parse_args {
       $exclude_tao = 1;
     } elsif ($ARGV[0] eq "-exclude_ciao") {
       $exclude_ciao = 1;
-    } elsif ($ARGV[0] eq "-exclude_dance") {
-      $exclude_dance = 1;
     } elsif ($ARGV[0] eq "-include_dds") {
       $dds = 1;
     } elsif ($ARGV[0] eq "-verbose") {
@@ -153,9 +143,8 @@ sub same_dir {
 sub generate_doxy_files {
 
   my $KIT = shift;
-  my $ROOT_DIR = shift;
+  my $VERSION_FILE = shift;
   my @DOCS = @_;
-  my $VERSION_FILE = "$ROOT_DIR/VERSION";
 
   my $VERSION = 'Snapshot ('.
     POSIX::strftime("%Y/%m/%d-%H:%M", localtime)
@@ -172,7 +161,7 @@ sub generate_doxy_files {
       $VERSION = $major.'.'.$minor.'.'.$beta;
     }
 
-    my $input = "$ROOT_DIR/etc/".$i.".doxygen";
+    my $input = "etc/".$i.".doxygen";
     my $output = "/tmp/".$i.".".$$.".doxygen";
 
     open(DOXYINPUT, $input)

@@ -7,12 +7,11 @@
 ACE_RCSID(Timed_Buffered_Oneways, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
-const ACE_TCHAR *client_done_file = ACE_TEXT("client_done.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,15 +20,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
-      case 's':
-        client_done_file = get_opts.opt_arg ();
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
-                           "-s <file_in_servant>"
                            "\n",
                            argv [0]),
                           -1);
@@ -60,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      test_i servant (orb.in (), client_done_file);
+      test_i servant (orb.in ());
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&servant);

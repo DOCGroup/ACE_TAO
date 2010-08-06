@@ -130,16 +130,6 @@ sub IgnoreExeSubDir
     return $self->{IGNOREEXESUBDIR};
 }
 
-sub IgnoreHostRoot
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREHOSTROOT} = shift;
-    }
-
-    return $self->{IGNOREHOSTROOT};
-}
 
 sub delay_factor {
   my($lps)    = 128;
@@ -202,8 +192,6 @@ sub iboot_cycle_power {
 
   if (defined($iboot_outlet) && defined($iboot_user) && defined($iboot_passwd)) {
     # We perform case #3
-    # This case doesn't support shutdown
-    return if $mode == 1;
 
     my $t = new Net::Telnet();
 
@@ -375,7 +363,6 @@ sub reboot {
 # Helper for spawning with list of kernel modules in a .vxtest file
 sub handle_vxtest_file
 {
-  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
@@ -388,26 +375,6 @@ sub handle_vxtest_file
       chomp $line1;
       push @$vx_ref, "ld < lib$line1" . ".so";
       unshift @$unld_ref, "unld \"lib$line1" . ".so\"";
-    }
-    close $fh;
-  } else {
-    return 0;
-  }
-  return 1;
-}
-
-# Load a file that is used as startup script. This script has to be
-# located on the host system
-sub handle_startup_script
-{
-  my $script = shift;
-  my $cmds = shift;
-  my $fh = new FileHandle;
-  if (open ($fh, $script)) {
-    while(<$fh>) {
-      my $line1 = $_;
-      chomp $line1;
-      push @$cmds, "$line1";
     }
     close $fh;
   } else {
@@ -438,27 +405,14 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if (defined $ENV{'ACE_TEST_WINCE'}) {
-  if ($OSNAME eq "MSWin32") {
-      require PerlACE::ProcessWinCE;
-  } else {
-      require PerlACE::ProcessWinCE_Unix;
-  }
+    require PerlACE::ProcessWinCE;
 } else {
-  if ($OSNAME eq "MSWin32") {
-      require PerlACE::ProcessVX_Win32;
-  }
-  else {
-      require PerlACE::ProcessVX_Unix;
-  }
+if ($OSNAME eq "MSWin32") {
+    require PerlACE::ProcessVX_Win32;
 }
-
-###
-
-sub kill_all
-{
-  my $procmask = shift;
-  my $target = shift;
-  ## NOT IMPLEMENTED YET
+else {
+    require PerlACE::ProcessVX_Unix;
+}
 }
 
 1;

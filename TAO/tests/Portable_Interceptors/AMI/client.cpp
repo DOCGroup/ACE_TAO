@@ -79,7 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Test::Echo_var echo =
         Test::Echo::_narrow (tmp.in ());
@@ -193,8 +193,6 @@ test_ami (CORBA::ORB_ptr orb,
   echo_handler =
     echo_handler_impl->_this ();
 
-  unsigned long initial_reply_count =
-    Echo_Client_Request_Interceptor::reply_count;
   unsigned long initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
   unsigned long initial_other_count =
@@ -207,11 +205,8 @@ test_ami (CORBA::ORB_ptr orb,
         "dummy message");
     }
 
-  unsigned long total_reply_count =
-    Echo_Client_Request_Interceptor::reply_count - initial_reply_count;
   unsigned long total_request_count =
-    Echo_Client_Request_Interceptor::request_count -
-    (total_reply_count + initial_request_count);
+    Echo_Client_Request_Interceptor::request_count - initial_request_count;
   unsigned long total_other_count =
     Echo_Client_Request_Interceptor::other_count - initial_other_count;
 
@@ -224,6 +219,11 @@ test_ami (CORBA::ORB_ptr orb,
                  total_request_count, total_other_count));
       exit_status = 1;
     }
+
+  initial_request_count =
+    Echo_Client_Request_Interceptor::request_count;
+  unsigned long initial_reply_count =
+    Echo_Client_Request_Interceptor::reply_count;
 
   while (echo_handler_impl->replies () != ITERATIONS)
     {
@@ -239,12 +239,10 @@ test_ami (CORBA::ORB_ptr orb,
 
   total_request_count =
     Echo_Client_Request_Interceptor::request_count - initial_request_count;
-  total_reply_count =
+  unsigned long total_reply_count =
     Echo_Client_Request_Interceptor::reply_count - initial_reply_count;
 
-  // total_request_count is 2*ITERATIONS since it's incremented twice for
-  // each call. Once for Echo and once for Echo_Handler.
-  if (total_request_count != 2 * ITERATIONS
+  if (total_request_count != ITERATIONS
       || total_reply_count != ITERATIONS)
     {
       ACE_ERROR((LM_ERROR,

@@ -42,9 +42,9 @@ module AA
     {
       interface x2 
       {
-        // 'AA::BB::' should be implicit
+        // 'A::B::' should be implicit
         void op1 (in x1 obj);
-        // 'AA::' should be implicit
+        // 'A::' should be implicit
         void op2 (in BB::x1 obj);
         // Just for reference
         void op3 (in AA::BB::x1 obj);
@@ -95,6 +95,7 @@ module Outside
 
 interface OpHolder
   {
+
     void  Operation (in ::Outside::Tricky p1,
                      out ::Outside::Reopened::Tricky p2,
                      inout ::Outside::Reopened::Newdef p3);
@@ -310,46 +311,4 @@ module A_mod
   };  
 };
 
-/// Similar to example at the top of this file,
-/// but with more openings and deeper nesting.
-module m1 
-{
-  module m2
-  {
-    module m3a
-    {
-      module m4a
-      {
-        const unsigned short FRED = 123;
-      };
-    };
-  };
-};
 
-module m1
-{
-  module m2
-  {
-    module m3a
-    {
-      module m4b
-      {
-        const unsigned short JIM = 240;
-      };
-    };
-  };
-};
-
-module m1
-{
-  module m2
-  {
-    module m3b
-    {
-      typedef string < ::m1::m2::m3a::m4b::JIM> StringJIM;
-      typedef string <m1::m2::m3a::m4b::JIM> StringJIM_0;
-      typedef string <m2::m3a::m4b::JIM> StringJIM_1;
-      typedef string <m3a::m4b::JIM> StringJIM_2;
-    };
-  };
-};

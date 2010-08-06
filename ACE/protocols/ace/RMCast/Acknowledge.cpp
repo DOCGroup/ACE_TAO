@@ -67,7 +67,7 @@ namespace ACE_RMCast
 
     for (;; ++sn)
     {
-      Queue::ENTRY* e = 0;
+      Queue::ENTRY* e;
 
       if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
 

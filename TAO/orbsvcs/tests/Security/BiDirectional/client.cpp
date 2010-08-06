@@ -111,15 +111,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
 
-      Callback_i *callback_impl = 0;
-      callback_impl = new Callback_i (orb.in ());
-      PortableServer::ServantBase_var safe (callback_impl);
+      Callback_i callback_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("client_callback");
 
       child_poa->activate_object_with_id (id.in (),
-                                          callback_impl);
+                                          &callback_impl);
 
       CORBA::Object_var callback_object =
         child_poa->id_to_reference (id.in ());

@@ -6,32 +6,22 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
+$iorfile = PerlACE::LocalFile ("server.ior");
+unlink $iorfile;
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
+$CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor$PerlACE::svcconf_ext -k file://$iorfile");
+$CL3 = new PerlACE::Process ("client", "-ORBSvcConf blocked$PerlACE::svcconf_ext -k file://$iorfile -x 1");
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $iorbase = "server.ior";
-my $reactor_conf = "reactor$PerlACE::svcconf_ext";
-my $blocked_conf = "blocked$PerlACE::svcconf_ext";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-my $client_reactor_conf = $client->LocalFile ($reactor_conf);
-my $client_blocked_conf = $client->LocalFile ($blocked_conf);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -39,62 +29,47 @@ if ($server_status != 0) {
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
 print STDERR "===== Base test, using LF \n";
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client1 = $CL1->SpawnWaitKill (100);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client1 != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
+
 print STDERR "=================================== \n";
 print STDERR "===== Test, using reactor to connect \n";
+$client2 = $CL2->SpawnWaitKill (100);
 
-$CL->Arguments ("-ORBSvcConf $client_reactor_conf -k file://$client_iorfile");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client2 != 0) {
+   print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
 print STDERR "========================================= \n";
 print STDERR "===== Test, using blocked connect strategy\n";
+$client3 = $CL3->SpawnWaitKill (100);
 
-$CL->Arguments ("-ORBSvcConf $client_blocked_conf -k file://$client_iorfile -x 1");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client3 != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

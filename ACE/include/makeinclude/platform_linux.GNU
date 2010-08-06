@@ -36,10 +36,6 @@ ifeq (Red Hat, $(findstring Red Hat,$(CXX_FULL_VERSION)))
     gcc_template_instantiation_visibility ?= 1
   endif
 endif
-# Mandriva 2007
-ifeq (4.1.1-3mdk, $(findstring 4.1.1-3mdk,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility ?= 1
-endif
 
 FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
@@ -52,17 +48,6 @@ ifeq ($(buildbits),32)
 endif
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
-  LDFLAGS    += -m64
-  ifneq ($(CROSS_COMPILE),)
-    PPC64_TARGET := $(shell echo '__powerpc64__' | $(CC) -E - | tail -n 1)
-    ifeq ($(PPC64_TARGET),1)
-      FLAGS_C_CC += -mminimal-toc
-    endif
-  else
-    ifeq ($(SYSARCH),ppc64)
-      FLAGS_C_CC += -mminimal-toc
-    endif
-  endif
 endif
 
 #
@@ -96,20 +81,6 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-ifneq ($(TCPU),)
-  ifeq ($(tunemodelflag),1)
-    FLAGS_C_CC += -mtune=$(TCPU)
-  endif
-  
-  ifeq ($(cpumodelflag),1)
-    FLAGS_C_CC += -mcpu=$(TCPU)
-  endif
-
-  ifeq ($(archmodelflag),1)
-    FLAGS_C_CC += -march=$(TCPU)
-  endif
-endif
 
 # TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
 # the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2

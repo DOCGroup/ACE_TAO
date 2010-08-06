@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_interface_fwd.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Interface_Fwd
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_interface_fwd.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Interface_Fwd
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_interface_fwd.h"
 #include "be_interface.h"
@@ -29,3 +34,6 @@
 #include "be_visitor_interface_fwd/cdr_op_ch.cpp"
 #include "be_visitor_interface_fwd/any_op_ch.cpp"
 
+ACE_RCSID (be, 
+           be_visitor_interface_fwd, 
+           "$Id$")

@@ -51,6 +51,10 @@ public:
   //=======================================
 
   // Data accessors.
+
+  const char *filename (void) const;
+  void filename (char *fname);
+
   const char* output_dir (void) const;
   void output_dir (const char* s);
 
@@ -58,14 +62,24 @@ public:
 
   ACE_CString & excluded_filenames (void);
   
-  void set_excluded_filenames (const char *filenames);
-  
   bool gen_copyright (void) const;
 
   //=========================================
 
   virtual void parse_args (long &i, char **av);
   // Parse args that affect this backend.
+
+  void prep_be_arg (char *s);
+  // Special BE arg call factored out of DRV_args.
+
+  void arg_post_proc (void);
+  // Checks made after parsing args.
+
+  virtual void usage (void) const;
+  // Usage message for backend options.
+
+  AST_Generator *generator_init (void);
+  // Create an AST node generator.
 
   int outfile_init (TAO_OutStream *&,
                     const char *file_prefix,

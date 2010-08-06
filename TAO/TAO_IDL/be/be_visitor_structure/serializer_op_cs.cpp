@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TAO::DCPS::Serializer operators for structures
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    serializer_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TAO::DCPS::Serializer operators for structures
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "utl_identifier.h"
+
+ACE_RCSID (be_visitor_structure, 
+           serializer_op_cs, 
+           "$Id$")
 
 be_visitor_structure_serializer_op_cs::be_visitor_structure_serializer_op_cs (
     be_visitor_context *ctx

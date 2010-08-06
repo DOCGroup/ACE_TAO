@@ -10,10 +10,15 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           amh_ss,
+           "$Id$")
+
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -27,12 +32,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 {
   // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    {
-      return 0;
-    }
-
-  /// These are not for the server side.  
-  if (node->is_sendc_ami ())
     {
       return 0;
     }
@@ -332,7 +331,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
-      << skel_prefix << this->ctx_->port_prefix ().c_str ()
+      << skel_prefix
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl

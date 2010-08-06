@@ -26,15 +26,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/PI_Server/PI_Server_includeC.h"
 
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/ServerRequestInterceptor_Adapter.h"
-#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
 #include "tao/Basic_Types.h"
 #include "tao/PI_Server/ServerRequestDetails.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,9 +67,9 @@ namespace TAO
    */
   class ServerRequestInterceptor_Adapter_Impl
     : public ServerRequestInterceptor_Adapter
-    , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
+
     /// Constructor.
     ServerRequestInterceptor_Adapter_Impl (void);
 
@@ -167,15 +168,12 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Upcall_Command &command);
 
-    void popTSC (TAO_ORB_Core *orb_core)
-      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
-    void pushTSC (TAO_ORB_Core *orb_core)
-      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
-
   private:
+
     /// List of registered interceptors.
     ServerRequestInterceptor_List interceptor_list_;
   };
+
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

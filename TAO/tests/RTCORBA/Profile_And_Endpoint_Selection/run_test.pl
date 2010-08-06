@@ -6,30 +6,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use English;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$status = 0;
+$iorfile = "ior_2";
+$client_debuglevel = 0;
+$server_debuglevel = 0;
+$client_debug = 0;
+$server_debug = 0;
+$iiop = 1;
+$shmiop = 1;
 
-my $iorbase = "ior_2";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-
-$server->DeleteFile ($iorbase);
-$client->DeleteFile ($iorbase);
-
-my $client_debuglevel = 0;
-my $server_debuglevel = 0;
-
-my $client_debug = 0;
-my $server_debug = 0;
-
-my $iiop = 1;
-my $shmiop = 1;
-my $status = 0;
-
-$extra_client_args = "-k file://$client_iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
+$extra_client_args = "-k file://$iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
 $extra_server_args = "-ORBdebuglevel $server_debuglevel -d $server_debug";
 
 if ($OSNAME eq "solaris") {
@@ -85,15 +74,16 @@ sub run_client
     my $client_args = "@_" . " $extra_client_args";
 
     print "client $client_args\n";
-    
-    $CL = $client->CreateProcess ("client", "$client_args");
+
+    $CL = new PerlACE::Process ("client", "$client_args");
 
     $CL->Spawn ();
 
-    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval (120));
+    $client = $CL->WaitKill (120);
 
-    if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
+    if ($client != 0)
+    {
+        print STDERR "ERROR: client returned $client\n";
         $status = 1;
         zap_server (1);
     }
@@ -105,53 +95,56 @@ sub run_server
 
     print "server $server_args\n";
 
-    $SV = $server->CreateProcess ("server", "$server_args");
+    $SV = new PerlACE::Process ("server", "$server_args");
     $SV->Spawn ();
 
-    if ($server->WaitForFileTimed ($iorbase,
-                                   $server->ProcessStartWaitInterval()) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile,$PerlACE::wait_interval_for_process_creation ) == -1)
+    {
         check_supported_priorities ($SV);
-        print STDERR "ERROR: cannot find ior file <$server_iorfile>\n";
-        $status = 1;
-        zap_server (1);
+	print STDERR "ERROR: cannot find ior file: $iorfile\n";
+	$status = 1;
+	zap_server (1);
     }
 }
 
 sub zap_server
 {
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+    $server = $SV->WaitKill (5);
 
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
+    if ($server != 0)
+    {
+        print STDERR "ERROR: server returned $server\n";
         $status = 1;
     }
 
-    $server->DeleteFile ($iorbase);
+    unlink $iorfile;
 
-    if ($_[0]) {
+    if ($_[0])
+    {
         exit $status;
     }
 }
 
 sub check_supported_priorities
 {
-    $process = shift;
-    $returnVal = $process->TimedWait (1);
-    if ($returnVal == 2) {
-        # Mark as no longer running to avoid errors on exit.
-        $process->{RUNNING} = 0;
-        exit 0;
-    }
+  $process = shift;
+  $returnVal = $process->TimedWait (1);
+  if ($returnVal == 2) {
+    # Mark as no longer running to avoid errors on exit.
+    $process->{RUNNING} = 0;
+    exit 0;
+  }
 }
 
-for $test (@configurations) {
+for $test (@configurations)
+{
     my $clients = $test->{clients};
 
-    for $args (@$clients) {
+    for $args (@$clients)
+    {
         print STDERR "\n******************************************************\n\n";
 
-        $server->DeleteFile ($iorbase);
-        $client->DeleteFile ($iorbase);
+        unlink $iorfile;
 
         run_server ($test->{server});
 
@@ -161,8 +154,7 @@ for $test (@configurations) {
     }
 }
 
-$server->DeleteFile ($iorbase);
-$client->DeleteFile ($iorbase);
+unlink "ior_1";
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

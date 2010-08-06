@@ -24,7 +24,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_field.h"
 #include "be_union_branch.h"
@@ -40,6 +40,10 @@
 #include "idl_defines.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_visitor_traits,
+           "$Id$")
 
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -122,13 +126,16 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "static ::" << node->name () << "_ptr duplicate ("
           << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "static void release (" << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "static ::" << node->name () << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
           << "const ::" << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
+          << "TAO_OutputCDR & cdr" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "};";
 
       os->gen_endif ();
@@ -285,12 +292,6 @@ be_visitor_traits::visit_component (be_component *node)
 }
 
 int
-be_visitor_traits::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-
-int
 be_visitor_traits::visit_component_fwd (be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
@@ -439,25 +440,25 @@ be_visitor_traits::visit_array (be_array *node)
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
-      << be_uidt
+      << name << "_slice * _tao_slice"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static " << name << "_slice * dup ("
       << be_idt << be_idt_nl
-      << "const " << name << "_slice * _tao_slice);"
-      << be_uidt
+      << "const " << name << "_slice * _tao_slice"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static void copy (" << be_idt << be_idt_nl
       << name << "_slice * _tao_to," << be_nl
-      << "const " << name << "_slice * _tao_from);"
-      << be_uidt
+      << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static " << name << "_slice * alloc (void);"
       << be_nl
       << "static void zero (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
-      << be_uidt
-      << be_uidt
+      << name << "_slice * _tao_slice"
+      << be_uidt_nl
+      << ");" << be_uidt
       << be_uidt_nl
       << "};";
   //FUZZ: enable check_for_lack_ACE_OS

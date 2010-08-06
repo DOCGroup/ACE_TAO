@@ -1,50 +1,44 @@
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
-
 # $Id$
-# -*- perl -*-
+
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+require ACEutils;
 
-$status = 0;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-$port = $server->RandomPort ();
-
-$SV1 = $server->CreateProcess ("server", "-ORBEndpoint iiop://:$port/portspan=2");
-$SV2 = $server->CreateProcess ("server", "-ORBEndpoint iiop://:$port/portspan=2");
-$SV3 = $server->CreateProcess ("server", "-ORBEndpoint iiop://:$port/portspan=2");
-
-$server_status = $SV1->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+$P1 = new PerlACE::Process("server", "-ORBEndpoint iiop://:5555/portspan=2");
+$P2 = new PerlACE::Process("server", "-ORBEndpoint iiop://:5555/portspan=2");
+$P3 = new PerlACE::Process("server", "-ORBEndpoint iiop://:5555/portspan=2");
+$test1 = $P1->Spawn();
+if ($test1 != 0) {
+    print STDERR "ERROR: Couldn't start first server. Err:$test1\n";
+    $P1->Kill();
     exit 1;
 }
 
-$server_status = $SV2->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $SV1->Kill ();
+$test2 = $P2->Spawn();
+if ($test2 != 0) {
+    print STDERR "ERROR: Couldn't start second server. Err:$test2\n";
+    $P1->Kill();
+    $P2->Kill();
     exit 1;
 }
 
-$server_status = $SV3->SpawnWaitKill ($server->ProcessStartWaitInterval());
-if ($server_status == 0) {
-    print STDERR "ERROR: Last server didn't fail! Err:$server_status\n";
-    $SV1->Kill ();
-    $SV2->Kill ();
+$test3 = $P3->SpawnWaitKill(5);
+if ($test3 == 0) {
+    print STDERR "ERROR: Last server didn't fail! Err:$test3\n";
+    $P1->Kill();
+    $P2->Kill();
+    $P3->Kill();
     exit 1;
 }
 
-$SV1->Kill();
-$SV2->Kill();
-$SV3->Kill();
+$P1->Kill();
+$P2->Kill();
+$P3->Kill();
 
 print STDOUT "Portspan test completed successfully.\n";
 
-exit $status;
+exit 0;

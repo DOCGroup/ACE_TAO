@@ -10,8 +10,7 @@ class Thread_Pool : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
-  Thread_Pool (CORBA::ORB_ptr orb,
-               ACE_Thread_Manager *thr_mgr,
+  Thread_Pool (ACE_Thread_Manager *thr_mgr,
                int n_threads);
   // Constructor activates <n_threads> in the thread pool.
 
@@ -29,7 +28,6 @@ public:
 
 private:
   virtual int close (u_long);
+  int nt_;                      // number of threads
   // Close hook.
-  CORBA::ORB_var orb_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> nt_;     // number of threads
 };

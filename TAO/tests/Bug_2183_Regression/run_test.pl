@@ -6,79 +6,70 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
+use PerlACE::Run_Test;
 
 # The server IOR file
-$iorbase = "server.ior";
-
-$server_conf = $server->LocalFile ("server.conf");
-$server_ior_file = $server->LocalFile ($iorbase);
-$server->DeleteFile ($iorbase);
+$server_ior_file_base = "server.ior";
+$server_ior_file = PerlACE::LocalFile ("$server_ior_file_base");
 
 # The client and server processes
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SERVER = new $class ("server");
+
 $perl_executable = $^X;
 $perl_executable =~ s/\.exe//ig;
 if ($^O == 'VMS') {
-    $perl_executable =~ s/000000\///g;
+  $perl_executable =~ s/000000\///g;
+}
+$DUMMY_CLIENT = new PerlACE::Process($perl_executable);
+$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
+
+$DUMMY_CLIENT->Arguments("hang_client.pl");
+$DUMMY_CLIENT->IgnoreHostRoot(1);
+$DUMMY_CLIENT->IgnoreExeSubDir(1);
+
+if (PerlACE::is_vxworks_test()) {
+  $SERVER->Arguments("-o $server_ior_file_base -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
+}
+else {
+  $SERVER->Arguments("-o $server_ior_file -ORBEndpoint iiop://:15000 -ORBSvcConf server.conf");
 }
 
-$port = '15000';
-
-$SV = $server->CreateProcess ("server",
-                              "-o $server_ior_file " .
-                              "-ORBEndpoint iiop://:$port " .
-                              "-ORBSvcConf $server_conf");
-
-$CL1 = $client->CreateProcess ("client", "-k file://$server_ior_file");
-$CL2 = $client->CreateProcess ("$perl_executable", "hang_client.pl ".
-                                                   $server->{'HOSTNAME'});
-
-$CL2->IgnoreHostRoot(1);
-$CL2->IgnoreExeSubDir(1);
-
-
 # Fire up the server
-$status_server = $SV->Spawn();
+$sv = $SERVER->Spawn();
 
-if ($status_server != 0) {
-   print STDERR "ERROR: server returned $status_server\n";
+if ($sv != 0) {
+   print STDERR "ERROR: server returned $sv\n";
    exit 1;
 }
 
-# We can wait on the IOR file
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_ior_file>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+# We can wait on the IOR file 
+if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_process_creation) == -1) 
+{
+   print STDERR "ERROR: cannot find $server_ior_file\n";
+   $SERVER->Kill();
+   exit 1;
 }
 
-$CL2->Spawn ();
+$DUMMY_CLIENT->Spawn();
 
-$CL2->Wait ($server->ProcessStartWaitInterval());
+$DUMMY_CLIENT->Wait (2);
 
-$client_status = $CL1->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: Bug #2183 Regression failed. Client returned $client_status\n";
-    $status = 1;
-    $SV->Kill ();
-    $CL2->Kill ();
-    $server->DeleteFile ($iorbase);
-    exit $status;
+$CLIENT->Arguments("-k file://$server_ior_file");
+if ($CLIENT->SpawnWaitKill (15) != 0)
+{
+   print STDERR "ERROR: Bug #2183 Regression failed. Non zero result from client.\n";
+   $SERVER->Kill();
+   $DUMMY_CLIENT->Kill();
+   unlink $server_ior_file;
+   exit 1;
 }
 
 print "Test succeeded !!!\n";
 
 # Clean up and return
-$SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-$CL2->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-$server->DeleteFile ($iorbase);
-
+$SERVER->TerminateWaitKill (5);
+$DUMMY_CLIENT->TerminateWaitKill (5);
+unlink $server_ior_file;
 exit 0;

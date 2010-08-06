@@ -54,17 +54,6 @@ public:
 
   /// Create the consumer admin
   virtual void create (TAO_Notify_ConsumerAdmin*& admin);
-
-  /// Create ProxyPushSupplier
-  virtual void create (TAO_Notify_ProxyPushSupplier*& proxy);
-//  /// Create CosEC_ProxyPushSupplier
-//  virtual void create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy);
-
-  /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
-
-  /// Create SequenceProxyPushSupplier
-  virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

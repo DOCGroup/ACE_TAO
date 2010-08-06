@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ARG_SHIFTER_T_CPP
 #define ACE_ARG_SHIFTER_T_CPP
 
@@ -8,6 +6,11 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_Errno.h"
 #include "ace/OS_Memory.h"
+
+ACE_RCSID (ace,
+           Arg_Shifter,
+           "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

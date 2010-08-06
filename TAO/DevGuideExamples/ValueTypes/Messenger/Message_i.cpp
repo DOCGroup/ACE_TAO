@@ -21,9 +21,12 @@ MessageImpl::MessageImpl
  const char* user,
  const char* subject,
  const char* txt
- ) : OBV_Message(Message::AddrList(), user, subject, txt)
+ )
 {
   addAddress(address);
+  user_(user);
+  subject_(subject);
+  text_(txt);
 }
 
 Message::AddrList* MessageImpl::getAddresses() {

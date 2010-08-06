@@ -100,6 +100,9 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
+
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -121,7 +124,8 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-#define ACE_HAS_STRSIGNAL
+// Compiler/platform supports sys_siglist array.
+#define ACE_HAS_SYS_SIGLIST
 
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
@@ -176,9 +180,11 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
-// If exceptions are enabled and we are using Sun/CC then
-// <operator new> throws an exception instead of returning 0.
-#define ACE_NEW_THROWS_EXCEPTIONS
+#  if defined (ACE_HAS_EXCEPTIONS)
+     // If exceptions are enabled and we are using Sun/CC then
+     // <operator new> throws an exception instead of returning 0.
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif /* ACE_HAS_EXCEPTIONS */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

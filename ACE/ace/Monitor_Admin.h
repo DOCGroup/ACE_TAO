@@ -50,10 +50,10 @@ namespace ACE
      */
     class Monitor_Point_Auto_Updater : public ACE_Event_Handler
     {
-    public:
-      /// Override of ACE base class method.
-      virtual int handle_timeout (const ACE_Time_Value& interval,
-                                  const void* monitor_point);
+      public:
+        /// Override of ACE base class method.
+        virtual int handle_timeout (const ACE_Time_Value& interval,
+                                    const void* monitor_point);
     };
 
     /**

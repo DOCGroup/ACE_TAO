@@ -259,6 +259,32 @@ ACE_Service_Gestalt::init_i (void)
   if (init_svc_conf_file_queue () == -1)
     return -1;
 
+  if ( svc_conf_file_queue_->is_empty ())
+    {
+      // Check if the default file exists before attempting to queue it
+      // for processing
+      FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
+                                ACE_TEXT ("r"));
+      bool skip_static_svcs = (fp == 0);
+      if (fp != 0)
+        ACE_OS::fclose (fp);
+
+      if (!skip_static_svcs) {
+        // Load the default "svc.conf" entry here if there weren't
+        // overriding -f arguments in <parse_args>.
+        if (svc_conf_file_queue_->enqueue_tail
+            (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("enqueuing ")
+                               ACE_DEFAULT_SVC_CONF
+                               ACE_TEXT(" file")),
+                              -1);
+          }
+      }
+    }
+
   return 0;
 }
 
@@ -827,14 +853,8 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
   void * foo =
     xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  int const temp_p = reinterpret_cast<int> (foo);
-#else
-  intptr_t const temp_p = reinterpret_cast<intptr_t> (foo);
-#endif
-
-  ACE_XML_Svc_Conf::Factory factory = reinterpret_cast<ACE_XML_Svc_Conf::Factory> (temp_p);
-
+  ACE_XML_Svc_Conf::Factory factory =
+    reinterpret_cast<ACE_XML_Svc_Conf::Factory> (foo);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
@@ -988,8 +1008,8 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
 
 
 int
-ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
-                             const ACE_TCHAR* logger_key,
+ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
+                             const ACE_TCHAR* /*logger_key*/,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
                              bool ignore_debug_flag)
@@ -998,7 +1018,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   int result = 0;
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
-  this->no_static_svcs_ = ignore_static_svcs;
+  no_static_svcs_ = ignore_static_svcs;
 
   // Record the current log setting upon entering this thread.
   u_long old_process_mask = log_msg->priority_mask
@@ -1024,31 +1044,6 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   if (this->init_i () != 0)
     return -1;
 
-  u_long flags = log_msg->flags ();
-
-  // Only use STDERR if the caller hasn't already set the flags.
-  if (flags == 0)
-    flags = (u_long) ACE_Log_Msg::STDERR;
-
-  const ACE_TCHAR *key = logger_key;
-
-  if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
-    {
-      // Only use the static <logger_key_> if the caller doesn't
-      // override it in the parameter list or if the key supplied is
-      // equal to the default static logger key.
-      key = this->logger_key_;
-    }
-  else
-    {
-      ACE_SET_BITS (flags, ACE_Log_Msg::LOGGER);
-    }
-
-  if (log_msg->open (program_name,
-                     flags,
-                     key) == -1)
-    return -1;
-
   if (!ignore_debug_flag)
     {
       // If -d was included as a startup parameter, the user wants debug
@@ -1060,61 +1055,18 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
         ACE_Log_Msg::disable_debug_messages ();
     }
 
-  if (!ignore_default_svc_conf_file)
-    {
-      bool add_default = true;
-      bool has_files = this->svc_conf_file_queue_ && 
-        !this->svc_conf_file_queue_->is_empty ();
-      bool has_cmdline = this->svc_queue_ && !this->svc_queue_->is_empty ();
-      if (has_files || has_cmdline)
-        {
-          // check if default file is already listed
-          ACE_TString *sptr = 0;
-          ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
-
-          for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
-               iter.next (sptr) != 0 && add_default;
-               iter.advance ())
-            {
-              add_default = (*sptr != default_svc_conf);
-            }
-
-          if (add_default)
-            {
-              FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
-              if (fp != 0)
-                ACE_OS::fclose(fp);
-              else
-                add_default = false;
-
-            }
-        }
-
-      // Load the default "svc.conf" entry. here if there weren't
-      // overriding -f arguments in <parse_args>.
-      if (add_default && svc_conf_file_queue_->enqueue_head
-          (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
-        {
-          errno = ENOENT;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("enqueuing ")
-                             ACE_DEFAULT_SVC_CONF
-                             ACE_TEXT(" file")),
-                            -1);
-        }
-    }
-
   // See if we need to load the static services.
   if (this->no_static_svcs_ == 0
       && this->load_static_svcs () == -1)
     result = -1;
   else
     {
-      result = this->process_directives ();
-      if (result != -1 || errno == ENOENT)
-        result = this->process_commandline_directives ();
+      if (this->process_commandline_directives () == -1)
+        result = -1;
+      else
+        result = this->process_directives (ignore_default_svc_conf_file);
     }
+
 
   // Reset debugging back to the way it was when we came into
   // into <open_i>.
@@ -1247,16 +1199,17 @@ ACE_Service_Gestalt::parse_args_i (int argc,
 // Process service configuration directives from the files queued for
 // processing
 int
-ACE_Service_Gestalt::process_directives (bool )
+ACE_Service_Gestalt::process_directives (bool ignore_default_svc_conf_file)
 {
   ACE_TRACE ("ACE_Service_Gestalt::process_directives");
+
   if (this->svc_conf_file_queue_ == 0
-       || this->svc_conf_file_queue_->is_empty ())
-    {
-      return 0;
-    }
+      || this->svc_conf_file_queue_->is_empty ())
+    return 0;
 
   ACE_TString *sptr = 0;
+  ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
+
   int failed = 0;
 
   // Iterate through all the svc.conf files.
@@ -1264,6 +1217,9 @@ ACE_Service_Gestalt::process_directives (bool )
        iter.next (sptr) != 0;
        iter.advance ())
     {
+      if (*sptr == default_svc_conf && ignore_default_svc_conf_file)
+        continue;
+
       int result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;

@@ -12,7 +12,7 @@
 #include "ace/Sig_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, Sig_Handler, "$Id$")
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 
@@ -148,7 +148,8 @@ ACE_Sig_Handler::register_handler_i (int signum,
   if (ACE_Sig_Handler::in_range (signum))
     {
       ACE_Sig_Action sa; // Define a "null" action.
-      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum, new_sh);
+      ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum,
+                                                          new_sh);
 
       // Return a pointer to the old <ACE_Sig_Handler> if the user
       // asks for this.
@@ -161,9 +162,9 @@ ACE_Sig_Handler::register_handler_i (int signum,
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
+#if !defined (ACE_HAS_LYNXOS_SIGNALS)
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
+#endif /* ACE_HAS_LYNXOS_SIGNALS */
       return new_disp->register_action (signum, old_disp);
     }
   else
@@ -399,10 +400,7 @@ ACE_Sig_Handlers::register_handler (int signum,
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
-
-      int result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
-
-      if (result == -1)
+      if (ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter) == -1)
         {
           // We couldn't reinstall our handler, so let's pretend like
           // none of this happened...
@@ -431,9 +429,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Default is to restart signal handlers.
           new_disp->flags (new_disp->flags () | SA_RESTART);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
           new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
 
           // Finally install (possibly reinstall) the ACE signal
           // handler disposition with the SA_RESTART mode enabled.
@@ -487,7 +483,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 
       for (ACE_Event_Handler **eh;
            handler_iterator.next (eh) != 0;
-           )
+           handler_iterator.advance ())
         {
           // Type-safe downcast would be nice here...
           ACE_Sig_Adapter *sh = (ACE_Sig_Adapter *) *eh;
@@ -555,12 +551,14 @@ ACE_Sig_Handlers::dispatch (int signum,
 
   for (ACE_Event_Handler **eh = 0;
        handler_iterator.next (eh) != 0;
-       )
-    if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
-      {
-        handler_set->remove (*eh);
-        delete *eh;
-      }
+       handler_iterator.advance ())
+    {
+      if ((*eh)->handle_signal (signum, siginfo, ucontext) == -1)
+        {
+          handler_set->remove (*eh);
+          delete *eh;
+        }
+    }
 }
 
 // Return the first item in the list of handlers.  Note that this will

@@ -120,7 +120,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "(%P|%t) ERROR:Client Interceptors not called"
                   " properly\n"));
 
-      corb->destroy ();
     }
   catch (const CORBA::Exception&)
     {

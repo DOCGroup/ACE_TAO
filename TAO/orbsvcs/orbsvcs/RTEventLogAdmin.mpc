@@ -12,7 +12,7 @@ project(RTEventLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin, 
 
 project(RTEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, rtevent {
   sharedname   = TAO_RTEventLogAdmin
-  dynamicflags += TAO_RTEVENTLOG_BUILD_DLL
+  dynamicflags = TAO_RTEVENTLOG_BUILD_DLL
   tagchecks   += RTEventLog
   after       += RTEventLogAdmin_IDL
 
@@ -46,7 +46,7 @@ project(RTEventLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, rtev
 
 project(RTEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, rteventlogadmin, dslogadmin_skel, rtevent_skel, portableserver {
   sharedname   = TAO_RTEventLogAdmin_Skel
-  dynamicflags += TAO_RTEVENTLOG_SKEL_BUILD_DLL
+  dynamicflags = TAO_RTEVENTLOG_SKEL_BUILD_DLL
   tagchecks   += RTEventLog
 
   IDL_Files {
@@ -75,7 +75,7 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, rteventloga
 
 project(RTEventLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, rteventlogadmin_skel, dslogadmin_serv, rtevent_serv, rtsched {
   sharedname   = TAO_RTEventLogAdmin_Serv
-  dynamicflags += TAO_RTEVENTLOG_SERV_BUILD_DLL
+  dynamicflags = TAO_RTEVENTLOG_SERV_BUILD_DLL
   tagchecks   += RTEventLog
 
   IDL_Files {

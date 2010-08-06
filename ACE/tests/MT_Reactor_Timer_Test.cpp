@@ -356,7 +356,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p, errno is %d\n"),
                   "wait ()",
-                  ACE_ERRNO_GET));
+                  errno));
       ACE_ASSERT (status != -1);
     }
 

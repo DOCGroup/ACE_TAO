@@ -1,140 +1,165 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+$TARGETHOSTNAME = "localhost";
+
+$file = PerlACE::LocalFile ("test.ior");
+$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 
 $status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $TARGETHOSTNAME = $server->HostName ();
-my $port = $server->RandomPort ();
-
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("INS_test_server",
-                              "-ORBdebuglevel $debug_level ".
-                              "-ORBEndpoint iiop://1.0\@$TARGETHOSTNAME:$port ".
-                              "-ORBDottedDecimalAddresses 1 ".
-                              "-i object_name -o $server_iorfile");
-$CL = $client->CreateProcess ("INS_test_client",
-                              "random_service ".
-                              "-ORBInitRef random_service=corbaloc::1.1\@".
-                              "$TARGETHOSTNAME:$port/object_name");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
-
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
 
 print STDERR "\n\n==== InitRef test\n";
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+unlink $file;
+if (PerlACE::is_vxworks_test()) {
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+    $SV = new PerlACE::ProcessVX ("INS_test_server",
+                        "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
+                        . " -i object_name -o test.ior -ORBDottedDecimalAddresses 1");
+}
+else {
+    $SV = new PerlACE::Process ("INS_test_server",
+                        "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
+                        . " -i object_name -o $file -ORBDottedDecimalAddresses 1");
+}
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$file>\n";
+    $SV->Kill ();
     exit 1;
+}
+
+$CL = new PerlACE::Process ("INS_test_client",
+                       "random_service "
+                       ."-ORBInitRef random_service="
+                       ."corbaloc::1.1@"."$TARGETHOSTNAME:$port/object_name");
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print STDERR "\n\n==== InvalidName test\n";
 
-$CL->Arguments ("not_a_service -ORBInitRef random_service=corbaloc:iiop:1.0\@".
-                "$TARGETHOSTNAME:$port/object_name");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$CL = new PerlACE::Process ("INS_test_client",
+                     " not_a_service "
+                       ."-ORBInitRef random_service="
+                       ."corbaloc:iiop:1.0@"."$TARGETHOSTNAME:$port/object_name");
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print STDERR "\n\n==== DefaultInitRef test\n";
 
-$CL->Arguments ("object_name -ORBDefaultInitRef corbaloc:iiop:1.0\@".
-                "$TARGETHOSTNAME:$port/");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$CL = new PerlACE::Process ("INS_test_client",
+                       " object_name "
+                       . "-ORBDefaultInitRef"
+                       ." corbaloc:iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print STDERR "\n\n==== Multi endpoint test\n";
 
 $port1 = $port + 1;
 $port2 = $port + 2;
-$CL->Arguments ("random_service -ORBInitRef random_service=corbaloc:iiop:1.0\@".
-                "$TARGETHOSTNAME:$port1,iiop:1.0\@$TARGETHOSTNAME:$port2,".
-                "iiop:1.0\@$TARGETHOSTNAME:$port/object_name");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$CL = new PerlACE::Process ("INS_test_client",
+                       " random_service "
+                       . "-ORBInitRef random_service="
+                       ."corbaloc:"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       .":1.0@"."$TARGETHOSTNAME:$port2,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port"
+                       ."/object_name");
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+print STDERR "\n\n==== Multi endpoint test with CORBA::ORB::list_initial_services ()\n";
+
+$port1 = $port + 1;
+$port2 = $port + 2;
+
+$CL = new PerlACE::Process ("INS_test_client",
+                       " random_service "
+                       . " -l "
+                       . "-ORBInitRef random_service="
+                       . "corbaloc:"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port2,"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port"
+                       . "/object_name");
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print STDERR "\n\n==== Multi endpoint default ref test\n";
 
-$CL->Arguments ("object_name -ORBDefaultInitRef corbaloc:iiop:1.0\@".
-                "$TARGETHOSTNAME:$port1,iiop:1.0\@$TARGETHOSTNAME:$port2,".
-                "iiop:1.0\@$TARGETHOSTNAME:$port/");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$CL = new PerlACE::Process ("INS_test_client",
+                       " object_name "
+                       . "-ORBDefaultInitRef "
+                       ."corbaloc:"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port2,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print STDERR "\n\n==== Default ref with final '/'\n";
 
-$CL->Arguments ("object_name -ORBDefaultInitRef corbaloc:iiop:1.0\@".
-                "$TARGETHOSTNAME:$port/");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$CL = new PerlACE::Process ("INS_test_client",
+                         " object_name "
+                       . "-ORBDefaultInitRef "
+                       ."corbaloc:"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL->SpawnWaitKill (60);
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+unlink $file;
 
 exit $status;

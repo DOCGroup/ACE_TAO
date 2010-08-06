@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    home_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Component Home node in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    home_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Component Home node in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_home, 
+           home_ch, 
+           "$Id$")
 
 be_visitor_home_ch::be_visitor_home_ch (
     be_visitor_context *ctx
@@ -40,10 +49,15 @@ be_visitor_home_ch::visit_home (be_home *node)
   // All we do in this is generate a forward declaration of the class.
   *os << be_nl << be_nl << "class " << node->local_name () << ";";
 
+  // Generate the ifdefined macro for the _ptr type.
+  os->gen_ifdef_macro (node->flat_name (), "_ptr");
+
   // Generate the _ptr typedef.
   *os << be_nl << be_nl 
       << "typedef " << node->local_name () << " *" << node->local_name ()
       << "_ptr;";
+
+  os->gen_endif ();
 
     if (be_global->tc_support ())
       {

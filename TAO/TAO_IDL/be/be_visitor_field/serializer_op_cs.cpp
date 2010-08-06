@@ -1,30 +1,41 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    serializer_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating TAO::DCPS::Serializer operators code for Field in
- *  the client stubs file.
- *
- *
- *  @author Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_serializer_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating TAO::DCPS::Serializer operators code for Field in
+//    the client stubs file.
+//
+// = AUTHOR
+//    Scott Harris <harris_s@ociweb.com> based on code by Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/serializer_op_cs.h"
 #include "be_visitor_sequence/serializer_op_cs.h"
 #include "be_visitor_structure/serializer_op_cs.h"
 #include "be_visitor_union/serializer_op_cs.h"
 
+ACE_RCSID (be_visitor_field,
+           serializer_op_cs,
+           "$Id$")
+
+
 // **********************************************
 //  visitor for field in the client stubs file
 // **********************************************
 
 be_visitor_field_serializer_op_cs::be_visitor_field_serializer_op_cs (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -67,7 +78,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
   // If the array is defined in this scope, we must generate
   // CDR stream operators for the array itself.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -87,8 +98,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
   // field.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -110,7 +120,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // For anonymous arrays ...
       // we have to generate a name for us that has an underscore
@@ -189,7 +199,7 @@ be_visitor_field_serializer_op_cs::visit_enum (be_enum *node)
   // If we are defined inside this scope, we must generate the
   /// Serializer stream operators for us here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -208,8 +218,7 @@ be_visitor_field_serializer_op_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -259,10 +268,9 @@ int
 be_visitor_field_serializer_op_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_serializer_op_cs::"
@@ -333,8 +341,7 @@ be_visitor_field_serializer_op_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -412,10 +419,9 @@ int
 be_visitor_field_serializer_op_cs::visit_valuetype (be_valuetype *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_serializer_op_cs::"
@@ -464,8 +470,7 @@ be_visitor_field_serializer_op_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -512,14 +517,12 @@ be_visitor_field_serializer_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 
 // Visit predefined type.
 int
-be_visitor_field_serializer_op_cs::visit_predefined_type (
-  be_predefined_type *node)
+be_visitor_field_serializer_op_cs::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -673,7 +676,7 @@ be_visitor_field_serializer_op_cs::visit_sequence (be_sequence *node)
   // If the sequence is defined in this scope, generate its
   // Serializer stream operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -694,8 +697,7 @@ be_visitor_field_serializer_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -751,8 +753,7 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -779,20 +780,9 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
       *os << "_dcps_max_marshaled_size_ulong () + " << buff;
       break;
     case TAO_CodeGen::TAO_FIND_SIZE:
-      if (node->node_type() == AST_Decl::NT_wstring)
-      {
-        *os << "_dcps_max_marshaled_size_ulong() + "
-          << "(_tao_aggregate." << f->local_name () << ".in () ? " 
-            << "ACE_OS::strlen(_tao_aggregate."
-            << f->local_name () << ".in ()) * sizeof (CORBA::WChar) : 0)";
-      }
-      else
-      {
-        *os << "_dcps_max_marshaled_size_ulong() + "
-            << "(_tao_aggregate." << f->local_name () << ".in () ? "
-            << "ACE_OS::strlen(_tao_aggregate."
-            << f->local_name () << ".in ()) : 0)";
-      }
+      *os << "_dcps_max_marshaled_size_ulong() + "
+          << "ACE_OS::strlen(_tao_aggregate."
+          << f->local_name () << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
@@ -823,7 +813,7 @@ be_visitor_field_serializer_op_cs::visit_structure (be_structure *node)
   // If the struct is defined in this scope, generate its Serializer stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -843,9 +833,8 @@ be_visitor_field_serializer_op_cs::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  // retrieve the field node.
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -920,7 +909,7 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
   // If the union is defined in this scope, generate its Serializer stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -941,8 +930,7 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -995,7 +983,8 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
 // ****************************************************************
 
 be_visitor_serializer_op_field_decl::be_visitor_serializer_op_field_decl (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -1043,8 +1032,7 @@ be_visitor_serializer_op_field_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -1064,7 +1052,7 @@ be_visitor_serializer_op_field_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // For anonymous arrays,
       // we have to generate a name for us that has an underscope

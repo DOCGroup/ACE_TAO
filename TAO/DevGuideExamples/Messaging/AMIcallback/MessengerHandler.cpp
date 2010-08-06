@@ -38,7 +38,7 @@ void MessengerHandler::send_message (
     std::cerr << "Error: Message was not sent." << std::endl;
   }
   // Our simple test just shuts down after sending one message.
-  orb_->shutdown(false);
+  orb_->shutdown(0);
 }
 
 void MessengerHandler::send_message_excep (Messaging::ExceptionHolder* excep_holder)
@@ -52,5 +52,5 @@ void MessengerHandler::send_message_excep (Messaging::ExceptionHolder* excep_hol
   {
     std::cerr << "A CORBA Exception was thrown: " << ex << std::endl;
   }
-  orb_->shutdown(false);
+  orb_->shutdown(0);
 }

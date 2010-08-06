@@ -108,7 +108,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
           else
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("handle_input: %p (errno: %d)\n"),
-                          ACE_TEXT ("recv"), ACE_ERRNO_GET));
+                          ACE_TEXT ("recv"), errno));
 
               // This will cause handle_close to get called.
               return -1;
@@ -360,8 +360,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
-  if (acceptor.open (local_addr) == -1
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) %p\n"),

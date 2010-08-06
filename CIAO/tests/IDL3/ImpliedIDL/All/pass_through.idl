@@ -6,7 +6,7 @@
  * Tests tool's regeneration of IDL2 constructs, which
  * should be basically unchanged.
  */
-
+ 
 #ifndef PASS_THROUGH_IDL
 #define PASS_THROUGH_IDL
 
@@ -21,7 +21,7 @@ module pre_mod
   {
     typedef long fork;
   };
-
+  
   union uke switch (which)
   {
     case ONE:
@@ -43,16 +43,16 @@ module mod
   interface foo
   {
     typeprefix foo "preefy";
-
+    
     exception wrongety_wrong
     {
       base unrelated;
       string explanation;
     };
-
+    
     attribute base base_attr
       getraises (wrongety_wrong)
-      setraises (pre_mod::wrong, wrongety_wrong);
+      setraises (pre_mod::wrong, wrongety_wrong);     
   };
 
   interface bleep;

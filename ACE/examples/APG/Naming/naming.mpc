@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(Netlocal) : aceexe, avoids_ace_for_tao {
+project(Netlocal) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = Netlocal
   Source_Files {
@@ -10,7 +11,8 @@ project(Netlocal) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(Netlocal Reader) : aceexe, avoids_ace_for_tao {
+project(Netlocal Reader) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = Netlocal_reader
   Source_Files {
@@ -20,7 +22,8 @@ project(Netlocal Reader) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(Nodelocal) : aceexe, avoids_ace_for_tao {
+project(Nodelocal) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = Nodelocal
   Source_Files {
@@ -29,7 +32,8 @@ project(Nodelocal) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(Nodelocal Shared) : aceexe, avoids_ace_for_tao {
+project(Nodelocal Shared) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = Nodelocal_shared
   Source_Files {
@@ -38,7 +42,8 @@ project(Nodelocal Shared) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(Nodelocal Shared Reader) : aceexe, avoids_ace_for_tao {
+project(Nodelocal Shared Reader) : aceexe {
+  avoids += ace_for_tao
   requires += ace_other
   exename = Nodelocal_shared_reader
   Source_Files {

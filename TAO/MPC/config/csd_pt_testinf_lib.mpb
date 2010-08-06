@@ -3,10 +3,10 @@
 
 project : csd_threadpool, taolib_with_idl {
   after += csd_pt_testinf
-  includes += ../../CSD_Strategy
+  includes += $(TAO_ROOT)/performance-tests/CSD_Strategy
   libs += CSD_PT_TestInf
-  libpaths += ../../CSD_Strategy/TestInf
-  idlflags += -I../../CSD_Strategy
+  libpaths += $(TAO_ROOT)/performance-tests/CSD_Strategy/TestInf
+  idlflags += -I$(TAO_ROOT)/performance-tests/CSD_Strategy
 
   specific(automake) {
    includes += $(TAO_BUILDDIR)/performance-tests/CSD_Strategy

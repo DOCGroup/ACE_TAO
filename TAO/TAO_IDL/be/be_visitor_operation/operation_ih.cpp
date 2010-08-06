@@ -1,16 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    operation_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           operation_ih, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for implementation header.
@@ -48,7 +56,7 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ih::"
+                         "(%N:%l) be_visitor_operation_sh::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);

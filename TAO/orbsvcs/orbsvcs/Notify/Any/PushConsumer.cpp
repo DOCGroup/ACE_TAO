@@ -110,7 +110,6 @@ TAO_Notify_PushConsumer::push (const CORBA::Any& payload)
   }
   //--cj end
 
-  last_ping_ = ACE_OS::gettimeofday ();
   this->push_consumer_->push (payload);
 }
 
@@ -121,7 +120,6 @@ TAO_Notify_PushConsumer::push (const CosNotification::StructuredEvent& event)
 
   TAO_Notify_Event::translate (event, any);
 
-  last_ping_ = ACE_OS::gettimeofday ();
   this->push_consumer_->push (any);
 }
 
@@ -159,12 +157,6 @@ TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consu
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);
-}
-
-CORBA::Object_ptr
-TAO_Notify_PushConsumer::get_consumer (void)
-{
-  return CosEventComm::PushConsumer::_duplicate (this->push_consumer_.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

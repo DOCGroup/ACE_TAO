@@ -296,8 +296,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
   PortableServer::POAManager_var poa_manager =
     parent_poa->the_POAManager ();
 
-  PortableServer::POA_var poa =
-    parent_poa->create_POA (POA_name_.c_str (),
-                            poa_manager.in (),
-                            poa_policy_list);
+  parent_poa->create_POA (POA_name_.c_str (),
+                          poa_manager.in (),
+                          poa_policy_list);
 }

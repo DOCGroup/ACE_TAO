@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_time.h"
 
-
+ACE_RCSID(ace, OS_NS_time, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_time.inl"
@@ -319,7 +319,6 @@ ACE_OS::mktime (struct tm *t)
   t_sys.wMonth = t->tm_mon + 1;  // SYSTEMTIME is 1-indexed, tm is 0-indexed
   t_sys.wYear = t->tm_year + 1900; // SYSTEMTIME is real; tm is since 1900
   t_sys.wDayOfWeek = t->tm_wday;  // Ignored in below function call.
-  t_sys.wMilliseconds = 0;
   if (SystemTimeToFileTime (&t_sys, &t_file) == 0)
     return -1;
   ACE_Time_Value tv (t_file);

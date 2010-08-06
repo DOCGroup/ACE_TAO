@@ -54,11 +54,11 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "MIF_Task::activate %d\n",
+    "Thread_Task::activate %d\n",
     importance_));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "MIF_Task::activate task\n");
+  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
   dt_creator_->log_msg (msg);
 
   base_time_ = base_time;
@@ -98,7 +98,7 @@ MIF_Task::perform_task (void)
 
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
-      sched_param = dt_creator_->sched_param (this->importance_);
+      sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (this->importance_));
       const char * name = 0;
 
       for (int i = 0; i < this->iter_; i++)

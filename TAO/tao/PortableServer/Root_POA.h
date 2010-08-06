@@ -217,8 +217,10 @@ public:
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant);
 
+#if !defined (CORBA_E_MICRO)
   void activate_object_with_id (const PortableServer::ObjectId &id,
                                 PortableServer::Servant p_servant);
+#endif
 
   void deactivate_object (const PortableServer::ObjectId &oid);
 
@@ -319,7 +321,8 @@ public:
    * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE
    * and NON_EXISTENT states.
    */
-  PortableInterceptor::AdapterState get_adapter_state (void);
+  PortableInterceptor::AdapterState get_adapter_state (
+    void);
 
   virtual void *thread_pool (void) const;
 
@@ -351,7 +354,8 @@ public:
   TAO_POA_Manager &tao_poa_manager ();
 
   bool is_poa_generated (CORBA::Object_ptr reference,
-                         PortableServer::ObjectId &system_id);
+                         PortableServer::ObjectId &system_id
+                        );
 
   /*
    * Validate if the servant may be activated
@@ -400,7 +404,7 @@ public:
 
   /**
    * Find the the servant with ObjectId <system_id>, and retrieve
-   * its priority. Usually used in RT CORBA with SERVER_DECLARED
+   * its priority.Usually used in RT CORBA with SERVER_DECLARED
    * priority model.
    *
    * @return -1 if servant does not exist, else 0 indicating the
@@ -414,7 +418,8 @@ public:
 
   void cleanup_servant (
     PortableServer::Servant servant,
-    const PortableServer::ObjectId &user_id);
+    const PortableServer::ObjectId &user_id
+   );
 
   void post_invoke_servant_cleanup(
     const PortableServer::ObjectId &system_id,
@@ -427,7 +432,9 @@ public:
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,
       CORBA::Short priority,
-      bool &wait_occurred_restart_call);
+      bool &wait_occurred_restart_call
+
+    );
 
   CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                        bool indirect);
@@ -547,10 +554,12 @@ protected:
   PortableServer::Servant get_servant_i (void);
 
 protected:
+#if !defined (CORBA_E_MICRO)
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
                                   bool &wait_occurred_restart_call);
+#endif
 
   virtual void remove_from_parent_i (void);
 
@@ -612,7 +621,8 @@ protected:
   PortableInterceptor::ObjectReferenceTemplate *get_adapter_template_i (void);
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *
+    get_obj_ref_factory (void);
 
   /// Set the object reference factory
   void set_obj_ref_factory (
@@ -630,7 +640,7 @@ protected:
       bool &wait_occurred_restart_call);
 
 public:
-  /// @todo Temporarily for servant retention
+    // @todo Temporarily for servant retention
   CORBA::Object_ptr
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id);

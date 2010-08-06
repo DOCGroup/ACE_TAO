@@ -117,7 +117,6 @@ namespace TAO
        * @name TAO_Connection Handler overloads
        */
       virtual int release_os_resources (void);
-      virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
 
     private:

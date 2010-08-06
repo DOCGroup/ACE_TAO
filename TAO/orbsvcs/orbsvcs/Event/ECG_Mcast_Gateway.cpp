@@ -505,7 +505,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
   if (this->consumer_qos_.dependencies.length () > 0)
     {
       // Client supplied consumer qos.  Use it.
-      this->consumer_qos_.is_gateway = true;
+      this->consumer_qos_.is_gateway = 1;
       sender->connect (this->consumer_qos_);
     }
   else
@@ -518,7 +518,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
                                    0);
       RtecEventChannelAdmin::ConsumerQOS & qos =
         const_cast<RtecEventChannelAdmin::ConsumerQOS &> (consumer_qos_factory.get_ConsumerQOS ());
-      qos.is_gateway = true;
+      qos.is_gateway = 1;
 
       sender->connect (qos);
     }
@@ -551,7 +551,7 @@ TAO_ECG_Mcast_Gateway::init_receiver (
                                0, 1);
   RtecEventChannelAdmin::SupplierQOS & qos =
     const_cast<RtecEventChannelAdmin::SupplierQOS &> (supplier_qos_factory.get_SupplierQOS ());
-  qos.is_gateway = true;
+  qos.is_gateway = 1;
 
   receiver->connect (qos);
 

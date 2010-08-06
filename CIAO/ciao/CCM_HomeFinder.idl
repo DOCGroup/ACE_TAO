@@ -1,0 +1,39 @@
+// $Id$
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -Gv -I ../.. -I ../../orbsvcs/orbsvcs \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_HomeFinder.idl
+ */
+
+#if !defined (CCM_HOMEFINDER_IDL)
+#define CCM_HOMEFINDER_IDL
+
+#include "tao/orb_types.pidl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  exception HomeNotFound {};
+
+  interface CCMHome;
+
+  interface HomeFinder
+  {
+    CCMHome find_home_by_component_type (in CORBA::RepositoryId comp_repid)
+      raises (HomeNotFound);
+
+    CCMHome find_home_by_home_type (in CORBA::RepositoryId home_repid)
+      raises (HomeNotFound);
+
+    CCMHome find_home_by_name (in string home_name)
+      raises (HomeNotFound);
+  };
+};
+#endif /* CCM_HOMEFINDER_IDL */

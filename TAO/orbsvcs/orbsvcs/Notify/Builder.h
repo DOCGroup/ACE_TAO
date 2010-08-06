@@ -61,7 +61,7 @@ public:
 
   /// Build the Filter Factory.
   virtual CosNotifyFilter::FilterFactory_ptr
-  build_filter_factory (PortableServer::POA_ptr poa, TAO_Notify_FilterFactory*& ff);
+  build_filter_factory (PortableServer::POA_ptr poa);
 
   /// Build EventChannel.
   virtual CosNotifyChannelAdmin::EventChannel_ptr

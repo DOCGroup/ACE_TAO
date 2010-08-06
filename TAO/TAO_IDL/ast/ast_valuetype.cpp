@@ -2,35 +2,47 @@
 // $Id$
 
 #include "ast_valuetype.h"
-#include "ast_typedef.h"
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
 #include "ast_field.h"
-#include "ast_param_holder.h"
-
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
-
 #include "global_extern.h"
 #include "nr_extern.h"
 
 #include "ace/streams.h"
 
-AST_Decl::NodeType const
-AST_ValueType::NT = AST_Decl::NT_valuetype;
+ACE_RCSID (ast,
+           ast_valuetype,
+           "$Id$")
+
+AST_ValueType::AST_ValueType (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_supports (0),
+    pd_n_supports (0),
+    pd_inherits_concrete (0),
+    pd_supports_concrete (0),
+    pd_truncatable (false),
+    pd_custom (false)
+{
+}
 
 AST_ValueType::AST_ValueType (UTL_ScopedName *n,
-                              AST_Type **inherits,
+                              AST_Interface **inherits,
                               long n_inherits,
-                              AST_Type *inherits_concrete,
+                              AST_ValueType *inherits_concrete,
                               AST_Interface **inherits_flat,
                               long n_inherits_flat,
-                              AST_Type **supports,
+                              AST_Interface **supports,
                               long n_supports,
-                              AST_Type *supports_concrete,
+                              AST_Interface *supports_concrete,
                               bool abstract,
                               bool truncatable,
                               bool custom)
@@ -55,24 +67,6 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     pd_truncatable (truncatable),
     pd_custom (custom)
 {
-  // Enqueue the param holders (if any) for later destruction.
-  // By the time our destroy() is called, it will be too late
-  // to iterate over pd_inherits.
-  for (long i = 0; i < n_supports; ++i)
-    {
-      if (supports[i]->node_type () == AST_Decl::NT_param_holder)
-        {
-          this->param_holders_.enqueue_tail (supports[i]);
-        }
-    }
-   
-  if (inherits_concrete != 0)
-    {  
-      if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
-        {
-          this->param_holders_.enqueue_tail (inherits_concrete);
-        }
-    }
 }
 
 AST_ValueType::~AST_ValueType (void)
@@ -184,7 +178,7 @@ AST_ValueType::redefine (AST_Interface *from)
   this->pd_truncatable = vt->pd_truncatable;
 }
 
-AST_Type **
+AST_Interface **
 AST_ValueType::supports (void) const
 {
   return this->pd_supports;
@@ -196,13 +190,13 @@ AST_ValueType::n_supports (void) const
   return this->pd_n_supports;
 }
 
-AST_Type *
+AST_ValueType *
 AST_ValueType::inherits_concrete (void) const
 {
   return this->pd_inherits_concrete;
 }
 
-AST_Type *
+AST_Interface *
 AST_ValueType::supports_concrete (void) const
 {
   return this->pd_supports_concrete;
@@ -229,16 +223,18 @@ AST_ValueType::will_have_factory (void)
 // Look through supported interface list.
 AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
-                                  bool full_def_only)
+                                  bool treat_as_ref)
 {
   AST_Decl *d = 0;
   AST_Decl *d_before = 0;
-  AST_Type **is = 0;
+  AST_Interface **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
+//      idl_global->err ()->fwd_decl_lookup (this,
+//                                           e);
       return 0;
     }
 
@@ -251,16 +247,9 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
-        {
-          continue;
-        }
-        
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
-        
-      d = (i)->lookup_by_name_r (e, full_def_only);
-                               
+      d = (*is)->lookup_by_name (e,
+                                 treat_as_ref,
+                                 0 /* not in parent */);
       if (d != 0)
         {
           if (d_before == 0)
@@ -274,7 +263,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
               if (d != d_before)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "warning in %C line %d: ",
+                              "warning in %s line %d: ",
                               idl_global->filename ()->get_string (),
                               idl_global->lineno ()));
 
@@ -299,20 +288,6 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
     }
 
   return d_before;
-}
-
-AST_Decl *
-AST_ValueType::special_lookup (UTL_ScopedName *e,
-                               bool full_def_only)
-{
-  AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
-  if (d == 0)
-    {
-      d = this->look_in_supported (e, full_def_only);
-    }
-    
-  return d;
 }
 
 bool
@@ -378,11 +353,11 @@ AST_ValueType::legal_for_primary_key (void) const
 void
 AST_ValueType::destroy (void)
 {
-  this->AST_Interface::destroy ();
-  
   delete [] this->pd_supports;
   this->pd_supports = 0;
   this->pd_n_supports = 0;
+
+  this->AST_Interface::destroy ();
 }
 
 void
@@ -448,18 +423,58 @@ AST_ValueType::ast_accept (ast_visitor *visitor)
   return visitor->visit_valuetype (this);
 }
 
-AST_Field *
-AST_ValueType::fe_add_field (AST_Field *t)
-{
-  return this->fe_add_ref_decl (t);
-}
-
 AST_Factory *
 AST_ValueType::fe_add_factory (AST_Factory *f)
 {
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
+  AST_Decl *d = 0;
+
+  // Can't add to interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
+                                  f);
+      return 0;
+    }
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (f, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, f->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (f->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (f,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (f);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (f,
+                           false,
+                           f->local_name ());
+
+  return f;
 }
 
 bool
@@ -476,15 +491,14 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_ValueType *concrete_parent =
-    AST_ValueType::narrow_from_decl (node->inherits_concrete ());
+  AST_ValueType *concrete_parent = node->inherits_concrete ();
 
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {
       return true;
     }
 
-  AST_Type **v = node->pd_inherits;
+  AST_Interface **v = node->pd_inherits;
 
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {
@@ -536,6 +550,8 @@ AST_ValueType::lookup_primary_key_base (void) const
 
   return retval;
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_ValueType)
 IMPL_NARROW_FROM_SCOPE(AST_ValueType)

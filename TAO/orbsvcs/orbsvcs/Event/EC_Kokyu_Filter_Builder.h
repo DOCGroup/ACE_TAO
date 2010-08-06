@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/rtkokyu_event_export.h"
-#include "orbsvcs/RtecSchedulerC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

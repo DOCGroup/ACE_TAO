@@ -50,7 +50,7 @@
 <presetreference>Classes and Structs_Member Alignment Together_False</presetreference>
 </rule>
 <rule name="constructor-initialiser-packing">
-<presetreference>Constructor_Member Initializers_One Per Line Comma Below</presetreference>
+<presetreference>Constructor_Member Initializers_One Per Line</presetreference>
 </rule>
 <rule name="constructor-initialiser-style">
 <presetreference>Constructor_Initializer Alignment_True</presetreference>
@@ -100,12 +100,6 @@
 <rule name="expressions-binary-spacing">
 <presetreference>Expressions_Binary Operators_Spaced</presetreference>
 </rule>
-<rule name="expressions-conditional-spacing">
-<presetreference>Expressions_Conditional Operators_Spaced</presetreference>
-</rule>
-<rule name="expressions-conditional-spacing" override="true">
-<presetreference>Expressions_Conditional Operators_Disabled</presetreference>
-</rule>
 <rule name="expressions-functioncall-spacing">
 <presetreference>Functions_Calls_Spaced</presetreference>
 </rule>
@@ -114,9 +108,6 @@
 </rule>
 <rule name="expressions-pointer-spacing">
 <presetreference>Expressions_Pointer Operators_Not Spaced</presetreference>
-</rule>
-<rule name="expressions-pointer-wrapping">
-<presetreference>Expressions_Pointer Operator Wrapping_After</presetreference>
 </rule>
 <rule name="expressions-unary-spacing">
 <presetreference>Expressions_Logical and Bitwise Unary Operators_Not Spaced</presetreference>
@@ -160,11 +151,8 @@
 <rule name="function-parameter-alignment">
 <presetreference>Functions_Parameter Alignment_Bracket</presetreference>
 </rule>
-<rule name="function-parameter-brackets" override="true">
-<presetreference>Functions_Parameter Brackets_Disabled</presetreference>
-</rule>
 <rule name="function-parameter-lines">
-<presetreference>Functions_Parameter Lines_True</presetreference>
+<presetreference>Functions_Parameter Lines_False</presetreference>
 </rule>
 <rule name="function-parameter-spacing">
 <presetreference>Functions_Parameter Spacing_AfterComma</presetreference>
@@ -182,7 +170,7 @@
 <presetreference>Global_Alignment ensures at least one space_False</presetreference>
 </rule>
 <rule name="global-bracing-style">
-<presetreference>Global_Default Block Brace Position_Indented</presetreference>
+<presetreference>Global_Default Block Brace Position_Aligned</presetreference>
 </rule>
 <rule name="global-bracket-alignment">
 <presetreference>Expressions_Bracket Alignment_AlignAtBracket</presetreference>
@@ -257,13 +245,16 @@
 <presetreference>Global_Line Wrapping_80</presetreference>
 </rule>
 <rule name="member-initialiser-position">
-<presetreference>Constructor_Member Initializer Position_Below</presetreference>
+<presetreference>Constructor_Member Initializer Position_Below Indented</presetreference>
 </rule>
 <rule name="min-member-align">
 <presetreference>Classes and Structs_Minimum Member Alignment_None</presetreference>
 </rule>
 <rule name="multiple-inheritance">
 <presetreference>Classes and Structs_Multiple Inheritance_OnePerLine</presetreference>
+</rule>
+<rule name="multiple-inheritance" override="true">
+<presetreference>Classes and Structs_Multiple Inheritance_Disabled</presetreference>
 </rule>
 <rule name="namespace-bracing-style">
 <presetreference>Namespaces_Brace Position_Aligned</presetreference>

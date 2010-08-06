@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"

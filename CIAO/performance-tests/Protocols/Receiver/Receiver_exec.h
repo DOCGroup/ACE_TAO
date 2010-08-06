@@ -10,7 +10,7 @@
 namespace CIDL_ReceiverImpl
 {
   class RECEIVER_EXEC_Export ReceiverExec_i :
-    public virtual ::CIAO_Protocols_Receiver_Impl::Receiver_Exec,
+    public virtual ReceiverExec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -29,11 +29,13 @@ namespace CIDL_ReceiverImpl
 
     void ccm_remove (void);
 
-    void configuration_complete (void);
+    void ciao_preactivate (void);
+
+    void ciao_postactivate (void);
 
   protected:
 
-    ::CIAO_Protocols_Receiver_Impl::Receiver_Exec_Context_var context_;
+    ReceiverExec_Context_var context_;
 
     CORBA::ORB_var orb_;
 
@@ -81,7 +83,7 @@ namespace CIDL_ReceiverImpl
   };
 
   class RECEIVER_EXEC_Export ReceiverHomeExec_i :
-    public virtual ::CIAO_Protocols_Receiver_Impl::ReceiverHome_Exec,
+    public virtual ReceiverHomeExec,
     public virtual ::CORBA::LocalObject
   {
   public:

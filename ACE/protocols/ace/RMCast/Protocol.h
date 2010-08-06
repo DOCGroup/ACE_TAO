@@ -910,7 +910,7 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64* psn = 0;
+        u64* psn;
         i.next (psn);
         os << *psn;
       }

@@ -35,13 +35,13 @@ ACE_RCSID(tests, FlReactor_Test, "$Id$")
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
-#include /**/ <FL/Fl.H>
-#include /**/ <FL/Fl_Window.H>
-#include /**/ <FL/Fl_Hor_Slider.H>
-#include /**/ <FL/Fl_Box.H>
+#include /**/ <FL/Fl.h>
+#include /**/ <FL/Fl_Window.h>
+#include /**/ <FL/Fl_Hor_Slider.h>
+#include /**/ <FL/Fl_Box.h>
 #include /**/ <FL/math.h>
 #include /**/ <FL/gl.h>
-#include /**/ <FL/Fl_Gl_Window.H>
+#include /**/ <FL/Fl_Gl_Window.h>
 
 class Test_Window : public Fl_Gl_Window
 {
@@ -271,10 +271,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
   window.show (argc, argv);
   tw.show ();
 
-  int const retval = Fl::run ();
+  return Fl::run ();
 
   ACE_END_TEST;
-
-  return retval;
 }
 

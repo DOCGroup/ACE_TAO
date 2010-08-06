@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Containers_T.h"
+#include "ace/Array.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

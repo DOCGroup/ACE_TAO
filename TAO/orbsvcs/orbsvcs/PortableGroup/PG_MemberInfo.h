@@ -34,19 +34,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Structure that contains all member-specific information.
  */
-
 struct TAO_PG_MemberInfo
 {
-  PortableGroup::ObjectGroup_var group;
 
   /// Reference to the member.
   CORBA::Object_var member;
 
   /// The location at which the member resides.
   PortableGroup::Location location;
-
-  /// Flag indicates that the member is alive.
-  bool is_alive;
 
   /// Equality operator.
   /**

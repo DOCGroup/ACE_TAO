@@ -1,16 +1,16 @@
 // -*- MPC -*-
 // $Id$
 
-project(Execution_Manager_Exec) : install, dance_exe, naming, \
-                                  dance_domainapplicationmanager, \
-                                  dance_executionmanager_skel, \
-				  utils, dance_logger, avoids_minimum_corba, \
-				  iortable, dance_split_plan, dance_tools {
-  exename = dance_execution_manager
+project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc, ciao_executionmanager_stub, rtcorba, rtportableserver, rt_server, ciaoexe, rtcorba, strategies {
+  exename = Execution_Manager
+  
+  IDL_Files {
+  }
 
   Source_Files {
-    ExecutionManager_Impl.cpp
-    ExecutionManager_Module.cpp
+    ../Interfaces/ExecutionManagerDaemonS.cpp
     Execution_Manager.cpp
+    Execution_Manager_Impl.cpp
+    DAM_Map.cpp
   }
 }

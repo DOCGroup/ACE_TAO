@@ -29,7 +29,7 @@
 //
 // ============================================================================
 
-#include "../test_config.h"
+#include "tests/test_config.h"
 #include "ace/Default_Constants.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
@@ -146,7 +146,8 @@ static const char *test_string = "SSL_Asynch_Stream_Test!";
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
+#ifndef ACE_WIN32
+
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -156,24 +157,17 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  // Put the <signal_set>.
-# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  // In multi-threaded application this is not POSIX compliant
-  // but let's leave it just in case.
-  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
-# else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
-# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("pthread_sigmask failed")));
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+#endif /* ACE_WIN32 */
 
-  return 0;
+  return 1;
 }
 
 static void
@@ -457,9 +451,6 @@ proactor_loop (void *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Start handling events.\n")));
 
-  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
-  disable_signal (SIGPIPE, SIGPIPE);
-
   int result =
     ACE_Proactor::instance ()->proactor_run_event_loop ();
   if (result == -1)
@@ -479,9 +470,6 @@ start_clients (void *)
   // Client thread function.
   ACE_INET_Addr addr (rendezvous);
   ACE_SSL_SOCK_Connector connect;
-
-  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
-  disable_signal (SIGPIPE, SIGPIPE);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {

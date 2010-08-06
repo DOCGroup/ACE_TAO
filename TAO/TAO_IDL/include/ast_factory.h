@@ -67,8 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FACTORY_AST_FACTORY_HH
 #define _AST_FACTORY_AST_FACTORY_HH
 
-// Representation of OBV and component home factory
-// construct declaration.
+// Representation of OBV factory construct declaration.
 
 #include "ast_decl.h"
 #include "utl_scope.h"
@@ -80,9 +79,18 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
+
+  // Constructor(s).
+  AST_Factory (void);
+
   AST_Factory (UTL_ScopedName *n);
 
+  // Destructor.
   virtual ~AST_Factory (void);
+
+  // Data Accessors.
+
+  // Public operations.
 
   UTL_ExceptList *exceptions (void);
   // Return exception list.
@@ -112,12 +120,7 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  // Method to add exceptions.
-  UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
-
-  static AST_Decl::NodeType const NT;
-
-protected:
+private:
   // Data.
 
   UTL_ExceptList *pd_exceptions;

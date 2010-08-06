@@ -1,7 +1,5 @@
 // $Id$
 
-// Ensure that the PI library is linked in when building statically
-#include "tao/PI/PI.h"
 #include "TestS.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
@@ -68,6 +66,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Check this isn't generating transients for any other reason
       hello->ping ();
+
+
 
       try
         {

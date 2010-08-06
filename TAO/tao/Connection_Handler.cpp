@@ -30,6 +30,11 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
     connection_pending_ (false),
     is_closed_ (false)
 {
+  // @todo: We need to have a distinct option/ method in the resource
+  // factory for this and TAO_Transport.
+  this->lock_ =
+    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
+
   // Put ourselves in the connection wait state as soon as we get
   // created
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
@@ -38,6 +43,9 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
+  // @@ TODO Use auto_ptr<>
+  delete this->lock_;
+
   //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
@@ -198,12 +206,7 @@ TAO_Connection_Handler::handle_output_eh (
       return return_value;
     }
 
-  // The default constraints are to never block.
-  TAO::Transport::Drain_Constraints dc;
-  if (this->transport ()->handle_output (dc) == TAO_Transport::DR_ERROR)
-    {
-      return_value = -1;
-    }
+  return_value = this->transport ()->handle_output (0);
 
   this->pos_io_hook (return_value);
 
@@ -431,17 +434,26 @@ TAO_Connection_Handler::pos_io_hook (int &)
 }
 
 int
-TAO_Connection_Handler::close_handler (u_long)
+TAO_Connection_Handler::close_handler (u_long flags)
 {
   this->is_closed_ = true;
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
 
-  // If there was a pending connection cancel it.
-  this->cancel_pending_connection ();
+  // Save these for later.  It's possible that purge_entry() called on
+  // the transport could cause our own death.
+  bool pending = this->connection_pending_;
+  TAO_Transport* transport = this->transport ();
 
-  // Purge transport from cache if it's in cache.
-  this->transport ()->purge_entry();
+  // After calling this, it is unsafe to assume that this object has
+  // *NOT* been deleted!  Only if pending is true are we still around.
+  transport->purge_entry();
+
+  // We only need to remove the reference from the transport if there
+  // were connections pending at the time that the handler is closed or
+  // the handler is being closed during a new connection.
+  if (pending || ACE_BIT_DISABLED(flags, CLOSE_DURING_NEW_CONNECTION))
+    transport->remove_reference ();
 
   return 0;
 }

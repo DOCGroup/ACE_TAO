@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+#include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
@@ -132,7 +133,7 @@ Peer_Handler::display_menu (void)
 
 IPC_Client::IPC_Client (void)
   : iterations_ (0),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+    done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }

@@ -36,6 +36,11 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+# if defined (ACE_HAS_BROKEN_R_ROUTINES)
+#   undef ctime_r
+#   undef asctime_r
+# endif /* ACE_HAS_BROKEN_R_ROUTINES */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Type-safe, and unsigned.
@@ -94,8 +99,7 @@ inline long ace_timezone()
 
 
 #if !defined (ACE_LACKS_DIFFTIME)
-# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) \
-    && defined (_MSC_VER)
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T)
     // The WinCE 6.0 SDK ships with a diff_time that uses __time32_t as type
     // not time_t. This resolves in compilation warnings because time_t
     // can be 64bit. Disable at this momemt the warning for just this method
@@ -117,8 +121,7 @@ inline double ace_difftime(time_t t1, time_t t0)
 {
   return difftime (t1, t0);
 }
-# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) \
-    && defined (_MSC_VER)
+# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T)
 #   pragma warning (pop)
 # endif
 #endif /* !ACE_LACKS_DIFFTIME */
@@ -191,6 +194,10 @@ namespace ACE_OS
 #endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
+# if defined (difftime)
+#   undef difftime
+# endif /* difftime */
+
 #if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
 #else
@@ -258,6 +265,10 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);
+
+# if defined (timezone)
+#   undef timezone
+# endif /* timezone */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone (void);

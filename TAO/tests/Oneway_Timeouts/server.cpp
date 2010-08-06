@@ -22,7 +22,6 @@ int elapsed_max = 0;
 int elapsed_min = 0;
 int first_min = 0;
 int first_max = 0;
-const ACE_TCHAR *server_ior = ACE_TEXT ("test.ior");
 
 class Tester_i
   : public virtual POA_Tester
@@ -164,15 +163,14 @@ namespace {
   {
     //FUZZ: disable check_for_lack_ACE_OS
     cout << "server [-activate_delay ms] [-run_delay ms] [-request_delay ms] "
-      "[-abort_after n] [-server_ior <ior>]\n"
+      "[-abort_after n]\n"
       "\t[-expected n=0] [-elapsed_max ms=0] [-elapsed_min ms=0] "
       "[-first_min ms=0]\n"
       "\t[-first_max ms=0]\n"
       "\tactivate_delay Millisecond delay before POAManager::activate.\n"
       "\trun_delay Millisecond delay before ORB::run ().\n"
       "\trequest_delay Millisecond delay within each servant request.\n"
-      "\tabort_after abort () after N requests.\n"
-      "\tior Server ior.\n" << endl;
+      "\tabort_after abort () after N requests.\n" << endl;
     //FUZZ: enable check_for_lack_ACE_OS
   }
 
@@ -236,12 +234,6 @@ namespace {
             abort_after = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else if (args.cur_arg_strncasecmp (ACE_TEXT ("-server_ior")) == 0)
-          {
-            args.consume_arg ();
-            server_ior = args.get_current ();
-            args.consume_arg ();
-          }
         else
           {
             cerr << "Error: Unknown argument \""
@@ -255,7 +247,7 @@ namespace {
 
   void WriteIOR (const char *ior)
   {
-    ofstream out (ACE_TEXT_ALWAYS_CHAR (server_ior));
+    ofstream out ("server.ior");
     out << ior;
   }
 

@@ -47,7 +47,6 @@ public:
   ///= TAO_Notify_Tests_FilterFactory methods.
 
   virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
-  virtual void destroy (void);
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -56,14 +55,7 @@ public:
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
                                                                     const CORBA::Any & default_value);
 
-  virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-    
 protected:
-  /// Release this object.
-  virtual void release (void);
-
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;
 };

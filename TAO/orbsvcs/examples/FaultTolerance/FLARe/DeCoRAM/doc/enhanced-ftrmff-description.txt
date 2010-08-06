@@ -1,0 +1,50 @@
+ENHANCED-FTRMFF
+input: list of tasks
+       list of available processors
+       number of backups per component
+
+sort tasks by their period
+for each task
+  create a copy of the complete schedule
+  MULTI_FAILURE_SCHEDULE (primary)
+  if (success)
+    create list of backup tasks
+    for each backup task
+      MULTI_FAILURE_SCHEDULE (backup)
+    end for
+    add unscheduled backps to unschedulable list
+  else
+    add task to unschedulable list
+    continue with next task
+  end if
+end for
+return schedule and unschedulable list
+
+MULTI_FAILURE_SCHEDULE 
+input:  schedule
+        task
+
+for each processor
+  CALCULATE_FAILOVER_SCENARIOS (processor, task)
+  for each failover scenario
+    calculate worst case response time
+  end for
+  if maximum wcrt is smaller than the period
+    schedule task in this processor
+    return schedule result
+  end if
+end for
+
+CALCULATE_FAILOVER_SCENARIOS
+input: schedule
+       processor
+       task
+
+find backup tasks of processor
+find primary processors of backup tasks
+remove primary processor if the task is a backup
+determine set of all possible processor failure combinations
+for each combination
+  add a list of failed processors to the result
+end for
+return result with lists of failed processors

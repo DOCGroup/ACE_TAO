@@ -20,7 +20,6 @@
 #include /**/ "ace/pre.h"
 
 #include "DAnCE/Deployment/DeploymentC.h"
-#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "ace/SString.h"             //for the ACE_CString
 
 #include "ZIP_Wrapper.h"             //Wrapper around zzip
@@ -39,11 +38,12 @@
   * goes through the PackageConfiguration and updates the locations of the
   * artifacts, wrt to their location on the HTTP server.
   */
-class PC_Updater
+class  PC_Updater
 {
 public:
 
   /// Constructors
+
   PC_Updater (const char* server_path, const char* package);
   PC_Updater (ACE_CString& server_path, ACE_CString& package);
 
@@ -100,7 +100,8 @@ private:
 
   ACE_CString server_path_;
 
-  /// Create a doubly link list
+  /// create a doubly link list
+  //ACE_New_Allocator allocator_;
   ACE_Double_Linked_List<ZIP_File_Info> file_list_;
 
   ACE_CString package_;

@@ -28,10 +28,9 @@ module MIOP
 {
   typedef sequence <octet, 252> UniqueId;
 
-  typedef char char4[4];
   struct PacketHeader_1_0
   {
-    char4              magic;
+    char              magic[4];
     octet             hdr_version;
     octet             flags;
     unsigned short    packet_length;
@@ -43,14 +42,13 @@ module MIOP
   typedef GIOP::Version Version;
 
   typedef string Address;
- 
-  typedef sequence<IOP::TaggedComponent> Component_Seq;
+
   struct UIPMC_ProfileBody
   {
     Version           miop_version;
     Address           the_address;
     short             the_port;
-    Component_Seq     components;
+    sequence<IOP::TaggedComponent> components;
   };
 };
 

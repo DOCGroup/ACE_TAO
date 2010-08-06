@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for valueboxes in the client stub file
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for valueboxes in the client stub file
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           valuebox_cs,
+           "$Id: valuebox_cs.cpp Exp")
 
 be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
   : be_visitor_valuebox (ctx)
@@ -233,15 +242,13 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->local_name () << " *&vb_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::Boolean is_null_object = false;" << be_nl
-      << "::CORBA::Boolean is_indirected = false;" << be_nl
-      << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
+      << "::CORBA::Boolean is_null_object;" << be_nl
       << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
-      << "strm, indrected_strm, " << be_nl
+      << "strm," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id (),"
       << be_nl
-      << "is_null_object, is_indirected"
+      << "is_null_object"
       << be_uidt_nl
       << ") == false)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -251,13 +258,6 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "if (is_null_object)"  << be_idt_nl
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "if (is_indirected)"  << be_idt_nl
-      << "{" << be_idt_nl
-      << "return " << node->name () << "::_tao_unmarshal (" << be_idt
-      << be_idt << be_idt_nl
-      << " indrected_strm, vb_object);" 
-      << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "vb_object," << be_nl

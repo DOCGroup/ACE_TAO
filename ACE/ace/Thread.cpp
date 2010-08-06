@@ -2,6 +2,10 @@
 
 #include "ace/Thread.h"
 
+ACE_RCSID(ace,
+          Thread,
+          "$Id$")
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread.inl"
 #endif /* !defined (__ACE_INLINE__) */

@@ -8,7 +8,7 @@
 #include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, Token_Request_Reply, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,6 +2,10 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+ACE_RCSID (ace,
+           OS_NS_stdlib,
+           "$Id$")
+
 #include "ace/Default_Constants.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -57,11 +61,17 @@ ACE_OS::exit (int status)
     (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-#if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE)
+# if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
-#else
+# else
   ::exit (status);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
+#else
+  // @@ This is not exactly the same as ExitProcess.  But this is the
+  // closest one I can get.
+  ::TerminateProcess (::GetCurrentProcess (), status);
+#endif /* ACE_HAS_WINCE */
 }
 
 void
@@ -82,7 +92,7 @@ ACE_OS::free (void *ptr)
 ACE_TCHAR *
 ACE_OS::getenvstrings (void)
 {
-#if defined (ACE_LACKS_GETENVSTRINGS)
+#if defined (ACE_LACKS_ENV)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
@@ -106,7 +116,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #if defined (ACE_HAS_WINCE)
   // WinCE doesn't have environment variables so we just skip it.
   return ACE_OS::strdup (str);
-#elif defined (ACE_LACKS_STRENVDUP)
+#elif defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (str);
   ACE_NOTSUP_RETURN (0);
 #else
@@ -586,7 +596,7 @@ ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 }
 #endif /* ACE_LACKS_STRTOL */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOL)
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOL) 
 long
 ACE_OS::wcstol_emulation (const wchar_t *nptr,
         wchar_t **endptr,
@@ -724,7 +734,7 @@ ACE_OS::strtoul_emulation (const char *nptr,
 #endif /* ACE_LACKS_STRTOUL */
 
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL)
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL) 
 unsigned long
 ACE_OS::wcstoul_emulation (const wchar_t *nptr,
          wchar_t **endptr,
@@ -861,7 +871,7 @@ ACE_OS::strtoll_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOLL */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOLL)
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOLL) 
 ACE_INT64
 ACE_OS::wcstoll_emulation (const wchar_t *nptr,
          wchar_t **endptr,
@@ -1000,7 +1010,7 @@ ACE_OS::strtoull_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOULL */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOULL)
+#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOULL) 
 ACE_UINT64
 ACE_OS::wcstoull_emulation (const wchar_t *nptr,
           wchar_t **endptr,

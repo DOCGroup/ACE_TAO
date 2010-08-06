@@ -8,55 +8,11 @@
 ## MPC Command:
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/utils/catior
-
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-
-## Makefile.catior_lib.am
-
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
-
-lib_LTLIBRARIES = libTAO_Catior.la
-
-libTAO_Catior_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DCATIOR_BUILD_DLL
-
-libTAO_Catior_la_SOURCES = \
-  Catior_i.cpp
-
-libTAO_Catior_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_Catior_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_ZIOP.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Compression.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS = \
-  Catior_i.h \
-  catior_export.h
-
-endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
 
 ## Makefile.catior.am
 
@@ -64,9 +20,9 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 
-bin_PROGRAMS = tao_catior
+bin_PROGRAMS = catior
 
-tao_catior_CPPFLAGS = \
+catior_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -74,11 +30,10 @@ tao_catior_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-tao_catior_SOURCES = \
+catior_SOURCES = \
   catior.cpp
 
-tao_catior_LDADD = \
-  libTAO_Catior.la \
+catior_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_ZIOP.la \
   $(TAO_BUILDDIR)/tao/libTAO_Compression.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \

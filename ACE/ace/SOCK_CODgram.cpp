@@ -8,6 +8,8 @@
 #include "ace/SOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, SOCK_CODgram, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_CODgram)

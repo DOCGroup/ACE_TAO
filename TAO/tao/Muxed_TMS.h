@@ -25,15 +25,11 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template <class X> class ACE_Intrusive_Auto_Ptr;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
-class TAO_Reply_Dispatcher;
 
 /**
  * @class TAO_Muxed_TMS
@@ -63,7 +59,7 @@ public:
   // = Please read the documentation in the TAO_Transport_Mux_Strategy
   //   class.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd);
+                               TAO_Reply_Dispatcher *rh);
   virtual int unbind_dispatcher (CORBA::ULong request_id);
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
@@ -73,10 +69,6 @@ public:
   virtual bool idle_after_reply (void);
   virtual void connection_closed (void);
   virtual bool has_request (void);
-
-private:
-  void operator= (const TAO_Muxed_TMS &);
-  TAO_Muxed_TMS (const TAO_Muxed_TMS &);
 
 private:
   /// Lock to protect the state of the object
@@ -91,7 +83,7 @@ private:
   TAO_ORB_Core * const orb_core_;
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
-                                   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>,
+                                   TAO_Reply_Dispatcher *,
                                    ACE_Hash <CORBA::ULong>,
                                    ACE_Equal_To <CORBA::ULong>,
                                    ACE_Null_Mutex>

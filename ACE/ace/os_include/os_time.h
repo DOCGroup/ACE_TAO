@@ -81,6 +81,10 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if defined (ACE_HAS_BROKEN_CTIME)
+#  undef ctime
+#endif /* ACE_HAS_BROKEN_CTIME */
+
 // There are a lot of threads-related macro definitions in the config files.
 // They came in at different times and from different places and platform
 // requirements as threads evolved.  They are probably not all needed - some

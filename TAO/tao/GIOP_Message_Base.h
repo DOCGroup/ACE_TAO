@@ -159,8 +159,6 @@ public:
 private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
-  /// When decompressed, db contains a complete new ACE_Data_Block and
-  /// therefore qd its data block is alse replaced.
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                    size_t& rd_pos, size_t& wr_pos);
 #endif
@@ -183,11 +181,11 @@ private:
     const TAO_GIOP_Message_Version &version) const;
 
   /// Print out consolidate messages
-  int dump_consolidated_msg (TAO_OutputCDR &stream);
+  int dump_consolidated_msg (TAO_OutputCDR &stream, bool hex_dump_only);
 
   /// Print out a debug messages..
   void dump_msg (const char *label, const u_char *ptr,
-                 size_t len);
+                 size_t len, bool hex_dump_only = false);
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can

@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operator for the Sequence node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operator for the Sequence node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_sequence,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Sequence visitor for generating Any operator declarations in the client
@@ -32,9 +42,7 @@ int
 be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 {
   if (node->cli_stub_any_op_gen ()
-      || node->imported ()
-      || (node->is_local ()
-          && !be_global->gen_local_iface_anyops ()))
+      || node->imported ())
     {
       return 0;
     }
@@ -46,109 +54,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
-  // These are no-ops for now, so we just generate them and return
-  if (be_global->alt_mapping () && node->max_size ()->ev ()->u.ulval == 0)
-    {
-      be_type *bt =
-        be_type::narrow_from_decl (node->base_type ());
-        
-      if (bt->node_type () == AST_Decl::NT_typedef)
-        {
-          be_typedef *td = be_typedef::narrow_from_decl (bt);
-          bt = td->primitive_base_type ();
-        }
-        
-      enum type_category
-      {
-        ANY_VALUE,
-        ANY_OBJREF,
-        ANY_ARRAY
-      };
-      
-      type_category tc = ANY_VALUE;
-      
-      if (bt->node_type () == AST_Decl::NT_array)
-        {
-          tc = ANY_ARRAY;
-        }
-      else if (be_interface::narrow_from_decl (bt) != 0
-               && be_valuetype::narrow_from_decl (bt) == 0)
-        {
-          tc = ANY_OBJREF;
-        }
-        
-      *os << be_nl
-          << "void operator<<= (" << be_idt_nl
-          << "::CORBA::Any &_tao_any," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_elem)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "TAO::";
-          
-      switch (tc)
-        {
-          case ANY_OBJREF:
-            *os << "insert_objref_vector<"
-                << bt->full_name () << "_ptr> (";
-                
-            break;
-          case ANY_ARRAY:
-            *os << "insert_array_vector<"
-                << bt->full_name () << "_forany> (";
-                
-            break;
-          default:
-            *os << "insert_value_vector<"
-                << bt->full_name () << "> (";
-                
-            break;
-        }
-          
-      *os << be_idt_nl
-          << "_tao_any," << be_nl
-          << "_tao_elem);" << be_uidt << be_uidt_nl
-          << "}";
-          
-      *os << be_nl << be_nl
-          << "::CORBA::Boolean operator>>= (" << be_idt_nl
-          << "const ::CORBA::Any &_tao_any," << be_nl
-          << "std::vector<" << bt->full_name ()
-          << "> &_tao_elem)" << be_uidt_nl
-          << "{" << be_idt_nl
-          << "return" << be_idt_nl
-          << "TAO::";
-          
-      switch (tc)
-        {
-          case ANY_OBJREF:
-            *os << "extract_objref_vector<"
-                << bt->full_name () << "_ptr> (";
-                
-            break;
-          case ANY_ARRAY:
-            *os << "extract_array_vector<"
-                << bt->full_name () << "_forany> (";
-                
-            break;
-          default:
-            *os << "extract_value_vector<"
-                << bt->full_name () << "> (";
-                
-            break;
-        }
-          
-      *os << be_idt_nl
-          << "_tao_any," << be_nl
-          << "_tao_elem);" << be_uidt << be_uidt << be_uidt_nl
-          << "}";
-          
-      *os << be_nl
-          << be_global->core_versioning_end () << be_nl;
-      
-      node->cli_stub_any_op_gen (true);
-      return 0;
-    }
   
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
@@ -184,8 +89,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   be_typedef *td = this->ctx_->tdef ();
 
   // Copying insertion.
-  *os << be_nl
-      << "// Copying insertion." << be_nl
+  *os << be_nl << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
@@ -255,6 +159,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_end () << be_nl;
   
-  node->cli_stub_any_op_gen (true);
+  node->cli_stub_any_op_gen (1);
   return 0;
 }

@@ -15,6 +15,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_CORBA_SERVER_REQUEST_H
 #define TAO_CORBA_SERVER_REQUEST_H
 
@@ -45,6 +46,9 @@ namespace CORBA
 {
   class ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr);
 
   typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
   typedef TAO_Pseudo_Out_T<ServerRequest> ServerRequest_out;
@@ -113,8 +117,8 @@ namespace CORBA
     static ServerRequest_ptr _nil (void);
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcnt (void);
+    CORBA::ULong _decr_refcnt (void);
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);

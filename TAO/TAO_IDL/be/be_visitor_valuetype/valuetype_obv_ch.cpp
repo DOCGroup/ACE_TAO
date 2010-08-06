@@ -1,21 +1,30 @@
 
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_obv_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client header
- *  OBV_ class
- *  (see C++ mapping OMG 20.17)
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- *  @author based on interface_ch.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_obv__ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client header
+//    OBV_ class
+//    (see C++ mapping OMG 20.17)
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
+//    based on interface_ch.cpp from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_obv_ch,
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for client header
@@ -62,6 +71,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     }
   else
     {
+      // STEP 1: Generate the class name and the class name we inherit.
+      os->gen_ifdef_macro (node->flat_name (), "_OBV");
+
       *os << be_nl << be_nl << "// OBV_ class" << be_nl;
       *os << "class " << be_global->stub_export_macro() << " ";;
 
@@ -74,7 +86,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           << ": public virtual "
           << node->full_name ();
 
-      // STEP 1 (about which previous implementer forgot ):
+      // STEP 1a (about which previous implementer forgot ):
       // Generate inheritance from corresponding OBV_ classes.
 
 //------>>>
@@ -97,7 +109,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      AST_Type *inherited = 0;
+      AST_Interface *inherited = 0;
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -233,6 +245,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       *os << be_nl
           << "CORBA::Boolean require_truncation_;" << be_uidt_nl
           << "};";
+
+      os->gen_endif ();
     }
 
   return 0;

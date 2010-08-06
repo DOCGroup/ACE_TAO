@@ -84,7 +84,7 @@ public:
    * connection closed.
    * @param transport The transport attached to the event
    * @param max_wait_time Limit the time spent on the loop
-   * @return Returns -1 on error, 0 or non-zero value
+   * @param return Returns -1 on error, 0 or non-zero value
    *  otherwise.
    *
    * @todo Document this better, split the Follower code to the
@@ -183,9 +183,6 @@ public:
 
   /// Called when we are out of leaders.
   void no_leaders_available (void);
-
-  /// Set the new leader generator.
-  void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.

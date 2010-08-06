@@ -52,11 +52,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
 
     // Instantiate an EchoEventConsumer_i servant.
-    PortableServer::Servant_var<EchoEventSupplier_i> servant =
-      new EchoEventSupplier_i(orb.in());
+    EchoEventSupplier_i servant(orb.in());
 
     // Register it with the RootPOA.
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
     RtecEventComm::PushSupplier_var supplier =
       RtecEventComm::PushSupplier::_narrow(supplier_obj.in());

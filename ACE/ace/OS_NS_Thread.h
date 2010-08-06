@@ -304,9 +304,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_DAEMON              0          /* ignore in most places */
 #     define THR_JOINABLE            0          /* ignore in most places */
 #     define THR_SUSPENDED   CREATE_SUSPENDED
-#     if !defined (STACK_SIZE_PARAM_IS_A_RESERVATION)
-#       define STACK_SIZE_PARAM_IS_A_RESERVATION  0x00010000
-#     endif /* STACK_SIZE_PARAM_IS_A_RESERVATION */
 #     define THR_USE_AFX             0x01000000
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
@@ -317,11 +314,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
 
-#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
-
-typedef CONDITION_VARIABLE ACE_cond_t;
-
-#   elif defined (ACE_LACKS_COND_T)
+#   if defined (ACE_LACKS_COND_T)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -373,14 +366,6 @@ public:
   size_t was_broadcast_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#   endif /* ACE_LACKS_COND_T */
-
-#   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE) || defined (ACE_LACKS_COND_T)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 struct ACE_Export ACE_condattr_t
 {
   int type;
@@ -393,7 +378,7 @@ struct ACE_Export ACE_mutexattr_t
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#   endif /* ACE_HAS_WTHREADS_CONDITION_VARIABLE || ACE_LACKS_COND_T */
+#   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 
@@ -433,7 +418,7 @@ public:
   int ref_count_;
 
   /// Indicate that a reader is trying to upgrade
-  bool important_writer_;
+  int important_writer_;
 
   /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
@@ -1087,11 +1072,19 @@ namespace ACE_OS {
   void cleanup_tss (const u_int main_thread);
 
   //@{ @name A set of wrappers for condition variables.
+#if defined (ACE_LACKS_COND_T)
+  extern ACE_Export
+#else
   ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T */
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
 
+#if defined (ACE_LACKS_COND_T)
+  extern ACE_Export
+#else
   ACE_NAMESPACE_INLINE_FUNCTION
+#endif /* ACE_LACKS_COND_T */
   int condattr_destroy (ACE_condattr_t &attributes);
 
 #if defined (ACE_LACKS_COND_T)
@@ -1160,7 +1153,7 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_mutex_t *m,
-                      ACE_Time_Value *timeout);
+                      ACE_Time_Value *);
 
 #if defined (ACE_LACKS_COND_T)
   extern ACE_Export
@@ -1171,12 +1164,20 @@ namespace ACE_OS {
                  ACE_mutex_t *m);
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_thread_mutex_t *m,
-                      ACE_Time_Value *timeout);
+                      ACE_Time_Value *);
 
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
+#   else
+  ACE_NAMESPACE_INLINE_FUNCTION
+#   endif /* ACE_LACKS_COND_T */
   int cond_wait (ACE_cond_t *cv,
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
@@ -1317,7 +1318,7 @@ namespace ACE_OS {
 
   //@}
 
-  /// Low-level interface to @c priocntl(2).
+  /// Low-level interface to <priocntl>(2).
   /**
    * Can't call the following priocntl, because that's a macro on
    * Solaris.
@@ -1474,7 +1475,7 @@ namespace ACE_OS {
              size_t nsops);
   //@}
 
-  /// Friendly interface to @c priocntl(2).
+  /// Friendly interface to <priocntl>(2).
   extern ACE_Export
   int set_scheduling_params (const ACE_Sched_Params &,
                              ACE_id_t id = ACE_SELF);
@@ -1604,7 +1605,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask, in bytes.
+   * @param cpu_set_size The size of the cpu_mask
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */
@@ -1621,7 +1622,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask, in bytes.
+   * @param cpu_set_size The size of the cpu_mask
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */

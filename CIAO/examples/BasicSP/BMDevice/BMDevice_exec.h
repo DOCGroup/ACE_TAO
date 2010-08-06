@@ -18,56 +18,33 @@
 #include "BMDevice_exec_export.h"
 #include "BMDeviceEC.h"
 #include "tao/LocalObject.h"
+#include "BasicSP_exec.h"
 
 namespace MyImpl
 {
-  /**
-   * @class ReadData_Impl
-   *
-   * Implementation of the ReadData interface
-   */
-  class BMDEVICE_EXEC_Export ReadData_Impl :
-    public virtual ::BasicSP::CCM_ReadData,
-    public virtual ::CORBA::LocalObject
-  {
-  public:
-    /// Constructor
-    ReadData_Impl(const char* name);
-
-    void set_name (const char* name);
-
-    virtual char *
-    get_data (void);
-
-    ~ReadData_Impl (void);
-
-  private:
-    CORBA::String_var str_;
-  };
-  
   /**
    * @class BMDEVICE_exec_i
    *
    * An example RateGen executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDevice_exec_i :
-    public virtual CIAO_BasicSP_BMDevice_Impl::BMDevice_Exec,
+    public virtual CIDL_BMDevice_Impl::BMDevice_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
     /// Default constructor.
-    BMDevice_exec_i (void);
+    BMDevice_exec_i ();
 
     /// Default destructor.
-    ~BMDevice_exec_i (void);
+    ~BMDevice_exec_i ();
 
     // Operations from BasicSP::BMDevice
 
     virtual BasicSP::CCM_ReadData_ptr
-    get_data_read (void);
+    get_data_read ();
 
     virtual void
-    push_timeout_value (BasicSP::TimeOut *ev);
+    push_timeout (BasicSP::TimeOut *ev);
 
     // Operations from Components::SessionComponent
 
@@ -75,16 +52,19 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    configuration_complete (void);
+    ciao_preactivate ();
 
     virtual void
-    ccm_activate (void);
+    ccm_activate ();
+    virtual void
+    ciao_postactivate ();
+
 
     virtual void
-    ccm_passivate (void);
+    ccm_passivate ();
 
     virtual void
-    ccm_remove (void);
+    ccm_remove ();
   protected:
 
    /// Copmponent specific context
@@ -94,32 +74,30 @@ namespace MyImpl
     MyImpl::ReadData_Impl* data_read_;
   };
 
-  extern "C" BMDEVICE_EXEC_Export ::Components::EnterpriseComponent_ptr
-  create_BasicSP_BMDevice_Impl (void);
-
   /**
    * @class BMDeviceHome_exec_i
    *
    * BMDevice home executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDeviceHome_exec_i :
-    public virtual CIAO_BasicSP_BMDevice_Impl::BMDeviceHome_Exec,
+    public virtual CIDL_BMDevice_Impl::BMDeviceHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
     /// Default ctor.
-    BMDeviceHome_exec_i (void);
+    BMDeviceHome_exec_i ();
 
     /// Default dtor.
-    ~BMDeviceHome_exec_i (void);
+    ~BMDeviceHome_exec_i ();
 
     // Explicit home operations.
 
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (void);
+    create ();
   };
+
 }
 
 // Executor DLL entry point.  CIAO's deployment and assembly framework

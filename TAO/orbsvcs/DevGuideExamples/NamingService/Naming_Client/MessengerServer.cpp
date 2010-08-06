@@ -43,8 +43,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     name[1].id = CORBA::string_dup( "Messenger" );
 
     // Create an object
-    PortableServer::Servant_var<Messenger_i> servant = new Messenger_i;
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    Messenger_i servant;
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     obj = poa->id_to_reference(oid.in());
     naming_client->rebind(name, obj.in());
 

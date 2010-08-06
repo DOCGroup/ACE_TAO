@@ -77,8 +77,7 @@ size_t const ACE_MAX_THREADS = 4;
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
-  if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
+  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
@@ -94,8 +93,7 @@ size_t const ACE_MAX_THREADS = 4;
 
 #define ACE_APPEND_LOG(NAME) \
   const ACE_TCHAR *program = NAME; \
-  if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
+  ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
@@ -127,6 +125,11 @@ size_t const ACE_MAX_THREADS = 4;
       ACE_OS::unlink (temp); \
     }
 
+#if defined (ghs)
+# // Rename main to ace_main for compatibility with run_tests.vxworks.
+# undef ACE_MAIN
+# define ACE_MAIN ace_main
+#endif /* ghs */
 #else /* ! VXWORKS */
 #  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 #    define ACE_INIT_LOG_FMT ACE_TEXT ("%ls%ls%ls")
@@ -149,7 +152,7 @@ size_t const ACE_MAX_THREADS = 4;
 #define OFSTREAM ofstream
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-#include "Test_Output_Export.h"
+#include "tests/Test_Output_Export.h"
 
 class Test_Output_Export ACE_Test_Output
 {

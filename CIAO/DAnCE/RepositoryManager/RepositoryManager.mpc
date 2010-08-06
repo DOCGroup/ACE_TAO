@@ -1,51 +1,53 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_RepositoryManagerDaemon_IDL) : install, taoidldefaults {
-  custom_only = 1
+//RepositoryManager project: implementation of a repository manager
+//compleint with the D&C spec
+
+project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zlib, ciaoexe {
+
+  includes += $(CIAO_ROOT)/tools/Config_Handlers $(ACE_ROOT)/contrib/minizip
+  //to circumvent an improper include resolution
+  //in the Package_Handlers/PC_Intf.h
+  exename = RepositoryManagerDaemon
+  requires += zlib
+  after += minizip
+  libs += Package_Config_Handlers minizip
+
   IDL_Files {
     RepositoryManagerDaemon.idl
   }
-  specific {
-    install_dir = DAnCE/RepositoryManager
-  }
-}
 
-project (DAnCE_RepositoryManager_Exec) : install, dance_logger, dance_config_handlers, dance_repositorymanagerbase, dance_repositorymanager_skel, naming, iortable, utils, zlib, minizip, dance_exe {
-  exename = dance_repository_manager
-  after += DAnCE_RepositoryManagerDaemon_IDL
-  requires += zlib
   Source_Files {
     RepositoryManagerDaemonC.cpp
     RepositoryManagerDaemonS.cpp
     ZIP_Wrapper.cpp
+    RepositoryManager.cpp
     RepositoryManager_Impl.cpp
     RM_Helper.cpp
     URL_Parser.cpp
-    PC_Updater.cpp
-    Repository_Manager_Module.cpp
-    Repository_Manager.cpp
-  }
-  Template_Files {
     PC_Updater_T.cpp
+    PC_Updater.cpp
   }
-  IDL_Files {
-  }
-  specific {
-    install_dir = DAnCE/RepositoryManager
-  }
+
 }
 
-project (DAnCE_RepositoryManager_Admin_Exec) : install, dance_repositorymanager_stub, dance_config_handlers, naming, dance_exe, dance_logger {
-  exename = dance_rm_admin
-  after += DAnCE_RepositoryManagerDaemon_IDL
+
+
+// RMadmin project: a sample client for the RM.
+
+project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers, ciaoexe {
+  exename = RMadmin
+  after  += RepositoryManager
 
   IDL_Files {
+   RepositoryManagerDaemon.idl
   }
 
   Source_Files {
-    repository_manager_admin.cpp
+    RMadmin.cpp
     RepositoryManagerDaemonC.cpp
-    repository_manager_admin_exec.cpp
+    Options.cpp
+    RM_Helper.cpp
   }
 }

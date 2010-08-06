@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Typedefs in the client inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Typedefs in the client inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef,
+           typedef_ci,
+           "$Id$")
 
 // ******************************************************
 // Typedef visitor for client inline
@@ -50,7 +59,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -124,7 +133,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
   be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_type *bt = 0;
+  be_type *bt;
 
   // This doesn't catch 'typedef of a typedef' if the node is
   // imported, so we check for that below before generating
@@ -218,7 +227,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
 int
 be_visitor_typedef_ci::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -249,7 +258,7 @@ be_visitor_typedef_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_ci::visit_structure (be_structure *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -280,7 +289,7 @@ be_visitor_typedef_ci::visit_structure (be_structure *node)
 int
 be_visitor_typedef_ci::visit_union (be_union *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {

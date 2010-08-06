@@ -3,6 +3,9 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 ACE_RCSID(Bug_1361_Regression, shutdown, "$Id$")
 
 #if defined (ACE_OPENVMS)

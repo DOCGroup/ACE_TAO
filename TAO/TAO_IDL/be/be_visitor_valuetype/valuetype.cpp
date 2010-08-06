@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes. This is a generic visitor.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes. This is a generic visitor.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on interface.cpp from Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype,
+           "$Id$")
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -45,7 +56,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       // generated so that elements in the node's scope can use it
       // for code generation.
 
-      this->ctx_->scope (node);
+      this->ctx_->scope (node->decl ());
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -183,8 +194,8 @@ be_visitor_valuetype::visit_constant (be_constant *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_MODULE_OBV_CI:
-    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
@@ -264,6 +275,8 @@ be_visitor_valuetype::visit_enum (be_enum *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
@@ -512,6 +525,8 @@ be_visitor_valuetype::visit_union (be_union *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
@@ -625,8 +640,8 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_MODULE_OBV_CI:
-    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
@@ -696,7 +711,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-      this->ctx_->scope (node);
+      this->ctx_->scope (node->decl ());
 
       // Set the node to be visited.
       this->ctx_->node (field);
@@ -763,7 +778,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                                                      unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
+  AST_ValueType *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
   if (parent != 0)

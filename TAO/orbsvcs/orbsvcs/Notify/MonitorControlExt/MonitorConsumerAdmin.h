@@ -62,30 +62,14 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
-
-  TAO_MonitorEventChannel* get_ec (void) const;
-
-  const ACE_CString & stat_name (void)const;
-
-
   /// Receive the queue count and store the approximated queue size in
   /// our statistic object.
   virtual void update_queue_count (size_t count);
 
-  virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
-
-  virtual void destroy (void);
-
 private:
-
-  virtual void remove (void);
-
   ACE_CString stat_name_;
-  ACE_CString queue_size_stat_name_;
-  ACE_CString overflow_stat_name_;
   ACE_CString control_name_;
-  Monitor_Base * queue_size_;
-  Monitor_Base * overflows_;
+  Monitor_Base* queue_size_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

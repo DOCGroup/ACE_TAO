@@ -67,12 +67,11 @@ public:
 
     proxy_id = proxy->id ();
 
+    proxy_ret = PROXY::_narrow (obj.in());
+
     // insert proxy in admin container.
     parent->insert (proxy);
 
-    proxy->configure (*parent, proxy_id);
-
-    proxy_ret = PROXY::_narrow (obj.in());
     return proxy_ret._retn ();
   }
 
@@ -167,9 +166,9 @@ TAO_Notify_Builder::~TAO_Notify_Builder ()
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notify_FilterFactory*& ff)
+TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa)
 {
-  ff = ACE_Dynamic_Service<TAO_Notify_FilterFactory>::instance ("TAO_Notify_FilterFactory");
+  TAO_Notify_FilterFactory* ff = ACE_Dynamic_Service<TAO_Notify_FilterFactory>::instance ("TAO_Notify_FilterFactory");
 
   if (ff == 0)
     {

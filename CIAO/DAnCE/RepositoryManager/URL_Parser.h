@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 //=============================================================================
@@ -16,6 +17,8 @@
 #ifndef URL_PARSER_H
 #define URL_PARSER_H
 
+#include "ace/Get_Opt.h"
+#include "ace/ARGV.h"
 #include "ace/Singleton.h"  //for ACE_Singleton
 #include "ace/Null_Mutex.h" //for ACE_Null_Mutex
 
@@ -34,7 +37,7 @@ public:
   bool parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Return false on failure
-  bool parseURL (ACE_TCHAR* url);
+  bool parseURL (char* url);
 
   void Error (void);
 

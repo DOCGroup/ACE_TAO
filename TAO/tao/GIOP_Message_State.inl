@@ -11,8 +11,10 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
     byte_order_ (0),
     message_type_ (GIOP::Request),
     payload_size_ (0),
-    more_fragments_ (false),
-    compressed_ (false)
+    more_fragments_ (false)
+#if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
+    , compressed_ (false)
+#endif
 {
 }
 

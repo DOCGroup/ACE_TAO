@@ -59,11 +59,10 @@ module NotifyMonitoringExt
   /// This corresponds to the EventChannel supplier admin names
   const string EventChannelSupplierAdminNames = "SupplierAdminNames";
 
-  /// This corresponds to the queue size: Deprecated. Use QueueElementCount
+  /// This corresponds to the EventChannel queue size
   const string EventChannelQueueSize = "QueueSize";
 
-  /// This corresponds to the queue count
-  /// Available at both the ConsumerAdmin level and the individual consumer level
+  /// This corresponds to the EventChannel queue count
   const string EventChannelQueueElementCount = "QueueElementCount";
 
   /// This corresponds to the EventChannel's oldest event
@@ -74,11 +73,6 @@ module NotifyMonitoringExt
 
   /// This corresponds to the EventChannelFactory names
   const string EventChannelFactoryNames = "FactoryNames";
-
-  /// This corresponds to the EventChannelQueueOverflows names
-  /// Events were discarded because QoS limits were exceeded
-  /// Available at both the ConsumerAdmin level and the individual consumer level
-  const string EventChannelQueueOverflows = "QueueOverflows";
 
   exception NameAlreadyUsed {};
   exception NameMapError {};

@@ -6,34 +6,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+use PerlACE::Run_Test;
 
 $status = 0;
+$file = PerlACE::LocalFile ("test.ior");
 
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
+unlink $file;
 
-$SV = $server->CreateProcess ("server");
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server");
 
 print STDERR "\n\n==== Running bug 2936 regression test\n";
 
-$test = $SV->Spawn ();
+$SV->Spawn ();
 
-if ($test != 0) {
-    print STDERR "ERROR: test returned $test\n";
-    exit 1;
-}
-
-$collocated = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15);
+$collocated = $SV->WaitKill (30);
 
 if ($collocated != 0) {
     print STDERR "ERROR: Bug_2936_Regression returned $collocated\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
+unlink $file;
 
 exit $status;

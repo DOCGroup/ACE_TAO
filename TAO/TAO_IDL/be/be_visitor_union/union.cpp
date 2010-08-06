@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union.cpp
- *
- *  $Id$
- *
- *  Generic visitor generating code for Unions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union.cpp
+//
+// = DESCRIPTION
+//    Generic visitor generating code for Unions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union, 
+           union, 
+           "$Id$")
 
 be_visitor_union::be_visitor_union (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -141,12 +150,6 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 
   be_union_branch* b =
     be_union_branch::narrow_from_decl (bd);
-    
-  // Could be a type decl.  
-  if (b == 0)
-    {
-      return 0;
-    }
 
   *os << be_nl;
 

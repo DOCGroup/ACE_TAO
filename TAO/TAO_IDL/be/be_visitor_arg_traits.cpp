@@ -20,7 +20,7 @@
 #include "be_interface_fwd.h"
 #include "be_valuetype_fwd.h"
 #include "be_component_fwd.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_home.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
@@ -45,6 +45,11 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
+
+
+ACE_RCSID (be,
+           be_visitor_arg_traits,
+           "$Id$")
 
 be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
                                               be_visitor_context *ctx)
@@ -77,7 +82,7 @@ be_visitor_arg_traits::visit_root (be_root *node)
 
   if (be_global->ami_call_back ())
     {
-      int const status =
+      int status =
         this->visit_valuetype (be_global->messaging_exceptionholder ());
 
       if (-1 == status)
@@ -159,8 +164,8 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
               << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << "," << be_nl << this->insert_policy() 
-          << be_uidt_nl
+      *os << "," << be_nl << this->insert_policy() << " <"
+          << node->name () << "_ptr>" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -249,8 +254,8 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << "," << be_nl << this->insert_policy()
-         << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << " <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -303,8 +308,8 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << "," << be_nl << this->insert_policy()
-         << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << " <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -419,7 +424,10 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
               << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
               << bound << "," << be_nl
-              << this->insert_policy() 
+              << this->insert_policy() << " <" << be_idt_nl
+              << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+              << ">"
+              << be_uidt_nl
               << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
@@ -500,7 +508,10 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy()
+      << this->insert_policy() << " <" << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
+      << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -581,7 +592,9 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy() << " <" << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
       << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
@@ -611,26 +624,20 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-  os->gen_ifdef_macro (alias->flat_name (),
-                       guard_suffix.c_str (),
-                       false);
-                       
-  bool use_vec = (node->unbounded () && be_global->alt_mapping ());
-  UTL_ScopedName *sn = alias->name ();
-  
+  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str (), false);
+
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "class " << this->S_ << "Arg_Traits<" << sn << ">"
-      << be_idt_nl
+      << "class "
+      << this->S_ << "Arg_Traits<"
+      << alias->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << (use_vec ? "Vector_" : "Var_Size_")
-      << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << sn << "," << be_nl
-      << this->insert_policy() << be_uidt_nl
+      << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
+      << alias->name () << "," << be_nl
+      << this->insert_policy() << " <" << alias->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
-
 
   os->gen_endif ();
 
@@ -748,7 +755,9 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << be_idt << be_idt_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy() << " <" << be_idt << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
       << be_uidt << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -792,7 +801,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   *os << node->name () << "_forany";
 
-  *os << "," << be_nl << this->insert_policy();
+  *os << "," << be_nl << this->insert_policy() << " <" << node->name () << "_forany" << ">";
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -834,7 +843,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   *os << "Basic_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << node->name () << "," << be_nl
-      << this->insert_policy() << be_uidt_nl
+      << this->insert_policy() << " <" << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -877,7 +886,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl;
 
-  *os << node->name () << "," << be_nl << this->insert_policy() << be_uidt_nl
+  *os << node->name () << "," << be_nl << this->insert_policy() << " <" << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -984,7 +993,8 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl << this->insert_policy();
+      << node->name () << "," << be_nl << this->insert_policy() << " <"
+      << node->name () << ">";
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -1146,12 +1156,6 @@ int
 be_visitor_arg_traits::visit_component_fwd (be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
-}
-
-int
-be_visitor_arg_traits::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 int

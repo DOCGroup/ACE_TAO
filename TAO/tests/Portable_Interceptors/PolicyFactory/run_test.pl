@@ -19,7 +19,7 @@ print STDERR "\n\n==== Running PolicyFactory test\n";
 
 $SV->Spawn ();
 
-$process_status = $SV->WaitKill ($process->ProcessStartWaitInterval());
+$process_status = $SV->WaitKill ($process->ProcessStopWaitInterval() + 30); # extra timeout
 
 if ($process_status != 0) {
     print STDERR "ERROR: server returned $process_status\n";

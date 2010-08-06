@@ -18,7 +18,8 @@
 //
 // ============================================================================
 
-#include <ace/streams.h>
+#include <iostream>
+#include <fstream>
 #include <strstream>
 #include "server.h"
 #include <ace/Synch_T.h>
@@ -529,8 +530,8 @@ find (CCS::Controller::SearchSeq & slist)
         CCS::Controller::SearchCriterion sc = slist[i].key._d ();
         if (sc == CCS::Controller::ASSET) {
             // Search for matching asset number.
-            bool make = false;
-            CCS::AssetType num = 0;
+                bool make = false;
+            CCS::AssetType num;
                 {
                 ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
                 where = m_assets.find (slist[i].key.asset_num ());
@@ -737,7 +738,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
     catch (const CORBA::Exception & e) {
         std::cerr << "Uncaught CORBA exception: "
-                  << e
+                  //<< e
                   << std::endl;
         return 1;
     }

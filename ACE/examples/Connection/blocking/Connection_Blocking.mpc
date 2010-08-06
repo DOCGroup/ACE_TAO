@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*acceptor) : aceexe, avoids_ace_for_tao {
+project(*acceptor) : aceexe {
+  avoids += ace_for_tao
   exename = acceptor
   Source_Files {
     SPIPE-acceptor.cpp
@@ -9,7 +10,8 @@ project(*acceptor) : aceexe, avoids_ace_for_tao {
   }
 }
 
-project(*connector) : aceexe, avoids_ace_for_tao {
+project(*connector) : aceexe {
+  avoids += ace_for_tao
   exename = connector
   Source_Files {
     SPIPE-connector.cpp

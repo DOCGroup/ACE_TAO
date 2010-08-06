@@ -153,26 +153,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   parser.setDTDHandler (handler);
   parser.setErrorHandler (handler);
   parser.setEntityResolver (handler);
+  ACEXML_DECLARE_NEW_ENV;
 
-  try
+  ACEXML_TRY_EX (FIRST)
   {
-    parser.parse (&input);
+    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK_EX (FIRST);
   }
-  catch (const ACEXML_Exception& ex)
+  ACEXML_CATCH (ACEXML_Exception, ex)
     {
       ex.print();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
     }
-  try
+  ACEXML_ENDTRY;
+  ACEXML_TRY_EX (SECOND)
   {
-    parser.parse (&input);
+    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK_EX (SECOND);
   }
-  catch (const ACEXML_SAXException& ex)
+  ACEXML_CATCH (ACEXML_SAXException, ex)
     {
       ex.print();
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Exception occurred. Exiting...\n")));
       return 1;
     }
+  ACEXML_ENDTRY;
 //   ACEXML_TRY_EX (THIRD)
 //   {
 //     parser.parse (&input ACEXML_ENV_ARG_PARAMETER);

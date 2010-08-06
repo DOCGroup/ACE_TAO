@@ -30,15 +30,14 @@ CONTROLLED_FILES = \
 	TAO/docs \
 	TAO/examples \
 	TAO/interop-tests \
-        TAO/m4 \
+	TAO/m4 \
 	TAO/orbsvcs \
 	TAO/performance-tests \
 	TAO/rules.tao.GNU \
         TAO/MPC \
 	TAO/tao \
 	TAO/tests \
-	TAO/utils \
-	TAO/etc
+	TAO/utils
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/TAO/TAO-INSTALL \

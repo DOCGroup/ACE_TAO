@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Dgram.h"
 
 #include "ace/Handle_Set.h"
@@ -18,8 +16,12 @@
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <iphlpapi.h>
+#include /**/ <Iphlpapi.h>
 #endif
+
+ACE_RCSID (ace,
+           SOCK_Dgram,
+           "$Id$")
 
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure

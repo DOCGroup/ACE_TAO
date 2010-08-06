@@ -5,12 +5,12 @@ project: vc_warnings {
   exename   = FaCENOACE
   requires += wince
   macros   += NO_ACE
-  lit_libs += aygshell commctrl
+  lit_libs += aygshell
 
   Source_Files {
     FaCE.cpp
     Main.cpp
-    CE_ARGV.cpp
+    CE_ARGV.CPP
     CE_Screen_Output.cpp
   }
 }

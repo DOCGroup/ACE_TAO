@@ -50,8 +50,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       ACE_Thread_Manager::instance ()->wait ();
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

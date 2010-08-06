@@ -17,7 +17,7 @@
 //
 //============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"

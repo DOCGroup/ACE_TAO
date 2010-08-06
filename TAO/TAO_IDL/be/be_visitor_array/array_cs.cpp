@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    array_cs.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_array,
+           array_cs,
+           "$Id$")
 
 // ************************************************************************
 //  visitor for array declaration in client stubs
@@ -304,7 +313,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()->decl ()))
+      && bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);

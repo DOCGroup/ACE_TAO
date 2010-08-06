@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 
 // IOR file of the Sender
-const ACE_TCHAR * ior = 0;
+const char * ior = 0;
 const char * message = 0;
 
 int
@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'm':
-          message = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          message = get_opts.opt_arg ();
           break;
 
         case '?':  // display help for use of the server.
@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (ior  == 0)
     {
-      ior = ACE_TEXT("file://Sender.ior");
+      ior = "file://Sender.ior";
     }
 
   return 0;
@@ -58,7 +58,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      CORBA::Object_var obj = orb->string_to_object (ior);
+      CORBA::Object_var obj =
+        orb->string_to_object (ior);
 
       Hello::Sender_var sender = Hello::Sender::_narrow (obj.in ());
 
@@ -70,9 +71,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (message)
-        {
-          sender->local_message (message);
-        }
+      {
+        sender->local_message (message);
+      }
 
       sender->start ();
 
@@ -80,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Unknown exception\n");
+      ex._tao_print_exception ("Unknown exception \n");
       return -1;
     }
 

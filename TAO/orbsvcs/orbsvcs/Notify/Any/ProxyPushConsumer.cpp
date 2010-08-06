@@ -79,23 +79,6 @@ TAO_Notify_ProxyPushConsumer::get_proxy_type_name (void) const
 }
 
 void
-TAO_Notify_ProxyPushConsumer::validate ()
-{
-  TAO_Notify_Supplier* sup = this->supplier ();
-  if (sup != 0 && ! sup->is_alive (true))
-  {
-    if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, 
-                  ACE_TEXT ("(%P|%t) TAO_Notify_ProxyPushConsumer::validate(%d)")
-                  ACE_TEXT ("disconnecting \n"), this->id ()));
-    }
-    this->disconnect_push_consumer ();
-  }
-}
-
-
-void
 TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
 {
   SuperClass::load_attrs(attrs);
@@ -124,15 +107,5 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
         }
     }
 }
-
-void
-TAO_Notify_ProxyPushConsumer::configure(
-  TAO_Notify_SupplierAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // presently nothing to do here.
-  // this method was added to support NotificationMC
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -4,7 +4,7 @@
 #include "be_scope.h"
 #include "be_valuetype.h"
 #include "be_eventtype.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_home.h"
 #include "be_module.h"
 #include "be_exception.h"
@@ -13,9 +13,12 @@
 #include "be_enum.h"
 #include "be_operation.h"
 #include "be_factory.h"
-#include "be_finder.h"
 #include "be_root.h"
 #include "be_visitor.h"
+
+ACE_RCSID (be, 
+           be_scope, 
+           "$Id$")
 
 // Default Constructor.
 be_scope::be_scope (void)
@@ -36,18 +39,6 @@ be_scope::~be_scope (void)
 }
 
 // Code generation methods.
-
-AST_Field *
-be_scope::be_add_field (AST_Field *f)
-{
-  return this->fe_add_field (f);
-}
-
-AST_Argument *
-be_scope::be_add_argument (AST_Argument *)
-{
-  return 0;
-}
 
 void
 be_scope::comma (unsigned short comma)
@@ -75,8 +66,6 @@ be_scope::decl (void)
       return be_eventtype::narrow_from_scope (this);
     case AST_Decl::NT_component:
       return be_component::narrow_from_scope (this);
-    case AST_Decl::NT_connector:
-      return be_connector::narrow_from_scope (this);
     case AST_Decl::NT_home:
       return be_home::narrow_from_scope (this);
     case AST_Decl::NT_module:
@@ -95,8 +84,6 @@ be_scope::decl (void)
       return be_operation::narrow_from_scope (this);
     case AST_Decl::NT_factory:
       return be_factory::narrow_from_scope (this);
-    case AST_Decl::NT_finder:
-      return be_finder::narrow_from_scope (this);
     default:
       return (be_decl *)0;
     }
@@ -112,5 +99,7 @@ be_scope::accept (be_visitor *visitor)
 {
   return visitor->visit_scope (this);
 }
+
+
 
 IMPL_NARROW_FROM_SCOPE (be_scope)

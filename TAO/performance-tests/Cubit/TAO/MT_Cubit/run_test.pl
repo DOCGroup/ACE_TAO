@@ -1,24 +1,16 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
 $usage = "run_tests.pl [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::Run_Test;
+
+$iorfile = PerlACE::LocalFile ("mtcubit.ior");
 $iterations = 1000;
 $low_priority_threads = 1;
 $thread_per_rate = '';
@@ -55,59 +47,28 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
 
 $threads = $low_priority_threads + 1;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+# Make sure the file is gone, so we can wait on it.
+unlink $iorfile;
 
-my $iorbase = "mtcubit.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+$SV = new PerlACE::Process ("server", "$thread_per_rate -f $iorfile -t $threads");
+$CL = new PerlACE::Process ("client", "$thread_per_rate -f $iorfile -t $threads -n $iterations");
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level $thread_per_rate -f $server_iorfile -t $threads");
-$CL = $client->CreateProcess ("client", "$thread_per_rate -f $client_iorfile -t $threads -n $iterations");
+$SV->Spawn ();
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$client = $CL->SpawnWaitKill (180);
+$SV->Kill ();
+
+unlink $iorfile;
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 165);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$server_status = $SV->Kill ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-exit $status;
+exit 0;

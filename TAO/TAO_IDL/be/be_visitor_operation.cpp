@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_operation.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Operation
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_operation.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Operation
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_array.h"
@@ -36,14 +42,8 @@
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
 #include "be_home.h"
-#include "be_porttype.h"
-#include "be_provides.h"
-#include "be_factory.h"
 #include "be_extern.h"
 #include "be_helper.h"
-#include "be_identifier_helper.h"
-#include "be_util.h"
-
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "nr_extern.h"
@@ -67,8 +67,6 @@
 #include "be_visitor_operation/operation_ih.cpp"
 #include "be_visitor_operation/operation_ss.cpp"
 #include "be_visitor_operation/operation_is.cpp"
-#include "be_visitor_operation/operation_svs.cpp"
-#include "be_visitor_operation/operation_exs.cpp"
 #include "be_visitor_operation/rettype.cpp"
 #include "be_visitor_operation/rettype_return_cs.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
@@ -76,8 +74,11 @@
 #include "be_visitor_operation/upcall_command_ss.cpp"
 
 // AMI
+#include "be_visitor_operation/ami_ch.cpp"
 #include "be_visitor_operation/ami_cs.cpp"
+#include "be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp"
+#include "be_visitor_operation/ami_exception_holder_operation_cs.cpp"
 
 // Smart proxy
 #include "be_visitor_operation/smart_proxy_ch.cpp"
@@ -93,3 +94,6 @@
 #include "be_visitor_operation/amh_rh_ss.cpp"
 #include "be_visitor_operation/amh_rh_sh.cpp"
 
+ACE_RCSID (be,
+           be_visitor_operation,
+           "$Id$")

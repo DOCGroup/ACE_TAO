@@ -30,13 +30,25 @@
 #if (__GNUC__ < 3)
 # define ACE_LACKS_MEMBER_TEMPLATES
 # define ACE_LACKS_NUMERIC_LIMITS
+# define ACE_LACKS_ISCTYPE
 #endif /* __GNUC__ < 3 */
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-#if (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+// __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
+// is not defined with -fno-exceptions, the ACE default for g++.
+// ACE_HAS_EXCEPTIONS is defined in
+// include/makeinclude/wrapper_macros.GNU, so this really isn't
+// necessary.  Just in case . . .
+#if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#  define ACE_HAS_EXCEPTIONS
+#endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
+
+#if defined (ACE_HAS_EXCEPTIONS)
+#  define ACE_NEW_THROWS_EXCEPTIONS
+#  if (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
 // Versions of g++ prior to 3.3 had a buggy operator // new(nothrow)[]().
-#  define ACE_HAS_NEW_NOTHROW
-#endif /* __GNUC__ >= 3.3 */
+#    define ACE_HAS_NEW_NOTHROW
+#  endif /* __GNUC__ >= 3.3 */
+#endif /* ACE_HAS_EXCEPTIONS */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
@@ -87,7 +99,7 @@
 
 // Take advantage of G++ (>= 4.x) visibility attributes to generate
 // improved shared library binaries.
-#if (__GNUC__ >= 4) && !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
+#if (__GNUC__ >= 4) && !defined (__MINGW32__)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -137,28 +149,6 @@
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
 #endif  /* __GNU__ >= 4 */
-
-// GCC >= 4.1 provides __sync_XXXX builtins for use in atomic operations
-// although the builtins are provided globally they are not supported on all platforms
-#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 1))
-# if defined (__powerpc__)
-// The builtins seem to be provided for all powerpc platforms
-#   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
-# if ((__GNUC__ == 4) && (__GNUC_MINOR__ == 1) && (__GNUC_PATCHLEVEL__ == 1))
-// PPU GCC 4.1.1 doesn't have builtin atomic ops for size 1/2
-#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_2
-#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_1
-# endif
-# endif
-# if defined (__ia64)
-// The builtins seem to be provided for the IA64 platforms
-#   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
-# endif
-# if defined (__amd64__) || defined (__x86_64__)
-// The builtin's are provided also for 64bit linux
-#   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
-# endif
-#endif
 
 #if defined (ACE_HAS_GNU_REPO)
   // -frepo causes unresolved symbols of basic_string left- and

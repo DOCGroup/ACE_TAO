@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Pipe.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"

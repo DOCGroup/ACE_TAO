@@ -1,17 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_valuetype.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Interface and be_interface that provides
- *  additional means for C++ mapping of an valuetype.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_valuetype.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Interface and be_interface that provides
+//    additional means for C++ mapping of an valuetype.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    derived from be_interface.cpp
+//
+// ============================================================================
 
 #include "be_valuetype.h"
 #include "be_visitor.h"
@@ -24,15 +29,48 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_valuetype,
+           "$Id$")
+
+// Default constructor.
+be_valuetype::be_valuetype (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_interface (),
+    AST_ValueType (),
+    full_obv_skel_name_ (0)
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+
+  AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
+
+  if (m != 0)
+    {
+      m->set_has_nested_valuetype ();
+    }
+
+  // Always the case.
+  this->has_constructor (true);
+}
+
+// Constructor used to build the AST.
 be_valuetype::be_valuetype (UTL_ScopedName *n,
-                            AST_Type **inherits,
+                            AST_Interface **inherits,
                             long n_inherits,
-                            AST_Type *inherits_concrete,
+                            AST_ValueType *inherits_concrete,
                             AST_Interface **inherits_flat,
                             long n_inherits_flat,
-                            AST_Type **supports,
+                            AST_Interface **supports,
                             long n_supports,
-                            AST_Type *supports_concrete,
+                            AST_Interface *supports_concrete,
                             bool abstract,
                             bool truncatable,
                             bool custom)
@@ -74,9 +112,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    abstract,
                    truncatable,
                    custom),
+    full_obv_skel_name_ (0),
     supports_abstract_ (false),
-    var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (0)
+    var_out_seq_decls_gen_ (0)
 {
   // Check that redefine() copies all members.
 
@@ -97,12 +135,6 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     {
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
-        
-      if (intf == 0)
-        {
-          // The item is a template param holder.
-          continue;
-        }
 
       if (intf->is_abstract () || intf->has_mixed_parentage ())
         {
@@ -161,7 +193,7 @@ be_valuetype::full_obv_skel_name (void)
 {
   if (0 == this->full_obv_skel_name_)
     {
-      this->compute_fullobvskelname ();
+      compute_fullobvskelname ();
     }
 
   return this->full_obv_skel_name_;
@@ -286,7 +318,7 @@ be_valuetype::have_operation (void)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = this->n_inherits ();
-      AST_Type **inherits = this->inherits ();
+      AST_Interface **inherits = this->inherits ();
 
       for (i = 0; i < n_inherits; ++i)
         {
@@ -303,17 +335,15 @@ be_valuetype::have_operation (void)
   if (! have_operation)
     {
       // Check for operations on supported interfaces
-      AST_Type * supported = this->supports_concrete ();
+      AST_Interface * supported = this->supports_concrete ();
 
       if (supported != 0)
         {
-          be_interface *intf =
-            be_interface::narrow_from_decl (supported);
+          be_interface *intf = be_interface::narrow_from_decl (supported);
 
           if (intf != 0)
             {
-              have_operation =
-                be_valuetype::have_supported_op (intf);
+                    have_operation = be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -324,6 +354,7 @@ be_valuetype::have_operation (void)
 bool
 be_valuetype::have_supported_op (be_interface * node)
 {
+
   bool have_supported_op = 0;
 
   if (node->nmembers () == 0)
@@ -362,17 +393,14 @@ be_valuetype::have_supported_op (be_interface * node)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = node->n_inherits ();
-      AST_Type **inherits = node->inherits ();
-      
+      AST_Interface **inherits = node->inherits ();
       for (i = 0; i < n_inherits; ++i)
         {
-          be_interface * intf =
-            be_interface::narrow_from_decl (inherits[i]);
+          be_interface * intf = be_interface::narrow_from_decl (inherits[i]);
 
           if (intf != 0)
             {
-              have_supported_op =
-                be_valuetype::have_supported_op (intf);
+              have_supported_op = be_valuetype::have_supported_op (intf);
 
               if (have_supported_op)
                 {
@@ -396,7 +424,7 @@ be_valuetype::will_have_factory (void)
 bool
 be_valuetype::has_member (void)
 {
-  AST_Type *parent = this->pd_inherits_concrete;
+  AST_ValueType *parent = this->pd_inherits_concrete;
 
   // We're looking for inherited members too.
   if (parent != 0)
@@ -510,8 +538,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
 }
 
 void
-be_valuetype::gen_ostream_operator (TAO_OutStream *os,
-                                    bool /* use_underscore */)
+be_valuetype::gen_ostream_operator (TAO_OutStream *os)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -528,9 +555,9 @@ be_valuetype::gen_ostream_operator (TAO_OutStream *os,
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_valuetype::gen_var_out_seq_decls (void)
+be_valuetype:: gen_var_out_seq_decls (void)
 {
-  if (this->var_out_seq_decls_gen_)
+  if (this->var_out_seq_decls_gen_ == 1)
     {
       return;
     }
@@ -561,7 +588,7 @@ be_valuetype::gen_var_out_seq_decls (void)
 
   os->gen_endif ();
 
-  this->var_out_seq_decls_gen_ = true;
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // For building the pre and postfix of private data fields.
@@ -582,9 +609,7 @@ be_valuetype::statefull_inherit (void)
 {
   if (this->pd_inherits_concrete != 0)
     {
-      return
-        be_valuetype::narrow_from_decl (
-          this->pd_inherits_concrete);
+      return be_valuetype::narrow_from_decl (this->pd_inherits_concrete);
     }
   else
     {
@@ -602,6 +627,9 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy (void)
 {
+  delete [] this->full_obv_skel_name_;
+  this->full_obv_skel_name_ = 0;
+
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
 }
@@ -714,15 +742,14 @@ int
 be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
                                                    TAO_OutStream *os)
 {
-  AST_Type *supported = this->supports_concrete ();
+  AST_Interface *supported = this->supports_concrete ();
 
   if (supported == 0)
     {
       return 0;
     }
 
-  be_interface *concrete =
-    be_interface::narrow_from_decl (supported);
+  be_interface *concrete = be_interface::narrow_from_decl (supported);
 
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -844,6 +871,8 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
 
   return 0;
 }
+
+
 
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)

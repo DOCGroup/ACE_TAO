@@ -61,20 +61,20 @@ public:
 
   ~TAO_Offer_Database (void);
 
-  /// Add an offer of type @ type and generate a CosTrading::OfferId
+  /// Add an offer of type <type> and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
   int remove_offer (const CosTrading::OfferId offer_id);
 
-  /// Lookup an offer whose offer_id is @a offer_id, and return
+  /// Lookup an offer whose offer_id is <offer_id>, and return
   /// it. Otherwise, throw the appropriate exception.
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
 
   /**
-   * Lookup an offer whose OfferId is @a offer_id and return in
-   * @a type_name the type name of the object. Type name is just a
+   * Lookup an offer whose OfferId is <offer_id> and return in
+   * <type_name> the type name of the object. Type name is just a
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
@@ -108,13 +108,13 @@ private:
   // --- with an empty Offer_Map_Entry --- but also since most locks
   // have unimplemented copy constructors.
 
-  /// Lookup an offer whose type is @ type and id, @a id. Return 0 on
+  /// Lookup an offer whose type is <type> and id, <id>. Return 0 on
   /// failure.
   CosTrading::Offer* lookup_offer (const char* type,
                                    CORBA::ULong id);
 
   /**
-   * Remove an offers whose id is @id. Returns 0 on success, -1
+   * Remove an offers whose id is <offer_id>. Returns 0 on success, -1
    * on failure, and throws a CosTrading::IllegalOfferId if it can't
    * parse the CosTrading::OfferId.
    */
@@ -175,6 +175,8 @@ class TAO_Service_Offer_Iterator
   void next_offer (void);
 
  private:
+  // Protected constructor.
+
   /// Lock the top_level map.
   TAO_Offer_Database<LOCK_TYPE>& stm_;
 

@@ -11,16 +11,27 @@
 #include "testing_object_reference_traits.hpp"
 #include "mock_reference.hpp"
 #include "tao/Object_Reference_Sequence_Element_T.h"
-#include "test_macros.h"
+
+#include <sstream>
+#include <stdexcept>
+#include <iostream>
+
+#include <boost/test/unit_test.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
+using namespace boost::unit_test_framework;
+
+struct Tester
+{
   typedef object_reference_traits<mock_reference,mock_reference_var,true> tested_element_traits;
   typedef object_reference_sequence_element<tested_element_traits> tested_element;
   typedef mock_reference * reference_type;
   typedef tested_element_traits::object_type_var reference_var;
 
-  int test_assignment_from_var_release_true()
+  void test_assignment_from_var_release_true()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -31,32 +42,30 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       tested_element x(xe, true);
       reference_var y(mock_reference::allocate(2));
 
-      FAIL_RETURN_IF_NOT(md.expect(0), md);
-      FAIL_RETURN_IF_NOT(mr.expect(0), mr);
+      BOOST_CHECK_MESSAGE(md.expect(0), md);
+      BOOST_CHECK_MESSAGE(mr.expect(0), mr);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(md.expect(1), md);
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(md.expect(1), md);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(x);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0),d );
-    FAIL_RETURN_IF_NOT(r.expect(0),r );
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(1), mr);
-
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(1), mr);
   }
 
-  int test_assignment_from_var_release_false()
+  void test_assignment_from_var_release_false()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -68,32 +77,31 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       tested_element x(xe, false);
       reference_var y(mock_reference::allocate(2));
 
-      FAIL_RETURN_IF_NOT(md.expect(0), md);
-      FAIL_RETURN_IF_NOT(mr.expect(0), mr);
+      BOOST_CHECK_MESSAGE(md.expect(0), md);
+      BOOST_CHECK_MESSAGE(mr.expect(0), mr);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d );
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
-      FAIL_RETURN_IF_NOT(md.expect(1), md);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(md.expect(1), md);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(x);
       tested_element_traits::release(oldxe);
-      FAIL_RETURN_IF_NOT(r.expect(2), r);
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(r.expect(2), r);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0),d );
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(1), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(1), mr);
   }
 
-  int test_assignment_from_var_throw()
+  void test_assignment_from_var_throw()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -104,34 +112,33 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       tested_element x(xe, true);
       reference_var y(mock_reference::allocate(2));
 
-      FAIL_RETURN_IF_NOT(md.expect(0), md);
-      FAIL_RETURN_IF_NOT(mr.expect(0), mr);
+      BOOST_CHECK_MESSAGE(md.expect(0), md);
+      BOOST_CHECK_MESSAGE(mr.expect(0), mr);
 
       mock_reference::duplicate_calls.failure_countdown(1);
 
-      CHECK_THROW(x = y, testing_exception);
+      BOOST_CHECK_THROW(x = y, testing_exception);
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
-      FAIL_RETURN_IF_NOT(md.expect(1), md);
-      FAIL_RETURN_IF_NOT(mr.expect(0), mr);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(md.expect(1), md);
+      BOOST_CHECK_MESSAGE(mr.expect(0), mr);
 
-      CHECK_EQUAL(1, x->id());
-      CHECK_EQUAL(2, y->id());
+      BOOST_CHECK_EQUAL(1, x->id());
+      BOOST_CHECK_EQUAL(2, y->id());
 
       tested_element_traits::release(x);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0), d);
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(1), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(1), mr);
   }
 
-  int test_assignment_from_element_release_true()
+  void test_assignment_from_element_release_true()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -144,32 +151,31 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       reference_type ye = mock_reference::allocate(2);
       tested_element y(ye, true);
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0) ,r);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(1), d);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(md.expect(1), md);
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(d.expect(1), d);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(md.expect(1), md);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(xe);
       tested_element_traits::release(ye);
-      FAIL_RETURN_IF_NOT(r.expect(2),r );
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(r.expect(2), r);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0), d);
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(0), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(0), mr);
   }
 
-  int test_assignment_from_element_release_false()
+  void test_assignment_from_element_release_false()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -183,33 +189,32 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       reference_type ye = mock_reference::allocate(2);
       tested_element y(ye, true);
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(1), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
-      FAIL_RETURN_IF_NOT(md.expect(1), md);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(d.expect(1), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(md.expect(1), md);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(xe);
       tested_element_traits::release(oldxe);
       tested_element_traits::release(ye);
-      FAIL_RETURN_IF_NOT(r.expect(3), r);
-      FAIL_RETURN_IF_NOT(mr.expect(3), mr);
+      BOOST_CHECK_MESSAGE(r.expect(3), r);
+      BOOST_CHECK_MESSAGE(mr.expect(3), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0), d);
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(0), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(0), mr);
   }
 
-  int test_assignment_from_reference_release_true()
+  void test_assignment_from_reference_release_true()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -221,31 +226,30 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
       reference_type y = mock_reference::allocate(2);
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(md.expect(0), md);
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(md.expect(0), md);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(xe);
-      FAIL_RETURN_IF_NOT(r.expect(1), r);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(r.expect(1), r);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0), d);
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(0), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(0), mr);
   }
 
-  int test_assignment_from_reference_release_false()
+  void test_assignment_from_reference_release_false()
   {
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
@@ -258,43 +262,81 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
       reference_type y = mock_reference::allocate(2);
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
 
       x = y;
 
-      FAIL_RETURN_IF_NOT(d.expect(0), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
-      FAIL_RETURN_IF_NOT(md.expect(0), md);
-      FAIL_RETURN_IF_NOT(mr.expect(1), mr);
+      BOOST_CHECK_MESSAGE(d.expect(0), d);
+      BOOST_CHECK_MESSAGE(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(md.expect(0), md);
+      BOOST_CHECK_MESSAGE(mr.expect(1), mr);
 
-      CHECK_EQUAL(2, x->id());
+      BOOST_CHECK_EQUAL(2, x->id());
 
       tested_element_traits::release(xe);
       tested_element_traits::release(oldxe);
-      FAIL_RETURN_IF_NOT(r.expect(2), 2);
-      FAIL_RETURN_IF_NOT(mr.expect(2), mr);
+      BOOST_CHECK_MESSAGE(r.expect(2), r);
+      BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
 
-    FAIL_RETURN_IF_NOT(d.expect(0), d);
-    FAIL_RETURN_IF_NOT(r.expect(0), r);
-    FAIL_RETURN_IF_NOT(md.expect(0), md);
-    FAIL_RETURN_IF_NOT(mr.expect(0), mr);
-    return 0;
+    BOOST_CHECK_MESSAGE(d.expect(0), d);
+    BOOST_CHECK_MESSAGE(r.expect(0), r);
+    BOOST_CHECK_MESSAGE(md.expect(0), md);
+    BOOST_CHECK_MESSAGE(mr.expect(0), mr);
   }
 
-int ACE_TMAIN(int,ACE_TCHAR*[])
+  void add_all(test_suite * ts)
+  {
+    boost::shared_ptr<Tester> shared_this(self_);
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_var_release_true,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_var_release_false,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_var_throw,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_element_release_true,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_element_release_false,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_reference_release_true,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_assignment_from_reference_release_false,
+                shared_this));
+  }
+
+  static boost::shared_ptr<Tester> allocate()
+  {
+    boost::shared_ptr<Tester> ptr(new Tester);
+    ptr->self_ = ptr;
+
+    return ptr;
+  }
+
+private:
+  Tester() {}
+
+  boost::weak_ptr<Tester> self_;
+};
+
+ACE_Proper_Export_Flag test_suite *
+init_unit_test_suite(int, char*[])
 {
-  int status = 0;
+  test_suite * ts =
+      BOOST_TEST_SUITE("object reference sequence element unit test");
 
-  status += test_assignment_from_var_release_true ();
-  status += test_assignment_from_var_release_false ();
-  status += test_assignment_from_var_throw ();
-  status += test_assignment_from_element_release_true ();
-  status += test_assignment_from_element_release_false ();
-  status += test_assignment_from_reference_release_true ();
-  status += test_assignment_from_reference_release_false ();
+  boost::shared_ptr<Tester > mock_reference_tester(
+      Tester::allocate());
+  mock_reference_tester->add_all(ts);
 
-  return status;
+  return ts;
 }
 

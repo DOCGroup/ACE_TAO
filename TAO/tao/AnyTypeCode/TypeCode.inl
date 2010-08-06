@@ -4,14 +4,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<>
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::TypeCode_ptr obj)
+{
+  return obj == 0;
+}
+
 ACE_INLINE void
 CORBA::release (CORBA::TypeCode_ptr obj)
 {
-  if (obj != 0)
-    {
-      obj->tao_release ();
-    }
+  if (obj)
+    obj->tao_release ();
 }
 
 // --------------------------------------------------------------

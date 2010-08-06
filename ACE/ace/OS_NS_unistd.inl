@@ -23,7 +23,7 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* ACE_HAS_ACCESS_EMULATION */
 
-#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x680)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
+#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x670)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
 #  else
@@ -214,39 +214,6 @@ ACE_OS::dup (ACE_HANDLE handle)
 #else
   ACE_OSCALL_RETURN (::dup (handle), ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_LACKS_DUP */
-}
-
-ACE_INLINE ACE_HANDLE
-ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
-{
-  ACE_OS_TRACE("ACE_OS::dup");
-#if defined (ACE_LACKS_DUP)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (pid);
-  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
-#elif defined (ACE_WIN32)
-  ACE_HANDLE new_fd;
-  ACE_HANDLE hTargetProcess = ::OpenProcess (PROCESS_DUP_HANDLE,
-                                             FALSE,
-                                             pid);
-  if(::DuplicateHandle(::GetCurrentProcess (),
-                       handle,
-                       hTargetProcess,
-                       &new_fd,
-                       0,
-                       TRUE,
-                       DUPLICATE_SAME_ACCESS))
-    {
-      ::CloseHandle (hTargetProcess);
-      return new_fd;
-    }
-  else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
-  /*NOTREACHED*/
-#else
-  ACE_UNUSED_ARG (pid);
-  ACE_OSCALL_RETURN(::dup(handle), ACE_HANDLE, ACE_INVALID_HANDLE);
-#endif /*ACE_WIN32 &&  !ACE_HAS_WINCE*/
 }
 
 ACE_INLINE int
@@ -622,13 +589,9 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #else
-  int const fd = ::_open_osfhandle (intptr_t (handle), 0);
-  int status = 0;
-  if (fd != -1)
-    {
-      status = ::_isatty (fd);
-      ::_close (fd);
-    }
+  int fd = ::_open_osfhandle (intptr_t (handle), 0);
+  int status = ::_isatty (fd);
+  ::_close (fd);
   return status;
 #endif /* ACE_LACKS_ISATTY */
 }

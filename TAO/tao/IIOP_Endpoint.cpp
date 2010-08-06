@@ -11,7 +11,6 @@
 #include "tao/IOPC.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/IIOP_Profile.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -113,19 +112,16 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 TAO_IIOP_Endpoint &
 TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
 {
-  if (this != &other)
-    {
-      this->host_ = other.host_;
-      this->port_ = other.port_;
+  this->host_ = other.host_;
+  this->port_ = other.port_;
 #if defined (ACE_HAS_IPV6)
-      this->is_ipv6_decimal_ = other.is_ipv6_decimal_;
+  this->is_ipv6_decimal_ = other.is_ipv6_decimal_;
 #endif /* ACE_HAS_IPV6 */
-      this->is_encodable_  = other.is_encodable_;
-      this->object_addr_set_ = other.object_addr_set_;
-      this->object_addr_ = other.object_addr_;
-      this->preferred_path_ = other.preferred_path_;
-      this->next_ = 0; // do not copy list membership, since we are only cloning the values
-    }
+  this->is_encodable_  = other.is_encodable_;
+  this->object_addr_set_ = other.object_addr_set_;
+  this->object_addr_ = other.object_addr_;
+  this->preferred_path_ = other.preferred_path_;
+  this->next_ = 0; // do not copy list membership, since we are only cloning the values
   return *this;
 }
 
@@ -412,16 +408,14 @@ static ACE_CString find_local(const ACE_Vector<ACE_CString>& local_ips,
   return "";
 }
 
-TAO_IIOP_Endpoint *
-TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
-                                       const char *local,
-                                       TAO_IIOP_Profile &profile)
+TAO_IIOP_Endpoint*
+TAO_IIOP_Endpoint::add_local_endpoint(TAO_IIOP_Endpoint* ep, const char* local)
 {
-  TAO_IIOP_Endpoint *tmp = static_cast<TAO_IIOP_Endpoint *> (ep->duplicate ());
-  tmp->is_encodable_ = true;
-  tmp->preferred_path_.host = local;
-  profile.add_endpoint (tmp);
-  return tmp;
+  TAO_Endpoint* tmp = ep->duplicate();
+  ep->next_ = static_cast<TAO_IIOP_Endpoint*>(tmp);
+  ep->next_->is_encodable_ = true;
+  ep->next_->preferred_path_.host = CORBA::string_dup(local);
+  return ep->next_;
 }
 
 static void
@@ -522,9 +516,7 @@ static void find_preferred_interfaces (const ACE_CString& host,
 }
 
 CORBA::ULong
-TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
-                                         bool enforce,
-                                         TAO_IIOP_Profile &profile)
+TAO_IIOP_Endpoint::preferred_interfaces (const char* csv, bool enforce)
 {
   ACE_Vector<ACE_CString> preferred;
   find_preferred_interfaces(this->host_.in(), csv, preferred);
@@ -536,14 +528,14 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
     TAO_IIOP_Endpoint* ep = this;
     for (size_t i = 1; i < count; ++i)
     {
-      ep = add_local_endpoint (ep, preferred[i].c_str(), profile);
+      ep = add_local_endpoint(ep, preferred[i].c_str());
     }
 
     // If we're not enforcing the preferred interfaces, then we can just add
     // a new non-preferred endpoint to the end with a default local addr.
     if (! enforce)
     {
-      ep = add_local_endpoint (ep, "", profile);
+      ep = add_local_endpoint(ep, "");
     }
     else
     {

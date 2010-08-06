@@ -1,29 +1,46 @@
 // -*- MPC -*-
 // $Id$
 
-project(DAnCE_Plan_Launcher_Impl) : install_lib, dance_lib, dance_logger, dance_convert_plan, \
-                            dance_executionmanager_stub, \
-                            dance_domainapplication_stub, \
-                            dance_domainapplicationmanager_stub, \
-                            dance_nodeapplication_stub, \
-                            dance_nodeapplicationmanager_stub, \
-                            dance_nodemanager_stub {
-
-  dynamicflags += DANCE_PLAN_LAUNCHER_BUILD_DLL
+project(Plan_Launcher_Impl) : ciao_servant_dnc \
+                              , ciao_config_handlers \
+                              , ciao_executionmanager_stub \
+                              , ciao_plan_generator \
+                              , rtcorba \
+                              , dance_utils \
+                              , ace_output \
+{
+  sharedname = Plan_Launcher_Impl
+  dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
 
   Source_Files {
-    EM_Launcher.cpp
-    NM_Launcher.cpp
+    ../ExecutionManager/DAM_Map.cpp
+    Plan_Launcher_Impl.cpp
+    Plan_Launcher_Benchmark_Impl.cpp
   }
-  
-  Template_Files {
-    Plan_Launcher_Base_Impl_T.cpp
+
+  Header_Files {
+    ../ExecutionManager/DAM_Map.h
+    Plan_Launcher_Impl.h
+    Plan_Launcher_Impl_Export.h
   }
 }
-        
-project(Plan_Launcher_Exec) : install, dance_exe, dance_plan_launcher {
-  exename = dance_plan_launcher
+
+project(Plan_Launcher) : ciao_server_dnc \
+                         , ciao_config_handlers \
+                         , ciao_executionmanager_stub \
+                         , ciao_plan_generator \
+                         , ciaoexe \
+                         , rtcorba \
+                         , dance_utils \
+{
+  exename = plan_launcher
+  after += Plan_Launcher_Impl
+  libs  += Plan_Launcher_Impl
+
   Source_Files {
     Plan_Launcher.cpp
+  }
+
+  Header_Files {
   }
 }

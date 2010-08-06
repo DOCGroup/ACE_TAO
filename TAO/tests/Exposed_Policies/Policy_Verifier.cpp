@@ -4,9 +4,7 @@
 ACE_RCSID (tao, Policy_Verifier, "$Id$")
 
 Policy_Verifier::Policy_Verifier (void)
-  : rt_object_properties_ (0)
-  , rt_poa_properties_ (0)
-  , priority_bands_ (0)
+  : priority_bands_ (0)
 {
   ACE_OS::strcpy (this->base_object_ref_,
                   ACE_TEXT("file://default.ior"));
@@ -16,8 +14,7 @@ Policy_Verifier::Policy_Verifier (void)
 
 Policy_Verifier::~Policy_Verifier (void)
 {
-  delete rt_object_properties_;
-  delete rt_poa_properties_;
+  // No Op.
 }
 
 bool

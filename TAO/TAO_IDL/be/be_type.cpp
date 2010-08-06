@@ -1,32 +1,48 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_type.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Type that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_type.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Type that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_type.h"
 #include "be_scope.h"
 #include "be_visitor.h"
 #include "be_codegen.h"
 #include "be_helper.h"
-#include "be_extern.h"
-
-#include "ast_valuetype.h"
-#include "ast_sequence.h"
-
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+
+ACE_RCSID (be,
+           be_type,
+           "$Id$")
+
+be_type::be_type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    be_decl (),
+    tc_name_ (0),
+    common_varout_gen_ (false),
+    seen_in_sequence_ (false),
+    seen_in_operation_ (false)
+{
+}
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
@@ -217,15 +233,13 @@ be_type::gen_fwd_helper_name (void)
 }
 
 void
-be_type::gen_ostream_operator (TAO_OutStream *,
-                               bool /* use_underscore */)
+be_type::gen_ostream_operator (TAO_OutStream *)
 {
 }
 
 void
 be_type::gen_member_ostream_operator (TAO_OutStream *os,
                                       const char *instance_name,
-                                      bool /* use_underscore */,
                                       bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : "");
@@ -246,7 +260,7 @@ be_type::fwd_helper_name (const char *name)
 void
 be_type::gen_common_varout (TAO_OutStream *os)
 {
-  if (this->common_varout_gen_)
+  if (this->common_varout_gen_ == 1)
     {
       return;
     }
@@ -255,16 +269,25 @@ be_type::gen_common_varout (TAO_OutStream *os)
       << "// " << __FILE__ << ":" << __LINE__;
 
   AST_Type::SIZE_TYPE st = this->size_type ();
+  AST_Decl::NodeType nt = this->node_type ();
 
   *os << be_nl << be_nl
-      << (this->node_type () == AST_Decl::NT_struct ? "struct "
-                                                    : "class ")
+      << (nt == AST_Decl::NT_struct ? "struct " : "class ")
       << this->local_name () << ";";
+      
+  if (this->gen_dds_decls ())
+    {
+      *os << be_nl << be_nl
+          << "class " << this->local_name () << "Seq;" << be_nl
+          << "class " << this->local_name () << "TypeSupport;" << be_nl
+          << "class " << this->local_name () << "DataWriter;" << be_nl
+          << "class " << this->local_name () << "DataReader;";
+    }
 
   *os << be_nl << be_nl
       << "typedef" << be_idt_nl
-      << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
-                                : "::TAO_Var_Var_T<")
+      << (st == AST_Type::FIXED ? "TAO_Fixed_Var_T<"
+                                : "TAO_Var_Var_T<")
       << be_idt << be_idt_nl
       << this->local_name () << be_uidt_nl
       << ">" << be_uidt_nl
@@ -279,69 +302,29 @@ be_type::gen_common_varout (TAO_OutStream *os)
   else
     {
       *os << "typedef" << be_idt_nl
-          << "::TAO_Out_T<" << be_idt << be_idt_nl
+          << "TAO_Out_T<" << be_idt << be_idt_nl
           << this->local_name () << be_uidt_nl
           << ">" << be_uidt_nl
           << this->local_name () << "_out;" << be_uidt;
     }
 
-  this->common_varout_gen_ = true;
+  this->common_varout_gen_ = 1;
 }
 
 void
-be_type::gen_stub_decls (TAO_OutStream *os)
+be_type::gen_dds_typedefs (TAO_OutStream *os)
 {
-  if (this->anonymous ())
+  if (this->gen_dds_decls ())
     {
-      return;
-    }
-    
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-      
-  *os << be_nl;
-      
-  AST_Interface *i = AST_Interface::narrow_from_decl (this);
-  AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
-  
-  if (i != 0)
-    {
-      *os << be_nl
-          << "typedef " << this->local_name ()
-          << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
-    }
-    
-  bool skip_varout = false;
-  AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
-  
-  if (s != 0)
-    {
-      // _vars and _outs not supported yet by alt mapping.
-      if (be_global->alt_mapping () && s->unbounded ())
-        {
-          skip_varout = true;
-        }
-    }
-  
-  if (!skip_varout)
-    {  
-      *os << be_nl
-          << "typedef " << this->local_name ()
-          << "_var _var_type;" << be_nl
-          << "typedef " << this->local_name ()
-          << "_out _out_type;";
-    }
-      
-  bool gen_any_destructor =
-    be_global->any_support ()
-    && (!this->is_local ()
-        || be_global->gen_local_iface_anyops ());
-
-  if (gen_any_destructor)
-    {
-      *os << be_nl << be_nl
-          << "static void _tao_any_destructor (void *);";
+      *os << "typedef " << this->local_name  ()
+          << "Seq _seq_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "TypeSupport _type_support_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "DataWriter _data_writer_type;" << be_nl
+          << "typedef " << this->local_name  ()
+          << "DataReader _data_reader_type;"
+          << be_nl << be_nl;
     }
 }
 

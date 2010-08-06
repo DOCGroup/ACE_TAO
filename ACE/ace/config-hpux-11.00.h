@@ -27,6 +27,12 @@
 #    ifndef ACE_USING_MCPP_PREPROCESSOR
 #     define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 #    endif
+// Compiler supports C++ exception handling. It's on by default. If the
+// +noeh compiler option is used to disable exceptions, the compiler defines
+// __HPACC_NOEH.
+#    if !defined (__HPACC_NOEH)
+#      define ACE_HAS_EXCEPTIONS 1
+#    endif
 
 // If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
 // The -AA option enables the 2.0 standard C++ library. If not used, then
@@ -278,10 +284,16 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
+/* Platform/compiler supports _sys_errlist symbol */
+#define ACE_HAS_SYS_ERRLIST 1
+
 #define ACE_HAS_UALARM
 
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
+
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
@@ -334,9 +346,6 @@
 
 #define ACE_LACKS_ISWASCII
 
-#define ACE_LACKS_SETENV
-#define ACE_LACKS_UNSETENV
-
 // Shared library name/path components
 #if defined (__ia64)
 #  define ACE_DLL_SUFFIX  ACE_TEXT (".so")
@@ -355,7 +364,6 @@
 
 #define ACE_HAS_3_PARAM_READDIR_R
 
-#define ACE_LACKS_STRUCT_LIFNUM
 
 //////////////////////////////////////////////////////////////////////////
 //

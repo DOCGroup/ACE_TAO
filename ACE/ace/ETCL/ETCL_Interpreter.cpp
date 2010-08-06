@@ -62,7 +62,7 @@ ETCL_Interpreter::is_empty_string (const char* str)
               break;
             }
 
-          ++i;
+          i++;
         }
 
       if (str[i] == '\0')
@@ -84,11 +84,11 @@ int
 Lex_String_Input::copy_into (char* buf, 
                              int max_size)
 {
-  int const chars_left = 
+  int chars_left = 
     ACE_Utils::truncate_cast<int> (
       Lex_String_Input::end_ - Lex_String_Input::current_);
       
-  int const n = max_size > chars_left ? chars_left : max_size;
+  int n = max_size > chars_left ? chars_left : max_size;
 
   if (n > 0)
     {

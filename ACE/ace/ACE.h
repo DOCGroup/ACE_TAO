@@ -474,22 +474,6 @@ namespace ACE
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
 
   /**
-   * Returns the given timestamp in the form
-   * "hour:minute:second:microsecond."  The month, day, and year are
-   * also stored in the beginning of the @a date_and_time array, which
-   * is a user-supplied array of size @a time_len> @c ACE_TCHARs.
-   * Returns 0 if unsuccessful, else returns pointer to beginning of the
-   * "time" portion of @a date_and_time.  If @a
-   * return_pointer_to_first_digit is 0 then return a pointer to the
-   * space before the time, else return a pointer to the beginning of
-   * the time portion.
-   */
-  extern ACE_Export ACE_TCHAR *timestamp (const ACE_Time_Value& time_value,
-                                          ACE_TCHAR date_and_time[],
-                                          size_t time_len,
-                                          bool return_pointer_to_first_digit = false);
-
-  /**
    * Returns the current timestamp in the form
    * "hour:minute:second:microsecond."  The month, day, and year are
    * also stored in the beginning of the @a date_and_time array, which
@@ -643,7 +627,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
   /// Hex conversion utility.
-  extern ACE_Export ACE_TCHAR nibble2hex (u_int n);
+  ACE_NAMESPACE_INLINE_FUNCTION ACE_TCHAR nibble2hex (u_int n);
 
   /// Convert a hex character to its byte representation.
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);

@@ -2,7 +2,7 @@
 
 #include "ace/config-all.h"
 
-
+ACE_RCSID(ace, Timeprobe, "$Id$")
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 

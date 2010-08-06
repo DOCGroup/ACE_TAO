@@ -45,7 +45,7 @@ private:
   ACE_Mutex lock_;
   int orb_threads_;
   int busy_threads_;
-  CORBA::Short message_counter_;
+  int message_counter_;
 
   int run_test (void);
 public:

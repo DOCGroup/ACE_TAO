@@ -86,9 +86,7 @@ spawn_child (const ACE_TCHAR *argv0,
              int my_process_id)
 {
 
-#if defined (ACE_HAS_WINCE)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
@@ -99,11 +97,8 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
   ACE_TCHAR prio[64];
   ACE_TCHAR cmd[16];
-
-  if (debug_test)
-    ACE_OS::strcpy (cmd, ACE_TEXT ("-d"));
-  else
-    cmd[0] = ACE_TEXT ('\0');
+  debug_test ? ACE_OS::sprintf (cmd, ACE_TEXT ("-d")) :
+               ACE_OS::sprintf (cmd, ACE_TEXT (""));
 
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   if (my_process_id == 1)
@@ -132,27 +127,20 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
     }
   else
-    prio[0] = ACE_TEXT ('\0');
+    ACE_OS::sprintf(prio, "");
 
   ACE_TCHAR pd [16];
   ACE_OS::sprintf (pd, ACE_TEXT (" -p %d"), my_process_id);
   ACE_OS::strcat (cmd, pd);
 #else
   ACE_UNUSED_ARG (my_process_id);
-  prio[0] = ACE_TEXT ('\0');
+  ACE_OS::sprintf(prio, ACE_TEXT(""));
 #endif
 
-  opts.process_name (argv0);
   opts.command_line (cmdline_format,
-#if !defined (ACE_HAS_WINCE)
                      argv0,
-#endif /* !ACE_HAS_WINCE */
                      cmd,
                      sleep_time);
-
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Spawning <%s> <%s>\n"),
-                        opts.process_name(),
-                        opts.command_line_buf ()));
 
   pid_t result = mgr.spawn (opts);
 
@@ -186,7 +174,7 @@ public:
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
-    ++running_tasks;
+    running_tasks++;
     activate ();
     return 0;
   }
@@ -225,7 +213,7 @@ public:
   int close (u_long)
       // FUZZ: enable check_for_lack_ACE_OS
   {
-    --running_tasks;
+    running_tasks--;
     return 0;
   }
 
@@ -305,11 +293,11 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       // child process: sleep & exit
       ACE_TCHAR lognm[MAXPATHLEN];
-      int const mypid (ACE_OS::getpid ());
+      int mypid (ACE_OS::getpid ());
       ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
 
       ACE_START_TEST (lognm);
-      int const secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
+      int secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
 
       ACE_TCHAR prio[64];
@@ -331,7 +319,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       else if (priority == REALTIME_PRIORITY_CLASS)
         ACE_OS::sprintf (prio, ACE_TEXT("and priority 'realtime'"));
 #else
-      prio[0] = ACE_TEXT ('\0');
+      ACE_OS::sprintf (prio, ACE_TEXT (""));
 #endif
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
@@ -542,7 +530,6 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
-#ifdef ACE_HAS_THREADS
   Process_Task task1 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 3);
   Process_Task task2 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 2);
   Process_Task task3 (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"), mgr, 1);
@@ -567,7 +554,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   order.c_str ()));
       test_status = 1;
     }
-#endif /* ACE_HAS_THREADS */
 
 #if !defined (ACE_OPENVMS)
   // --------------------------------------------------
@@ -594,7 +580,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Reactor loop done!\n") ));
 
-  size_t const nr_procs = mgr.managed ();
+  size_t nr_procs = mgr.managed ();
   if (nr_procs != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
