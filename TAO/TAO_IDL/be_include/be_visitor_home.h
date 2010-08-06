@@ -23,8 +23,6 @@
 #include "be_visitor_operation/operation.h"
 #include "be_visitor_operation/arglist.h"
 
-#include "be_visitor_home/home_ch.h"
-#include "be_visitor_home/home_cs.h"
 #include "be_visitor_home/home_svh.h"
 #include "be_visitor_home/home_svs.h"
 #include "be_visitor_home/home_ex_idl.h"

@@ -42,8 +42,6 @@
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.h"
 #include "be_visitor_context.h"
 
-#include "be_visitor_home/home_ch.cpp"
-#include "be_visitor_home/home_cs.cpp"
 #include "be_visitor_home/home_svh.cpp"
 #include "be_visitor_home/home_svs.cpp"
 #include "be_visitor_home/home_ex_idl.cpp"

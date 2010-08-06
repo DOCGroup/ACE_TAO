@@ -1,3 +1,23 @@
+Fri Aug  6 20:18:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_home/home_ch.cpp:
+        * TAO_IDL/be/be_visitor_home/home_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_home/home_cs.h:
+        * TAO_IDL/be_include/be_visitor_home/home_ch.h:
+
+          Removed these visitors, their functionality has
+          been subsumed by the corresponding interface
+          visitors.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_home.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be_include/be_visitor_home.h:
+
+          Changes related to the visitor removal described
+          above.
+
 Fri Aug  6 18:57:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_ss.cpp:
