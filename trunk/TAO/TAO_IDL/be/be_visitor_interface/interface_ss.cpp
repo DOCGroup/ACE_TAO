@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "global_extern.h"
 #include "ast_generator.h"
 #include "ast_string.h"
@@ -33,7 +32,9 @@ be_visitor_interface_ss::~be_visitor_interface_ss (void)
 int
 be_visitor_interface_ss::visit_interface (be_interface *node)
 {
-  if (node->srv_skel_gen () || node->imported () || node->is_abstract ())
+  if (node->srv_skel_gen ()
+      || node->imported ()
+      || node->is_abstract ())
     {
       return 0;
     }
@@ -72,25 +73,30 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "codegen for operation table failed\n"),
+                         ACE_TEXT ("be_visitor_interface_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for operation ")
+                         ACE_TEXT ("table failed\n")),
                         -1);
     }
 
   if (this->generate_proxy_classes (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "codegen for proxy classes\n"),
+                         ACE_TEXT ("be_visitor_interface_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for proxy classes\n")),
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -115,13 +121,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << flat_name << "_optable;" << be_uidt_nl
+      << "this->optable_ = &tao_" << flat_name
+      << "_optable;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // find if we are at the top scope or inside some module
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name << " ("
-      << "const " << local_name_prefix << node_local_name << "& rhs)";
+      << "const " << local_name_prefix
+      << node_local_name << "& rhs)";
 
   *os << be_idt_nl
       << ": TAO_Abstract_ServantBase (rhs)," << be_nl
@@ -130,8 +138,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (this->generate_copy_ctor (node, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::visit_interface - "
-                         " copy ctor generation failed\n"),
+                         ACE_TEXT ("be_visitor_interface_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT (" copy ctor generation failed\n")),
                         -1);
     }
 
@@ -149,14 +158,18 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_interface_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
   // Generate code for the _is_a skeleton.
   {
@@ -202,8 +215,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_is_a_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant)" << be_uidt << be_uidt_nl;
-    *os << "{" << be_idt;
+        << "void * servant)" << be_uidt << be_uidt_nl
+        << "{" << be_idt;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -240,7 +253,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << is_a_upcall_command_name.c_str() << " command (" << be_idt_nl
+        << is_a_upcall_command_name.c_str()
+        << " command (" << be_idt_nl
         << "impl";
 
     if (!is_a.void_return_type ()
@@ -297,7 +311,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     non_existent.set_defined_in (node);
 
     ACE_CString non_exist_upcall_command_name =
-      "_non_existent_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+      "_non_existent_"
+      + ACE_CString (node_local_name)
+      + "_Upcall_Command";
 
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
     upcall_command_visitor.visit (&non_existent,
@@ -309,8 +325,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant)" << be_uidt << be_uidt_nl;
-    *os << "{" << be_idt;
+        << "void * servant)" << be_uidt << be_uidt_nl
+        << "{" << be_idt;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -346,7 +362,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << non_exist_upcall_command_name.c_str() << " command (" << be_idt_nl
+        << non_exist_upcall_command_name.c_str()
+        << " command (" << be_idt_nl
         << "impl";
 
     if (!non_existent.void_return_type ()
@@ -408,7 +425,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     repository_id.set_defined_in (node);
 
     ACE_CString repository_id_upcall_command_name =
-      "_repository_id_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+      "_repository_id_"
+      + ACE_CString (node_local_name)
+      + "_Upcall_Command" ;
 
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
     upcall_command_visitor.visit (&repository_id,
@@ -420,8 +439,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_repository_id_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant)" << be_uidt << be_uidt_nl;
-    *os << "{" << be_idt;
+        << "void * servant)" << be_uidt << be_uidt_nl
+        << "{" << be_idt;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -457,8 +476,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << repository_id_upcall_command_name.c_str() << " command ("
-        << be_idt_nl << "impl";
+        << repository_id_upcall_command_name.c_str()
+        << " command (" << be_idt_nl
+        << "impl";
 
     if (!repository_id.void_return_type ()
         || repository_id.argument_count () > 0)
@@ -496,9 +516,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     s.get ()->destroy ();
   }
 
-  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
+  if (!be_global->gen_corba_e ()
+      && !be_global->gen_minimum_corba ())
   {
-    *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+    *os << be_nl << be_nl;
+    
+    *os << "// TAO_IDL - Generated from " << be_nl
         << "// " << __FILE__ << ":" << __LINE__;
 
     *os << be_nl << be_nl
@@ -511,7 +534,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
         << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
         << be_idt << be_idt_nl
-        << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
+        << "TAO_ORB_Core::ifr_client_adapter_name ()"
+        << be_uidt_nl
         << ");" << be_uidt_nl << be_uidt_nl;
     *os << "if (!_tao_adapter)" << be_idt_nl
         << "{" << be_idt_nl
@@ -533,7 +557,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::CORBA::Boolean const _tao_result =" << be_idt_nl
         << "_tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);"
         << be_uidt_nl << be_nl
-        << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
+        << "_tao_adapter->dispose (_tao_retval);"
+        << be_nl << be_nl;
 
     *os << "if (!_tao_result)" << be_idt_nl
         << "{" << be_idt_nl
@@ -566,7 +591,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     get_component.set_defined_in (node);
 
     ACE_CString get_component_upcall_command_name =
-      "_get_component_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+      "_get_component_"
+      + ACE_CString (node_local_name)
+      + "_Upcall_Command" ;
 
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
     upcall_command_visitor.visit (&get_component,
@@ -579,8 +606,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant" << be_uidt_nl
-        << ")" << be_uidt_nl;
-    *os << "{" << be_idt;
+        << ")" << be_uidt_nl
+        << "{" << be_idt;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -662,9 +689,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "visit_interface - "
-                         "traversal of inhertance graph failed\n"),
+                         ACE_TEXT ("be_visitor_interface_ss::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("traversal of inhertance ")
+                         ACE_TEXT ("graph failed\n")),
                         -1);
     }
 
@@ -678,7 +706,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << " ||" << be_uidt_nl
           << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
           << "(char *)value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
+          << be_uidt_nl
           << ")";
     }
 
@@ -709,9 +738,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_ss::"
-                             "visit_interface - "
-                             "codegen for TIE class failed\n"),
+                             ACE_TEXT ("be_visitor_interface_ss::")
+                             ACE_TEXT ("visit_interface - ")
+                             ACE_TEXT ("codegen for TIE ")
+                             ACE_TEXT ("class failed\n")),
                             -1);
         }
 
@@ -723,9 +753,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
-                                                  be_interface *base,
-                                                  TAO_OutStream *os)
+be_visitor_interface_ss::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_ss::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_ss::gen_abstract_ops_helper (
+  be_interface *node,
+  be_interface *base,
+  TAO_OutStream *os)
 {
   if (!base->is_abstract ())
     {
@@ -746,9 +789,9 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
       if (d == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_ss::"
-                             "gen_abstract_ops_helper - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_interface_ss::")
+                             ACE_TEXT ("gen_abstract_ops_helper - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
         }
 
@@ -794,7 +837,8 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
         }
       else if (AST_Decl::NT_attr == nt)
         {
-          AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+          AST_Attribute *attr =
+            AST_Attribute::narrow_from_decl (d);
           be_attribute new_attr (attr->readonly (),
                                  attr->field_type (),
                                  0,
@@ -803,14 +847,16 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
           new_attr.set_defined_in (node);
           new_attr.set_name (new_name);
 
-          UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
+          UTL_ExceptList *get_exceptions =
+            attr->get_get_exceptions ();
 
           if (0 != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
 
-          UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
+          UTL_ExceptList *set_exceptions =
+            attr->get_set_exceptions ();
 
           if (0 != set_exceptions)
             {
@@ -832,10 +878,14 @@ be_visitor_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
-  // the _this () operation.
+  // The _this () operation.
   *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
       << "::_this (void)" << be_nl
@@ -851,7 +901,8 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
    if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
      {
-       *os << "::CORBA::Boolean const _tao_opt_colloc =" << be_idt_nl
+       *os << "::CORBA::Boolean const _tao_opt_colloc ="
+           << be_idt_nl
            << "stub->servant_orb_var ()->orb_core ()->"
            << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
      }
@@ -859,7 +910,8 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "tmp," << be_nl
       << "::CORBA::Object (stub, ";
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+  if (be_global->gen_direct_collocation()
+      || be_global->gen_thru_poa_collocation ())
     {
       *os << "_tao_opt_colloc";
     }
@@ -874,13 +926,15 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl << be_nl
-      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
+      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;"
+      << be_nl
       << "return" << be_idt_nl
       << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
       << be_idt << be_idt_nl
       << "obj.in ()," << be_nl;
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+  if (be_global->gen_direct_collocation()
+      || be_global->gen_thru_poa_collocation ())
     {
       *os << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
@@ -906,8 +960,12 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+      
+  *os << be_nl << be_nl;
 
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (TAO_ServerRequest & req, void * servant_upcall)"
@@ -954,17 +1012,20 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           if (node->accept (&ispb_visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_interface_ss::"
-                                 "generate_proxy_classes - "
-                                 "codegen for Base Proxy Broker "
-                                 "class failed\n"),
+                                 ACE_TEXT ("be_visitor_interface_ss::")
+                                 ACE_TEXT ("generate_proxy_classes - ")
+                                 ACE_TEXT ("codegen for Base Proxy Broker ")
+                                 ACE_TEXT ("class failed\n")),
                                 -1);
             }
         }
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation()
+          || be_global->gen_thru_poa_collocation ())
       {
-        *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+        *os << be_nl << be_nl;
+        
+        *os << "// TAO_IDL - Generated from" << be_nl
             << "// " << __FILE__ << ":" << __LINE__;
 
         // Proxy Broker Factory Function.
@@ -972,7 +1033,8 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
             << "TAO::Collocation_Proxy_Broker *" << be_nl
             << node->flat_client_enclosing_scope ()
             << node->base_proxy_broker_name ()
-            << "_Factory_function ( ::CORBA::Object_ptr)" << be_nl
+            << "_Factory_function ( ::CORBA::Object_ptr)"
+            << be_nl
             << "{" << be_idt_nl
             << "return";
 
@@ -1024,7 +1086,8 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
         *os << "static int" << be_nl
             << node->flat_client_enclosing_scope ()
             << node->base_proxy_broker_name ()
-            << "_Stub_Factory_Initializer_Scarecrow =" << be_idt_nl
+            << "_Stub_Factory_Initializer_Scarecrow ="
+            << be_idt_nl
             << node->flat_client_enclosing_scope ()
             << node->base_proxy_broker_name ()
             << "_Factory_Initializer (" << be_idt << be_idt_nl
@@ -1045,9 +1108,10 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
       if (node->accept (&idpi_visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_cs::"
-                             "generate_proxy_classes - "
-                             "codegen for Base Proxy Broker class failed\n"),
+                             ACE_TEXT ("be_visitor_interface_cs::")
+                             ACE_TEXT ("generate_proxy_classes - ")
+                             ACE_TEXT ("codegen for Base Proxy ")
+                             ACE_TEXT ("Broker class failed\n")),
                             -1);
         }
     }

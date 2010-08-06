@@ -2983,6 +2983,42 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
     }
 }
 
+void
+be_interface::gen_skel_inheritance (TAO_OutStream *os)
+{
+  long n_parents = this->n_inherits ();
+  AST_Type *parent = 0;
+  AST_Type **parents = this->inherits ();
+  bool has_concrete_parent = false;
+
+  for (int i = 0; i < n_parents; ++i)
+    {
+      parent = parents[i];
+
+      if (parent->is_abstract ())
+        {
+          continue;
+        }
+
+      if (has_concrete_parent)
+        {
+          *os << "," << be_nl;
+        }
+
+      *os << "public virtual " << "POA_"
+          << parent->name ();
+
+      has_concrete_parent = true;
+    }
+
+  if (! has_concrete_parent)
+    {
+      // We don't inherit from another user defined object, hence our
+      // base class is the ServantBase class.
+      *os << "public virtual PortableServer::ServantBase";
+    }
+}
+
 int
 be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 {

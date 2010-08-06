@@ -75,9 +75,9 @@ be_visitor_module::visit_constant (be_constant *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_constant - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_constant - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -108,9 +108,9 @@ be_visitor_module::visit_native (be_native *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::::"
-                         "visit_native - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::::")
+                         ACE_TEXT ("visit_native - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -183,9 +183,9 @@ be_visitor_module::visit_enum (be_enum *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_enum - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_enum - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -258,9 +258,9 @@ be_visitor_module::visit_exception (be_exception *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_exception - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_exception - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -381,9 +381,9 @@ be_visitor_module::visit_interface (be_interface *node)
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_module::"
-                           "visit_interface - "
-                           "Bad context state\n"),
+                           ACE_TEXT ("be_visitor_module::")
+                           ACE_TEXT ("visit_interface - ")
+                           ACE_TEXT ("Bad context state\n")),
                           -1);
       }
     }
@@ -395,9 +395,9 @@ be_visitor_module::visit_interface (be_interface *node)
   else if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_interface - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -446,9 +446,9 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_interface_fwd - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_interface_fwd - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -521,9 +521,9 @@ be_visitor_module::visit_valuebox (be_valuebox *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_valuebox - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_valuebox - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -614,9 +614,9 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_valuetype - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_valuetype - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -664,9 +664,9 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_valuetype_fwd - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_valuetype_fwd - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -696,77 +696,26 @@ be_visitor_module::visit_component (be_component *node)
 
   switch (this->ctx_->state ())
     {
+    // These cases all behave like interfaces.
     case TAO_CodeGen::TAO_ROOT_CH:
-      {
-        be_visitor_interface_ch visitor (&ctx);
-        // So we can pick up the abstract ops helpers.
-        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CI:
-      {
-        be_visitor_interface_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CS:
-      {
-        be_visitor_interface_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-      {
-        be_visitor_interface_cdr_op_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
-      {
-        be_visitor_interface_cdr_op_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_SH:
+    case TAO_CodeGen::TAO_ROOT_SI:
+    case TAO_CodeGen::TAO_ROOT_SS:
+      return this->visit_interface (node);
+      
+    // Nothing for these with components.  
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
     case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
-      {
-        return 0; // nothing to be done for DCPS
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
-      {
-        be_visitor_interface_any_op_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
-      {
-        be_visitor_interface_any_op_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SH:
-      {
-        be_visitor_component_sh visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SI:
-      {
-        be_visitor_component_si visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SS:
-      {
-        be_visitor_component_ss visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    // Nothing for these with components, they have the executor.  
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_CNH:
+    case TAO_CodeGen::TAO_ROOT_CNS:
       break;
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
@@ -798,15 +747,12 @@ be_visitor_module::visit_component (be_component *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_module::"
-                           "visit_component - "
-                           "Bad context state\n"),
+                           ACE_TEXT ("be_visitor_module::")
+                           ACE_TEXT ("visit_component - ")
+                           ACE_TEXT ("Bad context state\n")),
                           -1);
       }
     }
@@ -814,9 +760,9 @@ be_visitor_module::visit_component (be_component *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_component - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_component - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -859,9 +805,9 @@ be_visitor_module::visit_component_fwd (be_component_fwd *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_component_fwd - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_component_fwd - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -931,9 +877,9 @@ be_visitor_module::visit_home (be_home *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_home - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_home - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -1076,9 +1022,9 @@ be_visitor_module::visit_structure (be_structure *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_structure - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_structure - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -1109,9 +1055,9 @@ be_visitor_module::visit_structure_fwd (be_structure_fwd *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_structure_fwd - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_structure_fwd - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -1190,9 +1136,9 @@ be_visitor_module::visit_union (be_union *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_union - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_union - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -1223,9 +1169,9 @@ be_visitor_module::visit_union_fwd (be_union_fwd *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_union_fwd - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_union_fwd - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
@@ -1304,9 +1250,9 @@ be_visitor_module::visit_typedef (be_typedef *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module::"
-                         "visit_typedef - "
-                         "failed to accept visitor\n"),
+                         ACE_TEXT ("be_visitor_module::")
+                         ACE_TEXT ("visit_typedef - ")
+                         ACE_TEXT ("failed to accept visitor\n")),
                         -1);
     }
 
