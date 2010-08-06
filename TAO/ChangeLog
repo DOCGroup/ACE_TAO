@@ -1,3 +1,13 @@
+Fri Aug  6 13:42:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp(valid_creation):
+        
+          Skipped call to pre_exist() check if the new entry represents
+          an IDL module, since modules may be reopened. This bug (reported
+          by Bogdan Jeram <bjeram at eso dot org>) was somehow
+          reintroduced since 1.7.8. This fix handles any reopened
+          module, and closes [BUGID:3881].
+
 Thu Aug  5 13:25:00 UTC 2010  Build CZar  <buildczar at prismtech dot com>
 
         * tao/Valuetype/AbstractBase.h:
