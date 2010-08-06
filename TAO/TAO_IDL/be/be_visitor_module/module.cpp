@@ -825,18 +825,6 @@ be_visitor_module::visit_home (be_home *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_ROOT_CH:
-      {
-        be_visitor_home_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_CS:
-      {
-        be_visitor_home_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_SVH:
       {
         be_visitor_home_svh visitor (&ctx);
@@ -867,9 +855,6 @@ be_visitor_module::visit_home (be_home *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CNH:
-    case TAO_CodeGen::TAO_ROOT_CNS:
-      break;
     default:
       return 0; // nothing to be done
     }

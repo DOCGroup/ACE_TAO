@@ -407,7 +407,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
     }
 
-  if (be_global->tc_support () && !node->home_equiv ())
+  if (be_global->tc_support ())
     {
 
       be_visitor_context ctx = *this->ctx_;
@@ -452,9 +452,10 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
   if (node->is_local ())
     {
-      *os << "return " << node->local_name () << "::_duplicate ("
-          << be_idt << be_idt_nl
-          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref)"
+      *os << "return " << node->local_name ()
+          << "::_duplicate (" << be_idt << be_idt_nl
+          << "dynamic_cast<" << node->local_name ()
+          << "_ptr> (_tao_objref)"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
@@ -464,7 +465,8 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = 0;" << be_nl << be_nl
+      *os << node->full_name () << " *proxy = 0;"
+      << be_nl << be_nl
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
@@ -472,7 +474,8 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "_tao_objref," << be_nl
           << "\"" << node->repoID () << "\"," << be_nl;
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation()
+          || be_global->gen_thru_poa_collocation ())
         {
           *os << node->flat_client_enclosing_scope ()
               << node->base_proxy_broker_name ()
@@ -507,7 +510,8 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "_tao_objref," << be_nl
           << "\"" << node->repoID () << "\"," << be_nl;
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+      if (be_global->gen_direct_collocation()
+          || be_global->gen_thru_poa_collocation ())
         {
           *os << node->flat_client_enclosing_scope ()
               << node->base_proxy_broker_name ()
