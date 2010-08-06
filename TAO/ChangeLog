@@ -1,3 +1,38 @@
+Fri Aug  6 18:57:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_ss.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_component/component_si.cpp:
+        * TAO_IDL/be_include/be_visitor_component/component_sh.h:
+        * TAO_IDL/be_include/be_visitor_component/component_si.h:
+        * TAO_IDL/be_include/be_visitor_component/component_ss.h:
+
+          Removed these visitors, their functions are now taken
+          over by the corresponding interface visitors.
+
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_si.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+
+          - Refactored code from component and interface skeleton
+            visitors, to facilitate the removal of the former,
+            as described above.
+
+          - Formatted ACE_ERROR macros to use ACE_TEXT.
+
+          - Cosmetic changes.
+
 Fri Aug  6 14:43:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/tao_other_tests.lst:

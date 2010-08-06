@@ -343,6 +343,9 @@ public:
   /// Generate the "public virtual" entries in the stub header.
   virtual void gen_stub_inheritance (TAO_OutStream *os);
   
+  /// Generate the "public virtual" entries in the skel header.
+  virtual void gen_skel_inheritance (TAO_OutStream *os);
+  
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
   

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_INTERFACE_SS_H_
 #define _BE_INTERFACE_INTERFACE_SS_H_
 
@@ -30,14 +29,12 @@
 class be_visitor_interface_ss : public be_visitor_interface
 {
 public:
-  /// constructor
   be_visitor_interface_ss (be_visitor_context *ctx);
-
-  /// destructor
   ~be_visitor_interface_ss (void);
 
-  /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);
+  virtual int visit_component (be_component *node);
+  virtual int visit_connector (be_connector *node);
 
   /// Helper to generate the declarations for the operations
   /// of any abstract parents we may have.

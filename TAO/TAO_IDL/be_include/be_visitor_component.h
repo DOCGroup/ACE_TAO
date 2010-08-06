@@ -20,9 +20,6 @@
 #include "be_visitor_component_scope.h"
 
 #include "be_visitor_component/component.h"
-#include "be_visitor_component/component_sh.h"
-#include "be_visitor_component/component_si.h"
-#include "be_visitor_component/component_ss.h"
 #include "be_visitor_component/component_svh.h"
 #include "be_visitor_component/facet_svh.h"
 #include "be_visitor_component/context_svh.h"

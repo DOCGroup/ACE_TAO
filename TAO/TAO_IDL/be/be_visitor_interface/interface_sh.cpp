@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 // ************************************************************
 // Interface visitor for server header.
 // ************************************************************
@@ -52,9 +51,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (this->generate_amh_classes (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "be_visitor_interface_sh::"
-                          "visit_interface - "
-                          "codegen for AMH classes failed\n"),
+                          ACE_TEXT ("be_visitor_interface_sh::")
+                          ACE_TEXT ("visit_interface - ")
+                          ACE_TEXT ("codegen for AMH classes failed\n")),
                         -1);
     }
 
@@ -73,8 +72,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       class_name +=  node->local_name ();
     }
 
-  *os << be_nl << be_nl
-      << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl;
+  
+  *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the skeleton class name.
@@ -82,65 +82,42 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "class " << class_name.c_str () << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "typedef " << class_name.c_str () << " *" << class_name.c_str ()
-      << "_ptr;";
+  *os << "typedef " << class_name.c_str () << " *"
+      << class_name.c_str () << "_ptr;";
 
 
   if (be_global->gen_direct_collocation ())
     {
       *os << be_nl << be_nl
-          << "class " << node->direct_proxy_impl_name () << ";" << be_nl
-          << "class " << node->strategized_proxy_broker_name () << ";";
+          << "class " << node->direct_proxy_impl_name ()
+          << ";" << be_nl
+          << "class " << node->strategized_proxy_broker_name ()
+          << ";";
     }
 
   // Now generate the class definition.
   *os << be_nl << be_nl
       << "class " << be_global->skel_export_macro ()
-      << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
+      << " " << class_name.c_str () << be_idt_nl
+      << ": " << be_idt;
 
-  long n_parents = node->n_inherits ();
-  AST_Type *parent = 0;
-  bool has_concrete_parent = false;
-
-  for (int i = 0; i < n_parents; ++i)
-    {
-      parent = node->inherits ()[i];
-
-      if (parent->is_abstract ())
-        {
-          continue;
-        }
-
-      if (has_concrete_parent)
-        {
-          *os << "," << be_nl;
-        }
-
-      *os << "public virtual " << "POA_"
-          << parent->name ();
-
-      has_concrete_parent = true;
-    }
-
-  if (! has_concrete_parent)
-    {
-      // We don't inherit from another user defined object, hence our
-      // base class is the ServantBase class.
-      *os << "public virtual PortableServer::ServantBase";
-    }
+  node->gen_skel_inheritance (os);
 
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl;
 
   // Default constructor.
-  *os << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+  *os << class_name.c_str () << " (void);"
+      << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
   // Some useful typedefs.
   *os << "// Useful for template programming." << be_nl
-      << "typedef ::" << node->name () << " _stub_type;" << be_nl
-      << "typedef ::" << node->name () << "_ptr _stub_ptr_type;" << be_nl
+      << "typedef ::" << node->name () << " _stub_type;"
+      << be_nl
+      << "typedef ::" << node->name () << "_ptr _stub_ptr_type;"
+      << be_nl
       << "typedef ::" << node->name () << "_var _stub_var_type;"
       << be_nl << be_nl;
 
@@ -162,7 +139,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (!be_global->gen_minimum_corba ())
     {
       // Add a skeleton for our _non_existent method.
-      *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
+      *os << "static void _non_existent_skel ("
+          << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
           << "void * servant);" << be_uidt
@@ -172,7 +150,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
     {
       // Add a skeleton for our _interface method.
-      *os << "static void _interface_skel (" << be_idt << be_idt_nl
+      *os << "static void _interface_skel ("
+          << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
           << "void * servant);" << be_uidt
@@ -192,7 +171,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (!be_global->gen_minimum_corba ())
     {
       // Add a skeleton for our _repository_id method.
-      *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
+      *os << "static void _repository_id_skel ("
+          << be_idt << be_idt_nl
           << "TAO_ServerRequest & req," << be_nl
           << "void * servant_upcall," << be_nl
           << "void * servant);" << be_uidt
@@ -216,9 +196,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (this->visit_scope (node) ==  -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "be_visitor_interface_sh::"
-                          "visit_interface - "
-                          "codegen for scope failed\n"),
+                         ACE_TEXT ("be_visitor_interface_sh::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -233,9 +213,10 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "be_visitor_interface_sh::"
-                          "visit_interface - "
-                          "inheritance graph traversal failed\n"),
+                         ACE_TEXT ("be_visitor_interface_sh::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("inheritance graph ")
+                         ACE_TEXT ("traversal failed\n")),
                         -1);
     }
 
@@ -251,18 +232,14 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
       if (node->accept (&ispb_visitor) == -1)
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "be_visitor_interface_sh::"
-              "visit_interface - "
-              "codegen for strategized proxy broker class failed\n"
-            ),
-            -1
-          );
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_interface_sh::")
+                             ACE_TEXT ("visit_interface - ")
+                             ACE_TEXT ("codegen for strategized ")
+                             ACE_TEXT ("proxy broker class failed\n")),
+                            -1);
         }
     }
-
-  ctx = *this->ctx_;
 
   // Generate the collocated class.
 
@@ -270,20 +247,17 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   if (be_global->gen_direct_collocation ())
     {
-      ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH);
       be_visitor_interface_direct_proxy_impl_sh idpi_visitor (&ctx);
 
       if (node->accept (&idpi_visitor) == -1)
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "be_visitor_interface_sh::"
-              "visit_interface - "
-              "codegen for direct collocated class failed\n"
-            ),
-            -1
-          );
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_interface_sh::")
+                             ACE_TEXT ("visit_interface - ")
+                             ACE_TEXT ("codegen for direct ")
+                             ACE_TEXT ("collocated class failed\n")),
+                            -1);
         }
     }
 
@@ -291,11 +265,22 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 }
 
 int
+be_visitor_interface_sh::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_sh::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
+}
+
+int
 be_visitor_interface_sh::gen_abstract_ops_helper (
-    be_interface *node,
-    be_interface *base,
-    TAO_OutStream *os
-  )
+  be_interface *node,
+  be_interface *base,
+  TAO_OutStream *os)
 {
   if (!base->is_abstract ())
     {
@@ -316,9 +301,9 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
       if (d == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_sh::"
-                             "gen_abstract_ops_helper - "
-                             "bad node in this scope\n"),
+                             ACE_TEXT ("be_visitor_interface_sh::")
+                             ACE_TEXT ("gen_abstract_ops_helper - ")
+                             ACE_TEXT ("bad node in this scope\n")),
                             -1);
         }
 
@@ -371,7 +356,8 @@ be_visitor_interface_sh::this_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Print out the _this() method.
-  *os << "::" << node->full_name () << " *_this (void);" << be_nl;
+  *os << "::" << node->full_name () << " *_this (void);"
+      << be_nl;
 }
 
 int
