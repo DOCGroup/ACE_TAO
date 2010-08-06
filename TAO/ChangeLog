@@ -1,3 +1,9 @@
+Fri Aug  6 14:43:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/tao_other_tests.lst:
+        
+          Added new test below.
+
 Fri Aug  6 14:35:45 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3881_Regression/*.*:
