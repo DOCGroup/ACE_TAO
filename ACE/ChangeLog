@@ -285,7 +285,6 @@ Thu Aug  5 08:13:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/config-win32-msvc-7.h:
         * ace/config-win32-msvc-8.h:
         * ace/config-win32-msvc-9.h:
-
         * include/makeinclude/platform_aix.GNU:
         * include/makeinclude/platform_aix_g++.GNU:
         * include/makeinclude/platform_aix_ibm.GNU:
@@ -320,17 +319,17 @@ Thu Aug  5 08:13:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_win32_icc.GNU:
         * include/makeinclude/platform_win32_interix.GNU:
         * include/makeinclude/wrapper_macros.GNU:
-
-        * rpmbuild/ace-tao.spec:
-
         * tests/Bug_3673_Regression_Test.cpp:
         * tests/Reactor_Exceptions_Test.cpp:
         * tests/tests.mpc:
+          Removed support for non exception builds, ACE_HAS_EXCEPTIONS is
+          now always defined
+
+        * rpmbuild/ace-tao.spec:
+          Small updates
 
         * ace/Exception_Macros.h:
-
         * bin/MakeProjectCreator/config/exceptions.mpb:
-
           Removed these files.
 
 Thu Aug  5 07:40:00 UTC 2010  Build CZar  <buildczar at prismtech dot com>
