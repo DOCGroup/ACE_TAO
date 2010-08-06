@@ -46,8 +46,10 @@ be_visitor_interface_si::visit_interface (be_interface *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_si::visit_interface "
-                         "error determining mult inheritance\n"),
+                         ACE_TEXT ("be_visitor_interface_si::")
+                         ACE_TEXT ("visit_interface ")
+                         ACE_TEXT ("error determining mult ")
+                         ACE_TEXT ("inheritance\n")),
                         -1);
     }
 
@@ -59,9 +61,10 @@ be_visitor_interface_si::visit_interface (be_interface *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_si::"
-                         "visit_interface - "
-                         "codegen for base class skeletons failed\n"),
+                         ACE_TEXT ("be_visitor_interface_si::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("codegen for base ")
+                         ACE_TEXT ("class skeletons failed\n")),
                         -1);
     }
 
@@ -81,15 +84,27 @@ be_visitor_interface_si::visit_interface (be_interface *node)
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_si::"
-                             "visit_interface - "
-                             "codegen for collocated base class "
-                             "skeletons failed\n"),
+                             ACE_TEXT ("be_visitor_interface_si::")
+                             ACE_TEXT ("visit_interface - ")
+                             ACE_TEXT ("codegen for collocated base ")
+                             ACE_TEXT ("class skeletons failed\n")),
                             -1);
         }
     }
 
   return 0;
+}
+
+int
+be_visitor_interface_si::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_interface_si::visit_connector (be_connector *node)
+{
+  return this->visit_interface (node);
 }
 
 int

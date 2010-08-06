@@ -313,6 +313,38 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
   *os << be_uidt;
 }
 
+void
+be_component::gen_skel_inheritance (TAO_OutStream *os)
+{
+  AST_Component *base = this->base_component ();
+
+  if (base != 0)
+    {
+      *os << "public virtual POA_" << base->name ();
+    }
+  else
+    {
+      *os << "public virtual POA_Components::CCMObject";
+    }
+
+  long nsupports = this->n_inherits ();
+  AST_Type **supports = this->supports ();
+  AST_Type *supported = 0;
+
+  for (long i = 0; i < nsupports; ++i)
+    {
+      supported = supports[i];
+
+      if (supported->is_abstract ())
+        {
+          continue;
+        }
+
+      *os << "," << be_nl;
+      *os << "public virtual POA_" << supported->name ();
+    }
+}
+
 int
 be_component::gen_is_a_ancestors (TAO_OutStream *os)
 {
