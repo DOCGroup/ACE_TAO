@@ -37,8 +37,6 @@
 #include "be_visitor_home.h"
 #include "be_visitor_attribute.h"
 #include "be_visitor_operation.h"
-#include "be_visitor_typecode/typecode_defn.h"
-#include "be_visitor_typecode/objref_typecode.h"
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.h"
 #include "be_visitor_context.h"
 

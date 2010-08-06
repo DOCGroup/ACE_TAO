@@ -46,7 +46,6 @@
 #include "be_visitor_interface.h"
 #include "be_visitor_structure.h"
 #include "be_visitor_typedef.h"
-#include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
 #include "be_util.h"
 #include "be_helper.h"

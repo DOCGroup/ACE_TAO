@@ -19,7 +19,6 @@
 #include "ast_argument.h"
 
 #include "be_visitor_scope.h"
-#include "be_visitor_typecode/typecode_decl.h"
 #include "be_visitor_operation/operation.h"
 #include "be_visitor_operation/arglist.h"
 
