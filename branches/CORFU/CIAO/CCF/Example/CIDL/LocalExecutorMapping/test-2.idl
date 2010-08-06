@@ -1,0 +1,74 @@
+// file      : CCF/Example/CIDL/LocalExecutorMapping/test-2.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#include "test-1.idl"
+
+interface Goof {};
+
+module M2
+{
+
+  interface I {};
+  interface J {};
+
+  eventtype E supports I, J
+  {
+    factory new (in string name);
+    public string name;
+  };
+
+  valuetype V
+  {
+    public long l;
+  };
+
+  component C2 : M1::C1 supports I, J
+  {
+    provides Goof pg;
+    uses Goof ug;
+
+    publishes E pe;
+    emits E me;
+    consumes E ce;
+  };
+
+  typedef sequence<octet> OctetSeq;
+
+  struct S
+  {
+    long l;
+    OctetSeq octet_seq;
+  };
+
+  typedef sequence<S> S_Seq;
+
+  exception Ex1
+  {
+    string descr;
+  };
+
+  exception Ex2
+  {
+  };
+
+  home H2 : M1::H1 supports I, J manages C2
+  {
+    readonly attribute long rl;
+    readonly attribute M::I rai;
+    attribute OctetSeq seq;
+    attribute S_Seq a_s_seq;
+
+    void
+      foo (in long l,
+           inout boolean b,
+           out long ol,
+           in M::I i,
+           out unsigned long long ull,
+           inout S_Seq s_seq,
+           in V v) raises (Ex1, Ex2);
+
+    factory new (in long l, in OctetSeq s) raises (Ex2, Ex1);
+    finder find (in long l, in OctetSeq s) raises (Ex1, Ex2);
+  };
+};

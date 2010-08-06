@@ -1,0 +1,79 @@
+//$Id$
+project(PI) : taolib, tao_output, codecfactory, install, tao_versioning_idl_defaults {
+  sharedname   = TAO_PI
+  dynamicflags = TAO_PI_BUILD_DLL
+  idlflags += -SS -Sci -Gp -Gd \
+              -Wb,export_macro=TAO_PI_Export \
+              -Wb,export_include=tao/PI/pi_export.h \
+              -o PI
+
+  Source_Files {
+    PI
+  }
+
+  Header_Files {
+    PI
+  }
+
+  Inline_Files {
+    PI
+  }
+
+  Template_Files {
+    PI
+  }
+
+  Resource_Files {
+    PI
+  }
+
+  PIDL_Files {
+    PI
+  }
+
+  IDL_Files {
+    idlflags += -Sorb -GX \
+                -Wb,unique_include=tao/PI/PI.h
+    PI/PI_include.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sorb -Sal -GX \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    PI/ORBInitInfo.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sorb -Sal \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    PI/ORBInitializer.pidl
+    PI/ClientRequestInterceptor.pidl
+    PI/ClientRequestInfo.pidl
+    PI/RequestInfo.pidl
+    PI/PIForwardRequest.pidl
+    PI/PICurrent.pidl
+    PI/ProcessingModePolicy.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sorb -Sal
+    idlflags -= -Sa -St
+    PI/Interceptor.pidl
+  }
+
+  IDL_Files {
+    idlflags += -GA -Sal \
+                -Wb,include_guard=TAO_PI_SAFE_INCLUDE \
+                -Wb,safe_include=tao/PI/PI.h
+    idlflags -= -Sa -St
+    PI/InvalidSlot.pidl
+  }
+
+  Pkgconfig_Files {
+    PI/TAO_PI.pc.in
+  }
+}

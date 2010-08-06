@@ -1,0 +1,58 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, messaging {
+  after += *idl
+  specific(bmake, nmake, em3, vc6, vc71, vc8, vc9, vc10) {
+    // Use a roughly 16MB stack to avoid stack overflow in this test
+    StackReserveSize = 16000000
+  }
+  Source_Files {
+    Clock_Ticks.cpp
+    Server_Peer.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Scavenger): taoserver, messaging {
+  exename = scavenger
+  after += *idl
+  Source_Files {
+    scavenger.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, messaging {
+  exename = client
+  after += *idl
+  Source_Files {
+    Clock_Ticks.cpp
+    Client_Peer.cpp
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}

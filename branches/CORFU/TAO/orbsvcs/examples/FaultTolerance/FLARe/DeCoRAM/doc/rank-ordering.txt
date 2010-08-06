@@ -1,0 +1,41 @@
+data: a) schedule of previous tasks as key value pairs:
+           processor -> list of tasks
+      b) list of schedule results for current tasks
+           <task, processor, worst case response time>
+         with each task having a <name, role, rank>
+post-condition: each tasks rank is assigned such that ranks are
+      unique and result in a spread distribution of primaries accross
+      processors
+
+for each schedule result
+  entry.wcrt = run worst-case response time analysis for processor 
+               in non-failure case (all backups are passive)
+end for
+sort schedule entries ascendingly according to their wcrt
+make first entry the primary
+give ascending rank to all other entries starting with rank 1
+
+example
+-------
+A(2,4,1) B(2,8,1) C(6,24,2) - 2 failures considered
+
+schedule A:
+
+P1: A
+P2: A_1
+P3: A_2
+
+schedule B:
+P1: A   B -> wcrt = 4|8 -> rank 2
+P2: A_1 B -> wcrt = 3|8 -> rank 0
+P3: A_2 B -> wcrt = 3|8 -> rank 1
+
+schedule C:
+P1: A   B_2 C -> wcrt = 21|24 -> rank 2
+P2: A_1 B   C -> wcrt = 14|24 -> rank 1
+P3: A_2 B_1 C -> wcrt = 11|24 -> rank 0
+
+result:
+P1: A   B_2 C_2
+P2: A_1 B   C_1
+P3: A_2 B_1 C

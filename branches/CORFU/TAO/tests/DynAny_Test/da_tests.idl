@@ -1,0 +1,75 @@
+/* -*- C++ -*- */
+//
+// $Id$
+
+#include <orb.idl>
+
+module DynAnyTests
+{
+  struct enclosed_struct
+  {
+    float f;
+    short s;
+  };
+
+  struct test_struct
+  {
+    char c;
+    CORBA::ShortSeq ss;
+    enclosed_struct es;
+  };
+
+  typedef sequence<string<8> > test_seq;
+  typedef sequence<short> SeqShort;
+
+  const unsigned long DIM = 2;
+  typedef long test_array [DIM];
+
+  enum test_enum
+  {
+    TE_ZEROTH,
+    TE_FIRST,
+    TE_SECOND,
+    TE_THIRD,
+    TE_FOURTH
+  };
+
+  typedef test_enum Enumerated_a;
+  typedef test_enum Enumerated_b;
+  typedef test_enum Enumerated_c;
+
+  struct StructTypedefEnum {
+    Enumerated_a    field_1;
+    Enumerated_b    field_2;
+    Enumerated_c    field_3;
+  };
+
+  union test_union switch (test_enum)
+  {
+    case TE_SECOND: CORBA::TypeCode tc;
+    case TE_FOURTH: test_enum te;
+    default: short s;
+    case TE_THIRD: string str;
+    case TE_ZEROTH: octet o;
+  };
+
+  typedef test_struct test_struct_alias;
+  typedef test_union test_union_alias;
+
+  union test_implicit_def switch (boolean) {
+    case TRUE :
+       test_enum tenum;
+  } ;
+
+  union test_union_no_active_member switch (long) {
+        case 1: long    field_long;
+        case 2: string  field_string;
+  };
+
+  struct test_struct_with_long_double
+  {
+    long double field_longdouble;
+  };
+
+
+};

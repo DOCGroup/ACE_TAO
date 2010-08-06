@@ -1,0 +1,51 @@
+//$Id$
+project(RTPortableServer) : taolib, tao_output, install, rtcorba, portableserver, avoids_corba_e_micro {
+  sharedname   = TAO_RTPortableServer
+  dynamicflags = TAO_RTPORTABLESERVER_BUILD_DLL
+
+  idlflags += -Sci -SS -Sorb -GX \
+          -Wb,export_macro=TAO_RTPortableServer_Export \
+          -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h \
+          -o RTPortableServer
+
+  Source_Files {
+    RTPortableServer
+  }
+
+  Header_Files {
+    RTPortableServer
+  }
+
+  Inline_Files {
+    RTPortableServer
+  }
+
+  Template_Files {
+    RTPortableServer
+  }
+
+  Resource_Files {
+    RTPortableServer
+  }
+
+  PIDL_Files {
+    RTPortableServer
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd \
+                -Wb,include_guard=TAO_RT_PORTABLESERVER_SAFE_INCLUDE \
+                -Wb,safe_include=tao/RTPortableServer/RTPortableServer.h
+    RTPortableServer/RTPortableServer.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Sa \
+                -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h
+    RTPortableServer/RTPortableServer_include.pidl
+  }
+
+  Pkgconfig_Files {
+    RTPortableServer/TAO_RTPortableServer.pc.in
+  }
+}

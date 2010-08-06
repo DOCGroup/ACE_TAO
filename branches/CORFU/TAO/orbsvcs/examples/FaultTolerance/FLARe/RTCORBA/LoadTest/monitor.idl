@@ -1,0 +1,12 @@
+#ifndef MONITOR_IDL
+#define MONITOR_IDL
+
+interface HostMonitor
+{
+  boolean register_process (in string process_id, in string hostname, in long port);
+  boolean unregister_process (in string process_id);
+  void dump ();
+};
+
+#endif // MONITOR_IDL
+

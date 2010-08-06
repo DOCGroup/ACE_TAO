@@ -1,0 +1,265 @@
+<!-- $Id$ -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
+	xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:p="urn:schemas-microsoft-com:office:powerpoint"
+	xmlns:oa="urn:schemas-microsoft-com:office:activation" xmlns="http://www.w3.org/TR/REC-html40">
+	<head>
+		<title>Building a Stock Quoter with TAO - A Tutorial</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+		<meta name="ProgId" content="Word.Document">
+		<meta name="Generator" content="Microsoft Word 11">
+		<meta name="Originator" content="Microsoft Word 11">
+		<link rel="File-List" href="04_files/filelist.xml">
+			<link rel="Edit-Time-Data" href="04_files/editdata.mso"> <!--[if !mso]>
+<STYLE>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</STYLE>
+<![endif]-->  <!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Abdullah Sowayan</o:Author>
+  <o:LastAuthor>Abdullah Sowayan</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>4</o:TotalTime>
+  <o:Created>2006-11-06T21:26:00Z</o:Created>
+  <o:LastSaved>2007-03-08T01:20:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>292</o:Words>
+  <o:Characters>1668</o:Characters>
+  <o:Company>Lockheed Martin</o:Company>
+  <o:Lines>13</o:Lines>
+  <o:Paragraphs>3</o:Paragraphs>
+  <o:CharactersWithSpaces>1957</o:CharactersWithSpaces>
+  <o:Version>11.5606</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->  <!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->  <!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+				<style> <!-- /* Font Definitions */ @font-face {font-family:Wingdings; panose-1:5 0 0 0 0 0 0 0 0 0; mso-font-charset:2; mso-generic-font-family:auto; mso-font-pitch:variable; mso-font-signature:0 268435456 0 0 -2147483648 0;}
+	/* Style Definitions */ p.MsoNormal, li.MsoNormal, div.MsoNormal {mso-style-parent:""; margin:0in; margin-bottom:.0001pt; mso-pagination:widow-orphan; font-size:12.0pt; font-family:"Times New Roman"; mso-fareast-font-family:"Times New Roman";}
+	h3 {mso-margin-top-alt:auto; margin-right:0in; mso-margin-bottom-alt:auto; margin-left:0in; mso-pagination:widow-orphan; mso-outline-level:3; font-size:13.5pt; font-family:"Times New Roman"; font-weight:bold;}
+	a:link, span.MsoHyperlink {color:#000FFF; text-decoration:underline; text-underline:single;}
+	a:visited, span.MsoHyperlinkFollowed {color:#FF0F0F; text-decoration:underline; text-underline:single;}
+	p {mso-margin-top-alt:auto; margin-right:0in; mso-margin-bottom-alt:auto; margin-left:0in; mso-pagination:widow-orphan; font-size:12.0pt; font-family:"Times New Roman"; mso-fareast-font-family:"Times New Roman";}
+	address {margin:0in; margin-bottom:.0001pt; mso-pagination:widow-orphan; font-size:12.0pt; font-family:"Times New Roman"; font-style:italic;}
+	code {font-family:"Courier New"; mso-ascii-font-family:"Courier New"; mso-fareast-font-family:"Times New Roman"; mso-hansi-font-family:"Courier New"; mso-bidi-font-family:"Courier New";}
+	@page Section1 {size:8.5in 11.0in; margin:1.0in 1.25in 1.0in 1.25in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;}
+	div.Section1 {page:Section1;}
+	/* List Definitions */ @list l0 {mso-list-id:67775701; mso-list-template-ids:1355323582;}
+	@list l0:level1 {mso-level-number-format:bullet; mso-level-text:\F0B7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Symbol;}
+	@list l0:level2 {mso-level-tab-stop:1.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level3 {mso-level-tab-stop:1.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level4 {mso-level-tab-stop:2.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level5 {mso-level-tab-stop:2.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level6 {mso-level-tab-stop:3.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level7 {mso-level-tab-stop:3.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level8 {mso-level-tab-stop:4.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l0:level9 {mso-level-tab-stop:4.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1 {mso-list-id:170876734; mso-list-template-ids:1310460404;}
+	@list l1:level1 {mso-level-number-format:bullet; mso-level-text:\F0B7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Symbol;}
+	@list l1:level2 {mso-level-tab-stop:1.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level3 {mso-level-tab-stop:1.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level4 {mso-level-tab-stop:2.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level5 {mso-level-tab-stop:2.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level6 {mso-level-tab-stop:3.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level7 {mso-level-tab-stop:3.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level8 {mso-level-tab-stop:4.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l1:level9 {mso-level-tab-stop:4.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2 {mso-list-id:333609146; mso-list-template-ids:-1273693138;}
+	@list l2:level1 {mso-level-number-format:bullet; mso-level-text:\F0A7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Wingdings;}
+	@list l2:level2 {mso-level-tab-stop:1.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level3 {mso-level-tab-stop:1.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level4 {mso-level-tab-stop:2.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level5 {mso-level-tab-stop:2.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level6 {mso-level-tab-stop:3.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level7 {mso-level-tab-stop:3.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level8 {mso-level-tab-stop:4.0in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l2:level9 {mso-level-tab-stop:4.5in; mso-level-number-position:left; text-indent:-.25in;}
+	@list l3 {mso-list-id:909120102; mso-list-template-ids:116433128;}
+	@list l3:level1 {mso-level-number-format:bullet; mso-level-text:\F0B7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Symbol;}
+	@list l4 {mso-list-id:1387752558; mso-list-template-ids:245692192;}
+	@list l4:level1 {mso-level-number-format:bullet; mso-level-text:\F0B7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Symbol;}
+	@list l5 {mso-list-id:1450973280; mso-list-template-ids:2147393542;}
+	@list l5:level1 {mso-level-number-format:bullet; mso-level-text:\F0A7; mso-level-tab-stop:.5in; mso-level-number-position:left; text-indent:-.25in; mso-ansi-font-size:10.0pt; font-family:Wingdings;}
+	ol {margin-bottom:0in;}
+	ul {margin-bottom:0in;}
+	--></style>
+		<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->  <!-- $Id$ --> <!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]-->  <!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+	</head>
+	<body bgcolor="white" lang="EN-US" link="#000fff" vlink="#ff0f0f" style='tab-interval:
+.5in'>
+		<h3 align="center" style='TEXT-ALIGN:center' class="Section1"><span style='COLOR:black'>Step 6:
+System Deployment<o:p></o:p></span></h3>
+		<h3 align="center" style='TEXT-ALIGN:center' class="Section1"><span style='COLOR:black'><img width="432" height="223" id="_x0000_i1025" src="images/step6.jpg"><o:p></o:p>
+			</span></h3>
+		<p class="MsoNormal"><span style='COLOR:black'>Now that we have all the
+components and driver programs successfully built, along with the Deploymentplan
+generated by PICML, we will be able to run our application<br>
+<br>
+From different command prompts in </span><code><span style='FONT-SIZE:10pt;
+COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/descriptors</span></code><span style='COLOR:black'> directory: <o:p></o:p></span></p>
+		<DIV class="Section1">
+			<UL type="disc">
+				<li class="MsoNormal" style='COLOR:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 level1 lfo3;tab-stops:list .5in'>
+					Start NodeManagers (NodeDameon) by running:</li></UL>
+		</DIV>
+		<P class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l1 level1 lfo3; tab-stops: list .5in">&nbsp;<FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp; 
+				%CIAO_ROOT%/bin/NodeManager -ORBListenendpoints iiop://localhost:30000 -s 
+				%CIAO_ROOT%/bin/NodeApplication -d 1000</FONT></P>
+		<P class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l1 level1 lfo3; tab-stops: list .5in"><FONT face="Courier New" size="2"></FONT>&nbsp;</P>
+		<P class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l1 level1 lfo3; tab-stops: list .5in"><FONT face="Courier New" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%CIAO_ROOT%/bin/NodeManager 
+				-ORBListenendpoints iiop://localhost:40000 -s %CIAO_ROOT%/bin/NodeApplication 
+				-d 1000</FONT></P>
+		<UL type="disc">
+			<li class="MsoNormal" style='COLOR:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l1 level1 lfo3;tab-stops:list .5in'>
+				Start the execution manager:</li></UL>
+		<P class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l1 level1 lfo3; tab-stops: list .5in">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			&nbsp;&nbsp;&nbsp; <code>
+				<span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/Execution_Manager
+     -o ior -i NodeMap.dat</span></code>&nbsp;<o:p></o:p>
+		</P>
+		<p><span style='COLOR:black'>The </span><code><span style='FONT-SIZE:10pt;
+COLOR:black'>NodeMap.dat</span></code><span style='COLOR:black'> file describes
+the deployment daemons CIAO's Execution_Manager will contact to instantiate
+ComponentServer's, home's, and component instances. Each line specify the name
+of a installation "destination" and the corresponding IOR for the
+CIAO_Daemon.<o:p></o:p></span></p>
+		<ul type="square">
+			<li class="MsoNormal" style='COLOR:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l2 level1 lfo6;tab-stops:list .5in'>
+				<em>NOTE</em>: As one can see, we use the "NodeMap.dat" file to instruct the 
+				Execution_Manager how to find the endpoint of each individual NodeManager 
+				(i.e., Node Daemon) where component(s) will be deployed, so this is 
+				non-standard. We plan to use Naming Service to do this in the future.<o:p></o:p></li>
+		</ul>
+		<ul type="disc">
+			<li class="MsoNormal" style='COLOR:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 level1 lfo9;tab-stops:list .5in'>
+				Start the plan_launcher by running <code>
+					<span style='FONT-SIZE:10pt'>%CIAO_ROOT%/bin/plan_launcher
+     -p Plan.cdp -k file://ior</span></code><o:p></o:p>
+			<li class="MsoNormal" style='COLOR:black;mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 level1 lfo9;tab-stops:list .5in'>
+				By now the components should be successfully deployed. You may run the driver 
+				program to start the application. e.g. you can try the following<o:p></o:p>
+				:
+				<UL>
+					<LI class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l0 level1 lfo9; tab-stops: list .5in">
+						Instruct the StockDistributor component to start publishing stock quotes:</LI></UL>
+			</li>
+		</ul>
+		<P class="MsoNormal" style="MARGIN-BOTTOM: 12pt"><span style='COLOR:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><code><span style='FONT-SIZE:10pt;COLOR:black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.exe
+-o</span></code></P>
+		<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+			<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+				<LI>
+					<span style='COLOR:black'>Instruct the StockBroker 
+    to subscirbe to MSFT stock 
+publications: </span></LI></UL>
+		</UL>
+		<P><SPAN style="COLOR: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN><code><span style='FONT-SIZE:
+10pt;COLOR:
+black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
+-s MSFT</span></code></P>
+		<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+			<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+				<LI>
+					<CODE>
+						<SPAN style="FONT-SIZE: 10pt; COLOR: black">
+							<SPAN style="COLOR: black">
+								<FONT face="Times New Roman"><FONT size="3">Instruct the StockBroker to subscirbe 
+										to&nbsp;IBM stock publications</FONT>:</FONT></SPAN>
+						</SPAN></CODE></LI></UL>
+		</UL>
+		<P><span style='COLOR:black'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><code><span style='FONT-SIZE:
+10pt;COLOR:
+black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
+-s IBM</span></code></P>
+		<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+			<UL dir="ltr" style="MARGIN-RIGHT: 0px">
+				<LI>
+					<CODE>
+						<SPAN style="FONT-SIZE: 10pt; COLOR: black"></SPAN></CODE><span style='COLOR:black'><SPAN style="COLOR: black">Instruct the StockBroker to unsubscirbe to MSFT stock 
+    publications:</SPAN>
+					</span></LI></UL>
+		</UL>
+		<SPAN style="COLOR: black">
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN><code><span style='FONT-SIZE:
+10pt;COLOR:
+black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.exe
+-u MSFT</span></code><span style='COLOR:black'></P>
+<UL>
+				<UL>
+					<LI>
+						<SPAN style="COLOR: black">
+							<SPAN style="COLOR: black">Instruct the 
+    StockDistributor component to stop publishing stock 
+quotes:</SPAN></LI></UL>
+			</UL> </span>
+		<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN><code><span style='FONT-SIZE:
+10pt;COLOR:
+black'>%CIAO_ROOT%/docs/tutorials/Quoter/Simple/Distributor/StockDistributorDriver.exe
+&#8211;f</span></code><code><span style='FONT-SIZE:10pt'><o:p></o:p>
+				</span></code></P>
+		<P><CODE><SPAN style="FONT-SIZE: 10pt"></SPAN></CODE><code><span style='FONT-SIZE:
+10pt'>&nbsp;</P>
+		<UL>
+			<DIV class="MsoNormal" style="MARGIN-BOTTOM: 12pt">
+				<LI class="MsoNormal" style="COLOR: black; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-list: l2 level1 lfo6; tab-stops: list .5in">
+					<FONT color="#ff0000"><EM>NOTE</EM>: Windows uses %VARIABLE% to fetch the values of 
+						environment variables. Linux/Unix uses $VARIABLE to fetch the values of 
+						environment variables. As such, if you're running this tutorial on Linux/Unix 
+						operating system, change the above commands to use $VARIABLE instead of 
+						%VARIABLE% when you run the programs.</FONT></SPAN></CODE></LI></DIV>
+		</UL>
+		<p class="MsoNormal" align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><a href="03.html">Previous</a><span style='mso-tab-count:
+8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+				<o:p></o:p>
+			</span></p>
+		<div class="MsoNormal" align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
+				<hr size="2" width="100%" align="center">
+			</span></div>
+		<address><span style='COLOR:black'><a href="mailto:ming.xiong@vanderbilt.edu">Ming Xiong<br>
+				</a>
+			</span><a href="mailto:abdullah.sowayan@lmco.com">Abdullah Sowayan</a></address>
+		<p class="MsoNormal"><span style='COLOR:black'><o:p>&nbsp;</o:p>
+			</span></p>
+		<P class="MsoNormal"><SPAN style="COLOR: black">$Id$</SPAN></P>
+		<p class="MsoNormal" style='MARGIN-BOTTOM:12pt'><span style='COLOR:black'><o:p>&nbsp;</o:p>
+			</span></p>
+	</body>
+</html>

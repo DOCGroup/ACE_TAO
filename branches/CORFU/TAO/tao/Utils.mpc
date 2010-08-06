@@ -1,0 +1,35 @@
+// $Id$
+project (TAO_Utils) : taolib, tao_output, install, portableserver, pi {
+  sharedname    = TAO_Utils
+  dynamicflags  = TAO_UTILS_BUILD_DLL
+
+  Source_Files {
+    Utils
+  }
+
+  Header_Files {
+    Utils
+  }
+
+  Inline_Files {
+    Utils
+  }
+
+  Template_Files {
+    Utils
+  }
+
+  Resource_Files {
+    Utils
+  }
+
+  PIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_Utils.pc.in
+  }
+}

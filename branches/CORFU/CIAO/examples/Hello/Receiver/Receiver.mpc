@@ -1,0 +1,121 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Hello_Base -u Hello Receiver"
+
+project(Hello_Receiver_idl_gen) : taoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h
+
+  IDL_Files {
+    Receiver.idl
+  }
+}
+
+project(Hello_Receiver_cidl_gen) : ciaocidldefaults, taoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
+               --svnt-export-include Receiver_svnt_export.h
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
+              -Wb,export_include=Receiver_exec_export.h \
+              -SS
+              
+  CIDL_Files {
+    Receiver.cidl
+  }
+  
+  IDL_Files {
+    ReceiverE.idl
+  }
+}
+
+project(Hello_Receiver_stub) : ciao_client_dnc {
+  avoids += ace_for_tao
+  after += Hello_Receiver_idl_gen Hello_Base_stub
+  libs  += Hello_Base_stub
+  
+  sharedname = Hello_Receiver_stub
+  dynamicflags   = RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverC.cpp
+  }
+
+  Header_Files {
+    ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    ReceiverC.inl
+  }
+}
+
+project(Hello_Receiver_exec) : ciao_component_dnc {
+  avoids += ace_for_tao
+  after   += Hello_Receiver_cidl_gen Hello_Receiver_stub
+  sharedname = Hello_Receiver_exec
+  libs += Hello_Receiver_stub Hello_Base_stub
+  
+  dynamicflags   = RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverEC.cpp
+    Receiver_exec.cpp
+  }
+  
+  Header_Files {
+    ReceiverEC.h
+    Receiver_exec.h
+    Receiver_exec_export.h
+  }
+  
+  Inline_Files {
+    ReceiverEC.inl
+  }
+}
+
+
+project(Hello_Receiver_svnt) : ciao_servant_dnc {
+  avoids += ace_for_tao
+  after      += Hello_Base_skel Hello_Receiver_exec
+  sharedname  = Hello_Receiver_svnt
+  libs       += Hello_Receiver_exec \
+                Hello_Receiver_stub \
+                Hello_Base_skel \
+                Hello_Base_stub
+  
+  dynamicflags = RECEIVER_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverS.cpp
+    Receiver_svnt.cpp
+  }
+  
+  Header_Files {
+    ReceiverS.h
+    Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+  
+  Inline_Files {
+    ReceiverS.inl
+  }
+}
+
+

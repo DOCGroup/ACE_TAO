@@ -1,0 +1,106 @@
+RANKED-FTRMFF
+input: list of tasks
+       list of available processors
+       number of backups per component
+
+sort tasks by their period
+for each task
+  call BUILD-FAILURE-MAP to initialize RANKED_WCRT algorithm
+  create a copy of the global schedule for this iteration
+  schedule_result = RANKED-SCHEDULE (local schedule, primary)
+  if (unschedulable)
+    add tp unschedulable list
+  else
+    add to schedule result list
+  end if
+
+  create list of backup tasks
+
+  for each backup task
+    schedule_result = RANKED-SCHEDULE (local schedule, backup)
+    if (unschedulable)
+      add to unschedulable list
+    else
+      add to schedule result list
+    end if
+  end for
+
+  if (all tasks were schedulable)
+    ORDER-REPLICAS (schedule_entries)
+    add all tasks to the schedule
+  end if
+end for
+return schedule and unschedulable list
+
+-------------------------------------------------------------------------------
+RANKED-SCHEDULE 
+input:  schedule
+        task
+output: <task, processor, wcrt>
+
+for each processor
+  add task to tasks on processor
+  wcrt = RANKED-WCRT (local_tasks);
+  if schedulable
+    remove processor from schedule (not more than one replica per host)
+    return <task, processor, wcrt>
+  end if
+end for
+
+-------------------------------------------------------------------------------
+RANKED-WCRT
+input : tasks
+data  : failure_map
+        consistency_level
+output: wcrt
+
+for each backup in tasks
+  determine the processors that lead to activation
+  add processors to the set of relevant processors
+end for
+calculate all possible failure combinations of relevant processors
+  (-> combination size of consistency level)
+for each failure_set of failed processors
+  create a set of active replicas on the local processor
+  for each active replica set
+    modify the task list to mark all active replica as primaries
+    calculate wcrt of task list
+    store max (wcrt, old max)
+  end for
+end for
+return maximum wcrt
+
+-------------------------------------------------------------------------------
+BUILD-FAILURE-MAP
+input : schedule
+output: failure_map
+
+create map backup_groups that contains <proc, taskname> pairs associated
+  with their object_id
+for each processor in schedule
+  for each task on processor
+    add <proccessor, task> with key basename(task) to backup_groups
+  end for
+end for
+for each taskgroup in backup_groups
+  sort tasks by their rank
+  for each task in taskgroup
+    if (task is a backup replica)
+      add all processors containing backup replicas with lower ranks
+        to a list relevant_processors
+      add relevant_processors with key of the replica name to failure_map
+    end if
+  end for
+end for
+return failure_map
+
+-------------------------------------------------------------------------------
+ORDER-REPLICAS
+data : schedule_entries <task, processor, wcrt>
+
+sort entries accendingly according to their wcrt
+for r = 1 to size(schedule_entries) - 1
+  entry.task.rank = r;
+end for
+
+-------------------------------------------------------------------------------

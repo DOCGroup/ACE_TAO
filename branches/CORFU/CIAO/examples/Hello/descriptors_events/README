@@ -1,0 +1,145 @@
+Event Descriptors for Hello Example
+===================================
+
+This folder contains several deployemnts to demonstrate and test the
+functionality of rt event channel integration into CIAO/DAnCE.
+Please see $CIAO_ROOT/docs/schema/CIAOEvents.txt for a detailed description
+how to configure descriptor files accordingly.
+
+The rest of this file describes the rule of the files in this directory.
+
+single files and their role:
+----------------------------
+
+./run_test.pl			: script that executes all available tests
+
+./run_NodeDaemons.pl 		: script to launch two empty NodeApplications
+./run_NodeDaemons_svc_conf.pl 	: starts two node NodeApplications on the 
+				  localhost interface and loads rtec.conf on 
+				  startup
+./run_NodeDaemons_with_ip.pl 	: starts two node NodeApplications under the
+				  IP address and not on the localhost interface
+
+./NodeManagerMap.dat		: contains ip addresses for SenderNode and 
+				  ReceiverNode (both on localhost)
+./NodeManagerMap_collocated.dat	: contains an ip address for a single 
+				  SenderNode (on localhost)
+./NodeManagerMapTwoHosts.dat	: contains ip addresses for SenderNode 
+				  (on localhost) and ReceiverNode 
+				  (on real ip address)
+
+./rtec.conf			: example for a service configurator file 
+				  for the event service
+
+
+existing test cases:
+--------------------
+
+./ciao-events-example.ced
+./deploymentplan_events.cdp 
+./run_test_simple.pl
+
+	Uses the standard event service and connects one sender to one 
+	receiver. In the standard configuration, used here, the EventChannel 
+	is running collocated within the NodeApplication "SenderNode", where
+	the sender component is located:
+	SenderNode[Sender --> ES] --> ReceiverNode[Receiver]
+
+./ciao-events-example-collocated.ced
+./deploymentplan_events_collocated.cdp 
+./run_test_collocated.pl:
+
+	This example modifies the standard example by deploying all components
+	within one node:
+	SenderNode[Sender --> ES --> Receiver]
+
+./ciao-events-example-with-federation.ced
+./deploymentplan_federation.cdp
+./run_test_federated.pl:
+
+	In this example, two Event Services ES_01 and ES_02 are federated.
+	The Sender Event Port is then connected to the first service, while
+	the Receiver gets its events from the second service.
+	All entities are collocated in one node process:
+	SenderNode[Sender --> ES_01 --> ES_02 --> Receiver]
+
+	(problem:
+	Receiver - Informed by the Sender with message [ACE/TAO/CIAO]
+	CORBA EXCEPTION caught
+	(27698|3072210624) EXCEPTION, RTEventServiceConsumer_impl::push()
+
+	system exception, ID 'IDL:omg.org/CORBA/BAD_INV_ORDER:1.0'
+	Unknown vendor minor code id (0), minor code = 0, completed = NO
+	)
+
+./ciao-events-example-with-filters.ced
+./deploymentplan_with_filters.cdp
+./run_test_filtered.pl:
+
+	This example applies a filter to the EventService connection on the
+ 	receiver side. In this case the filter contains a disjunction group
+	of two sender component sources.
+	SenderNode[Sender --> ES -{Filter}-> Receiver]
+
+./ciao-events-federation-mcast.ced
+./deploymentplan_federation_mcast.cdp
+./run_test_multicast.pl:
+
+	To test collocated use of multicast federation of event channels
+	use this example. It deploys sender and receiver in the same
+	node and connects them through two eventchannels, using udp 
+	multicast to communicate:
+	SenderNode[Sender --> ES_01 --> udp_sender -UDP{224.9.9.2:1234}-> 
+	    udp_mcast_receiver --> ES_02 --> Receiver]	
+
+
+	(unresolved failure:
+	Create a receiver object with addr_serv_id: addr_serv_1
+	(20850|3072210624) EXCEPTION, NodeApplication_Impl::finishLaunch	
+
+	system exception, ID 'IDL:omg.org/CORBA/UNKNOWN:1.0'
+	OMG minor code (1), described as 'Unlisted user exception received by c
+	lient.', completed = MAYBE
+	)
+
+./ciao-events-federation-udp.ced
+./deploymentplan_federation_udp.cdp
+./run_test_udp.pl:
+
+	In this example, udp communication is used to send the event
+	from one sender node to a receiver node:
+	SenderNode[Sender --> ES --> udp_sender] -UDP{localhost:1234}->
+	    ReceiverNode[udp_receiver --> ES_02 --> Receiver]
+
+./ciao-events-federation-udp-collocated.ced
+./deploymentplan_federation_udp_collocated.cdp
+./run_test_udp_collocated.pl:
+
+	Same example, as the above udp example, but deployed on a
+	single node application and therefore collocated:
+	SenderNode[Sender --> ES_01 --> udp_sender -UDP{localhost:1234}-> 
+	    udp_receiver --> ES_02 --> Receiver]
+
+./ciao-events-federation-udp-two-hosts.ced
+./deploymentplan_federation_udp_two_hosts.cdp
+
+	this test is not yet automated, because the nodes are
+	supposed to be deployed on two different host machines:
+	SenderNode[Sender --> ES_01 --> udp_sender] 
+	    -UDP{129.59.129.181:1234}-> 
+	        ReceiverNode[udp_receiver --> ES_02 --> ReceiverNode]
+
+./ciao-events-example.ced
+./deploymentplan_multiple_senders.cdp
+./run_test_multiple_senders.pl:
+
+	This example extends the standard example by adding two more sender
+	components to the SenderNode:
+		  [Sender01  -->    ]	
+	SenderNode[Sender02  --> ES ] --> ReceiverNode[Receiver]
+		  [Sender03  -->    ]
+
+
+------
+
+author: Friedhelm Wolf (fwolf@dre.vanderbilt.edu)

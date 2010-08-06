@@ -1,0 +1,61 @@
+// -*- MPC -*-
+// $Id$
+
+project(Config_Manager) : ciao_deployment_stub, ace_output {
+  sharedname   = CIAO_Config_Manager
+  dynamicflags = CONFIG_MANAGER_BUILD_DLL
+  Source_Files {
+    Config_Manager.cpp
+  }
+}
+
+project(NodeApp_Configurator): ciao_config_manager, ace_output {
+  sharedname   = CIAO_NodeApp_Configurator
+  dynamicflags = NODEAPP_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NodeApp_Configurator.cpp
+  }
+}
+
+project(NoOp_Configurator): ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NoOp_Configurator
+  dynamicflags = NOOP_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NoOp_Configurator.cpp
+  }
+}
+
+project(RTNA_Configurator): negotiate_codesets, rtportableserver, rtcorba, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_RTNA_Configurator
+  dynamicflags = CIAO_RTNA_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    RTConfig_Manager.cpp
+  }
+}
+
+project(NA_Configurator): ciao_deployment_stub, diffservpolicy, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NA_Configurator
+  dynamicflags = CIAO_NA_CONFIGURATOR_BUILD_DLL
+  Source_Files {
+    NAConfig_Manager.cpp
+  }
+}
+
+project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_nodeapp_configurator, ace_output {
+  sharedname   = CIAO_NodeApplication
+  dynamicflags = NODEAPPLICATION_BUILD_DLL
+  Source_Files {
+    Configurator_Factory.cpp
+    Container_Impl.cpp
+    NodeApplication_Core.cpp
+    NodeApplication_Impl.cpp
+  }
+}
+
+project(NodeApplication): ciao_server_dnc, ciao_events_dnc, ciao_nodeapplication, ciaoexe {
+  exename   = NodeApplication
+  Source_Files {
+    NodeApplication.cpp
+  }
+}
+

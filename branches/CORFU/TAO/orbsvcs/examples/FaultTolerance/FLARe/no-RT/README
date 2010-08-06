@@ -1,0 +1,25 @@
+FLARe concepts
+==============
+
+
+State Synchronization
+---------------------
+
+Each FLARe server process contains one StateSynchronizationAgent (SSA) object 
+that is responsible for distributing the states of the applications running in 
+this process. The applicatios have the obligation of implementing the 
+ReplicatedApplication interface. The SSA kann either use direct CORBA 
+communication or DDS to disseminate the state to other replicas for the
+primary applications.
+
+The following steps are executed to disseminate the state of an application
+using DDS:
+
+- a ReplicationManager is started up
+- for each node, a host_manager is started up
+- each server process is started up
+  - SSA is activated
+  - application servants are activated
+  - applications are registered with the agent through register_application ()
+  - SSA created DDS topic for name of the application and creates a datawriter
+    and datareader for this topic.
