@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project : acelib, ace_output, install, exceptions, threads {
+project : acelib, ace_output, install, threads {
   avoids = ace_for_tao
   sharedname    = ACE_TMCast
   dynamicflags += TMCAST_BUILD_DLL
