@@ -555,7 +555,9 @@ TAO_IFR_Service_Utils::valid_container (
 
   if (error_flag == 1)
     {
-      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
+      throw
+        CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
+                          CORBA::COMPLETED_NO);
     }
 }
 
@@ -583,12 +585,15 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
 {
   // The repo id must not already exist.
   ACE_TString holder;
+  
   if (repo->config ()->get_string_value (repo->repo_ids_key (),
                                          id,
                                          holder)
        == 0)
     {
-      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+      throw
+        CORBA::BAD_PARAM (CORBA::OMGVMCID | 2,
+                          CORBA::COMPLETED_NO);
     }
 }
 
@@ -636,9 +641,9 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (member_name.fast_rep ()) != 0)
             {
-              throw CORBA::BAD_PARAM (
-                CORBA::OMGVMCID | 3,
-                CORBA::COMPLETED_NO);
+              throw
+                CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
+                                  CORBA::COMPLETED_NO);
             }
         }
     }
@@ -786,6 +791,12 @@ TAO_IFR_Service_Utils::valid_creation (
 {
   TAO_IFR_Service_Utils::valid_container (container_kind,
                                           contained_kind);
+     
+  /// IDL modules can be reopened, and thus pre-exist.                                        
+  if (contained_kind == CORBA::dk_Module)
+    {
+      return;
+    }
 
   TAO_IFR_Service_Utils::pre_exist (id,
                                     checker,
