@@ -1545,7 +1545,7 @@ ReplicationManager_i::send_rank_list (void)
       catch (CORBA::SystemException &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RM: A client agent agent died.\n"));
+                      "RM: A client agent died.\n"));
     
           // Make sure to remove the failed agent from the list.
           AGENT_LIST::iterator tmp_it = al_iter;
