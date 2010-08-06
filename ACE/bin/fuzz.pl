@@ -21,10 +21,9 @@ use PerlACE::Run_Test;
 #
 # Add tests for these:
 #
-# - not setting up the release configs correctly in dsp files
 # - Guards in .h files
 # - no global functions
-# - other commit_check checks, tabs, trailing spaces.
+# - other commit_check checks
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -51,6 +50,7 @@ use PerlACE::Run_Test;
 @files_sln = ();
 @files_vcproj = ();
 @files_run_pl = ();
+@files_generic = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -147,6 +147,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(cdp)$/i) {
         push @files_cdp, ($name);
+    }
+    elsif ($name =~ /\.(pm|cmd|java|sh|txt|xml)$/i) {
+        push @files_generic, ($name);
     }
 }
 
@@ -435,6 +438,33 @@ sub check_for_tab ()
                 }
                 if ($disable == 0 and /.*\t.*/) {
                     print_error ("$file:$.: found tab");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+sub check_for_trailing_whitespace ()
+{
+    print "Running trailing_whitespaces check\n";
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl,
+                              @files_cdp, @files_pl, @files_generic) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_trailing_whitespace/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_trailing_whitespace/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and /\s\n$/) {
+                    print_error ("$file:$.: found trailing whitespace");
                 }
             }
             close (FILE);
@@ -1851,7 +1881,7 @@ sub check_for_long_file_names ()
     foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
                    @files_dsp, @files_dsw, @files_gnu, @files_idl,
                    @files_pl, @files_changelog, @files_makefile,
-                   @files_bor, @files_mpc) {
+                   @files_bor, @files_mpc, @files_generic) {
         if ( length( basename($file) ) >= $max_filename )
         {
             print_error ("File name $file meets or exceeds $max_filename chars.");
@@ -2024,13 +2054,14 @@ sub check_for_ORB_init ()
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m/;
 
 if (!getopts ('cdhl:t:mv') || $opt_h) {
-    print "fuzz.pl [-cdhm] [-l level] [-t test_name][file1, file2, ...]\n";
+    print "fuzz.pl [-cdhm] [-l level] [-t test_names] [file1, file2, ...]\n";
     print "\n";
     print "    -c             only look at the files passed in\n";
     print "    -d             turn on debugging\n";
     print "    -h             display this help\n";
     print "    -l level       set detection level (default = 5)\n";
-    print "    -t test_name   specify any single test to run. This will disable the run level setting\n";
+    print "    -t test_names  specify comma-separated list of tests to run\n".
+          "                       this will disable the run level setting\n";
     print "    -m             only check locally modified files (uses cvs)\n";
     print "======================================================\n";
     print "list of the tests that could be run:\n";
@@ -2070,7 +2101,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_long_file_names
            check_for_refcountservantbase
            check_for_TAO_Local_RefCounted_Object
-           check_for_ORB_init\n";
+           check_for_ORB_init
+           check_for_trailing_whitespace\n";
     exit (1);
 }
 
@@ -2091,8 +2123,12 @@ else {
 }
 
 if ($opt_t) {
-    &$opt_t();
-    exit (1);
+    my @tests = split '\s*,\s*', $opt_t;
+    for my $test (@tests) {
+      &$test();
+    }
+    print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
+    exit ($errors > 0) ? 1 : 0;
 }
 
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
@@ -2139,7 +2175,8 @@ check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_export_file () if ($opt_l >= 6);
+check_for_trailing_whitespace () if ($opt_l >= 6);
 
-print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
+print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
 exit (1) if $errors > 0;
