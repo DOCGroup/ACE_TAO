@@ -950,6 +950,9 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            << "\"";
     }
 
+  // Generate the include statement for AnyTypeCode
+  *this->anyop_header_ << "\n#include \"tao/AnyTypeCode/Any.h\"\n";
+
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
   bool const got_tao_pidl =
@@ -961,7 +964,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     {
       tao_prefix = "tao/";
     }
-
+  
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   if (be_global->safe_include ())
@@ -2494,6 +2497,13 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/AnyTypeCode_methods.h",
                                this->client_header_);
+
+  this->gen_cond_file_include (be_global->tc_support ()
+                               && !be_global->gen_anyop_files (),
+                               "tao/AnyTypeCode/Any.h",
+                               this->client_header_);
+
+
 
   if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {

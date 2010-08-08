@@ -1,9 +1,50 @@
+Sun Aug  8 21:10:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_enum.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * tao/AnyTypeCode/Any.h:
+        * tao/AnyTypeCode/Any.inl:
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/ExceptionA.h:
+        * tao/AnyTypeCode/ExceptionA.cpp:
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/AnyTypeCode/PolicyA.cpp:
+        * tao/AnyTypeCode/WrongTransactionA.h:
+        * tao/AnyTypeCode/WrongTransactionA.cpp:
+
+          Expanded use of the ACE_ANY_OPS_USE_NAMESPACE macro for compilers that
+          implement strict argument dependent lookup, especially for overloaded
+          operators. 
+
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/Messaging/Buffering_Constraint_Policy.cpp:
+        * tao/RTCORBA/RT_ProtocolPropertiesA.cpp:
+        * tao/orbconf.h:
+
+          Various compile fixes for the Clang LLVM compiler.
+
 Fri Aug  6 20:24:47 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component.cpp:
         * TAO_IDL/be/be_visitor_home.cpp:
         * TAO_IDL/be_include/be_visitor_home.h:
-        
+
           Removed unnecessary includes.
 
 Fri Aug  6 20:18:12 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -64,20 +105,20 @@ Fri Aug  6 18:57:50 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Aug  6 14:43:26 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/tao_other_tests.lst:
-        
+
           Added new test below.
 
 Fri Aug  6 14:35:45 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3881_Regression/*.*:
-        
-          New test, consisiting of IDL file and perl script, to 
+
+          New test, consisiting of IDL file and perl script, to
           check for reintroduction of [BUGID:3881].
 
 Fri Aug  6 13:42:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp(valid_creation):
-        
+
           Skipped call to pre_exist() check if the new entry represents
           an IDL module, since modules may be reopened. This bug (reported
           by Bogdan Jeram <bjeram at eso dot org>) was somehow
@@ -96,14 +137,14 @@ Wed Aug  4 20:52:39 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_util.cpp:
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
-        
+
           New IDL compiler option -Sg, which disables the generation of
           unique extensions on header file preprocessor guards. These
           changes are from a patch supplied by Bogdan Jeram
           <bjeram at eso dot org>, and close [BUGID:3867].
-          
+
         * docs/compiler.html:
-        
+
           Updated IDL compiler options table.
 
 Wed Aug  4 19:24:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>

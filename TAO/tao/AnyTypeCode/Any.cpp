@@ -368,6 +368,11 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 
 // Insertion of the other basic types.
 
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+namespace CORBA
+{
+#endif
+
 void
 operator<<= (CORBA::Any &any, CORBA::Short s)
 {
@@ -742,6 +747,10 @@ operator >>= (const CORBA::Any &any, std::string &str)
   ACE::strdelete (const_cast <char *> (buf));
   return flag;
 }
+
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+}
+#endif
 
 // ================================================================
 // Any_Impl_T template specializations.

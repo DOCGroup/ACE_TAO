@@ -15,6 +15,8 @@
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_exception.h"
+#include "be_module.h"
+#include "be_util.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
 #include "be_component.h"
