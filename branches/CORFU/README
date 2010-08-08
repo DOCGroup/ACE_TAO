@@ -1,19 +1,20 @@
 1. FLARE_F6 branch has been copied as CORFU branch.
+   ACE, TAO, CIAO are all pulled in as svn:externals from FTCIAO branch. 
+   No idea what CIAO_FLARE is for.
 2. The components are implemented in 
    $CIAO_ROOT/DAnCE/tests/CIAO/FTComponent
    $CIAO_ROOT/DAnCE/tests/CIAO/FTTask
-   $CIAO_ROOT is pulled in as svn:externals from FTCIAO branch. No idea what CIAO_FLARE is for.
 3. ReplicationManager and HostMonitor processes are implemented in $TAO_ROOT/orbsvcs/LWFT_Service
 4. ReplicationManager, HostMonitor, and StateSynchronizationAgent libraries are implemented in $TAO_ROOT/orbsvcs/orbsvcs/LWFT
-5. Deployment plans, scripts are in CORFU-experiment-Aug-6-2010.tar.gz
+5. FTComponentServer is in the $CIAO_ROOT/ciao/FTComponentServer 
+6. FaultCorrelationManager is in $CIAO_ROOT/DAnCE/FaultCorrelationManager
+7. Deployment plans, scripts are in CORFU-experiment-Aug-6-2010.tar.gz
    The experiments in the group-failover directory are tested.
-6. FTComponentServer is in the CIAO_FLARE branch (revision 84357). 
-   CORFU directory has an appropriate svn:externals property, which should pull it in.
-7. Use env.sh to setup your environment.
-8. Use FLARE-F6 or FLARE-F6-Copy experiments on isislab.
+8. Use env.sh to setup your environment.
+9. Use FLARE-F6 or FLARE-F6-Copy experiments on isislab.
 
 
 Sumant Tambe
 sutambe at dre dot vanderbilt dot edu
 sutambe at yahoo dot com
-Last updated: Aug 7, 2010
+Last updated: Aug 8, 2010
