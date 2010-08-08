@@ -1,3 +1,9 @@
+Sun Aug  8 23:31:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+
+          Clang uses ACE_ANY_OPS_USE_NAMESPACE.
+
 Fri Aug  6 17:36:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/fuzz.pl:
