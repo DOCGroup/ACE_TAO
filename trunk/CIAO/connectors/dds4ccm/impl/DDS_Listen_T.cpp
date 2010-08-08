@@ -26,6 +26,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
+  bool result = false;
   if (DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
@@ -34,8 +35,10 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
             profile_name))
     {
       this->data_control_._set_component (component);
+      result = true;
     }
-  return false;
+    
+  return result;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -53,9 +56,9 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         DataReaderListener_type (
                           listener,
                           status,
-                          &data_control_,
+                          data_control_,
                           reactor,
-                          &this->condition_manager_),
+                          this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
   this->data_reader_.set_listener (
@@ -81,6 +84,6 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control (void)
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control");
 
-  return &this->data_control_;
+  return ::CCM_DDS::CCM_DataListenerControl::_duplicate (&this->data_control_);
 }
 

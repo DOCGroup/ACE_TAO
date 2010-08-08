@@ -41,9 +41,9 @@ namespace CIAO
       DataReaderListener_T (
         typename CCM_TYPE::listener_type::_ptr_type listener,
         ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-        DataListenerControl_type * control,
+        DataListenerControl_type& control,
         ACE_Reactor * reactor,
-        ConditionManager_type * condition_manager);
+        ConditionManager_type& condition_manager);
 
       /// Destructor
       virtual ~DataReaderListener_T (void);
@@ -57,8 +57,8 @@ namespace CIAO
 
     private:
       typename CCM_TYPE::listener_type::_var_type listener_;
-      DataListenerControl_type * control_;
-      ConditionManager_type * condition_manager_;
+      DataListenerControl_type& control_;
+      ConditionManager_type& condition_manager_;
     };
   }
 }
