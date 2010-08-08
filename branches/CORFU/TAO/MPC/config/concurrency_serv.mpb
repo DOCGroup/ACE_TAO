@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, concurrency_skel, avoids_corba_e_micro {
-  after     += CosConcurrency_Serv
-  libs      += TAO_CosConcurrency_Serv
-}
