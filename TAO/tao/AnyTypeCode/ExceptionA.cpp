@@ -83,6 +83,11 @@ namespace TAO
 
 // =======================================================================
 
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+namespace CORBA
+{
+#endif
+
 
 // Insertion of CORBA::Exception - copying.
 void
@@ -105,6 +110,10 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
       exception->_tao_type (),
       exception);
 }
+
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+}
+#endif
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

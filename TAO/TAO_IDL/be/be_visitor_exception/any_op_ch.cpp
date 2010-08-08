@@ -43,6 +43,52 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  be_module *module = 0;
+  if (node->is_nested ())
+    {
+      AST_Decl *d = node;
+      AST_Decl::NodeType nt = d->node_type ();
+
+      while (nt != AST_Decl::NT_root)
+        {
+          if (nt == AST_Decl::NT_module)
+            {
+              module = be_module::narrow_from_decl (d);
+              break;
+            }
+          else
+            {
+              d = ScopeAsDecl (d->defined_in ());
+              nt = d->node_type ();
+            }
+        }
+
+      if (module != 0)
+        {
+          // Some compilers handle "any" operators in a namespace
+          // corresponding to their module, others do not.
+          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
+      
+          be_util::gen_nested_namespace_begin (os, module);
+      
+          *os << be_nl << be_nl
+              << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
+              << " &); // copying version" << be_nl;
+          *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
+              << "*); // noncopying version" << be_nl;
+          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
+              << node->name () << " *&); // deprecated\n";
+          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
+              << node->name () << " *&);";
+      
+          be_util::gen_nested_namespace_end (os, module);
+      
+          // Emit #else.
+          *os << be_nl << be_nl
+              << "#else\n\n";
+        }
+    }
+      
   *os << be_global->core_versioning_begin () << be_nl;
   
   *os << be_nl << be_nl
@@ -56,6 +102,11 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
+
+  if (module != 0)
+    {
+      *os << "\n\n#endif";
+    }
   
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)

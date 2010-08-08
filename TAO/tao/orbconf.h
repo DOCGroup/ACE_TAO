@@ -21,6 +21,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
+#include "ace/Condition_Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

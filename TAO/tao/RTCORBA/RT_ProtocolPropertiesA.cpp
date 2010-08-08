@@ -130,7 +130,7 @@ namespace RTCORBA
         _tao_any,
         ProtocolProperties::_tao_any_destructor,
         _tc_ProtocolProperties,
-        *_tao_elem)
+        *_tao_elem);
   }
   
   ::CORBA::Boolean
@@ -143,7 +143,7 @@ namespace RTCORBA
           _tao_any,
           ProtocolProperties::_tao_any_destructor,
           _tc_ProtocolProperties,
-          _tao_elem)
+          _tao_elem);
   }
 }
 
