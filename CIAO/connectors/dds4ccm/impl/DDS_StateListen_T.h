@@ -53,10 +53,10 @@ public:
 
 private:
   /**
-   * DDS_Listen
+   * DDS_StateListen
    */
   //@{
-  ::CCM_DDS::CCM_StateListenerControl_var data_control_;
+  StateListenerControl_type data_control_;
   //@}
 };
 

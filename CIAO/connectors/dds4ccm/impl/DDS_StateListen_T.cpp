@@ -9,9 +9,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_StateListen_T (void) :
-  data_control_ (new CCM_DDS_StateListenerControl_T
-    < ::CCM_DDS::CCM_StateListenerControl, CCM_TYPE> ())
+DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_StateListen_T (void) 
 {
 }
 
@@ -31,6 +29,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
+  bool result = false;
   if (DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
@@ -38,22 +37,11 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
             library_name,
             profile_name))
     {
-      StateListenerControl_type *dds_slc = dynamic_cast < StateListenerControl_type * >
-        (this->data_control_.in ());
-      if (dds_slc)
-        {
-          dds_slc->_set_component (component);
-          return true;
-        }
-      else
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        ACE_TEXT ("DDS_StateListen_T::configuration_complete - ")
-                        ACE_TEXT ("Unable to cast Data control.\n")));
-          return false;
-        }
+      this->data_control_._set_component (component);
+      result = true;
     }
-  return false;
+    
+  return result;
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -71,15 +59,15 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         DataReaderStateListener_type (
                           listener,
                           status,
-                          this->data_control_.in (),
+                          this->data_control_,
                           reactor,
-                          &this->condition_manager_),
+                          this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
   ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
                               this->listener_.in (),
                               DataReaderStateListener_type::get_mask (listener));
-  if (retcode != DDS::RETCODE_OK)
+  if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "DDS_StateListen_T::activate - "
@@ -95,18 +83,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  StateListenerControl_type *dds_slc = dynamic_cast < StateListenerControl_type * >
-    (this->data_control_.in ());
-  if (dds_slc)
-    {
-      dds_slc->_set_component (CCM_TYPE::base_type::_nil ());
-    }
-  else
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    ACE_TEXT ("DDS_StateListen_T::remove - ")
-                    ACE_TEXT ("Unable to cast StateListenerControl.\n")));
-    }
+  this->data_control_._set_component (CCM_TYPE::base_type::_nil ());
   DDSSubscriberBase_type::remove (subscriber);
 }
 
@@ -116,8 +93,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control (voi
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control");
 
-  return ::CCM_DDS::CCM_StateListenerControl::_duplicate (
-    this->data_control_.in ());
+  return ::CCM_DDS::CCM_StateListenerControl::_duplicate (&this->data_control_);
 }
 
 

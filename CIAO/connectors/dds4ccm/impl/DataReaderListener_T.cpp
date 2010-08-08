@@ -8,9 +8,9 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderListener_T (
   typename CCM_TYPE::listener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-  DataListenerControl_type * control,
+  DataListenerControl_type& control,
   ACE_Reactor * reactor,
-  ConditionManager_type * condition_manager)
+  ConditionManager_type& condition_manager)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::listener_type::_duplicate (listener)),
     control_ (control),
@@ -32,27 +32,25 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available");
 
-  if ((this->control_ &&
-       this->control_->mode () == ::CCM_DDS::NOT_ENABLED) ||
-      ::CORBA::is_nil (rdr))
+  if (!::CORBA::is_nil (rdr) &&
+      this->control_.mode () != ::CCM_DDS::NOT_ENABLED)
     {
-      return;
-    }
-  if (this->reactor_)
-    {
-      DataReaderHandler_type * rh = 0;
-      ACE_NEW (rh, DataReaderHandler_type (this, rdr));
-
-      ACE_Event_Handler_var safe_handler (rh);
-      if (this->reactor_->notify (rh) != 0)
+      if (this->reactor_)
         {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+          DataReaderHandler_type * rh = 0;
+          ACE_NEW (rh, DataReaderHandler_type (this, rdr));
+
+          ACE_Event_Handler_var safe_handler (rh);
+          if (this->reactor_->notify (rh) != 0)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                            ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+            }
         }
-    }
-  else
-    {
-      this->on_data_available_i (rdr);
+      else
+        {
+          this->on_data_available_i (rdr);
+        }
     }
 }
 
@@ -63,9 +61,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i");
 
-  if ((this->control_ &&
-       this->control_->mode () == ::CCM_DDS::NOT_ENABLED) ||
-      ::CORBA::is_nil (rdr))
+  if (::CORBA::is_nil (rdr) ||
+      this->control_.mode () == ::CCM_DDS::NOT_ENABLED)
     {
       return;
     }
@@ -88,13 +85,13 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
       reader->take (data,
                     sample_info,
                     DDS_LENGTH_UNLIMITED,
-                    this->condition_manager_->get_querycondition_listener ());
+                    this->condition_manager_.get_querycondition_listener ());
 
-  if (result == DDS_RETCODE_NO_DATA)
+  if (result == ::DDS::RETCODE_NO_DATA)
     {
       return;
     }
-  else if (result != DDS_RETCODE_OK)
+  else if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                           ACE_TEXT ("Unable to take data from data reader, ")
@@ -103,7 +100,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
       return;
     }
 
-  if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
+  if (this->control_.mode () == ::CCM_DDS::ONE_BY_ONE)
     {
       for (::DDS_Long i = 0; i < data.length (); ++i)
         {
@@ -150,8 +147,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
     }
 
   // Return the loan
-  DDS_ReturnCode_t const retval = reader->return_loan (data, sample_info);
-  if (retval != DDS_RETCODE_OK)
+  DDS::ReturnCode_t const retval = reader->return_loan (data, sample_info);
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
         "CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i - "
