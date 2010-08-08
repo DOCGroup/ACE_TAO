@@ -1,5 +1,8 @@
 // $Id$
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/Valuetype/AbstractBase.h"
+
 #include "tao/DynamicAny/DynCommon.h"
 
 #include "tao/DynamicAny/DynAnyFactory.h"
@@ -18,6 +21,7 @@
 
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (DynamicAny,
            DynCommon,

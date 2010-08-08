@@ -88,6 +88,11 @@ CORBA::Any_var::ptr (void) const
 // CORBA::Any_var insertion operators
 // *************************************************************
 
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+namespace CORBA
+{
+#endif
+
 ACE_INLINE void
 operator <<= (CORBA::Any_var &lhs, CORBA::Short rhs)
 {
@@ -313,6 +318,10 @@ operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_object rhs)
 {
   return lhs.in () >>= rhs;
 }
+
+#ifdef ACE_ANY_OPS_USE_NAMESPACE
+}
+#endif
 
 // *************************************************************
 // Inline operations for class CORBA::Any_out
