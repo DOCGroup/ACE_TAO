@@ -4,11 +4,13 @@
 4. ReplicationManager, HostMonitor, and StateSynchronizationAgent libraries are implemented in $TAO_ROOT/orbsvcs/orbsvcs/LWFT
 5. Deployment plans, scripts are in CORFU-experiment-Aug-6-2010.tar.gz
    The experiments in the group-failover directory are tested.
-6. Use env.sh to setup your environment.
-7. Use FLARE-F6 or FLARE-F6-Copy experiments on isislab.
+6. FTComponentServer is in the CIAO_FLARE branch (revision 84357). 
+   CORFU directory has an appropriate svn:externals property, which should pull it in.
+7. Use env.sh to setup your environment.
+8. Use FLARE-F6 or FLARE-F6-Copy experiments on isislab.
 
 
 Sumant Tambe
 sutambe at dre dot vanderbilt dot edu
 sutambe at yahoo dot com
-Aug 6, 2010
+Last updated: Aug 7, 2010
