@@ -1,5 +1,0 @@
-// $Id$
-
-project: namingexe, iortable, install, dslogadmin_serv, valuetype {
-  exename   = Basic_Logging_Service
-}
