@@ -1,5 +1,6 @@
 1. FLARE_F6 branch has been copied as CORFU branch.
-2. The components are implemented in $CIAO_ROOT/DAnCE/tests/CIAO/FTComponents
+2. The components are implemented in CIAO_FLARE/DAnCE/tests/CIAO/FTComponent
+   Set $CIAO_ROOT to CIAO_FLARE root.
 3. ReplicationManager and HostMonitor processes are implemented in $TAO_ROOT/orbsvcs/LWFT_Service
 4. ReplicationManager, HostMonitor, and StateSynchronizationAgent libraries are implemented in $TAO_ROOT/orbsvcs/orbsvcs/LWFT
 5. Deployment plans, scripts are in CORFU-experiment-Aug-6-2010.tar.gz
