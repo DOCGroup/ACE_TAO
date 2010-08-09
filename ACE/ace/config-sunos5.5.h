@@ -64,7 +64,6 @@
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
 #   define ACE_HAS_NEW_NOTHROW
-#  endif 
 # elif (__SUNPRO_CC == 0x420) || (__SUNPRO_CC == 0x410)
 # define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __SUNPRO_CC >= 0x500 */
