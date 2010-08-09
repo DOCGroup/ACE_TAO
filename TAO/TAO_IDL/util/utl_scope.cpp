@@ -480,29 +480,16 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
 {
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
+  
   if (d)
     {
-      if (!can_be_redefined (d))
+      if (!FE_Utils::can_be_redefined (d, t))
         {
-          AST_Decl::NodeType tnt = t->node_type ();
-          AST_Decl::NodeType dnt = d->node_type ();
-
-          // Factories are not inherited, so they can be
-          // redefined, but not in the same scope (home or
-          // valuetype).
-          bool inherited_factory =
-            (   tnt == AST_Decl::NT_factory
-             && dnt == AST_Decl::NT_factory
-             && t->defined_in () != d->defined_in ());
-
-          if (!inherited_factory)
-            {
-              idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                          t,
-                                          ScopeAsDecl (this),
-                                          d);
-              return 0;
-            }
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      ScopeAsDecl (this),
+                                      d);
+          return 0;
         }
 
       // For convenience, AST_Template_Module_Inst inherits
@@ -589,9 +576,10 @@ AST_Structure *
 UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = this->lookup_for_add (t);
+  
   if (predef)
     {
-      if (!can_be_redefined (predef))
+      if (!FE_Utils::can_be_redefined (predef, t))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
@@ -599,6 +587,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
                                       predef);
           return 0;
         }
+        
       if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
@@ -648,7 +637,7 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
         {
           t->set_full_definition (AST_Structure::narrow_from_decl (d));
         }
-      else if (!can_be_redefined (d))
+      else if (!FE_Utils::can_be_redefined (d, t))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
