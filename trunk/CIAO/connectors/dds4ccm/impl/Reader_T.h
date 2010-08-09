@@ -12,7 +12,7 @@
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
 #include "ace/Copy_Disabled.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
-#include "dds4ccm/impl/DDS4CCM_LocalObject_T.h"
+#include "dds4ccm/impl/LocalObject_T.h"
 
 #include "dds4ccm/impl/ConditionManager_T.h"
 
@@ -30,7 +30,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
       class Reader_T :
           public virtual CCM_TYPE::reader_type,
-          public virtual DDS4CCM_LocalObject_T<CCM_TYPE>,
+          public virtual LocalObject_T<CCM_TYPE>,
           private virtual ACE_Copy_Disabled
       {
       typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>

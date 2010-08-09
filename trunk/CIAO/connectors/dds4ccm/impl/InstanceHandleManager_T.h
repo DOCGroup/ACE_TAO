@@ -10,7 +10,7 @@
 #define INSTANCEHANDLEMANGER_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "dds4ccm/impl/DDS4CCM_LocalObject_T.h"
+#include "dds4ccm/impl/LocalObject_T.h"
 #include "ace/Copy_Disabled.h"
 
 namespace CIAO
@@ -20,7 +20,7 @@ namespace CIAO
     template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     class InstanceHandleManager_T :
       public virtual BASE_TYPE,
-      public virtual DDS4CCM_LocalObject_T<CCM_TYPE>,
+      public virtual LocalObject_T<CCM_TYPE>,
       private virtual ACE_Copy_Disabled
     {
     public:

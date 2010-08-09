@@ -5,7 +5,7 @@
 #define DATALISTENERCONTROL_T_H_
 
 #include "dds4ccm/idl/dds4ccm_DataListenerControlEC.h"
-#include "dds4ccm/impl/DDS4CCM_LocalObject_T.h"
+#include "dds4ccm/impl/LocalObject_T.h"
 
 #include "ace/Copy_Disabled.h"
 
@@ -16,7 +16,7 @@
 template <typename BASE_TYPE, typename CCM_TYPE>
 class CCM_DDS_DataListenerControl_T
   : public virtual BASE_TYPE,
-    public virtual ::CIAO::DDS4CCM::DDS4CCM_LocalObject_T<CCM_TYPE>,
+    public virtual ::CIAO::DDS4CCM::LocalObject_T<CCM_TYPE>,
     private ACE_Copy_Disabled
 {
 public:

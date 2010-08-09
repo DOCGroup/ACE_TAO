@@ -34,8 +34,18 @@ namespace CIAO
         {
           this->error_listener_->on_unexpected_status (this->entity_, this->status_kind_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnUnexpectedStatusHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnUnexpectedStatusHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -66,8 +76,18 @@ namespace CIAO
         {
           this->csl_->on_requested_incompatible_qos (this->dr_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnRequestedOncompatibleQosHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -98,8 +118,18 @@ namespace CIAO
         {
           this->csl_->on_sample_rejected (this->dr_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnSampleRejectedHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnSampleRejectedHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -130,8 +160,18 @@ namespace CIAO
         {
           this->csl_->on_inconsistent_topic (this->tp_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnInconsistentTopicHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnInconsistentTopicHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -162,8 +202,18 @@ namespace CIAO
         {
           this->csl_->on_offered_deadline_missed (this->dw_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnOfferedDeadlineMissedHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -194,8 +244,18 @@ namespace CIAO
         {
           this->csl_->on_offered_incompatible_qos (this->dw_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnOfferedIncompatibleQoSHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -224,8 +284,18 @@ namespace CIAO
         {
           this->psl_->on_requested_deadline_missed (this->dr_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnRequestedDeadlineMissedHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }
@@ -254,8 +324,18 @@ namespace CIAO
         {
           this->psl_->on_sample_lost (this->dr_, this->status_);
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "OnSampleLostHandler::handle_exception");
+        }
       catch (...)
         {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "CIAO::DDS4CCM::OnSampleLostHandler::handle_exception - "
+            "Unexpected exception caught\n"));
         }
       return 0;
     }

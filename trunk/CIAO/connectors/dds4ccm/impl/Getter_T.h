@@ -44,7 +44,7 @@ namespace CIAO
       template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
       class Getter_Base_T :
          public virtual CCM_TYPE::getter_type,
-         public virtual DDS4CCM_LocalObject_T<CCM_TYPE>,
+         public virtual LocalObject_T<CCM_TYPE>,
          private virtual ACE_Copy_Disabled
       {
       typedef CIAO::DDS4CCM::CCM_DDS_ReadCondition_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
