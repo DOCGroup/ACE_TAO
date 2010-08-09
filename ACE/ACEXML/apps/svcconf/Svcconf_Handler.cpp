@@ -76,7 +76,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           msg += ACE_TString (active_info->name ());
           msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
 
       void *(*func) (ACE_Service_Object_Exterminator *) = 0;
@@ -96,7 +96,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           msg += ACE_TString (active_info->name ());
           msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
       symbol = (*func)(&gobbler); // target object created in the loaded DLL.
 
@@ -127,7 +127,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               msg += ACE_TString (active_info->name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           this->stream_svc_type_ =
@@ -165,7 +165,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_TString (active_info->name ());
                   msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
 
 
@@ -197,7 +197,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_TString (active_info->name ());
                   msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           this->parsed_info_.reset ();
@@ -233,7 +233,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   msg += ACE_TString (this->parsed_info_.name ());
                   msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           this->parsed_info_.reset ();
@@ -338,7 +338,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           msg += ACE_TString (this->stream_info_.name ());
           msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
       this->stream_ =   this->stream_svc_type_ == 0
         ? 0
@@ -376,7 +376,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           mt->resume ();
@@ -393,7 +393,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
@@ -417,7 +417,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           mt->suspend ();
@@ -434,7 +434,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
@@ -458,7 +458,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           this->stream_->remove (mt);
@@ -475,7 +475,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
               msg += ACE_TString (this->parsed_info_.name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
@@ -580,8 +580,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
             msg += ACE_TString (this->stream_info_.name ());
             msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                 -1);
+            throw ACEXML_SAXException (msg.c_str ());
           }
       }
   return 0;
@@ -607,8 +606,7 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
             msg += ACE_TString (this->parsed_info_.name ());
             msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                            -1);
+            throw ACEXML_SAXException (msg.c_str ());
           }
       }
   return 0;
@@ -648,8 +646,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
                   msg += ACE_TString (info->name ());
                   msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                       -1);
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
@@ -675,8 +672,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
                   msg += ACE_TString (info->name ());
                   msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                  -1);
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           else
@@ -688,7 +684,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
               msg += ACE_TString (info->name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }
@@ -726,7 +722,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
               msg += ACE_TString (info->name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }
@@ -760,7 +756,7 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist)
               msg += ACE_TString (info->name ());
               msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }

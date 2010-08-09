@@ -26,7 +26,9 @@
 #include "ace/Version.h"
 #include "ace/Versioned_Namespace.h"
 
+#if !defined (ACE_HAS_EXCEPTIONS)
 #define ACE_HAS_EXCEPTIONS
+#endif /* !ACE_HAS_EXCEPTIONS */
 
 // ACE_HAS_TLI is used to decide whether to try any XTI/TLI functionality
 // so if it isn't set, set it. Capabilities and differences between
