@@ -1,3 +1,11 @@
+Mon Aug  9 15:14:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+          Zap emulated exception macros
+
+        * ace/config-macros.h:
+          Only define ACE_HAS_EXCEPTIONS when it is not defined yet
+
 Mon Aug  9 06:38:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
