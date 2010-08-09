@@ -61,7 +61,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                   const ListenOneByOneTestSeq & an_instance,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
-    //just count. Is checked on ccm_remove.
+    // Just count. Is checked on ccm_remove.
     this->received_many_by_many_ += an_instance.length ();
   }
 

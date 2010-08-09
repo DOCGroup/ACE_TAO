@@ -27,7 +27,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
                                   const ListenNotEnabledTest & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    //just count; this value is checked on ccm_remove.
+    // Just count; this value is checked on ccm_remove.
     ++this->received_one_by_one_;
   }
 
@@ -36,7 +36,7 @@ namespace CIAO_LNE_Test_Receiver_Impl
                                   const ListenNotEnabledTestSeq & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfoSeq & /*info*/)
   {
-    //just count; this value is checked on ccm_remove.
+    // Just count; this value is checked on ccm_remove.
     ++this->received_many_by_many_;
   }
 
