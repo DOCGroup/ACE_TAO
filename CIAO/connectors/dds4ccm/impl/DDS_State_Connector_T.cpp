@@ -361,7 +361,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
   catch (const ::CCM_DDS::InternalError &ex)
     {
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
                               "DDS_State_Connector_T::configuration_complete");
       throw ::CORBA::INTERNAL ();
@@ -369,7 +369,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
   catch (const ::CORBA::Exception& ex)
     {
       DDS4CCM_PRINT_CORBA_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
                               "DDS_State_Connector_T::configuration_complete");
       throw;
@@ -437,7 +437,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
   catch (const ::CCM_DDS::InternalError &ex)
     {
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
                               "DDS_State_Connector_T::ccm_activate");
       throw ::CORBA::INTERNAL ();
@@ -445,7 +445,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
   catch (const ::CORBA::Exception& ex)
     {
       DDS4CCM_PRINT_CORBA_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
                               "DDS_State_Connector_T::ccm_activate");
       throw;
@@ -497,7 +497,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
   catch (const ::CCM_DDS::InternalError &ex)
     {
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
                               "DDS_State_Connector_T::ccm_passivate");
       throw ::CORBA::INTERNAL ();
@@ -505,7 +505,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_passivate (vo
   catch (const ::CORBA::Exception& ex)
     {
       DDS4CCM_PRINT_CORBA_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
                               "DDS_State_Connector_T::ccm_passivate");
       throw;
@@ -556,7 +556,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
   catch (const ::CCM_DDS::InternalError &ex)
     {
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
                               "DDS_State_Connector_T::ccm_remove");
       throw ::CORBA::INTERNAL ();
@@ -564,7 +564,7 @@ DDS_State_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_remove (void)
   catch (const ::CORBA::Exception& ex)
     {
       DDS4CCM_PRINT_CORBA_EXCEPTION (
-                              1,
+                              DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
                               "DDS_State_Connector_T::ccm_remove");
       throw;

@@ -1,3 +1,23 @@
+Mon Aug  9 14:50:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DataListenerControl_T.h:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+          Renamed DDS4CCM_LocalObject to LocalObject, no need for DDS4CCM
+          prefix, it is already in that namespace. Added more logging in all
+          handle_exception methods
+
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.h:
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.cpp:
+          Removed these files.
+
 Mon Aug  9 06:42:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.h:

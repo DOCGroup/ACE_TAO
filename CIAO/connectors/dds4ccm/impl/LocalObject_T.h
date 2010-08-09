@@ -11,12 +11,12 @@ namespace CIAO
   namespace DDS4CCM
   {
     template <typename CCM_TYPE>
-    class DDS4CCM_LocalObject_T
+    class LocalObject_T
       : public virtual ::CORBA::LocalObject
     {
     public:
-      DDS4CCM_LocalObject_T (void);
-      ~DDS4CCM_LocalObject_T (void);
+      LocalObject_T (void);
+      virtual ~LocalObject_T (void);
 
       void _set_component (typename CCM_TYPE::base_type::_ptr_type component);
       virtual ::CORBA::Object_ptr _get_component (void);
@@ -27,6 +27,6 @@ namespace CIAO
   }
 }
 
-#include "dds4ccm/impl/DDS4CCM_LocalObject_T.cpp"
+#include "dds4ccm/impl/LocalObject_T.cpp"
 
 #endif /* DDS4CCM_LOCALOBJECT_T_H_ */
