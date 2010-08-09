@@ -1,3 +1,11 @@
+Mon Aug  9 19:09:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenOneByOne/Receiver/LOBO_Test_Receiver_exec.cpp:
+          Updated some comments
+
 Mon Aug  9 14:50:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:

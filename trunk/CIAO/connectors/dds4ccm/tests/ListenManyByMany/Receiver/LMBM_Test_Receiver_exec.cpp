@@ -26,7 +26,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                   const ListenManyByManyTest & /*an_instance*/,
                                   const ::CCM_DDS::ReadInfo & /*info*/)
   {
-    //just count; this value is checked on ccm_remove.
+    // Just count; this value is checked on ccm_remove.
     ++this->received_one_by_one_;
   }
 
