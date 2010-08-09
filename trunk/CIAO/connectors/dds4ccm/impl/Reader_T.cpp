@@ -204,7 +204,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
     }
   // Return the loan
   DDS_ReturnCode_t const retval = this->impl ()->return_loan (data, sample_info);
-  if (retval != DDS_RETCODE_OK)
+  if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                     "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_last - "
