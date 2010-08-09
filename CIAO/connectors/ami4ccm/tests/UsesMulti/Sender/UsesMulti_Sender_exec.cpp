@@ -58,7 +58,7 @@ namespace CIAO_UsesMulti_Sender_Impl
     ::UsesMulti::Sender::sendc_run_my_um_oneConnections_var  my_one_ami_ =
       context_->get_connections_sendc_run_my_um_one();
 
-    //Invoke Asynchronous calls to test
+    // Invoke Asynchronous calls to test
     for (CORBA::ULong i = 0; i < my_one_ami_->length (); ++i)
       {
         CORBA::String_var test;
@@ -82,8 +82,8 @@ namespace CIAO_UsesMulti_Sender_Impl
                                           i); 
         ACE_DEBUG ((LM_DEBUG, "Sender (ASYNCH) : send <%C> !\n",
                     test.in ()));
-        //there is more than 1 message sent, without receiving callbacks,
-        //so it is asynchronous
+        // There is more than 1 message sent, without receiving callbacks,
+        // so it is asynchronous
         if (nr_of_sent.value() > 1)
           {
             asynch = true;
