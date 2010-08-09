@@ -79,8 +79,8 @@ namespace CIAO
       void set_parameters (const ::CCM_DDS::QueryFilter & filter,
                            ::DDS::QueryCondition_ptr qc);
     };
-  };
-};
+  }
+}
 
 #include "dds4ccm/impl/ConditionManager_T.cpp"
 
