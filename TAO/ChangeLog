@@ -1,3 +1,33 @@
+Mon Aug  9 17:06:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/Makefile.am:
+
+          Removed the source file, since its only
+          method has been moved rewritten in
+          class FE_Utils, and updated the automake
+          file.
+
+        * TAO_IDL/include/fe_utils.h:
+        * TAO_IDL/include/utl_scope_T.cpp:
+        * TAO_IDL/include/global_extern.h:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Rewrote the formerly global method
+          can_be_redefined() in class FE_Utils,
+          and rerouted all calls to the new version.
+          This change fixes some redefinition bugs
+          that were introduced in x.8.1, thanks to
+          Robert Shectman <shectman at llnl dot gov> for
+          reporting the problem.
+          
+        * tests/IDL_Test/interface.idl:
+        
+          Added test cases for the above change.
+
 Mon Aug  9 13:13:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3883_Regression/test.idl:

@@ -209,3 +209,39 @@ module i2
       string getstr3();
     };
 };
+
+/// Tests acceptance of legal redefinitions (of
+/// constants, exceptions and types) in a derived
+/// interface.
+module redefs
+{
+  interface base
+  {
+    const long lconst = -5;
+    
+    exception ex
+    {
+      string info;
+    };
+    
+    struct foo
+    {
+      short index;
+    };
+  };
+
+  interface derived : base
+  {
+    const long lconst = 44;
+    
+    exception ex
+    {
+      long serial;
+    };
+    
+    struct foo
+    {
+      string str;
+    };
+  };
+};

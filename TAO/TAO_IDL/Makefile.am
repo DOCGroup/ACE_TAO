@@ -60,7 +60,6 @@ libTAO_IDL_FE_la_SOURCES = \
   ast/ast_provides.cpp \
   ast/ast_publishes.cpp \
   ast/ast_recursive.cpp \
-  ast/ast_redef.cpp \
   ast/ast_root.cpp \
   ast/ast_sequence.cpp \
   ast/ast_string.cpp \

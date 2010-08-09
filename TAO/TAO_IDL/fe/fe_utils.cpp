@@ -810,6 +810,94 @@ FE_Utils::original_local_name (Identifier *local_name)
 }
 
 bool
+FE_Utils::can_be_redefined (AST_Decl *prev_decl,
+                            AST_Decl *curr_decl)
+{
+  AST_Decl::NodeType pnt = prev_decl->node_type ();
+  AST_Decl::NodeType cnt = curr_decl->node_type ();
+  
+  switch (cnt)
+  {
+    /// For these, any non-zero previous decl
+    /// is an error.
+    case AST_Decl::NT_attr:
+    case AST_Decl::NT_op:
+    case AST_Decl::NT_ext_port:
+    case AST_Decl::NT_mirror_port:
+    case AST_Decl::NT_provides:
+    case AST_Decl::NT_publishes:
+    case AST_Decl::NT_consumes:
+    case AST_Decl::NT_uses:
+      return false;
+    default:
+      break;
+  }
+    
+  UTL_Scope *prev_scope = prev_decl->defined_in ();
+  UTL_Scope *curr_scope = curr_decl->defined_in ();
+  AST_Structure *s = 0;
+  AST_StructureFwd *s_fwd = 0;
+  AST_Interface *i = 0;
+  AST_InterfaceFwd *i_fwd = 0;
+  
+  bool nt_eq = (pnt == cnt);
+  bool s_eq = (prev_scope == curr_scope);
+
+  switch (pnt)
+  {
+    case AST_Decl::NT_module:
+      /// Just need to check that both are modules.
+      return (cnt == AST_Decl::NT_module);
+    /// For the *_fwd types, if scopes aren't related, it's ok.
+    /// If they are related, then we need another fwd or a full decl.
+    case AST_Decl::NT_component_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_component));
+    case AST_Decl::NT_eventtype_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_eventtype));
+    case AST_Decl::NT_interface_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_interface));
+    case AST_Decl::NT_struct_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_struct));
+    case AST_Decl::NT_union_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_union));
+    case AST_Decl::NT_valuetype_fwd:
+      return (!s_eq || (nt_eq || cnt == AST_Decl::NT_valuetype));
+    /// If scopes aren't related, it's ok. If they are, check
+    /// if the previous is a dummy for a fwd decl. Even a redef
+    /// in a derived interface type is ok.
+    case AST_Decl::NT_struct:
+    case AST_Decl::NT_union:
+      s = AST_Structure::narrow_from_decl (prev_decl);
+      s_fwd = (s == 0 ? 0 : s->fwd_decl ());
+      return (!s_eq || s_fwd != 0);
+    case AST_Decl::NT_interface:
+    case AST_Decl::NT_component:
+    case AST_Decl::NT_eventtype:
+    case AST_Decl::NT_valuetype:
+    case AST_Decl::NT_connector:
+      i = AST_Interface::narrow_from_decl (prev_decl);
+      i_fwd = (i == 0 ? 0 : i->fwd_decl ());
+      return (!s_eq || i_fwd != 0);
+    /// For factories, exceptions, constants and types, even a
+    /// redef in a derived interface type is ok. Checking for
+    /// unequal scopes covers boxed valuetypes as well.
+    case AST_Decl::NT_valuebox:
+    case AST_Decl::NT_except:
+    case AST_Decl::NT_typedef:
+    case AST_Decl::NT_const:
+    case AST_Decl::NT_factory:
+    case AST_Decl::NT_type:
+    {
+      return !s_eq;
+    }
+    /// What's left are the case from the previous switch statement.
+    /// Same rule applies - no overrides or redefs, ever.
+    default:
+      return false;
+  }
+}
+
+bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   ACE_CString &param_id,
                                   size_t index)
