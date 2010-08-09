@@ -1,3 +1,9 @@
+Mon Aug  9 06:42:10 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.h:
+        * connectors/dds4ccm/impl/DDS4CCM_LocalObject_T.h:
+          Removed not needed semi colons
+
 Sun Aug  8 12:46:54 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Listen_T.cpp:

@@ -24,8 +24,8 @@ namespace CIAO
     private:
       typename CCM_TYPE::base_type::_var_type component_;
     };
-  };
-};
+  }
+}
 
 #include "dds4ccm/impl/DDS4CCM_LocalObject_T.cpp"
 
