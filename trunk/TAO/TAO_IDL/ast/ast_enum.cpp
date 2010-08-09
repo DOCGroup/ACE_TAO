@@ -268,7 +268,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (t)) != 0)
     {
-      if (!can_be_redefined (d))
+      if (!FE_Utils::can_be_redefined (d, t))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,

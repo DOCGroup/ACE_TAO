@@ -63,7 +63,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
             }
 
         }
-      else if (!can_be_redefined (predef))
+      else if (!FE_Utils::can_be_redefined (predef, t))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
@@ -157,7 +157,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
             }
         }
 
-      if (!can_be_redefined (d)) {
+      if (!FE_Utils::can_be_redefined (d, t)) {
 
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
