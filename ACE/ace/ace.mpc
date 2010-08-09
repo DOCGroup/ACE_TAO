@@ -398,7 +398,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Codeset_Symbols.h
     Condition_T.h
     Default_Constants.h
-    Exception_Macros.h
     Global_Macros.h
     Guard_T.h
     Hash_Map_Manager.h
