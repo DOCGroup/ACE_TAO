@@ -1,3 +1,8 @@
+Mon Aug  9 06:38:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Fixed compile error
+
 Mon Aug  9 06:35:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
