@@ -1,3 +1,9 @@
+Mon Aug  9 13:13:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_3883_Regression/test.idl:
+        
+          Added id string.
+
 Sun Aug  8 21:10:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
