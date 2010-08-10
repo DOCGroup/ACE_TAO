@@ -1,7 +1,12 @@
+Tue Aug 10 08:55:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed zapped file
+
 Mon Aug  9 17:14:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
-        
+
           Added Robert Shectman <shectman at llnl dot gov>
 
 Mon Aug  9 16:02:08 UTC 2010  Adam Mitz  <mitza@ociweb.com>
