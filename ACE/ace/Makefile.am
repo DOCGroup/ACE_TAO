@@ -522,7 +522,6 @@ nobase_include_HEADERS += \
   Event_Handler_T.cpp \
   Event_Handler_T.h \
   Event_Handler_T.inl \
-  Exception_Macros.h \
   FIFO.h \
   FIFO.inl \
   FIFO_Recv.h \
