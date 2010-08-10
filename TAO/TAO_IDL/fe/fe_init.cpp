@@ -100,6 +100,11 @@ fe_populate_global_scope (void)
       
   root->fe_add_predefined_type (pdt);
   
+  /// Put this prefix in force while we're creating the
+  /// CORBA module and its contents.
+  char *prefix = ACE::strnew ("omg.org");
+  idl_global->pragma_prefixes ().push (prefix);
+  
   Identifier corba_id ("CORBA");
   UTL_ScopedName sn (&corba_id, 0);
   
@@ -248,6 +253,10 @@ fe_populate_global_scope (void)
       &TypeCode_name);
       
   m->fe_add_predefined_type (pdt);
+  
+  char *trash = 0;
+  idl_global->pragma_prefixes ().pop (trash);
+  ACE::strdelete (trash);
 }
 
 // Populate idl_global's hash map with upper case versions of
