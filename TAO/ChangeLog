@@ -1,3 +1,9 @@
+Tue Aug 10 12:24:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/included.idl:
+        
+          Cosmetic changes.
+
 Mon Aug  9 17:06:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_redef.cpp:
