@@ -58,7 +58,7 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic");
 
       ::DDS::DomainParticipant_var dp = subscriber->get_participant ();
-      if (CORBA::is_nil (dp.in ()))
+      if (::CORBA::is_nil (dp.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "
@@ -82,7 +82,7 @@ namespace CIAO
                                                     topic,
                                                     this->filter_.expression,
                                                     this->filter_.parameters);
-      if (CORBA::is_nil (this->cft_.in ()))
+      if (::CORBA::is_nil (this->cft_.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_ContentFilterSetting_i::create_contentfilteredtopic: "

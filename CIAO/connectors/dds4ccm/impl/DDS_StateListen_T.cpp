@@ -19,7 +19,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~DDS_StateListen_T (v
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-bool
+void
 DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
   typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
@@ -29,19 +29,14 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complet
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  bool result = false;
-  if (DDSSubscriberBase_type::configuration_complete (
+  DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
             subscriber,
             library_name,
-            profile_name))
-    {
-      this->data_control_._set_component (component);
-      result = true;
-    }
-    
-  return result;
+            profile_name);
+            
+  this->data_control_._set_component (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -73,6 +68,7 @@ DDS_StateListen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                     "DDS_StateListen_T::activate - "
                     "Error setting the listener on the DataReader - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 }
 

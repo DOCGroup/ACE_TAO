@@ -14,7 +14,7 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~DDS_Get_T (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-bool
+void
 DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
   typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
@@ -23,17 +23,13 @@ DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Get_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
-  if (DDSSubscriberBase_type::configuration_complete (component,
+  DDSSubscriberBase_type::configuration_complete (component,
                                                       topic,
                                                       subscriber,
                                                       library_name,
-                                                      profile_name))
-    {
-      this->dds_get_.set_impl (&this->data_reader_,
-                               &this->condition_manager_);
-      this->dds_get_._set_component (component);
-    }
-  return true;
+                                                      profile_name);
+  this->dds_get_.set_impl (&this->data_reader_, &this->condition_manager_);
+  this->dds_get_._set_component (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>

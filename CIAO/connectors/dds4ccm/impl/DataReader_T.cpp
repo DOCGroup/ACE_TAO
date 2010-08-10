@@ -266,6 +266,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
                     "DataReader_T::passivate - "
                     "Error while setting the listener on the data reader - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -298,6 +299,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datareader 
             ::DDS::DataReaderListener::_nil (),
             0);
     }
+
   this->set_impl(reader.in ());
 }
 
@@ -793,14 +795,14 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
       if (!this->impl_)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+                        "CIAO::DDS4CCM::DataReader_T::set_impl - "
                         "Failed to cast DDS::DataReader to DataReader_T\n"));
         }
     }
   else
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DataReader_T::create_datareader - "
+                    "CIAO::DDS4CCM::DataReader_T::set_impl - "
                     "Failed to cast DDS::DataReader to DataReader_T\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }

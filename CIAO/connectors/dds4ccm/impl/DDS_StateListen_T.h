@@ -37,7 +37,7 @@ public:
   ::CCM_DDS::CCM_StateListenerControl_ptr get_data_control (void);
   //@}
 
-  bool configuration_complete (
+  void configuration_complete (
     typename CCM_TYPE::base_type::_ptr_type component,
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,

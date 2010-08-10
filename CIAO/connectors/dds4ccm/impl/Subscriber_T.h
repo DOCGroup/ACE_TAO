@@ -96,13 +96,11 @@ namespace CIAO
 #endif
 
       virtual ::DDS::ReturnCode_t
-      delete_datareader (
-        ::DDS::DataReader_ptr a_datareader);
+      delete_datareader (::DDS::DataReader_ptr a_datareader);
 
       virtual ::DDS::ReturnCode_t delete_contained_entities (void);
 
-      virtual ::DDS::DataReader_ptr lookup_datareader (
-        const char * impl_name);
+      virtual ::DDS::DataReader_ptr lookup_datareader (const char * impl_name);
 
       virtual ::DDS::ReturnCode_t
       get_datareaders (
@@ -111,33 +109,24 @@ namespace CIAO
         ::DDS::ViewStateMask view_states,
         ::DDS::InstanceStateMask instance_states);
 
-      virtual ::DDS::ReturnCode_t
-      notify_datareaders (void);
+      virtual ::DDS::ReturnCode_t notify_datareaders (void);
 
-      virtual ::DDS::ReturnCode_t
-      set_qos (
-        const ::DDS::SubscriberQos & qos);
+      virtual ::DDS::ReturnCode_t set_qos (const ::DDS::SubscriberQos & qos);
 
-      virtual ::DDS::ReturnCode_t
-      get_qos (
-        ::DDS::SubscriberQos & qos);
+      virtual ::DDS::ReturnCode_t get_qos (::DDS::SubscriberQos & qos);
 
       virtual ::DDS::ReturnCode_t
       set_listener (
         ::DDS::SubscriberListener_ptr a_listener,
         ::DDS::StatusMask mask);
 
-      virtual ::DDS::SubscriberListener_ptr
-      get_listener (void);
+      virtual ::DDS::SubscriberListener_ptr get_listener (void);
 
-      virtual ::DDS::ReturnCode_t
-      begin_access (void);
+      virtual ::DDS::ReturnCode_t begin_access (void);
 
-      virtual ::DDS::ReturnCode_t
-      end_access (void);
+      virtual ::DDS::ReturnCode_t end_access (void);
 
-      virtual ::DDS::DomainParticipant_ptr
-      get_participant (void);
+      virtual ::DDS::DomainParticipant_ptr get_participant (void);
 
       virtual ::DDS::ReturnCode_t
       set_default_datareader_qos (
