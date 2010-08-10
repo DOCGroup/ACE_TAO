@@ -85,6 +85,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
                     "DDS_Write_T::activate - "
                     "Error setting the listener on the writer - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 }
 
@@ -103,6 +104,7 @@ DDS_Write_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
                     "DDS_Write_T::passivate - "
                     "Error while setting the listener on the writer - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 
   this->data_listener_ = ::DDS::DataWriterListener::_nil ();

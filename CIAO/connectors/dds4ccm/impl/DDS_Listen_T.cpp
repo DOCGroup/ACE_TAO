@@ -16,7 +16,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~DDS_Listen_T (void)
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
-bool
+void
 DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
   typename CCM_TYPE::base_type::_ptr_type component,
   ::DDS::Topic_ptr topic,
@@ -26,19 +26,13 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete");
 
-  bool result = false;
-  if (DDSSubscriberBase_type::configuration_complete (
+  DDSSubscriberBase_type::configuration_complete (
             component,
             topic,
             subscriber,
             library_name,
-            profile_name))
-    {
-      this->data_control_._set_component (component);
-      result = true;
-    }
-    
-  return result;
+            profile_name);
+  this->data_control_._set_component (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -72,6 +66,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                     "DDS_Listen_T::activate - "
                     "Error while setting the listener on the listen - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 }
 

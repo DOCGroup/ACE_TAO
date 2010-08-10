@@ -32,7 +32,7 @@ public:
   typename CCM_TYPE::getter_type::_ptr_type get_fresh_data (void);
   //@}
 
-  bool configuration_complete (
+  void configuration_complete (
     typename CCM_TYPE::base_type::_ptr_type component,
     ::DDS::Topic_ptr topic,
     ::DDS::Subscriber_ptr subscriber,
