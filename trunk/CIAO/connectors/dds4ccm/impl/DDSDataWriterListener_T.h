@@ -65,7 +65,6 @@ namespace CIAO
     private:
       ::DDS::DataWriterListener_var impl_;
       DataWriter_type * typed_dw_;
-
     };
   }
 }

@@ -61,9 +61,18 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                           this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
-  this->data_reader_.set_listener (
+    
+  ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
     this->listener_.in (),
     DataReaderListener_type::get_mask (status));
+
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Listen_T::activate - "
+                    "Error while setting the listener on the listen - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
