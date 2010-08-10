@@ -89,7 +89,6 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
   try
     {
       this->parser_.parse (&this->input_stream_);
-      ACEXML_TRY_CHECK;
     }
   catch (const ACEXML_SAXException& ex)
     {
