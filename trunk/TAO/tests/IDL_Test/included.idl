@@ -64,11 +64,11 @@ module A
   struct MyStructA;
   typedef sequence<MyStructA> MySeqA;
 
- struct MyStructA
- {
+  struct MyStructA
+  {
    string str;
    MySeqA recursive_member;
- };
+  };
 };
 
 #endif /* IDL_TEST_INCLUDED_IDL */
