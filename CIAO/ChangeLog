@@ -1,3 +1,11 @@
+Tue Aug 10 07:00:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSDataWriterListener_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+          Check return values of set_listener
+
 Mon Aug  9 19:09:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
