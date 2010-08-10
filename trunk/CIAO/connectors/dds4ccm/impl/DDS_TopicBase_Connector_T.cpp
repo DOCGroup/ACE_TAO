@@ -273,6 +273,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_default_top
                     "DDS_TopicBase_Connector_T::activate_default_topic - "
                     "Error while setting the listener on the topic - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();                    
     }
 }
 
@@ -290,6 +291,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
                           reactor),
                         ::CORBA::NO_MEMORY ());
     }
+    
   ::DDS::ReturnCode_t const retcode = this->subscriber_->set_listener (
                             this->subscriber_listener_.in (),
                             SubscriberListener::get_mask (
@@ -300,6 +302,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_subscriber 
                     "DDS_TopicBase_Connector_T::activate_subscriber - "
                     "Error while setting the listener on the subscriber - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();                    
     }
 }
 
@@ -318,6 +321,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
                           reactor),
                         ::CORBA::NO_MEMORY ());
     }
+
   ::DDS::ReturnCode_t const retcode = this->publisher_->set_listener (
                             this->publisher_listener_.in (),
                             PublisherListener::get_mask (
@@ -328,6 +332,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate_publisher (
                     "DDS_TopicBase_Connector_T::activate_publisher - "
                     "Error while setting the listener on the publisher - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();                    
     }
 }
 
@@ -346,6 +351,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_default_to
                     "DDS_TopicBase_Connector_T::passivate_default_topic - "
                     "Error while setting the listener on the topic - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 
   this->topiclistener_ = ::DDS::TopicListener::_nil ();
@@ -366,6 +372,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_subscriber
                     "DDS_TopicBase_Connector_T::passivate_subscriber - "
                     "Error while setting the listener on the subscriber - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 
   this->subscriber_listener_ = ::DDS::SubscriberListener::_nil ();
@@ -386,6 +393,7 @@ DDS_TopicBase_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate_publisher 
                     "DDS_TopicBase_Connector_T::passivate_publisher - "
                     "Error while setting the listener on the publisher - <%C>\n",
                     ::CIAO::DDS4CCM::translate_retcode (retcode)));
+      throw ::CORBA::INTERNAL ();
     }
 
   this->publisher_listener_ = ::DDS::PublisherListener::_nil ();
