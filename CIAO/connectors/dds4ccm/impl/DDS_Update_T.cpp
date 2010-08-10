@@ -77,9 +77,18 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
                         DataWriterListener_type (),
                         ::CORBA::NO_MEMORY ());
     }
-  this->ccm_dds_writer_.set_listener (
+
+  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_.set_listener (
     this->data_listener_.in (),
     DataWriterListener_type::get_mask ());
+
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Update_T::activate - "
+                    "Error while setting the listener on the updater - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

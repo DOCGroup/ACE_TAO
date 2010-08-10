@@ -76,9 +76,18 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         PortStatusListener_type (status, reactor),
                         ::CORBA::NO_MEMORY ());
     }
-  this->data_reader_.set_listener (
-    this->listener_.in (),
-    PortStatusListener_type::get_mask (status));
+    
+  ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
+      this->listener_.in (),
+      PortStatusListener_type::get_mask (status));
+
+  if (retcode != ::DDS::RETCODE_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                    "DDS_Subscriber_Base_T::activate - "
+                    "Error while setting the listener on the subscriber - <%C>\n",
+                    ::CIAO::DDS4CCM::translate_retcode (retcode)));
+    }
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
