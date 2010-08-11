@@ -143,7 +143,11 @@ else
   endif
 <%endif%>
 endif
+<%if(install)%>
 OUTPUT_DIRECTORY = $(if $(ARCH),$(if $(INSBIN),$(INSBIN)/$(ARCH)),$(INSBIN))
+<%else%>
+OUTPUT_DIRECTORY = $(if $(ARCH),./$(ARCH))
+<%endif%>
 <%else%>
 <%if(dllout || libout)%>
 COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
@@ -385,8 +389,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 <%if(exename)%>
 
-ifneq ($(OUTPUT_DIRECTORY),)
-ifneq ($(OUTPUT_DIRECTORY),.)
+ifneq ($(INSBIN),)
+ifneq ($(INSBIN),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
   CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/$(if $(ARCH),$(ARCH)/)%$(VAR)$(EXEEXT))
 endif
