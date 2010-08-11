@@ -43,8 +43,6 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
   }
 
   Inline_Files {
-    DAnCE_DeploymentInterceptorsC.inl
-    DAnCE_PropertiesC.inl
     DAnCE_LocalityManagerC.inl
     DAnCE_ArtifactInstallationC.inl
   }
