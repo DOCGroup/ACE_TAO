@@ -1,3 +1,13 @@
+Wed Aug 11 20:03:48 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/fm/CIAO-*.gif:
+        * docs/fm/CIAO.css:
+        * docs/fm/CIAO.htm:
+
+          Adding HTML document exported from Adobe FrameMaker, based on the
+          source file docs/fm/CIAO.fm, which came from the OCI TAO Developer's
+          Guide.
+
 Tue Aug 10 18:59:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:
