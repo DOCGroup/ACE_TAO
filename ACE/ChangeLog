@@ -1,3 +1,11 @@
+Wed Aug 11 20:50:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          With ARCH set, we need to create the local ARCH directory for the
+          executable in case there are no object files that would otherwise
+          have required it.
+
 Wed Aug 11 13:45:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
