@@ -1,7 +1,13 @@
+Wed Aug 11 20:49:43 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/tao.mpc:
+
+          install orb.idl.
+
 Tue Aug 10 17:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_init.cpp(fe_populate_global_scope):
-        
+
           Put "omg.org" on the pragma prefix stack temporarily
           so it will be applied when creating CORBA module
           and its contents.
@@ -9,7 +15,7 @@ Tue Aug 10 17:46:16 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Aug 10 12:24:31 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/included.idl:
-        
+
           Cosmetic changes.
 
 Mon Aug  9 17:06:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -37,15 +43,15 @@ Mon Aug  9 17:06:41 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
           that were introduced in x.8.1, thanks to
           Robert Shectman <shectman at llnl dot gov> for
           reporting the problem.
-          
+
         * tests/IDL_Test/interface.idl:
-        
+
           Added test cases for the above change.
 
 Mon Aug  9 13:13:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Bug_3883_Regression/test.idl:
-        
+
           Added id string.
 
 Sun Aug  8 21:10:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -80,7 +86,7 @@ Sun Aug  8 21:10:30 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Expanded use of the ACE_ANY_OPS_USE_NAMESPACE macro for compilers that
           implement strict argument dependent lookup, especially for overloaded
-          operators. 
+          operators.
 
         * tao/DynamicAny/DynCommon.cpp:
         * tao/Messaging/Buffering_Constraint_Policy.cpp:
