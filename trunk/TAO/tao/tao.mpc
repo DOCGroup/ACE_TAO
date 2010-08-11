@@ -59,6 +59,7 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     Policy.pidl
     Typecode_types.pidl
     WrongTransaction.pidl
+    orb.idl
   }
 }
 
