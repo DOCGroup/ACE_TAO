@@ -140,6 +140,7 @@
 
 // GCC >= 4.1 provides __sync_XXXX builtins for use in atomic operations
 // although the builtins are provided globally they are not supported on all platforms
+#if defined (ACE_HAS_THREADS)
 #if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 1))
 # if defined (__powerpc__)
 // The builtins seem to be provided for all powerpc platforms
@@ -159,6 +160,7 @@
 #   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
 # endif
 #endif
+#endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_GNU_REPO)
   // -frepo causes unresolved symbols of basic_string left- and
