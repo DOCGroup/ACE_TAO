@@ -1,6 +1,0 @@
-// $Id$
-
-project : odbc, adbclib {
-  libs  += ADBC_ODBC
-  after += ADBC_ODBC
-}

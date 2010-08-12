@@ -1,0 +1,511 @@
+    1  vi ../node-5/TESTAlpha-client.txt 
+    2  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+    3  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+    4  vi ../node-5/TESTAlpha-client.txt 
+    5  vi ../node-5/TESTAlpha-client.txt 
+    6  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+    7  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+    8  vi ../node-5/TESTAlpha-client.txt 
+    9  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   10   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   11  vi ../node-5/TESTAlpha-client.txt 
+   12  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   13  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   14  vi ../node-5/TESTAlpha-client.txt 
+   15  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   16  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   17  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   18   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   19   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   20   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   21   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   22  exit
+   23  ll
+   24  cd $EXP_ROOT 
+   25  ls
+   26  pwd
+   27  cd ../common/
+   28  ls
+   29  wget http://www.ethereal.com/distribution/ethereal-0.99.0.tar.gz
+   30  ls
+   31  tar -xvzf ethereal-0.99.0.tar.gz 
+   32  rm -fr ethereal-0.99.0*
+   33  ls
+   34  ping -c 1 127.0.0.1
+   35  iptables -A INPUT -s 127.0.0.1 -p icmp -j DROP
+   36  sudo iptables -A INPUT -s 127.0.0.1 -p icmp -j DROP
+   37  ping -c 1 127.0.0.1
+   38  sudo iptables -D INPUT 1
+   39  ping -c 1 127.0.0.1
+   40  cd $EXP_ROOT
+   41  cd group-failover/node-1
+   42  ./run_test.pl
+   43  vi run_test.pl
+   44  ./run_test.pl
+   45  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   46  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   47  ./run_test.pl
+   48   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   49   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   50  ./run_test.pl
+   51   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   52   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   53  exit
+   54  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   55  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   56   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   57   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   58   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   59   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   60  exit
+   61  cd $EXP_ROOT 
+   62  cd group-failover/node-1
+   63  vi ThreeNodeGroup-1.cdp 
+   64  rm .ThreeNodeGroup-1.cdp.swp 
+   65  vi ThreeNodeGroup-1.cdp 
+   66  vi ThreeNodeGroup-2.cdp 
+   67  vi Alpha-client.cdp
+   68  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+   69  vi ThreeNodeGroup-1.cdp 
+   70   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   71  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+   72   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   73   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   74   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   75   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   76  exit
+   77  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   78  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   79   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   80   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   81   ps aux | grep component 
+   82   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   83   ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   84  exit
+   85  ps aux 
+   86  ps aux  | grep component
+   87  ps aux  | grep nm.sh
+   88  ps aux  | grep nm.sh | gawk '{print $2}' | xargs -n 1 kill -9
+   89  ps aux  | grep nm.sh
+   90  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   91  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   92  ps aux  | grep nm.sh
+   93  exit
+   94  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   95  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   96  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+   97  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+   98  ssh node-1
+   99  ssh node-1.flare-f6.f6.isislab.vanderbilt.edu
+  100  exit
+  101  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  102  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  103  cd /proj/F6/test/group-failover/node-1
+  104  ./run_test.pl
+  105  vi run_test.pl
+  106  hostname
+  107  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  108  q
+  109  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  110  ./run_test.pl
+  111  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  112  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  113  ./run_test.pl
+  114  exit
+  115  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  116  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  117  cd /proj/F6/test/group-failover/node-1
+  118  ./deploy.pl ThreeNodeGroup-1
+  119  vi ThreeNodeGroup-1.cdp 
+  120  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  121  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  122  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  123  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  124  exit
+  125  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  126  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  127  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  128  s aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  129  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  130  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  131  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  132  exit
+  133  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  134  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  135  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  136  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  137  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  138  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  139  exit
+  140  exit
+  141  exit
+  142  exit
+  143  exit
+  144  exit
+  145  exit
+  146  exit
+  147  exit
+  148  exit
+  149  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  150  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  151  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  152  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  153  man iptable
+  154  man iptables
+  155  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  156  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  157  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  158  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  159  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  160  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  161  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  162  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  163  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  164  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  165  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  166   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  167  man iptables
+  168  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  169  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  170  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  171  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  172  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  173  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  174  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  175  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  176  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  177  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  178  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  179  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  180  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  181  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  182  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  183  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  184  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  185  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  186  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  187  man iptables
+  188  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  189  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  190  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  191  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  192  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  193  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  194  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  195  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  196  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  197  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  198  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  199  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  200  cd /proj/F6/test/group-failover/node-1
+  201  ./run_test.pl ThreeNodeGroup-1
+  202  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  203  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  204  ./deploy.pl ThreeNodeGroup-1
+  205  vi ThreeNodeGroup-2.cdp 
+  206  ./deploy.pl ThreeNodeGroup-2
+  207  ./deploy.pl ThreeNodeGroup-2
+  208  ./deploy.pl  Alpha-client
+  209  vi Alpha-client.cdp 
+  210  vi ThreeNodeGroup-1.cdp 
+  211  vi Alpha-client.cdp 
+  212  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  213  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  214  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  215  vi ThreeNodeGroup-1.cdp 
+  216  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  217  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  218  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  219  ./trigger.pl TEST Alpha
+  220  vi ThreeNodeGroup-1.cdp 
+  221  vi ThreeNodeGroup-1.cdp 
+  222  vi ThreeNodeGroup-1.cdp 
+  223  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  224  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  225  vi Alpha-client.cdp 
+  226  vi ThreeNodeGroup-1.cdp 
+  227  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  228  ./trigger.pl TEST Alpha
+  229  iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  230  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  231  sudo iptables -D OUTPUT 1
+  232  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  233  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  234  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  235  ./trigger.pl TEST Alpha
+  236  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  237  sudo iptables -D OUTPUT 1
+  238  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  239  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  240  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  241  ./trigger.pl TEST Alpha
+  242  sudo iptables -D OUTPUT 1
+  243  vi Alpha-client.cdp 
+  244  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  245  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  246  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  247  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  248  sudo iptables -D OUTPUT 1
+  249  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  250   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  251  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  252  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  253  sudo iptables -D OUTPUT 1
+  254  sudo iptables -D OUTPUT 1
+  255  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  256  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  257  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  258  sudo iptables -D OUTPUT 1
+  259  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  260  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  261  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  262  vi ThreeNodeGroup-1.cdp 
+  263  vi Alpha-client.cdp 
+  264  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  265  ./trigger.pl TEST Alpha
+  266  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -j DROP
+  267  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  268  sudo iptables -D OUTPUT 1
+  269  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  270  ifconfig
+  271  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  272  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  273  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  274  ./trigger.pl TEST Alpha
+  275  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  276  ssh node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  277  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  278  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  279  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  280  ./trigger.pl TEST Alpha
+  281  vi ThreeNodeGroup-1.cdp 
+  282  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  283  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  284  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client
+  285  ./trigger.pl TEST ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  286  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  287  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  288  ping node-5.flare-f6.f6.isislab.vanderbilt.edu
+  289  ping node-5.flare-f6.f6.isislab.vanderbilt.edu
+  290  ping node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  291  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  292  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  293  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  294  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  295  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  296  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  297  ping node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  298  cd /proj/F6/ftciao/CIAO/DAnCE/tests/CIAO/FTComponents/
+  299  vi FTTask_exec.cpp 
+  300  make
+  301  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  302  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  303  ping node-5.flare-f6-copy.f6.isislab.vanderbilt.edu
+  304  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  305  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  306  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  307   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  308  vi FTTask_exec.cpp 
+  309  man sleep
+  310  man sleep 2
+  311  man sleep 3
+  312  man 3 sleep
+  313  man 2 sleep 
+  314  vi FTTask_exec.cpp 
+  315  make
+  316  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  317  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  318  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  319  vi FTTask_exec.cpp 
+  320  make
+  321  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  322  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  323  vi FTTask_exec.cpp 
+  324  make
+  325  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  326  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  327  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  328  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  329  vi FTTask_exec.cpp 
+  330  vi FTTask_exec.cpp 
+  331  make
+  332  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  333  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  334  vi FTTask_exec.cpp 
+  335  make
+  336  vi FTTask_exec.cpp 
+  337  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  338  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  339  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  340  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  341  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  342  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  343  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  344  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  345  vi FTClient_Timer_Handler.cpp 
+  346  make
+  347  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  348  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  349  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  350  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  351  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  352  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  353  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  354  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  355  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  356  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  357  ostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  358  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  359  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client ; ./trigger.pl TEST Alpha
+  360  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  361  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  362  ./deploy.pl ThreeNodeGroup-1
+  363  ./deploy.pl ThreeNodeGroup-2
+  364  ./deploy.pl Alpha-client
+  365  ./trigger.pl TEST Alpha
+  366  sudo iptables -D OUTPUT 1
+  367  sudo iptables -D OUTPUT 1
+  368  sudo iptables -D OUTPUT 1
+  369  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  370  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  371  ./deploy.pl ThreeNodeGroup-1 ThreeNodeGroup-2 Alpha-client ; ./trigger.pl TEST Alpha
+  372  sudo iptables -A OUTPUT -d 129.59.123.82 -p tcp -m state --state ESTABLISHED -j DROP ; sudo iptables -A OUTPUT -d 10.1.1.6 -p tcp -m state --state ESTABLISHED -j DROP
+  373  vi ThreeNodeGroup-2.cdp 
+  374  vi ThreeNodeGroup-1.cdp 
+  375  sudo iptables -D OUTPUT 1
+  376  sudo iptables -D OUTPUT 1
+  377  sudo iptables -D OUTPUT 1
+  378  ux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  379  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  380  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  381  ps aux | grep ReplicationManager
+  382  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  383  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  384  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  385  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  386  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  387  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  388  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  389  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  390  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  391  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  392  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  393  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  394  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  395  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  396  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  397  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  398  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  399  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  400  cd $EXP_ROOT 
+  401  cd group-failover/node-1
+  402  ./run_test.pl
+  403  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  404  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  405  ./run_test.pl
+  406  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  407  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  408  ./run_test.pl
+  409  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  410  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  411  ./run_test.pl
+  412  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  413  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  414  ./run_test.pl
+  415  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  416  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  417  ./run_test.pl
+  418  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  419  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  420  ./run_test.pl
+  421  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  422  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  423  ./run_test.pl
+  424  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  425   ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  426  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  427  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  428  ./run_test.pl
+  429  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  430  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  431  ./run_test.pl
+  432  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  433  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  434  ./run_test.pl
+  435  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  436  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  437  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  438  ps aux | grep Name_Service
+  439  ps aux | grep Naming_Service
+  440  ps aux | grep Nam
+  441  ./run_test.pl
+  442  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  443  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  444  ./run_test.pl
+  445  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  446  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  447  ./run_test.pl
+  448  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  449  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  450  ./run_test.pl
+  451  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  452  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  453  ./run_test.pl
+  454  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  455  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  456  ./run_test.pl
+  457  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  458  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  459  ./run_test.pl
+  460  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  461  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  462  ./run_test.pl
+  463  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  464  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  465  ./run_test.pl
+  466  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  467  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  468  ./run_test.pl
+  469  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  470  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  471  ps aux | grep Nam
+  472  ps aux | grep Host
+  473  ps aux | grep REp
+  474  ps aux | grep Rep
+  475  ps aux | grep Fau
+  476  ./run_test.pl
+  477  ps aux | grep HostMonitor | gawk '{print $2}' | xargs -n 1 kill -9
+  478  ps aux | grep component | gawk '{print $2}' | xargs -n 1 kill -9
+  479  ./run_test.pl
+  480  ls
+  481  ls -al
+  482  cd /proj/F6
+  483  ls
+  484  cd test
+  485  ls
+  486  cd permission_test/
+  487  ls
+  488  ls -al
+  489  mv this that
+  490  ls -al
+  491  suspend
+  492  cd /proj/F6/test/permission_test
+  493  ls 
+  494  ls -al
+  495  mv this that
+  496  ls -al
+  497  cd ..
+  498  rm -r permission_test/
+  499  y
+  500  ls -al
+  501  exit
+  502  exit
+  503  exit
+  504  exit
+  505  exit
+  506  exit
+  507  exit
+  508  exit
+  509  gawk -F . '{print \$1}' /var/emulab/boot/nickname
+  510  history | more
+  511  history > ~/command_history.txt

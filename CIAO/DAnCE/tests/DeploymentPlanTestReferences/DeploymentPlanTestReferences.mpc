@@ -1,9 +1,0 @@
-// $Id$
-project : dance, taolib, xerces, dance_config_handlers, dance_logger {
-  exename   = DeploymentPlanTestReferences
-
-  Source_Files {
-    test.cpp
-  }
-}
-
