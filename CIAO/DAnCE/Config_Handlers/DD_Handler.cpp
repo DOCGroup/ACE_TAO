@@ -14,9 +14,10 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    /*
     DD_Handler::DD_Handler (const ACE_TCHAR *file) :
       idl_domain_(0),
-      domain_ (0),
+      domain_ptr_ (0),
       retval_ (false)
     {
       DANCE_TRACE("DP_PCD_Handler::constructor");
@@ -32,15 +33,17 @@ namespace CIAO
 
       //      Domain d = domain (dom);
 
-      this->domain_.reset (dm);
+      this->domain_ptr_.reset (dm);
 
       if (!this->build_domain ())
         throw NoDomain ();
     }
+    */
 
     DD_Handler::DD_Handler (Domain *dmn):
       idl_domain_(0),
-      domain_(dmn),
+      domain_ptr_ (dmn),
+      domain_ (*dmn),
       retval_(false)
     {
       DANCE_TRACE("DP_PCD_Handler::constructor - Domain");
@@ -48,14 +51,26 @@ namespace CIAO
         throw NoDomain ();
     }
 
+    DD_Handler::DD_Handler (Domain &dmn):
+      idl_domain_(0),
+      domain_ (dmn),
+      retval_(false)
+    {
+      DANCE_TRACE("DP_PCD_Handler::constructor - Domain");
+      if(!this->build_domain ())
+        throw NoDomain ();
+    }
+    
+    /*
     DD_Handler::DD_Handler (::Deployment::Domain *dmn):
       idl_domain_(dmn),
-      domain_(0),
+      domain_ptr_ (dmn),
       retval_(false)
     {
       if(!this->build_xsc())
         throw NoDomain ();
     }
+    */
 
     DD_Handler::~DD_Handler (void)
     {
@@ -69,21 +84,21 @@ namespace CIAO
 
       // Read in the name
       // Check if the label is there or not
-      if (domain_->label_p ())
+      if (domain_.label_p ())
         this->idl_domain_->label =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_->label ().c_str ()));
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.label ().c_str ()));
 
-      if (domain_->UUID_p ())
+      if (domain_.UUID_p ())
         this->idl_domain_->UUID =
-          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_->UUID ().c_str ()));
+          CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (domain_.UUID ().c_str ()));
 
-      CORBA::ULong len = domain_->count_node ();
+      CORBA::ULong len = domain_.count_node ();
       this->idl_domain_->node.length (len);
 
       //Resource _resource;
       int i =0;
-      for (Domain::node_const_iterator iter = domain_->begin_node ();
-           iter != domain_->end_node ();
+      for (Domain::node_const_iterator iter = domain_.begin_node ();
+           iter != domain_.end_node ();
            ++iter,++i
            )
         {
@@ -191,21 +206,21 @@ namespace CIAO
     Domain const *
     DD_Handler::domain_xsc () const
     {
-      if(!this->domain_.get())
+      if(!this->domain_ptr_.get())
         throw NoDomain ();
 
       //else
-      return this->domain_.get();
+      return this->domain_ptr_.get();
     }
 
     Domain *
     DD_Handler::domain_xsc ()
     {
-      if(!this->domain_.get())
+      if(!this->domain_ptr_.get())
         throw NoDomain ();
 
       //else
-      return this->domain_.release();
+      return this->domain_ptr_.release();
     }
   }
 }
