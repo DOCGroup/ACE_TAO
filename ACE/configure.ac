@@ -1295,6 +1295,11 @@ AC_CHECK_TYPE([sigset_t],
               [AC_DEFINE([ACE_LACKS_SIGSET], 1,
                          [Define to 1 if the system lacks the type `sigset_t'.])],
               [#include <signal.h>])
+AC_CHECK_TYPE([struct lifnum],
+              [],
+              [AC_DEFINE([ACE_LACKS_STRUCT_LIFNUM], 1,
+                         [Define to 1 if the system uses int instead of `struct lifnum' for SIOCGIFNUM ioctl.])],
+              [#include <net/if.h>])
 AC_CHECK_TYPE([struct utsname],
               [],
               [AC_DEFINE([ACE_LACKS_UTSNAME_T], 1,

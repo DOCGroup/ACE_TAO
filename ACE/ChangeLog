@@ -1,3 +1,7 @@
+Thu Aug 12 16:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Added feature test for ACE_LACKS_STRUCT_LIFNUM.
+
 Thu Aug 12 08:39:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
