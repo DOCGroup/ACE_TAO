@@ -94,13 +94,17 @@ main (int argc, char *argv[])
 
       //      std::cout << "Before StateSyncAgent." << std::endl;
 
-      StateSynchronizationAgent_i* ssa_servant =
+/* ssa_servant does not seem to be used anywhere.
+   StateSyncAgentTask creates an agent in its svc method.
+
+        StateSynchronizationAgent_i* ssa_servant =
 	      new StateSynchronizationAgent_i (
 		    AppOptions::instance ()->host_id (),
 		    AppOptions::instance ()->process_id (),
 		    !(AppOptions::instance ()->use_dds ()));
 
       PortableServer::ServantBase_var owner_xfer_ssa (ssa_servant);
+*/
 
       // Create task for state synchronization agent.
       StateSyncAgentTask *sync_agent_thread =

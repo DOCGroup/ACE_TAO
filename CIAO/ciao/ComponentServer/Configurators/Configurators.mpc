@@ -20,3 +20,22 @@ project(CIAO_Basic_Config_Manager) : ciao_lib, ciao_config_manager, ciao_compone
   }
 }
 
+project(CIAO_RTNA_Configurator) : ciao_lib, ciao_config_manager, ciao_componentserver_stub, rtcorba {
+
+  sharedname = CIAO_RTNA_Configurator
+
+  dynamicflags += CIAO_RTNA_CONFIGURATOR_BUILD_DLL 
+
+  Source_Files {
+    RT/RTConfig_Manager.cpp
+  }
+
+  Inline_Files {
+    RT/RTConfig_Manager.inl
+  }
+
+  Header_Files {
+    RT/RTConfig_Manager.h
+    RT/RTNA_Configurator_Export.h
+  }
+}

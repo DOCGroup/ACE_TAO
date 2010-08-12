@@ -8,7 +8,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     bool CLA_Handler::commandline_arguments (const ServerResourcesDef &src,
-                                             ::CIAO::DAnCE::CommandlineArgs &dest)
+                                             ::CIAO::Deployment::CommandlineArgs &dest)
     {
       ServerCmdlineOptions sco = src.cmdline();
 
@@ -27,7 +27,7 @@ namespace CIAO
     }
 
     ServerCmdlineOptions
-    CLA_Handler::commandline_argument (const CIAO::DAnCE::CommandlineArgs &src)
+    CLA_Handler::commandline_argument (const CIAO::Deployment::CommandlineArgs &src)
     {
       ServerCmdlineOptions co;
 

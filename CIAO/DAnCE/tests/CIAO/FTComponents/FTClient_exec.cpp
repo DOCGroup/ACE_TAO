@@ -53,6 +53,7 @@ namespace CIDL_FTClient_Impl
   void
   FTClient_exec_i::start (const char * prefix)
   {
+    std::cout << "FTClient_exec_i::start ()\n" ;
     CIAO_TRACE ("FTClient_exec_i::start ()");
 
     if (!started_)
@@ -236,6 +237,11 @@ namespace CIDL_FTClient_Impl
     file << orb_->object_to_string (ref.in ());
     file.flush ();
     file.close ();
+
+    Name_Helper_T <ReplicationManager> rmh (orb_.in ());
+    timeout_handler_.set_replication_manager(rmh.resolve
+        ("ReplicationManager"));
+    timeout_handler_.set_server_name(this->name_.c_str());
   }
 
   void

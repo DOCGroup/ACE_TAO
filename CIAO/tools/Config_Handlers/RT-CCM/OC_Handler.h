@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,9 +37,9 @@ namespace CIAO
     {
     public:
       static bool orb_config (const ORBConfigs &src,
-                              ::CIAO::DAnCE::ORBConfigs &dest);
+                              ::CIAO::Deployment::ORBConfigs &dest);
 
-      static ORBConfigs orb_config (const ::CIAO::DAnCE::ORBConfigs &src);
+      static ORBConfigs orb_config (const ::CIAO::Deployment::ORBConfigs &src);
 
     };
   }

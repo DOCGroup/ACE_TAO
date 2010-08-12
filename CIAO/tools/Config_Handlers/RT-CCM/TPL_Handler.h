@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 
 #include "RT_CCM_Handlers_Export.h"
 
@@ -35,10 +35,10 @@ namespace CIAO
 
         static bool threadpool_with_lanes (
         const ThreadpoolWithLanesDef &src,
-        ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &dest);
+        ::CIAO::Deployment::ORS_ThreadpoolWithLanes &dest);
 
         static ThreadpoolWithLanesDef threadpool_with_lanes (
-        const ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &src);
+        const ::CIAO::Deployment::ORS_ThreadpoolWithLanes &src);
     };
     }
 }

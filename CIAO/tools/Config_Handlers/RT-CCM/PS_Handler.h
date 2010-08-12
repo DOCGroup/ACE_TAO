@@ -12,7 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,9 +33,9 @@ namespace CIAO
       {
       public:
         static bool policy_set (const PolicySet &src,
-                                ::CIAO::DAnCE::PolicySet &dest);
+                                ::CIAO::Deployment::PolicySet &dest);
 
-        static PolicySet policy_set (const ::CIAO::DAnCE::PolicySet &src);
+        static PolicySet policy_set (const ::CIAO::Deployment::PolicySet &src);
       };
 
     }

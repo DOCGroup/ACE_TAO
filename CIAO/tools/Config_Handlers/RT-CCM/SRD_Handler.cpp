@@ -1,5 +1,5 @@
 // $Id$
-#include "Utils/XML_Typedefs.h"
+#include "XML_Typedefs.h"
 #include "SRD_Handler.h"
 #include "CIAOServerResources.hpp"
 #include "CLA_Handler.h"
@@ -15,7 +15,7 @@ namespace CIAO
       retval_ (false)
     {
       XERCES_CPP_NAMESPACE::DOMDocument *dom =
-        XML_HELPER.create_dom (file);
+        XML_Helper::XML_HELPER.create_dom (file);
 
       if (!dom)
         throw SRD_Handler::NoSRD ();
@@ -36,7 +36,7 @@ namespace CIAO
         throw NoSRD ();
     }
 
-    SRD_Handler::SRD_Handler (::CIAO::DAnCE::ServerResource *srd):
+    SRD_Handler::SRD_Handler (::CIAO::Deployment::ServerResource *srd):
       idl_srd_(srd),
       srd_(0),
       retval_(false)
@@ -52,7 +52,7 @@ namespace CIAO
     bool
     SRD_Handler::build_srd ()
     {
-      this->idl_srd_.reset ( new ::CIAO::DAnCE::ServerResource );
+      this->idl_srd_.reset ( new ::CIAO::Deployment::ServerResource );
 
       if(this->srd_->cmdline_p())
         {
@@ -111,7 +111,7 @@ namespace CIAO
       return true;
     }
 
-    ::CIAO::DAnCE::ServerResource const *
+    ::CIAO::Deployment::ServerResource const *
     SRD_Handler::srd_idl () const
     {
       if(!this->idl_srd_.get())
@@ -121,7 +121,7 @@ namespace CIAO
       return this->idl_srd_.get();
     }
 
-    ::CIAO::DAnCE::ServerResource *
+    ::CIAO::Deployment::ServerResource *
     SRD_Handler::srd_idl ()
     {
       if(!this->idl_srd_.get())

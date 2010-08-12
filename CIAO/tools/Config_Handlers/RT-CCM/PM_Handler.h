@@ -12,7 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,9 +33,9 @@ namespace CIAO
       {
       public:
         static bool priority_model_pd (const PriorityModelPolicyDef &src,
-                                       ::CIAO::DAnCE::PriorityModelPolicyDef &dest);
+                                       ::CIAO::Deployment::PriorityModelPolicyDef &dest);
 
-        static PriorityModelPolicyDef priority_model_pd (const ::CIAO::DAnCE::PriorityModelPolicyDef &src);
+        static PriorityModelPolicyDef priority_model_pd (const ::CIAO::Deployment::PriorityModelPolicyDef &src);
       };
     }
 

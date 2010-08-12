@@ -84,7 +84,7 @@ namespace CIAO
 
       if (this->rt_support_)
         {
-          int rt_retval = this->config_dll_.open (ACE_DLL_PREFIX ACE_TEXT ("CIAO_RTNA_Configurator"),
+          int rt_retval = this->config_dll_.open (/*ACE_DLL_PREFIX*/ ACE_TEXT ("CIAO_RTNA_Configurator"),
                                                   ACE_DEFAULT_SHLIB_MODE,
                                                   false);
 

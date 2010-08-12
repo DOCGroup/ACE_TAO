@@ -11,16 +11,16 @@ namespace CIAO
 
     bool
     PM_Handler::priority_model_pd (const PriorityModelPolicyDef &src,
-                                   ::CIAO::DAnCE::PriorityModelPolicyDef &dest)
+                                   ::CIAO::Deployment::PriorityModelPolicyDef & dest)
     {
       switch (src.priority_model ().integral ())
         {
         case PriorityModel::SERVER_DECLARED_l:
-          dest.priority_model = ::CIAO::DAnCE::SERVER_DECLARED;
+          dest.priority_model = ::CIAO::Deployment::SERVER_DECLARED;
           break;
 
         case PriorityModel::CLIENT_PROPAGATED_l:
-          dest.priority_model = ::CIAO::DAnCE::CLIENT_PROPAGATED;
+          dest.priority_model = ::CIAO::Deployment::CLIENT_PROPAGATED;
           break;
 
         default:
@@ -39,17 +39,17 @@ namespace CIAO
 
 
     PriorityModelPolicyDef
-    PM_Handler::priority_model_pd (const ::CIAO::DAnCE::PriorityModelPolicyDef &src)
+    PM_Handler::priority_model_pd (const ::CIAO::Deployment::PriorityModelPolicyDef &src)
     {
       auto_ptr <PriorityModelPolicyDef> pmd;
 
       switch (src.priority_model)
         {
-        case ::CIAO::DAnCE::CLIENT_PROPAGATED:
+        case ::CIAO::Deployment::CLIENT_PROPAGATED:
           pmd.reset (new PriorityModelPolicyDef (PriorityModel::CLIENT_PROPAGATED));
           break;
 
-        case ::CIAO::DAnCE::SERVER_DECLARED:
+        case ::CIAO::Deployment::SERVER_DECLARED:
           pmd.reset (new PriorityModelPolicyDef (PriorityModel::SERVER_DECLARED));
           break;
 

@@ -10,7 +10,7 @@ namespace CIAO
     bool
     TPL_Handler::threadpool_with_lanes (
            const ThreadpoolWithLanesDef &src,
-           ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &dest)
+           ::CIAO::Deployment::ORS_ThreadpoolWithLanes &dest)
     {
       if (src.id_p ())
         {
@@ -52,7 +52,7 @@ namespace CIAO
     }
 
     ThreadpoolWithLanesDef TPL_Handler::threadpool_with_lanes (
-           const ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &src)
+           const ::CIAO::Deployment::ORS_ThreadpoolWithLanes &src)
     {
       ThreadpoolWithLanesDef tpl (XMLSchema::unsignedLong (src.stacksize),
                                   XMLSchema::boolean ((src.allow_borrowing)),

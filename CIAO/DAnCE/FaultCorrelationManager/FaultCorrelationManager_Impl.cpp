@@ -138,6 +138,8 @@ namespace DAnCE
         timer_.start ();
 
         Deployment::Applications_var apps = dam->getApplications();
+        DANCE_DEBUG ((LM_TRACE, 
+                      "size of apps is = (%d)\n",apps->length()));
 
         for (size_t i = 0; i < apps->length(); ++i)
           {
@@ -253,8 +255,10 @@ namespace DAnCE
       }
 
     ACE_CString plan_id;
-    if (instances_.find (component_id,
-                         plan_id) != 0)
+    {
+      ACE_Guard <ACE_Thread_Mutex> guard (instances_lock_);
+      if (instances_.find (component_id,
+                           plan_id) != 0)
       {
         DANCE_DEBUG ((LM_WARNING,
                       "FCM::app_failure (%C, %C): "
@@ -264,6 +268,7 @@ namespace DAnCE
                       component_id.c_str ()));
         return;
       }
+    }
 
     DANCE_DEBUG ((LM_TRACE, 
                   "FCM::app_failure (%C, %C): "
@@ -334,6 +339,7 @@ namespace DAnCE
       { 
         if (deploy)
           {
+            ACE_Guard <ACE_Thread_Mutex> guard (instances_lock_);
             // add component with the plan id it belongs to
             instances_.bind (plan.instance[i].name.in (), 
                              plan.UUID.in ());
@@ -345,6 +351,7 @@ namespace DAnCE
           }
         else
           {
+            ACE_Guard <ACE_Thread_Mutex> guard (instances_lock_);
             // remove component entry
             instances_.unbind (plan.instance[i].name.in ());
 
@@ -537,4 +544,36 @@ namespace DAnCE
     return constraints._retn ();
   }
 
-};
+  FLARE::ApplicationList*
+   FaultCorrelationManager_Impl::FOU_participants(const char* app)
+   {
+      ACE_CString plan_id, component_id(app);
+      FLARE::ApplicationList_var alist = new FLARE::ApplicationList();
+
+      ACE_Guard <ACE_Thread_Mutex> guard (instances_lock_);
+      if (instances_.find (component_id,
+                           plan_id) != 0)
+      {
+        DANCE_DEBUG ((LM_WARNING,
+                      "FCM::FOU_participants: "
+                      "plan for component '%C' not found.\n",
+                      component_id.c_str ()));
+        return alist._retn();
+      }
+
+      for(TInstancesOfPlan::iterator iter = instances_.begin();
+          iter != instances_.end();
+          ++iter)
+      {
+        if((*iter).int_id_ == plan_id)
+        {
+          size_t len = alist->length();
+          alist->length(len + 1);
+          alist[len] = (*iter).ext_id_.c_str();
+        }
+      }
+      return alist._retn();
+   }
+
+
+}

@@ -61,16 +61,16 @@ namespace CIAO
 
     bool
     NPM_Handler::nw_priority_model_pd (const NWPriorityModelPolicyDef &src,
-      ::CIAO::DAnCE::NWPriorityModelPolicyDef &dest)
+      ::CIAO::Deployment::NWPriorityModelPolicyDef &dest)
     {
       switch (src.nw_priority_model ().integral ())
         {
         case NWPriorityModel::SERVER_DECLARED_NWPRIORITY_l:
-          dest.nw_priority_model = ::CIAO::DAnCE::SERVER_DECLARED_NWPRIORITY;
+          dest.nw_priority_model = ::CIAO::Deployment::SERVER_DECLARED_NWPRIORITY;
           break;
 
         case NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY_l:
-          dest.nw_priority_model = ::CIAO::DAnCE::CLIENT_PROPAGATED_NWPRIORITY;
+          dest.nw_priority_model = ::CIAO::Deployment::CLIENT_PROPAGATED_NWPRIORITY;
           break;
 
         default:
@@ -99,18 +99,18 @@ namespace CIAO
 
     NWPriorityModelPolicyDef
     NPM_Handler::nw_priority_model_pd (
-      const ::CIAO::DAnCE::NWPriorityModelPolicyDef &src)
+      const ::CIAO::Deployment::NWPriorityModelPolicyDef &src)
     {
       auto_ptr <NWPriorityModelPolicyDef> pmd;
 
       switch (src.nw_priority_model)
         {
-        case ::CIAO::DAnCE::CLIENT_PROPAGATED_NWPRIORITY:
+        case ::CIAO::Deployment::CLIENT_PROPAGATED_NWPRIORITY:
           pmd.reset (new NWPriorityModelPolicyDef
 (NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY, 0, 0));
           break;
 
-        case ::CIAO::DAnCE::SERVER_DECLARED_NWPRIORITY:
+        case ::CIAO::Deployment::SERVER_DECLARED_NWPRIORITY:
           pmd.reset (new NWPriorityModelPolicyDef
 (NWPriorityModel::SERVER_DECLARED_NWPRIORITY, 0, 0));
           break;

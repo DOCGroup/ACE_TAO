@@ -182,6 +182,8 @@ public:
   virtual void set_ranklist_constraints (
      const RankListConstraints & constraints);
 
+  void finish_invocation(const char *);
+
   void
   load_based_selection_algo (void);
 
@@ -306,7 +308,7 @@ private:
   STRING_TO_STRING_LIST_MAP processid_backup_map_;
   STRING_TO_STRING_LIST_MAP processid_primary_map_;
   STRING_TO_STRING_LIST_MAP hostid_process_map_;
-
+  
   RankList rank_list_;
   RankList enhanced_rank_list_;
   AGENT_LIST agent_list_;
@@ -406,6 +408,7 @@ private:
 
   void send_failure_notice (const char * host,
                             const ::FLARE::ApplicationList & object_ids);
+  bool phase(int, const char * object_id);
 };
 
 #endif  /* REPLICATION_MANAGER_H */

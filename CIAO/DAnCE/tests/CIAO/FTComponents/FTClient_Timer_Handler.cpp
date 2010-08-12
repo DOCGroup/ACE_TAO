@@ -17,7 +17,8 @@ namespace CIDL_FTClient_Impl
     bool logging)
     : client_executor_ (client_executor),
       logging_ (logging),
-      count_ (0)
+      count_ (0),
+      rm_(ReplicationManager::_nil())
   {
     timer_.calibrate ();
   }
@@ -40,6 +41,17 @@ namespace CIDL_FTClient_Impl
     prefix_ = prefix;
   }
 
+  void 
+  FTClient_Timer_Handler::set_replication_manager (ReplicationManager_ptr rm)
+  {
+    rm_ = ReplicationManager::_duplicate(rm);
+  }
+
+  void FTClient_Timer_Handler::set_server_name(std::string const & server_name)
+  {
+    this->server_name_ = server_name;
+  }
+
   int
   FTClient_Timer_Handler::handle_timeout (const ACE_Time_Value &,
                                           const void *)
@@ -53,8 +65,8 @@ namespace CIDL_FTClient_Impl
           rt_current->the_priority (client_executor_->priority ());
         */
 
-        CIAO_DEBUG ((LM_EMERGENCY, "s(%s) ",
-                     client_executor_->name ()));
+        CIAO_DEBUG ((LM_EMERGENCY, "\nBegin: c(%s) (%d)\n",
+                     client_executor_->name (), count_ + 1));
 
         if (CORBA::is_nil (server_.in ()))
           {
@@ -73,6 +85,10 @@ namespace CIDL_FTClient_Impl
 
         server_processing_time.msec (
           server_->run_task (client_executor_->execution_time ()));
+        rm_->finish_invocation(CORBA::string_dup(server_name_.c_str()));
+        CIAO_DEBUG ((LM_EMERGENCY, 
+                     "FTClient_Timer_Handler::handle_timeout () - "
+                     "Completed run_task\n"));
 
         timer_.stop ();
        
@@ -98,7 +114,7 @@ namespace CIDL_FTClient_Impl
         if ((client_executor_->iterations () > 0) && 
             (++count_ >= client_executor_->iterations ()))
           {
-            server_->stop ();
+            //server_->stop ();
             
             client_executor_->ccm_passivate ();
             
@@ -125,6 +141,7 @@ namespace CIDL_FTClient_Impl
         logfile += prefix_;
         logfile += client_executor_->name ();
         logfile += "-client.txt";
+        std::cout << "Creating file " << logfile << std::endl;
         std::ofstream out (logfile.c_str ());
 
         for (TimingList::iterator it = history_.begin ();

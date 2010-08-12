@@ -44,7 +44,8 @@ namespace CIDL_FTTask_Impl
       primary_ (true),
       state_ (0),
       suicidal_count_ (0),
-      task_ (state_)
+      task_ (state_),
+      done_(false)
   {
     CIAO_TRACE ("FTTask_exec_i::FTTask_exec_i (void)");
 
@@ -62,22 +63,47 @@ namespace CIDL_FTTask_Impl
   FTTask_exec_i::run_task (
     ::CORBA::Double execution_time)
   {
-    CIAO_DEBUG ((LM_EMERGENCY, "x(%s) ", object_id_.c_str ()));
+    CIAO_DEBUG ((LM_EMERGENCY, "s(%s) ", object_id_.c_str ()));
 
     timer_.start ();
 
-    this->cpu_.run (static_cast <size_t> (execution_time));
+    try 
+    {
+      if (strstr(nested_object_ior_.in(), "corbaname")) 
+      {
+        if (!done_)
+        {
+          next_ = nested_server ();
+          done_ = true;
+        }
+        next_->run_task(execution_time);
 
-    ++state_;
+      }
+    }
+    catch (CORBA::SystemException & e)
+    {
+    }
     
-    agent_->state_changed (object_id_.c_str ());
+    ++state_;
+    if (state_ == suicidal_count_)
+    {
+      CIAO_DEBUG((LM_EMERGENCY, 
+            "\n********* Sleeping 4 seconds before exiting.\n"));
+      sleep(4);
+      exit(1);
+    }
+    //task_.signal ();
+    
+    this->cpu_.run (static_cast <size_t> (execution_time));
+    
+    //agent_->state_changed (object_id_.c_str ());
 
     timer_.stop ();
 
     timer_.elapsed_time (last_execution_time_);
 
-    task_.signal ();
-
+    CIAO_DEBUG((LM_EMERGENCY, 
+            "\nCompleted run_task in s(%s)\n", object_id_.c_str()));
     return last_execution_time_.msec ();
   }
 
@@ -164,6 +190,26 @@ namespace CIDL_FTTask_Impl
   {
     CIAO_TRACE ("FTTask_exec_i::COMPONENT_REFERENCE () setter");
     myself_ = CORBA::Object::_duplicate (COMPONENT_REFERENCE);
+  }
+
+  char *
+  FTTask_exec_i::nested_object_ior ()
+  {
+    return CORBA::string_dup (nested_object_ior_.in());
+  }
+
+  void
+  FTTask_exec_i::nested_object_ior (const char * nested_object_ior)
+  {
+    nested_object_ior_ = nested_object_ior;
+  }
+
+  DeCoRAM::Worker_ptr 
+  FTTask_exec_i::nested_server (void)
+  {
+    CORBA::Object_var obj = orb_->string_to_object (nested_object_ior_);
+
+    return DeCoRAM::Worker::_narrow (obj.in ());
   }
 
   CORBA::Double
