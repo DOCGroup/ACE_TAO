@@ -65,9 +65,9 @@ namespace DAnCE
   {
     DANCE_TRACE ("Start_Instance::invoke_post_interceptor");
     
-    (*i)->instance_post_activate (this->plan_,
-                                  this->instanceRef_,
-                                  this->instance_excep_.in ());
+    (*i)->post_activate (this->plan_,
+                         this->instanceRef_,
+                         this->instance_excep_.in ());
   }
   
   

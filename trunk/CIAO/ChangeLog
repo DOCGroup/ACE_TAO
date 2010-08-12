@@ -1,3 +1,28 @@
+Thu Aug 12 19:35:41 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h:
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
+
+          Removed the superfluous 'instance_' prefix on most operations.
+
+        * DAnCE/LocalityManager/Interceptors/Best_Effort.h:
+        * DAnCE/LocalityManager/Interceptors/Best_Effort.cpp:
+        * DAnCE/LocalityManager/Interceptors/Standard_Error.h:
+        * DAnCE/LocalityManager/Interceptors/Standard_Error.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Configured.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Connect.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Install.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Passivate.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Remove.cpp:
+        * DAnCE/LocalityManager/Scheduler/Events/Start.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Updated to reflect the above change.
+
 Thu Aug 12 19:19:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/DD_Handler.h:

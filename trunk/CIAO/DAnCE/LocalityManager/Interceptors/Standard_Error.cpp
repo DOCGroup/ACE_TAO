@@ -25,30 +25,30 @@ namespace DAnCE
   }
 
   void
-  Standard_Error::instance_post_install (const ::Deployment::DeploymentPlan &plan,
-                                         ::CORBA::ULong instance_index,
+  Standard_Error::post_install (const ::Deployment::DeploymentPlan &plan,
+                                         ::CORBA::ULong index,
                                          const ::CORBA::Any &,
                                          const ::CORBA::Any &exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_install - ")
+                         ACE_TEXT ("Standard_Error::post_install - ")
                          ACE_TEXT ("Propagating exception from instance <%C>\n"),
-                         plan.instance[instance_index].name.in ()));
+                         plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
 
   void
-  Standard_Error::instance_post_connect (const ::Deployment::DeploymentPlan &plan,
+  Standard_Error::post_connect (const ::Deployment::DeploymentPlan &plan,
                                          ::CORBA::ULong connection,
                                          const ::CORBA::Any &exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_connect - ")
+                         ACE_TEXT ("Standard_Error::post_connect - ")
                          ACE_TEXT ("Propagating exception from connection <%C>\n"),
                          plan.connection[connection].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
@@ -56,64 +56,64 @@ namespace DAnCE
   }
   
   void 
-  Standard_Error::instance_post_configured (const ::Deployment::DeploymentPlan & plan,
-                                            ::CORBA::ULong instance_index,
+  Standard_Error::post_configured (const ::Deployment::DeploymentPlan & plan,
+                                            ::CORBA::ULong index,
                                             const ::CORBA::Any &exception )
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_configured - ")
+                         ACE_TEXT ("Standard_Error::post_configured - ")
                          ACE_TEXT ("Propagating exception from configuring instance <%C>\n"),
-                         plan.instance[instance_index].name.in ()));
+                         plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
   
   
   void
-  Standard_Error::instance_post_activate (const ::Deployment::DeploymentPlan & plan,
-                                          ::CORBA::ULong instance_index,
+  Standard_Error::post_activate (const ::Deployment::DeploymentPlan & plan,
+                                          ::CORBA::ULong index,
                                           const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_activate - ")
+                         ACE_TEXT ("Standard_Error::post_activate - ")
                          ACE_TEXT ("Propagating exception from activation of instance <%C>\n"),
-                         plan.instance[instance_index].name.in ()));
+                         plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
   
   
   void
-  Standard_Error::instance_post_passivate (const ::Deployment::DeploymentPlan & plan,
-                                           ::CORBA::ULong instance_index,
+  Standard_Error::post_passivate (const ::Deployment::DeploymentPlan & plan,
+                                           ::CORBA::ULong index,
                                            const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_passivate - ")
+                         ACE_TEXT ("Standard_Error::post_passivate - ")
                          ACE_TEXT ("Propagating exception from passivation of instance <%C>\n"),
-                         plan.instance[instance_index].name.in ()));
+                         plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
   
   
   void
-  Standard_Error::instance_post_remove (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong instance_index,
+  Standard_Error::post_remove (const ::Deployment::DeploymentPlan & plan,
+                                        ::CORBA::ULong index,
                                         const ::CORBA::Any & exception)
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
         DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::instance_post_remove - ")
+                         ACE_TEXT ("Standard_Error::post_remove - ")
                          ACE_TEXT ("Propagating exception from removal of instance <%C>\n"),
-                         plan.instance[instance_index].name.in ()));
+                         plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }

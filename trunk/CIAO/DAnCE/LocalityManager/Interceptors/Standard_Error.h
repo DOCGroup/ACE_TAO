@@ -31,34 +31,34 @@ namespace DAnCE
     virtual ~Standard_Error (void);
 
     virtual
-      void instance_post_install (const ::Deployment::DeploymentPlan & plan,
-                                  ::CORBA::ULong instance_index,
-                                  const ::CORBA::Any & instance_reference,
+      void post_install (const ::Deployment::DeploymentPlan & plan,
+                                  ::CORBA::ULong index,
+                                  const ::CORBA::Any & reference,
                                   const ::CORBA::Any & exception_thrown);
 
     virtual
-      void instance_post_connect (const ::Deployment::DeploymentPlan & plan,
+      void post_connect (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong connectionRef,
                                   const ::CORBA::Any & exceptionThrown);
 
 
     virtual
-      void instance_post_configured (const ::Deployment::DeploymentPlan & plan,
+      void post_configured (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any & exception_thrown);
 
     virtual
-      void instance_post_activate (const ::Deployment::DeploymentPlan & plan,
+      void post_activate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
                                    const ::CORBA::Any & exception_thrown);
 
     virtual
-      void instance_post_passivate (const ::Deployment::DeploymentPlan & plan,
+      void post_passivate (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong instanceRef,
                                     const ::CORBA::Any & exception_thrown);
 
     virtual
-      void instance_post_remove (const ::Deployment::DeploymentPlan & plan,
+      void post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
                                  const ::CORBA::Any & exception_thrown);
     virtual
