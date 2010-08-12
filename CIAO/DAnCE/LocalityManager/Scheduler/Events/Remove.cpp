@@ -65,9 +65,9 @@ namespace DAnCE
   {
     DANCE_TRACE ("Remove_Instance::invoke_post_interceptor");
     
-    (*i)->instance_post_remove (this->plan_,
-                                this->instanceRef_,
-                                this->instance_excep_.in ());
+    (*i)->post_remove (this->plan_,
+                       this->instanceRef_,
+                       this->instance_excep_.in ());
   }
   
   

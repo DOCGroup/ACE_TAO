@@ -42,7 +42,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Install_Instance::invoke_pre_interceptor");
     
-    (*i)->instance_pre_install (this->plan_,
+    (*i)->pre_install (this->plan_,
                                 this->instanceRef_);
   }
   
@@ -72,7 +72,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Install_Instance::invoke_post_interceptor");
     
-    (*i)->instance_post_install (this->plan_,
+    (*i)->post_install (this->plan_,
                                  this->instanceRef_,
                                  this->instance_.in (),
                                  this->instance_excep_.in ());

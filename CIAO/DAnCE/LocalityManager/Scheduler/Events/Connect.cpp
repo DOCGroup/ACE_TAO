@@ -39,7 +39,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Connect_Instance::invoke_pre_interceptor");
     
-    (*i)->instance_pre_connect (this->plan_,
+    (*i)->pre_connect (this->plan_,
                                 this->connectionRef_,
                                 this->provided_ref_);
   }
@@ -69,7 +69,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Connect_Instance::invoke_post_interceptor");
     
-    (*i)->instance_post_connect (this->plan_,
+    (*i)->post_connect (this->plan_,
                                  this->connectionRef_,
                                  this->instance_excep_.in ());
   }

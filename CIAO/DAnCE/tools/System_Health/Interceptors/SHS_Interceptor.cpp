@@ -35,15 +35,15 @@ namespace DAnCE
   }
   
   void
-  SHS_Interceptor::instance_post_install (const ::Deployment::DeploymentPlan &plan,
-                                          ::CORBA::ULong instance_index,
+  SHS_Interceptor::post_install (const ::Deployment::DeploymentPlan &plan,
+                                          ::CORBA::ULong index,
                                           const ::CORBA::Any &/*reference*/,
                                           const ::CORBA::Any &exception)
   {
     ::DAnCE::SHS::Status_Update update;
-    CORBA::ULong mdd_idx = plan.instance[instance_index].implementationRef;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
-    update.id = plan.instance[instance_index].name.in ();
+    update.id = plan.instance[index].name.in ();
     update.type = 
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     
@@ -68,7 +68,7 @@ namespace DAnCE
   }
 
   void
-  SHS_Interceptor::instance_post_connect (const ::Deployment::DeploymentPlan &plan,
+  SHS_Interceptor::post_connect (const ::Deployment::DeploymentPlan &plan,
                                          ::CORBA::ULong connection,
                                          const ::CORBA::Any &exception)
   {
@@ -98,14 +98,14 @@ namespace DAnCE
   }
   
   void 
-  SHS_Interceptor::instance_post_configured (const ::Deployment::DeploymentPlan & plan,
-                                            ::CORBA::ULong instance_index,
+  SHS_Interceptor::post_configured (const ::Deployment::DeploymentPlan & plan,
+                                            ::CORBA::ULong index,
                                             const ::CORBA::Any &exception )
   {
     ::DAnCE::SHS::Status_Update update;
-    CORBA::ULong mdd_idx = plan.instance[instance_index].implementationRef;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
-    update.id = plan.instance[instance_index].name.in ();
+    update.id = plan.instance[index].name.in ();
     update.type = 
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     
@@ -131,14 +131,14 @@ namespace DAnCE
   
   
   void
-  SHS_Interceptor::instance_post_activate (const ::Deployment::DeploymentPlan & plan,
-                                       ::CORBA::ULong instance_index,
+  SHS_Interceptor::post_activate (const ::Deployment::DeploymentPlan & plan,
+                                       ::CORBA::ULong index,
                                        const ::CORBA::Any & exception)
   {
     ::DAnCE::SHS::Status_Update update;
-    CORBA::ULong mdd_idx = plan.instance[instance_index].implementationRef;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
-    update.id = plan.instance[instance_index].name.in ();
+    update.id = plan.instance[index].name.in ();
     update.type = 
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     
@@ -164,14 +164,14 @@ namespace DAnCE
   
   
   void
-  SHS_Interceptor::instance_post_passivate (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong instance_index,
+  SHS_Interceptor::post_passivate (const ::Deployment::DeploymentPlan & plan,
+                                        ::CORBA::ULong index,
                                         const ::CORBA::Any & exception)
   {
     ::DAnCE::SHS::Status_Update update;
-    CORBA::ULong mdd_idx = plan.instance[instance_index].implementationRef;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
-    update.id = plan.instance[instance_index].name.in ();
+    update.id = plan.instance[index].name.in ();
     update.type = 
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     
@@ -197,14 +197,14 @@ namespace DAnCE
   
   
   void
-  SHS_Interceptor::instance_post_remove (const ::Deployment::DeploymentPlan & plan,
-                                     ::CORBA::ULong instance_index,
+  SHS_Interceptor::post_remove (const ::Deployment::DeploymentPlan & plan,
+                                     ::CORBA::ULong index,
                                      const ::CORBA::Any & exception)
   {
     ::DAnCE::SHS::Status_Update update;
-    CORBA::ULong mdd_idx = plan.instance[instance_index].implementationRef;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
 
-    update.id = plan.instance[instance_index].name.in ();
+    update.id = plan.instance[index].name.in ();
     update.type = 
       DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
     

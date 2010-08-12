@@ -66,9 +66,9 @@ namespace DAnCE
   {
     DANCE_TRACE ("Passivate_Instance::invoke_post_interceptor");
     
-    (*i)->instance_post_passivate (this->plan_,
-                                   this->instanceRef_,
-                                   this->instance_excep_.in ());
+    (*i)->post_passivate (this->plan_,
+                          this->instanceRef_,
+                          this->instance_excep_.in ());
   }
   
   
