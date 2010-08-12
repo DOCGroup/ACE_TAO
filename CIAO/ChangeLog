@@ -1,3 +1,9 @@
+Thu Aug 12 14:04:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/fm/CIAO.htm:
+
+          Added dollar-Id-dollar in HTML comment.
+
 Wed Aug 11 20:47:38 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * DAnCE/DAnCE/DAnCE_Core.mpc:
