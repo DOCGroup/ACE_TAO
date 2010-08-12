@@ -25,6 +25,7 @@
 namespace Deployment
 {
   struct DeploymentPlan;
+  struct Domain;
 }
 
 namespace CIAO
@@ -41,16 +42,22 @@ namespace CIAO
       ::Deployment::DeploymentPlan const *get_plan (void);
       ::Deployment::DeploymentPlan *release_plan (void);
 
+      ::Deployment::Domain const *get_domain (void);
+      ::Deployment::Domain *release_domain (void);
+
       void add_search_path (const ACE_TCHAR *environment,
                             const ACE_TCHAR *relpath);
 
     protected:
+      
+      bool read_process_plan (const ACE_TCHAR *file);
 
-      bool read_process_file (const ACE_TCHAR *file);
+      bool read_process_domain (const ACE_TCHAR *file);
 
     private:
       std::basic_string <ACE_TCHAR> file_;
       ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
+      ACE_Auto_Ptr< ::Deployment::Domain> idl_domain_;
     };
   }
 }
