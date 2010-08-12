@@ -21,14 +21,14 @@ module DAnCE
     void preprocess_plan (inout ::Deployment::DeploymentPlan plan)
       raises (::Deployment::PlanError);
 
-    void instance_pre_install (inout ::Deployment::DeploymentPlan plan,
+    void pre_install (inout ::Deployment::DeploymentPlan plan,
                                in unsigned long instanceRef)
       raises (::Deployment::PlanError,
               ::Deployment::InvalidProperty,
               ::Deployment::InvalidNodeExecParameter,
               ::Deployment::InvalidComponentExecParameter);
 
-    void instance_post_install (in ::Deployment::DeploymentPlan plan,
+    void post_install (in ::Deployment::DeploymentPlan plan,
                                 in unsigned long instance_index,
                                 in any instance_reference,
                                 in any exception_thrown)
@@ -43,31 +43,31 @@ module DAnCE
                                   in any exception_thrown)
       raises (::Deployment::InvalidConnection);
     
-    void instance_pre_connect (inout ::Deployment::DeploymentPlan plan,
+    void pre_connect (inout ::Deployment::DeploymentPlan plan,
                                in unsigned long connection_index,
                                inout any provided_reference)
       raises (::Deployment::InvalidConnection);
 
-    void instance_post_connect (in Deployment::DeploymentPlan plan,
+    void post_connect (in Deployment::DeploymentPlan plan,
                                 in unsigned long connectionRef,
                                 in any exceptionThrown)
       raises (::Deployment::InvalidConnection);
     
-    void instance_post_configured (in ::Deployment::DeploymentPlan plan,
+    void post_configured (in ::Deployment::DeploymentPlan plan,
                                    in unsigned long instanceRef,
                                    in any exception_thrown)
       raises (::Deployment::StartError);
 
-    void instance_post_activate (in ::Deployment::DeploymentPlan plan,
+    void post_activate (in ::Deployment::DeploymentPlan plan,
                                  in unsigned long instanceRef,
                                  in any exception_thrown)
       raises (::Deployment::StartError);
 
-    void instance_post_passivate (in ::Deployment::DeploymentPlan plan,
+    void post_passivate (in ::Deployment::DeploymentPlan plan,
                                   in unsigned long instanceRef,
                                   in any exception_thrown)
       raises (::Deployment::StopError);
-    void instance_post_remove (in ::Deployment::DeploymentPlan plan,
+    void post_remove (in ::Deployment::DeploymentPlan plan,
                                in unsigned long instanceRef,
                                in any exception_thrown)
       raises (::Deployment::StopError);

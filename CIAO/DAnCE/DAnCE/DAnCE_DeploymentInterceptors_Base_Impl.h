@@ -45,13 +45,13 @@ namespace DAnCE
       void preprocess_plan (::Deployment::DeploymentPlan & plan);
   
     virtual
-      void instance_pre_install (::Deployment::DeploymentPlan & plan,
+      void pre_install (::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef);
   
     virtual
-      void instance_post_install (const ::Deployment::DeploymentPlan & plan,
-                                  ::CORBA::ULong instance_index,
-                                  const ::CORBA::Any & instance_reference,
+      void post_install (const ::Deployment::DeploymentPlan & plan,
+                                  ::CORBA::ULong index,
+                                  const ::CORBA::Any & reference,
                                   const ::CORBA::Any & exception_thrown);
 
     virtual
@@ -61,32 +61,32 @@ namespace DAnCE
                                     const ::CORBA::Any & exception_thrown);
     
     virtual
-      void instance_pre_connect (::Deployment::DeploymentPlan & plan,
+      void pre_connect (::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong connection_index,
                                  ::CORBA::Any & provided_reference);
   
     virtual
-      void instance_post_connect (const ::Deployment::DeploymentPlan & plan,
+      void post_connect (const ::Deployment::DeploymentPlan & plan,
                                   ::CORBA::ULong connectionRef,
                                   const ::CORBA::Any & exceptionThrown);
 
     virtual
-      void instance_post_configured (const ::Deployment::DeploymentPlan & plan,
+      void post_configured (const ::Deployment::DeploymentPlan & plan,
                                      ::CORBA::ULong instanceRef,
                                      const ::CORBA::Any & exception_thrown);
   
     virtual
-      void instance_post_activate (const ::Deployment::DeploymentPlan & plan,
+      void post_activate (const ::Deployment::DeploymentPlan & plan,
                                    ::CORBA::ULong instanceRef,
                                    const ::CORBA::Any & exception_thrown);
   
     virtual
-      void instance_post_passivate (const ::Deployment::DeploymentPlan & plan,
+      void post_passivate (const ::Deployment::DeploymentPlan & plan,
                                     ::CORBA::ULong instanceRef,
                                     const ::CORBA::Any & exception_thrown);
   
     virtual
-      void instance_post_remove (const ::Deployment::DeploymentPlan & plan,
+      void post_remove (const ::Deployment::DeploymentPlan & plan,
                                  ::CORBA::ULong instanceRef,
                                  const ::CORBA::Any & exception_thrown);
   };

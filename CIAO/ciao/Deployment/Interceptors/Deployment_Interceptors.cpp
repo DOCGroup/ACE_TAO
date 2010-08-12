@@ -30,30 +30,30 @@ namespace CIAO
   {
   }
 
-  void CIAO_StoreReferences_i::instance_pre_install (::Deployment::DeploymentPlan &,
+  void CIAO_StoreReferences_i::pre_install (::Deployment::DeploymentPlan &,
                                                       ::CORBA::ULong)
   {
     // no-op
   }
 
-  void CIAO_StoreReferences_i::instance_post_install (const ::Deployment::DeploymentPlan &plan,
-                                                       ::CORBA::ULong instance_index,
-                                                       const ::CORBA::Any &instance_reference,
+  void CIAO_StoreReferences_i::post_install (const ::Deployment::DeploymentPlan &plan,
+                                                       ::CORBA::ULong index,
+                                                       const ::CORBA::Any &reference,
                                                        const ::CORBA::Any &)
   {
     const ::Deployment::InstanceDeploymentDescription &inst =
-      plan.instance[instance_index];
+      plan.instance[index];
     
     DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-                     ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
+                     ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                      ACE_TEXT ("Interceptor post install for instance %C\n"),
-                     plan.instance[instance_index].name.in ()));
+                     plan.instance[index].name.in ()));
     
-    if (instance_reference.type() == ::CORBA::_tc_null)
+    if (reference.type() == ::CORBA::_tc_null)
       {
         DANCE_ERROR (3, (LM_WARNING, DLINFO
-                         ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
-                         ACE_TEXT ("Got a nil instance_reference, unable to store reference ")
+                         ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
+                         ACE_TEXT ("Got a nil reference, unable to store reference ")
                          ACE_TEXT ("for instance <%C>\n"),
                          inst.name.in ()));
         return;
@@ -68,10 +68,10 @@ namespace CIAO
           {
             CORBA::Object_var obj;
             
-            if (!(instance_reference >>= CORBA::Any::to_object (obj)))
+            if (!(reference >>= CORBA::Any::to_object (obj)))
               {
                 DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                 ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
+                                 ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                                  ACE_TEXT ("Unable to extract instance reference from Any\n")));
               }
             
@@ -79,10 +79,10 @@ namespace CIAO
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
             
             DANCE_DEBUG (9, (LM_TRACE, DLINFO 
-                             ACE_TEXT ("CIAO_StoreReferences_i::instance_post_install - ")
+                             ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
                              ACE_TEXT ("Registering name %C for instance %C\n"),
                              name,
-                             plan.instance[instance_index].name.in ()));
+                             plan.instance[index].name.in ()));
 
             Name_Utilities::bind_object (name,
                                          obj.in (),
@@ -92,7 +92,7 @@ namespace CIAO
                                  DAnCE::INSTANCE_IOR_FILE) == 0)
           {
             CORBA::Object_var obj;
-            instance_reference >>= CORBA::Any::to_object (obj);
+            reference >>= CORBA::Any::to_object (obj);
 
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
@@ -131,14 +131,14 @@ namespace CIAO
   }
 
   void 
-  CIAO_ReferenceLookup_i::instance_pre_connect (::Deployment::DeploymentPlan &,
+  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &,
                                                  ::CORBA::ULong,
                                                  ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
-  void CIAO_ReferenceLookup_i::instance_post_connect (const ::Deployment::DeploymentPlan &,
+  void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
                                                        ::CORBA::ULong,
                                                        const ::CORBA::Any &)
   {

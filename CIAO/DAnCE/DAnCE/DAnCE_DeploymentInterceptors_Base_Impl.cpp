@@ -28,14 +28,14 @@ namespace DAnCE
   }
 
   void
-  DeploymentInterceptor_Base::instance_pre_install (::Deployment::DeploymentPlan &,
+  DeploymentInterceptor_Base::pre_install (::Deployment::DeploymentPlan &,
                                                     ::CORBA::ULong)
   {
     // Add your implementation here
   }
 
   void
-  DeploymentInterceptor_Base::instance_post_install (const ::Deployment::DeploymentPlan &,
+  DeploymentInterceptor_Base::post_install (const ::Deployment::DeploymentPlan &,
                                                      ::CORBA::ULong,
                                                      const ::CORBA::Any & ,
                                                      const ::CORBA::Any & )
@@ -53,7 +53,7 @@ namespace DAnCE
   }
 
   void
-  DeploymentInterceptor_Base::instance_pre_connect (::Deployment::DeploymentPlan & ,
+  DeploymentInterceptor_Base::pre_connect (::Deployment::DeploymentPlan & ,
                                                     ::CORBA::ULong ,
                                                     ::CORBA::Any & )
   {
@@ -61,35 +61,35 @@ namespace DAnCE
   }
 
   void
-  DeploymentInterceptor_Base::instance_post_connect (const ::Deployment::DeploymentPlan & ,
+  DeploymentInterceptor_Base::post_connect (const ::Deployment::DeploymentPlan & ,
                                                      ::CORBA::ULong ,
                                                      const ::CORBA::Any & )
   {
     // Add your implementation here
   }
 
-  void DeploymentInterceptor_Base::instance_post_configured (const ::Deployment::DeploymentPlan & ,
+  void DeploymentInterceptor_Base::post_configured (const ::Deployment::DeploymentPlan & ,
                                                                 ::CORBA::ULong ,
                                                                 const ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
-  void DeploymentInterceptor_Base::instance_post_activate (const ::Deployment::DeploymentPlan & ,
+  void DeploymentInterceptor_Base::post_activate (const ::Deployment::DeploymentPlan & ,
                                                               ::CORBA::ULong ,
                                                               const ::CORBA::Any & )
   {
     // Add your implementation here
   }
 
-  void DeploymentInterceptor_Base::instance_post_passivate (const ::Deployment::DeploymentPlan & ,
+  void DeploymentInterceptor_Base::post_passivate (const ::Deployment::DeploymentPlan & ,
                                                                ::CORBA::ULong ,
                                                                const ::CORBA::Any &)
   {
     // Add your implementation here
   }
 
-  void DeploymentInterceptor_Base::instance_post_remove (const ::Deployment::DeploymentPlan & ,
+  void DeploymentInterceptor_Base::post_remove (const ::Deployment::DeploymentPlan & ,
                                                             ::CORBA::ULong ,
                                                             const ::CORBA::Any & )
   {

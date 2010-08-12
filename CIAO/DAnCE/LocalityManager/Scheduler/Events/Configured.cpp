@@ -63,7 +63,7 @@ namespace DAnCE
   {
     DANCE_TRACE ("Instance_Configured::invoke_post_interceptor");
     
-    (*i)->instance_post_configured (this->plan_,
+    (*i)->post_configured (this->plan_,
                                     this->instanceRef_,
                                     this->instance_excep_.in ());
   }
