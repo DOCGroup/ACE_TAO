@@ -1,3 +1,21 @@
+Thu Aug 12 22:14:46 UTC 2010  Sumant Tambe  <sutambe@nospam>
+
+        * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
+
+        * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.h:
+        * orbsvcs/orbsvcs/LWFT/CorbaStateUpdate.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent.idl:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+
+        The above changes are related to CORFU results and GroupFailover
+        implementation with two phase commit.
+
 Sun Mar 22 03:04:48 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
@@ -7,30 +25,30 @@ Sun Mar 22 03:04:48 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
         * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
         * orbsvcs/LWFT_Service/host_monitor.cpp:
-        
+
           Added logging for failure timing.
 
 Wed Mar 18 21:06:23 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Removed triggering of a process failure in case of a failed
           StateSynchronizationAgent to prevent duplicate notifications due
           to HostMonitor messages.
 
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
-        
+
           Fixed behavioral bugs.
-        
+
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.mpc
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
-        
+
           Added RTCORBA code to client and server.
 
         * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
-        
+
           Removed throw statements that interfere with the interceptor
           framework.
 
@@ -43,7 +61,7 @@ Tue Mar 17 21:37:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.h
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
-        
+
           Changed server and client to take server processing time into
           account and added additional client parameters for logging
           output control.
@@ -52,51 +70,51 @@ Fri Mar 13 03:40:01 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Added logging for process failure times.
 
 Fri Mar 13 02:25:36 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h:
-        
+
           Removed unnecessary ofstream member.
 
 Thu Mar 12 15:28:41 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Fixed behavior of static_selection_algo ().
 
 Thu Mar 12 03:48:16 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
-        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker_i.h:
-        
+
           Added task for failure that can be triggered based on the
           invocation count.
 
-        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp        
+        * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.h
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp:
-        
+
           Changed measurement and shutdown behavior.
 
 Tue Mar 10 20:19:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
         * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
-        
+
           Debugging output and other minor changes.
-        
+
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Added timing output.
-        
+
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent.idl:
-        
+
           Cosmetic changes.
-        
+
         * orbsvcs/examples/FaultTolerance/FLARe/Worker
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/client.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Worker.idl
@@ -107,7 +125,7 @@ Tue Mar 10 20:19:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/server.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/Client_Timer_Handler.cpp
         * orbsvcs/examples/FaultTolerance/FLARe/Worker/run_test.pl:
-        
+
           Added new test application for timing measurements.
 
 Mon Mar  9 17:30:45 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -115,11 +133,11 @@ Mon Mar  9 17:30:45 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp
         * orbsvcs/orbsvcs/LWFT/Failure_Handler.cpp
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
-        
+
           Changed debugging output.
-        
+
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Added functionality to remove state sync agents in case of
           process failures.
 
@@ -141,10 +159,10 @@ Mon Mar  9 15:54:19 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp
         * orbsvcs/orbsvcs/LWFT/StateSyncAgentTask.cpp
         * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:
-        
+
           Manually merged in changes from FLARE_F6 branch revisions 84712
           - 84732.
-                
+
         * orbsvcs/examples/FaultTolerance/FLARe
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/ServerTask.h
@@ -163,7 +181,7 @@ Mon Mar  9 15:54:19 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/no-RT.mpc
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/state_ts_export.h
         * orbsvcs/examples/FaultTolerance/FLARe/no-RT/test_i.h:
-        
+
           Added FLARe example application.
 
 Sat Mar  7 04:01:52 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -171,20 +189,20 @@ Sat Mar  7 04:01:52 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/HMOptions.h
         * orbsvcs/orbsvcs/LWFT/HMOptions.cpp
         * orbsvcs/orbsvcs/LWFT/HostMonitorImpl.cpp:
-        
+
           Added debugging level option.
-        
-        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h        
+
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
         * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
-        
+
           Changed failure notification interface.
 
         * orbsvcs/orbsvcs/LWFT/AppSideReg.h:
         * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
         * orbsvcs/orbsvcs/LWFT/AppOptions.cpp:
         * orbsvcs/orbsvcs/LWFT/AppOptions.h:
-        
+
           Moved storage of the application monitor thread class
           from class AppSideReg, which is no longer a thread in
           its own right and hence goes out of scope quickly, to
@@ -193,11 +211,11 @@ Sat Mar  7 04:01:52 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 Sun Mar  1 06:46:09 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
-        
+
           Removed unnecessary header inclusion.
-        
+
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Changed debugging output.
 
 Sun Mar  1 05:53:24 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -205,53 +223,53 @@ Sun Mar  1 05:53:24 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           Exchanged replica_selection_algorithm.
 
 Sat Feb 28 22:21:06 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
         * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
-        
+
           Changed callback method name.
 
 Sat Feb 28 17:06:22 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
-        
+
           Generate typcode and any information for the
           StateSynchronizationAgent interface.
-        
+
         * orbsvcs/orbsvcs/LWFT/AppInfo.idl:
-        
+
           Added process id information for the state synchronization agent
           list.
-        
+
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
-        
+
           When a state synchronization agent registers its process id will
           be stored so that the replication manager later can find errors
-          based on failed state synchronization instances.          
+          based on failed state synchronization instances.
 
 Sat Feb 28 00:31:20 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/AppSideMonitor_Thread.cpp:
 
           Changed debugging level in error case.
-        
+
         * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.h
         * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp
-        
+
           Added FaultNotifier interface to ReplicationManager.
 
 Thu Feb 26 23:27:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LWFT/LWFT.mpc
         * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
-        
+
           Added FaultNotification interface definition.
 
 Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -259,10 +277,10 @@ Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * MPC/config/lwft_server.mpb
         * MPC/config/lwft_dds.mpb
         * MPC/config/lwft_client.mpb:
-        
+
           Added mpc templates for the lightweight fault tolerance
           framework.
-        
+
         * orbsvcs/orbsvcs/LWFT
         * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h
         * orbsvcs/orbsvcs/LWFT/DDSStateUpdate_T.cpp
@@ -341,18 +359,18 @@ Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/LWFT/Monitor_Manager.h
         * orbsvcs/orbsvcs/LWFT/DDSFailure.h
         * orbsvcs/orbsvcs/LWFT/Failure_Handler.h:
-        
+
           Added LWFT libraries.
-        
+
         * orbsvcs/LWFT_Service
         * orbsvcs/LWFT_Service/RMOptions.h
         * orbsvcs/LWFT_Service/ReplicationManager_process.cpp
         * orbsvcs/LWFT_Service/host_monitor.cpp
         * orbsvcs/LWFT_Service/LWFT_Service.mpc
         * orbsvcs/LWFT_Service/RMOptions.cpp:
-        
-          Added LWFT services. 
-        
+
+          Added LWFT services.
+
         * TAO_IDL/include/ast_structure.h
         * TAO_IDL/include/idl_global.h
         * TAO_IDL/include/ast_type.h
@@ -364,7 +382,7 @@ Thu Feb 26 04:24:02 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * TAO_IDL/fe/lex.yy.cpp
         * TAO_IDL/fe/idl.ll
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added changes to IDL compiler that generate DDS type
           information.
 

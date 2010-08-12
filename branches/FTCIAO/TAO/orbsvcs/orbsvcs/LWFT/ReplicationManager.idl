@@ -38,4 +38,6 @@ interface ReplicationManager : ReplicatedApplication, FLARE::FaultNotifier
   void proc_failure (in string process_id);
   
   Object get_next (in string object_id);
+
+  void finish_invocation(in string object_id);
 };

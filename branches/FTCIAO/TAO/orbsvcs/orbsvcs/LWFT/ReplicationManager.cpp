@@ -1797,6 +1797,97 @@ ReplicationManager_i::get_next (const char * /* object_id */)
   return CORBA::Object::_nil ();
 }
 
+void ReplicationManager_i::finish_invocation(const char * object_id)
+{
+  // 2PC
+  // Acquiring two lock like this could lead to a deadlock if
+  // some other thread is acquiring the same two locks in the
+  // reverse order. One solution is to put all these locks in an
+  // array and acquire them only in the increasing order of index.
+  ACE_Guard<ACE_Recursive_Thread_Mutex> appset_guard(appset_lock_);
+  ACE_Guard<ACE_Thread_Mutex> ssa_guard(state_sync_agent_list_mutex_);
+
+  if(phase(1, object_id))
+     phase(2, object_id);
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                "ReplicationManager_i::finish_invocation(): "
+                "phase 1 failed. Skipping phase 2.\n"));
+  }
+}
+
+bool ReplicationManager_i::phase(int phase, const char * /* object_id */)
+{
+  // object_id is supposed to be used to lookup the pariticipants 
+  // in an FOU. object_id is the head of the FOU. A simplication is 
+  // assumed here that all the objects in the app_set are the FOU participants.
+
+  bool precommit_success = true;
+
+  try {
+    // locks acquired in finish_invocation.
+    for(OBJECTID_APPSET_MAP::iterator iter = objectid_appset_map_.begin();
+        (iter != objectid_appset_map_.end()) && precommit_success;
+        ++iter)
+    {
+      if ((*iter).ext_id_ == "ReplicationManager")
+        continue;
+
+      APP_SET app_set((*iter).int_id_);
+
+      for(APP_SET::iterator app_set_iter = app_set.begin();
+          (app_set_iter != app_set.end()) && precommit_success;
+          ++app_set_iter)
+      {
+        if((*app_set_iter).role == phase)
+        {
+          StateSynchronizationAgent_var ssa;
+
+          // locks acquired in finish_invocation.
+          if(state_synchronization_agent_map_.find(
+                (*app_set_iter).process_id, ssa) == 0)       
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ReplicationManager_i::phase(): "
+                        "Found SSA for objectid = %s, phase = %d\n",
+                        (*iter).ext_id_.c_str(), phase));
+            if(phase == 1)
+            {
+              precommit_success =  
+                ssa->precommit_state(CORBA::string_dup((*iter).ext_id_.c_str()))
+                ? 1 : 0; 
+            }
+            if(phase == 2)
+              ssa->commit_state(CORBA::string_dup((*iter).ext_id_.c_str()));
+
+            break; // no need to search further in the app_set.
+          }
+          else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "ReplicationManager_i::phase(): "
+                        "Can't find SSA for objectid = %s, phase = %d\n",
+                        (*iter).ext_id_.c_str(), phase));
+
+            break; // Don't search further in the app_set.
+          }
+        }
+      }
+    }
+  }
+  catch (::CORBA::Exception & ex)
+  {
+    ACE_ERROR ((LM_ERROR,
+                "ReplicationManager_i::finish_invocation(): "
+                "Exception raised while executing two-phase commit. phase = %d\n",
+                phase));
+    precommit_success = false;
+  }
+
+  return precommit_success;
+}
+
 void
 ReplicationManager_i::set_state (const ::CORBA::Any & state_value)
 {

@@ -12,7 +12,7 @@ namespace CIAO
 
     bool
     CB_Handler::connection_band (const ConnectionBandsDef &src,
-                                 ::CIAO::DAnCE::ORS_ConnectionBands &dest)
+                                 ::CIAO::Deployment::ORS_ConnectionBands &dest)
     {
       // Set the number of bands
       CORBA::ULong num (dest.bands.length ());
@@ -42,7 +42,7 @@ namespace CIAO
 
 
     ConnectionBandsDef
-    CB_Handler::connection_band (const ::CIAO::DAnCE::ORS_ConnectionBands &src)
+    CB_Handler::connection_band (const ::CIAO::Deployment::ORS_ConnectionBands &src)
     {
       ConnectionBandsDef cb;
 

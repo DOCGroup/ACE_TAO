@@ -8,6 +8,7 @@
 #include "ace/High_Res_Timer.h"
 #include "tao/ORB.h"
 #include "WorkerC.h"
+#include "orbsvcs/orbsvcs/LWFT/ReplicationManagerC.h"
 
 namespace CIDL_FTClient_Impl
 {
@@ -18,8 +19,9 @@ namespace CIDL_FTClient_Impl
   class FTClient_Timer_Handler : public ACE_Event_Handler
   {
   public:
-    FTClient_Timer_Handler (CIDL_FTClient_Impl::FTClient_exec_i * client_executor,
-                            bool logging = true);
+    FTClient_Timer_Handler (
+        CIDL_FTClient_Impl::FTClient_exec_i * client_executor,
+        bool logging = true);
     
     void set_orb (CORBA::ORB_ptr orb);
 
@@ -32,6 +34,9 @@ namespace CIDL_FTClient_Impl
                                 const void *);
     
     void dump (void);
+
+    void set_replication_manager(ReplicationManager_ptr);
+    void set_server_name(std::string const & server_name);
 
   private:
     FTClient_exec_i * client_executor_;
@@ -56,6 +61,10 @@ namespace CIDL_FTClient_Impl
     TimingList history_;
 
     std::string prefix_;
+
+    ReplicationManager_var rm_;
+
+    std::string server_name_;
   };
 
 } // end namespace CIDL_FTClient_Impl

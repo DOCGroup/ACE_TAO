@@ -22,6 +22,19 @@ interface StateSynchronizationAgent
   /// to all registered replicas.
   void state_changed (in string object_id);
 
+  /// Transfer the state of the give object_id to the agents in the replicas.
+  /// Invoked by primary SSA to SSA in replica servers.
+  void transfer_state (in string object_id, in any state_value);
+
+  /// Send the state of the object_id to the other Agents.
+  /// Commit it only when ReplicationManager says commit.
+  /// Should be invoked only on the primary agents by the ReplicationManager.
+  boolean precommit_state (in string object_id);
+
+  /// Commit the state with the replica object_id by calling set_stae.
+  /// Invoked by the ReplicationManager on the SSA in the replicas.
+  void commit_state (in string object_id);
+
   /// Used by the ReplicationManager to update information about
   /// active replicas.
   void update_rank_list (in RankList replicas);

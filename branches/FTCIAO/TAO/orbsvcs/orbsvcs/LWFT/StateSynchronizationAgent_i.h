@@ -33,13 +33,23 @@ class SSA_Export StateSynchronizationAgent_i
 {
  public:
   StateSynchronizationAgent_i (const std::string & host_id,
-			                         const std::string & process_id,
+                               const std::string & process_id,
                                bool use_corba = true);
 
   ~StateSynchronizationAgent_i (void);
 
   /// Implementation of the StateSynchronizationAgent interface.
   virtual void state_changed (const char * object_id);
+
+  /// Called by RM to initiate 2PC.
+  virtual CORBA::Boolean precommit_state (const char * object_id);
+
+  /// Persist the state without commiting it by sending it to the
+  /// SSA in replica servers.
+  virtual void transfer_state (const char * object_id, const ::CORBA::Any & state_value);
+
+  /// Commit the state. Called by RM.
+  virtual void commit_state (const char * object_id);
 
   /// Implementation of the StateSynchronizationAgent interface.
   virtual void update_rank_list (const RankList & rank_list);
@@ -57,8 +67,8 @@ class SSA_Export StateSynchronizationAgent_i
 
   typedef
   ACE_Refcounted_Auto_Ptr <StatefulObject,
-				                   ACE_Null_Mutex>
-    STATEFUL_OBJECT_PTR;
+                           ACE_Null_Mutex>
+                           STATEFUL_OBJECT_PTR;
 
   typedef std::list<STATEFUL_OBJECT_PTR> REPLICA_OBJECT_LIST;
 
@@ -107,6 +117,9 @@ private:
 
   /// keeps references to all applications running in this process
   OBJECTID_APPLICATION_MAP application_map_;
+  
+  // pre-commit state 
+  ::CORBA::Any precommit_state_;
 
 #ifdef FLARE_USES_DDS
 

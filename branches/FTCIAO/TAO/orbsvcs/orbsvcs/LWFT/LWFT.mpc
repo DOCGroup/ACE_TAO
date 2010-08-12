@@ -165,6 +165,7 @@ project(*ReplicationManager) : portableserver, orbsvcs_output {
   dynamicflags = RM_BUILD_DLL
   idlflags += -Wb,export_macro=RM_Export \
               -Wb,export_include=rm_export.h
+  idlflags -= -Sa -St
               
   IDL_Files {
     ReplicationManager.idl

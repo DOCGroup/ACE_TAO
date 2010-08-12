@@ -205,6 +205,8 @@ ACE_RCSID (Config_Handlers,
              q < len;
              q++)
           {
+            // We now support CIAOServerResources
+            /*
             if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
                                 "CIAOServerResources") == 0)
               {
@@ -212,6 +214,7 @@ ACE_RCSID (Config_Handlers,
                             "(%P|%t) DP_Handler: Dumping of ServerResources not currently supported."));
                 continue;
               }
+            */
 
             this->xsc_dp_->add_infoProperty (
                                              Property_Handler::get_property (

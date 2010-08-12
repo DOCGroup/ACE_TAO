@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 #include "IDREF_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,11 +35,11 @@ namespace CIAO
     {
     public:
       static bool connection_band (const ConnectionBandsDef &src,
-                                   ::CIAO::DAnCE::ORS_ConnectionBands &dest);
+                                   ::CIAO::Deployment::ORS_ConnectionBands &dest);
 
-      static ConnectionBandsDef connection_band (const ::CIAO::DAnCE::ORS_ConnectionBands &src);
+      static ConnectionBandsDef connection_band (const ::CIAO::Deployment::ORS_ConnectionBands &src);
 
-      //          static IDREF_Base<::CIAO::DAnCE::ORS_ConnectionBands> IDREF;
+      //          static IDREF_Base<::CIAO::Deployment::ORS_ConnectionBands> IDREF;
     };
   }
 }

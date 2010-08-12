@@ -9,7 +9,10 @@
 module DAnCE 
 {
   interface FaultCorrelationManager : FLARE::FaultNotification, DAnCE::ExecutionManagerDaemon {
-    void stop_failover_unit (in string fou_id);
+    /* This function is not invoked remotely. Instead,
+       FLARE::FaultNotification::app_failure is invoked by RM. */
+     void stop_failover_unit (in string fou_id); 
+     FLARE::ApplicationList FOU_participants(in string app);
   };
 };
 

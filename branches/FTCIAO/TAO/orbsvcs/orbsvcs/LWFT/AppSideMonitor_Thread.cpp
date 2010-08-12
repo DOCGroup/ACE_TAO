@@ -111,7 +111,7 @@ AppSideMonitor_Thread::svc (void)
           port_ = AppOptions::instance ()->port ();
         }
 
-      ACE_DEBUG ((LM_TRACE,
+      ACE_DEBUG ((LM_ERROR,
                   "AppSideMonitor_Thread::svc - got heartbeat port "
                   "%d from hm.\n", port_));
 

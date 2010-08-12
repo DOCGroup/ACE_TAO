@@ -1,35 +1,83 @@
+Thu Aug 12 22:10:02 UTC 2010  Sumant Tambe  <sutambe@nospam>
+
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h:
+        * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+
+        * DAnCE/Interfaces/FaultCorrelationManager.idl:
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h:
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
+        * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp:
+        * DAnCE/tests/CIAO/FTComponents/FTTask.idl:
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h:
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
+        * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp:
+
+        The changes above are related to CORFU experiments and
+        GroupFailover two phase commit implementation. 
+        The changes below are not related to it.
+
+        * ciao/ComponentServer/Configurators/Configurators.mpc:
+        * ciao/ComponentServer/Configurators/Server_Configurator.cpp:
+
+        * tools/Config_Handlers/DP_Handler.cpp:
+
+        * tools/Config_Handlers/RT-CCM/CB_Handler.h:
+        * tools/Config_Handlers/RT-CCM/CB_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.h:
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.h:
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.h:
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/OC_Handler.h:
+        * tools/Config_Handlers/RT-CCM/OC_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/OR_Handler.h:
+        * tools/Config_Handlers/RT-CCM/OR_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/PM_Handler.h:
+        * tools/Config_Handlers/RT-CCM/PM_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/PS_Handler.h:
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h:
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.h:
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/TP_Handler.h:
+        * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
+
 Wed Apr 15 15:58:24 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTClient.idl
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h:
-        
+
           Added attribute logstart to delay logging for a number of
           invocations.
-          
+
         * DAnCE/tests/CIAO/FTComponents/Worker.idl
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
-        
+
           Changed run_task return value, server shutdown behavior and
           naming convention for ior file.
-        
+
         * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp:
-        
+
           Added support for triggering several clients in one invocation.
 
-        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h        
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.h
         * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
-        
+
           Changed logging output.
-        
+
         * DAnCE/tests/CIAO/FTComponents/Failure_Task.cpp:
-         
+
           Changed shutdown behavior.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Changed logging behavior.
 
 Tue Mar 17 17:45:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -43,7 +91,7 @@ Tue Mar 17 17:45:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
         * DAnCE/tests/CIAO/FTComponents/Trigger.idl:
-        
+
           Added prefix paramter to the trigger interface and added a
           return value for the processing time to the Worker interface.
 
@@ -51,15 +99,15 @@ Mon Mar 16 17:36:12 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h:
-        
+
           Added timing measurement.
-        
+
         * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
-        
+
           Cosmetic changes and adding timer calibration in ctor.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Changed debugging output.
 
 Fri Mar 13 19:28:40 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -70,16 +118,16 @@ Fri Mar 13 19:28:40 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
         * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp
-        * DAnCE/tests/CIAO/FTComponents/Trigger.idl        
+        * DAnCE/tests/CIAO/FTComponents/Trigger.idl
         * DAnCE/tests/CIAO/FTComponents/FTTrigger_export.h:
-        
+
           Added trigger interface to client component.
 
 Fri Mar 13 04:07:28 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Added logging functionality for fou shutdown timing.
 
 Fri Mar 13 02:33:32 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -94,7 +142,7 @@ Fri Mar 13 02:33:32 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/FTComponents/Failure_Task.h
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
         * DAnCE/tests/CIAO/FTComponents/FTTask.idl:
-        
+
           Changed client and server behavior for automated test cases.
 
 Thu Mar 12 15:57:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -105,34 +153,34 @@ Thu Mar 12 15:57:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/FTComponents/Failure_Task.h
         * DAnCE/tests/CIAO/FTComponents/Failure_Task.cpp
         * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
-        
+
           Added new class that allows concurrent shutdown of a component.
-        
+
         * DAnCE/tests/CIAO/FTComponents/killtask.cpp:
-        
+
           Wrote executable to shutdown component through its Worker::stop
           method.
 
         * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
-        
+
           relocated AppSideMonitor_Thread activation.
 
 Mon Mar  9 17:27:48 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Added remove_constraints () method.
-        
+
         * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
-        
+
           Adapted to new AppSideMonitor_Thread usage.
 
 Sat Mar  7 04:16:27 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Changed failure notification interface.
 
 Sun Mar  1 06:47:31 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -140,37 +188,37 @@ Sun Mar  1 06:47:31 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Added functionality for constraint creation and submission to
           the replication manager.
 
 Sun Mar  1 01:10:12 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
-        
+
           Changed debugging output.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Added option for ior output filename.
 
 Sat Feb 28 22:22:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Interfaces/FaultCorrelationManager.idl:
-        
+
           Corrected typo.
-        
+
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
 
           Changed structure of entry for the server component in the
           NamingService.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Made the FaultCorrelationManager an active object so that
           incoming failure notifications can be queued and processed in an
           extra thread to reduce response times.
@@ -178,7 +226,7 @@ Sat Feb 28 22:22:47 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 Sat Feb 28 17:10:30 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
-        
+
           Added call to state_changed () to trigger state replication and
           changed debug output level for some messages.
 
@@ -186,7 +234,7 @@ Sat Feb 28 03:21:27 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Added registration with the FLARe ReplicationManager.
 
 Fri Feb 27 18:39:39 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -194,12 +242,12 @@ Fri Feb 27 18:39:39 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/Interfaces/FaultCorrelationManager.idl
         * DAnCE/Interfaces/ExecutionManager_svnt_export.h
         * DAnCE/Interfaces/Interfaces.mpc:
-        
+
           The FaultCorrelationManager now supports
           DAnCE::ExecutionManagerDaemon instead of only
           Deployment::ExecutionManager so that a plan launcher can work
           with it.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
@@ -213,7 +261,7 @@ Fri Feb 27 18:12:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/FaultCorrelationManager.idl
         * DAnCE/Deployment/DAnCE_Core.mpc:
-        * DAnCE/Interfaces/FaultCorrelationManager.idl        
+        * DAnCE/Interfaces/FaultCorrelationManager.idl
         * DAnCE/Interfaces/Interfaces.mpc
         * DAnCE/Interfaces/FaultCorrelationManager_svnt_export.h
         * DAnCE/Interfaces/FaultCorrelationManager_stub_export.h
@@ -226,25 +274,25 @@ Fri Feb 27 18:12:13 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp
-        
+
           Adjusted libraries and includes.
-        
+
 Fri Feb 27 15:40:10 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/FaultCorrelation
         * DAnCE/tests/FaultCorrelation/proc_failure.mpc
         * DAnCE/tests/FaultCorrelation/proc_failure.cpp:
-        
+
           Added test application that triggers the FCMs proc_failure
           interface.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
-        
+
           Added functionality for deploymentplan analysis.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Added exec-mgr property to the list to make sure the list is
           never empty, which would cause problems in the constructor of
           FaultCorrelationManager_Impl.
@@ -252,20 +300,20 @@ Fri Feb 27 15:40:10 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 Thu Feb 26 23:23:05 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/FaultCorrelationManager.idl:
-        
+
           Added execution manager interface as inherited interface.
-        
+
         * DAnCE/Deployment/DAnCE_Core.mpc:
-        
+
           Created a separate library for the FaultCorrelationManager
           interface.
-        
+
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.h
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager.mpc
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Implemented basic funtionality of execution manager forwarding.
 
 Thu Feb 26 18:17:03 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -281,22 +329,22 @@ Thu Feb 26 18:17:03 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Exec.cpp
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
-        
+
           Added sceleton for the FaultCorrelationManager.
 
 Thu Feb 26 16:05:54 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/ExecutionManager-Deployments/simple_em_launcher.cpp:
-        
+
           Added manual mode.
-        
+
         * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h:
-        
+
           The server reference is now resolved in every call to prevent
           problems with startup order of FTTask and FTClient components.
-        
+
         * DAnCE/tests/CIAO/Components/SimplePublisher.mpc
         * DAnCE/tests/CIAO/Components/SimpleEmitter.mpc
         * DAnCE/tests/CIAO/Components/SimpleNull.mpc
@@ -306,78 +354,78 @@ Thu Feb 26 16:05:54 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/Components/SimpleAttribute.mpc
         * DAnCE/tests/CIAO/Components/SimpleCommon.mpc
         * DAnCE/tests/CIAO/Components/SimpleUser.mpc:
-        
+
           Added ciao_lib base project to all libraries to make them
           install into $ACE_ROOT/lib.
 
         * ciao/Containers/FTSession/FT_Session_Container.cpp:
-        
+
           Debug output cosmetic changes.
 
 Wed Feb 25 18:17:38 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
-        
+
           Removed RTCORBA code.
-        
+
         * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
-        
+
           Changed library includes.
-        
+
         * ciao/Containers/FTSession/FT_Session_Container.cpp:
-        
+
           Fixed debugging output.
 
 Wed Feb 25 03:41:17 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
-        
+
           Corrected string check.
-        
+
         * MPC/config/ciao_ft_componentserver_svnt.mpb
         * MPC/config/ciao_ft_componentserver_stub.mpb:
-        
+
           Adopted to non ft templates.
 
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.h
         * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.h
         * DAnCE/tests/CIAO/FTComponents/FTClient_exec.cpp:
-        
+
           Add component creation functions.
-        
+
         * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
 
           Change library includes.
 
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
+
           Added code to intialize a COMPONENT_SERVER attribute if present.
 
         * ciao/FTComponentServer/CIAO_Container_Impl.cpp:
-        
+
           Added code for extracting the ObjectId config property and use
           it as a USER_ID on servant registration.
-        
+
         * ciao/FTComponentServer/CIAO_FTComponentServer_Impl.cpp:
-        
+
           Removed RTCORBA calls.
-        
+
         * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
-        
+
           Changed debugging output and changed AppSideReg usage.
 
         * ciao/FTComponentServer/CIAO_ComponentServer.mpc:
-        
-          Changed library includes.          
-        
+
+          Changed library includes.
+
         * ciao/FTComponentServer/Configurator_Factory.cpp:
-        
+
           Added return statement.
 
-        * ciao/FTComponentServer/Name_Helper_T.h        
+        * ciao/FTComponentServer/Name_Helper_T.h
         * ciao/Containers/FTSession/FT_Session_Container.cpp:
-         
+
           Fixing debugging output format.
 
 Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
@@ -386,10 +434,10 @@ Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * MPC/config/ciao_ft_componentserver_svnt.mpb
         * MPC/config/ciao_ft_componentserver_configurator.mpb
         * MPC/config/ciao_ft_componentserver_stub.mpb:
-        
+
           Added MPC templates for fault tolerant session container and
           component server.
-        
+
         * DAnCE/tests/CIAO/FTComponents
         * DAnCE/tests/CIAO/FTComponents/FTClient.idl
         * DAnCE/tests/CIAO/FTComponents/FTClient_Task.h
@@ -412,13 +460,13 @@ Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * DAnCE/tests/CIAO/FTComponents/FTTask.cidl
         * DAnCE/tests/CIAO/FTComponents/FTClient_svnt_export.h
         * DAnCE/tests/CIAO/FTComponents/FTClient_Task.cpp:
-        
+
           Added test components for FT functionality.
-        
+
         * DAnCE/tests/CIAO/NodeManager-Deployments/simple_nm_launcher.cpp:
-        
-          Added manual mode for launcher executable. 
-        
+
+          Added manual mode for launcher executable.
+
         * ciao/FTComponentServer
         * ciao/FTComponentServer/Configurator_Factory.h
         * ciao/FTComponentServer/CIAO_Container_Impl.cpp
@@ -466,9 +514,9 @@ Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * ciao/FTComponentServer/CIAO_FTComponentServer.h
         * ciao/FTComponentServer/CIAO_CS_Client.idl
         * ciao/FTComponentServer/Configurator_Factory.cpp:
-          
+
           Added fault tolerant component server.
-        
+
         * ciao/Containers/FTSession
         * ciao/Containers/FTSession/FT_Session_Container.inl
         * ciao/Containers/FTSession/FT_Session_Container.cpp
@@ -476,7 +524,7 @@ Mon Feb 23 23:07:15 UTC 2009  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
         * ciao/Containers/FTSession/FT_Session_Container_export.h
         * ciao/Containers/FTSession/FT_Session_Container.idl
         * ciao/Containers/FTSession/FT_Session_Container.mpc:
-        
+
           Added fault tolerant session container.
 
 Sat Feb 21 20:06:18 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>

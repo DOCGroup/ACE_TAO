@@ -27,7 +27,7 @@ project (RT_CCM_Config_Handlers) : acelib, dance_deployment_stub, ciao_config_ha
 
   after += RT_CCM_XML_Generation
   
-  requires += dummy_label
+//  requires += dummy_label
 
   Source_Files {
         CIAOServerResources.cpp

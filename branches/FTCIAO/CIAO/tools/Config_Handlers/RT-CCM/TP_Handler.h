@@ -14,7 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,9 +35,9 @@ namespace CIAO
     {
     public:
       static bool thread_pool (const ThreadpoolDef &src,
-                               ::CIAO::DAnCE::ORS_Threadpool &dest);
+                               ::CIAO::Deployment::ORS_Threadpool &dest);
 
-      static ThreadpoolDef thread_pool (const ::CIAO::DAnCE::ORS_Threadpool &src);
+      static ThreadpoolDef thread_pool (const ::CIAO::Deployment::ORS_Threadpool &src);
     };
   }
 }

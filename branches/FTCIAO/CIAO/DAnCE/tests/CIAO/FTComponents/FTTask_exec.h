@@ -34,6 +34,7 @@
 #include "CPU/CPU_Worker.h"
 #include "Failure_Task.h"
 #include "ace/High_Res_Timer.h"
+#include "WorkerC.h"
 
 namespace CIDL_FTTask_Impl
 {
@@ -98,6 +99,14 @@ namespace CIDL_FTTask_Impl
     virtual void 
     failure_count (CORBA::Long failure_count);
 
+    virtual char *
+    nested_object_ior (void);
+
+    virtual void
+    nested_object_ior (const char * nested_object_ior);
+
+    DeCoRAM::Worker_ptr 
+    nested_server (void);
     // Port operations.
 
     // Operations from Components::SessionComponent
@@ -127,11 +136,13 @@ namespace CIDL_FTTask_Impl
     CORBA::ORB_var orb_;
 
     StateSynchronizationAgent_var agent_;
-
+    
     DeCoRAM::CCM_FTTask_Context_var context_;
 
     CORBA::Object_var myself_;
 
+    CORBA::String_var nested_object_ior_;
+    
     CUTS_CPU_Worker cpu_;
 
     std::string object_id_;
@@ -149,6 +160,10 @@ namespace CIDL_FTTask_Impl
     ACE_High_Res_Timer timer_;
 
     ACE_Time_Value last_execution_time_;
+    
+    DeCoRAM::Worker_var next_;
+
+    bool done_;
   };
 
   extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr

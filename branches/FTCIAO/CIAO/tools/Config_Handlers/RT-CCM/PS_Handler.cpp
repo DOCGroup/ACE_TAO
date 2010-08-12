@@ -12,7 +12,7 @@ namespace CIAO
   {
     bool
     PS_Handler::policy_set (const PolicySet &src,
-                            ::CIAO::DAnCE::PolicySet &dest)
+                            ::CIAO::Deployment::PolicySet &dest)
     {
       if (src.id_p ())
         dest.Id = CORBA::string_dup (src.id ().c_str ());
@@ -30,7 +30,7 @@ namespace CIAO
            i != src.end_priorityModel ();
            ++i)
         {
-          ::CIAO::DAnCE::PriorityModelPolicyDef pmd;
+          ::CIAO::Deployment::PriorityModelPolicyDef pmd;
 
           PM_Handler::priority_model_pd (*i, pmd);
 
@@ -42,7 +42,7 @@ namespace CIAO
            i != src.end_nwpriorityModel ();
            ++i)
         {
-          ::CIAO::DAnCE::NWPriorityModelPolicyDef npmd;
+          ::CIAO::Deployment::NWPriorityModelPolicyDef npmd;
 
           NPM_Handler::nw_priority_model_pd (*i, npmd);
 
@@ -54,7 +54,7 @@ namespace CIAO
            i != src.end_cnwpriorityModel ();
            ++i)
         {
-          ::CIAO::DAnCE::CNWPriorityModelPolicyDef cnpmd;
+          ::CIAO::Deployment::CNWPriorityModelPolicyDef cnpmd;
 
           CNPM_Handler::cnw_priority_pd (*i, cnpmd);
 
@@ -65,7 +65,7 @@ namespace CIAO
            i != src.end_threadpool ();
            ++i)
         {
-          ::CIAO::DAnCE::ThreadpoolPolicyDef tpd;
+          ::CIAO::Deployment::ThreadpoolPolicyDef tpd;
 
           tpd.Id = CORBA::string_dup (i->id ().c_str ());
 
@@ -77,7 +77,7 @@ namespace CIAO
            i != src.end_priorityBandedConnection ();
            ++i)
         {
-          ::CIAO::DAnCE::PriorityBandedConnectionPolicyDef pbc;
+          ::CIAO::Deployment::PriorityBandedConnectionPolicyDef pbc;
 
           pbc.Id = CORBA::string_dup (i->id ().c_str ());
 
@@ -87,7 +87,7 @@ namespace CIAO
     }
 
     PolicySet
-    PS_Handler::policy_set (const ::CIAO::DAnCE::PolicySet &src)
+    PS_Handler::policy_set (const ::CIAO::Deployment::PolicySet &src)
     {
       PolicySet ps;
 
@@ -104,29 +104,29 @@ namespace CIAO
 
           switch (src.policies[i]._d ())
             {
-            case ::CIAO::DAnCE::PRIORITY_MODEL_POLICY_TYPE:
+            case ::CIAO::Deployment::PRIORITY_MODEL_POLICY_TYPE:
               ps.add_priorityModel (
                 PM_Handler::priority_model_pd (
                      src.policies[i].PriorityModelDef ()));
               break;
 
-            case ::CIAO::DAnCE::NETWORK_PRIORITY_TYPE:
+            case ::CIAO::Deployment::NETWORK_PRIORITY_TYPE:
               ps.add_nwpriorityModel (
                 NPM_Handler::nw_priority_model_pd (
                    src.policies[i].NWPriorityModelDef ()));
               break;
 
-            case ::CIAO::DAnCE::CLIENT_NETWORK_PRIORITY_TYPE:
+            case ::CIAO::Deployment::CLIENT_NETWORK_PRIORITY_TYPE:
               ps.add_cnwpriorityModel (
                 CNPM_Handler::cnw_priority_pd (
                    src.policies[i].CNWPriorityModelDef ()));
               break;
 
-            case ::CIAO::DAnCE::THREADPOOL_POLICY_TYPE:
+            case ::CIAO::Deployment::THREADPOOL_POLICY_TYPE:
               ps.add_threadpool  (src.policies[i].ThreadpoolDef ().Id.in ());
               break;
 
-            case ::CIAO::DAnCE::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+            case ::CIAO::Deployment::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
               ps.add_priorityBandedConnection (
                 src.policies[i].PriorityBandedConnectionDef ().Id.in ());
               break;

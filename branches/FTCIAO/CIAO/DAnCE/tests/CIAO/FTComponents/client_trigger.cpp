@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include "TriggerC.h"
 #include "ace/Get_Opt.h"
 
@@ -18,6 +19,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
       for (int i = 2; i < argc; ++i)
         {
+          std::cout << argv[i] << std::endl;
           applications.push_back (argv[i]);
         }
     }
@@ -34,7 +36,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -63,6 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
            it2 != triggers.end ();
            ++it2)
         {
+          std::cout << "Calling with prefix = " << prefix << std::endl;
           (*it2)->start (CORBA::string_dup (prefix));
         }
 

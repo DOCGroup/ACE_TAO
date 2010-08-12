@@ -12,7 +12,7 @@ namespace CIAO
 
     bool OC_Handler::orb_config (
                                  const ORBConfigs &src,
-                                 ::CIAO::DAnCE::ORBConfigs &dest)
+                                 ::CIAO::Deployment::ORBConfigs &dest)
     {
       if (src.resources_p ())
         OR_Handler::orb_resources (src.resources (), dest.orb_resources);
@@ -33,7 +33,7 @@ namespace CIAO
 
 
     ORBConfigs OC_Handler::orb_config (
-                                       const ::CIAO::DAnCE::ORBConfigs &src)
+                                       const ::CIAO::Deployment::ORBConfigs &src)
     {
       ORBConfigs oc;
 

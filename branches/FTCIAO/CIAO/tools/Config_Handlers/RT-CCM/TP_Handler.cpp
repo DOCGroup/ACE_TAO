@@ -8,7 +8,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     bool TP_Handler::thread_pool (const ThreadpoolDef &src,
-                                  ::CIAO::DAnCE::ORS_Threadpool &dest)
+                                  ::CIAO::Deployment::ORS_Threadpool &dest)
     {
       dest.Id = CORBA::String_var (src.id ().c_str ());
 
@@ -36,7 +36,7 @@ namespace CIAO
     }
 
     ThreadpoolDef
-    TP_Handler::thread_pool (const ::CIAO::DAnCE::ORS_Threadpool &src)
+    TP_Handler::thread_pool (const ::CIAO::Deployment::ORS_Threadpool &src)
     {
       ThreadpoolDef tp (XMLSchema::unsignedLong (src.stacksize),
                         XMLSchema::unsignedLong (src.static_threads),

@@ -79,14 +79,14 @@ StateSynchronizationAgent_i::~StateSynchronizationAgent_i (void)
 #endif /* FLARE_USES_DDS */
 }
 
-void 
+  void 
 StateSynchronizationAgent_i::state_changed (const char * object_id)
 {
-  /*
-  ACE_DEBUG ((LM_TRACE, 
+  
+  ACE_DEBUG ((LM_EMERGENCY, 
               "SSA::state_changed (%s) called.\n", 
               object_id));
-  */
+  
   // get application reference
   ReplicatedApplication_var app;
 
@@ -126,12 +126,12 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
   if (replica_map_.find (ACE_CString (object_id),
 			 replica_group) != 0)
     {
-      /*
-      ACE_ERROR ((LM_WARNING, 
+      
+      ACE_ERROR ((LM_ERROR, 
                   "(%P|%t) SSA::state_changed () "
                   "could not find replicas for the application %s\n",
 		  object_id));
-      */
+     
       return;
     }
 
@@ -148,12 +148,141 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 	      }
       catch (const CORBA::SystemException& ex)
 	      {
-	        ACE_DEBUG ((LM_WARNING, 
+	        ACE_DEBUG ((LM_ERROR, 
 		                  "(%P|%t) SSA::state_changed () "
 		                  "exception while contacting a "
 		                  "server replica for %s.\n",
 		                  object_id));
 	      }
+    }
+}
+
+
+::CORBA::Boolean StateSynchronizationAgent_i::precommit_state (const char * object_id)
+{
+  ACE_ERROR ((LM_ERROR, 
+              "SSA::precommit_state (%s) called.\n", 
+              object_id));
+  
+  // get application reference
+  ReplicatedApplication_var app;
+
+  if (application_map_.find (ACE_CString (object_id),
+			                       app) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) SSA::precommit_state () "
+		            "could not find application for object id %s\n",
+		            object_id));
+      return false;
+    }
+
+  // Get state from the application.
+  CORBA::Any_var state;
+  
+  try 
+    {
+      state = app->get_state ();
+    }
+   catch (const CORBA::SystemException& ex)
+    {
+      ACE_ERROR ((LM_ERROR, 
+		              "(%P|%t) SSA::precommit_state () "
+		              "exception while calling the "
+		              "get_state method for application "
+		              "%s:\n"
+		              "%s",
+		              object_id,
+		              ex._info ().c_str ()));
+      return false;
+    }
+
+  // Send state to each element in the replica_map_.
+  ReplicaGroup replica_group;
+  
+  if (replica_map_.find (ACE_CString (object_id),
+			 replica_group) != 0)
+    {
+      
+      ACE_ERROR ((LM_ERROR, 
+                  "(%P|%t) SSA::precommit_state () "
+                  "could not find replicas for the application %s\n",
+		  object_id));
+      
+      return false;
+    }
+
+  ReplicatedApplication_var replica;
+  
+  for (REPLICA_OBJECT_LIST::iterator it = replica_group.replicas.begin ();
+       it != replica_group.replicas.end ();
+       ++it)
+    {
+      try
+	{
+          CorbaStateUpdate * csu = dynamic_cast<CorbaStateUpdate *> ((*it).get());
+          ReplicatedApplication_var rep_app =
+            ReplicatedApplication::_narrow(csu->application());
+	  StateSynchronizationAgent_var ssa_in_replica = rep_app->agent();
+          ssa_in_replica->transfer_state(CORBA::string_dup(object_id), state.in ());
+	}
+      catch (const CORBA::Exception& ex)
+	{
+	   ACE_DEBUG ((LM_ERROR, 
+	              "(%P|%t) SSA::precommit_state () "
+	              "exception while contacting a "
+	              "SSA in server replica for %s.\n",
+	              object_id));
+           return false;
+	}
+    }
+    return true;
+}
+
+void StateSynchronizationAgent_i::transfer_state (
+    const char * object_id,
+    const ::CORBA::Any & state_value)
+{
+  ACE_ERROR ((LM_EMERGENCY, 
+              "(%P|%t) SSA::transfer_state () "
+              "for the application %s\n",
+              object_id));
+  this->precommit_state_ = state_value;
+}
+
+void StateSynchronizationAgent_i::commit_state (const char * object_id)
+{
+  ACE_ERROR ((LM_EMERGENCY, 
+              "(%P|%t) SSA::commit_state () "
+              "for the application %s\n",
+              object_id));
+  
+  ReplicatedApplication_var app;
+
+  if (application_map_.find (ACE_CString (object_id),
+			                       app) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, 
+		              "(%P|%t) SSA::commit_state () "
+		              "could not find application for object id %s\n",
+		              object_id));
+      return;
+    }
+
+  try 
+    {
+      app->set_state (this->precommit_state_);
+    }
+   catch (const CORBA::SystemException& ex)
+    {
+      ACE_DEBUG ((LM_ERROR, 
+		              "(%P|%t) SSA::commit_state () "
+		              "exception while calling the "
+		              "get_state method for application "
+		              "%s:\n"
+		              "%s",
+		              object_id,
+		              ex._info ().c_str ()));
+      return;
     }
 }
 
@@ -243,8 +372,8 @@ StateSynchronizationAgent_i::register_application (
   const char * object_id,
   ReplicatedApplication_ptr app)
 {
-  //ACE_DEBUG ((LM_TRACE,
-  //            "SSA::register_application (%s) called.\n", object_id));
+  ACE_ERROR ((LM_ERROR,
+              "SSA::register_application (%s) called.\n", object_id));
 
   ACE_CString oid (object_id);
 

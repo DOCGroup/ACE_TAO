@@ -11,7 +11,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     bool OR_Handler::orb_resources (const ORBResources &src,
-                                    ::CIAO::DAnCE::ORBResources &dest)
+                                    ::CIAO::Deployment::ORBResources &dest)
     {
       // We know that there should be only one.
       dest.length (1);
@@ -52,7 +52,7 @@ namespace CIAO
       return true;
     }
 
-    ORBResources OR_Handler::orb_resources (const ::CIAO::DAnCE::ORBResources &src)
+    ORBResources OR_Handler::orb_resources (const ::CIAO::Deployment::ORBResources &src)
     {
       if (src.length () == 0 ||
           src[0].threadpool_list.length () == 0 ||

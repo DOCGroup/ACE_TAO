@@ -12,6 +12,7 @@ module DeCoRAM
     attribute short  role;
     attribute double load;
     attribute long   failure_count;
+    attribute string nested_object_ior;
   };
 
   home FTTaskHome manages FTTask

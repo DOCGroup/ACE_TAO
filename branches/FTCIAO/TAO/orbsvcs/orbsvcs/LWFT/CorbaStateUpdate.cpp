@@ -33,3 +33,9 @@ CorbaStateUpdate::set_state (const ::CORBA::Any & state_value)
       ra->set_state (state_value);
     }
 }
+
+CORBA::Object_ptr CorbaStateUpdate::application() const
+{
+  return application_.in();
+}
+

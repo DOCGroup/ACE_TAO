@@ -49,6 +49,8 @@ namespace DAnCE
     virtual ~FaultCorrelationManager_Impl();
 
     virtual void stop_failover_unit (const char * fou_id);
+    virtual FLARE::ApplicationList* FOU_participants(const char* app);
+
 
     // methods from inherited interfaces
 
@@ -134,6 +136,7 @@ namespace DAnCE
     TDomainManagers dams_;
 
     TInstancesOfPlan instances_;
+    ACE_Thread_Mutex instances_lock_;
 
     TNodeMap nodes_;
 

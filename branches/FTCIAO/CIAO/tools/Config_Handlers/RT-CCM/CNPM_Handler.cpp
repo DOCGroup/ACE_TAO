@@ -61,7 +61,7 @@ namespace CIAO
 
     bool
     CNPM_Handler::cnw_priority_pd (const CNWPriorityModelPolicyDef &src,
-      ::CIAO::DAnCE::CNWPriorityModelPolicyDef &dest)
+      ::CIAO::Deployment::CNWPriorityModelPolicyDef &dest)
     {
       int request_array_slot = 7;
       long d = dscp[request_array_slot];
@@ -82,7 +82,7 @@ namespace CIAO
 
     CNWPriorityModelPolicyDef
     CNPM_Handler::cnw_priority_pd (
-      const ::CIAO::DAnCE::CNWPriorityModelPolicyDef&)
+      const ::CIAO::Deployment::CNWPriorityModelPolicyDef&)
     {
       auto_ptr <CNWPriorityModelPolicyDef> pmd;
       pmd.reset (new CNWPriorityModelPolicyDef (0, 0));

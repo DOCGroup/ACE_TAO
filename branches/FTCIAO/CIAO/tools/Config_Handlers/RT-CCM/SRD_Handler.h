@@ -14,7 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
+#include "ComponentServer/CIAO_ServerResourcesC.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,13 +42,13 @@ namespace CIAO
 
       SRD_Handler(ServerResourcesDef *srd);
 
-      SRD_Handler(::CIAO::DAnCE::ServerResource *srd);
+      SRD_Handler(::CIAO::Deployment::ServerResource *srd);
 
       ~SRD_Handler (void);
 
-      ::CIAO::DAnCE::ServerResource const *srd_idl (void) const;
+      ::CIAO::Deployment::ServerResource const *srd_idl (void) const;
 
-      ::CIAO::DAnCE::ServerResource *srd_idl (void);
+      ::CIAO::Deployment::ServerResource *srd_idl (void);
 
       ServerResourcesDef const *srd_xsc (void) const;
 
@@ -60,7 +60,7 @@ namespace CIAO
 
       bool build_xsc ();
 
-      auto_ptr < ::CIAO::DAnCE::ServerResource > idl_srd_;
+      auto_ptr < ::CIAO::Deployment::ServerResource > idl_srd_;
 
       auto_ptr <ServerResourcesDef> srd_;
 

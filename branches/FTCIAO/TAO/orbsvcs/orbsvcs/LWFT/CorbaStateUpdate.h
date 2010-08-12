@@ -35,6 +35,8 @@ public:
   /// method to set the 
   virtual void set_state (const ::CORBA::Any & state_value);  
 
+  CORBA::Object_ptr application() const;
+
 private:
   CORBA::Object_var application_;
 };
