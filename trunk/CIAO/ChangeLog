@@ -1,3 +1,17 @@
+Thu Aug 12 19:19:00 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/DD_Handler.h:
+        * DAnCE/Config_Handlers/DD_Handler.cpp:
+        * DAnCE/Config_Handlers/XML_File_Intf.h:
+        * DAnCE/Config_Handlers/XML_File_Intf.cpp:
+
+          Added domain parsing to the XML_File_Intf.
+
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+
+          Transition to XML_File_Intf instead of using DD_Handler
+          directly.
+
 Thu Aug 12 14:04:30 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * docs/fm/CIAO.htm:

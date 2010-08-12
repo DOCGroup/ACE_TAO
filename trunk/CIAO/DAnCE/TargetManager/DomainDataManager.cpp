@@ -2,7 +2,7 @@
 #include "DomainDataManager.h"
 #include "Deployment/Deployment_NodeManagerC.h"
 
-#include "Config_Handlers/DD_Handler.h"
+#include "Config_Handlers/XML_File_Intf.h"
 #include "DAnCE/Logger/Log_Macros.h"
 
 #ifdef GEN_OSTREAM_OPS
@@ -23,9 +23,9 @@ DAnCE::DomainDataManager::init (CORBA::ORB_ptr orb,
   DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
                 ACE_TEXT ("Parsing initial domain from file %s\n"),
                 domain_name));
-
-  CIAO::Config_Handlers::DD_Handler dd (domain_name);
-  ::Deployment::Domain* dmn = dd.domain_idl ();
+  
+  CIAO::Config_Handlers::XML_File_Intf intf (domain_name);
+  ::Deployment::Domain* dmn = intf.release_domain ();
 
   DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE::DomainDataManager::init - ")
                 ACE_TEXT ("Initial domain successfully parsed\n")));

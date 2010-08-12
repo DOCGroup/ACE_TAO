@@ -44,20 +44,13 @@ class Config_Handlers_Export DD_Handler
 public:
 class NoDomain {};
 
-/**
-* @param file The file to be read
-*/
-DD_Handler (const ACE_TCHAR *file);
 
 /**
 * @param dmn The Domain structure
 */
 DD_Handler(Domain *dmn);
 
-/**
-* @param dmn The Deployment::Domain structure
-*/
-DD_Handler(::Deployment::Domain *dmn);
+DD_Handler(Domain &dmn);
 
 /**
 */
@@ -102,8 +95,9 @@ bool build_xsc ();
 auto_ptr < ::Deployment::Domain > idl_domain_;
 
 /// The XSC Domain structure
-auto_ptr <Domain> domain_;
-
+auto_ptr <Domain> domain_ptr_;
+ 
+ Domain &domain_;
 /// The return value used
 bool retval_;
 };
