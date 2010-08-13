@@ -74,6 +74,7 @@ libTAO_IFR_BE_la_SOURCES = \
   be_global.cpp \
   be_init.cpp \
   be_produce.cpp \
+  be_util.cpp \
   ifr_adding_visitor.cpp \
   ifr_adding_visitor_exception.cpp \
   ifr_adding_visitor_operation.cpp \
@@ -85,6 +86,7 @@ libTAO_IFR_BE_la_SOURCES = \
 noinst_HEADERS = \
   be_extern.h \
   be_global.h \
+  be_util.h \
   ifr_adding_visitor.h \
   ifr_adding_visitor_exception.h \
   ifr_adding_visitor_operation.h \
