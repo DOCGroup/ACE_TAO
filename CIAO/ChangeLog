@@ -1,3 +1,9 @@
+Fri Aug 13 15:47:22 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/dds4ccm/examples/Shapes/models/Shapes-complete-delegation.xme:
+
+          Example illustrating delegation.
+
 Fri Aug 13 06:07:23 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/models/dds4ccm.xme:
