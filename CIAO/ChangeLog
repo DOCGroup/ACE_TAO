@@ -1,3 +1,10 @@
+Fri Aug 13 06:07:23 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * connectors/dds4ccm/models/dds4ccm.xme:
+
+          Re-generated dds4ccm library since some of the elements
+          were missing.
+
 Thu Aug 12 19:35:41 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
