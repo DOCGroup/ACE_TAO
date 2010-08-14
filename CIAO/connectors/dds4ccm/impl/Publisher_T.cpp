@@ -172,7 +172,7 @@ namespace CIAO
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                     "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_datawriter - "
                     "Successfully casted provided object reference to servant.\n"));
