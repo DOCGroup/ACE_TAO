@@ -1,3 +1,11 @@
+Sat Aug 14 18:15:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+          Corrected error levels and use some DEBUG macros instead of ERROR
+
 Fri Aug 13 15:47:22 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * connectors/dds4ccm/examples/Shapes/models/Shapes-complete-delegation.xme:
