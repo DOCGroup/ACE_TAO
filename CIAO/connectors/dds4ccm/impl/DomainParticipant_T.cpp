@@ -163,14 +163,14 @@ namespace CIAO
 
       if (!ccm_dds_pub)
         {
-          DDS4CCM_ERROR (3, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipant_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                         "Unable to cast provided object reference to servant pointer.\n"));
           return ::DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                    "CCM_DDS_DomainParticipant_T"
                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_publisher - "
                    "Successfully casted provided object reference to "
@@ -322,7 +322,7 @@ namespace CIAO
           return ::DDS::RETCODE_ERROR;
         }
 
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_subscriber - Successfully casted "
                     "provided object reference to Subscriber_type\n"));
@@ -598,7 +598,7 @@ namespace CIAO
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_topic <%C> - "
                     "Successfully casted provided object reference to servant.\n",
