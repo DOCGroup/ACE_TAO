@@ -83,8 +83,7 @@ namespace CIAO
 
     CIAO::Container_var container_ref (cont);
 
-    DEPLOYMENT_STATE::instance ()->add_container (name,
-                                                  cont);
+    DEPLOYMENT_STATE::instance ()->add_container (name, cont);
     
     (*outref) <<= container_ref;
     
@@ -133,7 +132,7 @@ namespace CIAO
     ::CIAO::Container_var cont = 
         DEPLOYMENT_STATE::instance ()->fetch_container (name);
     
-    if (!cont)
+    if (::CORBA::is_nil (cont.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO,
                         "Container_Handler_i::remove_instance - "

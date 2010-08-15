@@ -1,3 +1,11 @@
+Sun Aug 15 18:14:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+          Fixed invalid check for nil object reference
+
+        * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:
+          Added log line just before we call delete_participant on DDS
+
 Sun Aug 15 10:27:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Session/Session_Container.cpp:

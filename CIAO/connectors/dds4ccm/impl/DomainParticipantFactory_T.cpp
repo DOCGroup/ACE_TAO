@@ -237,8 +237,14 @@ namespace CIAO
                     "Successfully casted provided object reference to servant type.\n"));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
+
       if (DPMANAGER->remove_participant (part->get_impl ()))
         {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, CLINFO
+                    "CCM_DDS_DomainParticipantFactory_T"
+                    "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
+                    "Going to delete participant.\n"));
+                    
           retval = DDSDomainParticipantFactory::get_instance ()->
               delete_participant (part->get_impl ());
 
