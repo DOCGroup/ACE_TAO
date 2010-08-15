@@ -1,3 +1,8 @@
+Sun Aug 15 10:27:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed some refcount problems
+
 Sat Aug 14 18:15:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantFactory_T.cpp:

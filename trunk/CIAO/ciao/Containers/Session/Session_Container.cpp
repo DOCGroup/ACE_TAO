@@ -801,7 +801,7 @@ namespace CIAO
 
     try
       {
-        PortableServer::Servant srv_tmp =
+        PortableServer::ServantBase_var srv_tmp =
           this->component_poa_->reference_to_servant (provider);
 
         CIAO_DEBUG (9,
@@ -813,7 +813,7 @@ namespace CIAO
                      provider_port));
 
         CIAO::Connector_Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
 
         if (!prov_serv)
           {
@@ -831,7 +831,7 @@ namespace CIAO
                      "Successfully fetched user servant [%C] from POA\n", user_port));
 
         CIAO::Connector_Servant_Impl_Base *user_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
 
         if (user_serv == 0)
           {
@@ -923,7 +923,7 @@ namespace CIAO
 
     try
       {
-        PortableServer::Servant srv_tmp =
+        PortableServer::ServantBase_var srv_tmp =
           this->component_poa_->reference_to_servant (provider);
 
         CIAO_DEBUG (9,
@@ -933,7 +933,7 @@ namespace CIAO
                      "Successfully fetched provider servant from POA\n"));
 
         CIAO::Connector_Servant_Impl_Base *prov_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
 
         if (prov_serv == 0)
           {
@@ -956,7 +956,7 @@ namespace CIAO
                      "Successfully fetched user servant from POA\n"));
 
         CIAO::Connector_Servant_Impl_Base *user_serv =
-          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp);
+          dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (srv_tmp.in ());
 
         if (user_serv == 0)
           {
@@ -1019,7 +1019,7 @@ namespace CIAO
 
     try
       {
-        PortableServer::Servant svt;
+        PortableServer::ServantBase_var svt;
 
         try
           {
@@ -1046,10 +1046,10 @@ namespace CIAO
           }
         else
           {
-            CIAO::Connector_Servant_Impl_Base * comp (0);
-            CIAO::Home_Servant_Impl_Base *home (0);
+            CIAO::Connector_Servant_Impl_Base * comp = 0;
+            CIAO::Home_Servant_Impl_Base *home = 0;
 
-            if ((comp = dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (svt)))
+            if ((comp = dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (svt.in ())))
               {
                 CIAO_DEBUG (9,
                             (LM_TRACE,
@@ -1060,7 +1060,7 @@ namespace CIAO
                 
                 comp->set_attributes (values);
               }
-            else if ((home = dynamic_cast <CIAO::Home_Servant_Impl_Base *> (svt)))
+            else if ((home = dynamic_cast <CIAO::Home_Servant_Impl_Base *> (svt.in ())))
               {
                 CIAO_DEBUG (9,
                             (LM_TRACE,
@@ -1122,12 +1122,15 @@ namespace CIAO
       {
 
         CIAO::Connector_Servant_Impl_Base * svt = 0;
-
+        PortableServer::ServantBase_var servant_from_reference;
+        
         try
           {
+            servant_from_reference =
+              this->component_poa_->reference_to_servant (compref);
             svt =
               dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
-                this->component_poa_->reference_to_servant (compref));
+                servant_from_reference.in ());
           }
         catch (...)
           {
@@ -1192,12 +1195,15 @@ namespace CIAO
     try
       {
         CIAO::Connector_Servant_Impl_Base * svt = 0;
+        PortableServer::ServantBase_var servant_from_reference;
 
         try
           {
+            servant_from_reference =
+              this->component_poa_->reference_to_servant (compref);
             svt =
               dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
-                this->component_poa_->reference_to_servant (compref));
+                servant_from_reference.in ());
           }
         catch (...)
           {
@@ -1251,7 +1257,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::uninstall");
 
-    PortableServer::Servant svnt;
+    PortableServer::ServantBase_var svnt;
 
     switch (y)
       {
@@ -1265,7 +1271,7 @@ namespace CIAO
       }
 
     PortableServer::ObjectId_var oid;
-    this->uninstall_servant (svnt, y, oid.out ());
+    this->uninstall_servant (svnt.in (), y, oid.out ());
   }
 
   void
@@ -1282,9 +1288,11 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::uninstall_component");
 
+    PortableServer::ServantBase_var srv_tmp =
+      this->component_poa_->reference_to_servant (homeref);
     CIAO::Connector_Servant_Impl_Base * svnt =
       dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (
-        this->component_poa_->reference_to_servant (homeref));
+        srv_tmp.in ());
 
     if (!svnt)
       {
@@ -1336,8 +1344,7 @@ namespace CIAO
 
     try
       {
-        PortableServer::ObjectId_var tmp_id;
-        tmp_id = tmp->servant_to_id (svnt);
+        PortableServer::ObjectId_var tmp_id = tmp->servant_to_id (svnt);
         tmp->deactivate_object (tmp_id);
 
         CIAO_DEBUG (9,
@@ -1348,7 +1355,6 @@ namespace CIAO
                      "reference count is %u\n",
                      svnt->_refcount_value () - 1));
 
-        svnt->_remove_ref ();
         oid = tmp_id._retn ();
       }
     catch (const CORBA::Exception &ex)
