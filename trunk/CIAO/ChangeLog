@@ -1,3 +1,14 @@
+Mon Aug 16 11:47:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Servant_Impl_T.cpp:
+          Updated the Port Activator to make correct use 
+
 Mon Aug 16 10:19:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Home_Handler.cpp:
