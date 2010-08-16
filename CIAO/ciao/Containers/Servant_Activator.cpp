@@ -100,11 +100,12 @@ namespace CIAO
   }
 
   void
-  Servant_Activator_i::etherealize (const PortableServer::ObjectId &oid,
-                                  PortableServer::POA_ptr ,
-                                  PortableServer::Servant servant,
-                                  CORBA::Boolean ,
-                                  CORBA::Boolean)
+  Servant_Activator_i::etherealize (
+    const PortableServer::ObjectId &oid,
+    PortableServer::POA_ptr ,
+    PortableServer::Servant servant,
+    CORBA::Boolean ,
+    CORBA::Boolean remaining_activations)
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
@@ -140,7 +141,7 @@ namespace CIAO
         throw CORBA::OBJECT_NOT_EXIST ();
       }
 
-    pa_iter->second->deactivate (servant);
+    pa_iter->second->deactivate (servant, remaining_activations);
   }
 
   bool

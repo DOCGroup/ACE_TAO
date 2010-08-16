@@ -31,7 +31,8 @@ module CIAO
 
     PortableServer::Servant activate (in PortableServer::ObjectId oid);
 
-    void deactivate (in PortableServer::Servant servant);
+    void deactivate (in PortableServer::Servant servant,
+                     in boolean remaining_activations);
   };
 };
 

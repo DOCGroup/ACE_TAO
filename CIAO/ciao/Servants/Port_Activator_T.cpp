@@ -34,12 +34,12 @@ namespace CIAO
             typename COMP_SERV>
   void
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
-      PortableServer::Servant servant)
+      PortableServer::Servant servant,
+      CORBA::Boolean remaining_activations)
   {
-    SERVANT *s = dynamic_cast<SERVANT *> (servant);
-    if (s)
+    if (!remaining_activations)
       {
-        s->_remove_ref ();
+        delete servant;
       }
   }
 
@@ -71,6 +71,7 @@ namespace CIAO
                           SERVANT (this->executor_,
                                    this->context_),
                           CORBA::NO_MEMORY ());
+                          
         return s;
       }
 
