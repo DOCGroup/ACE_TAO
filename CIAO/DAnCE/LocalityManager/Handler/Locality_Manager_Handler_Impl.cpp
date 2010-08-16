@@ -31,7 +31,13 @@ namespace DAnCE
   Locality_Handler_i::~Locality_Handler_i (void)
   {
   }
-
+  
+  void
+  Locality_Handler_i::close (void)
+  {
+    
+  }
+  
   char * Locality_Handler_i::instance_type (void)
   {
     DANCE_TRACE ("Locality_Handler_i::instance_type");

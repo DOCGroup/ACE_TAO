@@ -80,6 +80,8 @@ namespace CIAO
 
     virtual
       void configure(const Deployment::Properties&);
+    
+    virtual void close (void);
 
   private:
     CORBA::ORB_var orb_;

@@ -5,6 +5,15 @@
 
 namespace CIAO
 {
+  void
+  Deployment_State::close (void)
+  {
+    this->containers_.clear ();
+    this->instance_container_.clear ();
+    this->homes_.clear ();
+    this->components_.clear ();
+  }
+
   void 
   Deployment_State::add_container (const char *id,
                                    CIAO::Container_ptr container)

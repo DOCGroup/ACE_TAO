@@ -28,6 +28,7 @@ namespace CIAO
   class CIAO_Locality_Handler_Export Deployment_State
   {
   public:
+    void close (void);
 
     void add_container (const char *id,
                         CIAO::Container_ptr container);

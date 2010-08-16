@@ -36,7 +36,14 @@ namespace CIAO
       { //swallow
       }
   }
-    
+  
+  void
+  Container_Handler_i::close (void)
+  {
+    DEPLOYMENT_STATE::instance ()->close ();
+    DEPLOYMENT_STATE::close ();
+  }
+
   char * 
   Container_Handler_i::instance_type (void)
   {
