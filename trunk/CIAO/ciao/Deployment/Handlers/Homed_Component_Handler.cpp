@@ -286,7 +286,7 @@ namespace CIAO
         
     using namespace CIAO::Deployment;
     CORBA::Any val;
-    const char *tmp;
+    const char *tmp = 0;
 
     if (instance->second.pmap->find (COMPONENT_HOME, val) == 0)
         {
@@ -345,7 +345,7 @@ namespace CIAO
     
     CIAO_DEBUG (4, (LM_INFO, CLINFO
                     "Homed_Component_Handler_i::remove_instance - "
-                    "Component <%C> successfully removed\n"));
+                    "Component <%C> successfully removed\n", name));
     
     this->instances_.erase (instance);
     

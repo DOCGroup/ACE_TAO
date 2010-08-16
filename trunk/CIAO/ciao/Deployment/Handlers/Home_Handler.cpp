@@ -33,7 +33,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Handler_i::install_instance");
     
-    ::CORBA::Any *retval_tmp;
+    ::CORBA::Any *retval_tmp = 0;
     ACE_NEW_THROW_EX (retval_tmp,
                       CORBA::Any (),
                       CORBA::NO_MEMORY ());
