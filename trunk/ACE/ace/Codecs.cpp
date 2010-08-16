@@ -1,11 +1,9 @@
+// $Id$
+
 #include "ace/Codecs.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
-
-ACE_RCSID (ace,
-           Codecs,
-           "$Id$")
 
 namespace
 {

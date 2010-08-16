@@ -24,9 +24,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
-ACE_RCSID (ace,
-           Service_Config,
-           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -9,10 +9,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (ace,
-           POSIX_CB_Proactor,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)

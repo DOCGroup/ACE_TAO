@@ -2,8 +2,6 @@
 
 #include "ace/FoxReactor/FoxReactor.h"
 
-ACE_RCSID(ace, FoxReactor, "$Id$")
-
 #include "ace/Synch_T.h"
 
 FXDEFMAP(ACE_FoxReactor) ACE_FoxReactorMap[]={

@@ -18,11 +18,6 @@
 # include <algorithm>
 #endif  /* !ACE_WIN32 */
 
-ACE_RCSID (ace,
-           Select_Reactor_Base,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename iterator>

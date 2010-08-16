@@ -157,11 +157,6 @@ static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
 #endif /* AIX && __IBMCPP__ >= 500 */
 
 
-ACE_RCSID (ace,
-           Sock_Connect,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Bind socket to an unused port.

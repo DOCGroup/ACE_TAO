@@ -17,11 +17,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (ace,
-           SString,
-           "SString.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
-
-
 // ************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
