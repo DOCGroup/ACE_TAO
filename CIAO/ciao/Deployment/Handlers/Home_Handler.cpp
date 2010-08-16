@@ -19,6 +19,11 @@ namespace CIAO
     CIAO_TRACE ("Home_Handler_i::~Home_Handler_i");
   }
     
+  void Home_Handler_i::close (void)
+  {
+    this->instances_.clear ();
+  }
+
   char * 
   Home_Handler_i::instance_type (void)
   {
@@ -211,7 +216,7 @@ namespace CIAO
     DEPLOYMENT_STATE::instance ()->add_home (idd.name.in (), cont_id, home_ref.in ());
 
       
-    *instance_reference <<=home_ref;
+    *instance_reference <<= home_ref;
   }
   
   

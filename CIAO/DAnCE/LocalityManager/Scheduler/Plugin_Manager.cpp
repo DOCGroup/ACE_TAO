@@ -96,9 +96,31 @@ namespace DAnCE
   Plugin_Manager::Plugin_Manager (void)
   {
   }
+  
+  template<typename T>
+  struct Closer
+  {
+    void operator() (T& item)
+    {
+      item.second->close ();
+    }
+  };
 
   Plugin_Manager::~Plugin_Manager (void)
   {
+    try
+      {
+        std::for_each (handler_map_.begin (),
+                       handler_map_.end (),
+                       Closer<HANDLER_MAP::value_type> ());
+
+      }
+    catch (...)
+      {
+        DANCE_ERROR (1, (LM_ERROR, DLINFO
+                         ACE_TEXT ("Plugin_Manager::~Plugin_Manager - ")
+                         ACE_TEXT ("Caught unknown C++ exception while closing plugin manager\n")));
+      }
   }
   
   void

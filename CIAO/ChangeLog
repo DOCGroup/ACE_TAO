@@ -1,3 +1,30 @@
+Mon Aug 16 12:44:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+        
+          Add close () method to explictly release resources on shutdown to
+          installation handlers. 
+        
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        
+          Cosmetic. 
+        
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * ciao/Deployment/Handlers/CIAO_State.h:
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Implement close method.
+
 Mon Aug 16 11:47:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Servant_Activator.cpp:
@@ -7,7 +34,7 @@ Mon Aug 16 11:47:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ciao/Servants/Port_Activator_T.h:
         * ciao/Servants/Port_Activator_T.cpp:
         * ciao/Servants/Servant_Impl_T.cpp:
-          Updated the Port Activator to make correct use 
+          Updated the Port Activator to make correct use
 
 Mon Aug 16 10:19:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

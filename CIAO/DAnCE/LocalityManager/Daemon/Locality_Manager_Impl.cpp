@@ -983,7 +983,7 @@ namespace DAnCE
                      uuid_.c_str ()));
 
     this->orb_->shutdown ();
-    
+
     // Explicitly close the plugin manager to release memory.
     PLUGIN_MANAGER::close ();
   }

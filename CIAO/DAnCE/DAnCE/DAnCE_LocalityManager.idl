@@ -72,6 +72,9 @@ module DAnCE
                           in unsigned long instanceRef,
                           in any instance_reference)
       raises (::Deployment::StopError);
+    
+    /// Instruct the handler to release any resources prior to deallocation.
+    void close ();
   };
 
   interface LocalityManager :

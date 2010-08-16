@@ -78,7 +78,9 @@ namespace DAnCE
 
     virtual
       void configure(const Deployment::Properties&);
-
+    
+    virtual void close (void);
+     
   private:
     static const char *instance_type_;
     DAnCE_LocalityActivator_i *activator_;
