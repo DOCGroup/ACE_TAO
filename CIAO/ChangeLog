@@ -1,3 +1,11 @@
+Mon Aug 16 09:35:50 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+          Use _nil() instead of 0
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+          Reduced scope of a _var and check if it is not nill
+
 Sun Aug 15 18:14:00 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Container_Handler.cpp:
