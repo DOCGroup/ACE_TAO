@@ -160,14 +160,6 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter (
     }
   else
     {
-      if (ACE_OS::strlen (filter.expression.in ()) == 0)
-        {
-          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "DDS_Subscriber_Base_T::filter: "
-                        "Filter expression not set. Unable to create "
-                        "ContentFilterSetting interface.\n"));
-          throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
-        }
       this->cft_setting_.filter (filter);
     }
 }
