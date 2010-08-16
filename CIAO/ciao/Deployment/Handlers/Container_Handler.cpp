@@ -42,6 +42,9 @@ namespace CIAO
   {
     DEPLOYMENT_STATE::instance ()->close ();
     DEPLOYMENT_STATE::close ();
+    
+    this->orb_ = CORBA::ORB::_nil ();
+    this->poa_ = PortableServer::POA::_nil ();
   }
 
   char * 
@@ -218,7 +221,7 @@ namespace CIAO
                                         "Unable to locate POA");
       }
     
-    this->orb_ = TAO_ORB_Core_instance ()->orb ();
+    this->orb_ = CORBA::ORB::_duplicate (TAO_ORB_Core_instance ()->orb ());
     
     if (CORBA::is_nil (this->orb_))
       {
