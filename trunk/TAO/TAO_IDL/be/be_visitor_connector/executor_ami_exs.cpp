@@ -146,7 +146,9 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   os_ << d->local_name () << "_"
       << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return this->facet_exec_;" << be_uidt_nl
+      << "return "
+      << smart_scope << scope->full_name () << "::CCM_" << t->local_name () << "::_duplicate ("
+      << "this->facet_exec_);" << be_uidt_nl
       << "}";
   
   return 0;
