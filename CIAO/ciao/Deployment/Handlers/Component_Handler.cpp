@@ -401,12 +401,15 @@ namespace CIAO
                                          "Invalid container\n");
         }
       
-      Components::CCMObject_var ref
-        = DEPLOYMENT_STATE::instance ()->fetch_component (name);
-
       try
         {
-          container->uninstall_component (ref);
+          Components::CCMObject_var ref
+            = DEPLOYMENT_STATE::instance ()->fetch_component (name);
+
+          if (!CORBA::is_nil (ref.in ()))
+            {
+              container->uninstall_component (ref.in ());
+            }
         }
       catch (const CORBA::Exception &ex)
         {

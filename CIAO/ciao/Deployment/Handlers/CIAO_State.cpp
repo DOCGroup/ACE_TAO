@@ -40,7 +40,7 @@ namespace CIAO
     
     CONTAINERS::iterator pos = this->containers_.find (id);
     
-    if (pos == this->containers_.end ()) return 0;
+    if (pos == this->containers_.end ()) return CIAO::Container::_nil ();
     return CIAO::Container::_duplicate (pos->second.in ());
   }
 
@@ -87,7 +87,7 @@ namespace CIAO
 
     HOMES::iterator pos = this->homes_.find (id);
     
-    if (pos == this->homes_.end ()) return 0;
+    if (pos == this->homes_.end ()) return Components::CCMHome::_nil ();
     return Components::CCMHome::_duplicate (pos->second.in ());    
   }
   
@@ -134,7 +134,11 @@ namespace CIAO
 
     COMPONENTS::iterator pos = this->components_.find (id);
     
-    if (pos == this->components_.end ()) return 0;
+    if (pos == this->components_.end ())
+      {
+        return Components::CCMObject::_nil ();
+      }
+      
     return Components::CCMObject::_duplicate (pos->second.in ());    
   }
   
