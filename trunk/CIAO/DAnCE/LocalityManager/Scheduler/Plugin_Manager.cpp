@@ -113,7 +113,11 @@ namespace DAnCE
         std::for_each (handler_map_.begin (),
                        handler_map_.end (),
                        Closer<HANDLER_MAP::value_type> ());
-
+        
+        for (INTERCEPTORS::iterator i = this->interceptors_.begin ();
+             i != this->interceptors_.end ();
+             ++i)
+          *i = ::DAnCE::DeploymentInterceptor::_nil ();
       }
     catch (...)
       {

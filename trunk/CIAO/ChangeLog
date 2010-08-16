@@ -1,3 +1,10 @@
+Mon Aug 16 15:51:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+
+          additional fixes for improper reference counting.
+
 Mon Aug 16 14:09:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
