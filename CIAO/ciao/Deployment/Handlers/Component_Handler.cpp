@@ -371,7 +371,7 @@ namespace CIAO
                     name));
         
     CORBA::Any val;
-    const char *cont_id;
+    const char *cont_id = 0;
     
     if (instance->second.pmap->find (Deployment::CONTAINER_ID, val) == 0)
         {

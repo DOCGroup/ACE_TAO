@@ -51,8 +51,8 @@ namespace CIAO
   {
     if (this->executor_->_refcount_value () > 1)
       {
-        CIAO_DEBUG (6,
-                    (LM_INFO, CLINFO
+        CIAO_ERROR (1,
+                    (LM_ERROR, CLINFO
                      "Servant_Impl_T::~Servant_Impl_T - "
                      "Executor object reference count is %u\n",
                      this->executor_->_refcount_value ()));

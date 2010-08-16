@@ -26,7 +26,8 @@ namespace CIAO
   /**
    * @class Port_Activator_T
    *
-   * @brief Concrete class that implements the strategy for creating
+   * @brief
+   * Concrete class that implements the strategy for creating
    * the right type of servant for the ports in question.
    *
    * This class is parametrized by the servant type for the port, the
@@ -55,7 +56,8 @@ namespace CIAO
     virtual PortableServer::Servant activate (
       const PortableServer::ObjectId &oid);
 
-    virtual void deactivate (PortableServer::Servant servant);
+    virtual void deactivate (
+      PortableServer::Servant servant, CORBA::Boolean remaining_activations);
 
   private:
     /// The executor

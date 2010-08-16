@@ -64,7 +64,8 @@ namespace CIAO
     virtual PortableServer::Servant activate (
         const PortableServer::ObjectId &oid) = 0;
 
-    virtual void deactivate (::PortableServer::Servant servant) = 0;
+    virtual void deactivate (::PortableServer::Servant servant,
+                             CORBA::Booolean remaining_activations) = 0;
 
   protected:
     /// The object ID that is used to activate the servant within the POA.
