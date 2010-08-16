@@ -18,10 +18,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_socket.h"
 
-ACE_RCSID (ace,
-           INET_Addr,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)

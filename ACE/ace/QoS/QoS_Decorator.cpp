@@ -3,8 +3,6 @@
 
 #include "QoS_Decorator.h"
 
-ACE_RCSID(ace, QoS_Decorator, "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_DECORATOR)

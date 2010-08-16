@@ -22,10 +22,6 @@
 #include "ace/os_include/os_typeinfo.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID (ace,
-           Process_Manager,
-           "$Id$")
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
 ACE_Process_Manager_cleanup (void *instance, void *arg)

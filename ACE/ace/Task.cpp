@@ -8,10 +8,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (ace,
-           Task,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)

@@ -5,8 +5,6 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 
-ACE_RCSID(ace, XtReactor, "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)

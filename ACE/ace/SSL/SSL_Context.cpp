@@ -1,3 +1,4 @@
+// $Id$
 #include "SSL_Context.h"
 
 #include "sslconf.h"
@@ -25,11 +26,6 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 #include <openssl/safestack.h>
-
-ACE_RCSID (ACE_SSL,
-           SSL_Context,
-           "$Id$")
-
 
 namespace
 {

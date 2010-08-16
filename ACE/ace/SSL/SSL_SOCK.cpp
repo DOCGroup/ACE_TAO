@@ -9,11 +9,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/os_signal.h"
 
-ACE_RCSID (ACE_SSL,
-           SSL_SOCK,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SSL_SOCK::ACE_SSL_SOCK (void)

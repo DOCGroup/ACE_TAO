@@ -13,10 +13,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace,
-          Timer_Hash_T,
-          "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>

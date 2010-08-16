@@ -15,10 +15,6 @@
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Thread_Manager,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)

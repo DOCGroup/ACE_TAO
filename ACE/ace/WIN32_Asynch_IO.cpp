@@ -2,10 +2,6 @@
 
 #include "ace/WIN32_Asynch_IO.h"
 
-ACE_RCSID (ace,
-           Win32_Asynch_IO,
-           "$Id$")
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
     (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
