@@ -7,68 +7,68 @@ Mon Aug 16 22:00:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
 Mon Aug 16 12:58:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-        *ace/Auto_Event.cpp
-        *ace/CDR_Stream.cpp
-        *ace/Cleanup.cpp
-        *ace/Codecs.cpp
-        *ace/DEV_Addr.cpp
-        *ace/Dynamic_Service_Base.cpp
-        *ace/Filecache.cpp
-        *ace/Flag_Manip.cpp
-        *ace/FlReactor/FlReactor.cpp
-        *ace/FoxReactor/FoxReactor.cpp
-        *ace/Handle_Ops.cpp
-        *ace/Hashable.cpp
-        *ace/INET_Addr.cpp
-        *ace/Init_ACE.cpp
-        *ace/Local_Tokens.cpp
-        *ace/Logging_Strategy.cpp
-        *ace/Malloc.cpp
-        *ace/MEM_Addr.cpp
-        *ace/Message_Block.cpp
-        *ace/Method_Request.cpp
-        *ace/Multihomed_INET_Addr.cpp
-        *ace/Name_Request_Reply.cpp
-        *ace/OS_NS_string.cpp
-        *ace/OS_Thread_Adapter.cpp
-        *ace/Parse_Node.cpp
-        *ace/Ping_Socket.cpp
-        *ace/POSIX_Asynch_IO.cpp
-        *ace/POSIX_CB_Proactor.cpp
-        *ace/Proactor.cpp
-        *ace/Proactor_Impl.cpp
-        *ace/Process_Manager.cpp
-        *ace/QoS/QoS_Decorator.cpp
-        *ace/QoS/QoS_Manager.cpp
-        *ace/QoS/QoS_Session_Factory.cpp
-        *ace/QoS/QoS_Session_Impl.cpp
-        *ace/QoS/SOCK_Dgram_Mcast_QoS.cpp
-        *ace/Reactor.cpp
-        *ace/Refcountable_T.cpp
-        *ace/Remote_Name_Space.cpp
-        *ace/Select_Reactor_Base.cpp
-        *ace/Service_Config.cpp
-        *ace/Service_Gestalt.cpp
-        *ace/Shared_Memory_SV.cpp
-        *ace/Singleton.cpp
-        *ace/Sock_Connect.cpp
-        *ace/SSL/SSL_Asynch_BIO.cpp
-        *ace/SSL/SSL_Asynch_Stream.cpp
-        *ace/SSL/SSL_Context.cpp
-        *ace/SSL/SSL_SOCK.cpp
-        *ace/SSL/SSL_SOCK_Acceptor.cpp
-        *ace/SSL/SSL_SOCK_Connector.cpp
-        *ace/SSL/SSL_SOCK_Stream.cpp
-        *ace/SString.cpp
-        *ace/Svc_Conf.y
-        *ace/Svc_Conf_y.cpp
-        *ace/Task.cpp
-        *ace/Thread_Manager.cpp
-        *ace/Timer_Hash_T.cpp
-        *ace/TkReactor/TkReactor.cpp
-        *ace/Token_Collection.cpp
-        *ace/WIN32_Asynch_IO.cpp
-        *ace/XtReactor/XtReactor.cpp
+        * ace/Auto_Event.cpp:
+        * ace/CDR_Stream.cpp:
+        * ace/Cleanup.cpp:
+        * ace/Codecs.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Filecache.cpp:
+        * ace/Flag_Manip.cpp:
+        * ace/FlReactor/FlReactor.cpp:
+        * ace/FoxReactor/FoxReactor.cpp:
+        * ace/Handle_Ops.cpp:
+        * ace/Hashable.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/Init_ACE.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Logging_Strategy.cpp:
+        * ace/Malloc.cpp:
+        * ace/MEM_Addr.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Method_Request.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_Thread_Adapter.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Ping_Socket.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Proactor_Impl.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/QoS/QoS_Decorator.cpp:
+        * ace/QoS/QoS_Manager.cpp:
+        * ace/QoS/QoS_Session_Factory.cpp:
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/Reactor.cpp:
+        * ace/Refcountable_T.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Shared_Memory_SV.cpp:
+        * ace/Singleton.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK.cpp:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+        * ace/SString.cpp:
+        * ace/Svc_Conf.y
+        * ace/Svc_Conf_y.cpp:
+        * ace/Task.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/TkReactor/TkReactor.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/XtReactor/XtReactor.cpp:
         Removed ACE_RCSID
 
 Thu Aug 12 16:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
