@@ -1,3 +1,10 @@
+Mon Aug 16 22:00:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/Reactor/Misc/Reactor_Misc.mpc:
+
+          Explicitly list an empty Template_Files so that the *_t.cpp doesn't
+          get added to Template_Files.
+
 Mon Aug 16 12:58:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *ace/Auto_Event.cpp
