@@ -80,7 +80,9 @@ namespace CIAO
 
     virtual
       void configure(const Deployment::Properties&);
-
+    
+    virtual void close (void);
+    
   private:
     Deployment_Common::INSTANCES instances_;
   };

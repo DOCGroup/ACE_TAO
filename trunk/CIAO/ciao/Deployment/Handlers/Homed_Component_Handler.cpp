@@ -20,7 +20,13 @@ namespace CIAO
   {
     CIAO_TRACE ("Homed_Component_Handler_i::~Homed_Component_Handler_i");
   }
-    
+  
+  void
+  Homed_Component_Handler_i::close (void)
+  {
+    this->instances_.clear ();
+  }
+
   char * 
   Homed_Component_Handler_i::instance_type (void)
   {

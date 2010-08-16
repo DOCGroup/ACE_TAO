@@ -20,6 +20,12 @@ namespace CIAO
     CIAO_TRACE ("Component_Handler_i::~Component_Handler_i");
   }
     
+  void
+  Component_Handler_i::close (void)
+  {
+    this->instances_.clear ();
+  }
+
   char * 
   Component_Handler_i::instance_type (void)
   {
@@ -215,7 +221,7 @@ namespace CIAO
                                                     cont_id,
                                                     comp_ref.in ());
 
-      *instance_reference <<= comp_ref;;
+      *instance_reference <<= comp_ref;
   }
   
   void
