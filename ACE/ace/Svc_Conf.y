@@ -10,10 +10,6 @@
 #include "ace/Service_Types.h"
 #include "ace/ace_wchar.h"
 
-ACE_RCSID (ace,
-           Svc_Conf_y,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prototypes.

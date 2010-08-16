@@ -29,10 +29,6 @@
 
 #include "ace/Svc_Conf_Param.h"
 
-ACE_RCSID (ace,
-           Service_Gestalt,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard

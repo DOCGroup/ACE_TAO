@@ -6,10 +6,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Time_Value.h"
 
-ACE_RCSID (ace,
-           Handle_Ops,
-           "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

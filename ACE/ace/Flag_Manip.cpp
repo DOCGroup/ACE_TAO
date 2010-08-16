@@ -15,10 +15,6 @@
 #  include "ace/os_include/os_termios.h"
 #endif /* CYGWIN32 */
 
-ACE_RCSID (ace,
-           Flag_Manip,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Flags are file status flags to turn on.

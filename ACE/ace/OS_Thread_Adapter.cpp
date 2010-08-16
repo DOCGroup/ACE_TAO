@@ -2,10 +2,6 @@
 
 #include "ace/OS_Thread_Adapter.h"
 
-ACE_RCSID (ace,
-           OS_Thread_Adapter,
-           "$Id$")
-
 #include "ace/Thread_Hook.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/Global_Macros.h"
