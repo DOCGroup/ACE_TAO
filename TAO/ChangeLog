@@ -1,3 +1,11 @@
+Tue Aug 17 18:47:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp:
+        
+          Fixed bug in cleanup of root scope when TAO_IDL processes
+          multiple files in one execution. Thanks to Olli Savia
+          <ops@iki.fi> for reporting the problem.
+
 Tue Aug 17 18:33:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
