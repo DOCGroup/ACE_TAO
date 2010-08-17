@@ -65,7 +65,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << class_name << "::~"
       << class_name << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "delete this->facet_exec_;" << be_uidt_nl
+      << "::CORBA::release (this->facet_exec_);" << be_uidt_nl
       << "}";
       
   if (this->visit_scope (node) == -1)
