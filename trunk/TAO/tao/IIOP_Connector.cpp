@@ -61,8 +61,9 @@ private:
   unsigned count_;
 };
 
-TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (TAO_IIOP_Connection_Handler **p,
-                                                          unsigned count)
+TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (
+  TAO_IIOP_Connection_Handler **p,
+  unsigned count)
   : ptr_ (p),
     count_ (count)
 {
@@ -146,14 +147,12 @@ TAO_IIOP_Connector::supports_parallel_connects(void) const
 int
 TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint =
-    this->remote_endpoint (endpoint);
+  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (endpoint);
 
   if (iiop_endpoint == 0)
     return -1;
 
-   const ACE_INET_Addr &remote_address =
-     iiop_endpoint->object_addr ();
+   const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
    // Verify that the remote ACE_INET_Addr was initialized properly.
    // Failure can occur if hostname lookup failed when initializing the
@@ -578,14 +577,14 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (TAO_debug_level > 2)
     {
-    ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                   ACE_TEXT ("new %s connection to <%C:%d> on Transport[%d]\n"),
                   transport->is_connected() ?
                   ACE_TEXT("connected") : ACE_TEXT("not connected"),
                   iiop_endpoint->host (),
-                iiop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+                  iiop_endpoint->port (),
+                  svc_handler->peer ().get_handle ()));
     }
 
 #if defined (INDUCE_BUG_2654_C)
@@ -665,7 +664,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_IIOP_Profile (this->orb_core ()),
                   0);
 
-  const int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
