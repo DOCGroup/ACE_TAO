@@ -1,3 +1,8 @@
+Tue Aug 17 07:34:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ace/CDR_Stream.cpp
+        Add Id
+
 Mon Aug 16 22:00:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * examples/Reactor/Misc/Reactor_Misc.mpc:

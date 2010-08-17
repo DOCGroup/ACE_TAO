@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
