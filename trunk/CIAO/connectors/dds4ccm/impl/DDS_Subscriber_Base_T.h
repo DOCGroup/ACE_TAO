@@ -20,11 +20,6 @@
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 class DDS_Subscriber_Base_T
 {
-typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-  ConditionManager_type;
-typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-  PortStatusListener_type;
-
 public:
   DDS_Subscriber_Base_T (void);
   ~DDS_Subscriber_Base_T (void);
@@ -61,14 +56,25 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 protected:
+  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    ConditionManager_type;
+  typedef ::CIAO::DDS4CCM::PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    PortStatusListener_type;
+  typedef ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+    Reader_type;
+  typedef ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    DataReader_type;
+  typedef ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i
+    ContentFilterSetting_type;
+    
   /**
    * DDS_Subscriber_Base_T
    */
   //@{
   ::DDS::DataReaderListener_var listener_;
-  ::CIAO::DDS4CCM::CCM_DDS_ContentFilterSetting_i cft_setting_;
-  ::CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> dds_read_;
-  ::CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> data_reader_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<ContentFilterSetting_type> cft_setting_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Reader_type> dds_read_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataReader_type> data_reader_;
   bool configuration_complete_;
   //@}
   ConditionManager_type condition_manager_;

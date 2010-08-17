@@ -25,7 +25,7 @@ namespace CIAO
     {
     public:
       /// Constructor
-      CCM_DDS_ContentFilterSetting_i ();
+      CCM_DDS_ContentFilterSetting_i (void);
 
       /// Destructor
       virtual ~CCM_DDS_ContentFilterSetting_i (void);

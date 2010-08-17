@@ -5,8 +5,7 @@
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::DDS_Subscriber_Base_T (void)
-  : data_reader_ (0),
-    configuration_complete_ (false)
+  : configuration_complete_ (false)
 {
 }
 
@@ -28,13 +27,12 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
   this->configuration_complete_ = true;
 
-  if (!this->data_reader_.get_impl ())
+  if (!this->data_reader_->get_impl ())
     {
-      if (ACE_OS::strlen (this->cft_setting_.filter ()->expression.in ()) > 0)
+      if (ACE_OS::strlen (this->cft_setting_->filter ()->expression.in ()) > 0)
         {
           ::DDS::ContentFilteredTopic_var cft =
-            this->cft_setting_.create_contentfilteredtopic (topic,
-                                                            subscriber);
+            this->cft_setting_->create_contentfilteredtopic (topic, subscriber);
           if (CORBA::is_nil (cft.in ()))
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR,
@@ -42,21 +40,21 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
                             "Error creating ContentFilteredTopic.\n"));
               throw ::CORBA::INTERNAL ();
             }
-          this->data_reader_.create_datareader (cft,
-                                                subscriber,
-                                                library_name,
-                                                profile_name);
+          this->data_reader_->create_datareader (cft,
+                                                 subscriber,
+                                                 library_name,
+                                                 profile_name);
         }
       else
         {
-          this->data_reader_.create_datareader (topic,
-                                                subscriber,
-                                                library_name,
-                                                profile_name);
+          this->data_reader_->create_datareader (topic,
+                                                 subscriber,
+                                                 library_name,
+                                                 profile_name);
         }
-      this->dds_read_.set_impl (&this->data_reader_,
+      this->dds_read_->set_impl (this->data_reader_,
                                 &this->condition_manager_);
-      this->dds_read_._set_component (component);
+      this->dds_read_->_set_component (component);
     }
 }
 
@@ -75,7 +73,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         ::CORBA::NO_MEMORY ());
     }
     
-  ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
+  ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
       this->listener_.in (),
       PortStatusListener_type::get_mask (status));
 
@@ -96,7 +94,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate ()
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::passivate");
 
   this->condition_manager_.passivate ();
-  this->data_reader_.passivate ();
+  this->data_reader_->passivate ();
   this->listener_ = ::DDS::DataReaderListener::_nil ();
 }
 
@@ -107,9 +105,9 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  this->data_reader_.delete_datareader (subscriber);
-  this->cft_setting_.delete_contentfilteredtopic (subscriber);
-  this->dds_read_._set_component (CCM_TYPE::base_type::_nil ());
+  this->data_reader_->delete_datareader (subscriber);
+  this->cft_setting_->delete_contentfilteredtopic (subscriber);
+  this->dds_read_->_set_component (CCM_TYPE::base_type::_nil ());
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -118,7 +116,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data");
 
-  return CCM_TYPE::reader_type::_duplicate (&this->dds_read_);
+  return CCM_TYPE::reader_type::_duplicate (this->dds_read_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -127,7 +125,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_dds_entity (v
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_dds_entity");
 
-  return ::DDS::CCM_DataReader::_duplicate (&this->data_reader_);
+  return ::DDS::CCM_DataReader::_duplicate (this->data_reader_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -136,7 +134,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_filter_config
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_filter_config");
 
-  return ::CCM_DDS::CCM_ContentFilterSetting::_duplicate (&this->cft_setting_);
+  return ::CCM_DDS::CCM_ContentFilterSetting::_duplicate (this->cft_setting_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -145,7 +143,7 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter (void)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter");
 
-  return this->cft_setting_.filter ();
+  return this->cft_setting_->filter ();
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -160,6 +158,6 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::filter (
     }
   else
     {
-      this->cft_setting_.filter (filter);
+      this->cft_setting_->filter (filter);
     }
 }

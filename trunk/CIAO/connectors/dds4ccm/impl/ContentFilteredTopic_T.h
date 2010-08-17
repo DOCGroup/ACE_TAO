@@ -32,7 +32,7 @@ namespace CIAO
     typedef CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DomainParticipant_type;
     public:
       /// Constructor
-      CCM_DDS_ContentFilteredTopic_T (DDSContentFilteredTopic * dw);
+      explicit CCM_DDS_ContentFilteredTopic_T (DDSContentFilteredTopic * dw = 0);
 
       /// Destructor
       virtual ~CCM_DDS_ContentFilteredTopic_T (void);
