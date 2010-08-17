@@ -1,3 +1,19 @@
+Tue Aug 17 08:49:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/idltocpp0x/IDLC++0xRFP.odt:
+          First initial commit, much more has to be done to get this draft RFP
+          ready
+
+        * tao/IIOP_Connector.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Tester.cpp:
+          Layout changes
+
+        * tests/POA/On_Demand_Activation/Servant_Activator.cpp:
+          Boolean now maps to bool
+
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Removed obsolete helper method
+
 Mon Aug 16 09:09:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
