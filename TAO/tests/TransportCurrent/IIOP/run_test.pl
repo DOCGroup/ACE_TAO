@@ -9,17 +9,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use Config;
 use PerlACE::TestTarget;
 
-sub add_path {
-    my($name)  = shift;
-    my($value) = shift;
-    if (defined $ENV{$name}) {
-        $ENV{$name} .= $Config{'path_sep'} . $value
-        }
-    else {
-        $ENV{$name} = $value;
-    }
-}
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 

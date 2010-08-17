@@ -59,6 +59,6 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with test_i delete it.
-  if (remaining_activations == 0)
+  if (!remaining_activations)
     delete servant;
 }
