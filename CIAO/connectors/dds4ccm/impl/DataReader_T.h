@@ -52,7 +52,7 @@ namespace CIAO
     typedef DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> DataReader_type;
     public:
       /// Constructor
-      DataReader_T (DDSDataReader * dr);
+      explicit DataReader_T (DDSDataReader * dr = 0);
 
       /// Destructor
       virtual ~DataReader_T (void);

@@ -55,8 +55,8 @@ namespace CIAO_LNE_Test_Sender_Impl
           }
       }
 
-::LNE_Test::ListenNotEnabledTestConnector::Writer_var writer =
-          this->context_->get_connection_info_write_data ();
+    ::LNE_Test::ListenNotEnabledTestConnector::Writer_var writer =
+      this->context_->get_connection_info_write_data ();
 
     try
       {

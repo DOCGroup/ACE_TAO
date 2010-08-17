@@ -32,7 +32,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_complete (
             subscriber,
             library_name,
             profile_name);
-  this->data_control_._set_component (component);
+  this->data_control_->_set_component (component);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
@@ -50,13 +50,13 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::activate (
                         DataReaderListener_type (
                           listener,
                           status,
-                          data_control_,
+                          this->data_control_,
                           reactor,
                           this->condition_manager_),
                         ::CORBA::NO_MEMORY ());
     }
     
-  ::DDS::ReturnCode_t const retcode = this->data_reader_.set_listener (
+  ::DDS::ReturnCode_t const retcode = this->data_reader_->set_listener (
     this->listener_.in (),
     DataReaderListener_type::get_mask (status));
 
@@ -77,7 +77,7 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::remove");
 
-  this->data_control_._set_component (CCM_TYPE::base_type::_nil ());
+  this->data_control_->_set_component (CCM_TYPE::base_type::_nil ());
 
   DDSSubscriberBase_type::remove (subscriber);
 }
@@ -88,6 +88,6 @@ DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control (void)
 {
   DDS4CCM_TRACE ("DDS_Listen_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_data_control");
 
-  return ::CCM_DDS::CCM_DataListenerControl::_duplicate (&this->data_control_);
+  return ::CCM_DDS::CCM_DataListenerControl::_duplicate (this->data_control_);
 }
 

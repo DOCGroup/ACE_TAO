@@ -11,12 +11,12 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReaderStateListener_T (
   typename CCM_TYPE::statelistener_type::_ptr_type listener,
   ::CCM_DDS::PortStatusListener_ptr port_status_listener,
-  StateListenerControl_type& control,
+  ::CCM_DDS::StateListenerControl_ptr control,
   ACE_Reactor* reactor,
   ConditionManager_type& condition_manager)
   : PortStatusListener_T <DDS_TYPE, CCM_TYPE, VENDOR_TYPE> (port_status_listener, reactor) ,
     listener_ (CCM_TYPE::statelistener_type::_duplicate (listener)),
-    control_ (control),
+    control_ (::CCM_DDS::StateListenerControl::_duplicate (control)),
     condition_manager_ (condition_manager)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::DataReaderStateListener_T");
@@ -36,7 +36,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available");
   if (!::CORBA::is_nil (rdr) &&
-     this->control_.mode () != ::CCM_DDS::NOT_ENABLED)
+     this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
     {
       if (this->reactor_)
         {
@@ -65,7 +65,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i");
 
   if (::CORBA::is_nil (rdr) ||
-      this->control_.mode () == ::CCM_DDS::NOT_ENABLED)
+      this->control_->mode () == ::CCM_DDS::NOT_ENABLED)
     {
       return;
     }
@@ -88,11 +88,11 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       ::DDS_SampleInfoSeq sample_info;
       ::DDS_Long max_samples = 0;
 
-      this->control_.mode () == ::CCM_DDS::ONE_BY_ONE
+      this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
         ? max_samples = DDS_LENGTH_UNLIMITED
-        : this->control_.max_delivered_data() == 0
+        : this->control_->max_delivered_data() == 0
           ? max_samples = DDS_LENGTH_UNLIMITED
-          : max_samples = this->control_.max_delivered_data ();
+          : max_samples = this->control_->max_delivered_data ();
 
       ::DDS::ReturnCode_t const result = reader->take (
                   data,
@@ -109,7 +109,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                         ACE_TEXT ("Unable to take data from data reader, ")
                         ACE_TEXT ("error %d.\n"), result));
         }
-      if (this->control_.mode () == ::CCM_DDS::ONE_BY_ONE)
+      if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
           for (::DDS_Long i = 0; i < data.length (); ++i)
             {
@@ -140,7 +140,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                 }
             }
         }
-      else if (this->control_.mode () == ::CCM_DDS::MANY_BY_MANY)
+      else if (this->control_->mode () == ::CCM_DDS::MANY_BY_MANY)
         {
           typedef std::vector<DDS_Long> Updates;
           Updates updates;

@@ -20,15 +20,6 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDO
 class DDS_Listen_T
   : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
 {
-typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-  ConditionManager_type;
-typedef ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-  DataReaderListener_type;
-typedef CCM_DDS_DataListenerControl_T< ::CCM_DDS::CCM_DataListenerControl, CCM_TYPE>
-  DataListenerControl_type;
-typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
-  DDSSubscriberBase_type;
-
 public:
   DDS_Listen_T (void);
   ~DDS_Listen_T (void);
@@ -56,11 +47,20 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
+  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    ConditionManager_type;
+  typedef ::CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    DataReaderListener_type;
+  typedef CCM_DDS_DataListenerControl_T< ::CCM_DDS::CCM_DataListenerControl, CCM_TYPE>
+    DataListenerControl_type;
+  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+    DDSSubscriberBase_type;
+
   /**
    * DDS_Listen
    */
   //@{
-  DataListenerControl_type data_control_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataListenerControl_type> data_control_;
   //@}
 };
 

@@ -48,7 +48,7 @@ namespace CIAO
     typedef CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Topic_type;
 
     public:
-      explicit CCM_DDS_DataWriter_T (DDSDataWriter * dw);
+      explicit CCM_DDS_DataWriter_T (DDSDataWriter * dw = 0);
 
       virtual ::DDS::ReturnCode_t set_qos (const ::DDS::DataWriterQos & qos);
 

@@ -24,6 +24,25 @@ namespace CIAO
     private:
       typename CCM_TYPE::base_type::_var_type component_;
     };
+
+    /**
+     * Helper template that allocates a new LOCAL_OBJECT from the heap and that
+     * makes sure we call ::CORBA::release() at destruction
+     */
+    template <typename LOCAL_OBJECT>
+    class LocalObject_Auto_Ptr_T : private ACE_Copy_Disabled
+    {
+    public:
+      LocalObject_Auto_Ptr_T (void);
+      
+      ~LocalObject_Auto_Ptr_T (void);
+
+      LOCAL_OBJECT* operator-> (void) const;
+
+      operator LOCAL_OBJECT *& (void);
+    private:
+      LOCAL_OBJECT* l;
+    };
   }
 }
 

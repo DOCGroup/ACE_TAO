@@ -15,11 +15,6 @@ template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDO
 class DDS_Get_T
   : public DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
 {
-typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-  ConditionManager_type;
-typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
-  DDSSubscriberBase_type;
-
 public:
   DDS_Get_T (void);
   ~DDS_Get_T (void);
@@ -43,12 +38,19 @@ public:
     ::DDS::Subscriber_ptr subscriber);
 
 private:
+  typedef CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    ConditionManager_type;
+  typedef DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+    DDSSubscriberBase_type;
+  typedef ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>
+    Getter_type;
+
   /**
    * DDS_Get
    */
   //@{
   ::DDS::DataReaderListener_var listener_;
-  ::CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE> dds_get_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Getter_type> dds_get_;
   //@}
 };
 

@@ -9,8 +9,7 @@
 #include "dds4ccm/impl/Log_Macros.h"
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Update_T (void) :
-  ccm_dds_writer_ (0)
+DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Update_T (void) 
 {
 }
 
@@ -29,7 +28,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
   const char* profile_name)
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete");
-  if (!this->ccm_dds_writer_.get_impl ())
+  if (!this->ccm_dds_writer_->get_impl ())
     {
       ::DDS::DataWriter_var dwv_tmp;
       if (library_name && profile_name)
@@ -60,9 +59,9 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::configuration_complete (
                         "internal represenation.\n"));
           throw ::CORBA::INTERNAL ();
         }
-      this->ccm_dds_writer_.set_impl (rw->get_impl ());
-      this->dds_update_.set_impl (&this->ccm_dds_writer_);
-      this->dds_update_._set_component (component);
+      this->ccm_dds_writer_->set_impl (rw->get_impl ());
+      this->dds_update_->set_impl (this->ccm_dds_writer_);
+      this->dds_update_->_set_component (component);
     }
 }
 
@@ -78,7 +77,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::activate ()
                         ::CORBA::NO_MEMORY ());
     }
 
-  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_.set_listener (
+  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_->set_listener (
     this->data_listener_.in (),
     DataWriterListener_type::get_mask ());
 
@@ -97,9 +96,10 @@ void
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate ()
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::passivate");
-  ::DDS::ReturnCode_t const retcode = this->ccm_dds_writer_.set_listener (
-                                              ::DDS::DataWriterListener::_nil (),
-                                              0);
+  
+  ::DDS::ReturnCode_t const retcode =
+    this->ccm_dds_writer_->set_listener (::DDS::DataWriterListener::_nil (), 0);
+    
   if (retcode != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
@@ -119,7 +119,7 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
 {
   DDS4CCM_TRACE ("DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove");
   ::DDS::ReturnCode_t const retval =
-    publisher->delete_datawriter (&this->ccm_dds_writer_);
+    publisher->delete_datawriter (this->ccm_dds_writer_);
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
@@ -128,22 +128,22 @@ DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::remove (
         ::CIAO::DDS4CCM::translate_retcode (retval)));
       throw ::CORBA::INTERNAL ();
     }
-  this->ccm_dds_writer_.set_impl (0);
-  this->dds_update_._set_component (CCM_TYPE::base_type::_nil ());
-  this->dds_update_.set_impl (0);
+  this->ccm_dds_writer_->set_impl (0);
+  this->dds_update_->_set_component (CCM_TYPE::base_type::_nil ());
+  this->dds_update_->set_impl (0);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 typename CCM_TYPE::updater_type::_ptr_type
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_data (void)
 {
-  return CCM_TYPE::updater_type::_duplicate (&this->dds_update_);
+  return CCM_TYPE::updater_type::_duplicate (this->dds_update_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::CCM_DataWriter_ptr
 DDS_Update_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_dds_entity (void)
 {
-  return ::DDS::CCM_DataWriter::_duplicate (&this->ccm_dds_writer_);
+  return ::DDS::CCM_DataWriter::_duplicate (this->ccm_dds_writer_);
 }
 
