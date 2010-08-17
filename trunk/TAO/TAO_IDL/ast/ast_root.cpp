@@ -177,44 +177,44 @@ AST_Root::destroy ()
   long j = 0;
   AST_Decl *d = 0;
 
-  // Just destroy and delete the non-predefined types in the
-  // scope, in case we are processing multiple IDL files.
+  // Just destroy and delete everything but the CORBA
+  // module, and the 'void' keyword, in case we are
+  // processing multiple IDL files.
   // Final cleanup will be done in fini().
-  for (i = this->pd_decls_used; i > 0; --i)
+  long end = this->pd_decls_used;
+  
+  for (i = 2; i < end; ++i)
     {
-      d = this->pd_decls[i - 1];
-
-      // We want to keep the predefined types we add to global
-      // scope around and not add them each time.
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          j = i;
-          break;
-        }
+      d = this->pd_decls[i];
 
       d->destroy ();
       delete d;
       d = 0;
       --this->pd_decls_used;
     }
+    
+  // Same goes for the references and the name
+  // references, leave the first 2.
 
   // This array of pointers holds references, no need
   // for destruction. The array itself will be cleaned
   // up when AST_Root::fini() calls UTL_Scope::destroy ().
-  for (i = this->pd_referenced_used; i > j; --i)
+  for (i = 2; i < this->pd_referenced_used; ++i)
     {
-      this->pd_referenced[i - 1] = 0;
-      --this->pd_referenced_used;
+      this->pd_referenced[i] = 0;
     }
+    
+  this->pd_referenced_used = 2;
 
-  for (i = this->pd_name_referenced_used; i > j; --i)
+  for (i = 2; i < this->pd_name_referenced_used; ++i)
     {
-      Identifier *id = this->pd_name_referenced[i - 1];
+      Identifier *id = this->pd_name_referenced[i];
       id->destroy ();
       delete id;
       id = 0;
-      --this->pd_name_referenced_used;
     }
+    
+  this->pd_name_referenced_used = 2;
 }
 
 void
