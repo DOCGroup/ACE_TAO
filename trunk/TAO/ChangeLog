@@ -1,3 +1,8 @@
+Tue Aug 17 18:33:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+          Instead of calling delete on the ami4ccm facet, release it
+
 Tue Aug 17 10:56:02 UTC 2010  Olli Savia  <ops@iki.fi>
 
         * tao/AnyTypeCode/TypeCode.inl:
