@@ -34,6 +34,9 @@ project (DAnCE_PL_Daemon) : dance_exe, install, dance_plan_launcher, utils, danc
    libs += DAnCE_PL_Daemon_stub
    dynamicflags += DANCE_PL_SKEL_BUILD_DLL
 
+   IDL_Files {
+   }
+
    Source_Files {
      PL_DaemonS.cpp
      PL_Daemon_Impl.cpp
