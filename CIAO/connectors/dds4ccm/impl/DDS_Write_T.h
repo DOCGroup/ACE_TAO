@@ -42,20 +42,22 @@ public:
 
   void remove (::DDS::Publisher_ptr publisher);
 
-private:
+private:      
+  typedef ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> Writer_type;
+  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    DataWriterListener_type;
+  typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    DataWriter_type;
+    
   /**
    * DDS_Write
    */
   //@{
   ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::Writer_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> writer_t_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ccm_dds_writer_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < Writer_type > writer_t_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T < DataWriter_type > ccm_dds_writer_;
   //@}
 
-  typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-    DataWriterListener_type;
-  typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
-    DataWriter_type;
 };
 
 #include "dds4ccm/impl/DDS_Write_T.cpp"

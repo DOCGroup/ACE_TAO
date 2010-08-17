@@ -1,3 +1,64 @@
+Tue Aug 17 18:30:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.cpp:
+          Splitted lifecycle of the connector from its facets using the new
+          LocalObject_Auto_Ptr_T which allocates the local facet and makes sure
+          we call release on it when the connector gets destructed. It can be
+          that the user component is destructed after the connector and than
+          we just can't destructs the facets at that moment, because they are
+          still in the user component context. They will get destructed at the
+          moment the user component context gets destructed
+
+Tue Aug 17 18:29:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.h:
+        * connectors/dds4ccm/impl/ContentFilteredTopic_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataWriter_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.h:
+        * connectors/dds4ccm/impl/LocalObject_T.cpp:
+
+        * connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+
 Tue Aug 17 07:56:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/docs/RFP.odt:

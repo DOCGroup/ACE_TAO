@@ -35,18 +35,21 @@ public:
   void remove (::DDS::Publisher_ptr publisher);
 
 private:
-  /**
-   * DDS_Update
-   */
-  //@{
-  ::DDS::DataWriterListener_var data_listener_;
-  ::CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> dds_update_;
-  ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> ccm_dds_writer_;
-  //@}
   typedef ::CIAO::DDS4CCM::DataWriterListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriterListener_type;
   typedef ::CIAO::DDS4CCM::CCM_DDS_DataWriter_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
     DataWriter_type;
+  typedef ::CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
+    Updater_type;
+
+    /**
+   * DDS_Update
+   */
+  //@{
+  ::DDS::DataWriterListener_var data_listener_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<Updater_type> dds_update_;
+  ::CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<DataWriter_type> ccm_dds_writer_;
+  //@}
 };
 
 #include "dds4ccm/impl/DDS_Update_T.cpp"
