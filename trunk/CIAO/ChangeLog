@@ -1,3 +1,9 @@
+Tue Aug 17 23:41:47 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Daemon/PL_Daemon.mpc:
+
+          Windows linker fixes.
+
 Tue Aug 17 18:30:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ContentFilterSetting.h:
