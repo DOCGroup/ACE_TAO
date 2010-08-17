@@ -89,7 +89,7 @@ namespace CORBA
   
   template<>
   TAO_Export Boolean
-  is_nil (Object_ptr);
+  is_nil<> (Object_ptr);
 
   /**
    * @class Object
