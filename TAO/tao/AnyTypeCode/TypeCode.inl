@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<>
 ACE_INLINE void
-CORBA::release (CORBA::TypeCode_ptr obj)
+CORBA::release<> (CORBA::TypeCode_ptr obj)
 {
   if (obj != 0)
     {
