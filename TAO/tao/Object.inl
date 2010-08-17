@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<>
 ACE_INLINE
 CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
+CORBA::is_nil<> (CORBA::Object_ptr obj)
 {
   if (obj == 0)
     {

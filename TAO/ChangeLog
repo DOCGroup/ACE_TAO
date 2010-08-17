@@ -1,3 +1,10 @@
+Tue Aug 17 10:56:02 UTC 2010  Olli Savia  <ops@iki.fi>
+
+        * tao/AnyTypeCode/TypeCode.inl:
+        * tao/Object.h:
+        * tao/Object.inl:
+          Modified template specializations to work with older GCCs.
+
 Tue Aug 17 08:49:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/idltocpp0x/IDLC++0xRFP.odt:
