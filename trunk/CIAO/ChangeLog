@@ -1,3 +1,8 @@
+Tue Aug 17 07:56:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/docs/RFP.odt:
+          Draft RFP, now multiple people can update it
+
 Mon Aug 16 15:51:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
