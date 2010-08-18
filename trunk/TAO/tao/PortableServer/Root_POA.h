@@ -78,6 +78,7 @@ class TAO_Network_Priority_Hook;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
 class TAO_Regular_POA;
+class TAO_Active_Object_Map;
 
 namespace PortableInterceptor
 {
@@ -125,6 +126,10 @@ public:
   friend class TAO_IORInfo;
 
   typedef ACE_CString String;
+
+  /// @todo Temporarily for debugging, useful for debugging and status retrieval,
+  /// could be removed with future rework of the AOM.
+  TAO_Active_Object_Map * get_active_object_map() const;
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::POA_ptr create_POA (

@@ -120,6 +120,8 @@ namespace TAO
 
         virtual ::PortableServer::ServantRetentionPolicyValue type() const;
 
+        virtual TAO_Active_Object_Map * get_active_object_map() const;
+
     protected:
       TAO_Root_POA *poa_;
     };

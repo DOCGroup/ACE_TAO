@@ -115,6 +115,9 @@ namespace TAO
         PortableServer::Servant servant) = 0;
 
       virtual ::PortableServer::ServantRetentionPolicyValue type() const = 0;
+
+      virtual TAO_Active_Object_Map * get_active_object_map() const = 0;
+
     };
   }
 }

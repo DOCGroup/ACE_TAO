@@ -2725,4 +2725,12 @@ TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
 {
 }
 
+TAO_Active_Object_Map *
+TAO_Root_POA::get_active_object_map() const
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    get_active_object_map();
+}
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL
