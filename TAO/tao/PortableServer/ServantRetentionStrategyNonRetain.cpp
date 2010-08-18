@@ -283,6 +283,11 @@ namespace TAO
       return ::PortableServer::NON_RETAIN;
     }
 
+    TAO_Active_Object_Map *
+    ServantRetentionStrategyNonRetain::get_active_object_map() const
+    {
+      return 0;
+    }
   }
 }
 

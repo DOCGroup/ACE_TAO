@@ -138,6 +138,8 @@ namespace TAO
       virtual int unbind_using_user_id (
         const PortableServer::ObjectId &user_id);
 
+      TAO_Active_Object_Map * get_active_object_map() const;
+
     private:
       auto_ptr<TAO_Active_Object_Map> active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;

@@ -61,7 +61,7 @@ namespace TAO
       name_str += poa->orb_core ().orbid ();
       name_str += '_';
       name_str += poa->the_name ();
-      
+
       active_object_map->monitor_->name (name_str.c_str ());
       active_object_map->monitor_->add_to_registry ();
 #endif /* TAO_HAS_MONITOR_POINTS */
@@ -975,6 +975,12 @@ namespace TAO
     ServantRetentionStrategyRetain::type(void) const
     {
       return ::PortableServer::RETAIN;
+    }
+
+    TAO_Active_Object_Map *
+    ServantRetentionStrategyRetain::get_active_object_map() const
+    {
+      return this->active_object_map_.get();
     }
 
   }
