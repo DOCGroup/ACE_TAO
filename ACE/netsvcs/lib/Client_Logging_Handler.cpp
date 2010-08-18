@@ -135,9 +135,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   int flags = 0;
 
   // We've got a framed IPC mechanism, so we can just to a <recv>.
-  int result = spipe.recv (&header_msg,
-                           (ACE_Str_Buf *) 0,
-                           &flags);
+  ssize_t result = spipe.recv (&header_msg,
+                               (ACE_Str_Buf *) 0,
+                               &flags);
 
   if (result < 0 || header_msg.len == 0)
     {
@@ -241,7 +241,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                        &payload_msg,
                        &flags);
 
-  if (result < 0 || payload_msg.len != length)
+  if (result < 0 || payload_msg.len != (int)length)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%p\n"),
