@@ -98,11 +98,6 @@ be_visitor_context_svh::visit_component (be_component *node)
   os_ << "virtual ~" << lname << "_Context (void);";
 
   os_ << be_nl << be_nl
-      << "/// CIAO-specific." << be_nl
-      << "static " << lname << "_Context *" << be_nl
-      << "_narrow ( ::Components::SessionContext_ptr p);";
-      
-  os_ << be_nl << be_nl
       << "// Operations for " << lname
       << " receptacles and event sources,"
       << be_nl
