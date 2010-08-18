@@ -169,7 +169,7 @@ namespace CIAO
             dynamic_cast < ContentFilteredTopic_type * > (a_topic);
           if (!cf_topic)
             {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                           "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
                           "VENDOR_TYPE>::create_datareader -Error: Unable to "
                           "cast provided topic to one of its servant.\n"));
@@ -238,7 +238,7 @@ namespace CIAO
             dynamic_cast < ContentFilteredTopic_type * > (a_topic);
           if (!cf_topic)
             {
-              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                             "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::create_datareader_with_profile - "
                             "Error: Unable to cast provided topic to one "
@@ -301,7 +301,7 @@ namespace CIAO
       DataReader_type *dr = dynamic_cast< DataReader_type *> (a_datareader);
       if (!dr)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_datareader -Unable to cast "
                         "provided object reference to servant.\n"));
