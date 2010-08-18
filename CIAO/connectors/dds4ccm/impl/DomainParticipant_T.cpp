@@ -315,7 +315,7 @@ namespace CIAO
 
       if (!ccm_dds_sub)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_subscriber - Unable to cast "
                         "provided object reference to servant pointer.\n"));
@@ -590,7 +590,7 @@ namespace CIAO
 
       if (!tp)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_topic <%C> - Unable to cast "
                         "provided object reference to servant.\n",
@@ -698,7 +698,7 @@ namespace CIAO
       Topic_type *top = dynamic_cast< Topic_type *> (related_topic);
       if (!top)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_contentfilteredtopic - "
                         "Unable to cast provided topic.\n"));
@@ -764,7 +764,7 @@ namespace CIAO
           dynamic_cast < ContentFilteredTopic_type *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_contentfilteredtopic - "
                         "Unable to cast provided ContentFilteredTopic.\n"));

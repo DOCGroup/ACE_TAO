@@ -50,7 +50,7 @@ namespace CIAO
 
       if (!topic)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter - "
                         "Error: Unable to cast provided topic to its servant.\n"));
@@ -105,7 +105,7 @@ namespace CIAO
 
       if (!topic)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Error: Unable to cast provided topic to its servant.\n"));
@@ -165,7 +165,7 @@ namespace CIAO
 
       if (!top)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_datawriter - "
                         "Unable to cast provided object reference to servant.\n"));
