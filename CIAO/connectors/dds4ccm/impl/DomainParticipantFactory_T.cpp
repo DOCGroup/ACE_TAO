@@ -223,7 +223,7 @@ namespace CIAO
 
       if (!part)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                         "CCM_DDS_DomainParticipantFactory_T"
                         "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_participant - "
                         "Unable to cast provided object reference to servant "

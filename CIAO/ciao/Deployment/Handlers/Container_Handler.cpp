@@ -131,9 +131,10 @@ namespace CIAO
   }
 
   void
-  Container_Handler_i::remove_instance (const ::Deployment::DeploymentPlan & plan,
-                                        ::CORBA::ULong instanceRef,
-                                        const ::CORBA::Any &)
+  Container_Handler_i::remove_instance (
+    const ::Deployment::DeploymentPlan & plan,
+    ::CORBA::ULong instanceRef,
+    const ::CORBA::Any &)
   {
     CIAO_TRACE ("Container_Handler_i::remove_instance");
     
@@ -144,9 +145,9 @@ namespace CIAO
     
     if (::CORBA::is_nil (cont.in ()))
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO,
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Container_Handler_i::remove_instance - "
-                        "Error, no contianer with id <%C>",
+                        "Error, no container with id <%C>\n",
                         name));
         throw ::Deployment::StopError (name,
                                        "No container with ID");
