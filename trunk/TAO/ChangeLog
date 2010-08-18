@@ -1,3 +1,15 @@
+Wed Aug 18 17:14:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        
+          Modified generated _narrow() method for contexts, to
+          increment the refcount, as with all other _narrow()
+          methods.
+
 Wed Aug 18 15:04:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp(destroy):

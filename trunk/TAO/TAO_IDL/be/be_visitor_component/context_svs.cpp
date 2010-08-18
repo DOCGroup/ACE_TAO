@@ -67,8 +67,13 @@ be_visitor_context_svs::visit_component (be_component *node)
       <<  "_Context::_narrow ( ::Components::SessionContext_ptr p)"
       << be_nl
       << "{" << be_idt_nl
-      << "return dynamic_cast<" << lname
-      << "_Context *> (p);" << be_uidt_nl
+      << "return" << be_idt_nl
+      << "dynamic_cast<" << lname << "_Context *> (" << be_idt_nl
+      << global << sname << "::CCM_" << lname
+      << "_Context::_duplicate (" << be_idt_nl
+      << "dynamic_cast< " << global << sname << "::CCM_"
+      << lname << "_Context_ptr> (p)));"
+      << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
   if (this->visit_component_scope (node) == -1)
