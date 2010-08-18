@@ -171,10 +171,9 @@ AST_Root::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Root::destroy ()
+AST_Root::destroy (void)
 {
   long i = 0;
-  long j = 0;
   AST_Decl *d = 0;
 
   // Just destroy and delete everything but the CORBA

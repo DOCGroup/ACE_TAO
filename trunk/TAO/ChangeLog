@@ -1,3 +1,9 @@
+Wed Aug 18 15:04:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp(destroy):
+        
+          Removed unused local variable.
+
 Wed Aug 18 14:05:20 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tao/PortableServer/Root_POA.cpp:
