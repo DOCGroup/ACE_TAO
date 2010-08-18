@@ -1,3 +1,11 @@
+Wed Aug 18 18:10:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+        
+          Removed generation of the context servants's _narrow()
+          method, it doesn't appear to be needed any more.
+
 Wed Aug 18 17:14:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
