@@ -1,11 +1,20 @@
+Thu Aug 19 12:37:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Functor_T.h:
+          Doxygen changes
+
+        * include/makeinclude/platform_linux.GNU:
+          Make it possible to control -mminimal-toc through the
+          platform_macros.GNU file using minimaltoc
+
 Thu Aug 19 12:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/config/inet.mpb:
         * bin/MakeProjectCreator/config/inetssl.mpb:
         * protocols/ace/INet/inet.mpc:
         * protocols/ace/INet/inet_ssl.mpb:
-	  Changes to split INet into 2 libraries; regular and SSL.
-	  Fixes dependencies of DAnCE tools on SSL.
+          Changes to split INet into 2 libraries; regular and SSL.
+          Fixes dependencies of DAnCE tools on SSL.
 
 Wed Aug 18 09:26:04 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
