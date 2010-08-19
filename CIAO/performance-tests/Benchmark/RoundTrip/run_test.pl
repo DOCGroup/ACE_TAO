@@ -72,7 +72,7 @@ if ($tg->WaitForFileTimed($daemon_base,
 $DC = $tg->CreateProcess ("$controller",
                           "$common_args $start_args");
 
-$DC->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
+$DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
 if ($tg->WaitForFileTimed($home_base,
                           $tg->ProcessStartWaitInterval ()) == -1) {
     print STDERR "ERROR: Could not find home ior file <$home_ior>\n";
@@ -80,7 +80,7 @@ if ($tg->WaitForFileTimed($home_base,
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
+$client = $CL->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -91,7 +91,7 @@ if ($client != 0) {
 $DC = $tg->CreateProcess ("$controller",
                             "$common_args $end_args");
 
-$ctrl = $DC->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
+$ctrl = $DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
 if ($ctrl != 0) {
     print STDERR "ERROR: Fail to end component server\n";
     $DC->Kill ();
@@ -102,7 +102,7 @@ if ($ctrl != 0) {
 $DC = $tg->CreateProcess ("$controller",
                           "$common_args $shutdown_args");
 
-$ctrl = $DC->SpawnWaitKill ($tg->ProcessStopWaitInterval ());
+$ctrl = $DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
 if ($ctrl != 0) {
     print STDERR "ERROR: Fail to shutdown CIAODaemon\n";
     $DS->Kill ();

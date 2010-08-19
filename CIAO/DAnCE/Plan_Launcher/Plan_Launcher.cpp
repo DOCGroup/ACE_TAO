@@ -106,7 +106,7 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("to plan UUID if plan is provided. ")
               ACE_TEXT ("Default is on for NM-based deployments.\n")
 
-              ACE_TEXT ("\t-q|--quiet\t\t\tSupress error messages.\n")
+              ACE_TEXT ("\t-q|--quiet\t\t\tSuppress error messages.\n")
               ACE_TEXT ("\t-h|--help\t\t\tShow this usage information\n")
               ));
 }
