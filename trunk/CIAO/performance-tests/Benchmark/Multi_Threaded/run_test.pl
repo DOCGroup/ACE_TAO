@@ -81,7 +81,7 @@ sleep (5);
 
 #Start the client to send the trigger message
 $CL = $tg->CreateProcess ("../Multi_Threaded/client", "");
-$CL->SpawnWaitKill($tg->ProcessStopWaitInterval ());
+$CL->SpawnWaitKill($tg->ProcessStartWaitInterval ());
 
 $AM->Kill ();
 $AD->Kill ();

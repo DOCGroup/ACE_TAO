@@ -224,7 +224,7 @@ sleep (30);
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -q\n";
+print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file\n";
 
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-k file://$ior_emfile -x $cdp_file -s");
