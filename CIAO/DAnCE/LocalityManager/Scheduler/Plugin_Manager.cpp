@@ -300,7 +300,7 @@ namespace DAnCE
     if ((i = this->config_plugins_.find (id)) ==
         this->config_plugins_.end ())
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
+        DANCE_ERROR (9, (LM_TRACE, DLINFO
                          ACE_TEXT ("Plugin_Manager::get_configuration_handler - ")
                          ACE_TEXT ("No configuration plugin for type %C found\n"),
                          id));
