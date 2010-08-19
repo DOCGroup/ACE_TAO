@@ -127,7 +127,7 @@ public:
 
   typedef ACE_CString String;
 
-  /// @todo Temporarily for debugging, useful for debugging and status retrieval,
+  /// @note Temporarily for debugging, useful for debugging and status retrieval,
   /// could be removed with future rework of the AOM.
   TAO_Active_Object_Map * get_active_object_map() const;
 
