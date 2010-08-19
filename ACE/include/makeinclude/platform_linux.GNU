@@ -56,13 +56,19 @@ ifeq ($(buildbits),64)
   ifneq ($(CROSS_COMPILE),)
     PPC64_TARGET := $(shell echo '__powerpc64__' | $(CC) -E - | tail -n 1)
     ifeq ($(PPC64_TARGET),1)
-      FLAGS_C_CC += -mminimal-toc
+      minimaltoc ?= 1
     endif
   else
     ifeq ($(SYSARCH),ppc64)
-      FLAGS_C_CC += -mminimal-toc
+      minimaltoc ?= 1
     endif
   endif
+endif
+
+minimaltoc ?= 0
+
+ifeq ($(minimaltoc),1)
+  FLAGS_C_CC += -mminimal-toc
 endif
 
 #
