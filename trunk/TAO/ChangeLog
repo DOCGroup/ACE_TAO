@@ -1,19 +1,31 @@
+Thu Aug 19 10:11:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/idltocpp0x/IDLC++0xRFP.odt:
+          Updated draft
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.inl:
+          Removed TAO_Local_Refcounted_Object, it is deprecated for years now
+
+        * tao/Objref_VarOut_T.h:
+          Doxygen changes
+
 Wed Aug 18 18:10:21 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
-        
+
           Removed generation of the context servants's _narrow()
           method, it doesn't appear to be needed any more.
 
 Wed Aug 18 17:14:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:
-        
+
           Modified generated _narrow() method for contexts, to
           increment the refcount, as with all other _narrow()
           methods.
@@ -21,7 +33,7 @@ Wed Aug 18 17:14:05 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Aug 18 15:04:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp(destroy):
-        
+
           Removed unused local variable.
 
 Wed Aug 18 14:05:20 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
@@ -38,7 +50,7 @@ Wed Aug 18 14:05:20 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 Tue Aug 17 18:47:23 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp:
-        
+
           Fixed bug in cleanup of root scope when TAO_IDL processes
           multiple files in one execution. Thanks to Olli Savia
           <ops@iki.fi> for reporting the problem.
