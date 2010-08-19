@@ -1,3 +1,12 @@
+Thu Aug 19 12:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/inet_ssl.mpb:
+	  Changes to split INet into 2 libraries; regular and SSL.
+	  Fixes dependencies of DAnCE tools on SSL.
+
 Wed Aug 18 09:26:04 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * netsvcs/lib/Client_Logging_Handler.cpp:
