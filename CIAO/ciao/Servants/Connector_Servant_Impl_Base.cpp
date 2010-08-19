@@ -116,14 +116,14 @@ namespace CIAO
         throw ::Components::InvalidName ();
       }
 
-    CORBA::Object_ptr retval = this->lookup_facet (name);
+    CORBA::Object_var retval = this->lookup_facet (name);
 
-    if ( ::CORBA::is_nil (retval))
+    if ( ::CORBA::is_nil (retval. in()))
       {
         throw ::Components::InvalidName ();
       }
 
-    return retval;
+    return retval._retn ();
   }
 
  #if !defined (CCM_LW)
