@@ -16,22 +16,25 @@ module DAnCE
 {
   local interface DeploymentInterceptor
   {
+    /// Invoked when the interceptor is loaded, before any other
+    /// event.
     void configure (in ::Deployment::Properties config);
-
+    
+    
     void preprocess_plan (inout ::Deployment::DeploymentPlan plan)
       raises (::Deployment::PlanError);
 
     void pre_install (inout ::Deployment::DeploymentPlan plan,
-                               in unsigned long instanceRef)
+                      in unsigned long instanceRef)
       raises (::Deployment::PlanError,
               ::Deployment::InvalidProperty,
               ::Deployment::InvalidNodeExecParameter,
               ::Deployment::InvalidComponentExecParameter);
 
     void post_install (in ::Deployment::DeploymentPlan plan,
-                                in unsigned long instance_index,
-                                in any instance_reference,
-                                in any exception_thrown)
+                       in unsigned long instance_index,
+                       in any instance_reference,
+                       in any exception_thrown)
       raises (::Deployment::PlanError,
               ::Deployment::InvalidProperty,
               ::Deployment::InvalidNodeExecParameter,
@@ -44,33 +47,45 @@ module DAnCE
       raises (::Deployment::InvalidConnection);
     
     void pre_connect (inout ::Deployment::DeploymentPlan plan,
-                               in unsigned long connection_index,
-                               inout any provided_reference)
+                      in unsigned long connection_index,
+                      inout any provided_reference)
       raises (::Deployment::InvalidConnection);
 
     void post_connect (in Deployment::DeploymentPlan plan,
-                                in unsigned long connectionRef,
-                                in any exceptionThrown)
+                       in unsigned long connectionRef,
+                       in any exceptionThrown)
       raises (::Deployment::InvalidConnection);
     
     void post_configured (in ::Deployment::DeploymentPlan plan,
-                                   in unsigned long instanceRef,
-                                   in any exception_thrown)
+                          in unsigned long instanceRef,
+                          in any exception_thrown)
       raises (::Deployment::StartError);
 
     void post_activate (in ::Deployment::DeploymentPlan plan,
-                                 in unsigned long instanceRef,
-                                 in any exception_thrown)
+                        in unsigned long instanceRef,
+                        in any exception_thrown)
       raises (::Deployment::StartError);
 
     void post_passivate (in ::Deployment::DeploymentPlan plan,
-                                  in unsigned long instanceRef,
-                                  in any exception_thrown)
+                         in unsigned long instanceRef,
+                         in any exception_thrown)
       raises (::Deployment::StopError);
     void post_remove (in ::Deployment::DeploymentPlan plan,
-                               in unsigned long instanceRef,
-                               in any exception_thrown)
+                      in unsigned long instanceRef,
+                      in any exception_thrown)
       raises (::Deployment::StopError);
+    
+    /**
+     * @brief Invoked on an unexpected event, not usually during normal deployment activity.
+     * @param plan The deployment plan which the instance is a part of.
+     * @param instanceRef The instance on which this unexpected event took place.
+     * @param exception_thrown An exception that was thrown, if any, which should not be re-thrown.
+     * @param error A human-readable error message, if appropriate
+     */
+    void unexpected_event (in ::Deployment::DeploymentPlan plan,
+                           in unsigned long instanceRef,
+                           in any exception_thrown,
+                           in string error);
   };
 };
 

@@ -1,5 +1,6 @@
 // $Id$
-project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance_output, dance_logger {
+project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance_output, dance_logger, \
+                                dance_deployment_scheduler   {
   
    dynamicflags += DANCE_LOCALITY_HANDLER_BUILD_DLL   
    Source_Files {

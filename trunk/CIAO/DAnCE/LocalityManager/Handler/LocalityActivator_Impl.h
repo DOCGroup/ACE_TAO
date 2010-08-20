@@ -62,7 +62,9 @@ namespace DAnCE
     virtual void configuration_complete (const char *server_UUID);
 
     ::DAnCE::LocalityManager_ptr
-        create_locality_manager (const ::Deployment::Properties & config);
+    create_locality_manager (const ::Deployment::DeploymentPlan &plan,
+                             CORBA::ULong instanceRef,
+                             const ::Deployment::Properties & config);
 
     void remove_locality_manager (
                                   ::DAnCE::LocalityManager_ptr server);
@@ -97,17 +99,28 @@ namespace DAnCE
 
     void create_properties (const Server_Info &info,
                             Deployment::Properties_out config);
-
+    
     struct Server_Info
     {
-      Server_Info (size_t cmap_size_hint = 128)
+      enum ProcessStatus
+        {
+          ACTIVE,
+          TERMINATE_REQUESTED,
+          TERMINATED,
+          INACTIVE
+        };
+
+      Server_Info (const ::Deployment::DeploymentPlan &plan,
+                   CORBA::ULong instanceRef,
+                   size_t cmap_size_hint = 128)
         : cmap_ (new DAnCE::Utility::PROPERTY_MAP (cmap_size_hint)),
           ref_ (DAnCE::LocalityManager::_nil ()),
           pid_ (ACE_INVALID_PID),
-          activated_ (false),
-          terminated_ (false),
+          status_ (INACTIVE),
           mutex_ (),
-          condition_ (mutex_)
+          condition_ (mutex_),
+          plan_ (plan),
+          instanceRef_ (instanceRef)
       {}
 
       typedef ACE_Refcounted_Auto_Ptr <DAnCE::Utility::PROPERTY_MAP,
@@ -117,24 +130,14 @@ namespace DAnCE
       PROPERTY_MAP_PTR cmap_;
       DAnCE::LocalityManager_var ref_;
       pid_t pid_;
-      bool activated_;
-      bool terminated_;
+      ProcessStatus status_;
       TAO_SYNCH_MUTEX mutex_;
       ACE_Condition<TAO_SYNCH_MUTEX> condition_;
+      const ::Deployment::DeploymentPlan &plan_;
+      CORBA::ULong instanceRef_;
     };
 
     typedef ACE_Refcounted_Auto_Ptr<Server_Info, ACE_Null_Mutex> Safe_Server_Info;
-
-    struct _server_info
-    {
-      bool operator() (const Safe_Server_Info &a, const Safe_Server_Info &b) const
-      {
-        return a->uuid_ < b->uuid_;
-      }
-    };
-
-    // Presumably, there won't be too many component servers per node application
-    typedef std::set <Safe_Server_Info, _server_info> SERVER_INFOS;
 
     /**
     * @brief The exit handler class for the locality manager child process
@@ -157,6 +160,17 @@ namespace DAnCE
     private:
       Safe_Server_Info server_info_;
     };
+
+    struct _server_info
+    {
+      bool operator() (const Safe_Server_Info &a, const Safe_Server_Info &b) const
+      {
+        return a->uuid_ < b->uuid_;
+      }
+    };
+
+    // Presumably, there won't be too many component servers per node application
+    typedef std::set <Safe_Server_Info, _server_info> SERVER_INFOS;
 
     /// Default args to pass to all componentservers.
     ACE_CString default_args_;
