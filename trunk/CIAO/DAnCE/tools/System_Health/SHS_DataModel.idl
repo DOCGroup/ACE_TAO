@@ -12,8 +12,6 @@ module DAnCE
     {
       /// Diagnostic message
       const string SHS_DIAGNOSTIC = "edu.vanderbilt.dre.DAnCE.SHS.Diagnostic";
-      /// Connection status update
-      const string SHS_CONNECTION = "edu.vanderbilt.dre.DAnCE.SHS.Connection";
       /// Process ID
       const string SHS_PID = "edu.vanderbilt.dre.DAnCE.SHS.PID";
       /// Process or thread priority
@@ -22,10 +20,27 @@ module DAnCE
       const string SHS_AFFINITY = "edu.vanderbilt.dre.DAnCE.SHS.Affinity";
       /// Number of threads configured with the reactor
       const string SHS_TPOOL = "edu.vanderblt.dre.DAnCE.SHS.ThreadPool";
-      /// Memory footprint of the instance
-      const string SHS_MEM_FP = "edu.vanderblt.dre.DAnCE.SHS.MemoryFootprint";
       /// IDs of hosted instances
       const string SHS_HOSTED_INSTANCES = "edu.vanderblt.dre.DAnCE.SHS.HostedInstances";
+      
+      /********** INSTANCE META DATA **********/
+      /// Memory footprint of the instance
+      const string SHS_MEM_FP = "edu.vanderblt.dre.DAnCE.SHS.MemoryFootprint";
+      /// Reference to instance (Appropriate reference type)
+      const string SHS_INSTANCE_REF = "edu.vanderblt.dre.DAnCE.SHS.InstanceReference";
+      /// Sequence of properties found in the deployment plan. 
+
+      /********** CONNECTION META DATA **********/
+      /// Instance type indicating a connection status update
+      const string SHS_CONNECTION = "edu.vanderbilt.dre.DAnCE.SHS.Connection";
+      /// ID of 'provider' instance, if present (string, format component_id:port_name)
+      const string SHS_CONN_PROVIDER = "edu.vanderbilt.dre.DAnCE.SHS.Connection.Provider";
+      /// ID of non-'provider' instance, if present (string, format component_id:port_name)
+      const string SHS_CONN_RECIPIENT =  "edu.vanderbilt.dre.DAnCE.SHS.Connection.Recipient";
+      /// Connection type (appropriate port kind, e.g. CCMComponentPortKind)
+      const string SHS_CONN_PORT_KIND = "edu.vanderbilt.dre.DAnCE.SHS.Connection.Kind";
+      /// External endpoint (::Deployment::ExternalReferenceEndpoint)
+      const string SHS_CONN_EXTERNAL_ENDPOINT = "edu.vanderbilt.dre.DAnCE.SHS.Connection.ExternalEndpoint";
     };
     
     /// Enumberation describing liveness status of event

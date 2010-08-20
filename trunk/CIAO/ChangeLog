@@ -1,3 +1,11 @@
+Fri Aug 20 20:06:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+        * DAnCE/tools/System_Health/SHS_DataModel.idl:
+
+          Expanded meta-data vocabulary and additional items captured as part
+          of H&S updates.
+
 Fri Aug 20 20:03:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/LocalityManager/UnexpectedShutdown:
