@@ -1,3 +1,9 @@
+Fri Aug 20 20:13:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/SatisfierProperty_Handler.cpp:
+
+          Fixed bad handing of SatisfierProperties.
+
 Fri Aug 20 20:06:15 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
