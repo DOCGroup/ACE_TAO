@@ -463,20 +463,15 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *&entry)
   {
-    int retval = 0;
+    // Remove the entry from the Map
+    int retval = this->cache_map_.unbind (entry);
 
-    if (entry != 0)
-      {
-        // Remove the entry from the Map
-        retval = this->cache_map_.unbind (entry);
-
-        // Set the entry pointer to zero
-        entry = 0;
+    // Set the entry pointer to zero
+    entry = 0;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-        this->size_monitor_->receive (this->current_size ());
+    this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-      }
 
     return retval;
   }
