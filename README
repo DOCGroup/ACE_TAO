@@ -2,8 +2,7 @@
    ACE, TAO, CIAO are all pulled in as svn:externals from FTCIAO branch. 
    No idea what CIAO_FLARE is for.
 2. The components are implemented in 
-   $CIAO_ROOT/DAnCE/tests/CIAO/FTComponent
-   $CIAO_ROOT/DAnCE/tests/CIAO/FTTask
+   $DANCE_ROOT/tests/CIAO/FTComponents
 3. ReplicationManager and HostMonitor processes are implemented in $TAO_ROOT/orbsvcs/LWFT_Service
 4. ReplicationManager, HostMonitor, and StateSynchronizationAgent libraries are implemented in $TAO_ROOT/orbsvcs/orbsvcs/LWFT
 5. FTComponentServer is in the $CIAO_ROOT/ciao/FTComponentServer 
