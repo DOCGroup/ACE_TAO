@@ -1,9 +1,17 @@
+Fri Aug 20 20:06:05 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/notifytest.mpb:
+
+          Changed the libpaths and includes back to paths starting with
+          $(TAO_ROOT) as they were before
+          Tue May 18 21:42:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
 Fri Aug 20 14:44:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Transport_Cache_Manager_T.inl:
         * tao/Transport_Cache_Manager_T.cpp:
           Moved check for null entry outside lock.
-	  Optimization. Resolves Bugzilla #3659.
+          Optimization. Resolves Bugzilla #3659.
 
 Thu Aug 19 10:11:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
