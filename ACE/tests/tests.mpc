@@ -1906,3 +1906,10 @@ project(Bug_3334_Regression_Test) : acetest {
     Bug_3334_Regression_Test.cpp
   }
 }
+
+project(Missing_Svc_Conf_Test) : acetest {
+  exename = Missing_Svc_Conf_Test  
+  Source_Files {
+    Missing_Svc_Conf_Test.cpp
+  }
+}

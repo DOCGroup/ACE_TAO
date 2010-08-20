@@ -1108,7 +1108,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   else
     {
       result = this->process_directives ();
-      if (result != -1 || errno == ENOENT)
+      if (result != -1)
         result = this->process_commandline_directives ();
     }
 
