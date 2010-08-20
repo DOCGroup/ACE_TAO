@@ -1,3 +1,10 @@
+Fri Aug 20 20:01:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+
+          If externalReferenceEndpoints have a zero-length port name, attempt
+          to connect as a CORBA 2.x reference.
+
 Fri Aug 20 15:30:11 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
