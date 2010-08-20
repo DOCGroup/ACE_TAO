@@ -571,6 +571,15 @@ namespace DAnCE
           throw ::Deployment::StopError ("locality manager",
                                          "unable to stop locality manager");
         }
+      
+      if (info->status_ == Server_Info::TERMINATED)
+        {
+          DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                           ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
+                           ACE_TEXT ("Locality Manager with UUID <%C> already terminated\n"),
+                           info->uuid_.c_str ()));
+          return;
+        }
 
       try
         {
