@@ -1,3 +1,11 @@
+Fri Aug 20 20:13:44 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/Parsing/Parsing.mpc:
+        * DAnCE/tests/Parsing/domain.cpp:
+        * DAnCE/tests/Parsing/run_test.pl:
+
+          Test to verify that domain cdd file parsing works.
+
 Fri Aug 20 20:13:07 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/SatisfierProperty_Handler.cpp:
