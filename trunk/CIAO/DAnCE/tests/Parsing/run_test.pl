@@ -57,4 +57,12 @@ open (STDERR, ">&OLDERR");
   sleep (1);
 }
 
+$APP = $tg->CreateProcess ("./Domain_Parsing", "ArtGallery3Nodes.cdd");
+$retval = $APP->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+$status = $status + $retval;
+
+if ($retval != 0) {
+    print STDERR "ERROR: Parting returned $retval for domain test.\n";
+}
+
 exit $status;
