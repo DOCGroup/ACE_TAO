@@ -39,8 +39,15 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry (HASH_MAP_ENTRY *&entry)
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-    return this->purge_entry_i (entry);
+    int retval = 0;
+
+    if (entry != 0)
+      {
+	ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+	retval = this->purge_entry_i (entry);
+      }
+      
+    return retval;
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
