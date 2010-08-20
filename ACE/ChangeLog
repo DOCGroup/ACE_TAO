@@ -1,3 +1,17 @@
+Fri Aug 20 13:29:22 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          One more shot at fixing the behavior of the service configurator
+          in the face of missing defaulted svc.conf file.
+        
+        * tests/Missing_Svc_Conf_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        
+          Added a proper test to ensure changes to this behavior are caught
+          in the future.
+
 Fri Aug 20 11:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TSS_T.cpp:
