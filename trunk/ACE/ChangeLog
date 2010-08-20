@@ -1,10 +1,22 @@
+Fri Aug 20 11:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TSS_T.cpp:
+          Updated comment
+
+        * include/makeinclude/platform_g++_common.GNU:
+          If minimaltoc is set to 1, add -mminimal-toc to compiler flags
+
+        * include/makeinclude/platform_linux.GNU:
+          Removed check for ppc64, if you build for ppc64 and need -mminimal-toc
+          add minimaltoc=1 to your platform_macros.GNU file
+
 Fri Aug 20 09:52:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/inet_ssl.mpb:
-	  Removed feature subproject config.
+          Removed feature subproject config.
 
         * protocols/ace/INet/inet_ssl.mpc:
-	  Added sublibrary project I forgot yesterday.
+          Added sublibrary project I forgot yesterday.
 
 Thu Aug 19 12:37:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 

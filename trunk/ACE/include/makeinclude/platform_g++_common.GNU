@@ -129,3 +129,11 @@ endif # shared_libs
 ifeq ($(CXX_MAJOR_VERSION), 2)
   CCFLAGS += -ftemplate-depth-23
 endif
+
+minimaltoc ?= 0
+
+ifeq ($(minimaltoc),1)
+  FLAGS_C_CC += -mminimal-toc
+endif
+
+
