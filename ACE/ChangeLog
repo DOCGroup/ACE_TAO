@@ -1,3 +1,11 @@
+Fri Aug 20 09:52:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/inet_ssl.mpb:
+	  Removed feature subproject config.
+
+        * protocols/ace/INet/inet_ssl.mpc:
+	  Added sublibrary project I forgot yesterday.
+
 Thu Aug 19 12:37:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Functor_T.h:
