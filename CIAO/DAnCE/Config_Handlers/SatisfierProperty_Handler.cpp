@@ -48,9 +48,9 @@ namespace CIAO
           toconfig.kind = Deployment::Maximum;
           break;
 
-          //        case SatisfierPropertyKind::Attribute_l:
-          //toconfig.kind = Deployment::_Attribute;
-          //break;
+        case SatisfierPropertyKind::Attribute_l:
+          toconfig.kind = Deployment::Attribute;
+          break;
 
         case SatisfierPropertyKind::Selection_l:
           toconfig.kind = Deployment::Selection;
