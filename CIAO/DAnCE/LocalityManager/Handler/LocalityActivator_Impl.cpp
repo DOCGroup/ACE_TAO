@@ -6,6 +6,7 @@
 #include "DAnCE/Logger/Log_Macros.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "tao/ORB_Core.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
 
 namespace DAnCE
 {
@@ -80,7 +81,7 @@ namespace DAnCE
           throw ::CORBA::BAD_PARAM ();
         }
 
-      if (info->activated_)
+      if (info->status_ == Server_Info::ACTIVE)
         {
           DANCE_ERROR (1, (LM_ERROR, DLINFO
                            ACE_TEXT ("DAnCE_LocalityActivator_i::locality_manager_callback - ")
@@ -154,7 +155,7 @@ namespace DAnCE
               throw ::CORBA::BAD_PARAM ();
             }
 
-          if (info->activated_)
+          if (info->status_ == Server_Info::ACTIVE)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
                                ACE_TEXT ("DAnCE_LocalityActivator_i::configuration_complete - ")
@@ -178,7 +179,7 @@ namespace DAnCE
                               guard,
                               info->mutex_,
                               CORBA::NO_RESOURCES ());
-          info->activated_ = true;
+          info->status_ = Server_Info::ACTIVE;
           info->condition_.signal ();
         }
       catch (...)
@@ -192,11 +193,15 @@ namespace DAnCE
     }
 
     ::DAnCE::LocalityManager_ptr
-    DAnCE_LocalityActivator_i::create_locality_manager (const ::Deployment::Properties & config)
+    DAnCE_LocalityActivator_i::create_locality_manager (const ::Deployment::DeploymentPlan &plan,
+                                                        CORBA::ULong instanceRef,
+                                                        const ::Deployment::Properties & config)
     {
       DANCE_TRACE("DAnCE_LocalityActivator_i::create_locality_manager");
 
-      Safe_Server_Info server (new Server_Info (config.length () + 1));
+      Safe_Server_Info server (new Server_Info (plan,
+                                                instanceRef,
+                                                config.length () + 1));
 
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
@@ -326,7 +331,7 @@ namespace DAnCE
 
     pid_t
     DAnCE_LocalityActivator_i::spawn_locality_manager (Server_Child_Handler* exit_handler,
-                                                    const ACE_CString &cmd_line)
+                                                       const ACE_CString &cmd_line)
     {
       DANCE_TRACE ("DAnCE_LocalityActivator_i::spawn_locality_manager");
 
@@ -449,7 +454,7 @@ namespace DAnCE
       // for thread-pool concurrency model.
       while (true)
         {
-          if (!si.terminated_ && !si.activated_)
+          if (si.status_ != Server_Info::ACTIVE && si.status_ != Server_Info::TERMINATED)
             {
               ACE_GUARD_THROW_EX ( TAO_SYNCH_MUTEX,
                                    guard,
@@ -459,13 +464,13 @@ namespace DAnCE
               // been activated by the previous leader's perform_work,
               // so let's check to make sure that only non-activated
               // folks are hanging on perform_work.
-              if (!si.terminated_ && !si.activated_)
+              if (si.status_ != Server_Info::ACTIVE && si.status_ != Server_Info::TERMINATED)
                 {
                   this->orb_->perform_work (timeout);
                 }
             }
 
-          if (si.terminated_)
+          if (si.status_ == Server_Info::TERMINATED)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
                                ACE_TEXT ("DAnCE_LocalityActivator_i::single_threaded_wait_for_callback - ")
@@ -475,7 +480,7 @@ namespace DAnCE
                                               "Failed to startup LocalityManager");
             }
 
-          if (si.activated_)
+          if (si.status_ == Server_Info::ACTIVE)
             {
               break;
             }
@@ -505,7 +510,7 @@ namespace DAnCE
                            si.mutex_,
                            CORBA::NO_RESOURCES ());
 
-      while (! si.activated_ )
+      while (si.status_ != Server_Info::ACTIVE)
         {
           if (si.condition_.wait (&timeout) == -1)
             {
@@ -517,7 +522,7 @@ namespace DAnCE
                                             "timed out waiting for callback");
             }
 
-          if (si.terminated_)
+          if (si.status_ == Server_Info::TERMINATED)
             {
               DANCE_ERROR (1, (LM_ERROR, DLINFO
                                ACE_TEXT ("DAnCE_LocalityActivator_i::multi_threaded_wait_for_callback - ")
@@ -573,6 +578,7 @@ namespace DAnCE
                            ACE_TEXT ("DAnCE_LocalityActivator_i::remove_locality_manager - ")
                            ACE_TEXT ("Calling shutdown () on LocalityManager %C\n"),
                            info->uuid_.c_str ()));
+          info->status_ = Server_Info::TERMINATE_REQUESTED;
           server->shutdown ();
         }
       catch (::Deployment::StopError &)
@@ -651,8 +657,38 @@ namespace DAnCE
       // this method is guarenteed to be called synchronously
       // so we can safely call anything we like
 
+      // Check if the termination was requested, log an error if not. 
+      if (this->server_info_->status_  != Server_Info::TERMINATE_REQUESTED)
+        {
+          DANCE_ERROR (1, (LM_ERROR, DLINFO
+                           ACE_TEXT ("DAnCE_LocalityActivator_i::Server_Child_Handler::handle_exit - ")
+                           ACE_TEXT ("Error: Unexpected locality shutdown.\n")));
+          
+          const DAnCE::Plugin_Manager::INTERCEPTORS &interceptors = 
+            PLUGIN_MANAGER::instance ()->fetch_interceptors ();
+
+        for (Plugin_Manager::INTERCEPTORS::const_iterator i = interceptors.begin ();
+             i != interceptors.end ();
+             ++i)
+          {
+            try
+              {
+                ::CORBA::Any tmp;
+                (*i)->unexpected_event (this->server_info_->plan_,
+                                        this->server_info_->instanceRef_,
+                                        tmp,
+                                        "Unexpected component server exit.");
+              }
+            catch (...)
+              {
+                // swallow
+              }
+          }
+        }
+      
       // flag this process as exited
-      this->server_info_->terminated_ = true;
+      this->server_info_->status_ = Server_Info::TERMINATED;
+
       // signal possibly waiting startup thread
       this->server_info_->condition_.signal ();
 
