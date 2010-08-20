@@ -1,3 +1,17 @@
+Fri Aug 20 20:03:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/Component.cdp:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/UnexpectedShutdown.idl:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/UnexpectedShutdown.mpc:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/UnexpectedShutdown_exec.h:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/UnexpectedShutdown_exec.cpp:
+        * DAnCE/tests/LocalityManager/UnexpectedShutdown/run_test.pl:
+
+          Test excercising the detection of early shutdown locality manager.  This
+          test is currently intentionally not part of the test list as there is still
+          an outstanding (benign) error message.
+
 Fri Aug 20 20:03:03 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
