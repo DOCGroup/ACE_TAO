@@ -1,3 +1,8 @@
+Fri Aug 20 14:11:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/NoQuery.cdp:
+          Removed this file, no query is now valid
+
 Thu Aug 19 13:40:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
