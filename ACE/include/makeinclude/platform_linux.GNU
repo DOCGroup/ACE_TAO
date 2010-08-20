@@ -53,25 +53,8 @@ endif
 ifeq ($(buildbits),64)
   FLAGS_C_CC += -m64
   LDFLAGS    += -m64
-  ifneq ($(CROSS_COMPILE),)
-    PPC64_TARGET := $(shell echo '__powerpc64__' | $(CC) -E - | tail -n 1)
-    ifeq ($(PPC64_TARGET),1)
-      minimaltoc ?= 1
-    endif
-  else
-    ifeq ($(SYSARCH),ppc64)
-      minimaltoc ?= 1
-    endif
-  endif
 endif
 
-minimaltoc ?= 0
-
-ifeq ($(minimaltoc),1)
-  FLAGS_C_CC += -mminimal-toc
-endif
-
-#
 # Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
 # instead of setting them directly here (older versions of gcc don't set it
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
