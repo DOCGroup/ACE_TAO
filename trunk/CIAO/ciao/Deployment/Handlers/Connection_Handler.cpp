@@ -367,22 +367,26 @@ namespace CIAO
     
     if (conn.externalReference.length () != 0)
       {
-        ::Components::CCMObject_var facet_provider = 
-          ::Components::CCMObject::_narrow (provided.in ());
-        
-        if (CORBA::is_nil (facet_provider.in ()))
+        if (ACE_OS::strlen (conn.externalReference[0].portName.in ()) > 0)
           {
-            CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Connection_Handler::connect_facet - "
-                            "Unable to narrow provided external reference "
-                            "to CCMObject in connection <%C>\n",
-                            conn.name.in ()));
-            throw ::Deployment::InvalidConnection (conn.name.in (),
-                                                   "Unable to narrow external reference to CCMObject\n");
+            ::Components::CCMObject_var facet_provider = 
+              ::Components::CCMObject::_narrow (provided.in ());
+            
+            if (CORBA::is_nil (facet_provider.in ()))
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                "Connection_Handler::connect_facet - "
+                                "Unable to narrow provided external reference "
+                                "to CCMObject in connection <%C> for port <%C>\n",
+                                conn.name.in (),
+                                conn.externalReference[0].portName.in ()));
+                throw ::Deployment::InvalidConnection (conn.name.in (),
+                                                       "Unable to narrow external reference to CCMObject\n");
+              }
+            
+            provided = 
+              facet_provider->provide_facet (conn.externalReference[0].portName.in ());
           }
-        
-        provided = 
-          facet_provider->provide_facet (conn.externalReference[0].portName.in ());
       }
     
     ::Components::CCMObject_var receptacle = 
