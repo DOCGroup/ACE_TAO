@@ -96,6 +96,11 @@ namespace DAnCE
     // Add your implementation here
   }
 
-
+  void DeploymentInterceptor_Base::unexpected_event (const ::Deployment::DeploymentPlan & plan,
+                                                     ::CORBA::ULong instanceRef,
+                                                     const ::CORBA::Any & exception_thrown,
+                                                     const char *error)
+  {
+  }
 }
 

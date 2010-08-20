@@ -116,7 +116,9 @@ namespace DAnCE
                      allprops.length ()));
 
     ::DAnCE::LocalityManager_var lm_ref =
-        this->activator_->create_locality_manager (allprops);
+        this->activator_->create_locality_manager (plan,
+                                                   instanceRef,
+                                                   allprops);
 
     if (CORBA::is_nil (lm_ref))
       {

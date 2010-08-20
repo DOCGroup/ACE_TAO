@@ -1,3 +1,16 @@
+Fri Aug 20 15:30:11 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl:
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.h:
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.h:
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+
+          Add additional interception point that is invoked on unexpected
+          events, beginning with the crash of a locality server.
+
 Fri Aug 20 14:11:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/ContentFilteredTopic/Deployments/NoQuery.cdp:
