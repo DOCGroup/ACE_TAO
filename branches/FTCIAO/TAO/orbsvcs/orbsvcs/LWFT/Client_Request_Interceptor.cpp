@@ -4,6 +4,7 @@
 #include "Client_Request_Interceptor.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/High_Res_Timer.h"
 
 #include "ForwardingAgent.h"
 
@@ -13,7 +14,9 @@ Client_Request_Interceptor::Client_Request_Interceptor (
   : orb_id_ (CORBA::string_dup (orb_id)),
     orb_ (),
     request_count_ (0),
-    agent_ (agent)
+    agent_ (agent),
+    last_successful_(0),
+    lag_by_one_(0)
 {
 }
 
@@ -47,8 +50,31 @@ Client_Request_Interceptor::send_poll (
 
 void
 Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr /* ri */)
+    PortableInterceptor::ClientRequestInfo_ptr  ri )
 {
+  /*
+  const CORBA::ULong tagID = 9654;
+  char *tag = 0;
+
+  IOP::TaggedComponent_var mytag = ri->get_effective_component (tagID);
+  tag = reinterpret_cast <char *>(mytag->component_data.get_buffer ());
+
+  if((strcmp(tag,"Alpha") == 0) && (!lag_by_one_))
+  {
+    ++last_successful_;
+    if(this->agent_->getRM()->finish_invocation(
+        CORBA::string_dup(tag), 2, 0))
+    {
+      std::cerr << "Client_Request_Interceptor::receive_reply(): "
+                << "finish_invocation successful." << std::endl;
+    }
+    else
+    {
+      std::cerr << "Client_Request_Interceptor::receive_reply(): "
+                << "finish_invocation failed." << std::endl;
+    }
+  }
+  */
   /*
   ACE_DEBUG ((LM_INFO, 
               ACE_TEXT("(%P|%t) Client_Request_Interceptor::receive_reply (%s)\n"), 
@@ -75,13 +101,29 @@ Client_Request_Interceptor::receive_exception (
 */
   const CORBA::ULong tagID = 9654;
   char *tag = 0;
-  
+
   try
     {
-      IOP::TaggedComponent_var mytag = ri->get_effective_component (tagID);
-      tag = reinterpret_cast <char *> ( mytag->component_data.get_buffer ());
-      ACE_CString new_string = CORBA::string_dup (tag);
-      CORBA::Object_var forward = this->agent_->next_member (tag);
+      CORBA::Object_var forward;
+      IOP::TaggedComponent_var mytag = ri->get_effective_component(tagID);
+      tag = reinterpret_cast <char *>(mytag->component_data.get_buffer());
+      
+      if(lag_by_one_)
+      {
+        ACE_High_Res_Timer timer;
+        timer.start();
+        forward =
+          this->agent_->getRM()->prepare_reinvocation(
+              CORBA::string_dup(tag), 
+              last_successful_, 5, 0);
+        timer.stop();
+        ACE_Time_Value  tv;
+        timer.elapsed_time(tv);
+        std::cerr << "prepare_reinvocation overhead = " << tv.msec() << std::endl;
+      }
+      else
+        forward = this->agent_->next_member (tag);
+      
       ACE_THROW (PortableInterceptor::ForwardRequest (forward.in ())); 
     }
   catch (CORBA::BAD_PARAM&)

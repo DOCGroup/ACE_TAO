@@ -96,3 +96,8 @@ ForwardingAgent_i::initialize (CORBA::Object_ptr rm_ior)
   RankList *rank_list = this->RM_var_->register_agent (temp.in ());
   update_rank_list (*rank_list);
 }
+
+ReplicationManager_ptr ForwardingAgent_i::getRM()
+{
+  return this->RM_var_.in();
+}

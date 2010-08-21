@@ -182,7 +182,16 @@ public:
   virtual void set_ranklist_constraints (
      const RankListConstraints & constraints);
 
-  void finish_invocation(const char *);
+  CORBA::Boolean finish_invocation(const char *, ::CORBA::Long tsec, ::CORBA::Long tusec);
+  CORBA::Object_ptr prepare_reinvocation(
+      const char *,
+      CORBA::Long last_successful,
+      CORBA::Long tsec, 
+      CORBA::Long tusec);
+  
+  bool ami_two_phase_commit(const char *, long tsec, long tusec);
+  
+  bool two_phase_commit(const char *);
 
   void
   load_based_selection_algo (void);
@@ -408,7 +417,8 @@ private:
 
   void send_failure_notice (const char * host,
                             const ::FLARE::ApplicationList & object_ids);
-  bool phase(int, const char * object_id);
+  bool phase(int phase, const char * object_id);
+  bool ami_phase(int phase, const char * object_id, long tsec, long tusec);
 };
 
 #endif  /* REPLICATION_MANAGER_H */

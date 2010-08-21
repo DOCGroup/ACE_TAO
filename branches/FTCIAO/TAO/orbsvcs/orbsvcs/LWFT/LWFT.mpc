@@ -112,11 +112,12 @@ project(*Server) : iorinterceptor, orbsvcs_output {
   }
 }
 
-project(*StateSyncAgent) : portableserver, orbsvcs_output { // , lwft_dds , splicelib {
+project(*StateSyncAgent) : portableserver, orbsvcs_output, ami { // , lwft_dds , splicelib {
   after += *Common
   idlflags += -Wb,export_macro=SSA_Export \
-              -Wb,export_include=ssa_export.h
-  idlflags -= -St -Sa
+              -Wb,export_include=ssa_export.h 
+
+  idlflags -= -St -Sa 
   dynamicflags = SSA_BUILD_DLL
   libs += LWFT_Common 
   sharedname = LWFT_StateSyncAgent
@@ -136,12 +137,14 @@ project(*StateSyncAgent) : portableserver, orbsvcs_output { // , lwft_dds , spli
     StateSynchronizationAgentC.cpp
     StateSynchronizationAgentS.cpp
     StateSynchronizationAgent_i.cpp
+    SSA_AMI_Handler.cpp
   }
 
   Header_Files {
     DDSStateReaderListener_T.h
     DDSStateUpdate_T.h
     ssa_export.h
+    SSA_AMI_Handler.h
   }
   
   Inline_Files {
@@ -207,11 +210,13 @@ project(*ReplicationManagerImpl) : portableserver, orbsvcs_output, lwft_server {
   Source_Files {
     ReplicationManager.cpp
     AppInfoC.cpp
+    SSA_AMI_Handler.cpp
   }
   
   Header_Files {
     ReplicationManager.h
     rm_impl_export.h
+    SSA_AMI_Handler.h
   }
   
   Inline_Files {

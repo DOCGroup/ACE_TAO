@@ -77,6 +77,10 @@ private:
   CORBA::ULong request_count_;
 
   ForwardingAgent_i *agent_;
+
+  long last_successful_;
+
+  bool lag_by_one_;
 };
 
 #if defined(_MSC_VER)

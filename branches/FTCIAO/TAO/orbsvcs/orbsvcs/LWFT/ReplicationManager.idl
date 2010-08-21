@@ -39,5 +39,6 @@ interface ReplicationManager : ReplicatedApplication, FLARE::FaultNotifier
   
   Object get_next (in string object_id);
 
-  void finish_invocation(in string object_id);
+  boolean finish_invocation(in string object_id, in long tsec, in long tusec);
+  Object prepare_reinvocation(in string object_id, in long last_successful, in long tsec, in long tusec);
 };
