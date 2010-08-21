@@ -81,17 +81,18 @@ namespace CIAO_cpuaffinity_A_Impl
         return;
       }
     
+    int z_set = CPU_ISSET (0, &mask);
+    int o_set = CPU_ISSET (1, &mask);
+
     if (cpu_affinity_ == 0 &&
-        (!CPU_ISSET (0, &mask) ||
-         CPU_ISSET (1, &mask)))
+        (!z_set || o_set))
       {
         ACE_ERROR ((LM_ERROR, "Error: Expected to only be on processor zero.\n"));
         return;
       }
     
     if (cpu_affinity_ == 1 &&
-        (CPU_ISSET (0, &mask) ||
-         !CPU_ISSET (1, &mask)))
+        (z_set || !o_set))
       {
         ACE_ERROR ((LM_ERROR, "Error: Expected to only be on processor one.\n"));
       }
