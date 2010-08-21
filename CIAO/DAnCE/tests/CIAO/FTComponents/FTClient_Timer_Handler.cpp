@@ -85,11 +85,18 @@ namespace CIDL_FTClient_Impl
 
         server_processing_time.msec (
           server_->run_task (client_executor_->execution_time ()));
-        rm_->finish_invocation(CORBA::string_dup(server_name_.c_str()));
-        CIAO_DEBUG ((LM_EMERGENCY, 
-                     "FTClient_Timer_Handler::handle_timeout () - "
-                     "Completed run_task\n"));
 
+        if(rm_->finish_invocation(
+              CORBA::string_dup(client_executor_->name ()), 2, 0))
+        {
+          std::cerr << "FTClient_Timer_Handler::handle_timeout(): "
+                    << "finish_invocation successful." << std::endl;
+        }
+        else
+        {
+          std::cerr << "FTClient_Timer_Handler::handle_timeout(): "
+                    << "finish_invocation failed." << std::endl;
+        }
         timer_.stop ();
        
         ACE_Time_Value rt;
@@ -144,14 +151,24 @@ namespace CIDL_FTClient_Impl
         std::cout << "Creating file " << logfile << std::endl;
         std::ofstream out (logfile.c_str ());
 
+        float avg_server_time = 0, avg_client_time = 0;
+        size_t count = 0;
         for (TimingList::iterator it = history_.begin ();
              it != history_.end ();
-             ++it)
+             ++it, ++count)
           {
+            if(count > 0)
+            {
+              avg_server_time += it->server_time.msec();
+              avg_client_time += it->client_time.msec();
+            }
             out << it->server_time.msec () << " " << it->client_time.msec () << std::endl;
           }
 
-        out.close ();
+         if(count > 1) 
+           out << avg_server_time/(count-1) << " " 
+               << avg_client_time/(count-1) << std::endl;
+         out.close ();
       }
   }
 

@@ -6,7 +6,7 @@
 
 module DeCoRAM
 {
-  component FTTask supports Worker, ReplicatedApplication
+  component FTTask supports Worker, ReplicatedApplication 
   {
     attribute Object COMPONENT_REFERENCE;
     attribute short  role;
