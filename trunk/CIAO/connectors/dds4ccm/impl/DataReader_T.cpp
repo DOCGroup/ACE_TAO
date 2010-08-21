@@ -53,7 +53,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::log_query_conditio
   if (CIAO_debug_level >= DDS4CCM_LOG_LEVEL_DDS_STATUS)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::")
+                    ACE_TEXT ("DataReader_T::")
                     ACE_TEXT ("read_wo_instance - read_w_condition:\n")));
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                     ACE_TEXT ("\t\texpression <%C>\n"),
@@ -112,12 +112,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_wo_instance (
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_wo_instance - ")
+                        ACE_TEXT ("DataReader_T::read_wo_instance - ")
                         ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                         translate_retcode (retval)));
         }
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_wo_instance - ")
+                            ACE_TEXT ("DataReader_T::read_wo_instance - ")
                             ACE_TEXT ("retval is %C\n"),
                             translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
@@ -134,7 +134,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::read_w_instance");
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_INFO, CLINFO
-                ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
+                ACE_TEXT ("DataReader_T::read_w_instance - ")
                 ACE_TEXT ("Start reading with instance.\n")));
   DDS_ReturnCode_t const retval = this->impl ()->read_instance (
                                         data,
@@ -150,12 +150,12 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
+                        ACE_TEXT ("DataReader_T::read_w_instance - ")
                         ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                         translate_retcode (retval)));
         }
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::read_w_instance - ")
+                    ACE_TEXT ("DataReader_T::read_w_instance - ")
                     ACE_TEXT ("retval is %C\n"),
                     translate_retcode(retval)));
       throw ::CCM_DDS::InternalError (retval, 0);
@@ -485,7 +485,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_readconditi
       if (!qc)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::delete_readcondition - ")
+                        ACE_TEXT ("DataReader_T::delete_readcondition - ")
                         ACE_TEXT ("Unable to cast provided condition to a typed ")
                         ACE_TEXT ("read condition nor a typed query condition\n")));
           return ::DDS::RETCODE_BAD_PARAMETER;
@@ -494,7 +494,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_readconditi
       if (!dds_rc)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("CIAO::DDS4CCM::DataReader_T::delete_readcondition - ")
+                        ACE_TEXT ("DataReader_T::delete_readcondition - ")
                         ACE_TEXT ("Unable to cast DDSQueryCondition to a ")
                         ACE_TEXT ("DDSReadCondition\n")));
           return ::DDS::RETCODE_BAD_PARAMETER;
@@ -585,8 +585,8 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener (void
     dynamic_cast <CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE> *> (drl);
   if (!ccm_dds_drl)
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, "CIAO::DDS4CCM::DataReader_T"
-                                "<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener - "
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, "DataReader_T"
+                                "::get_listener - "
                                 "DDS returned a NIL listener.\n"));
       return ::DDS::DataReaderListener::_nil ();
     }
@@ -795,14 +795,14 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
       if (!this->impl_)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "CIAO::DDS4CCM::DataReader_T::set_impl - "
+                        "DataReader_T::set_impl - "
                         "Failed to cast DDS::DataReader to DataReader_T\n"));
         }
     }
   else
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DataReader_T::set_impl - "
+                    "DataReader_T::set_impl - "
                     "Failed to cast DDS::DataReader to DataReader_T\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }

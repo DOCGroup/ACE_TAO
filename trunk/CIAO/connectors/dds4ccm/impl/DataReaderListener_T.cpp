@@ -151,7 +151,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "CIAO::DDS4CCM::DataReaderListener_T::on_data_available_i - "
+        "DataReaderListener_T::on_data_available_i - "
         "Error returning loan to DDS - <%C>\n",
         translate_retcode (retval)));
     }
