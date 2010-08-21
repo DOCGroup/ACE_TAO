@@ -1,3 +1,10 @@
+Sat Aug 21 16:47:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * DAnCE/tests/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+
+          Compile errors.
+
 Sat Aug 21 16:40:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/Parsing/ArtGallery3Nodes.cdd:
