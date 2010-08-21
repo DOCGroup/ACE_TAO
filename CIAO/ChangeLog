@@ -1,3 +1,9 @@
+Sat Aug 21 16:39:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
+
+          Warnings.
+
 Sat Aug 21 16:32:46 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/SHS_DataModel.idl:
