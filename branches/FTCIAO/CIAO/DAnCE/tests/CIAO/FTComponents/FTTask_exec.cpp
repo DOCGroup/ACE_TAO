@@ -84,19 +84,23 @@ namespace CIDL_FTTask_Impl
     {
     }
     
-    ++state_;
-    if (state_ == suicidal_count_)
-    {
-      CIAO_DEBUG((LM_EMERGENCY, 
-            "\n********* Sleeping 4 seconds before exiting.\n"));
-      sleep(4);
-      exit(1);
-    }
     //task_.signal ();
     
     this->cpu_.run (static_cast <size_t> (execution_time));
     
-    //agent_->state_changed (object_id_.c_str ());
+    ++state_;
+    if (state_ == suicidal_count_)
+    {
+      CIAO_DEBUG((LM_EMERGENCY, "\n********* CRASHING *************\n"));
+      //sleep(4);
+      exit(1);
+    }
+
+    if(primary_)
+    {
+      //agent_->state_changed (object_id_.c_str ());
+      agent_->precommit_state (object_id_.c_str ());
+    }
 
     timer_.stop ();
 
@@ -392,12 +396,15 @@ namespace CIDL_FTTask_Impl
 
 	// publish application in NameService for the client
 	if (primary_)
-	  {
-	    Name_Helper_T <Worker> tnh (orb_.in ());
-
-	    tnh.bind ("FLARE_TESTAPPLICATION/" + object_id_,
-		      ref.in ());
-          }
+	{
+	  Name_Helper_T <Worker> tnh (orb_.in ());
+	  tnh.bind ("FLARE_TESTAPPLICATION/" + object_id_, ref.in ());
+        }
+        else
+        {
+	  Name_Helper_T <Worker> tnh (orb_.in ());
+	  tnh.bind ("FLARE_TESTAPPLICATION_BACKUP/" + object_id_, ref.in ());
+        }
 
         // and write it to a file
         std::string iorfilename;
@@ -451,7 +458,6 @@ namespace CIDL_FTTask_Impl
     return std::string (hn_str);
   }
 
-
   std::string
   FTTask_exec_i::get_process_id ()
   {
@@ -461,7 +467,6 @@ namespace CIDL_FTTask_Impl
     
     return ss.str ();
   }
-
 
   extern "C" FTTASK_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_DeCoRAM_FTTask_Impl (void)

@@ -65,8 +65,8 @@ project(FTClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
               -Wb,export_include=FTClient_exec_export.h \
               -SS
 
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
-  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT 
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT 
               
   CIDL_Files {
     FTClient.cidl
@@ -171,7 +171,7 @@ project(FTTask_idl_gen) : ciaoidldefaults, anytypecode {
               -Wb,stub_export_include=FTTask_stub_export.h \
               -Wb,skel_export_macro=FTTASK_SVNT_Export \
               -Wb,skel_export_include=FTTask_svnt_export.h  
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT 
 
   IDL_Files {
     FTTask.idl
@@ -187,8 +187,8 @@ project(FTTask_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
               -Wb,export_include=FTTask_exec_export.h \
               -SS
 
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
-  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT 
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT 
               
   CIDL_Files {
     FTTask.cidl

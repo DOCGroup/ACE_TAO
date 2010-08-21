@@ -1,3 +1,12 @@
+Sat Aug 21 23:20:05 UTC 2010  Sumant Tambe  <sutambe@nospam>
+
+        * DAnCE/tests/CIAO/FTComponents/FTClient_Timer_Handler.cpp:
+        * DAnCE/tests/CIAO/FTComponents/FTComponents.mpc:
+        * DAnCE/tests/CIAO/FTComponents/FTTask.idl:
+        * DAnCE/tests/CIAO/FTComponents/FTTask_exec.cpp:
+
+          Improved group failover support using lag-by-one approach.
+
 Thu Aug 12 22:10:02 UTC 2010  Sumant Tambe  <sutambe@nospam>
 
         * DAnCE/FaultCorrelationManager/FaultCorrelationManager_Impl.h:
@@ -14,7 +23,7 @@ Thu Aug 12 22:10:02 UTC 2010  Sumant Tambe  <sutambe@nospam>
         * DAnCE/tests/CIAO/FTComponents/client_trigger.cpp:
 
         The changes above are related to CORFU experiments and
-        GroupFailover two phase commit implementation. 
+        GroupFailover two phase commit implementation.
         The changes below are not related to it.
 
         * ciao/ComponentServer/Configurators/Configurators.mpc:
