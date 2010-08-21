@@ -1,3 +1,9 @@
+Sat Aug 21 16:40:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/Parsing/ArtGallery3Nodes.cdd:
+
+          File missing from a previous commit.
+
 Sat Aug 21 16:39:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_DeploymentInterceptors_Base_Impl.cpp:
