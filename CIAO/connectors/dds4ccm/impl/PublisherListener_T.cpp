@@ -45,8 +45,8 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpect
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("PublisherListener_T::failed to ")
-                                ACE_TEXT ("use reactor.\n")));
+                        ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
+                        ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
           else
@@ -54,18 +54,27 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpect
               this->error_listener_->on_unexpected_status (entity, status_kind);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "PublisherListener_T::on_unexpected_status");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "PublisherListener_T::on_unexpected_status - "
+            "Unexpected exception caught for <%C>\n",
+            translate_statuskind (status_kind)));
         }
     }
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                     ACE_TEXT ("PublisherListener_T::on_unexpected_status: ")
-                    ACE_TEXT ("No error listener connected\n")));
+                    ACE_TEXT ("No error listener connected for <%C>\n"),
+                    translate_statuskind (status_kind)));
     }
 }
 
@@ -108,11 +117,18 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_
               this->error_listener_->on_offered_deadline_missed (the_Writer, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "PublisherListener_T::on_offered_deadline_missed");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "PublisherListener_T::on_offered_deadline_missed - "
+            "Unexpected exception caught\n"));
         }
     }
   else
@@ -168,11 +184,18 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_
               this->error_listener_->on_offered_incompatible_qos (the_Writer, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "PublisherListener_T::on_offered_incompatible_qos");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "PublisherListener_T::on_offered_incompatible_qos - "
+            "Unexpected exception caught\n"));
         }
     }
   else

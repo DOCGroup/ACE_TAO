@@ -1,3 +1,22 @@
+Sat Aug 21 11:53:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DDSTopicListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+        * connectors/dds4ccm/impl/Writer_T.cpp:
+          Logging improvements
+
 Fri Aug 20 20:13:44 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/Parsing/Parsing.mpc:

@@ -37,7 +37,7 @@ CIAO::DDS4CCM::DataReaderHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::handle_exce
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "CIAO::DDS4CCM::DataReaderHandler_T::handle_exception - "
+        "DataReaderHandler_T::handle_exception - "
         "Unexpected exception caught\n"));
     }
   return 0;
@@ -77,7 +77,7 @@ CIAO::DDS4CCM::DataReaderStateHandler_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::handle
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "CIAO::DDS4CCM::DataReaderStateHandler_T::handle_exception - "
+        "DataReaderStateHandler_T::handle_exception - "
         "Unexpected exception caught\n"));
     }
   return 0;

@@ -31,6 +31,8 @@ namespace CIAO
       ::DDSTopic* the_topic,
       const ::DDS_InconsistentTopicStatus & status)
     {
+      DDS4CCM_TRACE ("CCM_DDS_TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent_topic");
+      
       ::DDS::Topic_var dds_topic = ::DDS::Topic::_nil ();
       ACE_NEW (dds_topic,
                Topic_type (the_topic));

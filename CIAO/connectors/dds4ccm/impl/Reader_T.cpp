@@ -66,7 +66,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
     this->get_nr_valid_samples (sample_info, true);
 
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                     ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - ")
+                     ACE_TEXT ("Reader_T::read_last - ")
                      ACE_TEXT ("total number of samples <%u> - ")
                      ACE_TEXT ("last number of samples <%u>\n"),
                      data.length(),
@@ -92,7 +92,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
   if (retval != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_last - "
+                    "Reader_T::read_last - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
     }
@@ -114,7 +114,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
 
   CORBA::ULong const nr_of_valid_samples = this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
+                ACE_TEXT ("Reader_T::read_all - ")
                 ACE_TEXT ("total number of samples <%u> - ")
                 ACE_TEXT ("valid number of samples <%u>\n"),
                 data.length (),
@@ -140,7 +140,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
   if (retval != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - "
+                    "Reader_T::read_all - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
     }
@@ -187,7 +187,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
 
   ::DDS_Long sample = data.length();
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
-                ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_last - ")
+                ACE_TEXT ("Reader_T::read_one_last - ")
                 ACE_TEXT ("total number of samples <%u>\n"),
                 sample));
   while (sample >= 0 && !sample_info[sample-1].valid_data)
@@ -207,7 +207,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_last - "
+                    "Reader_T::read_one_last - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
     }
@@ -233,7 +233,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   CORBA::ULong const nr_of_valid_samples =
     this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                ACE_TEXT ("CIAO::DDS4CCM::DDS_CCM::Reader_T::read_all - ")
+                ACE_TEXT ("Reader_T::read_all - ")
                 ACE_TEXT ("total number of samples <%u> - ")
                 ACE_TEXT ("valid number of samples <%u>\n"),
                 data.length (),
@@ -260,7 +260,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   if (retval != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                    "CIAO::DDS4CCM::DDS_CCM::Reader_T::read_one_all - "
+                    "Reader_T::read_one_all - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
     }

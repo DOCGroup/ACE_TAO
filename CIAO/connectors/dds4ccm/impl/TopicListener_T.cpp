@@ -36,26 +36,48 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent
 
   if (! ::CORBA::is_nil (this->error_listener_.in ()))
     {
-      if (this->reactor_)
+      try
         {
-          ::CIAO::DDS4CCM::OnInconsistentTopicHandler* rh = 0;
-          ACE_NEW (rh,
-                   ::CIAO::DDS4CCM::OnInconsistentTopicHandler (
-                     this->error_listener_,
-                     the_topic,
-                     status));
-          ACE_Event_Handler_var safe_handler (rh);
-          if (this->reactor_->notify (rh) != 0)
+          if (this->reactor_)
             {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
-                            ACE_TEXT ("failed to use reactor.\n")));
+              ::CIAO::DDS4CCM::OnInconsistentTopicHandler* rh = 0;
+              ACE_NEW (rh,
+                      ::CIAO::DDS4CCM::OnInconsistentTopicHandler (
+                        this->error_listener_,
+                        the_topic,
+                        status));
+              ACE_Event_Handler_var safe_handler (rh);
+              if (this->reactor_->notify (rh) != 0)
+                {
+                  DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                                ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                                ACE_TEXT ("failed to use reactor.\n")));
+                }
+            }
+          else
+            {
+              this->error_listener_->on_inconsistent_topic (the_topic, status);
             }
         }
-      else
+      catch (const ::CORBA::Exception& ex)
         {
-          this->error_listener_->on_inconsistent_topic (the_topic, status);
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "TopicListener_T::on_inconsistent_topic");
         }
+      catch (...)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "TopicListener_T::on_inconsistent_topic - "
+            "Unexpected exception caught\n"));
+        }
+    }
+  else
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
+                    ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                    ACE_TEXT ("No error listener connected\n")));
     }
 }
 

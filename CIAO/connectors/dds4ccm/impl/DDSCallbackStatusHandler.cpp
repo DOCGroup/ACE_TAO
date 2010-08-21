@@ -44,8 +44,10 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnUnexpectedStatusHandler::handle_exception - "
-            "Unexpected exception caught\n"));
+            "OnUnexpectedStatusHandler::handle_exception - "
+            "Unexpected exception caught for <%C>\n",
+            translate_statuskind (this->status_kind_)));
+
         }
       return 0;
     }
@@ -86,7 +88,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnRequestedOncompatibleQosHandler::handle_exception - "
+            "OnRequestedOncompatibleQosHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -128,7 +130,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnSampleRejectedHandler::handle_exception - "
+            "OnSampleRejectedHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -170,7 +172,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnInconsistentTopicHandler::handle_exception - "
+            "OnInconsistentTopicHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -212,7 +214,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnOfferedDeadlineMissedHandler::handle_exception - "
+            "OnOfferedDeadlineMissedHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -254,7 +256,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnOfferedIncompatibleQoSHandler::handle_exception - "
+            "OnOfferedIncompatibleQoSHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -294,7 +296,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnRequestedDeadlineMissedHandler::handle_exception - "
+            "OnRequestedDeadlineMissedHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;
@@ -334,7 +336,7 @@ namespace CIAO
       catch (...)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::OnSampleLostHandler::handle_exception - "
+            "OnSampleLostHandler::handle_exception - "
             "Unexpected exception caught\n"));
         }
       return 0;

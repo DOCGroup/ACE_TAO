@@ -55,7 +55,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
   if (DDS_InstanceHandle_equals (&hnd, &::DDS_HANDLE_NIL))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
+                  ACE_TEXT ("Updater_T::create_i: ")
                   ACE_TEXT ("Unable to unregister instance, nil handle.\n")));
       throw ::CCM_DDS::InternalError (::DDS_RETCODE_ERROR, index);
     }
@@ -63,7 +63,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::create_i: ")
+                  ACE_TEXT ("Updater_T::create_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
       throw ::CCM_DDS::InternalError (result, index);
@@ -99,7 +99,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::update_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::update_i: ")
+                  ACE_TEXT ("Updater_T::update_i: ")
                   ACE_TEXT ("Unable to update data, error %C.\n"),
                   translate_retcode (result)));
       throw ::CCM_DDS::InternalError (result, index);
@@ -152,7 +152,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
+                  ACE_TEXT ("Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to dispose instance, error %C.\n"),
                   translate_retcode (result)));
       throw ::CCM_DDS::InternalError (result, index);
@@ -161,7 +161,7 @@ CIAO::DDS4CCM::Updater_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_i (
   if (result != DDS_RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                  ACE_TEXT ("CIAO::DDS4CCM::Updater_T::delete_i: ")
+                  ACE_TEXT ("Updater_T::delete_i: ")
                   ACE_TEXT ("Unable to unregister instance, error %C.\n"),
                   translate_retcode (result)));
       throw ::CCM_DDS::InternalError (result, index);

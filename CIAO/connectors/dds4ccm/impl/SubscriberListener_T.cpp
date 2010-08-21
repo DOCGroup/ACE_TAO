@@ -66,12 +66,18 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
               this->error_listener_->on_requested_incompatible_qos (reader, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "SubscriberListener_T::on_requested_incompatible_qos");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("SubscriberListener_T::")
-                        ACE_TEXT ("on_requested_incompatible_qos: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "SubscriberListener_T::on_requested_incompatible_qos - "
+            "Unexpected exception caught\n"));
         }
     }
   else
@@ -113,18 +119,27 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpec
               this->error_listener_->on_unexpected_status (entity, status_kind);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "SubscriberListener_T::on_unexpected_status");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-              ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
-              ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "SubscriberListener_T::on_unexpected_status - "
+            "Unexpected exception caught for <%C>\n",
+            translate_statuskind (status_kind)));
         }
    }
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
-                  ACE_TEXT ("No error listener connected\n")));
+                  ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
+                  ACE_TEXT ("No error listener connected for <%C>\n"),
+                  translate_statuskind (status_kind)));
     }
 }
 
@@ -190,11 +205,18 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
               this->error_listener_->on_sample_rejected (reader, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "SubscriberListener_T::on_sample_rejected");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "SubscriberListener_T::on_sample_rejected - "
+            "Unexpected exception caught\n"));
         }
     }
   else
