@@ -19,15 +19,15 @@ module DAnCE
       /// Process affinity mask
       const string SHS_AFFINITY = "edu.vanderbilt.dre.DAnCE.SHS.Affinity";
       /// Number of threads configured with the reactor
-      const string SHS_TPOOL = "edu.vanderblt.dre.DAnCE.SHS.ThreadPool";
+      const string SHS_TPOOL = "edu.vanderbilt.dre.DAnCE.SHS.ThreadPool";
       /// IDs of hosted instances
-      const string SHS_HOSTED_INSTANCES = "edu.vanderblt.dre.DAnCE.SHS.HostedInstances";
+      const string SHS_HOSTED_INSTANCES = "edu.vanderbilt.dre.DAnCE.SHS.HostedInstances";
       
       /********** INSTANCE META DATA **********/
       /// Memory footprint of the instance
-      const string SHS_MEM_FP = "edu.vanderblt.dre.DAnCE.SHS.MemoryFootprint";
+      const string SHS_MEM_FP = "edu.vanderbilt.dre.DAnCE.SHS.MemoryFootprint";
       /// Reference to instance (Appropriate reference type)
-      const string SHS_INSTANCE_REF = "edu.vanderblt.dre.DAnCE.SHS.InstanceReference";
+      const string SHS_INSTANCE_REF = "edu.vanderbilt.dre.DAnCE.SHS.InstanceReference";
       /// Sequence of properties found in the deployment plan. 
 
       /********** CONNECTION META DATA **********/
