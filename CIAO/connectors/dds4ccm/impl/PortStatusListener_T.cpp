@@ -59,11 +59,18 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
               this->port_status_listener_->on_requested_deadline_missed (the_reader, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "PortStatusListener_T::on_requested_deadline_missed");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        ACE_TEXT ("PortStatusListener_T::on_requested_deadline_missed: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "PortStatusListener_T::on_requested_deadline_missed - "
+            "Unexpected exception caught\n"));
         }
     }
   else
@@ -112,11 +119,18 @@ CIAO::DDS4CCM::PortStatusListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
               this->port_status_listener_->on_sample_lost (the_reader, status);
             }
         }
+      catch (const ::CORBA::Exception& ex)
+        {
+          DDS4CCM_PRINT_CORBA_EXCEPTION (
+                                  DDS4CCM_LOG_LEVEL_ERROR,
+                                  ex,
+                                  "PortStatusListener_T::on_sample_lost");
+        }
       catch (...)
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                        ACE_TEXT ("PortStatusListener_T::on_sample_lost: ")
-                        ACE_TEXT ("DDS Exception caught\n")));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+            "PortStatusListener_T::on_sample_lost - "
+            "Unexpected exception caught\n"));
         }
     }
   else

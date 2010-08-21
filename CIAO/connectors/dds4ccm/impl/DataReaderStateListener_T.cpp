@@ -46,7 +46,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
           if (this->reactor_->notify (rh) != 0)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            ACE_TEXT ("DataReaderStateHandler_T::")
+                            ACE_TEXT ("DataReaderStateListener_T::")
                             ACE_TEXT ("failed to use reactor.\n")));
             }
         }
@@ -106,8 +106,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       else if (result != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                        ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
                         ACE_TEXT ("Unable to take data from data reader, ")
-                        ACE_TEXT ("error %d.\n"), result));
+                        ACE_TEXT ("error %C.\n"), translate_retcode (result)));
         }
       if (this->control_->mode () == ::CCM_DDS::ONE_BY_ONE)
         {
@@ -149,7 +150,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
             {
               if ((sample_info[i].valid_data &&
                    sample_info[i].view_state == ::DDS_NEW_VIEW_STATE) ||
-                  sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+                   sample_info[i].instance_state == ::DDS_NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                 {
                   if (updates.size () > 0)
                     {
@@ -219,15 +220,22 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
+            "DataReaderStateListener_T::on_data_available_i - "
             "Error returning loan to DDS - <%C>\n",
             translate_retcode (retval)));
         }
     }
+  catch (const ::CORBA::Exception& ex)
+    {
+      DDS4CCM_PRINT_CORBA_EXCEPTION (
+                              DDS4CCM_LOG_LEVEL_ERROR,
+                              ex,
+                              "DataReaderStateListener_T::on_data_available_i");
+    }
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "CIAO::DDS4CCM::DataReaderStateListener_T::on_data_available_i - "
+        "DataReaderStateListener_T::on_data_available_i - "
         "Unexpected exception caught\n"));
     }
 }
