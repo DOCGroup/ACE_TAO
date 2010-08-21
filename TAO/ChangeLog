@@ -1,3 +1,30 @@
+Sat Aug 21 23:18:27 UTC 2010  Sumant Tambe  <sutambe@nospam>
+
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.h:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.h:
+        * orbsvcs/orbsvcs/LWFT/ForwardingAgent.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl:
+        * orbsvcs/orbsvcs/LWFT/SSA_AMI_Handler.h:
+        * orbsvcs/orbsvcs/LWFT/SSA_AMI_Handler.cpp:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.h:
+        * orbsvcs/orbsvcs/LWFT/StateSynchronizationAgent_i.cpp:
+        
+          Improved group failover support with lag-by-one approach.
+
+Fri Aug 13 06:00:50 UTC 2010  Sumant Tambe  <sutambe@nospam>
+
+        * orbsvcs/orbsvcs/LWFT/LWFT.mpc:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.h:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/LWFT/SSA_AMI_Handler.h:
+        * orbsvcs/orbsvcs/LWFT/SSA_AMI_Handler.cpp:
+
+          Two-phase commit with CORBA AMI.
+
 Thu Aug 12 22:14:46 UTC 2010  Sumant Tambe  <sutambe@nospam>
 
         * orbsvcs/LWFT_Service/ReplicationManager_process.cpp:

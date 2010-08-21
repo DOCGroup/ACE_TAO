@@ -22,6 +22,7 @@
 #include "StateSynchronizationAgentS.h"
 #include "StatefulObject.h"
 #include "ssa_export.h"
+#include "SSA_AMI_Handler.h"
 
 #if defined (FLARE_USES_DDS)
 # include <ccpp_dds_dcps.h>
@@ -29,7 +30,8 @@
 #endif 
 
 class SSA_Export StateSynchronizationAgent_i
-  : public POA_StateSynchronizationAgent
+  : public POA_StateSynchronizationAgent, 
+    public AMI_StateSynchronizationAgentHandler
 {
  public:
   StateSynchronizationAgent_i (const std::string & host_id,
@@ -57,6 +59,24 @@ class SSA_Export StateSynchronizationAgent_i
   /// Registers application for statesynchronization with CORBA.
   virtual void register_application (const char * object_id,
 				     ReplicatedApplication_ptr app);
+  
+  virtual void state_changed() {}
+  virtual void state_changed_excep(Messaging::ExceptionHolder*) {}
+    
+  virtual void precommit_state(CORBA::Boolean) {}
+  virtual void precommit_state_excep(Messaging::ExceptionHolder*) {}
+     
+  virtual void commit_state() {}
+  virtual void commit_state_excep(Messaging::ExceptionHolder*) {}
+     
+  virtual void transfer_state();
+  virtual void transfer_state_excep(Messaging::ExceptionHolder*) {}
+     
+  virtual void update_rank_list() {}
+  virtual void update_rank_list_excep(Messaging::ExceptionHolder*) {}
+     
+  virtual void register_application() {}
+  virtual void register_application_excep(Messaging::ExceptionHolder*) {}
 
 #ifdef FLARE_USES_DDS
   /// Registers application for state synchronization with DDS
@@ -139,6 +159,10 @@ private:
 
   /// decides whether replicas should be updated through corba or dds
   bool use_corba_;
+  
+  StateSynchronizationAgent_var ssa_in_replica_;
+
+  size_t ssa_invoked_;
 };
 
 #include "StateSynchronizationAgent_i_T.cpp"

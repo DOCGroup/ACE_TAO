@@ -30,6 +30,7 @@ public:
   virtual void update_rank_list (const RankList & rank_list);
   
   void initialize (CORBA::Object_ptr);
+  ReplicationManager_ptr getRM();
   void proactive (bool v);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

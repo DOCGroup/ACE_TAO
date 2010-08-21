@@ -14,6 +14,7 @@
 
 #include "StateSynchronizationAgent_i.h"
 #include "CorbaStateUpdate.h"
+#include "SSA_AMI_Handler.h"
 
 #ifdef FLARE_USES_DDS
 # include "DDSStateUpdate_T.h"
@@ -31,7 +32,9 @@ StateSynchronizationAgent_i::StateSynchronizationAgent_i (
     publisher_ (DDS::Publisher::_nil ()),
     subscriber_ (DDS::Subscriber::_nil ()),
 #endif /* FLARE_USES_DDS */
-    use_corba_ (use_corba)
+    use_corba_ (use_corba),
+    ssa_in_replica_(StateSynchronizationAgent::_nil()),
+    ssa_invoked_(0)
 {
 #if defined (FLARE_USES_DDS)
   if (!use_corba_)
@@ -160,8 +163,9 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
 
 ::CORBA::Boolean StateSynchronizationAgent_i::precommit_state (const char * object_id)
 {
+  
   ACE_ERROR ((LM_ERROR, 
-              "SSA::precommit_state (%s) called.\n", 
+              "(%P|%t) SSA::precommit_state (%s) called.\n", 
               object_id));
   
   // get application reference
@@ -212,7 +216,14 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
     }
 
   ReplicatedApplication_var replica;
-  
+
+  bool use_ami = true; // Enabling AMI here causes abnormal termination.
+  if(use_ami && (ssa_invoked_ != 0))
+    ACE_ERROR ((LM_EMERGENCY, 
+                "(%P|%t) SSA::transfer_state (): "
+                "Transfer state has not completed. ssa_invoked = %d\n",
+                ssa_invoked_));
+
   for (REPLICA_OBJECT_LIST::iterator it = replica_group.replicas.begin ();
        it != replica_group.replicas.end ();
        ++it)
@@ -222,8 +233,18 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
           CorbaStateUpdate * csu = dynamic_cast<CorbaStateUpdate *> ((*it).get());
           ReplicatedApplication_var rep_app =
             ReplicatedApplication::_narrow(csu->application());
-	  StateSynchronizationAgent_var ssa_in_replica = rep_app->agent();
-          ssa_in_replica->transfer_state(CORBA::string_dup(object_id), state.in ());
+          if(ssa_in_replica_.in() == 0)
+  	    ssa_in_replica_ = rep_app->agent();
+          if(use_ami)
+          {
+            ssa_in_replica_->sendc_transfer_state(
+                (AMI_StateSynchronizationAgentHandler *)this,
+                CORBA::string_dup(object_id),
+                state.in());
+            ++ssa_invoked_;
+          }
+          else
+            ssa_in_replica_->transfer_state(CORBA::string_dup(object_id), state.in ());
 	}
       catch (const CORBA::Exception& ex)
 	{
@@ -235,22 +256,34 @@ StateSynchronizationAgent_i::state_changed (const char * object_id)
            return false;
 	}
     }
-    return true;
+    if(use_ami)
+    {
+      // If 100 seconds pass in just waiting for state transfer something
+      // is wrong. 
+      //ACE_Time_Value tv(100, 0);
+      //return ssa_ami_handler_ptr->wait_for_results(ssa_invoked, tv);
+      return true;
+    }
+    else
+      return true;
 }
 
 void StateSynchronizationAgent_i::transfer_state (
     const char * object_id,
     const ::CORBA::Any & state_value)
 {
+    
   ACE_ERROR ((LM_EMERGENCY, 
               "(%P|%t) SSA::transfer_state () "
               "for the application %s\n",
               object_id));
+  
   this->precommit_state_ = state_value;
 }
 
 void StateSynchronizationAgent_i::commit_state (const char * object_id)
 {
+  
   ACE_ERROR ((LM_EMERGENCY, 
               "(%P|%t) SSA::commit_state () "
               "for the application %s\n",
@@ -516,3 +549,11 @@ StateSynchronizationAgent_i::get_unique_id (
   return unique_id;
 }
 
+void StateSynchronizationAgent_i::transfer_state()
+{
+  --ssa_invoked_;
+  ACE_ERROR ((LM_EMERGENCY, 
+              "(%P|%t) SSA::transfer_state (): "
+              "Transafer state completed ssa_invoked = %d\n",
+              ssa_invoked_));
+}
