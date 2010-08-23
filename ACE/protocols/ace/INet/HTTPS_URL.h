@@ -55,7 +55,7 @@ namespace ACE
 
               enum
               {
-                HTTPS_PORT = 443,
+                HTTPS_PORT = 443
               };
 
             protected:
