@@ -1,3 +1,9 @@
+Mon Aug 23 19:51:59 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Missing_Svc_Conf_Test.cpp:
+        
+          Fix some scoreboard problems.
+
 Mon Aug 23 15:05:56 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Select_Reactor.h:
