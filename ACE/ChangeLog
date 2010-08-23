@@ -1,3 +1,10 @@
+Mon Aug 23 15:05:56 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Select_Reactor.h:
+
+          vc10 needs an "ACE_Export" declaration on the explicit template
+          instantiation of ACE_Select_Reactor.
+
 Mon Aug 23 13:23:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-kfreebsd.h:
