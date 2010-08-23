@@ -1,3 +1,13 @@
+Mon Aug 23 14:11:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Layout changes to comments
+
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/Plan_pub.cdp:
+          Send 5000 samples instead of 10000 so that we don't get all kind
+          of test failures on slower systems
+
 Sat Aug 21 16:47:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Configuration/CPU_Affinity.cpp:
