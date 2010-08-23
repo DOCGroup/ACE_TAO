@@ -1,3 +1,11 @@
+Mon Aug 23 15:55:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/LocalObject.h:
+
+          Added a preprocessor macro that allows applications to determine
+          whether or not this version of TAO always reference-counts its
+          local objects.
+
 Mon Aug 23 14:54:46 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
