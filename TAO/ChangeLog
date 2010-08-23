@@ -1,3 +1,8 @@
+Mon Aug 23 09:38:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+          Implements patches from Bugzilla 3655 (with changes).
+
 Mon Aug 23 09:31:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Transport_Cache_Manager_T.inl:
