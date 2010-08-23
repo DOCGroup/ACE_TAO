@@ -26,13 +26,15 @@
 //
 // ==========================================================================
 
-#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Logging_Strategy.h"
 
+#include "test_config.h"
+
 int
-run_main (int , ACE_TCHAR ** )
+run_main (int, ACE_TCHAR *[] )
 {
   ACE_START_TEST (ACE_TEXT ("Missing_Svc_Conf_Test"));
 
