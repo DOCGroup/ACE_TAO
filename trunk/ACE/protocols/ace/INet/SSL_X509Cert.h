@@ -13,7 +13,7 @@
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
-#include "ace/INet/INet_Export.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +28,7 @@ namespace ACE
         *
         * Provides reference counting for the X509 certificate object.
         */
-        class ACE_INET_Export SSL_X509Cert
+        class ACE_INET_SSL_Export SSL_X509Cert
           {
             public:
               SSL_X509Cert ();
