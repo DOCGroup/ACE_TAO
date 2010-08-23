@@ -14,6 +14,7 @@
 #include "ace/SString.h"
 #include "ace/SSL/SSL_Context.h"
 #include "ace/INet/SSL_X509Cert.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +29,7 @@ namespace ACE
         *   verification callback.
         *
         */
-        class ACE_INET_Export SSL_CertificateCallbackArg
+        class ACE_INET_SSL_Export SSL_CertificateCallbackArg
           {
             public:
               SSL_CertificateCallbackArg (const ACE_SSL_Context* ssl_ctx,
@@ -64,7 +65,7 @@ namespace ACE
         *   verification callbacks.
         *
         */
-        class ACE_INET_Export SSL_CertificateCallback
+        class ACE_INET_SSL_Export SSL_CertificateCallback
           {
             public:
               SSL_CertificateCallback ();
@@ -80,7 +81,7 @@ namespace ACE
         *   all peer certificates.
         *
         */
-        class ACE_INET_Export SSL_CertificateAcceptor
+        class ACE_INET_SSL_Export SSL_CertificateAcceptor
           : public SSL_CertificateCallback
           {
             public:

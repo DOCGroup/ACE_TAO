@@ -19,6 +19,7 @@
 
 #include "ace/INet/HTTP_ClientRequestHandler.h"
 #include "ace/INet/HTTPS_Session.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +33,7 @@ namespace ACE
         * @brief Implements HTTPS session factory.
         *
         */
-        class ACE_INET_Export SessionFactory_Impl
+        class ACE_INET_SSL_Export SessionFactory_Impl
           : public ACE::HTTP::SessionFactory
           {
             private:

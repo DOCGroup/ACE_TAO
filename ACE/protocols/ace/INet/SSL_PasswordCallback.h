@@ -13,6 +13,7 @@
 
 #include "ace/SString.h"
 #include "ace/INet/INet_Log.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +28,7 @@ namespace ACE
         *   password callback.
         *
         */
-        class ACE_INET_Export SSL_PasswordCallback
+        class ACE_INET_SSL_Export SSL_PasswordCallback
           {
             public:
               SSL_PasswordCallback ();

@@ -16,6 +16,7 @@
 #include "ace/Singleton.h"
 #include "ace/SSL/SSL_Context.h"
 #include "ace/INet/SSL_CallbackManager.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +30,7 @@ namespace ACE
         * @brief Implements security (SSL) context for HTTPS sessions.
         *
         */
-        class ACE_INET_Export Context
+        class ACE_INET_SSL_Export Context
           {
             public:
               Context (bool verify_peer = Context::ssl_verify_peer_,

@@ -1,3 +1,16 @@
+Mon Aug 23 11:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/INet_SSL_Export.h:
+        * protocols/ace/INet/HTTPS_Context.h:
+        * protocols/ace/INet/HTTPS_SessionFactory.h:
+        * protocols/ace/INet/HTTPS_URL.h:
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CertificateCallback.h:
+        * protocols/ace/INet/SSL_PasswordCallback.h:
+        * protocols/ace/INet/SSL_X509Cert.h:
+        * protocols/ace/INet/inet_ssl.mpc:
+          Changes to fix MSVC 7/8 link errors.
+
 Mon Aug 23 11:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/HTTPS_URL.h:

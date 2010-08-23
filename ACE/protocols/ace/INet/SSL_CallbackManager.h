@@ -16,6 +16,7 @@
 #include "ace/SSL/SSL_Context.h"
 #include "ace/INet/SSL_CertificateCallback.h"
 #include "ace/INet/SSL_PasswordCallback.h"
+#include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +31,7 @@ namespace ACE
         *   SSL callbacks.
         *
         */
-        class ACE_INET_Export SSL_CallbackManager
+        class ACE_INET_SSL_Export SSL_CallbackManager
           {
             public:
               SSL_CallbackManager ();
