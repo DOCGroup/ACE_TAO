@@ -17,7 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INet/INet_Export.h"
+#include "ace/INet/INet_SSL_Export.h"
 #include "ace/INet/HTTP_URL.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -32,7 +32,7 @@ namespace ACE
         * @brief Implements HTTPS url support.
         *
         */
-        class ACE_INET_Export URL
+        class ACE_INET_SSL_Export URL
           : public ACE::HTTP::URL
           {
             public:
