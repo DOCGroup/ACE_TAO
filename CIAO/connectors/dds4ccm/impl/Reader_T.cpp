@@ -182,7 +182,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   DDS_SampleInfoSeq sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
-  // For now, only read with instance...
+  // For now, only read with instance
   this->impl ()->read_w_instance (data, lookup_hnd, sample_info);
 
   ::DDS_Long sample = data.length();

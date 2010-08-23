@@ -247,7 +247,7 @@
           <kind>tk_ulonglong</kind>
         </type>
         <value>
-          <ulonglong>9000</ulonglong>
+          <ulonglong>5000</ulonglong>
         </value>
       </value>
     </configProperty>
