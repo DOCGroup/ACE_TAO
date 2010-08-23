@@ -1,3 +1,11 @@
+Mon Aug 23 13:23:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-kfreebsd.h:
+          New config file for kfreebsd
+
+        * ace/config-win32-common.h:
+          Removed commented out defines
+
 Mon Aug 23 11:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/INet_SSL_Export.h:
@@ -19,7 +27,7 @@ Mon Aug 23 11:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 Sat Aug 21 12:53:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Missing_Svc_Conf_Test.cpp:
-        
+
           Added a descriptive comment block to the source.
 
 Fri Aug 20 13:29:22 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>

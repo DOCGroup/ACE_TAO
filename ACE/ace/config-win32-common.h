@@ -323,40 +323,12 @@
 #define ACE_HAS_WTOI
 #define ACE_HAS_WTOL
 
-// Compiler/platform correctly calls init()/fini() for shared
-// libraries. - applied for DLLs ?
-//define ACE_HAS_AUTOMATIC_INIT_FINI
-
-// Platform supports POSIX O_NONBLOCK semantics.
-//define ACE_HAS_POSIX_NONBLOCK
-
-// Platform contains <poll.h>.
-//define ACE_HAS_POLL
-
-// Platform supports the /proc file system.
-//define ACE_HAS_PROC_FS
-
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
-
-// Compiler/platform supports SVR4 signal typedef.
-//define ACE_HAS_SVR4_SIGNAL_T
-
-// Platform provides <sys/filio.h> header.
-//define ACE_HAS_SYS_FILIO_H
-
-// Platform supports ACE_TLI timod STREAMS module.
-//define ACE_HAS_TIMOD_H
-
-// Platform supports ACE_TLI tiuser header.
-//define ACE_HAS_TIUSER_H
 
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!
 #define ACE_HAS_TLI_PROTOTYPES
-
-// Platform supports ACE_TLI.
-//define ACE_HAS_TLI
 
 // I'm pretty sure NT lacks these
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
