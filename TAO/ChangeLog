@@ -1,3 +1,9 @@
+Mon Aug 23 19:37:45 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/PortableServer/Active_Object_Map.cpp:
+
+          Fixed path to debug.h
+
 Mon Aug 23 15:55:50 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/LocalObject.h:
