@@ -31,6 +31,8 @@
 
 #include "tao/Object.h"
 
+#define TAO_LOCAL_OBJECTS_ALWAYS_REFCOUNT
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
