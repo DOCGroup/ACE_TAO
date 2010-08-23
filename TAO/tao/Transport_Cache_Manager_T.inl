@@ -43,8 +43,8 @@ namespace TAO
 
     if (entry != 0)
       {
-	ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-	retval = this->purge_entry_i (entry);
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
+        retval = this->purge_entry_i (entry);
       }
       
     return retval;
