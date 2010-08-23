@@ -5,9 +5,6 @@
 
 #include "ace/OS_NS_sys_time.h"
 
-//============================================================
-// ConditionManager_T
-//============================================================
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ConditionManager_T ()
   : impl_ (0),
@@ -252,7 +249,7 @@ CIAO::DDS4CCM::ConditionManager_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::query (
     }
   else
     {
-      //remove query conditions
+      // Remove query conditions
       this->remove_conditions ();
       this->init_readcondition ();
     }
