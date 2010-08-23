@@ -11,7 +11,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
-#include "TAO/tao/debug.h"
+#include "tao/debug.h"
 #include "PortableServer_Functions.h"
 
 ACE_RCSID(PortableServer,
