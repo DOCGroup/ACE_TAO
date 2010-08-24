@@ -287,7 +287,15 @@ DDS_Event_Connector_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::ccm_activate (voi
     {
       ACE_Reactor* reactor = 0;
 #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-      reactor = this->context_->get_CCM_object()->_get_orb ()->orb_core ()->reactor ();
+      ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+      if (!::CORBA::is_nil (ccm_object.in ()))
+        {
+          ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+          if (!::CORBA::is_nil (orb.in ()))
+            {
+              reactor = orb->orb_core ()->reactor ();
+            }
+        }
 #endif
       TopicBaseConnector::ccm_activate (reactor);
 
