@@ -282,7 +282,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("IIOP_Acceptor::open, address==%C, options=%C\n"),
-                  address, options != 0 ? options : "(null)"));
+                  address, options));
     }
 
   this->orb_core_ = orb_core;
