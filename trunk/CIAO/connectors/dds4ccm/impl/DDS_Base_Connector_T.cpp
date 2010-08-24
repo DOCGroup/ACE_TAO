@@ -254,3 +254,4 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::reactor (void)
 
   return reactor;
 }
+
