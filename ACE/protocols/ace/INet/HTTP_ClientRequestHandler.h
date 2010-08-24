@@ -176,7 +176,11 @@ namespace ACE
                                                         std::istream* put_data = 0);
 */
 
+#if (_MSC_VER < 1500)
+              class ACE_INET_Export HttpConnectionKey
+#else
               class HttpConnectionKey
+#endif
                 : public INetConnectionKey
                 {
                   public:
