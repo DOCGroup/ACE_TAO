@@ -74,7 +74,11 @@ namespace ACE
               * @brief
               *
               */
+#if (_MSC_VER < 1500)
+              class ACE_INET_Export INetConnectionKey
+#else
               class INetConnectionKey
+#endif
                 : public ConnectionKey
                 {
                   public:
