@@ -130,7 +130,11 @@ namespace ACE
               ACE_CString path_;
 
             public:
+#if (_MSC_VER < 1500)
+              class ACE_INET_Export Factory
+#else
               class Factory
+#endif
                 {
                   public:
                     Factory ();

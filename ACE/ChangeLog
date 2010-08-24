@@ -1,3 +1,10 @@
+Tue Aug 24 12:59:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+          Changes to fix export problems with nested classes with MSVC 7/8.
+
 Tue Aug 24 11:29:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * ace/Log_Msg.h:
