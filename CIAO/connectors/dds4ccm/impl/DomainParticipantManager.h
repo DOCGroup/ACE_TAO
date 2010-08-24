@@ -58,12 +58,11 @@ namespace CIAO
       DomainParticipantManager (void);
 
       /// Destructor
-      virtual ~DomainParticipantManager (void);
+      ~DomainParticipantManager (void);
 
       bool add_topic (DDSDomainParticipant *dp, DDSTopic * tp);
 
       bool remove_topic (DDSDomainParticipant * dp, DDSTopic *tp);
-
 
       DDSDomainParticipant * get_participant (const char * qos_profile);
 
