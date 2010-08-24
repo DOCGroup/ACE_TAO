@@ -80,10 +80,8 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
     {
         // Initialize orb
         CORBA::ORB_var orb = 
-          CORBA::ORB_init( command_line.get_argc(),
-                           command_line.get_ASCII_argv() );
-        if (parse_args(command_line.get_argc(),
-                       command_line.get_TCHAR_argv()))
+          CORBA::ORB_init(argc, argv);
+        if (parse_args(argc, argv))
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("failed to parse args")),
