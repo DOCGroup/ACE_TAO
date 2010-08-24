@@ -121,6 +121,8 @@ namespace CIAO
     DomainParticipantManager::~DomainParticipantManager (void)
     {
       DDS4CCM_TRACE ("DomainParticipantManager::~DomainParticipantManager");
+      
+      DDSDomainParticipantFactory::finalize_instance ();
     }
 
     bool
@@ -227,6 +229,8 @@ namespace CIAO
         {
           if (iter->second->_ref_count () == 1)
             {
+              delete iter->second;
+              
               // Save to remove from list
               this->dps_.erase (iter);
             }
