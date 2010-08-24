@@ -853,6 +853,10 @@ namespace CIAO
                 ::DDS::DomainParticipantListener_ptr a_listener,
                 ::DDS::StatusMask mask)
     {
+      // Delete the previously set listener
+      DDSDomainParticipantListener *listener = this->impl ()->get_listener ();
+      delete listener;
+
       CCM_DDS_DomainParticipantListener_i * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {

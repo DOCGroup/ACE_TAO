@@ -56,12 +56,15 @@ namespace CIAO
       ::DDS::DataWriterListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
+      // Delete the previously set listener
+      DDSDataWriterListener *listener = this->impl ()->get_listener ();
+      delete listener;
+
       DataWriterListener_type * ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            DataWriterListener_type (a_listener,
-                                                     this),
+                            DataWriterListener_type (a_listener, this),
                             ::CORBA::NO_MEMORY ());
         }
       return this->impl ()->set_listener (ccm_dds_impl_list, mask);
