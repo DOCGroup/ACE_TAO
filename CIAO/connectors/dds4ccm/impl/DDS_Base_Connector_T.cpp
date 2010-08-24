@@ -230,3 +230,24 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::ccm_remove (void)
 
   this->domain_participant_ = ::DDS::DomainParticipant::_nil ();
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+ACE_Reactor*
+DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::reactor (void)
+{
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::reactor");
+  
+  ACE_Reactor* reactor = 0;
+
+  ::CORBA::Object_var ccm_object = this->context_->get_CCM_object();
+  if (!::CORBA::is_nil (ccm_object.in ()))
+    {
+      ::CORBA::ORB_var orb = ccm_object->_get_orb ();
+      if (!::CORBA::is_nil (orb.in ()))
+        {
+          reactor = orb->orb_core ()->reactor ();
+        }
+    }
+
+  return reactor;
+}
