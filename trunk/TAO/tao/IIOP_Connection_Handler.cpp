@@ -30,10 +30,12 @@ TAO_IIOP_Connection_Handler::add_reference (void)
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::add_reference ();
   if (TAO_debug_level > 9)
     {
+      TAO_Transport *tport = this->transport ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("add_reference, up to %d\n"),
-                  this->transport (), rc));
+                  tport != 0 ? tport->id () : 0,
+                  rc));
     }
   return rc;
 
@@ -48,7 +50,9 @@ TAO_IIOP_Connection_Handler::remove_reference (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
-                  ACE_TEXT("remove_reference, down to %d\n"), tport, rc));
+                  ACE_TEXT("remove_reference, down to %d\n"),
+                  tport != 0 ? tport->id () : 0,
+                  rc));
     }
   return rc;
 }
@@ -81,10 +85,12 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
   if (TAO_debug_level > 9)
     {
+      TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, ")
                   ACE_TEXT("this=%@\n"),
-                  static_cast<TAO_Transport *> (specific_transport), this));
+                  tport != 0 ? tport->id () : 0,
+                  this));
     }
 
   // store this pointer (indirectly increment ref count)
@@ -93,6 +99,16 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
+  if (TAO_debug_level > 9)
+    {
+      TAO_Transport *tport = this->transport ();
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] dtor, ")
+                  ACE_TEXT("this=%@,transport=%@\n"),
+                  tport != 0 ? tport->id () : 0,
+                  this,
+                  tport));
+    }
   delete this->transport ();
   int const result =
     this->release_os_resources ();

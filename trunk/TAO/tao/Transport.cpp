@@ -201,6 +201,13 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
 TAO_Transport::~TAO_Transport (void)
 {
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
+                  this->id_
+                  ));
+    }
+  
   delete this->messaging_object_;
 
   delete this->ws_;
@@ -488,6 +495,14 @@ TAO_Transport::purge_entry (void)
     entry = this->cache_map_entry_;
     this->cache_map_entry_ = 0;
   }
+  
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry\n")
+                  ACE_TEXT ("entry is %@\n"),
+                  this->id (), entry));
+    }
   return this->transport_cache_manager ().purge_entry (entry);
 }
 
@@ -958,7 +973,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     retval = this->send (iov, iovcnt, byte_count,
                          this->io_timeout (dc));
 
-  if (TAO_debug_level == 5)
+  if (TAO_debug_level > 9)
     {
       dump_iov (iov, iovcnt, this->id (),
                 byte_count, ACE_TEXT("drain_queue_helper"));
@@ -2675,6 +2690,11 @@ TAO_Transport::messaging_init (TAO_GIOP_Message_Version const &version)
 void
 TAO_Transport::pre_close (void)
 {
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::pre_close\n"),
+                  this->id_));
+    }
   // @TODO: something needs to be done with is_connected_. Checking it is
   // guarded by a mutex, but setting it is not. Until the need for mutexed
   // protection is required, the transport cache is holding its own copy
@@ -2694,8 +2714,10 @@ bool
 TAO_Transport::post_open (size_t id)
 {
   if (TAO_debug_level > 9)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
+                  ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
+    }
   this->id_ = id;
 
   // When we have data in our outgoing queue schedule ourselves

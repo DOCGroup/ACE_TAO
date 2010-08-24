@@ -384,7 +384,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                   "close_connection_eh\n",
+                   "close_connection_eh end\n",
                    id));
     }
 
