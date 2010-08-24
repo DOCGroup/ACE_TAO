@@ -63,8 +63,8 @@ protected:
   ::DDS::DomainId_t domain_id_;
   ::CORBA::String_var qos_profile_;
   bool configuration_complete_;
-  const char* library_name_;
-  const char* profile_name_;
+  char* library_name_;
+  char* profile_name_;
 
   ::DDS::DomainParticipant_var domain_participant_;
   ::DDS::DomainParticipantListener_var domainparticipantlistener_;

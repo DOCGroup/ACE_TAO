@@ -227,7 +227,7 @@ namespace CIAO
         {
           if (iter->second->_ref_count () == 1)
             {
-              //save to remove from list
+              // Save to remove from list
               this->dps_.erase (iter);
             }
           else
