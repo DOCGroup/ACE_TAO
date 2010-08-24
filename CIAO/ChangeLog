@@ -1,3 +1,13 @@
+Tue Aug 24 18:39:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Fixed memory leaks
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.h:
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Layout changes          
+
 Tue Aug 24 18:03:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:

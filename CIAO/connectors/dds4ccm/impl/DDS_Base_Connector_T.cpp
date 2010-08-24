@@ -22,6 +22,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T (void)
 {
+  ACE_OS::free (library_name_);
+  ACE_OS::free (profile_name_);
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -105,13 +107,14 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
       {
         if (!this->library_name_)
         {
-          this->library_name_ = p;
+          this->library_name_ = ACE_OS::strdup (p);
         }
         else if (!this->profile_name_)
         {
-          this->profile_name_ = p;
+          this->profile_name_ = ACE_OS::strdup (p);
         }
       }
+      ACE_OS::free (buf);
     }
   if (this->library_name_ && this->profile_name_)
     {
