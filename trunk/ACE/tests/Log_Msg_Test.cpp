@@ -636,10 +636,8 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id as argument %#t\n"), ACE_Thread::self ()));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id %t\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id as argument %#t\n"), 100));
-
+ 
   Log_Spec_Verify  verifier;
 
   ACE_LOG_MSG->msg_callback (&verifier);

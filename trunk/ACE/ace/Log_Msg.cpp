@@ -920,7 +920,6 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'T': print timestamp in hour:minute:sec:usec format.
  *   'D': print timestamp in month/day/year hour:minute:sec:usec format.
  *   't': print thread id (1 if single-threaded)
- *   '#t': print thread id argument
  *   'u': print as unsigned int
  *   'x': print as a hex number
  *   'X': print as a hex number
@@ -1718,68 +1717,63 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 't': // Format thread id.
-                  {
-                    // Did we find the flag indicating a thread value argument
-                    ACE_hthread_t thr_id;
-                    if (format[1] == ACE_TEXT('#'))
-                      {
-                        thr_id = va_arg (argp, ACE_hthread_t);
-                      }
-                    else
-                      {
-#if defined (DIGITAL_UNIX) && defined (ACE_HAS_THREADS)
-                        thr_id =
-                          static_cast<ACE_hthread_t> (pthread_getselfseq_np ());
-#else
-                        ACE_Thread::self (thr_id);
-#endif
-                      }
-
 #if defined (ACE_WIN32)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("u"));
-                    if (can_check)
-                      this_len = ACE_OS::snprintf
-                        (bp, bspace, format,
-                         static_cast<unsigned> (thr_id));
-                    else
-                      this_len = ACE_OS::sprintf (bp, format,
-                                               static_cast<unsigned> (thr_id));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
+                  if (can_check)
+                    this_len = ACE_OS::snprintf
+                      (bp, bspace, format,
+                       static_cast<unsigned> (ACE_Thread::self ()));
+                  else
+                    this_len =
+                      ACE_OS::sprintf (bp,
+                                       format,
+                                       static_cast <unsigned> (ACE_Thread::self ()));
 #elif defined (DIGITAL_UNIX)
-                    ACE_OS::strcpy (fp, ACE_TEXT ("u"));
-                    if (can_check)
-                      this_len = ACE_OS::snprintf (bp, bspace, format,
-                                               static_cast<unsigned> (thr_id));
-                    else
-                      this_len = ACE_OS::sprintf (bp, format,
-                                               static_cast<unsigned> (thr_id));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
+                  {
+                    int id =
+#  if defined (ACE_HAS_THREADS)
+                      pthread_getselfseq_np ();
+#  else
+                      ACE_Thread::self ();
+#  endif /* ACE_HAS_THREADS */
+
+                      if (can_check)
+                        this_len = ACE_OS::snprintf (bp, bspace, format, id);
+                      else
+                        this_len = ACE_OS::sprintf (bp, format, id);
+                  }
 #else
-#if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
-                    // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
-                    // code for it.
-                    ACE_OS::strcpy (fp, ACE_TEXT ("u"));
-                    if (can_check)
-                      this_len = ACE_OS::snprintf (bp, bspace, format, thr_id);
-                    else
-                      this_len = ACE_OS::sprintf (bp, format, thr_id);
-#else
-                    // Yes, this is an ugly C-style cast, but the correct
-                    // C++ cast is different depending on whether the t_id
-                    // is an integral type or a pointer type. FreeBSD uses
-                    // a pointer type, but doesn't have a _np function to
-                    // get an integral type, like the OSes above.
-                    ACE_OS::strcpy (fp, ACE_TEXT ("lu"));
-                    if (can_check)
-                      this_len = ACE_OS::snprintf (bp, bspace, format,
-                                          static_cast<unsigned long> (thr_id));
-                    else
-                      this_len = ACE_OS::sprintf (bp, format,
-                                          static_cast<unsigned long> (thr_id));
-#endif /* ACE_MWS || ACE_TANDEM_T1248_PTHREADS */
+                  ACE_hthread_t t_id;
+                  ACE_Thread::self (t_id);
+
+#  if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
+                  // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
+                  // code for it.
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
+                  if (can_check)
+                    this_len = ACE_OS::snprintf (bp, bspace, format, t_id);
+                  else
+                    this_len = ACE_OS::sprintf (bp, format, t_id);
+#  else
+                  // Yes, this is an ugly C-style cast, but the correct
+                  // C++ cast is different depending on whether the t_id
+                  // is an integral type or a pointer type. FreeBSD uses
+                  // a pointer type, but doesn't have a _np function to
+                  // get an integral type, like the OSes above.
+                  ACE_OS::strcpy (fp, ACE_TEXT ("lu"));
+                  if (can_check)
+                    this_len = ACE_OS::snprintf
+                      (bp, bspace, format, (unsigned long)t_id);
+                  else
+                    this_len = ACE_OS::sprintf
+                      (bp, format, (unsigned long)t_id);
+#  endif /* ACE_MWS || ACE_TANDEM_T1248_PTHREADS */
 
 #endif /* ACE_WIN32 */
-                    ACE_UPDATE_COUNT (bspace, this_len);
-                    break;
-                  }
+                  ACE_UPDATE_COUNT (bspace, this_len);
+                  break;
+
                 case 's':                       // String
                   {
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
