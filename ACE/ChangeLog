@@ -1,3 +1,10 @@
+Tue Aug 24 14:15:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * ace/Log_Msg.cpp
+        * ace/Log_Msg.h
+        * tests/Log_Msg_Test.cpp
+        Revert changes for logging thread id as argument.
+
 Tue Aug 24 12:59:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/ClientRequestHandler.h:
