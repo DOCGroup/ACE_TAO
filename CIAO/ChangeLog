@@ -1,3 +1,10 @@
+Tue Aug 24 09:28:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+          Fixed memory leaks
+
 Mon Aug 23 14:11:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager_T.cpp:
