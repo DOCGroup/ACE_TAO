@@ -54,6 +54,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_Topic_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener");
 
+      // Delete the previously set listener
+      DDSTopicListener *listener = this->impl ()->get_listener ();
+      delete listener;
+
       TopicListener_type *ccm_dds_impl_list = 0;
       if (! ::CORBA::is_nil (a_listener))
         {

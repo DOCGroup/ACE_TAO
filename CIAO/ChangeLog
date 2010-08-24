@@ -1,3 +1,14 @@
+Tue Aug 24 11:30:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DataWriter.cpp:
+        * connectors/dds4ccm/impl/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/Topic_T.cpp:
+          Delete the DDS listeners when they are set 
+
 Tue Aug 24 09:28:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:

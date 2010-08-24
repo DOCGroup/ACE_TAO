@@ -561,6 +561,10 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener");
 
+  // Delete the previously set listener
+  DDSDataReaderListener *listener = this->impl ()->get_listener ();
+  delete listener;
+
   DataReaderListener_type * ccm_dds_drl = 0;
   if (! ::CORBA::is_nil (a_listener))
     {
