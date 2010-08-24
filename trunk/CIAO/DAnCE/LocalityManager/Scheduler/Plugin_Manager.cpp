@@ -260,9 +260,9 @@ namespace DAnCE
     
     try
       {
-        const char *id = plugin->type ();
+        CORBA::String_var id = plugin->type ();
         
-        this->config_plugins_[id] = plugin._retn ();
+        this->config_plugins_[id.in ()] = plugin._retn ();
       }
     catch (const CORBA::Exception &ex)
       {
