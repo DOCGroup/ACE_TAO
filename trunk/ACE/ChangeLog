@@ -1,3 +1,13 @@
+Tue Aug 24 14:21:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Layout changes
+
+        * ace/config-win32-common.h:
+          Improved MinGW GCC 4.4 support. Thanks to
+          Jani Hakala <jani dot j dot hakala at jyu dot fi> for creating the
+          patch
+
 Tue Aug 24 14:15:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * ace/Log_Msg.cpp
@@ -23,7 +33,7 @@ Tue Aug 24 11:29:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
 Mon Aug 23 19:51:59 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Missing_Svc_Conf_Test.cpp:
-        
+
           Fix some scoreboard problems.
 
 Mon Aug 23 15:05:56 UTC 2010  Adam Mitz  <mitza@ociweb.com>
