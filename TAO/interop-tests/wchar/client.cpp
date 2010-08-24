@@ -106,14 +106,11 @@ run_one_test (interop::WChar_Passer_ptr server,
   switch (test_num)
     {
     case WCHAR_TO_SERVER:
-      return server->wchar_to_server (ref.get_wchar(data_set),
-                                      data_set);
+      return server->wchar_to_server (ref.get_wchar(data_set), data_set);
     case WSTRING_TO_SERVER:
-      return server->wstring_to_server (ref.get_wstring(data_set),
-                                        data_set);
+      return server->wstring_to_server (ref.get_wstring(data_set), data_set);
     case WARRAY_TO_SERVER:
-      return server->warray_to_server (ref.get_warray(data_set),
-                                       data_set);
+      return server->warray_to_server (ref.get_warray(data_set), data_set);
     case ANY_WCHAR_TO_SERVER:
       {
         CORBA::Any a;
@@ -304,14 +301,13 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 #else
   try
   {
-    ACE_Argv_Type_Converter command_line(argc, argv);
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( command_line.get_argc(), command_line.get_ASCII_argv() );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
     if (parse_args(argc, argv) == -1)
       return 0;
 
     // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object( ACE_TEXT_ALWAYS_CHAR(ior));
+    CORBA::Object_var obj = orb->string_to_object(ior);
     if( CORBA::is_nil( obj.in() ) )
       ACE_ERROR_RETURN ((LM_ERROR,
                          "arg is not a valid ior sting"),
@@ -330,7 +326,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
     CORBA::String_var server_orb =
       server->orb_name();
     ACE_ERROR ((LM_ERROR,
-                "wchar_interop test (TAO client, %s server) %s\n",
+                "wchar_interop test (TAO client, %C server) %C\n",
                 server_orb.in(),
                 (result ? "passed" : "failed")));
     if (kill_server)

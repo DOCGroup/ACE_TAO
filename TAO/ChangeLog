@@ -1,7 +1,22 @@
+Tue Aug 24 14:26:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/interop_wchar_i.cpp:
+        * interop-tests/wchar/server.cpp:
+          Layout changes and no need to convert to wchar
+
+        * tao/Adapter_Registry.h:
+        * tao/Condition.h:
+        * tao/Connection_Handler.h:
+        * tao/TAO_Singleton.h:
+          Use ACE_Copy_Disabled
+
+        * tao/Connector_Impl.cpp:
+          Layout changes
+
 Tue Aug 24 14:20:19 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tao/LocalObject.h:
-
           Reverted change from yesterday, apps using TAO will rely on the
           version macros to determine the LocalObject refcounting.
 

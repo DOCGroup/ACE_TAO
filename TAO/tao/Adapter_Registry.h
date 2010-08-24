@@ -47,10 +47,10 @@ class TAO_MProfile;
 class TAO_ServerRequest;
 class TAO_Adapter;
 
-class TAO_Export TAO_Adapter_Registry
+class TAO_Export TAO_Adapter_Registry : private ACE_Copy_Disabled
 {
 public:
-  TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
+  explicit TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
 
   /// Close the
   ~TAO_Adapter_Registry (void);
@@ -104,10 +104,6 @@ private:
   size_t adapters_count_;
   TAO_Adapter **adapters_;
   //@}
-
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Adapter_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
