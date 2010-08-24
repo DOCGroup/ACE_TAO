@@ -579,9 +579,9 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic (::DDS::Topic_ptr a_topic)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
-      const char * topic_name = a_topic->get_name ();
+      CORBA::String_var topic_name = a_topic->get_name ();
       DDSTopicDescription * dds_td =
-        this->impl ()->lookup_topicdescription (topic_name);
+        this->impl ()->lookup_topicdescription (topic_name.in ());
       DDSTopic * tp = 0;
       if (dds_td)
         {
@@ -594,7 +594,7 @@ namespace CIAO
                         "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                         "VENDOR_TYPE>::delete_topic <%C> - Unable to cast "
                         "provided object reference to servant.\n",
-                        topic_name));
+                        topic_name.in ()));
           return ::DDS::RETCODE_BAD_PARAMETER;
         }
 
@@ -602,7 +602,7 @@ namespace CIAO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                     "VENDOR_TYPE>::delete_topic <%C> - "
                     "Successfully casted provided object reference to servant.\n",
-                    topic_name));
+                    topic_name.in ()));
 
       ::DDS::ReturnCode_t retval = DDS::RETCODE_OK;
       if (DPMANAGER->remove_topic (this->impl (), tp))
@@ -615,7 +615,7 @@ namespace CIAO
                             "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::delete_topic <%C> - "
                             "Error: RTI delete_topic returned non-ok error code %C\n",
-                            topic_name,
+                            topic_name.in (),
                             translate_retcode (retval)));
             }
           else
@@ -624,7 +624,7 @@ namespace CIAO
                             "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
                             "VENDOR_TYPE>::delete_topic <%C> - "
                             "Provided topic successfully deleted\n",
-                            topic_name));
+                            topic_name.in ()));
             }
         }
       return retval;
