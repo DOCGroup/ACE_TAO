@@ -60,28 +60,19 @@ namespace CIAO
       /// Destructor
       virtual ~DomainParticipantManager (void);
 
-      bool
-      add_topic (DDSDomainParticipant *dp,
-                 DDSTopic * tp);
+      bool add_topic (DDSDomainParticipant *dp, DDSTopic * tp);
+
+      bool remove_topic (DDSDomainParticipant * dp, DDSTopic *tp);
+
+
+      DDSDomainParticipant * get_participant (const char * qos_profile);
 
       bool
-      remove_topic (DDSDomainParticipant * dp,
-                    DDSTopic *tp);
+      add_participant (const char * qos_profile, DDSDomainParticipant * dp);
 
+      bool remove_participant (DDSDomainParticipant * dp);
 
-      DDSDomainParticipant *
-      get_participant (const char * qos_profile);
-
-      bool
-      add_participant (const char * qos_profile,
-                       DDSDomainParticipant * dp);
-
-      bool
-      remove_participant (DDSDomainParticipant * dp);
-
-      void
-      _inc_ref (DDSDomainParticipant * dp,
-                DDSTopic * tp);
+      void _inc_ref (DDSDomainParticipant * dp, DDSTopic * tp);
 
     private:
       TAO_SYNCH_MUTEX dps_mutex_;
