@@ -53,7 +53,8 @@ class TAO_Transport;
  * right protocol. This way, most of the common code for the
  * different protocols would be in this implementation.
  */
-class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
+class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event,
+                                          private ACE_Copy_Disabled
 {
 public:
 
@@ -195,10 +196,6 @@ protected:
    */
   virtual void pos_io_hook (int & return_value);
   //@}
-
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connection_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
 
 private:
   /// Pointer to the TAO_ORB_Core

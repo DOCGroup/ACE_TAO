@@ -49,11 +49,9 @@ TAO_Connect_Concurrency_Strategy<SVC_HANDLER>::
 
 template <class SVC_HANDLER> int
 TAO_Connect_Concurrency_Strategy<SVC_HANDLER>::
-    activate_svc_handler (SVC_HANDLER *sh,
-                          void *arg)
+    activate_svc_handler (SVC_HANDLER *sh, void *arg)
 {
-  return ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
-                                                                      arg);
+  return ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh, arg);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
