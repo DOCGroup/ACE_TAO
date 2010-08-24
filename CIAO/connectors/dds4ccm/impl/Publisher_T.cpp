@@ -242,10 +242,15 @@ namespace CIAO
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
     ::DDS::ReturnCode_t
-    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (::DDS::PublisherListener_ptr a_listener,
-                                   ::DDS::StatusMask mask)
+    CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener (
+      ::DDS::PublisherListener_ptr a_listener,
+      ::DDS::StatusMask mask)
     {
       DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_listener");
+
+      // Delete the previously set listener
+      DDSPublisherListener *listener = this->impl ()->get_listener ();
+      delete listener;
 
       PublisherListener_type * ccm_dds_impl_list  = 0;
       if (! ::CORBA::is_nil (a_listener))

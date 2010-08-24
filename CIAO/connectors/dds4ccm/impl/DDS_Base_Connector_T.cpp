@@ -112,7 +112,6 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::init_default_domain (void
           this->profile_name_ = p;
         }
       }
-      ACE_OS_Memory::free (buf);
     }
   if (this->library_name_ && this->profile_name_)
     {
