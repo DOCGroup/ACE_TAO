@@ -14,6 +14,8 @@
 #ifndef TAO_IIOP_CONNECTION_HANDLER_H
 #define TAO_IIOP_CONNECTION_HANDLER_H
 
+#include <vector>
+
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
@@ -42,7 +44,8 @@ template class TAO_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 namespace IIOP
 {
-  class ListenPointList;
+  struct ListenPoint;
+  typedef std::vector< ListenPoint> ListenPointList;
 }
 
 // ****************************************************************

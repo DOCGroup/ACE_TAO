@@ -11,11 +11,13 @@
 #ifndef TAO_CORBA_CONV_FRAME_PIDL
 #define TAO_CORBA_CONV_FRAME_PIDL
 
+#include "tao/ULongSeq.pidl"
+
 #pragma prefix "omg.org"
 
 module CONV_FRAME {
   typedef unsigned long CodeSetId;
-  typedef sequence<CodeSetId> CodeSetIdSeq;
+  typedef CORBA::ULongSeq CodeSetIdSeq;
 
   struct CodeSetComponent {
      CodeSetId native_code_set;

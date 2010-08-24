@@ -37,8 +37,9 @@ module IOP
     ComponentId     tag;
     CORBA::OctetSeq component_data;
   };
-  typedef sequence<TaggedComponent> MultipleComponentProfile;
+  
   typedef sequence<TaggedComponent> TaggedComponentSeq;
+  typedef TaggedComponentSeq MultipleComponentProfile;
 
   // @@ All security related tags are located in the Security Service
   // @@ related IDL files, in accordance with the Security Service 1.8

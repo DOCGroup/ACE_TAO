@@ -29,8 +29,8 @@
 #include "tao/objectid.h"
 #include "tao/VarOut_T.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
+//#include "tao/Seq_Var_T.h"
+//#include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
 #include "tao/Policy_ForwardC.h"
 #include "tao/ServicesC.h"
@@ -69,7 +69,7 @@ namespace CORBA
   class StructMemberSeq;
   class UnionMemberSeq;
   class ValueMemberSeq;
-  class ORB_ObjectIdList;
+  typedef std::vector<char *> ORB_ObjectIdList;
   
   class Object;
   typedef Object * Object_ptr;
@@ -98,7 +98,7 @@ namespace CORBA
   typedef CORBA::ULong PolicyType;
 
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
-
+/*
   typedef
     TAO_VarSeq_Var_T<
         ORB_ObjectIdList
@@ -110,7 +110,7 @@ namespace CORBA
         ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
-
+*/
   class ValueFactoryBase;
   typedef ValueFactoryBase *ValueFactory;
 
@@ -133,12 +133,8 @@ namespace CORBA
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
 
-    typedef
-      TAO::unbounded_object_reference_sequence<
-          CORBA::Request, CORBA::Request_var
-        >
-      RequestSeq;
-
+    typedef std::vector<Request_ptr> RequestSeq;
+/*
     typedef
       TAO_VarSeq_Var_T<
           RequestSeq
@@ -150,6 +146,7 @@ namespace CORBA
           RequestSeq
         >
       RequestSeq_out;
+*/
 #endif
 
   /**
@@ -195,9 +192,9 @@ namespace CORBA
     static CORBA::TypeCode_ptr const _tc_ObjectId;
 
     typedef CORBA::ORB_ObjectIdList ObjectIdList;
-    typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
-    typedef CORBA::ORB_ObjectIdList_out ObjectIdList_out;
-    typedef CORBA::ORB_ObjectIdList *ObjectIdList_ptr;
+//    typedef CORBA::ORB_ObjectIdList_var ObjectIdList_var;
+//    typedef CORBA::ORB_ObjectIdList_out ObjectIdList_out;
+//    typedef CORBA::ORB_ObjectIdList *ObjectIdList_ptr;
     static CORBA::TypeCode_ptr const _tc_ObjectIdList;
 
     /// Return a duplicate of @c orb.
@@ -492,7 +489,7 @@ namespace CORBA
 
     /// Returns a sequence of ObjectIds that lists which objects have
     /// references available via the initial references mechanism.
-    CORBA::ORB::ObjectIdList_ptr list_initial_services (void);
+    CORBA::ORB::ObjectIdList list_initial_services (void);
 
 #if !defined(CORBA_E_MICRO)
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,

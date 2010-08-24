@@ -484,7 +484,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
+  CORBA::ULong len = listen_list.size ();
 
   if (TAO_debug_level > 0 && len == 0)
     {

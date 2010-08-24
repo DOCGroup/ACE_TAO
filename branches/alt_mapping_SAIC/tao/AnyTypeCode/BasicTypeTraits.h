@@ -31,20 +31,20 @@ namespace CORBA
   class TypeCode;
   typedef TypeCode * TypeCode_ptr;
 
-  class BooleanSeq;
-  class CharSeq;
-  class OctetSeq;
-  class WCharSeq;
-  class ShortSeq;
-  class UShortSeq;
-  class LongSeq;
-  class ULongSeq;
-  class LongLongSeq;
-  class ULongLongSeq;
-  class FloatSeq;
-  class DoubleSeq;
-  class LongDoubleSeq;
-  class AnySeq;
+  typedef std::vector<Boolean>    BooleanSeq;
+  typedef std::vector<Char>       CharSeq;
+  typedef std::vector<Octet>      OctetSeq;
+  typedef std::vector<WChar>      WCharSeq;
+  typedef std::vector<Short>      ShortSeq;
+  typedef std::vector<UShort>     UShortSeq;
+  typedef std::vector<Long>       LongSeq;
+  typedef std::vector<ULong>      ULongSeq;
+  typedef std::vector<LongLong>   LongLongSeq;
+  typedef std::vector<ULongLong>  ULongLongSeq;
+  typedef std::vector<Float>      FloatSeq;
+  typedef std::vector<Double>     DoubleSeq;
+  typedef std::vector<LongDouble> LongDoubleSeq;
+  typedef std::vector<Any>        AnySeq;
 }
 
 namespace TAO

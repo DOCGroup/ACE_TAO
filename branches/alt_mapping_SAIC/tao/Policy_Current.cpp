@@ -41,7 +41,7 @@ TAO_Policy_Current::get_policy (CORBA::PolicyType policy)
   return impl.get_policy (policy);
 }
 
-CORBA::PolicyList *
+CORBA::PolicyList
 TAO_Policy_Current::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 
 {

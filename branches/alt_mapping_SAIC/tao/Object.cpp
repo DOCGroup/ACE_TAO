@@ -97,10 +97,10 @@ if (!this->is_evaluated_) \
         CORBA::Object::tao_object_initialize (this); \
   }
 
-#define TAO_OBJECT_IOR_EVALUATE_RETURN \
+#define TAO_OBJECT_IOR_EVALUATE_RETURN(retval) \
 if (!this->is_evaluated_) \
   { \
-    ACE_GUARD_RETURN (ACE_Lock , mon, *this->object_init_lock_, 0); \
+    ACE_GUARD_RETURN (ACE_Lock , mon, *this->object_init_lock_, retval); \
     if (!this->is_evaluated_) \
       CORBA::Object::tao_object_initialize (this); \
   }
@@ -204,7 +204,7 @@ CORBA::Object::_servant (void) const
 CORBA::Boolean
 CORBA::Object::_is_a (const char *type_id)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(false);
 
   // NOTE: if _stub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
@@ -272,14 +272,14 @@ CORBA::Object::_stubobj (void) const
 TAO_Stub *
 CORBA::Object::_stubobj (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
   return this->protocol_proxy_;
 }
 
 CORBA::ULong
 CORBA::Object::_hash (CORBA::ULong maximum)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
 
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->hash (maximum);
@@ -311,7 +311,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
       return true;
     }
 
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(false);
 
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->is_equivalent (other_obj);
@@ -321,10 +321,10 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
 
 // TAO's extensions
 
-TAO::ObjectKey *
+TAO::ObjectKey
 CORBA::Object::_key (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
 
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();
@@ -355,7 +355,7 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 
   // If the profile length is zero for a non-evaluted IOR it is a
   // null-object.
-  if ((!obj->is_evaluated ()) && obj->ior ().profiles.length () == 0)
+  if ((!obj->is_evaluated ()) && obj->ior ().profiles.size () == 0)
     return true;
 
   // To accomodate new definitions.
@@ -452,7 +452,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
 CORBA::Request_ptr
 CORBA::Object::_request (const char *operation)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
   if (this->protocol_proxy_)
     {
       TAO_Dynamic_Adapter *dynamic_adapter =
@@ -478,7 +478,7 @@ CORBA::Object::_request (const char *operation)
 CORBA::Boolean
 CORBA::Object::_non_existent (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(false);
 
   CORBA::Boolean retval = false;
 
@@ -499,14 +499,14 @@ CORBA::Object::_non_existent (void)
 CORBA::InterfaceDef_ptr
 CORBA::Object::_get_interface (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
   return this->proxy_broker ()->_get_interface (this);
 }
 
 CORBA::Object_ptr
 CORBA::Object::_get_component (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::Object::_nil ());
   return this->proxy_broker ()->_get_component (this);
 }
 #endif
@@ -514,7 +514,7 @@ CORBA::Object::_get_component (void)
 char*
 CORBA::Object::_repository_id (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
   return this->proxy_broker ()->_repository_id (this);
 }
 
@@ -531,7 +531,7 @@ CORBA::Object::_repository_id (void)
 CORBA::Policy_ptr
 CORBA::Object::_get_policy (CORBA::PolicyType type)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::Policy::_nil ());
 
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy (type);
@@ -542,7 +542,7 @@ CORBA::Object::_get_policy (CORBA::PolicyType type)
 CORBA::Policy_ptr
 CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::Policy::_nil ());
 
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_cached_policy (type);
@@ -555,7 +555,7 @@ CORBA::Object::_set_policy_overrides (
   const CORBA::PolicyList & policies,
   CORBA::SetOverrideType set_add)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::Object::_nil ());
 
   if (!this->protocol_proxy_)
     throw ::CORBA::NO_IMPLEMENT ();
@@ -588,10 +588,10 @@ CORBA::Object::_set_policy_overrides (
   return obj;
 }
 
-CORBA::PolicyList *
+CORBA::PolicyList
 CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::PolicyList ());
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy_overrides (types);
   else
@@ -600,11 +600,11 @@ CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
 
 CORBA::Boolean
 CORBA::Object::_validate_connection (
-  CORBA::PolicyList_out inconsistent_policies)
+  CORBA::PolicyList & inconsistent_policies)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN;
+  TAO_OBJECT_IOR_EVALUATE_RETURN(false);
 
-  inconsistent_policies = 0;
+  inconsistent_policies;
   CORBA::Boolean retval = true;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -644,7 +644,7 @@ CORBA::Object::_get_orb (void)
     }
   else
     {
-      TAO_OBJECT_IOR_EVALUATE_RETURN;
+      TAO_OBJECT_IOR_EVALUATE_RETURN(CORBA::ORB::_nil ());
       if (this->protocol_proxy_)
         return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
       else
@@ -704,7 +704,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 {
   CORBA::ULong const profile_count =
-    obj->ior_->profiles.length ();
+    obj->ior_->profiles.size ();
 
   // Assumption is that after calling this method, folks should test
   // for protocol_proxy_ or whatever to make sure that things have

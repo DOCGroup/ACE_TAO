@@ -248,7 +248,7 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
   CORBA::ULong const count = profiles.profile_count ();
 
   // Set the number of elements in the sequence of tagged_profile
-  ior_info->profiles.length (count);
+  ior_info->profiles.resize (count);
 
   // Call the create_tagged_profile one every member of the
   // profile and make the sequence
@@ -472,17 +472,20 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
   return stub;
 }
 
-CORBA::PolicyList *
+CORBA::PolicyList
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 {
+  CORBA::PolicyList policy_list;
+  
   if (this->policies_ == 0)
     {
+    /*
       CORBA::PolicyList *policy_list_ptr = 0;
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());
-
-      return policy_list_ptr;
+    */
+      return policy_list;
     }
   else
     {

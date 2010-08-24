@@ -221,7 +221,7 @@ public:
   void reply_status (GIOP::ReplyStatusType except_type);
 
   /// Set the requesting principal
-  void requesting_principal (const CORBA::OctetSeq & principal);
+  void requesting_principal (const CORBA::OctetSeq  principal);
 
   /// Return the reference to the tagged profile
   TAO_Tagged_Profile &profile (void);
@@ -339,7 +339,7 @@ private:
   TAO_Tagged_Profile profile_;
 
   /// Identifies the requester.
-  CORBA::OctetSeq_var requesting_principal_;
+  CORBA::OctetSeq requesting_principal_;
 
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_;

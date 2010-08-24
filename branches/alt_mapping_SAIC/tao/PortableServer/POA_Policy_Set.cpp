@@ -34,9 +34,9 @@ TAO_POA_Policy_Set::~TAO_POA_Policy_Set (void)
 
 void
 TAO_POA_Policy_Set::add_client_exposed_fixed_policies (
-  CORBA::PolicyList *client_exposed_policies)
+  CORBA::PolicyList &client_exposed_policies)
 {
-  CORBA::ULong cep_index = client_exposed_policies->length ();
+  CORBA::ULong cep_index = client_exposed_policies.size ();
 
   for (CORBA::ULong i = 0;
        i < this->num_policies ();

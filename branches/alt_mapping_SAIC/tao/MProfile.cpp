@@ -25,7 +25,7 @@ TAO_MProfile::~TAO_MProfile (void)
 {
   if (this->policy_list_ != 0)
     {
-      CORBA::ULong const len = this->policy_list_->length ();
+      CORBA::ULong const len = this->policy_list_->size ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
           try

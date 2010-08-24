@@ -21,7 +21,6 @@ namespace TAO
   LocateRequest_Invocation_Adapter::LocateRequest_Invocation_Adapter (
     CORBA::Object_ptr target)
     : target_ (target)
-    , list_ (0)
   {
   }
 
@@ -103,10 +102,10 @@ namespace TAO
     return;
   }
 
-  CORBA::PolicyList *
+  CORBA::PolicyList
   LocateRequest_Invocation_Adapter::get_inconsistent_policies (void)
   {
-    return this->list_._retn ();
+    return this->list_;
   }
 
   bool

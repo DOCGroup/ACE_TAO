@@ -16,7 +16,7 @@ namespace TAO
     , stub_ (stub)
     , transport_ (0)
     , profile_ (0)
-    , inconsistent_policies_ (0)
+//    , inconsistent_policies_ (0)
     , is_released_ (false)
     , blocked_ (block)
   {
@@ -58,17 +58,17 @@ namespace TAO
     this->is_released_ = true;
   }
 
-  ACE_INLINE CORBA::PolicyList *
+  ACE_INLINE CORBA::PolicyList
   Profile_Transport_Resolver::inconsistent_policies (void) const
   {
     return this->inconsistent_policies_;
   }
 
-  ACE_INLINE CORBA::PolicyList *
+  ACE_INLINE CORBA::PolicyList
   Profile_Transport_Resolver::steal_inconsistent_policies (void)
   {
-    CORBA::PolicyList *tmp = this->inconsistent_policies_;
-    this->inconsistent_policies_ = 0;
+    CORBA::PolicyList tmp = this->inconsistent_policies_;
+    this->inconsistent_policies_.resize (0);
     return tmp;
   }
 }

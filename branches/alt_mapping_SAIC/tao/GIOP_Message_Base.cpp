@@ -1000,7 +1000,7 @@ TAO_GIOP_Message_Base::process_request (
               permanent_forward_condition
               ? GIOP::LOCATION_FORWARD_PERM
               : GIOP::LOCATION_FORWARD);
-          reply_params.svc_ctx_.length (0);
+          reply_params.svc_ctx_.resize (0);
 
           // Send back the reply service context.
           reply_params.service_context_notowned (
@@ -1475,7 +1475,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
 {
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;
-  reply_params.svc_ctx_.length (0);
+  reply_params.svc_ctx_.resize (0);
 
   // We are going to send some data
   reply_params.argument_flag_ = true;

@@ -48,7 +48,7 @@ namespace TAO
   void
   insert_objref_vector (
     CORBA::Any &,
-    const std::vector<typename T::_ptr_type> &)
+    const std::vector<T> &)
   {
   }
     
@@ -57,7 +57,7 @@ namespace TAO
   void
   insert_objref_vector (
     CORBA::Any &,
-    std::vector<typename T::_ptr_type> *)
+    std::vector<T> *)
   {
   }
     
@@ -65,7 +65,7 @@ namespace TAO
   bool
   extract_objref_vector (
     const CORBA::Any &,
-    std::vector<typename T::_ptr_type> &)
+    std::vector<T> &)
   {
     return true;
   }  

@@ -50,7 +50,7 @@ namespace TAO
       /**
        * Validate the passed object key if it belongs to this POA.
        */
-      bool validate (TAO::ObjectKey_var& key);
+      bool validate (TAO::ObjectKey & key);
 
       /**
        * Returns the length of the key type

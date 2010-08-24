@@ -66,12 +66,13 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
-  CORBA::ULong const max = params.svc_ctx_.maximum ();
-  CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (true);
-  this->reply_service_info_.replace (max, len, context_list, true);
+//  CORBA::ULong const max = params.svc_ctx_.maximum ();
+//  CORBA::ULong const len = params.svc_ctx_.length ();
+//  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (true);
+//  this->reply_service_info_.replace (max, len, context_list, true);
+  this->reply_service_info_ = params.svc_ctx_;
 
-  if (this->reply_service_info_.length() > 0)
+  if (this->reply_service_info_.size () > 0)
     {
       orb_core_->service_context_registry ().
         process_service_contexts (this->reply_service_info_, *(params.transport_));

@@ -102,6 +102,16 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
+  AST_PredefinedType *pdt =
+    AST_PredefinedType::narrow_from_decl (bt);
+  AST_PredefinedType::PredefinedType pt =
+    AST_PredefinedType::PT_abstract;
+  
+  if (pdt != 0)
+    {
+      pt = pdt->pt ();
+    }
+ 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
   
@@ -109,17 +119,54 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "::CORBA::Boolean operator<< (" << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_vector)"
+          << "const " << node->name () << " &_tao_sequence)"
           << be_uidt_nl
           << "{" << be_idt_nl
-          << "::CORBA::ULong length = _tao_vector.size ();"
+          << "::CORBA::ULong length = _tao_sequence.size ();"
           << be_nl
           << "strm << length;" << be_nl << be_nl
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
-          << "{" << be_idt_nl
-          << "if (! (strm << _tao_vector[i]))" << be_idt_nl
+          << "{" << be_idt_nl;
+          
+      switch (pt)
+        {
+          case AST_PredefinedType::PT_boolean:
+            *os << "ACE_OutputCDR::from_boolean tao_tmp (_tao_sequence[i]);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_char:
+            *os << "ACE_OutputCDR::from_char tao_tmp (_tao_sequence[i]);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_octet:
+            *os << "ACE_OutputCDR::from_octet tao_tmp (_tao_sequence[i]);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_wchar:
+            *os << "ACE_OutputCDR::from_wchar tao_tmp (_tao_sequence[i]);"
+                << be_nl << be_nl;
+            break;
+          default:
+            break;
+        }
+          
+      *os << "if (! (strm << ";
+      
+      switch (pt)
+        {
+          case AST_PredefinedType::PT_boolean:
+          case AST_PredefinedType::PT_char:
+          case AST_PredefinedType::PT_octet:
+          case AST_PredefinedType::PT_wchar:
+            *os << "tao_tmp))";
+            break;
+          default:
+            *os << "_tao_sequence[i]))";
+            break;
+        }
+          
+      *os << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl
@@ -148,31 +195,87 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "::CORBA::Boolean operator>> (" << be_idt_nl
           << "TAO_InputCDR &strm," << be_nl
-          << "std::vector<" << bt->full_name ()
-          << "> &_tao_vector)" << be_uidt_nl
+          << node->name () << " &_tao_sequence)" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::ULong length = 0UL;" << be_nl
           << bt->full_name ();
           
-      if (bt->size_type () == AST_Type::VARIABLE)
+      AST_Interface *i = AST_Interface::narrow_from_decl (bt);
+      AST_ValueType *v = AST_ValueType::narrow_from_decl (bt);
+      bool ptr_type = false;
+      
+      if (i != 0)
         {
-          *os << " *";
+          ptr_type =  true;
+          *os << (v == 0 ? "_ptr" : " *");
         }
-          
-      *os << " tmp;" << be_nl << be_nl
+        
+      if (pt == AST_PredefinedType::PT_pseudo)
+        {
+          ACE_CString lname (bt->local_name ()->get_string ());
+            
+          if (lname == "TypeCode")
+            {
+              ptr_type = true;
+              *os << "_ptr";
+            }
+        }
+         
+      *os << " tmp" << (ptr_type ? " = 0" : "");
+      
+      *os << ";" << be_nl << be_nl
           << "if (! (strm >> length))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
-          << "_tao_vector.resize (length);" << be_nl << be_nl
+          << "_tao_sequence.resize (length);" << be_nl << be_nl
           << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
-          << "{" << be_idt_nl
-          << "if (! (strm >> tmp))" << be_idt_nl
+          << "{" << be_idt_nl;
+                    
+      switch (pt)
+        {
+          case AST_PredefinedType::PT_boolean:
+            *os << "ACE_InputCDR::to_boolean tao_tmp (tmp);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_char:
+            *os << "ACE_InputCDR::to_char tao_tmp (tmp);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_octet:
+            *os << "ACE_InputCDR::to_octet tao_tmp (tmp);"
+                << be_nl << be_nl;
+            break;
+          case AST_PredefinedType::PT_wchar:
+            *os << "ACE_InputCDR::to_wchar tao_tmp (tmp);"
+                << be_nl << be_nl;
+            break;
+          default:
+            break;
+        }
+          
+      *os << "if (! (strm >> ";
+          
+      switch (pt)
+        {
+          case AST_PredefinedType::PT_boolean:
+          case AST_PredefinedType::PT_char:
+          case AST_PredefinedType::PT_octet:
+          case AST_PredefinedType::PT_wchar:
+            *os << "tao_tmp))";
+            break;
+          default:
+            *os << "tmp))";
+            break;
+        }
+          
+      *os << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "_tao_vector[i] = tmp;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+          
+      *os << "_tao_sequence[i] = tmp;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "return true;" << be_uidt_nl
           << "}" << be_nl;

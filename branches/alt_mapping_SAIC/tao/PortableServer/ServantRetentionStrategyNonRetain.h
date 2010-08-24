@@ -43,7 +43,7 @@ namespace TAO
       CORBA::ULong waiting_servant_deactivation (void) const;
 
       virtual
-      PortableServer::ObjectId *
+      PortableServer::ObjectId
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
                        bool &wait_occurred_restart_call);
@@ -63,7 +63,7 @@ namespace TAO
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      bool &wait_occurred_restart_call);
 
-      virtual PortableServer::ObjectId *system_id_to_object_id (
+      virtual PortableServer::ObjectId system_id_to_object_id (
         const PortableServer::ObjectId &system_id);
 
       virtual

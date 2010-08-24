@@ -1060,11 +1060,16 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                TAO::ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if (0)//TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
-                    profile.profile_data.length ());
+  const char *buf =
+    reinterpret_cast<const char *> (
+      profile.profile_data.get_allocator ().address (
+        *profile.profile_data.begin ()));
+          
+  TAO_InputCDR cdr (buf,
+                    profile.profile_data.size ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
   CORBA::Octet major;

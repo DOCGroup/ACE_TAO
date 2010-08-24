@@ -55,7 +55,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
 // TAO's extensions
 
 
-TAO::ObjectKey *
+TAO::ObjectKey
 CORBA::LocalObject::_key (void)
 {
   if (TAO_debug_level > 0)
@@ -158,7 +158,7 @@ CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &)
 }
 
 CORBA::Boolean
-CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
+CORBA::LocalObject::_validate_connection (CORBA::PolicyList &)
 {
   throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }

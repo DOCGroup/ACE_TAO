@@ -308,7 +308,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
         }
     }
 
-  if (listen_point_list.length () == 0)
+  if (listen_point_list.size () == 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -405,10 +405,10 @@ TAO_IIOP_Transport::get_listen_point (
 #endif /* ACE_HAS_IPV6 */
 
       // Get the count of the number of elements
-      CORBA::ULong const len = listen_point_list.length ();
+      CORBA::ULong const len = listen_point_list.size ();
 
       // Increase the length by 1
-      listen_point_list.length (len + 1);
+      listen_point_list.resize (len + 1);
 
       // We have the connection and the acceptor endpoint on the
       // same interface

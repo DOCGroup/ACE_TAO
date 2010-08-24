@@ -14,6 +14,8 @@
 #ifndef TAO_PROFILE_TRANSPORT_RESOLVER_H
 #define TAO_PROFILE_TRANSPORT_RESOLVER_H
 
+#include <vector>
+
 #include /**/ "ace/pre.h"
 #include "ace/Global_Macros.h"
 
@@ -37,8 +39,9 @@ class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
 {
-  class Object;
-  class PolicyList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 
   class Object;
   typedef Object *Object_ptr;
@@ -148,9 +151,9 @@ namespace TAO
     /// cached.
     void init_inconsistent_policies (void);
 
-    CORBA::PolicyList *inconsistent_policies (void) const;
+    CORBA::PolicyList inconsistent_policies (void) const;
 
-    CORBA::PolicyList *steal_inconsistent_policies (void);
+    CORBA::PolicyList steal_inconsistent_policies (void);
   private:
 
     /// Helper method to access get the connection timeout from the
@@ -198,7 +201,7 @@ namespace TAO
      * Policy_ForwardC.h, and that is what we precisely want to
      * avoid.
      */
-    CORBA::PolicyList *inconsistent_policies_;
+    CORBA::PolicyList inconsistent_policies_;
 
     /// Has the transport been idle?
     mutable bool is_released_;

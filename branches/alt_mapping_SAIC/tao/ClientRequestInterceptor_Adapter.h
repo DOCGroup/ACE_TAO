@@ -18,6 +18,8 @@
 #ifndef TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H
 #define TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H
 
+#include <vector>
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "tao/TAO_Export.h"
@@ -44,7 +46,9 @@ namespace PortableInterceptor
 
 namespace CORBA
 {
-  class PolicyList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 }
 
 namespace TAO

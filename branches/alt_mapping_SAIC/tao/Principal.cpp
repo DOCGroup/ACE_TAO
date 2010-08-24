@@ -27,16 +27,13 @@ operator<< (TAO_OutputCDR & cdr, CORBA::Principal * x)
 {
   if (x != 0)
     {
-      CORBA::ULong length  = x->id.length ();
-      cdr.write_long (length);
-      cdr.write_octet_array (x->id.get_buffer (), length);
+      return cdr << x->id;
     }
   else
     {
       cdr.write_ulong (0);
+      return (CORBA::Boolean) cdr.good_bit ();
     }
-
-  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean
@@ -48,15 +45,13 @@ operator>> (TAO_InputCDR & cdr, CORBA::Principal *& x)
   if (length == 0 || !cdr.good_bit ())
     {
       x = 0;
+      return (CORBA::Boolean) cdr.good_bit ();
     }
   else
     {
       ACE_NEW_RETURN (x, CORBA::Principal, 0);
-      x->id.length (length);
-      cdr.read_octet_array (x->id.get_buffer (), length);
+      return cdr >> x->id;
     }
-
-  return (CORBA::Boolean) cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

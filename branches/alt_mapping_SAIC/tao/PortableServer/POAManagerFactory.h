@@ -51,7 +51,7 @@ public:
       const char * id,
       const ::CORBA::PolicyList & policies);
 
-  virtual ::PortableServer::POAManagerFactory::POAManagerSeq * list (void);
+  virtual ::PortableServer::POAManagerFactory::POAManagerSeq list (void);
 
   virtual ::PortableServer::POAManager_ptr find (const char * id);
 

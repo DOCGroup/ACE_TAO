@@ -50,7 +50,7 @@ namespace TAO
       virtual PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId &id);
 
-      virtual PortableServer::ObjectId *servant_to_id (
+      virtual PortableServer::ObjectId servant_to_id (
         PortableServer::Servant servant);
 
       virtual ::PortableServer::RequestProcessingPolicyValue type() const;

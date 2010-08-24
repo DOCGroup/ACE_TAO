@@ -79,8 +79,8 @@ public:
   friend class TAO_Root_POA;
 
   typedef PortableServer::ObjectId poa_name;
-  typedef PortableServer::ObjectId_var poa_name_var;
-  typedef PortableServer::ObjectId_out poa_name_out;
+//  typedef PortableServer::ObjectId_var poa_name_var;
+  typedef PortableServer::ObjectId & poa_name_out;
 
   /// Constructor.
   TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,

@@ -58,36 +58,6 @@ namespace TAO
 TAO::ObjectKey::ObjectKey (void)
 {}
 
-TAO::ObjectKey::ObjectKey (
-    CORBA::ULong max
-  )
-  : TAO::unbounded_value_sequence<
-        CORBA::Octet
-      >
-    (max)
-{}
-
-TAO::ObjectKey::ObjectKey (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Octet * buffer,
-    CORBA::Boolean release
-  )
-  : TAO::unbounded_value_sequence<
-        CORBA::Octet
-      >
-    (max, length, buffer, release)
-{}
-
-TAO::ObjectKey::ObjectKey (
-    const ObjectKey &seq
-  )
-  : TAO::unbounded_value_sequence<
-        CORBA::Octet
-      >
-    (seq)
-{}
-
 TAO::ObjectKey::~ObjectKey (void)
 {}
 
@@ -95,7 +65,7 @@ TAO::ObjectKey::~ObjectKey (void)
 
 void
 TAO::ObjectKey::encode_sequence_to_string (char* & str,
-                                           TAO::unbounded_value_sequence<CORBA::Octet> const & seq)
+                                           std::vector<CORBA::Octet> const & seq)
 {
   // We must allocate a buffer which is (gag) 3 times the length
   // of the sequence, which is the length required in the worst-case
@@ -106,7 +76,7 @@ TAO::ObjectKey::encode_sequence_to_string (char* & str,
   // OR, we could just return this space.  The classic time-space tradeoff,
   // and for now we'll let time win out, which means that we only do the
   // allocation once.
-  CORBA::ULong const seq_len = seq.length ();
+  CORBA::ULong const seq_len = seq.size ();
   CORBA::ULong const len = 3 * seq_len; /* space for zero termination
                                            not needed */
   str = CORBA::string_alloc (len);
@@ -152,12 +122,12 @@ TAO::ObjectKey::is_legal (unsigned char c)
 
 void
 TAO::ObjectKey::decode_string_to_sequence (
-  TAO::unbounded_value_sequence<CORBA::Octet> & seq,
+  std::vector<CORBA::Octet> & seq,
   char const * str)
 {
   if (str == 0)
     {
-      seq.length (0);
+      seq.resize (0);
       return;
     }
 
@@ -174,7 +144,7 @@ TAO::ObjectKey::decode_string_to_sequence (
 
   // Set the length of the sequence to be as long as we'll possibly
   // need...we'll reset it to the actual length later.
-  seq.length (len);
+  seq.resize (len);
 
   CORBA::ULong i = 0;
   for (;
@@ -196,7 +166,7 @@ TAO::ObjectKey::decode_string_to_sequence (
     }
 
   // Set the length appropriately
-  seq.length (i);
+  seq.resize (i);
 }
 
 /*static*/ CORBA::Boolean
@@ -216,14 +186,14 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
         }
 
       // Set the length of the sequence.
-      key.length (_tao_seq_len);
+      key.resize (_tao_seq_len);
 
       // If length is 0 we return true.
       if (0 >= _tao_seq_len)
         {
           return 1;
         }
-
+/*
       // Retrieve all the elements.
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (ACE_BIT_DISABLED (strm.start ()->flags (),
@@ -237,8 +207,10 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       return strm.read_octet_array (key.get_buffer (),
                                     _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (key.get_buffer (), key.length ());
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+
+//      return strm.read_octet_array (key.get_buffer (), key.length ());
+      return strm >> key;
+//#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
 
     }
   return 0;
@@ -257,7 +229,8 @@ CORBA::Boolean operator<< (
     const TAO::ObjectKey &_tao_sequence
   )
 {
-  return TAO::marshal_sequence(strm, _tao_sequence);
+  return 
+    strm << (const std::vector<CORBA::Octet> &) _tao_sequence;
 }
 
 CORBA::Boolean operator>> (
@@ -265,7 +238,8 @@ CORBA::Boolean operator>> (
     TAO::ObjectKey &_tao_sequence
   )
 {
-  return TAO::demarshal_sequence(strm, _tao_sequence);
+  return
+    strm >> (std::vector<CORBA::Octet> &) _tao_sequence;
 }
 
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */

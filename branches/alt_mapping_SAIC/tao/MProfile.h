@@ -16,6 +16,8 @@
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
 
+#include <vector>
+
 #include /**/ "ace/pre.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
@@ -34,7 +36,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Profile;
 namespace CORBA
 {
-  class PolicyList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 }
 
 typedef CORBA::ULong TAO_PHandle;

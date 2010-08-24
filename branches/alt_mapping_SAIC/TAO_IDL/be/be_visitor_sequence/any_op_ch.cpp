@@ -48,24 +48,10 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       
   *os << be_nl << be_nl;
 
-  ACE_CString name;
+  ACE_CString name = node->full_name ();
   
   bool alt = be_global->alt_mapping ();
   
-  if (alt)
-    {
-      be_type *bt =
-        be_type::narrow_from_decl (node->base_type ());
-        
-      name = "std::vector<";
-      name += bt->full_name ();
-      name += ">";
-    }
-  else
-    {
-      name = node->full_name ();
-    }
-
   be_module *module = 0;  
   if (node->is_nested ())
     {

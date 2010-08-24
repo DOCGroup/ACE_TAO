@@ -1036,7 +1036,7 @@ CORBA::ORB::unregister_initial_reference (const char * id)
 }
 #endif
 
-CORBA::ORB::ObjectIdList_ptr
+CORBA::ORB::ObjectIdList
 CORBA::ORB::list_initial_services (void)
 {
   this->check_shutdown ();

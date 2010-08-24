@@ -121,7 +121,7 @@ namespace CORBA
 
     /// Throws CORBA::NO_IMPLEMENT.
     CORBA::Boolean _validate_connection (
-        CORBA::PolicyList_out inconsistent_policies);
+        CORBA::PolicyList & inconsistent_policies);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -146,7 +146,7 @@ namespace CORBA
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey * _key (void);
+    virtual TAO::ObjectKey _key (void);
 
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;

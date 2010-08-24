@@ -77,32 +77,15 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const ";
-      
-  if (alt)
-    {
-      *os << "std::vector<" << base_type->name () << ">";
-    }
-  else
-    {
-      *os << node->name ();
-    }
+      << "const " << node->name ();
     
   *os << " &_tao_sequence" << be_uidt_nl
       << ");" << be_uidt_nl;
       
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &strm," << be_nl;
-  
-  if (alt)
-    {
-      *os << "std::vector<" << base_type->name () << ">";
-    }
-  else
-    {    
-      *os << node->name ();
-    }
+      << "TAO_InputCDR &strm," << be_nl
+      << node->name ();
   
   *os << " &_tao_sequence" << be_uidt_nl
       << ");" << be_uidt;

@@ -30,7 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace IIOP
 {
-  class ListenPointList;
+  struct ListenPoint;
+  typedef std::vector< ListenPoint> ListenPointList;
 }
 
 // Forward decls.

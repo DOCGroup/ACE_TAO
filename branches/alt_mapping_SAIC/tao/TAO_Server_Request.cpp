@@ -69,7 +69,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
-    requesting_principal_ (0),
+//    requesting_principal_ (0),
     dsi_nvlist_align_ (0),
     operation_details_ (0),
     argument_flag_ (true)
@@ -111,7 +111,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
-    requesting_principal_ (0),
+//    requesting_principal_ (0),
     dsi_nvlist_align_ (0),
     operation_details_ (0),
     argument_flag_ (true)
@@ -148,7 +148,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
-    requesting_principal_ (0),
+//    requesting_principal_ (0),
     dsi_nvlist_align_ (0),
     operation_details_ (&details),
     argument_flag_ (false)
@@ -171,12 +171,14 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 
   IOP::ServiceContextList & src_request_contexts =
     (const_cast <TAO_Operation_Details&> (details)).request_service_info ();
-
+    
+  dest_request_contexts = src_request_contexts;
+/*
   dest_request_contexts.replace (src_request_contexts.maximum (),
                                  src_request_contexts.length (),
                                  src_request_contexts.get_buffer (),
-                                 false /* Do not release. */);
-
+                                 false); // Do not release.
+*/
   // Don't shallow copy the reply service context. It is probably empty,
   // when then during the request it is used, the buffer gets allocated and
   // then the operation details don't get the reply service context
@@ -304,7 +306,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
 
   // Change this to pass back the same thing we received, as well as
   // leave a comment why this is important!
-  reply_params.svc_ctx_.length (0);
+  reply_params.svc_ctx_.resize (0);
 
   // Send back the reply service context.
   reply_params.service_context_notowned (&this->reply_service_info ());
@@ -377,7 +379,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       TAO_Pluggable_Reply_Params_Base reply_params;
 
       reply_params.request_id_ = this->request_id_;
-      reply_params.svc_ctx_.length (0);
+      reply_params.svc_ctx_.resize (0);
 
       // Send back the reply service context.
       reply_params.service_context_notowned (&this->reply_service_info ());
@@ -510,7 +512,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   reply_params.request_id_ = this->request_id_;
 
-  reply_params.svc_ctx_.length (0);
+  reply_params.svc_ctx_.resize (0);
 
   // Send back the empty reply service context.
   reply_params.service_context_notowned (&this->reply_service_info ());
@@ -535,12 +537,14 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                   ACE_TEXT ("could not make cached reply\n")));
 
     }
-
+    
+  *this->outgoing_ << s;
+/*
   /// Append reply here....
   this->outgoing_->write_octet_array (
     s.get_buffer (),
     s.length ());
-
+*/
   if (!this->outgoing_->good_bit ())
     {
       ACE_ERROR ((LM_ERROR,

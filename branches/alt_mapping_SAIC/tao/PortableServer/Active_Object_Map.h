@@ -79,14 +79,14 @@ public:
   bind_using_system_id_returning_system_id (
     PortableServer::Servant servant,
     CORBA::Short priority,
-    PortableServer::ObjectId_out system_id);
+    PortableServer::ObjectId & system_id);
 
   /// Must be used with SYSTEM_ID policy.
   int
   bind_using_system_id_returning_user_id (
     PortableServer::Servant servant,
     CORBA::Short priority,
-    PortableServer::ObjectId_out user_id);
+    PortableServer::ObjectId & user_id);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
   /// user_id is actually system_id.
@@ -100,7 +100,7 @@ public:
   int
   find_system_id_using_user_id (const PortableServer::ObjectId &user_id,
                                 CORBA::Short priority,
-                                PortableServer::ObjectId_out system_id);
+                                PortableServer::ObjectId & system_id);
 
   /// Can be used with any policy.
   int
@@ -119,13 +119,13 @@ public:
   /// user_id is actually system_id.
   int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id);
+                              PortableServer::ObjectId & user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// user_id is actually system_id.
   int
   find_system_id_using_servant (PortableServer::Servant servant,
-                                PortableServer::ObjectId_out system_id,
+                                PortableServer::ObjectId & system_id,
                                 CORBA::Short &priority);
 
   /// Can be used with any policy. With the SYSTEM_ID policy,
@@ -149,7 +149,7 @@ public:
   find_servant_and_system_id_using_user_id (
     const PortableServer::ObjectId &user_id,
     PortableServer::Servant &servant,
-    PortableServer::ObjectId_out system_id,
+    PortableServer::ObjectId & system_id,
     CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
@@ -166,13 +166,7 @@ public:
   /// the @a system_id is identical to @a user_id.
   int
   find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
-                                PortableServer::ObjectId_out user_id);
-
-  /// Can be used with any policy.  When the SYSTEM_ID policy is used,
-  /// the @a system_id is identical to @a user_id.
-  int
-  find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
-                                 PortableServer::ObjectId &user_id);
+                                const PortableServer::ObjectId &user_id);
 
   /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.
@@ -296,13 +290,13 @@ public:
   /// @a user_id is actually @c system_id.
   virtual int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id) = 0;
+                              PortableServer::ObjectId & user_id) = 0;
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually @a system_id.
   virtual int
   find_system_id_using_servant (PortableServer::Servant servant,
-                                PortableServer::ObjectId_out system_id,
+                                PortableServer::ObjectId & system_id,
                                 CORBA::Short &priority) = 0;
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
@@ -353,13 +347,13 @@ public:
   /// @a user_id is actually @c system_id.
   virtual int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id);
+                              PortableServer::ObjectId & user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually @a system_id.
   virtual int
   find_system_id_using_servant (PortableServer::Servant servant,
-                                PortableServer::ObjectId_out system_id,
+                                PortableServer::ObjectId & system_id,
                                 CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
@@ -402,13 +396,13 @@ public:
   /// @a user_id is actually @c system_id.
   virtual int
   find_user_id_using_servant (PortableServer::Servant servant,
-                              PortableServer::ObjectId_out user_id);
+                              PortableServer::ObjectId & user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   /// <user_id> is actually @a system_id.
   virtual int
   find_system_id_using_servant (PortableServer::Servant servant,
-                                PortableServer::ObjectId_out system_id,
+                                PortableServer::ObjectId & system_id,
                                 CORBA::Short &priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
@@ -624,7 +618,7 @@ public:
 
   /// Get the system id associated with this entry.
   virtual int
-  system_id (PortableServer::ObjectId_out system_id,
+  system_id (PortableServer::ObjectId & system_id,
              TAO_Active_Object_Map_Entry &entry) = 0;
 };
 
@@ -661,7 +655,7 @@ public:
   hint_size (void);
 
   virtual int
-  system_id (PortableServer::ObjectId_out system_id,
+  system_id (PortableServer::ObjectId & system_id,
              TAO_Active_Object_Map_Entry &entry);
 
   typedef ACE_Active_Map_Manager_Adapter<
@@ -703,7 +697,7 @@ public:
   hint_size (void);
 
   virtual int
-  system_id (PortableServer::ObjectId_out system_id,
+  system_id (PortableServer::ObjectId & system_id,
              TAO_Active_Object_Map_Entry &entry);
 };
 

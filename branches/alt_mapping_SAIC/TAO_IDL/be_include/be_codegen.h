@@ -422,7 +422,7 @@ private:
   void gen_stub_src_includes (void);
   void gen_skel_src_includes (void);
   void gen_seq_file_includes (void);
-  void gen_any_file_includes (TAO_OutStream * stream) ;
+  void gen_any_file_includes (TAO_OutStream * stream);
   void gen_var_file_includes (void);
   void gen_stub_arg_file_includes (TAO_OutStream * stream);
   void gen_skel_arg_file_includes (TAO_OutStream * stream);

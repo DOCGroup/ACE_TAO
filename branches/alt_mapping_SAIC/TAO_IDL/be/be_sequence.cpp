@@ -398,7 +398,7 @@ be_sequence::gen_ostream_operator (TAO_OutStream *os,
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "[\";" << be_nl << be_nl
-      << "for (CORBA::ULong i = 0; i < _tao_sequence.length (); ++i)"
+      << "for (CORBA::ULong i = 0; i < _tao_sequence.size (); ++i)"
       << be_idt_nl
       << "{" << be_idt_nl
       << "if (i != 0)" << be_idt_nl

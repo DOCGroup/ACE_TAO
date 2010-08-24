@@ -3064,6 +3064,12 @@ TAO_CodeGen::gen_any_file_includes (TAO_OutStream * stream)
     {
       this->gen_standard_include (stream,
                                   "tao/CDR.h");
+                                  
+      this->gen_cond_file_include (
+        be_global->alt_mapping ()
+        | idl_global->seq_seen_,
+        "tao/AnyTypeCode/Vector_AnyOp_T.h",
+        stream);
 
       // Any_Impl_T.cpp needs the full CORBA::Any type.
       this->gen_cond_file_include (
@@ -3120,13 +3126,15 @@ TAO_CodeGen::gen_var_file_includes (void)
     );
 
   this->gen_cond_file_include (
-      idl_global->seq_seen_,
+      idl_global->seq_seen_
+      & !be_global->alt_mapping (),
       "tao/Seq_Var_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->seq_seen_,
+      idl_global->seq_seen_
+      & !be_global->alt_mapping (),
       "tao/Seq_Out_T.h",
       this->client_header_
     );

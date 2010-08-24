@@ -212,11 +212,11 @@ namespace CORBA
       const CORBA::PolicyList & policies,
       CORBA::SetOverrideType set_add);
 
-    CORBA::PolicyList * _get_policy_overrides (
+    CORBA::PolicyList _get_policy_overrides (
       const CORBA::PolicyTypeSeq & types);
 
     CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies);
+      CORBA::PolicyList & inconsistent_policies);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -275,7 +275,7 @@ namespace CORBA
 
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
-    virtual TAO::ObjectKey *_key (void);
+    virtual TAO::ObjectKey _key (void);
 
     /// Constructor
     Object (TAO_Stub *p,

@@ -78,18 +78,19 @@ TAO_POAManager_Factory::create_POAManager (
   return poamanager._retn ();
 }
 
-::PortableServer::POAManagerFactory::POAManagerSeq *
+::PortableServer::POAManagerFactory::POAManagerSeq
 TAO_POAManager_Factory::list (void)
 {
-  ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
+  ::PortableServer::POAManagerFactory::POAManagerSeq poamanagers;
   CORBA::ULong number_of_poamanagers = static_cast <CORBA::ULong>
                                               (this->poamanager_set_.size ());
+  /*
   ACE_NEW_THROW_EX (poamanagers,
                     PortableServer::POAManagerFactory::POAManagerSeq (
                       number_of_poamanagers),
                     CORBA::NO_MEMORY ());
-
-  poamanagers->length (number_of_poamanagers);
+  */
+  poamanagers->resize (number_of_poamanagers);
 
   CORBA::ULong index = 0;
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
@@ -97,8 +98,8 @@ TAO_POAManager_Factory::list (void)
         ++iterator, ++index)
     {
       ::PortableServer::POAManager_ptr poamanager = (*iterator);
-      poamanagers[index] =
-        PortableServer::POAManager::_duplicate (poamanager);
+      poamanagers[index] = poamanager;
+//        PortableServer::POAManager::_duplicate (poamanager);
     }
 
   return poamanagers._retn ();

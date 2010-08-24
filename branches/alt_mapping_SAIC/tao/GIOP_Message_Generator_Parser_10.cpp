@@ -103,8 +103,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 
 #else
 
-  CORBA::OctetSeq req_principal (0);
-  req_principal.length (0);
+  CORBA::OctetSeq req_principal;
+  req_principal.resize (0);
 
 #endif /* TAO_PEER_REQUIRES_PRINCIPAL */
 
@@ -167,7 +167,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       // But first we take it out any of them..
       CORBA::ULong count = 0;
       IOP::ServiceContextList &svc_ctx = reply.service_context_notowned ();
-      CORBA::ULong const l = svc_ctx.length ();
+      CORBA::ULong const l = svc_ctx.size ();
       CORBA::ULong i;
 
       for (i = 0; i != l; ++i)

@@ -17,11 +17,27 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_Service_Context::set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr)
+TAO_Service_Context::set_context_i (IOP::ServiceId id,
+                                    TAO_OutputCDR &cdr)
 {
   IOP::ServiceContext context;
   context.context_id = id;
-
+  
+  ::CORBA::OctetSeq tmp;
+  TAO_InputCDR in (cdr);
+  
+  /// Don't know if this is necessary for core ORB function.
+  if (!(in >> tmp))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "TAO_Service_Context::"
+                  "set_context_i failed\n"));
+                  
+      return;
+    }
+    
+  context.context_data = tmp;
+/*
   // Make a *copy* of the CDR stream...
   size_t const length = cdr.total_length ();
   context.context_data.length (static_cast<CORBA::ULong> (length));
@@ -34,7 +50,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr)
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
-
+*/
   this->set_context_i (context);
 }
 
@@ -42,6 +58,22 @@ void
 TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
                                     TAO_OutputCDR &cdr)
 {
+  size_t length = cdr.total_length ();
+  context.context_data.resize (length);
+  size_t index = 0;
+  
+  for (const ACE_Message_Block *i = cdr.begin ();
+       i != 0;
+       i = i->cont ())
+    {
+      char *buf = i->base ();
+    
+      for (size_t j = 0; j < i->length (); ++j)
+        {
+          context.context_data[index++] = buf[j];
+        }
+    }
+/*
   // Make a *copy* of the CDR stream...
   size_t const length = cdr.total_length ();
   context.context_data.length (static_cast<CORBA::ULong> (length));
@@ -54,6 +86,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
       ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
+  */
 }
 
 void
@@ -66,7 +99,7 @@ int
 TAO_Service_Context::set_context (const IOP::ServiceContext &context,
                                   CORBA::Boolean replace)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i = 0; i != this->service_context_.size (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -91,7 +124,7 @@ TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropiate action.
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i = 0; i != this->service_context_.size (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -106,14 +139,15 @@ TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
 void
 TAO_Service_Context::set_context_i (IOP::ServiceContext& context)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i = 0; i != this->service_context_.size (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
-          CORBA::ULong const max = context.context_data.maximum ();
-          CORBA::ULong const len = context.context_data.length ();
-          CORBA::Octet * const buf = context.context_data.get_buffer (1);
-          this->service_context_[i].context_data.replace (max, len, buf, 1);
+//          CORBA::ULong const max = context.context_data.maximum ();
+//          CORBA::ULong const len = context.context_data.length ();
+//          CORBA::Octet * const buf = context.context_data.get_buffer (1);
+//          this->service_context_[i].context_data.replace (max, len, buf, 1);
+          this->service_context_[i].context_data = context.context_data;
           return;
         }
     }
@@ -126,13 +160,14 @@ TAO_Service_Context::add_context_i (IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong const l = this->service_context_.length ();
-  this->service_context_.length (l + 1);
+  CORBA::ULong const l = this->service_context_.size ();
+  this->service_context_.resize (l + 1);
   this->service_context_[l].context_id = context.context_id;
-  CORBA::ULong const max = context.context_data.maximum ();
-  CORBA::ULong const len = context.context_data.length ();
-  CORBA::Octet* const buf = context.context_data.get_buffer (1);
-  this->service_context_[l].context_data.replace (max, len, buf, 1);
+//  CORBA::ULong const max = context.context_data.maximum ();
+//  CORBA::ULong const len = context.context_data.length ();
+//  CORBA::Octet* const buf = context.context_data.get_buffer (1);
+//  this->service_context_[l].context_data.replace (max, len, buf, 1);
+  this->service_context_[l].context_data = context.context_data;
 }
 
 void
@@ -140,15 +175,15 @@ TAO_Service_Context::add_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong const l = this->service_context_.length ();
-  this->service_context_.length (l + 1);
+  CORBA::ULong const l = this->service_context_.size ();
+  this->service_context_.resize (l + 1);
   this->service_context_[l] = context;
 }
 
 int
 TAO_Service_Context::get_context (IOP::ServiceContext& context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i = 0; i != this->service_context_.size (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -164,7 +199,7 @@ int
 TAO_Service_Context::get_context (IOP::ServiceId id,
                                   const IOP::ServiceContext **context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i = 0; i != this->service_context_.size (); ++i)
     {
       if (id == this->service_context_[i].context_id)
         {
@@ -180,7 +215,7 @@ int
 TAO_Service_Context::get_context (IOP::ServiceId id,
                                   IOP::ServiceContext_out context)
 {
-  CORBA::ULong const len = this->service_context_.length ();
+  CORBA::ULong const len = this->service_context_.size ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {

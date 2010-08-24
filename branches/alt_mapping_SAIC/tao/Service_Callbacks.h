@@ -29,6 +29,7 @@
 #include "tao/Invocation_Utils.h"
 #include "tao/Object.h"
 #include "tao/Service_Context.h"
+#include "tao/IOPC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,12 +42,12 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
 }
-
+/*
 namespace IOP
 {
   class ServiceContextList;
 }
-
+*/
 /**
  * @class TAO_Service_Callbacks
  *

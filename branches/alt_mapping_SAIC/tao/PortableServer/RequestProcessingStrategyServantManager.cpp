@@ -55,7 +55,7 @@ namespace TAO
       return this->poa_->find_servant (system_id);
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     RequestProcessingStrategyServantManager::servant_to_id (
       PortableServer::Servant servant)
     {

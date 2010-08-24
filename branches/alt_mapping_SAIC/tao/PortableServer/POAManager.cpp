@@ -32,14 +32,14 @@ TAO_POA_Manager::TAO_POA_Manager (
     poa_collection_ (),
     object_adapter_ (object_adapter),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id)),
+    id_ (id == 0 ? this->generate_manager_id () : id),
     poa_manager_factory_ (* dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory)),
     policies_ (policies)
 {
   poa_manager_factory_._add_ref ();
 }
 #else
-    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id))
+    id_ (id == 0 ? this->generate_manager_id () : id)
 {
 }
 #endif
@@ -52,10 +52,10 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 #endif
 }
 
-char *
+std::string
 TAO_POA_Manager::get_id (void)
 {
-  return CORBA::string_dup (this->id_.in ());
+  return this->id_;
 }
 
 void
@@ -167,7 +167,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
 
   if (ior_adapter)
     {
-      ior_adapter->adapter_manager_state_changed (this->id_.in (),
+      ior_adapter->adapter_manager_state_changed (this->id_,
                                                   adapter_state);
     }
 }

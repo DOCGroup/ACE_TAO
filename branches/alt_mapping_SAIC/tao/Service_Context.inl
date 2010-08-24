@@ -39,7 +39,7 @@ ACE_INLINE bool
 TAO_Service_Context::is_service_id (IOP::ServiceId id)
 {
   for (CORBA::ULong i = 0;
-       i != this->service_context_.length ();
+       i != this->service_context_.size ();
        ++i)
     {
       if (id == this->service_context_[i].context_id)
