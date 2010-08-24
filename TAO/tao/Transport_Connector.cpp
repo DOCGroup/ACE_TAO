@@ -734,7 +734,14 @@ TAO_Connector::wait_for_connection_completion (
       result = tcm.cache_transport (&desc, transport);
       if (result == -1)
       {
-
+        if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
+                      ACE_TEXT("wait_for_connection_completion, ")
+                      ACE_TEXT("transport [%d], Failed to cache transport.\n"),
+                      transport->id ()));
+        }
       }
     }
   else if (transport->connection_handler ()->is_timeout ())

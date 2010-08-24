@@ -58,10 +58,7 @@ class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 public:
 
   /// Constructor
-  TAO_Connection_Handler (void);
-
-  /// Constructor
-  TAO_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor
   virtual ~TAO_Connection_Handler (void);
