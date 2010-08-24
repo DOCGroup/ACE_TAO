@@ -28,7 +28,7 @@ TAO_Root_POA::the_parent (void)
   return PortableServer::POA::_nil ();
 }
 
-ACE_INLINE PortableInterceptor::AdapterName *
+ACE_INLINE PortableInterceptor::AdapterName
 TAO_Root_POA::adapter_name (void)
 {
   return this->adapter_name_i ();
@@ -83,16 +83,16 @@ TAO_Root_POA::persistent (void)
   return (this->cached_policies_.lifespan () == PortableServer::PERSISTENT);
 }
 
-ACE_INLINE const ACE_CString &
+ACE_INLINE const std::string &
 TAO_Root_POA::name (void) const
 {
   return this->name_;
 }
 
-ACE_INLINE char *
+ACE_INLINE std::string
 TAO_Root_POA::the_name (void)
 {
-  return CORBA::string_dup (this->name_.c_str ());
+  return this->name_;
 }
 
 ACE_INLINE const TAO_Object_Adapter::poa_name &
@@ -104,7 +104,7 @@ TAO_Root_POA::folded_name (void) const
 ACE_INLINE const TAO_Object_Adapter::poa_name &
 TAO_Root_POA::system_name (void) const
 {
-  return this->system_name_.in ();
+  return this->system_name_;
 }
 
 ACE_INLINE char

@@ -33,7 +33,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,10 +41,8 @@
 
 #include /**/ "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/Sequence_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
+//#include "tao/Environment.h"
+#include "tao/OctetSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -71,40 +68,14 @@ namespace TAO
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
 
-  class ObjectKey;
-
-  typedef
-    TAO_FixedSeq_Var_T<
-        ObjectKey
-      >
-    ObjectKey_var;
-
-  typedef
-    TAO_Seq_Out_T<
-        ObjectKey
-      >
-    ObjectKey_out;
-
   class TAO_Export ObjectKey
     : public
-        TAO::unbounded_value_sequence<
-            CORBA::Octet
-          >
+        std::vector< ::CORBA::Octet>
   {
   public:
     ObjectKey (void);
-    ObjectKey (CORBA::ULong max);
-    ObjectKey (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Octet* buffer,
-        CORBA::Boolean release = false
-      );
-    ObjectKey (const ObjectKey &);
     ~ObjectKey (void);
-
-    typedef ObjectKey_var _var_type;
-
+/*
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     ObjectKey (
         CORBA::ULong length,
@@ -117,10 +88,10 @@ namespace TAO
 
     static void encode_sequence_to_string (
         char* & str,
-        TAO::unbounded_value_sequence<CORBA::Octet> const & seq
+        std::vector<CORBA::Octet> const & seq
       );
     static void decode_string_to_sequence (
-        TAO::unbounded_value_sequence<CORBA::Octet> &seq,
+        std::vector<CORBA::Octet> &seq,
         char const * str
       );
     static CORBA::Boolean is_legal (unsigned char c);

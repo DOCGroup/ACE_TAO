@@ -99,12 +99,12 @@ TAO_Operation_Details::reply_service_info (void) const
 ACE_INLINE void
 TAO_Operation_Details::reset_request_service_info (void)
 {
-  this->request_service_context ().service_info ().length (0);
+  this->request_service_context ().service_info ().resize (0);
 }
 ACE_INLINE void
 TAO_Operation_Details::reset_reply_service_info (void)
 {
-  this->reply_service_context ().service_info ().length (0);
+  this->reply_service_context ().service_info ().resize (0);
 }
 
 ACE_INLINE void

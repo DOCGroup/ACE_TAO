@@ -60,17 +60,22 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
       const PortableServer::ObjectId &system_id)
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
+      /*
       PortableServer::ObjectId *id = 0;
       ACE_NEW_THROW_EX (id,
                         PortableServer::ObjectId (system_id),
                         CORBA::NO_MEMORY ());
-
+      */
+      
+      PortableServer::ObjectId id;
+      id.assign (system_id.begin (), system_id.end ());
+      
       return id;
     }
 
@@ -155,7 +160,7 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyNonRetain::activate_object (
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,

@@ -25,15 +25,11 @@
 
 #include "tao/LF_Invocation_Event.h"
 #include "tao/CDR.h"
+#include "tao/IOPC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
-
-namespace IOP
-{
-  class ServiceContextList;
-}
 
 /**
  * @class TAO_Synch_Reply_Dispatcher

@@ -76,8 +76,6 @@ namespace PortableServer
   // be\be_visitor_typedef/typedef_ch.cpp:472
 
   typedef CORBA::OctetSeq ObjectId;
-  typedef CORBA::OctetSeq_var ObjectId_var;
-  typedef CORBA::OctetSeq_out ObjectId_out;
 
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598

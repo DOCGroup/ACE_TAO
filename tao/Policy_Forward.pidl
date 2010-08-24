@@ -27,6 +27,8 @@
 #ifndef TAO_CORBA_POLICY_FORWARD_PIDL
 #define TAO_CORBA_POLICY_FORWARD_PIDL
 
+#include "tao/ULongSeq.pidl"
+
 #pragma prefix "omg.org"
 
 module CORBA
@@ -37,7 +39,7 @@ module CORBA
 
   typedef sequence<Policy> PolicyList;
 
-  typedef sequence<PolicyType> PolicyTypeSeq;
+  typedef ULongSeq PolicyTypeSeq;
 
   local interface PolicyCurrent;
 

@@ -291,7 +291,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       return -1;
     }
 
-  if (req_service_info.length() > 0)
+  if (req_service_info.size () > 0)
     {
       request.orb_core ()->service_context_registry ().
         process_service_contexts (req_service_info, *(request.transport ()));

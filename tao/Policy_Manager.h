@@ -49,7 +49,7 @@ public:
 
   // = The CORBA::PolicyManager operations
 
-  virtual CORBA::PolicyList * get_policy_overrides (
+  virtual CORBA::PolicyList get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts);
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,

@@ -39,8 +39,9 @@ class TAO_ORB_Core;
 
 namespace CORBA
 {
-  /// Forward declaration of PolicyList
-  class PolicyList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 }
 
 /**
@@ -106,7 +107,7 @@ public:
 
   /// Obtain the object key, return 0 if the profile cannot be parsed.
   /// The memory is owned by the caller!
-  TAO::ObjectKey *_key (void) const;
+  TAO::ObjectKey _key (void) const;
   //@}
 
   /**

@@ -15,10 +15,13 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::PolicyList *
+CORBA::PolicyList
 TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    ace_mon,
+                    this->mutex_,
+                    CORBA::PolicyList ());
   return this->impl_.get_policy_overrides (ts);
 }
 

@@ -1946,7 +1946,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
   // became in turns the "body" of the IOP::TaggedComponent. This
   // conversion is a responsability of the CORBA::Profile class.  (See
   // orbos\98-05-05.pdf Section 5.4)
-  if (policy_list->length () != 0)
+  if (policy_list->size () != 0)
     {
       TAO_Profile * profile = 0;
 
@@ -2787,7 +2787,7 @@ TAO_ORB_Core::resolve_rir (const char *name)
   return CORBA::Object::_nil ();
 }
 
-CORBA::ORB::ObjectIdList *
+CORBA::ORB::ObjectIdList
 TAO_ORB_Core::list_initial_references (void)
 {
   // Unsupported initial services should NOT be included in the below list!
@@ -2803,22 +2803,16 @@ TAO_ORB_Core::list_initial_references (void)
     + this->init_ref_map_.size ()
     + this->object_ref_table_.current_size ();
 
-  CORBA::ORB::ObjectIdList *tmp = 0;
-
-  ACE_NEW_THROW_EX (tmp,
-                    CORBA::ORB::ObjectIdList (
-                      static_cast<CORBA::ULong> (total_size)),
-                    CORBA::NO_MEMORY ());
-
-  CORBA::ORB::ObjectIdList_var list (tmp);
-  list->length (static_cast<CORBA::ULong> (total_size));
+  CORBA::ORB::ObjectIdList list;
+  list.resize (total_size);
 
   CORBA::ULong index = 0;
   // Index for ObjectIdList members.
 
   // Iterate over the registered initial references.
   for (index = 0; index < initial_services_size; ++index)
-    list[index] = initial_services[index];
+    list[index] =
+      const_cast<char *> (initial_services[index]);
 
   // Now iterate over the initial references created by the user and
   // add them to the sequence.
@@ -2839,9 +2833,10 @@ TAO_ORB_Core::list_initial_references (void)
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
        ++j, ++index)
-    list[index] = (*j).first.c_str ();
+    list[index] =
+      const_cast<char *> ((*j).first.c_str ());
 
-  return list._retn ();
+  return list;
 }
 
 // ****************************************************************

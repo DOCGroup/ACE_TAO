@@ -51,7 +51,7 @@ namespace TAO
         this->transport_->remove_reference ();
       }
 
-    delete this->inconsistent_policies_;
+//    delete this->inconsistent_policies_;
   }
 
   void
@@ -244,6 +244,7 @@ namespace TAO
   void
   Profile_Transport_Resolver::init_inconsistent_policies (void)
   {
+  /*
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),
                       CORBA::NO_MEMORY (
@@ -251,6 +252,7 @@ namespace TAO
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+  */
   }
 
 

@@ -205,7 +205,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // First encode the sequence length.
-  *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
+  *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.size ();"
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;

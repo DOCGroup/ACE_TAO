@@ -463,12 +463,18 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 
       // Typedef the type.
       *os << "typedef " << bt->nested_type_name (scope)
-          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // Typedef the _var and _out types.
-      *os << "typedef " << bt->nested_type_name (scope, "_var")
-          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-      *os << "typedef " << bt->nested_type_name (scope, "_out")
-          << " " << tdef->nested_type_name (scope, "_out") << ";";
+          << " " << tdef->nested_type_name (scope) << ";";
+          
+      if (!be_global->alt_mapping ())
+        {
+          // Typedef the _var and _out types.
+          *os << be_nl << "typedef "
+              << bt->nested_type_name (scope, "_var")
+              << " " << tdef->nested_type_name (scope, "_var") << ";";
+          *os << be_nl << "typedef "
+              << bt->nested_type_name (scope, "_out")
+              << " " << tdef->nested_type_name (scope, "_out") << ";";
+        }
     }
 
   return 0;

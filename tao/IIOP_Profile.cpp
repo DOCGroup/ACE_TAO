@@ -659,19 +659,19 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
       tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
 
       size_t length = out_cdr.total_length ();
-      tagged_component.component_data.length
-        (static_cast<CORBA::ULong>(length));
-      CORBA::Octet *buf =
-        tagged_component.component_data.get_buffer ();
+      tagged_component.component_data.resize (length);
+      size_t index = 0;
 
       for (const ACE_Message_Block *iterator = out_cdr.begin ();
                  iterator != 0;
            iterator = iterator->cont ())
         {
-          size_t i_length = iterator->length ();
-          ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
-
-          buf += i_length;
+          char *buf = iterator->base ();
+        
+          for (size_t j = 0; j < iterator->length (); ++j)
+            {
+              tagged_component.component_data[index++] = buf[j];
+            }
         }
 
       // Add component with encoded endpoint data to this profile's
@@ -707,7 +707,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
   // priority is not!
 
   TAO::IIOPEndpointSequence endpoints;
-  endpoints.length (actual_count);
+  endpoints.resize (actual_count);
 
   endpoint = &this->endpoint_;
 
@@ -761,11 +761,13 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
-        tagged_component.component_data.get_buffer ();
-
-      TAO_InputCDR in_cdr (reinterpret_cast<const char *> (buf),
-                           tagged_component.component_data.length ());
+      const char *buf =
+        reinterpret_cast<const char *> (
+          tagged_component.component_data.get_allocator ().address (
+            *tagged_component.component_data.begin ()));
+      
+      TAO_InputCDR in_cdr (buf,
+                           tagged_component.component_data.size ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
@@ -790,7 +792,7 @@ TAO_IIOP_Profile::decode_endpoints (void)
       // from the end of the sequence to preserve endpoint order,
       // since <add_endpoint> method reverses the order of endpoints
       // in the list.
-      for (CORBA::ULong i = endpoints.length () - 1;
+      for (CORBA::ULong i = endpoints.size () - 1;
            i > 0;
            --i)
         {
@@ -809,15 +811,18 @@ TAO_IIOP_Profile::decode_endpoints (void)
   // components.
 
   IOP::MultipleComponentProfile& tc = this->tagged_components_.components();
-  for (CORBA::ULong index = 0; index < tc.length(); index++)
+  for (CORBA::ULong index = 0; index < tc.size (); index++)
     {
       if (tc[index].tag != IOP::TAG_ALTERNATE_IIOP_ADDRESS)
         continue;
-      const CORBA::Octet *buf =
-        tc[index].component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*>(buf),
-                           tc[index].component_data.length ());
+      const char *buf =
+        reinterpret_cast<const char *> (
+          tc[index].component_data.get_allocator ().address (
+            *tc[index].component_data.begin ()));
+      
+      TAO_InputCDR in_cdr (buf,
+                           tc[index].component_data.size ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;

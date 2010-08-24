@@ -82,7 +82,7 @@ public:
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add);
 
-  virtual CORBA::PolicyList *get_policy_overrides (
+  virtual CORBA::PolicyList get_policy_overrides (
     const CORBA::PolicyTypeSeq & types);
 #endif
 

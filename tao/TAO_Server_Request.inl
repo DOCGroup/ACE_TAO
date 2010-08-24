@@ -23,7 +23,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
     orb_core_ (0),
     request_id_ (0),
     profile_ (0),
-    requesting_principal_ (0),
+//    requesting_principal_ (0),
     dsi_nvlist_align_ (0),
     operation_details_ (0),
     argument_flag_ (true)
@@ -153,7 +153,7 @@ TAO_ServerRequest::request_id (CORBA::ULong req)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::requesting_principal (const CORBA::OctetSeq &principal)
+TAO_ServerRequest::requesting_principal (const CORBA::OctetSeq principal)
 {
   this->requesting_principal_ = principal;
 }

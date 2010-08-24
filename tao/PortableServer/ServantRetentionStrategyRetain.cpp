@@ -170,21 +170,21 @@ namespace TAO
       return servant;
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyRetain::system_id_to_object_id (
       const PortableServer::ObjectId &system_id)
     {
       // The object denoted by the reference does not have to be
       // active for this operation to succeed.
-      PortableServer::ObjectId_var user_id;
+      PortableServer::ObjectId user_id;
       if (this->active_object_map_->
           find_user_id_using_system_id (system_id,
-                                        user_id.out ()) != 0)
+                                        user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
 
-      return user_id._retn ();
+      return user_id;
     }
 
     PortableServer::Servant
@@ -694,7 +694,7 @@ namespace TAO
               servant->_interface_repository_id (), user_id);
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyRetain::activate_object (
       PortableServer::Servant servant,
       CORBA::Short priority,
@@ -723,11 +723,11 @@ namespace TAO
       // Otherwise, the activate_object operation generates an Object Id
       // and enters the Object Id and the specified servant in the Active
       // Object Map. The Object Id is returned.
-      PortableServer::ObjectId_var user_id;
+      PortableServer::ObjectId user_id;
       if (this->active_object_map_->
           bind_using_system_id_returning_user_id (servant,
                                                   priority,
-                                                  user_id.out ()) != 0)
+                                                  user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -738,7 +738,7 @@ namespace TAO
 
       // Inform the custom servant dispatching (CSD) strategy that the
       // sevant is activated.
-      this->poa_->servant_activated_hook (servant, user_id.in ());
+      this->poa_->servant_activated_hook (servant, user_id);
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -750,7 +750,7 @@ namespace TAO
       // same number of times.
       servant->_add_ref ();
 
-      return user_id._retn ();
+      return user_id;
     }
 
     void

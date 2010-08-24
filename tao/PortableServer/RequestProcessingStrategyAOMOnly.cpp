@@ -126,7 +126,7 @@ namespace TAO
     {
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     RequestProcessingStrategyAOMOnly::servant_to_id (
       PortableServer::Servant servant)
     {

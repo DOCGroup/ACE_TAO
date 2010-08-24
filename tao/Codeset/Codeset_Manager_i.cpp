@@ -177,13 +177,15 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
   CONV_FRAME::CodeSetId tcs_c = TAO_CODESET_ID_XOPEN_UTF_8;
   CONV_FRAME::CodeSetId tcs_w = TAO_CODESET_ID_UNICODE;
 
-  if (service_cntx.get_context(context))
+  if (service_cntx.get_context (context))
     {
       // Convert the Service Context to Codeset Context
       const char *buffer =
-        reinterpret_cast<const char*> (context.context_data.get_buffer ());
+        reinterpret_cast<const char *> (
+          context.context_data.get_allocator ().address (
+            *context.context_data.begin ()));
 
-      TAO_InputCDR cdr (buffer,context.context_data.length ());
+      TAO_InputCDR cdr (buffer, context.context_data.size ());
       CORBA::Boolean byte_order;
 
       if (cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -274,7 +276,7 @@ TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
                                     CONV_FRAME::CodeSetComponent &cs_comp)
 {
   for (CORBA::ULong i = 0L;
-       i < cs_comp.conversion_code_sets.length ();
+       i < cs_comp.conversion_code_sets.size ();
        ++i )
     {
       if (id == cs_comp.conversion_code_sets[i])
@@ -290,7 +292,7 @@ TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
                                        CONV_FRAME::CodeSetComponent &cs_comp2)
 {
   for(CORBA::ULong index = 0L;
-       index < cs_comp1.conversion_code_sets.length();
+       index < cs_comp1.conversion_code_sets.size();
        ++index )
     {
       if (this->isElementOf(cs_comp1.conversion_code_sets[index], cs_comp2))
@@ -426,7 +428,7 @@ int
 TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                                  CONV_FRAME::CodeSetComponent& cs_comp)
 {
-  cs_comp.conversion_code_sets.length
+  cs_comp.conversion_code_sets.resize
     (static_cast<CORBA::ULong> (cd.num_translators()));
 
   CORBA::ULong index;
@@ -481,7 +483,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
         }
     }
 
-  cs_comp.conversion_code_sets.length(index);
+  cs_comp.conversion_code_sets.resize(index);
   return 0;
 }
 

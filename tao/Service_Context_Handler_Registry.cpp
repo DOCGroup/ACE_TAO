@@ -17,7 +17,7 @@ TAO_Service_Context_Registry::process_service_contexts (
   TAO_Transport& transport)
 {
   for (CORBA::ULong index = 0;
-       index != sc.length ();
+       index != sc.size ();
        ++index)
   {
     IOP::ServiceContext const & context = sc[index];

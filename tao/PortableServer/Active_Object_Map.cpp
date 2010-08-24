@@ -533,7 +533,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
 int
 TAO_Unique_Id_Strategy::find_user_id_using_servant (
   PortableServer::Servant servant,
-  PortableServer::ObjectId_out user_id)
+  PortableServer::ObjectId & user_id)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
   int result = this->active_object_map_->servant_map_->find (servant, entry);
@@ -546,9 +546,12 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (
         }
       else
         {
+          user_id.assign (entry->user_id_.begin (), entry->user_id_.end ());
+          /*
           ACE_NEW_RETURN (user_id,
-                          PortableServer::ObjectId (entry->user_id_),
+                          PortableServer::ObjectId (entry->user_id_.),
                           -1);
+          */
         }
     }
 
@@ -558,7 +561,7 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (
 int
 TAO_Unique_Id_Strategy::find_system_id_using_servant (
   PortableServer::Servant servant,
-  PortableServer::ObjectId_out system_id,
+  PortableServer::ObjectId & system_id,
   CORBA::Short &priority)
 {
   TAO_Active_Object_Map_Entry *entry = 0;
@@ -689,7 +692,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
 int
 TAO_Multiple_Id_Strategy::find_user_id_using_servant (
   PortableServer::Servant,
-  PortableServer::ObjectId_out)
+  PortableServer::ObjectId &)
 {
   return -1;
 }
@@ -697,7 +700,7 @@ TAO_Multiple_Id_Strategy::find_user_id_using_servant (
 int
 TAO_Multiple_Id_Strategy::find_system_id_using_servant (
   PortableServer::Servant,
-  PortableServer::ObjectId_out,
+  PortableServer::ObjectId &,
   CORBA::Short &)
 {
   return -1;
@@ -1024,12 +1027,16 @@ TAO_Active_Hint_Strategy::hint_size (void)
 }
 
 int
-TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
+TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId & system_id,
                                      TAO_Active_Object_Map_Entry &entry)
 {
+  system_id.assign (entry.system_id_.begin (), entry.system_id_.end ());
+
+  /*
   ACE_NEW_RETURN (system_id,
                   PortableServer::ObjectId (entry.system_id_),
                   -1);
+  */
   return 0;
 }
 
@@ -1078,12 +1085,16 @@ TAO_No_Hint_Strategy::hint_size (void)
 }
 
 int
-TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
+TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId & system_id,
                                  TAO_Active_Object_Map_Entry &entry)
 {
+  system_id.assign (entry.user_id_.begin (), entry.user_id_.end ());
+
+  /*
   ACE_NEW_RETURN (system_id,
                   PortableServer::ObjectId (entry.user_id_),
                   -1);
+  */
   return 0;
 }
 

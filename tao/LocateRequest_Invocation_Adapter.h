@@ -64,7 +64,7 @@ namespace TAO
     void invoke (void);
 
     /// Accessor to the inconsistent policy list
-    CORBA::PolicyList *get_inconsistent_policies (void);
+    CORBA::PolicyList get_inconsistent_policies (void);
 
   private:
 
@@ -78,7 +78,7 @@ namespace TAO
 
   private:
     CORBA::Object_ptr target_;
-    CORBA::PolicyList_var list_;
+    CORBA::PolicyList list_;
   };
 }
 

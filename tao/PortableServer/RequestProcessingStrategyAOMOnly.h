@@ -78,7 +78,7 @@ namespace TAO
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
-      virtual PortableServer::ObjectId *servant_to_id (
+      virtual PortableServer::ObjectId servant_to_id (
         PortableServer::Servant servant);
 
       virtual void post_invoke_servant_cleanup(

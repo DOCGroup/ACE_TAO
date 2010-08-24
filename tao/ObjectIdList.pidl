@@ -32,12 +32,14 @@
 #ifndef TAO_CORBA_ORB_OBJECTIDLIST_PIDL
 #define TAO_CORBA_ORB_OBJECTIDLIST_PIDL
 
+#include "tao/StringSeq.pidl"
+
 #pragma prefix "omg.org"
 
 module CORBA
 {
   typedef string ORB_ObjectId;
-  typedef sequence<ORB_ObjectId> ORB_ObjectIdList;
+  typedef StringSeq ORB_ObjectIdList;
 };
 
 #endif /* TAO_CORBA_ORB_OBJECTIDLIST_PIDL */

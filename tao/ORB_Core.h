@@ -32,6 +32,7 @@
 #include "tao/Object_Ref_Table.h"
 #include "tao/ObjectKey_Table.h"
 #include "tao/Messaging_SyncScopeC.h"
+#include "tao/IOPC.h"
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Adapter_Registry.h"
@@ -113,16 +114,13 @@ namespace TAO
 
 namespace CORBA
 {
-  class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
+  typedef std::vector<char *> ORB_ObjectIdList;
   class ORB;
   typedef ORB *ORB_ptr;
 
-  class PolicyList;
-}
-
-namespace IOP
-{
-  class ServiceContextList;
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef std::vector<Policy_ptr> PolicyList;
 }
 
 namespace PortableInterceptor
@@ -688,7 +686,7 @@ public:
   const char *server_id (void) const;
 
   /// List all the service known by the ORB
-  CORBA::ORB_ObjectIdList *list_initial_references (void);
+  CORBA::ORB_ObjectIdList list_initial_references (void);
 
   /// Reference counting...
   unsigned long _incr_refcnt (void);

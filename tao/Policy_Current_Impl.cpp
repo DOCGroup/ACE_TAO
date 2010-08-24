@@ -22,7 +22,7 @@ TAO_Policy_Current_Impl::set_policy_overrides (
   this->manager_impl_.set_policy_overrides (policies, set_add);
 }
 
-CORBA::PolicyList *
+CORBA::PolicyList
 TAO_Policy_Current_Impl::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 {
   return this->manager_impl_.get_policy_overrides (ts);

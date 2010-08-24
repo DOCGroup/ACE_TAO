@@ -69,7 +69,7 @@ public:
   /// Get the values (if any) for the policies in @a types, if @a
   /// types is an empty list the method returns *all* the current
   /// policies.
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types);
+  CORBA::PolicyList get_policy_overrides (const CORBA::PolicyTypeSeq & types);
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);

@@ -77,7 +77,7 @@ public:
 
   PortableServer::POAManager::State get_state (void);
 
-  char *get_id (void);
+  std::string get_id (void);
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -138,7 +138,7 @@ protected:
 
   TAO_Object_Adapter &object_adapter_;
 
-  CORBA::String_var id_;
+  std::string id_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

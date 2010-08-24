@@ -78,11 +78,28 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           tc = ANY_OBJREF;
         }
         
+      if (bt->node_type () == AST_Decl::NT_pre_defined)
+        {
+          AST_PredefinedType *pdt =
+            AST_PredefinedType::narrow_from_decl (bt);
+            
+          if (pdt->pt () == AST_PredefinedType::PT_pseudo)
+            {
+              ACE_CString lname (
+                bt->local_name ()->get_string ());
+                
+              if (lname == "TypeCode")
+                {
+                  tc = ANY_OBJREF;
+                }
+            }
+        }
+        
       *os << be_nl
           << "void operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_elem)" << be_uidt_nl
+          << "const " << node->name  ()
+          << " &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::";
           
@@ -113,8 +130,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "const ::CORBA::Any &_tao_any," << be_nl
-          << "std::vector<" << bt->full_name ()
-          << "> &_tao_elem)" << be_uidt_nl
+          << node->name () << " &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
           << "TAO::";
