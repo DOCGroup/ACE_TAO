@@ -64,10 +64,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_deadline_missed");
 
       ::DDS::RequestedDeadlineMissedStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_requested_deadline_missed (
-        this->get_datareader_proxy (the_reader),
-        ddsstatus);
+      this->impl_->on_requested_deadline_missed (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -79,10 +78,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_requested_incompatible_qos");
 
       ::DDS::RequestedIncompatibleQosStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_requested_incompatible_qos (
-        this->get_datareader_proxy (the_reader),
-        ddsstatus);
+      this->impl_->on_requested_incompatible_qos (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -94,10 +92,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_rejected");
 
       ::DDS::SampleRejectedStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_sample_rejected (
-        this->get_datareader_proxy (the_reader),
-        ddsstatus);
+      this->impl_->on_sample_rejected (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -109,10 +106,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_liveliness_changed");
 
       ::DDS::LivelinessChangedStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_liveliness_changed (
-        this->get_datareader_proxy (the_reader),
-        ddsstatus);
+      this->impl_->on_liveliness_changed (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -122,8 +118,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_available");
 
-      this->impl_->on_data_available (
-        this->get_datareader_proxy (the_reader));
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
+      this->impl_->on_data_available (proxy.in ());
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -135,10 +131,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_subscription_matched");
 
       ::DDS::SubscriptionMatchedStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_subscription_matched (
-        this->get_datareader_proxy (the_reader),
-        ddsstatus);
+      this->impl_->on_subscription_matched (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
@@ -150,9 +145,9 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_lost");
 
       ::DDS::SampleLostStatus ddsstatus;
+      ::DDS::CCM_DataReader_var proxy = this->get_datareader_proxy (the_reader);
       ddsstatus <<= status;
-      this->impl_->on_sample_lost (
-        this->get_datareader_proxy (the_reader), ddsstatus);
+      this->impl_->on_sample_lost (proxy.in (), ddsstatus);
     }
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>

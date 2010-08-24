@@ -29,7 +29,8 @@ DDS_Subscriber_Base_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::configuration_com
 
   if (!this->data_reader_->get_impl ())
     {
-      if (ACE_OS::strlen (this->cft_setting_->filter ()->expression.in ()) > 0)
+      ::CCM_DDS::QueryFilter_var filter = this->cft_setting_->filter ();
+      if (ACE_OS::strlen (filter->expression.in ()) > 0)
         {
           ::DDS::ContentFilteredTopic_var cft =
             this->cft_setting_->create_contentfilteredtopic (topic, subscriber);
