@@ -57,6 +57,9 @@ public:
 protected:
   void init_default_domain (void);
 
+  /// Get the reactor associated with this component
+  ACE_Reactor* reactor (void);
+
   ::DDS::DomainId_t domain_id_;
   ::CORBA::String_var qos_profile_;
   bool configuration_complete_;
@@ -69,7 +72,6 @@ protected:
   typename CCM_TYPE::context_type::_var_type context_;
 
   DomainParticipantFactory dp_factory_;
-
 };
 
 #include "dds4ccm/impl/DDS_Base_Connector_T.cpp"

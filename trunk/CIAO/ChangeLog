@@ -1,3 +1,14 @@
+Tue Aug 24 18:03:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Added helper method reactor to get the reactor
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          Use the new reactor helper and throw an exception when we can't
+          get a reactor when we require one
+
 Tue Aug 24 15:31:19 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDSPublisherListener_T.cpp:
