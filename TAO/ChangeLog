@@ -1,3 +1,9 @@
+Wed Aug 25 13:25:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Selected changes from patches in Bugzilla 3652.
+
 Tue Aug 24 14:26:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * interop-tests/wchar/client.cpp:

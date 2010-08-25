@@ -96,7 +96,8 @@ class TAO_RTEvent_Export ACE_ConsumerQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0);
+  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
+                           CORBA::ULong qos_max_len = 0);
 
   /// Death and destruction.
   ~ACE_ConsumerQOS_Factory (void);
@@ -211,7 +212,7 @@ class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 public:
   /// Default construction.
   ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           int qos_max_len = 0);
+                           CORBA::ULong qos_max_len = 0);
 
   /**
    * Publish @a sid and @a type that is generate by a method described by
