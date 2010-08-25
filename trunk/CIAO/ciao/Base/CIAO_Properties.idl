@@ -26,6 +26,12 @@ module CIAO
     const string SERVER_MULTITHREAD = "edu.vanderbilt.dre.CIAO.Multithreaded";
     const string REGISTER_NAMING = "edu.vanderbilt.dre.CIAO.RegisterNaming";
     const string COMPONENTINSTALLATION_REF = "edu.vanderbilt.dre.CIAO.ComponentInstallation";
+
+    const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
+    const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
+    const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
+    const string CCM_HOMEDCOMPONENT = "edu.dre.vanderbilt.dre.CCM.HomedComponent";
+    const string CCM_CONNECTOR = "edu.dre.vanderbilt.dre.CCM.Connector";
   };
 };
 #endif /* CIAO_PROPERTIES_IDL */
