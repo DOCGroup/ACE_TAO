@@ -365,7 +365,7 @@ TAO_IIOP_Profile::hash (CORBA::ULong max)
   const TAO::ObjectKey &ok =
     this->ref_object_key_->object_key ();
 
-  if (ok.length () >= 4)
+  if (ok.size () >= 4)
     {
       hashval += ok[1];
       hashval += ok[3];

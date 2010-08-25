@@ -141,9 +141,9 @@ namespace TAO
       const PortableServer::ObjectId &system_id)
     {
       // Find user id from system id.
-      PortableServer::ObjectId_var user_id;
+      PortableServer::ObjectId user_id;
       if (active_object_map_->
-          find_user_id_using_system_id (system_id, user_id.out()) != 0)
+          find_user_id_using_system_id (system_id, user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -158,7 +158,7 @@ namespace TAO
       int const result =
         active_object_map_->
           find_servant_using_system_id_and_user_id (system_id,
-                                                    user_id.in(),
+                                                    user_id,
                                                     servant,
                                                     entry);
 
@@ -212,14 +212,14 @@ namespace TAO
       // If an object with the specified Object Id value is currently
       // active, a reference encapsulating the information used to
       // activate the object is returned.
-      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId system_id;
       PortableServer::Servant servant;
       CORBA::Short priority;
 
       if (this->active_object_map_->
           find_servant_and_system_id_using_user_id (id,
                                                     servant,
-                                                    system_id.out (),
+                                                    system_id,
                                                     priority) == 0)
         {
           // Remember params for potentially invoking <key_to_object> later.
@@ -247,9 +247,9 @@ namespace TAO
       PortableServer::Servant &servant)
     {
       // Find user id from system id.
-      PortableServer::ObjectId_var user_id;
+      PortableServer::ObjectId user_id;
       if (this->active_object_map_->
-          find_user_id_using_system_id (system_id, user_id.out()) != 0)
+          find_user_id_using_system_id (system_id, user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -257,7 +257,7 @@ namespace TAO
       TAO_Active_Object_Map_Entry *entry = 0;
       int const result = this->active_object_map_->
         find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id.in(),
+                                                  user_id,
                                                   servant,
                                                   entry);
       if (result == 0)
@@ -288,7 +288,7 @@ namespace TAO
         }
 
       poa_current_impl.object_id(user_id);
-      servant_upcall.user_id (&poa_current_impl.object_id());
+      servant_upcall.user_id (poa_current_impl.object_id());
 
       // If the POA has the RETAIN policy, the POA looks in the Active
       // Object Map to find if there is a servant associated with the
@@ -491,7 +491,7 @@ namespace TAO
         }
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyRetain::servant_to_user_id (
       PortableServer::Servant servant)
     {
@@ -519,12 +519,12 @@ namespace TAO
 
       // If the POA has the UNIQUE_ID policy and the specified servant is
       // active, the Object Id associated with that servant is returned.
-      PortableServer::ObjectId_var user_id;
+      PortableServer::ObjectId user_id;
       if (!this->poa_->allow_multiple_activations () &&
           this->active_object_map_->
-          find_user_id_using_servant (servant, user_id.out ()) != -1)
+          find_user_id_using_servant (servant, user_id) != -1)
         {
-          return user_id._retn ();
+          return user_id;
         }
 
       // If the POA has the IMPLICIT_ACTIVATION policy and either the POA
@@ -537,11 +537,11 @@ namespace TAO
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
           // object map.
-          PortableServer::ObjectId_var user_id;
+          PortableServer::ObjectId user_id;
           if (this->active_object_map_->
               bind_using_system_id_returning_user_id (servant,
                                                       this->poa_->server_priority (),
-                                                      user_id.out ()) != 0)
+                                                      user_id) != 0)
             {
               throw ::CORBA::OBJ_ADAPTER ();
             }
@@ -552,7 +552,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant, user_id.in ());
+          this->poa_->servant_activated_hook (servant, user_id);
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -564,7 +564,7 @@ namespace TAO
           // the reference count of the Servant passed to this function.
           servant->_add_ref ();
 
-          return user_id._retn ();
+          return user_id;
         }
 
       /*
@@ -573,7 +573,7 @@ namespace TAO
       throw PortableServer::POA::ServantNotActive ();
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyRetain::servant_to_system_id_i (
       PortableServer::Servant servant,
       CORBA::Short &priority)
@@ -591,14 +591,14 @@ namespace TAO
 
       // If the POA has the UNIQUE_ID policy and the specified servant is
       // active, the Object Id associated with that servant is returned.
-      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId system_id;
       if (!this->poa_->allow_multiple_activations () &&
           this->active_object_map_->
           find_system_id_using_servant (servant,
-                                        system_id.out (),
+                                        system_id,
                                         priority) != -1)
         {
-          return system_id._retn ();
+          return system_id;
         }
 
 #if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
@@ -617,11 +617,11 @@ namespace TAO
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
           // object map.
-          PortableServer::ObjectId_var system_id;
+          PortableServer::ObjectId system_id;
           if (this->active_object_map_->
               bind_using_system_id_returning_system_id (servant,
                                                         priority,
-                                                        system_id.out ()) != 0)
+                                                        system_id) != 0)
             {
               throw ::CORBA::OBJ_ADAPTER ();
             }
@@ -632,7 +632,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant, system_id.in ());
+          this->poa_->servant_activated_hook (servant, system_id);
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -644,7 +644,7 @@ namespace TAO
           // the reference count of the Servant passed to this function.
           servant->_add_ref ();
 
-          return system_id._retn ();
+          return system_id;
         }
 
       // Otherwise, the ServantNotActive exception is raised.
@@ -663,7 +663,7 @@ namespace TAO
       // consistent Object Id value when asked politely).
       CORBA::Short priority = this->poa_->server_priority ();
 
-      PortableServer::ObjectId_var system_id =
+      PortableServer::ObjectId system_id =
         this->servant_to_system_id_i (servant, priority);
 
       PortableServer::ObjectId user_id;
@@ -671,7 +671,7 @@ namespace TAO
       // This operation requires the RETAIN, therefore don't worry about
       // the NON_RETAIN case.
       if (this->active_object_map_->
-          find_user_id_using_system_id (system_id.in (), user_id) != 0)
+          find_user_id_using_system_id (system_id, user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -712,7 +712,7 @@ namespace TAO
         {
           if (wait_occurred_restart_call)
             {
-              return 0;
+              return PortableServer::ObjectId ();
             }
           else
             {
@@ -870,20 +870,20 @@ namespace TAO
       // available. The generated Object Id value may be obtained by
       // invoking POA::reference_to_id with the created reference.
 
-      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId system_id;
       PortableServer::ObjectId user_id;
 
       if (this->active_object_map_->
           bind_using_system_id_returning_system_id (0,
                                                     priority,
-                                                    system_id.out ()) != 0)
+                                                    system_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // Find user id from system id.
       if (this->active_object_map_->
-          find_user_id_using_system_id (system_id.in (),
+          find_user_id_using_system_id (system_id,
                                         user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
@@ -917,7 +917,7 @@ namespace TAO
       // the applicable policies.
 
       PortableServer::Servant servant = 0;
-      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId system_id;
 
       // @@ We need something that can find the system id using
       // appropriate strategy, at the same time, return the servant if
@@ -928,7 +928,7 @@ namespace TAO
       if (this->active_object_map_->
           find_system_id_using_user_id (oid,
                                         priority,
-                                        system_id.out ()) != 0)
+                                        system_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }

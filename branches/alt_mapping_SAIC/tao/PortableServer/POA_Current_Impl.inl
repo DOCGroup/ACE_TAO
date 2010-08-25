@@ -25,17 +25,23 @@ namespace TAO
     ACE_INLINE void
     POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
     {
-      if (this->object_id_.release () ||
-          this->object_id_.get_buffer() == this->object_id_buf_)
+//      if (this->object_id_.release () ||
+//          this->object_id_.get_buffer() == this->object_id_buf_)
+      if (this->object_id_ == this->object_id_buf_)
         {
           // Resize the current object_id_.  If it is less than the
           // length of the current buffer, no allocation will take place.
-          size_t id_size = id.length ();
-          this->object_id_.length (id_size);
+          size_t id_size = id.size ();
+          this->object_id_.resize (id_size);
+          
+          for (CORBA::ULong i = 0; i < id_size; ++i)
+            {
+              this->object_id_[i] = id[i];
+            }
 
           // Get the buffer and copy the new object id in it's place.
-          ACE_OS::memcpy (this->object_id_.get_buffer (),
-                          id.get_buffer (), id_size);
+//          ACE_OS::memcpy (this->object_id_.get_buffer (),
+//                          id.get_buffer (), id_size);
         }
       else
         {
@@ -53,24 +59,32 @@ namespace TAO
     POA_Current_Impl::replace_object_id (
       const PortableServer::ObjectId &system_id)
     {
+      this->object_id_.resize (system_id.size ());
+      
+      for (CORBA::ULong i = 0; i < system_id.size (); ++i)
+        {
+          this->object_id_[i] = system_id[i];
+        }
+    /*
       // This has the effect of replacing the underlying buffer
       // with that of another object id without copying.
       object_id_.replace (system_id.maximum (),
                           system_id.length (),
                           const_cast <CORBA::Octet *> (system_id.get_buffer ()),
                           0);
+    */
     }
 
     ACE_INLINE void
     POA_Current_Impl::object_key (const TAO::ObjectKey &key)
     {
-      this->object_key_ = &key;
+      this->object_key_ = key;
     }
 
     ACE_INLINE const TAO::ObjectKey &
     POA_Current_Impl::object_key (void) const
     {
-      return *this->object_key_;
+      return this->object_key_;
     }
 
     ACE_INLINE void

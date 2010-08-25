@@ -166,7 +166,7 @@ public:
   /// the @a system_id is identical to @a user_id.
   int
   find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
-                                const PortableServer::ObjectId &user_id);
+                                PortableServer::ObjectId &user_id);
 
   /// Are there any remaining activations of @a servant in the active
   /// object map?  Can be used with any policy.

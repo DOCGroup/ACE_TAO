@@ -342,9 +342,9 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 
 
 void
-TAO_Profile::policies (CORBA::PolicyList *policy_list)
+TAO_Profile::policies (CORBA::PolicyList &policy_list)
 {
-  if (policy_list == 0)
+  if (policy_list.empty ())
     {
       if (TAO_debug_level)
         {
@@ -363,19 +363,19 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  CORBA::ULong const plen = policy_list->size ();
+  CORBA::ULong const plen = policy_list.size ();
 
   policy_value_seq.resize (plen);
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
       TAO_OutputCDR out_CDR;
-      policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
+      policy_value_seq[i].ptype = policy_list[i]->policy_type ();
 
       if (!(out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
         return;
 
-      if (!((*policy_list)[i]->_tao_encode (out_CDR)))
+      if (!(policy_list[i]->_tao_encode (out_CDR)))
         return;
 
       length = out_CDR.total_length ();
@@ -433,7 +433,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 }
 
 void
-TAO_Profile::get_policies (CORBA::PolicyList& pl)
+TAO_Profile::get_policies (CORBA::PolicyList & pl)
 {
 #if !defined(CORBA_E_MICRO)
      if (!this->are_policies_parsed_)

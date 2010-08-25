@@ -34,6 +34,7 @@
 #include "tao/Sequence_T.h"
 #include "tao/Policy_ForwardC.h"
 #include "tao/ServicesC.h"
+#include "tao/StringSeqC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -69,7 +70,7 @@ namespace CORBA
   class StructMemberSeq;
   class UnionMemberSeq;
   class ValueMemberSeq;
-  typedef std::vector<char *> ORB_ObjectIdList;
+  typedef StringSeq ORB_ObjectIdList;
   
   class Object;
   typedef Object * Object_ptr;

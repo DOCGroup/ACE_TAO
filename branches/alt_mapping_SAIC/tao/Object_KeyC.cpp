@@ -58,6 +58,11 @@ namespace TAO
 TAO::ObjectKey::ObjectKey (void)
 {}
 
+TAO::ObjectKey::ObjectKey (const TAO::ObjectKey &rhs)
+  : std::vector< ::CORBA::Octet> (rhs)
+{
+}
+
 TAO::ObjectKey::~ObjectKey (void)
 {}
 

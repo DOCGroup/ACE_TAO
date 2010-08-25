@@ -61,7 +61,7 @@ namespace TAO
     /// Activate the ORT library
     virtual int activate (const char *server_id,
                           const char *orb_id,
-                          PortableInterceptor::AdapterName *,
+                          PortableInterceptor::AdapterName,
                           PortableServer::POA_ptr poa) = 0;
 
     /// Set a different ort_factory to be used.

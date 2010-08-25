@@ -58,7 +58,7 @@ namespace TAO
     /// Constructor
     ObjectReferenceTemplate (const char *server_id,
                              const char *orb_id,
-                             PortableInterceptor::AdapterName *adapter_name,
+                             PortableInterceptor::AdapterName &adapter_name,
                              PortableServer::POA_ptr poa);
 
     /**
@@ -72,7 +72,7 @@ namespace TAO
 
     virtual char * orb_id (void);
 
-    virtual PortableInterceptor::AdapterName * adapter_name (void);
+    virtual PortableInterceptor::AdapterName adapter_name (void);
     //@}
 
     /**
@@ -99,7 +99,7 @@ namespace TAO
   private:
     const char *server_id_;
     const char *orb_id_;
-    PortableInterceptor::AdapterName_var adapter_name_;
+    PortableInterceptor::AdapterName adapter_name_;
     PortableServer::POA_var poa_;
   };
 }

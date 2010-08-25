@@ -1167,10 +1167,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
         }
 
-      TAO::ObjectKey tmp_key (locate_request.object_key ().length (),
-                              locate_request.object_key ().length (),
-                              locate_request.object_key ().get_buffer (),
-                              0);
+      TAO::ObjectKey tmp_key (locate_request.object_key ());
 
       // Set it to an error state
       parse_error = 1;

@@ -79,7 +79,7 @@ int
 TAO::ORT_Adapter_Impl::activate (
   const char *server_id,
   const char *orb_id,
-  PortableInterceptor::AdapterName *adapter_name,
+  PortableInterceptor::AdapterName &adapter_name,
   PortableServer::POA_ptr poa)
 {
   // No need to lock here, there is one instance for each POA and

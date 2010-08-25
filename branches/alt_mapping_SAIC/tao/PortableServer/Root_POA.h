@@ -232,7 +232,7 @@ public:
 
   PortableServer::ObjectId servant_to_id (PortableServer::Servant p_servant);
 
-  PortableServer::ObjectId *servant_to_user_id (PortableServer::Servant p_servant);
+  PortableServer::ObjectId servant_to_user_id (PortableServer::Servant p_servant);
 
   CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant);
 
@@ -540,7 +540,7 @@ protected:
 
   TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
-                                CORBA::PolicyList *policy_list,
+                                CORBA::PolicyList &policy_list,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_Acceptor_Registry &acceptor_registry);
 

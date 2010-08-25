@@ -48,7 +48,7 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS char* ObjectId_to_string (
     const PortableServer::ObjectId &id);
 
-  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (
+  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId string_to_ObjectId (
     const char *id);
 }
 

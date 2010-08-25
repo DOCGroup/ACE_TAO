@@ -324,7 +324,7 @@ CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
 TAO::ObjectKey
 CORBA::Object::_key (void)
 {
-  TAO_OBJECT_IOR_EVALUATE_RETURN(0);
+  TAO_OBJECT_IOR_EVALUATE_RETURN(TAO::ObjectKey ());
 
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
     return this->_stubobj ()->profile_in_use ()->_key ();

@@ -33,6 +33,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace TAO
+{
+  class ObjectKey;
+}
+
 namespace CORBA
 {
   class LocalObject;

@@ -34,8 +34,8 @@ namespace TAO
         poa_ (0),
         servant_ (0),
         state_ (INITIAL_STAGE),
-        system_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, system_id_buf_),
-        user_id_ (0),
+//        system_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, system_id_buf_),
+//        user_id_ (0),
         current_context_ (),
 #if (TAO_HAS_MINIMUM_POA == 0)
         cookie_ (0),

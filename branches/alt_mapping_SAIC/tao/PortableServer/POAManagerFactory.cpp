@@ -26,7 +26,7 @@ TAO_POAManager_Factory::~TAO_POAManager_Factory (void)
 
 ::PortableServer::POAManager_ptr
 TAO_POAManager_Factory::create_POAManager (
-  const char * id,
+  const std::string id,
   const ::CORBA::PolicyList & policies
   )
 {
@@ -50,7 +50,7 @@ TAO_POAManager_Factory::create_POAManager (
 
   PortableServer::POAManager_var poamanager;
 
-  if (id != 0)
+  if (!id.empty ())
   {
     poamanager = this->find (id);
 
@@ -66,7 +66,7 @@ TAO_POAManager_Factory::create_POAManager (
   {
     PortableServer::POAManager_ptr pm = 0;
     ACE_NEW_THROW_EX (pm,
-                      TAO_POA_Manager (object_adapter_, id, policies, this),
+                      TAO_POA_Manager (object_adapter_, id.c_str (), policies, this),
                       CORBA::NO_MEMORY
                       (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                        CORBA::COMPLETED_NO));
@@ -90,7 +90,7 @@ TAO_POAManager_Factory::list (void)
                       number_of_poamanagers),
                     CORBA::NO_MEMORY ());
   */
-  poamanagers->resize (number_of_poamanagers);
+  poamanagers.resize (number_of_poamanagers);
 
   CORBA::ULong index = 0;
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
@@ -102,11 +102,11 @@ TAO_POAManager_Factory::list (void)
 //        PortableServer::POAManager::_duplicate (poamanager);
     }
 
-  return poamanagers._retn ();
+  return poamanagers;
 }
 
 ::PortableServer::POAManager_ptr
-TAO_POAManager_Factory::find (const char * id)
+TAO_POAManager_Factory::find (const std::string id)
 {
   ::PortableServer::POAManager_ptr poamanager =
     ::PortableServer::POAManager::_nil();
@@ -115,9 +115,9 @@ TAO_POAManager_Factory::find (const char * id)
         iterator != this->poamanager_set_.end ();
         ++iterator)
     {
-      CORBA::String_var poamanagerid = (*iterator)->get_id ();
+      CORBA::String_var poamanagerid = (*iterator)->get_id ().c_str ();
 
-      if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
+      if (ACE_OS::strcmp (id.c_str (), poamanagerid.in()) == 0)
         {
           poamanager = PortableServer::POAManager::_duplicate (*iterator);
           break;

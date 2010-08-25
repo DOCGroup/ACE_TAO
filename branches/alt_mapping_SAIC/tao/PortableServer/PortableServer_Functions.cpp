@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
-  PortableServer::ObjectId *
+  PortableServer::ObjectId
   string_to_ObjectId (const char *string)
   {
     // Size of string
@@ -20,7 +20,15 @@ namespace PortableServer
     //
     CORBA::ULong buffer_size = static_cast <CORBA::ULong>
                                            (ACE_OS::strlen (string));
-
+                                           
+    PortableServer::ObjectId id;
+    id.resize (buffer_size);
+                                           
+    for (CORBA::ULong i = 0; i < buffer_size; ++i)
+      {
+        id[i] = string[i];
+      }
+/*
     // Create the buffer for the Id
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
@@ -35,21 +43,27 @@ namespace PortableServer
                                               buffer,
                                               1),
                     0);
-
+*/
     return id;
   }
 
   char *
   ObjectId_to_string (const PortableServer::ObjectId &id)
   {
+    CORBA::ULong length = id.size ();
     // Create space
-    char * string = CORBA::string_alloc (id.length ());
+    char * string = CORBA::string_alloc (length);
 
     // Copy the data
-    ACE_OS::memcpy (string, id.get_buffer (), id.length ());
+//    ACE_OS::memcpy (string, id.get_buffer (), id.length ());
+
+    for (CORBA::ULong i = 0; i < length; ++i)
+      {
+        string[i] = id[i];
+      }
 
     // Null terminate the string
-    string[id.length ()] = '\0';
+    string[length] = '\0';
 
     // Return string
     return string;

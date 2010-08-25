@@ -23,14 +23,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MProfile::~TAO_MProfile (void)
 {
-  if (this->policy_list_ != 0)
+  if (!this->policy_list_.empty ())
     {
-      CORBA::ULong const len = this->policy_list_->size ();
+      CORBA::ULong const len = this->policy_list_.size ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
           try
             {
-              CORBA::Policy_ptr policy = (*this->policy_list_)[i];
+              CORBA::Policy_ptr policy = this->policy_list_[i];
               policy->destroy ();
             }
           catch (const ::CORBA::Exception&)
@@ -40,7 +40,7 @@ TAO_MProfile::~TAO_MProfile (void)
             }
         }
 
-      delete this->policy_list_;
+//      delete this->policy_list_;
     }
 
   this->cleanup ();
@@ -304,7 +304,7 @@ TAO_MProfile::hash (CORBA::ULong max)
   // Changed to a mod value instead of an average.
   return hashval % max;
 }
-
+/*
 void
 TAO_MProfile::create_policy_list (void)
 {
@@ -314,7 +314,7 @@ TAO_MProfile::create_policy_list (void)
                                       CORBA::COMPLETED_NO)
                     );
 }
-
+*/
 void
 TAO_MProfile::init_policy_list (void)
 {
@@ -322,12 +322,12 @@ TAO_MProfile::init_policy_list (void)
   // it causes the initialization of the policies
   // for the current profile.
 
-  this->get_current_profile ()->get_policies (*this->policy_list_);
+  this->get_current_profile ()->get_policies (this->policy_list_);
 
   this->is_policy_list_initialized_ = true;
 }
 
-CORBA::PolicyList *
+CORBA::PolicyList
 TAO_MProfile::policy_list (void)
 {
   if (!this->is_policy_list_initialized_)
@@ -335,22 +335,24 @@ TAO_MProfile::policy_list (void)
       ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                         guard,
                         this->mutex_,
-                        0);
+                        CORBA::PolicyList ());
 
-      if (this->policy_list_ == 0)
+      if (this->policy_list_.empty ())
         {
-          this->create_policy_list ();
+//          this->create_policy_list ();
 
           this->init_policy_list ();
         }
     }
+  /*
   CORBA::PolicyList *ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     CORBA::PolicyList (*this->policy_list_),
                     CORBA::NO_MEMORY (0,
                                       CORBA::COMPLETED_NO));
-
-  return ret_val;
+  */
+//  return ret_val;
+  return this->policy_list_;
 }
 
 int

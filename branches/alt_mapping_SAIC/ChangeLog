@@ -1,3 +1,62 @@
+Wed Aug 25 19:55:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/POA_Current.h:
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/PortableServer/PortableServer_WFunctions.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Servant_Upcall.inl:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/PortableServer_Functions.cpp:
+        * tao/PortableServer/POA_Current_Impl.inl:
+        * tao/PortableServer/Active_Object_Map.h:
+        * tao/PortableServer/Active_Object_Map.inl:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/Object_Adapter.inl:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/POAManagerFactory.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.h:
+        * tao/PortableServer/ORT_Adapter.h:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/PortableServer/POAManagerFactory.h:
+        * tao/PortableServer/PortableServer_Functions.h:
+        * tao/PortableServer/POA_Current_Impl.cpp:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA_Current_Impl.h:
+        * tao/PortableServer/POA_Current.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/Object_KeyC.cpp:
+        * tao/MProfile.inl:
+        * tao/MProfile.h:
+        * tao/Object_KeyC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.h:
+        * tao/Profile.cpp:
+        * tao/ORB.h:
+        * tao/Profile.h:
+        * tao/ORB_Core.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Object.cpp:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.h:
+        * tao/MProfile.cpp:
+        
+          More changes to make the ORB and POA compatible with the
+          alternate IDL to C++  mapping.
+
 Tue Aug 24 18:13:42 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
