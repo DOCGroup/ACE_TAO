@@ -1,3 +1,12 @@
+Wed Aug 25 20:44:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Tagged_Profile.inl:
+        * tao/ObjectKey_Table.cpp:
+        * tao/Tagged_Profile.cpp:
+        
+          A few more needed changes for the alternate mapping
+          caught by the compiler when doing a clean build.
+
 Wed Aug 25 19:55:18 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
