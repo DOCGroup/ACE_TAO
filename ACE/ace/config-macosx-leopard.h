@@ -228,4 +228,4 @@
 #error "Compiler must be upgraded, see http://developer.apple.com"
 #endif /* __APPLE_CC__ */
 
-#endif /* ACE_CONFIG_MACOSX_TIGER_H */
+#endif /* ACE_CONFIG_MACOSX_LEOPARD_H */
