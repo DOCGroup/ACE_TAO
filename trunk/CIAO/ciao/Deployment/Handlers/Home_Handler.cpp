@@ -24,6 +24,20 @@ namespace CIAO
     this->instances_.clear ();
   }
 
+  ::CORBA::StringSeq *
+  Home_Handler_i::dependencies (void)
+  {
+    ::CORBA::StringSeq *retval (0);
+    ACE_NEW_THROW_EX (retval,
+                      ::CORBA::StringSeq (1),
+                      CORBA::NO_MEMORY ());
+    
+    retval->length (1);
+    (*retval)[0] = CIAO::Deployment::CCM_CONTAINER;
+
+    return retval;
+  }
+
   char * 
   Home_Handler_i::instance_type (void)
   {
