@@ -79,7 +79,7 @@ namespace CIAO
                 (LM_TRACE,
                  CLINFO
                  "Session_Container::init - "
-                 "Initializing a container with name %C\n",
+                 "Initializing a container with name <%C>\n",
                  name));
 
     if (CORBA::is_nil (this->root_poa_.in ()))
@@ -89,7 +89,7 @@ namespace CIAO
                      CLINFO
                      "CIAO::Session_Container: Unable "
                      "to initialize the POA.\n"));
-
+        
         throw Components::CreateFailure ();
       }
 
