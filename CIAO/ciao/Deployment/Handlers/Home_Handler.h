@@ -36,6 +36,9 @@ namespace CIAO
   
     // Destructor 
     virtual ~Home_Handler_i (void);
+
+    virtual 
+      ::CORBA::StringSeq * dependencies (void);
     
     virtual
       char * instance_type (void);
