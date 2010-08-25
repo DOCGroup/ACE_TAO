@@ -96,14 +96,24 @@ TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   CORBA::Long key_length = 0;
+  CORBA::ULong klen = static_cast<CORBA::ULong> (key_length);
   hdr_status = hdr_status && input.read_long (key_length);
 
   if (hdr_status)
     {
+      this->object_key_.resize (klen);
+      CORBA::Octet *buf = (CORBA::Octet *) input.rd_ptr ();
+      
+      for (CORBA::ULong i = 0; i < klen; ++i)
+        {
+          this->object_key_[i] = buf[i];
+        }
+    /*
       this->object_key_.replace (key_length,
                                  key_length,
                                  (CORBA::Octet*)input.rd_ptr (),
                                  0);
+    */
       input.skip_bytes (key_length);
 
       this->object_key_extracted_ = true;

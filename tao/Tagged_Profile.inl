@@ -29,9 +29,13 @@ TAO_Tagged_Profile::object_key (void)
 ACE_INLINE void
 TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
 {
+  this->object_key_ = object_key;
+
+/*
   this->object_key_.replace (object_key.length (),
                              object_key.length (),
                              object_key.get_buffer ());
+*/
   this->object_key_extracted_ = true;
 }
 

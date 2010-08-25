@@ -15,8 +15,8 @@ bool
 TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
                                        const TAO::ObjectKey &rhs) const
 {
-  const CORBA::ULong rlen = rhs.length ();
-  const CORBA::ULong llen = lhs.length ();
+  const CORBA::ULong rlen = rhs.size ();
+  const CORBA::ULong llen = lhs.size ();
   if (llen < rlen)
     {
       return 1;
@@ -26,8 +26,8 @@ TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
       return 0;
     }
 
-  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
+  const CORBA::Octet * rhs_buff = rhs.get_allocator ().address (*rhs.begin ());
+  const CORBA::Octet * lhs_buff = lhs.get_allocator ().address (*lhs.begin ());
   const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) < 0);
 
   return result;
