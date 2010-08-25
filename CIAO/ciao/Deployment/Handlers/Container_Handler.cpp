@@ -47,6 +47,17 @@ namespace CIAO
     this->poa_ = PortableServer::POA::_nil ();
   }
 
+  ::CORBA::StringSeq *
+  Container_Handler_i::dependencies (void)
+  {
+    ::CORBA::StringSeq *retval (0);
+    ACE_NEW_THROW_EX (retval,
+                      ::CORBA::StringSeq (0),
+                      CORBA::NO_MEMORY ());
+    
+    return retval;
+  }
+
   char * 
   Container_Handler_i::instance_type (void)
   {
@@ -74,7 +85,7 @@ namespace CIAO
     
     CIAO_DEBUG (6, (LM_DEBUG, CLINFO 
                     "Container_Handler_i::install_instance - "
-                    "Creating container with id %C\n",
+                    "Creating container with id <%C>\n",
                     name));
     ACE_NEW_THROW_EX (cont,
                       CIAO::Session_Container (this->orb_,

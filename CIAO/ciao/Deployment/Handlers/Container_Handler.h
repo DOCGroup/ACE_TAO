@@ -41,6 +41,9 @@ namespace CIAO
     
     virtual
       char * instance_type (void);
+
+    virtual 
+      ::CORBA::StringSeq * dependencies (void);
   
     virtual
       void install_instance (const ::Deployment::DeploymentPlan & plan,
