@@ -108,6 +108,16 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
+/* WARNING:
+ *   Use of ACE_GUARD() is rarely correct.  ACE_GUARD() causes the current
+ *   function to return if the lock is not acquired.  Since merely returning
+ *   (no value) almost certainly fails to handle the acquisition failure
+ *   and almost certainly fails to communicate the failure to the caller
+ *   for the caller to handle, ACE_GUARD() is almost always the wrong
+ *   thing to do.  The same goes for ACE_WRITE_GUARD() and ACE_READ_GUARD() .
+ *   ACE_GUARD_REACTION() is better because it lets you specify error
+ *   handling code.
+ */
 #define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
    ACE_Guard< MUTEX > OBJ (LOCK); \
    if (OBJ.locked () != 0) { ACTION; } \
@@ -130,6 +140,37 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
+
+// ----------------------------------------------------------------
+
+#if defined(ACE_UNEXPECTED_RETURNS)
+
+/* Using ACE_UNEXPECTED_RETURNS is ill-advised because, in many cases,
+ *   it fails to inform callers of the error condition.
+ * It exists mainly to provide back-compatibility with old, dangerous,
+ *   incorrect behavior.
+ * Code that previously used ACE_GUARD() or ACE_GUARD_RETURN() to return
+ *   upon failure to acquire a lock can now use:
+ *     ACE_GUARD_REACTION(..., ACE_UNEXPECTED(...))
+ *   The behavior of this depends on whether or not ACE_UNEXPECTED_RETURNS
+ *     is defined.  If so, it just returns upon failure (as in the original),
+ *     which is usually dangerous because it usually fails to handle the
+ *     error.  If not, it calls std::unexpected(), which does whatever the
+ *     std::unexpected handler does (which is to abort, by default).
+ */
+#  define ACE_UNEXPECTED(RETVAL) \
+  do { \
+    return RETVAL; \
+  } while (0)
+
+#else
+
+#  define ACE_UNEXPECTED(RETVAL) \
+  do { \
+    std::unexpected(); \
+  } while (0)
+
+#endif
 
 // ----------------------------------------------------------------
 

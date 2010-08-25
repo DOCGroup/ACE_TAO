@@ -1,3 +1,11 @@
+Wed Aug 25 09:49:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Arg_Shifter.h:
+        * ace/config-macosx-leopard.h:
+        * ace/Guard_T.h:
+        * ace/Global_Macros.h:
+          Selected changes from patches in Bugzilla 3652.
+
 Tue Aug 24 14:21:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
