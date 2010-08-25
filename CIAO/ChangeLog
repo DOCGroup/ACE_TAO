@@ -1,3 +1,9 @@
+Wed Aug 25 23:05:42 UTC 2010  William Otte  <wotte@zifnab>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          logging change.
+
 Tue Aug 24 19:01:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
