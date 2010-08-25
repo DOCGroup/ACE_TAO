@@ -9,6 +9,7 @@
 #include "tao/SystemException.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Object_KeyC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"

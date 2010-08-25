@@ -74,7 +74,7 @@ public:
 
   /// Factory method for creating new POA's.
   virtual TAO_Root_POA *create_Root_POA (
-      const ACE_CString &name,
+      const std::string &name,
       PortableServer::POAManager_ptr poa_manager,
       const TAO_POA_Policy_Set &policies,
       ACE_Lock &lock,

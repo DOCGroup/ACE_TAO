@@ -445,7 +445,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator end = ipn.end ();
 
   TAO_Root_POA *parent = this->root_;
-  if (parent == 0 || parent->name () != *iterator)
+  if (parent == 0 || parent->name () != (*iterator).c_str ())
     throw ::CORBA::OBJ_ADAPTER ();
   else
     ++iterator;
@@ -458,7 +458,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
       try
         {
-          current = parent->find_POA_i (*iterator, 1);
+          current = parent->find_POA_i ((*iterator).c_str (), 1);
         }
       catch (const PortableServer::POA::AdapterNonExistent&)
         {
@@ -715,8 +715,8 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               TAO_ServerRequest &request,
                               CORBA::Object_out forward_to)
 {
-  if (key.length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-      || ACE_OS::memcmp (key.get_buffer (),
+  if (key.size() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
+      || ACE_OS::memcmp (key.get_allocator ().address (*key.begin ()),
                          &TAO_Root_POA::objectkey_prefix[0],
                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
@@ -924,10 +924,10 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
        ++j)
     {
       const TAO_Profile *profile = mp.get_profile (j);
-      TAO::ObjectKey_var objkey = profile->_key ();
+      TAO::ObjectKey objkey = profile->_key ();
 
-      if (objkey->length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-          || ACE_OS::memcmp (objkey->get_buffer (),
+      if (objkey.size() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
+          || ACE_OS::memcmp (objkey.get_allocator ().address (*objkey.begin ()),
                              &TAO_Root_POA::objectkey_prefix[0],
                              TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
@@ -936,7 +936,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
       try
         {
-          this->find_servant (objkey.in (), servant);
+          this->find_servant (objkey, servant);
         }
       catch (const ::CORBA::Exception&)
         {
@@ -1016,9 +1016,12 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
       if (result != 0)
         this->persistent_poa_system_map_.unbind (name);
       else
+        system_name = name;
+      /*
         ACE_NEW_RETURN (system_name,
                         poa_name (name),
                         -1);
+      */
     }
 
   return result;
@@ -1068,9 +1071,12 @@ TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (
   int result =
     this->object_adapter_->persistent_poa_name_map_->bind (folded_name, poa);
   if (result == 0)
+    system_name = folded_name;
+  /*
     ACE_NEW_RETURN (system_name,
                     poa_name (folded_name),
                     -1);
+  */
   return result;
 }
 
@@ -1158,16 +1164,18 @@ TAO_Object_Adapter::iteratable_poa_name::iterator
 TAO_Object_Adapter::iteratable_poa_name::begin (void) const
 {
   return iterator (1,
-                   this->folded_name_.length (),
-                   this->folded_name_.get_buffer ());
+                   this->folded_name_.size (),
+                   this->folded_name_.get_allocator ().address (
+                    *this->folded_name_.begin ()));
 }
 
 TAO_Object_Adapter::iteratable_poa_name::iterator
 TAO_Object_Adapter::iteratable_poa_name::end (void) const
 {
   return iterator (0,
-                   this->folded_name_.length (),
-                   this->folded_name_.get_buffer ());
+                   this->folded_name_.size (),
+                   this->folded_name_.get_allocator ().address (
+                    *this->folded_name_.begin ()));
 }
 
 void

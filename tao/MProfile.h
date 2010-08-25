@@ -179,17 +179,17 @@ protected:
 
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
- void create_policy_list (void);
+// void create_policy_list (void);
 
 public:
 
   /// Sets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  void policy_list (CORBA::PolicyList *policy_list);
+  void policy_list (CORBA::PolicyList policy_list);
 
   /// Gets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
-  CORBA::PolicyList *policy_list (void);
+  CORBA::PolicyList policy_list (void);
 
 protected:
 
@@ -199,7 +199,7 @@ protected:
 protected:
   /// Stores the policy list for the profile of this MProfile.
   friend class TAO_Profile;
-  CORBA::PolicyList *policy_list_;
+  CORBA::PolicyList policy_list_;
 
   CORBA::Boolean is_policy_list_initialized_;
 

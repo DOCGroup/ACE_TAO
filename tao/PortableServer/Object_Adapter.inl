@@ -105,9 +105,12 @@ TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
 
   if (result == 0)
     {
+      system_name = name;
+    /*
       ACE_NEW_RETURN (system_name,
                       poa_name (name),
                       -1);
+    */
     }
 
   return result;

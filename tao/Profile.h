@@ -134,7 +134,7 @@ public:
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
-  virtual void policies (CORBA::PolicyList *policy_list);
+  virtual void policies (CORBA::PolicyList &policy_list);
 
   /// Accessor for the client exposed policies of this profile.
   virtual void  get_policies (CORBA::PolicyList &policy_list);

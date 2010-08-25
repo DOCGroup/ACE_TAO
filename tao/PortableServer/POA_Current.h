@@ -55,7 +55,7 @@ namespace TAO
        * raise the @c NoContext exception if this function is not
        * invoked in the context of an upcall.
        */
-      PortableServer::ObjectId *get_object_id (void);
+      PortableServer::ObjectId get_object_id (void);
 
       /**
        * This operation returns a locally manufactured reference to the object

@@ -89,7 +89,7 @@ namespace TAO
 
       virtual void deactivate_all_objects (void);
 
-      virtual PortableServer::ObjectId *servant_to_user_id (
+      virtual PortableServer::ObjectId servant_to_user_id (
         PortableServer::Servant servant);
 
       virtual CORBA::Object_ptr servant_to_reference (

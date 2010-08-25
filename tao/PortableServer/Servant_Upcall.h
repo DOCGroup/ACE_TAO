@@ -131,7 +131,7 @@ namespace TAO
 
       /// User ID accessors.  This is the same value returned by
       /// PortableServer::Current::get_object_id().
-      void user_id (const PortableServer::ObjectId *);
+      void user_id (const PortableServer::ObjectId &);
       const PortableServer::ObjectId &user_id (void) const;
 
       /// Servant accessor.
@@ -204,7 +204,7 @@ namespace TAO
       CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
-      const PortableServer::ObjectId *user_id_;
+      PortableServer::ObjectId user_id_;
 
       POA_Current_Impl current_context_;
 

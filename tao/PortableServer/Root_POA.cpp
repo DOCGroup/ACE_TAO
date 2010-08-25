@@ -471,8 +471,9 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
       // The POAManager name will be generated when the POAManager instance
       // is created.
+      std::string dummy;
       the_poa_manager
-        = tao_poa_manager_factory->create_POAManager (0, empty_policies);
+        = tao_poa_manager_factory->create_POAManager (dummy, empty_policies);
 #else
 
       PortableServer::POAManager_ptr the_poa_manager_ptr;
@@ -714,7 +715,7 @@ TAO_Root_POA::servant_to_id (PortableServer::Servant servant)
   return this->servant_to_id_i (servant);
 }
 
-PortableServer::ObjectId *
+PortableServer::ObjectId
 TAO_Root_POA::servant_to_user_id (PortableServer::Servant servant)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
@@ -1046,7 +1047,7 @@ TAO_Root_POA::adapter_name_i (void)
   for (CORBA::ULong i = 1; i < len; ++i)
     {
 //      (*names)[--ilen] = poa->the_name ().c_str ();
-      names[--ilen].assign (poa->the_name);
+      names[--ilen].assign (poa->the_name ());
 
       poa = poa->the_parent ();
 
@@ -1656,7 +1657,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   if (!is_persistent)
     {
       // Take the creation time for the timestamp
-      poa_creation_time.creation_time (key_data + starting_at);
+      poa_creation_time.creation_time (&key + starting_at);
 
       // Skip past the timestamp
       starting_at += TAO::Portable_Server::Creation_Time::creation_time_length ();
@@ -1676,15 +1677,20 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
     {
       // System ids have fixed size.
       poa_name_size = static_cast <CORBA::ULong>
-                                  (key.length () - starting_at -
+                                  (key.size () - starting_at -
                                    TAO_Active_Object_Map::system_id_size ());
     }
   else
     {
+      poa_name_size =
+        *(reinterpret_cast<const CORBA::ULong *> (
+            key.get_allocator ().address (key[starting_at])));
+    /*        
       // Get the size from the object key.
       ACE_OS::memcpy (&poa_name_size,
                       key_data + starting_at,
                       sizeof (poa_name_size));
+    */    
       poa_name_size = ACE_NTOHL (poa_name_size);
 
       starting_at += sizeof (poa_name_size);
@@ -1854,19 +1860,27 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   starting_at += this->root_key_type_length ();
 
   // Add the id_assignment part
-  this->active_policy_strategies_.id_assignment_strategy()->create_key (buffer, starting_at);
+  this->active_policy_strategies_.id_assignment_strategy()->create_key (
+    this->id_.get_allocator ().address (*this->id_.begin ()),
+    starting_at);
 
   // Add the lifespan part
-  this->active_policy_strategies_.lifespan_strategy()->create_key (buffer, starting_at);
+  this->active_policy_strategies_.lifespan_strategy()->create_key (
+    this->id_.get_allocator ().address (*this->id_.begin ()),
+    starting_at);
 
   // Check if we need to added the length of the POA name.
   if (add_poa_name_length)
     {
       poa_name_length = ACE_HTONL (poa_name_length);
+      const char *tbuf =
+        reinterpret_cast<const char *> (&poa_name_length);
       
       for (CORBA::ULong i = 0; i < sizeof (poa_name_length); ++i)
         {
-          buffer[starting_at++] = poa_name_length[i];
+          CORBA::OctetSeq::iterator it = this->id_.begin ();
+          this->id_.insert (it + starting_at, tbuf[i]);
+          ++starting_at;
         }
       
       /*
@@ -1883,7 +1897,9 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
     {
       for (CORBA::ULong i = 0; i < this->system_name_.size (); ++i)
         {
-          buffer[starting_at++] = this->system_name_[i];
+          CORBA::OctetSeq::iterator it = this->id_.begin ();
+          this->id_.insert (it + starting_at, this->system_name_[i]);
+          ++starting_at;
         }
     
       /*
@@ -2171,7 +2187,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     this->create_stub_object (
       key,
       type_id,
-      client_exposed_policies._retn (),
+      client_exposed_policies,
       filter,
       this->orb_core_.lane_resources ().acceptor_registry ());
 
@@ -2205,9 +2221,9 @@ TAO_Root_POA::components_established (PortableInterceptor::IORInfo_ptr info)
 void
 TAO_Root_POA::save_ior_component (const IOP::TaggedComponent &component)
 {
-  CORBA::ULong const old_len = this->tagged_component_.length ();
+  CORBA::ULong const old_len = this->tagged_component_.size ();
 
-  this->tagged_component_.length (old_len + 1);
+  this->tagged_component_.resize (old_len + 1);
   this->tagged_component_[old_len] = component;
 }
 
@@ -2222,11 +2238,11 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
   // this->tagged_component_id_ is increased, we need to increase the
   // size of this->profile_id_array_ also.
 
-  CORBA::ULong const old_len = this->tagged_component_id_.length ();
+  CORBA::ULong const old_len = this->tagged_component_id_.size ();
 
   CORBA::ULong const new_len = old_len + 1;
 
-  this->tagged_component_id_.length (new_len);
+  this->tagged_component_id_.resize (new_len);
   this->tagged_component_id_[old_len] = component;
 
   this->profile_id_array_.size (new_len);
@@ -2236,7 +2252,7 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 TAO_Stub *
 TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   const char *type_id,
-                                  CORBA::PolicyList *policy_list,
+                                  CORBA::PolicyList &policy_list,
                                   TAO_Acceptor_Filter *filter,
                                   TAO_Acceptor_Registry &acceptor_registry)
 {
@@ -2294,13 +2310,13 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
     this->orb_core_.create_stub_object (mprofile, type_id, policy_list);
 
   // Add the saved tagged components methods to the profiles.
-  CORBA::ULong len = this->tagged_component_.length ();
+  CORBA::ULong len = this->tagged_component_.size ();
   for (CORBA::ULong i = 0; i != len; ++i)
     {
       this->add_ior_component (mprofile, this->tagged_component_[i]);
     }
 
-  len = this->tagged_component_id_.length ();
+  len = this->tagged_component_id_.size ();
 
   for (CORBA::ULong k = 0; k != len; ++k)
     {
@@ -2330,7 +2346,7 @@ TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
   this->policies_.add_client_exposed_fixed_policies (client_exposed_policies);
 
 //  return policies._retn ();
-  return policies;
+  return client_exposed_policies;
 }
 
 TAO_SERVANT_LOCATION
@@ -2394,7 +2410,7 @@ TAO_Root_POA::ORT_adapter_i (void)
       // Get the full adapter name of this POA, do this before we
       // create the adapter so that in case this fails, we just
       // return 0 and not a not activated adapter
-      PortableInterceptor::AdapterName *adapter_name = this->adapter_name_i ();
+      PortableInterceptor::AdapterName adapter_name = this->adapter_name_i ();
 
       this->ort_adapter_ = ort_ap_factory->create ();
 

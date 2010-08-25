@@ -63,19 +63,27 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       {
         ANY_VALUE,
         ANY_OBJREF,
-        ANY_ARRAY
+        ANY_ARRAY,
+        ANY_STRING
       };
       
       type_category tc = ANY_VALUE;
+      AST_Decl::NodeType nt = bt->node_type ();
       
-      if (bt->node_type () == AST_Decl::NT_array)
+      if (nt == AST_Decl::NT_array)
         {
           tc = ANY_ARRAY;
         }
-      else if (be_interface::narrow_from_decl (bt) != 0
-               && be_valuetype::narrow_from_decl (bt) == 0)
+      else if ((be_interface::narrow_from_decl (bt) != 0
+                && be_valuetype::narrow_from_decl (bt) == 0)
+               || (be_interface_fwd::narrow_from_decl (bt) != 0
+                   && be_valuetype_fwd::narrow_from_decl (bt) == 0))
         {
           tc = ANY_OBJREF;
+        }
+      else if (nt == AST_Decl::NT_string)
+        {
+          tc = ANY_STRING;
         }
         
       if (bt->node_type () == AST_Decl::NT_pre_defined)
@@ -108,17 +116,20 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         case ANY_OBJREF:
           *os << "insert_objref_vector<"
               << bt->full_name () << "_ptr> (";
-                
+ ACE_DEBUG ((LM_DEBUG, "objref: %s\n", bt->local_name ()->get_string ()));
           break;
         case ANY_ARRAY:
           *os << "insert_array_vector<"
               << bt->full_name () << "_forany> (";
                 
           break;
+        case ANY_STRING:
+          *os << "insert_value_vector<std::string> (";
+          break;
         default:
           *os << "insert_value_vector<"
               << bt->full_name () << "> (";
-                
+ ACE_DEBUG ((LM_DEBUG, "default: %s\n", bt->local_name ()->get_string ()));
           break;
         }
           
@@ -146,6 +157,9 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           *os << "extract_array_vector<"
               << bt->full_name () << "_forany> (";
                 
+          break;
+        case ANY_STRING:
+          *os << "extract_value_vector<std::string> (";
           break;
         default:
           *os << "extract_value_vector<"

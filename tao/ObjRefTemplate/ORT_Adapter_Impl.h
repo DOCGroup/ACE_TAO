@@ -42,7 +42,7 @@ namespace TAO
     /// Activate this adapter
     virtual int activate (const char *server_id,
                           const char *orb_id,
-                          PortableInterceptor::AdapterName *adapter_name,
+                          PortableInterceptor::AdapterName adapter_name,
                           PortableServer::POA_ptr poa);
 
     /// Accessor methods to ObjectReferenceTemplate template

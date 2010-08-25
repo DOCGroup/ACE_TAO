@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PS_ForwardC.h"
+#include "tao/Object_KeyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -77,7 +78,7 @@ namespace TAO
        * This may be necessary in cases where a <Servant> is serving under
        * the guise of multiple object ids.
        */
-      PortableServer::ObjectId *get_object_id (void);
+      PortableServer::ObjectId get_object_id (void);
 
       /**
        * Returns a reference to the servant that hosts the object in whose
@@ -151,7 +152,8 @@ namespace TAO
 
       /// In order to avoid memory allocations, we will populate
       /// the object id with this buffer.
-      CORBA::Octet object_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
+//      CORBA::Octet object_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
+      PortableServer::ObjectId object_id_buf_;
 
       /**
        * The object ID of the current context.  This is the user id and
@@ -161,7 +163,7 @@ namespace TAO
       PortableServer::ObjectId object_id_;
 
       /// The object key of the current context.
-      const TAO::ObjectKey *object_key_;
+      TAO::ObjectKey object_key_;
 
       /// The servant for the current upcall.
       PortableServer::Servant servant_;

@@ -89,7 +89,7 @@ namespace TAO
 
       virtual void deactivate_all_objects (void);
 
-      virtual PortableServer::ObjectId *servant_to_user_id (
+      virtual PortableServer::ObjectId servant_to_user_id (
         PortableServer::Servant servant);
 
       virtual
@@ -120,7 +120,7 @@ namespace TAO
       void
       deactivate_map_entry (TAO_Active_Object_Map_Entry *active_object_map_entry);
 
-      PortableServer::ObjectId *servant_to_system_id_i (
+      PortableServer::ObjectId servant_to_system_id_i (
           PortableServer::Servant p_servant,
           CORBA::Short &priority);
 

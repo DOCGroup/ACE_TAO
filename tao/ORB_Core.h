@@ -114,7 +114,7 @@ namespace TAO
 
 namespace CORBA
 {
-  typedef std::vector<char *> ORB_ObjectIdList;
+  typedef StringSeq ORB_ObjectIdList;
   class ORB;
   typedef ORB *ORB_ptr;
 
@@ -598,7 +598,7 @@ public:
   /// based on the endpoint.
   TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
                                 const char *type_id,
-                                CORBA::PolicyList *policy_list);
+                                CORBA::PolicyList &policy_list);
 
   /// Factory method that create the "right" Stub depending on
   /// wheather RTCORBA is loaded or not. The factory used to create

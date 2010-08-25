@@ -27,7 +27,7 @@ namespace TAO
       return impl->get_POA ();
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     POA_Current::get_object_id (void)
     {
       POA_Current_Impl *impl = this->implementation ();

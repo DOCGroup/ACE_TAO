@@ -74,6 +74,7 @@ namespace TAO
   {
   public:
     ObjectKey (void);
+    ObjectKey (const ObjectKey &rhs);
     ~ObjectKey (void);
 /*
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)

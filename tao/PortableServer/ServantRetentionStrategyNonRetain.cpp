@@ -114,7 +114,7 @@ namespace TAO
       // not own the data.
       poa_current_impl.replace_object_id (system_id);
 
-      servant_upcall.user_id (&system_id);
+      servant_upcall.user_id (system_id);
 
       return 0;
     }
@@ -146,7 +146,7 @@ namespace TAO
     {
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId
     ServantRetentionStrategyNonRetain::servant_to_user_id (
       PortableServer::Servant /*servant*/)
     {
@@ -193,20 +193,22 @@ namespace TAO
       // available. The generated Object Id value may be obtained by
       // invoking POA::reference_to_id with the created reference.
 
-      PortableServer::ObjectId_var system_id;
+      PortableServer::ObjectId system_id;
       PortableServer::ObjectId user_id;
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
+      /*
       PortableServer::ObjectId *sys_id = 0;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId,
                         CORBA::NO_MEMORY ());
-
+      
       system_id = sys_id;
-
+      */
+      
       // User id is the same as system id.
-      user_id = system_id.in ();
+      user_id = system_id;
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
@@ -235,8 +237,8 @@ namespace TAO
       // the applicable policies.
 
       PortableServer::Servant servant = 0;
-      PortableServer::ObjectId_var system_id;
-
+      PortableServer::ObjectId system_id;
+/*
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
       PortableServer::ObjectId *sys_id = 0;
@@ -245,7 +247,7 @@ namespace TAO
                         CORBA::NO_MEMORY ());
 
       system_id = sys_id;
-
+*/
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,

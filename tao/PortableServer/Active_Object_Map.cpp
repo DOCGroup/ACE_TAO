@@ -1050,12 +1050,19 @@ int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
                                    PortableServer::ObjectId &user_id)
 {
+  user_id.resize (system_id.size ());
+
+  for (CORBA::ULong i = 0; i < system_id.size (); ++i)
+    {
+      user_id[i] = system_id[i];
+    }
+/*
   // Smartly copy all the data; <user_id does not own the data>.
   user_id.replace (system_id.maximum (),
                    system_id.length (),
                    const_cast<CORBA::Octet *> (system_id.get_buffer ()),
                    0);
-
+*/
   return 0;
 }
 

@@ -167,7 +167,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
 
   if (ior_adapter)
     {
-      ior_adapter->adapter_manager_state_changed (this->id_,
+      ior_adapter->adapter_manager_state_changed (this->id_.c_str (),
                                                   adapter_state);
     }
 }

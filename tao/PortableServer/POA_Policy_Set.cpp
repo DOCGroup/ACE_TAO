@@ -47,8 +47,8 @@ TAO_POA_Policy_Set::add_client_exposed_fixed_policies (
       // If this policy is client exposed, add it to the list.
       if (policy->_tao_scope () & TAO_POLICY_CLIENT_EXPOSED)
         {
-          client_exposed_policies->length (cep_index + 1);
-          (*client_exposed_policies)[cep_index] = policy->copy ();
+          client_exposed_policies.resize (cep_index + 1);
+          client_exposed_policies[cep_index] = policy->copy ();
           ++cep_index;
         }
     }

@@ -13,6 +13,8 @@ namespace PortableServer
   PortableServer::ObjectId *
   wstring_to_ObjectId (const CORBA::WChar *string)
   {
+    throw ::CORBA::NO_IMPLEMENT ();
+/*
     // Size of Id
     //
     // We DO NOT include the zero terminator, as this is simply an
@@ -38,11 +40,15 @@ namespace PortableServer
                     0);
 
     return id;
+*/
   }
 
   CORBA::WChar *
   ObjectId_to_wstring (const PortableServer::ObjectId &id)
   {
+    throw ::CORBA::NO_IMPLEMENT ();
+    
+    /*
     // Compute resulting wide string's length.
     CORBA::ULong string_length =
       id.length () / sizeof (CORBA::WChar);
@@ -65,6 +71,7 @@ namespace PortableServer
 
     // Return string.
     return string;
+    */
   }
 }
 

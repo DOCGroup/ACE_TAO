@@ -15,7 +15,7 @@ namespace TAO
   ObjectReferenceTemplate::ObjectReferenceTemplate (
   const char *server_id,
   const char *orb_id,
-  PortableInterceptor::AdapterName *adapter_name,
+  PortableInterceptor::AdapterName &adapter_name,
   PortableServer::POA_ptr poa)
   : server_id_ (server_id),
     orb_id_ (orb_id),
@@ -40,9 +40,10 @@ namespace TAO
     return CORBA::string_dup (this->orb_id_);
   }
 
-  PortableInterceptor::AdapterName *
+  PortableInterceptor::AdapterName
   ObjectReferenceTemplate::adapter_name (void)
   {
+  /*
     PortableInterceptor::AdapterName *adapter_name = 0;
 
     ACE_NEW_THROW_EX (adapter_name,
@@ -55,6 +56,9 @@ namespace TAO
                           CORBA::COMPLETED_NO));
 
     return adapter_name;
+  */
+  
+    return this->adapter_name_;
   }
 
   CORBA::Object_ptr

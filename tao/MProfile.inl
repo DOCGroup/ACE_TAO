@@ -7,8 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  policy_list_ (0),
-     is_policy_list_initialized_ (false),
+  :  is_policy_list_initialized_ (false),
      forward_from_(0),
      pfiles_ (0),
      current_ (0),
@@ -20,8 +19,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
-  :  policy_list_ (0),
-     is_policy_list_initialized_ (false),
+  :  is_policy_list_initialized_ (false),
      forward_from_(0),
      pfiles_ (0),
      current_ (0),
@@ -197,7 +195,7 @@ TAO_MProfile::pfiles (void) const
 }
 
 ACE_INLINE void
-TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
+TAO_MProfile::policy_list (CORBA::PolicyList policy_list)
 {
   this->policy_list_ = policy_list;
 }

@@ -1936,7 +1936,7 @@ TAO_ORB_Core::request_dispatcher (TAO_Request_Dispatcher *request_dispatcher)
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   const char *type_id,
-                                  CORBA::PolicyList *policy_list)
+                                  CORBA::PolicyList &policy_list)
 {
   // Add the Polices contained in "policy_list" to each profile so
   // that those policies will be exposed to the client in the IOR.  In
@@ -1946,7 +1946,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
   // became in turns the "body" of the IOP::TaggedComponent. This
   // conversion is a responsability of the CORBA::Profile class.  (See
   // orbos\98-05-05.pdf Section 5.4)
-  if (policy_list->size () != 0)
+  if (policy_list.size () != 0)
     {
       TAO_Profile * profile = 0;
 

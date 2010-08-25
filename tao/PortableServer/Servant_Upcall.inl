@@ -34,7 +34,7 @@ namespace TAO
 
     ACE_INLINE void
     Servant_Upcall::user_id (
-      const PortableServer::ObjectId *id)
+      const PortableServer::ObjectId &id)
     {
       this->user_id_ = id;
     }
@@ -42,7 +42,7 @@ namespace TAO
     ACE_INLINE const PortableServer::ObjectId &
     Servant_Upcall::user_id (void) const
     {
-      return *(this->user_id_);
+      return this->user_id_;
     }
 
     #if (TAO_HAS_MINIMUM_POA == 0)

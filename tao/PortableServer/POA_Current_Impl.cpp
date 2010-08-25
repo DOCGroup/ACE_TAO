@@ -23,8 +23,8 @@ namespace TAO
   {
     POA_Current_Impl::POA_Current_Impl (void)
       : poa_ (0),
-        object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
-        object_key_ (0),
+//        object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
+//        object_key_ (0),
         servant_ (0),
         priority_ (TAO_INVALID_PRIORITY),
         previous_current_impl_ (0),
@@ -37,7 +37,7 @@ namespace TAO
     {
       // Remember information about this upcall.
       this->poa_ = p;
-      this->object_key_ = &key;
+      this->object_key_ = key;
 
       // Set the current context and remember the old one.
       this->tss_resources_ = TAO_TSS_Resources::instance ();
@@ -73,15 +73,18 @@ namespace TAO
       return PortableServer::POA::_duplicate (this->poa_);
     }
 
-    PortableServer::ObjectId *
+    PortableServer::ObjectId 
     POA_Current_Impl::get_object_id (void)
     {
+      PortableServer::ObjectId objid;
+      /*
       PortableServer::ObjectId *objid = 0;
 
       // Create a new one and pass it back
       ACE_NEW_RETURN (objid,
                       PortableServer::ObjectId (this->object_id_),
                       0);
+      */
       return objid;
     }
 

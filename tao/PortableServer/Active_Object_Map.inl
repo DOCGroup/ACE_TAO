@@ -256,7 +256,7 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (
 ACE_INLINE int
 TAO_Active_Object_Map::find_user_id_using_system_id (
   const PortableServer::ObjectId &system_id,
-  const PortableServer::ObjectId &user_id)
+  PortableServer::ObjectId &user_id)
 {
   return this->id_hint_strategy_->recover_key (system_id, user_id);
 }
