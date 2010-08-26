@@ -1,6 +1,7 @@
-#include "Middle_Impl.h"
+// -*- C++ -*-
+// $Id$
 
-ACE_RCSID(Bug_3647_Regression, Middle_Impl, "$Id$")
+#include "Middle_Impl.h"
 
 Bug_3647_Regression::Middle_Impl::
 Middle_Impl(

@@ -1,11 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (Abstract_Interface,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://test.ior");
 int debug = 0;

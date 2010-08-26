@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #ifndef TAO_TEST_I_H

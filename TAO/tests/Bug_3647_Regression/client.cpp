@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "TestC.h"
@@ -6,10 +7,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID(Bug_3647_Regression,
-          client,
-          "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://middle.ior");
 bool verbose = true;

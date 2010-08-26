@@ -1,3 +1,63 @@
+Thu Aug 26 13:44:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Loader.cpp:
+        * tests/AMH_Exceptions/client.cpp:
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/Abstract_Interface/client.cpp:
+        * tests/Abstract_Interface/server.cpp:
+        * tests/Abstract_Interface/test_i.h:
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Alt_Mapping/options.cpp:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+        * tests/Bug_2936_Regression/DllORB.cpp:
+        * tests/Bug_2966_Regression/Hello.cpp:
+        * tests/Bug_2966_Regression/client.cpp:
+        * tests/Bug_2966_Regression/server.cpp:
+        * tests/Bug_3251_Regression/DllOrb.cpp:
+        * tests/Bug_3524_Regression/client.cpp:
+        * tests/Bug_3524_Regression/server.cpp:
+        * tests/Bug_3524_Regression/test_i.cpp:
+        * tests/Bug_3542_Regression/DllOrb.cpp:
+        * tests/Bug_3647_Regression/Backend_Impl.cpp:
+        * tests/Bug_3647_Regression/Middle_Impl.cpp:
+        * tests/Bug_3647_Regression/backend_server.cpp:
+        * tests/Bug_3647_Regression/client.cpp:
+        * tests/Bug_3647_Regression/middle_server.cpp:
+        * tests/COIOP/Client_Task.cpp:
+        * tests/COIOP/Hello.cpp:
+        * tests/COIOP/Server_Task.cpp:
+        * tests/MProfile_Connection_Timeout/client.cpp:
+        * tests/MProfile_Connection_Timeout/server.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/OctetSeq/client.cpp:
+        * tests/OctetSeq/server.cpp:
+        * tests/OctetSeq/test_i.cpp:
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/TransportCurrent/Framework/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/Framework/Server_Main.cpp:
+        * tests/TransportCurrent/Framework/Tester.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/TransportCurrent/Framework/simple.cpp:
+        * tests/TransportCurrent/IIOP/Current_Test_Impl.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Main.cpp:
+        * tests/TransportCurrent/IIOP/IIOP_Server_Request_Interceptor.cpp:
+        * tests/TransportCurrent/IIOP/client.cpp:
+        * tests/TransportCurrent/IIOP/server.cpp:
+        * tests/TransportCurrent/lib/Client_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tests/TransportCurrent/lib/Current_Test.idl:
+        * tests/TransportCurrent/lib/Server_ORBInitializer.cpp:
+        * tests/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+          Various cleanup
+
+        * tao/Utils/Auto_Functor.h:
+        * tao/Auto_Functor.h:
+          Removed this file, use the ACE file
+
 Thu Aug 26 13:39:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBANAME_Parser.cpp:

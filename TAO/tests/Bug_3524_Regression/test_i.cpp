@@ -1,11 +1,8 @@
-// $Id: test_i.cpp,v 1.1 2003/08/27 22:43:35 vz Exp
+// -*- C++ -*-
+// $Id$
 
 #include "test_i.h"
 #include "ace/Auto_Ptr.h"
-
-ACE_RCSID (Bug_3524_Regression,
-           test_i,
-           "$Id$")
 
 A_i::A_i (CORBA::ORB_ptr orb,
           CORBA::ValueFactoryBase *vtp_factory)
