@@ -39,7 +39,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS::ReturnCode_t
 CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
   typename DDS_TYPE::dds_seq_type & data,
-  DDS_SampleInfoSeq & sample_info,
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
   const DDS_Long & max_samples)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DDS_CCM::Getter_Base_T::get");
@@ -80,7 +80,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_Base_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_many
       max_samples = DDS_LENGTH_UNLIMITED;
     }
 
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
@@ -230,7 +230,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, true, VENDOR_TYPE>::get_one
 
           while (!valid_data_read)
             {
-              DDS_SampleInfoSeq sample_info;
+              typename DDS_TYPE::sampleinfo_seq_type sample_info;
               typename DDS_TYPE::dds_seq_type data;
 
               ::DDS::ReturnCode_t const retcode = this->get (data,
@@ -310,7 +310,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
       return false;
     }
 
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
   for (::DDS_Long i = 0; i < active_conditions.length(); i++)
     {
@@ -321,7 +321,7 @@ CIAO::DDS4CCM::DDS_CCM::Getter_T<DDS_TYPE, CCM_TYPE, false, VENDOR_TYPE>::get_on
 
           while (!valid_data_read)
             {
-              DDS_SampleInfoSeq sample_info;
+              typename DDS_TYPE::sampleinfo_seq_type sample_info;
               typename DDS_TYPE::dds_seq_type data;
               ::DDS::ReturnCode_t const retcode = this->get (data,
                                                           sample_info,

@@ -85,7 +85,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
   try
     {
       typename DDS_TYPE::dds_seq_type data;
-      ::DDS_SampleInfoSeq sample_info;
+      typename DDS_TYPE::sampleinfo_seq_type sample_info;
       ::DDS_Long max_samples = 0;
 
       this->control_->mode () == ::CCM_DDS::ONE_BY_ONE
@@ -99,11 +99,11 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
                   sample_info,
                   max_samples,
                   this->condition_manager_.get_querycondition_listener ());
-      if (result == DDS_RETCODE_NO_DATA)
+      if (result == ::DDS::RETCODE_NO_DATA)
         {
           return;
         }
-      else if (result != DDS_RETCODE_OK)
+      else if (result != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                         ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")

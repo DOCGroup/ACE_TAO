@@ -107,7 +107,7 @@ namespace CIAO
         DataReader_type * impl (void);
 
         ::DDS::ReturnCode_t get (typename DDS_TYPE::dds_seq_type & data,
-                                 DDS_SampleInfoSeq & sample_info,
+                                 typename DDS_TYPE::sampleinfo_seq_type & sample_info,
                                  const DDS_Long & max_samples);
       };
 

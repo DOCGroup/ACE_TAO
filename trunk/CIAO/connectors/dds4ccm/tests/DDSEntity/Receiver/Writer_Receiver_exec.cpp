@@ -110,7 +110,7 @@ namespace CIAO_Writer_Receiver_Impl
         DDSDataReader* dds_reader = typed_ccm_dr->get_impl ();
         if (dds_reader)
           {
-            this->reader_ = WriterTestDataReader::narrow (dds_reader);
+            this->reader_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datareader_type::narrow (dds_reader);
             if (!this->reader_)
               {
                 ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
@@ -133,12 +133,14 @@ namespace CIAO_Writer_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    WriterTestRTISeq data;
-    ::DDS_SampleInfoSeq sample_info;
+    typename ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::dds_seq_type
+      data;
+    typename ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::sampleinfo_seq_type
+      sample_info_seq;
 
     ::DDS::ReturnCode_t const result = this->reader_->take (
                 data,
-                sample_info,
+                sample_info_seq,
                 1,
                 0);
 
