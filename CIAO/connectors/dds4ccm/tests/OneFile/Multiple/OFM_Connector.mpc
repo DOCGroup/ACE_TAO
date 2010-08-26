@@ -81,7 +81,7 @@ project(OFM_Connector_stub) : ccm_stub, dds4ccm_base, dds4ccm_ts_default {
   }
 }
 
-project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
+project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl {
   after    += OFM_Connector_lem_stub OFM_Connector_stub 
   sharedname = OFM_Connector_exec
   libs     += OFM_Connector_stub OFM_Connector_lem_stub 
@@ -105,7 +105,7 @@ project(OFM_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
 }
 
 
-project(OFM_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
+project(OFM_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += OFM_Connector_lem_stub
   sharedname  = OFM_Connector_svnt
   libs       += OFM_Connector_stub OFM_Connector_lem_stub

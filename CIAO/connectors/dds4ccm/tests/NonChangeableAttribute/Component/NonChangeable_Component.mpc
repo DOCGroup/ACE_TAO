@@ -84,7 +84,7 @@ project(NonChangeable_Component_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(NonChangeable_Component_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl {
+project(NonChangeable_Component_exec) : ciao_executor, dds4ccm_impl {
   after   += NonChangeable_Component_lem_stub NonChangeable_Component_stub \
              DDS_NonChangeableBase_stub DDS_NonChangeableConnector_stub \
              DDS_NonChangeableConnector_lem_stub 

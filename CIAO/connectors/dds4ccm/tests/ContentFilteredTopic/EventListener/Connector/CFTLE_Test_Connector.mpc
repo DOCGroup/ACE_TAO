@@ -84,7 +84,7 @@ project(DDS_CFTLE_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_CFTLE_Test_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_CFTLE_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += DDS_CFTLE_Test_Connector_lem_stub DDS_CFTLE_Test_Connector_stub DDS_CFTLE_Test_Base_stub
   sharedname = DDS_CFTLE_Test_Connector_exec
   libs += DDS_CFTLE_Test_Connector_stub DDS_CFTLE_Test_Connector_lem_stub DDS_CFTLE_Test_Base_stub DDS_CFTLE_Test_Base_stub
@@ -110,7 +110,7 @@ project(DDS_CFTLE_Test_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_le
 }
 
 
-project(DDS_CFTLE_Test_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_CFTLE_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += DDS_CFTLE_Test_Connector_lem_stub DDS_CFTLE_Test_Connector_exec DDS_CFTLE_Test_Connector_stub 
   sharedname  = DDS_CFTLE_Test_Connector_svnt
   libs       += DDS_CFTLE_Test_Connector_stub \

@@ -76,7 +76,7 @@ project(Derived_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += Derived_Connector_lem_stub Derived_Connector_stub
   sharedname = Derived_Connector_exec
   libs += Derived_Connector_stub Derived_Connector_lem_stub Derived_stub
@@ -101,7 +101,7 @@ project(Derived_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 }
 
 
-project(Derived_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
+project(Derived_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += Derived_Connector_lem_stub
   sharedname  = Derived_Connector_svnt
   libs       += Derived_Connector_stub Derived_Connector_lem_stub  Derived_stub
