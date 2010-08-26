@@ -18,7 +18,6 @@
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
-typedef ::DDS::SampleInfoSeq DDS_SampleInfoSeq;
 #endif
 
 namespace CIAO
@@ -82,7 +81,7 @@ namespace CIAO
           const ::DDS::InstanceHandle_t & instance_handle);
 
         CORBA::ULong get_nr_valid_samples (
-          const DDS_SampleInfoSeq & sample_info,
+          const typename DDS_TYPE::sampleinfo_seq_type & sample_info,
           bool determine_last = false);
       };
     }

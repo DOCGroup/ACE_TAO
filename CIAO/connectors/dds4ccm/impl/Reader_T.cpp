@@ -27,7 +27,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::~Reade
 template <typename DDS_TYPE, typename CCM_TYPE, bool FIXED, DDS4CCM_Vendor VENDOR_TYPE>
 CORBA::ULong
 CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::get_nr_valid_samples (
-  const DDS_SampleInfoSeq& sample_info,
+  const typename DDS_TYPE::sampleinfo_seq_type& sample_info,
   bool determine_last)
 {
   CORBA::ULong nr_of_samples = 0;
@@ -55,7 +55,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_l
   ::CCM_DDS::ReadInfoSeq& infos)
 {
   // This function has to return the last sample of all instances
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
   this->impl ()->read_wo_instance (data,
@@ -105,7 +105,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_a
           ::CCM_DDS::ReadInfoSeq& infos)
 {
   // This function has to return all samples of all instances
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
   this->impl ()->read_wo_instance (data,
@@ -179,7 +179,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   ::DDS_InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
   // For now, only read with instance
@@ -224,7 +224,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   ::DDS_InstanceHandle_t const lookup_hnd =
     this->check_handle (an_instance, instance_handle);
 
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   typename DDS_TYPE::dds_seq_type data;
 
   this->impl ()->read_w_instance (data, lookup_hnd, sample_info);

@@ -33,7 +33,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DataReader_T (DDSD
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::DataReader_T");
   if (dr)
     {
-      this->impl_ = DDS_TYPE::data_reader::narrow (dr);
+      this->impl_ = DDS_TYPE::datareader_type::narrow (dr);
     }
 }
 
@@ -84,7 +84,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_wo_instance (
   typename DDS_TYPE::dds_seq_type & data,
-  DDS_SampleInfoSeq & sample_info,
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
   DDSQueryCondition * qc)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::read_wo_instance");
@@ -129,7 +129,7 @@ void
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::read_w_instance (
   typename DDS_TYPE::dds_seq_type & data,
   const ::DDS_InstanceHandle_t & lookup_hnd,
-  DDS_SampleInfoSeq & sample_info)
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::read_w_instance");
 
@@ -166,7 +166,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_ReturnCode_t
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
   typename DDS_TYPE::dds_seq_type & data,
-  DDS_SampleInfoSeq & sample_info,
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
   const DDS_Long & max_samples,
   DDSQueryCondition * qc)
 {
@@ -187,7 +187,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_ReturnCode_t
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get (
   typename DDS_TYPE::dds_seq_type & data,
-  DDS_SampleInfoSeq & sample_info,
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
   const DDS_Long & max_samples,
   DDSReadCondition * rd)
 {
@@ -207,7 +207,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_ReturnCode_t
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::take (
   typename DDS_TYPE::dds_seq_type & data,
-  DDS_SampleInfoSeq & sample_info,
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info,
   const DDS_Long & max_samples,
   DDSQueryCondition * qc)
 {
@@ -244,7 +244,7 @@ template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 ::DDS_ReturnCode_t
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::return_loan (
   typename DDS_TYPE::dds_seq_type & data,
-  ::DDS_SampleInfoSeq & sample_info)
+  typename DDS_TYPE::sampleinfo_seq_type & sample_info)
 {
   DDS4CCM_TRACE ("CIAO::DDS4CCM::DataReader_T::return_loan");
 
@@ -357,7 +357,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_datareader 
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-typename DDS_TYPE::data_reader *
+typename DDS_TYPE::datareader_type *
 CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->impl_)
@@ -788,7 +788,7 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
   DataReader_type * dds_dr = dynamic_cast < DataReader_type * > (dr);
   if (dds_dr)
     {
-      this->impl_ = DDS_TYPE::data_reader::narrow (dds_dr->get_impl ());
+      this->impl_ = DDS_TYPE::datareader_type::narrow (dds_dr->get_impl ());
       if (!this->impl_)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO

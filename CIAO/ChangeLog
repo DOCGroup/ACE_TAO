@@ -1,3 +1,22 @@
+Thu Aug 26 14:55:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.h:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.h:
+        * connectors/dds4ccm/impl/InstanceHandleManager_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Updated for changed and new traits
+
+        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+          Use DDS traits from generated connector to reduce amount of vendor
+          specific code in this user component
+
 Thu Aug 26 14:40:32 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
@@ -35,12 +54,10 @@ Thu Aug 26 14:40:32 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender_exec.cpp:
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Sender/OIT_Test_Sender_exec.h:
         * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.cpp:
-        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.h:                                                                             
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Receiver/OIT_Test_Receiver_exec.h:
         * connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
         Made use of platform independent ACE_Thread_ID class for testing thread switch.
 
-
-                          
 Thu Aug 26 14:21:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
@@ -52,7 +69,6 @@ Thu Aug 26 14:21:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Deployment/Handlers/Container_Handler.cpp:
         * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
-
           Attempt to address valgrind errors.
 
 Thu Aug 26 13:01:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
