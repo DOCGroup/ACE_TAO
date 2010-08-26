@@ -1,3 +1,10 @@
+Thu Aug 26 11:41:48 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Dependency_Sorter.cpp:
+        * connectors/dds4ccm/impl/DataReader_T.cpp:
+
+          Fuzz.
+
 Thu Aug 26 11:39:22 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/Config_Handler_Impl.cpp:
