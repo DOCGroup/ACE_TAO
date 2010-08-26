@@ -1,3 +1,12 @@
+Thu Aug 26 11:01:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSWriterEntity:
+        * connectors/dds4ccm/tests/DDSEntity:
+          Renamed to DDSEntity, we show now reader and writer
+
+        * bin/ciao_tests.lst:
+          Updated test
+    
 Thu Aug 26 10:59:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:
