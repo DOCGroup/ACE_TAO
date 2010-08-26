@@ -73,7 +73,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ciao/dds4ccm
+HTML_OUTPUT           = html/libciao-doc/dds4ccm
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -134,17 +134,16 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-                        html/tao/TAO.tag=../../tao \
-                        html/ace/ssl/ACE_SSL.tag=../../ace/ssl \
-                        html/tao/portableserver/TAO_PortableServer.tag=../../tao/portableserver \
-                        html/tao/iortable/TAO_IORTable.tag=../../tao/iortable \
-                        html/tao/rtcorba/TAO_RTCORBA.tag=../../tao/rtcorba \
-                        html/tao/security/TAO_Security.tag=../../tao/security \
-                        html/acexml/ACEXML.tag=../../acexml \
-                        html/tao/cosnaming/TAO_CosNaming.tag=../../tao/cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../tao/ifr
-GENERATE_TAGFILE      = html/ciao/dds4ccm/dds4ccm.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=../../libtao-doc \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../../libtao-doc/portableserver \
+                        html/libtao-doc/iortable/TAO_IORTable.tag=../../libtao-doc/iortable \
+                        html/libtao-doc/rtcorba/TAO_RTCORBA.tag=../../libtao-doc/rtcorba \
+                        html/libtao-doc/security/TAO_Security.tag=../../libtao-doc/security \
+                        html/libacexml-doc/ACEXML.tag=../../libacexml-doc \
+                        html/libtao-doc/cosnaming/TAO_CosNaming.tag=../../libtao-doc/cosnaming \
+                        html/libtao-doc/ifr/TAO_IFR.tag=../../libtao-doc/ifr
+GENERATE_TAGFILE      = html/libciao-doc/dds4ccm/dds4ccm.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
