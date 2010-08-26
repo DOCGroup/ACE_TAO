@@ -81,12 +81,10 @@ project(QC_QCTQ_Starter_stub) : ccm_stub, dds4ccm_base {
 }
 
 
-project(QC_QCTQ_Starter_svnt) : ciao_servant, dds4ccm_base {
-  after      += QC_QCTQ_Starter_lem_stub QC_QCTQ_Starter_stub\
-                DDS4CCM_lem_stub DDS4CCM_skel
+project(QC_QCTQ_Starter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += QC_QCTQ_Starter_lem_stub QC_QCTQ_Starter_stub
   sharedname  = QC_QCTQ_Starter_svnt
-  libs       += QC_QCTQ_Starter_stub QC_QCTQ_Starter_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += QC_QCTQ_Starter_stub QC_QCTQ_Starter_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

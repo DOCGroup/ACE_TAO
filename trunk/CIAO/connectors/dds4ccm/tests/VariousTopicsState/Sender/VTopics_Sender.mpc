@@ -89,21 +89,20 @@ project(DDS_VTopics_Sender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_VTopics_Sender_exec) : ciao_executor, dds4ccm_base {
+project(DDS_VTopics_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += DDS_VTopics_Sender_lem_stub DDS_VTopics_Sender_stub \
              DDS_VTopics_Connector_lem_stub DDS_VTopics_Connector_stub \
              DDS_VTS_String_Connector_lem_stub DDS_VTS_String_Connector_stub \
              DDS_VTS_Array_Connector_lem_stub DDS_VTS_Array_Connector_stub \
              DDS_VTS_Valuetype_Connector_lem_stub DDS_VTS_Valuetype_Connector_stub \
              DDS_VTS_Union_Connector_lem_stub DDS_VTS_Union_Connector_stub \
-             DDS_VTS_Seq_Connector_lem_stub DDS_VTS_Seq_Connector_stub \
-             DDS4CCM_lem_stub
+             DDS_VTS_Seq_Connector_lem_stub DDS_VTS_Seq_Connector_stub 
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_VTopics_Base_stub \
           DDS_VTopics_Connector_lem_stub DDS_VTopics_Connector_stub \
           DDS_VTS_String_Connector_stub DDS_VTS_Array_Connector_stub \
           DDS_VTS_Valuetype_Connector_stub DDS_VTS_Seq_Connector_stub \
-          DDS_VTS_Union_Connector_stub DDS4CCM_lem_stub
+          DDS_VTS_Union_Connector_stub 
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -126,9 +125,8 @@ project(DDS_VTopics_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_VTopics_Sender_svnt) : ciao_servant, dds4ccm_base {
-  after      += DDS_VTopics_Base_stub  DDS_VTopics_Sender_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel \
+project(DDS_VTopics_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += DDS_VTopics_Base_stub  DDS_VTopics_Sender_lem_stub \
                 DDS_VTopics_Connector_stub DDS_VTopics_Connector_svnt DDS_VTopics_Connector_lem_stub \
                 DDS_VTS_String_Connector_stub DDS_VTS_String_Connector_svnt DDS_VTS_String_Connector_lem_stub \
                 DDS_VTS_Array_Connector_stub DDS_VTS_Array_Connector_svnt DDS_VTS_Array_Connector_lem_stub \
@@ -138,7 +136,6 @@ project(DDS_VTopics_Sender_svnt) : ciao_servant, dds4ccm_base {
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
                 DDS_VTopics_Base_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel \
                 DDS_VTopics_Connector_stub DDS_VTopics_Connector_svnt \
                 DDS_VTS_String_Connector_stub DDS_VTS_String_Connector_svnt \
                 DDS_VTS_Array_Connector_stub DDS_VTS_Array_Connector_svnt \

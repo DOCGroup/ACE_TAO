@@ -14,6 +14,8 @@
 
 #include "tao/LocalObject.h"
 
+class WriterTestDataReader;
+
 namespace CIAO_Writer_Receiver_Impl
 {
   //============================================================
@@ -65,6 +67,7 @@ namespace CIAO_Writer_Receiver_Impl
     virtual void ccm_remove (void);
 
   private:
+    WriterTestDataReader * reader_;
     ::Writer::CCM_Receiver_Context_var context_;
   };
 

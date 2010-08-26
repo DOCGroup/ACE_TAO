@@ -106,14 +106,12 @@ project(PSAT_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+project(PSAT_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after  += PSAT_Connector_lem_gen \
             DDS_PSAT_Connector_stub \
-            DDS_CCM_Example_PSAT_stub \
-            DDS4CCM_lem_stub
+            DDS_CCM_Example_PSAT_stub 
   libs   += DDS_CCM_Example_PSAT_stub \
-            DDS_PSAT_Connector_stub \
-            DDS4CCM_lem_stub
+            DDS_PSAT_Connector_stub 
   libpaths += lib
   libout = lib
   includes += ..
@@ -163,17 +161,15 @@ project(DDS_PSAT_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl {
   after    += DDS_CCM_Example_PSAT_type_stub \
               PSAT_Connector_lem_stub \
-              DDS_PSAT_Connector_stub \
-              DDS4CCM_lem_stub
+              DDS_PSAT_Connector_stub 
   sharedname = DDS_PSAT_Connector_exec
   libs += DDS_CCM_Example_PSAT_type_stub \
           DDS_PSAT_Connector_stub \
           PSAT_Connector_lem_stub \
-          DDS_CCM_Example_PSAT_stub \
-          DDS4CCM_lem_stub
+          DDS_CCM_Example_PSAT_stub 
   libpaths += lib
   libout = lib
   includes += ..
@@ -197,17 +193,15 @@ project(DDS_PSAT_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub
 }
 
 
-project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_PSAT_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += PSAT_Connector_lem_stub \
                 DDS_PSAT_Connector_exec \
-                DDS_PSAT_Connector_skel \
-                DDS4CCM_lem_stub
+                DDS_PSAT_Connector_skel 
   sharedname  = DDS_PSAT_Connector_svnt
   libs       += DDS_PSAT_Connector_stub \
                 PSAT_Connector_lem_stub  \
                 DDS_CCM_Example_PSAT_stub \
-                DDS_PSAT_Connector_exec \
-                DDS4CCM_lem_stub
+                DDS_PSAT_Connector_exec 
   libpaths += lib
   libout = lib
   includes += ..

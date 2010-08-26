@@ -31,14 +31,12 @@ project(DDS_Hello_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+project(DDS_Hello_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after  += DDS_Hello_Connector_lem_gen \
             DDS_Hello_Connector_stub \
-            DDS_Hello_Base_stub \
-            DDS4CCM_lem_stub
+            DDS_Hello_Base_stub 
   libs   += DDS_Hello_Base_stub \
-            DDS_Hello_Connector_stub \
-            DDS4CCM_lem_stub
+            DDS_Hello_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -91,13 +89,11 @@ project(DDS_Hello_Connector_stub) : ccm_stub, dds4ccm_base {
 project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_impl {
   after  += DDS_Hello_Connector_lem_stub \
             DDS_Hello_Connector_stub \
-            DDS4CCM_lem_stub \
             DDS_Hello_Base_stub
   sharedname = DDS_Hello_Connector_exec
   libs += DDS_Hello_Connector_stub \
           DDS_Hello_Connector_lem_stub \
-          DDS_Hello_Base_stub \
-          DDS4CCM_lem_stub
+          DDS_Hello_Base_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -121,17 +117,14 @@ project(DDS_Hello_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_Hello_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  avoids     += ace_for_tao
   after      += DDS_Hello_Connector_lem_stub \
                 DDS_Hello_Connector_exec \
-                DDS_Hello_Connector_stub \
-                DDS4CCM_lem_stub
+                DDS_Hello_Connector_stub 
   sharedname  = DDS_Hello_Connector_svnt
   libs       += DDS_Hello_Connector_stub \
                 DDS_Hello_Connector_lem_stub  \
                 DDS_Hello_Base_stub \
-                DDS_Hello_Connector_exec \
-                DDS4CCM_lem_stub
+                DDS_Hello_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

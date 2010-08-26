@@ -32,9 +32,9 @@ project(CoherentUpdate_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(CoherentUpdate_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += CoherentUpdate_Connector_lem_gen CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub DDS4CCM_lem_stub
-  libs  += CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_stub DDS4CCM_lem_stub
+project(CoherentUpdate_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += CoherentUpdate_Connector_lem_gen CoherentUpdate_Connector_stub CoherentUpdate_Test_Base_stub 
+  libs  += CoherentUpdate_Test_Base_stub CoherentUpdate_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -86,10 +86,10 @@ project(CoherentUpdate_Connector_stub) : ccm_stub, dds4ccm_base {
 
 project(CoherentUpdate_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += CoherentUpdate_Connector_lem_stub CoherentUpdate_Connector_stub \
-             DDS4CCM_lem_stub CoherentUpdate_Test_Base_stub
+             CoherentUpdate_Test_Base_stub
   sharedname = CoherentUpdate_Connector_exec
   libs += CoherentUpdate_Connector_stub CoherentUpdate_Connector_lem_stub \
-          CoherentUpdate_Test_Base_stub DDS4CCM_lem_stub CoherentUpdate_Test_Base_stub
+          CoherentUpdate_Test_Base_stub CoherentUpdate_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -113,14 +113,14 @@ project(CoherentUpdate_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(CoherentUpdate_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += CoherentUpdate_Connector_lem_stub CoherentUpdate_Connector_exec \
-                CoherentUpdate_Connector_stub DDS4CCM_lem_stub
+  after      += CoherentUpdate_Connector_lem_stub \
+                CoherentUpdate_Connector_exec \
+                CoherentUpdate_Connector_stub 
   sharedname  = CoherentUpdate_Connector_svnt
   libs       += CoherentUpdate_Connector_stub \
                 CoherentUpdate_Connector_lem_stub  \
                 CoherentUpdate_Test_Base_stub \
-                CoherentUpdate_Connector_exec \
-                DDS4CCM_lem_stub
+                CoherentUpdate_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

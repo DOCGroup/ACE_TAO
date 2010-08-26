@@ -83,10 +83,10 @@ project(DDS_Distributor_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_Distributor_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_Distributor_lem_stub DDS_Distributor_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub DDS4CCM_lem_stub
+project(DDS_Distributor_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += DDS_Distributor_lem_stub DDS_Distributor_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub 
   sharedname = Distributor_exec
-  libs += Distributor_stub Distributor_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub DDS4CCM_lem_stub
+  libs += Distributor_stub Distributor_lem_stub DDS_Quoter_Base_stub DDS_Quoter_Connector_lem_stub DDS_Quoter_Connector_stub 
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -109,11 +109,11 @@ project(DDS_Distributor_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_Distributor_svnt) : ciao_servant, dds4ccm_base {
-  after      += DDS_Quoter_Base_stub  DDS_Distributor_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt  DDS_Quoter_Connector_lem_stub
+project(DDS_Distributor_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += DDS_Quoter_Base_stub  DDS_Distributor_lem_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt  DDS_Quoter_Connector_lem_stub
   sharedname  = Distributor_svnt
   libs       += Distributor_stub Distributor_lem_stub  \
-                DDS_Quoter_Base_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt DDS_Quoter_Connector_lem_stub
+                DDS_Quoter_Base_stub DDS_Quoter_Connector_stub DDS_Quoter_Connector_svnt DDS_Quoter_Connector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

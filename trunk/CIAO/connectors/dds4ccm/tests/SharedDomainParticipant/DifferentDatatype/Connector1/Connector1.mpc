@@ -31,9 +31,9 @@ project(DDS_SharedDP_Connector1_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_SharedDP_Connector1_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_SharedDP_Connector1_lem_gen DDS_SharedDP_Connector1_stub DDS_SharedDP_DDBase_stub DDS4CCM_lem_stub
-  libs  += DDS_SharedDP_DDBase_stub DDS_Connector1_stub DDS4CCM_lem_stub
+project(DDS_SharedDP_Connector1_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += DDS_SharedDP_Connector1_lem_gen DDS_SharedDP_Connector1_stub DDS_SharedDP_DDBase_stub 
+  libs  += DDS_SharedDP_DDBase_stub DDS_Connector1_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -84,9 +84,9 @@ project(DDS_SharedDP_Connector1_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_SharedDP_Connector1_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_stub DDS4CCM_lem_stub DDS_SharedDP_DDBase_stub
+  after   += DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_stub DDS_SharedDP_DDBase_stub
   sharedname = DDS_Connector1_exec
-  libs += DDS_Connector1_stub DDS_Connector1_lem_stub DDS_SharedDP_DDBase_stub DDS4CCM_lem_stub DDS_SharedDP_DDBase_stub
+  libs += DDS_Connector1_stub DDS_Connector1_lem_stub DDS_SharedDP_DDBase_stub DDS_SharedDP_DDBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,13 +110,12 @@ project(DDS_SharedDP_Connector1_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_SharedDP_Connector1_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_exec DDS_SharedDP_Connector1_stub DDS4CCM_lem_stub
+  after      += DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_exec DDS_SharedDP_Connector1_stub 
   sharedname  = DDS_Connector1_svnt
   libs       += DDS_Connector1_stub \
                 DDS_Connector1_lem_stub  \
                 DDS_SharedDP_DDBase_stub \
-                DDS_Connector1_exec \
-                DDS4CCM_lem_stub
+                DDS_Connector1_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

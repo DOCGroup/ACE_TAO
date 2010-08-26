@@ -85,14 +85,12 @@ project(DDS_DDSInstanceHandleSender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl {
+project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, dds4ccm_impl {
   after += DDS_DDSInstanceHandleSender_lem_stub DDS_DDSInstanceHandleSender_stub \
-           DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub \
-           DDS4CCM_lem_stub
+           DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub 
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub \
-          DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub \
-          DDS4CCM_lem_stub
+          DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub 
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -115,13 +113,13 @@ project(DDS_DDSInstanceHandleSender_exec) : ciao_executor, dds4ccm_base, dds4ccm
 }
 
 
-project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_base {
+project(DDS_DDSInstanceHandleSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after += DDS_DDSInstanceHandleBase_stub DDS_DDSInstanceHandleSender_lem_stub \
-           DDS4CCM_lem_stub DDS4CCM_skel DDS_InstanceHandleConnector_stub \
+           DDS_InstanceHandleConnector_stub \
            DDS_InstanceHandleConnector_svnt DDS_InstanceHandleConnector_lem_stub
   sharedname = Sender_svnt
-  libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub DDS4CCM_lem_stub \
-          DDS4CCM_skel DDS_InstanceHandleConnector_stub DDS_InstanceHandleConnector_svnt \
+  libs += Sender_stub Sender_lem_stub DDS_DDSInstanceHandleBase_stub \
+          DDS_InstanceHandleConnector_stub DDS_InstanceHandleConnector_svnt \
           DDS_InstanceHandleConnector_lem_stub
   libpaths += ../lib
   libout = ../lib

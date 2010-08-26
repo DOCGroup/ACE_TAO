@@ -127,15 +127,15 @@ project(Shapes_Sender_comp_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(Shapes_Sender_comp_svnt) : ciao_servant, dds4ccm_base {
-  after      += Shapes_ShapeType_msg_stub  Shapes_Sender_comp_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt \
+project(Shapes_Sender_comp_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += Shapes_ShapeType_msg_stub  Shapes_Sender_comp_lem_stub \
+                Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt \
                 Shapes_ShapeType_conn_lem_stub Shapes_Control_comp_svnt \
                 Shapes_Control_obj_stub Shapes_Control_obj_svnt \
                 Shapes_Control_obj_lem_stub
 
   libs       += Shapes_Sender_comp_stub Shapes_Sender_comp_lem_stub  \
-                Shapes_ShapeType_msg_stub DDS4CCM_lem_stub DDS4CCM_skel \
+                Shapes_ShapeType_msg_stub \
                 Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_svnt \
                 Shapes_ShapeType_conn_lem_stub Shapes_Control_comp_svnt \
                 Shapes_Control_obj_stub Shapes_Control_obj_svnt \
