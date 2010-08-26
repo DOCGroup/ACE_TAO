@@ -101,7 +101,7 @@ namespace CIAO_Writer_Receiver_Impl
     DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (dds_dr.in ());
     if (typed_ccm_dr)
       {
-        this->reader_ = WriterTestDataReader::narrow (typed_ccm_dr->get_impl_base ());
+        this->reader_ = WriterTestDataReader::narrow (typed_ccm_dr->get_impl ());
         if (!this->reader_)
           {
             ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
