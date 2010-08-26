@@ -1,3 +1,9 @@
+Thu Aug 26 11:53:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/bin/dance_tests.lst:
+        * bin/ciao_tests.lst:
+          Moved DAnCE tests to their own lst file
+
 Thu Aug 26 11:41:48 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Scheduler/Dependency_Sorter.cpp:
