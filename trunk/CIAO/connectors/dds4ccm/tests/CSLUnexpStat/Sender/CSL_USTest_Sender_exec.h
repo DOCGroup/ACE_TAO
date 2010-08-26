@@ -20,7 +20,6 @@
 namespace CIAO_CSL_USTest_Sender_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Sender_exec_i;
 
@@ -51,10 +50,10 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                     Atomic_Boolean &,
                                     Atomic_Boolean &,
                                     Atomic_Boolean &,
-                                    Atomic_ThreadId &,
-                                    Atomic_ThreadId &,
-                                    Atomic_ThreadId &,
-                                    Atomic_ThreadId &);
+                                    ACE_Thread_ID &,
+                                    ACE_Thread_ID &,
+                                    ACE_Thread_ID &,
+                                    ACE_Thread_ID &);
 
     virtual ~ConnectorStatusListener_exec_i (void);
 
@@ -71,7 +70,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
     void on_offered_deadline_missed (::DDS::DataWriter_ptr the_writer,
                                      const DDS::OfferedDeadlineMissedStatus & status);
     virtual
-    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer, 
+    void on_offered_incompatible_qos( ::DDS::DataWriter_ptr the_writer,
                                       const DDS::OfferedIncompatibleQosStatus & status);
     virtual
     void on_unexpected_status( ::DDS::Entity_ptr the_entity,
@@ -82,10 +81,10 @@ namespace CIAO_CSL_USTest_Sender_Impl
     Atomic_Boolean &liveliness_lost_received_;
     Atomic_Boolean &reliable_dr_activity_changed_received_;
     Atomic_Boolean &reliable_writer_cache_changed_received_;
-    Atomic_ThreadId &thread_id_publication_matched_;
-    Atomic_ThreadId &thread_id_liveliness_lost_;
-    Atomic_ThreadId &thread_id_reliable_dr_activity_changed_;
-    Atomic_ThreadId &thread_id_reliable_writer_cache_changed_;
+    ACE_Thread_ID &thread_id_publication_matched_;
+    ACE_Thread_ID &thread_id_liveliness_lost_;
+    ACE_Thread_ID &thread_id_reliable_dr_activity_changed_;
+    ACE_Thread_ID &thread_id_reliable_writer_cache_changed_;
   };
 
   class Sender_exec_i
@@ -115,10 +114,10 @@ namespace CIAO_CSL_USTest_Sender_Impl
     Atomic_Boolean liveliness_lost_received_;
     Atomic_Boolean reliable_dr_activity_changed_received_;
     Atomic_Boolean reliable_writer_cache_changed_received_;
-    Atomic_ThreadId thread_id_listener_publication_matched_;
-    Atomic_ThreadId thread_id_listener_liveliness_lost_;
-    Atomic_ThreadId thread_id_reliable_dr_activity_changed_;
-    Atomic_ThreadId thread_id_reliable_writer_cache_changed_;
+    ACE_Thread_ID thread_id_listener_publication_matched_;
+    ACE_Thread_ID thread_id_listener_liveliness_lost_;
+    ACE_Thread_ID thread_id_reliable_dr_activity_changed_;
+    ACE_Thread_ID thread_id_reliable_writer_cache_changed_;
 
     pulse_Generator * ticker_;
 

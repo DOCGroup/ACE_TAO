@@ -19,7 +19,6 @@ namespace CIAO_QCTL_Test_Receiver_Impl
 {
   class Receiver_exec_i;
 
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> Atomic_Long;
 
   //============================================================
@@ -31,7 +30,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
   {
   public:
     QueryConditionTwoListenersTest_Listener_1 (
-                            Atomic_ThreadId &thread_id,
+                            ACE_Thread_ID &thread_id,
                             Atomic_Long &samples_received);
     virtual ~QueryConditionTwoListenersTest_Listener_1 (void);
 
@@ -44,7 +43,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
       const QueryConditionTwoListenersTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
-    Atomic_ThreadId &thread_id_1_;
+    ACE_Thread_ID &thread_id_1_;
     Atomic_Long &samples_received_1_;
   };
 
@@ -57,7 +56,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
   {
   public:
     QueryConditionTwoListenersTest_Listener_2 (
-                            Atomic_ThreadId &thread_id,
+                            ACE_Thread_ID &thread_id,
                             Atomic_Long &samples_received);
     virtual ~QueryConditionTwoListenersTest_Listener_2 (void);
 
@@ -70,7 +69,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
       const QueryConditionTwoListenersTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
-    Atomic_ThreadId &thread_id_2_;
+    ACE_Thread_ID &thread_id_2_;
     Atomic_Long &samples_received_2_;
   };
 
@@ -120,8 +119,8 @@ namespace CIAO_QCTL_Test_Receiver_Impl
   private:
     ::QCTL_Test::CCM_Receiver_Context_var context_;
 
-    Atomic_ThreadId thread_id_listener_1_;
-    Atomic_ThreadId thread_id_listener_2_;
+    ACE_Thread_ID thread_id_listener_1_;
+    ACE_Thread_ID thread_id_listener_2_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;
