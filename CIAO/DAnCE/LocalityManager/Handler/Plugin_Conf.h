@@ -10,10 +10,11 @@
 #define PLUGIN_CONF_H
 
 #include "Deployment/Deployment_DeploymentPlanC.h"
+#include "LocalityManager/Handler/DAnCE_Locality_Handler_export.h"
 
 namespace DAnCE
 {
-  class Plugin_Configurator
+  class DAnCE_Locality_Handler_Export Plugin_Configurator
   {
   public:
     void load_from_text_file (const ACE_TCHAR *file);

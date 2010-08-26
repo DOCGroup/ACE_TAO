@@ -1,3 +1,9 @@
+Thu Aug 26 03:18:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Handler/Plugin_Conf.h:
+
+          Add missing export macro.
+
 Thu Aug 26 00:28:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
