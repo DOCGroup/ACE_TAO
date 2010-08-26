@@ -9,6 +9,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"

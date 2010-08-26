@@ -38,7 +38,7 @@ namespace TAO
     class Servant_Upcall;
   }
 
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
 }
 
 class TAO_TSS_Resources;

@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <vector>
+
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -45,7 +47,7 @@ namespace IOP
 
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
 }
 
 /**

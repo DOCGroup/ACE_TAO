@@ -163,6 +163,7 @@ be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 {
+/*
   be_type *bt = 0;
 
   if (this->ctx_->alias ()) // typedef of a typedef
@@ -187,7 +188,7 @@ be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
                             -1);
         }
     }
-
+*/
   return 0;
 }
 

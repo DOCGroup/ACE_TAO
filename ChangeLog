@@ -1,3 +1,52 @@
+Thu Aug 26 14:46:25 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_cs.cpp:
+
+          Disabled code generation of CDR and optional
+          ostream operators for typedefs if the base
+          type is a sequence. Since the sequence is now
+          itself a typedef, we get 'already defined'
+          link errors for these operators because the
+          compiler doesn't see it as an overload.
+          
+        * tao/tao.mpc:
+
+          Moved Object_Key.pidl out of the hand-crafted
+          list and into the automatic list. It is now
+          generated as a typedef of OctetSeq, and doing
+          it this way eliminates 'already defined' link
+          errors between TAO and PortableServer. The
+          hand-crafted static methods that had been
+          added to Object_Key are now in TAO_Profile.
+
+        * tao/target_specification.h:
+        * tao/PortableServer/POA_Current_Impl.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/Object_KeyC.cpp:
+        * tao/Adapter.h:
+        * tao/Object_KeyC.h:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+        * tao/Adapter_Registry.h:
+        * tao/ObjectKey_Table.h:
+        * tao/Profile.cpp:
+        * tao/Transport_Acceptor.h:
+        * tao/DLL_Parser.cpp:
+        * tao/Profile.h:
+        * tao/Object.h:
+        * tao/Stub.h:
+        * tao/ORB_Core.h:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/COIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Acceptor_Filter.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/LocalObject.h:
+
+          Mods necessitated by the changes above.
+
 Wed Aug 25 20:44:19 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Tagged_Profile.inl:

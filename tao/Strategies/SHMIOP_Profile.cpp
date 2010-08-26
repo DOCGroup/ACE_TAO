@@ -257,8 +257,8 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
     }
 
   TAO::ObjectKey ok;
-  TAO::ObjectKey::decode_string_to_sequence (ok,
-                                             okd + 1);  // increment past the object key separator
+  TAO_Profile::decode_string_to_sequence (ok, okd + 1); 
+  // increment past the object key separator
 
   (void) this->orb_core ()->object_key_table ().bind (ok,
                                                       this->ref_object_key_);

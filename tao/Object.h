@@ -50,9 +50,14 @@ class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_ORB_Core;
 
+namespace CORBA
+{
+  typedef std::vector<Octet> OctetSeq;
+}
+
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
   class Object_Proxy_Broker;
 }
 

@@ -25,6 +25,7 @@
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/Configurable_Refcount.h"
+#include "tao/Object_KeyC.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -109,6 +110,23 @@ public:
   /// The memory is owned by the caller!
   TAO::ObjectKey _key (void) const;
   //@}
+
+  static void encode_sequence_to_string (
+    char* & str,
+    std::vector<CORBA::Octet> const & seq);
+      
+  static void decode_string_to_sequence (
+    std::vector<CORBA::Octet> &seq,
+    char const * str);
+      
+  static CORBA::Boolean is_legal (unsigned char c);
+
+  /// A special method that gives no regard to how the ORB has
+  /// configured  the resource factory. This will be used only
+  /// during Profile decoding and should be safe. This is a solution
+  /// for the bug report [Bug 1616]
+  static CORBA::Boolean demarshal_key (TAO::ObjectKey & key,
+                                       TAO_InputCDR & cdr);
 
   /**
    * @name Template methods that needs to be implemented by the

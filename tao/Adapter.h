@@ -15,6 +15,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <vector>
+
 #include "tao/CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +38,7 @@ namespace CORBA
 
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
 }
 
 class TAO_ORB_Core;

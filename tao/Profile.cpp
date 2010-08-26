@@ -15,6 +15,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.inl"
@@ -120,6 +121,158 @@ TAO_Profile::_key (void) const
   return key;
 }
 
+void
+TAO_Profile::encode_sequence_to_string (char* & str,
+                                        std::vector<CORBA::Octet> const & seq)
+{
+  // We must allocate a buffer which is (gag) 3 times the length
+  // of the sequence, which is the length required in the worst-case
+  // scenario of all non-printable characters.
+  //
+  // There are two strategies here...we could allocate all that space here,
+  // fill it up, then copy-allocate new space of just the right length.
+  // OR, we could just return this space.  The classic time-space tradeoff,
+  // and for now we'll let time win out, which means that we only do the
+  // allocation once.
+  CORBA::ULong const seq_len = seq.size ();
+  CORBA::ULong const len = 3 * seq_len; /* space for zero termination
+                                           not needed */
+  str = CORBA::string_alloc (len);
+
+  char * const eos = str + len;
+  char *       cp  = str;
+
+  for (CORBA::ULong i = 0;
+       cp < eos && i < seq_len;
+       ++i)
+    {
+      unsigned char bt = seq[i];
+      if (is_legal (bt))
+        {
+          *cp++ = static_cast<char> (bt);
+          continue;
+        }
+
+      *cp++ = '%';
+      *cp++ = static_cast<char> (ACE::nibble2hex ((bt >> 4) & 0x0f));
+      *cp++ = static_cast<char> (ACE::nibble2hex (bt & 0x0f));
+    }
+  // Zero terminate
+  *cp = '\0';
+}
+
+void
+TAO_Profile::decode_string_to_sequence (
+  std::vector<CORBA::Octet> & seq,
+  char const * str)
+{
+  if (str == 0)
+    {
+      seq.resize (0);
+      return;
+    }
+
+  size_t const str_len = ACE_OS::strlen (str);
+
+  // Ensure sequence length value does not exceed maximum value for
+  // sequence index type (CORBA::ULong).  This is mostly an issue for
+  // 64-bit MS Windows builds.
+  CORBA::ULong const len =
+    ACE_Utils::truncate_cast<CORBA::ULong> (str_len);
+
+  char const * const eos = str + str_len;
+  char const *       cp  = str;
+
+  // Set the length of the sequence to be as long as we'll possibly
+  // need...we'll reset it to the actual length later.
+  seq.resize (len);
+
+  CORBA::ULong i = 0;
+  for (;
+       cp < eos && i < len;
+       ++i)
+    {
+      if (*cp == '%' || *cp == '\\')
+        {
+          // This is an escaped non-printable,
+          // so we decode the hex values into
+          // the sequence's octet
+          seq[i]  = static_cast<CORBA::Octet> (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= static_cast<CORBA::Octet> (ACE::hex2byte (cp[2]));
+          cp += 3;
+        }
+      else
+        // Copy it in
+        seq[i] = *cp++;
+    }
+
+  // Set the length appropriately
+  seq.resize (i);
+}
+
+CORBA::Boolean
+TAO_Profile::is_legal (unsigned char c)
+{
+  if (isalnum (c))
+  {
+    return true;
+  }
+  else
+  {
+    return ( c == ';' || c == '/' ||c == ':' || c == '?' ||
+             c == '@' || c == '&' ||c == '=' || c == '+' ||
+             c == '$' || c == ',' ||c == '_' || c == '.' ||
+             c == '!' || c == '~' ||c == '*' || c == '\'' ||
+             c == '-' || c == '(' || c == ')' );
+  }
+}
+
+/*static*/ CORBA::Boolean
+TAO_Profile::demarshal_key (TAO::ObjectKey &key,
+                               TAO_InputCDR &strm)
+{
+  CORBA::ULong _tao_seq_len;
+
+  if (strm >> _tao_seq_len)
+    {
+      // Add a check to the length of the sequence
+      // to make sure it does not exceed the length
+      // of the stream. (See bug 58.)
+      if (_tao_seq_len > strm.length ())
+        {
+          return 0;
+        }
+
+      // Set the length of the sequence.
+      key.resize (_tao_seq_len);
+
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len)
+        {
+          return 1;
+        }
+/*
+      // Retrieve all the elements.
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      if (ACE_BIT_DISABLED (strm.start ()->flags (),
+      ACE_Message_Block::DONT_DELETE))
+      {
+        key.replace (_tao_seq_len, strm.start ());
+        key.mb ()->wr_ptr (key.mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
+      return strm.read_octet_array (key.get_buffer (),
+                                    _tao_seq_len);
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+
+//      return strm.read_octet_array (key.get_buffer (), key.length ());
+      return strm >> key;
+//#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+
+    }
+  return 0;
+}
 
 int
 TAO_Profile::encode (TAO_OutputCDR &stream) const
@@ -204,7 +357,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
   TAO::ObjectKey ok;
 
   // ... and object key.
-  if (TAO::ObjectKey::demarshal_key (ok, cdr) == 0)
+  if (TAO_Profile::demarshal_key (ok, cdr) == 0)
     {
       return -1;
     }

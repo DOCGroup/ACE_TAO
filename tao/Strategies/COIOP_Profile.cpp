@@ -128,8 +128,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   this->endpoint_.uuid_.from_string (tmp._retn ());
 
   TAO::ObjectKey ok;
-  TAO::ObjectKey::decode_string_to_sequence (ok,
-                                             okd + 1);
+  TAO_Profile::decode_string_to_sequence (ok, okd + 1);
 
   (void) this->orb_core ()->object_key_table ().bind (ok,
                                                       this->ref_object_key_);
