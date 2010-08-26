@@ -51,6 +51,7 @@ use PerlACE::Run_Test;
 @files_vcproj = ();
 @files_run_pl = ();
 @files_generic = ();
+@files_doxygen = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -147,6 +148,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(cdp)$/i) {
         push @files_cdp, ($name);
+    }
+    elsif ($name =~ /\.(doxygen)$/i) {
+        push @files_doxygen, ($name);
     }
     elsif ($name =~ /\.(pm|cmd|java|sh|txt|xml)$/i) {
         push @files_generic, ($name);
@@ -425,7 +429,7 @@ sub check_for_ACE_Thread_Mutex ()
 sub check_for_tab ()
 {
     print "Running tabs check\n";
-    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp) {
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp, @files_doxygen) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
