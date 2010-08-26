@@ -1,3 +1,17 @@
+Thu Aug 26 13:04:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check doxygen files for tabs
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+        * html/index.html:
+          Changed documentation subdirectories to make debian packaging easier
+
 Thu Aug 26 12:30:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * debian/control:

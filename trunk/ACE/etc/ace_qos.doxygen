@@ -74,7 +74,7 @@ IGNORE_PREFIX         = ACE_ ACE_QoS_
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace/QoS
+HTML_OUTPUT           = html/libace-doc/QoS
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,8 +135,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=..
-GENERATE_TAGFILE      = html/ace/QoS/ACE_QoS.tag
+TAGFILES              = html/libace-doc/ACE.tag=..
+GENERATE_TAGFILE      = html/libace-doc/QoS/ACE_QoS.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

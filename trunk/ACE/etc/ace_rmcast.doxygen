@@ -74,7 +74,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace/rmcast
+HTML_OUTPUT           = html/libace-doc/rmcast
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,8 +135,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=..
-GENERATE_TAGFILE      = html/ace/rmcast/ACE_RMCast.tag
+TAGFILES              = html/libace-doc/ACE.tag=..
+GENERATE_TAGFILE      = html/libace-doc/rmcast/ACE_RMCast.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
