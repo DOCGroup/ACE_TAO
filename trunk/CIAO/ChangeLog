@@ -1,3 +1,11 @@
+Thu Aug 26 15:17:05 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Move the _duplicate into the plugin manager.
+
 Thu Aug 26 14:55:26 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
