@@ -129,15 +129,15 @@ namespace DAnCE
 
   void
   Interceptor_Handler_Impl::remove_instance (const ::Deployment::DeploymentPlan &,
-                                      ::CORBA::ULong,
-                                      const ::CORBA::Any &instance_reference)
+                                             ::CORBA::ULong,
+                                             const ::CORBA::Any &)
   {
   }
 
   void
   Interceptor_Handler_Impl::connect_instance (const ::Deployment::DeploymentPlan &,
-                                       ::CORBA::ULong,
-                                       const ::CORBA::Any &)
+                                              ::CORBA::ULong,
+                                              const ::CORBA::Any &)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
