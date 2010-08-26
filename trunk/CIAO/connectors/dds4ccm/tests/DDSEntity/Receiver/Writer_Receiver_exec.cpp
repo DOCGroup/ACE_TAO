@@ -147,6 +147,11 @@ namespace CIAO_Writer_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Take returned %C with %d samples\n",
                 ::CIAO::DDS4CCM::translate_retcode (result), data.length ()));
 
+    ::DDS::ReturnCode_t const result_loan = this->reader_->return_loan (data, sample_info_seq);
+
+    ACE_DEBUG ((LM_DEBUG, "Return loan returned %C\n",
+                ::CIAO::DDS4CCM::translate_retcode (result_loan)));
+
     ::CCM_DDS::DataListenerControl_var lc =
       this->context_->get_connection_info_out_data_control ();
 
