@@ -170,10 +170,12 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
       os_ << "Seq dds_seq_type;" << be_nl
           << "typedef ::" << dt_name
           << "TypeSupport type_support;" << be_nl
+          << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
+          << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl
           << "typedef ::" << dt_name
-          << "DataWriter data_writer;" << be_nl
+          << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
-          << "DataReader data_reader;" << be_uidt_nl
+          << "DataReader datareader_type;" << be_uidt_nl
           << "};";
     }
 }
