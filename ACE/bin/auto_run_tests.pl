@@ -17,13 +17,16 @@ use English;
 use Getopt::Std;
 use Cwd;
 
-use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT);
+use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT DANCE_ROOT);
 
 if (!defined $TAO_ROOT && -d "$ACE_ROOT/TAO") {
     $TAO_ROOT = "$ACE_ROOT/TAO";
 }
 if (!defined $CIAO_ROOT && -d "$ACE_ROOT/TAO/CIAO") {
     $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO";
+}
+if (!defined $DANCE_ROOT && -d "$ACE_ROOT/TAO/CIAO/DAnCE") {
+    $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO/DAnCE";
 }
 
 ################################################################################
@@ -40,7 +43,7 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
     print "    -s sandbox  Runs each program using a sandbox program\n";
     print "    -o          ORB test only\n";
     print "    -t          TAO tests (other than ORB tests) only\n";
-    print "    -C          CIAO tests only\n";
+    print "    -C          CIAO and DAnCE tests only\n";
     print "    -Config cfg Run the tests for the <cfg> configuration\n";
     print "    -l list     Load the list and run only those tests\n";
     print "    -r dir      Root directory for running the tests\n";
@@ -62,6 +65,12 @@ if (!getopts ('adl:os:r:tC') || $opt_h) {
         print "CIAO Test Configs: " . $ciao_config_list->list_configs ()
             . "\n";
     }
+    if (defined $DANCE_ROOT) {
+        $dance_config_list = new PerlACE::ConfigList;
+        $dance_config_list->load ($DANCE_ROOT."/bin/dance_tests.lst");
+        print "DAnCE Test Configs: " . $dance_config_list->list_configs ()
+            . "\n";
+    }
     exit (1);
 }
 
@@ -81,6 +90,7 @@ push (@file_list, "$TAO_ROOT/bin/tao_other_tests.lst");
 
 if ($opt_C) {
 push (@file_list, "$CIAO_ROOT/bin/ciao_tests.lst");
+push (@file_list, "$DANCE_ROOT/bin/dance_tests.lst");
 }
 
 if ($opt_r) {
@@ -102,6 +112,9 @@ if (scalar(@file_list) == 0) {
     }
     if (-d $CIAO_ROOT) {
         push (@file_list, "$CIAO_ROOT/bin/ciao_tests.lst");
+    }
+    if (-d $DANCE_ROOT) {
+        push (@file_list, "$DANCE_ROOT/bin/dance_tests.lst");
     }
 }
 
@@ -152,11 +165,15 @@ foreach my $test_lst (@file_list) {
         if ($directory =~ m:^CIAO/(.*):) {
           $directory = $1;
         }
+        if ($directory =~ m:^DAnCE/(.*):) {
+          $directory = $1;
+        }
 
         $status = undef;
         foreach my $path ($ACE_ROOT."/$directory",
                           $TAO_ROOT."/$directory",
                           $CIAO_ROOT."/$directory",
+                          $DANCE_ROOT."/$directory",
                           $startdir."/$directory",
                           $startdir."/$orig_dir") {
           if (-d $path && ($status = chdir ($path))) {
