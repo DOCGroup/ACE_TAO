@@ -85,7 +85,7 @@ project(CFT_ReadGet_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += CFT_ReadGet_Test_Connector_lem_stub CFT_ReadGet_Test_Connector_stub \
              CFT_ReadGet_Test_Base_stub
   sharedname = CFT_ReadGet_Test_Connector_exec
@@ -113,7 +113,7 @@ project(CFT_ReadGet_Test_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_
 }
 
 
-project(CFT_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub {
+project(CFT_ReadGet_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += CFT_ReadGet_Test_Connector_lem_stub CFT_ReadGet_Test_Connector_exec \
                 CFT_ReadGet_Test_Connector_stub 
   sharedname  = CFT_ReadGet_Test_Connector_svnt

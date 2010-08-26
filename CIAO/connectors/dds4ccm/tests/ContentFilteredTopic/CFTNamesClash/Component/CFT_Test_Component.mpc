@@ -113,7 +113,7 @@ project(CFT_Test_Component_exec) : ciao_executor, dds4ccm_lem_stub {
 }
 
 
-project(CFT_Test_Component_svnt) : ciao_servant, dds4ccm_base, dds4ccm_lem_stub, dds4ccm_skel {
+project(CFT_Test_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   CFT_Test_Component_lem_stub CFT_Test_Base_stub \
                   CFT_Test_Connector_stub CFT_Test_Connector_svnt \
                   CFT_Test_Component_exec CFT_Test_Connector_lem_stub 

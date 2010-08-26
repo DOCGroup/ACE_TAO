@@ -85,7 +85,7 @@ project(DDS_DDSWriterEntitySender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_impl {
   after += DDS_DDSWriterEntitySender_lem_stub DDS_DDSWriterEntitySender_stub \
            DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub \
            DDS_DDSWriterEntityConnector_exec

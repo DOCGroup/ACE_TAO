@@ -84,7 +84,7 @@ project(DDS_LatencyTT_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_LatencyTT_Test_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_LatencyTT_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += DDS_LTT_Test_Connector_lem_stub DDS_LatencyTT_Test_Connector_stub 
   sharedname = DDS_LatencyTT_Test_Connector_exec
   libs += DDS_LatencyTT_Test_Connector_stub DDS_LTT_Test_Connector_lem_stub DDS_LatencyTT_Test_Base_stub 
