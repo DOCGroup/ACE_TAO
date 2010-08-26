@@ -1,3 +1,11 @@
+Thu Aug 26 11:39:22 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+
+          Warnings.
+
 Thu Aug 26 11:01:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity:
@@ -6,7 +14,7 @@ Thu Aug 26 11:01:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:
           Updated test
-    
+
 Thu Aug 26 10:59:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/DDSWriterEntity/Receiver/Writer_Receiver_exec.cpp:

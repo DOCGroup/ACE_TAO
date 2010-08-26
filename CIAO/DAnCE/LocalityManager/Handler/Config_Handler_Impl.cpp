@@ -129,8 +129,8 @@ namespace DAnCE
 
   void
   Config_Handler_Impl::remove_instance (const ::Deployment::DeploymentPlan &,
-                                      ::CORBA::ULong,
-                                      const ::CORBA::Any &instance_reference)
+                                        ::CORBA::ULong,
+                                        const ::CORBA::Any &)
   {
   }
 
