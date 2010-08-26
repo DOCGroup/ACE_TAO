@@ -84,7 +84,7 @@ IGNORE_PREFIX         = ACE_
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace
+HTML_OUTPUT           = html/libace-doc
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -149,7 +149,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 #---------------------------------------------------------------------------
 
 TAGFILES              =
-GENERATE_TAGFILE      = html/ace/ACE.tag
+GENERATE_TAGFILE      = html/libace-doc/ACE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

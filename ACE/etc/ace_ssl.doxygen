@@ -74,7 +74,7 @@ IGNORE_PREFIX         = ACE_SSL_
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace/ssl
+HTML_OUTPUT           = html/libace-doc/ssl
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,8 +135,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=..
-GENERATE_TAGFILE      = html/ace/ssl/ACE_SSL.tag
+TAGFILES              = html/libace-doc/ACE.tag=..
+GENERATE_TAGFILE      = html/libace-doc/ssl/ACE_SSL.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
