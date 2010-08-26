@@ -97,6 +97,18 @@ namespace DAnCE
   Plugin_Manager::Plugin_Manager (void)
   {
   }
+
+  void
+  Plugin_Manager::set_orb (CORBA::ORB_ptr orb)
+  {
+    this->orb_ = CORBA::ORB::_duplicate (orb);
+  }
+  
+  CORBA::ORB_ptr 
+  Plugin_Manager::get_orb (void)
+  {
+    return this->orb_;
+  }
   
   template<typename T>
   struct Closer
@@ -109,6 +121,7 @@ namespace DAnCE
 
   Plugin_Manager::~Plugin_Manager (void)
   {
+    ACE_ERROR ((LM_EMERGENCY, "**** ~plugin_manager\n"));
     try
       {
         std::for_each (handler_map_.begin (),

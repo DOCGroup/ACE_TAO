@@ -1,12 +1,12 @@
 // $Id$
 
 #include "Container_Handler.h"
-#include "tao/ORB_Core.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Containers/Session/Session_Container.h"
 #include "ciao/Base/Server_init.h"
 #include "DAnCE/DAnCE_Utility.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
+#include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "CIAO_State.h"
 
 namespace CIAO
@@ -220,20 +220,8 @@ namespace CIAO
                     "Received %u properties for configuration\n",
                     props.length ()));
 
-    DAnCE::Utility::get_property_value (DAnCE::ENTITY_POA,
-                                        props,
-                                        this->poa_);
-    
-    if (CORBA::is_nil (this->poa_))
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Container_Handler_i::configure - "
-                        "Unable to locate POA.\n"));
-        throw ::Deployment::StartError ("CIAO Container Handler ",
-                                        "Unable to locate POA");
-      }
-    
-    this->orb_ = CORBA::ORB::_duplicate (TAO_ORB_Core_instance ()->orb ());
+    this->orb_ = 
+      CORBA::ORB::_duplicate (DAnCE::PLUGIN_MANAGER::instance ()->get_orb ());
     
     if (CORBA::is_nil (this->orb_))
       {
@@ -242,6 +230,21 @@ namespace CIAO
                         "Unable to locate ORB.\n"));
         throw ::Deployment::StartError ("CIAO Container Handler ",
                                         "Unable to locate ORB");
+      }
+    
+    CORBA::Object_var object =
+      this->orb_->resolve_initial_references ("RootPOA");
+
+    this->poa_ = 
+      PortableServer::POA::_narrow (object.in ());
+
+    if (CORBA::is_nil (this->poa_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Container_Handler_i::configure - "
+                        "Unable to locate POA.\n"));
+        throw ::Deployment::StartError ("CIAO Container Handler ",
+                                        "Unable to locate POA");
       }
     
     CIAO::Server_init (orb_);
