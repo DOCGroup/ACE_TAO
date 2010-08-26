@@ -32,9 +32,9 @@ project(DDS_InstanceHandleConnector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_InstanceHandleConnector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_InstanceHandleConnector_lem_gen DDS_InstanceHandleConnector_stub DDS_DDSInstanceHandleBase_stub DDS4CCM_lem_stub
-  libs  += DDS_DDSInstanceHandleBase_stub DDS_InstanceHandleConnector_stub DDS4CCM_lem_stub
+project(DDS_InstanceHandleConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += DDS_InstanceHandleConnector_lem_gen DDS_InstanceHandleConnector_stub DDS_DDSInstanceHandleBase_stub 
+  libs  += DDS_DDSInstanceHandleBase_stub DDS_InstanceHandleConnector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(DDS_InstanceHandleConnector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_InstanceHandleConnector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub DDS4CCM_lem_stub DDS_DDSInstanceHandleBase_stub
+  after   += DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_stub DDS_DDSInstanceHandleBase_stub
   sharedname = DDS_InstanceHandleConnector_exec
-  libs += DDS_InstanceHandleConnector_stub DDS_InstanceHandleConnector_lem_stub DDS_DDSInstanceHandleBase_stub DDS4CCM_lem_stub DDS_DDSInstanceHandleBase_stub
+  libs += DDS_InstanceHandleConnector_stub DDS_InstanceHandleConnector_lem_stub DDS_DDSInstanceHandleBase_stub DDS_DDSInstanceHandleBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(DDS_InstanceHandleConnector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_InstanceHandleConnector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_exec DDS_InstanceHandleConnector_stub DDS4CCM_lem_stub
+  after      += DDS_InstanceHandleConnector_lem_stub DDS_InstanceHandleConnector_exec DDS_InstanceHandleConnector_stub 
   sharedname  = DDS_InstanceHandleConnector_svnt
   libs       += DDS_InstanceHandleConnector_stub \
                 DDS_InstanceHandleConnector_lem_stub  \
                 DDS_DDSInstanceHandleBase_stub \
-                DDS_InstanceHandleConnector_exec \
-                DDS4CCM_lem_stub
+                DDS_InstanceHandleConnector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

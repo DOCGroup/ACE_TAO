@@ -84,14 +84,13 @@ project(OIT_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(OIT_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
+project(OIT_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += OIT_Test_Receiver_lem_stub OIT_Test_Receiver_stub \
              OIT_Test_Base_stub OIT_Receiver_Connector_stub \
-             OIT_Receiver_Connector_lem_stub DDS4CCM_lem_stub
+             OIT_Receiver_Connector_lem_stub 
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub OIT_Test_Base_stub \
-          OIT_Receiver_Connector_stub OIT_Receiver_Connector_lem_stub \
-          DDS4CCM_lem_stub
+          OIT_Receiver_Connector_stub OIT_Receiver_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -114,16 +113,14 @@ project(OIT_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(OIT_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
+project(OIT_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   OIT_Test_Receiver_lem_stub OIT_Test_Base_stub \
                   OIT_Receiver_Connector_stub OIT_Receiver_Connector_svnt \
-                  OIT_Test_Receiver_exec OIT_Receiver_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel
+                  OIT_Test_Receiver_exec OIT_Receiver_Connector_lem_stub 
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub OIT_Test_Base_stub \
                 OIT_Receiver_Connector_stub OIT_Receiver_Connector_svnt \
-                Receiver_exec OIT_Receiver_Connector_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel
+                Receiver_exec OIT_Receiver_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

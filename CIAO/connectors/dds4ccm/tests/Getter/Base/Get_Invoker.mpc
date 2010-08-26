@@ -82,12 +82,11 @@ project(DDS_Get_Invoker_stub) : ccm_stub, dds4ccm_base {
 }
 
 
-project(DDS_Get_Invoker_svnt) : ciao_servant, dds4ccm_base {
+project(DDS_Get_Invoker_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   DDS_Get_Invoker_lem_stub DDS_Get_Invoker_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel DDS_Get_Invoker_idl_gen
+                  DDS_Get_Invoker_idl_gen
   sharedname  = Get_Invoker_svnt
-  libs       += Get_Invoker_stub Get_Invoker_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += Get_Invoker_stub Get_Invoker_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

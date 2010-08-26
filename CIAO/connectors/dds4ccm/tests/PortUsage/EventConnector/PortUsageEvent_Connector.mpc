@@ -32,9 +32,9 @@ project(PortUsageEvent_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(PortUsageEvent_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += PortUsageEvent_Connector_lem_gen PortUsageEvent_Connector_stub PortUsage_Test_Base_stub DDS4CCM_lem_stub
-  libs  += PortUsage_Test_Base_stub PortUsageEvent_Connector_stub DDS4CCM_lem_stub
+project(PortUsageEvent_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += PortUsageEvent_Connector_lem_gen PortUsageEvent_Connector_stub PortUsage_Test_Base_stub 
+  libs  += PortUsage_Test_Base_stub PortUsageEvent_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(PortUsageEvent_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(PortUsageEvent_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += PortUsageEvent_Connector_lem_stub PortUsageEvent_Connector_stub DDS4CCM_lem_stub PortUsage_Test_Base_stub
+  after   += PortUsageEvent_Connector_lem_stub PortUsageEvent_Connector_stub PortUsage_Test_Base_stub
   sharedname = PortUsageEvent_Connector_exec
-  libs += PortUsageEvent_Connector_stub PortUsageEvent_Connector_lem_stub PortUsage_Test_Base_stub DDS4CCM_lem_stub PortUsage_Test_Base_stub
+  libs += PortUsageEvent_Connector_stub PortUsageEvent_Connector_lem_stub PortUsage_Test_Base_stub PortUsage_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(PortUsageEvent_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(PortUsageEvent_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += PortUsageEvent_Connector_lem_stub PortUsageEvent_Connector_exec PortUsageEvent_Connector_stub DDS4CCM_lem_stub
+  after      += PortUsageEvent_Connector_lem_stub PortUsageEvent_Connector_exec PortUsageEvent_Connector_stub 
   sharedname  = PortUsageEvent_Connector_svnt
   libs       += PortUsageEvent_Connector_stub \
                 PortUsageEvent_Connector_lem_stub  \
                 PortUsage_Test_Base_stub \
-                PortUsageEvent_Connector_exec \
-                DDS4CCM_lem_stub
+                PortUsageEvent_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

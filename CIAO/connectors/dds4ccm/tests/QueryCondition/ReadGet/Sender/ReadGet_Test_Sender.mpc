@@ -87,14 +87,14 @@ project(QC_ReadGet_Test_Sender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(QC_ReadGet_Test_Sender_exec) : ciao_executor, dds4ccm_base {
+project(QC_ReadGet_Test_Sender_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += QC_ReadGet_Test_Sender_lem_stub QC_ReadGet_Test_Sender_stub \
              QC_ReadGet_Test_Connector_lem_stub QC_ReadGet_Test_Connector_stub \
-             DDS4CCM_lem_stub QC_ReadGet_Starter_lem_stub
+             QC_ReadGet_Starter_lem_stub
   sharedname = Sender_exec
   libs    += Sender_stub Sender_lem_stub QC_ReadGet_Test_Base_stub \
              QC_ReadGet_Test_Connector_lem_stub QC_ReadGet_Test_Connector_stub \
-             QC_ReadGet_Starter_stub DDS4CCM_lem_stub QC_ReadGet_Starter_lem_stub \
+             QC_ReadGet_Starter_stub QC_ReadGet_Starter_lem_stub \
              QC_ReadGet_Starter_lem_stub
   libpaths += ../lib
   includes += ..
@@ -118,15 +118,15 @@ project(QC_ReadGet_Test_Sender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(QC_ReadGet_Test_Sender_svnt) : ciao_servant, dds4ccm_base {
+project(QC_ReadGet_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      += QC_ReadGet_Test_Base_stub  QC_ReadGet_Test_Sender_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel QC_ReadGet_Test_Connector_stub \
+                QC_ReadGet_Test_Connector_stub \
                 QC_ReadGet_Test_Connector_svnt QC_ReadGet_Test_Connector_lem_stub \
                 QC_ReadGet_Starter_stub QC_ReadGet_Starter_svnt \
                 QC_ReadGet_Starter_lem_stub
   sharedname  = Sender_svnt
-  libs       += Sender_stub Sender_lem_stub QC_ReadGet_Test_Base_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel QC_ReadGet_Test_Connector_stub QC_ReadGet_Test_Connector_svnt \
+  libs       += Sender_stub Sender_lem_stub QC_ReadGet_Test_Base_stub \
+                QC_ReadGet_Test_Connector_stub QC_ReadGet_Test_Connector_svnt \
                 QC_ReadGet_Test_Connector_lem_stub QC_ReadGet_Starter_stub \
                 QC_ReadGet_Starter_svnt QC_ReadGet_Starter_lem_stub
   libpaths += ../lib

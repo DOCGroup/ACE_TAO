@@ -85,14 +85,14 @@ project(DDS_DDSWriterEntitySender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl {
+project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_base, dds4ccm_impl, dds4ccm_lem_stub {
   after += DDS_DDSWriterEntitySender_lem_stub DDS_DDSWriterEntitySender_stub \
            DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub \
-           DDS4CCM_lem_stub DDS_DDSWriterEntityConnector_exec
+           DDS_DDSWriterEntityConnector_exec
   sharedname = Sender_exec
   libs += Sender_stub Sender_lem_stub DDS_DDSWriterEntityBase_stub \
           DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub \
-          DDS4CCM_lem_stub DDS_DDSWriterEntityConnector_exec
+          DDS_DDSWriterEntityConnector_exec
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -115,13 +115,13 @@ project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_base, dds4ccm_i
 }
 
 
-project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_base {
+project(DDS_DDSWriterEntitySender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after += DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntitySender_lem_stub \
-           DDS4CCM_lem_stub DDS4CCM_skel DDS_DDSWriterEntityConnector_stub \
+           DDS_DDSWriterEntityConnector_stub \
            DDS_DDSWriterEntityConnector_svnt DDS_DDSWriterEntityConnector_lem_stub
   sharedname = Sender_svnt
-  libs += Sender_stub Sender_lem_stub DDS_DDSWriterEntityBase_stub DDS4CCM_lem_stub \
-          DDS4CCM_skel DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt \
+  libs += Sender_stub Sender_lem_stub DDS_DDSWriterEntityBase_stub \
+          DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt \
           DDS_DDSWriterEntityConnector_lem_stub
   libpaths += ../lib
   libout = ../lib

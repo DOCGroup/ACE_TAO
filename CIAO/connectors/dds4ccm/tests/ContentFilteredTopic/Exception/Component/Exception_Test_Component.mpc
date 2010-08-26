@@ -84,14 +84,13 @@ project(CFT_Exception_Test_Component_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(CFT_Exception_Test_Component_exec) : ciao_executor, dds4ccm_base {
+project(CFT_Exception_Test_Component_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += CFT_Exception_Test_Component_lem_stub CFT_Exception_Test_Component_stub \
              CFT_Exception_Test_Base_stub CFT_Exception_Test_Connector_stub \
-             CFT_Exception_Test_Connector_lem_stub DDS4CCM_lem_stub
+             CFT_Exception_Test_Connector_lem_stub 
   sharedname = Component_exec
   libs += Component_stub Component_lem_stub CFT_Exception_Test_Base_stub \
-          CFT_Exception_Test_Connector_stub CFT_Exception_Test_Connector_lem_stub \
-          DDS4CCM_lem_stub
+          CFT_Exception_Test_Connector_stub CFT_Exception_Test_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -114,16 +113,14 @@ project(CFT_Exception_Test_Component_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(CFT_Exception_Test_Component_svnt) : ciao_servant, dds4ccm_base {
+project(CFT_Exception_Test_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   CFT_Exception_Test_Component_lem_stub CFT_Exception_Test_Base_stub \
                   CFT_Exception_Test_Connector_stub CFT_Exception_Test_Connector_svnt \
-                  CFT_Exception_Test_Component_exec CFT_Exception_Test_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel
+                  CFT_Exception_Test_Component_exec CFT_Exception_Test_Connector_lem_stub 
   sharedname  = Component_svnt
   libs       += Component_stub Component_lem_stub CFT_Exception_Test_Base_stub \
                 CFT_Exception_Test_Connector_stub CFT_Exception_Test_Connector_svnt \
-                Component_exec CFT_Exception_Test_Connector_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel
+                Component_exec CFT_Exception_Test_Connector_lem_stub  
   libpaths += ../lib
   libout = ../lib
   includes += ..

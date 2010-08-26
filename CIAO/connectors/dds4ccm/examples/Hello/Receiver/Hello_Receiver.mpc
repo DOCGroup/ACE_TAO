@@ -85,11 +85,11 @@ project(DDS_Hello_Receiver_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_Hello_Receiver_exec) : ciao_executor, dds4ccm_base {
+project(DDS_Hello_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
   avoids  += ace_for_tao
-  after   += DDS_Hello_Receiver_lem_stub DDS_Hello_Receiver_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub DDS4CCM_lem_stub
+  after   += DDS_Hello_Receiver_lem_stub DDS_Hello_Receiver_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub 
   sharedname = Receiver_exec
-  libs += Receiver_stub Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub DDS4CCM_lem_stub
+  libs += Receiver_stub Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -112,11 +112,11 @@ project(DDS_Hello_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_Hello_Receiver_svnt) : ciao_servant, dds4ccm_base {
+project(DDS_Hello_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   avoids     += ace_for_tao
-  after      +=   DDS_Hello_Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_svnt DDS_Hello_Receiver_exec DDS_Hello_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+  after      +=   DDS_Hello_Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_svnt DDS_Hello_Receiver_exec DDS_Hello_Connector_lem_stub 
   sharedname  = Receiver_svnt
-  libs       += Receiver_stub Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_svnt Receiver_exec DDS_Hello_Connector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += Receiver_stub Receiver_lem_stub DDS_Hello_Base_stub DDS_Hello_Connector_stub DDS_Hello_Connector_svnt Receiver_exec DDS_Hello_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

@@ -13,6 +13,7 @@
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 #include "dds4ccm/impl/Utils.h"
+#include "dds4ccm/impl/DataReader.h"
 #include "dds4ccm/idl/dds4ccm_BaseC.h"
 #include "dds4ccm/impl/ndds/InstanceHandle_t.h"
 
@@ -38,9 +39,7 @@ namespace CIAO
     class CCM_DDS_DataReaderListener_T;
 
     template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-    class DataReader_T
-      : public virtual ::DDS::CCM_DataReader,
-        public virtual ::CORBA::LocalObject
+    class DataReader_T : public virtual CCM_DDS_DataReader_Base
     {
     typedef ::CIAO::DDS4CCM::CCM_DDS_DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>
       DataReaderListener_type;
@@ -192,6 +191,8 @@ namespace CIAO
 
       ::DDS::StatusMask get_mask (void);
 
+      virtual DDSDataReader * get_impl_base (void);
+      
     private:
       typename DDS_TYPE::data_reader * impl_;
 

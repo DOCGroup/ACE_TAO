@@ -1,8 +1,6 @@
 // $Id$
 
-project (DDS4CCM_skel) : install, dds4ccm, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
-  after += DDS4CCM_lem_stub
-  libs  += DDS4CCM_lem_stub DDS4CCM_stub
+project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
   includes += $(CIAO_ROOT)/connectors
 
   dynamicflags += DDS4CCM_SKEL_BUILD_DLL
