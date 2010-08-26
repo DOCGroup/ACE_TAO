@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ifr
+HTML_OUTPUT           = html/libtao-doc/ifr
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,12 +135,12 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-			html/tao/TAO.tag=.. \
-			html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
-			html/tao/iortable/TAO_IORTable.tag=../iortable \
-			html/tao/cosnaming/TAO_CosNaming.tag=../cosnaming
-GENERATE_TAGFILE      = html/tao/ifr/TAO_IFR.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver \
+                        html/libtao-doc/iortable/TAO_IORTable.tag=../iortable \
+                        html/libtao-doc/cosnaming/TAO_CosNaming.tag=../cosnaming
+GENERATE_TAGFILE      = html/libtao-doc/ifr/TAO_IFR.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
