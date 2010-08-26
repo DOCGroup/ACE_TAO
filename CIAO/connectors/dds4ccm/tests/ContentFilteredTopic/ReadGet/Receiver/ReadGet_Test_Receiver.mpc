@@ -87,15 +87,15 @@ project(CFT_ReadGet_Test_Receiver_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(CFT_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += CFT_ReadGet_Test_Receiver_lem_stub CFT_ReadGet_Test_Receiver_stub \
              CFT_ReadGet_Test_Base_stub CFT_ReadGet_Test_Connector_stub \
-             CFT_ReadGet_Test_Connector_lem_stub DDS4CCM_lem_stub \
+             CFT_ReadGet_Test_Connector_lem_stub \
              CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub CFT_ReadGet_Test_Base_stub \
           CFT_ReadGet_Test_Connector_stub CFT_ReadGet_Test_Connector_lem_stub \
-          DDS4CCM_lem_stub CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub
+          CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -118,17 +118,17 @@ project(CFT_ReadGet_Test_Receiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(CFT_ReadGet_Test_Receiver_svnt) : ciao_servant, dds4ccm_base {
+project(CFT_ReadGet_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   CFT_ReadGet_Test_Receiver_lem_stub CFT_ReadGet_Test_Base_stub \
                   CFT_ReadGet_Test_Connector_stub CFT_ReadGet_Test_Connector_svnt \
                   CFT_ReadGet_Test_Receiver_exec CFT_ReadGet_Test_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel CFT_ReadGet_Starter_stub \
+                  CFT_ReadGet_Starter_stub \
                   CFT_ReadGet_Starter_svnt CFT_ReadGet_Starter_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub CFT_ReadGet_Test_Base_stub \
                 CFT_ReadGet_Test_Connector_stub CFT_ReadGet_Test_Connector_svnt \
-                Receiver_exec CFT_ReadGet_Test_Connector_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel CFT_ReadGet_Starter_stub CFT_ReadGet_Starter_svnt \
+                Receiver_exec CFT_ReadGet_Test_Connector_lem_stub \
+                CFT_ReadGet_Starter_stub CFT_ReadGet_Starter_svnt \
                 CFT_ReadGet_Starter_lem_stub
   libpaths += ../lib
   libout = ../lib

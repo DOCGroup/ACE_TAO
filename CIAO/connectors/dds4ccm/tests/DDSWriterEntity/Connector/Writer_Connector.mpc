@@ -32,9 +32,9 @@ project(DDS_DDSWriterEntityConnector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_DDSWriterEntityConnector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_DDSWriterEntityConnector_lem_gen DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityBase_stub DDS4CCM_lem_stub
-  libs  += DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS4CCM_lem_stub
+project(DDS_DDSWriterEntityConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += DDS_DDSWriterEntityConnector_lem_gen DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityBase_stub 
+  libs  += DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(DDS_DDSWriterEntityConnector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_DDSWriterEntityConnector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub DDS4CCM_lem_stub
+  after   += DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_stub 
   sharedname = DDS_DDSWriterEntityConnector_exec
-  libs += DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityBase_stub DDS4CCM_lem_stub
+  libs += DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityBase_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(DDS_DDSWriterEntityConnector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_DDSWriterEntityConnector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_exec DDS_DDSWriterEntityConnector_stub DDS4CCM_lem_stub
+  after      += DDS_DDSWriterEntityConnector_lem_stub DDS_DDSWriterEntityConnector_exec DDS_DDSWriterEntityConnector_stub 
   sharedname  = DDS_DDSWriterEntityConnector_svnt
   libs       += DDS_DDSWriterEntityConnector_stub \
                 DDS_DDSWriterEntityConnector_lem_stub  \
                 DDS_DDSWriterEntityBase_stub \
-                DDS_DDSWriterEntityConnector_exec \
-                DDS4CCM_lem_stub
+                DDS_DDSWriterEntityConnector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

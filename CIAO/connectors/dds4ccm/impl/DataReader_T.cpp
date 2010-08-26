@@ -811,3 +811,10 @@ CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_impl (
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
 }
+
+template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
+DDSDataReader *
+CIAO::DDS4CCM::DataReader_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_impl_base (void)
+{
+  return this->impl_;
+}

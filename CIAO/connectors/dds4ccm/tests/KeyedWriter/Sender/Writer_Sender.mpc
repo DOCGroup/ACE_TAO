@@ -83,10 +83,10 @@ project(DDS_KeyedWriterSender_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_KeyedWriterSender_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_KeyedWriterSender_lem_stub DDS_KeyedWriterSender_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub
+project(DDS_KeyedWriterSender_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += DDS_KeyedWriterSender_lem_stub DDS_KeyedWriterSender_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub 
   sharedname = Sender_exec
-  libs += Sender_stub Sender_lem_stub DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub DDS4CCM_lem_stub
+  libs += Sender_stub Sender_lem_stub DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_lem_stub DDS_KeyedWriterConnector_stub 
   libpaths += ../lib
   includes += ..
   libout = ../lib
@@ -109,11 +109,11 @@ project(DDS_KeyedWriterSender_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_KeyedWriterSender_svnt) : ciao_servant, dds4ccm_base {
-  after      += DDS_KeyedWriterBase_stub  DDS_KeyedWriterSender_lem_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt  DDS_KeyedWriterConnector_lem_stub
+project(DDS_KeyedWriterSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += DDS_KeyedWriterBase_stub  DDS_KeyedWriterSender_lem_stub DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt  DDS_KeyedWriterConnector_lem_stub
   sharedname  = Sender_svnt
   libs       += Sender_stub Sender_lem_stub  \
-                DDS_KeyedWriterBase_stub DDS4CCM_lem_stub DDS4CCM_skel DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt DDS_KeyedWriterConnector_lem_stub
+                DDS_KeyedWriterBase_stub DDS_KeyedWriterConnector_stub DDS_KeyedWriterConnector_svnt DDS_KeyedWriterConnector_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..

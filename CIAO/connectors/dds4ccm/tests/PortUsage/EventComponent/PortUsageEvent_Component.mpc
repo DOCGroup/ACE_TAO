@@ -84,14 +84,13 @@ project(PortUsageEvent_Component_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(PortUsageEvent_Component_exec) : ciao_executor, dds4ccm_base {
+project(PortUsageEvent_Component_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += PortUsageEvent_Component_lem_stub PortUsageEvent_Component_stub \
              PortUsage_Test_Base_stub PortUsageEvent_Connector_stub \
-             PortUsageEvent_Connector_lem_stub DDS4CCM_lem_stub
+             PortUsageEvent_Connector_lem_stub 
   sharedname = EventComponent_exec
   libs += EventComponent_stub EventComponent_lem_stub PortUsage_Test_Base_stub \
-          PortUsageEvent_Connector_stub PortUsageEvent_Connector_lem_stub \
-          DDS4CCM_lem_stub
+          PortUsageEvent_Connector_stub PortUsageEvent_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -114,16 +113,14 @@ project(PortUsageEvent_Component_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(PortUsageEvent_Component_svnt) : ciao_servant, dds4ccm_base {
+project(PortUsageEvent_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   PortUsageEvent_Component_lem_stub PortUsage_Test_Base_stub \
                   PortUsageEvent_Connector_stub PortUsageEvent_Connector_svnt \
-                  PortUsageEvent_Component_exec PortUsageEvent_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel
+                  PortUsageEvent_Component_exec PortUsageEvent_Connector_lem_stub 
   sharedname  = EventComponent_svnt
   libs       += EventComponent_stub EventComponent_lem_stub PortUsage_Test_Base_stub \
                 PortUsageEvent_Connector_stub PortUsageEvent_Connector_svnt \
-                EventComponent_exec PortUsageEvent_Connector_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel
+                EventComponent_exec PortUsageEvent_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

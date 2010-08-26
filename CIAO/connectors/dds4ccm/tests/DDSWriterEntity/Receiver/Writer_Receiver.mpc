@@ -81,10 +81,10 @@ project(DDS_DDSWriterEntityReceiver_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_DDSWriterEntityReceiver_exec) : ciao_executor, dds4ccm_base {
-  after   += DDS_DDSWriterEntityReceiver_lem_stub DDS_DDSWriterEntityReceiver_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub
+project(DDS_DDSWriterEntityReceiver_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += DDS_DDSWriterEntityReceiver_lem_stub DDS_DDSWriterEntityReceiver_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub 
   sharedname = Receiver_exec
-  libs += Receiver_stub Receiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub
+  libs += Receiver_stub Receiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -107,10 +107,10 @@ project(DDS_DDSWriterEntityReceiver_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(DDS_DDSWriterEntityReceiver_svnt) : ciao_servant, dds4ccm_base {
-  after      +=   DDS_DDSWriterEntityReceiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt DDS_DDSWriterEntityReceiver_exec DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+project(DDS_DDSWriterEntityReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      +=   DDS_DDSWriterEntityReceiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt DDS_DDSWriterEntityReceiver_exec DDS_DDSWriterEntityConnector_lem_stub 
   sharedname  = Receiver_svnt
-  libs       += Receiver_stub Receiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt Receiver_exec DDS_DDSWriterEntityConnector_lem_stub DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += Receiver_stub Receiver_lem_stub DDS_DDSWriterEntityBase_stub DDS_DDSWriterEntityConnector_stub DDS_DDSWriterEntityConnector_svnt Receiver_exec DDS_DDSWriterEntityConnector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

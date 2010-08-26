@@ -81,12 +81,10 @@ project(DDS_Coh_Update_ReaderStarter_stub) : ccm_stub, dds4ccm_base {
 }
 
 
-project(DDS_Coh_Update_ReaderStarter_svnt) : ciao_servant, dds4ccm_base {
-  after      +=   DDS_Coh_Update_ReaderStarter_lem_stub DDS_Coh_Update_ReaderStarter_stub\
-                  DDS4CCM_lem_stub DDS4CCM_skel
+project(DDS_Coh_Update_ReaderStarter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      +=   DDS_Coh_Update_ReaderStarter_lem_stub DDS_Coh_Update_ReaderStarter_stub
   sharedname  = Reader_Starter_svnt
-  libs       += Reader_Starter_stub Reader_Starter_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += Reader_Starter_stub Reader_Starter_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

@@ -1,9 +1,6 @@
 // $Id$
 
-project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, taolib, ciao_output, ccm_stub, ciao_logger {
-
-  after += DDS4CCM_lem_stub
-  libs += DDS4CCM_lem_stub
+project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib, ciao_output, ccm_stub, ciao_logger {
 
   dynamicflags += DDS4CCM_DDS_IMPL_BUILD_DLL
   macros += BUILDING_DDS_LIB
@@ -17,6 +14,7 @@ project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, taolib, ciao_output, ccm
   }
 
   Source_Files {
+    DataReader.cpp
     DataWriter.cpp
     Coherent_Changes_Guard.cpp
     DomainParticipantListener.cpp

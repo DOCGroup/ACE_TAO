@@ -6,6 +6,8 @@
 #include "ace/Log_Msg.h"
 
 #include "ace/OS_NS_time.h"
+#include "Base/Writer_BaseSupport.h"
+#include "Connector/Writer_Connector_conn.h"
 
 namespace CIAO_Writer_Receiver_Impl
 {
@@ -84,6 +86,36 @@ namespace CIAO_Writer_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+    ::DDS::DataReader_var dds_dr =
+      this->context_->get_connection_info_out_dds_entity ();
+
+    if (::CORBA::is_nil (dds_dr.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
+                    "Datareader connection is NIL.\n"));
+        throw ::CORBA::INTERNAL ();
+      }
+
+    typedef ::CIAO::DDS4CCM::CCM_DDS_DataReader_Base DataReader_type;
+
+    DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (dds_dr.in ());
+    if (typed_ccm_dr)
+      {
+        this->reader_ = WriterTestDataReader::narrow (typed_ccm_dr->get_impl_base ());
+        if (!this->reader_)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
+                        "Error casting the typed CCM DataReader to a typed "
+                        "DDS DataReader.\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
+                    "Error casting DataReader to typed DataReader\n"));
+        throw ::CORBA::INTERNAL ();
+      }
   }
 
   void

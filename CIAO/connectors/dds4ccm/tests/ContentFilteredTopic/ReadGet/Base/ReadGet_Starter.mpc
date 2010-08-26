@@ -81,12 +81,10 @@ project(CFT_ReadGet_Starter_stub) : ccm_stub, dds4ccm_base {
 }
 
 
-project(CFT_ReadGet_Starter_svnt) : ciao_servant, dds4ccm_base {
-  after      += CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub\
-                DDS4CCM_lem_stub DDS4CCM_skel
+project(CFT_ReadGet_Starter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += CFT_ReadGet_Starter_lem_stub CFT_ReadGet_Starter_stub
   sharedname  = CFT_ReadGet_Starter_svnt
-  libs       += CFT_ReadGet_Starter_stub CFT_ReadGet_Starter_lem_stub \
-                DDS4CCM_lem_stub DDS4CCM_skel
+  libs       += CFT_ReadGet_Starter_stub CFT_ReadGet_Starter_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

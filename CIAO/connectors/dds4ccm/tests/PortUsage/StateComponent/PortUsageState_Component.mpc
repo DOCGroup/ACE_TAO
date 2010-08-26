@@ -84,14 +84,13 @@ project(PortUsageState_Component_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(PortUsageState_Component_exec) : ciao_executor, dds4ccm_base {
+project(PortUsageState_Component_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += PortUsageState_Component_lem_stub PortUsageState_Component_stub \
              PortUsage_Test_Base_stub PortUsageState_Connector_stub \
-             PortUsageState_Connector_lem_stub DDS4CCM_lem_stub
+             PortUsageState_Connector_lem_stub 
   sharedname = StateComponent_exec
   libs += StateComponent_stub StateComponent_lem_stub PortUsage_Test_Base_stub \
-          PortUsageState_Connector_stub PortUsageState_Connector_lem_stub \
-          DDS4CCM_lem_stub
+          PortUsageState_Connector_stub PortUsageState_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -114,16 +113,14 @@ project(PortUsageState_Component_exec) : ciao_executor, dds4ccm_base {
 }
 
 
-project(PortUsageState_Component_svnt) : ciao_servant, dds4ccm_base {
+project(PortUsageState_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      +=   PortUsageState_Component_lem_stub PortUsage_Test_Base_stub \
                   PortUsageState_Connector_stub PortUsageState_Connector_svnt \
-                  PortUsageState_Component_exec PortUsageState_Connector_lem_stub \
-                  DDS4CCM_lem_stub DDS4CCM_skel
+                  PortUsageState_Component_exec PortUsageState_Connector_lem_stub 
   sharedname  = StateComponent_svnt
   libs       += StateComponent_stub StateComponent_lem_stub PortUsage_Test_Base_stub \
                 PortUsageState_Connector_stub PortUsageState_Connector_svnt \
-                StateComponent_exec PortUsageState_Connector_lem_stub DDS4CCM_lem_stub \
-                DDS4CCM_skel
+                StateComponent_exec PortUsageState_Connector_lem_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..

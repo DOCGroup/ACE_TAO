@@ -32,9 +32,9 @@ project(DDS_Shapes_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_Shapes_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_Shapes_Connector_lem_gen DDS_Shapes_Connector_stub DDS_Shapes_Base_stub DDS4CCM_lem_stub
-  libs  += DDS_Shapes_Base_stub DDS_Shapes_Connector_stub DDS4CCM_lem_stub
+project(DDS_Shapes_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += DDS_Shapes_Connector_lem_gen DDS_Shapes_Connector_stub DDS_Shapes_Base_stub 
+  libs  += DDS_Shapes_Base_stub DDS_Shapes_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(DDS_Shapes_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_Shapes_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub DDS4CCM_lem_stub
+  after   += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_stub 
   sharedname = DDS_Shapes_Connector_exec
-  libs += DDS_Shapes_Connector_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Base_stub DDS4CCM_lem_stub
+  libs += DDS_Shapes_Connector_stub DDS_Shapes_Connector_lem_stub DDS_Shapes_Base_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(DDS_Shapes_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_Shapes_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_exec DDS_Shapes_Connector_stub DDS4CCM_lem_stub
+  after      += DDS_Shapes_Connector_lem_stub DDS_Shapes_Connector_exec DDS_Shapes_Connector_stub 
   sharedname  = DDS_Shapes_Connector_svnt
   libs       += DDS_Shapes_Connector_stub \
                 DDS_Shapes_Connector_lem_stub  \
                 DDS_Shapes_Base_stub \
-                DDS_Shapes_Connector_exec \
-                DDS4CCM_lem_stub
+                DDS_Shapes_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

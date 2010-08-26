@@ -32,9 +32,9 @@ project(OIT_Sender_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(OIT_Sender_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += OIT_Sender_Connector_lem_gen OIT_Sender_Connector_stub OIT_Test_Base_stub DDS4CCM_lem_stub
-  libs  += OIT_Test_Base_stub OIT_Sender_Connector_stub DDS4CCM_lem_stub
+project(OIT_Sender_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += OIT_Sender_Connector_lem_gen OIT_Sender_Connector_stub OIT_Test_Base_stub 
+  libs  += OIT_Test_Base_stub OIT_Sender_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(OIT_Sender_Connector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(OIT_Sender_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_stub DDS4CCM_lem_stub OIT_Test_Base_stub
+  after   += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_stub OIT_Test_Base_stub
   sharedname = OIT_Sender_Connector_exec
-  libs += OIT_Sender_Connector_stub OIT_Sender_Connector_lem_stub OIT_Test_Base_stub DDS4CCM_lem_stub OIT_Test_Base_stub
+  libs += OIT_Sender_Connector_stub OIT_Sender_Connector_lem_stub OIT_Test_Base_stub OIT_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(OIT_Sender_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(OIT_Sender_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_exec OIT_Sender_Connector_stub DDS4CCM_lem_stub
+  after      += OIT_Sender_Connector_lem_stub OIT_Sender_Connector_exec OIT_Sender_Connector_stub 
   sharedname  = OIT_Sender_Connector_svnt
   libs       += OIT_Sender_Connector_stub \
                 OIT_Sender_Connector_lem_stub  \
                 OIT_Test_Base_stub \
-                OIT_Sender_Connector_exec \
-                DDS4CCM_lem_stub
+                OIT_Sender_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

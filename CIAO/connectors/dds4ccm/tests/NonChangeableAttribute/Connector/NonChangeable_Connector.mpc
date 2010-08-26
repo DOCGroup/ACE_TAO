@@ -32,9 +32,9 @@ project(DDS_NonChangeableConnector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_NonChangeableConnector_lem_stub) : ccm_svnt, dds4ccm_base {
-  after += DDS_NonChangeableConnector_lem_gen DDS_NonChangeableConnector_stub DDS_NonChangeableBase_stub DDS4CCM_lem_stub
-  libs  += DDS_NonChangeableBase_stub DDS_NonChangeableConnector_stub DDS4CCM_lem_stub
+project(DDS_NonChangeableConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += DDS_NonChangeableConnector_lem_gen DDS_NonChangeableConnector_stub DDS_NonChangeableBase_stub 
+  libs  += DDS_NonChangeableBase_stub DDS_NonChangeableConnector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -85,9 +85,9 @@ project(DDS_NonChangeableConnector_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(DDS_NonChangeableConnector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_stub DDS4CCM_lem_stub DDS_NonChangeableBase_stub
+  after   += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_stub DDS_NonChangeableBase_stub
   sharedname = DDS_NonChangeableConnector_exec
-  libs += DDS_NonChangeableConnector_stub DDS_NonChangeableConnector_lem_stub DDS_NonChangeableBase_stub DDS4CCM_lem_stub DDS_NonChangeableBase_stub
+  libs += DDS_NonChangeableConnector_stub DDS_NonChangeableConnector_lem_stub DDS_NonChangeableBase_stub DDS_NonChangeableBase_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -111,13 +111,12 @@ project(DDS_NonChangeableConnector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(DDS_NonChangeableConnector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_exec DDS_NonChangeableConnector_stub DDS4CCM_lem_stub
+  after      += DDS_NonChangeableConnector_lem_stub DDS_NonChangeableConnector_exec DDS_NonChangeableConnector_stub 
   sharedname  = DDS_NonChangeableConnector_svnt
   libs       += DDS_NonChangeableConnector_stub \
                 DDS_NonChangeableConnector_lem_stub  \
                 DDS_NonChangeableBase_stub \
-                DDS_NonChangeableConnector_exec \
-                DDS4CCM_lem_stub
+                DDS_NonChangeableConnector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..
