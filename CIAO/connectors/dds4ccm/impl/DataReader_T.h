@@ -185,13 +185,11 @@ namespace CIAO
         ::DDS::PublicationBuiltinTopicData & publication_data,
         DDS_INSTANCE_HANDLE_T_IN publication_handle);
 
-      typename DDS_TYPE::data_reader * get_impl (void);
-
       void set_impl (::DDS::DataReader_ptr dr);
 
       ::DDS::StatusMask get_mask (void);
 
-      virtual DDSDataReader * get_impl_base (void);
+      virtual DDSDataReader * get_impl (void);
       
     private:
       typename DDS_TYPE::data_reader * impl_;
