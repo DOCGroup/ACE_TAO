@@ -20,7 +20,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   // ContentFilteredTopicListenStateTest_Listener_exec_i
   //============================================================
   ContentFilteredTopicListenStateTest_Listener::ContentFilteredTopicListenStateTest_Listener (
-                                              Atomic_ThreadId &thread_id,
+                                              ACE_Thread_ID &thread_id,
                                               Atomic_Long &samples_received)
     : thread_id_ (thread_id),
       samples_received_ (samples_received)
@@ -55,7 +55,9 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                       const ContentFilteredTopicListenStateTest& an_instance,
                       const CCM_DDS::ReadInfo& /*read_info*/)
   {
-    this->thread_id_ = ACE_Thread::self ();
+    ACE_Thread_ID t_id;
+    this->thread_id_.handle (t_id.handle ());
+    this->thread_id_.id (t_id.id ());
     ++this->samples_received_;
 
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenStateTest_Listener::on_one_update: "
@@ -89,12 +91,14 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : thread_id_listener_ (0),
-      iterations_ (10),
+    : iterations_ (10),
       keys_ (5),
       samples_expected_ (keys_ * SAMPLES_PER_KEY),
       samples_received_ (0)
   {
+    thread_id_listener_.id (0);
+    thread_id_listener_.handle (0);
+
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -189,7 +193,15 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-    if (this->thread_id_listener_.value () == 0)
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
+
+    char list_buf [65];
+    this->thread_id_listener_.to_string (list_buf);
+
+
+    if (this->thread_id_listener_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for ReaderListener not set!\n"));
@@ -201,37 +213,37 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, "CFT_STATE: "
                               "Thread switch for ReaderListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: "
                               "Thread switch for ReaderListener "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     #else
     else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
                                 ACE_Thread::self ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: ReaderListener: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "CFT_STATE: ReaderListener: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     #endif
 
     if (this->samples_received_ != this->samples_expected_)

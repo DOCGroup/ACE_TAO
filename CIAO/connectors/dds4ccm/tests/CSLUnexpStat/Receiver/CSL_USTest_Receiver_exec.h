@@ -20,7 +20,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong > Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
 
@@ -76,8 +75,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
                                     Atomic_Boolean &,
-                                    Atomic_ThreadId &,
-                                    Atomic_ThreadId &);
+                                    ACE_Thread_ID &,
+                                    ACE_Thread_ID &);
 
     virtual ~ConnectorStatusListener_exec_i (void);
 
@@ -103,8 +102,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   private:
     Atomic_Boolean &subscription_matched_received_;
     Atomic_Boolean &liveliness_changed_received_;
-    Atomic_ThreadId &thread_id_subcription_matched_;
-    Atomic_ThreadId &thread_id_liveliness_changed_;
+    ACE_Thread_ID &thread_id_subcription_matched_;
+    ACE_Thread_ID &thread_id_liveliness_changed_;
   };
 
   //============================================================
@@ -154,8 +153,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
 
     Atomic_Boolean subscription_matched_received_;
     Atomic_Boolean liveliness_changed_received_;
-    Atomic_ThreadId thread_id_listener_subscription_matched_;
-    Atomic_ThreadId thread_id_listener_liveliness_changed_;
+    ACE_Thread_ID thread_id_listener_subscription_matched_;
+    ACE_Thread_ID thread_id_listener_liveliness_changed_;
     Atomic_ULong received_;
   };
 

@@ -17,7 +17,6 @@
 namespace CIAO_OIT_Test_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
   // ConnectorStatusListener_exec_i
@@ -28,7 +27,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
   {
   public:
     ConnectorStatusListener_exec_i (Atomic_Boolean &,
-                                    Atomic_ThreadId &);
+                                    ACE_Thread_ID &);
     virtual ~ConnectorStatusListener_exec_i (void);
 
     virtual
@@ -52,7 +51,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
         ::DDS::StatusKind  status_kind);
     private:
     Atomic_Boolean &inconsistent_;
-    Atomic_ThreadId &thread_id_;
+    ACE_Thread_ID &thread_id_;
   };
 
   //============================================================
@@ -94,7 +93,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
     ::OIT_Test::CCM_Receiver_Context_var context_;
 
     Atomic_Boolean inconsistent_;
-    Atomic_ThreadId thread_id_listener_;
+    ACE_Thread_ID thread_id_listener_;
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

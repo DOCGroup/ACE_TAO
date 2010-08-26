@@ -71,6 +71,8 @@ namespace CIAO_Updater_Receiver_Impl
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
   {
+    thread_id_listener_.id (0);
+    thread_id_listener_.handle (0);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)

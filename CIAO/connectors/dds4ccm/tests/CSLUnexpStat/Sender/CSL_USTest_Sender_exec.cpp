@@ -37,10 +37,10 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                                                   Atomic_Boolean &liveliness_lost_received,
                                                                   Atomic_Boolean &reliable_dr_activity_changed_received,
                                                                   Atomic_Boolean &reliable_writer_cache_changed_received,
-                                                                  Atomic_ThreadId &thread_id_publication_matched,
-                                                                  Atomic_ThreadId &thread_id_liveliness_lost,
-                                                                  Atomic_ThreadId &thread_id_reliable_dr_activity_changed,
-                                                                  Atomic_ThreadId &thread_id_reliable_writer_cache_changed)
+                                                                  ACE_Thread_ID &thread_id_publication_matched,
+                                                                  ACE_Thread_ID &thread_id_liveliness_lost,
+                                                                  ACE_Thread_ID &thread_id_reliable_dr_activity_changed,
+                                                                  ACE_Thread_ID &thread_id_reliable_writer_cache_changed)
    : publication_matched_received_ (publication_matched_received),
      liveliness_lost_received_ (liveliness_lost_received),
      reliable_dr_activity_changed_received_ (reliable_dr_activity_changed_received),
@@ -91,6 +91,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
     ::DDS::Entity_ptr the_entity,
     ::DDS::StatusKind status_kind)
   {
+    ACE_Thread_ID t_id;
     ACE_DEBUG ((LM_DEBUG, "SENDER\t\tConnectorStatusListener_exec_i::on_unexpected_status: "
                           "received <%C>\n",
                           CIAO::DDS4CCM::translate_statuskind (status_kind)));
@@ -98,22 +99,28 @@ namespace CIAO_CSL_USTest_Sender_Impl
     if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
       {
         this->liveliness_lost_received_ = true;
-        this->thread_id_liveliness_lost_ = ACE_Thread::self ();
-      }
+        this->thread_id_liveliness_lost_.handle (t_id.handle ());
+        this->thread_id_liveliness_lost_.id (t_id.id ());
+    }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         this->publication_matched_received_ = true;
-        this->thread_id_publication_matched_ = ACE_Thread::self ();
+        this->thread_id_publication_matched_.handle (t_id.handle ());
+        this->thread_id_publication_matched_.id (t_id.id ());
+
       }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS)
       {
         this->reliable_dr_activity_changed_received_ = true;
-        this->thread_id_reliable_dr_activity_changed_ = ACE_Thread::self ();
+        this->thread_id_reliable_dr_activity_changed_.handle (t_id.handle ());
+        this->thread_id_reliable_dr_activity_changed_.id (t_id.id ());
       }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS)
       {
         this->reliable_writer_cache_changed_received_ = true;
-        this->thread_id_reliable_writer_cache_changed_ = ACE_Thread::self ();
+       this->thread_id_reliable_writer_cache_changed_.handle (t_id.handle ());
+        this->thread_id_reliable_writer_cache_changed_.id (t_id.id ());
+
       }
   }
 
@@ -124,12 +131,17 @@ namespace CIAO_CSL_USTest_Sender_Impl
     : publication_matched_received_ (false),
       liveliness_lost_received_ (false),
       reliable_dr_activity_changed_received_ (false),
-      reliable_writer_cache_changed_received_ (false),
-      thread_id_listener_publication_matched_ (0),
-      thread_id_listener_liveliness_lost_ (0),
-      thread_id_reliable_dr_activity_changed_ (0),
-      thread_id_reliable_writer_cache_changed_ (0)
+      reliable_writer_cache_changed_received_ (false)
   {
+    thread_id_listener_publication_matched_.id (0);
+    thread_id_listener_publication_matched_.handle (0);
+    thread_id_listener_liveliness_lost_.id (0);
+    thread_id_listener_liveliness_lost_.handle (0);
+    thread_id_reliable_dr_activity_changed_.id (0);
+    thread_id_reliable_dr_activity_changed_.handle (0);
+    thread_id_reliable_writer_cache_changed_.id (0);
+    thread_id_reliable_writer_cache_changed_.handle (0);
+
     this->ticker_ = new pulse_Generator (*this);
   }
 
@@ -286,188 +298,195 @@ namespace CIAO_CSL_USTest_Sender_Impl
                                ACE_TEXT ("'RELIABLE_WRITER_CACHE_CHANGED_STATUS'\n")
                     ));
       }
+    //get current thread
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
 
     //test thread switch for PUBLICATION_MATCHED_STATUS
-    if (this->thread_id_listener_publication_matched_.value () == 0)
+
+    char list_buf_pm [65];
+    this->thread_id_listener_publication_matched_.to_string(list_buf_pm);
+    if (this->thread_id_listener_publication_matched_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'PUBLICATION_MATCHED_STATUS' not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_publication_matched_== ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
                               "Thread switch for 'PUBLICATION_MATCHED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_pm,
+                              ccm_buf));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread switch for 'PUBLICATION_MATCHED_STATUS' "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_pm,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_publication_matched_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_publication_matched_== ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'PUBLICATION_MATCHED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_pm,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'PUBLICATION_MATCHED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_publication_matched_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_pm,
+                              ccm_buf));
       }
     #endif
 
     //test thread switch for LIVELINESS_LOST_STATUS
-    if (this->thread_id_listener_liveliness_lost_.value () == 0)
+     char list_buf_ll [65];
+    this->thread_id_listener_liveliness_lost_.to_string(list_buf_ll);
+    if (this->thread_id_listener_liveliness_lost_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'LIVELINESS_LOST_STATUS' not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_lost_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_liveliness_lost_== ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
                               "Thread switch for 'LIVELINESS_LOST_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_lost_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf_ll,
+                              ccm_buf));
+     }
     else
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread switch for 'LIVELINESS_LOST_STATUS' "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_lost_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ll,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_lost_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_liveliness_lost_== ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'LIVELINESS_LOST_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_lost_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ll,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'LIVELINESS_LOST_STATUS': "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_liveliness_lost_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ll,
+                              ccm_buf));
       }
     #endif
 
     //test thread switch for RELIABLE_READER_ACTIVITY_CHANGED_STATUS
-    if (this->thread_id_reliable_dr_activity_changed_.value () == 0)
+    char list_buf_ra [65];
+    this->thread_id_reliable_dr_activity_changed_.to_string(list_buf_ra);
+
+    if (this->thread_id_reliable_dr_activity_changed_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS' not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_reliable_dr_activity_changed_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_reliable_dr_activity_changed_== ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
                               "Thread switch for 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_dr_activity_changed_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ra,
+                              ccm_buf));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread switch for 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS' "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_dr_activity_changed_.value (),
-                              ACE_Thread::self ()));
-      }
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ra,
+                              ccm_buf));
+     }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_lost_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_reliable_dr_activity_changed_== ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_dr_activity_changed_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf_ra,
+                              ccm_buf));
+     }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'RELIABLE_READER_ACTIVITY_CHANGED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_dr_activity_changed_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_ra,
+                              ccm_buf));
       }
     #endif
 
     //test thread switch for RELIABLE_WRITER_CACHE_CHANGED_STATUS
-    if (this->thread_id_reliable_writer_cache_changed_.value () == 0)
+     char list_buf_rw [65];
+    this->thread_id_reliable_writer_cache_changed_.to_string (list_buf_rw);
+
+    if (this->thread_id_reliable_writer_cache_changed_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for 'RELIABLE_WRITER_CACHE_CHANGED_STATUS' not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_reliable_writer_cache_changed_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_reliable_writer_cache_changed_== ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
                               "Thread switch for 'RELIABLE_WRITER_CACHE_CHANGED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_writer_cache_changed_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf_rw,
+                              ccm_buf));
+    }
     else
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread switch for 'RELIABLE_WRITER_CACHE_CHANGED_STATUS' "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_writer_cache_changed_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_rw,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_liveliness_lost_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_reliable_writer_cache_changed_== ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: 'RELIABLE_WRITER_CACHE_CHANGED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_writer_cache_changed_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_rw,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: 'RELIABLE_WRITER_CACHE_CHANGED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_reliable_writer_cache_changed_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_rw,
+                              ccm_buf));
       }
     #endif
   }

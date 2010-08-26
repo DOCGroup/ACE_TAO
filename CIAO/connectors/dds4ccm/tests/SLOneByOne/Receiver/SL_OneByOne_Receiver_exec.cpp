@@ -26,7 +26,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                                               Atomic_Long &on_creation,
                                               Atomic_Long &on_one_update,
                                               Atomic_Long &on_deletion,
-                                              Atomic_ThreadId &thread_id)
+                                              ACE_Thread_ID &thread_id)
     : on_many_updates_ (on_many_updates),
       on_creation_ (on_creation),
       on_one_update_ (on_one_update),
@@ -44,7 +44,9 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
   StateListener_exec_i::on_creation (const ::TestTopic & datum,
                                      const ::CCM_DDS::ReadInfo & info)
   {
-    this->thread_id_ = ACE_Thread::self ();
+    ACE_Thread_ID t_id;
+    this->thread_id_.handle (t_id.handle ());
+    this->thread_id_.id (t_id.id ());
     if (!datum.key.in() == 0 &&
         info.instance_status == CCM_DDS::INSTANCE_CREATED)
       {
@@ -121,9 +123,11 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       updater_data_ (0),
       on_creation_ (0),
       on_one_update_ (0),
-      on_deletion_ (0),
-      thread_id_listener_ (0)
+      on_deletion_ (0)
   {
+    thread_id_listener_.id (0);
+    thread_id_listener_.handle (0);
+
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -261,50 +265,55 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                     this->on_deletion_.value ()));
       }
 
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
 
-    if (this->thread_id_listener_.value () == 0)
+    char list_buf [65];
+    this->thread_id_listener_.to_string (list_buf);
+
+
+    if (this->thread_id_listener_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for StatusListener not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "OK: "
                               "Thread switch for StatusListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread switch for StatusListener "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: StatusListener: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK: StatusListener: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     #endif
   }
 
