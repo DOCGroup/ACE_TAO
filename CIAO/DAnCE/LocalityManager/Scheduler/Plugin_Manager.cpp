@@ -107,7 +107,7 @@ namespace DAnCE
   CORBA::ORB_ptr 
   Plugin_Manager::get_orb (void)
   {
-    return this->orb_;
+    return CORBA::ORB::_duplicate (this->orb_);
   }
   
   template<typename T>

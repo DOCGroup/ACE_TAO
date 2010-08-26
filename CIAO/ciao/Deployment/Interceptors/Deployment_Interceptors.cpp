@@ -15,7 +15,7 @@ namespace CIAO
   CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
     this->orb_ = 
-      CORBA::ORB::_duplicate (DAnCE::PLUGIN_MANAGER::instance ()->get_orb ());
+      DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
     
     if (CORBA::is_nil (this->orb_))
       {
