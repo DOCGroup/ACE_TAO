@@ -27,6 +27,7 @@
 #endif /* _MSC_VER */
 
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Object_KeyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,11 +35,6 @@ namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-}
-
-namespace TAO
-{
-  class ObjectKey;
 }
 
 class TAO_ORB_Core;

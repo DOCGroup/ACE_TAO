@@ -16,6 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <vector>
+
 #include "tao/orbconf.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
@@ -28,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
 }
 
 class TAO_MProfile;

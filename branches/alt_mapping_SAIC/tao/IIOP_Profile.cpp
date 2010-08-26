@@ -308,8 +308,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
 
   TAO::ObjectKey ok;
 
-  TAO::ObjectKey::decode_string_to_sequence (ok,
-                                             okd + 1);
+  TAO_Profile::decode_string_to_sequence (ok, okd + 1);
 
   (void) this->orb_core ()->object_key_table ().bind (ok,
                                                       this->ref_object_key_);
@@ -478,8 +477,8 @@ TAO_IIOP_Profile::to_string (void)
   // corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
 
   CORBA::String_var key;
-  TAO::ObjectKey::encode_sequence_to_string (key.inout(),
-                                             this->ref_object_key_->object_key ());
+  TAO_Profile::encode_sequence_to_string (key.inout(),
+                                          this->ref_object_key_->object_key ());
 
   size_t buflen = (
        8 /* "corbaloc" */ +

@@ -42,7 +42,7 @@ class TAO_Profile;
 
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
   class Object_Proxy_Broker;
   class Transport_Queueing_Strategy;
 }

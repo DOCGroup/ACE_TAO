@@ -2094,7 +2094,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
       // Add the key.
 
       CORBA::String_var key_str;
-      TAO::ObjectKey::encode_sequence_to_string (key_str.inout (), key);
+      TAO_Profile::encode_sequence_to_string (key_str.inout (), key);
 
       ior += key_str.in ();
 

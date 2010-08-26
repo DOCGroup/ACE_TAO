@@ -24,7 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <vector>
+
 #include "ace/Acceptor.h"
+
 #include "tao/Basic_Types.h"
 
 // Forward declarations.
@@ -47,7 +50,7 @@ namespace IOP
 
 namespace TAO
 {
-  class ObjectKey;
+  typedef std::vector<CORBA::Octet> ObjectKey;
 }
 
 //@@ TAO_ACCEPTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK

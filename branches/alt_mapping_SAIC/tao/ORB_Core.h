@@ -33,17 +33,17 @@
 #include "tao/ObjectKey_Table.h"
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/IOPC.h"
+#include "tao/StringSeqC.h"
 #include "tao/Object.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Adapter_Registry.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Service_Context_Handler_Registry.h"
-#include "ace/Array_Map.h"
 
+#include "ace/Array_Map.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
-
 #include "ace/Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -117,6 +117,9 @@ namespace CORBA
   typedef StringSeq ORB_ObjectIdList;
   class ORB;
   typedef ORB *ORB_ptr;
+
+  class ValueFactoryBase;
+  typedef ValueFactoryBase *ValueFactory;
 
   class Policy;
   typedef Policy *Policy_ptr;
