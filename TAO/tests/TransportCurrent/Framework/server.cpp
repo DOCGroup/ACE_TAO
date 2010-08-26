@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
@@ -9,10 +10,6 @@
 #include "Current_Test_Impl.h"
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
-
-ACE_RCSID (Transport_Current,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 int nthreads = 1;

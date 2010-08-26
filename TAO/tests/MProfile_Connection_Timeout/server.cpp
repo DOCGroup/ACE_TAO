@@ -1,12 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(MProfile_Connection_Timeout,
-          server,
-          "$Id$")
 
 const ACE_TCHAR *ior_output_file = 0;
 int orb_run = 0;

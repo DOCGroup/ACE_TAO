@@ -1,19 +1,16 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/TransportCurrent/TCC.h"
 
 #include "Current_Test_Impl.h"
 
-ACE_RCSID (Transport_Current,
-           Current_Test_Impl,
-           "$Id$")
-
-  Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
-                                        PortableServer::POA_ptr poa,
-                                        int do_collocated_calls)
-    : orb_ (CORBA::ORB::_duplicate (orb))
-    , poa_ (PortableServer::POA::_duplicate (poa))
-    , do_collocated_calls_ (do_collocated_calls)
+Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
+                                      PortableServer::POA_ptr poa,
+                                      int do_collocated_calls)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , poa_ (PortableServer::POA::_duplicate (poa))
+  , do_collocated_calls_ (do_collocated_calls)
 {
 }
 

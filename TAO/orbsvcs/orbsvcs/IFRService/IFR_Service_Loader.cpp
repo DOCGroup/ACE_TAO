@@ -37,20 +37,15 @@ TAO_IFR_Service_Loader::init (int argc,
   try
     {
       // Copy command line parameter.
-      ACE_Argv_Type_Converter command_line (argc,
-                                            argv);
+      ACE_Argv_Type_Converter command_line (argc, argv);
 
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc (),
-                         command_line.get_ASCII_argv (),
-                         0);
+        CORBA::ORB_init (argc, argv);
 
       // This function call initializes the IFR_Service Service
       CORBA::Object_var object =
-        this->create_object (orb.in (),
-                             command_line.get_argc (),
-                             command_line.get_TCHAR_argv ());
+        this->create_object (orb.in (), argc, argv);
     }
   catch (const CORBA::Exception&)
     {

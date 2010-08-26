@@ -1,13 +1,10 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID (OctetSeq,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
