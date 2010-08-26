@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/strategies
+HTML_OUTPUT           = html/libtao-doc/strategies
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,8 +135,8 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace html/tao/TAO.tag=..
-GENERATE_TAGFILE      = html/tao/strategies/TAO_Strategies.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc html/libtao-doc/TAO.tag=..
+GENERATE_TAGFILE      = html/libtao-doc/strategies/TAO_Strategies.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
