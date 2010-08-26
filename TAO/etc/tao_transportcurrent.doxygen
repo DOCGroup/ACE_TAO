@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/transportcurrent
+HTML_OUTPUT           = html/libtao-doc/transportcurrent
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,10 +135,10 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-                        html/tao/TAO.tag=.. \
-                        html/tao/pi/TAO_PI.tag=../pi
-GENERATE_TAGFILE      = html/tao/transportcurrent/TAO_TransportCurrent.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/pi/TAO_PI.tag=../pi
+GENERATE_TAGFILE      = html/libtao-doc/transportcurrent/TAO_TransportCurrent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

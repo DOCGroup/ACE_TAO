@@ -72,7 +72,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ziop
+HTML_OUTPUT           = html/libtao-doc/ziop
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -135,10 +135,10 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-                        html/tao/TAO.tag=.. \
-                        html/tao/compression/TAO_Compression.tag=../compression
-GENERATE_TAGFILE      = html/tao/ziop/TAO_ZIOP.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/compression/TAO_Compression.tag=../compression
+GENERATE_TAGFILE      = html/libtao-doc/ziop/TAO_ZIOP.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

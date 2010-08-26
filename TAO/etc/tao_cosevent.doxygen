@@ -75,7 +75,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/cosevent
+HTML_OUTPUT           = html/libtao-doc/cosevent
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -138,10 +138,10 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-	html/tao/TAO.tag=.. \
-	html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
-	html/tao/esf/TAO_ESF.tag=../esf
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver \
+                        html/libtao-doc/esf/TAO_ESF.tag=../esf
 GENERATE_TAGFILE      = html/tao/cosevent/TAO_CosEvent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
