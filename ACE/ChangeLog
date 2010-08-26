@@ -1,3 +1,8 @@
+Thu Aug 26 12:30:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/control:
+          Made some fixes for x.8.1
+
 Thu Aug 26 11:54:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/auto_run_tests.pl:
