@@ -207,8 +207,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                               "Thread ID for ReaderListener not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "CFT_STATE: "
                               "Thread switch for ReaderListener seems OK. "
@@ -227,8 +226,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                               ccm_buf));
      }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: CFT_STATE: ReaderListener: "
                               "DDS seems to use a CCM thread for its callback: "
