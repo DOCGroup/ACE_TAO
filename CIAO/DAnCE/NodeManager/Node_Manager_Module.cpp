@@ -47,7 +47,6 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     rebind_plan_ns_ior_ (0),
     cs_path_ (ACE_TEXT("dance_locality_manager")),
     timeout_ (5),
-    standalone_ (false),
     server_args_ (0),
     domain_nc_ (0),
     instance_nc_ (0),
@@ -85,7 +84,6 @@ DAnCE_NodeManager_Module::usage (void)
     "\t-i|--port-indirection\t enable plan objects indirection via servant locator\n"
     "\t-s|--server-executable\t default component server executable\n"
     "\t--server-args\t\t additional arguments to supply to the component server\n"
-    "\t--standalone-nm\t\t Indicates that this NodeManager is not managed by an ExecutionManager\n"
     "\t-t|--timeout\t\t default timeout in seconds to wait for component server spawn\n"
     "\t-d|--domain-nc [NC]\t Default naming context for domain objects.\n"
     "\t--instance-nc [NC]\t Default naming context for instance registration directives. No argument indicates Domain NC.\n"
@@ -111,7 +109,6 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
   get_opts.long_option (ACE_TEXT("port-indirection"), 'i', ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("server-executable"), 's', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("server-args"), ACE_Get_Opt::ARG_REQUIRED);
-  get_opts.long_option (ACE_TEXT("standalone-nm"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT("timeout"), 't', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("domain-nc"), 'd', ACE_Get_Opt::ARG_REQUIRED);
   get_opts.long_option (ACE_TEXT("best-effort"), ACE_Get_Opt::NO_ARG);
@@ -189,14 +186,8 @@ DAnCE_NodeManager_Module::parse_args (int argc, ACE_TCHAR * argv[])
           break;
 
         case 0:
-          if (ACE_OS::strcmp (get_opts.long_option (), ACE_TEXT("standalone-nm")) == 0)
-            {
-              DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
-                            ACE_TEXT("Found option directing NodeManager to run as standalone entity.\n")));
-              this->options_.standalone_ = true;
-            }
-          else if (ACE_OS::strcmp (get_opts.long_option (),
-                                   ACE_TEXT("server-args")) == 0)
+          if (ACE_OS::strcmp (get_opts.long_option (),
+                              ACE_TEXT("server-args")) == 0)
             {
               DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("Node_Manager_Module::parse_args - ")
                             ACE_TEXT("Using provided component server arguments: '%s'\n"),
@@ -604,11 +595,6 @@ DAnCE_NodeManager_Module::create_nm_properties (DAnCE::Utility::PROPERTY_MAP &pr
     CORBA::Any val;
     val <<= CORBA::Any::from_string (CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->options_.cs_path_)),0);
     props.bind (DAnCE::LOCALITY_EXECUTABLE, val);
-  }
-  {
-    CORBA::Any val;
-    val <<= CORBA::Any::from_boolean (this->options_.standalone_);
-    props.bind (DAnCE::STANDALONE_NM, val);
   }
   {
     CORBA::Any val;

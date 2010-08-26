@@ -24,6 +24,7 @@
 
 #include "LocalityManager/Daemon/Locality_Manager_Impl_Export.h"
 #include "LocalityManager/Scheduler/Deployment_Scheduler.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
 
 #include <map>
 #include <vector>
@@ -39,6 +40,7 @@ namespace DAnCE
   public:
     // Constructor 
     LocalityManager_i (const ACE_TString &uuid,
+                       std::list <std::string> plugin_config_files,
                        CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa);
   
@@ -80,6 +82,9 @@ namespace DAnCE
     void collect_references (::Deployment::Connections_out &providedReference);
     
     ACE_TString uuid_;
+    
+    std::list< std::string > plugin_config_files_;
+
     CORBA::ORB_var orb_;
     PortableServer::POA_var poa_;
     
@@ -90,9 +95,7 @@ namespace DAnCE
     
     HANDLER_TABLE instance_handlers_;
     
-    typedef std::vector< std::string > HANDLER_ORDER;
-    
-    HANDLER_ORDER handler_order_;
+    Plugin_Manager::INSTALL_ORDER handler_order_;
     
     typedef std::map < std::string, CORBA::Any_var > REFERENCE_MAP;
     

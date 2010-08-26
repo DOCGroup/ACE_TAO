@@ -93,6 +93,7 @@ namespace DAnCE
       return plugin._retn ();
     }
   }
+  
   Plugin_Manager::Plugin_Manager (void)
   {
   }
@@ -135,7 +136,8 @@ namespace DAnCE
 
   char *
   Plugin_Manager::register_installation_handler (const ACE_TCHAR *artifact,
-                                                 const ACE_TCHAR *entrypoint)
+                                                 const ACE_TCHAR *entrypoint,
+                                                 const Plugin_Manager::IH_DEPS &depends)
   {
     ::DAnCE::InstanceDeploymentHandler_var plugin = 
       load_plugin< ::DAnCE::InstanceDeploymentHandler > (artifact,
@@ -144,15 +146,28 @@ namespace DAnCE
     try
       {
         plugin->configure (this->config_);
-        
+
         CORBA::String_var instance_type = plugin->instance_type ();
-        
-        this->handler_map_[instance_type.in ()] = plugin._retn ();
         
         DANCE_DEBUG (6, (LM_INFO, DLINFO
                          ACE_TEXT ("Plugin_Manager::register_installation_handler - ")
                          ACE_TEXT ("Successfully created installation handler for instance type <%C>\n"),
                          instance_type.in ()));
+        
+        this->ih_dep_.add_dependency (instance_type.in (), depends);
+        
+        ::CORBA::StringSeq_var deps = plugin->dependencies ();
+        
+        if (!CORBA::is_nil (deps))
+          {
+            for (CORBA::ULong i = 0; i < deps->length (); ++i)
+              {
+                this->ih_dep_.add_dependency (instance_type.in (), 
+                                              deps[i].in ());
+              }
+          }
+
+        this->handler_map_[instance_type.in ()] = plugin._retn ();
         
         return instance_type._retn ();
       }
@@ -179,6 +194,12 @@ namespace DAnCE
       }
   }
   
+  void
+  Plugin_Manager::get_installation_order (Plugin_Manager::INSTALL_ORDER &io)
+  {
+    this->ih_dep_.calculate_order (io);
+  }
+
   void 
   Plugin_Manager::register_interceptor (const ACE_TCHAR *artifact,
                                         const ACE_TCHAR *entrypoint)

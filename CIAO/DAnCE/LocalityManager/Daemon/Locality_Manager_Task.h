@@ -13,6 +13,9 @@
 #include "ace/Task.h"
 #include "tao/ORB.h"
 
+#include <list>
+#include <string>
+
 namespace DAnCE
 {
   class LocalityManager_Task : ACE_Task_Base
@@ -40,6 +43,8 @@ namespace DAnCE
     ACE_TString uuid_;
     ACE_TString callback_ior_str_;
     ACE_TString output_file_;
+    
+    std::list < std::string > plugin_config_;
   };
 }
 

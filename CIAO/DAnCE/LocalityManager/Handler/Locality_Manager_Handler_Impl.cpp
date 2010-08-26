@@ -37,6 +37,16 @@ namespace DAnCE
   {
     
   }
+
+  ::CORBA::StringSeq *
+  Locality_Handler_i::dependencies (void)
+  {
+    ::CORBA::StringSeq *retval (0);
+    ACE_NEW_THROW_EX (retval,
+                      ::CORBA::StringSeq (0),
+                      CORBA::NO_MEMORY ());
+    return retval;
+  }
   
   char * Locality_Handler_i::instance_type (void)
   {
