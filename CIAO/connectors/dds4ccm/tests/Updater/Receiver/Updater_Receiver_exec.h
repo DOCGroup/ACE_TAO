@@ -20,7 +20,6 @@
 namespace CIAO_Updater_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
 
@@ -32,7 +31,8 @@ namespace CIAO_Updater_Receiver_Impl
       public virtual ::CORBA::LocalObject
   {
   public:
-    ListenOneByOneTest_Listener_exec_i (Atomic_ThreadId &);
+    ListenOneByOneTest_Listener_exec_i (ACE_Thread_ID &);
+
     virtual ~ListenOneByOneTest_Listener_exec_i (void);
 
     virtual void
@@ -44,7 +44,7 @@ namespace CIAO_Updater_Receiver_Impl
       const TestTopicSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
-    Atomic_ThreadId &thread_id_;
+    ACE_Thread_ID &thread_id_;
   };
 
   //============================================================
@@ -78,7 +78,7 @@ namespace CIAO_Updater_Receiver_Impl
 
   private:
     ::Updater::CCM_Receiver_Context_var context_;
-    Atomic_ThreadId thread_id_listener_;
+    ACE_Thread_ID thread_id_listener_;
 };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
