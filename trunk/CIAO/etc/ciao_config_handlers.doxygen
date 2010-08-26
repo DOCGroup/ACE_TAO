@@ -71,7 +71,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ciao/tools/config_handlers
+HTML_OUTPUT           = html/libciao-doc/tools/config_handlers
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -132,18 +132,18 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../../../ace \
-                        html/tao/TAO.tag=../../.. \
-                        html/ace/ssl/ACE_SSL.tag=../../../../ace/ssl \
-                        html/tao/portableserver/TAO_PortableServer.tag=../../../portableserver \
-                        html/tao/iortable/TAO_IORTable.tag=../../../iortable \
-                        html/tao/rtcorba/TAO_RTCORBA.tag=../../../rtcorba \
-                        html/tao/security/TAO_Security.tag=../../../security \
-                        html/acexml/ACEXML.tag=../../../../acexml \
-                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../../rtportableserver \
-                        html/tao/cosnaming/TAO_CosNaming.tag=../../../cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../../ifr
-GENERATE_TAGFILE      = html/ciao/tools/Config_Handlers.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../../../libace-doc \
+                        html/libtao-doc/TAO.tag=../../.. \
+                        html/libace-doc/ssl/ACE_SSL.tag=../../../../libace-doc/ssl \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../../../portableserver \
+                        html/libtao-doc/iortable/TAO_IORTable.tag=../../../iortable \
+                        html/libtao-doc/rtcorba/TAO_RTCORBA.tag=../../../rtcorba \
+                        html/libtao-doc/security/TAO_Security.tag=../../../security \
+                        html/libacexml-doc/ACEXML.tag=../../../../libacexml-doc \
+                        html/libtao-doc/rtportableserver/TAO_RTPortableServer.tag=../../../rtportableserver \
+                        html/libtao-doc/cosnaming/TAO_CosNaming.tag=../../../cosnaming \
+                        html/libtao-doc/ifr/TAO_IFR.tag=../../../ifr
+GENERATE_TAGFILE      = html/libciao-doc/tools/Config_Handlers.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

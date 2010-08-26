@@ -1,3 +1,11 @@
+Thu Aug 26 13:01:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/etc/DAnCE.doxygen:
+        * etc/ciao.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Changed documentation subdirectories to make debian packaging easier
+
 Thu Aug 26 11:53:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/bin/dance_tests.lst:
