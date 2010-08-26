@@ -1,3 +1,8 @@
+Thu Aug 26 11:54:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Extended script to also check for $DANCE_ROOT/bin/dance_tests.lst
+
 Thu Aug 26 10:20:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
@@ -16,7 +21,7 @@ Wed Aug 25 19:58:19 UTC 2010  Steve Huston  <shuston@riverace.com>
           the token, dispatch the notification. Thus, each thread will
           dispatch one notification, and multiple threads can dispatch
           them at the same time if there are multiples.
-        
+
           Also fixed an error where it was possible to lose notice of a
           notification. Resolves Bugzilla #3328.
 
