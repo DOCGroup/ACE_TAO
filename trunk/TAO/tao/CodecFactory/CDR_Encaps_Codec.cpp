@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CodecFactory/CDR_Encaps_Codec.h"
@@ -17,11 +18,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
-
-
-ACE_RCSID (CodecFactory,
-           CDR_Encaps_Codec,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

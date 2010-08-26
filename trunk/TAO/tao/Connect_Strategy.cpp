@@ -1,11 +1,10 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Connect_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Multi_Event.h"
-
-ACE_RCSID (tao,
-           Connect_Strategy,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

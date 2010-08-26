@@ -1,14 +1,11 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 # include "tao/Cache_Entries_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Cache_Entries_T.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID(tao,
-          Cache_Entries,
-          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

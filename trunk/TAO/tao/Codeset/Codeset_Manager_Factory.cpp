@@ -15,8 +15,6 @@
 #include "ace/Service_Config.h"
 #include "tao/Codeset/Codeset_Manager_i.h"
 
-ACE_RCSID (Codeset, Codeset_Manager_Factory, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory (void)
