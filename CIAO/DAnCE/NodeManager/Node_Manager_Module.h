@@ -78,7 +78,6 @@ class DAnCE_NodeManager_Module
     ACE_Vector<ACE_TString> node_managers_;
     const ACE_TCHAR * cs_path_;
     unsigned int timeout_;
-    CORBA::Boolean standalone_;
     const ACE_TCHAR * server_args_;
     const ACE_TCHAR * domain_nc_;
     const ACE_TCHAR * instance_nc_;

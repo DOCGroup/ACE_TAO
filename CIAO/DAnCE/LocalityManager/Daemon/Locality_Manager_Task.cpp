@@ -11,6 +11,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
+#include "ace/Env_Value_T.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "DAnCE/Logger/Logger_Service.h"
@@ -87,6 +88,7 @@ namespace DAnCE
     DAnCE::LocalityManager_i *lm_srv = 0;
     ACE_NEW_NORETURN (lm_srv,
                       LocalityManager_i (this->uuid_,
+                                         this->plugin_config_,
                                          this->orb_.in (),
                                          root_poa.in ()));
 
@@ -232,7 +234,7 @@ namespace DAnCE
                      ACE_TEXT ("LocalityManager_Task::parse_args - ")
                      ACE_TEXT ("parsing arguments...\n")));
 
-    ACE_Get_Opt opts (argc, argv, ACE_TEXT("hu:c:"), 1, 0,
+    ACE_Get_Opt opts (argc, argv, ACE_TEXT("hu:c:p:"), 1, 0,
                       ACE_Get_Opt::RETURN_IN_ORDER);
     opts.long_option (ACE_TEXT("uuid"), 'u', ACE_Get_Opt::ARG_REQUIRED);
     opts.long_option (ACE_TEXT("callback-ior"), 'c', ACE_Get_Opt::ARG_REQUIRED);
@@ -240,6 +242,7 @@ namespace DAnCE
     opts.long_option (ACE_TEXT("log-level"),'l', ACE_Get_Opt::ARG_REQUIRED);
     opts.long_option (ACE_TEXT("trace"),'t', ACE_Get_Opt::NO_ARG);
     opts.long_option (ACE_TEXT("output-ior"),'o', ACE_Get_Opt::ARG_REQUIRED);
+    opts.long_option (ACE_TEXT("plugin-config"),'p', ACE_Get_Opt::ARG_REQUIRED);
 
     int c = 0;
     while ((c = opts ()) != -1)
@@ -282,11 +285,18 @@ namespace DAnCE
                             opts.opt_arg ()));
             this->output_file_ = opts.opt_arg ();
             break;
+            
+          case 'p':
+            DANCE_DEBUG (6, (LM_DEBUG, DLINFO 
+                             ACE_TEXT ("LocalityManager_Task::parse_args - ")
+                             ACE_TEXT ("Adding <%s> to plugin config list\n"),
+                             opts.opt_arg ()));
+            this->plugin_config_.push_back (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
 
           case 'h':
             this->usage ();
             throw Error ("Command line help requested, bailing out....");
-
+            
           default:
             DANCE_ERROR (1, (LM_ERROR, DLINFO 
                              ACE_TEXT (" Unknown option: %s\n"),
@@ -307,6 +317,20 @@ namespace DAnCE
                          ACE_TEXT ("LocalityManager_Task::parse_args - ")
                          ACE_TEXT ("Starting ComponentServer without a callback IOR\n")));
       }
+    
+    if (this->plugin_config_.size () == 0)
+      {
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                         ACE_TEXT ("LocalityManager_Task::parse_args - ")
+                         ACE_TEXT ("No plugin config specified, adding default at ")
+                         ACE_TEXT ("DANCE_ROOT/bin/ciao.localityconfig\n")));
+        
+        ACE_Env_Value<const ACE_TCHAR *> dance_env (ACE_TEXT ("DANCE_ROOT"),
+                                                    ACE_TEXT (""));
+        std::string filename (ACE_TEXT_ALWAYS_CHAR (dance_env));
+        filename += "/bin/ciao.localityconfig";
+        this->plugin_config_.push_back (filename.c_str ());
+      }
   }
 
   void
@@ -322,6 +346,7 @@ namespace DAnCE
                 ACE_TEXT ("\t-u|--uuid <uuid> \t\t\tSets UUID of spawned component server (required)\n")
                 ACE_TEXT ("\t-c|--callback-ior <string ior>\t\tSets callback url for the spawning Activator.\n")
                 ACE_TEXT ("\t-o|--output-ior <filename>\t\tOutputs the IOR of the component server object to file\n")
+                ACE_TEXT ("\t-p|--plugin-config <filename>\t\tReads specified file to configure plugins\n")
                 ));
 
   }

@@ -6,8 +6,20 @@ project(DAnCE_Locality_Handler) : dance_skel, dance_split_plan, dance_lib, dance
    Source_Files {
      LocalityActivator_Impl.cpp
      Locality_Manager_Handler_Impl.cpp
+     Inst_Handler_Impl.cpp
+     Interceptor_Handler_Impl.cpp
+     Config_Handler_Impl.cpp
+     Plugin_Conf.cpp
    }
 
+  Header_Files {
+     LocalityActivator_Impl.h
+     Locality_Manager_Handler_Impl.h
+     Inst_Handler_Impl.h
+     Interceptor_Handler_Impl.h
+     Config_Handler_Impl.h
+     Plugin_Conf.h
+  }
   specific {
     install_dir = DAnCE/LocalityManager/Handler
   }

@@ -30,12 +30,6 @@ module DAnCE
   /// file.  Property value is string.
   const string INSTANCE_IOR_FILE = "edu.vanderbilt.dre.DAnCE.InstanceIOR";
 
-  // const string REGISTER_PORT_NAMING = "edu.vanderbilt.dre.DAnCE.RegisterPortNaming";
-
-  // Node Infrastructure Configuration
-  /// Indicates that the NodeManager is running as a standalone entity.
-  const string STANDALONE_NM = "edu.vanderbilt.dre.DAnCE.StandaloneNM";
-
   /// Indicates the naming context for domain objects, which includes infrastructure
   /// and redirection.
   const string DOMAIN_NC = "edu.vanderbilt.dre.DAnCE.DomainNC";
@@ -77,7 +71,12 @@ module DAnCE
   const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
   const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
   const string CCM_HOMEDCOMPONENT = "edu.dre.vanderbilt.dre.CCM.HomedComponent";
+  const string CCM_CONNECTOR = "edu.dre.vanderbilt.dre.CCM.Connector";
+
   const string DANCE_LOCALITYMANAGER = "edu.vanderbilt.dre.DAnCE.LocalityManager";
+  const string DANCE_INSTALLATIONHANDLER = "edu.vanderbilt.dre.DAnCE.InstanceHandler";
+  const string DANCE_DEPLOYMENTINTERCEPTOR = "edu.vanderbilt.dre.DAnCE.DeploymentInterceptor";
+  const string DANCE_CONFIGPLUGIN = "edu.vanderbilt.dre.DAnCE.ConfigPlugin";
 
   // Locality Manager execParameter properties
   const string DANCE_LM_PATH = "edu.vanderbilt.dre.DAnCE.LocalityManager.path";
@@ -85,5 +84,14 @@ module DAnCE
   const string DANCE_LM_INSTALLER = "edu.vanderbilt.dre.DAnCE.LocalityManager.installer";
   const string DANCE_LM_PROCESSNAME = "edu.vanderbilt.dre.DAnCE.LocalityManager.ProcessName";
   const string DANCE_LM_CPUAFFINITY = "edu.vanderbilt.dre.DAnCE.LocalityManager.CPUAffinity";
+  
+  // Instance Deployment Handler installation properties
+
+  /// Instance types that must be installed before the instance handled by the decorated handler
+  const string DANCE_PLUGIN_ENTRYPT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.EntryPoint";
+  const string DANCE_PLUGIN_ARTIFACT = "edu.vanderbilt.dre.DAnCE.InstanceHandler.Artifact";
+  const string DANCE_IDH_DEPENDSON = "edu.vanderbilt.dre.DAnCE.InstanceHandler.DependsOn";
+  
+  
 };
 

@@ -28,6 +28,8 @@ module DAnCE
   {
     readonly attribute string instance_type;
     
+    readonly attribute ::CORBA::StringSeq dependencies;
+
     void configure (in ::Deployment::Properties config);
 
     void install_instance (in ::Deployment::DeploymentPlan plan,

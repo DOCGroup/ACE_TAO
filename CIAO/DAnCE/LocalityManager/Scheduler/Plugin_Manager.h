@@ -14,11 +14,13 @@
 #include "ace/Singleton.h"
 
 #include "LocalityManager/Scheduler/Deployment_Scheduler_export.h"
+#include "LocalityManager/Scheduler/Dependency_Sorter.h"
 #include "Deployment/Deployment_DeploymentPlanC.h"
 #include "DAnCE/DAnCE_LocalityManagerC.h"
 #include "DAnCE/DAnCE_DeploymentInterceptorsC.h"
 
 #include <map>
+#include <set>
 #include <list>
 
 namespace DAnCE
@@ -36,15 +38,24 @@ namespace DAnCE
     
     /// Set the configuration of the plugin_manager
     void set_configuration (const Deployment::Properties &config);
-
+    
+    typedef Dependency_Sorter::IH_DEPS IH_DEPS;
+    
     /// Registers a new installation handler.
     char * register_installation_handler (const ACE_TCHAR *artifact,
-                                          const ACE_TCHAR *entrypoint);
-    
+                                          const ACE_TCHAR *entrypoint,
+                                          const IH_DEPS &dependencies);
+
     /// Registers a new deployment interceptor
     void register_interceptor (const ACE_TCHAR *artifact,
                                const ACE_TCHAR *entrypoint);
+    
+    
+    typedef Dependency_Sorter::Invalid_Install_Order Invalid_Install_Order;
+    typedef Dependency_Sorter::INSTALL_ORDER INSTALL_ORDER;
 
+    void get_installation_order (INSTALL_ORDER &);
+    
     ::DAnCE::InstanceDeploymentHandler_ptr 
         fetch_installation_handler (const char *instance_type);
     
@@ -69,12 +80,14 @@ namespace DAnCE
                        LocalityConfiguration_var > CONFIG_MAP;
     
     HANDLER_MAP handler_map_;
-
+    
     INTERCEPTORS interceptors_;
     
     CONFIG_MAP config_plugins_;
+    
+    Dependency_Sorter ih_dep_;
   };
-
+  
   typedef ACE_Singleton <Plugin_Manager,
                          TAO_SYNCH_MUTEX> PLUGIN_MANAGER;
 }

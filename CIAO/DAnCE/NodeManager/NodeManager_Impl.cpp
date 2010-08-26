@@ -41,9 +41,11 @@ namespace DAnCE
     ::Deployment::Properties prop;
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
+    Plugin_Manager::IH_DEPS deps;
     CORBA::String_var safe_type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
-                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Locality_Handler"));
+                                                                  ACE_TEXT_CHAR_TO_TCHAR ("create_Locality_Handler"),
+                                                                  deps);
 
     if (this->properties_.find (DAnCE::LOCALITY_BESTEFFORT) == 0)
       PLUGIN_MANAGER::instance ()->register_interceptor (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),

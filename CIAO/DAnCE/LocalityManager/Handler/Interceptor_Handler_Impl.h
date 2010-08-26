@@ -2,14 +2,14 @@
 // $Id$
 
 /**
- * @file Locality_Manager_Handler_Impl.h
+ * @file Interceptor_Handler_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * 
  * Installation handler implementation for spawning LocalityManagers. 
  */
 
-#ifndef DANCE_LOCALITYMANAGERI_MIGAYG_H_
-#define DANCE_LOCALITYMANAGERI_MIGAYG_H_
+#ifndef DANCE_INTERCEPTOR_HANDLER_H
+#define DANCE_INTERCEPTOR_HANDLER_H
 
 #include "DAnCE/DAnCE_LocalityManagerS.h"
 #include "DAnCE/DAnCE_Utility.h"
@@ -23,24 +23,22 @@
 
 namespace DAnCE
 {
-  class DAnCE_LocalityActivator_i;
-
-  class DAnCE_Locality_Handler_Export Locality_Handler_i
+  class DAnCE_Locality_Handler_Export Interceptor_Handler_Impl
     : public virtual DAnCE::InstanceDeploymentHandler,
       public virtual ::CORBA::LocalObject
   {
   public:
     // Constructor 
-    Locality_Handler_i (void);
+    Interceptor_Handler_Impl (void);
   
     // Destructor 
-    virtual ~Locality_Handler_i (void);
+    virtual ~Interceptor_Handler_Impl (void);
     
     virtual
       char * instance_type (void);
-
-    virtual
-      ::CORBA::StringSeq * dependencies (void);
+    
+    ::CORBA::StringSeq *
+        dependencies (void);
 
     virtual
       void install_instance (const ::Deployment::DeploymentPlan & plan,
@@ -86,14 +84,13 @@ namespace DAnCE
      
   private:
     static const char *instance_type_;
-    DAnCE_LocalityActivator_i *activator_;
   };
 }
 
 extern "C"
 {
   ::DAnCE::InstanceDeploymentHandler_ptr 
-  DAnCE_Locality_Handler_Export create_Locality_Handler (void);
+  DAnCE_Locality_Handler_Export create_Interceptor_Handler (void);
 }
 
 #endif
