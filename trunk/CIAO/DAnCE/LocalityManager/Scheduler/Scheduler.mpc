@@ -9,6 +9,7 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
     Plugin_Manager.cpp
     Deployment_Scheduler.cpp
     Deployment_Completion.cpp
+    Dependency_Sorter.cpp
     Events/Action_Base.cpp
     Events/Install.cpp
     Events/Remove.cpp
@@ -29,6 +30,7 @@ project(DAnCE_Deployment_Scheduler) : dance_lib, dance_output, dance_skel, dance
     Deployment_Scheduler.h
     Deployment_Scheduler_export.h
     Deployment_Completion.h
+    Dependency_Sorter.h
     Events/Action_Base.h
     Events/Install.h
     Events/Remove.h

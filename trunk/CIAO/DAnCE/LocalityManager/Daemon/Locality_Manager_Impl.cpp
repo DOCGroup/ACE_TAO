@@ -6,6 +6,7 @@
 
 #include "DAnCE/DAnCE_Utility.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
+#include "LocalityManager/Handler/Plugin_Conf.h"
 #include "LocalityManager/Scheduler/Plugin_Manager.h"
 #include "LocalityManager/Scheduler/Deployment_Completion.h"
 #include "LocalityManager/Scheduler/Events/Install.h"
@@ -22,9 +23,11 @@ namespace DAnCE
 {
   // Implementation skeleton constructor
   LocalityManager_i::LocalityManager_i (const ACE_TString &uuid,
+                                        std::list < std::string > plugin_config,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa)
     : uuid_ (uuid),
+      plugin_config_files_ (plugin_config),
       orb_ (CORBA::ORB::_duplicate  (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       spawn_delay_ (30)
@@ -60,78 +63,25 @@ namespace DAnCE
 
         PLUGIN_MANAGER::instance ()->set_configuration (*props);
       }
-
-    CORBA::String_var type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (
-        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-        ACE_TEXT_CHAR_TO_TCHAR ("create_Container_Handler"));
-
-    if (type.in ())
-      {
-        this->handler_order_.push_back (type.in ());
-        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
-      }
-
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("LocalityManager_i::init - ")
-                     ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.in ()));
-
-    type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (
-        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-        ACE_TEXT_CHAR_TO_TCHAR ("create_Home_Handler"));
-
-    if (type.in ())
-      {
-        this->handler_order_.push_back (type.in ());
-        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
-      }
-
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("LocalityManager_i::init - ")
-                     ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.in ()));
-
-    type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (
-        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-        ACE_TEXT_CHAR_TO_TCHAR ("create_Homed_Component_Handler"));
-    if (type.in ())
-      {
-        this->handler_order_.push_back (type.in ());
-        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
-      }
-
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("LocalityManager_i::init - ")
-                     ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.in ()));
-
-    type =
-      PLUGIN_MANAGER::instance ()->register_installation_handler (
-        ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Handlers"),
-        ACE_TEXT_CHAR_TO_TCHAR ("create_Component_Handler"));
-    if (type.in ())
-      {
-        this->handler_order_.push_back (type.in ());
-        this->instance_handlers_[type.in ()] = INSTANCE_LIST ();
-      }
-
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                     ACE_TEXT ("LocalityManager_i::init - ")
-                     ACE_TEXT ("Registered handler for <%C>\n"),
-                     type.in ()));
-
-    PLUGIN_MANAGER::instance ()->register_interceptor (
-      ACE_TEXT_CHAR_TO_TCHAR ("CIAO_Deployment_Interceptors"),
-      ACE_TEXT_CHAR_TO_TCHAR ("create_CIAO_StoreReferences"));
     
-    PLUGIN_MANAGER::instance ()->register_interceptor (
-         ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_SHS_Interceptors"),
-         ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_SHS_Interceptor"));
-    
+    Plugin_Configurator config;
     bool tmp;
+
+    DANCE_DEBUG (10, (LM_DEBUG, DLINFO
+                      ACE_TEXT ("LocalityManager_i::init - ")
+                      ACE_TEXT ("Loading %u plugin configuration files\n"),
+                      this->plugin_config_files_.size ()));
+    
+    for (std::list < std::string >::const_iterator i = this->plugin_config_files_.begin ();
+         i != this->plugin_config_files_.end (); ++i)
+      {
+        DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+                         ACE_TEXT ("LocalityManager_i::init - ")
+                         ACE_TEXT ("Loading plugin file <%C>\n"),
+                         i->c_str ()));
+        config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
+      }
+
     if (props &&
         DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,
                                             *props,
@@ -148,14 +98,6 @@ namespace DAnCE
           ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
       }
     
-    PLUGIN_MANAGER::instance ()->register_configuration_plugin (
-               ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
-               ACE_TEXT_CHAR_TO_TCHAR ("create_Process_Name"));
-
-    PLUGIN_MANAGER::instance ()->register_configuration_plugin (
-               ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_LM_Config_Plugins"),
-               ACE_TEXT_CHAR_TO_TCHAR ("create_CPU_Affinity"));
-
     if (this->props_)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
@@ -226,6 +168,8 @@ namespace DAnCE
                                   ::Deployment::Connections_out providedReference)
   {
     DANCE_TRACE ("LocalityManager_i::startLaunch");
+    
+    PLUGIN_MANAGER::instance ()->get_installation_order (this->handler_order_);
 
     this->install_instances (prop);
 
@@ -243,7 +187,7 @@ namespace DAnCE
 
     Deployment_Completion completion (this->scheduler_);
 
-    for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
+    for (Plugin_Manager::INSTALL_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
       {
@@ -612,7 +556,7 @@ namespace DAnCE
 
     dispatched = 0;
 
-    for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
+    for (Plugin_Manager::INSTALL_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
       {
@@ -698,7 +642,7 @@ namespace DAnCE
     Deployment_Completion completion (this->scheduler_);
     CORBA::ULong dispatched (0);
 
-    for (HANDLER_ORDER::const_iterator i = this->handler_order_.begin ();
+    for (Plugin_Manager::INSTALL_ORDER::const_iterator i = this->handler_order_.begin ();
          i != this->handler_order_.end ();
          ++i)
       {

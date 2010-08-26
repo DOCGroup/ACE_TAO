@@ -1,3 +1,37 @@
+Thu Aug 26 00:28:12 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_LocalityManager.idl:
+        * DAnCE/DAnCE/DAnCE_Properties.idl:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager.mpc:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.h:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/Config_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Inst_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Interceptor_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.h:
+        * DAnCE/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * DAnCE/LocalityManager/Handler/Plugin_Conf.h:
+        * DAnCE/LocalityManager/Handler/Plugin_Conf.cpp:
+        * DAnCE/LocalityManager/Scheduler/Dependency_Sorter.h:
+        * DAnCE/LocalityManager/Scheduler/Dependency_Sorter.cpp:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * DAnCE/LocalityManager/Scheduler/Scheduler.mpc:
+        * DAnCE/MPC/config/dance_locality_manager.mpb:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/Node_Manager_Module.h:
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+        * DAnCE/bin/ciao.localityconfig:
+
+          Textfile-based deployment of installation handlers, plug-ins,
+          and interceptors.
+
 Wed Aug 25 23:07:19 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/Component_Handler.h:
