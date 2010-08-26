@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Default_Stub_Factory.h"
@@ -6,10 +7,6 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (tao,
-           TAO_Default_Stub_Factory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

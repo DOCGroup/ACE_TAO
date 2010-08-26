@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Invocation_Adapter.h"
 #include "tao/Profile_Transport_Resolver.h"
@@ -19,11 +20,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
-
-
-ACE_RCSID (tao,
-           Invocation_Adapter,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Profile_Transport_Resolver.h"
@@ -23,11 +24,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Profile_Transport_Resolver,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

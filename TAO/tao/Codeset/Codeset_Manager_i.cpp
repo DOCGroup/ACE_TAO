@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/TAO_Server_Request.h"
@@ -20,12 +21,6 @@
 #include "ace/Codeset_Registry.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
-
-
-ACE_RCSID (Codeset,
-           Codeset_Manager_i,
-           "$Id$")
-
 
 // These numbers are assigned by the OpenGroup, a database is
 // available at

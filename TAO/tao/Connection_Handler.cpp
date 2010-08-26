@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Connection_Handler.h"
 #include "tao/ORB_Core.h"
@@ -17,10 +18,6 @@
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Connection_Handler,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

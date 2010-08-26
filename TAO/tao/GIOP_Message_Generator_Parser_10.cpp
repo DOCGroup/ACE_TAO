@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/GIOP_Message_Generator_Parser_10.h"
 #include "tao/GIOP_Utils.h"
@@ -12,10 +13,6 @@
 #include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (tao,
-           GIOP_Message_Generator_Parser_10,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

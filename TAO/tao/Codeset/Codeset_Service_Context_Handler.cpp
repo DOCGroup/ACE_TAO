@@ -1,10 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Codeset/Codeset_Service_Context_Handler.h"
-
-ACE_RCSID (Codeset,
-           Codeset_Service_Context_Handler,
-           "$Id$")
 
 #include "tao/CDR.h"
 #include "tao/Transport.h"

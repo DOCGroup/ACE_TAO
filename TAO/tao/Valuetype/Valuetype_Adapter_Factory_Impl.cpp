@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -5,10 +6,6 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
-
-ACE_RCSID (ValueType,
-           Valuetype_Adapter_Factory_Impl,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

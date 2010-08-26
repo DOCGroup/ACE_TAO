@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
@@ -19,10 +20,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (Valuetype,
-           ValueBase,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
