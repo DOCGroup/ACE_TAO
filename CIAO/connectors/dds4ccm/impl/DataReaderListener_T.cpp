@@ -80,7 +80,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
     }
 
   typename DDS_TYPE::dds_seq_type data;
-  DDS_SampleInfoSeq sample_info;
+  typename DDS_TYPE::sampleinfo_seq_type sample_info;
   ::DDS::ReturnCode_t const result =
       reader->take (data,
                     sample_info,

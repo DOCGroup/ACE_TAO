@@ -17,7 +17,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, typename BASE_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
-typename DDS_TYPE::data_writer *
+typename DDS_TYPE::datawriter_type *
 CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYPE>::impl (void)
 {
   if (this->writer_)
@@ -65,7 +65,7 @@ CIAO::DDS4CCM::InstanceHandleManager_T<DDS_TYPE, CCM_TYPE, BASE_TYPE, VENDOR_TYP
     }
   else
     {
-      this->writer_ = DDS_TYPE::data_writer::narrow (writer->get_impl ());
+      this->writer_ = DDS_TYPE::datawriter_type::narrow (writer->get_impl ());
     }
 }
 

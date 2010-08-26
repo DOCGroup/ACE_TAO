@@ -19,7 +19,6 @@
 
 #if (CIAO_DDS4CCM_OPENDDS==1)
 typedef ::DDS::InstanceHandle_t DDS_InstanceHandle_t;
-typedef ::DDS::SampleInfoSeq DDS_SampleInfoSeq;
 #endif
 
 namespace CIAO
@@ -58,29 +57,29 @@ namespace CIAO
 
       void read_wo_instance (
         typename DDS_TYPE::dds_seq_type & data,
-        DDS_SampleInfoSeq & sample_info,
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         DDSQueryCondition * qc);
 
       void read_w_instance (
         typename DDS_TYPE::dds_seq_type & data,
         const ::DDS_InstanceHandle_t & lookup_hnd,
-        DDS_SampleInfoSeq & sample_info);
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info);
 
       DDS_ReturnCode_t get (
         typename DDS_TYPE::dds_seq_type & data,
-        DDS_SampleInfoSeq & sample_info,
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSQueryCondition * qc);
 
       DDS_ReturnCode_t get (
         typename DDS_TYPE::dds_seq_type & data,
-        DDS_SampleInfoSeq & sample_info,
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSReadCondition * rd);
 
       DDS_ReturnCode_t take (
         typename DDS_TYPE::dds_seq_type & data,
-        DDS_SampleInfoSeq & sample_info,
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info,
         const DDS_Long & max_samples,
         DDSQueryCondition * qc);
 
@@ -90,7 +89,7 @@ namespace CIAO
       DDS_ReturnCode_t
       return_loan (
         typename DDS_TYPE::dds_seq_type & data,
-        ::DDS_SampleInfoSeq & sample_info);
+        typename DDS_TYPE::sampleinfo_seq_type & sample_info);
 
       void delete_datareader (::DDS::Subscriber_ptr subscriber);
 
@@ -192,11 +191,11 @@ namespace CIAO
       virtual DDSDataReader * get_impl (void);
       
     private:
-      typename DDS_TYPE::data_reader * impl_;
+      typename DDS_TYPE::datareader_type * impl_;
 
       ::DDS::StatusMask lst_mask_;
 
-      typename DDS_TYPE::data_reader * impl (void);
+      typename DDS_TYPE::datareader_type * impl (void);
 
       void log_query_condition (DDSQueryCondition * qc);
     };

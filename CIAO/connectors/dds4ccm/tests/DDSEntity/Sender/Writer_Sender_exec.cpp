@@ -113,7 +113,7 @@ namespace CIAO_Writer_Sender_Impl
           {
             if (this->last_key->second->iteration == this->iterations_)
               {
-                //next key
+                // Next key
                 ++this->last_key;
               }
             else
@@ -236,7 +236,7 @@ namespace CIAO_Writer_Sender_Impl
         DDSDataWriter* dds_datawriter = typed_ccm_dw->get_impl ();
         if (dds_datawriter)
           {
-            this->writer_ = WriterTestDataWriter::narrow (dds_datawriter);
+            this->writer_ = ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::datawriter_type::narrow (dds_datawriter);
             if (!this->writer_)
               {
                 ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
