@@ -4,8 +4,7 @@ Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>
 Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz
-Build-Conflicts: autoconf2.13, automake1.4
-Standards-Version: 3.8.3
+Standards-Version: 3.8.4
 Vcs-Svn: svn://svn.debian.org/svn/pkg-ace/trunk
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-ace/trunk
 Homepage: http://www.cs.wustl.edu/~schmidt/ACE.html
@@ -27,7 +26,7 @@ Description: makefile, project and workspace creator
   * mpc-ace, generating project files for a single target
   * mwc-ace, generating workspace files for a set of projects
 
-Package: libace-5.8
+Package: libace-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -53,7 +52,7 @@ Description: C++ network programming framework
 Package: libace-dev
 Architecture: any
 Section: libdevel
-Depends: libace-5.8 (= ${binary:Version}), ${misc:Depends}
+Depends: libace-5.8.1 (= ${binary:Version}), ${misc:Depends}
 Suggests: libace-doc, libtao-dev, pkg-config
 Replaces: mpc-ace (<< 5.6.3-4)
 Description: C++ network programming framework development files
@@ -68,7 +67,7 @@ Description: C++ network programming framework documentation
  This package contains the ACE overview documentation, tutorials,
  examples, and information regarding upstream development.
 
-Package: libace-ssl-5.8
+Package: libace-ssl-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -79,12 +78,12 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 5.8d), ${misc:Depends}
+Depends: libace-ssl-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 5.8d), ${misc:Depends}
 Description: ACE secure socket layer library development files
  This package contains the header files and static library for the ACE
  SSL library.
 
-Package: libace-rmcast-5.8
+Package: libace-rmcast-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -98,12 +97,12 @@ Description: ACE reliable multicast library
 Package: libace-rmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-rmcast-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-rmcast-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE reliable multicast library development files
  This package contains the header files and static library for the ACE
  reliable multicast library.
 
-Package: libace-tmcast-5.8
+Package: libace-tmcast-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -116,12 +115,12 @@ Description: ACE transactional multicast library
 Package: libace-tmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tmcast-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-tmcast-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE transactional multicast library development files
  This package contains the header files and static library for the ACE
  transactional multicast library.
 
-Package: libace-htbp-5.8
+Package: libace-htbp-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -135,7 +134,7 @@ Description: ACE protocol over HTTP tunneling library
 Package: libace-htbp-dev
 Architecture: any
 Section: libdevel
-Depends: libace-htbp-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-htbp-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE protocol over HTTP tunneling library development files
  This package contains the header files and static library for the ACE
  HTBP library.
@@ -150,7 +149,7 @@ Description: ACE perfect hash function generator
  basically the same options and functionality. ace_gperf simply takes
  advantage of the some of the features provided by the ACE library.
 
-Package: libacexml-5.8
+Package: libacexml-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -165,7 +164,7 @@ Description: ACE SAX based XML parsing library
 Package: libacexml-dev
 Architecture: any
 Section: libdevel
-Depends: libacexml-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libacexml-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE SAX based XML parsing library development files
  This package contains the header files and static library for the ACE
  XML parsing library.
@@ -174,7 +173,7 @@ Package: libkokyu-5.8
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: libtao-1.8.1, libtao-orbsvcs-1.8
+Suggests: libtao-1.8.1, libtao-orbsvcs-1.8.1
 Description: ACE scheduling and dispatching library
  Kokyu is a library designed to provide flexible scheduling and
  dispatching services.
@@ -185,12 +184,12 @@ Description: ACE scheduling and dispatching library
 Package: libkokyu-dev
 Architecture: any
 Section: libdevel
-Depends: libkokyu-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libkokyu-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE scheduling and dispatching library development files
  This package contains the header files and static library for the ACE
  scheduling and dispatching library.
 
-Package: libace-qtreactor-5.8
+Package: libace-qtreactor-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -209,12 +208,12 @@ Description: ACE-GUI reactor integration for Qt
 Package: libace-qtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-qtreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libqt4-dev, ${misc:Depends}
+Depends: libace-qtreactor-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libqt4-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for Qt development files
  This package contains header files and static library for the ACE-Qt
  reactor integration.
 
-Package: libace-xtreactor-5.8
+Package: libace-xtreactor-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -232,12 +231,12 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 5.8), ${misc:Depends}
+Depends: libace-xtreactor-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
 
-Package: libace-tkreactor-5.8
+Package: libace-tkreactor-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -255,12 +254,12 @@ Description: ACE-GUI reactor integration for Tk
 Package: libace-tkreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tkreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 5.8), ${misc:Depends}
+Depends: libace-tkreactor-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Tk development files
  This package contains header files and static library for the ACE-Tk
  reactor integration.
 
-Package: libace-flreactor-5.8
+Package: libace-flreactor-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -277,12 +276,12 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 5.8), ${misc:Depends}
+Depends: libace-flreactor-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 5.8), ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
 
-Package: libace-foxreactor-5.8
+Package: libace-foxreactor-5.8.1
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -299,7 +298,7 @@ Description: ACE-GUI reactor integration for FOX
 Package: libace-foxreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-foxreactor-5.8 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
+Depends: libace-foxreactor-5.8.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for FOX development files
  This package contains header files and static library for the ACE-FOX
  reactor integration.
