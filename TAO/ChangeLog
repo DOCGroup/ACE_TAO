@@ -1,3 +1,12 @@
+Thu Aug 26 16:02:12 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/notifytest.mpb:
+
+          Reverted the change from
+          Fri Aug 20 20:06:05 UTC 2010  Adam Mitz  <mitza at ociweb dot com>
+          because it causes the "make install" builds to fail.  We will have
+          to live with a warning from some linker for now.  Real fix to follow.
+
 Thu Aug 26 14:54:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
