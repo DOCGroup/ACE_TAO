@@ -1,3 +1,9 @@
+Thu Aug 26 09:01:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        Made use of platform independant ACE_Thread_ID class for testing thread switch.
+
 Thu Aug 26 03:18:31 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/Plugin_Conf.h:
