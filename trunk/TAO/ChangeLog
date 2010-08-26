@@ -1,3 +1,11 @@
+Thu Aug 26 14:54:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Slightly changed the dds traits
+
+        * tests/MProfile_Connection_Timeout/test_i.cpp:
+          Removed rcsid
+
 Thu Aug 26 13:44:36 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
