@@ -1,3 +1,9 @@
+Thu Aug 26 13:08:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/servers/servers.mpc:
+          Use ace_netsvcs as executable name, this makes more sense when
+          we install this file in a target directory
+
 Thu Aug 26 13:04:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
