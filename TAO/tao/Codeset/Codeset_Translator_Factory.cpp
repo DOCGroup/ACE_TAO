@@ -5,7 +5,6 @@
  *  @file    Codeset_Translator_Factory.cpp
  *
  *  $Id$
-
  *
  *  The base for all the translator factories. Translator factories are
  *  responsible for supplying the proper translator on demand.
@@ -15,13 +14,8 @@
  */
 //=============================================================================
 
-
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
-
-ACE_RCSID (Codeset,
-           Codeset_Translator_Factory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

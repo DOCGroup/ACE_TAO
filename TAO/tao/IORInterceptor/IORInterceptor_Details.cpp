@@ -1,9 +1,8 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/IORInterceptor/IORInterceptor_Details.h"
 #include "tao/SystemException.h"
-
-ACE_RCSID (IORInterceptor,
-           IORInterceptor_Details,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

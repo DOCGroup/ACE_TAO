@@ -17,9 +17,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-
-ACE_RCSID (Codeset, Codeset, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

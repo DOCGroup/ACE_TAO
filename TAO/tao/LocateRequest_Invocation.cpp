@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/LocateRequest_Invocation.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -12,10 +15,6 @@
 #include "ace/Intrusive_Auto_Ptr.h"
 
 #include "ace/Countdown_Time.h"
-
-ACE_RCSID (tao,
-           LocateRequest_Invocation,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

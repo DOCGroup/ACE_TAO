@@ -1,8 +1,7 @@
-#include "tao/Services_Activate.h"
+// -*- C++ -*-
+// $Id$
 
-ACE_RCSID (tao,
-           Services_Activate,
-           "$Id$")
+#include "tao/Services_Activate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

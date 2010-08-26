@@ -1,3 +1,55 @@
+Thu Aug 26 13:39:29 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBANAME_Parser.cpp:
+        * tao/Cache_Entries_T.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * tao/CodecFactory/CodecFactory.cpp:
+        * tao/CodecFactory/CodecFactory_impl.cpp:
+        * tao/Codeset/Codeset.cpp:
+        * tao/Codeset/Codeset_Descriptor.cpp:
+        * tao/Codeset/Codeset_Manager_Factory.cpp:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/Codeset_Service_Context_Handler.cpp:
+        * tao/Codeset/Codeset_Translator_Factory.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+        * tao/Connect_Strategy.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/Default_Stub_Factory.cpp:
+        * tao/FlResource/FlResource_Factory.cpp:
+        * tao/FlResource/FlResource_Loader.cpp:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Factory.cpp:
+        * tao/IORInterceptor/IORInfo.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Details.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/LF_Event_Loop_Thread_Helper.cpp:
+        * tao/LF_Follower_Auto_Ptr.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/New_Leader_Generator.cpp:
+        * tao/Parser_Registry.cpp:
+        * tao/Policy_Current_Impl.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Service_Context_Handler.cpp:
+        * tao/Services_Activate.cpp:
+        * tao/Stub_Factory.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport_Acceptor.cpp:
+        * tao/Transport_Queueing_Strategies.cpp:
+        * tao/Transport_Selection_Guard.cpp:
+        * tao/Transport_Timer.cpp:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory_Map.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Factory_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+          Zap ACE_RCSID
+
 Thu Aug 26 13:03:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:

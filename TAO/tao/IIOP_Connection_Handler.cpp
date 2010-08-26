@@ -1,3 +1,5 @@
+// -*- C++ -*-
+// $Id$
 
 #include "tao/IIOP_Connection_Handler.h"
 
@@ -15,10 +17,6 @@
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (tao,
-           IIOP_Connection_Handler,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

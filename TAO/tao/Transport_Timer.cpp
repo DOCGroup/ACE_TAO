@@ -1,11 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Transport_Timer.h"
 #include "tao/Transport.h"
-
-ACE_RCSID (tao, 
-           Transport_Timer, 
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

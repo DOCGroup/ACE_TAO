@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CORBANAME_Parser.h"
@@ -14,11 +15,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (tao,
-           CORBANAME_Parser,
-           "$Id$")
 
 static const char corbaname_prefix[] = "corbaname:";
 

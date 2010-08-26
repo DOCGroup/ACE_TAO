@@ -1,9 +1,8 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Valuetype/ValueFactory.h"
 #include "ace/Guard_T.h"
-
-ACE_RCSID (Valuetype,
-           ValueFactory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

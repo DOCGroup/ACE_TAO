@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/TAO_Server_Request.h"
@@ -20,10 +21,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           TAO_Server_Request,
-           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
