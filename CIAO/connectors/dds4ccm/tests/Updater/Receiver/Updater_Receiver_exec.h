@@ -13,8 +13,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "ace/OS_NS_Thread.h"
-
 
 
 namespace CIAO_Updater_Receiver_Impl

@@ -76,8 +76,8 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   //============================================================
   PortStatusListener_exec_i::PortStatusListener_exec_i (Atomic_Boolean &sample_port_1,
                                                         Atomic_Boolean &sample_port_2,
-                                                        Atomic_ThreadId &thread_id_1,
-                                                        Atomic_ThreadId &thread_id_2,
+                                                        ACE_Thread_ID &thread_id_1,
+                                                        ACE_Thread_ID &thread_id_2,
                                                         int port_nr)
     : sample_port_1_(sample_port_1),
       sample_port_2_(sample_port_2),
@@ -106,12 +106,16 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   {
     if (this->port_nr_ == 1)
       {
-        this->thread_id_1_ = ACE_Thread::self ();
+        ACE_Thread_ID t_id;
+        this->thread_id_1_.handle (t_id.handle ());
+        this->thread_id_1_.id (t_id.id ());
       }
     if (this->port_nr_ == 2)
       {
-        this->thread_id_2_ = ACE_Thread::self ();
-      }
+        ACE_Thread_ID t_id;
+        this->thread_id_2_.handle (t_id.handle ());
+        this->thread_id_2_.id (t_id.id ());
+     }
 
     if (this->port_nr_ == 1 &&
         status.total_count > 0)
@@ -133,10 +137,13 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
     sample_port_1_ (false),
-    sample_port_2_ (false),
-    thread_id_listener_1_ (0),
-    thread_id_listener_2_ (0)
+    sample_port_2_ (false)
   {
+    thread_id_listener_1_.id (0);
+    thread_id_listener_1_.handle (0);
+    thread_id_listener_2_.id (0);
+    thread_id_listener_2_.handle (0);
+
     this->ticker_ = new read_action_Generator (*this);
   }
 
@@ -298,95 +305,101 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
                                ACE_TEXT ("'on_sample_lost' in on DDS_GET port Receiver\n")
                     ));
       }
+             //get current thread
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
+
+    char list_buf_1 [65];
+    this->thread_id_listener_1_.to_string (list_buf_1);
+
     //check thread switch for listener 1
-    if (this->thread_id_listener_1_.value () == 0)
+    if (this->thread_id_listener_1_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for PortStatusListener I not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_1_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "OK : "
                               "Thread switch for PortStatusListener I seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_1_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf_1,
+                              ccm_buf));
+     }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread switch for PortStatusListener I "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_1_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_1,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_1_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_1_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: PortStatusListener I: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_1_.value (),
-                              ACE_Thread::self ()));
-      }
+                              "listener <%C> - component <%C>\n",
+                              list_buf_1,
+                              ccm_buf));
+     }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK : PortStatusListener I: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_1_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_1,
+                              ccm_buf));
       }
     #endif
 
     //check thread switch for listener 2
-    if (this->thread_id_listener_2_.value () == 0)
-      {
+    char list_buf_2 [65];
+   this->thread_id_listener_2_.to_string (list_buf_2);
+   if (this->thread_id_listener_2_.id () == 0)
+     {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for PortStatusListener II not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_2_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "OK : "
                               "Thread switch for PortStatusListener II seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_2_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_2,
+                              ccm_buf));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread switch for PortStatusListener II "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_2_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_2,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_2_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_2_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: PortStatusListener II: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_2_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_2,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "OK : PortStatusListener II: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_2_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf_2,
+                              ccm_buf));
       }
     #endif
   }

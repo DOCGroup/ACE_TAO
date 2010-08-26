@@ -12,8 +12,9 @@ namespace CIAO_OIT_Test_Sender_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &inconsistent,
-                                                                          Atomic_ThreadId &thread_id)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+                                             Atomic_Boolean &inconsistent,
+                                             ACE_Thread_ID &thread_id)
     : inconsistent_ (inconsistent),
       thread_id_ (thread_id)
   {
@@ -28,7 +29,9 @@ namespace CIAO_OIT_Test_Sender_Impl
      ::DDS::Topic_ptr /*the_topic*/,
      const DDS::InconsistentTopicStatus & /*status*/)
   {
-    this->thread_id_ = ACE_Thread::self ();
+    ACE_Thread_ID t_id;
+    this->thread_id_.handle (t_id.handle ());
+    this->thread_id_.id (t_id.id ());
     this->inconsistent_ = true;
   }
 
@@ -66,9 +69,10 @@ namespace CIAO_OIT_Test_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : inconsistent_ (false),
-      thread_id_listener_ (0)
+    : inconsistent_ (false)
   {
+    thread_id_listener_.id (0);
+    thread_id_listener_.handle (0);
   }
 
   Sender_exec_i::~Sender_exec_i (void)
@@ -121,49 +125,56 @@ namespace CIAO_OIT_Test_Sender_Impl
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("SENDER ERROR: did not receive the expected ")
                               ACE_TEXT ("error 'on_inconsistent_topic'\n")));
       }
-    if (this->thread_id_listener_.value () == 0)
+
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
+
+    char list_buf [65];
+    this->thread_id_listener_.to_string(list_buf);
+
+    if (this->thread_id_listener_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread ID for ConnectorStatusListener not set!\n"));
       }
+
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: "
                               "Thread switch for ConnectorStatusListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                             "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     else
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: "
                               "Thread switch for ConnectorStatusListener "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                             "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "SENDER ERROR: ConnectorStatusListener: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                             "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "SENDER OK: ConnectorStatusListener: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+     }
     #endif
   }
 

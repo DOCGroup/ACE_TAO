@@ -15,7 +15,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   ListenOneByOneTest_Listener_exec_i::ListenOneByOneTest_Listener_exec_i (
                                               Atomic_ULong &received_one_by_one,
                                               Atomic_ULong &received_many_by_many,
-                                              Atomic_ThreadId &thread_id)
+                                              ACE_Thread_ID &thread_id)
     : received_one_by_one_ (received_one_by_one),
       received_many_by_many_ (received_many_by_many),
       thread_id_ (thread_id)
@@ -31,7 +31,10 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                   const ListenOneByOneTest & an_instance,
                                   const ::CCM_DDS::ReadInfo & info)
   {
-    this->thread_id_ = ACE_Thread::self ();
+    ACE_Thread_ID t_id;
+    this->thread_id_.handle (t_id.handle ());
+    this->thread_id_.id (t_id.id ());
+
     ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
@@ -71,10 +74,12 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
-      thread_id_listener_ (0),
       iterations_ (10),
       keys_ (5)
   {
+    thread_id_listener_.id (0);
+    thread_id_listener_.handle (0);
+
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -201,49 +206,55 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                "one_by_one callback. "
                                "Test passed!\n"));
       }
-    if (this->thread_id_listener_.value () == 0)
+    //get current thread
+    char ccm_buf [65];
+    ACE_Thread_ID ccm_thread_id;
+    ccm_thread_id.to_string (ccm_buf);
+
+    char list_buf [65];
+    this->thread_id_listener_.to_string (list_buf);
+
+    if (this->thread_id_listener_.id () == 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: "
                               "Thread ID for ReaderListener not set!\n"));
       }
     #if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1)
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: "
                               "Thread switch for ReaderListener seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+    }
     else
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: "
                               "Thread switch for ReaderListener "
                               "doesn't seem to work! "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+    }
     #else
-    else if (ACE_OS::thr_equal (this->thread_id_listener_.value (),
-                                ACE_Thread::self ()))
+    else if (this->thread_id_listener_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ONE_BY_ONE: ReaderListener: "
                               "DDS seems to use a CCM thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
+                              "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG, "ONE_BY_ONE: ReaderListener: "
                               "DDS seems to use its own thread for its callback: "
-                              "listener <%u> - component <%u>\n",
-                              this->thread_id_listener_.value (),
-                              ACE_Thread::self ()));
-      }
+                               "listener <%C> - component <%C>\n",
+                              list_buf,
+                              ccm_buf));
+    }
     #endif
   }
 

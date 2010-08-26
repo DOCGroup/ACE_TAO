@@ -21,7 +21,6 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
 {
   class Receiver_exec_i;
 
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> Atomic_Long;
 
   //============================================================
@@ -33,7 +32,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   {
   public:
     ContentFilteredTopicListenStateTest_Listener (
-                            Atomic_ThreadId &thread_id,
+                            ACE_Thread_ID &thread_id,
                             Atomic_Long &samples_received);
     virtual ~ContentFilteredTopicListenStateTest_Listener (void);
 
@@ -54,7 +53,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                  const CCM_DDS::ReadInfo& read_info);
 
   private:
-    Atomic_ThreadId &thread_id_;
+    ACE_Thread_ID &thread_id_;
     Atomic_Long &samples_received_;
   };
 
@@ -98,7 +97,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   private:
     ::CFTLS_Test::CCM_Receiver_Context_var context_;
 
-    Atomic_ThreadId thread_id_listener_;
+    ACE_Thread_ID thread_id_listener_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;

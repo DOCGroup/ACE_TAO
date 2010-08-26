@@ -25,7 +25,6 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_ULong;
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> Atomic_Bool;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   //============================================================
   // ListenOneByOneTest_Listener_exec_i
@@ -38,7 +37,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     ListenOneByOneTest_Listener_exec_i (
                             Atomic_ULong &received_one_by_one,
                             Atomic_ULong &received_many_by_many,
-                            Atomic_ThreadId &thread_id);
+                            ACE_Thread_ID &thread_id);
     virtual ~ListenOneByOneTest_Listener_exec_i (void);
 
     virtual void
@@ -52,7 +51,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   private:
     Atomic_ULong &received_one_by_one_;
     Atomic_ULong &received_many_by_many_;
-    Atomic_ThreadId &thread_id_;
+    ACE_Thread_ID &thread_id_;
   };
 
   //============================================================
@@ -97,7 +96,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
 
     Atomic_ULong    received_one_by_one_;
     Atomic_ULong    received_many_by_many_;
-    Atomic_ThreadId thread_id_listener_;
+    ACE_Thread_ID thread_id_listener_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;

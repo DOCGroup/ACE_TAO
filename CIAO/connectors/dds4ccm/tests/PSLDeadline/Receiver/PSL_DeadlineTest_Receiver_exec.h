@@ -20,7 +20,6 @@
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
 
@@ -75,8 +74,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   public:
     PortStatusListener_exec_i (Atomic_Boolean &,
                                Atomic_Boolean &,
-                               Atomic_ThreadId &,
-                               Atomic_ThreadId &,
+                               ACE_Thread_ID &,
+                               ACE_Thread_ID &,
                                int );
     virtual ~PortStatusListener_exec_i (void);
 
@@ -93,8 +92,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   private:
     Atomic_Boolean &deadline_port_1_;
     Atomic_Boolean &deadline_port_2_;
-    Atomic_ThreadId &thread_id_1_;
-    Atomic_ThreadId &thread_id_2_;
+    ACE_Thread_ID &thread_id_1_;
+    ACE_Thread_ID &thread_id_2_;
     int port_nr_;
   };
 
@@ -133,8 +132,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
     Atomic_Boolean deadline_port_1_;
     Atomic_Boolean deadline_port_2_;
-    Atomic_ThreadId thread_id_listener_1_;
-    Atomic_ThreadId thread_id_listener_2_;
+    ACE_Thread_ID thread_id_listener_1_;
+    ACE_Thread_ID thread_id_listener_2_;
 };
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr

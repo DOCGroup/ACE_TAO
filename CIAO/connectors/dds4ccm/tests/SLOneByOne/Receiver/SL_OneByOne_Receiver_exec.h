@@ -20,7 +20,6 @@
 namespace CIAO_SL_OneByOne_Receiver_Impl
 {
   typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> Atomic_Long;
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, ACE_thread_t> Atomic_ThreadId;
 
   class Receiver_exec_i;
 
@@ -36,7 +35,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                           Atomic_Long &,
                           Atomic_Long &,
                           Atomic_Long &,
-                          Atomic_ThreadId &);
+                          ACE_Thread_ID &);
     virtual ~StateListener_exec_i (void);
 
     virtual void
@@ -60,7 +59,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
      Atomic_Long &on_creation_;
      Atomic_Long &on_one_update_;
      Atomic_Long &on_deletion_;
-     Atomic_ThreadId &thread_id_;
+     ACE_Thread_ID &thread_id_;
   };
 
   //============================================================
@@ -99,7 +98,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
     Atomic_Long on_creation_;
     Atomic_Long on_one_update_;
     Atomic_Long on_deletion_;
-    Atomic_ThreadId thread_id_listener_;
+    ACE_Thread_ID thread_id_listener_;
   };
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_SL_OneByOne_Receiver_Impl (void);
