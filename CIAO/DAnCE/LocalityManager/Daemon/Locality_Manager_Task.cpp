@@ -139,7 +139,8 @@ namespace DAnCE
           if  (cf == 0)
             {
               DANCE_ERROR (1, (LM_CRITICAL, ACE_TEXT ("LocalityManager_Task::run - ")
-                               ACE_TEXT ("Out of memory error while allocating config values.")));
+                               ACE_TEXT ("Out of memory error while allocating config ")
+			       ACE_TEXT ("values.")));
             }
           else
             {
@@ -208,6 +209,7 @@ namespace DAnCE
     root_poa->destroy (1, 1);
 
     this->orb_->destroy ();
+    this->orb_ = CORBA::ORB::_nil ();
 
     return 0;
   }

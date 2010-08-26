@@ -57,12 +57,10 @@ namespace DAnCE
                      props->length ()));
         this->props_ = props;
 
-        DAnCE::Utility::update_property_value (ENTITY_POA,
-                                               *this->props_,
-                                               this->poa_);
-
         PLUGIN_MANAGER::instance ()->set_configuration (*props);
       }
+    
+    PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
     
     Plugin_Configurator config;
     bool tmp;
@@ -921,7 +919,7 @@ namespace DAnCE
   LocalityManager_i::shutdown (void)
   {
     DANCE_TRACE ("LocalityManager_i::shutdown");
-
+    
     DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                      ACE_TEXT ("DAnCE LocalityManager shutdown request received for UUID <%C>\n"),
                      uuid_.c_str ()));
@@ -930,5 +928,9 @@ namespace DAnCE
 
     // Explicitly close the plugin manager to release memory.
     PLUGIN_MANAGER::close ();
+
+    this->props_ = 0;
+    this->poa_ = PortableServer::POA::_nil ();
+    this->orb_ = CORBA::ORB::_nil ();
   }
 }
