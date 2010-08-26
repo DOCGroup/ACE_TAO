@@ -84,7 +84,7 @@ project(DDS_Throughput_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_Throughput_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub {
+project(DDS_Throughput_Connector_exec) : ciao_executor, dds4ccm_impl {
   after   += DDS_TP_Test_Connector_lem_stub DDS_Throughput_Connector_stub 
   sharedname = DDS_Throughput_Connector_exec
   libs += DDS_Throughput_Connector_stub DDS_TP_Test_Connector_lem_stub DDS_Throughput_Base_stub 

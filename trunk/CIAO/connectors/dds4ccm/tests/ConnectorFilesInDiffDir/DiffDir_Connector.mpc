@@ -81,7 +81,7 @@ project(DiffDir_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub  {
+project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl {
   after    += DiffDir_Connector_lem_stub DiffDir_Connector_stub
   sharedname = DiffDir_Connector_exec
   libs     += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
@@ -106,7 +106,7 @@ project(DiffDir_Connector_exec) : ciao_executor, dds4ccm_impl, dds4ccm_lem_stub 
 }
 
 
-project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl, dds4ccm_lem_stub  {
+project(DiffDir_Connector_svnt) : ciao_servant, dds4ccm_impl {
   after      += DiffDir_Connector_lem_stub
   sharedname  = DiffDir_Connector_svnt
   libs       += DiffDir_Connector_stub DiffDir_Connector_lem_stub DiffDir_stub
