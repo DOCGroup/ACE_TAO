@@ -1,3 +1,17 @@
+Thu Aug 26 14:21:28 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/Plugin_Conf.cpp:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.h:
+        * DAnCE/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * ciao/Deployment/Handlers/CIAO_Deployment_Handlers.mpc:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+          Attempt to address valgrind errors.
+
 Thu Aug 26 13:01:32 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/etc/DAnCE.doxygen:

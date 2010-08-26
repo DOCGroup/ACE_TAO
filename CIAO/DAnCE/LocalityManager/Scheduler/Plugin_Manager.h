@@ -36,6 +36,10 @@ namespace DAnCE
     
     ~Plugin_Manager (void);
     
+    void set_orb (CORBA::ORB_ptr orb);
+    
+    CORBA::ORB_ptr get_orb (void);
+
     /// Set the configuration of the plugin_manager
     void set_configuration (const Deployment::Properties &config);
     
@@ -86,6 +90,8 @@ namespace DAnCE
     CONFIG_MAP config_plugins_;
     
     Dependency_Sorter ih_dep_;
+    
+    CORBA::ORB_var orb_;
   };
   
   typedef ACE_Singleton <Plugin_Manager,

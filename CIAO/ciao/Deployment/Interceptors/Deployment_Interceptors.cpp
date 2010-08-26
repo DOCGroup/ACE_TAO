@@ -6,6 +6,7 @@
 #include "Deployment/Deployment_StartErrorC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/DAnCE_Utility.h"
+#include "DAnCE/LocalityManager/Scheduler/Plugin_Manager.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
@@ -13,7 +14,8 @@ namespace CIAO
   // Implementation skeleton constructor
   CIAO_StoreReferences_i::CIAO_StoreReferences_i (void)
   {
-    this->orb_ = TAO_ORB_Core_instance ()->orb ();
+    this->orb_ = 
+      CORBA::ORB::_duplicate (DAnCE::PLUGIN_MANAGER::instance ()->get_orb ());
     
     if (CORBA::is_nil (this->orb_))
       {
