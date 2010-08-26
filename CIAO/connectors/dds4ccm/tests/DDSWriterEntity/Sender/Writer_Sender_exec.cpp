@@ -213,12 +213,17 @@ namespace CIAO_Writer_Sender_Impl
   void
   Sender_exec_i::configuration_complete (void)
   {
+  }
+
+  void
+  Sender_exec_i::ccm_activate (void)
+  {
     ::DDS::DataWriter_var dds_dw =
       this->context_->get_connection_info_write_dds_entity ();
 
     if (::CORBA::is_nil (dds_dw.in ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
+        ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
                     "Datawriter connection is NIL.\n"));
         throw ::CORBA::INTERNAL ();
       }
@@ -228,26 +233,32 @@ namespace CIAO_Writer_Sender_Impl
     DataWriter_type * typed_ccm_dw = dynamic_cast <DataWriter_type*> (dds_dw.in ());
     if (typed_ccm_dw)
       {
-        this->writer_ = WriterTestDataWriter::narrow (typed_ccm_dw->get_impl ());
-        if (!this->writer_)
+        DDSDataWriter* dds_datawriter = typed_ccm_dw->get_impl ();
+        if (dds_datawriter)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
-                        "Error casting the typed CCM DataWriter to a typed "
-                        "DDS DataWriter.\n"));
+            this->writer_ = WriterTestDataWriter::narrow (dds_datawriter);
+            if (!this->writer_)
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
+                            "Error narrowing to a typed "
+                            "DDS DataWriter.\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
+                        "Error getting DDS DataWriter.\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::configuration_complete - "
+        ACE_ERROR ((LM_ERROR, "ERROR : Sender_exec_i::ccm_activate - "
                     "Error casting DataWriter to typed DataWriter\n"));
         throw ::CORBA::INTERNAL ();
       }
-  }
 
-  void
-  Sender_exec_i::ccm_activate (void)
-  {
     this->start ();
 
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, _guard,
