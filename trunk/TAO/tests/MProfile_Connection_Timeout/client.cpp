@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -7,10 +8,6 @@
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-
-ACE_RCSID(MProfile_Connection_Timeout,
-          client,
-          "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;

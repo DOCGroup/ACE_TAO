@@ -1,10 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (Current_Test_Lib,
-           Client_ORBInitializer,
-           "$Id$")
 
 #include "Client_Request_Interceptor.h"
 #include "Client_ORBInitializer.h"

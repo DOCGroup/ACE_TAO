@@ -121,10 +121,10 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa)
 
   PortableServer::ServantBase_var servant =
     root_poa->reference_to_servant (object.in ());
-  expected_refcount++;
+  ++expected_refcount;
 
   root_poa->deactivate_object (id.in ());
-  expected_refcount--;
+  --expected_refcount;
 
   CORBA::ULong refcount =
     test._refcount_value ();

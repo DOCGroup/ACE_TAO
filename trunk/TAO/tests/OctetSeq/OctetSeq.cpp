@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -25,8 +26,6 @@
 #include "tao/CDR.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,

@@ -1008,7 +1008,6 @@ nobase_include_HEADERS = \
   Asynch_Queued_Message.h \
   Asynch_Reply_Dispatcher_Base.h \
   Asynch_Reply_Dispatcher_Base.inl \
-  Auto_Functor.h \
   BD_String_Argument_T.cpp \
   BD_String_Argument_T.h \
   BD_String_Argument_T.inl \
@@ -6131,7 +6130,6 @@ libTAO_Utils_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  Utils/Auto_Functor.h \
   Utils/Encodable.h \
   Utils/Implicit_Deactivator.h \
   Utils/ORB_Destroyer.h \

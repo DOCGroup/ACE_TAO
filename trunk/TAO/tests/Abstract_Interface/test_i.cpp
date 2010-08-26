@@ -1,12 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Abstract_Interface,
-           test_i,
-           "$Id$")
 
 char *
 foo_i::foo_op (const char * inarg)

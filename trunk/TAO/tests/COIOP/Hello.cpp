@@ -1,18 +1,16 @@
-//
+// -*- C++ -*-
 // $Id$
-//
+
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
-
-  Hello::Hello (CORBA::ORB_ptr orb,
-              ACE_thread_t thrid)
-  : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
+Hello::Hello (CORBA::ORB_ptr orb,
+            ACE_thread_t thrid)
+: orb_ (CORBA::ORB::_duplicate (orb))
+  , thr_id_ (thrid)
 {
 }
 
