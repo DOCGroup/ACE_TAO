@@ -8,6 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
+#include "dds4ccm/impl/Utils.h"
 
 namespace CIAO_Writer_Receiver_Impl
 {
@@ -86,12 +87,17 @@ namespace CIAO_Writer_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+  }
+
+  void
+  Receiver_exec_i::ccm_activate (void)
+  {
     ::DDS::DataReader_var dds_dr =
       this->context_->get_connection_info_out_dds_entity ();
 
     if (::CORBA::is_nil (dds_dr.in ()))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
+        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
                     "Datareader connection is NIL.\n"));
         throw ::CORBA::INTERNAL ();
       }
@@ -101,26 +107,44 @@ namespace CIAO_Writer_Receiver_Impl
     DataReader_type * typed_ccm_dr = dynamic_cast <DataReader_type*> (dds_dr.in ());
     if (typed_ccm_dr)
       {
-        this->reader_ = WriterTestDataReader::narrow (typed_ccm_dr->get_impl ());
-        if (!this->reader_)
+        DDSDataReader* dds_reader = typed_ccm_dr->get_impl ();
+        if (dds_reader)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
-                        "Error casting the typed CCM DataReader to a typed "
-                        "DDS DataReader.\n"));
+            this->reader_ = WriterTestDataReader::narrow (dds_reader);
+            if (!this->reader_)
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                            "Error narrowing to a typed "
+                            "DDS DataReader.\n"));
+                throw ::CORBA::INTERNAL ();
+              }
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
+                        "Error getting DDS Datareader.\n"));
             throw ::CORBA::INTERNAL ();
           }
       }
     else
       {
-        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::configuration_complete - "
+        ACE_ERROR ((LM_ERROR, "ERROR : Receiver_exec_i::ccm_activate - "
                     "Error casting DataReader to typed DataReader\n"));
         throw ::CORBA::INTERNAL ();
       }
-  }
 
-  void
-  Receiver_exec_i::ccm_activate (void)
-  {
+    WriterTestRTISeq data;
+    ::DDS_SampleInfoSeq sample_info;
+
+    ::DDS::ReturnCode_t const result = this->reader_->take (
+                data,
+                sample_info,
+                1,
+                0);
+
+    ACE_DEBUG ((LM_DEBUG, "Take returned %C with %d samples\n",
+                ::CIAO::DDS4CCM::translate_retcode (result), data.length ()));
+
     ::CCM_DDS::DataListenerControl_var lc =
       this->context_->get_connection_info_out_data_control ();
 
