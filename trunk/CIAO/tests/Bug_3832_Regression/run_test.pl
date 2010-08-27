@@ -44,12 +44,12 @@ if ($server->WaitForFileTimed ($TestCaseC_i,
 
 $server_status = $SV->Kill ($server->ProcessStopWaitInterval());
 
-# Test for the presence of LM_ERROR
+# Test for the presence of LM_DEBUG
 $found = 0 ;
 open (I_FILE, "$server_TestCaseC_i") ;
 while( <I_FILE> ){
    chomp ;
-   if( $_ =~ /LM_ERROR/ ){
+   if( $_ =~ /LM_DEBUG/ ){
        $found = 1 ;
        last ;
    }
