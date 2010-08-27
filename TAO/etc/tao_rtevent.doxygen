@@ -50,15 +50,15 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/orbsvcs/orbsvcs/RtecEventComm.idl \
-	TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl \
-	TAO/orbsvcs/orbsvcs/RtecBase.idl \
-	TAO/orbsvcs/orbsvcs/RtecDefaultEventData.idl \
-	TAO/orbsvcs/orbsvcs/RtecUDPAdmin.idl \
-	TAO/orbsvcs/orbsvcs/Event_Utilities.h \
-        TAO/orbsvcs/orbsvcs/Event_Utilities.inl \
-	TAO/orbsvcs/orbsvcs/Event_Utilities.cpp \
-	TAO/orbsvcs/orbsvcs/Event_Service_Constants.h \
-	TAO/orbsvcs/orbsvcs/Event
+                        TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl \
+                        TAO/orbsvcs/orbsvcs/RtecBase.idl \
+                        TAO/orbsvcs/orbsvcs/RtecDefaultEventData.idl \
+                        TAO/orbsvcs/orbsvcs/RtecUDPAdmin.idl \
+                        TAO/orbsvcs/orbsvcs/Event_Utilities.h \
+                        TAO/orbsvcs/orbsvcs/Event_Utilities.inl \
+                        TAO/orbsvcs/orbsvcs/Event_Utilities.cpp \
+                        TAO/orbsvcs/orbsvcs/Event_Service_Constants.h \
+                        TAO/orbsvcs/orbsvcs/Event
 FILE_PATTERNS         = EC_*.cpp EC_*.h EC_*.inl EC_*.pidl ECG_*.cpp ECG_*.h *.idl
 RECURSIVE             =
 EXCLUDE               =
