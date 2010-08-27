@@ -1,3 +1,9 @@
+Fri Aug 27 18:06:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+          Thinking more about this, we don't need a mutex here
+
 Fri Aug 27 14:57:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Locking.h:

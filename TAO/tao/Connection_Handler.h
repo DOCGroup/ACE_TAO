@@ -210,9 +210,6 @@ private:
   /// Once closed make sure the transport is not added back to the cache.
   /// This is distinct from the leader-follower state so it cannot be reset.
   bool is_closed_;
-
-  /// Mutex to guard the is_closed_ member to prevent a double close
-  TAO_SYNCH_MUTEX is_closed_mutex_;
    
   /*
    * Hook to add instance members from derived class
