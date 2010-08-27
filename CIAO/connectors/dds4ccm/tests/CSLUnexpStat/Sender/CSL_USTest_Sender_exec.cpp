@@ -131,17 +131,12 @@ namespace CIAO_CSL_USTest_Sender_Impl
     : publication_matched_received_ (false),
       liveliness_lost_received_ (false),
       reliable_dr_activity_changed_received_ (false),
-      reliable_writer_cache_changed_received_ (false)
+      reliable_writer_cache_changed_received_ (false),
+      thread_id_listener_publication_matched_ (0, 0),
+      thread_id_listener_liveliness_lost_ (0, 0),
+      thread_id_reliable_dr_activity_changed_ (0, 0),
+      thread_id_reliable_writer_cache_changed_ (0, 0)
   {
-    thread_id_listener_publication_matched_.id (0);
-    thread_id_listener_publication_matched_.handle (0);
-    thread_id_listener_liveliness_lost_.id (0);
-    thread_id_listener_liveliness_lost_.handle (0);
-    thread_id_reliable_dr_activity_changed_.id (0);
-    thread_id_reliable_dr_activity_changed_.handle (0);
-    thread_id_reliable_writer_cache_changed_.id (0);
-    thread_id_reliable_writer_cache_changed_.handle (0);
-
     this->ticker_ = new pulse_Generator (*this);
   }
 

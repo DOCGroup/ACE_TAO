@@ -123,11 +123,9 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
       updater_data_ (0),
       on_creation_ (0),
       on_one_update_ (0),
-      on_deletion_ (0)
+      on_deletion_ (0),
+      thread_id_listener_ (0, 0)
   {
-    thread_id_listener_.id (0);
-    thread_id_listener_.handle (0);
-
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)

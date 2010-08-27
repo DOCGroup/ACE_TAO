@@ -77,10 +77,9 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
   // Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : deadline_missed_ (false)
+    : deadline_missed_ (false),
+      thread_id_listener_ (0, 0)
   {
-    thread_id_listener_.id (0);
-    thread_id_listener_.handle (0);
   }
 
   Sender_exec_i::~Sender_exec_i (void)

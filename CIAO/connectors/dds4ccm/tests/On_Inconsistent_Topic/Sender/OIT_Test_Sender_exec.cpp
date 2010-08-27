@@ -69,10 +69,9 @@ namespace CIAO_OIT_Test_Sender_Impl
   // Component Executor Implementation Class: Sender_exec_i
   //============================================================
   Sender_exec_i::Sender_exec_i (void)
-    : inconsistent_ (false)
+    : inconsistent_ (false),
+      thread_id_listener_ (0, 0)
   {
-    thread_id_listener_.id (0);
-    thread_id_listener_.handle (0);
   }
 
   Sender_exec_i::~Sender_exec_i (void)

@@ -84,11 +84,9 @@ namespace CIAO_QCLE_Test_Receiver_Impl
     : iterations_ (10),
       keys_ (5),
       samples_expected_ (keys_ * SAMPLES_PER_KEY),
-      samples_received_ (0)
+      samples_received_ (0),
+      thread_id_listener_ (0, 0)
   {
-    thread_id_listener_.id (0);
-    thread_id_listener_.handle (0);
-
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)

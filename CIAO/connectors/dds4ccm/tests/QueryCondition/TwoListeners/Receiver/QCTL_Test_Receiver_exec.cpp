@@ -149,13 +149,10 @@ namespace CIAO_QCTL_Test_Receiver_Impl
       samples_expected_1_ (keys_ * SAMPLES_PER_KEY_1),
       samples_received_1_ (0),
       samples_expected_2_ (keys_ * (this->iterations_ - 4)),
-      samples_received_2_ (0)
+      samples_received_2_ (0),
+      thread_id_listener_1_ (0, 0),
+      thread_id_listener_2_ (0, 0)
   {
-    thread_id_listener_1_.id (0);
-    thread_id_listener_1_.handle (0);
-    thread_id_listener_2_.id (0);
-    thread_id_listener_2_.handle (0);
-
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)

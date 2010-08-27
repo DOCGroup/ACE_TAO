@@ -75,11 +75,10 @@ namespace CIAO_LOBO_Test_Receiver_Impl
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
       iterations_ (10),
-      keys_ (5)
-  {
-    thread_id_listener_.id (0);
-    thread_id_listener_.handle (0);
+      keys_ (5),
+      thread_id_listener_ (0, 0)
 
+  {
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
