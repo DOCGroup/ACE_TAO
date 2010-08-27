@@ -15,6 +15,7 @@ project: build_files {
   Define_Custom(IDL) {
     automatic            = 1
     dependent            = $(TAO_IDL_DEP)
+    dependent_libs       = $(ACE_ROOT)/lib/TAO_IDL_BE $(ACE_ROOT)/lib/TAO_IDL_FE
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
