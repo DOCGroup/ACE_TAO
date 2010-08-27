@@ -1,3 +1,9 @@
+Fri Aug 27 03:02:56 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+
+          Bugfix for command line parsing.
+
 Fri Aug 27 03:02:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
