@@ -697,7 +697,10 @@ public:
   ACE_Thread_ID (void);
 
   /// Copy constructor.
-  ACE_Thread_ID (const ACE_Thread_ID &rhs);
+  ACE_Thread_ID (const ACE_Thread_ID &id);
+
+  /// Assignment operator
+  ACE_Thread_ID& operator= (const ACE_Thread_ID&id);
 
   /// Get the thread id.
   ACE_thread_t id (void) const;
