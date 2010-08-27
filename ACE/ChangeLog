@@ -1,3 +1,14 @@
+Fri Aug 27 14:17:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+          Doxygen changes
+
+        * ace/OS_NS_Thread.cpp:
+          Use ACE_GUARD
+
+        * bin/fuzz.pl:
+          Added check for ACE_Guard
+
 Fri Aug 27 06:56:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:

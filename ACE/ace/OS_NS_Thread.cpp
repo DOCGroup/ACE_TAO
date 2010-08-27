@@ -707,7 +707,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
 
   // scope the guard
   {
-    ACE_GUARD_REACTION(ACE_Thread_Mutex, guard, *mutex_, ACE_UNEXPECTED(;));
+    ACE_GUARD (ACE_Thread_Mutex, guard, *mutex_);
     if (ptr_ != 0)
       {
         if (ACE_BIT_ENABLED (flags_, FLAG_DELETING))
