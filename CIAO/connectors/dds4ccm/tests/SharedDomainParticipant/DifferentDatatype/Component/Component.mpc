@@ -90,7 +90,7 @@ project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_impl {
   after   += DDS_SharedDP_DDComponent_lem_stub DDS_SharedDP_DDComponent_stub \
              DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_stub \
              DDS_SharedDP_Connector2_lem_stub DDS_SharedDP_Connector2_stub \
-             DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_stub \
+             DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_stub 
   sharedname = Component_exec
   libs += Component_stub Component_lem_stub DDS_SharedDP_DDBase_stub \
           DDS_Connector1_lem_stub DDS_Connector1_stub \
@@ -116,7 +116,6 @@ project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_impl {
   Inline_Files {
   }
 }
-
 
 project(DDS_SharedDP_DDComponent_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   after      += DDS_SharedDP_DDBase_stub  DDS_SharedDP_DDComponent_lem_stub \
