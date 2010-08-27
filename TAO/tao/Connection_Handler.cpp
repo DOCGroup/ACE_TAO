@@ -116,16 +116,14 @@ TAO_Connection_Handler::svc_i (void)
       max_wait_time = &current_timeout;
     }
 
-  TAO_Resume_Handle rh (this->orb_core_,
-                        ACE_INVALID_HANDLE);
+  TAO_Resume_Handle rh (this->orb_core_, ACE_INVALID_HANDLE);
 
   // We exit of the loop if
   // - If the ORB core is shutdown by another thread
   // - Or if the transport is null. This could happen if an error
   // occured.
   // - Or if during processing a return value of -1 is received.
-  while (!this->orb_core_->has_shutdown ()
-         && result >= 0)
+  while (!this->orb_core_->has_shutdown () && result >= 0)
     {
       // Let the transport know that it is used
       (void) this->transport ()->update_transport ();
@@ -159,7 +157,7 @@ TAO_Connection_Handler::svc_i (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"));
+                 "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
 
   return result;
 }
@@ -176,16 +174,14 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
 }
 
 int
-TAO_Connection_Handler::handle_output_eh (
-    ACE_HANDLE, ACE_Event_Handler * eh)
+TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
 {
   // Let the transport that it is going to be used
   (void) this->transport ()->update_transport ();
 
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
-  TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   eh->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
   int return_value = 0;
   this->pre_io_hook (return_value);
@@ -293,8 +289,21 @@ TAO_Connection_Handler::handle_input_internal (
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
-
-  this->is_closed_ = true;
+  {
+    // Make sure we only close once
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->is_closed_mutex_,
+                      0);
+    if (this->is_closed_)
+      {
+        return 1;
+      }
+    else
+      {
+        this->is_closed_ = true;
+      }
+  }
 
   // Save the ID for debugging messages
   ACE_HANDLE const handle = eh->get_handle ();
@@ -430,7 +439,23 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (u_long)
 {
-  this->is_closed_ = true;
+  {
+    // Make sure we only close once
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->is_closed_mutex_,
+                      0);
+                      
+    if (this->is_closed_)
+      {
+        return 0;
+      }
+    else
+      {
+        this->is_closed_ = true;
+      }
+  }
+
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
 
