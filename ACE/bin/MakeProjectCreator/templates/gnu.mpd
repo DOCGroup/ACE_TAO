@@ -16,10 +16,8 @@ DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
-<%if(staticname || sharedname)%>
 
 LIB_PREFIX      ?= lib
-<%endif%>
 <%if(need_staticflags)%>
 static_libs_only ?= 1
 <%endif%>
@@ -555,26 +553,15 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
     ## then we need the special rule.
     ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%custom_type->input_file%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%> echo 0),)
       .NOTPARALLEL:
-<%if(flag_overrides(custom_type->input_file, dependent))%>
+<%if(flag_overrides(custom_type->input_file, dependent) || custom_type->dependent || flag_overrides(custom_type->input_file, dependent_libs) || custom_type->dependent_libs)%>
     else
       ## By this point, all of the generated files are here and up-to-date
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifneq ($(shell<%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%><%endif%><%endif%><%if(flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(dep_lib, flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%><%else%><%if(custom_type->dependent_libs)%><%foreach(custom_type->dependent_libs)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endif%><%endif%> echo 0),)
         .NOTPARALLEL:
       endif
-<%else%>
-<%if(custom_type->dependent)%>
-    else
-      ## By this point, all of the generated files are here and up-to-date
-      ## with respect to the source file.  Now we need to make sure that
-      ## they are up-to-date with respect to the generation tool.  If the tool
-      ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
-        .NOTPARALLEL:
-      endif
-<%endif%>
 <%endif%>
     endif
   else
@@ -609,6 +596,14 @@ endif
 	@echo '#include "<%pch_header%>"' > temp.$$$$ && cat <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%> >> temp.$$$$ && mv temp.$$$$ <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>
 <%endfor%>
 <%endif%>
+<%endif%>
+
+<%if(flag_overrides(custom_type->input_file, dependent_libs) || custom_type->dependent_libs)%>
+ifneq ($(static_libs_only),1)
+ifneq ($(CROSS-COMPILE),1)
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>:<%if(flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(dep_lib, flag_overrides(custom_type->input_file, dependent_libs))%> <%if(contains(dep_lib, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent_libs)%><%foreach(custom_type->dependent_libs)%> <%if(contains(custom_type->dependent_lib, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%><%endif%><%endfor%><%endif%><%endif%>
+endif
+endif
 <%endif%>
 
 <%endif%>
