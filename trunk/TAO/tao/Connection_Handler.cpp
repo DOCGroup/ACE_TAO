@@ -289,21 +289,10 @@ TAO_Connection_Handler::handle_input_internal (
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
-  {
-    // Make sure we only close once
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->is_closed_mutex_,
-                      0);
-    if (this->is_closed_)
-      {
-        return 1;
-      }
-    else
-      {
-        this->is_closed_ = true;
-      }
-  }
+  if (this->is_closed_)
+    {
+      return 1;
+    }
 
   // Save the ID for debugging messages
   ACE_HANDLE const handle = eh->get_handle ();
@@ -439,22 +428,10 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (u_long)
 {
-  {
-    // Make sure we only close once
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->is_closed_mutex_,
-                      0);
-                      
-    if (this->is_closed_)
-      {
-        return 0;
-      }
-    else
-      {
-        this->is_closed_ = true;
-      }
-  }
+  if (this->is_closed_)
+    {
+      return 0;
+    }
 
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
