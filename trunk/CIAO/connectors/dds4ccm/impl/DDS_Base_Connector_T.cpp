@@ -15,6 +15,8 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
   , library_name_ (0)
   , profile_name_ (0)
 {
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T");
+  
   ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), this->domain_id_);
   this->domain_id_ = id;
 }
@@ -22,8 +24,14 @@ DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::DDS_Base_Connector_T (voi
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
 DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T (void)
 {
+  DDS4CCM_TRACE ("DDS_Base_Connector_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::~DDS_Base_Connector_T");
+  
   ACE_OS::free (library_name_);
   ACE_OS::free (profile_name_);
+
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, CLINFO
+                "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
+                "Connector has been destructed\n"));
 }
 
 template <typename DDS_TYPE, typename CCM_TYPE, DDS4CCM_Vendor VENDOR_TYPE>
