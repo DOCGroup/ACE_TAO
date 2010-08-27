@@ -499,7 +499,7 @@ TAO_Transport::purge_entry (void)
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry\n")
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
                   ACE_TEXT ("entry is %@\n"),
                   this->id (), entry));
     }

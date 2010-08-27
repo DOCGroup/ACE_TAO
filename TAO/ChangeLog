@@ -1,3 +1,14 @@
+Fri Aug 27 12:22:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connection_Handler.cpp:
+          Added a mutex to guard that we only close once, this fixes bugzilla
+          3658
+
+        * tao/Transport.cpp:
+          Fixed debug message
+
 Fri Aug 27 11:38:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_cosevent.doxygen:
