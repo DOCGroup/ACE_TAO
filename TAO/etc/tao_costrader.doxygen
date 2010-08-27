@@ -49,11 +49,10 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = \
-	TAO/orbsvcs/orbsvcs/CosTrading.idl \
-	TAO/orbsvcs/orbsvcs/CosTradingDynamic.idl \
-	TAO/orbsvcs/orbsvcs/CosTradingRepos.idl \
-	TAO/orbsvcs/orbsvcs/Trader
+INPUT                 = TAO/orbsvcs/orbsvcs/CosTrading.idl \
+                        TAO/orbsvcs/orbsvcs/CosTradingDynamic.idl \
+                        TAO/orbsvcs/orbsvcs/CosTradingRepos.idl \
+                        TAO/orbsvcs/orbsvcs/Trader
 FILE_PATTERNS         = *.cpp *.h *.inl *.idl
 RECURSIVE             =
 EXCLUDE               =
