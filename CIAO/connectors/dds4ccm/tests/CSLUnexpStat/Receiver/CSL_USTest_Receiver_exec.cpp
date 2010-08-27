@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 //Test for on_unexpected_status with status LIVELINESS_CHANGED_STATUS' and 'SUBSCRIPTION_MATCHED_STATUS
@@ -29,7 +28,6 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     this->callback_.read_all ();
     return 0;
   }
-
 
   //============================================================
   // ConnectorStatusListener_exec_i
@@ -301,26 +299,22 @@ namespace CIAO_CSL_USTest_Receiver_Impl
      if (!this->subscription_matched_received_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
-                              ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
-                    ));
+                              ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")));
       }
     else
       {
          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
-                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")
-                    ));
+                               ACE_TEXT ("'SUBSCRIPTION_MATCHED_STATUS'\n")));
       }
     if (!this->liveliness_changed_received_.value ())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("RECEIVER ERROR: Didn't receive the expected ")
-                              ACE_TEXT ("'LIVELINESS_CHANGED_STATUS'\n")
-                    ));
+                              ACE_TEXT ("'LIVELINESS_CHANGED_STATUS'\n")));
       }
     else
       {
          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RECEIVER OK: Received the expected ")
-                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' \n")
-                    ));
+                               ACE_TEXT ("'LIVELINESS_CHANGED_STATUS' \n")));
       }
     char ccm_buf [65];
     ACE_Thread_ID ccm_thread_id;
@@ -350,7 +344,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for 'SUBSCRIPTION_MATCHED_STATUS' "
                               "doesn't seem to work! "
-                               "listener <%C> - component <%C>\n",
+                              "listener <%C> - component <%C>\n",
                               list_buf,
                               ccm_buf));
       }
@@ -359,7 +353,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'SUBSCRIPTION_MATCHED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                               "listener <%C> - component <%C>\n",
+                              "listener <%C> - component <%C>\n",
                               list_buf,
                               ccm_buf));
       }
@@ -388,7 +382,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: "
                               "Thread switch for 'LIVELINESS_CHANGED_STATUS' seems OK. "
                               "(DDS uses the CCM thread for its callback) "
-                                "listener <%C> - component <%C>\n",
+                              "listener <%C> - component <%C>\n",
                               list_buf_lc,
                               ccm_buf));
      }
@@ -397,7 +391,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: "
                               "Thread switch for 'LIVELINESS_CHANGED_STATUS' "
                               "doesn't seem to work! "
-                                "listener <%C> - component <%C>\n",
+                              "listener <%C> - component <%C>\n",
                               list_buf_lc,
                               ccm_buf));
      }
@@ -406,7 +400,7 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "RECEIVER ERROR: 'LIVELINESS_CHANGED_STATUS': "
                               "DDS seems to use a CCM thread for its callback: "
-                               "listener <%C> - component <%C>\n",
+                              "listener <%C> - component <%C>\n",
                               list_buf_lc,
                               ccm_buf));
       }
@@ -414,8 +408,8 @@ namespace CIAO_CSL_USTest_Receiver_Impl
       {
         ACE_DEBUG ((LM_DEBUG, "RECEIVER OK: 'LIVELINESS_CHANGED_STATUS': "
                               "DDS seems to use its own thread for its callback: "
-                               "listener <%C> - component <%C>\n",
-                              list_bu_lcf,
+                              "listener <%C> - component <%C>\n",
+                              list_buf_lc,
                               ccm_buf));
       }
     #endif
