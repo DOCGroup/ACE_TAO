@@ -144,6 +144,19 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::preparePlan");
 
     this->plan_ = plan;
+    
+    Plugin_Manager::INTERCEPTORS interceptors = 
+      PLUGIN_MANAGER::instance ()->fetch_interceptors ();
+    
+    for (Plugin_Manager::INTERCEPTORS::iterator i = interceptors.begin ();
+         i != interceptors.end ();
+         ++i)
+      {
+        if (!CORBA::is_nil (*i))
+          {
+            (*i)->preprocess_plan (this->plan_);
+          }
+      }
 
     // populate the impl_type_table.
     for (CORBA::ULong i = 0;
