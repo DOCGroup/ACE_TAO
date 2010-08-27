@@ -35,7 +35,6 @@ namespace CIAO
   Deployment_State::remove_container (const char *id)
   {
     CIAO_TRACE ("Deployment_State::remove_container");
-    
     CONTAINERS::iterator pos = this->containers_.find (id);
     
     if (pos != this->containers_.end ())
@@ -49,7 +48,11 @@ namespace CIAO
     
     CONTAINERS::iterator pos = this->containers_.find (id);
     
-    if (pos == this->containers_.end ()) return CIAO::Container::_nil ();
+    if (pos == this->containers_.end ()) 
+      {
+        return CIAO::Container::_nil ();
+      }
+    
     return CIAO::Container::_duplicate (pos->second.in ());
   }
 

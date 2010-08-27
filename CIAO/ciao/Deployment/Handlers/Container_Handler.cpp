@@ -20,7 +20,11 @@ namespace CIAO
   Container_Handler_i::~Container_Handler_i (void)
   {
     CIAO_TRACE ("Container_Handler_i::~Container_Handler_i");
-    
+  }
+  
+  void
+  Container_Handler_i::close (void)
+  {
     try
       {
         // For the time being, we are going to go ahead and delete
@@ -35,11 +39,7 @@ namespace CIAO
     catch (...)
       { //swallow
       }
-  }
-  
-  void
-  Container_Handler_i::close (void)
-  {
+
     DEPLOYMENT_STATE::instance ()->close ();
     DEPLOYMENT_STATE::close ();
     
