@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
-
 #include "orbsvcs/Notify/Property.h"
 #include "orbsvcs/Notify/Notify_Extensions.h"
 

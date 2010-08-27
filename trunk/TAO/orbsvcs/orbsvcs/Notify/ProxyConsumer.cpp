@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_ProxyConsumer, "$Id$")
-
 #include "tao/debug.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/Notify/Supplier.h"

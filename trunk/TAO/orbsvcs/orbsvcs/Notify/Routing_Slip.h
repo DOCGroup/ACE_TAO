@@ -79,7 +79,7 @@ public:
 
   void reconnect (void);
 
-  /// destructor (should be private but that inspires compiler wars)
+  /// Destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();
 
   //////////////////

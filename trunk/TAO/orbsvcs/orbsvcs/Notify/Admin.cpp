@@ -6,10 +6,6 @@
 #include "orbsvcs/Notify/Admin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Admin,
-           "$Id$")
-
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 
 #include "orbsvcs/Notify/Container_T.h"

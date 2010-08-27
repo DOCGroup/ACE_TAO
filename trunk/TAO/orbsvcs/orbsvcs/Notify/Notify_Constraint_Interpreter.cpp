@@ -5,10 +5,6 @@
 #include "orbsvcs/Notify/EventType.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify,
-           NS_Constraint_Interpreter,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter (void)

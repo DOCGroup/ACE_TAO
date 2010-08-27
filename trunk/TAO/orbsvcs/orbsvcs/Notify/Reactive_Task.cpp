@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/Reactive_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Reactive_Task, "$Id$")
-
 #include "orbsvcs/Notify/Timer_Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h"
-
-ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Sequence/SequencePushSupplier.h"
 #include "orbsvcs/Notify/AdminProperties.h"

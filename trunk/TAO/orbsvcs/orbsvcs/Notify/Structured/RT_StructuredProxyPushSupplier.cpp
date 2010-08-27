@@ -3,10 +3,7 @@
 #include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 #include "tao/debug.h"
 
-#include "tao/debug.h"
 #include "orbsvcs/Notify/Method_Request_Dispatch.h"
-
-ACE_RCSID (Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

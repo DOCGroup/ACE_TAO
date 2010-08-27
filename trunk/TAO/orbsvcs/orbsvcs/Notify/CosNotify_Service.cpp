@@ -12,10 +12,6 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify,
-           TAO_CosNotify_Service,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)

@@ -1,11 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Notify/Peer.h"
-
-ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
-
 #include "orbsvcs/Notify/Proxy.h"
-
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

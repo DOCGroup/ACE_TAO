@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_ID_Factory, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ID_Factory::TAO_Notify_ID_Factory (void)
