@@ -44,7 +44,7 @@ Publisher_impl::Worker::~Worker()
 
 void Publisher_impl::Worker::addSubscriber(Subscriber_ptr subscriber)
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
   subscribers.push_back(_Subscriber());
   _Subscriber& s = subscribers.back();
   s.unsubscribed = false;
@@ -64,7 +64,7 @@ int Publisher_impl::Worker::svc (void)
       data += 0.01;
       ++iteration;
       {
-        ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
         doShutdown = subscribers.size() > 0;
         for (vector<_Subscriber>::iterator iter = subscribers.begin();
              iter != subscribers.end(); ++iter)
@@ -89,7 +89,7 @@ int Publisher_impl::Worker::svc (void)
       }
       if (iteration % 200 == 0)
         {
-          ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex);
+          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
           for (vector<_Subscriber>::iterator iter = subscribers.begin();
                iter != subscribers.end(); ++iter)
             {

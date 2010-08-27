@@ -505,7 +505,7 @@ bool
 TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon)
 {
   bool result = true;
-  TAO_Notify_Method_Request_Event_Queueable * request;
+  TAO_Notify_Method_Request_Event_Queueable * request = 0;
   if (requests.dequeue_head (request) == 0)
     {
       ace_mon.release ();

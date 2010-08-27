@@ -368,7 +368,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
      proxy_ (proxy),
      locked_ (0)
 {
-  ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an
   // exception is wrong, the client has *no* way to handle that kind
   // of error.  Even worse, there is no exception to raise in that
@@ -392,7 +392,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
     return;
 
   {
-    ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
     // If the guard fails there is not much we can do, raising an
     // exception is wrong, the client has *no* way to handle that kind
     // of error.  Even worse, there is no exception to raise in that
@@ -400,7 +400,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
     // @@ Returning something won't work either, the error should be
     // logged though!
 
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return;
   }
