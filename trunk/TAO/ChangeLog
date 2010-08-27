@@ -1,3 +1,12 @@
+Fri Aug 27 08:16:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Removed zapped file
+
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
+        * tao/TransportCurrent/Current_Impl.cpp:
+          Layout changes
+
 Fri Aug 27 06:57:04 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_anytypecode.doxygen:
