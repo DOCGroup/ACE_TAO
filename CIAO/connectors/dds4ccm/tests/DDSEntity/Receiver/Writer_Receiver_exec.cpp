@@ -133,9 +133,9 @@ namespace CIAO_Writer_Receiver_Impl
         throw ::CORBA::INTERNAL ();
       }
 
-    typename ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::dds_seq_type
+    ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::dds_seq_type
       data;
-    typename ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::sampleinfo_seq_type
+    ::CIAO_WriterTestConnector_DDS_Event_Impl::WriterTest_DDS_Traits::sampleinfo_seq_type
       sample_info_seq;
 
     ::DDS::ReturnCode_t const result = this->reader_->take (
