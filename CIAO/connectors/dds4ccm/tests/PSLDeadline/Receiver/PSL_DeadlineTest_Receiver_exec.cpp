@@ -318,7 +318,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
                               ccm_buf));
       }
     #else
-    else if (Athis->thread_id_listener_1_ == ccm_thread_id)
+    else if (this->thread_id_listener_1_ == ccm_thread_id)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: PortStatusListener I: "
                               "DDS seems to use a CCM thread for its callback: "
