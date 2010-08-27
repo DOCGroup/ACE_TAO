@@ -1,3 +1,9 @@
+Fri Aug 27 18:36:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Added assignment operator for ACE_Thread_Id
+
 Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * Connector.{h cpp} (ACE_NonBlocking_Connect_Handler): Add a
