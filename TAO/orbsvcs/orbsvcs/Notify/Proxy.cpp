@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Proxy, "$Id$")
-
 #include "orbsvcs/Notify/Peer.h"
 #include "orbsvcs/Notify/Proxy.h"
 #include "orbsvcs/Notify/Method_Request_Updates.h"

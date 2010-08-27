@@ -25,8 +25,6 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-ACE_RCSID(Notify, TAO_Notify_EventChannel, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin

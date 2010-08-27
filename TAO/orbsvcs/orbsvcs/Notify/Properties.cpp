@@ -8,10 +8,6 @@
 #include "orbsvcs/Notify/Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Properties,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Properties::TAO_Notify_Properties (void)

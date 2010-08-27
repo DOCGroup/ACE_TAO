@@ -2,8 +2,6 @@
 
 #include "orbsvcs/Notify/Timer_Queue.h"
 
-ACE_RCSID (Notify, TAO_Notify_Timer_Queue, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)

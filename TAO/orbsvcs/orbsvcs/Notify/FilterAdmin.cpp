@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, FilterAdmin, "$Id$")
-
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/EventChannelFactory.h"

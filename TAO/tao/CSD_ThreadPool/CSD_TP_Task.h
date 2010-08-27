@@ -110,7 +110,6 @@ namespace TAO
       typedef ACE_Guard<LockType>     GuardType;
       typedef TAO_Condition<LockType> ConditionType;
 
-
       /// Lock to protect the "state" (all of the data members) of this object.
       LockType lock_;
 

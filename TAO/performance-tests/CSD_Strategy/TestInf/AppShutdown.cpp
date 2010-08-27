@@ -55,7 +55,7 @@ AppShutdown::client_done()
   unsigned cur_shutdown;
 
   {
-    GuardType guard(this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     cur_shutdown = ++this->num_clients_shutdown_;
   }
 

@@ -6,10 +6,6 @@
 #include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_AdminProperties,
-           "$Id$")
-
 #include "orbsvcs/CosNotificationC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

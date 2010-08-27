@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
-
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
-
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/ProxyConsumer.h"

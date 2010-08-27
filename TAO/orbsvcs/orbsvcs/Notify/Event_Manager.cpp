@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Event_Manager.h"
-
-ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
-
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Consumer_Map.h"

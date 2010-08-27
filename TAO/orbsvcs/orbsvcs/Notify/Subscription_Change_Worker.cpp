@@ -4,9 +4,6 @@
 
 #include "orbsvcs/Notify/Proxy.h"
 
-ACE_RCSID(Notify, TAO_Subscription_Change_Worker, "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Subscription_Change_Worker::TAO_Notify_Subscription_Change_Worker (

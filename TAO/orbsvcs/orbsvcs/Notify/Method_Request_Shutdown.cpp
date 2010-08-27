@@ -3,8 +3,6 @@
 #include "orbsvcs/Notify/Method_Request_Shutdown.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task)

@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
-
 #include "orbsvcs/Notify/Timer.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Method_Request_Event.h"
@@ -221,7 +219,6 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
             catch (const CORBA::Exception&)
               {
                 // todo is there something meaningful we can do here?
-                ;
               }
             break;
           }
@@ -588,8 +585,8 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
   return result;
 }
 
-//@@todo: rather than is_error, use pacing interval so it will be configurable
-//@@todo: find some way to use batch buffering stratgy for sequence consumers.
+/// @todo: rather than is_error, use pacing interval so it will be configurable
+/// @todo: find some way to use batch buffering stratgy for sequence consumers.
 void
 TAO_Notify_Consumer::schedule_timer (bool is_error)
 {
