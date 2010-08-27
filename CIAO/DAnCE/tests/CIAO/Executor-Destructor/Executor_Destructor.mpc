@@ -1,0 +1,151 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Executor_Destructor"
+
+project(Executor_Destructor_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=EXECUTOR_DESTRUCTOR_STUB_Export \
+              -Wb,stub_export_include=Executor_Destructor_stub_export.h \
+              -Wb,skel_export_macro=EXECUTOR_DESTRUCTOR_SVNT_Export \
+              -Wb,skel_export_include=Executor_Destructor_svnt_export.h \
+              -Wb,exec_export_macro=EXECUTOR_DESTRUCTOR_EXEC_Export \
+              -Wb,exec_export_include=Executor_Destructor_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
+
+  IDL_Files {
+    Executor_Destructor.idl
+  }
+}
+
+project(Executor_Destructor_lem_gen) : ciaoidldefaults   {
+  after += Executor_Destructor_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=EXECUTOR_DESTRUCTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=Executor_Destructor_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    Executor_DestructorE.idl
+  }
+}
+
+project(Executor_Destructor_lem_stub) : ccm_svnt   {
+  after += Executor_Destructor_lem_gen Executor_Destructor_stub 
+  libs  +=  Executor_Destructor_stub
+  
+  
+  sharedname = Executor_Destructor_lem_stub
+  dynamicflags += EXECUTOR_DESTRUCTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Executor_DestructorEC.cpp
+  }
+
+  Header_Files {
+    Executor_DestructorEC.h
+    Executor_Destructor_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Executor_DestructorEC.inl
+  }
+}
+
+project(Executor_Destructor_stub) : ccm_stub   {
+  after += Executor_Destructor_idl_gen 
+  libs  += 
+  
+  
+  sharedname = Executor_Destructor_stub
+  dynamicflags += EXECUTOR_DESTRUCTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Executor_DestructorC.cpp
+  }
+
+  Header_Files {
+    Executor_DestructorC.h
+    Executor_Destructor_stub_export.h
+  }
+
+  Inline_Files {
+    Executor_DestructorC.inl
+  }
+}
+
+project(Executor_Destructor_exec) : ciao_executor   {
+  after   += Executor_Destructor_lem_stub Executor_Destructor_stub
+  sharedname = Executor_Destructor_exec
+  libs += Executor_Destructor_stub Executor_Destructor_lem_stub 
+  
+  after += Executor_Destructor_Interceptor
+  libs +=  Executor_Destructor_Interceptor
+  
+  dynamicflags += EXECUTOR_DESTRUCTOR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Executor_Destructor_exec.cpp
+  }
+
+  Header_Files {
+    Executor_Destructor_exec.h
+    Executor_Destructor_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Executor_Destructor_svnt) : ciao_servant   {
+  after      +=   Executor_Destructor_lem_stub
+  sharedname  = Executor_Destructor_svnt
+  libs       += Executor_Destructor_stub Executor_Destructor_lem_stub  
+  
+  
+  dynamicflags += EXECUTOR_DESTRUCTOR_SVNT_BUILD_DLL
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    Executor_DestructorS.cpp
+    Executor_Destructor_svnt.cpp
+  }
+
+  Header_Files {
+    Executor_DestructorS.h
+    Executor_Destructor_svnt.h
+    Executor_Destructor_svnt_export.h
+  }
+
+  Inline_Files {
+    Executor_DestructorS.inl
+  }
+}
+
+project (Executor_Destructor_Interceptor) : \
+        dance_stub, dance_deployment_stub {
+  dynamicflags += EXECUTOR_DESTRUCTOR_INTERCEPTOR_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Executor_Destructor_Interceptor.cpp
+    Exec_Dest_Status.cpp
+  }
+
+  Header_Files {
+    Executor_Destructor_Interceptor.h
+    Exec_Dest_Status.h
+  }
+}
