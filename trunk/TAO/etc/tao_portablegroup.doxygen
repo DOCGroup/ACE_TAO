@@ -50,9 +50,9 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = \
-	TAO/orbsvcs/orbsvcs/miop.idl \
-	TAO/orbsvcs/orbsvcs/PortableGroup.idl \
-	TAO/orbsvcs/orbsvcs/PortableGroup
+                        TAO/orbsvcs/orbsvcs/miop.idl \
+                        TAO/orbsvcs/orbsvcs/PortableGroup.idl \
+                        TAO/orbsvcs/orbsvcs/PortableGroup
 FILE_PATTERNS         = *.cpp *.h *.inl *.pidl
 RECURSIVE             =
 EXCLUDE               =

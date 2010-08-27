@@ -50,11 +50,11 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/orbsvcs/orbsvcs/Security.idl \
-			TAO/orbsvcs/orbsvcs/SecurityLevel1.idl \
-			TAO/orbsvcs/orbsvcs/SecurityLevel2.idl \
-			TAO/orbsvcs/orbsvcs/SecurityAdmin.idl \
-			TAO/orbsvcs/orbsvcs/SecurityReplaceable.idl \
-			TAO/orbsvcs/orbsvcs/Security
+                        TAO/orbsvcs/orbsvcs/SecurityLevel1.idl \
+                        TAO/orbsvcs/orbsvcs/SecurityLevel2.idl \
+                        TAO/orbsvcs/orbsvcs/SecurityAdmin.idl \
+                        TAO/orbsvcs/orbsvcs/SecurityReplaceable.idl \
+                        TAO/orbsvcs/orbsvcs/Security
 FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =

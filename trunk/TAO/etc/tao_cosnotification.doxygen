@@ -50,14 +50,14 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = \
-	TAO/orbsvcs/orbsvcs/CosNotification.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyFilter.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyComm.idl \
-	TAO/orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl \
-        TAO/orbsvcs/orbsvcs/Notify \
-        TAO/orbsvcs/orbsvcs/Notify/Any \
-        TAO/orbsvcs/orbsvcs/Notify/Sequence \
-        TAO/orbsvcs/orbsvcs/Notify/Structured
+                        TAO/orbsvcs/orbsvcs/CosNotification.idl \
+                        TAO/orbsvcs/orbsvcs/CosNotifyFilter.idl \
+                        TAO/orbsvcs/orbsvcs/CosNotifyComm.idl \
+                        TAO/orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl \
+                        TAO/orbsvcs/orbsvcs/Notify \
+                        TAO/orbsvcs/orbsvcs/Notify/Any \
+                        TAO/orbsvcs/orbsvcs/Notify/Sequence \
+                        TAO/orbsvcs/orbsvcs/Notify/Structured
 FILE_PATTERNS         = *.cpp *.h *.inl *.idl
 RECURSIVE             =
 EXCLUDE               =
