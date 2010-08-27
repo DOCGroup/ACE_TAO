@@ -102,6 +102,9 @@ public:
   /// Called by ACE_Reactor when asynchronous connections fail.
   virtual int handle_input (ACE_HANDLE);
 
+  /// Called by ACE_Dev_Poll_Reactor when asynchronous connections fail.
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+
   /// Called by ACE_Reactor when asynchronous connections succeed.
   virtual int handle_output (ACE_HANDLE);
 
