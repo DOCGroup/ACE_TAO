@@ -142,7 +142,7 @@ TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
                         html/libtao-doc/TAO.tag=.. \
                         html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver \
                         html/libtao-doc/esf/TAO_ESF.tag=../esf
-GENERATE_TAGFILE      = html/tao/cosevent/TAO_CosEvent.tag
+GENERATE_TAGFILE      = html/libtao-doc/cosevent/TAO_CosEvent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
