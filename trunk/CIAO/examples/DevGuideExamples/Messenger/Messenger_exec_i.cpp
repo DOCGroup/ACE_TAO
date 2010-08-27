@@ -62,7 +62,7 @@ namespace CIAO_Messenger_Impl
       // get the run_lock from the Runnable executor; we have an
       // agreement with the Runnable executor that we must posess the
       // run_lock to publish
-      ACE_Guard<TAO_SYNCH_MUTEX> guard( this->control_->get_run_lock() );
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->control_->get_run_lock());
 
       // create a message to publish
       ::Message_var msg = new ::OBV_Message();
