@@ -32,7 +32,7 @@ project(DDS_Throughput_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_TP_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_base {
+project(DDS_TP_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   after += DDS_Throughput_Connector_lem_gen DDS_Throughput_Connector_stub DDS_Throughput_Base_stub 
   libs  += DDS_Throughput_Base_stub DDS_Throughput_Connector_stub 
   libpaths += ../lib
