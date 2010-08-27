@@ -121,7 +121,6 @@ namespace DAnCE
 
   Plugin_Manager::~Plugin_Manager (void)
   {
-    ACE_ERROR ((LM_EMERGENCY, "**** ~plugin_manager\n"));
     try
       {
         std::for_each (handler_map_.begin (),
