@@ -1,3 +1,10 @@
+Fri Aug 27 16:51:52 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+
+          Fixed container removal.
+
 Fri Aug 27 14:50:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Executor-Destructor/Exec_Dest_Status.h:
