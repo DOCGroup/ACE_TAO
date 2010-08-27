@@ -10,12 +10,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/Handle_Set.h"
 #include "ace/Svc_Handler.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_select.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -365,17 +363,9 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listener)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input");
-  ACE_Handle_Set conn_handle;
 
   // Default is "timeout (0, 0)," which means "poll."
   ACE_Time_Value timeout;
-#  if defined (ACE_WIN32)
-  // This arg is ignored on Windows and causes pointer truncation
-  // warnings on 64-bit compiles
-  int select_width = 0;
-#  else
-  int select_width = int (listener) + 1;
-#  endif /* ACE_WIN32 */
 
   // Accept connections from clients.  Note that a loop is used for two
   // reasons:
@@ -432,18 +422,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
                         ACE_TEXT ("activate_svc_handler")));
           return 0;
         }
-
-      conn_handle.set_bit (listener);
     }
 
   // Now, check to see if there is another connection pending and
   // break out of the loop if there is none.
-  while (this->use_select_
-         && ACE_OS::select (select_width,
-                            conn_handle,
-                            0,
-                            0,
-                            &timeout) == 1);
+  while (this->use_select_ &&
+         ACE::handle_read_ready (listener,
+                                 &timeout) == 1);
   return 0;
 }
 
