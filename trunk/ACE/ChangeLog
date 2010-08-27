@@ -1,4 +1,4 @@
-Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@smokey.mro.riverace.com>
+Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * Connector.{h cpp} (ACE_NonBlocking_Connect_Handler): Add a
           handle_close() which calls handle_input() if called by the
