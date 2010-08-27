@@ -1,11 +1,7 @@
 // $Id$
 
 #include "orbsvcs/Notify/Any/AnyEvent.h"
-
-ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
-
 #include "orbsvcs/Notify/Consumer.h"
-
 #include "tao/corba.h"
 #include "tao/debug.h"
 

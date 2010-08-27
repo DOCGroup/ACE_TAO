@@ -8,9 +8,6 @@
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
 
-
-ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushSupplier, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier (void)

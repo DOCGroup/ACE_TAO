@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
-
-ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
-
 #include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"

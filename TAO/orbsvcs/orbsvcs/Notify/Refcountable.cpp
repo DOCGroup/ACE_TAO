@@ -3,10 +3,7 @@
 #include "orbsvcs/Notify/Refcountable.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-
 #include "ace/Guard_T.h"
-
-ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
 #if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
 

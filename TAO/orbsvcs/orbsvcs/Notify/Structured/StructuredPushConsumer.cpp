@@ -1,8 +1,5 @@
 // $Id$
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
-
-ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
-
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
 #include "tao/ORB_Core.h"

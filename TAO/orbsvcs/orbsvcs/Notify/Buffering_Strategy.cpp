@@ -2,9 +2,6 @@
 
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 
-ACE_RCSID (Notify, Buffering_Strategy, "$Id$")
-
-
 #include "orbsvcs/Notify/Method_Request.h"
 #include "orbsvcs/Notify/Notify_Extensions.h"
 #include "orbsvcs/Notify/QoSProperties.h"

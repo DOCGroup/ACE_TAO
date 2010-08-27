@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
-
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL

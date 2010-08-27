@@ -11,8 +11,6 @@
 #include "orbsvcs/Notify/Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Supplier, "$Id$")
-
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/Proxy.h"
 

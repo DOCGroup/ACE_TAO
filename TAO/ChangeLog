@@ -1,3 +1,98 @@
+Fri Aug 27 14:33:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Initializer.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/Peer.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Service.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
+        * orbsvcs/orbsvcs/Notify/Supplier.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+        * orbsvcs/orbsvcs/Notify/Validate_Client_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
+          Zapped RCSID
+
+        * performance-tests/CSD_Strategy/TestInf/AppShutdown.h:
+        * performance-tests/CSD_Strategy/TestInf/AppShutdown.cpp:
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.h:
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+          Guard changes
+
 Fri Aug 27 12:50:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Refcountable.cpp:

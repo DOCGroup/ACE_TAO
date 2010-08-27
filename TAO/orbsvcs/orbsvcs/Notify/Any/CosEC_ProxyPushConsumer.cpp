@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
-
-ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/AdminProperties.h"
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
