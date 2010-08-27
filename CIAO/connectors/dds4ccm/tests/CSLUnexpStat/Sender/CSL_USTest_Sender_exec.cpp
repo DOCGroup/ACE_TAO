@@ -99,28 +99,23 @@ namespace CIAO_CSL_USTest_Sender_Impl
     if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_LOST_STATUS)
       {
         this->liveliness_lost_received_ = true;
-        this->thread_id_liveliness_lost_.handle (t_id.handle ());
-        this->thread_id_liveliness_lost_.id (t_id.id ());
+        this->thread_id_liveliness_lost_ = t_id;
     }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::PUBLICATION_MATCHED_STATUS)
       {
         this->publication_matched_received_ = true;
-        this->thread_id_publication_matched_.handle (t_id.handle ());
-        this->thread_id_publication_matched_.id (t_id.id ());
+        this->thread_id_publication_matched_ = t_id;
 
       }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS)
       {
         this->reliable_dr_activity_changed_received_ = true;
-        this->thread_id_reliable_dr_activity_changed_.handle (t_id.handle ());
-        this->thread_id_reliable_dr_activity_changed_.id (t_id.id ());
+        this->thread_id_reliable_dr_activity_changed_ = t_id;
       }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_WRITER_CACHE_CHANGED_STATUS)
       {
         this->reliable_writer_cache_changed_received_ = true;
-       this->thread_id_reliable_writer_cache_changed_.handle (t_id.handle ());
-        this->thread_id_reliable_writer_cache_changed_.id (t_id.id ());
-
+        this->thread_id_reliable_writer_cache_changed_ = t_id;
       }
   }
 

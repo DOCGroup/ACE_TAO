@@ -102,15 +102,13 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
       {
         this->deadline_port_1_ = true;
         ACE_Thread_ID t_id;
-        this->thread_id_1_.handle (t_id.handle ());
-        this->thread_id_1_.id (t_id.id ());
+        this->thread_id_1_ = t_id;
       }
     if (this->port_nr_ == 2 && ! ::CORBA::is_nil (the_reader) && status.total_count!= 0)
       {
         this->deadline_port_2_ = true;
         ACE_Thread_ID t_id;
-        this->thread_id_2_.handle (t_id.handle ());
-        this->thread_id_2_.id (t_id.id ());
+        this->thread_id_2_ = t_id;
       }
   }
 

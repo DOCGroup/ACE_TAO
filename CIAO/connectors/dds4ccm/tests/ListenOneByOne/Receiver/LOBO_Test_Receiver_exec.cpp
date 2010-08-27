@@ -32,8 +32,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                                   const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
 
     ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "key <%C> - iteration <%d>\n",
@@ -74,10 +73,9 @@ namespace CIAO_LOBO_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
+      thread_id_listener_ (0, 0),
       iterations_ (10),
-      keys_ (5),
-      thread_id_listener_ (0, 0)
-
+      keys_ (5)
   {
   }
 
