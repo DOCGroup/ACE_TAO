@@ -2,13 +2,11 @@
 // $Id$
 
 project(*idl): taoidldefaults {
-  idlflags += -Sa -St
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
-
 
 project(*Client): taoclient, strategies {
   after += *idl

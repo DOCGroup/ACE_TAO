@@ -6,10 +6,6 @@
 #include "ace/Thread_Manager.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int

@@ -1,3 +1,34 @@
+Fri Aug 27 12:50:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * examples/Advanced/ch_21/server.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Update_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/client.cpp:
+        * tao/Transport.cpp:
+        * tests/Bug_1254_Regression/Bug_1254_Regression.mpc:
+        * tests/Bug_2417_Regression/publisher_impl.cpp:
+        * tests/Bug_2654_Regression/Bug_2654_Regression.mpc:
+        * tests/Bug_2654_Regression/Hello.h:
+        * tests/Bug_2654_Regression/Hello.idl:
+        * tests/Bug_2654_Regression/Hello.cpp:
+        * tests/Bug_2654_Regression/client.cpp:
+        * tests/Bug_2654_Regression/server.cpp:
+        * tests/Bug_3531_Regression/test_i.cpp:
+        * tests/Bug_3812_Regression/Bug_3812_Regression.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/CSD_TP_Test_Dynamic.mpc:
+        * tests/Optimized_Connection/Optimized_Connection.mpc:
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+          Use ACE_GUARD macro, use %B for logging a size_t, layout and cleanup
+
 Fri Aug 27 12:22:35 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.h:

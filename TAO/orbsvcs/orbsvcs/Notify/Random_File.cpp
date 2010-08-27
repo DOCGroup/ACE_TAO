@@ -89,8 +89,8 @@ Random_File::write(const size_t block_number, void* buf, bool atomic)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Write block %d %c\n"),
-    static_cast<int> (block_number),
+    ACE_TEXT ("(%P|%t) Write block %B %c\n"),
+    block_number,
     (atomic ? '*' : ' ')
     ));
   bool result = this->seek(block_number);
@@ -124,8 +124,8 @@ Random_File::read(const size_t block_number, void* buf)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Read block %d\n"),
-    static_cast<int> (block_number)
+    ACE_TEXT ("(%P|%t) Read block %B\n"),
+    block_number
     ));
   bool result = this->seek(block_number);
   if (result)

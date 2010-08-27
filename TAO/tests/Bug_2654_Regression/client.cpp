@@ -20,8 +20,6 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 class Callback_i : public POA_Test::CallBack
@@ -71,7 +69,7 @@ int
 Worker::svc()
 {
   {
-    ACE_Guard<ACE_Mutex> g(this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     if (this->orb_threads_ > 0)
       {
         --this->orb_threads_;
@@ -91,7 +89,7 @@ Worker::svc()
         {
           CORBA::Short n = 0;
           {
-            ACE_Guard<ACE_Mutex> g(this->lock_);
+            ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
             n = ++this->message_counter_;
           }
           this->asynch_hello_->method (n);
@@ -114,7 +112,7 @@ Worker::svc()
     ACE_DEBUG ((LM_DEBUG, "(%t) Did all iterations\n"));
 
   {
-    ACE_Guard<ACE_Mutex> g(this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     --this->busy_threads_;
     if (this->busy_threads_)
       return 0;

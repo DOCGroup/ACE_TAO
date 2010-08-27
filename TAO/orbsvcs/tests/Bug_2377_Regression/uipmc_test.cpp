@@ -121,7 +121,7 @@ public:
           {
             int c = 0;
             {
-              ACE_Guard<ACE_Mutex> guard (this->mutex_);
+              ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
               c = this->count_++;
             }
 

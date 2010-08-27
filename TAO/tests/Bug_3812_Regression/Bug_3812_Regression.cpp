@@ -76,7 +76,7 @@ class Client_Task : public ACE_Task_Base
    
   int svc ()
   {
-    ACE_Guard<TAO_SYNCH_MUTEX> lock (test_lock);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, test_lock);
     process_listen_point ();
     test_condition.signal ();
     return 0;
