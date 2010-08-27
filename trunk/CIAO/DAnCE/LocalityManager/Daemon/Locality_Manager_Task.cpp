@@ -294,6 +294,7 @@ namespace DAnCE
                              ACE_TEXT ("Adding <%s> to plugin config list\n"),
                              opts.opt_arg ()));
             this->plugin_config_.push_back (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+            break;
 
           case 'h':
             this->usage ();
