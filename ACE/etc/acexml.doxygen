@@ -74,7 +74,7 @@ IGNORE_PREFIX         = ACEXML_
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/acexml
+HTML_OUTPUT           = html/libacexml-doc
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
