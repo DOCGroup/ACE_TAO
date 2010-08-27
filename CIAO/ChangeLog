@@ -1,3 +1,9 @@
+Fri Aug 27 14:50:24 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tests/CIAO/Executor-Destructor/Exec_Dest_Status.h:
+
+          compile fix.
+
 Fri Aug 27 13:58:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/History_exec_i.cpp:
