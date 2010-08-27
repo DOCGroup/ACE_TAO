@@ -429,7 +429,8 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
 // -----------------------------------------------------------------
 
 ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository (void)
-  : max_size_ (0),
+  : size_ (0),
+    max_size_ (0),
     handlers_ (0)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository");
@@ -566,6 +567,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::bind (
   this->handlers_[handle].event_handler = event_handler;
   this->handlers_[handle].mask = mask;
   event_handler->add_reference ();
+  ++this->size_;
 
   return 0;
 }
@@ -587,6 +589,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::unbind (ACE_HANDLE handle,
   entry->mask = ACE_Event_Handler::NULL_MASK;
   entry->suspended = false;
   entry->controlled = false;
+  --this->size_;
   return 0;
 }
 
@@ -600,7 +603,6 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                                             int s_queue)
   : initialized_ (false)
   , poll_fd_ (ACE_INVALID_HANDLE)
-  , size_ (0)
   // , ready_set_ ()
 #if defined (ACE_HAS_EVENT_POLL)
   , epoll_wait_in_progress_ (false)
@@ -647,7 +649,6 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                                             int s_queue)
   : initialized_ (false)
   , poll_fd_ (ACE_INVALID_HANDLE)
-  , size_ (0)
   // , ready_set_ ()
 #if defined (ACE_HAS_DEV_POLL)
   , dp_fds_ (0)
@@ -789,8 +790,6 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                                             ACE_Event_Handler::READ_MASK) == -1))
     result = -1;
 
-  this->size_ = size;
-
   if (result != -1)
     // We're all set to go.
     this->initialized_ = true;
@@ -862,6 +861,8 @@ ACE_Dev_Poll_Reactor::close (void)
 
   delete [] this->dp_fds_;
   this->dp_fds_ = 0;
+  this->start_pfds_ = 0;
+  this->end_pfds_ = 0;
 
 #endif  /* ACE_HAS_EVENT_POLL */
 
@@ -892,11 +893,6 @@ ACE_Dev_Poll_Reactor::close (void)
     }
 
   this->poll_fd_ = ACE_INVALID_HANDLE;
-
-#if defined (ACE_HAS_DEV_POLL)
-  this->start_pfds_ = 0;
-  this->end_pfds_ = 0;
-#endif /* ACE_HAS_DEV_POLL */
 
   this->initialized_ = false;
 
@@ -950,12 +946,12 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
   // Check if we have timers to fire.
   int const timers_pending =
- ((this_timeout != 0 && max_wait_time == 0)
+    ((this_timeout != 0 && max_wait_time == 0)
      || (this_timeout != 0 && max_wait_time != 0
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
   long const timeout =
- (this_timeout == 0
+    (this_timeout == 0
      ? -1 /* Infinity */
      : static_cast<long> (this_timeout->msec ()));
 
@@ -994,7 +990,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   struct dvpoll dvp;
 
   dvp.dp_fds = this->dp_fds_;
-  dvp.dp_nfds = this->size_;
+  dvp.dp_nfds = this->handler_rep_.size ();
   dvp.dp_timeout = timeout;  // Milliseconds
 
   // Poll for events
@@ -1220,16 +1216,12 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // Notice that pfds only contains file descriptors that have
   // received events.
   struct pollfd *& pfds = this->start_pfds_;
+  const ACE_HANDLE handle = pfds->fd;
+  short &revents          = pfds->revents;
   if (pfds < this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
 
     {
-
-#ifdef ACE_HAS_DEV_POLL
-      const ACE_HANDLE handle = pfds->fd;
-      short &revents          = pfds->revents;
-#endif /* ACE_HAS_DEV_POLL */
-
       /* When using sys_epoll, we can attach arbitrary user
          data to the descriptor, so it can be delivered when
          activity is detected. Perhaps we should store event
@@ -1520,7 +1512,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   // Add file descriptor to the "interest set."
   if (ACE_OS::write (this->poll_fd_, &pfd, sizeof (pfd)) != sizeof (pfd))
     {
- (void) this->handler_rep_.unbind (handle);
+      (void) this->handler_rep_.unbind (handle);
       return -1;
     }
 #endif /*ACE_HAS_DEV_POLL*/
@@ -1785,7 +1777,7 @@ ACE_Dev_Poll_Reactor::suspend_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
-  size_t const len = this->handler_rep_.size ();
+  size_t const len = this->handler_rep_.max_size ();
 
   for (size_t i = 0; i < len; ++i)
     {
@@ -1896,7 +1888,7 @@ ACE_Dev_Poll_Reactor::resume_handlers (void)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
-  size_t const len = this->handler_rep_.size ();
+  size_t const len = this->handler_rep_.max_size ();
 
   for (size_t i = 0; i < len; ++i)
     {
@@ -2200,7 +2192,7 @@ ACE_Dev_Poll_Reactor::initialized (void)
 size_t
 ACE_Dev_Poll_Reactor::size (void) const
 {
-  return this->size_;
+  return this->handler_rep_.size ();
 }
 
 ACE_Lock &
@@ -2475,7 +2467,7 @@ ACE_Dev_Poll_Reactor::dump (void) const
               ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->handler_rep_.size ()));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("deactivated_ = %d"),
               this->deactivated_));
