@@ -45,8 +45,7 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                                      const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
     if (!datum.key.in() == 0 &&
         info.instance_status == CCM_DDS::INSTANCE_CREATED)
       {

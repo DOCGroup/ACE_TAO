@@ -56,8 +56,7 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
                       const CCM_DDS::ReadInfo& /*read_info*/)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
     ++this->samples_received_;
 
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenStateTest_Listener::on_one_update: "
@@ -91,11 +90,11 @@ namespace CIAO_CFTLS_Test_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
+    : thread_id_listener_ (0, 0),
+      iterations_ (10),
       keys_ (5),
       samples_expected_ (keys_ * SAMPLES_PER_KEY),
-      samples_received_ (0),
-      thread_id_listener_ (0, 0)
+      samples_received_ (0)
   {
   }
 

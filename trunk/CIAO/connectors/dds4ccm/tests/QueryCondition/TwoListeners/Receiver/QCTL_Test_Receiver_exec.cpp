@@ -38,8 +38,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_1_.handle (t_id.handle ());
-    this->thread_id_1_.id (t_id.id ());
+    this->thread_id_1_ = t_id;
     ++this->samples_received_1_;
 
     ACE_DEBUG ((LM_DEBUG, "QueryConditionTwoListenersTest_Listener_1::on_one_data: "
@@ -99,8 +98,7 @@ namespace CIAO_QCTL_Test_Receiver_Impl
     const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_2_.handle (t_id.handle ());
-    this->thread_id_2_.id (t_id.id ());
+    this->thread_id_2_ = t_id;
 
     ++this->samples_received_2_;
 
@@ -144,14 +142,14 @@ namespace CIAO_QCTL_Test_Receiver_Impl
   // Receiver_exec_i
   //============================================================
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (10),
+    : thread_id_listener_1_ (0, 0),
+      thread_id_listener_2_ (0, 0),
+      iterations_ (10),
       keys_ (5),
       samples_expected_1_ (keys_ * SAMPLES_PER_KEY_1),
       samples_received_1_ (0),
       samples_expected_2_ (keys_ * (this->iterations_ - 4)),
-      samples_received_2_ (0),
-      thread_id_listener_1_ (0, 0),
-      thread_id_listener_2_ (0, 0)
+      samples_received_2_ (0)
   {
   }
 

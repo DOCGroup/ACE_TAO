@@ -32,10 +32,11 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   //============================================================
   // ConnectorStatusListener_exec_i
   //============================================================
-  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (Atomic_Boolean &subscription_matched_received,
-                                                                  Atomic_Boolean &liveliness_changed_received,
-                                                                 ACE_Thread_ID &thread_id_subcription_matched,
-                                                                 ACE_Thread_ID &thread_id_liveliness_changed)
+  ConnectorStatusListener_exec_i::ConnectorStatusListener_exec_i (
+    Atomic_Boolean &subscription_matched_received,
+    Atomic_Boolean &liveliness_changed_received,
+    ACE_Thread_ID &thread_id_subcription_matched,
+    ACE_Thread_ID &thread_id_liveliness_changed)
    : subscription_matched_received_ (subscription_matched_received),
      liveliness_changed_received_ (liveliness_changed_received),
      thread_id_subcription_matched_ (thread_id_subcription_matched),
@@ -90,14 +91,12 @@ namespace CIAO_CSL_USTest_Receiver_Impl
     if (! ::CORBA::is_nil (the_entity) && status_kind == DDS::SUBSCRIPTION_MATCHED_STATUS)
       {
         this->subscription_matched_received_ = true;
-        this->thread_id_subcription_matched_.handle (t_id.handle ());
-        this->thread_id_subcription_matched_.id (t_id.id ());
+        this->thread_id_subcription_matched_ = t_id;
       }
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::LIVELINESS_CHANGED_STATUS)
       {
         this->liveliness_changed_received_ = true;
-        this->thread_id_liveliness_changed_.handle (t_id.handle ());
-        this->thread_id_liveliness_changed_.id (t_id.id ());
+        this->thread_id_liveliness_changed_ = t_id;
       }
   }
 
@@ -143,9 +142,9 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : subscription_matched_received_ (false),
       liveliness_changed_received_ (false),
-      received_(0),
       thread_id_listener_subscription_matched_ (0, 0),
-      thread_id_listener_liveliness_changed_ (0, 0)
+      thread_id_listener_liveliness_changed_ (0, 0),
+      received_(0)
   {
     this->lc_ = ::CCM_DDS::DataListenerControl::_nil ();
     this->pulser_= new Pulser (*this);

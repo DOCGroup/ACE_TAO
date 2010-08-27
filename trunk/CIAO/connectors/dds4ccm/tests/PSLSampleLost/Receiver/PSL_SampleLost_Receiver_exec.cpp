@@ -107,14 +107,12 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
     if (this->port_nr_ == 1)
       {
         ACE_Thread_ID t_id;
-        this->thread_id_1_.handle (t_id.handle ());
-        this->thread_id_1_.id (t_id.id ());
+        this->thread_id_1_ = t_id;
       }
     if (this->port_nr_ == 2)
       {
         ACE_Thread_ID t_id;
-        this->thread_id_2_.handle (t_id.handle ());
-        this->thread_id_2_.id (t_id.id ());
+        this->thread_id_2_ = t_id;
      }
 
     if (this->port_nr_ == 1 &&
