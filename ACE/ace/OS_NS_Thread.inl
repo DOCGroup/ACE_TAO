@@ -3600,6 +3600,17 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
 }
 
 ACE_INLINE
+ACE_Thread_ID& 
+ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
+{
+  if (this != &id)
+    {
+      this->thread_id_ = id.thread_id_;
+      this->thread_handle_ = id.thread_handle_;
+    }
+}
+
+ACE_INLINE
 ACE_Thread_ID::ACE_Thread_ID (void)
   : thread_id_ (ACE_OS::thr_self ())
 {
