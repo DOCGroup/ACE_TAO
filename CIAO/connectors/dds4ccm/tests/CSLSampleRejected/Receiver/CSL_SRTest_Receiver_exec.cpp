@@ -49,8 +49,7 @@ namespace CIAO_CSL_SRTest_Receiver_Impl
     const DDS::SampleRejectedStatus & status)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
     if (status.last_reason == DDS::REJECTED_BY_INSTANCES_LIMIT &&
         ! ::CORBA::is_nil(the_reader))
       {

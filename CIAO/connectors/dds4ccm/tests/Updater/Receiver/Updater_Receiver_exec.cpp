@@ -33,8 +33,7 @@ namespace CIAO_Updater_Receiver_Impl
                                   const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
 
     ACE_DEBUG ((LM_DEBUG, "ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "key <%C> - iteration <%d>\n",

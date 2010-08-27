@@ -27,8 +27,7 @@ namespace CIAO_OIT_Test_Receiver_Impl
     const DDS::InconsistentTopicStatus & /* status */)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_.handle (t_id.handle ());
-    this->thread_id_.id (t_id.id ());
+    this->thread_id_ = t_id;
     this->inconsistent_ = true;
     this->inconsistent_ = true;
   }
