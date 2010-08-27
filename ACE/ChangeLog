@@ -1,3 +1,15 @@
+Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@smokey.mro.riverace.com>
+
+        * Connector.{h cpp} (ACE_NonBlocking_Connect_Handler): Add a
+          handle_close() which calls handle_input() if called by the
+          ACE_Dev_Poll_Reactor to remove a failed connect. Apparently,
+          Linux epoll, at least sometimes, signals EPOLLERR on a failed
+          nonblocking connect, unlike the select() case which selects the
+          failed fd for read. Thanks to Kannan Ramaswamy <kannan dot
+          ramaswamy at cogcap dot com> for this information and fix.
+
+        * THANKS: Added Kannan to the Hall of Fame.
+
 Fri Aug 27 14:17:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:
