@@ -318,7 +318,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Array_VarOut_T.h
     Asynch_Queued_Message.h
     Asynch_Reply_Dispatcher_Base.h
-    Auto_Functor.h
     Base_Transport_Property.h
     Basic_Arguments.h
     Basic_Argument_T.h
