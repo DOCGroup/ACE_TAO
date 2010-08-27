@@ -390,7 +390,6 @@ sub check_for_export_file ()
 # This test checks for the use of ACE_Thread_Mutex in TAO/CIAO,
 # TAO_SYNCH_MUTEX should used instead to make the code build
 # in single-threaded builds.
-
 sub check_for_ACE_Thread_Mutex ()
 {
     print "Running ACE_Thread_Mutex check\n";
@@ -415,6 +414,36 @@ sub check_for_ACE_Thread_Mutex ()
                     }
 
                     print_error ("$file:$.: found ACE_Thread_Mutex, use TAO_SYNCH_MUTEX instead to allow the code to work in single-threaded builds");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+# This test checks for the use of ACE_Guard
+# ACE_GUARD should used because it checks if we really got a lock
+# in single-threaded builds.
+sub check_for_ACE_Guard ()
+{
+    print "Running ACE_Guard check\n";
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_ACE_Guard/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ACE_Thread_Mutex/) {
+                    $disable = 0;
+                    next ITERATION;
+                }
+                if ($disable == 0 and /ACE_Guard/) {
+                    print_error ("$file:$.: found ACE_Guard, use ACE_GUARD");
                 }
             }
             close (FILE);
@@ -2180,6 +2209,7 @@ check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_export_file () if ($opt_l >= 6);
 check_for_trailing_whitespace () if ($opt_l >= 6);
+check_for_ACE_Guard () if ($opt_l >= 8);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
