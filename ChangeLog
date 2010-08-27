@@ -8,6 +8,22 @@ Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@riverace.com>
           failed fd for read. Thanks to Kannan Ramaswamy <kannan dot
           ramaswamy at cogcap dot com> for this information and fix.
 
+Wed Aug 25 19:58:19 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.{h cpp}: Regarding change number 2 at
+          Fri Mar 26 14:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+          dispatching notifies in only one thread at a time was 1) wrong
+          (TP_Reactor doesn't do this), 2) broke important existing
+          applications at a customer site. This has been fixed so that the
+          notify dispatch behavior is like ACE_TP_Reactor: when the
+          notify handle is signaled, extract one notification, release
+          the token, dispatch the notification. Thus, each thread will
+          dispatch one notification, and multiple threads can dispatch
+          them at the same time if there are multiples.
+
+          Also fixed an error where it was possible to lose notice of a
+          notification. Resolves Bugzilla #3328.
+
 Thu Jul 29 14:41:32 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.h (set_handles): Clarify that passing ACE_INVALID_HANDLE
