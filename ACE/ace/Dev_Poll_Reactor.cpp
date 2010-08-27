@@ -130,8 +130,11 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_UNUSED_ARG (timeout);
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
+  // When using the queue, always try to write to the notify pipe. If it
+  // fills up, ignore it safely because the already-written bytes will
+  // eventually cause the notify handler to be dispatched.
   if (-1 == this->notification_queue_.push_new_notification (buffer))
-    return -1;      // Also decrement eh's reference count
+    return -1;             // Also decrement eh's reference count
 
   // The notification has been queued, so it will be delivered at some
   // point (and may have been already); release the refcnt guard.
