@@ -141,7 +141,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
                         html/libtao-doc/TAO.tag=.. \
                         html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver
-GENERATE_TAGFILE      = html/tao/av/TAO_AV.tag
+GENERATE_TAGFILE      = html/libtao-doc/av/TAO_AV.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
