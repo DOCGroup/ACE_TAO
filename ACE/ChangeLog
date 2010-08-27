@@ -1,3 +1,9 @@
+Fri Aug 27 06:56:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/acexml.doxygen:
+          Fuzz fixes
+
 Thu Aug 26 13:20:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:

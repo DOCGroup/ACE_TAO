@@ -138,7 +138,7 @@ PREDEFINED            = __ACE_INLINE__ \
                         ACE_INLINE=inline \
                         ACE_NAMESPACE_INLINE_FUNCTION=inline
 EXPAND_AS_DEFINED     = ACE_RCSID \
-			            ACE_UNIMPLEMENTED_FUNC \
+                        ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
                         ACE_THROW_SPEC \
                         ACE_T1 \
