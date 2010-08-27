@@ -169,8 +169,8 @@ Persistent_File_Allocator::allocate()
     // allocate non-existent blocks.  FIX this
   }
   if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate: %d\n"),
-    static_cast<int> (block_number)
+    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate: %B\n"),
+    block_number
     ));
   result = this->allocate_at(block_number);
   return result;
@@ -182,8 +182,8 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
   Persistent_Storage_Block* result = 0;
   this->used(block_number);
   if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %d\n"),
-    static_cast<int> (block_number)
+    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %B\n"),
+    block_number
     ));
   ACE_NEW_RETURN(result, Persistent_Storage_Block(
     block_number,
@@ -209,8 +209,8 @@ Persistent_File_Allocator::used(size_t block_number)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
   if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %d\n"),
-    static_cast<int> (block_number)
+    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::used: %B\n"),
+    block_number
     ));
   ACE_ASSERT (!this->free_blocks_.is_set (block_number));
   this->free_blocks_.set_bit(block_number, true);
@@ -220,8 +220,8 @@ void
 Persistent_File_Allocator::free(size_t block_number)
 {
   if (DEBUG_LEVEL > 0) ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::free: %d\n"),
-    static_cast<int> (block_number)
+    ACE_TEXT ("(%P|%t) Persistent_File_Allocator::free: %B\n"),
+    block_number
     ));
   ACE_ASSERT (this->free_blocks_.is_set (block_number));
   this->free_block(block_number);
@@ -278,16 +278,16 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
     if (!psb->get_allocator_owns())
     {
       if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Copy PSB %d\n")
-        , static_cast<int> (psb->block_number ())
+        ACE_TEXT ("(%P|%t) Copy PSB %B\n")
+        , psb->block_number ()
         ));
       ACE_NEW_RETURN(ourpsb, Persistent_Storage_Block(*psb), false);
       ourpsb->set_allocator_owns(true);
     }
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Queueing PSB to write block %d\n")
-      , static_cast<int> (psb->block_number ())
+      ACE_TEXT ("(%P|%t) Queueing PSB to write block %B\n")
+      , psb->block_number ()
       ));
     result = (0 == this->block_queue_.enqueue_tail(ourpsb));
     this->wake_up_thread_.signal();

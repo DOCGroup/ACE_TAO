@@ -130,7 +130,7 @@ public:
           {
             CORBA::Short c = 0;
             {
-              ACE_Guard<ACE_Mutex> guard (this->mutex_);
+              ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
               c = this->count_++;
             }
 

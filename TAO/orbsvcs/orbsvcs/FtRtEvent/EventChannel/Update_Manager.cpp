@@ -30,7 +30,7 @@ Update_Manager::~Update_Manager()
 
 void Update_Manager::handle_reply(int id)
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   replied_[id] = true;
 
   if ((replied_ & signal_condition_) == signal_condition_) {
@@ -43,7 +43,7 @@ void Update_Manager::handle_reply(int id)
 
 void Update_Manager::handle_exception(int id)
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   replied_[id] = true;
   ++transaction_level_;
 

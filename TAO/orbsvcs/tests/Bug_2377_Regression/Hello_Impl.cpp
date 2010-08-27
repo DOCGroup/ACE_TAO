@@ -57,7 +57,7 @@ MessageLog::~MessageLog ()
 void
 MessageLog::register_message_send (int message_num)
 {
-  ACE_Guard<ACE_Mutex> guard(this->mutex_);
+  ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
     {
       this->sent_[message_num]++;
@@ -78,7 +78,7 @@ MessageLog::register_message_send (int message_num)
 void
 MessageLog::register_message_recv (int message_num)
 {
-  ACE_Guard<ACE_Mutex> guard(this->mutex_);
+  ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
     {
       this->rcvd_[message_num]++;

@@ -57,8 +57,8 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const ACE_TCHAR *location)
 {
-  ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
-
+  ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
+  
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),

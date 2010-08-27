@@ -66,38 +66,38 @@ Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Routing_Slip_Statistics\n")
-      ACE_TEXT ("  enter_transient              \t%d\n")
-      ACE_TEXT ("  continue_transient           \t%d\n")
-      ACE_TEXT ("  enter_reloaded               \t%d\n")
-      ACE_TEXT ("  enter_new                    \t%d\n")
-      ACE_TEXT ("  continue_new                 \t%d\n")
-      ACE_TEXT ("  enter_complete_while_new     \t%d\n")
-      ACE_TEXT ("  enter_saving                 \t%d\n")
-      ACE_TEXT ("  enter_saved                  \t%d\n")
-      ACE_TEXT ("  enter_updating               \t%d\n")
-      ACE_TEXT ("  enter_changed_while_saving   \t%d\n")
-      ACE_TEXT ("  continue_changed_while_saving\t%d\n")
-      ACE_TEXT ("  enter_changed                \t%d\n")
-      ACE_TEXT ("  continue_changed             \t%d\n")
-      ACE_TEXT ("  enter_complete               \t%d\n")
-      ACE_TEXT ("  enter_deleting               \t%d\n")
-      ACE_TEXT ("  enter_terminal               \t%d\n")
-      , static_cast<int> (count_enter_transient_)
-      , static_cast<int> (count_continue_transient_)
-      , static_cast<int> (count_enter_reloaded_)
-      , static_cast<int> (count_enter_new_)
-      , static_cast<int> (count_continue_new_)
-      , static_cast<int> (count_enter_complete_while_new_)
-      , static_cast<int> (count_enter_saving_)
-      , static_cast<int> (count_enter_saved_)
-      , static_cast<int> (count_enter_updating_)
-      , static_cast<int> (count_enter_changed_while_saving_)
-      , static_cast<int> (count_continue_changed_while_saving_)
-      , static_cast<int> (count_enter_changed_)
-      , static_cast<int> (count_continue_changed_)
-      , static_cast<int> (count_enter_complete_)
-      , static_cast<int> (count_enter_deleting_)
-      , static_cast<int> (count_enter_terminal_)
+      ACE_TEXT ("  enter_transient              \t%B\n")
+      ACE_TEXT ("  continue_transient           \t%B\n")
+      ACE_TEXT ("  enter_reloaded               \t%B\n")
+      ACE_TEXT ("  enter_new                    \t%B\n")
+      ACE_TEXT ("  continue_new                 \t%B\n")
+      ACE_TEXT ("  enter_complete_while_new     \t%B\n")
+      ACE_TEXT ("  enter_saving                 \t%B\n")
+      ACE_TEXT ("  enter_saved                  \t%B\n")
+      ACE_TEXT ("  enter_updating               \t%B\n")
+      ACE_TEXT ("  enter_changed_while_saving   \t%B\n")
+      ACE_TEXT ("  continue_changed_while_saving\t%B\n")
+      ACE_TEXT ("  enter_changed                \t%B\n")
+      ACE_TEXT ("  continue_changed             \t%B\n")
+      ACE_TEXT ("  enter_complete               \t%B\n")
+      ACE_TEXT ("  enter_deleting               \t%B\n")
+      ACE_TEXT ("  enter_terminal               \t%B\n")
+      , count_enter_transient_
+      , count_continue_transient_
+      , count_enter_reloaded_
+      , count_enter_new_
+      , count_continue_new_
+      , count_enter_complete_while_new_
+      , count_enter_saving_
+      , count_enter_saved_
+      , count_enter_updating_
+      , count_enter_changed_while_saving_
+      , count_continue_changed_while_saving_
+      , count_enter_changed_
+      , count_continue_changed_
+      , count_enter_complete_
+      , count_enter_deleting_
+      , count_enter_terminal_
       ));
   }
   return result;
@@ -174,7 +174,7 @@ Routing_Slip::Routing_Slip(
   , complete_requests_ (0)
   , rspm_ (0)
 {
-  Routing_Slip_Guard guard (sequence_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;
   if (DEBUG_LEVEL > 1) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: constructor\n"),
@@ -218,7 +218,7 @@ Routing_Slip::event () const
 void
 Routing_Slip::wait_persist ()
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   while (!this->is_safe_)
   {
     this->until_safe_.wait ();
@@ -232,17 +232,16 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 
   TAO_Notify_ProxyConsumer::Ptr pcgrd(pc);
 
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  size_t request_id = delivery_requests_.size ();
+  size_t const request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: lookup, completed %d of %d\n"),
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: lookup, completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      request_id,
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
   this->delivery_requests_.push_back (request);
@@ -288,7 +287,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   ACE_ASSERT (this->state_ == rssCREATING);
 
   TAO_Notify_ProxySupplier::Ptr psgrd(ps);
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   enter_state_transient (guard);
   guard.acquire();
@@ -341,18 +340,17 @@ Routing_Slip::dispatch (
   ACE_ASSERT (this->state_ != rssCREATING);
 
   TAO_Notify_ProxySupplier::Ptr psgrd(ps);
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   size_t request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Dispatch %s; completed %d of %d\n"),
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Dispatch %s; completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
+      request_id,
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
   if (! ps->has_shutdown() )
@@ -362,10 +360,10 @@ Routing_Slip::dispatch (
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %d to "
+                    "(%P|%t) Routing Slip #%d: dispatching Delivery_Request %B to "
                     "proxy supplier %d\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
       ps->execute_task (method);
     }
@@ -373,10 +371,10 @@ Routing_Slip::dispatch (
     {
       if (DEBUG_LEVEL > 5)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %d to "
+                    "(%P|%t) Routing Slip #%d: not dispatching Delivery_Request %B to "
                     "proxy supplier %d; already shut down\n",
                     this->sequence_,
-                    static_cast<int> (request_id),
+                    request_id,
                     ps->id()));
     }
 }
@@ -387,19 +385,18 @@ Routing_Slip::dispatch (
 void
 Routing_Slip::delivery_request_complete (size_t request_id)
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   ACE_ASSERT (request_id < this->delivery_requests_.size ());
   // reset the pointer to allow the delivery_request to be deleted.
   this->delivery_requests_[request_id].reset ();
   this->complete_requests_ += 1;
 
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%d: completed %d of %d\n"),
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: delivery_request_complete #%B: completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
-      ));
+      request_id,
+      this->complete_requests_,
+      this->delivery_requests_.size ()));
   State state = this->state_;
   switch (state)
   {
@@ -452,7 +449,7 @@ Routing_Slip::delivery_request_complete (size_t request_id)
 void
 Routing_Slip::at_front_of_persist_queue ()
 {
-  Routing_Slip_Guard guard (this->internals_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   State state = this->state_;
   switch (state)
   {
@@ -511,8 +508,7 @@ Routing_Slip::persist_complete ()
 {
   // keep this object around til this method returns.
   Routing_Slip_Ptr me(this->this_ptr_);
-  Routing_Slip_Guard guard (this->internals_);
-  ACE_ASSERT (guard.locked ());
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   // allow the ConsumerProxy to return from the CORBA push call.
   if (! is_safe_)
