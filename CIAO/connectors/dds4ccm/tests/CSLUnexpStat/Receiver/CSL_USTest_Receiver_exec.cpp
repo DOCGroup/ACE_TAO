@@ -143,13 +143,10 @@ namespace CIAO_CSL_USTest_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : subscription_matched_received_ (false),
       liveliness_changed_received_ (false),
-      received_(0)
+      received_(0),
+      thread_id_listener_subscription_matched_ (0, 0),
+      thread_id_listener_liveliness_changed_ (0, 0)
   {
-    this->thread_id_listener_subscription_matched_.handle (0);
-    this->thread_id_listener_subscription_matched_.id (0);
-    this->thread_id_listener_liveliness_changed_.handle (0);
-    this->thread_id_listener_liveliness_changed_.id (0);
-
     this->lc_ = ::CCM_DDS::DataListenerControl::_nil ();
     this->pulser_= new Pulser (*this);
   }

@@ -137,12 +137,10 @@ namespace CIAO_PSL_SampleLost_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
   : rate_ (10),
     sample_port_1_ (false),
-    sample_port_2_ (false)
+    sample_port_2_ (false),
+    thread_id_listener_1_ (0, 0),
+    thread_id_listener_2_ (0, 0)
   {
-    thread_id_listener_1_.id (0);
-    thread_id_listener_1_.handle (0);
-    thread_id_listener_2_.id (0);
-    thread_id_listener_2_.handle (0);
 
     this->ticker_ = new read_action_Generator (*this);
   }
