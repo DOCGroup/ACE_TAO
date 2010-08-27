@@ -1,3 +1,11 @@
+Fri Aug 27 19:09:02 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        
+          Merged dependent_libs change from TAO 1.5a to cause idl files
+          to be rebuilt when tao_idl's dynamically linked libraries are
+          rebuilt.
+
 Fri Aug 27 18:06:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.h:
