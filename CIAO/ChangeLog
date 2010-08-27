@@ -1,3 +1,10 @@
+Fri Aug 27 13:58:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.cpp:
+          Use ACE_GUARD macro
+
 Fri Aug 27 12:03:26 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Bug_3832_Regression/run_test.pl:
