@@ -42,7 +42,7 @@ namespace CIAO_Messenger_Impl
   char*
   Publication_exec_i::text ()
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
     return CORBA::string_dup( this->text_.c_str() );
   }
@@ -60,7 +60,7 @@ namespace CIAO_Messenger_Impl
   CORBA::UShort
   Publication_exec_i::period ()
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
     return this->period_;
   }
