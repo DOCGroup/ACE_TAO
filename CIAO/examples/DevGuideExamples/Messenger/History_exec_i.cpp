@@ -42,7 +42,7 @@ namespace CIAO_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_all\n") ));
 
@@ -69,7 +69,7 @@ namespace CIAO_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_latest\n") ));
 

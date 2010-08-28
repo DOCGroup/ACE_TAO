@@ -1,3 +1,10 @@
+Sat Aug 28 09:56:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Publication_exec_i.cpp:
+          Fixed compile errors
+
 Fri Aug 27 18:38:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLDeadline/Sender/CSL_DeadlineTest_Sender_exec.cpp:
