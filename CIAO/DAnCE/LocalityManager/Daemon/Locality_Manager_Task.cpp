@@ -140,7 +140,7 @@ namespace DAnCE
             {
               DANCE_ERROR (1, (LM_CRITICAL, ACE_TEXT ("LocalityManager_Task::run - ")
                                ACE_TEXT ("Out of memory error while allocating config ")
-			       ACE_TEXT ("values.")));
+                               ACE_TEXT ("values.")));
             }
           else
             {

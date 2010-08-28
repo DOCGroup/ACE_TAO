@@ -47,73 +47,73 @@ namespace DAnCE
     // Read from the file line by line
     while ((string = reader.read ('\n')) != 0)
       {
-	try
-	  {
-	    size_t len = ACE_OS::strlen (string);
+        try
+          {
+            size_t len = ACE_OS::strlen (string);
 
-	    if (len == 0) continue;
+            if (len == 0) continue;
         
-	    std::istringstream tokenizer (string);
-	    std::vector< std::string > tokens;
-	    std::copy (std::istream_iterator< std::string > (tokenizer),
-		       std::istream_iterator <std::string > (),
-		       std::back_inserter < std::vector < std::string > > (tokens));
+            std::istringstream tokenizer (string);
+            std::vector< std::string > tokens;
+            std::copy (std::istream_iterator< std::string > (tokenizer),
+                       std::istream_iterator <std::string > (),
+                       std::back_inserter < std::vector < std::string > > (tokens));
         
-	    if (tokens.size () != 3)
-	      {
-		DANCE_ERROR (1, (LM_ERROR, DLINFO
-				 ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-				 ACE_TEXT ("Skipping line <%C>, wrong format.  Got %u tokens instead of 3\n"),
-				 string,
-				 tokens.size ()));
-	      }
-	    else
-	      {
-		DANCE_DEBUG (7, (LM_DEBUG, DLINFO
-				 ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-				 ACE_TEXT ("Attempting to load plugin of type <%C>, artifact <%C>, entrypoint <%C>\n"),
-				 tokens[0].c_str (),
-				 tokens[1].c_str (),
-				 tokens[2].c_str ()));
+            if (tokens.size () != 3)
+              {
+                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                                 ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                 ACE_TEXT ("Skipping line <%C>, wrong format.  Got %u tokens instead of 3\n"),
+                                 string,
+                                 tokens.size ()));
+              }
+            else
+              {
+                DANCE_DEBUG (7, (LM_DEBUG, DLINFO
+                                 ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                 ACE_TEXT ("Attempting to load plugin of type <%C>, artifact <%C>, entrypoint <%C>\n"),
+                                 tokens[0].c_str (),
+                                 tokens[1].c_str (),
+                                 tokens[2].c_str ()));
                              
 
-		if (ACE_OS::strcmp (tokens[0].c_str (), 
-				    DAnCE::DANCE_INSTALLATIONHANDLER) == 0)
-		  {
-		    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
-					DAnCE::DANCE_INSTALLATIONHANDLER,
-					plan, pos++);
-		  }
-		else if (ACE_OS::strcmp (tokens[0].c_str (), 
-					 DAnCE::DANCE_DEPLOYMENTINTERCEPTOR) == 0)
-		  {
-		    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
-					DAnCE::DANCE_DEPLOYMENTINTERCEPTOR,
-					plan, pos++);
-		  }
-		else if (ACE_OS::strcmp (tokens[0].c_str (), 
-					 DAnCE::DANCE_CONFIGPLUGIN) == 0)
-		  {
-		    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
-					DAnCE::DANCE_CONFIGPLUGIN,
-					plan, pos++);
-		  }
-		else
-		  {
-		    DANCE_ERROR (1, (LM_ERROR, DLINFO
-				     ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
-				     ACE_TEXT ("Skipping line <%C>, bad type name\n"),
-				     string));
-		  }
-	      }
+                if (ACE_OS::strcmp (tokens[0].c_str (), 
+                                    DAnCE::DANCE_INSTALLATIONHANDLER) == 0)
+                  {
+                    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
+                                        DAnCE::DANCE_INSTALLATIONHANDLER,
+                                        plan, pos++);
+                  }
+                else if (ACE_OS::strcmp (tokens[0].c_str (), 
+                                         DAnCE::DANCE_DEPLOYMENTINTERCEPTOR) == 0)
+                  {
+                    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
+                                        DAnCE::DANCE_DEPLOYMENTINTERCEPTOR,
+                                        plan, pos++);
+                  }
+                else if (ACE_OS::strcmp (tokens[0].c_str (), 
+                                         DAnCE::DANCE_CONFIGPLUGIN) == 0)
+                  {
+                    this->create_entry (tokens[1].c_str (), tokens[2].c_str (),
+                                        DAnCE::DANCE_CONFIGPLUGIN,
+                                        plan, pos++);
+                  }
+                else
+                  {
+                    DANCE_ERROR (1, (LM_ERROR, DLINFO
+                                     ACE_TEXT ("Plugin_Configurator::load_from_text_file - ")
+                                     ACE_TEXT ("Skipping line <%C>, bad type name\n"),
+                                     string));
+                  }
+              }
         
-	    reader.alloc ()->free (string);
-	  }
-	catch (...)
-	  {
-	    reader.alloc ()->free (string);
-	    throw;
-	  }
+            reader.alloc ()->free (string);
+          }
+        catch (...)
+          {
+            reader.alloc ()->free (string);
+            throw;
+          }
       }
 
     this->deploy_plan (plan);
