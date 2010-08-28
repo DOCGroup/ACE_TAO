@@ -64,7 +64,7 @@ int Publisher_impl::Worker::svc (void)
       data += 0.01;
       ++iteration;
       {
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex, 0);
         doShutdown = subscribers.size() > 0;
         for (vector<_Subscriber>::iterator iter = subscribers.begin();
              iter != subscribers.end(); ++iter)
@@ -89,7 +89,7 @@ int Publisher_impl::Worker::svc (void)
       }
       if (iteration % 200 == 0)
         {
-          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex);
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex, 0);
           for (vector<_Subscriber>::iterator iter = subscribers.begin();
                iter != subscribers.end(); ++iter)
             {
