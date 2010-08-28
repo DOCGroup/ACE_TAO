@@ -318,6 +318,48 @@ namespace DAnCE
           cmd_options += ' ';
         }
 
+      if (server.cmap_->find (DAnCE::DANCE_LM_CONFIGFILE, val) == 0)
+        {
+          const char *args = 0;
+          val >>= args;
+
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                           ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                           ACE_TEXT ("Adding provided locality configuration file %C\n"), args));
+
+          cmd_options += ' ';
+          cmd_options += args;
+          cmd_options += ' ';
+        }
+
+      if (server.cmap_->find (DAnCE::DANCE_LM_CONFIGFILE, val) == 0)
+        {
+          const char *args = 0;
+          val >>= args;
+
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                           ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                           ACE_TEXT ("Adding provided locality configuration file %C\n"), args));
+
+          cmd_options += ' ';
+          cmd_options += args;
+          cmd_options += ' ';
+        }
+
+      if (server.cmap_->find (DAnCE::DANCE_LM_CONFIGFILE, val) == 0)
+        {
+          const char *args = 0;
+          val >>= args;
+
+          DANCE_DEBUG (9, (LM_TRACE, DLINFO
+                           ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
+                           ACE_TEXT ("Adding provided locality configuration file %C\n"), args));
+
+          cmd_options += ' ';
+          cmd_options += args;
+          cmd_options += ' ';
+        }
+
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::construct_command_line - ")
                        ACE_TEXT ("Creating component server")
