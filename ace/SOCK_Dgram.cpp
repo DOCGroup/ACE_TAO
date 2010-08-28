@@ -432,9 +432,9 @@ ACE_SOCK_Dgram::recv (void *buf,
       return this->recv (buf, n, addr, flags);
     }
   else
-  {
-	  return -1;
-  }
+    {
+      return -1;
+    }
 }
 
 ssize_t
@@ -451,9 +451,9 @@ ACE_SOCK_Dgram::send (const void *buf,
       return this->send (buf, n, addr, flags);
     }
   else
-  {
-	  return -1;
-  }
+    {
+      return -1;
+    }
 }
 
 int
