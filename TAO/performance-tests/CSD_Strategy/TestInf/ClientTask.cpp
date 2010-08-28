@@ -62,7 +62,7 @@ ClientTask::svc()
   unsigned num_loops;
 
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
     this->engines_.get(engine, this->engines_.size() - 1);
     this->engines_.pop_back();
     num_loops = this->num_loops_;
@@ -72,7 +72,7 @@ ClientTask::svc()
   {
     if (engine->execute(num_loops) == false)
       {
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
         ++this->failure_count_;
       }
   }
@@ -81,7 +81,7 @@ ClientTask::svc()
     ex._tao_print_exception (
       "ClientTask::svc Caught exception from execute():");
 
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
     ++this->failure_count_ ;
   }
   catch (...)
@@ -89,7 +89,7 @@ ClientTask::svc()
     ACE_ERROR((LM_ERROR,
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
                "in execute() " ));
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
     ++this->failure_count_;
   }
 
