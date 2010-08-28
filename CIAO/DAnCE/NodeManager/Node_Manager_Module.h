@@ -83,7 +83,7 @@ class DAnCE_NodeManager_Module
     const ACE_TCHAR * instance_nc_;
     unsigned int threads_;
     bool best_effort_;
-
+    const ACE_TCHAR * locality_config_;
     SOptions();
   };
 
