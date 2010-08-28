@@ -3608,6 +3608,7 @@ ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
       this->thread_id_ = id.thread_id_;
       this->thread_handle_ = id.thread_handle_;
     }
+  return *this;
 }
 
 ACE_INLINE
