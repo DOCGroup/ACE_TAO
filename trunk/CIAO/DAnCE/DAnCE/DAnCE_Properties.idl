@@ -84,7 +84,9 @@ module DAnCE
   const string DANCE_LM_INSTALLER = "edu.vanderbilt.dre.DAnCE.LocalityManager.installer";
   const string DANCE_LM_PROCESSNAME = "edu.vanderbilt.dre.DAnCE.LocalityManager.ProcessName";
   const string DANCE_LM_CPUAFFINITY = "edu.vanderbilt.dre.DAnCE.LocalityManager.CPUAffinity";
-  
+  const string DANCE_LM_PROCESSPRIORITY = "edu.vanderbilt.dre.DAnCE.LocalityManager.ProcessPriority";
+  const string DANCE_LM_CONFIGFILE = "edu.vanderbilt.dre.DAnCE.LocalityManager.ConfigFile";
+
   // Instance Deployment Handler installation properties
 
   /// Instance types that must be installed before the instance handled by the decorated handler
