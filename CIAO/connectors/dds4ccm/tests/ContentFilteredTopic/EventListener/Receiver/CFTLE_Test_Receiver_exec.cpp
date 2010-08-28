@@ -35,7 +35,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
                                   const ::CCM_DDS::ReadInfo & info)
   {
     ACE_Thread_ID t_id;
-    this->thread_id_ = t_id
+    this->thread_id_ = t_id;
     ++this->samples_received_;
     ACE_DEBUG ((LM_DEBUG, "ContentFilteredTopicListenEventTest_Listener::on_one_data: "
                           "key <%C> - iteration <%d>\n",
