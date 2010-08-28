@@ -26,7 +26,7 @@ Simple_Server_i::test_method (Simple_Server_ptr objref)
       try
         {
           {
-            ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
             if (!this->timer_registed_)
               {
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) Scheduling timeout...\n"));
@@ -63,7 +63,7 @@ int
 Simple_Server_i::handle_timeout (const ACE_Time_Value &,
                                  const void *)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   // We are the (client) leader.  Signal the leader-follower pattern to
   // elect a new leader
   TAO_ORB_Core *oc = orb_->orb_core();
