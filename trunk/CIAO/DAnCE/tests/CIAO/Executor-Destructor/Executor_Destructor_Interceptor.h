@@ -2,7 +2,7 @@
 // $Id$
 
 /**
- * @file DAnCE_DeploymentInterceptors_Base_Impl.h
+ * @file Executor_Destructor_Interceptor.h
  *
  * Base, no-op interceptor.  
  **/

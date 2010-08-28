@@ -1,3 +1,12 @@
+Sat Aug 28 20:38:42 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * DAnCE/LocalityManager/Handler/Plugin_Conf.cpp:
+        * DAnCE/tests/CIAO/Executor-Destructor/Exec_Dest_Status.cpp:
+        * DAnCE/tests/CIAO/Executor-Destructor/Executor_Destructor_Interceptor.h:
+
+          Fuzz.
+
 Sat Aug 28 09:56:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/History_exec_i.cpp:
