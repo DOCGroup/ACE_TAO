@@ -1,7 +1,7 @@
 // $Id$
 
 project (DAnCE_SHS_CORBA_Transport) : dance_lib, dance_output, dance_logger, \
-        dance_shs_daemon, naming {
+        dance_shs_daemon, naming, dance_deployment_scheduler {
   
    dynamicflags += DANCE_SHS_CORBA_TRANSPORT_BUILD_DLL
 
