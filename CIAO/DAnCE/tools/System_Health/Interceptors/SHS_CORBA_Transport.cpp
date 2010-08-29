@@ -4,6 +4,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "DAnCE/DAnCE_PropertiesC.h"
 #include "DAnCE/Logger/Log_Macros.h"
+#include "LocalityManager/Scheduler/Plugin_Manager.h"
 
 namespace DAnCE
 {
@@ -24,15 +25,40 @@ namespace DAnCE
 
       for (CORBA::ULong i = 0; i < props.length (); ++i)
         {
+	  DANCE_DEBUG (10, (LM_TRACE, DLINFO
+			    ACE_TEXT ("SHS_CORBA_Transport::configure - ")
+			    ACE_TEXT ("Considering property <%C>\n"),
+			    props[i].name.in ()));
+
           if ((ACE_OS::strcmp (props[i].name.in (),
                               DAnCE::LOCALITY_NAMINGCONTEXT) == 0) ||
               (ACE_OS::strcmp (props[i].name.in (),
                                DAnCE::INSTANCE_NC) == 0))
             {
-              CORBA::Object_var obj;
-              props[i].value >>= CORBA::Any::to_object (obj);
+	      DANCE_DEBUG (7, (LM_DEBUG, DLINFO
+			       ACE_TEXT ("SHS_CORBA_Transport::configure - ")
+			       ACE_TEXT ("Found property <%C>\n"),
+			       props[i].name.in ()));
               
-              CORBA::is_nil (obj);
+              CORBA::Object_var obj;
+              
+              if (!(props[i].value >>= CORBA::Any::to_object (obj)))
+                {
+                  const char *val;
+                  props[i].value >>= CORBA::Any::to_string (val, 0);
+                  
+                  CORBA::ORB_var orb = PLUGIN_MANAGER::instance ()->get_orb ();
+                  obj = orb->string_to_object (val);
+                }
+              
+              if (CORBA::is_nil (obj))
+		{
+		  DANCE_ERROR (3, (LM_NOTICE, DLINFO
+				   ACE_TEXT ("Unable to extract an object reference from ")
+				   ACE_TEXT ("property <%C>\n"),
+				   props[i].name.in ()));
+		  return;
+		}
                 
               ctx = CosNaming::NamingContext::_narrow (obj.in ());
               break;

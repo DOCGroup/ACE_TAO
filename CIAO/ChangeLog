@@ -1,3 +1,21 @@
+Sun Aug 29 15:34:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+
+          Bugfixes for localityconfiguration command line option.
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+
+          Bugfixes.
+
+        * examples/Hello/descriptors/run_test_shs.pl:
+        * examples/Hello/descriptors/shs.localityconfig:
+
+          Modified test to load SHS interceptor from localityconfig file.
+
 Sat Aug 28 21:03:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Properties.idl:

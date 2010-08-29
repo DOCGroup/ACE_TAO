@@ -248,8 +248,19 @@ NodeApplicationManager_Impl::preparePlan (const Deployment::DeploymentPlan& plan
                                                  new_path.c_str ());
 #endif
         }
-
-      // Need to add naming service reference to config properties.
+      
+      const char *config_file;
+      
+      if (DAnCE::Utility::get_property_value (DAnCE::DANCE_LM_CONFIGFILE,
+                                              this->properties_,
+                                              config_file))
+        {
+          DAnCE::Utility::update_property_value<const char *> (DAnCE::DANCE_LM_CONFIGFILE,
+                                                               lm_idd.configProperty,
+                                                               config_file);
+        }
+      
+      
       DAnCE::Utility::update_property_value<CosNaming::NamingContext_ptr> (
             DAnCE::LOCALITY_NAMINGCONTEXT,
             lm_idd.configProperty,
