@@ -135,7 +135,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../libace-doc \
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
                         html/libtao-doc/TAO.tag=..
 GENERATE_TAGFILE      = html/libtao-doc/anytypecode/TAO_AnyTypeCode.tag
 ALLEXTERNALS          = NO
