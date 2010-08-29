@@ -133,7 +133,7 @@ sub run_node_daemons {
         $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --instance-nc corbaloc:rir:/NameService --locality-config shs.localityconfig";
 
         print "Run dance_node_manager with $d_param\n";
 

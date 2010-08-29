@@ -41,6 +41,8 @@ namespace DAnCE
     ::Deployment::Properties prop;
     ::DAnCE::Utility::build_property_sequence (prop, properties);
     PLUGIN_MANAGER::instance ()->set_configuration (prop);
+    PLUGIN_MANAGER::instance ()->set_orb (this->orb_);
+    
     Plugin_Manager::IH_DEPS deps;
     CORBA::String_var safe_type =
       PLUGIN_MANAGER::instance ()->register_installation_handler (ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Locality_Handler"),
