@@ -84,8 +84,8 @@ namespace DAnCE
     // Add your implementation here
   }
 
-  void Executor_Destructor::post_remove (const ::Deployment::DeploymentPlan &plan,
-                                         ::CORBA::ULong instRef,
+  void Executor_Destructor::post_remove (const ::Deployment::DeploymentPlan &,
+                                         ::CORBA::ULong ,
                                          const ::CORBA::Any & )
   {
   }
