@@ -55,6 +55,6 @@ namespace dance_test
 
 EXECUTOR_DESTRUCTOR_INTERCEPTOR_SINGLETON_DECLARE (ACE_Singleton,
                                                    dance_test::Exec_Dest_Status,
-                                                   ACE_Null_Mutex);
+                                                   ACE_Null_Mutex)
 
 #endif
