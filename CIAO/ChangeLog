@@ -1,3 +1,12 @@
+Sun Aug 29 18:16:20 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Configuration.mpc:
+        * DAnCE/LocalityManager/Configuration/Process_Priority.h:
+        * DAnCE/LocalityManager/Configuration/Process_Priority.cpp:
+        * DAnCE/LocalityManager/Configuration/Process_Priority_export.h:
+
+          Process_Priority configuration plugin.
+
 Sun Aug 29 15:34:43 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/LocalityActivator_Impl.cpp:
