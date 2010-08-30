@@ -1,3 +1,9 @@
+Mon Aug 30 11:28:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Process_Priority.cpp:
+
+          Compile fix for windows.
+
 Mon Aug 30 04:16:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/Node_Manager_Module.cpp:
