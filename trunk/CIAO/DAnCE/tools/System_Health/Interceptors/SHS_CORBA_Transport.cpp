@@ -25,20 +25,20 @@ namespace DAnCE
 
       for (CORBA::ULong i = 0; i < props.length (); ++i)
         {
-	  DANCE_DEBUG (10, (LM_TRACE, DLINFO
-			    ACE_TEXT ("SHS_CORBA_Transport::configure - ")
-			    ACE_TEXT ("Considering property <%C>\n"),
-			    props[i].name.in ()));
+          DANCE_DEBUG (10, (LM_TRACE, DLINFO
+                            ACE_TEXT ("SHS_CORBA_Transport::configure - ")
+                            ACE_TEXT ("Considering property <%C>\n"),
+                            props[i].name.in ()));
 
           if ((ACE_OS::strcmp (props[i].name.in (),
                               DAnCE::LOCALITY_NAMINGCONTEXT) == 0) ||
               (ACE_OS::strcmp (props[i].name.in (),
                                DAnCE::INSTANCE_NC) == 0))
             {
-	      DANCE_DEBUG (7, (LM_DEBUG, DLINFO
-			       ACE_TEXT ("SHS_CORBA_Transport::configure - ")
-			       ACE_TEXT ("Found property <%C>\n"),
-			       props[i].name.in ()));
+              DANCE_DEBUG (7, (LM_DEBUG, DLINFO
+                               ACE_TEXT ("SHS_CORBA_Transport::configure - ")
+                               ACE_TEXT ("Found property <%C>\n"),
+                               props[i].name.in ()));
               
               CORBA::Object_var obj;
               
@@ -52,13 +52,13 @@ namespace DAnCE
                 }
               
               if (CORBA::is_nil (obj))
-		{
-		  DANCE_ERROR (3, (LM_NOTICE, DLINFO
-				   ACE_TEXT ("Unable to extract an object reference from ")
-				   ACE_TEXT ("property <%C>\n"),
-				   props[i].name.in ()));
-		  return;
-		}
+                {
+                  DANCE_ERROR (3, (LM_NOTICE, DLINFO
+                                   ACE_TEXT ("Unable to extract an object reference from ")
+                                   ACE_TEXT ("property <%C>\n"),
+                                   props[i].name.in ()));
+                  return;
+                }
                 
               ctx = CosNaming::NamingContext::_narrow (obj.in ());
               break;

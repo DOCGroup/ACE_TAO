@@ -67,6 +67,12 @@ namespace DAnCE
                                  const ::CORBA::Any & exception_thrown);
     virtual
       void configure(const Deployment::Properties&);
+
+    virtual
+      void unexpected_event (const ::Deployment::DeploymentPlan & plan,
+                             ::CORBA::ULong index,
+                             const ::CORBA::Any & exception_thrown,
+                             const char *error);
     
   private:
     auto_ptr <DAnCE::SHS::SHS_Transport> shs_transport_;
