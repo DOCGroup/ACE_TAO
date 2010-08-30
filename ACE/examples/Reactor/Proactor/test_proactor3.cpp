@@ -111,7 +111,7 @@ private:
 void
 MyTask::create_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
 
   if (threads_ == 0)
     {
@@ -158,7 +158,7 @@ MyTask::create_proactor (void)
 void
 MyTask::delete_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   if (--threads_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Delete Proactor\n"));
@@ -230,14 +230,14 @@ Receiver::Receiver (void)
   : handle_ (ACE_INVALID_HANDLE),
     io_count_ (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   sessions_++;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
 Receiver::~Receiver (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   sessions_--;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
@@ -248,7 +248,7 @@ int
 Receiver::check_destroy (void)
 {
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
     if (io_count_ > 0)
       return 1;
@@ -284,7 +284,7 @@ Receiver::open (ACE_HANDLE handle,
 int
 Receiver::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -308,7 +308,7 @@ Receiver::initiate_read_stream (void)
 int
 Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
   if (nbytes <= 0)
     {
       mb.release ();
@@ -375,8 +375,8 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
   check_destroy ();
 }
@@ -412,8 +412,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
   check_destroy ();
 }
@@ -537,7 +537,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 int
 Sender::initiate_write_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   welcome_message_.rd_ptr(welcome_message_.base ());
   welcome_message_.wr_ptr(welcome_message_.base ());
@@ -556,7 +556,7 @@ Sender::initiate_write_stream (void)
 int
 Sender::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -615,8 +615,8 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
 }
 
@@ -659,8 +659,8 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
 }
 
