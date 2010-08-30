@@ -1,3 +1,11 @@
+Mon Aug 30 22:26:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.h:
+        * DAnCE/tools/System_Health/Interceptors/SHS_Interceptor.cpp:
+
+          Fuzz, and some additional meta-data for the interceptor.
+
 Mon Aug 30 11:28:13 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Configuration/Process_Priority.cpp:

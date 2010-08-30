@@ -264,6 +264,46 @@ namespace DAnCE
     if (this->shs_transport_.get ())
       this->shs_transport_->push_event (update);
   }
+
+  void
+  SHS_Interceptor::unexpected_event (const ::Deployment::DeploymentPlan & plan,
+                                     ::CORBA::ULong index,
+                                     const ::CORBA::Any & exception,
+                                     const char *error)
+  {
+    ::DAnCE::SHS::Status_Update update;
+    CORBA::ULong mdd_idx = plan.instance[index].implementationRef;
+
+    update.id = plan.instance[index].name.in ();
+    update.type = 
+      DAnCE::Utility::get_instance_type (plan.implementation[mdd_idx].execParameter);
+
+    update.new_status = DAnCE::SHS::INST_ERROR;
+    CORBA::ULong pos (0);
+    
+    if (exception.type() != ::CORBA::_tc_null)
+      {
+        std::string result;
+        DAnCE::Utility::stringify_exception_from_any (exception,
+                                                      result);
+        
+        update.instance_info.length (pos + 1);
+        update.instance_info[pos].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
+        update.instance_info[pos].value <<= CORBA::Any::from_string (result.c_str (), 0);
+        ++pos;
+      }
+    
+    if (error)
+      {
+        update.instance_info.length (pos + 1);
+        update.instance_info[pos].name = ::DAnCE::SHS::Constants::SHS_DIAGNOSTIC;
+        update.instance_info[pos].value <<= CORBA::Any::from_string (error, 0);
+        ++pos;
+      }
+    
+    if (this->shs_transport_.get ())
+      this->shs_transport_->push_event (update);
+  }
 }
 
 extern "C"
