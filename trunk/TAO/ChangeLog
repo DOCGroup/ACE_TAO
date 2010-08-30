@@ -1,8 +1,16 @@
+Mon Aug 30 15:07:23 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3632_Regression/Bug_3632_Regression.mpc:
+
+          Added an "after" so that parallel builds work correctly and the
+          generated makefiles achieve the author's presumed intent of running
+          the *idl project first.
+
 Mon Aug 30 14:55:33 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
-        
-          Added postinstall commands to add symlinks to TAO_IDL_BE and 
+
+          Added postinstall commands to add symlinks to TAO_IDL_BE and
           TAO_IDL_FE to the installed share/ace directory, so that
           projects built on taobaseidldefaults.mpb (dependent_libs
           on TAO_IDL_FE/BE) can build from a TAO install.(Bugzilla #3281)
