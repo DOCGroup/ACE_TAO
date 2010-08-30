@@ -739,6 +739,7 @@ nobase_include_HEADERS += \
   Null_Mutex.h \
   Null_Semaphore.h \
   Numeric_Limits.h \
+  Obstack.h \
   OS.h \
   OS.inl \
   OS_Dirent.h \
