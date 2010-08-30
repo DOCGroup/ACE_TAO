@@ -157,14 +157,14 @@ Receiver::Receiver (void)
   : handle_ (ACE_INVALID_HANDLE),
     nIOCount ( 0 )
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
+  ACE_GUARD (MyMutex, locker, m_Mtx);
   nSessions ++ ;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
 }
 
 Receiver::~Receiver (void)
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
+  ACE_GUARD (MyMutex, locker, m_Mtx);
   nSessions -- ;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%d\n", nSessions ));
@@ -177,7 +177,7 @@ Receiver::~Receiver (void)
 bool Receiver::check_destroy ()
 {
   {
-    ACE_Guard<MyMutex> locker (m_Mtx) ;
+    ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, false);
 
     if ( nIOCount > 0 )
       {
@@ -191,10 +191,8 @@ bool Receiver::check_destroy ()
 
 
 void Receiver::open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block)
+                     ACE_Message_Block &)
 {
-  ACE_UNUSED_ARG (message_block);
-
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
 
@@ -225,7 +223,7 @@ void Receiver::open (ACE_HANDLE handle,
 
 int Receiver::initiate_read_stream (void)
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
+  ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -255,7 +253,7 @@ int Receiver::initiate_read_stream (void)
 
 int Receiver::initiate_write_stream (ACE_Message_Block & mb, int nBytes )
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
+  ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
   if (this->ws_.write (mb , nBytes ) == -1)
     {
       mb.release ();
@@ -319,8 +317,8 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<MyMutex> locker (m_Mtx) ;
-    nIOCount-- ;
+    ACE_GUARD (MyMutex, locker, m_Mtx);
+    --nIOCount;
   }
   check_destroy () ;
 }
@@ -359,8 +357,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
     }
 
   {
-    ACE_Guard<MyMutex> locker (m_Mtx) ;
-    nIOCount-- ;
+    ACE_GUARD (MyMutex, locker, m_Mtx);
+    --nIOCount;
   }
   check_destroy () ;
 }
@@ -490,8 +488,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 
 int Sender::initiate_write_stream (void)
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
-
+  ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
   welcome_message_.rd_ptr( welcome_message_.base ());
   welcome_message_.wr_ptr( welcome_message_.base ());
@@ -513,7 +510,7 @@ int Sender::initiate_write_stream (void)
 
 int Sender::initiate_read_stream (void)
 {
-  ACE_Guard<MyMutex> locker (m_Mtx) ;
+  ACE_GUARD_RETURN (MyMutex, locker, m_Mtx, -1);
 
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -583,8 +580,8 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
     }
 
   {
-    ACE_Guard<MyMutex> locker (m_Mtx) ;
-    nIOCount-- ;
+    ACE_GUARD_RETURN (MyMutex, locker, m_Mtx);
+    --nIOCount;
   }
 }
 
@@ -633,8 +630,8 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<MyMutex> locker (m_Mtx) ;
-    nIOCount-- ;
+    ACE_GUARD (MyMutex, locker, m_Mtx);
+    --nIOCount;
   }
 }
 

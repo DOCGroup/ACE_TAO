@@ -1,3 +1,12 @@
+Mon Aug 30 10:06:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+          ACE_Guard changes
+
 Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_ready, handle_timed_complete,
@@ -17,7 +26,7 @@ Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
           the rate at which this problem was cropping up was increasing.
           Thanks to Olivier Langlois for diagnosing this problem and
           proposing the patch.
-        
+
           (handle_ready): Properly set the poll condition for read and/or
           write. Thanks to kumaran.prem@gmail.com for this fix.
 
