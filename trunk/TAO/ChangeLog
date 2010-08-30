@@ -1,3 +1,12 @@
+Mon Aug 30 14:55:33 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        
+          Added postinstall commands to add symlinks to TAO_IDL_BE and 
+          TAO_IDL_FE to the installed share/ace directory, so that
+          projects built on taobaseidldefaults.mpb (dependent_libs
+          on TAO_IDL_FE/BE) can build from a TAO install.(Bugzilla #3281)
+
 Mon Aug 30 10:00:45 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/AbstractBase.h:
@@ -21,7 +30,7 @@ Fri Aug 27 19:09:02 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
 
           Merged dependent_libs change from TAO 1.5a to cause idl files
           to be rebuilt when tao_idl's dynamically linked libraries are
-          rebuilt.
+          rebuilt.(Bugzilla #3281)
 
 Fri Aug 27 18:06:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
