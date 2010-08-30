@@ -14,8 +14,7 @@ CORBA::AbstractBase::_nil (void)
 }
 
 ACE_INLINE CORBA::AbstractBase_ptr
-CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj
-                              )
+CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj)
 {
   return CORBA::AbstractBase::_duplicate (obj);
 }
