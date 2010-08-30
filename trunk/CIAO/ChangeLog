@@ -1,3 +1,9 @@
+Mon Aug 30 04:16:06 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/Node_Manager_Module.cpp:
+
+          Fix for segmentation fault.
+
 Sun Aug 29 18:37:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tests/CIAO/Executor-Destructor/Exec_Dest_Status.h:

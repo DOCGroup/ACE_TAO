@@ -50,7 +50,8 @@ DAnCE_NodeManager_Module::SOptions::SOptions(void)
     server_args_ (0),
     domain_nc_ (0),
     instance_nc_ (0),
-    best_effort_ (false)
+    best_effort_ (false),
+    locality_config_ (0)
 {
 }
 
