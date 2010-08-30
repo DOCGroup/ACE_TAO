@@ -1,3 +1,9 @@
+Mon Aug 30 16:48:34 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/FIFO.h:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Send.h: Clarified initialization and open behavior.
+
 Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_ready, handle_timed_complete,
