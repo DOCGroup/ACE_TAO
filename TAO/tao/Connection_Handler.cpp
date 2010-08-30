@@ -294,6 +294,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
       return 1;
     }
 
+  this->is_closed_ = true;
+
   // Save the ID for debugging messages
   ACE_HANDLE const handle = eh->get_handle ();
 
@@ -433,6 +435,8 @@ TAO_Connection_Handler::close_handler (u_long)
       return 0;
     }
 
+  this->is_closed_ = true;
+  
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
 
