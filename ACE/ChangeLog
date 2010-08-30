@@ -1,3 +1,8 @@
+Mon Aug 30 15:33:57 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h (set_handles): Add a note that passing a socket handle
+          with this mechanism does not work on Windows.
+
 Mon Aug 30 10:06:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_proactor2.cpp:
