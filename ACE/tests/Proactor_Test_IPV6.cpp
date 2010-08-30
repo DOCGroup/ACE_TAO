@@ -952,7 +952,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else
       mb.release ();
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1048,7 +1048,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           this->initiate_read_stream ();
       }
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1634,7 +1634,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           this->initiate_read_stream ();
       }
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1751,7 +1751,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           this->initiate_write_stream ();
       }
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
