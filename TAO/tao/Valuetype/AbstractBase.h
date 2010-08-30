@@ -84,8 +84,7 @@ namespace CORBA
     CORBA::Object_ptr _to_object (void);
     CORBA::ValueBase *_to_value (void);
 
-    virtual CORBA::Boolean _is_a (const char *type_id
-                                  );
+    virtual CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
 
     /// TAO specific operations

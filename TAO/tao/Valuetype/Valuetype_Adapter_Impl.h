@@ -47,8 +47,7 @@ public:
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr);
 
-  virtual CORBA::Boolean stream_to_value (TAO_InputCDR &,
-                                          CORBA::ValueBase *&);
+  virtual CORBA::Boolean stream_to_value (TAO_InputCDR &, CORBA::ValueBase *&);
 
   virtual CORBA::Boolean stream_to_abstract_base (
       TAO_InputCDR &,
