@@ -420,14 +420,12 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
-    Obstack.h
     OS.h
     OS_Dirent.h
     OS_Memory.h
     OS_NS_macros.h
     OS_String.h
     OS_Thread_Adapter.h
-    Obstack.h
     Object_Manager_Base.h
     Obstack.h
     Pair.h
