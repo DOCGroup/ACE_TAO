@@ -1,7 +1,7 @@
 USER VISIBLE CHANGES BETWEEN ACE-5.8.1 and ACE-5.8.2
 ====================================================
 
-. Added support for the Microsoft Visual 2010 IDE
+. Added support for the Microsoft Visual Studio 2010 IDE (vc10)
 
 . Removed complete support for emulated C++ exceptions
 
