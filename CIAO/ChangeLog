@@ -1,3 +1,10 @@
+Tue Aug 31 15:06:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+
+          Small modification to Will's commit (directly below this): the
+          verbatim sections for post-install steps are not needed here.
+
 Tue Aug 31 14:16:26 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DAnCE/DAnCE_Core.mpc:

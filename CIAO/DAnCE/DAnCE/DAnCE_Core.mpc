@@ -22,11 +22,6 @@ project(DAnCE_IDL) : ciaolib_with_idl, dance_output, valuetype, gen_ostream, \
   IDL_Files {
     DAnCE_ArtifactInstallation.idl
   }
-
-  verbatim(gnuace, postinstall) {
-"	$(MKDIR) $(INSTALL_PREFIX)/share/DAnCE/DAnCE"
-"	cp  DAnCE_LocalityManager.idl $(INSTALL_PREFIX)/share/DAnCE/DAnCE/"
-  }
 }
 
 project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
@@ -63,11 +58,6 @@ project (DAnCE_stub) : ciaolib_with_idl, dance_output, \
 
   Template_Files {
     DAnCE_Utility.tpp
-  }
-
-  verbatim(gnuace, postinstall) {
-"	$(MKDIR) $(INSTALL_PREFIX)/share/DAnCE/DAnCE"
-"	cp  DAnCE_LocalityManagerC.h $(INSTALL_PREFIX)/share/DAnCE/DAnCE/"
   }
 }
 
