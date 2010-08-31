@@ -1,3 +1,21 @@
+Tue Aug 31 12:57:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/DomainParticipant_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener_T.cpp:
+        * connectors/dds4ccm/impl/PublisherListener_T.cpp:
+        * connectors/dds4ccm/impl/Publisher_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener_T.cpp:
+        * connectors/dds4ccm/impl/Subscriber_T.cpp:
+        * connectors/dds4ccm/impl/TopicListener_T.cpp:
+          Improved logging.
+
+        * connectors/dds4ccm/impl/LocalObject_T.cpp:
+        * connectors/dds4ccm/impl/LocalObject_T.h:
+          Added copy constructor in which one can pass the object.
+
 Mon Aug 30 22:26:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:

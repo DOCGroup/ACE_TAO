@@ -233,7 +233,7 @@ CIAO::DDS4CCM::DDS_CCM::Reader_T<DDS_TYPE, CCM_TYPE, FIXED, VENDOR_TYPE>::read_o
   CORBA::ULong const nr_of_valid_samples =
     this->get_nr_valid_samples (sample_info);
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                ACE_TEXT ("Reader_T::read_all - ")
+                ACE_TEXT ("Reader_T::read_one_all - ")
                 ACE_TEXT ("total number of samples <%u> - ")
                 ACE_TEXT ("valid number of samples <%u>\n"),
                 data.length (),

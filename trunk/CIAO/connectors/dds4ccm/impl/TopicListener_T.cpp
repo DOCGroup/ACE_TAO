@@ -50,7 +50,7 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                                ACE_TEXT ("TopicListener_T::on_inconsistent_topic - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
@@ -76,7 +76,7 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_inconsistent
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("TopicListener_T::on_inconsistent_topic: ")
+                    ACE_TEXT ("TopicListener_T::on_inconsistent_topic - ")
                     ACE_TEXT ("No error listener connected\n")));
     }
 }
@@ -95,7 +95,6 @@ CIAO::DDS4CCM::TopicListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
     {
       mask = ::DDS::INCONSISTENT_TOPIC_STATUS;
     }
-
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                  "TopicListener_T::get_mask - "
                  "Mask becomes %x\n",

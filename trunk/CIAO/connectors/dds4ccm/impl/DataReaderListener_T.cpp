@@ -44,7 +44,8 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
           if (this->reactor_->notify (rh) != 0)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            ACE_TEXT ("DataReaderListener_T::failed to use reactor.\n")));
+                            ACE_TEXT ("DataReaderListener_T::on_data_available - ")
+                            ACE_TEXT ("failed to use reactor.\n")));
             }
         }
       else
@@ -94,6 +95,7 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   else if (result != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
+                          ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
                           ACE_TEXT ("Unable to take data from data reader, ")
                           ACE_TEXT ("error %C.\n"),
                           translate_retcode (result)));
@@ -151,9 +153,9 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_data_av
   if (retval != ::DDS::RETCODE_OK)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "DataReaderListener_T::on_data_available_i - "
-        "Error returning loan to DDS - <%C>\n",
-        translate_retcode (retval)));
+                    ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                    ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
+                    translate_retcode (retval)));
     }
 }
 
@@ -171,11 +173,9 @@ CIAO::DDS4CCM::DataReaderListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_mask (
     {
       mask |= PortStatusListener_type::get_mask (listener);
     }
-    
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, CLINFO
                  "DataReaderListener_T::get_mask - "
                  "Mask becomes %x\n",
                  mask));
-                 
   return mask;
 }
