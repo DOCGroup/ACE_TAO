@@ -54,10 +54,6 @@
 #define ACE_HAS_AIO_CALLS
 #endif /* !ACE_HAS_AIO_CALLS */
 
-#ifdef ACE_HAS_LIMITED_SELECT
-#undef ACE_HAS_LIMITED_SELECT
-#endif /* ACE_HAS_LIMITED_SELECT */
-
 // SunOS 5.7 has socklen_t
 #define ACE_HAS_SOCKLEN_T
 

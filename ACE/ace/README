@@ -366,8 +366,6 @@ ACE_HAS_THR_MINSTACK                    Platform calls thr_minstack()
                                         (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T                The rusage_t structure has
                                         only two fields.
-ACE_HAS_LIMITED_SELECT                  The select is unable to deal with
-                                        large file descriptors.
 ACE_HAS_LINUX_NPTL                      Linux platform (with kernel >= 2.6.x)
                                         with GLibc including new NPTL (Native
                                         POSIX Thread Library).

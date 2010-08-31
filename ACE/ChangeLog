@@ -1,3 +1,12 @@
+Tue Aug 31 12:56:36 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Added an entry for the change at
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/README:
+        * ace/config-sunos5.6.h:
+        * ace/config-sunos5.7.h: Removed all mention of ACE_HAS_LIMITED_SELECT.
+
 Mon Aug 30 18:41:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
