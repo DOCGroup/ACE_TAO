@@ -56,7 +56,7 @@ namespace CIAO
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher_with_profile");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_publisher_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
@@ -108,7 +108,7 @@ namespace CIAO
       ::DDS::PublisherListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_publisher");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_publisher");
       ACE_UNUSED_ARG (qos);
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
                     "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
@@ -206,7 +206,7 @@ namespace CIAO
       ::DDS::SubscriberListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber_with_profile");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_subscriber_with_profile");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, CLINFO
                    "CCM_DDS_DomainParticipant_T"
@@ -259,7 +259,7 @@ namespace CIAO
                                        ::DDS::SubscriberListener_ptr a_listener,
                                        ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_subscriber");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_subscriber");
 
       ACE_UNUSED_ARG (qos);
 
@@ -372,14 +372,14 @@ namespace CIAO
                                             ::DDS::TopicListener_ptr a_listener,
                                             ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_topic");
 
       ACE_UNUSED_ARG (qos);
 
       if (impl_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "DDS_DomainParticipant_i::create_topic - "
+                        "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Error: provided nil topic name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                         0);
@@ -388,14 +388,14 @@ namespace CIAO
       if (type_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "DDS_DomainParticipant_i::create_topic - "
+                        "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Error: provided nil type name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER,
                                         0);
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, CLINFO
-                    "DDS_DomainParticipant_i::create_topic - "
+                    "CCM_DDS_DomainParticipant_T::create_topic - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
 
@@ -428,7 +428,7 @@ namespace CIAO
           if (!dds_tp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
-                            "DDS_DomainParticipant_i::create_topic - "
+                            "CCM_DDS_DomainParticipant_T::create_topic - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -440,7 +440,7 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
-                        "DDS_DomainParticipant_i::create_topic - "
+                        "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
 
@@ -455,7 +455,7 @@ namespace CIAO
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "CCM_DDS_DomainParticipant_T::create_topic - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
 
@@ -481,12 +481,12 @@ namespace CIAO
         ::DDS::TopicListener_ptr a_listener,
         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_topic_with_profile");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_topic_with_profile");
 
       if (impl_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Error: provided nil topic name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
@@ -494,13 +494,13 @@ namespace CIAO
       if (type_name == 0)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Error: provided nil type name\n"));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
         }
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_DEBUG, CLINFO
-                    "DDS_DomainParticipant_i::create_topic_with_profile - "
+                    "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                     "Attempting to create topic with name %C and type %C\n",
                     impl_name, type_name));
 
@@ -533,7 +533,7 @@ namespace CIAO
           if (!dds_tp)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, CLINFO
-                            "DDS_DomainParticipant_i::create_topic_with_profile - "
+                            "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                             "Error: RTI DDS returned a nil topic\n"));
               delete ccm_dds_tl;
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -545,7 +545,7 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Successfully created topic with name %C and type %C\n",
                         impl_name, type_name));
 
@@ -560,7 +560,7 @@ namespace CIAO
       else
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                        "DDS_DomainParticipant_i::create_topic_with_profile - "
+                        "CCM_DDS_DomainParticipant_T::create_topic_with_profile - "
                         "Re-using topic with name %C and type %C.\n",
                         impl_name, type_name));
           DPMANAGER->_inc_ref (this->impl (), dds_tp);
@@ -578,7 +578,7 @@ namespace CIAO
     ::DDS::ReturnCode_t
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_topic (::DDS::Topic_ptr a_topic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_topic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::delete_topic");
       CORBA::String_var topic_name = a_topic->get_name ();
       DDSTopicDescription * dds_td =
         this->impl ()->lookup_topicdescription (topic_name.in ());
@@ -655,6 +655,8 @@ namespace CIAO
       DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::lookup_topicdescription");
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_DEBUG, CLINFO
+                    "CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, "
+                    "VENDOR_TYPE>::lookup_topicdescription - "
                     "Looking up topic: name <%C>\n",
                     name));
 
@@ -692,7 +694,7 @@ namespace CIAO
                                                           const char * filter_expression,
                                                           const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_contentfilteredtopic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_contentfilteredtopic");
 
 #if (CIAO_DDS4CCM_NDDS==1)
       Topic_type *top = dynamic_cast< Topic_type *> (related_topic);
@@ -740,7 +742,7 @@ namespace CIAO
                         ::CORBA::NO_MEMORY ());
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, CLINFO
-                    "DDS_DomainParticipant_i::create_contentfilteredtopic - "
+                    "CCM_DDS_DomainParticipant_T::create_contentfilteredtopic - "
                     "Successfully created contentfilteredtopic with name <%C> and "
                     "filter expression <%C>\n",
                     name, filter_expression));
@@ -759,7 +761,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_contentfilteredtopic (
       ::DDS::ContentFilteredTopic_ptr a_contentfilteredtopic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_contentfilteredtopic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::delete_contentfilteredtopic");
       ContentFilteredTopic_type *ccm_dds_cft =
           dynamic_cast < ContentFilteredTopic_type *> (a_contentfilteredtopic);
       if (!ccm_dds_cft)
@@ -781,7 +783,7 @@ namespace CIAO
       const char * subscription_expression,
       const ::DDS::StringSeq & expression_parameters)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::create_multitopic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::create_multitopic");
 #if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (name);
       ACE_UNUSED_ARG (type_name);
@@ -802,7 +804,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::delete_multitopic (
       ::DDS::MultiTopic_ptr a_multitopic)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::delete_multitopic");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::delete_multitopic");
 #if (CIAO_DDS4CCM_NDDS==1)
       ACE_UNUSED_ARG (a_multitopic);
       //Not implemented in version ndds.4.5b.rev01 of RTI DDS.
@@ -825,7 +827,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_qos (
       const ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::set_qos");
 #if (CIAO_DDS4CCM_NDDS==1)
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
@@ -840,7 +842,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_qos (
       ::DDS::DomainParticipantQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_qos");
       ::DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -871,7 +873,7 @@ namespace CIAO
     ::DDS::DomainParticipantListener_ptr
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_listener (void)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_listener");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_listener");
 
       DDSDomainParticipantListener *ccm_dds_dp_list = this->impl ()->get_listener ();
       CCM_DDS_DomainParticipantListener_i * list_proxy =
@@ -946,7 +948,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_publisher_qos (
       const ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_publisher_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::set_default_publisher_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_publisher_qos (ccm_dds_qos);
@@ -957,7 +959,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_publisher_qos (
       ::DDS::PublisherQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_publisher_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_default_publisher_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode = this->impl()-> get_default_publisher_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -969,7 +971,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_subscriber_qos (
       const ::DDS::SubscriberQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_subscriber_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::set_default_subscriber_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_subscriber_qos (ccm_dds_qos);
@@ -980,7 +982,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_subscriber_qos (
       ::DDS::SubscriberQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_subscriber_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_default_subscriber_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_subscriber_qos (ccm_dds_qos);
@@ -993,7 +995,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::set_default_topic_qos (
       const ::DDS::TopicQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_default_topic_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::set_default_topic_qos");
       ::DDS_TopicQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->impl()->set_default_topic_qos (ccm_dds_qos);
@@ -1004,7 +1006,7 @@ namespace CIAO
     CCM_DDS_DomainParticipant_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_default_topic_qos (
       ::DDS::TopicQos & qos)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_default_topic_qos");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_default_topic_qos");
       ::DDS_TopicQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
             this->impl()-> get_default_topic_qos (ccm_dds_qos);
@@ -1029,7 +1031,7 @@ namespace CIAO
       ::DDS::ParticipantBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_participant_data");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_discovered_participant_data");
       DDS_ParticipantBuiltinTopicData dds_part_data;
       dds_part_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;
@@ -1062,7 +1064,7 @@ namespace CIAO
       ::DDS::TopicBuiltinTopicData & impl_data,
       DDS_INSTANCE_HANDLE_T_IN impl_handle)
     {
-      DDS4CCM_TRACE ("DDS_DomainParticipant_i::get_discovered_topic_data");
+      DDS4CCM_TRACE ("CCM_DDS_DomainParticipant_T::get_discovered_topic_data");
       DDS_TopicBuiltinTopicData dds_tp_data;
       dds_tp_data <<= impl_data;
       ::DDS_InstanceHandle_t dds_hnd;

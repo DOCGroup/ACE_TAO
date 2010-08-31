@@ -57,7 +57,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
                                 ACE_TEXT ("SubscriberListener_T::")
-                                ACE_TEXT ("on_requested_incompatible_qos: ")
+                                ACE_TEXT ("on_requested_incompatible_qos - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
@@ -83,7 +83,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_request
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos: ")
+                  ACE_TEXT ("SubscriberListener_T::on_requested_incompatible_qos - ")
                   ACE_TEXT ("No error listener connected\n")));
     }
 }
@@ -110,7 +110,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpec
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
+                                ACE_TEXT ("SubscriberListener_T::on_unexpected_status - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
@@ -137,7 +137,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_unexpec
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                  ACE_TEXT ("SubscriberListener_T::on_unexpected_status: ")
+                  ACE_TEXT ("SubscriberListener_T::on_unexpected_status - ")
                   ACE_TEXT ("No error listener connected for <%C>\n"),
                   translate_statuskind (status_kind)));
     }
@@ -196,7 +196,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+                                ACE_TEXT ("SubscriberListener_T::on_sample_rejected - ")
                                 ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
@@ -222,7 +222,7 @@ CIAO::DDS4CCM::SubscriberListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_sample_
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("SubscriberListener_T::on_sample_rejected: ")
+                    ACE_TEXT ("SubscriberListener_T::on_sample_rejected - ")
                     ACE_TEXT ("No error listener connected\n")));
     }
 }

@@ -46,7 +46,7 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
           if (this->reactor_->notify (rh) != 0)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                            ACE_TEXT ("DataReaderStateListener_T::")
+                            ACE_TEXT ("DataReaderStateListener_T::on_data_available")
                             ACE_TEXT ("failed to use reactor.\n")));
             }
         }
@@ -220,9 +220,9 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
       if (retval != DDS_RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-            "DataReaderStateListener_T::on_data_available_i - "
-            "Error returning loan to DDS - <%C>\n",
-            translate_retcode (retval)));
+                        ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
+                        ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
+                        translate_retcode (retval)));
         }
     }
   catch (const ::CORBA::Exception& ex)
@@ -235,8 +235,8 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_da
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-        "DataReaderStateListener_T::on_data_available_i - "
-        "Unexpected exception caught\n"));
+                    ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
+                    ACE_TEXT ("Unexpected exception caught\n")));
     }
 }
 
@@ -259,7 +259,6 @@ CIAO::DDS4CCM::DataReaderStateListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::get_m
                  "DataReaderStateListener_T::get_mask - "
                  "Mask becomes %x\n",
                  mask));
-
   return mask;
 }
 

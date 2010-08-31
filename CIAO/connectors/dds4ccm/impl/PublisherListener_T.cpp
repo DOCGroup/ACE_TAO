@@ -108,8 +108,8 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("PublisherListener_T::failed to ")
-                                ACE_TEXT ("use reactor.\n")));
+                                ACE_TEXT ("PublisherListener_T::on_offered_deadline_missed - ")
+                                ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
           else
@@ -175,8 +175,8 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_
               if (this->reactor_->notify (rh) != 0)
                 {
                   DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, CLINFO
-                                ACE_TEXT ("PublisherListener_T::failed to ")
-                                ACE_TEXT ("use reactor.\n")));
+                                ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos - ")
+                                ACE_TEXT ("failed to use reactor.\n")));
                 }
             }
           else
@@ -201,7 +201,7 @@ CIAO::DDS4CCM::PublisherListener_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::on_offered_
   else
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
-                    ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos: ")
+                    ACE_TEXT ("PublisherListener_T::on_offered_incompatible_qos - ")
                     ACE_TEXT ("No error listener connected\n")));
     }
 }
