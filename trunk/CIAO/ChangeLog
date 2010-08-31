@@ -14,7 +14,7 @@ Tue Aug 31 12:57:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/LocalObject_T.cpp:
         * connectors/dds4ccm/impl/LocalObject_T.h:
-          Added copy constructor in which one can pass the object.
+          Added constructor in which one can pass the object.
 
 Mon Aug 30 22:26:16 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
