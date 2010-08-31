@@ -1,3 +1,14 @@
+Tue Aug 31 16:36:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp(DRV_sweep_dirs):
+        
+          When adding the path as a -I argument, surrounded the path
+          name with quotes, in case there are spaces in the path
+          string stored from the command line. If there are no
+          spaces, the quotes do no harm. Thanks to
+          Catherine L. Paquin <catherine dot paquin at ngc dot com>
+          for reporting the problem.
+
 Mon Aug 30 15:07:23 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3632_Regression/Bug_3632_Regression.mpc:
