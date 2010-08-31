@@ -38,8 +38,13 @@ namespace DAnCE
                                        "Unable to extract priority value from config property.");
       }
     
-    int retval = ACE_OS::thr_setprio (ACE_OS::thr_self (),
-                                      static_cast<int> (prio));
+    ACE_hthread_t handle;
+    
+    ACE_OS::thr_self (handle);
+
+    int retval = ACE_OS::thr_setprio (handle,
+                                      static_cast<int> (prio),
+				      -1);
     
     if (retval != 0)
       {
