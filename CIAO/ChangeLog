@@ -1,3 +1,9 @@
+Tue Aug 31 19:54:21 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/LocalityManager/Configuration/Process_Priority.cpp:
+
+          Fix for windows compilation.
+
 Tue Aug 31 15:06:49 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * DAnCE/DAnCE/DAnCE_Core.mpc:
