@@ -99,7 +99,7 @@ namespace CIAO
                                         ::DDS::DataWriterListener_ptr a_listener,
                                         ::DDS::StatusMask mask)
     {
-      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter");
+      DDS4CCM_TRACE ("CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, VENDOR_TYPE>::create_datawriter_with_profile");
 
       Topic_type * topic = dynamic_cast < Topic_type * > (a_topic);
 
@@ -139,7 +139,7 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, CLINFO
                         "CCM_DDS_Publisher_T<DDS_TYPE, CCM_TYPE, "
-                        "VENDOR_TYPE>::create_datareader_with_profile - "
+                        "VENDOR_TYPE>::create_datawriter_with_profile - "
                         "Successfully created datawriter with profile <%C#%C>.\n",
                         library_name,
                         profile_name));

@@ -37,6 +37,12 @@ CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<LOCAL_OBJECT>::~LocalObject_Auto_Ptr_T (vo
 }
 
 template <typename LOCAL_OBJECT>
+CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<LOCAL_OBJECT>::LocalObject_Auto_Ptr_T (LOCAL_OBJECT* lobject)
+  : l (lobject)
+{
+}
+
+template <typename LOCAL_OBJECT>
 LOCAL_OBJECT*
 CIAO::DDS4CCM::LocalObject_Auto_Ptr_T<LOCAL_OBJECT>::operator-> (void) const
 {

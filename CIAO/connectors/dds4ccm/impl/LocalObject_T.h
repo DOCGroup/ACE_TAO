@@ -37,6 +37,8 @@ namespace CIAO
       
       ~LocalObject_Auto_Ptr_T (void);
 
+      explicit LocalObject_Auto_Ptr_T (LOCAL_OBJECT* lobject);
+
       LOCAL_OBJECT* operator-> (void) const;
 
       operator LOCAL_OBJECT *& (void);

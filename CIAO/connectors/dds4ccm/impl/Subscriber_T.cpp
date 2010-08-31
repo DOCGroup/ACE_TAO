@@ -171,7 +171,7 @@ namespace CIAO
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_CAST_ERROR, (LM_ERROR, CLINFO
                           "CCM_DDS_Subscriber_T<DDS_TYPE, CCM_TYPE, "
-                          "VENDOR_TYPE>::create_datareader -Error: Unable to "
+                          "VENDOR_TYPE>::create_datareader - Error: Unable to "
                           "cast provided topic to one of its servant.\n"));
               delete ccm_dds_drl;
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
