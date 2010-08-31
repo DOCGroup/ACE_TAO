@@ -1,3 +1,9 @@
+Tue Aug 31 14:16:26 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DAnCE/DAnCE_Core.mpc:
+
+          Fixes for installed build.
+
 Tue Aug 31 12:57:15 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
