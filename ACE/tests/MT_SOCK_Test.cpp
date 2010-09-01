@@ -30,7 +30,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Handle_Set.h"
 #include "ace/Time_Value.h"
 
 ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
@@ -189,28 +188,25 @@ server (void *arg)
       ACE_ASSERT (tv == def_timeout);
 
       if (result == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("server: handle_read_ready acceptor")),
+                          0);
+      else if (result == 0)
         {
-          if (errno == ETIME)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) server: Test finished.\n")));
-              // The meaning of the backlog parameter for listen() varies by
-              // platform. For some reason lost to history, the specified value
-              // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
-              // literally as on Windows. We'll accept any number less than
-              // backlog * 2 as valid.
-              if (num_clients_connected > BACKLOG * 2)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) server: Incorrect # client ")
-                            ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
-                            BACKLOG, BACKLOG * 2, num_clients_connected));
-              return 0;
-            }
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) %p\n"),
-                             ACE_TEXT ("server: handle_read_ready acceptor")),
-                            0);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) server: Test finished.\n")));
+          // The meaning of the backlog parameter for listen() varies by
+          // platform. For some reason lost to history, the specified value
+          // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
+          // literally as on Windows. We'll accept any number less than
+          // backlog * 2 as valid.
+          if (num_clients_connected > BACKLOG * 2)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) server: Incorrect # client ")
+                        ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
+                        BACKLOG, BACKLOG * 2, num_clients_connected));
+          return 0;
         }
 
       // Create a new ACE_SOCK_Stream endpoint (note automatic restart

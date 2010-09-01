@@ -1,3 +1,21 @@
+Wed Sep  1 19:31:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_ready): Changed the timeout behavior to just
+          return 0, no errno, as ACE_OS::poll() and ACE_OS::select() both do.
+          This restores historic behavior changed inadvertently at
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_IO.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/SOCK_Test.cpp: Re-added the if/switch on return value from
+          ACE::handle_read|write_ready() to detect timeout and set errno
+          here.
+
+          These changes were necessary to fix the TAO faults test. Thanks
+          to Johnny and Simon for narrowing down the cause and testing
+          the fix.
+
 Wed Sep  1 15:58:47 UTC 2010  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

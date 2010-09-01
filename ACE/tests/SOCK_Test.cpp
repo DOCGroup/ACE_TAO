@@ -28,7 +28,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Handle_Set.h"
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
 
@@ -77,7 +76,10 @@ client (void *arg)
                                   0);
   // we expect the handle to be at leat write_ready since it is freshly connected.                   
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("ACE::handle_ready")),
+                      0);
   
   // Send data to server (correctly handles "incomplete writes").
 
@@ -125,7 +127,14 @@ server (void *arg)
   ACE_ASSERT (tv == def_timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) %p\n"),
+                       ACE_TEXT ("handle_read_ready")), 0);
+  else if (result == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) select timed out, shutting down\n")));
+      return 0;
+    }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
   // if errno == EINTR).
