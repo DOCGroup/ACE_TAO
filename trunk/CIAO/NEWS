@@ -5,6 +5,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 
 . Improved dds4ccm logging
 
+. Fixed several memory leaks in CIAO and DAnCE
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
 =======================================================
 
