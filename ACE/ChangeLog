@@ -1,3 +1,11 @@
+Wed Sep  1 15:58:47 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the short-circuit logic for the .NOTPARALLEL checks to ||
+          instead of &&.  If any one file is newer, we will have to rebuild.
+          Also added a missing foreach for the output files with dependent libs.
+
 Wed Sep  1 09:59:42 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/Time_Value_Test.cpp:
