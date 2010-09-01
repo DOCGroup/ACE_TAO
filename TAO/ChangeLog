@@ -1,7 +1,13 @@
+Wed Sep  1 09:24:39 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/Transport.cpp:
+          Fixed compile warning on QNX. time_t on QNX is defined as unsigned
+          int.
+
 Tue Aug 31 16:36:53 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp(DRV_sweep_dirs):
-        
+
           When adding the path as a -I argument, surrounded the path
           name with quotes, in case there are spaces in the path
           string stored from the command line. If there are no
