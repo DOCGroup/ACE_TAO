@@ -545,9 +545,9 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output")
                   ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
                   this->id (),
-              dc.block_on_io(),
-              dc.timeout() ? dc.timeout()->sec() : -1,
-              dc.timeout() ? dc.timeout()->usec() : -1 ));
+                  dc.block_on_io(),
+                  dc.timeout() ? dc.timeout()->sec() : static_cast<time_t> (-1),
+                  dc.timeout() ? dc.timeout()->usec() : -1 ));
     }
 
   // The flushing strategy (potentially via the Reactor) wants to send
