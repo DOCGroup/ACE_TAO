@@ -666,21 +666,33 @@ namespace ACE
                                 const ACE_Time_Value *timeout = 0);
 
   /// Timed wait for handle to get read ready.
+  /// @retval -1 for error
+  /// @retval 0 for timeout
+  /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_read_ready (ACE_HANDLE handle,
                          const ACE_Time_Value *timeout);
 
   /// Timed wait for handle to get write ready.
+  /// @retval -1 for error
+  /// @retval 0 for timeout
+  /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_write_ready (ACE_HANDLE handle,
                           const ACE_Time_Value *timeout);
 
   /// Timed wait for handle to get exception ready.
+  /// @retval -1 for error
+  /// @retval 0 for timeout
+  /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_exception_ready (ACE_HANDLE handle,
                               const ACE_Time_Value *timeout);
 
   /// Timed wait for handle to get read, write, or exception ready.
+  /// @retval -1 for error
+  /// @retval 0 for timeout
+  /// @retval 1 the handle is ready
   extern ACE_Export int handle_ready (ACE_HANDLE handle,
                                       const ACE_Time_Value *timeout,
                                       int read_ready,
