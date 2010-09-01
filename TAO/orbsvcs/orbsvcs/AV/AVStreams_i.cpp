@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   AVStreams_i.cpp
@@ -161,12 +160,12 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
     }
   catch (const AVStreams::noSuchFlow&)
     {
-      throw; 
+      throw;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_Basic_StreamCtrl::start");
-      throw;  
+      throw;
     }
   catch(...)
     {
@@ -453,12 +452,12 @@ TAO_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
     }
   catch (const AVStreams::noSuchFlow&)
     {
-      throw; 
+      throw;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_StreamCtrl::stop");
-      throw; 
+      throw;
     }
   catch(...)
     {
@@ -491,12 +490,12 @@ TAO_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
     }
   catch (const AVStreams::noSuchFlow&)
     {
-      throw; 
+      throw;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_StreamCtrl::start");
-      throw; 
+      throw;
     }
   catch(...)
     {
@@ -3407,7 +3406,7 @@ TAO_FlowConnection::stop (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_FlowConnection::stop");
-      throw;  
+      throw;
     }
   catch(...)
     {
@@ -3440,12 +3439,12 @@ TAO_FlowConnection::start (void)
     }
   catch (const AVStreams::noSuchFlow&)
     {
-      throw; 
+      throw;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_FlowConnection::start");
-      throw; 
+      throw;
     }
   catch(...)
     {
