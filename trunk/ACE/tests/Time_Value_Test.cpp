@@ -168,7 +168,7 @@ run_main (int, ACE_TCHAR *[])
   ost << ACE_Time_Value(1,1);
   ACE_ASSERT( ost.str() == "1.000001" );
   ost.str("");
-  ost << ACE_Time_Value(-1,-1);
+  ost << ACE_Time_Value(static_cast<time_t>(-1),-1);
   ACE_ASSERT( ost.str() == "-1.000001" );
   ost.str(""); 
   ost << ACE_Time_Value(0,1);
