@@ -2206,19 +2206,7 @@ ACE::handle_ready (ACE_HANDLE handle,
 
 #endif /* ACE_HAS_POLL */
 
-  switch (result)
-    {
-    case 0:  // Timer expired.
-      errno = ETIME;
-      /* FALLTHRU */
-    case -1: // we got here directly - select() returned -1.
-      return -1;
-    case 1: // Handle has data.
-      /* FALLTHRU */
-    default: // default is case result > 0; return a
-      // ACE_ASSERT (result == 1);
-      return result;
-    }
+  return result;
 }
 
 int
