@@ -1,4 +1,4 @@
-Wed Sep  1 11:43:33 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
+Wed Sep  1 11:43:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
   
         * tao/Connection_Handler.cpp:
           Reverted my changes to show that the change in behaviour in the
