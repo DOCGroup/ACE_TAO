@@ -44,7 +44,7 @@ namespace DAnCE
 
     int retval = ACE_OS::thr_setprio (handle,
                                       static_cast<int> (prio),
-				      -1);
+                                      -1);
     
     if (retval != 0)
       {
