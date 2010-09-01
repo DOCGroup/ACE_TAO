@@ -248,9 +248,9 @@ TAO_Connection_Handler::handle_input_internal (
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE handle = eh->get_handle();
+      ACE_HANDLE const handle = eh->get_handle();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
                   "handle = %d/%d\n",
                   t_id, handle, h));
     }
@@ -274,9 +274,9 @@ TAO_Connection_Handler::handle_input_internal (
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE handle = eh->get_handle ();
+      ACE_HANDLE const handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
                   "handle = %d/%d, retval = %d\n",
                   t_id, handle, h, return_value));
     }
@@ -289,11 +289,6 @@ TAO_Connection_Handler::handle_input_internal (
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
-  if (this->is_closed_)
-    {
-      return 1;
-    }
-
   this->is_closed_ = true;
 
   // Save the ID for debugging messages
@@ -430,11 +425,6 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (u_long)
 {
-  if (this->is_closed_)
-    {
-      return 0;
-    }
-
   this->is_closed_ = true;
   
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
