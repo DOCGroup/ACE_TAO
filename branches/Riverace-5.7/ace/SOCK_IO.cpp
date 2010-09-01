@@ -36,9 +36,18 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
   ACE_TRACE ("ACE_SOCK_IO::recvv");
 #if defined (FIONREAD)
   io_vec->iov_base = 0;
-  if( ACE::handle_read_ready (this->get_handle (), timeout) != 1 )
+  switch (ACE::handle_read_ready (this->get_handle (), timeout))
     {
+    case -1:
       return -1;
+      /* NOTREACHED */
+    case 0:
+      errno = ETIME;
+      return -1;
+      /* NOTREACHED */
+    default:
+      // Goes fine, fall through to get the data.
+      break;
     }
 
   int inlen = 0;
