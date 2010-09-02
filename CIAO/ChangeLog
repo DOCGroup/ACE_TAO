@@ -1,3 +1,11 @@
+Thu Sep  2 21:17:35 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/docs/LocalityManager-Plugins.txt:
+        * NEWS:
+        
+          Added documentation on how LocalityManager plugins are 
+          created and loaded. 
+        
 Thu Sep  2 16:28:56 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
