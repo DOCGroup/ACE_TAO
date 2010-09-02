@@ -7,6 +7,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 
 . Fixed several memory leaks in CIAO and DAnCE
 
+. Destructors for component executors prior to this release were never
+  invoked.  This bug has been fixed, and component executors are now
+  properly destructed. 
+
 . Installation handlers, deployment interceptors, and locality
   configurators are now loaded at run-time instead of statically
   configure at compile time.  This is accomplished with the use of 
@@ -14,7 +18,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
   see CIAO/examples/Hello/descriptors/run_test_shs.pl and
   DAnCE/tests/CIAO/Executor-Destructors/Component.cdp for examples of
   how to pass this file to the locality manager.  The default locality
-  configuration is loaded from DAnCE/bin/ciao.localityconfig.
+  configuration is loaded from DAnCE/bin/ciao.localityconfig. Please
+  see documentation located in DAnCE/docs/localityManager-Plugins.txt.
 
 . Names for operations in the deployment interceptors have changed
   slightly to remove the 'instance_' prefix on all operation
