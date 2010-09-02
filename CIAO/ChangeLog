@@ -1,9 +1,15 @@
+Thu Sep  2 16:28:56 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          Updated.
+
 Wed Sep  1 15:59:55 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/LocalityManager/Handler/LocalityHandler.mpc:
         * DAnCE/tools/Split_Plan/Split_Plan.mpc:
 
-          Add installed based project. 
+          Add installed based project.
 
 Wed Sep  1 08:31:38 UTC 2010  Marcel Smit  <msmit@remedy.nl>
 

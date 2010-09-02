@@ -7,6 +7,27 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 
 . Fixed several memory leaks in CIAO and DAnCE
 
+. Installation handlers, deployment interceptors, and locality
+  configurators are now loaded at run-time instead of statically
+  configure at compile time.  This is accomplished with the use of 
+  a locality configuration file passed on the command line.  Please
+  see CIAO/examples/Hello/descriptors/run_test_shs.pl and
+  DAnCE/tests/CIAO/Executor-Destructors/Component.cdp for examples of
+  how to pass this file to the locality manager.  The default locality
+  configuration is loaded from DAnCE/bin/ciao.localityconfig.
+
+. Names for operations in the deployment interceptors have changed
+  slightly to remove the 'instance_' prefix on all operation
+  names. Please see DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl.
+
+. Deployment interceptors have a new operation that is invoked when
+  unexpected events occur.  This is currently only invoked when the
+  NodeApplication receives notification that a locality manager has
+  exited unexpectedly. 
+
+. A locality configurator that sets the process priority has been
+  included. 
+ 
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
 =======================================================
 
