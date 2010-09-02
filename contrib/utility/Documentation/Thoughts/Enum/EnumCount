@@ -1,0 +1,95 @@
+From: Gianni Mariani <gi2nospam@mariani.ws>
+Date: 26 Jul 2003 04:52:43 GMT
+Newsgroups: comp.lang.c++
+Subject: Re: enum count
+
+Clive wrote:
+> If you have an enum, is there any way during execution to find the number of
+> values in the enum?
+> Say I have,
+> 
+> enum great { five, ten, fifteen };
+> 
+> How could I get the number 3 from that?
+> 
+> 
+
+replace the enums with objects that report themselves to a registry.
+
+
+I have done it in the past using a template ...
+
+templace <typename base>
+class ExposedEnum : public base
+{
+	public:
+	int	enum_val;	
+	ExposedEnum( int number )
+	  : enum_val( number )
+	{
+		ExposedEnumRegister<base>::Register( *this );
+	}
+
+	ExposedEnum( int number )
+	  : enum_val( ExposedEnumRegister<base>::GetNextNumber() )
+	{
+		ExposedEnumRegister<base>::Register( *this );
+	}
+
+
+
+// some more stuff ...
+
+	operator int () const
+	{
+		return enum_val;
+	}
+
+	explicit ExposedEnum( const ExposedEnum & foo );
+};
+
+
+template <typename base>
+class ExposedEnumRegister
+{
+
+	static int GetNextNumber ....
+
+	static void Register ....
+
+	static int Count ....
+
+}
+
+
+Now you can forward declare them...
+
+extern ExposedEnum< great > five;
+
+extern ExposedEnum< great > ten;
+
+extern ExposedEnum< great > fifteen;
+
+
+
+
+In a cpp file you can instantiate them.
+
+ExposedEnum< great > five( 5 );
+
+ExposedEnum< great > ten( 10 );
+
+ExposedEnum< great > fifteen;
+
+
+Now, if you want to know how many you have :
+
+ExposedEnumRegister< great >::Count();
+
+
+
+Disclaimer - it's an outline only, yes it's incomplete.
+
+G
+
+$Id$

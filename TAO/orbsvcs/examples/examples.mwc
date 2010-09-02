@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-workspace {
-  cmdline += -include $PWD/../tests    // for notifytest.mpb
-}
