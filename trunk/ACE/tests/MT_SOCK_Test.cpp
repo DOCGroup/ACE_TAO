@@ -24,12 +24,14 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Handle_Set.h"
 #include "ace/Time_Value.h"
 
 ACE_RCSID(tests, MT_SOCK_Test, "$Id$")
@@ -166,6 +168,7 @@ server (void *arg)
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
+  ACE_Handle_Set handle_set;
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
@@ -182,15 +185,26 @@ server (void *arg)
     {
       char buf[BUFSIZ];
 
+      handle_set.reset ();
+      handle_set.set_bit (peer_acceptor->get_handle ());
+
       ACE_DEBUG((LM_DEBUG, "(%P|%t) server: Waiting for connection...\n"));
 
-      int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
+      int select_width;
+#  if defined (ACE_WIN64)
+      // This arg is ignored on Windows and causes pointer truncation
+      // warnings on 64-bit compiles.
+      select_width = 0;
+#  else
+      select_width = int (peer_acceptor->get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+      int result = ACE_OS::select (select_width, handle_set, 0, 0, &tv);
       ACE_ASSERT (tv == def_timeout);
 
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("server: handle_read_ready acceptor")),
+                           ACE_TEXT ("server: select acceptor")),
                           0);
       else if (result == 0)
         {
@@ -201,7 +215,7 @@ server (void *arg)
           // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
           // literally as on Windows. We'll accept any number less than
           // backlog * 2 as valid.
-          if (num_clients_connected > BACKLOG * 2)
+          if (num_clients_connected >= BACKLOG * 2)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) server: Incorrect # client ")
                         ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
@@ -230,16 +244,29 @@ server (void *arg)
                                ACE_TEXT ("(%P|%t) %p\n"),
                                ACE_TEXT ("server: enable non blocking i/o")),
                               0);
+          handle_set.reset ();
+          handle_set.set_bit (new_stream.get_handle ());
+
           // Read data from client (terminate on error).
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) server: Waiting for data...\n")));
 
           for (ssize_t r_bytes; ;)
             {
-              if (ACE::handle_read_ready (new_stream.get_handle (), 0) == -1)
+              int select_width;
+#  if defined (ACE_WIN64)
+              // This arg is ignored on Windows and causes pointer truncation
+              // warnings on 64-bit compiles.
+              select_width = 0;
+#  else
+              select_width = int (new_stream.get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+              if (ACE_OS::select (select_width,
+                                  handle_set,
+                                  0, 0, 0) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) %p\n"),
-                                   ACE_TEXT ("stream handle_read_ready")),
+                                   ACE_TEXT ("select")),
                                   0);
 
               ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: Receiving data...\n"));

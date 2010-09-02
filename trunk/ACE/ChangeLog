@@ -1,3 +1,18 @@
+Thu Sep  2 14:46:56 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Acceptor.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/ACE.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * NEWS:
+          Reverted both commits by Steve Huston related to handle_ready()
+          and a NEWS entry.
+          Wed Sep  1 19:31:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+          This is necessary for a quick release of 1.8.2.
+
 Wed Sep  1 19:31:24 UTC 2010  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_ready): Changed the timeout behavior to just
