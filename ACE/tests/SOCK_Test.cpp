@@ -22,12 +22,14 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Thread.h"
 #include "ace/Time_Value.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Handle_Set.h"
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
 
@@ -67,20 +69,6 @@ client (void *arg)
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("disable")));
 
-  // Test Bug 3606
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
-  ACE_Time_Value tv (def_timeout);
-  int result = ACE::handle_ready (cli_stream.get_handle (), &tv,
-                                  1, // read_ready
-                                  1, // write_ready
-                                  0);
-  // we expect the handle to be at leat write_ready since it is freshly connected.                   
-  if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("ACE::handle_ready")),
-                      0);
-  
   // Send data to server (correctly handles "incomplete writes").
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
@@ -116,20 +104,31 @@ server (void *arg)
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
+  ACE_Handle_Set handle_set;
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];
   const char *t = ACE_ALPHABET;
 
-  int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
+  handle_set.reset ();
+  handle_set.set_bit (peer_acceptor->get_handle ());
 
+  int select_width;
+#  if defined (ACE_WIN64)
+  // This arg is ignored on Windows and causes pointer truncation
+  // warnings on 64-bit compiles.
+  select_width = 0;
+#  else
+  select_width = int (peer_acceptor->get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+  int result = ACE_OS::select (select_width,
+                               handle_set,
+                               0, 0, &tv);
   ACE_ASSERT (tv == def_timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("handle_read_ready")), 0);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
   else if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) select timed out, shutting down\n")));
@@ -148,11 +147,24 @@ server (void *arg)
       if (new_stream.enable (ACE_NONBLOCK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
 
+      handle_set.reset ();
+      handle_set.set_bit (new_stream.get_handle ());
+
       // Read data from client (terminate on error).
+      int select_width;
       for (ssize_t r_bytes; ;)
         {
-          if (ACE::handle_read_ready (new_stream.get_handle (), 0) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+#  if defined (ACE_WIN64)
+          // This arg is ignored on Windows and causes pointer truncation
+          // warnings on 64-bit compiles.
+          select_width = 0;
+#  else
+          select_width = int (new_stream.get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+          if (ACE_OS::select (select_width,
+                              handle_set,
+                              0, 0, 0) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
