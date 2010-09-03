@@ -231,6 +231,8 @@ TAO_Profile::is_legal (unsigned char c)
 TAO_Profile::demarshal_key (TAO::ObjectKey &key,
                                TAO_InputCDR &strm)
 {
+  return strm >> key;
+/*
   CORBA::ULong _tao_seq_len;
 
   if (strm >> _tao_seq_len)
@@ -251,7 +253,7 @@ TAO_Profile::demarshal_key (TAO::ObjectKey &key,
         {
           return 1;
         }
-/*
+
       // Retrieve all the elements.
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (ACE_BIT_DISABLED (strm.start ()->flags (),
@@ -267,11 +269,10 @@ TAO_Profile::demarshal_key (TAO::ObjectKey &key,
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
 
 //      return strm.read_octet_array (key.get_buffer (), key.length ());
-      return strm >> key;
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
 
-    }
-  return 0;
+//    }
+//  return 0;
 }
 
 int

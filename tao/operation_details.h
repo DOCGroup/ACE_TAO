@@ -29,8 +29,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Forward declarations
 namespace Dynamic
 {
-  class ParameterList;
-  class ExceptionList;
+  struct Parameter;
+  typedef std::vector<Parameter> ParameterList;
+  typedef std::vector< ::CORBA::TypeCode_ptr> ExceptionList;
 }
 
 namespace TAO

@@ -96,8 +96,8 @@ TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   CORBA::Long key_length = 0;
-  CORBA::ULong klen = static_cast<CORBA::ULong> (key_length);
   hdr_status = hdr_status && input.read_long (key_length);
+  CORBA::ULong klen = static_cast<CORBA::ULong> (key_length);
 
   if (hdr_status)
     {

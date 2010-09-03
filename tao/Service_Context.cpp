@@ -23,34 +23,24 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id,
   IOP::ServiceContext context;
   context.context_id = id;
   
-  ::CORBA::OctetSeq tmp;
-  TAO_InputCDR in (cdr);
-  
-  /// Don't know if this is necessary for core ORB function.
-  if (!(in >> tmp))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "TAO_Service_Context::"
-                  "set_context_i failed\n"));
-                  
-      return;
-    }
-    
-  context.context_data = tmp;
-/*
   // Make a *copy* of the CDR stream...
   size_t const length = cdr.total_length ();
-  context.context_data.length (static_cast<CORBA::ULong> (length));
-  CORBA::Octet *buf = context.context_data.get_buffer ();
+  context.context_data.resize (length);
+//  CORBA::Octet *buf = context.context_data.get_buffer ();
+  size_t index = 0;
 
   for (const ACE_Message_Block *i = cdr.begin ();
        i != 0;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
+//      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+//      buf += i->length ();
+      for (size_t j = 0; j < i->length (); ++j)
+        {
+          context.context_data[index++] = i->rd_ptr ()[j];
+        }
     }
-*/
+
   this->set_context_i (context);
 }
 
