@@ -1657,7 +1657,9 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   if (!is_persistent)
     {
       // Take the creation time for the timestamp
-      poa_creation_time.creation_time (&key + starting_at);
+      unsigned char *key_base =
+        const_cast<unsigned char *> (key.get_allocator ().address (*key.begin ()));
+      poa_creation_time.creation_time (key_base + starting_at);
 
       // Skip past the timestamp
       starting_at += TAO::Portable_Server::Creation_Time::creation_time_length ();
