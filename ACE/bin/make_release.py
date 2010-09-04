@@ -397,7 +397,7 @@ def update_debianbuild ():
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
-            lif re.search ('^Replaces:', line) is not None:
+            elif re.search ('^Replaces:', line) is not None:
                 line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
 
             new_ctrl += line
