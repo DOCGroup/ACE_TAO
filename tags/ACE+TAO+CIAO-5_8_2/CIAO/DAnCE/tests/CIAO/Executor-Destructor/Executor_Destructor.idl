@@ -1,0 +1,16 @@
+// $Id$
+
+#include <Components.idl>
+
+module dance_test
+{
+  component Exec_Destructor
+  {
+    attribute string id;
+  };
+  
+  home Home_Destructor manages Exec_Destructor
+  {
+    attribute string id;
+  };
+};

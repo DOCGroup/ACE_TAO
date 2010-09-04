@@ -1,0 +1,150 @@
+'
+'**********************************************************************
+' $Header$
+' $NoKeywords: $
+'
+' @doc AddIDL 
+'
+' Macros for Microsoft Visual Studio.
+'
+' @comm To install this file go to Tools->Customize->Macro Files->Browse...
+'
+'**********************************************************************
+'
+
+
+'@bsub Add an IDL file into all build projects in the current workspace.
+'@comm This routine also sets up the custom build options require for the TAO
+'CORBA implementation. The use can select to create a new file or just add a reference
+'to the project (e.g. if a file already exists).If a new file is created, then a
+'basic outline for an OMG module or interface declaration is inserted. Note that the inline
+'file extension is defined by INLINE_EXTENSION.
+'
+Sub AddIDLFile()
+'DESCRIPTION: Add new IDL File with TAO custom build entries to all build projects in the workspace. 
+
+	On Error Resume Next
+
+	'Define the extension used for inline files here
+	INLINE_EXTENSION = "inl"
+
+	WkSpaceDir = Application.CurrentDirectory
+	ModuleName = InputBox("module (namespace or extensionless IDL filename):")
+	FileName = ModuleName
+	WkSpaceDir=InputBox("Directory for IDL file: ","Output Directory",WkSpaceDir)
+	
+	if WkSpaceDir="" then
+		Exit Sub
+	end if
+
+	if Right(WkSpaceDir,1) <> "\" then
+		WkSpaceDir=WkSpaceDir+"\"
+	end if
+
+	IDLFile = WkSpaceDir+FileName +".idl"
+
+	'Try to a file with this path/name
+	Documents.Open IDLFile
+
+	'If such a file already exists then it should now be the active doc
+	if ActiveDocument.Fullname = IDLFile then
+
+		if msgbox("Overwrite the existing file ?",vbYesNo) = vbNo then 
+			NewFile = 0
+		else
+			'Close the file before we modify it
+			ActiveDocument.Close
+			NewFile = 1
+		end if
+	else
+		NewFile =1
+	end if
+
+	'If NewFile is set to 1 then create the outline for a OMG IDL module
+	if NewFile = 1 then
+		InterfaceName = InputBox("interface:")
+
+		if msgbox("Include a module ("+ ModuleName+") declaration",vbYesNo) = vbYes then 
+			Descr = vbLF + vbLF + "#if !defined (_" + UCase(ModuleName) + "_IDL)" + vbLF + _
+			"#define _" + UCase(ModuleName) + "_IDL" + vbLF +vbLF + _
+			"//"+vbLF+"//" +vbLF + "module " + ModuleName + " {" +vbLF + _
+			"	//" + vbLF + _
+			"	interface " + InterfaceName + "{"+vbLF + _
+			"		//Definitions"+ vbLF + vbLF+ vbLF + _
+			"		//Operations"+ vbLF + vbLF+ vbLF + _
+			"		//Properties"+ vbLF+ vbLF + _
+			"	};"+vbLF + "};"+vbLF +vbLF + _
+			"#endif /* _"+ UCase(ModuleName) +"_IDL */"+vbLF
+		else
+			Descr = vbLF + vbLF + "#if !defined (_" + UCase(ModuleName) + "_IDL)" + vbLF + _
+			"#define _" + UCase(ModuleName) + "_IDL" + vbLF +vbLF + _
+			"	//" + vbLF + _
+			"	//" + vbLF + _
+			"	interface " + InterfaceName + "{"+vbLF + _
+			"		//Definitions"+ vbLF + vbLF+ vbLF + _
+			"		//Operations"+ vbLF + vbLF+ vbLF + _
+			"		//Properties"+ vbLF+ vbLF + _
+			"	};"+vbLF +vbLF + _
+			"#endif /* _"+ UCase(ModuleName) +"_IDL */"+vbLF
+		end if
+
+		CreateCppFile IDLFile, Descr
+	end if
+
+		Dim proj
+		' Add the files to each project
+		'Note that the inline files do not need to be added
+		for each proj in Projects
+			if msgbox("Add "+ IDLFile +" and the IDL compiler output files to "+ proj +" ?",vbYesNo) = vbYes then
+				ProjectPath= Left(proj.FullName,InStrRev(proj.FullName,"\")-1)
+
+				proj.AddFile IDLFile
+				proj.AddFile WkSpaceDir+ModuleName + "C.cpp"
+				proj.AddFile WkSpaceDir+ModuleName + "C.h"
+				proj.AddFile WkSpaceDir+ModuleName + "S.cpp"
+				proj.AddFile WkSpaceDir+ModuleName + "S.h"
+				proj.AddFile WkSpaceDir+ModuleName + "S_T.cpp"
+				proj.AddFile WkSpaceDir+ModuleName + "S_T.h"
+
+				Dim cfg
+				' Add the custom build for each configuration in each project
+				If proj.Type = "Build" Then
+					Commands="%ACE_ROOT%\bin\tao_idl.exe -ci C."+ INLINE_EXTENSION +" -si S.inl -st S_T."+ INLINE_EXTENSION +" " + IDLFile
+					Output =	"$(InputName)C.cpp"		+ vbLF + _
+								"$(InputName)C.h"		+ vbLF + _
+								"$(InputName)C."+ INLINE_EXTENSION +""		+ vbLF + _
+								"$(InputName)S.cpp"		+ vbLF + _
+								"$(InputName)S.h"		+ vbLF + _
+								"$(InputName)S."+ INLINE_EXTENSION +""		+ vbLF + _
+								"$(InputName)S_T.cpp"	+ vbLF + _
+								"$(InputName)S_T.h"		+ vbLF + _
+								"$(InputName)S_T."+ INLINE_EXTENSION +""
+
+					for each cfg in proj.Configurations
+						cfg.AddCustomBuildStepToFile IDLFile, Commands, Output, "Running the TAO IDL Compiler on $(InputPath)..."
+					next
+				End If
+			end if
+		next
+End Sub
+
+
+
+
+
+'@bsub Creates a C/C++ file.
+'@comm This routine will create a C or C++ source file f, with content c. 
+'The new file will become the active doc.
+'
+Function CreateCppFile(byval f, byval c)
+'DESCRIPTION: Creates a .cpp file. 
+
+	On Error Resume Next
+    Documents.Add "Text"
+    ActiveDocument.Language = "C/C++"
+    ActiveDocument.Selection = c
+    ActiveDocument.Selection.NewLine
+    ActiveDocument.Save f
+
+End Function
+

@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file VT_Valuetype_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef VT_VALUETYPE_CONNECTOR_IDL_
+#define VT_VALUETYPE_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/VTopic_Base.idl"
+
+#pragma ciao lem "Conn_Valuetype/VT_Valuetype_ConnectorE.idl"
+
+module VTopic
+{
+  module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
+  //module ::CCM_DDS::Typed < ::X_Valuetype, ::X_ValuetypeSeq> X_ValuetypeConnector;
+};
+
+#endif /* VT_VALUETYPE_CONNECTOR_IDL_ */

@@ -1,0 +1,10 @@
+// $Id$
+
+project (simple) : adbc_sqlite {
+  exename = simple
+  install = .
+
+  Source_Files {
+    simple.cpp
+  }
+}

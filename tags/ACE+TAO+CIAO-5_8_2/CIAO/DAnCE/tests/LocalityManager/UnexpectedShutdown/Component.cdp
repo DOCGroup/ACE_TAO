@@ -1,0 +1,167 @@
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Hello_DDS_Deployment_1</label>
+  <UUID>Hello_DDS_Deployment_1</UUID>
+
+  <!-- Implementations declarations -->
+
+  <!-- Home implementation -->
+  
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+      
+  <implementation xmi:id="UnexpectedShutdownImplementation">
+    <name>UnexpectedShutdownImplementation</name>
+    <source/>
+    <artifact xmi:idref="UnexpectedShutdown_ExecArtifact" />
+    <artifact xmi:idref="UnexpectedShutdown_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_locality_Shutdown_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_locality_Shutdown_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UnexpectedShutdown_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>UnexpectedShutdown_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  
+  <instance xmi:id="CompSvrInst">
+    <name>ComponentServerInstance</name>
+    <node>UnexpectedShutdownNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-o InstOne.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="CompSvrInstTwo">
+    <name>ComponentServerInstance</name>
+    <node>UnexpectedShutdownNodeTwo</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+  </instance>
+
+  <instance xmi:id="UnexpectedShutdownInstanceTwo">
+    <name>UnexpectedShutdown</name>
+    <node>UnexpectedShutdownNodeTwo</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="UnexpectedShutdownImplementation" />
+  </instance>
+
+  <connection>
+    <name>TestConnectionReverse</name>
+    <internalEndpoint>
+      <portName>lm_port</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="UnexpectedShutdownInstanceTwo" />
+    </internalEndpoint>
+    <externalReference>
+      <location>file://InstOne.ior</location>
+      <provider>true</provider>
+      <supportedType>Meaningless</supportedType>
+    </externalReference>
+  </connection>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
+  <artifact xmi:id="UnexpectedShutdown_ExecArtifact">
+    <name>UnexpectedShutdown_exec</name>
+    <source/>
+    <node/>
+    <location>UnexpectedShutdown_exec</location>
+  </artifact>
+  <artifact xmi:id="UnexpectedShutdown_SvntArtifact">
+    <name>UnexpectedShutdown_svnt</name>
+    <source/>
+    <node/>
+    <location>UnexpectedShutdown_svnt</location>
+  </artifact>
+  <artifact xmi:id="UnexpectedShutdown_StubArtifact">
+    <name>UnexpectedShutdown_stub</name>
+    <source/>
+    <node/>
+    <location>UnexpectedShutdown_stub</location>
+  </artifact>
+  
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvrInst" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvrInstTwo" />
+    <constrainedInstance xmi:idref="UnexpectedShutdownInstanceTwo" />
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

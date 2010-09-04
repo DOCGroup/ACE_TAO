@@ -1,0 +1,111 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleProvider"
+
+project(SimpleCommon_SimpleProvider_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags +=  \
+              -Wb,stub_export_macro=SIMPLEPROVIDER_STUB_Export \
+              -Wb,stub_export_include=SimpleProvider_stub_export.h \
+              -Wb,skel_export_macro=SIMPLEPROVIDER_SVNT_Export \
+              -Wb,skel_export_include=SimpleProvider_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEPROVIDER_EXEC_Export \
+              -Wb,exec_export_include=SimpleProvider_exec_export.h
+
+  IDL_Files {
+    SimpleProvider.idl
+  }
+}
+
+project(SimpleCommon_SimpleProvider_lem_gen) : ciaoidldefaults {
+  after += SimpleCommon_SimpleProvider_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SIMPLEPROVIDER_EXEC_Export \
+              -Wb,export_include=SimpleProvider_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SimpleProviderE.idl
+  }
+}
+
+project(SimpleCommon_SimpleProvider_stub) : ccm_stub {
+  after += SimpleCommon_SimpleProvider_idl_gen SimpleCommon_stub
+  libs  += SimpleCommon_stub
+
+  sharedname = SimpleProvider_stub
+  dynamicflags += SIMPLEPROVIDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleProviderC.cpp
+  }
+
+  Header_Files {
+    SimpleProviderC.h
+    SimpleProvider_stub_export.h
+  }
+
+  Inline_Files {
+    SimpleProviderC.inl
+  }
+}
+
+project(SimpleCommon_SimpleProvider_exec) : ciao_executor {
+  after   += SimpleCommon_SimpleProvider_lem_gen SimpleCommon_SimpleProvider_stub
+  sharedname = SimpleProvider_exec
+  libs += SimpleProvider_stub SimpleCommon_stub
+
+  dynamicflags += SIMPLEPROVIDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleProviderEC.cpp
+    SimpleProvider_exec.cpp
+  }
+
+  Header_Files {
+    SimpleProviderEC.h
+    SimpleProvider_exec.h
+    SimpleProvider_exec_export.h
+  }
+
+  Inline_Files {
+    SimpleProviderEC.inl
+  }
+}
+
+
+project(SimpleCommon_SimpleProvider_svnt) : ciao_servant {
+  after      += SimpleCommon_skel SimpleCommon_SimpleProvider_exec
+  sharedname  = SimpleProvider_svnt
+  libs       += SimpleProvider_exec \
+                SimpleProvider_stub \
+                SimpleCommon_skel \
+                SimpleCommon_stub
+
+  dynamicflags += SIMPLEPROVIDER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleProviderS.cpp
+    SimpleProvider_svnt.cpp
+  }
+
+  Header_Files {
+    SimpleProviderS.h
+    SimpleProvider_svnt.h
+    SimpleProvider_svnt_export.h
+  }
+
+  Inline_Files {
+    SimpleProviderS.inl
+  }
+}
+
+

@@ -1,0 +1,690 @@
+//$Id$
+
+project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_install {
+  custom_only = 1
+  idlflags += -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode \
+              -Wb,export_macro=TAO_Export \
+              -Wb,export_include=tao/TAO_Export.h \
+              -Wb,anyop_export_macro=TAO_AnyTypeCode_Export \
+              -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
+  idlflags -= -Sa -St
+
+  IDL_Files {
+    GIOP.pidl >> AnyTypeCode/GIOPA.h AnyTypeCode/GIOPA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci
+    CONV_FRAME.pidl >> AnyTypeCode/CONV_FRAMEA.h AnyTypeCode/CONV_FRAMEA.cpp
+    Current.pidl >> AnyTypeCode/CurrentA.h AnyTypeCode/CurrentA.cpp
+    IIOP.pidl >> AnyTypeCode/IIOPA.h AnyTypeCode/IIOPA.cpp
+    IIOP_Endpoints.pidl >> AnyTypeCode/IIOP_EndpointsA.h AnyTypeCode/IIOP_EndpointsA.cpp
+    IOP.pidl >> AnyTypeCode/IOPA.h AnyTypeCode/IOPA.cpp
+    Messaging_PolicyValue.pidl >> AnyTypeCode/Messaging_PolicyValueA.h AnyTypeCode/Messaging_PolicyValueA.cpp
+    Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
+    ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
+    orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
+    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
+    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
+    Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
+    Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
+    PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
+    PortableInterceptor.pidl >> AnyTypeCode/PortableInterceptorA.h AnyTypeCode/PortableInterceptorA.cpp
+    Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
+    TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
+    TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci -Gse
+    BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
+    CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
+    DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp
+    FloatSeq.pidl >> AnyTypeCode/FloatSeqA.h AnyTypeCode/FloatSeqA.cpp
+    LongDoubleSeq.pidl >> AnyTypeCode/LongDoubleSeqA.h AnyTypeCode/LongDoubleSeqA.cpp
+    LongLongSeq.pidl >> AnyTypeCode/LongLongSeqA.h AnyTypeCode/LongLongSeqA.cpp
+    LongSeq.pidl >> AnyTypeCode/LongSeqA.h AnyTypeCode/LongSeqA.cpp
+    OctetSeq.pidl >> AnyTypeCode/OctetSeqA.h AnyTypeCode/OctetSeqA.cpp
+    ShortSeq.pidl >> AnyTypeCode/ShortSeqA.h AnyTypeCode/ShortSeqA.cpp
+    StringSeq.pidl >> AnyTypeCode/StringSeqA.h AnyTypeCode/StringSeqA.cpp
+    ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
+    ULongSeq.pidl >> AnyTypeCode/ULongSeqA.h AnyTypeCode/ULongSeqA.cpp
+    UShortSeq.pidl >> AnyTypeCode/UShortSeqA.h AnyTypeCode/UShortSeqA.cpp
+    WCharSeq.pidl >> AnyTypeCode/WCharSeqA.h AnyTypeCode/WCharSeqA.cpp
+    WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
+  }
+
+  PidlInstallWithoutBuilding_Files {
+    Object_Key.pidl
+    Policy.pidl
+    Typecode_types.pidl
+    WrongTransaction.pidl
+    orb.idl
+  }
+}
+
+project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop, valuetype_out_indirection {
+  after       += TAO_Core_idl
+  sharedname   = TAO
+  dynamicflags += TAO_BUILD_DLL
+
+  Source_Files(TAO_COMPONENTS) {
+    Abstract_Servant_Base.cpp
+    Acceptor_Filter.cpp
+    Acceptor_Registry.cpp
+    Adapter.cpp
+    Adapter_Factory.cpp
+    Adapter_Registry.cpp
+    AnyTypeCode_Adapter.cpp
+    Argument.cpp
+    Asynch_Queued_Message.cpp
+    Asynch_Reply_Dispatcher_Base.cpp
+    Base_Transport_Property.cpp
+    BiDir_Adapter.cpp
+    Bind_Dispatcher_Guard.cpp
+    Block_Flushing_Strategy.cpp
+    Blocked_Connect_Strategy.cpp
+    BooleanSeqC.cpp
+    CDR.cpp
+    CharSeqC.cpp
+    Cleanup_Func_Registry.cpp
+    Client_Strategy_Factory.cpp
+    ClientRequestInterceptor_Adapter_Factory.cpp
+    ClientRequestInterceptor_Adapter.cpp
+    Codeset_Manager.cpp
+    Codeset_Manager_Factory_Base.cpp
+    Codeset_Translator_Base.cpp
+    Collocated_Invocation.cpp
+    Collocation_Proxy_Broker.cpp
+    Collocation_Resolver.cpp
+    Configurable_Refcount.cpp
+    Connect_Strategy.cpp
+    Connection_Handler.cpp
+    Connection_Purging_Strategy.cpp
+    Connector_Registry.cpp
+    CONV_FRAMEC.cpp
+    CORBA_String.cpp
+    CORBALOC_Parser.cpp
+    CORBANAME_Parser.cpp
+    CurrentC.cpp
+    debug.cpp
+    default_client.cpp
+    Default_Collocation_Resolver.cpp
+    Default_Endpoint_Selector_Factory.cpp
+    default_resource.cpp
+    default_server.cpp
+    Default_Stub_Factory.cpp
+    Default_Thread_Lane_Resources_Manager.cpp
+    DLL_Parser.cpp
+    DoubleSeqC.cpp
+    Dynamic_Adapter.cpp
+    Endpoint.cpp
+    Endpoint_Selector_Factory.cpp
+    Environment.cpp
+    Exception.cpp
+    Exclusive_TMS.cpp
+    Fault_Tolerance_Service.cpp
+    FILE_Parser.cpp
+    FloatSeqC.cpp
+    Flushing_Strategy.cpp
+    GIOP_Fragmentation_Strategy.cpp
+    GIOP_Message_Base.cpp
+    GIOP_Message_Generator_Parser.cpp
+    GIOP_Message_Generator_Parser_10.cpp
+    GIOP_Message_Generator_Parser_11.cpp
+    GIOP_Message_Generator_Parser_12.cpp
+    GIOP_Message_Generator_Parser_Impl.cpp
+    GIOP_Message_Locate_Header.cpp
+    GIOP_Message_State.cpp
+    GIOP_Message_Version.cpp
+    GIOPC.cpp
+    HTTP_Client.cpp
+    HTTP_Handler.cpp
+    HTTP_Parser.cpp
+    IFR_Client_Adapter.cpp
+    IIOP_Acceptor.cpp
+    IIOP_Connection_Handler.cpp
+    IIOP_Connector.cpp
+    IIOP_Endpoint.cpp
+    IIOP_EndpointsC.cpp
+    IIOP_Factory.cpp
+    IIOP_Profile.cpp
+    IIOP_Transport.cpp
+    IIOPC.cpp
+    Incoming_Message_Queue.cpp
+    Incoming_Message_Stack.cpp
+    Invocation_Adapter.cpp
+    Invocation_Base.cpp
+    Invocation_Endpoint_Selectors.cpp
+    IOPC.cpp
+    IOR_Parser.cpp
+    IORInterceptor_Adapter.cpp
+    IORInterceptor_Adapter_Factory.cpp
+    Leader_Follower.cpp
+    Leader_Follower_Flushing_Strategy.cpp
+    LF_CH_Event.cpp
+    LF_Connect_Strategy.cpp
+    LF_Event.cpp
+    LF_Event_Binder.cpp
+    LF_Event_Loop_Thread_Helper.cpp
+    LF_Follower.cpp
+    LF_Follower_Auto_Adder.cpp
+    LF_Follower_Auto_Ptr.cpp
+    LF_Invocation_Event.cpp
+    LF_Multi_Event.cpp
+    LF_Strategy.cpp
+    LF_Strategy_Complete.cpp
+    LocalObject.cpp
+    LocateRequest_Invocation.cpp
+    LocateRequest_Invocation_Adapter.cpp
+    LongDoubleSeqC.cpp
+    LongLongSeqC.cpp
+    LongSeqC.cpp
+    LRU_Connection_Purging_Strategy.cpp
+    MCAST_Parser.cpp
+    Messaging_PolicyValueC.cpp
+    Messaging_SyncScopeC.cpp
+    MMAP_Allocator.cpp
+    MProfile.cpp
+    Muxed_TMS.cpp
+    New_Leader_Generator.cpp
+    NVList_Adapter.cpp
+    Null_Fragmentation_Strategy.cpp
+    Object.cpp
+    Object_KeyC.cpp
+    Object_Loader.cpp
+    Object_Proxy_Broker.cpp
+    Object_Ref_Table.cpp
+    ObjectIdListC.cpp
+    ObjectKey_Table.cpp
+    OctetSeqC.cpp
+    On_Demand_Fragmentation_Strategy.cpp
+    operation_details.cpp
+    ORB.cpp
+    ORBInitializer_Registry.cpp
+    ORBInitializer_Registry_Adapter.cpp
+    orb_typesC.cpp
+    ORB_Core.cpp
+    ORB_Core_Auto_Ptr.cpp
+    ORB_Core_TSS_Resources.cpp
+    ORB_Table.cpp
+    ParameterModeC.cpp
+    params.cpp
+    Parser_Registry.cpp
+    PI_ForwardC.cpp
+    Pluggable_Messaging_Utils.cpp
+    Policy_Current.cpp
+    Policy_CurrentC.cpp
+    Policy_Current_Impl.cpp
+    Policy_ForwardC.cpp
+    Policy_Manager.cpp
+    Policy_ManagerC.cpp
+    Policy_Set.cpp
+    Policy_Validator.cpp
+    PolicyC.cpp
+    PolicyFactory_Registry_Adapter.cpp
+    PolicyFactory_Registry_Factory.cpp
+    PortableInterceptorC.cpp
+    Principal.cpp
+    Profile.cpp
+    Profile_Transport_Resolver.cpp
+    Protocol_Factory.cpp
+    Protocols_Hooks.cpp
+    Network_Priority_Protocols_Hooks.cpp
+    Queued_Data.cpp
+    Queued_Message.cpp
+    Reactive_Connect_Strategy.cpp
+    Reactive_Flushing_Strategy.cpp
+    Refcounted_ObjectKey.cpp
+    Remote_Invocation.cpp
+    Remote_Object_Proxy_Broker.cpp
+    Reply_Dispatcher.cpp
+    Request_Dispatcher.cpp
+    RequestInterceptor_Adapter.cpp
+    Resource_Factory.cpp
+    Resume_Handle.cpp
+    Server_Strategy_Factory.cpp
+    ServerRequestInterceptor_Adapter.cpp
+    ServerRequestInterceptor_Adapter_Factory.cpp
+    Service_Callbacks.cpp
+    Service_Context.cpp
+    Service_Context_Handler.cpp
+    Service_Context_Handler_Registry.cpp
+    Services_Activate.cpp
+    ServicesC.cpp
+    ShortSeqC.cpp
+    String_Alloc.cpp
+    StringSeqC.cpp
+    Stub.cpp
+    Stub_Factory.cpp
+    Synch_Invocation.cpp
+    Synch_Queued_Message.cpp
+    Synch_Reply_Dispatcher.cpp
+    SystemException.cpp
+    Tagged_Components.cpp
+    Tagged_Profile.cpp
+    TAO_Internal.cpp
+    TAO_Server_Request.cpp
+    TAO_Singleton_Manager.cpp
+    TAOC.cpp
+    target_specification.cpp
+    Thread_Lane_Resources.cpp
+    Thread_Lane_Resources_Manager.cpp
+    Thread_Per_Connection_Handler.cpp
+    TimeBaseC.cpp
+    Transport.cpp
+    Transport_Acceptor.cpp
+    Transport_Connector.cpp
+    Transport_Descriptor_Interface.cpp
+    Transport_Mux_Strategy.cpp
+    Transport_Queueing_Strategies.cpp
+    Transport_Selection_Guard.cpp
+    Transport_Timer.cpp
+    TSS_Resources.cpp
+    TypeCodeFactory_Adapter.cpp
+    Typecode_typesC.cpp
+    ULongLongSeqC.cpp
+    ULongSeqC.cpp
+    UserException.cpp
+    UShortSeqC.cpp
+    Valuetype_Adapter.cpp
+    Valuetype_Adapter_Factory.cpp
+    Wait_On_Leader_Follower.cpp
+    Wait_On_LF_No_Upcall.cpp
+    Wait_On_Reactor.cpp
+    Wait_On_Read.cpp
+    Wait_Strategy.cpp
+    WCharSeqC.cpp
+    WrongTransactionC.cpp
+    WStringSeqC.cpp
+    GUIResource_Factory.cpp
+    ZIOP_Adapter.cpp
+  }
+
+  Header_Files {
+    Array_Traits_T.h
+    Abstract_Servant_Base.h
+    Acceptor_Filter.h
+    Acceptor_Impl.h
+    Acceptor_Registry.h
+    Adapter.h
+    Adapter_Factory.h
+    Adapter_Registry.h
+    Allocator.h
+    AnyTypeCode_Adapter.h
+    Any_Insert_Policy_T.h
+    Arg_Traits_T.h
+    Argument.h
+    Array_VarOut_T.h
+    Asynch_Queued_Message.h
+    Asynch_Reply_Dispatcher_Base.h
+    Base_Transport_Property.h
+    Basic_Arguments.h
+    Basic_Argument_T.h
+    Basic_Types.h
+    BD_String_Argument_T.h
+    BiDir_Adapter.h
+    Bind_Dispatcher_Guard.h
+    Blocked_Connect_Strategy.h
+    Block_Flushing_Strategy.h
+    BooleanSeqC.h
+    BooleanSeqS.h
+    Bounded_Array_Allocation_Traits_T.h
+    Bounded_Array_Sequence_T.h
+    Bounded_BD_String_Sequence_T.h
+    Bounded_Basic_String_Sequence_T.h
+    Bounded_Object_Reference_Sequence_T.h
+    Bounded_Reference_Allocation_Traits_T.h
+    Bounded_Sequence_CDR_T.h
+    Bounded_Value_Allocation_Traits_T.h
+    Bounded_Value_Sequence_T.h
+    Buffer_Allocator_T.h
+    Cache_Entries_T.h
+    CDR.h
+    CharSeqC.h
+    CharSeqS.h
+    Cleanup_Func_Registry.h
+    ClientRequestInterceptor_Adapter.h
+    Client_Strategy_Factory.h
+    Codeset_Descriptor_Base.h
+    Codeset_Manager.h
+    Codeset_Manager_Factory_Base.h
+    Codeset_Translator_Base.h
+    Collocated_Invocation.h
+    Collocation_Proxy_Broker.h
+    Collocation_Resolver.h
+    Collocation_Strategy.h
+    Condition.h
+    Connection_Handler.h
+    Connection_Purging_Strategy.h
+    Connector_Impl.h
+    Connector_Registry.h
+    Connect_Strategy.h
+    CONV_FRAMEC.h
+    CONV_FRAMES.h
+    corbafwd.h
+    corba.h
+    CORBALOC_Parser.h
+    CORBA_methods.h
+    CORBANAME_Parser.h
+    CORBA_String.h
+    CurrentC.h
+    CurrentS.h
+    debug.h
+    default_client.h
+    Default_Collocation_Resolver.h
+    Default_Endpoint_Selector_Factory.h
+    default_environment.h
+    default_ports.h
+    default_resource.h
+    default_server.h
+    Default_Stub_Factory.h
+    Default_Thread_Lane_Resources_Manager.h
+    DLL_Parser.h
+    DoubleSeqC.h
+    DoubleSeqS.h
+    Dynamic_Adapter.h
+    Endpoint.h
+    Endpoint_Selector_Factory.h
+    Environment.h
+    Exception_Data.h
+    Exception.h
+    Exclusive_TMS.h
+    Fault_Tolerance_Service.h
+    FILE_Parser.h
+    Fixed_Array_Argument_T.h
+    Fixed_Size_Argument_T.h
+    FloatSeqC.h
+    FloatSeqS.h
+    Flushing_Strategy.h
+    Generic_Sequence_T.h
+    GIOPC.h
+    GIOP_Message_Base.h
+    GIOP_Message_Generator_Parser_10.h
+    GIOP_Message_Generator_Parser_11.h
+    GIOP_Message_Generator_Parser_12.h
+    GIOP_Message_Generator_Parser.h
+    GIOP_Message_Generator_Parser_Impl.h
+    GIOP_Message_Locate_Header.h
+    GIOP_Message_State.h
+    GIOP_Message_Version.h
+    GIOPS.h
+    GIOP_Utils.h
+    GUIResource_Factory.h
+    HTTP_Client.h
+    HTTP_Handler.h
+    HTTP_Parser.h
+    IFR_Client_Adapter.h
+    IIOP_Acceptor.h
+    IIOPC.h
+    IIOP_Connection_Handler.h
+    IIOP_Connector.h
+    IIOP_Endpoint.h
+    IIOP_EndpointsC.h
+    IIOP_EndpointsS.h
+    IIOP_Factory.h
+    IIOP_Profile.h
+    IIOP_Transport.h
+    Incoming_Message_Queue.h
+    Incoming_Message_Stack.h
+    Invocation_Adapter.h
+    Invocation_Base.h
+    Invocation_Endpoint_Selectors.h
+    Invocation_Utils.h
+    IOPC.h
+    IOPS.h
+    IORInterceptor_Adapter_Factory.h
+    IORInterceptor_Adapter.h
+    IOR_Parser.h
+    Leader_Follower_Flushing_Strategy.h
+    Leader_Follower.h
+    LF_CH_Event.h
+    LF_Connect_Strategy.h
+    LF_Event_Binder.h
+    LF_Event.h
+    LF_Event_Loop_Thread_Helper.h
+    LF_Follower_Auto_Adder.h
+    LF_Follower_Auto_Ptr.h
+    LF_Follower.h
+    LF_Invocation_Event.h
+    LF_Strategy_Complete.h
+    LF_Strategy.h
+    Load_Protocol_Factory_T.h
+    LocalObject.h
+    LocateRequest_Invocation_Adapter.h
+    LocateRequest_Invocation.h
+    LongDoubleSeqC.h
+    LongDoubleSeqS.h
+    LongLongSeqC.h
+    LongLongSeqS.h
+    LongSeqC.h
+    LongSeqS.h
+    LRU_Connection_Purging_Strategy.h
+    MCAST_Parser.h
+    Message_Semantics.h
+    Messaging_PolicyValueC.h
+    Messaging_PolicyValueS.h
+    Messaging_SyncScopeC.h
+    Messaging_SyncScopeS.h
+    MM_Sequence_Iterator_T.h
+    MMAP_Allocator.h
+    MProfile.h
+    Muxed_TMS.h
+    New_Leader_Generator.h
+    Object_Argument_T.h
+    Object.h
+    objectid.h
+    ObjectIdListC.h
+    ObjectIdListS.h
+    Object_KeyC.h
+    ObjectKey_Table.h
+    Object_Loader.h
+    Object_Proxy_Broker.h
+    Object_Ref_Table.h
+    Object_T.h
+    Object_Reference_Sequence_Element_T.h
+    Object_Reference_Const_Sequence_Element_T.h
+    Objref_VarOut_T.h
+    Object_Reference_Traits_Base_T.h
+    Object_Reference_Traits_T.h
+    OctetSeqC.h
+    OctetSeqS.h
+    operation_details.h
+    orbconf.h
+    ORB_Constants.h
+    ORB_Core_Auto_Ptr.h
+    ORB_Core_TSS_Resources.h
+    ORB_Core.h
+    ORB.h
+    ORBInitializer_Registry.h
+    ORBInitializer_Registry_Adapter.h
+    ORB_Table.h
+    orb_typesC.h
+    orb_typesS.h
+    ParameterModeC.h
+    ParameterModeS.h
+    params.h
+    Parser_Registry.h
+    PI_ForwardC.h
+    PI_ForwardS.h
+    Pluggable_Messaging_Utils.h
+    PolicyC.h
+    PolicyFactory_Registry_Adapter.h
+    Policy_ForwardC.h
+    Policy_ForwardS.h
+    Policy_Current.h
+    Policy_CurrentC.h
+    Policy_CurrentS.h
+    Policy_Current_Impl.h
+    Policy_Manager.h
+    Policy_ManagerC.h
+    Policy_ManagerS.h
+    Policy_Set.h
+    PolicyS.h
+    Policy_Validator.h
+    PortableInterceptorC.h
+    PortableInterceptor.h
+    PortableInterceptorS.h
+    Principal.h
+    Profile.h
+    Profile_Transport_Resolver.h
+    Protocol_Factory.h
+    Protocols_Hooks.h
+    Network_Priority_Protocols_Hooks.h
+    Pseudo_VarOut_T.h
+    Queued_Message.h
+    Queued_Data.h
+    Range_Checking_T.h
+    Reactive_Connect_Strategy.h
+    Reactive_Flushing_Strategy.h
+    Refcounted_ObjectKey.h
+    Remote_Invocation.h
+    Remote_Object_Proxy_Broker.h
+    Reply_Dispatcher.h
+    Request_Dispatcher.h
+    RequestInterceptor_Adapter.h
+    Resource_Factory.h
+    Resume_Handle.h
+    Seq_Out_T.h
+    Seq_Var_T.h
+    Sequence_T.h
+    Server_Strategy_Factory.h
+    Service_Callbacks.h
+    Service_Context.h
+    Services_Activate.h
+    ServicesC.h
+    ServicesS.h
+    ShortSeqC.h
+    ShortSeqS.h
+    Special_Basic_Arguments.h
+    Special_Basic_Argument_T.h
+    StringSeqC.h
+    StringSeqS.h
+    String_Alloc.h
+    String_Manager_T.h
+    String_Sequence_Element_T.h
+    String_Const_Sequence_Element_T.h
+    String_Traits_Base_T.h
+    String_Traits_T.h
+    Stub_Factory.h
+    Stub.h
+    Synch_Invocation.h
+    Synch_Queued_Message.h
+    Synch_Reply_Dispatcher.h
+    SystemException.h
+    Tagged_Components.h
+    Tagged_Profile.h
+    TAOC.h
+    TAO_Export.h
+    TAO_Internal.h
+    TAO_Server_Request.h
+    TAOS.h
+    TAO_Singleton.h
+    TAO_Singleton_Manager.h
+    target_specification.h
+    Thread_Lane_Resources.h
+    Thread_Lane_Resources_Manager.h
+    Thread_Per_Connection_Handler.h
+    TimeBaseC.h
+    TimeBaseS.h
+    Timeprobe.h
+    Transport_Acceptor.h
+    Transport_Cache_Manager.h
+    Transport_Cache_Manager_T.h
+    Transport_Connector.h
+    Transport_Descriptor_Interface.h
+    Transport.h
+    Transport_Mux_Strategy.h
+    Transport_Queueing_Strategies.h
+    Transport_Selection_Guard.h
+    Transport_Timer.h
+    TSS_Resources.h
+    TypeCodeFactory_Adapter.h
+    Typecode_typesC.h
+    Typecode_typesS.h
+    UB_String_Arguments.h
+    UB_String_Argument_T.h
+    ULongLongSeqC.h
+    ULongLongSeqS.h
+    ULongSeqC.h
+    ULongSeqS.h
+    Unbounded_Array_Allocation_Traits_T.h
+    Unbounded_Array_Sequence_T.h
+    Unbounded_BD_String_Sequence_T.h
+    Unbounded_Basic_String_Sequence_T.h
+    Unbounded_Object_Reference_Sequence_T.h
+    Unbounded_Octet_Sequence_T.h
+    Unbounded_Octet_Sequence_T.h
+    Unbounded_Reference_Allocation_Traits_T.h
+    Unbounded_Sequence_CDR_T.h
+    Unbounded_Value_Allocation_Traits_T.h
+    Unbounded_Value_Sequence_T.h
+    UserException.h
+    UShortSeqC.h
+    UShortSeqS.h
+    Value_Traits_T.h
+    Valuetype_Adapter.h
+    Valuetype_Adapter_Factory.h
+    Var_Array_Argument_T.h
+    varbase.h
+    VarOut_T.h
+    Var_Size_Argument_T.h
+    Vector_Argument_T.h
+    Vector_CDR_T.h
+    Version.h
+    Versioned_Namespace.h
+    Wait_On_Leader_Follower.h
+    Wait_On_LF_No_Upcall.h
+    Wait_On_Reactor.h
+    Wait_On_Read.h
+    Wait_Strategy.h
+    WCharSeqC.h
+    WCharSeqS.h
+    WrongTransactionC.h
+    WrongTransactionS.h
+    WStringSeqC.h
+    WStringSeqS.h
+    ZIOP_Adapter.h
+  }
+
+  Inline_Files {
+    GIOPC.inl
+    *.inl
+  }
+
+  Template_Files {
+    *_T.cpp
+    Acceptor_Impl.cpp
+    Condition.cpp
+    Connector_Impl.cpp
+    TAO_Singleton.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO.pc.in
+  }
+
+  IDL_Files {
+  }
+
+  PIDL_Files {
+    orb.idl // not compiled
+  }
+
+  InstallData_Files {
+    gendir = .
+    ../rules.tao.GNU
+    ../README*
+    ../VERSION
+    ../PROBLEM-REPORT-FORM
+    ../NEWS
+    ../COPYING*
+    ../docs
+    ../MPC
+  }
+
+  verbatim(gnuace, postinstall) {
+"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
+"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(INSTALL_PREFIX)/share/tao/tao-devel.sh"
+  }
+}

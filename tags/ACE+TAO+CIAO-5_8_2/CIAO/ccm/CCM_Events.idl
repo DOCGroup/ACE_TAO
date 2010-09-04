@@ -1,0 +1,105 @@
+// $Id$
+/// Compliant with OMG 06-04-01 Section 6.6.8
+
+#if !defined (CCM_EVENTS_IDL)
+#define CCM_EVENTS_IDL
+
+#include "ccm/CCM_Base.idl"
+#include "ccm/CCM_Navigation.idl"
+#include "ccm/CCM_Receptacle.idl"
+#include "ccm/CCM_Cookie.idl"
+#include "ccm/CCM_EventBase.idl"
+#include "ccm/CCM_EventConsumerBase.idl"
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+#if !defined (CCM_LW)
+  valuetype ConsumerDescription : PortDescription
+  {
+    public EventConsumerBase consumer;
+  };
+  typedef sequence<ConsumerDescription> ConsumerDescriptions;
+#endif
+
+#if !defined (CCM_LW)
+  valuetype EmitterDescription : PortDescription
+  {
+    public EventConsumerBase consumer;
+  };
+  typedef sequence<EmitterDescription> EmitterDescriptions;
+#endif
+
+#if !defined (CCM_LW)
+  valuetype SubscriberDescription
+  {
+    public Cookie ck;
+    public EventConsumerBase consumer;
+  };
+  typedef sequence<SubscriberDescription> SubscriberDescriptions;
+#endif
+
+#if !defined (CCM_LW)
+  valuetype PublisherDescription : PortDescription
+  {
+    public SubscriberDescriptions consumers;
+  };
+  typedef sequence<PublisherDescription> PublisherDescriptions;
+#endif
+
+  interface Events
+  {
+    EventConsumerBase get_consumer (in FeatureName sink_name)
+      raises (InvalidName);
+
+    Cookie subscribe (in FeatureName publisher_name,
+                      in EventConsumerBase subscriber)
+      raises (InvalidName,
+              InvalidConnection,
+              ExceededConnectionLimit);
+
+    EventConsumerBase unsubscribe (in FeatureName publisher_name,
+                                   in Cookie ck)
+      raises (InvalidName,
+              InvalidConnection);
+
+    void connect_consumer (in FeatureName emitter_name,
+                           in EventConsumerBase consumer)
+      raises (InvalidName,
+              AlreadyConnected,
+              InvalidConnection);
+
+    EventConsumerBase disconnect_consumer (in FeatureName source_name)
+      raises (InvalidName,
+              NoConnection);
+
+#if !defined (CCM_LW)
+    ConsumerDescriptions get_all_consumers ();
+#endif
+
+#if !defined (CCM_LW)
+    ConsumerDescriptions get_named_consumers (in NameList names)
+      raises (InvalidName);
+#endif
+
+#if !defined (CCM_LW)
+    EmitterDescriptions get_all_emitters ();
+#endif
+
+#if !defined (CCM_LW)
+    EmitterDescriptions get_named_emitters (in NameList names)
+      raises (InvalidName);
+#endif
+
+#if !defined (CCM_LW)
+    PublisherDescriptions get_all_publishers ();
+#endif
+
+#if !defined (CCM_LW)
+    PublisherDescriptions get_named_publishers (in NameList names)
+      raises (InvalidName);
+#endif
+  };
+};
+#endif /* CCM_EVENTS_IDL */

@@ -1,0 +1,41 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, pi_server, interceptors {
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+    Server_ORBInitializer.cpp
+    server_interceptor.cpp
+    Threaded_Server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, pi, interceptors {
+  exename = client
+  after += *idl
+  Source_Files {
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+    client_interceptor.cpp
+    Threaded_Client.cpp
+
+    Server_Task.cpp
+    Client_Task.cpp
+  }
+  IDL_Files {
+  }
+}
+

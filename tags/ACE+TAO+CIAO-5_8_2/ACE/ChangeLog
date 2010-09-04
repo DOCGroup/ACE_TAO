@@ -1,0 +1,1424 @@
+Sat Sep 04 11:30:18 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE version 5.8.2 released.
+
+Thu Sep  2 14:46:56 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Acceptor.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/ACE.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * NEWS:
+          Reverted both commits by Steve Huston related to handle_ready()
+          and a NEWS entry.
+          Wed Sep  1 19:31:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+          This is necessary for a quick release of 1.8.2.
+
+Wed Sep  1 19:31:24 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_ready): Changed the timeout behavior to just
+          return 0, no errno, as ACE_OS::poll() and ACE_OS::select() both do.
+          This restores historic behavior changed inadvertently at
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_IO.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/SOCK_Test.cpp: Re-added the if/switch on return value from
+          ACE::handle_read|write_ready() to detect timeout and set errno
+          here.
+
+          These changes were necessary to fix the TAO faults test. Thanks
+          to Johnny and Simon for narrowing down the cause and testing
+          the fix.
+
+Wed Sep  1 15:58:47 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the short-circuit logic for the .NOTPARALLEL checks to ||
+          instead of &&.  If any one file is newer, we will have to rebuild.
+          Also added a missing foreach for the output files with dependent libs.
+
+Wed Sep  1 09:59:42 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/Time_Value_Test.cpp:
+          Fixed compile warning on QNX. time_t on QNX is defined as unsigned
+          int.
+
+Tue Aug 31 16:53:07 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Catherine L. Paquin <catherine dot paquin at ngc dot com>.
+
+Tue Aug 31 14:40:17 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+
+          Updated to proper name of Visual Studio 2010, which may assist
+          those searching for it in the NEWS file.
+
+Tue Aug 31 12:56:36 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Added an entry for the change at
+          Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/README:
+        * ace/config-sunos5.6.h:
+        * ace/config-sunos5.7.h: Removed all mention of ACE_HAS_LIMITED_SELECT.
+
+Mon Aug 30 18:41:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+          Added Obstack.h
+
+Mon Aug 30 16:48:34 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/FIFO.h:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Send.h: Clarified initialization and open behavior.
+
+Mon Aug 30 15:33:57 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h (set_handles): Add a note that passing a socket handle
+          with this mechanism does not work on Windows.
+
+Mon Aug 30 10:06:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+          ACE_Guard changes
+
+Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (handle_ready, handle_timed_complete,
+                       handle_timed_accept): On platforms where poll() is
+          available, prefer that to using select() for checking a single
+          handle's state and/or waiting for a condition. This preference
+          was previously only used if ACE_HAS_LIMITED_SELECT was set. The
+          ACE_HAS_LIMITED_SELECT choice is removed, making ACE_HAS_POLL the
+          setting that switches this preference. The driving reason for this
+          is that if select() is called to detect changes on a handle whose
+          values falls outside that which can safely be stored in an fdset,
+          the handle-setting macros/functions will set/clear bits outside
+          of the fdset. This results in very weird memory changes, often in
+          the stack, which are very hard to diagnose. poll()'s operation
+          does not suffer from this affect. With the growing use of large
+          numbers of handles and use of ACE_Dev_Poll_Reactor on Linux,
+          the rate at which this problem was cropping up was increasing.
+          Thanks to Olivier Langlois for diagnosing this problem and
+          proposing the patch.
+
+          (handle_ready): Properly set the poll condition for read and/or
+          write. Thanks to kumaran.prem@gmail.com for this fix.
+
+        * ace/Acceptor.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/SOCK_Test.cpp: Replaced use of ACE_OS::select() with
+          ACE::handle_ready() and friends.
+
+        This all resolves Bugzilla #3606.
+
+Fri Aug 27 19:10:16 UTC 2010  Brian Johnson  <johnsonb@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Merging dependent_libs support for gnuace from TAO 1.5a.
+          (Bugzilla #3281)
+
+Fri Aug 27 18:36:37 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Added assignment operator for ACE_Thread_Id
+
+Fri Aug 27 15:01:41 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * Connector.{h cpp} (ACE_NonBlocking_Connect_Handler): Add a
+          handle_close() which calls handle_input() if called by the
+          ACE_Dev_Poll_Reactor to remove a failed connect. Apparently,
+          Linux epoll, at least sometimes, signals EPOLLERR on a failed
+          nonblocking connect, unlike the select() case which selects the
+          failed fd for read. Thanks to Kannan Ramaswamy <kannan dot
+          ramaswamy at cogcap dot com> for this information and fix.
+
+        * THANKS: Added Kannan to the Hall of Fame.
+
+Fri Aug 27 14:17:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+          Doxygen changes
+
+        * ace/OS_NS_Thread.cpp:
+          Use ACE_GUARD
+
+        * bin/fuzz.pl:
+          Added check for ACE_Guard
+
+Fri Aug 27 06:56:11 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/acexml.doxygen:
+          Fuzz fixes
+
+Thu Aug 26 13:20:48 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Added DANCE_ROOT
+
+Thu Aug 26 13:08:56 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/servers/servers.mpc:
+          Use ace_netsvcs as executable name, this makes more sense when
+          we install this file in a target directory
+
+Thu Aug 26 13:04:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check doxygen files for tabs
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+        * html/index.html:
+          Changed documentation subdirectories to make debian packaging easier
+
+Thu Aug 26 12:30:33 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/control:
+          Made some fixes for x.8.1
+
+Thu Aug 26 11:54:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Extended script to also check for $DANCE_ROOT/bin/dance_tests.lst
+
+Thu Aug 26 10:20:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Changes implementing the patches from Bugzilla #3653 (with
+          changes and some rejects; *no* asserts allowed in ACE).
+
+Wed Aug 25 19:58:19 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.{h cpp}: Regarding change number 2 at
+          Fri Mar 26 14:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+          dispatching notifies in only one thread at a time was 1) wrong
+          (TP_Reactor doesn't do this), 2) broke important existing
+          applications at a customer site. This has been fixed so that the
+          notify dispatch behavior is like ACE_TP_Reactor: when the
+          notify handle is signaled, extract one notification, release
+          the token, dispatch the notification. Thus, each thread will
+          dispatch one notification, and multiple threads can dispatch
+          them at the same time if there are multiples.
+
+          Also fixed an error where it was possible to lose notice of a
+          notification. Resolves Bugzilla #3328.
+
+Wed Aug 25 09:49:41 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Arg_Shifter.h:
+        * ace/config-macosx-leopard.h:
+        * ace/Guard_T.h:
+        * ace/Global_Macros.h:
+          Selected changes from patches in Bugzilla 3652.
+
+Tue Aug 24 14:21:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Layout changes
+
+        * ace/config-win32-common.h:
+          Improved MinGW GCC 4.4 support. Thanks to
+          Jani Hakala <jani dot j dot hakala at jyu dot fi> for creating the
+          patch
+
+Tue Aug 24 14:15:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * ace/Log_Msg.cpp
+        * ace/Log_Msg.h
+        * tests/Log_Msg_Test.cpp
+        Revert changes for logging thread id as argument.
+
+Tue Aug 24 12:59:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+          Changes to fix export problems with nested classes with MSVC 7/8.
+
+Tue Aug 24 11:29:45 UTC 2010 Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * ChangeLog:
+        Add %#t to log a thread id that is coming from user code, as argument .
+
+Mon Aug 23 19:51:59 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Missing_Svc_Conf_Test.cpp:
+
+          Fix some scoreboard problems.
+
+Mon Aug 23 15:05:56 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Select_Reactor.h:
+
+          vc10 needs an "ACE_Export" declaration on the explicit template
+          instantiation of ACE_Select_Reactor.
+
+Mon Aug 23 13:23:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-kfreebsd.h:
+          New config file for kfreebsd
+
+        * ace/config-win32-common.h:
+          Removed commented out defines
+
+Mon Aug 23 11:57:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/INet_SSL_Export.h:
+        * protocols/ace/INet/HTTPS_Context.h:
+        * protocols/ace/INet/HTTPS_SessionFactory.h:
+        * protocols/ace/INet/HTTPS_URL.h:
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CertificateCallback.h:
+        * protocols/ace/INet/SSL_PasswordCallback.h:
+        * protocols/ace/INet/SSL_X509Cert.h:
+        * protocols/ace/INet/inet_ssl.mpc:
+          Changes to fix MSVC 7/8 link errors.
+
+Mon Aug 23 11:34:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTPS_URL.h:
+          Fixed GCC41 error concerning comma at end of enum list.
+
+Sat Aug 21 12:53:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Missing_Svc_Conf_Test.cpp:
+
+          Added a descriptive comment block to the source.
+
+Fri Aug 20 13:29:22 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          One more shot at fixing the behavior of the service configurator
+          in the face of missing defaulted svc.conf file.
+
+        * tests/Missing_Svc_Conf_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added a proper test to ensure changes to this behavior are caught
+          in the future.
+
+Fri Aug 20 11:58:20 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TSS_T.cpp:
+          Updated comment
+
+        * include/makeinclude/platform_g++_common.GNU:
+          If minimaltoc is set to 1, add -mminimal-toc to compiler flags
+
+        * include/makeinclude/platform_linux.GNU:
+          Removed check for ppc64, if you build for ppc64 and need -mminimal-toc
+          add minimaltoc=1 to your platform_macros.GNU file
+
+Fri Aug 20 09:52:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Removed feature subproject config.
+
+        * protocols/ace/INet/inet_ssl.mpc:
+          Added sublibrary project I forgot yesterday.
+
+Thu Aug 19 12:37:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Functor_T.h:
+          Doxygen changes
+
+        * include/makeinclude/platform_linux.GNU:
+          Make it possible to control -mminimal-toc through the
+          platform_macros.GNU file using minimaltoc
+
+Thu Aug 19 12:09:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Changes to split INet into 2 libraries; regular and SSL.
+          Fixes dependencies of DAnCE tools on SSL.
+
+Wed Aug 18 09:26:04 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+          Fixed a compile warning.
+
+Tue Aug 17 07:34:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ace/CDR_Stream.cpp
+        Add Id
+
+Mon Aug 16 22:00:06 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/Reactor/Misc/Reactor_Misc.mpc:
+
+          Explicitly list an empty Template_Files so that the *_t.cpp doesn't
+          get added to Template_Files.
+
+Mon Aug 16 12:58:31 UTC 2010  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ace/Auto_Event.cpp:
+        * ace/CDR_Stream.cpp:
+        * ace/Cleanup.cpp:
+        * ace/Codecs.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Filecache.cpp:
+        * ace/Flag_Manip.cpp:
+        * ace/FlReactor/FlReactor.cpp:
+        * ace/FoxReactor/FoxReactor.cpp:
+        * ace/Handle_Ops.cpp:
+        * ace/Hashable.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/Init_ACE.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Logging_Strategy.cpp:
+        * ace/Malloc.cpp:
+        * ace/MEM_Addr.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Method_Request.cpp:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_Thread_Adapter.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Ping_Socket.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Proactor_Impl.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/QoS/QoS_Decorator.cpp:
+        * ace/QoS/QoS_Manager.cpp:
+        * ace/QoS/QoS_Session_Factory.cpp:
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/Reactor.cpp:
+        * ace/Refcountable_T.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Shared_Memory_SV.cpp:
+        * ace/Singleton.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK.cpp:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+        * ace/SString.cpp:
+        * ace/Svc_Conf.y
+        * ace/Svc_Conf_y.cpp:
+        * ace/Task.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/TkReactor/TkReactor.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/XtReactor/XtReactor.cpp:
+        Removed ACE_RCSID
+
+Thu Aug 12 16:07:55 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Added feature test for ACE_LACKS_STRUCT_LIFNUM.
+
+Thu Aug 12 08:39:31 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Fixed problem compiling FC packages on OSB
+
+Wed Aug 11 20:50:37 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          With ARCH set, we need to create the local ARCH directory for the
+          executable in case there are no object files that would otherwise
+          have required it.
+
+Wed Aug 11 13:45:52 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Only enable GCC builtin atomic op when threads are enabled. Thanks to
+          Rafi <rafi dot net at gmail dot com> for reporting this
+
+Tue Aug 10 17:24:05 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/apps/svcconf/Svcconf.cpp:
+          Fixed compile problem
+
+Tue Aug 10 08:55:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed zapped file
+
+Mon Aug  9 17:14:27 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+
+          Added Robert Shectman <shectman at llnl dot gov>
+
+Mon Aug  9 16:02:08 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_vxworks6.8.GNU:
+
+          The location of user-mode (RTP) libraries has changed in 6.8.
+
+Mon Aug  9 15:14:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+          Zap emulated exception macros
+
+        * ace/config-macros.h:
+          Only define ACE_HAS_EXCEPTIONS when it is not defined yet
+
+Mon Aug  9 06:38:34 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Fixed compile error
+
+Mon Aug  9 06:35:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+          Removed zapped file
+
+Sun Aug  8 23:31:32 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+
+          Clang uses ACE_ANY_OPS_USE_NAMESPACE.
+
+Fri Aug  6 17:36:45 UTC 2010  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Added a "trailing whitespace" check (not enabled by default).
+          Added the ability to pass multiple test names on the command line.
+          Extend the "too long file name" check to some additional file types.
+
+Fri Aug  6 08:39:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/TMCast/TMCast.mpc:
+          Removed exceptions as base project
+
+Thu Aug  5 16:56:01 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+        * protocols/tests/RMCast/RMCast.mpc:
+          Removed exceptions as base project
+
+Thu Aug  5 09:00:49 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/ACE_crc32.cpp:
+        * ace/ACE_crc_ccitt.cpp:
+        * ace/ARGV.cpp:
+        * ace/ATM_Acceptor.cpp:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Connector.cpp:
+        * ace/ATM_Params.cpp:
+        * ace/ATM_QoS.cpp:
+        * ace/ATM_Stream.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Activation_Queue.cpp:
+        * ace/Active_Map_Manager.cpp:
+        * ace/Addr.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Argv_Type_Converter.cpp:
+        * ace/Assert.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Asynch_Pseudo_Task.cpp:
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op_GCC_T.cpp:
+        * ace/Atomic_Op_T.cpp:
+        * ace/Auto_Ptr.cpp:
+        * ace/Barrier.cpp:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Basic_Stats.cpp:
+        * ace/CDR_Base.cpp:
+        * ace/Capabilities.cpp:
+        * ace/Codeset_IBM1047.cpp:
+        * ace/Codeset_Registry.cpp:
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Connection_Recycling_Strategy.cpp:
+        * ace/Containers.cpp:
+        * ace/Copy_Disabled.cpp:
+        * ace/Countdown_Time.cpp:
+        * ace/DEV.cpp:
+        * ace/DEV_Connector.cpp:
+        * ace/DEV_IO.cpp:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Date_Time.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dirent_Selector.cpp:
+        * ace/Dump.cpp:
+        * ace/Dynamic.cpp:
+        * ace/Dynamic_Message_Strategy.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Event.cpp:
+        * ace/Event_Handler.cpp:
+        * ace/FIFO.cpp:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_IO.cpp:
+        * ace/File_Lock.cpp:
+        * ace/Framework_Component.cpp:
+        * ace/Functor.cpp:
+        * ace/Functor_String.cpp:
+        * ace/Future.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/High_Res_Timer.cpp:
+        * ace/ICMP_Socket.cpp:
+        * ace/IOStream.cpp:
+        * ace/IO_Cntl_Msg.cpp:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_Acceptor.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/LSOCK_Stream.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Memory_Pool.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Lock.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg_Backend.cpp:
+        * ace/Log_Msg_Callback.cpp:
+        * ace/Log_Msg_IPC.cpp:
+        * ace/Log_Msg_NT_Event_Log.cpp:
+        * ace/Log_Record.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_Stream.cpp:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/Malloc_Allocator.cpp:
+        * ace/Manual_Event.cpp:
+        * ace/Mem_Map.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_NT.cpp:
+        * ace/Message_Queue_Vx.cpp:
+        * ace/Msg_WFMO_Reactor.cpp:
+        * ace/Mutex.cpp:
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Space.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/Notification_Strategy.cpp:
+        * ace/OS.cpp:
+        * ace/OS_Errno.cpp:
+        * ace/OS_Log_Msg_Attributes.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_ctype.cpp:
+        * ace/OS_NS_dirent.cpp:
+        * ace/OS_NS_dlfcn.cpp:
+        * ace/OS_NS_errno.cpp:
+        * ace/OS_NS_fcntl.cpp:
+        * ace/OS_NS_math.cpp:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_poll.cpp:
+        * ace/OS_NS_pwd.cpp:
+        * ace/OS_NS_regex.cpp:
+        * ace/OS_NS_signal.cpp:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_strings.cpp:
+        * ace/OS_NS_stropts.cpp:
+        * ace/OS_NS_sys_mman.cpp:
+        * ace/OS_NS_sys_msg.cpp:
+        * ace/OS_NS_sys_resource.cpp:
+        * ace/OS_NS_sys_select.cpp:
+        * ace/OS_NS_sys_shm.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/OS_NS_sys_stat.cpp:
+        * ace/OS_NS_sys_time.cpp:
+        * ace/OS_NS_sys_uio.cpp:
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/OS_NS_sys_wait.cpp:
+        * ace/OS_NS_time.cpp:
+        * ace/OS_NS_unistd.cpp:
+        * ace/OS_NS_wchar.cpp:
+        * ace/OS_NS_wctype.cpp:
+        * ace/OS_TLI.cpp:
+        * ace/OS_main.cpp:
+        * ace/Obchunk.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager_Base.cpp:
+        * ace/PI_Malloc.cpp:
+        * ace/Pagefile_Memory_Pool.cpp:
+        * ace/Pipe.cpp:
+        * ace/Priority_Reactor.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Mutex.cpp:
+        * ace/Process_Semaphore.cpp:
+        * ace/Profile_Timer.cpp:
+        * ace/RW_Mutex.cpp:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/RW_Thread_Mutex.cpp:
+        * ace/Reactor_Impl.cpp:
+        * ace/Reactor_Notification_Strategy.cpp:
+        * ace/Reactor_Timer_Interface.cpp:
+        * ace/Read_Buffer.cpp:
+        * ace/Recursive_Thread_Mutex.cpp:
+        * ace/Recyclable.cpp:
+        * ace/Registry.cpp:
+        * ace/Registry_Name_Space.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/SOCK.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+        * ace/SOCK_Stream.cpp:
+        * ace/SPIPE.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SPIPE_Stream.cpp:
+        * ace/SUN_Proactor.cpp:
+        * ace/SV_Message.cpp:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Shared_Memory.cpp:
+        * ace/Sample_History.cpp:
+        * ace/Sbrk_Memory_Pool.cpp:
+        * ace/Sched_Params.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Semaphore.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Shared_Memory.cpp:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Shared_Object.cpp:
+        * ace/Sig_Adapter.cpp:
+        * ace/Sig_Handler.cpp:
+        * ace/Signal.cpp:
+        * ace/Stack_Trace.cpp:
+        * ace/Stats.cpp:
+        * ace/Synch_Options.cpp:
+        * ace/System_Time.cpp:
+        * ace/TLI.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/TLI_Stream.cpp:
+        * ace/TP_Reactor.cpp:
+        * ace/TSS_Adapter.cpp:
+        * ace/TTY_IO.cpp:
+        * ace/Thread.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Control.cpp:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Hook.cpp:
+        * ace/Thread_Mutex.cpp:
+        * ace/Thread_Semaphore.cpp:
+        * ace/Throughput_Stats.cpp:
+        * ace/Time_Value.cpp:
+        * ace/Timeprobe.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Token.cpp:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Request_Reply.cpp:
+        * ace/Trace.cpp:
+        * ace/UNIX_Addr.cpp:
+        * ace/UPIPE_Acceptor.cpp:
+        * ace/UPIPE_Connector.cpp:
+        * ace/UPIPE_Stream.cpp:
+        * ace/UUID.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WIN32_Proactor.cpp:
+        * ace/XTI_ATM_Mcast.cpp:
+        * ace/ace_wchar.cpp:
+        * ace/gethrtime.cpp:
+          Removed ACE_RCSID
+
+Thu Aug  5 08:13:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CORBA_macros.h:
+        * ace/Global_Macros.h:
+        * ace/Vector_T.h:
+        * ace/ace_wchar.h:
+        * ace/config-cxx-common.h:
+        * ace/config-doxygen.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-macros.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-suncc-common.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-interix.h:
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+        * include/makeinclude/platform_aix.GNU:
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * include/makeinclude/platform_cray.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+        * include/makeinclude/platform_irix6.x_common.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_icc.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_openvms.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_tandem.GNU:
+        * include/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/platform_tru64_g++.GNU:
+        * include/makeinclude/platform_unixware_g++.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_icc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+        * tests/Bug_3673_Regression_Test.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/tests.mpc:
+          Removed support for non exception builds, ACE_HAS_EXCEPTIONS is
+          now always defined
+
+        * rpmbuild/ace-tao.spec:
+          Small updates
+
+        * ace/Exception_Macros.h:
+        * bin/MakeProjectCreator/config/exceptions.mpb:
+          Removed these files.
+
+Thu Aug  5 07:40:00 UTC 2010  Build CZar  <buildczar at prismtech dot com>
+
+        * ace/OS_NS_Thread.cpp:
+          Add the missing ; to the lines added by the fix below.
+          Wed Aug  4 14:16:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+Wed Aug  4 17:21:17 UTC 2010  Chris Cleeland  <cleeland@ociweb.com>
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+          Added specific clause for cdt6.
+
+Wed Aug  4 14:16:46 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Check more internal return values
+
+        * rpmbuild/ace-tao.spec-bugfixonly.patch:
+          Removed this file, not needed
+
+Tue Aug  3 12:14:51 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * html/index.html:
+          DAnCE has its own file now and also some documentation got moved
+          out of the tao directory
+
+Sun Aug  1 18:14:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/make_release.py:
+        * docs/Download.html:
+        * etc/index.html:
+          Updated because of release
+
+        * debian/*:
+          Did rename actions the release script didn't do, have to sort this
+          out later
+
+Sun Aug 01 11:30:54 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.8.1 released.
+
+Thu Jul 29 14:41:32 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h (set_handles): Clarify that passing ACE_INVALID_HANDLE
+          for any of the handle values will cause a duplicate of the
+          corresponding ACE_STDIN/OUT/ERR to be used in the options.
+
+Thu Jul 29 10:43:32 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Created a new feature, inet_ssl. When set, the INet libary
+          builds, using SSL. To let the INet libary use SSL, one should
+          enable the inet_ssl feature in default.features and add ssl=1 to
+          the platform_macos.GNU.
+
+Mon Jul 26 20:26:53 UTC 2010  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.h: Note that the cpu_set_size to the get/set
+          affinity methods is a byte count.
+
+Mon Jul 26 07:02:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += corba_e_compact.
+
+Thu Jul 22 04:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * protocols/ace/INet/inet.mpc:
+          Added avoids += ace_for_tao.
+
+Wed Jul 21 18:23:32 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Basic_Types.h (ACE_INT8_FORMAT_SPECIFIER): Added the missing
+          "_ASCII" to the ACE_INT8_FORMAT_SPECIFIER macro usage.  Thanks
+          to Andre Kostur <akostur at incognito dot com> for reporting
+          this.
+
+Wed Jul 21 15:52:32 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Reverted for_TAO specific change, revised the processing to
+          ensure default first, then files, then cmdline directives.
+
+Wed Jul 21 03:07:28 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Fix errors in premature committal.
+
+Wed Jul 21 02:30:45 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Add a specialized open method to be called by TAO. TAO depends
+          on a modified order of directive evaluation.
+
+Tue Jul 20 18:02:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Fixed some typos, thanks to Thomas Lockhart
+          <Thomas dot lockhart at jpl dot nasa dot gov> for reporting this
+
+Tue Jul 20 15:08:49 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3319_Regression_Test.cpp:
+
+          Fix the test to be consistent with revised service config
+          behavior. The test had assumed that ACE_Service_Config::open()
+          would return 0 even if svc.conf were not present, but since it
+          was setting the ignore_default_svc_conf_file to 0, the restore
+          behavior of the service configurator is to fail with ENOENT in
+          that case.
+
+Tue Jul 20 08:48:00 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.cpp:
+          Fixed a bug in ACE_TSS::ts_get() that only exhibited on
+          SunOS/Studio builds. The later configutsyion uses ACE_HAS_THR_C_DEST
+          and with that define ts_get() behaved differently. In particular it
+          didn't create a ts_obj if tss_adapter was not 0.
+
+Tue Jul 20 07:38:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/SSL_CallbackManager.h:
+          Fixed comment typo.
+
+Tue Jul 20 05:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTP_BasicAuthentication.cpp:
+        * protocols/ace/INet/HTTP_BasicAuthentication.h:
+        * protocols/ace/INet/HTTP_BasicAuthentication.inl:
+        * protocols/ace/INet/inet.mpc:
+          Added basic support for HTTP Basic Authentication scheme.
+
+Tue Jul 20 03:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+          Fixed MSVC 7.1 compile problems.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Fixed compile problems for non-SSL builds.
+
+Tue Jul 20 03:25:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * protocols/ace/INet/inet_ssl.mpb:
+          Fuzz fixes.
+
+Mon Jul 19 11:50:59 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/TSS_T.inl:
+        * ace/TSS_T.h:
+        * ace/TSS_T.cpp:
+          Mostly fixed bug 3539. It doesn't fix a case when main thread
+          doesn't own ACE_TSS but still uses it. Fixing the later is not
+          straight forward and will require a lot more efforts.
+          Also rearranged the code so that it has less duplicates.
+
+        * tests/run_test.lst:
+          Marked the test as fixed.
+
+Mon Jul 19 09:15:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inet.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * protocols/ace/INet/inet.mpc:
+          Added new feature 'exclude_inet' to allow builds to
+          explicitly exclude building INet.
+
+Mon Jul 19 08:49:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_Session.h:
+          Fixed compile errors byadding version check to disable
+          'relatively' new OpenSSL functionality for builds using
+          outdated OpenSSL installations (OpenSSL <= 0.9.8e).
+
+Sat Jul 17 14:06:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Some include shuffling to fix an incomplete type warning
+          with MSVC.
+
+Sat Jul 17 11:39:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Replaced ace_openssl base project by ssl. Fixes missing
+          ACE_SSL lib link errors.
+
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+          Fixed MSVC compile errors.
+
+Sat Jul 17 10:26:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/config/inetssl.mpb:
+        * bin/MakeProjectCreator/config/inet.mpb:
+          Added feature project for SSL based parts of INet.
+          Setting feature ssl=1 will automatically cause correct
+          dependencies for SSL to be generated in INet based projects.
+
+        * protocols/ace/INet/HTTPS_Context.cpp:
+        * protocols/ace/INet/HTTPS_Context.h:
+        * protocols/ace/INet/HTTPS_Context.inl:
+        * protocols/ace/INet/HTTP_SessionBase.cpp:
+        * protocols/ace/INet/HTTP_SessionBase.h:
+        * protocols/ace/INet/HTTP_SessionBase.inl:
+        * protocols/ace/INet/HTTPS_Session.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.cpp:
+        * protocols/ace/INet/HTTPS_SessionFactory.h:
+        * protocols/ace/INet/HTTPS_Session.h:
+        * protocols/ace/INet/HTTPS_URL.cpp:
+        * protocols/ace/INet/HTTPS_URL.h:
+        * protocols/ace/INet/HTTPS_URL.inl:
+        * protocols/ace/INet/SSL_CallbackManager.cpp:
+        * protocols/ace/INet/SSL_CallbackManager.h:
+        * protocols/ace/INet/SSL_CallbackManager.inl:
+        * protocols/ace/INet/SSL_CertificateCallback.cpp:
+        * protocols/ace/INet/SSL_CertificateCallback.h:
+        * protocols/ace/INet/SSL_CertificateCallback.inl:
+        * protocols/ace/INet/SSL_PasswordCallback.cpp:
+        * protocols/ace/INet/SSL_PasswordCallback.h:
+        * protocols/ace/INet/SSL_Proxy_Connector.cpp:
+        * protocols/ace/INet/SSL_Proxy_Connector.h:
+        * protocols/ace/INet/SSLSock_IOStream.cpp:
+        * protocols/ace/INet/SSLSock_IOStream.h:
+        * protocols/ace/INet/SSL_X509Cert.cpp:
+        * protocols/ace/INet/SSL_X509Cert.h:
+        * protocols/ace/INet/SSL_X509Cert.inl:
+          New files implementing SSL/HTTPS support.
+          Includes support for proxy CONNECT tunneling.
+
+        * protocols/ace/INet/inet_ssl.mpb:
+          Feature project which will include SSL/HTTPS support
+          into INet when MPC feature ssl=1 is set.
+
+        * protocols/ace/INet/ClientRequestHandler.cpp:
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/ConnectionCache.cpp:
+        * protocols/ace/INet/ConnectionCache.h:
+        * protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/FTP_URL.cpp:
+        * protocols/ace/INet/FTP_URL.h:
+        * protocols/ace/INet/FTP_URL.inl:
+        * protocols/ace/INet/HeaderBase.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.inl:
+        * protocols/ace/INet/HTTP_Session.cpp:
+        * protocols/ace/INet/HTTP_Session.h:
+        * protocols/ace/INet/HTTP_StreamPolicyBase.h:
+        * protocols/ace/INet/HTTP_StreamPolicy.h:
+        * protocols/ace/INet/HTTP_URL.cpp:
+        * protocols/ace/INet/HTTP_URL.h:
+        * protocols/ace/INet/HTTP_URL.inl:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/RequestHandler.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+        * protocols/ace/INet/StreamInterceptor.h:
+        * protocols/ace/INet/URLBase.h:
+          Some redesign to accomodate addition of HTTPS.
+          Some additional logging.
+          Some additional documentation.
+
+        * protocols/ace/INet/HTTP_Simple_exec.cpp:
+          Extended to include HTTPS support.
+
+        * protocols/tests/INet/MT_Get/Main.cpp:
+          Added some traces.
+
+Fri Jul 16 22:08:05 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Further refinement of service initialization process. This
+          restores the order of processing, and is more explicit about
+          handling a defaulted svc.conf.
+
+Thu Jul 15 17:53:47 UTC 2010  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+        * THANKS:
+
+          Restore pre-gestalt behavior of returning -1 if svc.conf does
+          not exist and an ACE_Service_Config::open() is expecting to use
+          the default file.
+
+          Thanks to Daynesh Mangal (daynesh@gmail.com) for reporting the
+          errant behavior.
+
+Thu Jul 15 12:53:53 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Generate deprecated/todo pages
+
+Thu Jul 15 12:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/SSL/SSL_SOCK_Stream.h:
+        * ace/SSL/SSL_SOCK_Stream.inl:
+          Added two method overloads available in ACE_SOCK_Stream but
+          missing from ACE_SSL_SOCK_Stream.
+
+Thu Jul 15 09:49:28 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_POSITION_INDEPENDENT_POINTERS
+
+Thu Jul 15 09:29:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+        * etc/ace_inet.doxygen:
+        * html/index.html:
+          Added ACE INet library
+
+Thu Jul 15 09:11:51 UTC 2010  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-snowleopard.h:
+        * include/makeinclude/platform_clang_common.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Preliminary support for clang compiler.
+
+Tue Jul 13 14:39:55 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated
+
+Tue Jul 13 14:33:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Capabilities.h:
+          Doxygen fixes
+
+Tue Jul 13 14:20:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_errno.h:
+          Fixed problems with msvc 10, , thanks to Max Zhou
+          <earthdog at 126.com> for supplying these changes, this fixes
+          bugzilla 3873
+
+Tue Jul 13 11:08:38 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc10nmake.mpb:
+        * netsvcs/lib/lib.mpc:
+          vc10 support, thanks to Max Zhou <earthdog at 126.com> for
+          supplying these changes
+
+Mon Jul 12 11:04:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/Activation_Queue.h:
+        * ace/Active_Map_Manager.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.inl:
+        * ace/Event_Handler.h:
+        * ace/Filecache.h:
+        * ace/Manual_Event.h:
+        * ace/Map_Manager.h:
+        * ace/Mem_Map.h:
+        * ace/Message_Block.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/OS_NS_unistd.h:
+        * ace/Object_Manager.h:
+        * ace/Recursive_Thread_Mutex.h:
+          Layout, const, and doxygen fixes
+
+Mon Jul 12 10:11:24 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL_Manager.h:
+        * ace/Dirent.h:
+        * ace/Dump_T.h:
+        * ace/Event_Handler.h:
+        * ace/File_Lock.h:
+        * ace/INET_Addr.h:
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Record.h:
+        * ace/Logging_Strategy.h:
+          Fixed set of doxygen warnings
+
+Mon Jul 12 08:19:58 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.h:
+        * ace/Malloc_Base.h:
+        * ace/SString.h:
+        * ace/Stream.h:
+        * ace/Task.h:
+          Fixed set of doxygen warnings
+
+Fri Jul 09 09:35:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix killall() valgrind handling.
+
+Thu Jul 08 14:41:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix killall() valgrind handling.
+
+Thu Jul 08 07:56:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Make killall() recognize and handle valgrind runs correctly.
+
+Wed Jul  7 14:53:12 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/run_test.lst:
+        * tests/Bug_3539_Regression_Test.cpp:
+        * tests/tests.mpc:
+          Added a test for bug 3539 as non-fixed.
+
+Wed Jul  7 11:43:16 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Extended instructions
+
+Tue Jul  6 12:28:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          CIAO is also online available
+
+Tue Jul  6 11:29:41 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.cpp:
+        * ace/Service_Repository.h:
+        * ace/Task_T.h:
+          Fixed doxygen warnings
+
+Tue Jul  6 11:22:08 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+          Improved doxygen configuration
+
+Tue Jul  6 11:11:06 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Reduced the size of the colloboration graphs
+
+Mon Jul  5 15:20:14 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed some test code
+
+Mon Jul  5 14:59:25 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added missing file, thanks to Anatoli Sakhnik
+          <sakhnik at gmail dot com> for reporting this, this should fix
+          bugzilla 3870
+
+Mon Jul 05 14:32:30 UTC 2010  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fixes problem with killall() function being not selective enough.
+
+Mon Jul  5 13:56:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Disable include and included graphs, this should reduce the size
+          of the documentation a lot
+
+Mon Jul  5 13:29:23 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Some preparations to move the DAnCE doxygen files to DAnCE
+
+        * docs/bczar/bczar.html:
+          Updated release notes, made it possible to generate doxygen on
+          a regular system instead of on naboo, the side effect is that the
+          doxygen packages on naboo are 350Mb, on FC13 with all latest tools
+          they are 1.4GB
+
+Mon Jul  5 11:22:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed doxygen warning
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Define ACE_INLINE as inline and not as 1
+
+Mon Jul  5 10:56:15 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec-release.patch:
+          Removed this file.
+
+Mon Jul  5 09:11:21 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Removed link to very old patches and fixed typo
+
+Mon Jul  5 09:05:43 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Updated filenames in text
+
+Mon Jul  5 08:57:09 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Update latest minor release to x.8.0
+
+Mon Jul  5 08:19:17 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for x.8.0
+
+        * bin/generate_rel_manpages:
+          Remove restriction to run on naboo, removed doxygen check, updated
+          error message
+
+        * docs/Download.html:
+          Updated to x.8.0
+
+        * etc/ace.doxygen:
+          Layout changes
+
+        * etc/index.html:
+          Added 5.8
+
+        * rpmbuild/ace-tao.spec:
+          Changed version numbers to x.8.0 and added new ACE INet library
+
+Sun Jul 04 18:57:33 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.8 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

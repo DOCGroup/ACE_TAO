@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib {
+  avoids   += wince
+  avoids   += old_stdstream
+  avoids   += exclude_inet
+  avoids   += ace_for_tao
+  avoids   += corba_e_compact
+  after    += INet
+  libs     += ACE_INet
+  includes += $(ACE_ROOT)/protocols
+}
+ 
