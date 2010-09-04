@@ -1,3 +1,7 @@
+Sat Sep 04 11:30:18 CEST 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ACE version 5.8.2 released.
+
 Thu Sep  2 14:46:56 UTC 2010  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Acceptor.cpp:
