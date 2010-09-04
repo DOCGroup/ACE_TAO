@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
+=======================================================
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 =======================================================
 
@@ -9,11 +12,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 
 . Destructors for component executors prior to this release were never
   invoked.  This bug has been fixed, and component executors are now
-  properly destructed. 
+  properly destructed.
 
 . Installation handlers, deployment interceptors, and locality
   configurators are now loaded at run-time instead of statically
-  configure at compile time.  This is accomplished with the use of 
+  configure at compile time.  This is accomplished with the use of
   a locality configuration file passed on the command line.  Please
   see CIAO/examples/Hello/descriptors/run_test_shs.pl and
   DAnCE/tests/CIAO/Executor-Destructors/Component.cdp for examples of
@@ -28,11 +31,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
 . Deployment interceptors have a new operation that is invoked when
   unexpected events occur.  This is currently only invoked when the
   NodeApplication receives notification that a locality manager has
-  exited unexpectedly. 
+  exited unexpectedly.
 
 . A locality configurator that sets the process priority has been
-  included. 
- 
+  included.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
 =======================================================
 
@@ -64,7 +67,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
   (DAnCE/tests/LocalityManager), in which an attempt to tear down a
   locality manager with no installed components results in a memory
   access violation.  This will be fixed in CIAO 0.8.2.
- 
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
 =======================================================
 
