@@ -24,7 +24,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Thread.h"
@@ -168,7 +167,6 @@ server (void *arg)
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
-  ACE_Handle_Set handle_set;
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
@@ -185,42 +183,34 @@ server (void *arg)
     {
       char buf[BUFSIZ];
 
-      handle_set.reset ();
-      handle_set.set_bit (peer_acceptor->get_handle ());
-
       ACE_DEBUG((LM_DEBUG, "(%P|%t) server: Waiting for connection...\n"));
 
-      int select_width;
-#  if defined (ACE_WIN64)
-      // This arg is ignored on Windows and causes pointer truncation
-      // warnings on 64-bit compiles.
-      select_width = 0;
-#  else
-      select_width = int (peer_acceptor->get_handle ()) + 1;
-#  endif /* ACE_WIN64 */
-      int result = ACE_OS::select (select_width, handle_set, 0, 0, &tv);
+      int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
       ACE_ASSERT (tv == def_timeout);
 
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("server: select acceptor")),
-                          0);
-      else if (result == 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) server: Test finished.\n")));
-          // The meaning of the backlog parameter for listen() varies by
-          // platform. For some reason lost to history, the specified value
-          // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
-          // literally as on Windows. We'll accept any number less than
-          // backlog * 2 as valid.
-          if (num_clients_connected >= BACKLOG * 2)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) server: Incorrect # client ")
-                        ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
-                        BACKLOG, BACKLOG * 2, num_clients_connected));
-          return 0;
+          if (errno == ETIME)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) server: Test finished.\n")));
+              // The meaning of the backlog parameter for listen() varies by
+              // platform. For some reason lost to history, the specified value
+              // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
+              // literally as on Windows. We'll accept any number less than
+              // backlog * 2 as valid.
+              if (num_clients_connected > BACKLOG * 2)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) server: Incorrect # client ")
+                            ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
+                            BACKLOG, BACKLOG * 2, num_clients_connected));
+              return 0;
+            }
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("server: handle_read_ready acceptor")),
+                            0);
         }
 
       // Create a new ACE_SOCK_Stream endpoint (note automatic restart
@@ -244,29 +234,16 @@ server (void *arg)
                                ACE_TEXT ("(%P|%t) %p\n"),
                                ACE_TEXT ("server: enable non blocking i/o")),
                               0);
-          handle_set.reset ();
-          handle_set.set_bit (new_stream.get_handle ());
-
           // Read data from client (terminate on error).
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) server: Waiting for data...\n")));
 
           for (ssize_t r_bytes; ;)
             {
-              int select_width;
-#  if defined (ACE_WIN64)
-              // This arg is ignored on Windows and causes pointer truncation
-              // warnings on 64-bit compiles.
-              select_width = 0;
-#  else
-              select_width = int (new_stream.get_handle ()) + 1;
-#  endif /* ACE_WIN64 */
-              if (ACE_OS::select (select_width,
-                                  handle_set,
-                                  0, 0, 0) == -1)
+              if (ACE::handle_read_ready (new_stream.get_handle (), 0) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) %p\n"),
-                                   ACE_TEXT ("select")),
+                                   ACE_TEXT ("stream handle_read_ready")),
                                   0);
 
               ACE_DEBUG ((LM_DEBUG, "(%P|%t) server: Receiving data...\n"));
