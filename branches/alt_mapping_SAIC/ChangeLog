@@ -1,3 +1,32 @@
+Mon Sep  6 19:42:08 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/ub_str_seq.cpp:
+        * tests/Alt_Mapping/ub_str_seq.h:
+
+          New files, defining a test for unbounded
+          sequence of string.
+
+        * tests/Alt_Mapping/alt_mapping.mpc:
+
+          Added new files to project, and refactored
+          projects to separate client and server
+          executables from stub and skeleton libraries.
+
+        * tests/Alt_Mapping/options.h:
+        * tests/Alt_Mapping/alt_mapping_i.cpp:
+        * tests/Alt_Mapping/server.cpp:
+        * tests/Alt_Mapping/tests.h:
+        * tests/Alt_Mapping/alt_mapping_i.h:
+        * tests/Alt_Mapping/client.cpp:
+        * tests/Alt_Mapping/alt_mapping.idl:
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+        * tests/Alt_Mapping/ub_struct_seq.h:
+        * tests/Alt_Mapping/options.cpp:
+        * tests/Alt_Mapping/driver.cpp:
+        * tests/Alt_Mapping/run_test.pl:
+
+          Changes to cover the added string sequence test.
+
 Mon Sep  6 15:24:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/server.cpp:

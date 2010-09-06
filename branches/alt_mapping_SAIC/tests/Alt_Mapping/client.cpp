@@ -146,7 +146,7 @@ Alt_Mapping_Client<T>::run_sii_test (void)
                   opname));
     }
     
-  return this->results_.error_count ()? -1 : 0;
+  return this->results_.error_count () ? -1 : 0;
 }
 
 #endif /* CLIENT_CPP */

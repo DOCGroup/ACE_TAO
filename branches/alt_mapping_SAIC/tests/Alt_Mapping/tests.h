@@ -18,5 +18,6 @@
 
 #include "ub_struct_seq.h"
 #include "ub_string.h"
+#include "ub_str_seq.h"
 
 #endif /* if !defined */

@@ -61,7 +61,7 @@ protected:
   // print individual sequence
 
 private:
- char *opname_;
+  char *opname_;
 
   Alt_Mapping::StructSeq in_;
 

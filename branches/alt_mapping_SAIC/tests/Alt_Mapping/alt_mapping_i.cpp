@@ -47,9 +47,17 @@ Alt_Mapping_i::test_struct_sequence (
   Alt_Mapping::StructSeq & s2,
   Alt_Mapping::StructSeq & s3)
 {
-  // We copy the "in" sequences into all the inout, out and return sequences.
+  s2 = s1;
+  s3 = s1;
+  return s1;
+}
 
-  // now copy all elements of s1 into the others using the assignment operator
+CORBA::StringSeq
+Alt_Mapping_i::test_strseq (
+    const CORBA::StringSeq & s1,
+    CORBA::StringSeq & s2,
+    CORBA::StringSeq & s3)
+{
   s2 = s1;
   s3 = s1;
   return s1;

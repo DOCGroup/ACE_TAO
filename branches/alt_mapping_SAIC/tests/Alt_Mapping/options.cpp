@@ -93,6 +93,8 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
           this->test_type_ = Options::TEST_UB_STRING;
         else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_struct_seq")))
           this->test_type_ = Options::TEST_UB_STRUCT_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_strseq")))
+          this->test_type_ = Options::TEST_UB_STRING_SEQUENCE;
         break;
 
       case '?':
