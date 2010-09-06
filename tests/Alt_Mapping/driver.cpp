@@ -118,10 +118,13 @@ Driver::run (void)
     {
     case Options::TEST_UB_STRING:
       {
-        Alt_Mapping_Client<Test_Unbounded_String> *client = new
-          Alt_Mapping_Client<Test_Unbounded_String> (this->orb_.in (),
-                                                    this->objref_.in(),
-                                                    new Test_Unbounded_String);
+        Alt_Mapping_Client<Test_Unbounded_String> *client =
+          new
+            Alt_Mapping_Client<Test_Unbounded_String> (
+              this->orb_.in (),
+              this->objref_.in(),
+              new Test_Unbounded_String);
+              
         retstatus = client->run_sii_test ();
         
         delete client;
@@ -129,25 +132,30 @@ Driver::run (void)
       break;
     case Options::TEST_UB_STRUCT_SEQUENCE:
       {
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> (
-            this->orb_.in (),
-            this->objref_.in(),
-            new Test_Unbounded_Struct_Sequence);
+        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client =
+          new
+            Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> (
+              this->orb_.in (),
+              this->objref_.in(),
+              new Test_Unbounded_Struct_Sequence);
                                                    
         retstatus = client->run_sii_test ();
         
         delete client;
+      }
+      break;
+    case Options::TEST_UB_STRING_SEQUENCE:
+      {
+        Alt_Mapping_Client<Test_String_Sequence> *client =
+          new
+            Alt_Mapping_Client<Test_String_Sequence> (
+              this->orb_.in (),
+              this->objref_.in(),
+              new Test_String_Sequence);
+              
+        retstatus = client->run_sii_test ();
 
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client2 = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence>
-          (this->orb_.in (),
-           this->objref_.in(),
-           new Test_Unbounded_Struct_Sequence);
-
-        retstatus = client2->run_sii_test ();
-
-        delete client2;
+        delete client;
       }
       break;
     default:

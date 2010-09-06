@@ -1,5 +1,7 @@
 // $Id$
 
+#include "tao/StringSeq.pidl"
+
 interface Alt_Mapping
 {
   string test_unbounded_string (in string s1,
@@ -22,6 +24,10 @@ interface Alt_Mapping
   StructSeq test_struct_sequence (in StructSeq s1,
                                   inout StructSeq s2,
                                   out StructSeq s3);
+
+  CORBA::StringSeq test_strseq (in CORBA::StringSeq s1,
+                                inout CORBA::StringSeq s2,
+                                out CORBA::StringSeq s3);
 
   void shutdown ();
   // Shutdown the server: this is useful to check for memory leaks,

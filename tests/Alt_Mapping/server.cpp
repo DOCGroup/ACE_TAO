@@ -103,14 +103,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       temp = oa_ptr->id_to_reference (id);
 
-      CORBA::String_var str =
+      std::string str =
         orb_ptr->object_to_string (temp.in ());
 
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) The IOR is <%s>\n",
-                      str.in ()));
+                      str.c_str ()));
         }
 
       ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
@@ -125,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_OS::fprintf (ior_output_file,
                        "%s",
-                       str.in ());
+                       str.c_str ());
       ACE_OS::fclose (ior_output_file);
 
 

@@ -15,7 +15,7 @@
 
 #include "alt_mappingS.h"
 
-class Alt_Mapping_i : public POA_Alt_Mapping
+class ALT_MAPPING_SKEL_Export Alt_Mapping_i : public POA_Alt_Mapping
 {
   // = TITLE
   //    Alt_Mapping_i
@@ -35,6 +35,11 @@ public:
     const Alt_Mapping::StructSeq & s1,
     Alt_Mapping::StructSeq & s2,
     Alt_Mapping::StructSeq & s3);
+    
+  virtual CORBA::StringSeq test_strseq (
+    const CORBA::StringSeq & s1,
+    CORBA::StringSeq & s2,
+    CORBA::StringSeq & s3);
       
   void shutdown (void);
 

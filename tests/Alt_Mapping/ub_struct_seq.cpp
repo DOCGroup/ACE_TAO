@@ -34,8 +34,6 @@ Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -95,6 +93,7 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
       ex._tao_print_exception ("Test_Struct_Sequence::run_sii_test\n");
 
     }
+    
   return -1;
 }
 
