@@ -19,9 +19,11 @@
 #ifndef TAO_OBJECTKEY_PIDL
 #define TAO_OBJECTKEY_PIDL
 
+#include "tao/OctetSeq.pidl"
+
 module TAO
 {
-  typedef sequence<octet> ObjectKey;
+  typedef CORBA::OctetSeq ObjectKey;
 };
 
 #endif /* TAO_OBJECTKEY_PIDL */

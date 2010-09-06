@@ -32,8 +32,6 @@
 #include "Object_KeyC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "tao/Vector_CDR_T.h"
-#include "tao/Vector_Argument_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

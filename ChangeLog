@@ -1,3 +1,22 @@
+Mon Sep  6 15:24:49 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/server.cpp:
+        
+          Updated code related to ObjectId to reflect ORB changes.
+          
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_cs.cpp:
+        
+          Restored code generation for CDR operators for typedef of
+          sequence that had been erroneously commented out.
+          
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_Key.pidl:
+        
+          Redefined TAO::ObjectKey as a typedef of CORBA::OctetSeq,
+          instead of a typedef of sequence<octet>.
+
 Fri Sep  3 18:50:06 UTC 2010  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Root_POA.cpp:

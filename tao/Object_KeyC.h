@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // .\be\be_codegen.cpp:149
 
-#ifndef _TAO_PIDL_OBJECT_KEYC_NXW5RV_H_
-#define _TAO_PIDL_OBJECT_KEYC_NXW5RV_H_
+#ifndef _TAO_PIDL_OBJECT_KEYC_EXVGOK_H_
+#define _TAO_PIDL_OBJECT_KEYC_EXVGOK_H_
 
 #include /**/ "ace/pre.h"
 
@@ -49,9 +49,10 @@
 #include <vector>
 
 #include "tao/Basic_Types.h"
-#include "tao/Sequence_T.h"
 #include /**/ "tao/Versioned_Namespace.h"
 #include "ace/streams.h"
+
+#include "tao/OctetSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -69,14 +70,9 @@ namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // e:\branches\alt_mapping_saic\tao\tao_idl\be\be_visitor_sequence/sequence_ch.cpp:100
-
-#if !defined (_TAO_OBJECTKEY_CH_)
-#define _TAO_OBJECTKEY_CH_
+  // w:\tao\tao_idl\be\be_visitor_typedef/typedef_ch.cpp:462
   
-  typedef std::vector< ::CORBA::Octet> ObjectKey;
-
-#endif /* end #if !defined */
+  typedef CORBA::OctetSeq ObjectKey;
 
 // TAO_IDL - Generated from
 // e:\branches\alt_mapping_saic\tao\tao_idl\be\be_visitor_module/module_ch.cpp:70
