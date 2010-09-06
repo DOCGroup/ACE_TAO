@@ -1,3 +1,9 @@
+Mon Sep  6 09:30:00 UTC 2010  Simon Massey  <buildczar at prismtech dot com>
+
+        * ace/Acceptor.cpp:
+          Due to the way the code was formatted, I mistook a do {} while loop for
+          a while loop with my change. I have corrected this.
+
 Mon Sep  6 08:10:00 UTC 2010  Simon Massey  <buildczar at prismtech dot com>
 
         * ace/ACE.cpp:
