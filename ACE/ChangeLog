@@ -1,3 +1,17 @@
+Mon Sep  6 08:10:00 UTC 2010  Simon Massey  <buildczar at prismtech dot com>
+
+        * ace/ACE.cpp:
+        * ace/Acceptor.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * NEWS:
+          Now that release x.8.3. is out, we are attempting to provide the correct
+          fix to the original commit by Steve Huston related to handle_ready()
+          (Fri Aug 27 19:17:11 UTC 2010  Steve Huston  <shuston@riverace.com>)
+          and added back the corresponding NEWS entry.
+
 Sat Sep 04 18:08:03 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
