@@ -93,16 +93,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                      -1);
 
       // Register with GoodPOA with a specific name
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId id =
         PortableServer::string_to_ObjectId ("alt_mapping");
-      oa_ptr->activate_object_with_id (id.in (),
-                                       svnt);
+      oa_ptr->activate_object_with_id (id, svnt);
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
-      temp = oa_ptr->id_to_reference (id.in ());
+      temp = oa_ptr->id_to_reference (id);
 
       CORBA::String_var str =
         orb_ptr->object_to_string (temp.in ());
