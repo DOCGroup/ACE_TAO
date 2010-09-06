@@ -377,6 +377,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
   // 2. It allows the TLI_SAP::ACE_Acceptor class to work correctly (don't
   //    ask -- TLI is *horrible*...).
 
+  // Ensure that errno is preserved in case the ACE::handle_read_ready()
+  // method resets it in the loop bellow. We are actually supposed to
+  // ignore any errors from this loop, hence the return 0 following it.
+  ACE_Errno_Guard error (errno);
+
   // @@ What should we do if any of the substrategies fail?  Right
   // now, we just print out a diagnostic message if <ACE::debug>
   // returns > 0 and return 0 (which means that the Acceptor remains
@@ -391,9 +396,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
       if (this->make_svc_handler (svc_handler) == -1)
         {
           if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("make_svc_handler")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("make_svc_handler")));
+            }
           return 0;
         }
       // Accept connection into the Svc_Handler.
@@ -402,10 +409,18 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
           // Note that <accept_svc_handler> closes the <svc_handler>
           // on failure.
           if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("accept_svc_handler")));
-          return this->handle_accept_error ();
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("accept_svc_handler")));
+            }
+          const int ret = this->handle_accept_error ();
+          if (ret == -1)
+            {
+              // Ensure that the errno from the above call propegates.
+              error = errno;
+            }
+          return ret;
         }
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
@@ -417,23 +432,17 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
           // on failure.
 
           if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("activate_svc_handler")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("activate_svc_handler")));
+            }
           return 0;
         }
-    }
-
-  // Ensure that errno is preserved in case the ACE::handle_read_ready()
-  // method resets it in the loop bellow. We are actually supposed to
-  // ignore any errors from this loop, hence the return 0 following it.
-  ACE_Errno_Guard error (errno);
-
-  // Now, check to see if there is another connection pending and
-  // break out of the loop if there is none.
-  while (this->use_select_ &&
-         ACE::handle_read_ready (listener,
-                                 &timeout) == 1);
+      // Now, check to see if there is another connection pending and
+      // break out of the loop if there is none.
+    } while (this->use_select_ &&
+             ACE::handle_read_ready (listener, &timeout) == 1);
   return 0;
 }
 
