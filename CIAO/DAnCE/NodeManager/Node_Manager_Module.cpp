@@ -469,7 +469,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
       if (this->nm_map_.find (node_name, nm) == -1)
         {
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                        ACE_TEXT ("Allocating new NodeManger servant instance for NodeManager\n")));
+                        ACE_TEXT ("Allocating new NodeManager servant instance for NodeManager\n")));
           int size = 64;
           DAnCE::Utility::PROPERTY_MAP properties (size);
           this->create_nm_properties (properties);
@@ -482,7 +482,7 @@ DAnCE_NodeManager_Module::init (CORBA::ORB_ptr orb,
                                                    properties),
                           CORBA::Object::_nil ());
           DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("DAnCE_NodeManager_Module::init - ")
-                        ACE_TEXT ("New NodeManger servant instance for NodeManager allocated.\n")));
+                        ACE_TEXT ("New NodeManager servant instance for NodeManager allocated.\n")));
           this->nm_map_.bind (node_name, nm);
         }
 

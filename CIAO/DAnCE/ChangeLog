@@ -1,3 +1,9 @@
+Tue Sep  7 11:46:09 UTC 2010  Marcel Smit  <msmit@remedy.nl>
+
+        * LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * NodeManager/Node_Manager_Module.cpp:
+          Optimized logging
+
 Sun Sep  5 18:17:13 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DAnCE/DAnCE_Properties.idl:

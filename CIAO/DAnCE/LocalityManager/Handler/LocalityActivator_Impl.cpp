@@ -264,7 +264,7 @@ namespace DAnCE
       else
         this->single_threaded_wait_for_callback (*server, timeout);
 
-      server->pid_ = pid; // register pid of successfully started lm process
+      server->pid_ = pid; // register pid of successfully started lm processkate
 
       DANCE_DEBUG (6, (LM_DEBUG, DLINFO
                        ACE_TEXT ("DAnCE_LocalityActivator_i::create_locality_manager - ")
