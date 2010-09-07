@@ -4,11 +4,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Refcounted_ObjectKey.h"
 
-ACE_RCSID(tao,
-          ObjectKey_Table,
-          "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool

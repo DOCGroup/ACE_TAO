@@ -6,10 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Flag_Manip.h"
 
-ACE_RCSID (tao,
-           Thread_Per_Connection_Handler,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (

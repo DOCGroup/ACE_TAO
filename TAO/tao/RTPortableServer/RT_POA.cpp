@@ -30,10 +30,6 @@
 # include "tao/RTPortableServer/RT_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (RTPortableServer,
-           RT_POA,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,

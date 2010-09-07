@@ -8,10 +8,6 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (Messaging,
-           Buffering_Constraint_Policy,
-           "$Id$")
-
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/default_client.h"
@@ -17,11 +18,6 @@
 
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (tao,
-           default_client,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

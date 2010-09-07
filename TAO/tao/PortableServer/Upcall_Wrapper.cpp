@@ -20,10 +20,6 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
-ACE_RCSID (PortableServer,
-           Upcall_Wrapper,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

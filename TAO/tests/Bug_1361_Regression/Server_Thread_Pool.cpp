@@ -67,7 +67,7 @@ Thread_Pool::put (Test::Echo_ptr echoptr)
 {
   char * charData = (char *) Test::Echo::_duplicate (echoptr);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
   return this->put (mb);
 }
@@ -95,7 +95,7 @@ Thread_Pool::svc (void)
 
   for (;; count++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/DynamicAny/DynSequence_i.h"
@@ -9,10 +10,6 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/CDR.h"
-
-ACE_RCSID (DynamicAny,
-           DynSequence_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

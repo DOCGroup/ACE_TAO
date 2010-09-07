@@ -2,10 +2,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 
-ACE_RCSID (CSD_ThreadPool,
-           TP_Request,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Request.inl"
 #endif /* ! __ACE_INLINE__ */

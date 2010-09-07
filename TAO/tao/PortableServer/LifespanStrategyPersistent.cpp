@@ -1,11 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/LifespanStrategyPersistent.h"
-
-ACE_RCSID (PortableServer,
-           Lifespan_Strategy,
-           "$Id$")
-
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/ImR_Client_Adapter.h"

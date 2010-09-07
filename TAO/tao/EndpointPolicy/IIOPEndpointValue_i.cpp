@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/EndpointPolicy/IIOPEndpointValue_i.h"
 
@@ -7,10 +8,6 @@
 #include "tao/IIOP_Endpoint.h"
 #include "tao/IIOP_Acceptor.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (IIOPEndpointValue,
-           IIOPEndpointValue_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

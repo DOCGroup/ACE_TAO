@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "tao/Messaging/Messaging_Loader.h"
@@ -8,9 +7,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (Messaging, Messaging_Loader, "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

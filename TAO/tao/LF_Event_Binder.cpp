@@ -6,10 +6,6 @@
 # include "tao/LF_Event_Binder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           LF_Event_Binder,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Event_Binder::~TAO_LF_Event_Binder (void)

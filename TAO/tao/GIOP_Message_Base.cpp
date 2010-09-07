@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/GIOP_Message_Base.h"
@@ -19,10 +20,6 @@
  * Hook to add additional include files during specializations.
  */
 //@@ GIOP_MESSAGE_BASE_INCLUDE_ADD_HOOK
-
-ACE_RCSID (tao,
-           GIOP_Message_Base,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

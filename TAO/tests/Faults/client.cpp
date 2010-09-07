@@ -137,9 +137,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               server->shutdown_now (0);
             }
-          catch (const CORBA::COMM_FAILURE& comm_failure)
+          catch (const CORBA::COMM_FAILURE&)
             {
-              ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
         }
@@ -149,9 +148,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               server->shutdown_now (1);
             }
-          catch (const CORBA::COMM_FAILURE& comm_failure)
+          catch (const CORBA::COMM_FAILURE&)
             {
-              ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
         }
@@ -187,7 +185,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
-      return 1;
+      return -1;
     }
 
   return 0;

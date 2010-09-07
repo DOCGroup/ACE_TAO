@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
@@ -5,11 +6,6 @@
 #ifndef  __ACE_INLINE__
 # include  "True_RefCount_Policy.inl"
 #endif  /* !__ACE_INLINE__ */
-
-
-ACE_RCSID (AnyTypeCode,
-           True_RefCount_Policy,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

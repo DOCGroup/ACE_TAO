@@ -3,14 +3,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
-
 #include "tao/ORB_Core.h"
-
-
-ACE_RCSID (TypeCodeFactory,
-           TypeCodeFactory_Adapter_Impl,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

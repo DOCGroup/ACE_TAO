@@ -8,10 +8,6 @@
 #include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA,
-           TAO_RT_Transport_Descriptor_Property,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor_Property::~TAO_RT_Transport_Descriptor_Property (void)

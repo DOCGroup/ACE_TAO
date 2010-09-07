@@ -1,11 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Codeset_Manager.h"
 #include "tao/Codeset_Descriptor_Base.h"
-
-ACE_RCSID (tao,
-           Codeset_Manager,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

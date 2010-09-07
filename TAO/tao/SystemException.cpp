@@ -23,12 +23,6 @@
 # include "tao/SystemException.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           SystemException,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

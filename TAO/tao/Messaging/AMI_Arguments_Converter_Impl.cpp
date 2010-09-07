@@ -1,14 +1,12 @@
+// -*- C++ -*-
 // $Id$
+
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
-
-ACE_RCSID (Messaging,
-           AMI_Arguments_Converter_Impl,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

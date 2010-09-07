@@ -1,10 +1,8 @@
+// $Id$
+
 #include "tao/RTCORBA/Thread_Pool.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-ACE_RCSID (RTCORBA,
-           Thread_Pool,
-           "$Id$")
 
 #if ! defined (__ACE_INLINE__)
 #include "tao/RTCORBA/Thread_Pool.inl"

@@ -29,12 +29,6 @@
 # include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Synch_Invocation,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -255,9 +249,9 @@ namespace TAO
      */
 
     bool const
-      expired= (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
+      expired = (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
     if (expired)
-      errno= ETIME;
+      errno = ETIME;
     int const
       reply_error = expired ? -1 :
         this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);

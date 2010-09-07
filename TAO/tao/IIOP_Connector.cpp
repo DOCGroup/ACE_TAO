@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/IIOP_Connector.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -18,10 +21,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
-
-ACE_RCSID (tao,
-           IIOP_Connector,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -14,10 +14,6 @@
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(RTCORBA,
-          RT_ORB,
-          "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,

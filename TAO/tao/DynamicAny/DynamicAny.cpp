@@ -12,8 +12,6 @@
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
-ACE_RCSID(DynamicAny, DynamicAny, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynamicAny_Loader::TAO_DynamicAny_Loader (void)

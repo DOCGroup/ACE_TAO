@@ -3,11 +3,6 @@
 // Implementation of the Dynamic Server Skeleton Interface.
 
 #include "tao/DynamicInterface/Server_Request.h"
-
-ACE_RCSID (DynamicInterface,
-           Server_Request,
-           "$Id$")
-
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"

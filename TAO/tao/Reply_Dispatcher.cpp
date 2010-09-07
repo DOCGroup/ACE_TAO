@@ -2,10 +2,6 @@
 
 #include "tao/Reply_Dispatcher.h"
 
-ACE_RCSID (tao,
-           Reply_Dispatcher,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */

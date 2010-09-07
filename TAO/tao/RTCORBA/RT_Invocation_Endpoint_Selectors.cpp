@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -18,10 +20,6 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
-
-ACE_RCSID (RTCORBA,
-           RT_Invocation_Endpoint_Selectors,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

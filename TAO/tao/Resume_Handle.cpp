@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Resume_Handle.h"
 #include "tao/ORB_Core.h"
 #include "debug.h"
@@ -7,11 +10,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Resume_Handle.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Resume_Handle,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

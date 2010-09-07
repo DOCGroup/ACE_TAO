@@ -19,12 +19,6 @@
 
 #include "tao/Strategies/DIOP_Profile.h"
 
-
-ACE_RCSID (Strategies,
-           DIOP_Connector,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connector::TAO_DIOP_Connector (void)

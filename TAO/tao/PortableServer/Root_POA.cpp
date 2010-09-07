@@ -61,10 +61,6 @@
 # include "tao/PortableServer/Root_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Root_POA,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_Endpoint_Utils.h"
 #include "tao/Profile_Transport_Resolver.h"
 
@@ -9,12 +11,6 @@
 #include "tao/RTCORBA/RT_Stub.h"
 
 #include "tao/SystemException.h"
-
-ACE_RCSID (RTCORBA,
-           RT_Endpoint_Utils,
-           "$Id$")
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

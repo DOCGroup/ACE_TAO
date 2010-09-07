@@ -9,8 +9,6 @@
 #include "tao/MProfile.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (IORManip_IIOP_Filter, IORManip_IIOP_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter (void)

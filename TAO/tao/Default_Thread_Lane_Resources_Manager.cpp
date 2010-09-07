@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
@@ -5,12 +6,6 @@
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
-
-
-ACE_RCSID (tao,
-           Default_Thread_Lane_Resources_Manager,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

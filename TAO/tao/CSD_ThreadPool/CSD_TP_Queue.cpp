@@ -4,10 +4,6 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h"
 
-ACE_RCSID (CSD_ThreadPool,
-           TP_Queue,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Queue.inl"
 #endif /* ! __ACE_INLINE__ */

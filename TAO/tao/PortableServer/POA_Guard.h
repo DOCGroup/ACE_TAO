@@ -43,7 +43,9 @@ namespace TAO
       POA_Guard (::TAO_Root_POA &poa, bool check_for_destruction = true);
 
     private:
+// FUZZ: disable check_for_ACE_Guard
       ACE_Guard<ACE_Lock> guard_;
+// FUZZ: enable check_for_ACE_Guard
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

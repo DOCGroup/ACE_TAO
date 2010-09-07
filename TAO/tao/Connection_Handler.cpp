@@ -282,13 +282,21 @@ TAO_Connection_Handler::handle_input_internal (
     }
 
   if (return_value == -1)
-    resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+    {
+      resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
+    }
+    
   return return_value;
 }
 
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
+  if (this->is_closed_)
+    {
+      return 1;
+    }
+    
   this->is_closed_ = true;
 
   // Save the ID for debugging messages
@@ -425,16 +433,19 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (u_long)
 {
-  this->is_closed_ = true;
-  
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-                       this->orb_core_->leader_follower ());
+  if (!this->is_closed_)
+    {
+      this->is_closed_ = true;
 
-  // If there was a pending connection cancel it.
-  this->cancel_pending_connection ();
+      this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                            this->orb_core_->leader_follower ());
 
-  // Purge transport from cache if it's in cache.
-  this->transport ()->purge_entry();
+      // If there was a pending connection cancel it.
+      this->cancel_pending_connection ();
+
+      // Purge transport from cache if it's in cache.
+      this->transport ()->purge_entry();
+    }
 
   return 0;
 }

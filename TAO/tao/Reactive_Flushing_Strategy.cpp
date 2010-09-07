@@ -6,11 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Queued_Message.h"
 
-ACE_RCSID (tao,
-           Reactive_Flushing_Strategy,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

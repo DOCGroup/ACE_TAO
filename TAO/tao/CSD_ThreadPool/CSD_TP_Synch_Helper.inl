@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,7 +21,7 @@ ACE_INLINE
 bool
 TAO::CSD::TP_Synch_Helper::wait_while_pending()
 {
-  GuardType guard(this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
 
   while (this->state_ == PENDING)
     {
@@ -37,7 +36,7 @@ ACE_INLINE
 void
 TAO::CSD::TP_Synch_Helper::dispatched()
 {
-  GuardType guard(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
   this->state_ = DISPATCHED;
   this->condition_.signal();
 }
@@ -47,7 +46,7 @@ ACE_INLINE
 void
 TAO::CSD::TP_Synch_Helper::cancelled()
 {
-  GuardType guard(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
   this->state_ = CANCELLED;
   this->condition_.signal();
 }

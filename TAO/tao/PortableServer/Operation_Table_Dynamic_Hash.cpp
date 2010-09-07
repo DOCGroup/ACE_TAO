@@ -4,10 +4,6 @@
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(PortableServer,
-          Operation_Table_Dynamic_Hash,
-          "$Id$")
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Operation_Table_Timeprobe_Description[] =

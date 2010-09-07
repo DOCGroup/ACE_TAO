@@ -1,10 +1,7 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
-
-ACE_RCSID (CSD,
-           CSD_ORBInitializer,
-           "$Id$")
-
-
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"

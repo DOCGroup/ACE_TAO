@@ -27,10 +27,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
-           TAO_Stub,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub::TAO_Stub (const char *repository_id,
@@ -227,7 +223,9 @@ TAO_Stub::object_key (void) const
   if (this->forward_profiles_)
     {
       // Double-checked
+      // FUZZ: disable check_for_ACE_Guard
       ACE_Guard<ACE_Lock> obj (*this->profile_lock_ptr_);
+      // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
         return this->forward_profiles_->get_profile (0)->object_key ();

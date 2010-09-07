@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
@@ -7,11 +8,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"
-
-ACE_RCSID (CSD_Framework,
-           CSD_Object_Adapter_Factory,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

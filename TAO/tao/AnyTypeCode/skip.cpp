@@ -29,10 +29,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (AnyTypeCode,
-           skip,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::traverse_status

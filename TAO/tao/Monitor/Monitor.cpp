@@ -1,9 +1,8 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Monitor/Monitor.h"
 #include "tao/Monitor/Monitor_Impl.h"
-
-ACE_RCSID (Monitor,
-           Monitor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

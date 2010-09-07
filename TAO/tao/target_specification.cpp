@@ -1,4 +1,3 @@
-
 //$Id$
 
 #include "tao/target_specification.h"
@@ -7,6 +6,3 @@
 #include "tao/target_specification.inl"
 #endif /* !defined INLINE */
 
-ACE_RCSID (tao, 
-           target_specification, 
-           "$Id$")

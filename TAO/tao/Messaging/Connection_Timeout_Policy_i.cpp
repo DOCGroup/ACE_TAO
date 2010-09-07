@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
@@ -7,11 +8,6 @@
 #include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Truncate.h"
-
-ACE_RCSID (Messaging,
-           Connection_Timeout_Policy_i,
-           "$Id$")
-
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 

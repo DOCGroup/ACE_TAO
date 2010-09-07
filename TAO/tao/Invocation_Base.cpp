@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Invocation_Base.h"
 #include "tao/Stub.h"
 #include "tao/operation_details.h"
@@ -14,10 +16,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (tao,
-           Invocation_Base,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

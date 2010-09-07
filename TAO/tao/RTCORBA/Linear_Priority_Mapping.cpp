@@ -9,11 +9,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (RTCORBA,
-           Linear_Priority_Mapping,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)

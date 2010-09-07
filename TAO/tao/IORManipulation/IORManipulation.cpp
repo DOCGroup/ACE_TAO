@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/IORManipulation/IORManipulation.h"
 
 #include "tao/MProfile.h"
@@ -7,11 +10,6 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (IORManipulation,
-           IORManipulation,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

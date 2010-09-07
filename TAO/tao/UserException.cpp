@@ -9,11 +9,6 @@
 # include "tao/UserException.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           UserException,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Virtual.  Do not inline.

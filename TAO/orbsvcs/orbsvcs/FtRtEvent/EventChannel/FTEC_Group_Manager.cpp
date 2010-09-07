@@ -1,7 +1,6 @@
-// $Id$
+// // $Id$
 
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
-#include "ace/Synch_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
@@ -110,7 +109,7 @@ void TAO_FTEC_Group_Manager::join_group (
   TAO_FTRTEC::Log(1, ACE_TEXT("join group\n"));
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
+    ACE_WRITE_GUARD (FTRTEC::Replication_Service, lock, *svc);
     add_member(info, IOGR_Maker::instance()->get_ref_version()+1);
   }
 }
@@ -247,8 +246,8 @@ void TAO_FTEC_Group_Manager::replica_crashed (
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::replica_crashed\n"));
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    remove_member(location, IOGR_Maker::instance()->get_ref_version()+1);
+  ACE_WRITE_GUARD (FTRTEC::Replication_Service, lock, *svc);
+  remove_member(location, IOGR_Maker::instance()->get_ref_version()+1);
 }
 
 void TAO_FTEC_Group_Manager::remove_member (

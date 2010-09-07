@@ -2,10 +2,6 @@
 
 #include "tao/RTCORBA/RT_Service_Context_Handler.h"
 
-ACE_RCSID (RTCORBA,
-           RT_Service_Context_Handler,
-           "$Id$")
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/RTCORBA/RT_Policy_i.h"

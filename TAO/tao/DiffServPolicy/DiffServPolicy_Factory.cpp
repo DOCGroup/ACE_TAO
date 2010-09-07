@@ -1,9 +1,7 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
-
-ACE_RCSID (DiffServPolicy,
-           DiffServPolicy_Factory,
-           "$Id$")
-
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 #include "tao/PolicyC.h"

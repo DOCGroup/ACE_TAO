@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
@@ -5,12 +6,6 @@
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
-
-
-ACE_RCSID (AnyTypeCode,
-           Empty_Param_TypeCode,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

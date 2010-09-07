@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/PortableServer/POA_Policy_Set.h"
 #include "tao/PortableServer/POA_Cached_Policies.h"
@@ -10,10 +10,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/POA_Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (PortableServer,
-           POA_Policy_Set,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

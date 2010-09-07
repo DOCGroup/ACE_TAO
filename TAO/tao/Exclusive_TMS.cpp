@@ -5,10 +5,6 @@
 #include "tao/debug.h"
 #include "tao/Transport.h"
 
-ACE_RCSID (tao,
-           Exclusive_TMS,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)

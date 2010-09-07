@@ -1,8 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Acceptor_Filter.h"
-
-ACE_RCSID(tao, Acceptor_Filter, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

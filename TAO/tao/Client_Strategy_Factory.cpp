@@ -1,8 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Client_Strategy_Factory.h"
-
-ACE_RCSID(tao, Client_Strategy_Factory, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

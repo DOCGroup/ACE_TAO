@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Collocated_Invocation.h"
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/ORB_Core.h"
@@ -11,11 +13,6 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
-
-ACE_RCSID (tao,
-           Collocated_Invocation,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

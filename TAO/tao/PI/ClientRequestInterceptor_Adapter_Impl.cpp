@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/PI/ClientRequestInterceptor_Adapter_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12,10 +14,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/PortableInterceptorC.h"
-
-ACE_RCSID (PI,
-           ClientRequestInterceptorAdapter_Impl,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

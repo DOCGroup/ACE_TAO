@@ -1,10 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/orbconf.h"
-
-ACE_RCSID (PortableServer,
-           RequestProcessingStrategyServantLocatorFactoryImpl,
-           "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
