@@ -2213,7 +2213,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
     return result;
 
   // *now* it's appropriate to wait for an enqueued item
-  result = this->wait_not_empty_cond (ace_mon, timeout);
+  result = this->wait_not_empty_cond (timeout);
   if (result == -1)
     return result;
 

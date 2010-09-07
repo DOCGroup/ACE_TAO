@@ -11,6 +11,7 @@
 #include <ace/Synch.h>
 #include <ace/Time_Value.h>
 #include <ace/SOCK_Dgram_Mcast.h>
+#include <ace/Condition_T.h>
 
 #include "Messaging.hpp"
 
@@ -430,7 +431,7 @@ namespace ACE_TMCast
           {
             Recv* data = dynamic_cast<Recv*> (m.get ());
 
-            if (size < data->size ()) 
+            if (size < data->size ())
               throw Group::InsufficienSpace ();
 
             ACE_OS::memcpy (msg, data->payload (), data->size ());

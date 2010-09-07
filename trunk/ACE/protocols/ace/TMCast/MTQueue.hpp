@@ -8,6 +8,7 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/os_include/sys/os_types.h"
+#include "ace/Condition_T.h"
 
 namespace ACE_TMCast
 {
